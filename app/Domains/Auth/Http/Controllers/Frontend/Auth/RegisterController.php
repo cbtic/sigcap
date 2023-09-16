@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use LangleyFoxall\LaravelNISTPasswordRules\PasswordRules;
+use App\Models\Persona;
+use App\Models\TablaMaestra;
 
 /**
  * Class RegisterController.
@@ -60,8 +62,11 @@ class RegisterController
     public function showRegistrationForm()
     {
         abort_unless(config('boilerplate.access.user.registration'), 404);
+		
+		$tablaMaestra_model = new TablaMaestra;
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo("TIP_DOC");
 
-        return view('frontend.auth.register');
+        return view('frontend.auth.register',compact('tipo_documento'));
     }
 
     /**
@@ -94,9 +99,12 @@ class RegisterController
      */
     protected function create(array $data)
     {
-	
-		print_r($data);
-		exit();
+		$persona = Persona::where("id_tipo_documento",$data["id_tipo_documento"])->where("numero_documento",$data["numero_documento"])->first();
+		//print_r($persona);
+		$id_persona = $persona->id;
+		$data["id_persona"] = $id_persona;
+		//print_r($data);
+		//exit();
         abort_unless(config('boilerplate.access.user.registration'), 404);
 
         return $this->userService->registerUser($data);
