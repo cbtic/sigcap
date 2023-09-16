@@ -13,7 +13,25 @@
 
                     <x-slot name="body">
                         <x-forms.post :action="route('frontend.auth.register')">
-                            <div class="form-group row">
+                            
+							
+							<div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Tipo Documento</label>
+
+                                <div class="col-md-6">
+                                    <input type="text" name="id_tipo_documento" id="id_tipo_documento" class="form-control" placeholder="{{ __('Name') }}" maxlength="100" required autofocus autocomplete="id_tipo_documento" />
+                                </div>
+                            </div><!--form-group-->
+							
+							<div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Numero Documento</label>
+
+                                <div class="col-md-6">
+                                    <input type="text" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Name') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                </div>
+                            </div><!--form-group-->
+							
+							<div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">@lang('Name')</label>
 
                                 <div class="col-md-6">

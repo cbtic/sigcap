@@ -88,7 +88,11 @@ class UserService extends BaseService
                     'provider' => $provider,
                     'provider_id' => $info->id,
                     'email_verified_at' => now(),
+					/*'id_persona' => 1*/
                 ]);
+				
+				
+				
             } catch (Exception $e) {
                 DB::rollBack();
 
@@ -120,6 +124,7 @@ class UserService extends BaseService
                 'password' => $data['password'],
                 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
                 'active' => isset($data['active']) && $data['active'] === '1',
+				/*'id_persona' => 1,*/
             ]);
 
             $user->syncRoles($data['roles'] ?? []);
@@ -328,6 +333,7 @@ class UserService extends BaseService
             'provider_id' => $data['provider_id'] ?? null,
             'email_verified_at' => $data['email_verified_at'] ?? null,
             'active' => $data['active'] ?? true,
+			'id_persona' => 1,
         ]);
     }
 }

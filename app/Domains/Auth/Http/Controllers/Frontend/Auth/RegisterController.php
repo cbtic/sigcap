@@ -94,6 +94,9 @@ class RegisterController
      */
     protected function create(array $data)
     {
+	
+		print_r($data);
+		exit();
         abort_unless(config('boilerplate.access.user.registration'), 404);
 
         return $this->userService->registerUser($data);
