@@ -333,7 +333,7 @@ class UserService extends BaseService
             'provider_id' => $data['provider_id'] ?? null,
             'email_verified_at' => $data['email_verified_at'] ?? null,
             'active' => $data['active'] ?? true,
-			/*'id_persona' => 1,*/
+			'id_persona' => 1,
         ]);
     }
 }
