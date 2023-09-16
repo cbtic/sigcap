@@ -101,12 +101,26 @@ class RegisterController
     {
 		$persona = Persona::where("id_tipo_documento",$data["id_tipo_documento"])->where("numero_documento",$data["numero_documento"])->first();
 		//print_r($persona);
-		$id_persona = $persona->id;
-		$data["id_persona"] = $id_persona;
+		
+		if(isset($persona->id)){
+		
+			$id_persona = $persona->id;
+			$data["id_persona"] = $id_persona;
+			
+			abort_unless(config('boilerplate.access.user.registration'), 404);
+
+        	return $this->userService->registerUser($data);
+		
+		}else{
+			
+			//return redirect('register');
+			//new GeneralException(__('No se puede crear el usuario.'));
+			return route(homeRoute());
+			
+		}
+		
 		//print_r($data);
 		//exit();
-        abort_unless(config('boilerplate.access.user.registration'), 404);
-
-        return $this->userService->registerUser($data);
+        
     }
 }
