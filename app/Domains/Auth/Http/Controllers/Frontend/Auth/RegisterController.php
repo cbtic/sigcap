@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 use LangleyFoxall\LaravelNISTPasswordRules\PasswordRules;
 use App\Models\Persona;
 use App\Models\TablaMaestra;
-
+use App\Exceptions\GeneralException;
 /**
  * Class RegisterController.
  */
@@ -114,8 +114,8 @@ class RegisterController
 		}else{
 			
 			//return redirect('register');
-			//new GeneralException(__('No se puede crear el usuario.'));
-			return route(homeRoute());
+			throw new GeneralException(__('No se puede crear el usuario, no pertenece al colegio de arquitectos, ni al personal administrativos del colegio.'));
+			//return route(homeRoute());
 			
 		}
 		
