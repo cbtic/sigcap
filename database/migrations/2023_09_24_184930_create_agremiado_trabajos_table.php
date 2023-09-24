@@ -28,8 +28,8 @@ class CreateAgremiadoTrabajosTable extends Migration
             $table->string('referencia',200)->nullable();
             $table->string('codigo_postal',20)->nullable();
             $table->string('telefono',20)->nullable();           
-            $table->string('Celular',20)->nullable();            
-            $table->string('Email',100)->nullable();  
+            $table->string('celular',20)->nullable();            
+            $table->string('email',100)->nullable();  
 
             $table->string('estado',1)->nullable()->default('1');
             
@@ -39,7 +39,6 @@ class CreateAgremiadoTrabajosTable extends Migration
             $table->bigInteger('id_usuario_inserta')->unsigned()->index();
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index();
             $table->timestamps();
-
 
         });
     }
