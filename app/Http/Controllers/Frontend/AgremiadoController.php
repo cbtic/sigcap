@@ -40,6 +40,8 @@ class AgremiadoController extends Controller
 		$dataWebApi = json_decode($resultWebApi);
 		$token = $dataWebApi->token;
 		
+		//exit($token);
+		
 		/*************WEB SERVICE - LEER AGREMIADO*****************/
 		
 		$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=11&fecha=');		
@@ -54,7 +56,7 @@ class AgremiadoController extends Controller
 			$error_message = curl_strerror($errno);
 			echo "cURL error ({$errno}):\n {$error_message}";
 		}
-		
+		//print_r($resultWebApi2);exit();
 		$dataWebApi2 = json_decode($resultWebApi2);
 		$ok = $dataWebApi2->ok;
 		$data = $dataWebApi2->data;
@@ -64,7 +66,7 @@ class AgremiadoController extends Controller
 		//exit();
 		
 		/*************INSTAR AGREMIADO*****************/
-		
+		/*
 		foreach($data as $solicitud){
 			
 			$persona = new Persona;
@@ -157,6 +159,7 @@ class AgremiadoController extends Controller
 			
 			
 		}
+		*/
 		
 		$persona = new Persona;
 		$persona->id_tipo_documento = 1;//(ok)
@@ -214,7 +217,7 @@ class AgremiadoController extends Controller
 		$agremiadoSeguro->id_usuario_inserta = 1;
 		$agremiadoSeguro->save();
 		
-		
+		//exit();
 		/*************WEB SERVICE - ACTUALIZAR*****************/
 		
 		$data_string3 = '{"idSolicitud":1}';
@@ -232,9 +235,9 @@ class AgremiadoController extends Controller
 			$error_message = curl_strerror($errno);
 			echo "cURL error ({$errno}):\n {$error_message}";
 		}
-		
+		//print_r($resultWebApi3);exit();
 		$dataWebApi3 = json_decode($resultWebApi3);
-		print_r($dataWebApi3);
+		//print_r($dataWebApi3);
 		
 		//$ok = $dataWebApi2->ok;
 		//$data = $dataWebApi2->data;
