@@ -16,8 +16,7 @@ class CreateAgremiadoTrabajosTable extends Migration
         Schema::create('agremiado_trabajos', function (Blueprint $table) {
             $table->id();
 			$table->bigInteger('id_agremiado')->unsigned()->index();
-            $table->bigInteger('id_persona')->unsigned()->index();
-            
+                 
             $table->string('modalidad',1)->nullable()->default('1');
             $table->string('numero_documento',15)->nullable();
             $table->string('razon_social',200)->nullable();
@@ -32,14 +31,11 @@ class CreateAgremiadoTrabajosTable extends Migration
             $table->string('email',100)->nullable();  
 
             $table->string('estado',1)->nullable()->default('1');
-            
-			$table->foreign('id_persona')->references('id')->on('personas');
             $table->foreign('id_agremiado')->references('id')->on('agremiados');
 
             $table->bigInteger('id_usuario_inserta')->unsigned()->index();
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index();
             $table->timestamps();
-
         });
     }
 

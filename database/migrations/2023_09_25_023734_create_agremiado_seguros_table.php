@@ -15,15 +15,15 @@ class CreateAgremiadoSegurosTable extends Migration
     {
         Schema::create('agremiado_seguros', function (Blueprint $table) {
             $table->id();
-			$table->bigInteger('id_persona')->unsigned()->index();
+
+            $table->bigInteger('id_agremiado')->unsigned()->index();
             $table->bigInteger('id_parentesco')->unsigned()->index();
             $table->bigInteger('id_region')->unsigned()->index();
-            $table->bigInteger('id_agremiado')->unsigned()->index();
+           
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
             $table->string('estado',1)->nullable()->default('1');
-            
-			$table->foreign('id_persona')->references('id')->on('personas');
+                        
             $table->foreign('id_region')->references('id')->on('regiones');
             $table->foreign('id_agremiado')->references('id')->on('agremiados');
 
