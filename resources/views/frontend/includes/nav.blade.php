@@ -1,16 +1,22 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container">
+<nav class="navbar navbar-expand-md navbar-dark bg-primary mb-0">
+    <!--<div class="container">
         <x-utils.link
             :href="route('frontend.index')"
             :text="appName()"
             class="navbar-brand" />
-
+	-->
+	
+		<a href="{{ route('frontend.index') }}" class="navbar-brand">
+			<img src="<?php echo URL::to('/') ?>/img/cap.jpg" alt="" width="80" height="50" style="padding:0px;margin:0px">
+		</a>
+		<br>
+		
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="@lang('Toggle navigation')">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav col-lg-9 col-md-9 col-sm-12 col-xs-12">
                 @if(config('boilerplate.locale.status') && count(config('boilerplate.locale.languages')) > 1)
                     <li class="nav-item dropdown">
                         <x-utils.link
@@ -45,6 +51,17 @@
                         </li>
                     @endif
                 @else
+				
+					<li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
+						   aria-haspopup="true" aria-expanded="false">Agremiado</a>
+						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+								<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>
+								<a href="" class="dropdown-item">Consulta de Persona</a>
+						   </div>
+					</li>
+				
+				
                     <li class="nav-item dropdown">
                         <x-utils.link
                             href="#"

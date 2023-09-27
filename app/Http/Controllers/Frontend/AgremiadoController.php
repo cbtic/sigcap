@@ -14,7 +14,12 @@ use App\Models\AgremiadoSeguro;
 
 class AgremiadoController extends Controller
 {
-    
+	
+	public function index(){
+        
+		return view('frontend.agremiado.create');
+    }
+	    
 	public function importar_agremiado(){
 		
 		/*************WEB SERVICE - LEER TOKEN*****************/

@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Persona;
 use App\Models\PersonaDetalle;
-use App\Models\DocumentoIdentidade;
+//use App\Models\DocumentoIdentidade;
 use App\Models\TablaUbicacione;
 use App\Models\Empresa;
 use App\Models\Ubigeo;
 use App\Models\UnidadTrabajo;
 use App\Models\Contrato;
-
+use App\Models\TablaMaestra;
 
 //use App\Models\CondicionLaborale;
 
@@ -62,7 +62,10 @@ class PersonaController extends Controller
 		$persona = new Persona;
 		if($id>0) $persona = Persona::find($id);else $persona = new Persona;
 
-		$tipo_documento = DocumentoIdentidade::all();
+		//$tipo_documento = DocumentoIdentidade::all();
+		$tablaMaestra_model = new TablaMaestra;		
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo("TIP_DOC");
+		
 		if($id>0) $persona_detalle = PersonaDetalle::where('id_persona', '=', $id)->where('estado', '=', 'A')->first();else $persona_detalle = new PersonaDetalle;
 		//$persona_detalle = PersonaDetalle::where('id_persona', '=', $id)->where('estado', '=', 'A')->first();
 
