@@ -4,7 +4,11 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\TermsController;
 use Tabuna\Breadcrumbs\Trail;
 
+<<<<<<< HEAD
 use App\Http\Controllers\Frontend\PersonaController;
+=======
+use App\Http\Controllers\Frontend\AgremiadoController;
+>>>>>>> 6273cd6379d112522b18c5988cff04a14c624c1f
 
 /*
  * Frontend Controllers
@@ -23,6 +27,7 @@ Route::get('terms', [TermsController::class, 'index'])
             ->push(__('Terms & Conditions'), route('frontend.pages.terms'));
     });
 
+<<<<<<< HEAD
 Route::get('persona', [personaController::class, 'index'])->name('persona');
 Route::post('persona/listar_persona_ajax', [PersonaController::class, 'listar_persona_ajax'])->name('persona.listar_persona_ajax');
 Route::get('persona/modal_persona/{id}', [PersonaController::class, 'modal_persona'])->name('persona.modal_persona');
@@ -32,3 +37,8 @@ Route::get('persona/obtener_persona/{tipo_documento}/{numero_documento}', [Perso
 Route::get('persona/buscar_persona/{tipo_documento}/{numero_documento}', [PersonaController::class, 'buscar_persona'])->name('persona.buscar_persona');
 Route::get('persona/create', [personaController::class, 'create'])->name('persona.create');
 Route::get('persona/list_persona/{term}', [personaController::class, 'list_persona'])->name('persona.list_persona');
+=======
+
+Route::get('agremiado/importar_agremiado', [AgremiadoController::class, 'importar_agremiado'])->name('agremiado.importar_agremiado');
+
+>>>>>>> 6273cd6379d112522b18c5988cff04a14c624c1f

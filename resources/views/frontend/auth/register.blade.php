@@ -19,7 +19,17 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Tipo Documento</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" name="id_tipo_documento" id="id_tipo_documento" class="form-control" placeholder="{{ __('Name') }}" maxlength="100" required autofocus autocomplete="id_tipo_documento" />
+									
+									<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" type="text">
+                            			<option value="">--Seleccionar--</option>
+										<?php
+										foreach ($tipo_documento as $row) {?>
+										<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+										<?php 
+										}
+										?>										        
+                                    </select>
+									
                                 </div>
                             </div><!--form-group-->
 							
