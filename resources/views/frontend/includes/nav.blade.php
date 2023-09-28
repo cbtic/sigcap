@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-primary mb-0">
+<nav class="navbar navbar-expand-md navbar-dark bg-primary mb-0" style="background:#1C77B9!important">
     <!--<div class="container">
         <x-utils.link
             :href="route('frontend.index')"
@@ -7,7 +7,7 @@
 	-->
 	
 		<a href="{{ route('frontend.index') }}" class="navbar-brand">
-			<img src="<?php echo URL::to('/') ?>/img/cap.jpg" alt="" width="80" height="50" style="padding:0px;margin:0px">
+			<img src="<?php echo URL::to('/') ?>/img/logo-sin-fondo2.png" alt="" width="180" height="70" style="padding:0px;margin:0px">
 		</a>
 		<br>
 		
