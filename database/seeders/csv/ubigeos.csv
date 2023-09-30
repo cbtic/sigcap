@@ -1,4 +1,4 @@
-id;IdUbigeo;IdDepartamento;IdProvincia;IdDistrito;DescUbigeo;FlagEstado
+id;id_ubigeo;id_departamento;id_provincia;id_distrito;desc_ubigeo;estado
 1;000000;00;00;00; SIN DEFINIR;1
 2;000100;00;01;00; SIN DEFINIR;1
 3;000101;00;01;01; SIN DEFINIR;1
