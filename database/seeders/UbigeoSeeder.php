@@ -6,10 +6,10 @@ use Illuminate\Database\Seeder;
 use JeroenZwart\CsvSeeder\CsvSeeder;
 use DB;
 
-class RegionSeeder extends CsvSeeder
+class UbigeoSeeder extends CsvSeeder
 {
     public function __construct(){
-        $this->file = '/database/seeders/csv/regiones.csv';
+        $this->file = '/database/seeders/csv/ubigeos.csv';
 		$this->encode = false;
     }
     /**
