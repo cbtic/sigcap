@@ -11,13 +11,27 @@ use App\Models\AgremiadoExperienciaLaborale;
 use App\Models\AgremiadoIdioma;
 use App\Models\AgremiadoEstudio;
 use App\Models\AgremiadoSeguro;
+use App\Models\AgremiadoTrabajo;
+use App\Models\TablaMaestra;
 
 class AgremiadoController extends Controller
 {
 	
 	public function index(){
         
-		return view('frontend.agremiado.create');
+		$tablaMaestra_model = new TablaMaestra;
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
+		$estado_civil = $tablaMaestra_model->getMaestroByTipo(3);
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
+		$seguro_social = $tablaMaestra_model->getMaestroByTipo(13);
+		$actividad_gremial = $tablaMaestra_model->getMaestroByTipo(46);
+		$ubicacion_cliente = $tablaMaestra_model->getMaestroByTipo(63);
+		$autoriza_tramite = $tablaMaestra_model->getMaestroByTipo(45);
+		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		
+		return view('frontend.agremiado.create',compact('tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente'));
     }
 	    
 	public function importar_agremiado(){ 
@@ -113,7 +127,7 @@ class AgremiadoController extends Controller
 				
 				$agremiadoTrabajo = new AgremiadoTrabajo;
 				$agremiadoTrabajo->id_agremiado = $id_agremiado;
-				$agremiadoTrabajo->id_persona = "1";
+				//$agremiadoTrabajo->id_persona = "1";
 				$agremiadoTrabajo->modalidad = $modalidad;
 				$agremiadoTrabajo->numero_documento = $datoLaboral->numero_ruc;
 				$agremiadoTrabajo->razon_social = $datoLaboral->nombre_razon_social;
@@ -150,6 +164,11 @@ class AgremiadoController extends Controller
 				$agremiadoEstudio->id_agremiado = $id_agremiado;
 				$agremiadoEstudio->id_universidad = $this->equivalenciaUniversidad($estudio->id_universidad);
 				$agremiadoEstudio->id_especialidad = "1";
+				$agremiadoEstudio->tesis = $estudio->nombre_tesis;
+				$agremiadoEstudio->fecha_egresado = $estudio->fecha_egresado;
+				$agremiadoEstudio->fecha_graduado = $estudio->fecha_graduado;
+				$agremiadoEstudio->libro = $estudio->libro;
+				$agremiadoEstudio->folio = $estudio->folio;
 				$agremiadoEstudio->estado = 1;
 				$agremiadoEstudio->id_usuario_inserta = 1;
 				$agremiadoEstudio->save();
@@ -164,11 +183,11 @@ class AgremiadoController extends Controller
 				
 				$agremiadoSeguro = new AgremiadoSeguro;
 				$agremiadoSeguro->id_agremiado = $id_agremiado;
-				$agremiadoSeguro->id_persona = $id_persona;
+				//$agremiadoSeguro->id_persona = $id_persona;
 				$agremiadoSeguro->id_parentesco = $this->equivalenciaTipoParentesco($parentesco->id_parentezco);
-				$agremiadoSeguro->id_region = "1";
-				$agremiadoSeguro->fecha_inicio = "24-09-2023";
-				$agremiadoSeguro->fecha_fin = "24-09-2025";
+				$agremiadoSeguro->id_region = "5";
+				$agremiadoSeguro->fecha_inicio = null;
+				$agremiadoSeguro->fecha_fin = null;
 				$agremiadoSeguro->estado = 1;
 				$agremiadoSeguro->id_usuario_inserta = 1;
 				$agremiadoSeguro->save();
