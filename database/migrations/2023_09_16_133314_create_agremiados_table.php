@@ -18,9 +18,10 @@ class CreateAgremiadosTable extends Migration
 			$table->bigInteger('id_persona')->unsigned()->index();
 			$table->string('numero_cap',15)->nullable();
 			$table->bigInteger('id_situacion')->unsigned()->index();
-            $table->timestamps();
+            
 			$table->bigInteger('id_usuario_inserta')->unsigned()->index();
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index();
+            $table->timestamps();
 			$table->foreign('id_persona')->references('id')->on('personas');
         });
     }
