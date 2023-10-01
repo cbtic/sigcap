@@ -382,7 +382,7 @@ label.form-control-sm{
 															N&deg; CAP
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
@@ -414,10 +414,10 @@ label.form-control-sm{
 															<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
 																<option value="">--Selecionar--</option>
 																<?php
-																//foreach ($estado_expediente as $row) {?>
-																<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+																foreach ($region as $row) {?>
+																<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
 																<?php 
-																//}
+																}
 																?>
 															</select>
 															</div>
@@ -432,7 +432,7 @@ label.form-control-sm{
 																<option value="">--Selecionar--</option>
 																<?php
 																foreach ($tipo_documento as $row) {?>
-																<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+																<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 																<?php 
 																}
 																?>
@@ -442,7 +442,7 @@ label.form-control-sm{
 															N&deg; Doc
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" >
 															</div>
 														</div>
 														
@@ -451,7 +451,7 @@ label.form-control-sm{
 															Ap. Paterno
 															</div>
 															<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="apellido_paterno" id="apellido_paterno" value="<?php echo $persona->apellido_paterno?>" class="form-control form-control-sm" >
 															</div>
 														</div>
 														
@@ -539,13 +539,13 @@ label.form-control-sm{
 															Ap. Materno
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="apellido_materno" id="apellido_materno" value="<?php echo $persona->apellido_materno?>" class="form-control form-control-sm" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Nombre
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="nombres" id="nombres" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" >
 															</div>
 														</div>
 														
@@ -725,13 +725,13 @@ label.form-control-sm{
 												Departamento
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+												<select name="id_departamento" id="id_departamento" class="form-control form-control-sm" onchange="obtenerProvincia()">
 													<option value="">--Selecionar--</option>
 													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+													foreach ($departamento as $row) {?>
+													<option value="<?php echo $row->id_departamento?>"><?php echo $row->desc_ubigeo ?></option>
 													<?php 
-													//}
+													}
 													?>
 												</select>
 												</div>
@@ -739,29 +739,17 @@ label.form-control-sm{
 												Provincia
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-																<option value="">--Selecionar--</option>
-																<?php
-																//foreach ($estado_expediente as $row) {?>
-																<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-																<?php 
-																//}
-																?>
-															</select>
+												<select name="id_provincia" id="id_provincia" class="form-control form-control-sm" onchange="obtenerDistrito()">
+													<option value="">--Selecionar--</option>
+												</select>
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Distrito
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-																<option value="">--Selecionar--</option>
-																<?php
-																//foreach ($estado_expediente as $row) {?>
-																<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-																<?php 
-																//}
-																?>
-															</select>
+												<select name="id_distrito" id="id_distrito" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+												</select>
 												</div>
 											</div>
 											
@@ -816,43 +804,31 @@ label.form-control-sm{
 												Departamento
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-																<option value="">--Selecionar--</option>
-																<?php
-																//foreach ($estado_expediente as $row) {?>
-																<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-																<?php 
-																//}
-																?>
-															</select>
+												<select name="id_departamento_domiciliario" id="id_departamento_domiciliario" class="form-control form-control-sm" onchange="obtenerProvinciaDomiciliario()">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($departamento as $row) {?>
+													<option value="<?php echo $row->id_departamento?>"><?php echo $row->desc_ubigeo ?></option>
+													<?php 
+													}
+													?>
+												</select>
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Provincia
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-																<option value="">--Selecionar--</option>
-																<?php
-																//foreach ($estado_expediente as $row) {?>
-																<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-																<?php 
-																//}
-																?>
-															</select>
+												<select name="id_provincia_domiciliario" id="id_provincia_domiciliario" class="form-control form-control-sm" onchange="obtenerDistritoDomiciliario()">
+													<option value="">--Selecionar--</option>
+												</select>
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Distrito
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-																<option value="">--Selecionar--</option>
-																<?php
-																//foreach ($estado_expediente as $row) {?>
-																<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-																<?php 
-																//}
-																?>
-															</select>
+												<select name="id_distrito_domiciliario" id="id_distrito_domiciliario" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+												</select>
 												</div>
 											</div>
 											<div class="row">
@@ -1799,6 +1775,6 @@ label.form-control-sm{
     @push('after-scripts')
     
 	
-	<script src="{{ asset('js/expediente/create.js') }}"></script>
+	<script src="{{ asset('js/agremiado/create.js') }}"></script>
 	
 	@endpush

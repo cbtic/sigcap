@@ -13,13 +13,20 @@ use App\Models\AgremiadoEstudio;
 use App\Models\AgremiadoSeguro;
 use App\Models\AgremiadoTrabajo;
 use App\Models\TablaMaestra;
+use App\Models\Regione;
+use App\Models\Ubigeo;
 
 class AgremiadoController extends Controller
 {
 	
 	public function index(){
         
+		$agremiado = new Agremiado;
+		$persona = new Persona;
+		
 		$tablaMaestra_model = new TablaMaestra;
+		$regione_model = new Regione;
+		$ubigeo_model = new Ubigeo;
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$estado_civil = $tablaMaestra_model->getMaestroByTipo(3);
@@ -30,10 +37,83 @@ class AgremiadoController extends Controller
 		$ubicacion_cliente = $tablaMaestra_model->getMaestroByTipo(63);
 		$autoriza_tramite = $tablaMaestra_model->getMaestroByTipo(45);
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		$region = $regione_model->getRegionAll();
+		$departamento = $ubigeo_model->getDepartamento();
 		
-		return view('frontend.agremiado.create',compact('tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente'));
+		return view('frontend.agremiado.create',compact('agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento'));
     }
-	    
+	
+	public function editar_agremiado($id){
+        
+		$agremiado = Agremiado::find($id);
+		$persona = Persona::find($agremiado->id_persona);
+		
+		$tablaMaestra_model = new TablaMaestra;
+		$regione_model = new Regione;
+		$ubigeo_model = new Ubigeo;
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
+		$estado_civil = $tablaMaestra_model->getMaestroByTipo(3);
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
+		$seguro_social = $tablaMaestra_model->getMaestroByTipo(13);
+		$actividad_gremial = $tablaMaestra_model->getMaestroByTipo(46);
+		$ubicacion_cliente = $tablaMaestra_model->getMaestroByTipo(63);
+		$autoriza_tramite = $tablaMaestra_model->getMaestroByTipo(45);
+		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		$region = $regione_model->getRegionAll();
+		$departamento = $ubigeo_model->getDepartamento();
+		
+		return view('frontend.agremiado.create',compact('agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento'));
+    }
+	
+	public function consulta_agremiado(){
+		
+		$regione_model = new Regione;
+		$region = $regione_model->getRegionAll();
+		return view('frontend.agremiado.all',compact('region'));
+		
+	}
+	
+	public function listar_agremiado_ajax(Request $request){
+	
+		$agremiado_model = new Agremiado;
+		$p[]="";//$request->nombre;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $agremiado_model->listar_agremiado_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
+	}
+	
+	public function obtener_provincia($idDepartamento){
+		
+		$ubigeo_model = new Ubigeo;
+		$provincia = $ubigeo_model->getProvincia($idDepartamento);
+		echo json_encode($provincia);
+	}
+	
+	public function obtener_distrito($id_departamento,$idProvincia){
+		
+		$ubigeo_model = new Ubigeo;
+		$distrito = $ubigeo_model->getDistrito($id_departamento,$idProvincia);
+		echo json_encode($distrito);
+	}
+	
+	
 	public function importar_agremiado(){ 
 		
 		/*************WEB SERVICE - LEER TOKEN*****************/

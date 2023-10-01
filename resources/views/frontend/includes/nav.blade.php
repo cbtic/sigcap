@@ -57,7 +57,7 @@
 						   aria-haspopup="true" aria-expanded="false">Agremiado</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>
-								<a href="" class="dropdown-item">Consulta de Persona</a>
+								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
 						   </div>
 					</li>
 				

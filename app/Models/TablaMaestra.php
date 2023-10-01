@@ -15,7 +15,7 @@ class TablaMaestra extends Model
         $cad = "select id,codigo,denominacion 
                 from tabla_maestras 
                 where tipo='".$tipo."' 
-				and estado='A' 
+				and estado='1' 
                 order by orden ";
     
 		$data = DB::select($cad);

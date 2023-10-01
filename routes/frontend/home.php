@@ -35,5 +35,13 @@ Route::get('persona/create', [personaController::class, 'create'])->name('person
 Route::get('persona/list_persona/{term}', [personaController::class, 'list_persona'])->name('persona.list_persona');
 
 Route::get('agremiado', [AgremiadoController::class, 'index'])->name('agremiado');
+Route::get('agremiado/editar_agremiado/{id}', [AgremiadoController::class, 'editar_agremiado'])->name('agremiado.editar_agremiado');
 Route::get('agremiado/importar_agremiado', [AgremiadoController::class, 'importar_agremiado'])->name('agremiado.importar_agremiado');
+Route::get('agremiado/obtener_provincia/{idDepartamento}', [AgremiadoController::class, 'obtener_provincia'])->name('agremiado.obtener_provincia');
+Route::get('agremiado/obtener_distrito/{idDepartamento}/{idProvincia}', [AgremiadoController::class, 'obtener_distrito'])->name('agremiado.obtener_distrito');
+Route::get('agremiado/consulta_agremiado', [AgremiadoController::class, 'consulta_agremiado'])->name('agremiado.consulta_agremiado');
+Route::post('agremiado/listar_agremiado_ajax', [AgremiadoController::class, 'listar_agremiado_ajax'])->name('agremiado.listar_agremiado_ajax');
+
+
+
 
