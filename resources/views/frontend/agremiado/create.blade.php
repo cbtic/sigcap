@@ -382,7 +382,7 @@ label.form-control-sm{
 															N&deg; CAP
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
@@ -396,15 +396,7 @@ label.form-control-sm{
 															N&deg; Regional
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-																<option value="">--Selecionar--</option>
-																<?php
-																//foreach ($estado_expediente as $row) {?>
-																<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-																<?php 
-																//}
-																?>
-															</select>
+															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
@@ -419,7 +411,15 @@ label.form-control-sm{
 															Regional
 															</div>
 															<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+																<option value="">--Selecionar--</option>
+																<?php
+																foreach ($region as $row) {?>
+																<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+																<?php 
+																}
+																?>
+															</select>
 															</div>
 														</div>
 														
@@ -431,10 +431,10 @@ label.form-control-sm{
 															<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
 																<option value="">--Selecionar--</option>
 																<?php
-																//foreach ($estado_expediente as $row) {?>
-																<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+																foreach ($tipo_documento as $row) {?>
+																<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 																<?php 
-																//}
+																}
 																?>
 															</select>
 															</div>
@@ -442,7 +442,7 @@ label.form-control-sm{
 															N&deg; Doc
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" >
 															</div>
 														</div>
 														
@@ -451,7 +451,7 @@ label.form-control-sm{
 															Ap. Paterno
 															</div>
 															<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="apellido_paterno" id="apellido_paterno" value="<?php echo $persona->apellido_paterno?>" class="form-control form-control-sm" >
 															</div>
 														</div>
 														
@@ -496,10 +496,10 @@ label.form-control-sm{
 															<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
 																<option value="">--Selecionar--</option>
 																<?php
-																//foreach ($estado_expediente as $row) {?>
-																<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+																foreach ($tipo_zona as $row) {?>
+																<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
 																<?php 
-																//}
+																}
 																?>
 															</select>
 															</div>
@@ -525,10 +525,10 @@ label.form-control-sm{
 															<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
 																<option value="">--Selecionar--</option>
 																<?php
-																//foreach ($estado_expediente as $row) {?>
-																<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+																foreach ($estado_civil as $row) {?>
+																<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
 																<?php 
-																//}
+																}
 																?>
 															</select>
 															</div>
@@ -539,13 +539,13 @@ label.form-control-sm{
 															Ap. Materno
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="apellido_materno" id="apellido_materno" value="<?php echo $persona->apellido_materno?>" class="form-control form-control-sm" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Nombre
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="nombres" id="nombres" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" >
 															</div>
 														</div>
 														
@@ -655,7 +655,7 @@ label.form-control-sm{
 								href="#two-factor-authentication"
 								role="tab"
 								aria-controls="two-factor-authentication"
-								aria-selected="false">Trabajos</a>
+								aria-selected="false">Traslados</a>
 								
 							<a
 								class="nav-link"
@@ -671,6 +671,834 @@ label.form-control-sm{
 									
 					<div class="tab-content" id="my-profile-tabsContent">
 						<div class="tab-pane fade pt-3 show active" id="my-profile" role="tabpanel" aria-labelledby="my-profile-tab" style="padding-top:0px!important">
+							
+							<div class="row" style="padding-top:0px">
+
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Datos de Nacimiento
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+										
+											<div style="clear:both"></div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Fecha Nac.
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Edad
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Sexo
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($sexo as $row) {?>
+													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<?php 
+													}
+													?>
+												</select>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Departamento
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="id_departamento" id="id_departamento" class="form-control form-control-sm" onchange="obtenerProvincia()">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($departamento as $row) {?>
+													<option value="<?php echo $row->id_departamento?>"><?php echo $row->desc_ubigeo ?></option>
+													<?php 
+													}
+													?>
+												</select>
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Provincia
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="id_provincia" id="id_provincia" class="form-control form-control-sm" onchange="obtenerDistrito()">
+													<option value="">--Selecionar--</option>
+												</select>
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Distrito
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="id_distrito" id="id_distrito" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+												</select>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Lugar
+												</div>
+												<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Nacionalidad
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($nacionalidad as $row) {?>
+													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<?php 
+													}
+													?>
+												</select>
+												</div>
+												
+											</div>
+											
+												
+										</div>
+										
+										
+									</div>		
+									
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Datos Domiciliario
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+										
+											<div style="clear:both"></div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Departamento
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="id_departamento_domiciliario" id="id_departamento_domiciliario" class="form-control form-control-sm" onchange="obtenerProvinciaDomiciliario()">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($departamento as $row) {?>
+													<option value="<?php echo $row->id_departamento?>"><?php echo $row->desc_ubigeo ?></option>
+													<?php 
+													}
+													?>
+												</select>
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Provincia
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="id_provincia_domiciliario" id="id_provincia_domiciliario" class="form-control form-control-sm" onchange="obtenerDistritoDomiciliario()">
+													<option value="">--Selecionar--</option>
+												</select>
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Distrito
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="id_distrito_domiciliario" id="id_distrito_domiciliario" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+												</select>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Direcci&oacute;n
+												</div>
+												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												C&oacute;digo Postal
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													//foreach ($estado_expediente as $row) {?>
+													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+													<?php 
+													//}
+													?>
+												</select>
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Referencia
+												</div>
+												<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												
+											</div>
+												
+										</div>
+										
+										
+									</div>
+									
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Otros
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+										
+											<div style="clear:both"></div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Telefono Fijo
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Telefono Celular
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Correo Electronico
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Informaci&oacute;n Adicional
+												</div>
+												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												
+											</div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Inf. Confidencial
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												AFP
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($seguro_social as $row) {?>
+													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<?php 
+													}
+													?>
+												</select>
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Direcci&oacute;n de correspondencia
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												Clave
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												Act. Gremial
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($actividad_gremial as $row) {?>
+													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<?php 
+													}
+													?>
+												</select>
+												</div>
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												Ubicacion
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($ubicacion_cliente as $row) {?>
+													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<?php 
+													}
+													?>
+												</select>
+												</div>
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												Aut. Tramite
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($autoriza_tramite as $row) {?>
+													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<?php 
+													}
+													?>
+												</select>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												Categoria
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												Situacion
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($situacion_cliente as $row) {?>
+													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<?php 
+													}
+													?>
+												</select>
+												</div>
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												Otro
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												Fecha Fallecido
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+											</div>
+											
+												
+										</div>
+										
+										
+									</div>
+		
+								</div>
+						
+							</div>
+							
+						</div>
+
+						<div class="tab-pane fade pt-3" id="information" role="tabpanel" aria-labelledby="information-tab">
+							
+							<div class="row" style="padding-top:0px">
+
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Datos Empresa
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+										
+											<div style="clear:both"></div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												RUC
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Modalidad
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Centro trabajo
+												</div>
+												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													//foreach ($estado_expediente as $row) {?>
+													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+													<?php 
+													//}
+													?>
+												</select>
+												</div>
+												
+											</div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Rubro Negocio
+												</div>
+												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													//foreach ($estado_expediente as $row) {?>
+													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+													<?php 
+													//}
+													?>
+												</select>
+												</div>
+												
+											</div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Cargo
+												</div>
+												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													//foreach ($estado_expediente as $row) {?>
+													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+													<?php 
+													//}
+													?>
+												</select>
+												</div>
+												
+											</div>
+											
+												
+										</div>
+										
+										
+									</div>		
+									
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Datos Domicilio trabajo
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+										
+											<div style="clear:both"></div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Departamento
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Provincia
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Distrito
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Direcci&oacute;n
+												</div>
+												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													//foreach ($estado_expediente as $row) {?>
+													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+													<?php 
+													//}
+													?>
+												</select>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Referencia
+												</div>
+												<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													//foreach ($estado_expediente as $row) {?>
+													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+													<?php 
+													//}
+													?>
+												</select>
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												C&oacute;digo Postal
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												
+											</div>
+												
+										</div>
+										
+										
+									</div>
+									<!--
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Otros Datos trabajo
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+										
+											<div style="clear:both"></div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Telefono Fijo
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Telefono Celular
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Correo Electronico
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+											</div>
+											
+											
+												
+										</div>
+										
+										
+									</div>
+									-->
+									
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Otros Estudios
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+										
+											<div style="clear:both"></div>
+											
+											<div class="row">
+											
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																								
+													<div class="card-body">
+									
+														<div class="table-responsive">
+														<!--table-hover-grid-->
+														<table id="tblSolicitud" class="table table-hover table-sm">
+														<thead>
+															<tr style="font-size:13px">
+																<th>Estudio</th>
+																<th>Grado Conocimiento</th>
+															</tr>
+														</thead>
+														<tbody style="font-size:13px">
+															<tr>
+																<th>OTROS ESTUDIOS</th>
+																<th>INTERMEDIO</th>
+															</tr>														
+															<tr>
+																<th>OTROS ESTUDIOS</th>
+																<th>INTERMEDIO</th>
+															</tr>														
+															<tr>
+																<th>OTROS ESTUDIOS</th>
+																<th>INTERMEDIO</th>
+															</tr>
+														</tbody>							
+														</table>
+														
+														</div>
+													
+												</div>
+														
+												</div>
+												
+											</div>
+											
+											
+												
+										</div>
+										
+										
+									</div>
+		
+								</div>
+						
+							</div>
+							
+							
+						</div>
+						
+						<div class="tab-pane fade pt-3" id="seguimiento" role="tabpanel" aria-labelledby="information-tab">
+						 
+						 	<div class="row" style="padding-top:0px">
+
+								<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+		
+									<div class="card-body">
+									
+										<div class="table-responsive">
+											<input type="hidden" name="idSeguimiento" id="idSeguimiento" value="0">
+											<table id="tblSeguimiento" class="table table-hover table-sm">
+											<thead>
+											<tr style="font-size:13px">
+												<th>Fecha seguimiento</th>
+												<th>Observaci&oacute;n</th>
+												<th>Fecha proximo seguimiento</th>
+												<th>Estado</th>
+											</tr>
+											</thead>
+											<tbody style="font-size:13px">
+											</tbody>
+											</table>
+											
+										</div>
+								
+									</div>
+								</div>
+								
+								<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+									
+									<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoSeg" style="width:120px;margin-right:15px"/>
+									
+									<br />
+												
+									<input class="btn btn-sm btn-danger float-right" value="ELIMINAR" name="guardar" type="button" id="btnEliminarSeg" style="width:120px;margin-top:20px;margin-right:15px" />
+												
+								</div>
+								
+							
+							</div>
+							
+						 
+						</div>
+
+						<div class="tab-pane fade pt-3" id="two-factor-authentication" role="tabpanel" aria-labelledby="two-factor-authentication-tab">
+							
+							<div class="row" style="padding-top:0px">
+
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Traslados
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+										
+											<div style="clear:both"></div>
+											
+											<div class="row">
+											
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																								
+													<div class="card-body">
+									
+														<div class="table-responsive">
+														<!--table-hover-grid-->
+														<table id="tblSolicitud" class="table table-hover table-sm">
+														<thead>
+															<tr style="font-size:13px">
+																<th>Regional</th>
+																<th>Numero Regional</th>
+																<th>Fecha Inicio</th>
+																<th>Fecha Fin</th>
+																<th>Observaci&oacute;n</th>
+															</tr>
+														</thead>
+														<tbody style="font-size:13px">
+															<tr>
+																<th>REGIONAL LIMA</th>
+																<th>8239</th>
+																<th>28/02/1969</th>
+																<th>28/02/1969</th>
+																<th>Obs</th>
+															</tr>
+															<tr>
+																<th>REGIONAL LIMA</th>
+																<th>8239</th>
+																<th>28/02/1969</th>
+																<th>28/02/1969</th>
+																<th>Obs</th>
+															</tr>
+														</tbody>							
+														</table>
+														
+														</div>
+													
+												</div>
+														
+												</div>
+												
+											</div>
+											
+											
+												
+										</div>
+										
+										
+									</div>
+		
+								</div>
+						
+							</div>
+							
+						</div>
+						
+						<div class="tab-pane fade pt-3" id="two-factor-authentication_" role="tabpanel" aria-labelledby="two-factor-authentication-tab_" style="padding-top:0px!important">
 							
 							<div class="row" style="padding-top:0px">
 
@@ -746,21 +1574,21 @@ label.form-control-sm{
 												Lugar
 												</div>
 												<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-													<?php 
-													//}
-													?>
-												</select>
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Nacionalidad
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($nacionalidad as $row) {?>
+													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<?php 
+													}
+													?>
+												</select>
 												</div>
 												
 											</div>
@@ -789,38 +1617,10 @@ label.form-control-sm{
 											
 											<div class="row">
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Fecha Nac.
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Edad
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Sexo
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Departamento
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-													<?php 
-													//}
-													?>
-												</select>
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Provincia
@@ -835,26 +1635,26 @@ label.form-control-sm{
 												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
 												</div>
 											</div>
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Direcci&oacute;n
+												</div>
+												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+											</div>
 											
 											<div class="row">
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Lugar
+												C&oacute;digo Postal
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Referencia
 												</div>
 												<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-													<?php 
-													//}
-													?>
-												</select>
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Nacionalidad
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
 												</div>
 												
@@ -870,7 +1670,7 @@ label.form-control-sm{
 											<div id="" class="row">
 												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 													<strong>
-														Otros
+														Otros Datos trabajo
 													</strong>
 													
 												</div>
@@ -883,19 +1683,19 @@ label.form-control-sm{
 											
 											<div class="row">
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Fecha Nac.
+												Telefono Fijo
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Edad
+												Telefono Celular
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Sexo
+												Correo Electronico
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
@@ -903,56 +1703,26 @@ label.form-control-sm{
 											</div>
 											<div class="row">
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Departamento
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-													<?php 
-													//}
-													?>
-												</select>
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Provincia
+												
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Distrito
+												
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
 												</div>
 											</div>
 											
-											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Lugar
-												</div>
-												<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-													<?php 
-													//}
-													?>
-												</select>
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Nacionalidad
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-												
-											</div>
+											
 												
 										</div>
 										
@@ -963,139 +1733,6 @@ label.form-control-sm{
 						
 							</div>
 							
-						</div>
-
-						<div class="tab-pane fade pt-3" id="information" role="tabpanel" aria-labelledby="information-tab">
-							
-							<div class="row" style="padding-top:0px">
-
-								<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-		
-									<div class="card-body">
-									
-										<div class="table-responsive">
-											<input type="hidden" name="idMovimiento" id="idMovimiento" value="0">
-											<table id="tblMovimiento" class="table table-hover table-sm">
-											<thead>
-											<tr style="font-size:13px">
-												<th>Distrito Judicial</th>
-												<th>Organo Jurisdiccional</th>
-												<th>Responsable</th>
-												<th>Estado</th>
-												<th>Detalle</th>
-											</tr>
-											</thead>
-											<tbody style="font-size:13px">
-											</tbody>
-											</table>
-											
-										</div>
-								
-									</div>
-								</div>
-								
-								<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-									
-									<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoMov" style="width:120px;margin-right:15px"/>
-									
-									<br />
-												
-									<input class="btn btn-sm btn-danger float-right" value="ELIMINAR" name="guardar" type="button" id="btnEliminarMov" style="width:120px;margin-top:20px;margin-right:15px" />
-												
-								</div>
-								
-							
-							</div>
-							
-						</div>
-						
-						<div class="tab-pane fade pt-3" id="seguimiento" role="tabpanel" aria-labelledby="information-tab">
-						 
-						 	<div class="row" style="padding-top:0px">
-
-								<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-		
-									<div class="card-body">
-									
-										<div class="table-responsive">
-											<input type="hidden" name="idSeguimiento" id="idSeguimiento" value="0">
-											<table id="tblSeguimiento" class="table table-hover table-sm">
-											<thead>
-											<tr style="font-size:13px">
-												<th>Fecha seguimiento</th>
-												<th>Observaci&oacute;n</th>
-												<th>Fecha proximo seguimiento</th>
-												<th>Estado</th>
-											</tr>
-											</thead>
-											<tbody style="font-size:13px">
-											</tbody>
-											</table>
-											
-										</div>
-								
-									</div>
-								</div>
-								
-								<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-									
-									<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoSeg" style="width:120px;margin-right:15px"/>
-									
-									<br />
-												
-									<input class="btn btn-sm btn-danger float-right" value="ELIMINAR" name="guardar" type="button" id="btnEliminarSeg" style="width:120px;margin-top:20px;margin-right:15px" />
-												
-								</div>
-								
-							
-							</div>
-							
-						 
-						</div>
-
-						<div class="tab-pane fade pt-3" id="two-factor-authentication" role="tabpanel" aria-labelledby="two-factor-authentication-tab">
-							3333333333333333333333333333333
-						</div>
-						
-						<div class="tab-pane fade pt-3" id="two-factor-authentication_" role="tabpanel" aria-labelledby="two-factor-authentication-tab_">
-							
-							<div class="row" style="padding-top:0px">
-
-								<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-		
-									<div class="card-body">
-									
-										<div class="table-responsive">
-											<input type="hidden" name="idLitigante" id="idLitigante" value="0">
-											<table id="tblLitigante" class="table table-hover table-sm">
-											<thead>
-											<tr style="font-size:13px">
-												<th>Documento</th>
-												<th>Litigante</th>
-												<th>Tipo Litigante</th>
-												<th>Estado</th>
-											</tr>
-											</thead>
-											<tbody style="font-size:13px">
-											</tbody>
-											</table>
-											
-										</div>
-								
-									</div>
-								</div>
-								
-								<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-									
-									<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoLit" style="width:120px;margin-right:15px"/>
-									
-									<br />
-												
-									<input class="btn btn-sm btn-danger float-right" value="ELIMINAR" name="guardar" type="button" id="btnEliminarLit" style="width:120px;margin-top:20px;margin-right:15px" />
-												
-								</div>
-							
-							</div>
 							
 						</div>
 						
@@ -1138,6 +1775,6 @@ label.form-control-sm{
     @push('after-scripts')
     
 	
-	<script src="{{ asset('js/expediente/create.js') }}"></script>
+	<script src="{{ asset('js/agremiado/create.js') }}"></script>
 	
 	@endpush
