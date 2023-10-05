@@ -12,6 +12,7 @@ use App\Models\AgremiadoIdioma;
 use App\Models\AgremiadoEstudio;
 use App\Models\AgremiadoSeguro;
 use App\Models\AgremiadoTrabajo;
+use App\Models\AgremiadoParenteco;
 use App\Models\TablaMaestra;
 use App\Models\Regione;
 use App\Models\Ubigeo;
@@ -37,10 +38,11 @@ class AgremiadoController extends Controller
 		$ubicacion_cliente = $tablaMaestra_model->getMaestroByTipo(63);
 		$autoriza_tramite = $tablaMaestra_model->getMaestroByTipo(45);
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
 		$region = $regione_model->getRegionAll();
 		$departamento = $ubigeo_model->getDepartamento();
 		
-		return view('frontend.agremiado.create',compact('agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento'));
+		return view('frontend.agremiado.create',compact('agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo'));
     }
 	
 	public function editar_agremiado($id){
@@ -61,10 +63,11 @@ class AgremiadoController extends Controller
 		$ubicacion_cliente = $tablaMaestra_model->getMaestroByTipo(63);
 		$autoriza_tramite = $tablaMaestra_model->getMaestroByTipo(45);
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
 		$region = $regione_model->getRegionAll();
 		$departamento = $ubigeo_model->getDepartamento();
 		
-		return view('frontend.agremiado.create',compact('agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento'));
+		return view('frontend.agremiado.create',compact('agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo'));
     }
 	
 	public function consulta_agremiado(){
@@ -168,9 +171,10 @@ class AgremiadoController extends Controller
 		
 		foreach($data as $solicitud){
 			
-			$sexo="";
-			if($solicitud->idsexo==11)$sexo="M";
-			else $sexo="F";
+			$id_departamento_sol = str_pad($solicitud->iddepartamento, 2, "0", STR_PAD_LEFT);
+			$id_provincia_sol = str_pad($solicitud->idprovincia, 2, "0", STR_PAD_LEFT);
+			$id_distrito_sol = str_pad($solicitud->iddistrito, 2, "0", STR_PAD_LEFT);
+			$IdUbigeoDomicilio = $id_departamento_sol.$id_provincia_sol.$id_distrito_sol;
 			
 			$persona = new Persona;
 			$persona->id_tipo_documento = $this->equivalenciaTipoDocumento($solicitud->idtipodocumento);
@@ -179,7 +183,13 @@ class AgremiadoController extends Controller
 			$persona->apellido_materno = $solicitud->apellidomaterno;
 			$persona->nombres = $solicitud->nombre;
 			$persona->fecha_nacimiento = $solicitud->fechanacimiento;
-			$persona->sexo = $sexo;
+			//$persona->sexo = $sexo;
+			$persona->id_sexo = $this->equivalenciaTipoSexo($solicitud->idsexo);
+			$persona->grupo_sanguineo = $this->equivalenciaGrupoSanguineo($solicitud->gruposanguineo);
+			$persona->id_ubigeo_nacimiento = "150101";
+			$persona->lugar_nacimiento = $solicitud->lugarnacimiento;
+			$persona->id_nacionalidad = 16;
+			
 			$persona->id_tipo_persona = 1;
 			$persona->estado = 1;
 			$persona->id_usuario_inserta = 1;
@@ -189,6 +199,37 @@ class AgremiadoController extends Controller
 			$agremiado = new Agremiado;
 			$agremiado->id_persona = $id_persona;
 			$agremiado->numero_cap = $solicitud->numerocap;
+			$agremiado->id_regional = 5;
+			$agremiado->fecha = $solicitud->fechasolicitud;
+			$agremiado->desc_cliente = $solicitud->apellidopaterno." ".$solicitud->apellidomaterno." ".$solicitud->nombre;
+			$agremiado->id_estado_civil = $this->equivalenciaEstadoCivil($solicitud->estadocivil);
+			$agremiado->direccion = $solicitud->domicilio;
+			$agremiado->id_local = 1;
+			$agremiado->referencia = NULL;
+			$agremiado->id_seguro_social = 94;
+			$agremiado->id_ubigeo_domicilio = $IdUbigeoDomicilio;
+			$agremiado->codigo_postal = NULL;
+			$agremiado->referencia = NULL;
+			
+			$agremiado->telefono1 = $solicitud->numerotelefonofijo;
+			$agremiado->celular1 = $solicitud->numerocelular;
+			$agremiado->email1 = $solicitud->correoelectronico;
+			
+			$agremiado->fecha_colegiado = $solicitud->fechacolegiatura;
+			$agremiado->numero_regional = 0;
+			$agremiado->libro = NULL;
+			$agremiado->folio = NULL;
+			$agremiado->libro_nacional = $solicitud->numerolibro;
+			$agremiado->folio_nacional = $solicitud->numerofolio;
+			$agremiado->flag_correspondencia = true;
+			$agremiado->id_categoria = 89;
+			//$agremiado->fecha_actualiza = 
+			$agremiado->flag_confidencial = true;
+			$agremiado->id_autoriza_tramite = 222;
+			$agremiado->id_actividad_gremial = 224;
+			$agremiado->clave = 0;
+			$agremiado->id_ubicacion = 334;
+			
 			$agremiado->id_situacion = "74";
 			$agremiado->id_usuario_inserta = 1;
 			$agremiado->save();
@@ -260,10 +301,9 @@ class AgremiadoController extends Controller
 			}
 			*/
 			foreach($solicitud->parentesco as $parentesco){
-				
+				/*
 				$agremiadoSeguro = new AgremiadoSeguro;
 				$agremiadoSeguro->id_agremiado = $id_agremiado;
-				//$agremiadoSeguro->id_persona = $id_persona;
 				$agremiadoSeguro->id_parentesco = $this->equivalenciaTipoParentesco($parentesco->id_parentezco);
 				$agremiadoSeguro->id_region = "5";
 				$agremiadoSeguro->fecha_inicio = null;
@@ -271,6 +311,17 @@ class AgremiadoController extends Controller
 				$agremiadoSeguro->estado = 1;
 				$agremiadoSeguro->id_usuario_inserta = 1;
 				$agremiadoSeguro->save();
+				*/
+				$agremiadoParenteco = new AgremiadoParenteco;
+				$agremiadoParenteco->id_agremiado = $id_agremiado;
+				$agremiadoParenteco->id_parentesco = $this->equivalenciaTipoParentesco($parentesco->id_parentezco);
+				$agremiadoParenteco->id_sexo = $this->equivalenciaTipoSexo($parentesco->id_genero);
+				$agremiadoParenteco->apellido_nombre = $parentesco->apellido_paterno." ".$parentesco->apellido_materno." ".$parentesco->nombre;
+				$agremiadoParenteco->fecha_nacimiento = $parentesco->fecha_nacimiento;
+				$agremiadoParenteco->numero_documento = NULL;
+				$agremiadoParenteco->estado = 1;
+				$agremiadoParenteco->id_usuario_inserta = 1;
+				$agremiadoParenteco->save();
 				
 			}
 			
@@ -844,6 +895,81 @@ class AgremiadoController extends Controller
 	
 	}
 	
+	public function equivalenciaGrupoSanguineo($gruposanguineo){
 		
+		$gruposanguineo_nuevo = 0;
+		
+		switch ($gruposanguineo) {
+		  case "O Positivo":
+			$gruposanguineo_nuevo=1;//7
+			break;
+		  case "O Negativo":
+			$gruposanguineo_nuevo=2;//8
+			break;
+		  case "A Negativo":
+			$gruposanguineo_nuevo=3;//9
+			break;
+		  case "A Positivo":
+			$gruposanguineo_nuevo=4;//10
+			break;
+		  case "B Negativo":
+			$gruposanguineo_nuevo=5;//75
+			break;
+		  case "B Positivo":
+			$gruposanguineo_nuevo=6;//76
+			break;
+		  case "AB Positivo":
+			$gruposanguineo_nuevo=7;//77
+			break;
+		  case "AB Negativo":
+			$gruposanguineo_nuevo=8;//78
+			break;
+		}
+		
+		return $gruposanguineo_nuevo;
+	
+	}
+	
+	public function equivalenciaEstadoCivil($estadocivil){
+		
+		$estadocivil_nuevo = 0;
+		
+		switch ($estadocivil) {
+		  case "SOLTERO (A)":
+			$estadocivil_nuevo=5;//13
+			break;
+		  case "CASADO (A)":
+			$estadocivil_nuevo=6;//14
+			break;
+		  case "VIUDO (A)":
+			$estadocivil_nuevo=87;//15
+			break;
+		  case "DIVORCIADO (A)":
+			$estadocivil_nuevo=7;//16
+			break;
+		}
+		
+		return $estadocivil_nuevo;
+	
+	}
+	
+	public function equivalenciaTipoSexo($id_genero){
+		
+		$id_genero_nuevo = 0;
+		
+		switch ($id_genero) {
+		  case "11":
+			$id_genero_nuevo=3;//MASCULINO
+			break;
+		  case "12":
+			$id_genero_nuevo=4;//FEMENINO
+			break;
+		}
+		
+		return $id_genero_nuevo;
+	
+	}
+	
+			
 }
 

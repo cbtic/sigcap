@@ -388,7 +388,7 @@ label.form-control-sm{
 															Libro
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" >
 															</div>
 														</div>
 														<div class="row">
@@ -402,7 +402,7 @@ label.form-control-sm{
 															Libro
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="libro" id="libro" value="<?php echo $agremiado->libro?>" class="form-control form-control-sm" >
 															</div>
 														</div>
 														
@@ -411,11 +411,11 @@ label.form-control-sm{
 															Regional
 															</div>
 															<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-															<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+															<select name="id_regional" id="id_regional" class="form-control form-control-sm" onchange="">
 																<option value="">--Selecionar--</option>
 																<?php
 																foreach ($region as $row) {?>
-																<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+																<option value="<?php echo $row->id?>" <?php if($row->id==$agremiado->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 																<?php 
 																}
 																?>
@@ -463,13 +463,13 @@ label.form-control-sm{
 															Folio
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="folio_nacional" id="folio_nacional" value="<?php echo $agremiado->folio_nacional?>" class="form-control form-control-sm" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Fecha Colegiado
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" >
 															</div>
 														</div>
 														
@@ -504,10 +504,18 @@ label.form-control-sm{
 															</select>
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															Grupo Sang
+															Grupo Sang <?php //echo $persona->grupo_sanguineo?>
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+															<select name="grupo_sanguineo" id="grupo_sanguineo" class="form-control form-control-sm" onchange="">
+																<option value="">--Selecionar--</option>
+																<?php
+																foreach ($grupo_sanguineo as $row) {?>
+																<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->grupo_sanguineo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+																<?php 
+																}
+																?>
+															</select>
 															</div>
 														</div>
 														
@@ -526,7 +534,7 @@ label.form-control-sm{
 																<option value="">--Selecionar--</option>
 																<?php
 																foreach ($estado_civil as $row) {?>
-																<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+																<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado->id_estado_civil)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 																<?php 
 																}
 																?>
@@ -697,7 +705,7 @@ label.form-control-sm{
 												Fecha Nac.
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												<input type="text" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo $persona->fecha_nacimiento?>" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Edad
@@ -713,7 +721,7 @@ label.form-control-sm{
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($sexo as $row) {?>
-													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_sexo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 													<?php 
 													}
 													?>
@@ -729,7 +737,7 @@ label.form-control-sm{
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($departamento as $row) {?>
-													<option value="<?php echo $row->id_departamento?>"><?php echo $row->desc_ubigeo ?></option>
+													<option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($persona->id_ubigeo_nacimiento,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
 													<?php 
 													}
 													?>
@@ -758,7 +766,7 @@ label.form-control-sm{
 												Lugar
 												</div>
 												<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												<input type="text" name="lugar_nacimiento" id="lugar_nacimiento" value="<?php echo $persona->lugar_nacimiento?>" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Nacionalidad
@@ -768,7 +776,7 @@ label.form-control-sm{
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($nacionalidad as $row) {?>
-													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_nacionalidad)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 													<?php 
 													}
 													?>
@@ -808,7 +816,7 @@ label.form-control-sm{
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($departamento as $row) {?>
-													<option value="<?php echo $row->id_departamento?>"><?php echo $row->desc_ubigeo ?></option>
+													<option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($agremiado->id_ubigeo_domicilio,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
 													<?php 
 													}
 													?>
@@ -836,7 +844,7 @@ label.form-control-sm{
 												Direcci&oacute;n
 												</div>
 												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												<input type="text" name="direccion" id="direccion" value="<?php echo $agremiado->direccion?>" class="form-control form-control-sm" >
 												</div>
 											</div>
 											
@@ -890,19 +898,19 @@ label.form-control-sm{
 												Telefono Fijo
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												<input type="text" name="telefono1" id="telefono1" value="<?php echo $agremiado->telefono1?>" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Telefono Celular
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												<input type="text" name="celular1" id="celular1" value="<?php echo $agremiado->celular1?>" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Correo Electronico
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												<input type="text" name="email1" id="email1" value="<?php echo $agremiado->email1?>" class="form-control form-control-sm" >
 												</div>
 											</div>
 											<div class="row">
@@ -951,7 +959,7 @@ label.form-control-sm{
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($seguro_social as $row) {?>
-													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado->id_seguro_social)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 													<?php 
 													}
 													?>
@@ -980,7 +988,7 @@ label.form-control-sm{
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($actividad_gremial as $row) {?>
-													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado->id_actividad_gremial)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 													<?php 
 													}
 													?>
@@ -994,7 +1002,7 @@ label.form-control-sm{
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($ubicacion_cliente as $row) {?>
-													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado->id_ubicacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 													<?php 
 													}
 													?>
@@ -1008,7 +1016,7 @@ label.form-control-sm{
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($autoriza_tramite as $row) {?>
-													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado->id_autoriza_tramite)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 													<?php 
 													}
 													?>
@@ -1027,11 +1035,11 @@ label.form-control-sm{
 												Situacion
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+												<select name="id_situacion" id="id_situacion" class="form-control form-control-sm" onchange="">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($situacion_cliente as $row) {?>
-													<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado->id_situacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 													<?php 
 													}
 													?>
