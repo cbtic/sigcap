@@ -16,6 +16,7 @@ use App\Models\AgremiadoParenteco;
 use App\Models\TablaMaestra;
 use App\Models\Regione;
 use App\Models\Ubigeo;
+use Auth;
 
 class AgremiadoController extends Controller
 {
@@ -39,16 +40,18 @@ class AgremiadoController extends Controller
 		$autoriza_tramite = $tablaMaestra_model->getMaestroByTipo(45);
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
+		$categoria_cliente = $tablaMaestra_model->getMaestroByTipo(18);
 		$region = $regione_model->getRegionAll();
 		$departamento = $ubigeo_model->getDepartamento();
 		
-		return view('frontend.agremiado.create',compact('agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo'));
+		return view('frontend.agremiado.create',compact('id','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente'));
     }
 	
 	public function editar_agremiado($id){
         
 		$agremiado = Agremiado::find($id);
-		$persona = Persona::find($agremiado->id_persona);
+		$id_persona = $agremiado->id_persona;
+		$persona = Persona::find($id_persona);
 		
 		$tablaMaestra_model = new TablaMaestra;
 		$regione_model = new Regione;
@@ -64,11 +67,85 @@ class AgremiadoController extends Controller
 		$autoriza_tramite = $tablaMaestra_model->getMaestroByTipo(45);
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
+		$categoria_cliente = $tablaMaestra_model->getMaestroByTipo(18);
 		$region = $regione_model->getRegionAll();
 		$departamento = $ubigeo_model->getDepartamento();
 		
-		return view('frontend.agremiado.create',compact('agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo'));
+		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente'));
     }
+	
+	public function send(Request $request){
+
+        $sw = true;
+		$msg = "";
+		$id_user = Auth::user()->id;
+		
+		$id_agremiado = $request->id_agremiado;
+		$id_persona = $request->id_persona;
+		
+		if($id_agremiado> 0){
+			$agremiado = Agremiado::find($id_agremiado);
+		}else{
+			$agremiado = new Agremiado;
+		}
+		//exit($request->id_distrito_domiciliario);
+		$agremiado->numero_cap = $request->numero_cap;
+		$agremiado->libro_nacional = $request->libro_nacional;
+		$agremiado->numero_regional = $request->numero_regional;
+		$agremiado->libro = $request->libro;
+		$agremiado->id_regional = $request->id_regional;
+		$agremiado->id_ubigeo_domicilio = $request->id_distrito_domiciliario;
+		$agremiado->folio_nacional = $request->folio_nacional;
+		$agremiado->fecha_colegiado = $request->fecha_colegiado;
+		$agremiado->folio = $request->folio;
+		$agremiado->fecha_actualiza = $request->fecha_actualiza;
+		$agremiado->id_estado_civil = $request->id_estado_civil;
+		$agremiado->direccion = $request->direccion;
+		$agremiado->codigo_postal = $request->codigo_postal;
+		$agremiado->referencia = $request->referencia;
+		$agremiado->telefono1 = $request->telefono1;
+		$agremiado->telefono2 = $request->telefono2;
+		$agremiado->celular1 = $request->celular1;
+		$agremiado->celular2 = $request->celular2;
+		$agremiado->email1 = $request->email1;
+		$agremiado->email2 = $request->email2;
+		$agremiado->informacion_adicional = $request->informacion_adicional;
+		$agremiado->flag_confidencial = $request->flag_confidencial;
+		$agremiado->id_seguro_social = $request->id_seguro_social;
+		$agremiado->flag_correspondencia = $request->flag_correspondencia;
+		$agremiado->clave = $request->clave;
+		$agremiado->id_actividad_gremial = $request->id_actividad_gremial;
+		$agremiado->id_ubicacion = $request->id_ubicacion;
+		$agremiado->id_autoriza_tramite = $request->id_autoriza_tramite;
+		$agremiado->id_categoria = $request->id_categoria;
+		$agremiado->id_situacion = $request->id_situacion;
+		$agremiado->desc_situacion_otro = $request->desc_situacion_otro;
+		$agremiado->fecha_fallecido = $request->fecha_fallecido;
+		//$agremiado->estado = 1;
+		$agremiado->save();
+		
+		if($id_persona> 0){
+			$persona = Persona::find($id_persona);
+		}else{
+			$persona = new Persona;
+		}
+		
+		$persona->id_tipo_documento = $request->id_tipo_documento;
+		$persona->numero_documento = $request->numero_documento;
+		$persona->apellido_paterno = $request->apellido_paterno;
+		$persona->apellido_materno = $request->apellido_materno;
+		$persona->nombres = $request->nombres;
+		$persona->numero_ruc = $request->numero_ruc;
+		$persona->fecha_nacimiento = $request->fecha_nacimiento;
+		$persona->id_sexo = $request->id_sexo;
+		$persona->lugar_nacimiento = $request->lugar_nacimiento;
+		$persona->grupo_sanguineo = $request->grupo_sanguineo;
+		$persona->id_nacionalidad = $request->id_nacionalidad;
+		$persona->id_ubigeo_nacimiento = $request->id_distrito;
+		$persona->estado = 1;
+		$persona->save();
+		
+	}
 	
 	public function consulta_agremiado(){
 		
