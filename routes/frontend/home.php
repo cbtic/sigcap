@@ -41,6 +41,7 @@ Route::get('agremiado/obtener_provincia/{idDepartamento}', [AgremiadoController:
 Route::get('agremiado/obtener_distrito/{idDepartamento}/{idProvincia}', [AgremiadoController::class, 'obtener_distrito'])->name('agremiado.obtener_distrito');
 Route::get('agremiado/consulta_agremiado', [AgremiadoController::class, 'consulta_agremiado'])->name('agremiado.consulta_agremiado');
 Route::post('agremiado/listar_agremiado_ajax', [AgremiadoController::class, 'listar_agremiado_ajax'])->name('agremiado.listar_agremiado_ajax');
+Route::post('agremiado/send', [AgremiadoController::class, 'send'])->name('agremiado.send');
 
 
 
