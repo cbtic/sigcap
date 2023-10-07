@@ -383,13 +383,13 @@ label.form-control-sm{
 															N&deg; CAP
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" >
+															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly="readonly" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" >
+															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														<div class="row">
@@ -397,7 +397,7 @@ label.form-control-sm{
 															N&deg; Regional
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_regional" id="numero_regional" value="<?php echo $agremiado->numero_regional?>" class="form-control form-control-sm" >
+															<input type="text" name="numero_regional" id="numero_regional" value="<?php echo $agremiado->numero_regional?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
@@ -443,7 +443,7 @@ label.form-control-sm{
 															N&deg; Doc
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" >
+															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														
@@ -464,13 +464,13 @@ label.form-control-sm{
 															Folio
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="folio_nacional" id="folio_nacional" value="<?php echo $agremiado->folio_nacional?>" class="form-control form-control-sm" >
+															<input type="text" name="folio_nacional" id="folio_nacional" value="<?php echo $agremiado->folio_nacional?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Fecha Colegiado
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" >
+															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														
@@ -620,7 +620,7 @@ label.form-control-sm{
 								role="tab"
 								aria-controls="my-profile"
 								aria-selected="true">Datos Generales</a>
-								
+							<!--
 							<a
 								class="nav-link"
 								id="two-factor-authentication-tab_"
@@ -630,7 +630,7 @@ label.form-control-sm{
 								aria-controls="two-factor-authentication_"
 								aria-selected="false"
 								>Trabajo</a>
-
+							-->
 							<a
 								class="nav-link"
 								id="information-tab"
@@ -662,20 +662,20 @@ label.form-control-sm{
 							
 							<a
 								class="nav-link"
-								id="two-factor-authentication-tab"
+								id="traslado-tab"
 								data-toggle="pill"
-								href="#two-factor-authentication"
+								href="#traslado"
 								role="tab"
-								aria-controls="two-factor-authentication"
+								aria-controls="traslado"
 								aria-selected="false">Traslados</a>
 								
 							<a
 								class="nav-link"
-								id="two-factor-authentication-tab"
+								id="situacion-tab"
 								data-toggle="pill"
-								href="#two-factor-authentication"
+								href="#situacion"
 								role="tab"
-								aria-controls="two-factor-authentication"
+								aria-controls="situacion"
 								aria-selected="false">Viaje Extranjero</a>
 							
 						</div>
@@ -1104,7 +1104,7 @@ label.form-control-sm{
 											<div id="" class="row">
 												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 													<strong>
-														Datos Empresa
+														Estudios Realizados
 													</strong>
 													
 												</div>
@@ -1116,71 +1116,43 @@ label.form-control-sm{
 											<div style="clear:both"></div>
 											
 											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												RUC
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Modalidad
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Centro trabajo
-												</div>
-												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-													<?php 
-													//}
-													?>
-												</select>
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												
+													<div class="card-body">
+									
+														<div class="table-responsive">
+														<table id="tblSolicitud" class="table table-hover table-sm">
+														<thead>
+															<tr style="font-size:13px">
+																<th>Universidad</th>
+																<th>Especialidad</th>
+																<th>Titulo de Tesis</th>
+																<th>F. Egresado</th>
+																<th>F. Graduado</th>
+																<th>Libro</th>
+																<th>Folio</th>
+															</tr>
+														</thead>
+														<tbody style="font-size:13px">
+															<?php foreach($agremiado_estudio as $row){?>
+															<tr>
+																<th><?php echo $row->universidad?></th>
+																<th><?php echo $row->especialidad?></th>
+																<th><?php echo $row->tesis?></th>
+																<th><?php echo $row->fecha_egresado?></th>
+																<th><?php echo $row->fecha_graduado?></th>
+																<th><?php echo $row->libro?></th>
+																<th><?php echo $row->folio?></th>
+															</tr>														
+															<?php }?>
+														</tbody>							
+														</table>
+														
+													</div>
+													
 												</div>
 												
-											</div>
-											
-											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Rubro Negocio
 												</div>
-												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-													<?php 
-													//}
-													?>
-												</select>
-												</div>
-												
-											</div>
-											
-											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Cargo
-												</div>
-												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-													<?php 
-													//}
-													?>
-												</select>
-												</div>
-												
 											</div>
 											
 												
@@ -1194,7 +1166,7 @@ label.form-control-sm{
 											<div id="" class="row">
 												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 													<strong>
-														Datos Domicilio trabajo
+														Idiomas
 													</strong>
 													
 												</div>
@@ -1206,62 +1178,32 @@ label.form-control-sm{
 											<div style="clear:both"></div>
 											
 											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Departamento
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Provincia
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Distrito
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Direcci&oacute;n
-												</div>
-												<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-													<?php 
-													//}
-													?>
-												</select>
-												</div>
-											</div>
-											
-											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Referencia
-												</div>
-												<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-												<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													//foreach ($estado_expediente as $row) {?>
-													<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
-													<?php 
-													//}
-													?>
-												</select>
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												C&oacute;digo Postal
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												
+													<div class="card-body">
+									
+														<div class="table-responsive">
+														<table id="tblSolicitud" class="table table-hover table-sm">
+														<thead>
+															<tr style="font-size:13px">
+																<th>Idioma</th>
+																<th>Grado Conocimiento</th>
+															</tr>
+														</thead>
+														<tbody style="font-size:13px">
+															<?php foreach($agremiado_idioma as $row){?>
+															<tr>
+																<th><?php echo $row->idioma?></th>
+																<th><?php echo $row->grado?></th>
+															</tr>						
+															<?php }?>
+														</tbody>							
+														</table>
+														
+														</div>
+													
+													</div>
+												
 												</div>
 												
 											</div>
@@ -1270,13 +1212,26 @@ label.form-control-sm{
 										
 										
 									</div>
-									<!--
+									
+								</div>
+						
+							</div>
+							
+							
+						</div>
+						
+						<div class="tab-pane fade pt-3" id="seguimiento" role="tabpanel" aria-labelledby="information-tab">
+						 
+						 	<div class="row" style="padding-top:0px">
+
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								
 									<div class="card">
 										<div class="card-header">
 											<div id="" class="row">
 												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 													<strong>
-														Otros Datos trabajo
+														Datos Familiares
 													</strong>
 													
 												</div>
@@ -1288,60 +1243,65 @@ label.form-control-sm{
 											<div style="clear:both"></div>
 											
 											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Telefono Fijo
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												
+													<div class="card-body">
+									
+														<div class="table-responsive">
+														<table id="tblSolicitud" class="table table-hover table-sm">
+														<thead>
+															<tr style="font-size:13px">
+																<th>Parentesco</th>
+																<th>Sexo</th>
+																<th>Apellidos y Nombres</th>
+																<th>F.Nacimiento</th>
+															</tr>
+														</thead>
+														<tbody style="font-size:13px">
+															<?php foreach($agremiado_parentesco as $row){?>
+															<tr>
+																<th><?php echo $row->parentesco?></th>
+																<th><?php echo $row->sexo?></th>
+																<th><?php echo $row->apellido_nombre?></th>
+																<th><?php echo $row->fecha_nacimiento?></th>
+															</tr>						
+															<?php }?>
+														</tbody>							
+														</table>
+														
+														</div>
+													
+													</div>
+												
 												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Telefono Celular
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												Correo Electronico
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
+												
 											</div>
-											<div class="row">
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												
-												</div>
-												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="anio" id="anio" value="" class="form-control form-control-sm" >
-												</div>
-											</div>
-											
-											
 												
 										</div>
 										
 										
 									</div>
-									-->
+		
+									
+								</div>
+								
+							</div>
+							
+						 
+						</div>
+
+						<div class="tab-pane fade pt-3" id="two-factor-authentication" role="tabpanel" aria-labelledby="two-factor-authentication-tab">
+							
+							<div class="row" style="padding-top:0px">
+
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									
 									<div class="card">
 										<div class="card-header">
 											<div id="" class="row">
 												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 													<strong>
-														Otros Estudios
+														Trabajos
 													</strong>
 													
 												</div>
@@ -1359,27 +1319,42 @@ label.form-control-sm{
 													<div class="card-body">
 									
 														<div class="table-responsive">
-														<!--table-hover-grid-->
 														<table id="tblSolicitud" class="table table-hover table-sm">
 														<thead>
 															<tr style="font-size:13px">
-																<th>Estudio</th>
-																<th>Grado Conocimiento</th>
+																<th>Ruc</th>
+																<th>Centro Trabajo</th>
+																<th>Rubro</th>
+																<th>Cargo</th>
+																<th>Departamento</th>
+																<th>Provincia</th>
+																<th>Distrito</th>
+																<th>Direcci&oacute;n</th>
+																<th>Referencia</th>
+																<!--<th>C.Postal</th>-->
+																<th>Tel&eacute;fono</th>
+																<th>Celular</th>
+																<th>Correo</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
+															<?php foreach($agremiado_trabajo as $row){?>
 															<tr>
-																<th>OTROS ESTUDIOS</th>
-																<th>INTERMEDIO</th>
-															</tr>														
-															<tr>
-																<th>OTROS ESTUDIOS</th>
-																<th>INTERMEDIO</th>
-															</tr>														
-															<tr>
-																<th>OTROS ESTUDIOS</th>
-																<th>INTERMEDIO</th>
-															</tr>
+																<th><?php echo $row->numero_documento?></th>
+																<th><?php echo $row->razon_social?></th>
+																<th><?php echo $row->rubro_negocio?></th>
+																<th><?php echo $row->cargo?></th>
+																<th><?php echo $row->departamento?></th>
+																<th><?php echo $row->provincia?></th>
+																<th><?php echo $row->distrito?></th>
+																<th><?php echo $row->direccion?></th>
+																<th><?php echo $row->referencia?></th>
+																<!--<th><?php //echo $row->codigo_postal?></th>-->
+																<th><?php echo ($row->telefono="0")?$row->telefono:"-"?></th>
+																<th><?php echo $row->celular?></th>
+																<th><?php echo $row->email?></th>
+															</tr>						
+															<?php }?>
 														</tbody>							
 														</table>
 														
@@ -1402,54 +1377,9 @@ label.form-control-sm{
 						
 							</div>
 							
-							
 						</div>
 						
-						<div class="tab-pane fade pt-3" id="seguimiento" role="tabpanel" aria-labelledby="information-tab">
-						 
-						 	<div class="row" style="padding-top:0px">
-
-								<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-		
-									<div class="card-body">
-									
-										<div class="table-responsive">
-											<input type="hidden" name="idSeguimiento" id="idSeguimiento" value="0">
-											<table id="tblSeguimiento" class="table table-hover table-sm">
-											<thead>
-											<tr style="font-size:13px">
-												<th>Fecha seguimiento</th>
-												<th>Observaci&oacute;n</th>
-												<th>Fecha proximo seguimiento</th>
-												<th>Estado</th>
-											</tr>
-											</thead>
-											<tbody style="font-size:13px">
-											</tbody>
-											</table>
-											
-										</div>
-								
-									</div>
-								</div>
-								
-								<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-									
-									<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoSeg" style="width:120px;margin-right:15px"/>
-									
-									<br />
-												
-									<input class="btn btn-sm btn-danger float-right" value="ELIMINAR" name="guardar" type="button" id="btnEliminarSeg" style="width:120px;margin-top:20px;margin-right:15px" />
-												
-								</div>
-								
-							
-							</div>
-							
-						 
-						</div>
-
-						<div class="tab-pane fade pt-3" id="two-factor-authentication" role="tabpanel" aria-labelledby="two-factor-authentication-tab">
+						<div class="tab-pane fade pt-3" id="traslado" role="tabpanel" aria-labelledby="traslado-tab">
 							
 							<div class="row" style="padding-top:0px">
 
@@ -1478,32 +1408,97 @@ label.form-control-sm{
 													<div class="card-body">
 									
 														<div class="table-responsive">
-														<!--table-hover-grid-->
 														<table id="tblSolicitud" class="table table-hover table-sm">
 														<thead>
 															<tr style="font-size:13px">
 																<th>Regional</th>
-																<th>Numero Regional</th>
+																<th>N&uacute;mero Regional</th>
 																<th>Fecha Inicio</th>
 																<th>Fecha Fin</th>
 																<th>Observaci&oacute;n</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
+															<?php foreach($agremiado_traslado as $row){?>
 															<tr>
-																<th>REGIONAL LIMA</th>
-																<th>8239</th>
-																<th>28/02/1969</th>
-																<th>28/02/1969</th>
-																<th>Obs</th>
+																<th><?php echo $row->region?></th>
+																<th><?php echo $row->numero_regional?></th>
+																<th><?php echo $row->fecha_inicio?></th>
+																<th><?php echo $row->fecha_fin?></th>
+																<th><?php echo $row->observacion?></th>
+															</tr>						
+															<?php }?>
+														</tbody>							
+														</table>
+														
+														</div>
+													
+												</div>
+														
+												</div>
+												
+											</div>
+											
+											
+												
+										</div>
+										
+										
+									</div>
+		
+								</div>
+						
+							</div>
+							
+						</div>
+						
+						<div class="tab-pane fade pt-3" id="situacion" role="tabpanel" aria-labelledby="situacion-tab">
+							
+							<div class="row" style="padding-top:0px">
+
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Viaje Extranjero
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+										
+											<div style="clear:both"></div>
+											
+											<div class="row">
+											
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																								
+													<div class="card-body">
+									
+														<div class="table-responsive">
+														<table id="tblSolicitud" class="table table-hover table-sm">
+														<thead>
+															<tr style="font-size:13px">
+																<th>N&uacute;mero Resoluci&oacute;n</th>
+																<th>Fecha Inicio</th>
+																<th>Fecha Fin</th>
+																<th>Pa&iacute;s</th>
 															</tr>
+														</thead>
+														<tbody style="font-size:13px">
+															<?php foreach($agremiado_situacion as $row){?>
 															<tr>
-																<th>REGIONAL LIMA</th>
-																<th>8239</th>
-																<th>28/02/1969</th>
-																<th>28/02/1969</th>
-																<th>Obs</th>
+																<th><?php echo $row->ruta_documento?></th>
+																<th><?php echo $row->fecha_inicio?></th>
+																<th><?php echo $row->fecha_fin?></th>
+																<th><?php echo $row->pais?></th>
 															</tr>
+															<?php }?>
 														</tbody>							
 														</table>
 														

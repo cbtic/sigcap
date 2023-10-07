@@ -13,6 +13,8 @@ use App\Models\AgremiadoEstudio;
 use App\Models\AgremiadoSeguro;
 use App\Models\AgremiadoTrabajo;
 use App\Models\AgremiadoParenteco;
+use App\Models\AgremiadoTraslado;
+use App\Models\AgremiadoSituacione;
 use App\Models\TablaMaestra;
 use App\Models\Regione;
 use App\Models\Ubigeo;
@@ -56,6 +58,13 @@ class AgremiadoController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
 		$regione_model = new Regione;
 		$ubigeo_model = new Ubigeo;
+		$agremiadoEstudio_model = new AgremiadoEstudio;
+		$agremiadoIdioma_model = new AgremiadoIdioma;
+		$agremiadoParenteco_model = new AgremiadoParenteco;
+		$agremiadoTrabajo_model = new AgremiadoTrabajo;
+		$agremiadoTraslado_model = new AgremiadoTraslado;
+		$agremiadoSituacione_model = new AgremiadoSituacione;
+		
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$estado_civil = $tablaMaestra_model->getMaestroByTipo(3);
@@ -71,7 +80,15 @@ class AgremiadoController extends Controller
 		$region = $regione_model->getRegionAll();
 		$departamento = $ubigeo_model->getDepartamento();
 		
-		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente'));
+		$agremiado_estudio = $agremiadoEstudio_model->getAgremiadoEstudios($id);
+		$agremiado_idioma = $agremiadoIdioma_model->getAgremiadoIdiomas($id);
+		$agremiado_parentesco = $agremiadoParenteco_model->getAgremiadoParentesco($id);
+		$agremiado_trabajo = $agremiadoTrabajo_model->getAgremiadoTrabajo($id);
+		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
+		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);
+		
+		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion'));
+		
     }
 	
 	public function send(Request $request){
@@ -241,8 +258,8 @@ class AgremiadoController extends Controller
 		$data = $dataWebApi2->data;
 		
 		//echo $ok;
-		//dd($data);
-		//exit();
+		dd($data);
+		exit();
 		
 		/*************INSTAR AGREMIADO*****************/
 		
