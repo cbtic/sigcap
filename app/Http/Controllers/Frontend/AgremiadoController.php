@@ -210,6 +210,158 @@ class AgremiadoController extends Controller
 		echo json_encode($distrito);
 	}
 	
+	public function modal_agremiado_estudio($id){
+		
+		$tablaMaestra_model = new TablaMaestra;
+		
+		if($id>0){
+			$agremiadoEstudio = AgremiadoEstudio::find($id);
+		}else{
+			$agremiadoEstudio = new AgremiadoEstudio;
+		}
+		
+		$universidad = $tablaMaestra_model->getMaestroByTipo(85);
+		$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
+		
+		return view('frontend.agremiado.modal_estudio',compact('id','agremiadoEstudio','universidad','especialidad'));
+	
+	}
+	
+	public function send_agremiado_estudio(Request $request){
+		
+		if($request->id == 0){
+			$agremiadoEstudio = new AgremiadoEstudio;
+		}else{
+			$agremiadoEstudio = AgremiadoEstudio::find($request->id);
+		}
+		
+		$agremiadoEstudio->id_agremiado = $request->id_agremiado;
+		$agremiadoEstudio->id_universidad = $request->id_universidad;
+		$agremiadoEstudio->id_especialidad = $request->id_especialidad;
+		$agremiadoEstudio->tesis = $request->tesis;
+		$agremiadoEstudio->fecha_egresado = $request->fecha_egresado;
+		$agremiadoEstudio->fecha_graduado = $request->fecha_graduado;
+		$agremiadoEstudio->libro = $request->libro;
+		$agremiadoEstudio->folio = $request->folio;
+		$agremiadoEstudio->estado = 1;
+		$agremiadoEstudio->id_usuario_inserta = 1;
+		$agremiadoEstudio->save();
+			
+    }
+	
+	public function modal_agremiado_idioma($id){
+		
+		$tablaMaestra_model = new TablaMaestra;
+		
+		if($id>0){
+			$agremiadoIdioma = AgremiadoIdioma::find($id);
+		}else{
+			$agremiadoIdioma = new AgremiadoIdioma;
+		}
+		
+		$idioma = $tablaMaestra_model->getMaestroByTipo(87);
+		$grado = $tablaMaestra_model->getMaestroByTipo(17);
+		
+		return view('frontend.agremiado.modal_idioma',compact('id','agremiadoIdioma','idioma','grado'));
+	
+	}
+	
+	public function send_agremiado_idioma(Request $request){
+		
+		if($request->id == 0){
+			$agremiadoIdioma = new AgremiadoIdioma;
+		}else{
+			$agremiadoIdioma = AgremiadoIdioma::find($request->id);
+		}
+		
+		$agremiadoIdioma->id_agremiado = $request->id_agremiado;
+		$agremiadoIdioma->id_idioma = $request->id_idioma;
+		$agremiadoIdioma->id_grado_conocimiento = $request->id_grado_conocimiento;
+		$agremiadoIdioma->estado = 1;
+		$agremiadoIdioma->id_usuario_inserta = 1;
+		$agremiadoIdioma->save();
+			
+    }
+	
+	public function modal_agremiado_parentesco($id){
+		
+		$tablaMaestra_model = new TablaMaestra;
+		
+		if($id>0){
+			$agremiadoParenteco = AgremiadoParenteco::find($id);
+		}else{
+			$agremiadoParenteco = new AgremiadoParenteco;
+		}
+		
+		$parentesco = $tablaMaestra_model->getMaestroByTipo(12);
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		
+		return view('frontend.agremiado.modal_parentesco',compact('id','agremiadoParenteco','parentesco','sexo'));
+	
+	}
+	
+	public function send_agremiado_parentesco(Request $request){
+		
+		if($request->id == 0){
+			$agremiadoParenteco = new AgremiadoParenteco;
+		}else{
+			$agremiadoParenteco = AgremiadoParenteco::find($request->id);
+		}
+		
+		$agremiadoParenteco->id_agremiado = $request->id_agremiado;
+		$agremiadoParenteco->id_parentesco = $request->id_parentesco;
+		$agremiadoParenteco->id_sexo = $request->id_sexo;
+		$agremiadoParenteco->apellido_nombre = $request->apellido_nombre;
+		$agremiadoParenteco->fecha_nacimiento = $request->fecha_nacimiento;
+		$agremiadoParenteco->estado = 1;
+		$agremiadoParenteco->id_usuario_inserta = 1;
+		$agremiadoParenteco->save();
+			
+    }
+	
+	public function modal_agremiado_trabajo($id){
+		
+		$tablaMaestra_model = new TablaMaestra;
+		$ubigeo_model = new Ubigeo;
+		
+		if($id>0){
+			$agremiadoTrabajo = AgremiadoTrabajo::find($id);
+		}else{
+			$agremiadoTrabajo = new AgremiadoTrabajo;
+		}
+		
+		$cargo = $tablaMaestra_model->getMaestroByTipo(4);
+		$departamento = $ubigeo_model->getDepartamento();
+		
+		return view('frontend.agremiado.modal_trabajo',compact('id','agremiadoTrabajo','cargo','departamento'));
+	
+	}
+	
+	public function send_agremiado_trabajo(Request $request){
+		
+		if($request->id == 0){
+			$agremiadoTrabajo = new AgremiadoTrabajo;
+		}else{
+			$agremiadoTrabajo = AgremiadoTrabajo::find($request->id);
+		}
+		
+		$agremiadoTrabajo->id_agremiado = $request->id_agremiado;
+		$agremiadoTrabajo->id_cliente_cargo = $request->id_cliente_cargo;
+		$agremiadoTrabajo->rubro_negocio = $request->rubro_negocio;
+		$agremiadoTrabajo->id_ubigeo = $request->id_departamento_trabajo;
+		$agremiadoTrabajo->numero_documento = $request->numero_documento;
+		$agremiadoTrabajo->razon_social = $request->razon_social;
+		$agremiadoTrabajo->direccion = $request->direccion;
+		$agremiadoTrabajo->codigo_postal = $request->codigo_postal;
+		$agremiadoTrabajo->referencia = $request->referencia;
+		$agremiadoTrabajo->telefono = $request->telefono;
+		$agremiadoTrabajo->celular = $request->celular;
+		$agremiadoTrabajo->email = $request->email;
+		$agremiadoTrabajo->estado = 1;
+		$agremiadoTrabajo->id_usuario_inserta = 1;
+		$agremiadoTrabajo->save();
+		
+    }
 	
 	public function importar_agremiado(){ 
 		
