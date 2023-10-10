@@ -1,0 +1,61 @@
+CREATE OR REPLACE FUNCTION public.sp_listar_agremiado_paginado(p_region character varying, p_agremiado character varying, p_numero_cap character varying, p_numero_regional character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+ RETURNS refcursor
+ LANGUAGE plpgsql
+AS $function$
+
+Declare
+--v_id numeric;
+--v_numinf character varying;
+v_scad varchar;
+v_campos varchar;
+v_tabla varchar;
+v_where varchar;
+v_count varchar;
+v_col_count varchar;
+--v_perfil varchar;
+
+Begin
+
+	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
+	
+	v_campos=' a.id,tm.denominacion tipo_documento,p.numero_documento,a.numero_cap,'' region,'' fecha_inicio,
+p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, 
+p.fecha_nacimiento,tms.denominacion situacion ';
+
+	v_tabla='from agremiados a 
+inner join personas p on a.id_persona=p.id
+inner join tabla_maestras tm on p.id_tipo_documento::int=tm.codigo::int and tm.tipo=''16''
+--left join agremiado_seguros as2 on a.id=as2.id_agremiado 
+--left join regiones r on as2.id_region=r.id 
+inner join tabla_maestras tms on a.id_situacion::int=tms.codigo::int and tms.tipo=''14'' ';
+	
+	v_where = ' Where 1=1  ';
+	/*
+	If p_ruc<>'' Then
+	 v_where:=v_where||'And t1.ruc ilike ''%'||p_ruc||'%'' ';
+	End If;
+	
+	If p_nombre<>'' Then
+	 v_where:=v_where||'And t1.nombre ilike ''%'||p_nombre||'%'' ';
+	End If;
+
+	If p_estado<>'' Then
+	 v_where:=v_where||'And t1.estado = '''||p_estado||''' ';
+	End If;
+	*/
+	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
+	v_col_count:=' ,'||v_count||' as TotalRows ';
+
+	If v_count::Integer > p_limit::Integer then
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By a.id Desc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+	else
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By a.id Desc;'; 
+	End If;
+	
+	--Raise Notice '%',v_scad;
+	Open p_ref For Execute(v_scad);
+	Return p_ref;
+End
+
+$function$
+;
