@@ -42,6 +42,18 @@ Route::get('agremiado/obtener_distrito/{idDepartamento}/{idProvincia}', [Agremia
 Route::get('agremiado/consulta_agremiado', [AgremiadoController::class, 'consulta_agremiado'])->name('agremiado.consulta_agremiado');
 Route::post('agremiado/listar_agremiado_ajax', [AgremiadoController::class, 'listar_agremiado_ajax'])->name('agremiado.listar_agremiado_ajax');
 Route::post('agremiado/send', [AgremiadoController::class, 'send'])->name('agremiado.send');
+Route::get('agremiado/modal_agremiado_estudio/{id}', [AgremiadoController::class, 'modal_agremiado_estudio'])->name('agremiado.modal_agremiado_estudio');
+Route::post('agremiado/send_agremiado_estudio', [AgremiadoController::class, 'send_agremiado_estudio'])->name('agremiado.send_agremiado_estudio');
+
+Route::get('agremiado/modal_agremiado_idioma/{id}', [AgremiadoController::class, 'modal_agremiado_idioma'])->name('agremiado.modal_agremiado_idioma');
+Route::post('agremiado/send_agremiado_idioma', [AgremiadoController::class, 'send_agremiado_idioma'])->name('agremiado.send_agremiado_idioma');
+
+Route::get('agremiado/modal_agremiado_parentesco/{id}', [AgremiadoController::class, 'modal_agremiado_parentesco'])->name('agremiado.modal_agremiado_parentesco');
+Route::post('agremiado/send_agremiado_parentesco', [AgremiadoController::class, 'send_agremiado_parentesco'])->name('agremiado.send_agremiado_parentesco');
+
+Route::get('agremiado/modal_agremiado_trabajo/{id}', [AgremiadoController::class, 'modal_agremiado_trabajo'])->name('agremiado.modal_agremiado_trabajo');
+Route::post('agremiado/send_agremiado_trabajo', [AgremiadoController::class, 'send_agremiado_trabajo'])->name('agremiado.send_agremiado_trabajo');
+
 
 
 

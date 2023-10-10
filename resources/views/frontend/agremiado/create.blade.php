@@ -1112,7 +1112,9 @@ label.form-control-sm{
 										</div>
 
 										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-										
+											
+											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoEstudio" style="width:120px;margin-right:15px"/>
+											
 											<div style="clear:both"></div>
 											
 											<div class="row">
@@ -1175,6 +1177,8 @@ label.form-control-sm{
 
 										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
 										
+											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoIdioma" style="width:120px;margin-right:15px"/>
+											
 											<div style="clear:both"></div>
 											
 											<div class="row">
@@ -1239,7 +1243,9 @@ label.form-control-sm{
 										</div>
 
 										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-										
+											
+											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoParentesco" style="width:120px;margin-right:15px"/>
+											
 											<div style="clear:both"></div>
 											
 											<div class="row">
@@ -1309,7 +1315,9 @@ label.form-control-sm{
 										</div>
 
 										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-										
+											
+											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoTrabajo" style="width:120px;margin-right:15px"/>
+											
 											<div style="clear:both"></div>
 											
 											<div class="row">
