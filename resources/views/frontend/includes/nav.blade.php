@@ -60,7 +60,14 @@
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
 						   </div>
 					</li>
-				
+					<li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
+						   aria-haspopup="true" aria-expanded="false">Agremiado</a>
+						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+								<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>
+								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
+						   </div>
+					</li>				
 				
                     <li class="nav-item dropdown">
                         <x-utils.link
