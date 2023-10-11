@@ -337,6 +337,38 @@ class AgremiadoController extends Controller
 	
 	}
 	
+	public function modal_agremiado_traslado($id){
+		
+		$regione_model = new Regione;
+		
+		if($id>0){
+			$agremiadoTraslado = AgremiadoTraslado::find($id);
+		}else{
+			$agremiadoTraslado = new AgremiadoTraslado;
+		}
+		
+		$region = $regione_model->getRegionAll();
+		
+		return view('frontend.agremiado.modal_traslado',compact('id','agremiadoTraslado','region'));
+	
+	}
+	
+	public function modal_agremiado_situacion($id){
+		
+		$tablaMaestra_model = new TablaMaestra;
+		
+		if($id>0){
+			$agremiadoSituacion = AgremiadoSituacione::find($id);
+		}else{
+			$agremiadoSituacion = new AgremiadoSituacione;
+		}
+		
+		$pais = $tablaMaestra_model->getMaestroByTipo(88);
+		
+		return view('frontend.agremiado.modal_situacion',compact('id','agremiadoSituacion','pais'));
+	
+	}
+	
 	public function send_agremiado_trabajo(Request $request){
 		
 		if($request->id == 0){
@@ -360,6 +392,46 @@ class AgremiadoController extends Controller
 		$agremiadoTrabajo->estado = 1;
 		$agremiadoTrabajo->id_usuario_inserta = 1;
 		$agremiadoTrabajo->save();
+		
+    }
+	
+	public function send_agremiado_situacion(Request $request){
+		
+		if($request->id == 0){
+			$agremiadoSituacion = new AgremiadoSituacione;
+		}else{
+			$agremiadoSituacion = AgremiadoSituacione::find($request->id);
+		}
+		
+		$agremiadoSituacion->id_agremiado = $request->id_agremiado;
+		$agremiadoSituacion->id_motivo = 0;
+		$agremiadoSituacion->id_pais_destino = $request->id_pais_destino;
+		$agremiadoSituacion->fecha_inicio = $request->fecha_inicio;
+		$agremiadoSituacion->fecha_fin = $request->fecha_fin;
+		$agremiadoSituacion->ruta_documento = $request->ruta_documento;
+		$agremiadoSituacion->estado = 1;
+		$agremiadoSituacion->id_usuario_inserta = 1;
+		$agremiadoSituacion->save();
+		
+    }
+	
+	public function send_agremiado_traslado(Request $request){
+		
+		if($request->id == 0){
+			$agremiadoTraslado = new AgremiadoTraslado;
+		}else{
+			$agremiadoTraslado = AgremiadoTraslado::find($request->id);
+		}
+		
+		$agremiadoTraslado->id_agremiado = $request->id_agremiado;
+		$agremiadoTraslado->id_region = $request->id_region;
+		$agremiadoTraslado->fecha_inicio = $request->fecha_inicio;
+		$agremiadoTraslado->fecha_fin = $request->fecha_fin;
+		$agremiadoTraslado->numero_regional = $request->numero_regional;
+		$agremiadoTraslado->observacion = $request->observacion;
+		$agremiadoTraslado->estado = 1;
+		$agremiadoTraslado->id_usuario_inserta = 1;
+		$agremiadoTraslado->save();
 		
     }
 	

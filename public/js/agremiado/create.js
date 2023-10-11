@@ -49,6 +49,14 @@ $(document).ready(function () {
 		modalTrabajo(0);
 	});
 	
+	$('#btnNuevoTraslado').on('click', function () {
+		modalTraslado(0);
+	});
+	
+	$('#btnNuevoSituacion').on('click', function () {
+		modalSituacion(0);
+	});
+	
 	$('#btnNuevoSeg').on('click', function () {
 		modalSeguimiento(0);
 	});
@@ -3153,6 +3161,38 @@ function modalTrabajo(id){
 
 	$.ajax({
 			url: "/agremiado/modal_agremiado_trabajo/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modalTraslado(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/agremiado/modal_agremiado_traslado/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modalSituacion(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/agremiado/modal_agremiado_situacion/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
