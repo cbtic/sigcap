@@ -6,6 +6,7 @@ use Tabuna\Breadcrumbs\Trail;
 
 use App\Http\Controllers\Frontend\PersonaController;
 use App\Http\Controllers\Frontend\AgremiadoController;
+use App\Http\Controllers\Frontend\EmpresaController;
 
 /*
  * Frontend Controllers
@@ -55,6 +56,9 @@ Route::get('agremiado/modal_agremiado_trabajo/{id}', [AgremiadoController::class
 Route::post('agremiado/send_agremiado_trabajo', [AgremiadoController::class, 'send_agremiado_trabajo'])->name('agremiado.send_agremiado_trabajo');
 
 
+Route::get('empresa/consulta_empresa', [EmpresaController::class, 'consulta_empresa'])->name('empresa.consulta_empresa');
 
+Route::post('empresa/listar_empresa_ajax', [EmpresaController::class, 'listar_empresa_ajax'])->name('empresa.listar_empresa_ajax');
 
+Route::get('empresa/editar_empresa/{id}', [EmpresaController::class, 'editar_empresa'])->name('empresa.editar_empresa');
 

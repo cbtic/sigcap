@@ -415,8 +415,8 @@ class AgremiadoController extends Controller
 		$data = $dataWebApi2->data;
 		
 		//echo $ok;
-		dd($data);
-		exit();
+		//dd($data);
+		//exit();
 		
 		/*************INSTAR AGREMIADO*****************/
 		
