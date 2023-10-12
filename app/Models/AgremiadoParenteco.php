@@ -12,11 +12,12 @@ class AgremiadoParenteco extends Model
 	
 	function getAgremiadoParentesco($id_agremiado){
 
-        $cad = "select tm.denominacion parentesco,tms.denominacion sexo,ap.apellido_nombre,ap.fecha_nacimiento  
+        $cad = "select ap.id,tm.denominacion parentesco,tms.denominacion sexo,ap.apellido_nombre,ap.fecha_nacimiento  
 from agremiado_parentecos ap 
 inner join tabla_maestras tm on ap.id_parentesco=tm.codigo::int and tm.tipo='12'
 inner join tabla_maestras tms on ap.id_sexo=tms.codigo::int and tms.tipo='2'
-where ap.id_agremiado=".$id_agremiado;
+where ap.id_agremiado=".$id_agremiado."
+and ap.estado='1'";
     
 		$data = DB::select($cad);
         return $data;
