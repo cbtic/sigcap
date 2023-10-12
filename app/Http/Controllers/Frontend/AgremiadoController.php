@@ -435,6 +435,66 @@ class AgremiadoController extends Controller
 		
     }
 	
+	public function eliminar_estudio($id){
+
+		$agremiadoEstudio = AgremiadoEstudio::find($id);
+		$agremiadoEstudio->estado= "0";
+		$agremiadoEstudio->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_idioma($id){
+
+		$agremiadoIdioma = AgremiadoIdioma::find($id);
+		$agremiadoIdioma->estado= "0";
+		$agremiadoIdioma->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_parentesco($id){
+
+		$agremiadoParenteco = AgremiadoParenteco::find($id);
+		$agremiadoParenteco->estado= "0";
+		$agremiadoParenteco->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_trabajo($id){
+
+		$agremiadoTrabajo = AgremiadoTrabajo::find($id);
+		$agremiadoTrabajo->estado= "0";
+		$agremiadoTrabajo->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_traslado($id){
+
+		$agremiadoTraslado = AgremiadoTraslado::find($id);
+		$agremiadoTraslado->estado= "0";
+		$agremiadoTraslado->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_situacion($id){
+
+		$agremiadoSituacione = AgremiadoSituacione::find($id);
+		$agremiadoSituacione->estado= "0";
+		$agremiadoSituacione->save();
+		
+		echo "success";
+
+    }
+	
 	public function importar_agremiado(){ 
 		
 		/*************WEB SERVICE - LEER TOKEN*****************/
