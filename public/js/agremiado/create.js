@@ -3332,7 +3332,7 @@ function eliminarParentesco(id){
         message: "&iquest;Deseas eliminar el Familiar?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_idioma(id);
+                fn_eliminar_parentesco(id);
             }
         }
     });
