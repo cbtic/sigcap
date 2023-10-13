@@ -17,7 +17,7 @@ class CreatePeriodoDelegadoDetallesTable extends Migration
             $table->id();
             $table->bigInteger('id_periodo_delegado')->unsigned()->index();
             $table->string('denominacion',150)->nullable();
-            $table->date('fecha')->nullable();
+            $table->datetime('fecha')->nullable();
             $table->string('activo',1)->nullable()->default('1');
             $table->string('estado',1)->nullable()->default('1');
 

@@ -15,32 +15,31 @@ class CreateCajaIngresosTable extends Migration
     {
         Schema::create('caja_ingresos', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('id_regional')->unsigned()->index();
             $table->bigInteger('id_usuario')->unsigned()->index();
             $table->bigInteger('id_caja')->unsigned()->index();
             $table->double('saldo_inicial',15,8)->nullable();
             $table->double('total_recaudado',15,8)->nullable();
             $table->double('saldo_total',15,8)->nullable();
-            $table->date('voucher_fecha')->nullable();
-            $table->date('voucher_fecha')->nullable();
+            $table->date('fecha_inicio')->nullable();
+            $table->date('fecha_fin')->nullable();
+            $table->bigInteger('id_usuario_supervisor')->unsigned();
+            $table->double('saldo_liquidado',15,8)->nullable();
+            $table->string('observacion',400)->nullable();
+            $table->bigInteger('id_moneda')->unsigned()->index()->nullable();
+			$table->string('moneda',50)->nullable();
+            $table->string('estado',1)->nullable()->default('1');
+ 
+            $table->bigInteger('id_usuario_inserta')->unsigned()->index();
+			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index();
 
+            $table->foreign('id_regional')->references('id')->on('regiones');
 
             $table->timestamps();
         });
     }
 
-    id bigserial NOT NULL,
-	id_usuario int8 NOT NULL,
-	id_caja int8 NOT NULL,
-	saldo_inicial float8 NULL,
-	total_recaudado float8 NULL,
-	saldo_total float8 NULL,
-	fecha_inicio timestamp(0) NOT NULL,
-	estado varchar(1) NULL,
-	fecha_fin timestamp(0) NULL,
-	id_usuario_contabilidad int4 NULL,
-	saldo_liquidado float8 NULL,
-	observacion varchar(255) NULL,
-	id_moneda int8 NULL,
+
     /**
      * Reverse the migrations.
      *
