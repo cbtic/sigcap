@@ -439,8 +439,8 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var nombre = $('#nombre').val();
-            var ruc = $('#ruc').val();
+			var ruc = $('#rucBus').val();
+            var razon_social = $('#razon_socialBus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -449,7 +449,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						nombre:nombre,ruc:ruc,estado:estado,
+						ruc:ruc,razon_social:razon_social,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -538,7 +538,7 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<a href="/empresa/editar_empresa/'+row.id+'" style="font-size:12px" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEmpresa('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						html += '<a href="javascript:void(0)" onclick=eliminarEmpresa('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
@@ -567,7 +567,7 @@ function modalEmpresa(id){
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/empresa/modal_empresa/"+id,
+			url: "/empresa/modal_empresa_nuevoEmpresa/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);

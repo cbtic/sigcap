@@ -152,9 +152,6 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Nombre de Cuota">
 					</div>
-					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="centro_costo" name="centro_costo" placeholder="Centro de Costo">
-					</div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="partida_presupuestal" name="partida_presupuestal" placeholder="Partida Presupuestal">
 					</div>
@@ -165,9 +162,12 @@
 							<option value="0">Eliminado</option>
 						</select>
 					</div>
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<a href="/cuota" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						
+                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+
 					</div>
 				</div>
 				
@@ -180,7 +180,6 @@
                             <th>Regional</th>
                             <th>C&oacute;digo</th>
                             <th>Denominaci&oacute;n</th>
-							<th>Centro de Costos</th>
                             <th>Partida Presupuestal</th>
                             <th>Estado</th>
                         </tr>

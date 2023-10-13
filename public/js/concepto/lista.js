@@ -439,10 +439,7 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var regional = $('#regional').val();
-            var codigo = $('#codigo').val();
 			var denominacion = $('#denominacion').val();
-			var centro_de_costo = $('#centro_de_costo').val();
             var partida_presupuestal = $('#partida_presupuestal').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
@@ -452,7 +449,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,centro_de_costo:centro_de_costo,partida_presupuestal:partida_presupuestal,estado:estado,
+						denominacion:denominacion,partida_presupuestal:partida_presupuestal,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -469,7 +466,7 @@ function datatablenew(){
 				{
                 "mRender": function (data, type, row) {
                 	var regional = "";
-					if(row.regional!= null)regional = row.regional;
+					if(row.regional!= null)ruc = row.regional;
 					return regional;
                 },
                 "bSortable": false,
@@ -497,21 +494,12 @@ function datatablenew(){
                 },
 				{
 					"mRender": function (data, type, row) {
-						var centro_de_costo = "";
-						if(row.centro_de_costo!= null)centro_de_costo = row.centro_de_costo;
-						return centro_de_costo;
-					},
-					"bSortable": false,
-					"aTargets": [3]
-				},
-				{
-					"mRender": function (data, type, row) {
 						var partida_presupuestal = "";
 						if(row.partida_presupuestal!= null)partida_presupuestal = row.partida_presupuestal;
 						return partida_presupuestal;
 					},
 					"bSortable": false,
-					"aTargets": [4]
+					"aTargets": [3]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -525,7 +513,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [5]
+					"aTargets": [4]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -541,7 +529,7 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<a href="concepto/editar_concepto/'+row.id+'" style="font-size:12px" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalConcepto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						html += '<a href="javascript:void(0)" onclick=eliminarConcepto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
@@ -550,7 +538,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [6],
+					"aTargets": [5],
 				},
 
             ]
@@ -564,13 +552,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalEmpresa(id){
+function modalConcepto(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/empresa/modal_empresa/"+id,
+			url: "/concepto/modal_concepto/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);

@@ -331,6 +331,40 @@ function fn_save_empresa(){
     });
 }
 
+function fn_save_concepto(){
+    
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var regional = $('#regional').val();
+	var codigo = $('#codigo').val();
+	var denominacion = $('#denominacion').val();
+	var partida_presupuestal = $('#partida_presupuestal').val();
+	//var estado = $('#estado').val();
+	
+	//alert(id_agremiado);
+	//return false;
+	
+    $.ajax({
+			url: "/concepto/send_concepto_nuevoConcepto",
+            type: "POST",
+            data : {_token:_token,id:id,regional:regional,codigo:codigo,denominacion:denominacion,partida_presupuestal:partida_presupuestal},
+            success: function (result) {
+				
+				$('#openOverlayOpc').modal('hide');
+				window.location.reload();
+				
+				/*
+				$('#openOverlayOpc').modal('hide');
+				if(result==1){
+					bootbox.alert("La persona o empresa ya se encuentra registrado");
+				}else{
+					window.location.reload();
+				}
+				*/
+            }
+    });
+}
+
 function fn_liberar(id){
     
 	//var id_estacionamiento = $('#id_estacionamiento').val();
@@ -486,7 +520,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Empresas
+				Registro Concepto
 			</div>
 			
             <div class="card-body">
@@ -503,37 +537,30 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Ruc</label>
-								<input id="ruc" name="ruc" class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" >
+								<label class="control-label form-control-sm">Regional</label>
+								<input id="regional" name="regional" class="form-control form-control-sm"  value="<?php echo $concepto->regional?>" type="text" >
 							
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Nombre Comercial</label>
-								<input id="nombre_comercial" name="nombre_comercial" class="form-control form-control-sm"  value="<?php echo $empresa->nombre_comercial?>" type="text" >						
+								<label class="control-label form-control-sm">C&oacute;digo</label>
+								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" >						
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Raz&oacute;n Social</label>
-								<input id="razon_social" name="razon_social" class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" >													
+								<label class="control-label form-control-sm">Denominaci&oacute;n</label>
+								<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="<?php echo $concepto->denominacion?>" type="text" >													
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Direcci&oacute;n</label>
-								<input id="direccion" name="direccion" class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text" >																				
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Representante</label>
-								<input id="representante" name="representante" class="form-control form-control-sm"  value="<?php echo $empresa->representante?>" type="text" >																				
+								<label class="control-label form-control-sm">Partida Presupuestal</label>
+								<input id="partida_presupuestal" name="partida_presupuestal" class="form-control form-control-sm"  value="<?php echo $concepto->partida_presupuestal?>" type="text" >																				
 							</div>
 						</div>
 						
@@ -544,7 +571,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_empresa()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_concepto()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

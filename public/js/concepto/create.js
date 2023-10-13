@@ -66,6 +66,11 @@ $(document).ready(function () {
 		//Limpiar();
 		//window.location.reload();
 	});
+
+	$('#btnNuevoConcepto').on('click', function () {
+		modalConcepto(0);
+	});
+	
 	/*
 	$('.delete_ruta').on('click', function () {
 		DeleteImagen(this);
@@ -3114,6 +3119,21 @@ function modalEstudio(id){
 
 }
 
+function modalConcepto(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/concepto/modal_concepto_nuevoConcepto/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+}
+
 function modalIdioma(id){
 	
 	$(".modal-dialog").css("width","85%");
@@ -3161,6 +3181,7 @@ function modalTrabajo(id){
 	});
 
 }
+
 function modalSeguimiento(id){
 	
 	$(".modal-dialog").css("width","85%");
