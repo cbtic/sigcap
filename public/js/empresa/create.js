@@ -49,14 +49,6 @@ $(document).ready(function () {
 		modalTrabajo(0);
 	});
 	
-	$('#btnNuevoTraslado').on('click', function () {
-		modalTraslado(0);
-	});
-	
-	$('#btnNuevoSituacion').on('click', function () {
-		modalSituacion(0);
-	});
-	
 	$('#btnNuevoSeg').on('click', function () {
 		modalSeguimiento(0);
 	});
@@ -74,6 +66,11 @@ $(document).ready(function () {
 		//Limpiar();
 		//window.location.reload();
 	});
+
+	$('#btnNuevoEmpresa').on('click', function () {
+		modalEmpresa(0);
+	});
+	
 	/*
 	$('.delete_ruta').on('click', function () {
 		DeleteImagen(this);
@@ -3122,6 +3119,22 @@ function modalEstudio(id){
 
 }
 
+function modalEmpresa(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/empresa/modal_empresa_nuevoEmpresa/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
 function modalIdioma(id){
 	
 	$(".modal-dialog").css("width","85%");
@@ -3161,38 +3174,6 @@ function modalTrabajo(id){
 
 	$.ajax({
 			url: "/agremiado/modal_agremiado_trabajo/"+id,
-			type: "GET",
-			success: function (result) {
-					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
-			}
-	});
-
-}
-
-function modalTraslado(id){
-	
-	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
-
-	$.ajax({
-			url: "/agremiado/modal_agremiado_traslado/"+id,
-			type: "GET",
-			success: function (result) {
-					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
-			}
-	});
-
-}
-
-function modalSituacion(id){
-	
-	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
-
-	$.ajax({
-			url: "/agremiado/modal_agremiado_situacion/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
@@ -3269,163 +3250,6 @@ function fn_eliminar_mov(id){
             type: "GET",
             success: function (result) {
 				datatable_mov();
-            }
-    });
-}
-
-function eliminarEstudio(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el Estudio?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_estudio(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_estudio(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_estudio/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
-            }
-    });
-}
-
-function eliminarIdioma(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el Idioma?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_idioma(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_idioma(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_idioma/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
-            }
-    });
-}
-
-function eliminarParentesco(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el Familiar?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_parentesco(id);
-                fn_eliminar_idioma(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_parentesco(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_parentesco/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
-            }
-    });
-}
-
-function eliminarTrabajo(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar la experiencia profesional?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_trabajo(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_trabajo(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_trabajo/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
-            }
-    });
-}
-
-function eliminarTraslado(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el traslado?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_traslado(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_traslado(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_traslado/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
-            }
-    });
-}
-
-function eliminarSituacion(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el viaje al extranjero?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_situacion(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_situacion(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_situacion/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
             }
     });
 }

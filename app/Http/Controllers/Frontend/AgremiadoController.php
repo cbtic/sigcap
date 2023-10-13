@@ -337,6 +337,38 @@ class AgremiadoController extends Controller
 	
 	}
 	
+	public function modal_agremiado_traslado($id){
+		
+		$regione_model = new Regione;
+		
+		if($id>0){
+			$agremiadoTraslado = AgremiadoTraslado::find($id);
+		}else{
+			$agremiadoTraslado = new AgremiadoTraslado;
+		}
+		
+		$region = $regione_model->getRegionAll();
+		
+		return view('frontend.agremiado.modal_traslado',compact('id','agremiadoTraslado','region'));
+	
+	}
+	
+	public function modal_agremiado_situacion($id){
+		
+		$tablaMaestra_model = new TablaMaestra;
+		
+		if($id>0){
+			$agremiadoSituacion = AgremiadoSituacione::find($id);
+		}else{
+			$agremiadoSituacion = new AgremiadoSituacione;
+		}
+		
+		$pais = $tablaMaestra_model->getMaestroByTipo(88);
+		
+		return view('frontend.agremiado.modal_situacion',compact('id','agremiadoSituacion','pais'));
+	
+	}
+	
 	public function send_agremiado_trabajo(Request $request){
 		
 		if($request->id == 0){
@@ -361,6 +393,106 @@ class AgremiadoController extends Controller
 		$agremiadoTrabajo->id_usuario_inserta = 1;
 		$agremiadoTrabajo->save();
 		
+    }
+	
+	public function send_agremiado_situacion(Request $request){
+		
+		if($request->id == 0){
+			$agremiadoSituacion = new AgremiadoSituacione;
+		}else{
+			$agremiadoSituacion = AgremiadoSituacione::find($request->id);
+		}
+		
+		$agremiadoSituacion->id_agremiado = $request->id_agremiado;
+		$agremiadoSituacion->id_motivo = 0;
+		$agremiadoSituacion->id_pais_destino = $request->id_pais_destino;
+		$agremiadoSituacion->fecha_inicio = $request->fecha_inicio;
+		$agremiadoSituacion->fecha_fin = $request->fecha_fin;
+		$agremiadoSituacion->ruta_documento = $request->ruta_documento;
+		$agremiadoSituacion->estado = 1;
+		$agremiadoSituacion->id_usuario_inserta = 1;
+		$agremiadoSituacion->save();
+		
+    }
+	
+	public function send_agremiado_traslado(Request $request){
+		
+		if($request->id == 0){
+			$agremiadoTraslado = new AgremiadoTraslado;
+		}else{
+			$agremiadoTraslado = AgremiadoTraslado::find($request->id);
+		}
+		
+		$agremiadoTraslado->id_agremiado = $request->id_agremiado;
+		$agremiadoTraslado->id_region = $request->id_region;
+		$agremiadoTraslado->fecha_inicio = $request->fecha_inicio;
+		$agremiadoTraslado->fecha_fin = $request->fecha_fin;
+		$agremiadoTraslado->numero_regional = $request->numero_regional;
+		$agremiadoTraslado->observacion = $request->observacion;
+		$agremiadoTraslado->estado = 1;
+		$agremiadoTraslado->id_usuario_inserta = 1;
+		$agremiadoTraslado->save();
+		
+    }
+	
+	public function eliminar_estudio($id){
+
+		$agremiadoEstudio = AgremiadoEstudio::find($id);
+		$agremiadoEstudio->estado= "0";
+		$agremiadoEstudio->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_idioma($id){
+
+		$agremiadoIdioma = AgremiadoIdioma::find($id);
+		$agremiadoIdioma->estado= "0";
+		$agremiadoIdioma->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_parentesco($id){
+
+		$agremiadoParenteco = AgremiadoParenteco::find($id);
+		$agremiadoParenteco->estado= "0";
+		$agremiadoParenteco->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_trabajo($id){
+
+		$agremiadoTrabajo = AgremiadoTrabajo::find($id);
+		$agremiadoTrabajo->estado= "0";
+		$agremiadoTrabajo->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_traslado($id){
+
+		$agremiadoTraslado = AgremiadoTraslado::find($id);
+		$agremiadoTraslado->estado= "0";
+		$agremiadoTraslado->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_situacion($id){
+
+		$agremiadoSituacione = AgremiadoSituacione::find($id);
+		$agremiadoSituacione->estado= "0";
+		$agremiadoSituacione->save();
+		
+		echo "success";
+
     }
 	
 	public function importar_agremiado(){ 
@@ -410,8 +542,8 @@ class AgremiadoController extends Controller
 		$data = $dataWebApi2->data;
 		
 		//echo $ok;
-		dd($data);
-		exit();
+		//dd($data);
+		//exit();
 		
 		/*************INSTAR AGREMIADO*****************/
 		
@@ -680,13 +812,13 @@ class AgremiadoController extends Controller
 			$idioma_nuevo=4;//PORTUGUES
 			break;
 		  case "23":
-			$idioma_nuevo=5;//ALEMÁN
+			$idioma_nuevo=5;//ALEMï¿½N
 			break;
 		  case "24":
 			$idioma_nuevo=999;//OTROS
 			break;
 		  case "86":
-			$idioma_nuevo=999;//ESPAÑOL
+			$idioma_nuevo=999;//ESPAï¿½OL
 			break;
 		  default:
 			$idioma_nuevo=999;//NO EXISTE EN SQL
@@ -725,7 +857,7 @@ class AgremiadoController extends Controller
 			$idtipodocumento_nuevo=78;//DNI
 			break;
 		  case "2":
-			$idtipodocumento_nuevo=84;//CARNÉ DE EXTRANJERÍA
+			$idtipodocumento_nuevo=84;//CARNï¿½ DE EXTRANJERï¿½A
 			break;
 		  case "3":
 			$idtipodocumento_nuevo=79;//RUC
@@ -751,7 +883,7 @@ class AgremiadoController extends Controller
 		
 		switch ($id_universidad) {
 		  case "999":
-			$id_universidad_nuevo=1;//ESCUELA TECNICA SUPERIOR DE ARQUITECTURA CORUÑA
+			$id_universidad_nuevo=1;//ESCUELA TECNICA SUPERIOR DE ARQUITECTURA CORUï¿½A
 			break;
 		  case "999":
 			$id_universidad_nuevo=2;//EXTRANJERO
@@ -790,7 +922,7 @@ class AgremiadoController extends Controller
 			$id_universidad_nuevo=13;//UNIV. NAVARRA
 			break;
 		  case "90":
-			$id_universidad_nuevo=14;//UNIV. POLITECNICA CATALUÑA ESPAÑA
+			$id_universidad_nuevo=14;//UNIV. POLITECNICA CATALUï¿½A ESPAï¿½A
 			break;
 		  case "67":
 			$id_universidad_nuevo=15;//UNIV. POLITECNICA DE MADRID
@@ -961,10 +1093,10 @@ class AgremiadoController extends Controller
 			$id_universidad_nuevo=71;//UNIV.SAN PABLO CEU
 			break;
 		  case "78":
-			$id_universidad_nuevo=72;//UNIVERSIDAD POLITÉCNICA DE VALÉNCIA
+			$id_universidad_nuevo=72;//UNIVERSIDAD POLITï¿½CNICA DE VALï¿½NCIA
 			break;
 		  case "999":
-			$id_universidad_nuevo=73;//UNIVERSIDAD TÉCNICA DE LISBOA
+			$id_universidad_nuevo=73;//UNIVERSIDAD Tï¿½CNICA DE LISBOA
 			break;
 		  case "999":
 			$id_universidad_nuevo=74;//THE COOPERUNION FORTHE ADVANCEMENT
@@ -1006,7 +1138,7 @@ class AgremiadoController extends Controller
 			$id_universidad_nuevo=85;//UNIVERSIDAD PERUANA LOS ANDES
 			break;
 		  case "102":
-			$id_universidad_nuevo=86;//UNIVERSIDAD SEÑOR DE SIPAN
+			$id_universidad_nuevo=86;//UNIVERSIDAD SEï¿½OR DE SIPAN
 			break;
 		  case "999":
 			$id_universidad_nuevo=87;//UNIV. NACIONAL DEL CALLAO
@@ -1021,7 +1153,7 @@ class AgremiadoController extends Controller
 			$id_universidad_nuevo=90;//UNIVERSIDAD CATOLICA SEDES SAPIENTIAE
 			break;
 		  case "999":
-			$id_universidad_nuevo=91;//Universidad Tecnológica del Perú
+			$id_universidad_nuevo=91;//Universidad Tecnolï¿½gica del Perï¿½
 			break;
 		  case "109":
 			$id_universidad_nuevo=92;//UNIVERSIDAD NACIONAL DE SAN MARTIN
@@ -1048,7 +1180,7 @@ class AgremiadoController extends Controller
 			$id_universidad_nuevo=99;//UNIV. DE LAS PALMAS DE GRAN CANARIA
 			break;
 		  case "999":
-			$id_universidad_nuevo=100;//ECOLE NATIONALE SUPERIEURE D´ARCHITECTURE PAIS MAL
+			$id_universidad_nuevo=100;//ECOLE NATIONALE SUPERIEURE Dï¿½ARCHITECTURE PAIS MAL
 			break;
 		  case "999":
 			$id_universidad_nuevo=101;//UNIVERSIDAD CATOLICA BOLIVIANA SAN PABLO
@@ -1060,7 +1192,7 @@ class AgremiadoController extends Controller
 			$id_universidad_nuevo=103;//TULANE UNIVERSITY
 			break;
 		  case "999":
-			$id_universidad_nuevo=104;//ECOLES NATIONAL SUPERIEUR D´ARCHITECTUE DE MONTPEL
+			$id_universidad_nuevo=104;//ECOLES NATIONAL SUPERIEUR Dï¿½ARCHITECTUE DE MONTPEL
 			break;
 		  case "78":
 			$id_universidad_nuevo=105;//ESCUELA TECNIA SUPERIOR DE ARQUITECTURA DE VALENCI
