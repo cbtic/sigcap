@@ -41,10 +41,12 @@ class EmpresaController extends Controller
 
     public function editar_empresa($id){
         
-		$empresa = Empresa::find($id);
-		$id_empresa = $empresa->id_empresa;
-		$empresa = Empresa::find($id_empresa);
+		$empresas = Empresas::find($id);
+		$id_empresa = $empresas->id_empresa;
+		$empresas = Empresas::find($id_empresa);
 		
+        $empresas_model = new empresas;
+ 
 		//$tablaMaestra_model = new TablaMaestra;
 		//$regione_model = new Regione;
 		//$ubigeo_model = new Ubigeo;
@@ -79,5 +81,39 @@ class EmpresaController extends Controller
 		
 		return view('frontend.empresa.create',compact('ruc','nombre_comercial','razon_social','direccion','representante','estado'));
 		
+    }
+
+    public function modal_empresa_nuevoEmpresa($id){
+		
+		$empresas = new Empresas;
+		
+		if($id>0){
+			$empresas = Empresas::find($id);
+		}else{
+			$empresas = new Empresas;
+		}
+		
+		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
+		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
+		
+		return view('frontend.empresas.modal_nuevoEmpresa',compact('id'));
+	
+	}
+
+    public function send_empresa_nuevoEmpresa(Request $request){
+		
+		if($request->id == 0){
+			$empresas = new Empresas;
+		}else{
+			$empresas = Empresas::find($request->id);
+		}
+		
+		//$agremiadoIdioma->id_agremiado = $request->id_agremiado;
+		//$agremiadoIdioma->id_idioma = $request->id_idioma;
+		//$agremiadoIdioma->id_grado_conocimiento = $request->id_grado_conocimiento;
+		//$agremiadoIdioma->estado = 1;
+		//$agremiadoIdioma->id_usuario_inserta = 1;
+		//$agremiadoIdioma->save();
+			
     }
 }

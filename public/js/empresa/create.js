@@ -66,6 +66,11 @@ $(document).ready(function () {
 		//Limpiar();
 		//window.location.reload();
 	});
+
+	$('#btnNuevoEmpresa').on('click', function () {
+		modalEmpresa(0);
+	});
+	
 	/*
 	$('.delete_ruta').on('click', function () {
 		DeleteImagen(this);
@@ -3105,6 +3110,22 @@ function modalEstudio(id){
 
 	$.ajax({
 			url: "/agremiado/modal_agremiado_estudio/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modalEmpresa(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/empresa/modal_empresa_nuevoEmpresa/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
