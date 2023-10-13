@@ -10426,21 +10426,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-<<<<<<< HEAD
-                "reference": "66dba7265a37e4081f443ed8211d507cd3cce5ef"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/66dba7265a37e4081f443ed8211d507cd3cce5ef",
-                "reference": "66dba7265a37e4081f443ed8211d507cd3cce5ef",
-=======
                 "reference": "138c8164ca26fdf365c2d3091040d78b0723735f"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/138c8164ca26fdf365c2d3091040d78b0723735f",
                 "reference": "138c8164ca26fdf365c2d3091040d78b0723735f",
->>>>>>> 89f906da3262b1491f5a4063ecda98efbd25b408
                 "shasum": ""
             },
             "conflict": {
@@ -11107,11 +11098,7 @@
                     "type": "tidelift"
                 }
             ],
-<<<<<<< HEAD
-            "time": "2023-10-09T22:04:13+00:00"
-=======
             "time": "2023-10-10T22:04:32+00:00"
->>>>>>> 89f906da3262b1491f5a4063ecda98efbd25b408
         },
         {
             "name": "sebastian/cli-parser",
@@ -12402,9 +12389,5 @@
         "php": "^7.4|^8.0"
     },
     "platform-dev": [],
-<<<<<<< HEAD
     "plugin-api-version": "2.1.0"
-=======
-    "plugin-api-version": "2.3.0"
->>>>>>> 5b8acdde42aaac708014adb5004774194b882874
 }
