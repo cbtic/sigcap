@@ -85,3 +85,5 @@ Route::get('concepto/consulta_concepto', [ConceptoController::class, 'consulta_c
 Route::get('concepto/listar_concepto_ajax', [ConceptoController::class, 'listar_concepto_ajax'])->name('concepto.listar_concepto_ajax');
 
 Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('TipoConcepto.consulta_tipoConcepto');
+
+Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
