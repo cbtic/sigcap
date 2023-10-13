@@ -62,9 +62,9 @@
 					</li>
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">Agremiado</a>
+						   aria-haspopup="true" aria-expanded="false">Registro</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
-								<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>
+								<a href="/agremiado" class="dropdown-item">Conceptos</a>
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
 						   </div>
 					</li>				

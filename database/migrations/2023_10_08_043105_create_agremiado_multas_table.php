@@ -17,7 +17,7 @@ class CreateAgremiadoMultasTable extends Migration
             $table->id();
             $table->bigInteger('id_multa')->unsigned()->index();
             $table->bigInteger('id_comprobante')->unsigned()->index();
-            $table->date('fecha')->nullable();
+            $table->datetime('fecha')->nullable();
             $table->double('monto',14,2)->nullable();
             $table->bigInteger('id_estado_pago')->unsigned()->index();
             $table->string('estado',1)->nullable()->default('1');
