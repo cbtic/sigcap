@@ -28,19 +28,6 @@ class CreateCajaIngresosTable extends Migration
         });
     }
 
-    id bigserial NOT NULL,
-	id_usuario int8 NOT NULL,
-	id_caja int8 NOT NULL,
-	saldo_inicial float8 NULL,
-	total_recaudado float8 NULL,
-	saldo_total float8 NULL,
-	fecha_inicio timestamp(0) NOT NULL,
-	estado varchar(1) NULL,
-	fecha_fin timestamp(0) NULL,
-	id_usuario_contabilidad int4 NULL,
-	saldo_liquidado float8 NULL,
-	observacion varchar(255) NULL,
-	id_moneda int8 NULL,
     /**
      * Reverse the migrations.
      *
