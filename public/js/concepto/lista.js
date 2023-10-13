@@ -439,8 +439,8 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#denominacion').val();
-            var partida_presupuestal = $('#partida_presupuestal').val();
+			var denominacion = $('#denominacionBus').val();
+            var partida_presupuestal = $('#partida_presupuestalBus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -466,7 +466,7 @@ function datatablenew(){
 				{
                 "mRender": function (data, type, row) {
                 	var regional = "";
-					if(row.regional!= null)ruc = row.regional;
+					if(row.regional!= null)regional = row.regional;
 					return regional;
                 },
                 "bSortable": false,
@@ -493,40 +493,40 @@ function datatablenew(){
                 "aTargets": [2]
                 },
 				{
-					"mRender": function (data, type, row) {
-						var partida_presupuestal = "";
-						if(row.partida_presupuestal!= null)partida_presupuestal = row.partida_presupuestal;
-						return partida_presupuestal;
-					},
-					"bSortable": false,
-					"aTargets": [3]
+				"mRender": function (data, type, row) {
+					var partida_presupuestal = "";
+					if(row.partida_presupuestal!= null)partida_presupuestal = row.partida_presupuestal;
+					return partida_presupuestal;
+				},
+				"bSortable": false,
+				"aTargets": [3]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Activo";
-						}
-						if(row.estado == 0){
-							estado = "Inactivo";
-						}
-						return estado;
-					},
-					"bSortable": false,
-					"aTargets": [4]
+				"mRender": function (data, type, row) {
+					var estado = "";
+					if(row.estado == 1){
+						estado = "Activo";
+					}
+					if(row.estado == 0){
+						estado = "Inactivo";
+					}
+					return estado;
+				},
+				"bSortable": false,
+				"aTargets": [4]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						var clase = "";
-						if(row.estado == 1){
-							estado = "Eliminar";
-							clase = "btn-danger";
-						}
-						if(row.estado == 0){
-							estado = "Activar";
-							clase = "btn-success";
-						}
+				"mRender": function (data, type, row) {
+					var estado = "";
+					var clase = "";
+					if(row.estado == 1){
+						estado = "Eliminar";
+						clase = "btn-danger";
+					}
+					if(row.estado == 0){
+						estado = "Activar";
+						clase = "btn-success";
+					}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalConcepto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
@@ -542,7 +542,6 @@ function datatablenew(){
 				},
 
             ]
-
 
     });
 

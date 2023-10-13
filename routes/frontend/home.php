@@ -94,5 +94,6 @@ Route::post('concepto/send_concepto_nuevoConcepto', [ConceptoController::class, 
 
 Route::get('concepto/eliminar_empresa/{id}/{estado}', [ConceptoController::class, 'eliminar_empresa'])->name('concepto.eliminar_empresa');
 
-
 Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('TipoConcepto.consulta_tipoConcepto');
+
+Route::post('TipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('TipoConcepto.listar_tipoConcepto_ajax');
