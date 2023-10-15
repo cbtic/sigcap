@@ -18,7 +18,7 @@ class CreateComprasTable extends Migration
             $table->bigInteger('id_periodo_delegado')->unsigned()->index();
             $table->string('voucher_codigo',20)->nullable();
             $table->bigInteger('voucher_id_banco')->unsigned()->index();
-            $table->date('voucher_fecha')->nullable();
+            $table->datetime('voucher_fecha')->nullable();
             $table->bigInteger('id_empresa')->unsigned()->index();
 
             $table->string('estado',1)->nullable()->default('1');

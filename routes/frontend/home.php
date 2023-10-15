@@ -7,6 +7,8 @@ use Tabuna\Breadcrumbs\Trail;
 use App\Http\Controllers\Frontend\PersonaController;
 use App\Http\Controllers\Frontend\AgremiadoController;
 use App\Http\Controllers\Frontend\EmpresaController;
+use App\Http\Controllers\Frontend\ConceptoController;
+use App\Http\Controllers\Frontend\TipoConceptoController;
 
 use App\Http\Controllers\Frontend\MunicipalidadController;
 
@@ -57,6 +59,18 @@ Route::post('agremiado/send_agremiado_parentesco', [AgremiadoController::class, 
 Route::get('agremiado/modal_agremiado_trabajo/{id}', [AgremiadoController::class, 'modal_agremiado_trabajo'])->name('agremiado.modal_agremiado_trabajo');
 Route::post('agremiado/send_agremiado_trabajo', [AgremiadoController::class, 'send_agremiado_trabajo'])->name('agremiado.send_agremiado_trabajo');
 
+Route::get('agremiado/modal_agremiado_traslado/{id}', [AgremiadoController::class, 'modal_agremiado_traslado'])->name('agremiado.modal_agremiado_traslado');
+Route::post('agremiado/send_agremiado_traslado', [AgremiadoController::class, 'send_agremiado_traslado'])->name('agremiado.send_agremiado_traslado');
+
+Route::get('agremiado/modal_agremiado_situacion/{id}', [AgremiadoController::class, 'modal_agremiado_situacion'])->name('agremiado.modal_agremiado_situacion');
+Route::post('agremiado/send_agremiado_situacion', [AgremiadoController::class, 'send_agremiado_situacion'])->name('agremiado.send_agremiado_situacion');
+
+Route::get('agremiado/eliminar_estudio/{id}', [AgremiadoController::class, 'eliminar_estudio'])->name('agremiado.eliminar_estudio');
+Route::get('agremiado/eliminar_idioma/{id}', [AgremiadoController::class, 'eliminar_idioma'])->name('agremiado.eliminar_idioma');
+Route::get('agremiado/eliminar_parentesco/{id}', [AgremiadoController::class, 'eliminar_parentesco'])->name('agremiado.eliminar_parentesco');
+Route::get('agremiado/eliminar_trabajo/{id}', [AgremiadoController::class, 'eliminar_trabajo'])->name('agremiado.eliminar_trabajo');
+Route::get('agremiado/eliminar_traslado/{id}', [AgremiadoController::class, 'eliminar_traslado'])->name('agremiado.eliminar_traslado');
+Route::get('agremiado/eliminar_situacion/{id}', [AgremiadoController::class, 'eliminar_situacion'])->name('agremiado.eliminar_situacion');
 
 Route::get('empresa/consulta_empresa', [EmpresaController::class, 'consulta_empresa'])->name('empresa.consulta_empresa');
 
@@ -64,7 +78,41 @@ Route::post('empresa/listar_empresa_ajax', [EmpresaController::class, 'listar_em
 
 Route::get('empresa/editar_empresa/{id}', [EmpresaController::class, 'editar_empresa'])->name('empresa.editar_empresa');
 
+<<<<<<< HEAD
 Route::get('municipalidad/consulta_municipalidad', [MunicipalidadController::class, 'consulta_municipalidad'])->name('municipalidad.consulta_municipalidad');
 Route::post('municipalidad/listar_municipalidad', [MunicipalidadController::class, 'listar_municipalidad'])->name('municipalidad.listar_municipalidad');
 
 Route::get('municipalidad/modal_municipalidad/{id}', [MunicipalidadController::class, 'modal_municipalidad'])->name('municipalidad.modal_municipalidad');
+=======
+Route::get('empresa/modal_empresa_nuevoEmpresa/{id}', [EmpresaController::class, 'modal_empresa_nuevoEmpresa'])->name('empresa.modal_empresa_nuevoEmpresa');
+
+Route::post('empresa/send_empresa_nuevoEmpresa', [EmpresaController::class, 'send_empresa_nuevoEmpresa'])->name('empresa.send_empresa_nuevoEmpresa');
+
+Route::get('empresa/eliminar_empresa/{id}/{estado}', [EmpresaController::class, 'eliminar_empresa'])->name('empresa.eliminar_empresa');
+
+Route::get('concepto/consulta_concepto', [ConceptoController::class, 'consulta_concepto'])->name('concepto.consulta_concepto');
+
+Route::post('concepto/listar_concepto_ajax', [ConceptoController::class, 'listar_concepto_ajax'])->name('concepto.listar_concepto_ajax');
+
+Route::get('concepto/editar_concepto/{id}', [ConceptoController::class, 'editar_concepto'])->name('concepto.editar_concepto');
+
+Route::get('concepto/modal_concepto_nuevoConcepto/{id}', [ConceptoController::class, 'modal_concepto_nuevoConcepto'])->name('concepto.modal_concepto_nuevoConcepto');
+
+Route::post('concepto/send_concepto_nuevoConcepto', [ConceptoController::class, 'send_concepto_nuevoConcepto'])->name('concepto.send_concepto_nuevoConcepto');
+
+Route::get('concepto/eliminar_concepto/{id}/{estado}', [ConceptoController::class, 'eliminar_concepto'])->name('concepto.eliminar_concepto');
+
+Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('TipoConcepto.consulta_tipoConcepto');
+
+Route::post('TipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('TipoConcepto.listar_tipoConcepto_ajax');
+
+Route::get('TipoConcepto/editar_tipoConcepto/{id}', [TipoConceptoController::class, 'editar_tipoConcepto'])->name('TipoConcepto.editar_tipoConcepto');
+
+Route::get('TipoConcepto/modal_tipoConcepto_nuevotipoConcepto/{id}', [TipoConceptoController::class, 'modal_tipoConcepto_nuevotipoConcepto'])->name('TipoConcepto.modal_tipoConcepto_nuevotipoConcepto');
+
+Route::post('TipoConcepto/send_tipoConcepto_nuevotipoConcepto', [TipoConceptoController::class, 'send_tipoConcepto_nuevotipoConcepto'])->name('TipoConcepto.send_tipoConcepto_nuevotipoConcepto');
+
+Route::get('TipoConcepto/eliminar_tipoConcepto/{id}/{estado}', [TipoConceptoController::class, 'eliminar_tipoConcepto'])->name('TipoConcepto.eliminar_tipoConcepto');
+
+//Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
+>>>>>>> 6da99be46719575e20c9998cc8c4ca66b23a54fb

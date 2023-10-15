@@ -347,7 +347,7 @@ label.form-control-sm{
 
                         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
-                        <input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id?>">
+                        <input type="hidden" name="id_concepto" id="id_concepto" value="<?php echo $id?>">
 						<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona?>">
 						
                         <div class="row" id="divSolicitud">
@@ -426,7 +426,7 @@ label.form-control-sm{
 														
 														<div class="row">
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															Tipo de Documento
+															Documento
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="">
@@ -551,7 +551,7 @@ label.form-control-sm{
 															<input type="text" name="apellido_materno" id="apellido_materno" value="<?php echo $persona->apellido_materno?>" class="form-control form-control-sm" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															Nombres
+															Nombre
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="nombres" id="nombres" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" >
@@ -1133,7 +1133,6 @@ label.form-control-sm{
 																<th>F. Graduado</th>
 																<th>Libro</th>
 																<th>Folio</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1146,12 +1145,6 @@ label.form-control-sm{
 																<th><?php echo $row->fecha_graduado?></th>
 																<th><?php echo $row->libro?></th>
 																<th><?php echo $row->folio?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarEstudio(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>														
 															<?php }?>
 														</tbody>							
@@ -1199,7 +1192,6 @@ label.form-control-sm{
 															<tr style="font-size:13px">
 																<th>Idioma</th>
 																<th>Grado Conocimiento</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1207,12 +1199,6 @@ label.form-control-sm{
 															<tr>
 																<th><?php echo $row->idioma?></th>
 																<th><?php echo $row->grado?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalIdioma(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarIdioma(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>						
 															<?php }?>
 														</tbody>							
@@ -1275,7 +1261,6 @@ label.form-control-sm{
 																<th>Sexo</th>
 																<th>Apellidos y Nombres</th>
 																<th>F.Nacimiento</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1285,12 +1270,6 @@ label.form-control-sm{
 																<th><?php echo $row->sexo?></th>
 																<th><?php echo $row->apellido_nombre?></th>
 																<th><?php echo $row->fecha_nacimiento?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalParentesco(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarParentesco(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>						
 															<?php }?>
 														</tbody>							
@@ -1364,7 +1343,6 @@ label.form-control-sm{
 																<th>Tel&eacute;fono</th>
 																<th>Celular</th>
 																<th>Correo</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1383,12 +1361,6 @@ label.form-control-sm{
 																<th><?php echo ($row->telefono="0")?$row->telefono:"-"?></th>
 																<th><?php echo $row->celular?></th>
 																<th><?php echo $row->email?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalTrabajo(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarTrabajo(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>						
 															<?php }?>
 														</tbody>							
@@ -1434,9 +1406,7 @@ label.form-control-sm{
 										</div>
 
 										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-											
-											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoTraslado" style="width:120px;margin-right:15px"/>
-											
+										
 											<div style="clear:both"></div>
 											
 											<div class="row">
@@ -1454,7 +1424,6 @@ label.form-control-sm{
 																<th>Fecha Inicio</th>
 																<th>Fecha Fin</th>
 																<th>Observaci&oacute;n</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1465,12 +1434,6 @@ label.form-control-sm{
 																<th><?php echo $row->fecha_inicio?></th>
 																<th><?php echo $row->fecha_fin?></th>
 																<th><?php echo $row->observacion?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalTraslado(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarTraslado(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>						
 															<?php }?>
 														</tbody>							
@@ -1517,8 +1480,6 @@ label.form-control-sm{
 
 										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
 										
-											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoSituacion" style="width:120px;margin-right:15px"/>
-											
 											<div style="clear:both"></div>
 											
 											<div class="row">
@@ -1535,7 +1496,6 @@ label.form-control-sm{
 																<th>Fecha Inicio</th>
 																<th>Fecha Fin</th>
 																<th>Pa&iacute;s</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1545,12 +1505,6 @@ label.form-control-sm{
 																<th><?php echo $row->fecha_inicio?></th>
 																<th><?php echo $row->fecha_fin?></th>
 																<th><?php echo $row->pais?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalSituacion(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarSituacion(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>
 															<?php }?>
 														</tbody>							
@@ -1854,7 +1808,7 @@ label.form-control-sm{
     @push('after-scripts')
     
 	
-	<script src="{{ asset('js/agremiado/create.js') }}"></script>
+	<script src="{{ asset('js/concepto/create.js') }}"></script>
 	<script>
 	/*
 	var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();

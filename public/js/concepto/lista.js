@@ -8,7 +8,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalEmpresa(0);
+		modalConcepto(0);
 	});
 		
 	datatablenew();
@@ -412,7 +412,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/empresa/listar_empresa_ajax",
+        "sAjaxSource": "/concepto/listar_concepto_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -439,8 +439,8 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var ruc = $('#rucBus').val();
-            var razon_social = $('#razon_socialBus').val();
+			var denominacion = $('#denominacionBus').val();
+            var partida_presupuestal = $('#partida_presupuestalBus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -449,7 +449,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						ruc:ruc,razon_social:razon_social,estado:estado,
+						denominacion:denominacion,partida_presupuestal:partida_presupuestal,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -465,9 +465,9 @@ function datatablenew(){
             [	
 				{
                 "mRender": function (data, type, row) {
-                	var ruc = "";
-					if(row.ruc!= null)ruc = row.ruc;
-					return ruc;
+                	var regional = "";
+					if(row.regional!= null)regional = row.regional;
+					return regional;
                 },
                 "bSortable": false,
                 "aTargets": [0],
@@ -476,70 +476,61 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var nombre_comercial = "";
-					if(row.nombre_comercial!= null)nombre_comercial = row.nombre_comercial;
-					return nombre_comercial;
+                    var codigo = "";
+					if(row.codigo!= null)codigo = row.codigo;
+					return codigo;
                 },
                 "bSortable": false,
                 "aTargets": [1]
                 },
                 {
                 "mRender": function (data, type, row) {
-                	var razon_social = "";
-					if(row.razon_social!= null)razon_social = row.razon_social;
-					return razon_social;
+                	var denominacion = "";
+					if(row.denominacion!= null)denominacion = row.denominacion;
+					return denominacion;
                 },
                 "bSortable": false,
                 "aTargets": [2]
                 },
 				{
-					"mRender": function (data, type, row) {
-						var direccion = "";
-						if(row.direccion!= null)direccion = row.direccion;
-						return direccion;
-					},
-					"bSortable": false,
-					"aTargets": [3]
+				"mRender": function (data, type, row) {
+					var partida_presupuestal = "";
+					if(row.partida_presupuestal!= null)partida_presupuestal = row.partida_presupuestal;
+					return partida_presupuestal;
+				},
+				"bSortable": false,
+				"aTargets": [3]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var representante = "";
-						if(row.representante!= null)representante = row.representante;
-						return representante;
-					},
-					"bSortable": false,
-					"aTargets": [4]
+				"mRender": function (data, type, row) {
+					var estado = "";
+					if(row.estado == 1){
+						estado = "Activo";
+					}
+					if(row.estado == 0){
+						estado = "Inactivo";
+					}
+					return estado;
+				},
+				"bSortable": false,
+				"aTargets": [4]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Activo";
-						}
-						if(row.estado == 0){
-							estado = "Inactivo";
-						}
-						return estado;
-					},
-					"bSortable": false,
-					"aTargets": [5]
-				},
-				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						var clase = "";
-						if(row.estado == 1){
-							estado = "Eliminar";
-							clase = "btn-danger";
-						}
-						if(row.estado == 0){
-							estado = "Activar";
-							clase = "btn-success";
-						}
+				"mRender": function (data, type, row) {
+					var estado = "";
+					var clase = "";
+					if(row.estado == 1){
+						estado = "Eliminar";
+						clase = "btn-danger";
+					}
+					if(row.estado == 0){
+						estado = "Activar";
+						clase = "btn-success";
+					}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEmpresa('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<a href="javascript:void(0)" onclick=eliminarEmpresa('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalConcepto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						html += '<a href="javascript:void(0)" onclick=eliminarConcepto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -547,11 +538,10 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [6],
+					"aTargets": [5],
 				},
 
             ]
-
 
     });
 
@@ -561,13 +551,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalEmpresa(id){
+function modalConcepto(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/empresa/modal_empresa_nuevoEmpresa/"+id,
+			url: "/concepto/modal_concepto_nuevoConcepto/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);

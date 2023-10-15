@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Empresas</li>
+            <li class="breadcrumb-item active">Consulta de Tipos de Conceptos</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consultar Empresas <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consultar Tipo de Conceptos <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Empresas
+                        Lista de Tipo de conceptos
                     </strong>
                 </div><!--card-header-->
 				
@@ -150,10 +150,10 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="rucBus" name="rucBus" placeholder="Ruc">
+						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Ruc">
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="razon_socialBus" name="razon_socialBus" placeholder="Razon Social">
+						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Razon Social">
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
@@ -164,11 +164,8 @@
 					</div>
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-						
-                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
-                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
-
+						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
+						<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>
 					</div>
 				</div>
 				

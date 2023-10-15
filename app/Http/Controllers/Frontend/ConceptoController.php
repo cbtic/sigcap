@@ -4,27 +4,28 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Empresa;
+use App\Models\Concepto;
+use App\Models\Regione;
 
-class EmpresaController extends Controller
+class ConceptoController extends Controller
 {
-    function consulta_empresa(){
+    function consulta_concepto(){
+        
+        return view('frontend.concepto.all');
 
-        return view('frontend.empresa.all');
     }
 
-    public function listar_empresa_ajax(Request $request){
+    public function listar_concepto_ajax(Request $request){
 	
-		$empresa_model = new Empresa;
-		$p[]=$request->ruc;
+		$concepto_model = new Concepto;
+		$p[]="";//$request->nombre;
 		$p[]="";
-		$p[]=$request->razon_social;
-		$p[]="";
+		$p[]=$request->denominacion;
+        $p[]=$request->partida_presupuestal;
         $p[]="";
-        $p[]=$request->razon_social;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
-		$data = $empresa_model->listar_empresa_ajax($p);
+		$data = $concepto_model->listar_concepto_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -36,16 +37,15 @@ class EmpresaController extends Controller
 		$result["aaData"] = $data;
 
 		echo json_encode($result);
-	
 	}
 
-    public function editar_empresa($id){
+	public function editar_concepto($id){
         
-		$empresas = Empresas::find($id);
-		$id_empresa = $empresas->id_empresa;
-		$empresas = Empresas::find($id_empresa);
+		$concepto = Concepto::find($id);
+		$id_concepto = $concepto->id_concepto;
+		$concepto = Concepto::find($id_concepto);
 		
-        $empresas_model = new empresas;
+        $concepto_model = new concepto;
  
 		//$tablaMaestra_model = new TablaMaestra;
 		//$regione_model = new Regione;
@@ -79,54 +79,52 @@ class EmpresaController extends Controller
 		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
 		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);*/
 		
-		return view('frontend.empresa.create',compact('ruc','nombre_comercial','razon_social','direccion','representante','estado'));
+		return view('frontend.concepto.create',compact('regional','codigo','denominacion','partida_presupuestal','estado'));
 		
     }
 
-    public function modal_empresa_nuevoEmpresa($id){
+    public function modal_concepto_nuevoConcepto($id){
 		
-		$empresa = new Empresa;
-		
+		$concepto = new Concepto;
+		$regione_model = new Regione;
+
 		if($id>0){
-			$empresa = Empresa::find($id);
+			$concepto = Concepto::find($id);
 		}else{
-			$empresa = new Empresa;
+			$concepto = new Concepto;
 		}
 		
-		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
-		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
+		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.empresa.modal_empresa_nuevoEmpresa',compact('id','empresa'));
+		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','concepto','region'));
 	
 	}
 
-    public function send_empresa_nuevoEmpresa(Request $request){
+    public function send_concepto_nuevoConcepto(Request $request){
 		
 		if($request->id == 0){
-			$empresa = new Empresa;
+			$concepto = new Concepto;
 		}else{
-			$empresa = Empresa::find($request->id);
+			$concepto = Concepto::find($request->id);
 		}
 		
-		$empresa->ruc = $request->ruc;
-		$empresa->nombre_comercial = $request->nombre_comercial;
-		$empresa->razon_social = $request->razon_social;
-		$empresa->direccion = $request->direccion;
-		$empresa->representante = $request->representante;
-		$empresa->estado = 1;
-		$empresa->id_usuario_inserta = 1;
-		$empresa->save();
+		$concepto->id_regional = $request->id_regional;
+		$concepto->codigo = $request->codigo;
+		$concepto->denominacion = $request->denominacion;
+		$concepto->id_partida_presupuestal = $request->id_partida_presupuestal;
+		$concepto->estado = 1;
+		$concepto->id_usuario_inserta = 1;
+		$concepto->save();
 			
     }
 
-	public function eliminar_empresa($id,$estado)
+	public function eliminar_concepto($id,$estado)
     {
-		$empresa = Empresa::find($id);
-		$empresa->estado = $estado;
-		$empresa->save();
+		$concepto = Concepto::find($id);
+		$concepto->estado = $estado;
+		$concepto->save();
 
-		echo $empresa->id;
+		echo $concepto->id;
 
     }
-
 }

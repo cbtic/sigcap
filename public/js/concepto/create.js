@@ -67,8 +67,8 @@ $(document).ready(function () {
 		//window.location.reload();
 	});
 
-	$('#btnNuevoEmpresa').on('click', function () {
-		modalEmpresa(0);
+	$('#btnNuevoConcepto').on('click', function () {
+		modalConcepto(0);
 	});
 	
 	/*
@@ -1687,7 +1687,7 @@ function ocultar_solicitud(){
 function datatablenew(){
     var oTable = $('#tblSolicitud').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/expediente/listar_expediente_ajax",
+        "sAjaxSource": "/concepto/listar_concepto_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         "bFilter": false,
@@ -3119,20 +3119,19 @@ function modalEstudio(id){
 
 }
 
-function modalEmpresa(id){
+function modalConcepto(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/empresa/modal_empresa_nuevoEmpresa/"+id,
+			url: "/concepto/modal_concepto_nuevoConcepto/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
 			}
 	});
-
 }
 
 function modalIdioma(id){
