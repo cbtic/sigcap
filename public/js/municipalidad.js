@@ -254,15 +254,15 @@ function obtenerPlanDetalle(){
 	});
 	
 }
-function modalEstudio(id){
+function modalMunicipalidad(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/agremiado/modal_agremiado_estudio/"+id,
+			url: "/municipalidad/modal_municipalidad/"+id,
 			type: "GET",
-			success: function (result) {
+			success: function (result) {  
 					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
 			}
@@ -435,7 +435,7 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<a href="/empresa/editar_empresa/'+row.id+'" style="font-size:12px" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
+						html += '<a href="/municipalidad/modal_municipalidad/'+row.id+'" style="font-size:12px" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
 						html += '<a href="javascript:void(0)" onclick=eliminarEmpresa('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';

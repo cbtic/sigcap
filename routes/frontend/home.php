@@ -78,13 +78,11 @@ Route::post('empresa/listar_empresa_ajax', [EmpresaController::class, 'listar_em
 
 Route::get('empresa/editar_empresa/{id}', [EmpresaController::class, 'editar_empresa'])->name('empresa.editar_empresa');
 
-<<<<<<< HEAD
 Route::get('municipalidad/consulta_municipalidad', [MunicipalidadController::class, 'consulta_municipalidad'])->name('municipalidad.consulta_municipalidad');
 Route::post('municipalidad/listar_municipalidad', [MunicipalidadController::class, 'listar_municipalidad'])->name('municipalidad.listar_municipalidad');
 
 Route::get('municipalidad/modal_municipalidad/{id}', [MunicipalidadController::class, 'modal_municipalidad'])->name('municipalidad.modal_municipalidad');
-=======
-Route::get('empresa/modal_empresa_nuevoEmpresa/{id}', [EmpresaController::class, 'modal_empresa_nuevoEmpresa'])->name('empresa.modal_empresa_nuevoEmpresa');
+
 
 Route::post('empresa/send_empresa_nuevoEmpresa', [EmpresaController::class, 'send_empresa_nuevoEmpresa'])->name('empresa.send_empresa_nuevoEmpresa');
 
@@ -115,4 +113,3 @@ Route::post('TipoConcepto/send_tipoConcepto_nuevotipoConcepto', [TipoConceptoCon
 Route::get('TipoConcepto/eliminar_tipoConcepto/{id}/{estado}', [TipoConceptoController::class, 'eliminar_tipoConcepto'])->name('TipoConcepto.eliminar_tipoConcepto');
 
 //Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
->>>>>>> 6da99be46719575e20c9998cc8c4ca66b23a54fb

@@ -381,69 +381,12 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label">Denominacion</label>
-								<input id="denominacion_" name="denominacion_" class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" <?php echo $readonly?> >
+								<input id="denominacion_" name="denominacion_" class="form-control form-control-sm"  value="<?php echo $municipalidad->denominacion?>" type="text" <?php echo $readonly?> >
 							</div>
 						</div>
 						
 					</div>
-					
-					<div class="row">
-						
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label class="control-label">Raz&oacute;n Social</label>
-								<input id="razon_social_" name="razon_social_" class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" readonly>
-							</div>
-						</div>
-						
-					</div>
-										
-					<div class="row">
-						
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label class="control-label">Direcci&oacute;n</label>
-								<input id="direccion_" name="direccion_" class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text" <?php echo $readonly_?> >
-							</div>
-						</div>
-						
-					</div>
-
-					<div class="row">
-						
-						<div class="col-lg-6">
-							<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-								<label class="control-label">Tel&eacute;fono</label>
-								<input id="telefono_" name="telefono_" class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text">
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-								<label class="control-label">Correo</label>
-								<input id="email_" name="email_" class="form-control form-control-sm" value="<?php echo $empresa->email?>" type="text">
-							</div>
-						</div>
-						
-					</div>
-					
-					<div class="row">
-						
-						<div class="col-lg-6">
-							<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-								<label class="control-label">Costo Estacionamiento</label>
-								<input id="costo_estacionamiento_" name="costo_estacionamiento_" class="form-control form-control-sm"  value="<?php echo $empresa->costo_estacionamiento?>" type="text">
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-								<label class="control-label">Costo Volumen</label>
-								<input id="costo_volumen_" name="costo_volumen_" class="form-control form-control-sm"  value="<?php echo $empresa->costo_volumen?>" type="text">
-							</div>
-						</div>
-						
-					</div>
+		
 					
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
@@ -483,77 +426,11 @@ $(document).ready(function () {
 		//validaRuc(this.value);
 	});
 	
-	$('#tblReservaEstacionamiento').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-search").keyup(function() {
-		var dataTable = $('#tblReservaEstacionamiento').dataTable();
-		dataTable.fnFilter(this.value);
-	}); 
 	
-	$('#tblReservaEstacionamientoPreferente').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-searchp").keyup(function() {
-		var dataTable = $('#tblReservaEstacionamientoPreferente').dataTable();
-		dataTable.fnFilter(this.value);
-	});
-	
-	$('#tblSinReservaEstacionamiento').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-search2").keyup(function() {
-		var dataTable = $('#tblSinReservaEstacionamiento').dataTable();
-		dataTable.fnFilter(this.value);
-	}); 
 	
 	
 });
 
-function validaRuc(ruc){
-	var settings = {
-		"url": "https://apiperu.dev/api/ruc/"+ruc,
-		"method": "GET",
-		"timeout": 0,
-		"headers": {
-		  "Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
-		},
-	  };
-	  
-	  $.ajax(settings).done(function (response) {
-		console.log(response);
-		
-		if (response.success == true){
-
-			var data= response.data;
-
-			$('#razon_social_').val('')
-			$('#direccion_').val('')
-			$('#telefono_').val('')
-			$('#email_').val('')
-
-			$('#razon_social_').val(data.nombre_o_razon_social);
-			$('#direccion_').attr('readonly', true);
-
-			if (typeof data.direccion_completa != "undefined"){
-				$('#direccion_').val(data.direccion_completa);
-			}
-			else{
-				$('#direccion_').attr('readonly', false);
-			}
-			
-
-			//alert(data.nombre_o_razon_social);
-
-		}
-		else{
-			bootbox.alert("RUC Invalido,... revise el RUC digitado ¡");
-			return false;
-		}
-
-		
-	  });
-}
 
 </script>
 
@@ -563,141 +440,11 @@ $(document).ready(function() {
 	//$('#numero_placa').mask('AAA-000');
 	//$('#vehiculo_numero_placa').mask('AAA-000');
 	
-	$('#vehiculo_numero_placa').keyup(function() {
-		this.value = this.value.toLocaleUpperCase();
-	});
-	
-	$('#vehiculo_empresa').keyup(function() {
-		this.value = this.value.toLocaleUpperCase();
-	});
-		
-	$('#vehiculo_empresa').focusin(function() { $('#vehiculo_empresa').select(); });
-	
-	$('#vehiculo_empresa').autocomplete({
-		appendTo: "#vehiculo_empresa_busqueda",
-		source: function(request, response) {
-			$.ajax({
-			url: '/pesaje/list/'+$('#vehiculo_empresa').val(),
-			dataType: "json",
-			success: function(data){
-			   var resp = $.map(data,function(obj){
-					var hash = {key: obj.id, value: obj.razon_social, ruc: obj.ruc};
-					//if(obj.razon_social=='') { actualiza_ruc("") }
-					return hash;
-			   }); 
-			   response(resp);
-			},
-			error: function() {
-				//actualiza_ruc("");
-			}
-		});
-		},
-		select: function (event, ui) {
-			$('#vehiculo_empresa').blur();
-			$('#ruc').val(ui.item.ruc);
-			//if (ui.item.value != ''){
-			//actualiza_ruc(ui.item.value);
-			//}
-			obtener_vehiculos(ui.item.key);
-			$("#id_empresa").val(ui.item.key); // save selected id to hidden input
-		},
-			minLength: 2,
-			delay: 100
-	  });
-	  
-	
-	$('#modalVehiculoSaveBtn').click(function (e) {
-		e.preventDefault();
-		$(this).html('Enviando datos..');
-	
-		$.ajax({
-		  data: $('#modalVehiculoForm').serialize(),
-		  url: "/vehiculo/send_ajax_asignar",
-		  type: "POST",
-		  dataType: 'json',
-		  success: function (data) {
-	
-			  $('#modalVehiculoForm').trigger("reset");
-			  //$('#vehiculoModal').modal('hide');
-			  $('#openOverlayOpc').modal('hide');
-
-        alert(data.msg);
-        $("#nombre_empresa").val(data.vehiculo_empresa);
-        $("#numero_placa").val(data.vehiculo_numero_placa);
-        $("#numero_ejes").val(data.ejes);
-        $("#numero_documento").val(data.ruc);
-        $("#nombres_razon_social").val(data.razon_social);
-        $("#empresa_direccion").val(data.direccion);
-
-        $("#modalVehiculoSaveBtn").html("Grabar");
-	
-		  },
-		  error: function(data) {
-        mensaje = "Revisar el formulario:\n\n";
-        $.each( data["responseJSON"].errors, function( key, value ) {
-          mensaje += value +"\n";
-        });
-        $("#modalVehiculoSaveBtn").html("Grabar");
-        alert(mensaje);
-      }
-	  });
-	});	  
 	
 });
 
-function actualiza_ruc(razon_social) {
-	$.ajax({
-		url: '/pesaje/obtener_ruc/'+razon_social,
-		dataType: 'json',
-		type: 'GET',
-		success: function(result){
-			//alert(result);
-			$('#ruc').val(result);
-		},
-		error: function(){
-			$('#ruc').val('');
-		}
-
-	});
-}
 
 
-function obtener_vehiculos(id){
-	
-	option = {
-		url: '/pesaje/obtener_vehiculo_empresa/' + id,
-		type: 'GET',
-		dataType: 'json',
-		data: {}
-	};
-	$.ajax(option).done(function (data) {
-		
-		var option = "<option value='0'>Seleccionar</option>";
-		$("#id_vehiculo").html("");
-		$(data).each(function (ii, oo) {
-			option += "<option value='"+oo.id+"'>"+oo.placa+"</option>";
-		});
-		$("#id_vehiculo").html(option);
-		$("#id_vehiculo").val(id).select2();
-		
-		/*
-		var cantidad = data.cantidad;
-		var cantidadEstablecimiento = data.cantidadEstablecimiento;
-		var cantidadAlmacen = data.cantidadAlmacen;
-		$(cmb).closest("tr").find(".limpia_text").val("");                
-		$(cmb).closest("tr").find("#nro_stocks").val(cantidad);
-		$(cmb).closest("tr").find("#nro_stocks_establecimiento").val(cantidadEstablecimiento);
-		$(cmb).closest("tr").find("#nro_stocks_almacen").val(cantidadAlmacen);
-		$(cmb).closest("tr").find("#nro_med_solictados").val("");  
-		$(cmb).closest("tr").find("#nro_med_entregados").val("");
-		$(cmb).closest("tr").find("#lotes_lote").val("");
-		$(cmb).closest("tr").find("#lotes_cantidad").val("");
-		$(cmb).closest("tr").find("#lotes_registro_sanitario").val("");
-		$(cmb).closest("tr").find("#lotes_fecha_vencimiento").val("");
-		*/
-	});
-	
-		
-}
+
 </script>
 
