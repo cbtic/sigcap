@@ -8817,12 +8817,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
+<<<<<<< HEAD
                 "reference": "efd339340c840237fad050f3ea6fd8bbbbfc7ed6"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/efd339340c840237fad050f3ea6fd8bbbbfc7ed6",
                 "reference": "efd339340c840237fad050f3ea6fd8bbbbfc7ed6",
+=======
+                "reference": "138c8164ca26fdf365c2d3091040d78b0723735f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/138c8164ca26fdf365c2d3091040d78b0723735f",
+                "reference": "138c8164ca26fdf365c2d3091040d78b0723735f",
+>>>>>>> 84daddaaffb91b2374b640cfe063fb3d4c38dd79
                 "shasum": ""
             },
             "conflict": {
@@ -9475,7 +9484,25 @@
             "keywords": [
                 "dev"
             ],
+<<<<<<< HEAD
             "time": "2023-10-11T21:04:21+00:00"
+=======
+            "support": {
+                "issues": "https://github.com/Roave/SecurityAdvisories/issues",
+                "source": "https://github.com/Roave/SecurityAdvisories/tree/latest"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Ocramius",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/roave/security-advisories",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-10-10T22:04:32+00:00"
+>>>>>>> 84daddaaffb91b2374b640cfe063fb3d4c38dd79
         },
         {
             "name": "sebastian/cli-parser",

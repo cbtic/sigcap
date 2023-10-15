@@ -426,7 +426,7 @@ label.form-control-sm{
 														
 														<div class="row">
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															Documento
+															Tipo de Documento
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="">
@@ -551,7 +551,7 @@ label.form-control-sm{
 															<input type="text" name="apellido_materno" id="apellido_materno" value="<?php echo $persona->apellido_materno?>" class="form-control form-control-sm" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															Nombre
+															Nombres
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="nombres" id="nombres" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" >

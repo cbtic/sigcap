@@ -46,7 +46,12 @@ class AgremiadoController extends Controller
 		$region = $regione_model->getRegionAll();
 		$departamento = $ubigeo_model->getDepartamento();
 		
+<<<<<<< HEAD
+
+		return view('frontend.agremiado.create',compact('agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento'));
+=======
 		return view('frontend.agremiado.create',compact('id','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente'));
+>>>>>>> 5b8acdde42aaac708014adb5004774194b882874
     }
 	
 	public function editar_agremiado($id){
