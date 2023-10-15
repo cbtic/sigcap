@@ -66,6 +66,7 @@
 						   aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/empresa/consulta_empresa" class="dropdown-item">Consulta de Empresa</a>
+                                <a href="/municipalidad/consulta_municipalidad" class="dropdown-item">Municipalidades</a>
 						   </div>
 					</li>
 				
