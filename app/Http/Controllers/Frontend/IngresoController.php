@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Persona;
 use App\Models\Agremiado;
 use App\Models\TablaMaestra;
+use App\Models\TablaMaestra;
 
 use Auth;
 
