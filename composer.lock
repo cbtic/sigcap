@@ -3683,16 +3683,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.21",
+            "version": "v0.11.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "bcb22101107f3bf770523b65630c9d547f60c540"
+                "reference": "128fa1b608be651999ed9789c95e6e2a31b5802b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/bcb22101107f3bf770523b65630c9d547f60c540",
-                "reference": "bcb22101107f3bf770523b65630c9d547f60c540",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/128fa1b608be651999ed9789c95e6e2a31b5802b",
+                "reference": "128fa1b608be651999ed9789c95e6e2a31b5802b",
                 "shasum": ""
             },
             "require": {
@@ -3721,7 +3721,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "0.11.x-dev"
+                    "dev-0.11": "0.11.x-dev"
                 },
                 "bamarni-bin": {
                     "bin-links": false,
@@ -3755,7 +3755,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2023-09-17T21:15:54+00:00"
+            "time": "2023-10-14T21:56:36+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -6874,27 +6874,6 @@
                 "regex",
                 "regular expression"
             ],
-<<<<<<< HEAD
-            "support": {
-                "issues": "https://github.com/composer/pcre/issues",
-                "source": "https://github.com/composer/pcre/tree/3.1.1"
-            },
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/composer",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
-            ],
-=======
->>>>>>> 79629e46d6d4b2c785aab4f845fc470ee0fd0ffc
             "time": "2023-10-11T07:11:09+00:00"
         },
         {
@@ -8838,21 +8817,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-<<<<<<< HEAD
                 "reference": "efd339340c840237fad050f3ea6fd8bbbbfc7ed6"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/efd339340c840237fad050f3ea6fd8bbbbfc7ed6",
                 "reference": "efd339340c840237fad050f3ea6fd8bbbbfc7ed6",
-=======
-                "reference": "138c8164ca26fdf365c2d3091040d78b0723735f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/138c8164ca26fdf365c2d3091040d78b0723735f",
-                "reference": "138c8164ca26fdf365c2d3091040d78b0723735f",
->>>>>>> 84daddaaffb91b2374b640cfe063fb3d4c38dd79
                 "shasum": ""
             },
             "conflict": {
@@ -9505,44 +9475,7 @@
             "keywords": [
                 "dev"
             ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            "support": {
-                "issues": "https://github.com/Roave/SecurityAdvisories/issues",
-                "source": "https://github.com/Roave/SecurityAdvisories/tree/latest"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/Ocramius",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/roave/security-advisories",
-                    "type": "tidelift"
-                }
-            ],
-=======
->>>>>>> 79629e46d6d4b2c785aab4f845fc470ee0fd0ffc
->>>>>>> ced3b47d96383137635143cde359d8cfd727133f
             "time": "2023-10-11T21:04:21+00:00"
-=======
-            "support": {
-                "issues": "https://github.com/Roave/SecurityAdvisories/issues",
-                "source": "https://github.com/Roave/SecurityAdvisories/tree/latest"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/Ocramius",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/roave/security-advisories",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2023-10-10T22:04:32+00:00"
->>>>>>> 84daddaaffb91b2374b640cfe063fb3d4c38dd79
         },
         {
             "name": "sebastian/cli-parser",
@@ -10594,10 +10527,5 @@
     "platform": {
         "php": "^7.4|^8.0"
     },
-<<<<<<< HEAD
-    "platform-dev": [],
-    "plugin-api-version": "2.0.0"
-=======
     "platform-dev": []
->>>>>>> 79629e46d6d4b2c785aab4f845fc470ee0fd0ffc
 }
