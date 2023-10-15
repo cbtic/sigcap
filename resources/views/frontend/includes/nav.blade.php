@@ -72,6 +72,14 @@
 					</li>
 				
                     <li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
+						   aria-haspopup="true" aria-expanded="false">Registro</a>
+						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+								<a href="/empresa/consulta_empresa" class="dropdown-item">Estado de Cuenta</a>
+
+						   </div>
+					</li>
+                    <li class="nav-item dropdown">
                         <x-utils.link
                             href="#"
                             id="navbarDropdown"

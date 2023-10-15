@@ -191,8 +191,17 @@ $.mask.definitions['p'] = "[Mm]";
 */
 $(document).ready(function() {
 	//$('#hora_solicitud').focus();
-	$('#hora_solicitud').mask('00:00');
+	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
+
+	$('#ruc').blur(function () {
+		var id = $('#id').val();
+			if(id==0) {
+				validaRuc(this.value);
+			}
+		//validaRuc(this.value);
+	});
+
 });
 </script>
 
@@ -231,6 +240,51 @@ function validacion(){
         bootbox.alert(msg); 
         return false;
     }
+}
+
+function validaRuc(ruc){
+	var settings = {
+		"url": "https://apiperu.dev/api/ruc/"+ruc,
+		"method": "GET",
+		"timeout": 0,
+		"headers": {
+		  "Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
+		},
+	  };
+	  
+	  $.ajax(settings).done(function (response) {
+		console.log(response);
+		
+		if (response.success == true){
+
+			var data= response.data;
+
+			$('#razon_social').val('')
+			$('#direccion').val('')
+			$('#nombre_comercial').val('')
+			
+			$('#razon_social').val(data.nombre_o_razon_social);
+			$('#nombre_comercial').val(data.nombre_o_razon_social);
+			$('#direccion').attr('readonly', true);
+
+			if (typeof data.direccion_completa != "undefined"){
+				$('#direccion').val(data.direccion_completa);
+			}
+			else{
+				$('#direccion').attr('readonly', false);
+			}
+			
+
+			//alert(data.nombre_o_razon_social);
+
+		}
+		else{
+			bootbox.alert("RUC Invalido,... revise el RUC digitado ¡");
+			return false;
+		}
+
+		
+	  });
 }
 
 function guardarCita__(){
@@ -504,7 +558,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Ruc</label>
-								<input id="ruc" name="ruc" class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" >
+								<input id="ruc" name="ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" >
 							
 							</div>
 						</div>

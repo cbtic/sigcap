@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Concepto;
+use App\Models\Regione;
 
 class ConceptoController extends Controller
 {
@@ -85,17 +86,17 @@ class ConceptoController extends Controller
     public function modal_concepto_nuevoConcepto($id){
 		
 		$concepto = new Concepto;
-		
+		$regione_model = new Regione;
+
 		if($id>0){
 			$concepto = Concepto::find($id);
 		}else{
 			$concepto = new Concepto;
 		}
 		
-		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
-		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
+		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','concepto'));
+		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','concepto','region'));
 	
 	}
 
@@ -107,10 +108,10 @@ class ConceptoController extends Controller
 			$concepto = Concepto::find($request->id);
 		}
 		
-		$concepto->regional = $request->regional;
+		$concepto->id_regional = $request->id_regional;
 		$concepto->codigo = $request->codigo;
 		$concepto->denominacion = $request->denominacion;
-		$concepto->partida_presupuestal = $request->partida_presupuestal;
+		$concepto->id_partida_presupuestal = $request->id_partida_presupuestal;
 		$concepto->estado = 1;
 		$concepto->id_usuario_inserta = 1;
 		$concepto->save();

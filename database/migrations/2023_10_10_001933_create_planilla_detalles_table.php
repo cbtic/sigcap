@@ -17,11 +17,11 @@ class CreatePlanillaDetallesTable extends Migration
             $table->id();
             $table->bigInteger('id_planilla')->unsigned()->index();
             $table->bigInteger('id_agremiado')->unsigned()->index();
-            $table->bigInteger('id_plan_contgable')->unsigned()->index();
+            $table->bigInteger('id_plan_contable')->unsigned()->index();
             $table->string('ruta_compronante',150)->nullable();
             $table->string('voucher_codigo',150)->nullable();
             $table->bigInteger('id_banco')->unsigned()->index();
-            $table->date('voucher_fecha')->nullable();
+            $table->datetime('voucher_fecha')->nullable();
             $table->string('estado',1)->nullable()->default('1');
 
             $table->foreign('id_planilla')->references('id')->on('planillas');

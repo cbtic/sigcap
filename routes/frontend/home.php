@@ -92,8 +92,18 @@ Route::get('concepto/modal_concepto_nuevoConcepto/{id}', [ConceptoController::cl
 
 Route::post('concepto/send_concepto_nuevoConcepto', [ConceptoController::class, 'send_concepto_nuevoConcepto'])->name('concepto.send_concepto_nuevoConcepto');
 
-Route::get('concepto/eliminar_empresa/{id}/{estado}', [ConceptoController::class, 'eliminar_empresa'])->name('concepto.eliminar_empresa');
+Route::get('concepto/eliminar_concepto/{id}/{estado}', [ConceptoController::class, 'eliminar_concepto'])->name('concepto.eliminar_concepto');
 
 Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('TipoConcepto.consulta_tipoConcepto');
 
 Route::post('TipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('TipoConcepto.listar_tipoConcepto_ajax');
+
+Route::get('TipoConcepto/editar_tipoConcepto/{id}', [TipoConceptoController::class, 'editar_tipoConcepto'])->name('TipoConcepto.editar_tipoConcepto');
+
+Route::get('TipoConcepto/modal_tipoConcepto_nuevotipoConcepto/{id}', [TipoConceptoController::class, 'modal_tipoConcepto_nuevotipoConcepto'])->name('TipoConcepto.modal_tipoConcepto_nuevotipoConcepto');
+
+Route::post('TipoConcepto/send_tipoConcepto_nuevotipoConcepto', [TipoConceptoController::class, 'send_tipoConcepto_nuevotipoConcepto'])->name('TipoConcepto.send_tipoConcepto_nuevotipoConcepto');
+
+Route::get('TipoConcepto/eliminar_tipoConcepto/{id}/{estado}', [TipoConceptoController::class, 'eliminar_tipoConcepto'])->name('TipoConcepto.eliminar_tipoConcepto');
+
+//Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');

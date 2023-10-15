@@ -557,7 +557,7 @@ function modalConcepto(id){
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/concepto/modal_concepto/"+id,
+			url: "/concepto/modal_concepto_nuevoConcepto/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
