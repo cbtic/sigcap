@@ -16,12 +16,12 @@ class EmpresaController extends Controller
     public function listar_empresa_ajax(Request $request){
 	
 		$empresa_model = new Empresa;
-		$p[]="";//$request->nombre;
+		$p[]=$request->ruc;
 		$p[]="";
-		$p[]="";
+		$p[]=$request->razon_social;
 		$p[]="";
         $p[]="";
-        $p[]="";
+        $p[]=$request->razon_social;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $empresa_model->listar_empresa_ajax($p);
@@ -85,35 +85,48 @@ class EmpresaController extends Controller
 
     public function modal_empresa_nuevoEmpresa($id){
 		
-		$empresas = new Empresas;
+		$empresa = new Empresa;
 		
 		if($id>0){
-			$empresas = Empresas::find($id);
+			$empresa = Empresa::find($id);
 		}else{
-			$empresas = new Empresas;
+			$empresa = new Empresa;
 		}
 		
 		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.empresas.modal_nuevoEmpresa',compact('id'));
+		return view('frontend.empresa.modal_empresa_nuevoEmpresa',compact('id','empresa'));
 	
 	}
 
     public function send_empresa_nuevoEmpresa(Request $request){
 		
 		if($request->id == 0){
-			$empresas = new Empresas;
+			$empresa = new Empresa;
 		}else{
-			$empresas = Empresas::find($request->id);
+			$empresa = Empresa::find($request->id);
 		}
 		
-		//$agremiadoIdioma->id_agremiado = $request->id_agremiado;
-		//$agremiadoIdioma->id_idioma = $request->id_idioma;
-		//$agremiadoIdioma->id_grado_conocimiento = $request->id_grado_conocimiento;
-		//$agremiadoIdioma->estado = 1;
-		//$agremiadoIdioma->id_usuario_inserta = 1;
-		//$agremiadoIdioma->save();
+		$empresa->ruc = $request->ruc;
+		$empresa->nombre_comercial = $request->nombre_comercial;
+		$empresa->razon_social = $request->razon_social;
+		$empresa->direccion = $request->direccion;
+		$empresa->representante = $request->representante;
+		$empresa->estado = 1;
+		$empresa->id_usuario_inserta = 1;
+		$empresa->save();
 			
     }
+
+	public function eliminar_empresa($id,$estado)
+    {
+		$empresa = Empresa::find($id);
+		$empresa->estado = $estado;
+		$empresa->save();
+
+		echo $empresa->id;
+
+    }
+
 }

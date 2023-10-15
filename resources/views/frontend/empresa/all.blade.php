@@ -150,10 +150,10 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Ruc">
+						<input class="form-control form-control-sm" id="rucBus" name="rucBus" placeholder="Ruc">
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Razon Social">
+						<input class="form-control form-control-sm" id="razon_socialBus" name="razon_socialBus" placeholder="Razon Social">
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
@@ -164,8 +164,11 @@
 					</div>
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						
+                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+
 					</div>
 				</div>
 				
