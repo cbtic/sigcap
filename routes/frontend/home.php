@@ -10,6 +10,8 @@ use App\Http\Controllers\Frontend\EmpresaController;
 use App\Http\Controllers\Frontend\ConceptoController;
 use App\Http\Controllers\Frontend\TipoConceptoController;
 
+use App\Http\Controllers\Frontend\MunicipalidadController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -87,3 +89,7 @@ Route::get('concepto/listar_concepto_ajax', [ConceptoController::class, 'listar_
 Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('TipoConcepto.consulta_tipoConcepto');
 
 Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
+Route::get('municipalidad/consulta_municipalidad', [MunicipalidadController::class, 'consulta_municipalidad'])->name('municipalidad.consulta_municipalidad');
+Route::post('municipalidad/listar_municipalidad', [MunicipalidadController::class, 'listar_municipalidad'])->name('municipalidad.listar_municipalidad');
+
+Route::get('municipalidad/modal_municipalidad/{id}', [MunicipalidadController::class, 'modal_municipalidad'])->name('municipalidad.modal_municipalidad');
