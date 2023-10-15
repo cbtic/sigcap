@@ -39,7 +39,6 @@ class CreateCajaIngresosTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
