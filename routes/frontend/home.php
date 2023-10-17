@@ -101,16 +101,16 @@ Route::post('concepto/send_concepto_nuevoConcepto', [ConceptoController::class, 
 
 Route::get('concepto/eliminar_concepto/{id}/{estado}', [ConceptoController::class, 'eliminar_concepto'])->name('concepto.eliminar_concepto');
 
-Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('TipoConcepto.consulta_tipoConcepto');
+Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('tipoConcepto.consulta_tipoConcepto');
 
-Route::post('TipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('TipoConcepto.listar_tipoConcepto_ajax');
+Route::post('tipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('tipoConcepto.listar_tipoConcepto_ajax');
 
-Route::get('TipoConcepto/editar_tipoConcepto/{id}', [TipoConceptoController::class, 'editar_tipoConcepto'])->name('TipoConcepto.editar_tipoConcepto');
+Route::get('tipoConcepto/editar_tipoConcepto/{id}', [TipoConceptoController::class, 'editar_tipoConcepto'])->name('tipoConcepto.editar_tipoConcepto');
 
-Route::get('TipoConcepto/modal_tipoConcepto_nuevotipoConcepto/{id}', [TipoConceptoController::class, 'modal_tipoConcepto_nuevotipoConcepto'])->name('TipoConcepto.modal_tipoConcepto_nuevotipoConcepto');
+Route::get('tipoConcepto/modal_tipoConcepto_nuevoTipoConcepto/{id}', [TipoConceptoController::class, 'modal_tipoConcepto_nuevoTipoConcepto'])->name('tipoConcepto.modal_tipoConcepto_nuevoTipoConcepto');
 
-Route::post('TipoConcepto/send_tipoConcepto_nuevotipoConcepto', [TipoConceptoController::class, 'send_tipoConcepto_nuevotipoConcepto'])->name('TipoConcepto.send_tipoConcepto_nuevotipoConcepto');
+Route::post('tipoConcepto/send_tipoConcepto_nuevoTipoConcepto', [TipoConceptoController::class, 'send_tipoConcepto_nuevoTipoConcepto'])->name('tipoConcepto.send_tipoConcepto_nuevoTipoConcepto');
 
-Route::get('TipoConcepto/eliminar_tipoConcepto/{id}/{estado}', [TipoConceptoController::class, 'eliminar_tipoConcepto'])->name('TipoConcepto.eliminar_tipoConcepto');
+Route::get('tipoConcepto/eliminar_tipoConcepto/{id}/{estado}', [TipoConceptoController::class, 'eliminar_tipoConcepto'])->name('tipoConcepto.eliminar_tipoConcepto');
 
 //Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');

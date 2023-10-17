@@ -10,9 +10,9 @@ class TipoConcepto extends Model
 {
     use HasFactory;
 
-    public function listar_TipoConcepto_ajax($p){
+    public function listar_tipoConcepto_ajax($p){
 
-        return $this->readFuntionPostgres('sp_listar_tipoConcepto_paginado',$p);
+        return $this->readFuntionPostgres('sp_listar_tipoconcepto_paginado',$p);
 
     }
 

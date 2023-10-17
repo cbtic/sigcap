@@ -474,7 +474,7 @@ function datatablenew(){
 				"className": "dt-center",
 				//"className": 'control'
                 },
-				{
+				/*{
                 "mRender": function (data, type, row) {
                     var nombre_comercial = "";
 					if(row.nombre_comercial!= null)nombre_comercial = row.nombre_comercial;
@@ -482,7 +482,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "aTargets": [1]
-                },
+                },*/
                 {
                 "mRender": function (data, type, row) {
                 	var razon_social = "";
@@ -490,7 +490,7 @@ function datatablenew(){
 					return razon_social;
                 },
                 "bSortable": false,
-                "aTargets": [2]
+                "aTargets": [1]
                 },
 				{
 					"mRender": function (data, type, row) {
@@ -499,8 +499,8 @@ function datatablenew(){
 						return direccion;
 					},
 					"bSortable": false,
-					"aTargets": [3]
-				},
+					"aTargets": [2]
+				},/*
 				{
 					"mRender": function (data, type, row) {
 						var representante = "";
@@ -509,7 +509,7 @@ function datatablenew(){
 					},
 					"bSortable": false,
 					"aTargets": [4]
-				},
+				},*/
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -522,7 +522,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [5]
+					"aTargets": [3]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -547,7 +547,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [6],
+					"aTargets": [4],
 				},
 
             ]

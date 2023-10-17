@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Concepto;
 use App\Models\Regione;
+use Auth;
 
 class ConceptoController extends Controller
 {
@@ -102,6 +103,8 @@ class ConceptoController extends Controller
 
     public function send_concepto_nuevoConcepto(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$concepto = new Concepto;
 		}else{
@@ -113,7 +116,7 @@ class ConceptoController extends Controller
 		$concepto->denominacion = $request->denominacion;
 		$concepto->id_partida_presupuestal = $request->id_partida_presupuestal;
 		$concepto->estado = 1;
-		$concepto->id_usuario_inserta = 1;
+		$concepto->id_usuario_inserta = $id_user;
 		$concepto->save();
 			
     }

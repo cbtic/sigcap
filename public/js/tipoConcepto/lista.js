@@ -6,9 +6,9 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
-		
+	
 	$('#btnNuevo').click(function () {
-		modalConcepto(0);
+		modalTipoConcepto(0);
 	});
 		
 	datatablenew();
@@ -412,7 +412,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/concepto/listar_concepto_ajax",
+        "sAjaxSource": "/tipoConcepto/listar_tipoConcepto_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -429,7 +429,7 @@ function datatablenew(){
                         {},
         ],
 		"dom": '<"top">rt<"bottom"flpi><"clear">',
-        "fnDrawCallback": function(json) {	
+        "fnDrawCallback": function(json) {
             $('[data-toggle="tooltip"]').tooltip();
         },
 
@@ -439,8 +439,9 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#denominacionBus').val();
-            var partida_presupuestal = $('#partida_presupuestalBus').val();
+			var codigo = $('#codigo').val();
+			var id_regional = $('#id_regional').val();
+			var denominacion = $('#denominacion').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -449,7 +450,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,partida_presupuestal:partida_presupuestal,estado:estado,
+						codigo:codigo,id_regional:id_regional,denominacion:denominacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -463,6 +464,7 @@ function datatablenew(){
 
         "aoColumnDefs":
             [	
+				
 				{
 				"mRender": function (data, type, row) {
 					var codigo = "";
@@ -470,37 +472,39 @@ function datatablenew(){
 					return codigo;
 					},
 				"bSortable": false,
-				"aTargets": [0]
+				"aTargets": [0],
+				"className": "dt-center",
+				//"className": 'control'
 				},
 				{
                 "mRender": function (data, type, row) {
                 	var regional = "";
 					if(row.regional!= null)regional = row.regional;
 					return regional;
-                	},
+                },
                 "bSortable": false,
                 "aTargets": [1],
 				"className": "dt-center",
 				//"className": 'control'
                 },
-                {
+				{
                 "mRender": function (data, type, row) {
-                	var denominacion = "";
+                    var denominacion = "";
 					if(row.denominacion!= null)denominacion = row.denominacion;
 					return denominacion;
                 },
                 "bSortable": false,
                 "aTargets": [2]
                 },
-				{
-				"mRender": function (data, type, row) {
-					var partida_presupuestal = "";
-					if(row.partida_presupuestal!= null)partida_presupuestal = row.partida_presupuestal;
-					return partida_presupuestal;
-				},
-				"bSortable": false,
-				"aTargets": [3]
-				},
+                {
+                "mRender": function (data, type, row) {
+                	var estado = "";
+					if(row.estado!= null)estado = row.estado;
+					return estado;
+                },
+                "bSortable": false,
+                "aTargets": [3]
+                },
 				{
 				"mRender": function (data, type, row) {
 					var estado = "";
@@ -529,8 +533,8 @@ function datatablenew(){
 					}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalConcepto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<a href="javascript:void(0)" onclick=eliminarConcepto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalTipoConcepto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						html += '<a href="javascript:void(0)" onclick=eliminarTipoConcepto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -551,13 +555,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalConcepto(id){
+function modalTipoConcepto(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/concepto/modal_concepto_nuevoConcepto/"+id,
+			url: "/tipoConcepto/modal_tipoConcepto_nuevoTipoConcepto/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -583,7 +587,7 @@ function modalResponsable(id){
 
 }
 
-function eliminarConcepto(id,estado){
+function eliminarTipoConcepto(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -595,20 +599,20 @@ function eliminarConcepto(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" el Concepto?", 
+        message: "&iquest;Deseas "+act_estado+" el Tipo de Concepto?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_concepto(id,estado_);
+                fn_eliminar_tipoConcepto(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_concepto(id,estado){
+function fn_eliminar_tipoConcepto(id,estado){
 	
     $.ajax({
-            url: "/concepto/eliminar_concepto/"+id+"/"+estado,
+            url: "/tipoConcepto/eliminar_tipoConcepto/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
