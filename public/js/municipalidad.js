@@ -9,6 +9,12 @@ $(document).ready(function () {
 	$('#btnNuevo').click(function () {
 		modalMunicipalidad(0);
 	});
+
+	$('#denominacion').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
 		
 	datatablenew();
 
@@ -254,6 +260,7 @@ function obtenerPlanDetalle(){
 	});
 	
 }
+
 function modalMunicipalidad(id){
 	
 	$(".modal-dialog").css("width","85%");
@@ -364,6 +371,7 @@ function datatablenew(){
 			
 			var denominacion = $('#denominacion').val();
 			var estado = $('#estado').val();
+			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -403,10 +411,30 @@ function datatablenew(){
 					if(row.denominacion!= null)denominacion = row.denominacion;
 					return denominacion;
                 },
-                "bSortable": false,
+                "bSortable": true,
                 "aTargets": [1]
                 },
 				
+				{
+				"mRender": function (data, type, row) {
+					var tipo_municipalidad = "";
+					if(row.tipo_municipalidad != null)tipo_municipalidad=row.tipo_municipalidad
+							
+					return tipo_municipalidad;
+					},
+					"bSortable": true,
+					"aTargets": [2]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var idtipocom = "";
+						if(row.tipo_comision != null)idtipocom=row.tipo_comision
+							
+						return idtipocom;
+					},
+					"bSortable": false,
+					"aTargets": [3]
+				},
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -419,7 +447,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [2]
+					"aTargets": [4]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -435,8 +463,10 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<a href="/municipalidad/modal_municipalidad/'+row.id+'" style="font-size:12px" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
-						html += '<a href="javascript:void(0)" onclick=eliminarEmpresa('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalMunicipalidad('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+
+						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -444,7 +474,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [3],
+					"aTargets": [5],
 				},
 
             ]
@@ -490,7 +520,7 @@ function modalResponsable(id){
 
 }
 
-function eliminarEmpresa(id,estado){
+function eliminar(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -502,20 +532,20 @@ function eliminarEmpresa(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Empresa?", 
+        message: "&iquest;Deseas "+act_estado+" la Municipalidad?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_empresa(id,estado_);
+                fn_eliminar(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_empresa(id,estado){
+function fn_eliminar(id,estado){
 	
     $.ajax({
-            url: "/empresa/eliminar_empresa/"+id+"/"+estado,
+            url: "/municipalidad/eliminar_municipalidad/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

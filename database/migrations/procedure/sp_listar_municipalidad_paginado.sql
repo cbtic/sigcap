@@ -18,9 +18,10 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' id, denominacion, estado ';
+	v_campos='  m.id,m.denominacion ,tm.denominacion tipo_municipalidad ,tm2.denominacion tipo_comision,m.estado estado   ';
 
-	v_tabla='from municipalidades ';
+	v_tabla=' from municipalidades m inner join tabla_maestras tm on m.id_tipo_municipalidad =tm.codigo inner join tabla_maestras tm2 on m.id_tipo_comision  =tm2.codigo ';
+	
 	
 	v_where = ' Where 1=1  ';
 	/*
@@ -31,20 +32,20 @@ Begin
 	
 	*/
 	If p_denominacion<>'' Then
-	 v_where:=v_where||'And denominacion ilike ''%'||p_denominacion||'%'' ';
+	 v_where:=v_where||'And m.denominacion ilike ''%'||p_denominacion||'%'' ';
 	End If;
 
 	If p_estado<>'' Then
-	 v_where:=v_where||'And estado = '''||p_estado||''' ';
+	 v_where:=v_where||'And m.estado = '''||p_estado||''' ';
 	End If;
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By denominacion  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By m.denominacion  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By denominacion ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By m.denominacion ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;

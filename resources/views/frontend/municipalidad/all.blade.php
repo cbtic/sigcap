@@ -160,6 +160,7 @@
 							<option value="0">Eliminado</option>
 						</select>
 					</div>
+
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
@@ -175,8 +176,10 @@
                         <tr style="font-size:13px">
                             <th>Id</th>
                             <th>Denominaci&oacute;n</th>
-                            <th>Estado</th>
-							<th>Acciones</th>
+                            <th>Tipo Municipalidad</th>
+                            <th>Tipo Comisi&oacute;n</th>
+							<th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
