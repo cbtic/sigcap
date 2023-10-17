@@ -6,28 +6,17 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
-
-	$('#denominacionBus').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
-
-	$('#partida_presupuestalBus').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
-		
+	
 	$('#btnNuevo').click(function () {
-		modalConcepto(0);
+		modalPersona(0);
 	});
 		
 	datatablenew();
-	/*	
+	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
 	
+	/*
 	$('#fecha_inicio').datepicker({
         autoclose: true,
 		dateFormat: 'dd/mm/yy',
@@ -35,7 +24,6 @@ $(document).ready(function () {
 		changeYear: true,
     });
 	
-	//$("#fecha_vencimiento").datepicker($.datepicker.regional["es"]);
 	$('#fecha_vencimiento').datepicker({
         autoclose: true,
         dateFormat: 'dd/mm/yy',
@@ -82,34 +70,34 @@ $(document).ready(function () {
 
 
 	$(function() {
-		$('#modalEmpresaForm #apellido_paterno').keyup(function() {
+		$('#modalPersonaForm #apellido_paterno').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
 	$(function() {
-		$('#modalEmpresaForm #apellido_materno').keyup(function() {
+		$('#modalPersonaForm #apellido_materno').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
 	$(function() {
-		$('#modalEmpresaForm #nombres').keyup(function() {
+		$('#modalPersonaForm #nombres').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
 
 
 	$(function() {
-		$('#modalEmpresaTitularForm #apellido_paterno').keyup(function() {
+		$('#modalPersonaTitularForm #apellido_paterno').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
 	$(function() {
-		$('#modalEmpresaTitularForm #apellido_materno').keyup(function() {
+		$('#modalPersonaTitularForm #apellido_materno').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
 	$(function() {
-		$('#modalEmpresaTitularForm #nombres').keyup(function() {
+		$('#modalPersonaTitularForm #nombres').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
@@ -161,7 +149,7 @@ function guardarAfiliacion(){
 	//fn_save();
 }
 
-function fn_save___(){
+function fn_save_(){
     
     //var fecha_atencion_original = $('#fecha_atencion').val();
 	//var id_user = $('#id_user').val();
@@ -206,9 +194,12 @@ function validaTipoDocumento(){
 	}
 }
 
-function obtenerEmpresa(){
+
+
+function obtenerPersona(){
 		
-	var _id = $("#id").val();	
+	var tipo_documento = $("#tipo_documento").val();
+	var numero_documento = $("#numero_documento").val();
 	var msg = "";
 	
 	if (msg != "") {
@@ -217,20 +208,29 @@ function obtenerEmpresa(){
 	}
 	
 	//$('#empresa_id').val("");
-	$('#empresa_id').val("");
+	$('#persona_id').val("");
 	
 	$.ajax({
-		url: '/empresa/obtener_empresa/' + _id,
+		url: '/persona/obtener_persona/' + tipo_documento + '/' + numero_documento,
 		dataType: "json",
 		success: function(result){
-			//var nombre_persona= result.persona.apellido_paterno+" "+result.persona.apellido_materno+", "+result.persona.nombres;
-			//$('#nombre_persona').val(nombre_persona);
-			$('#empresa_id').val(result.empresa.id);
-
+			var nombre_persona= result.persona.apellido_paterno+" "+result.persona.apellido_materno+", "+result.persona.nombres;
+			$('#nombre_persona').val(nombre_persona);
+			$('#persona_id').val(result.persona.id);
+			if(result.persona.titular_id > 0){
+				$("#chkTitular").attr("checked",false);
+				$("#numero_documento_tit").val(result.persona.numero_documento_titular);
+				obtenerTitularActual(result.persona.tipo_documento_titular,result.persona.numero_documento_titular);
+			}
+			if(result.persona.titular_id == 0){
+				$("#chkTitular").attr("checked",true);
+				$("#numero_documento_tit").val(numero_documento);
+				obtenerTitularActual(tipo_documento,numero_documento);
+			}
 		},
 		error: function(data) {
-			alert("Empresa no encontrada en la Base de Datos.");
-			$('#empresaModal').modal('show');
+			alert("Persona no encontrada en la Base de Datos.");
+			$('#personaModal').modal('show');
 		}
 		
 	});
@@ -360,18 +360,18 @@ function cargarDevolucion(){
 */
 
 
-$('#modalEmpresaSaveBtn').click(function (e) {
+$('#modalPersonaSaveBtn').click(function (e) {
 	e.preventDefault();
 	$(this).html('Enviando datos..');
 
 	$.ajax({
-	  data: $('#modalEmpresaForm').serialize(),
+	  data: $('#modalPersonaForm').serialize(),
 	  url: "/afiliacion/nueva_inscripcion_ajax",
 	  type: "POST",
 	  dataType: 'json',
 	  success: function (data) {
 
-		  $('#modalEmpresaForm #modalEmpresaForm').trigger("reset");
+		  $('#modalPersonaForm #modalPersonaForm').trigger("reset");
 		  $('#personaModal').modal('hide');
 		  $('#numero_documento').val(data.numero_documento);
 		  $('#nombre_persona').val(data.nombre_apellido);
@@ -384,24 +384,24 @@ $('#modalEmpresaSaveBtn').click(function (e) {
 	$.each( data["responseJSON"].errors, function( key, value ) {
 	  mensaje += value +"\n";
 	});
-	$("#modalEmpresaForm #modalEmpresaSaveBtn").html("Grabar");
+	$("#modalPersonaForm #modalPersonaSaveBtn").html("Grabar");
 	alert(mensaje);
   }
   });
 });
 
-$('#modalEmpresaTitularSaveBtn').click(function (e) {
+$('#modalPersonaTitularSaveBtn').click(function (e) {
 	e.preventDefault();
 	$(this).html('Enviando datos..');
 
 	$.ajax({
-	  data: $('#modalEmpresaTitularForm').serialize(),
+	  data: $('#modalPersonaTitularForm').serialize(),
 	  url: "/afiliacion/nueva_inscripcion_ajax",
 	  type: "POST",
 	  dataType: 'json',
 	  success: function (data) {
 
-		  $('#modalEmpresaTitularForm #modalEmpresaForm').trigger("reset");
+		  $('#modalPersonaTitularForm #modalPersonaForm').trigger("reset");
 		  $('#personaTitularModal').modal('hide');
 		  $('#numero_documento_tit').val(data.numero_documento);
 		  $('#nombre_titular').val(data.nombre_apellido);
@@ -414,7 +414,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 	$.each( data["responseJSON"].errors, function( key, value ) {
 	  mensaje += value +"\n";
 	});
-	$("#modalEmpresaTitularForm  #modalEmpresaSaveBtn").html("Grabar");
+	$("#modalPersonaTitularForm  #modalPersonaSaveBtn").html("Grabar");
 	alert(mensaje);
   }
   });
@@ -424,7 +424,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/concepto/listar_concepto_ajax",
+        "sAjaxSource": "/persona/listar_persona_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -441,7 +441,7 @@ function datatablenew(){
                         {},
         ],
 		"dom": '<"top">rt<"bottom"flpi><"clear">',
-        "fnDrawCallback": function(json) {	
+        "fnDrawCallback": function(json) {
             $('[data-toggle="tooltip"]').tooltip();
         },
 
@@ -451,17 +451,23 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#denominacionBus').val();
-            var partida_presupuestal = $('#partida_presupuestalBus').val();
+			var numero_documento = $('#numero_documento').val();
+            var persona = $('#persona').val();
 			var estado = $('#estado').val();
+			var flag_foto = $('#flag_foto').val();
+			var flag_vacuna = $('#flag_vacuna').val();
+			var flag_carnet = $('#flag_carnet').val();
+			var flag_negativo = 0;
+			if($("#flag_negativo").is(':checked'))flag_negativo = 1;
 			var _token = $('#_token').val();
+			
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 //"contentType": "application/json; charset=utf-8",
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,partida_presupuestal:partida_presupuestal,estado:estado,
+						numero_documento:numero_documento,persona:persona,estado:estado,flag_negativo:flag_negativo,flag_foto:flag_foto,flag_vacuna:flag_vacuna,flag_carnet:flag_carnet,
 						_token:_token
                        },
                 "success": function (result) {
@@ -476,59 +482,93 @@ function datatablenew(){
         "aoColumnDefs":
             [	
 				{
-				"mRender": function (data, type, row) {
-					var codigo = "";
-					if(row.codigo!= null)codigo = row.codigo;
-					return codigo;
-					},
-				"bSortable": false,
-				"aTargets": [0]
-				},
-				{
                 "mRender": function (data, type, row) {
-                	var regional = "";
-					if(row.regional!= null)regional = row.regional;
-					return regional;
-                	},
+                	var tipo_documento = "";
+					if(row.tipo_documento!= null)tipo_documento = row.tipo_documento;
+					return tipo_documento;
+                },
                 "bSortable": false,
-                "aTargets": [1],
+                "aTargets": [0],
 				"className": "dt-center",
 				//"className": 'control'
                 },
+				{
+                "mRender": function (data, type, row) {
+                    var numero_documento = "";
+					if(row.numero_documento!= null)numero_documento = row.numero_documento;
+					return numero_documento;
+                },
+                "bSortable": false,
+                "aTargets": [1]
+                },
                 {
                 "mRender": function (data, type, row) {
-                	var denominacion = "";
-					if(row.denominacion!= null)denominacion = row.denominacion;
-					return denominacion;
+                	var persona = "";
+					if(row.persona!= null)persona = row.persona;
+					return persona;
                 },
                 "bSortable": false,
                 "aTargets": [2]
                 },
 				{
-				"mRender": function (data, type, row) {
-					var partida_presupuestal = "";
-					if(row.partida_presupuestal!= null)partida_presupuestal = row.partida_presupuestal;
-					return partida_presupuestal;
-				},
-				"bSortable": false,
-				"aTargets": [3]
-				},
+                "mRender": function (data, type, row) {
+                	var foto = "";
+					var html_foto="";
+					if(row.foto!= null)foto = row.foto;
+					if(foto!="" && foto!="ruta" && foto!="mail@mail.com")html_foto='<img width="30" src="/img/dni_asociados/'+foto+'" alt="">';
+					return html_foto;
+                },
+                "bSortable": false,
+                "aTargets": [3]
+                },
 				{
-				"mRender": function (data, type, row) {
-					var estado = "";
-					if(row.estado == 1){
-						estado = "Activo";
-					}
-					if(row.estado == 0){
-						estado = "Inactivo";
-					}
-					return estado;
-				},
-				"bSortable": false,
-				"aTargets": [4]
-				},
+                "mRender": function (data, type, row) {
+                	var codigo = "";
+					if(row.codigo!= null)codigo = row.codigo;
+					return codigo;
+                },
+                "bSortable": false,
+                "aTargets": [4]
+                },
 				{
-				"mRender": function (data, type, row) {
+                "mRender": function (data, type, row) {
+                	var ocupacion = "";
+					if(row.ocupacion!= null)ocupacion = row.ocupacion;
+					return ocupacion;
+                },
+                "bSortable": false,
+                "aTargets": [5]
+                },
+				{
+					"mRender": function (data, type, row) {
+						var ruc = "";
+						if(row.ruc!= null)ruc = row.ruc;
+						return ruc;
+					},
+					"bSortable": false,
+					"aTargets": [6]
+					},				
+				/*{
+                "mRender": function (data, type, row) {
+                	var tipo_relacion = "";
+					if(row.tipo_relacion!= null)tipo_relacion = row.tipo_relacion;
+					return tipo_relacion;
+                },
+                "bSortable": false,
+                "aTargets": [5]
+                },*/
+				{
+                "mRender": function (data, type, row) {
+                	var nombre_estado = "";
+					if(row.estado == 1)nombre_estado = "Activo";
+					if(row.estado == 0)nombre_estado = "Eliminado";
+					return nombre_estado;
+                },
+                "bSortable": false,
+                "aTargets": [7]
+                },
+				{
+                "mRender": function (data, type, row) {
 					var estado = "";
 					var clase = "";
 					if(row.estado == 1){
@@ -539,21 +579,48 @@ function datatablenew(){
 						estado = "Activar";
 						clase = "btn-success";
 					}
-						
-						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalConcepto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<a href="javascript:void(0)" onclick=eliminarConcepto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
-						
-						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
-						
-						html += '</div>';
-						return html;
-					},
-					"bSortable": false,
-					"aTargets": [5],
-				},
-
+					
+					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalPersona('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					html += '<a href="javascript:void(0)" onclick=eliminarPersona('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '</div>';
+					return html;
+                },
+                "bSortable": false,
+                "aTargets": [8],
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalFlagNegativo('+row.id+')" ><i class="fa fa-eye"></i> Flag Negativo</button>';
+					html += '</div>';
+					return html;
+                },
+                "bSortable": false,
+                "aTargets": [9]
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalPersonaVacuna('+row.id+')" ><i class="fa fa-syringe"></i> Nuevo</button>';
+					html += '</div>';
+					return html;
+                },
+                "bSortable": false,
+                "aTargets": [10]
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalPersonaSanidad('+row.id+')" ><i class="fa fa-id-card"></i> Nuevo</button>';
+					html += '</div>';
+					return html;
+                },
+                "bSortable": false,
+                "aTargets": [11]
+                },
             ]
+
 
     });
 
@@ -563,13 +630,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalConcepto(id){
+function modalPersona(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/concepto/modal_concepto_nuevoConcepto/"+id,
+			url: "/persona/modal_persona/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -579,13 +646,13 @@ function modalConcepto(id){
 
 }
 
-function modalResponsable(id){
+function modalPersonaVacuna(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/afiliacion/modal_afiliacion_empresa/"+id,
+			url: "/persona/modal_persona_vacuna/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -595,7 +662,39 @@ function modalResponsable(id){
 
 }
 
-function eliminarConcepto(id,estado){
+function modalFlagNegativo(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/persona/modal_flag_negativo/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modalPersonaSanidad(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/persona/modal_persona_sanidad/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function eliminarPersona(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -607,20 +706,20 @@ function eliminarConcepto(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" el Concepto?", 
+        message: "&iquest;Deseas "+act_estado+" la Persona?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_concepto(id,estado_);
+                fn_eliminar_persona(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_concepto(id,estado){
+function fn_eliminar_persona(id,estado){
 	
     $.ajax({
-            url: "/concepto/eliminar_concepto/"+id+"/"+estado,
+            url: "/persona/eliminar_persona/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

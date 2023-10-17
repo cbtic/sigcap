@@ -263,19 +263,18 @@ function validaRuc(ruc){
 			$('#direccion').val('')
 			$('#nombre_comercial').val('')
 			
-			$('#razon_social').val(data.nombre_o_razon_social);
-			$('#nombre_comercial').val(data.nombre_o_razon_social);
-			$('#direccion').attr('readonly', true);
+			$('#razon_social').val(data.nombre_o_razon_social).attr('readonly', true);
+			$('#nombre_comercial').val(data.nombre_o_razon_social).attr('readonly', true);
+			//$('#direccion').attr('readonly', true);
 
-			if (typeof data.direccion_completa != "undefined"){
-				$('#direccion').val(data.direccion_completa);
+			if (data.direccion_completa != ""){
+				$('#direccion').val(data.direccion_completa).attr('readonly', true);
 			}
 			else{
 				$('#direccion').attr('readonly', false);
 			}
 			
-
-			//alert(data.nombre_o_razon_social);
+			//alert(data.direccion_completa);
 
 		}
 		else{
@@ -358,6 +357,8 @@ function fn_save_empresa(){
 	var nombre_comercial = $('#nombre_comercial').val();
 	var razon_social = $('#razon_social').val();
 	var direccion = $('#direccion').val();
+	var email = $('#email').val();
+	var telefono = $('#telefono').val();
 	var representante = $('#representante').val();
 	//var estado = $('#estado').val();
 	
@@ -367,7 +368,7 @@ function fn_save_empresa(){
     $.ajax({
 			url: "/empresa/send_empresa_nuevoEmpresa",
             type: "POST",
-            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,representante:representante},
+            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,email:email,telefono:telefono,representante:representante},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -566,14 +567,14 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Nombre Comercial</label>
-								<input id="nombre_comercial" name="nombre_comercial" class="form-control form-control-sm"  value="<?php echo $empresa->nombre_comercial?>" type="text" >						
+								<input id="nombre_comercial" name="nombre_comercial" class="form-control form-control-sm"  value="<?php echo $empresa->nombre_comercial?>" type="text" readonly="readonly">						
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Raz&oacute;n Social</label>
-								<input id="razon_social" name="razon_social" class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" >													
+								<input id="razon_social" name="razon_social" class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" readonly="readonly">													
 							</div>
 						</div>
 						
@@ -581,6 +582,20 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Direcci&oacute;n</label>
 								<input id="direccion" name="direccion" class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text" >																				
+							</div>
+						</div>
+
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Email</label>
+								<input id="email" name="email" class="form-control form-control-sm"  value="<?php echo $empresa->email?>" type="text" >																				
+							</div>
+						</div>
+
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Tel&eacute;fono</label>
+								<input id="telefono" name="telefono" class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text" >																				
 							</div>
 						</div>
 						

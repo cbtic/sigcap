@@ -365,6 +365,39 @@ function fn_save_concepto(){
     });
 }
 
+function fn_save_tipoConcepto(){
+    
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var codigo = $('#codigo').val();
+	var id_regional = $('#id_regional').val();
+	var denominacion = $('#denominacion').val();
+	//var estado = $('#estado').val();
+	
+	//alert(id_agremiado);
+	//return false;
+	
+    $.ajax({
+			url: "/tipoConcepto/send_tipoConcepto_nuevoTipoConcepto",
+            type: "POST",
+            data : {_token:_token,id:id,codigo:codigo,id_regional:id_regional,denominacion:denominacion},
+            success: function (result) {
+				
+				$('#openOverlayOpc').modal('hide');
+				window.location.reload();
+				
+				/*
+				$('#openOverlayOpc').modal('hide');
+				if(result==1){
+					bootbox.alert("La persona o empresa ya se encuentra registrado");
+				}else{
+					window.location.reload();
+				}
+				*/
+            }
+    });
+}
+
 function fn_liberar(id){
     
 	//var id_estacionamiento = $('#id_estacionamiento').val();
@@ -520,7 +553,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Concepto
+				Registro Tipo Concepto
 			</div>
 			
             <div class="card-body">
@@ -534,7 +567,13 @@ container: '#myModal modal-body'
 					
 					
 					<div class="row" style="padding-left:10px">
-						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">C&oacute;digo</label>
+								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $tipoConcepto->codigo?>" type="text" readonly="readonly" >						
+							</div>
+						</div>	
+
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
@@ -542,7 +581,7 @@ container: '#myModal modal-body'
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($region as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$tipoConcepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
 									}
 									?>
@@ -552,33 +591,17 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">C&oacute;digo</label>
-								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" >						
-							</div>
-						</div>
-						
-						<div class="col-lg-12">
-							<div class="form-group">
 								<label class="control-label form-control-sm">Denominaci&oacute;n</label>
-								<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="<?php echo $concepto->denominacion?>" type="text" >													
-							</div>
-						</div>
-						
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Partida Presupuestal</label>
-								<input id="id_partida_presupuestal" name="id_partida_presupuestal" class="form-control form-control-sm"  value="<?php echo $concepto->id_partida_presupuestal?>" type="text" >
+								<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="<?php echo $tipoConcepto->denominacion?>" type="text" >													
 							</div>
 						</div>
 						
 					</div>
 					
-					
-					
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_concepto()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_tipoConcepto()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

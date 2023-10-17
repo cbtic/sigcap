@@ -179,10 +179,12 @@
                         <thead>
                         <tr style="font-size:13px">
                             <th>Ruc</th>
-                            <th>Nombre Comercial</th>
+                            <!--<th>Nombre Comercial</th>-->
                             <th>Raz&oacute;n Social</th>
 							<th>Direcci&oacute;n</th>
-                            <th>Representante</th>
+                            <th>Email</th>
+                            <th>Tel&eacute;fono</th>
+                            <!--<th>Representante</th>-->
                             <th>Estado</th>
 							<th>Acciones</th>
                         </tr>

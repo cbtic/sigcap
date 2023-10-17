@@ -66,6 +66,11 @@ $(document).ready(function () {
 		//Limpiar();
 		//window.location.reload();
 	});
+
+	$('#btnNuevoTipoConcepto').on('click', function () {
+		modalTipoConcepto(0);
+	});
+	
 	/*
 	$('.delete_ruta').on('click', function () {
 		DeleteImagen(this);
@@ -1682,7 +1687,7 @@ function ocultar_solicitud(){
 function datatablenew(){
     var oTable = $('#tblSolicitud').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/expediente/listar_expediente_ajax",
+        "sAjaxSource": "/tipoConcepto/listar_tipoConcepto_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         "bFilter": false,
@@ -3114,6 +3119,21 @@ function modalEstudio(id){
 
 }
 
+function modalTipoConcepto(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/tipoConcepto/modal_tipoConcepto_nuevoTipoConcepto/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+}
+
 function modalIdioma(id){
 	
 	$(".modal-dialog").css("width","85%");
@@ -3161,6 +3181,7 @@ function modalTrabajo(id){
 	});
 
 }
+
 function modalSeguimiento(id){
 	
 	$(".modal-dialog").css("width","85%");
@@ -3228,163 +3249,6 @@ function fn_eliminar_mov(id){
             type: "GET",
             success: function (result) {
 				datatable_mov();
-            }
-    });
-}
-
-function eliminarEstudio(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el Estudio?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_estudio(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_estudio(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_estudio/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
-            }
-    });
-}
-
-function eliminarIdioma(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el Idioma?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_idioma(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_idioma(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_idioma/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
-            }
-    });
-}
-
-function eliminarParentesco(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el Familiar?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_parentesco(id);
-                fn_eliminar_idioma(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_parentesco(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_parentesco/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
-            }
-    });
-}
-
-function eliminarTrabajo(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar la experiencia profesional?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_trabajo(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_trabajo(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_trabajo/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
-            }
-    });
-}
-
-function eliminarTraslado(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el traslado?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_traslado(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_traslado(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_traslado/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
-            }
-    });
-}
-
-function eliminarSituacion(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el viaje al extranjero?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_situacion(id);
-            }
-        }
-    });
-    $(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_situacion(id){
-	
-	$.ajax({
-            url: "/agremiado/eliminar_situacion/"+id,
-            type: "GET",
-            success: function (result) {
-				//datatable_mov();
-				window.location.reload();
             }
     });
 }

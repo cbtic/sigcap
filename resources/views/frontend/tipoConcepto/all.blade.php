@@ -150,10 +150,10 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Ruc">
+						<input class="form-control form-control-sm" id="codigo" name="codigo" placeholder="Codigo">
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Razon Social">
+						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominacion">
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
@@ -164,8 +164,8 @@
 					</div>
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
 					</div>
 				</div>
 				
@@ -175,11 +175,9 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Ruc</th>
-                            <th>Nombre Comercial</th>
-                            <th>Raz&oacute;n Social</th>
-							<th>Direcci&oacute;n</th>
-                            <th>Representante</th>
+                            <th>C&oacute;digo</th>
+                            <th>Regional</th>
+                            <th>Denominaci&oacute;n</th>
                             <th>Estado</th>
 							<th>Acciones</th>
                         </tr>
@@ -218,6 +216,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/empresa/lista.js') }}"></script>
+<script src="{{ asset('js/tipoConcepto/lista.js') }}"></script>
 
 @endpush
