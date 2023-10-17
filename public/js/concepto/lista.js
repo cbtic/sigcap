@@ -6,6 +6,18 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
+
+	$('#denominacionBus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#partida_presupuestalBus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
 		
 	$('#btnNuevo').click(function () {
 		modalConcepto(0);

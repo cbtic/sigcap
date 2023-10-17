@@ -15,6 +15,16 @@ class ConceptoController extends Controller
         return view('frontend.concepto.all');
 
     }
+	
+	public function __construct(){
+
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+	}
 
     public function listar_concepto_ajax(Request $request){
 	

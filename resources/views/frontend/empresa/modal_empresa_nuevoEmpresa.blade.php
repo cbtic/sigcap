@@ -357,6 +357,8 @@ function fn_save_empresa(){
 	var nombre_comercial = $('#nombre_comercial').val();
 	var razon_social = $('#razon_social').val();
 	var direccion = $('#direccion').val();
+	var email = $('#email').val();
+	var telefono = $('#telefono').val();
 	var representante = $('#representante').val();
 	//var estado = $('#estado').val();
 	
@@ -366,7 +368,7 @@ function fn_save_empresa(){
     $.ajax({
 			url: "/empresa/send_empresa_nuevoEmpresa",
             type: "POST",
-            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,representante:representante},
+            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,email:email,telefono:telefono,representante:representante},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -580,6 +582,20 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Direcci&oacute;n</label>
 								<input id="direccion" name="direccion" class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text" >																				
+							</div>
+						</div>
+
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Email</label>
+								<input id="email" name="email" class="form-control form-control-sm"  value="<?php echo $empresa->email?>" type="text" >																				
+							</div>
+						</div>
+
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Tel&eacute;fono</label>
+								<input id="telefono" name="telefono" class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text" >																				
 							</div>
 						</div>
 						

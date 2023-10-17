@@ -13,6 +13,16 @@ class EmpresaController extends Controller
 
         return view('frontend.empresa.all');
     }
+	
+	public function __construct(){
+
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+	}
 
     public function listar_empresa_ajax(Request $request){
 	
@@ -22,7 +32,9 @@ class EmpresaController extends Controller
 		$p[]=$request->razon_social;
 		$p[]="";
         $p[]="";
-        $p[]=$request->razon_social;
+		$p[]="";
+		$p[]="";
+		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $empresa_model->listar_empresa_ajax($p);
@@ -80,7 +92,7 @@ class EmpresaController extends Controller
 		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
 		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);*/
 		
-		return view('frontend.empresa.create',compact('ruc','nombre_comercial','razon_social','direccion','representante','estado'));
+		return view('frontend.empresa.create',compact('ruc','nombre_comercial','razon_social','direccion','email','telefono','representante','estado'));
 		
     }
 
@@ -115,11 +127,12 @@ class EmpresaController extends Controller
 		$empresa->nombre_comercial = $request->nombre_comercial;
 		$empresa->razon_social = $request->razon_social;
 		$empresa->direccion = $request->direccion;
+		$empresa->email = $request->email;
+		$empresa->telefono = $request->telefono;
 		$empresa->representante = $request->representante;
 		$empresa->estado = 1;
 		$empresa->id_usuario_inserta = $id_user;
 		$empresa->save();
-			
     }
 
 	public function eliminar_empresa($id,$estado)
