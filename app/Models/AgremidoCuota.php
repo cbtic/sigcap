@@ -6,15 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class TipoConcepto extends Model
+class AgremidoCuota extends Model
 {
-    use HasFactory;
 
-    public function listar_tipoConcepto_ajax($p){
-
-        return $this->readFuntionPostgres('sp_listar_tipoconcepto_paginado',$p);
-
-    }
 
     public function readFuntionPostgres($function, $parameters = null){
 

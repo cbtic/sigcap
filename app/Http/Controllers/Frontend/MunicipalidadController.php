@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Municipalidade;
+use App\Models\Ubigeo;
 
 use Auth;
 
@@ -52,31 +53,17 @@ class MunicipalidadController extends Controller
 
     public function modal_municipalidad($id){
 		$id_user = Auth::user()->id;
-		$modal_municipalidad = new Persona;
-		if($id>0) $persona = Persona::find($id);else $persona = new Persona;
+		$municipalidad = new Municipalidade;
+		if($id>0) $municipalidad = Municipalidade::find($id);else $municipalidad = new Municipalidade;
 
 		//$tipo_documento = DocumentoIdentidade::all();
-		$tablaMaestra_model = new TablaMaestra;		
-		$tipo_documento = $tablaMaestra_model->getMaestroByTipo("TIP_DOC");
+		//$tablaMaestra_model = new TablaMaestra;		
+		//$tipo_documento = $tablaMaestra_model->getMaestroByTipo("TIP_DOC");
 		
-		if($id>0) $persona_detalle = PersonaDetalle::where('id_persona', '=', $id)->where('estado', '=', 'A')->first();else $persona_detalle = new PersonaDetalle;
+		//if($id>0) $persona_detalle = PersonaDetalle::where('id_persona', '=', $id)->where('estado', '=', 'A')->first();else $persona_detalle = new PersonaDetalle;
 		//$persona_detalle = PersonaDetalle::where('id_persona', '=', $id)->where('estado', '=', 'A')->first();
 
-		$tabla_model = new TablaUbicacione;		
-		$profesiones = $tabla_model->getTablaUbicacionAll("tprofesiones","1");
-		$condLaboral = $tabla_model->getTablaUbicacionAll("condicion_laborales","1");
-		$tipPlanilla = $tabla_model->getTablaUbicacionAll("tplanillas","1");
-		$banco = $tabla_model->getTablaUbicacionAll("tbancos","1");
-		$regPension = $tabla_model->getTablaUbicacionAll("regimen_pensionarios","1");
-		$afp = $tabla_model->getTablaUbicacionAll("tafps","1");
-		$comisionAfp = $tabla_model->getTablaUbicacionAll("tipo_comisiones","1");
-		$cargo = $tabla_model->getTablaUbicacionAll("tcargos","1");
-		$nivel = $tabla_model->getTablaUbicacionAll("tniveles","1");
-		$moneda = $tabla_model->getTablaUbicacionAll("tipo_monedas","1");
-		$area_trabajo = $tabla_model->getTablaUbicacionAll("area_trabajos","1");
-
-		$empresa_model = new Empresa();		
-		$empresas = $empresa_model->getEmpresaAll("1");
+		
 
 		$ubigeo_model = new Ubigeo;
 		$departamento = $ubigeo_model->getDepartamento("PER");
@@ -87,26 +74,18 @@ class MunicipalidadController extends Controller
 		//print_r ($departamento);
 		//exit();
 
-		if($persona_detalle->ubigeo!=""){
-			$idDepartamento = substr($persona_detalle->ubigeo, 0, 2);
-			$idProvincia = substr($persona_detalle->ubigeo, 0, 4);
+		if($municipalidad->id_ubigeo!=""){
+			$idDepartamento = substr($municipalidad->ubigeo, 0, 2);
+			$idProvincia = substr($municipalidad->ubigeo, 0, 4);
 
 			$provincia = $ubigeo_model->getProvincia($idDepartamento);
-			$distrito = $ubigeo_model->getDistrito($idProvincia);
+			$distrito = $ubigeo_model->getDistrito($idDepartamento,$idProvincia);
 		}
 
-		$unidad_trabajo = "";
-
-		$unidad_model = new UnidadTrabajo;
-
-		if($persona_detalle->id_area_trabajo!=""){
-
-			$unidad_trabajo = $unidad_model->getUnidad($persona_detalle->id_area_trabajo);
-			//UnidadTrabajo::where('id_area_trabajo', '=', $persona_detalle->id_area_trabajo)->where('estado', '=', '1')->first();
-		}
+		
 
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.persona.modal_persona',compact('id','persona','persona_detalle','tipo_documento','profesiones','empresas','condLaboral','tipPlanilla','banco','regPension','afp','comisionAfp','cargo','nivel','moneda','departamento','provincia','distrito','area_trabajo','unidad_trabajo'));
+		return view('frontend.municipalidad.modal_municipalidad',compact('id','municipalidad','departamento','provincia','distrito'));
 	}
 }

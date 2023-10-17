@@ -13,6 +13,39 @@ class Agremiado extends Model
 	public function listar_agremiado_ajax($p){
 		return $this->readFunctionPostgres('sp_listar_agremiado_paginado',$p);
     }
+
+	function getAgremiado($tipo_documento,$numero_documento){
+
+        if($tipo_documento=="RUC"){
+            $cad = "select t1.id,razon_social,t1.direccion,t1.representante 
+                    from empresas t1                    
+                    Where t1.ruc='".$numero_documento."'";
+
+        }else{
+			
+			$cad = "select t1.id,nombres,apellido_paterno,apellido_materno,razon_social,t1.foto,t2.codigo,t2.fecha_inicio,t2.ubicacion_id id_ubicacion,
+					(select string_agg(numero_tarjeta, ',') from tarjetas tar where tar.persona_id=t2.persona_id and estado='1') tarjeta,
+					(select string_agg(t3_.plan_denominacion, ',')
+					from personas t1_
+					inner join afiliaciones t2_ on t1_.id = t2_.persona_id
+					inner join plan_atenciones t3_ on t2_.plan_id=t3_.id
+					where t1_.id=t1.id and t1_.estado='1' and t2_.estado='1')afiliacion, t1.ruc ruc_p, 
+                    (select ut.id from empresas e inner join ubicacion_trabajos ut on ut.ubicacion_empresa_id = e.id 
+					where e.ruc =t1.ruc and e.estado = '1' limit 1) id_ubicacion_p 
+					from personas t1
+					left join afiliaciones t2 on t1.id = t2.persona_id And t2.estado='1'
+					left join ubicacion_trabajos t3 on t2.ubicacion_id = t3.id
+					left join empresas t4 on t3.ubicacion_empresa_id = t4.id
+                    Where t1.tipo_documento='".$tipo_documento."'
+                    And t1.numero_documento='".$numero_documento."'
+					and t1.estado='1' 
+                    limit 1";
+					
+        }
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
 	
 	public function readFunctionPostgres($function, $parameters = null){
 

@@ -177,8 +177,8 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Regional</th>
                             <th>C&oacute;digo</th>
+                            <th>Regional</th>
                             <th>Denominaci&oacute;n</th>
                             <th>Partida Presupuestal</th>
                             <th>Estado</th>
