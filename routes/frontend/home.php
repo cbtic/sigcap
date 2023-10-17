@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\AgremiadoController;
 use App\Http\Controllers\Frontend\EmpresaController;
 use App\Http\Controllers\Frontend\ConceptoController;
 use App\Http\Controllers\Frontend\TipoConceptoController;
+use App\Http\Controllers\Frontend\IngresoController;
 
 use App\Http\Controllers\Frontend\MunicipalidadController;
 
@@ -71,6 +72,7 @@ Route::get('agremiado/eliminar_parentesco/{id}', [AgremiadoController::class, 'e
 Route::get('agremiado/eliminar_trabajo/{id}', [AgremiadoController::class, 'eliminar_trabajo'])->name('agremiado.eliminar_trabajo');
 Route::get('agremiado/eliminar_traslado/{id}', [AgremiadoController::class, 'eliminar_traslado'])->name('agremiado.eliminar_traslado');
 Route::get('agremiado/eliminar_situacion/{id}', [AgremiadoController::class, 'eliminar_situacion'])->name('agremiado.eliminar_situacion');
+Route::get('agremiado/obtener_agremiado/{tipo_documento}/{numero_documento}', [AgremiadoController::class, 'obtener_agremiado'])->name('agremiado.obtener_agremiado');
 
 Route::get('empresa/consulta_empresa', [EmpresaController::class, 'consulta_empresa'])->name('empresa.consulta_empresa');
 
@@ -113,4 +115,5 @@ Route::post('tipoConcepto/send_tipoConcepto_nuevoTipoConcepto', [TipoConceptoCon
 
 Route::get('tipoConcepto/eliminar_tipoConcepto/{id}/{estado}', [TipoConceptoController::class, 'eliminar_tipoConcepto'])->name('tipoConcepto.eliminar_tipoConcepto');
 
-//Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
+Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
+

@@ -30,9 +30,9 @@ border-right: 2px solid #5cb85c!important;
 @stack('after-scripts')
 
 
-@extends('frontend.layouts.app1')
+@extends('frontend.layouts.app')
 
-@section('title', app_name() . ' | ' . __('labels.frontend.afiliacion.box_title'))
+@section('title', __('labels.frontend.contact.box_title'))
 
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
@@ -59,7 +59,7 @@ border-right: 2px solid #5cb85c!important;
 
             <div class="card-body">
 
-            <form class="form-horizontal" method="post" action="{{ route('frontend.factura.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
+            <form class="form-horizontal" method="post" action="{{ route('frontend.ingreso.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -158,7 +158,7 @@ border-right: 2px solid #5cb85c!important;
 
         <div class="col col-sm-12 align-self-center">
 
-        <!--<form class="form-horizontal" method="post" action="{{ route('frontend.factura.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >-->
+        <!--<form class="form-horizontal" method="post" action="{{ route('frontend.ingreso.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >-->
             <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
             <div class="row">
@@ -187,7 +187,8 @@ border-right: 2px solid #5cb85c!important;
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_RUC?>"><?php echo $persona::TIPO_DOCUMENTO_RUC?></option>
 									<option value="<?php echo $persona::TIPO_DOCUMENTO_CEDULA?>"><?php echo $persona::TIPO_DOCUMENTO_CEDULA?></option>
 									<option value="<?php echo $persona::TIPO_DOCUMENTO_PTP?>"><?php echo $persona::TIPO_DOCUMENTO_PTP?></option>
-									<option value="<?php echo $persona::TIPO_DOCUMENTO_CPP?>"><?php echo $persona::TIPO_DOCUMENTO_CPP?></option>
+                                    <option selected="selected value="<?php echo $persona::TIPO_DOCUMENTO_CAP?>"><?php echo $persona::TIPO_DOCUMENTO_CAP?></option>
+									
                                 </select>
 
                                 <input type="hidden" readonly name="empresa_id" id="empresa_id" value="" class="form-control form-control-sm">
@@ -556,8 +557,11 @@ Plan" type="button" disabled="disabled" id="btnDesafiliar" onclick="eliminarAfil
 var id_caja_usuario = "<?php echo ($caja_usuario)?$caja_usuario->id_caja:0?>";
 //alert(id_caja_usuario);
 </script>
-{!! script(asset('js/ingreso.js')) !!}
-    @if(config('access.captcha.contact'))
-        @captchaScripts
-    @endif
+
+@endpush
+
+
+@push('after-scripts')
+
+<script src="{{ asset('js/ingreso.js') }}"></script>
 @endpush

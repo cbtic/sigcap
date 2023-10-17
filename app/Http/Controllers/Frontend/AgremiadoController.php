@@ -1348,6 +1348,17 @@ class AgremiadoController extends Controller
 	
 	}
 	
+	public function obtener_agremiado($tipo_documento,$numero_documento){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $agremiado = $agremiado_model->getAgremiado($tipo_documento,$numero_documento);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
 			
 }
 
