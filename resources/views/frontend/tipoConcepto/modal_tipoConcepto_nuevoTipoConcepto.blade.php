@@ -570,7 +570,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">C&oacute;digo</label>
-								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $tipoConcepto->codigo?>" type="text" >						
+								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $tipoConcepto->codigo?>" type="text" readonly="readonly" >						
 							</div>
 						</div>	
 

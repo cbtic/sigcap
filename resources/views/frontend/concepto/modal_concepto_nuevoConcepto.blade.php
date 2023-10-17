@@ -3,7 +3,7 @@
 <style>
 /*
 .datepicker {
-  z-index: 1600 !important; 
+  z-index: 1600 !important;
 }
 */
 /*.datepicker{ z-index:99999 !important; }*/
@@ -19,7 +19,7 @@
 	width: 100%;
 	max-width:40%!important
   }
-  
+
 #tablemodal{
     border-spacing: 0;
     display: flex;/*Se ajuste dinamicamente al tamano del dispositivo**/
@@ -553,7 +553,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">C&oacute;digo</label>
-								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" >						
+								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" readonly="readonly" >						
 							</div>
 						</div>
 						
