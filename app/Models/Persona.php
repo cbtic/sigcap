@@ -22,6 +22,7 @@ class Persona extends Model
     const TIPO_DOCUMENTO_RUC = 'RUC';
     const TIPO_DOCUMENTO_CEDULA = 'CEDULA';
     const TIPO_DOCUMENTO_PTP = 'PTP/PTEP';
+    const TIPO_DOCUMENTO_CAP = 'NRO_CAP';
 
     function getPersonaAll(){
 

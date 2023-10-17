@@ -1022,3 +1022,4 @@ id;tipo;denominacion;codigo;tipo_nombre;sub_codigo;abreviarura;orden;estado
 1021;91;CAJA 09;9;CAJA;;;9;1
 1022;91;CAJA 10;10;CAJA;;;10;1
 1023;91;CAJA VIRTUAL;11;CAJA VIRTUAL;;;11;0
+1024;16;NRO. CAP;85;TIPO DOCUMENTO CLIENTE;;;5;1
