@@ -6,6 +6,18 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
+
+	$('#rucBus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#razon_socialBus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
 		
 	$('#btnNuevo').click(function () {
 		modalEmpresa(0);
@@ -500,6 +512,24 @@ function datatablenew(){
 					},
 					"bSortable": false,
 					"aTargets": [2]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var email = "";
+						if(row.email!= null)email = row.email;
+						return email;
+					},
+					"bSortable": false,
+					"aTargets": [3]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var telefono = "";
+						if(row.telefono!= null)telefono = row.telefono;
+						return telefono;
+					},
+					"bSortable": false,
+					"aTargets": [4]
 				},/*
 				{
 					"mRender": function (data, type, row) {
@@ -522,7 +552,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [3]
+					"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -547,7 +577,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [4],
+					"aTargets": [6],
 				},
 
             ]

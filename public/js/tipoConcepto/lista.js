@@ -7,6 +7,19 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 	
+	$('#codigo').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#denominacion').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+	
+
 	$('#btnNuevo').click(function () {
 		modalTipoConcepto(0);
 	});

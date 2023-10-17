@@ -182,6 +182,8 @@
                             <!--<th>Nombre Comercial</th>-->
                             <th>Raz&oacute;n Social</th>
 							<th>Direcci&oacute;n</th>
+                            <th>Email</th>
+                            <th>Tel&eacute;fono</th>
                             <!--<th>Representante</th>-->
                             <th>Estado</th>
 							<th>Acciones</th>
