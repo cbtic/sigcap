@@ -3232,8 +3232,6 @@ function fn_eliminar_mov(id){
     });
 }
 
-<<<<<<< HEAD
-=======
 function eliminarEstudio(id){
 	
     bootbox.confirm({ 
@@ -3391,7 +3389,6 @@ function fn_eliminar_situacion(id){
     });
 }
 
->>>>>>> 79629e46d6d4b2c785aab4f845fc470ee0fd0ffc
 function eliminarSeg(){
 	
 	var id = $("#idSeguimiento").val();
