@@ -263,19 +263,18 @@ function validaRuc(ruc){
 			$('#direccion').val('')
 			$('#nombre_comercial').val('')
 			
-			$('#razon_social').val(data.nombre_o_razon_social);
-			$('#nombre_comercial').val(data.nombre_o_razon_social);
-			$('#direccion').attr('readonly', true);
+			$('#razon_social').val(data.nombre_o_razon_social).attr('readonly', true);
+			$('#nombre_comercial').val(data.nombre_o_razon_social).attr('readonly', true);
+			//$('#direccion').attr('readonly', true);
 
-			if (typeof data.direccion_completa != "undefined"){
-				$('#direccion').val(data.direccion_completa);
+			if (data.direccion_completa != ""){
+				$('#direccion').val(data.direccion_completa).attr('readonly', true);
 			}
 			else{
 				$('#direccion').attr('readonly', false);
 			}
 			
-
-			//alert(data.nombre_o_razon_social);
+			//alert(data.direccion_completa);
 
 		}
 		else{
@@ -566,14 +565,14 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Nombre Comercial</label>
-								<input id="nombre_comercial" name="nombre_comercial" class="form-control form-control-sm"  value="<?php echo $empresa->nombre_comercial?>" type="text" >						
+								<input id="nombre_comercial" name="nombre_comercial" class="form-control form-control-sm"  value="<?php echo $empresa->nombre_comercial?>" type="text" readonly="readonly">						
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Raz&oacute;n Social</label>
-								<input id="razon_social" name="razon_social" class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" >													
+								<input id="razon_social" name="razon_social" class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" readonly="readonly">													
 							</div>
 						</div>
 						

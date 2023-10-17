@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
+use Auth;
 
 class EmpresaController extends Controller
 {
@@ -102,6 +103,8 @@ class EmpresaController extends Controller
 
     public function send_empresa_nuevoEmpresa(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$empresa = new Empresa;
 		}else{
@@ -114,7 +117,7 @@ class EmpresaController extends Controller
 		$empresa->direccion = $request->direccion;
 		$empresa->representante = $request->representante;
 		$empresa->estado = 1;
-		$empresa->id_usuario_inserta = 1;
+		$empresa->id_usuario_inserta = $id_user;
 		$empresa->save();
 			
     }
