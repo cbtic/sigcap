@@ -13,6 +13,33 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
+
+    <style>
+        .close-heading{
+            position: relative;
+        }
+
+        button.close{
+            background:#1C77B9!important;
+            padding:0px 9px 4px 9px!important;
+            -moz-border-radius: 30px 30px 30px 30px!important; /* Firefox */
+            -webkit-border-radius: 30px 30px 30px 30px!important; /* Google Chrome y Safari */
+            border-radius: 30px 30px 30px 30px!important; /* CSS3 (Opera 10.5 e Internet Explorer 9) */
+        }
+
+        .close{
+            color:#FFFFFF!important;
+            opacity:1!important;
+            font-size:40px!important;
+
+            position: absolute;
+            z-index: 1000;
+            display:block;
+            right: 3px;
+            top:3px
+        }
+    </style>
+
     <livewire:styles />
     @stack('after-styles')
 </head>

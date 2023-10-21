@@ -7,7 +7,7 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
-	$('#rucBus').keypress(function(e){
+	$('#cap').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
@@ -20,7 +20,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalEmpresa(0);
+		modalMulta(0);
 	});
 		
 	datatablenew();
@@ -424,7 +424,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/empresa/listar_empresa_ajax",
+        "sAjaxSource": "/multa/listar_datosAgremiado_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -451,9 +451,8 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var ruc = $('#rucBus').val();
-            var razon_social = $('#razon_socialBus').val();
-			var estado = $('#estado').val();
+			var numero_cap = $('#cap').val();
+			//var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -461,7 +460,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						ruc:ruc,razon_social:razon_social,estado:estado,
+						numero_cap:numero_cap,
 						_token:_token
                        },
                 "success": function (result) {
@@ -477,9 +476,9 @@ function datatablenew(){
             [	
 				{
                 "mRender": function (data, type, row) {
-                	var ruc = "";
-					if(row.ruc!= null)ruc = row.ruc;
-					return ruc;
+                	var regional = "";
+					if(row.regional!= null)regional = row.regional;
+					return regional;
                 },
                 "bSortable": false,
                 "aTargets": [0],
@@ -497,9 +496,9 @@ function datatablenew(){
                 },*/
                 {
                 "mRender": function (data, type, row) {
-                	var razon_social = "";
-					if(row.razon_social!= null)razon_social = row.razon_social;
-					return razon_social;
+                	var numero_cap = "";
+					if(row.numero_cap!= null)numero_cap = row.numero_cap;
+					return numero_cap;
                 },
                 "bSortable": false,
                 "aTargets": [1],
@@ -507,40 +506,40 @@ function datatablenew(){
                 },
 				{
 				"mRender": function (data, type, row) {
-					var direccion = "";
-					if(row.direccion!= null)direccion = row.direccion;
-					return direccion;
+					var numero_documento = "";
+					if(row.numero_documento!= null)numero_documento = row.numero_documento;
+					return numero_documento;
 				},
 				"bSortable": false,
 				"aTargets": [2]
 				},
 				{
 					"mRender": function (data, type, row) {
-						var email = "";
-						if(row.email!= null)email = row.email;
-						return email;
+						var agremiado = "";
+						if(row.agremiado!= null)agremiado = row.agremiado;
+						return agremiado;
 					},
 					"bSortable": false,
 					"aTargets": [3]
 				},
 				{
 					"mRender": function (data, type, row) {
-						var telefono = "";
-						if(row.telefono!= null)telefono = row.telefono;
-						return telefono;
+						var sexo = "";
+						if(row.sexo!= null)sexo = row.sexo;
+						return sexo;
 					},
 					"bSortable": false,
 					"aTargets": [4]
-				},/*
+				},
 				{
 					"mRender": function (data, type, row) {
-						var representante = "";
-						if(row.representante!= null)representante = row.representante;
-						return representante;
+						var fecha_nacimiento = "";
+						if(row.fecha_nacimiento!= null)fecha_nacimiento = row.fecha_nacimiento;
+						return fecha_nacimiento;
 					},
 					"bSortable": false,
-					"aTargets": [4]
-				},*/
+					"aTargets": [5]
+				},/*
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -553,8 +552,8 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [5]
-				},
+					"aTargets": [6]
+				},*/
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -569,8 +568,8 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEmpresa('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<a href="javascript:void(0)" onclick=eliminarEmpresa('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalMulta('+row.id+')" ><i class="fa fa-edit"></i> Historial</button>';
+						//html += '<a href="javascript:void(0)" onclick=eliminarMulta('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -592,13 +591,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalEmpresa(id){
+function modalMulta(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/empresa/modal_empresa_nuevoEmpresa/"+id,
+			url: "/multa/modal_multa_nuevoMulta/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -624,7 +623,7 @@ function modalResponsable(id){
 
 }
 
-function eliminarEmpresa(id,estado){
+function eliminarMulta(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -636,20 +635,20 @@ function eliminarEmpresa(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Empresa?", 
+        message: "&iquest;Deseas "+act_estado+" la Multa?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_empresa(id,estado_);
+                fn_eliminar_multa(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_empresa(id,estado){
+function fn_eliminar_multa(id,estado){
 	
     $.ajax({
-            url: "/empresa/eliminar_empresa/"+id+"/"+estado,
+            url: "/multa/eliminar_multa/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

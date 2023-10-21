@@ -67,8 +67,8 @@ $(document).ready(function () {
 		//window.location.reload();
 	});
 
-	$('#btnNuevoConcepto').on('click', function () {
-		modalConcepto(0);
+	$('#btnNuevoMulta').on('click', function () {
+		modalMulta(0);
 	});
 	
 	/*
@@ -1687,7 +1687,7 @@ function ocultar_solicitud(){
 function datatablenew(){
     var oTable = $('#tblSolicitud').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/concepto/listar_concepto_ajax",
+        "sAjaxSource": "/empresa/listar_empresa_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         "bFilter": false,
@@ -3119,19 +3119,36 @@ function modalEstudio(id){
 
 }
 
-function modalConcepto(id){
+function modalEmpresa(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/concepto/listar_concepto_ajax"+id,
+			url: "/empresa/modal_empresa_nuevoEmpresa/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
 			}
 	});
+
+}
+
+function modalMulta(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/multa/modal_multa_nuevoMulta/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
 }
 
 function modalIdioma(id){

@@ -58,6 +58,7 @@
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
+                                <a href="/multa/consulta_multa" class="dropdown-item">Multas</a>
 						   </div>
 					</li>
 
