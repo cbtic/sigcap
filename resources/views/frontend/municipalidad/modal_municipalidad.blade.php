@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:40%!important
+	max-width:60%!important
   }
   
 #tablemodal{
@@ -166,180 +166,36 @@ function validacion(){
     }
 }
 
-function guardarCita__(){
-	alert("fdssf");
-}
-
-function guardarCita(id_medico,fecha_cita){
-    
-    var msg = "";
-    var id_ipress = $('#id_ipress').val();
-    var id_consultorio = $('#id_consultorio').val();
-    var fecha_atencion = $('#fecha_atencion').val();
-    var dni_beneficiario = $("#dni_beneficiario").val();
-	//alert(id_ipress);
-	if(dni_beneficiario == "")msg += "Debe ingresar el numero de documento <br>";
-    if(id_ipress==""){msg+="Debe ingresar una Ipress<br>";}
-    if(id_consultorio==""){msg+="Debe ingresar un Consultorio<br>";}
-    if(fecha_atencion==""){msg+="Debe ingresar una fecha de atencion<br>";}
-   
-    if(msg!=""){
-        bootbox.alert(msg); 
-        return false;
-    }
-    else{
-        fn_save_cita(id_medico,fecha_cita);
-    }
-}
 
 function fn_save(){
     
 	var _token = $('#_token').val();
 	var id  = $('#id').val();
-	var ruc = $('#ruc_').val();
-	var razon_social = $('#razon_social_').val();
-	var direccion = $('#direccion_').val();
-	var email = $('#email_').val();
-	var telefono = $('#telefono_').val();
-	var costo_estacionamiento = $('#costo_estacionamiento_').val();
-	var costo_volumen = $('#costo_volumen_').val();
-	
+	var denominacion = $('#denominacion_').val();
+	var tipo_municipalidad=$('#tipo_municipalidad_').val();	
     $.ajax({
-			url: "/empresa/send_empresa",
+			url: "/municipalidad/send_municipalidad",
             type: "POST",
-            data : {_token:_token,id:id,ruc:ruc,razon_social:razon_social,direccion:direccion,email:email,telefono:telefono,costo_estacionamiento:costo_estacionamiento,costo_volumen:costo_volumen},
-			dataType: 'json',
+            data : {_token:_token,id:id,denominacion:denominacion,tipo_municipalidad:tipo_municipalidad},
+			//dataType: 'json',
+			
+	
             success: function (result) {
 				
-				if(result.sw==false){
+			/*	if(result.sw==false){
 					bootbox.alert(result.msg);
 				}
-				
+*/
 				$('#openOverlayOpc').modal('hide');
-				datatablenew();
-				
-            }
-    });
-}
+				window.location.reload();
 
-function fn_liberar(id){
-    
-	//var id_estacionamiento = $('#id_estacionamiento').val();
-	var _token = $('#_token').val();
-	
-    $.ajax({
-			url: "/estacionamiento/liberar_asignacion_estacionamiento_vehiculo",
-            type: "POST",
-            data : {_token:_token,id:id},
-            success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				cargarAsignarEstacionamiento();
+								
             }
     });
 }
 
 
-function validarLiquidacion() {
-	
-	var msg = "";
-	var sw = true;
-	
-	var saldo_liquidado = $('#saldo_liquidado').val();
-	var estado = $('#estado').val();
-	
-	if(saldo_liquidado == "")msg += "Debe ingresar un saldo liquidado <br>";
-	if(estado == "")msg += "Debe ingresar una observacion <br>";
-	
-	if(msg!=""){
-		bootbox.alert(msg);
-		//return false;
-	} else {
-		//submitFrm();
-		document.frmLiquidacion.submit();
-	}
-	return false;
-}
 
-
-function obtenerVehiculo(id,obj){
-	
-	//$("#tblPlan tbody text-white").attr('class','bg-primary text-white');
-	if(obj!=undefined){
-		$("#tblSinReservaEstacionamiento tbody tr").each(function (ii, oo) {
-			var clase = $(this).attr("clase");
-			$(this).attr('class',clase);
-		});
-		
-		$(obj).attr('class','bg-success text-white');
-	}
-	//$('#tblPlanDetalle tbody').html("");
-	$('#id_empresa').val(id);
-	var id_estacionamiento = $('#id_estacionamiento').val();
-	$.ajax({
-		url: '/estacionamiento/obtener_vehiculo/'+id+'/'+id_estacionamiento,
-		dataType: "json",
-		success: function(result){
-			
-			var newRow = "";
-			$('#tblPlanDetalle').dataTable().fnDestroy(); //la destruimos
-			$('#tblPlanDetalle tbody').html("");
-			$(result).each(function (ii, oo) {
-				newRow += "<tr class='normal'><td>"+oo.placa+"</td>";
-				newRow += '<td class="text-left" style="padding:0px!important;margin:0px!important">';
-				newRow += '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-				newRow += '<a href="javascript:void(0)" onClick=fn_save("'+oo.id_vehiculo+'") class="btn btn-sm btn-normal">';
-				newRow += '<i class="fa fa-2x fa-check" style="color:green"></i></a></a></div></td></tr>';
-			});
-			$('#tblPlanDetalle tbody').html(newRow);
-			
-			$('#tblPlanDetalle').DataTable({
-				//"sPaginationType": "full_numbers",
-				"paging":false,
-				"dom": '<"top">rt<"bottom"flpi><"clear">',
-				"language": {"url": "/js/Spanish.json"},
-			});
-			
-			$("#system-search2").keyup(function() {
-				var dataTable = $('#tblPlanDetalle').dataTable();
-			   dataTable.fnFilter(this.value);
-			});
-			
-		}
-		
-	});
-	
-}
-
-/*
-$('#fecha_solicitud').datepicker({
-	autoclose: true,
-	dateFormat: 'dd-mm-yy',
-	changeMonth: true,
-	changeYear: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-/*
-$('#fecha_solicitud').datepicker({
-	format: "dd/mm/yyyy",
-	startDate: "01-01-2015",
-	endDate: "01-01-2020",
-	todayBtn: "linked",
-	autoclose: true,
-	todayHighlight: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-
-/*				
-format: "dd/mm/yyyy",
-startDate: "01-01-2015",
-endDate: "01-01-2020",
-todayBtn: "linked",
-autoclose: true,
-todayHighlight: true,
-container: '#myModal modal-body'
-*/	
 </script>
 
 
@@ -381,10 +237,84 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label">Denominacion</label>
-								<input id="denominacion_" name="denominacion_" class="form-control form-control-sm"  value="<?php echo $municipalidad->denominacion?>" type="text" <?php echo $readonly?> >
+								<input id="denominacion_" name="denominacion_" class="form-control form-control-sm"  value="<?php echo $municipalidad->denominacion?>" type="text"  >
 							</div>
 						</div>
-						
+
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label">Tipo de Municipalidad</label>
+								<select name="tipo_municipalidad_" id="tipo_municipalidad_" class="form-control form-control-sm" onchange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_municipalidad as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$municipalidad->id_tipo_municipalidad)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label">Tipo de Comisi&oacute;n</label>
+								<select name="tipo_comision_" id="tipo_comisiond_" class="form-control form-control-sm" onchange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_comision as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$municipalidad->id_tipo_comision)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+
+						<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+										
+											<div style="clear:both"></div>
+											
+											<div class="row">
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Departamento
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												
+												
+												<select name="id_departamento_domiciliario" id="id_departamento_domiciliario" class="form-control form-control-sm" onchange="obtenerProvinciaDomiciliario()">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($departamento as $row) {?>
+													<option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($municipalidad->id_ubigeo,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
+													<?php 
+													}
+													?>
+												</select>
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Provincia
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="id_provincia_domiciliario" id="id_provincia_domiciliario" class="form-control form-control-sm" onchange="obtenerDistritoDomiciliario()">
+													<option value="">--Selecionar--</option>
+												</select>
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												Distrito
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<select name="id_distrito_domiciliario" id="id_distrito_domiciliario" class="form-control form-control-sm" onchange="">
+													<option value="">--Selecionar--</option>
+												</select>
+												</div>
+											</div>
+										
+											
+												
+										</div>
+
+				
 					</div>
 		
 					
@@ -392,6 +322,7 @@ container: '#myModal modal-body'
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
 								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								
 							</div>
 												
 						</div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\ConceptoController;
 use App\Http\Controllers\Frontend\TipoConceptoController;
 use App\Http\Controllers\Frontend\MultaController;
 
+use App\Http\Controllers\Frontend\IngresoController;
 
 use App\Http\Controllers\Frontend\MunicipalidadController;
 
@@ -73,6 +74,7 @@ Route::get('agremiado/eliminar_parentesco/{id}', [AgremiadoController::class, 'e
 Route::get('agremiado/eliminar_trabajo/{id}', [AgremiadoController::class, 'eliminar_trabajo'])->name('agremiado.eliminar_trabajo');
 Route::get('agremiado/eliminar_traslado/{id}', [AgremiadoController::class, 'eliminar_traslado'])->name('agremiado.eliminar_traslado');
 Route::get('agremiado/eliminar_situacion/{id}', [AgremiadoController::class, 'eliminar_situacion'])->name('agremiado.eliminar_situacion');
+Route::get('agremiado/obtener_agremiado/{tipo_documento}/{numero_documento}', [AgremiadoController::class, 'obtener_agremiado'])->name('agremiado.obtener_agremiado');
 
 Route::get('empresa/consulta_empresa', [EmpresaController::class, 'consulta_empresa'])->name('empresa.consulta_empresa');
 
@@ -83,9 +85,9 @@ Route::get('empresa/modal_empresa_nuevoEmpresa/{id}', [EmpresaController::class,
 
 Route::get('municipalidad/consulta_municipalidad', [MunicipalidadController::class, 'consulta_municipalidad'])->name('municipalidad.consulta_municipalidad');
 Route::post('municipalidad/listar_municipalidad', [MunicipalidadController::class, 'listar_municipalidad'])->name('municipalidad.listar_municipalidad');
-
 Route::get('municipalidad/modal_municipalidad/{id}', [MunicipalidadController::class, 'modal_municipalidad'])->name('municipalidad.modal_municipalidad');
-
+Route::post('municipalidad/send_municipalidad', [MunicipalidadController::class, 'send_municipalidad'])->name('municipalidad.send_municipalidad');
+Route::get('municipalidad/eliminar_municipalidad/{id}/{estado}', [MunicipalidadController::class, 'eliminar_municipalidad'])->name('municipalidad.eliminar_municipalidad');
 
 Route::post('empresa/send_empresa_nuevoEmpresa', [EmpresaController::class, 'send_empresa_nuevoEmpresa'])->name('empresa.send_empresa_nuevoEmpresa');
 
@@ -130,3 +132,5 @@ Route::get('multa/eliminar_multa/{id}/{estado}', [MultaController::class, 'elimi
 
 
 //Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
+Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
+
