@@ -16,6 +16,7 @@ class CreateValorizacionesTable extends Migration
         Schema::create('valorizaciones', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_modulo')->unsigned()->index();
+            $table->bigInteger('pk_registro')->unsigned()->index();
             $table->bigInteger('id_concepto')->unsigned()->index();
             $table->bigInteger('id_agremido')->nullable();
             $table->bigInteger('id_empresa')->nullable();
