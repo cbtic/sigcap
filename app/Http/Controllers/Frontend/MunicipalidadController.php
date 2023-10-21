@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Municipalidade;
 use App\Models\Ubigeo;
+use App\Models\TablaMaestra;
 
 use Auth;
 
@@ -16,13 +17,22 @@ class MunicipalidadController extends Controller
         return view('frontend.municipalidad.all');
     }
 
+    public function __construct(){
+
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+	}
 
     //
     public function listar_municipalidad(Request $request){
 	
 		$municipalidad_model = new Municipalidade();
 		$p[]=$request->denominacion;
-		$p[]=$request->estado;
+		$p[]=$request->estado;          
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $municipalidad_model->listar_municipalidad($p);
@@ -36,15 +46,17 @@ class MunicipalidadController extends Controller
 		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
 		$result["aaData"] = $data;
 
+        //print_r(json_encode($result)); exit();
 		echo json_encode($result);
+
 	
 	}
 
     public function editar_municipalidad($id){
         
-		$empresa = Municipalidade::find($id);
-		$id_empresa = $empresa->id;
-		$empresa = Municipalidade::find($id_empresa);
+		$municipalidad = Municipalidade::find($id);
+		$id_municipalidad = $$municipalidad->id;
+		$municipalidad = Municipalidade::find($id);
 		
 		
 		return view('frontend.empresa.create',compact('ruc','nombre_comercial','razon_social','direccion','representante','estado'));
@@ -56,14 +68,11 @@ class MunicipalidadController extends Controller
 		$municipalidad = new Municipalidade;
 		if($id>0) $municipalidad = Municipalidade::find($id);else $municipalidad = new Municipalidade;
 
-		//$tipo_documento = DocumentoIdentidade::all();
-		//$tablaMaestra_model = new TablaMaestra;		
-		//$tipo_documento = $tablaMaestra_model->getMaestroByTipo("TIP_DOC");
-		
-		//if($id>0) $persona_detalle = PersonaDetalle::where('id_persona', '=', $id)->where('estado', '=', 'A')->first();else $persona_detalle = new PersonaDetalle;
-		//$persona_detalle = PersonaDetalle::where('id_persona', '=', $id)->where('estado', '=', 'A')->first();
+        $tablaMaestra_model = new TablaMaestra;
+		$tipo_municipalidad = $tablaMaestra_model->getMaestroByTipo(43);
+       
+        $tipo_comision = $tablaMaestra_model->getMaestroByTipo(24);
 
-		
 
 		$ubigeo_model = new Ubigeo;
 		$departamento = $ubigeo_model->getDepartamento("PER");
@@ -86,6 +95,43 @@ class MunicipalidadController extends Controller
 
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.municipalidad.modal_municipalidad',compact('id','municipalidad','departamento','provincia','distrito'));
-	}
+		return view('frontend.municipalidad.modal_municipalidad',compact('id','municipalidad','departamento','provincia','distrito','tipo_municipalidad','tipo_comision'));
+
+    }
+
+    public function send_municipalidad(Request $request){
+		$id_user = Auth::user()->id;
+
+        //print_r ($id_user);exit();
+        
+		if($request->id == 0){
+			$municipalidad = new municipalidade;
+		}else{
+			$municipalidad =municipalidade::find($request->id);
+		}
+		
+		$municipalidad->denominacion = $request->denominacion;
+	
+		//$municipalidad->estado = $request->estado_;
+        $municipalidad->id_tipo_municipalidad = $request->tipo_municipalidad;
+		$municipalidad->id_usuario_inserta = $id_user;
+        
+        
+
+		$municipalidad->save();
+			
+    }
+    
+    public function eliminar_municipalidad($id,$estado)
+    {
+		$municipalidad = municipalidade::find($id);
+		$municipalidad->estado = $estado;
+		$municipalidad->save();
+
+		echo $municipalidad->id;
+
+    }
 }
+
+
+
