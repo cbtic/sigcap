@@ -159,13 +159,13 @@
 						<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombre Agremiado">
                     </div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                        <div class="md-form md-outline input-with-post-icon datepicker">
+                        <div class="md-form md-outline input-with-post-icon">
                             <input placeholder="Fecha" type="date" id="fecha" class="form-control">
                             
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                        <div class="md-form md-outline input-with-post-icon datepicker">
+                        <div class="md-form md-outline input-with-post-icon">
                             <input placeholder="Fecha" type="date" id="fecha" class="form-control">
                            
                         </div>
