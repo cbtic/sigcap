@@ -117,3 +117,6 @@ Route::get('tipoConcepto/eliminar_tipoConcepto/{id}/{estado}', [TipoConceptoCont
 
 Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 
+Route::get('ingreso/obtener_valorizacion/{tipo_documento}/{id_persona}', [IngresoController::class, 'obtener_valorizacion'])->name('ingreso.obtener_valorizacion')->where('tipo_documento', '(.*)');
+
+Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
