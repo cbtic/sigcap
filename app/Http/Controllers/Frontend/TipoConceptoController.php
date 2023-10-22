@@ -32,7 +32,7 @@ class TipoConceptoController extends Controller
 		$p[]=$request->codigo;
 		$p[]=$request->id_regional;
 		$p[]=$request->denominacion;
-        $p[]="";
+        $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $tipoConcepto_model->listar_tipoConcepto_ajax($p);
@@ -116,13 +116,17 @@ class TipoConceptoController extends Controller
 		
 		$id_user = Auth::user()->id;
 
+		$tipoConcepto_model = new TipoConcepto;
+
 		if($request->id == 0){
 			$tipoConcepto = new TipoConcepto;
 		}else{
 			$tipoConcepto = TipoConcepto::find($request->id);
 		}
 		
-		$tipoConcepto->codigo = $request->codigo;
+		$codigo = $tipoConcepto_model->getCodigoTipoConcepto();
+
+		$tipoConcepto->codigo = $codigo;
 		$tipoConcepto->id_regional = $request->id_regional;
 		$tipoConcepto->denominacion = $request->denominacion;
 		$tipoConcepto->estado = 1;

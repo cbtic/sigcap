@@ -18,21 +18,15 @@ begin
 	 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' id, nombre,descripcion,estado   ';
+	v_campos=' id, nombre,descripcion,estado,fecha_inicio,fecha_fin,monto   ';
 
 	v_tabla=' from seguros_planes ';
 	
 	
 	v_where = ' Where 1=1  ';
-	/*
-	If p_ruc<>'' Then
-	 v_where:=v_where||'And t1.ruc ilike ''%'||p_ruc||'%'' ';
-	End If;
 	
-	
-	*/
 	If p_seguro<>'' Then
-	 v_where:=v_where||'And seguros_planes = '''||p_seguro||''' ';
+	 v_where:=v_where||'And id_seguro = '''||p_seguro||''' ';
 	End If;
 
 	If p_estado<>'' Then

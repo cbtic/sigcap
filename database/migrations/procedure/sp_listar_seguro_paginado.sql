@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE FUNCTION public.sp_listar_seguro_paginado(p_denominacion character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -18,9 +19,10 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos='  id,nombre , estado   ';
+	v_campos=' s.id,r.denominacion regional,s.nombre,s.descripcion,s.estado ';
 
-	v_tabla=' from seguros ';
+	v_tabla=' from seguros s
+		inner join regiones r on s.id_regional = r.id';
 	
 	
 	v_where = ' Where 1=1  ';
@@ -32,20 +34,20 @@ begin
 	
 	*/
 	If p_denominacion<>'' Then
-	 v_where:=v_where||'And nombre ilike ''%'||p_denominacion||'%'' ';
+	 v_where:=v_where||'And s.nombre ilike ''%'||p_denominacion||'%'' ';
 	End If;
 
 	If p_estado<>'' Then
-	 v_where:=v_where||'And estado = '''||p_estado||''' ';
+	 v_where:=v_where||'And s.estado = '''||p_estado||''' ';
 	End If;
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By nombre  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By s.nombre  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By nombre ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By s.nombre ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;

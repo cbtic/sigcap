@@ -94,6 +94,9 @@
 	color: #FFFFFF;
 }
 
+
+
+
 </style>
 
 @extends('frontend.layouts.app')
@@ -201,7 +204,10 @@
   <div class="modal-dialog" >
 
 	<div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">
-	
+      
+    
+
+
 	  <div class="modal-body" style="padding: 0px;margin: 0px">
 
 			<div id="diveditpregOpc"></div>

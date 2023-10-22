@@ -502,16 +502,17 @@ function datatablenew(){
 					return razon_social;
                 },
                 "bSortable": false,
-                "aTargets": [1]
+                "aTargets": [1],
+				"className": "dt-center",
                 },
 				{
-					"mRender": function (data, type, row) {
-						var direccion = "";
-						if(row.direccion!= null)direccion = row.direccion;
-						return direccion;
-					},
-					"bSortable": false,
-					"aTargets": [2]
+				"mRender": function (data, type, row) {
+					var direccion = "";
+					if(row.direccion!= null)direccion = row.direccion;
+					return direccion;
+				},
+				"bSortable": false,
+				"aTargets": [2]
 				},
 				{
 					"mRender": function (data, type, row) {

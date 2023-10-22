@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de conceptos
+                        Lista de Conceptos
                     </strong>
                 </div><!--card-header-->
 				
