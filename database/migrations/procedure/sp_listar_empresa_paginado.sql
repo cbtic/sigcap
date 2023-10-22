@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_empresa_paginado(p_ruc character varying, p_nombre_comercial character varying, p_razon_social character varying, p_direccion character varying, p_representante character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_empresa_paginado(p_ruc character varying, p_nombre_comercial character varying, p_razon_social character varying, p_direccion character varying, p_email character varying, p_telefono character varying, p_representante character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,24 +18,24 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' e.id, e.ruc, e.nombre_comercial, e.razon_social, e.direccion,  e.representante, e.estado ';
+	v_campos=' e.id, e.ruc, e.nombre_comercial, e.razon_social, e.direccion, e.email, e.telefono, e.representante, e.estado ';
 
 	v_tabla='from empresas e';
 	
 	v_where = ' Where 1=1  ';
-	/*
+	
 	If p_ruc<>'' Then
-	 v_where:=v_where||'And t1.ruc ilike ''%'||p_ruc||'%'' ';
+	 v_where:=v_where||'And e.ruc ilike ''%'||p_ruc||'%'' ';
 	End If;
 	
-	If p_nombre<>'' Then
-	 v_where:=v_where||'And t1.nombre ilike ''%'||p_nombre||'%'' ';
+	If p_razon_social<>'' Then
+	 v_where:=v_where||'And e.razon_social ilike ''%'||p_razon_social||'%'' ';
 	End If;
 
 	If p_estado<>'' Then
-	 v_where:=v_where||'And t1.estado = '''||p_estado||''' ';
+	 v_where:=v_where||'And e.estado = '''||p_estado||''' ';
 	End If;
-	*/
+	
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
@@ -52,5 +52,3 @@ End
 
 $function$
 ;
-
-
