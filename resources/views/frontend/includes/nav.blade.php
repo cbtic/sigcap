@@ -58,6 +58,7 @@
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
+                                <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliacion a Seguro</a>
 						   </div>
 					</li>
 

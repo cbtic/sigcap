@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Seguro;
-use App\Models\SegurosPlane;
+use App\Models\AfiliacionSeguro;
 use App\Models\Ubigeo;
 use App\Models\TablaMaestra;
 
 use Auth;
 
-class SeguroController extends Controller
-{
-    function consulta_seguro(){
 
-        return view('frontend.seguro.all');
+class AfiliacionSeguroController extends Controller
+{
+    function consulta_afiliacion_seguro(){
+
+        return view('frontend.Afiliacion_Seguro.all');
     }
 
     public function __construct(){
@@ -29,14 +29,15 @@ class SeguroController extends Controller
 	}
 
     //
-    public function listar_seguro(Request $request){
+    public function listar_Afiliacion_Seguro(Request $request){
 	
-		$municipalidad_model = new Seguro();
-		$p[]=$request->denominacion;
+		$afiliacionseguro_model = new AfiliacionSeguro();
+		$p[]=$request->cap;
+        $p[]=$request->denominacion;
 		$p[]=$request->estado;          
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
-		$data = $municipalidad_model->listar_seguro($p);
+		$data = $afiliacionseguro_model->listar_afiliacion_seguro($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -123,10 +124,41 @@ class SeguroController extends Controller
 
     }
 
+    public function send_municipalidad(Request $request){
+		$id_user = Auth::user()->id;
+
+        //print_r ($id_user);exit();
+        
+		if($request->id == 0){
+			$municipalidad = new Seguroe;
+		}else{
+			$municipalidad =Seguroe::find($request->id);
+		}
+		
+		$municipalidad->denominacion = $request->denominacion;
+	
+		//$municipalidad->estado = $request->estado_;
+        $municipalidad->id_tipo_municipalidad = $request->tipo_municipalidad;
+		$municipalidad->id_usuario_inserta = $id_user;
+        
+        
+
+		$municipalidad->save();
+			
+    }
     
-    
-    
+    public function eliminar_municipalidad($id,$estado)
+    {
+		$municipalidad = Seguroe::find($id);
+		$municipalidad->estado = $estado;
+		$municipalidad->save();
+
+		echo $municipalidad->id;
+
+    }
 }
+
+
 
 
 

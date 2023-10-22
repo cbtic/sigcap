@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\IngresoController;
 
 use App\Http\Controllers\Frontend\MunicipalidadController;
 use App\Http\Controllers\Frontend\SeguroController;
+use App\Http\Controllers\Frontend\AfiliacionSeguroController;
 
 /*
  * Frontend Controllers
@@ -124,3 +125,5 @@ Route::post('seguro/listar_seguro', [SeguroController::class, 'listar_seguro'])-
 Route::get('seguro/modal_seguro/{id}', [SeguroController::class, 'modal_seguro'])->name('seguro.modal_seguro');
 Route::post('seguro/send_seguro', [SeguroController::class, 'send_seguro'])->name('seguro.send_seguro');
 Route::get('seguro/eliminar_seguro/{id}/{estado}', [seguroController::class, 'eliminar_seguro'])->name('municipalidad.eliminar_seguro');
+
+Route::get('afiliacion_seguro/consulta_afiliacion_seguro', [AfiliacionSeguroController::class, 'consulta_afiliacion_seguro'])->name('afiliacion_seguro.consulta_afiliacion_seguro');
