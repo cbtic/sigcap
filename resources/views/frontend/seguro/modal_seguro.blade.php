@@ -170,25 +170,19 @@ function validacion(){
 function fn_save(){
     
 	var _token = $('#_token').val();
-	var id  = $('#id').val();
-	var denominacion = $('#denominacion_').val();
-	var tipo_municipalidad=$('#tipo_municipalidad_').val();	
+	var id = $('#id').val();
+	var id_regional = $('#id_regional').val();
+	var nombre = $('#denominacion_').val();
+	var descripcion =$('#descripcion_').val();	
     $.ajax({
-			url: "/municipalidad/send_municipalidad",
+			url: "/seguro/send_seguro",
             type: "POST",
-            data : {_token:_token,id:id,denominacion:denominacion,tipo_municipalidad:tipo_municipalidad},
+            data : {_token:_token,id:id,id_regional:id_regional,nombre:nombre,descripcion:descripcion},
 			//dataType: 'json',
-			
-	
             success: function (result) {
-				
-			/*	if(result.sw==false){
-					bootbox.alert(result.msg);
-				}
-*/
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-
+				//window.location.reload();
+				datatablenew();
 								
             }
     });
@@ -233,7 +227,22 @@ function fn_save(){
 							$readonly=$id>0?"readonly='readonly'":'';
 							$readonly_=$id>0?'':"readonly='readonly'";
 						?>
-
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Regional</label>
+								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($region as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$seguro->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label">Denominacion</label>
@@ -250,6 +259,7 @@ function fn_save(){
 					
 				
 					</div>
+					<!--
 					<div class="card">
 					<div class="card-header">
 						Detalles Plan
@@ -334,31 +344,32 @@ function fn_save(){
                         </tr>
                         </thead>
                         <tbody style="font-size:13px">
-											<?php  $n = 0;
-											foreach($plan_seguro as $row){
-												if(!isset($row->msg)){
+											<?php  
+											//$n = 0;
+											//foreach($plan_seguro as $row){
+												//if(!isset($row->msg)){
 											?>
 											<tr>
 												
-												<td width="10%"><?php echo $row->id?></td>
-												<td width="30%"><?php echo $row->nombre?></td>
-												<td width="15%"><?php echo $row->fecha_inicio?></td>
-												<td width="15%"><?php echo $row->fecha_fin?></td>
-												<td width="10%"><?php echo $row->monto?></td>												
-												<td width="10%"><?php echo $row->estado?></td>
-												<td> <button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalSeguro('+row.id+')" ><i class="fa fa-edit"></i> Editar</button><d>
+												<td width="10%"><?php //echo $row->id?></td>
+												<td width="30%"><?php //echo $row->nombre?></td>
+												<td width="15%"><?php //echo $row->fecha_inicio?></td>
+												<td width="15%"><?php //echo $row->fecha_fin?></td>
+												<td width="10%"><?php //echo $row->monto?></td>												
+												<td width="10%"><?php //echo $row->estado?></td>
+												<td> <button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onClick="modalSeguro('+row.id+')" ><i class="fa fa-edit"></i> Editar</button><d>
 												
 											</tr>
 											<?php 
-												}else{
-													//echo $row->msg;
-												}
-												}	
+												//}else{
+													
+												//}
+												//}	
 											?>
 										</tbody>
                     </table>
-                </div><!--table-responsive-->
-
+                </div>
+				-->
 			</form>
 					
 					<div style="margin-top:10px" class="form-group">

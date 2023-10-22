@@ -189,6 +189,7 @@ $.mask.definitions['P'] = "[AaPp]";
 $.mask.definitions['p'] = "[Mm]";
 });
 */
+
 $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	$('#hora_solicitud').mask('00:00');
@@ -366,10 +367,10 @@ function fn_save_concepto(){
 }
 
 function fn_save_tipoConcepto(){
-    
+    //var max($('#codigo').val());
+
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var codigo = $('#codigo').val();
 	var id_regional = $('#id_regional').val();
 	var denominacion = $('#denominacion').val();
 	//var estado = $('#estado').val();
@@ -380,7 +381,7 @@ function fn_save_tipoConcepto(){
     $.ajax({
 			url: "/tipoConcepto/send_tipoConcepto_nuevoTipoConcepto",
             type: "POST",
-            data : {_token:_token,id:id,codigo:codigo,id_regional:id_regional,denominacion:denominacion},
+            data : {_token:_token,id:id,id_regional:id_regional,denominacion:denominacion},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -505,6 +506,8 @@ function cargar_tipo_proveedor(){
 	
 }
 
+
+
 /*
 $('#fecha_solicitud').datepicker({
 	autoclose: true,
@@ -540,7 +543,12 @@ container: '#myModal modal-body'
 
 <body class="hold-transition skin-blue sidebar-mini">
 
+	<div class="panel-heading close-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+
     <div>
+	
 		<!--
         <section class="content-header">
           <h1>
@@ -549,11 +557,12 @@ container: '#myModal modal-body'
         </section>
 		-->
 		<div class="justify-content-center">		
-
+		
 		<div class="card">
-			
-			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
+		
+			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
 				Registro Tipo Concepto
+				
 			</div>
 			
             <div class="card-body">
@@ -567,12 +576,15 @@ container: '#myModal modal-body'
 					
 					
 					<div class="row" style="padding-left:10px">
+						
+						<?php if(isset($tipoConcepto->codigo) && $tipoConcepto->codigo!=""){?>
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">C&oacute;digo</label>
 								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $tipoConcepto->codigo?>" type="text" readonly="readonly" >						
 							</div>
 						</div>	
+						<?php }?>
 
 						<div class="col-lg-12">
 							<div class="form-group">

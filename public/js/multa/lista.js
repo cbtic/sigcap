@@ -1,29 +1,105 @@
+//alert("ok");
+//jQuery.noConflict(true);
 
 $(document).ready(function () {
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
-		
-	$('#btnNuevo').click(function () {
-		modalSeguro(0);
+
+	$('#numero_cap').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
 	});
 
-	$('#denominacion').keypress(function(e){
+	$('#numero_documento').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#agremiado').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#razon_socialBus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
 	});
 		
+	$('#btnNuevo').click(function () {
+		modalMulta(0);
+	});
+		
 	datatablenew();
+	/*	
+	$("#plan_id").select2();
+	$("#ubicacion_id").select2();
+	
+	$('#fecha_inicio').datepicker({
+        autoclose: true,
+		dateFormat: 'dd/mm/yy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
+	//$("#fecha_vencimiento").datepicker($.datepicker.regional["es"]);
+	$('#fecha_vencimiento').datepicker({
+        autoclose: true,
+        dateFormat: 'dd/mm/yy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	*/
+	
+	/*
+    $('#tblAlquiler').dataTable({
+    	"language": {
+    	"emptyTable": "No se encontraron resultados"
+    	}
+	});
+	*/
+	/*
+	$('#tblAlquiler').dataTable( {
+            "language": {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningun dato disponible en esta tabla",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "ultimo",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                },
+                "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        } );
+	*/
+
 
 	$(function() {
-		$('#modalSeguro #nombre_plan_').keyup(function() {
+		$('#modalEmpresaForm #apellido_paterno').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
 	$(function() {
-		$('#nombre').keyup(function() {
+		$('#modalEmpresaForm #apellido_materno').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
@@ -260,37 +336,40 @@ function obtenerPlanDetalle(){
 	
 }
 
-function modalSeguro(id){
+/*
+function cargarAlquiler(){
+    
+    var empresa_id = $('#empresa_id').val();
+	if(empresa_id == "")empresa_id=0;
 	
-	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
-
+    $("#tblAlquiler tbody").html("");
 	$.ajax({
-			url: "/seguro/modal_seguro/"+id,
+			url: "/alquiler/obtener_alquiler/"+empresa_id,
 			type: "GET",
 			success: function (result) {  
-					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
+					$("#tblAlquiler tbody").html(result);
+					//$('#tblAlquiler').dataTable();
 			}
 	});
 
 }
 
-function modalPlanes(id){
-	
-	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
+function cargarDevolucion(){
+    
+    
+    var numero_documento = $("#numero_documento").val();
+    $("#tblPago tbody").html("");
 	$.ajax({
-			url: "/seguro/modal_plan/"+id,
+			url: "/alquiler/obtener_devolucion/"+numero_documento,
 			type: "GET",
 			success: function (result) {  
-					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
+					$("#tblDevolucion tbody").html(result);
 			}
 	});
 
 }
+*/
 
 
 $('#modalEmpresaSaveBtn').click(function (e) {
@@ -357,7 +436,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/seguro/listar_seguro",
+        "sAjaxSource": "/multa/listar_datosAgremiado_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -384,9 +463,12 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#nombre').val();
+			var numero_cap = $('#numero_cap').val();
+			var numero_documento = $('#numero_documento').val();
+			var agremiado = $('#agremiado').val();
+			var fecha_inicio = $('#fecha_inicio').val();
+			var fecha_fin = $('#fecha_fin').val();
 			var estado = $('#estado').val();
-			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -394,7 +476,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,estado:estado,
+						numero_cap:numero_cap,numero_documento:numero_documento,agremiado:agremiado,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -410,59 +492,83 @@ function datatablenew(){
             [	
 				{
                 "mRender": function (data, type, row) {
-                	var id = "";
-					if(row.id!= null)id = row.id;
-					return id;
+                	var regional = "";
+					if(row.regional!= null)regional = row.regional;
+					return regional;
                 },
                 "bSortable": false,
                 "aTargets": [0],
 				"className": "dt-center",
 				//"className": 'control'
                 },
-				
-				{
+				/*{
                 "mRender": function (data, type, row) {
-                	var regional = "";
-					if(row.regional!= null)regional = row.regional;
-					return regional;
+                    var nombre_comercial = "";
+					if(row.nombre_comercial!= null)nombre_comercial = row.nombre_comercial;
+					return nombre_comercial;
                 },
-                "bSortable": true,
+                "bSortable": false,
                 "aTargets": [1]
-                },
-				
+                },*/
                 {
                 "mRender": function (data, type, row) {
-                	var nombre = "";
-					if(row.nombre!= null)nombre = row.nombre;
-					return nombre;
+                	var numero_cap = "";
+					if(row.numero_cap!= null)numero_cap = row.numero_cap;
+					return numero_cap;
                 },
-                "bSortable": true,
-                "aTargets": [2]
+                "bSortable": false,
+                "aTargets": [1],
+				"className": "dt-center",
                 },
-				
 				{
-                "mRender": function (data, type, row) {
-                	var descripcion = "";
-					if(row.descripcion!= null)descripcion = row.descripcion;
-					return descripcion;
-                },
-                "bSortable": true,
-                "aTargets": [3]
-                },
-				
+				"mRender": function (data, type, row) {
+					var numero_documento = "";
+					if(row.numero_documento!= null)numero_documento = row.numero_documento;
+					return numero_documento;
+				},
+				"bSortable": false,
+				"aTargets": [2]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var agremiado = "";
+						if(row.agremiado!= null)agremiado = row.agremiado;
+						return agremiado;
+					},
+					"bSortable": false,
+					"aTargets": [3]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var sexo = "";
+						if(row.sexo!= null)sexo = row.sexo;
+						return sexo;
+					},
+					"bSortable": false,
+					"aTargets": [4]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var fecha_nacimiento = "";
+						if(row.fecha_nacimiento!= null)fecha_nacimiento = row.fecha_nacimiento;
+						return fecha_nacimiento;
+					},
+					"bSortable": false,
+					"aTargets": [5]
+				},
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
 						if(row.estado == 1){
-							estado = "Activo";
+							estado = "Pendiente";
 						}
 						if(row.estado == 0){
-							estado = "Inactivo";
+							estado = "Pagado";
 						}
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [4]
+					"aTargets": [6]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -478,12 +584,8 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalSeguro('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						
-						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalPlanes('+row.id+')" ><i class="fa fa-edit"></i> Planes</button>';
-
-						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalMulta('+row.id+')" ><i class="fa fa-edit"></i> Historial</button>';
+						//html += '<a href="javascript:void(0)" onclick=eliminarMulta('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -491,7 +593,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [7],
 				},
 
             ]
@@ -505,13 +607,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalEmpresa(id){
+function modalMulta(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/empresa/modal_empresa/"+id,
+			url: "/multa/modal_multa_nuevoMulta/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -537,7 +639,7 @@ function modalResponsable(id){
 
 }
 
-function eliminar(id,estado){
+function eliminarMulta(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -549,20 +651,20 @@ function eliminar(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Municipalidad?", 
+        message: "&iquest;Deseas "+act_estado+" la Multa?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar(id,estado_);
+                fn_eliminar_multa(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar(id,estado){
+function fn_eliminar_multa(id,estado){
 	
     $.ajax({
-            url: "/municipalidad/eliminar_municipalidad/"+id+"/"+estado,
+            url: "/multa/eliminar_multa/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

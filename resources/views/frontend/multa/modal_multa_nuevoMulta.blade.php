@@ -1,4 +1,4 @@
-<title>Sistema de Empresas</title>
+<title>Sistema de Multas</title>
 
 <style>
 /*
@@ -349,26 +349,26 @@ function fn_save_estudio(){
     });
 }
 
-function fn_save_empresa(){
+function fn_save_multa(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var ruc = $('#ruc').val();
-	var nombre_comercial = $('#nombre_comercial').val();
-	var razon_social = $('#razon_social').val();
-	var direccion = $('#direccion').val();
-	var email = $('#email').val();
-	var telefono = $('#telefono').val();
-	var representante = $('#representante').val();
+	var numero_cap = $('#numero_cap').val();
+	var periodo = $('#periodo').val();
+	var concepto = $('#concepto').val();
+	var moneda = $('#moneda').val();
+	var importe = $('#importe').val();
+	var fecha_inicio = $('#fecha_inicio').val();
+	var fecha_fin = $('#fecha_fin').val();
 	//var estado = $('#estado').val();
 	
 	//alert(id_agremiado);
 	//return false;
 	
     $.ajax({
-			url: "/empresa/send_empresa_nuevoEmpresa",
+			url: "/multa/send_multa_nuevoMulta",
             type: "POST",
-            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,email:email,telefono:telefono,representante:representante},
+            data : {_token:_token,numero_cap:numero_cap,id:id,periodo:periodo,concepto:concepto,moneda:moneda,importe:importe,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -545,7 +545,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro Empresas
+				Registro Multas
 			</div>
 			
             <div class="card-body">
@@ -562,51 +562,51 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Ruc</label>
-								<input id="ruc" name="ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" >
+								<label class="control-label form-control-sm">N° CAP</label>
+								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $multa->numero_cap?>" type="text" >
+							
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Periodo</label>
+								<input id="periodo" name="periodo" on class="form-control form-control-sm"  value="<?php echo $multa->periodo?>" type="text" >
 							
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Nombre Comercial</label>
-								<input id="nombre_comercial" name="nombre_comercial" class="form-control form-control-sm"  value="<?php echo $empresa->nombre_comercial?>" type="text" readonly="readonly">						
+								<label class="control-label form-control-sm">Concepto</label>
+								<input id="concepto" name="concepto" class="form-control form-control-sm"  value="<?php echo $multa->concepto?>" type="text">						
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Raz&oacute;n Social</label>
-								<input id="razon_social" name="razon_social" class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" readonly="readonly">													
+								<label class="control-label form-control-sm">Moneda</label>
+								<input id="moneda" name="moneda" class="form-control form-control-sm"  value="<?php echo $multa->moneda?>" type="text">													
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Direcci&oacute;n</label>
-								<input id="direccion" name="direccion" class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text" >																				
+								<label class="control-label form-control-sm">Importe</label>
+								<input id="importe" name="importe" class="form-control form-control-sm"  value="<?php echo $multa->importe?>" type="text" >																				
 							</div>
 						</div>
 
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Email</label>
-								<input id="email" name="email" class="form-control form-control-sm"  value="<?php echo $empresa->email?>" type="text" >																				
+								<label class="control-label form-control-sm">Fecha Inicio</label>
+								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php echo $multa->fecha_inicio?>" type="text" >																				
 							</div>
 						</div>
 
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Tel&eacute;fono</label>
-								<input id="telefono" name="telefono" class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text" >																				
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Representante</label>
-								<input id="representante" name="representante" class="form-control form-control-sm"  value="<?php echo $empresa->representante?>" type="text" >																				
+								<label class="control-label form-control-sm">Fecha Fin</label>
+								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php echo $multa->fecha_fin?>" type="text" >																				
 							</div>
 						</div>
 						
@@ -617,7 +617,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_empresa()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_multa()" class="btn btn-sm btn-success">Registrar</a>
 							</div>
 												
 						</div>

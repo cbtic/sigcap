@@ -267,10 +267,11 @@ function validaTipoDocumento(){
 }
 
 function obtenerBeneficiario(){
-		
+	
 	var tipo_documento = $("#tipo_documento").val();
 	var numero_documento = $("#numero_documento").val();
 	var msg = "";
+	
 	
 	if (msg != "") {
 		bootbox.alert(msg);
@@ -287,50 +288,58 @@ function obtenerBeneficiario(){
 	$('#foto').attr('src','/dist/img/profile-icon.png');
 	
 	$.ajax({
-		url: '/afiliacion/obtener_afiliado/' + tipo_documento + '/' + numero_documento,
+		url: '/agremiado/obtener_agremiado/' + tipo_documento + '/' + numero_documento,
 		dataType: "json",
 		success: function(result){
-			//alert(result.afiliado.id);
+			//alert(result.agremiado.id);
+			//alert(result);
 			
 			if(tipo_documento == "RUC"){
-				$('#empresa_afiliado').val(result.afiliado.razon_social);
-				$('#empresa_direccion').val(result.afiliado.direccion);
-				$('#empresa_representante').val(result.afiliado.representante);
-				$('#empresa_id').val(result.afiliado.id);
-				$('#id_ubicacion').val(result.afiliado.id_ubicacion);
+				$('#empresa_afiliado').val(result.agremiado.razon_social);
+				$('#empresa_direccion').val(result.agremiado.direccion);
+				$('#empresa_representante').val(result.agremiado.representante);
+				$('#empresa_id').val(result.agremiado.id);
+				//$('#id_ubicacion').val(result.agremiado.id_ubicacion);
 			}else{
-				var afiliado = result.afiliado.apellido_paterno+" "+result.afiliado.apellido_materno+", "+result.afiliado.nombres;
-				$('#nombre_afiliado').val(afiliado);
-				//$('#codigo_afiliado').val(result.afiliado.codigo);	
+				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
+				$('#nombre_afiliado').val(agremiado);
+				$('#codigo_afiliado').val(result.agremiado.situacion);	
 				
 				//alert(result.afiliado.afiliacion);
+/*
 				if(result.afiliado.afiliacion!=null){
 					$('#codigo_afiliado').val(result.afiliado.afiliacion);
 					$('#btnDesafiliar').attr("disabled",false);
 				}
 				$('#empresa_afiliado').val(result.afiliado.razon_social);
-				$('#fecha_afiliado').val(result.afiliado.fecha_inicio);
-				$('#persona_id').val(result.afiliado.id);				
-				$('#id_ubicacion').val(result.afiliado.id_ubicacion);
+				*/
+				$('#fecha_afiliado').val(result.agremiado.fecha_colegiado);
 
-				$('#ruc_p').val(result.afiliado.ruc_p);
-				$('#id_ubicacion_p').val(result.afiliado.id_ubicacion_p);
-				
+				$('#persona_id').val(result.agremiado.id);		
+
+			//	$('#id_ubicacion').val(result.agremiado.id_empresa);
+				$('#ruc_p').val(result.agremiado.numero_ruc);
+			//	$('#id_ubicacion_p').val(result.afiliado.id_ubicacion_p);
+				/*
 				if(result.afiliado.tarjeta!=null){
 					$('#divTarjeta').show();
 					$('#numero_tarjeta').html(result.afiliado.tarjeta);
 					$('#btnInactivar').attr("disabled",false);
 				}
+				*/
 				
-				if(result.afiliado.foto!=null && result.afiliado.foto!="" && result.afiliado.foto!="ruta" && result.afiliado.foto!="mail@mail.com"){
-					$('#foto').attr('src','/img/dni_asociados/'+result.afiliado.foto);
+				
+				if(result.agremiado.foto!=null && result.agremiado.foto!=""){
+					$('#foto').attr('src','/img/dni_asociados/'+result.agremiado.foto);
+				}else{
+					$('#foto').attr('src','/img/profile-icon.png');
 				}
 				
 			}
 
 			cargarValorizacion();
 			cargarPagos();
-			cargarDudoso();
+			//cargarDudoso();
 			
 		}
 		
@@ -375,13 +384,13 @@ function cargarValorizacion(){
     
 	//var numero_documento = $("#numero_documento").val();
 	var tipo_documento = $("#tipo_documento").val();
-	var persona_id = 0;
-	if(tipo_documento=="RUC")persona_id = $('#id_ubicacion').val();
-	else persona_id = $('#persona_id').val();
+	var id_persona = 0;
+	if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
+	else id_persona = $('#persona_id').val();
 
     $("#tblValorizacion tbody").html("");
 	$.ajax({
-			url: "/ingreso/obtener_valorizacion/"+tipo_documento+"/"+persona_id,
+			url: "/ingreso/obtener_valorizacion/"+tipo_documento+"/"+id_persona,
 			type: "GET",
 			success: function (result) {  
 					$("#tblValorizacion tbody").html(result);

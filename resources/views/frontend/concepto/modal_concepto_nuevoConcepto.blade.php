@@ -507,6 +507,10 @@ container: '#myModal modal-body'
 
 <body class="hold-transition skin-blue sidebar-mini">
 
+	<div class="panel-heading close-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+
     <div>
 		<!--
         <section class="content-header">
@@ -519,7 +523,7 @@ container: '#myModal modal-body'
 
 		<div class="card">
 			
-			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
+			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
 				Registro Concepto
 			</div>
 			
