@@ -69,9 +69,7 @@
 								<a href="/concepto/consulta_concepto" class="dropdown-item">Consulta de Concepto</a>
                                 <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Consulta de Tipo de Concepto</a>
                                 <a href="/municipalidad/consulta_municipalidad" class="dropdown-item">Municipalidades</a>
-                                <a href="/municipalidad/consulta_municipalidad" class="dropdown-item">Municipalidades</a>
-								<a href="/concepto/consulta_concepto" class="dropdown-item">Consulta de Concepto</a>
-                                <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Consulta de Tipo de Concepto</a>
+								
 						   </div>
 					</li>
 				
