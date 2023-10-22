@@ -33,7 +33,7 @@ class ConceptoController extends Controller
 		$p[]="";
 		$p[]=$request->denominacion;
         $p[]=$request->partida_presupuestal;
-        $p[]="";
+        $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $concepto_model->listar_concepto_ajax($p);

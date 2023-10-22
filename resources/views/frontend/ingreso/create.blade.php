@@ -74,10 +74,10 @@ border-right: 2px solid #5cb85c!important;
 								-->
 								<div style="position:relative">
 								<!--<img src="{{ $logged_in_user->picture }}" class="user-profile-image_" id="foto" width="80px" height="110px" style="position:absolute;top:-30px;left:35%" />-->
-								<img src="/dist/img/profile-icon.png" id="foto" width="80px" height="110px" style="position:absolute;top:-30px;left:35%" />
+								<img src="../img/profile-icon.png" id="foto" width="90px" height="110px" style="position:absolute;top:-30px;left:35%" />
 								</div>
 							</div>
-
+                            
 							<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 								<div class="form-group">
                                 	<br>
@@ -234,11 +234,9 @@ border-right: 2px solid #5cb85c!important;
 								@hasanyrole('administrator')
 								
 								
-								<input class="btn btn-danger btn-sm" value="Inactivar 
-Tarjeta" type="button" disabled="disabled" id="btnInactivar" onclick="eliminarPersonaTarjeta()" style="cursor:pointer;float:left;font-size:15px;margin-bottom:15px">
+								<input class="btn btn-danger btn-sm" value="Inactivar Tarjeta" type="button" disabled="disabled" id="btnInactivar" onclick="eliminarPersonaTarjeta()" style="cursor:pointer;float:left;font-size:15px;margin-bottom:15px">
 								
-								<input class="btn btn-danger btn-sm float-right" value="Desafiliar 
-Plan" type="button" disabled="disabled" id="btnDesafiliar" onclick="eliminarAfiliado()" style="cursor:pointer;float:right;font-size:15px;margin-bottom:15px">
+								<input class="btn btn-danger btn-sm float-right" value="Desafiliar Plan" type="button" disabled="disabled" id="btnDesafiliar" onclick="eliminarAfiliado()" style="cursor:pointer;float:right;font-size:15px;margin-bottom:15px">
 								
 								<!--
 								<button class="btn btn-danger btn-sm float-left" disabled="disabled" id="btnInactivar" onclick="eliminarPersonaTarjeta()" style="cursor:pointer;float:right;font-size:15px;margin-bottom:15px;">Inactivar<br/>Tarjeta</button>
@@ -284,7 +282,7 @@ Plan" type="button" disabled="disabled" id="btnDesafiliar" onclick="eliminarAfil
                     <div class="row" id="divFechaAfliado">
                         <div class="col">
                             <div class="form-group">
-                                <label class="form-control-sm">Fecha Afiliacion</label>
+                                <label class="form-control-sm">Fecha Colegiatura</label>
                                 <input type="text" readonly name="fecha_afiliado" id="fecha_afiliado" value="{{old('clinom')}}" class="form-control form-control-sm">
                             </div>
                         </div>
@@ -410,66 +408,9 @@ Plan" type="button" disabled="disabled" id="btnDesafiliar" onclick="eliminarAfil
                                     </div><!--form-group-->
                                 </div><!--col-->
                             </div><!--row-->
-
-
                         </div><!--card-body-->
                     </div><!--card-->
-
-
 					<br />
-					<div class="card">
-                        <div class="card-header">
-                            <strong>
-                                Estado de Cuenta Dudoso
-								@hasanyrole('administrator')
-								<input class="btn btn-warning btn-sm pull-right" value="ACTIVAR" type="button" id="btnEstado" onclick="guardarEstado('A')" style="margin-left:20px" />
-								@endhasanyrole
-                            </strong>
-                        </div>
-
-                        <div class="card-body">
-
-							<!--
-							<div class="row">
-                                <div class="col">
-                                    <div class="form-group mb-0 clearfix">
-									<input class="btn btn-success pull-rigth" value="ACTIVAR" type="button" id="btnEstado" onclick="guardarEstado()" />
-                                    </div>
-                                </div>
-                            </div>
-							-->
-
-							<div class="table-responsive">
-                                <table id="tblDudoso" class="table table-hover table-sm">
-                                    <thead>
-                                    <tr style="font-size:13px">
-										<th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
-                                        	<input type="checkbox" name="select_all" value="1" id="example-select-all" style="display:none">
-										</th>
-										<th>Fecha</th>
-                                        <th>Concepto</th>
-                                        <th class="text-right">Monto</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-									<tfoot>
-										<tr>
-											<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda Total</th>
-											<td style="padding-bottom:0px;margin-bottom:0px">
-												<input type="text" readonly name="total_dudoso" id="total_dudoso" value="0" class="form-control form-control-sm text-right">
-											</td>
-										</tr>
-									</tfoot>
-                                </table>
-                            </div><!--table-responsive-->
-
-						</div>
-
-					</div>
-
-
-
                 </div>
 
                 <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">

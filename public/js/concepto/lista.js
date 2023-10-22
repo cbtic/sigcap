@@ -482,14 +482,15 @@ function datatablenew(){
 					return codigo;
 					},
 				"bSortable": false,
-				"aTargets": [0]
+				"aTargets": [0],
+				"className": "dt-center",
 				},
 				{
                 "mRender": function (data, type, row) {
                 	var regional = "";
 					if(row.regional!= null)regional = row.regional;
 					return regional;
-                	},
+                },
                 "bSortable": false,
                 "aTargets": [1],
 				"className": "dt-center",
@@ -588,7 +589,7 @@ function modalResponsable(id){
 			url: "/afiliacion/modal_afiliacion_empresa/"+id,
 			type: "GET",
 			success: function (result) {  
-					$("#diveditpregOpc").html(result);
+					$("#diveditpregOpc").html(result);			
 					$('#openOverlayOpc').modal('show');
 			}
 	});

@@ -6,22 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class TipoConcepto extends Model
+class Seguro extends Model
 {
-    use HasFactory;
+   
+    public function listar_seguro($p){
 
-    public function listar_tipoConcepto_ajax($p){
-
-        return $this->readFuntionPostgres('sp_listar_tipoconcepto_paginado',$p);
+        return $this->readFuntionPostgres('sp_listar_seguro_paginado',$p);
 
     }
 
-    function getCodigoTipoConcepto(){
+    public function listar_plan($p){
 
-        $cad = "select lpad((max(codigo::int)+1)::varchar,5,'0') codigo from tipo_conceptos tc ";
-    
-		$data = DB::select($cad);
-        return $data[0]->codigo;
+        return $this->readFuntionPostgres('sp_listar_seguro_plan_paginado',$p);
+
     }
 
     public function readFuntionPostgres($function, $parameters = null){

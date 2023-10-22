@@ -58,6 +58,7 @@
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
+                                <a href="/multa/consulta_multa" class="dropdown-item">Multas</a>
 						   </div>
 					</li>
 
@@ -70,6 +71,7 @@
                                 <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Consulta de Tipo de Concepto</a>
                                 <a href="/municipalidad/consulta_municipalidad" class="dropdown-item">Municipalidades</a>
 								
+                                <a href="/seguro/consulta_seguro" class="dropdown-item">Seguros</a>
 						   </div>
 					</li>
 				

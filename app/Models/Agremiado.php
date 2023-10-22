@@ -21,27 +21,25 @@ class Agremiado extends Model
                     from empresas t1                    
                     Where t1.ruc='".$numero_documento."'";
 
-        }else{
+        }elseif($tipo_documento=="NRO_CAP"){
 			
-			$cad = "select t1.id,nombres,apellido_paterno,apellido_materno,razon_social,t1.foto,t2.codigo,t2.fecha_inicio,t2.ubicacion_id id_ubicacion,
-					(select string_agg(numero_tarjeta, ',') from tarjetas tar where tar.persona_id=t2.persona_id and estado='1') tarjeta,
-					(select string_agg(t3_.plan_denominacion, ',')
-					from personas t1_
-					inner join afiliaciones t2_ on t1_.id = t2_.persona_id
-					inner join plan_atenciones t3_ on t2_.plan_id=t3_.id
-					where t1_.id=t1.id and t1_.estado='1' and t2_.estado='1')afiliacion, t1.ruc ruc_p, 
-                    (select ut.id from empresas e inner join ubicacion_trabajos ut on ut.ubicacion_empresa_id = e.id 
-					where e.ruc =t1.ruc and e.estado = '1' limit 1) id_ubicacion_p 
-					from personas t1
-					left join afiliaciones t2 on t1.id = t2.persona_id And t2.estado='1'
-					left join ubicacion_trabajos t3 on t2.ubicacion_id = t3.id
-					left join empresas t4 on t3.ubicacion_empresa_id = t4.id
-                    Where t1.tipo_documento='".$tipo_documento."'
-                    And t1.numero_documento='".$numero_documento."'
-					and t1.estado='1' 
-                    limit 1";
-					
-        }
+			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion
+					--,razon_social,t1.foto,t2.codigo,t2.fecha_inicio,t2.ubicacion_id id_ubicacion,				
+					from personas t1 
+					left join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
+					left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'                    
+					Where  t2.numero_cap ='".$numero_documento."' and t1.estado='1' 
+					limit 1";
+								
+        }else{
+			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc
+					--,razon_social,t1.foto,t2.codigo,t2.fecha_inicio,t2.ubicacion_id id_ubicacion,				
+					from personas t1 
+					left join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
+					left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'                    
+					Where  t1.tipo_documento='".$tipo_documento."' and t1.numero_documento = '".$numero_documento."' and t1.estado='1' 
+					limit 1";
+		}
 		//echo $cad;
 		$data = DB::select($cad);
         return $data[0];
