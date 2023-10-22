@@ -276,6 +276,22 @@ function modalSeguro(id){
 
 }
 
+function modalPlanes(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/seguro/modal_plan/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
 
 $('#modalEmpresaSaveBtn').click(function (e) {
 	e.preventDefault();
@@ -404,17 +420,36 @@ function datatablenew(){
 				//"className": 'control'
                 },
 				
-                {
+				{
                 "mRender": function (data, type, row) {
-                	var denominacion = "";
-					if(row.nombre!= null)denominacion = row.nombre;
-					return denominacion;
+                	var regional = "";
+					if(row.regional!= null)regional = row.regional;
+					return regional;
                 },
                 "bSortable": true,
                 "aTargets": [1]
                 },
 				
-			
+                {
+                "mRender": function (data, type, row) {
+                	var nombre = "";
+					if(row.nombre!= null)nombre = row.nombre;
+					return nombre;
+                },
+                "bSortable": true,
+                "aTargets": [2]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var descripcion = "";
+					if(row.descripcion!= null)descripcion = row.descripcion;
+					return descripcion;
+                },
+                "bSortable": true,
+                "aTargets": [3]
+                },
+				
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -427,7 +462,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [2]
+					"aTargets": [4]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -445,6 +480,8 @@ function datatablenew(){
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 						
 						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalSeguro('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						
+						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalPlanes('+row.id+')" ><i class="fa fa-edit"></i> Planes</button>';
 
 						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
@@ -454,7 +491,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [3],
+					"aTargets": [5],
 				},
 
             ]
