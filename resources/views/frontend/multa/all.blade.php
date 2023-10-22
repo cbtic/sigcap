@@ -94,9 +94,6 @@
 	color: #FFFFFF;
 }
 
-
-
-
 </style>
 
 @extends('frontend.layouts.app')
@@ -106,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Tipos de Conceptos</li>
+            <li class="breadcrumb-item active">Consulta de Multas</li>
         </li>
     </ol>
 @endsection
@@ -131,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consultar Tipo de Conceptos <!--<small class="text-muted">Usuarios activos</small>-->
+                        Multas <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -143,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Tipo de conceptos
+                        Lista de Multas
                     </strong>
                 </div><!--card-header-->
 				
@@ -152,43 +149,67 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="numero_cap" name="numero_cap" placeholder="N° de CAP">
+					</div>
+					<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="DNI">
+                    </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="codigo" name="codigo" placeholder="Codigo">
-					</div>
-					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominacion">
-					</div>
+						<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombre Agremiado">
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                        <div class="md-form md-outline input-with-post-icon datepicker">
+                            <input placeholder="Fecha" type="date" id="fecha" class="form-control">
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                        <div class="md-form md-outline input-with-post-icon datepicker">
+                            <input placeholder="Fecha" type="date" id="fecha" class="form-control">
+                           
+                        </div>
+						<!--<input class="form-control form-control-sm" id="fecha" name="fecha" placeholder="Fecha">-->
+                    </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
-							<option value="1" selected="selected">Activo</option>
-							<option value="0">Eliminado</option>
+                            <option value="1" selected="selected">Pendientes</option>
+							<option value="0">Pagados</option>
 						</select>
 					</div>
-                    
+        
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+						
+                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+
 					</div>
 				</div>
-				
-                <div class="card-body">				
+			</div>
+            <div class="card-body">	
 
-                    <div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
-                        <thead>
-                        <tr style="font-size:13px">
-                            <th>C&oacute;digo</th>
-                            <th>Regional</th>
-                            <th>Denominaci&oacute;n</th>
-                            <th>Estado</th>
-							<th>Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
+                <div class="table-responsive">
+                <table id="tblAfiliado" class="table table-hover table-sm">
+                    <thead>
+                    <tr style="font-size:13px">
+                        <th>Regional</th>
+                        <!--<th>Nombre Comercial</th>-->
+                        <th>N° de CAP</th>
+                        <th>N&uacute;mero de Documento</th>
+                        <th>Agremiado</th>
+                        <th>Sexo</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Estado</th>
+                        <!--<th>Estado</th>-->
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
                     </table>
-                </div><!--table-responsive-->
+                    </div><!--table-responsive-->
                 </form>
 
 
@@ -204,10 +225,7 @@
   <div class="modal-dialog" >
 
 	<div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">
-      
-    
-
-
+	
 	  <div class="modal-body" style="padding: 0px;margin: 0px">
 
 			<div id="diveditpregOpc"></div>
@@ -222,6 +240,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/tipoConcepto/lista.js') }}"></script>
+<script src="{{ asset('js/multa/lista.js') }}"></script>
 
 @endpush

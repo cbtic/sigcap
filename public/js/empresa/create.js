@@ -1687,7 +1687,7 @@ function ocultar_solicitud(){
 function datatablenew(){
     var oTable = $('#tblSolicitud').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/expediente/listar_expediente_ajax",
+        "sAjaxSource": "/empresa/listar_empresa_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         "bFilter": false,

@@ -9,6 +9,8 @@ use App\Http\Controllers\Frontend\AgremiadoController;
 use App\Http\Controllers\Frontend\EmpresaController;
 use App\Http\Controllers\Frontend\ConceptoController;
 use App\Http\Controllers\Frontend\TipoConceptoController;
+use App\Http\Controllers\Frontend\MultaController;
+
 use App\Http\Controllers\Frontend\IngresoController;
 
 use App\Http\Controllers\Frontend\MunicipalidadController;
@@ -116,6 +118,21 @@ Route::post('tipoConcepto/send_tipoConcepto_nuevoTipoConcepto', [TipoConceptoCon
 
 Route::get('tipoConcepto/eliminar_tipoConcepto/{id}/{estado}', [TipoConceptoController::class, 'eliminar_tipoConcepto'])->name('tipoConcepto.eliminar_tipoConcepto');
 
+Route::get('multa/consulta_multa', [MultaController::class, 'consulta_multa'])->name('multa.consulta_multa');
+
+Route::post('multa/listar_datosAgremiado_ajax', [MultaController::class, 'listar_datosAgremiado_ajax'])->name('multa.listar_datosAgremiado_ajax');
+
+Route::get('multa/editar_multa/{id}', [MultaController::class, 'editar_multa'])->name('multa.editar_multa');
+
+Route::get('multa/modal_multa_nuevoMulta/{id}', [MultaController::class, 'modal_multa_nuevoMulta'])->name('multa.modal_multa_nuevoMulta');
+
+Route::post('multa/send_multa_nuevoMulta', [MultaController::class, 'send_multa_nuevoMulta'])->name('multa.send_multa_nuevoMulta');
+
+Route::get('multa/eliminar_multa/{id}/{estado}', [MultaController::class, 'eliminar_multa'])->name('multa.eliminar_multa');
+
+
+
+//Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 
 
