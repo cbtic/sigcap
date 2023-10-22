@@ -34,7 +34,7 @@ class MultaController extends Controller
 		$p[]="";
         $p[]="";
 		$p[]="";
-		//$p[]=$request->estado;
+		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $multa_model->listar_datosAgremiado_ajax($p);

@@ -7,7 +7,19 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
-	$('#cap').keypress(function(e){
+	$('#numero_cap').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#numero_documento').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#agremiado').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
@@ -451,8 +463,12 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var numero_cap = $('#cap').val();
-			//var estado = $('#estado').val();
+			var numero_cap = $('#numero_cap').val();
+			var numero_documento = $('#numero_documento').val();
+			var agremiado = $('#agremiado').val();
+			var fecha_inicio = $('#fecha_inicio').val();
+			var fecha_fin = $('#fecha_fin').val();
+			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -460,7 +476,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						numero_cap:numero_cap,
+						numero_cap:numero_cap,numero_documento:numero_documento,agremiado:agremiado,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -539,21 +555,21 @@ function datatablenew(){
 					},
 					"bSortable": false,
 					"aTargets": [5]
-				},/*
+				},
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
 						if(row.estado == 1){
-							estado = "Activo";
+							estado = "Pendiente";
 						}
 						if(row.estado == 0){
-							estado = "Inactivo";
+							estado = "Pagado";
 						}
 						return estado;
 					},
 					"bSortable": false,
 					"aTargets": [6]
-				},*/
+				},
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -577,7 +593,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [6],
+					"aTargets": [7],
 				},
 
             ]
