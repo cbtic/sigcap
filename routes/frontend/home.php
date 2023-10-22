@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\TipoConceptoController;
 use App\Http\Controllers\Frontend\IngresoController;
 
 use App\Http\Controllers\Frontend\MunicipalidadController;
+use App\Http\Controllers\Frontend\SeguroController;
 
 /*
  * Frontend Controllers
@@ -120,3 +121,9 @@ Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingres
 Route::get('ingreso/obtener_valorizacion/{tipo_documento}/{id_persona}', [IngresoController::class, 'obtener_valorizacion'])->name('ingreso.obtener_valorizacion')->where('tipo_documento', '(.*)');
 
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
+
+Route::get('seguro/consulta_seguro', [SeguroController::class, 'consulta_seguro'])->name('seguro.consulta_seguro');
+Route::post('seguro/listar_seguro', [SeguroController::class, 'listar_seguro'])->name('seguro.listar_seguro');
+Route::get('seguro/modal_seguro/{id}', [SeguroController::class, 'modal_seguro'])->name('seguro.modal_seguro');
+Route::post('seguro/send_seguro', [SeguroController::class, 'send_seguro'])->name('seguro.send_seguro');
+Route::get('seguro/eliminar_seguro/{id}/{estado}', [seguroController::class, 'eliminar_seguro'])->name('municipalidad.eliminar_seguro');
