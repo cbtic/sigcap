@@ -49,7 +49,7 @@ class ConcursoController extends Controller
 		
 		if($id>0) $concurso = Concurso::find($id);else $concurso = new Concurso;
 
-		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(92);
+		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(93);
 
 		return view('frontend.concurso.modal_concurso',compact('id','concurso','tipo_concurso'));
 
@@ -62,7 +62,7 @@ class ConcursoController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
 		$concursoPuesto_model = new ConcursoPuesto;
 		$concurso_puesto = $concursoPuesto_model->getConcursoPuestoByIdConcurso($id);
-		$tipo_plaza = $tablaMaestra_model->getMaestroByTipo(93);
+		$tipo_plaza = $tablaMaestra_model->getMaestroByTipo(94);
 		
 		return view('frontend.concurso.modal_puesto',compact('id','concurso_puesto','tipo_plaza'));
 
