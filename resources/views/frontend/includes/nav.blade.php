@@ -71,6 +71,8 @@
 								<a href="/concepto/consulta_concepto" class="dropdown-item">Consulta de Concepto</a>
                                 <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Consulta de Tipo de Concepto</a>
                                 <a href="/seguro/consulta_seguro" class="dropdown-item">Seguros</a>
+								
+								<a href="/concurso" class="dropdown-item">Concurso</a>
 						   </div>
 					</li>
 				

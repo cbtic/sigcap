@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\IngresoController;
 
 use App\Http\Controllers\Frontend\MunicipalidadController;
 use App\Http\Controllers\Frontend\SeguroController;
+use App\Http\Controllers\Frontend\ConcursoController;
 
 use App\Http\Controllers\Frontend\ProntoPagoController;
 
@@ -154,4 +155,14 @@ Route::get('seguro/eliminar_seguro/{id}/{estado}', [seguroController::class, 'el
 Route::get('seguro/eliminar_plan/{id}', [seguroController::class, 'eliminar_plan'])->name('seguro.eliminar_plan');
 Route::post('seguro/send_plan', [SeguroController::class, 'send_plan'])->name('seguro.send_plan');
 Route::get('seguro/obtener_plan/{id}', [SeguroController::class, 'obtener_plan'])->name('seguro.obtener_plan');
+
+Route::get('concurso', [ConcursoController::class, 'index'])->name('concurso');
+Route::post('concurso/listar_concurso', [ConcursoController::class, 'listar_concurso'])->name('concurso.listar_concurso');
+Route::get('concurso/modal_concurso/{id}', [ConcursoController::class, 'modal_concurso'])->name('concurso.modal_concurso');
+Route::post('concurso/send_concurso', [ConcursoController::class, 'send_concurso'])->name('concurso.send_concurso');
+Route::get('concurso/modal_puesto/{id}', [ConcursoController::class, 'modal_puesto'])->name('concurso.modal_puesto');
+Route::post('concurso/listar_puesto', [ConcursoController::class, 'listar_puesto'])->name('concurso.listar_puesto');
+Route::get('concurso/eliminar_puesto/{id}', [ConcursoController::class, 'eliminar_puesto'])->name('concurso.eliminar_puesto');
+Route::post('concurso/send_puesto', [ConcursoController::class, 'send_puesto'])->name('concurso.send_puesto');
+Route::get('concurso/obtener_puesto/{id}', [ConcursoController::class, 'obtener_puesto'])->name('concurso.obtener_puesto');
 
