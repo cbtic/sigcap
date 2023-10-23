@@ -72,6 +72,8 @@
                                 <a href="/municipalidad/consulta_municipalidad" class="dropdown-item">Municipalidades</a>
 								
                                 <a href="/seguro/consulta_seguro" class="dropdown-item">Seguros</a>
+								
+								<a href="/concurso" class="dropdown-item">Concurso</a>
 						   </div>
 					</li>
 				
