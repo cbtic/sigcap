@@ -1,9 +1,9 @@
-<title>Sistema de Multas</title>
+<title>Sistema de Empresas</title>
 
 <style>
 /*
 .datepicker {
-  z-index: 1600 !important; 
+  z-index: 1600 !important;
 }
 */
 /*.datepicker{ z-index:99999 !important; }*/
@@ -19,7 +19,7 @@
 	width: 100%;
 	max-width:40%!important
   }
-  
+
 #tablemodal{
     border-spacing: 0;
     display: flex;/*Se ajuste dinamicamente al tamano del dispositivo**/
@@ -191,17 +191,8 @@ $.mask.definitions['p'] = "[Mm]";
 */
 $(document).ready(function() {
 	//$('#hora_solicitud').focus();
-	//$('#hora_solicitud').mask('00:00');
+	$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
-
-	$('#ruc').blur(function () {
-		var id = $('#id').val();
-			if(id==0) {
-				validaRuc(this.value);
-			}
-		//validaRuc(this.value);
-	});
-
 });
 </script>
 
@@ -240,50 +231,6 @@ function validacion(){
         bootbox.alert(msg); 
         return false;
     }
-}
-
-function validaRuc(ruc){
-	var settings = {
-		"url": "https://apiperu.dev/api/ruc/"+ruc,
-		"method": "GET",
-		"timeout": 0,
-		"headers": {
-		  "Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
-		},
-	  };
-	  
-	  $.ajax(settings).done(function (response) {
-		console.log(response);
-		
-		if (response.success == true){
-
-			var data= response.data;
-
-			$('#razon_social').val('')
-			$('#direccion').val('')
-			$('#nombre_comercial').val('')
-			
-			$('#razon_social').val(data.nombre_o_razon_social).attr('readonly', true);
-			$('#nombre_comercial').val(data.nombre_o_razon_social).attr('readonly', true);
-			//$('#direccion').attr('readonly', true);
-
-			if (data.direccion_completa != ""){
-				$('#direccion').val(data.direccion_completa).attr('readonly', true);
-			}
-			else{
-				$('#direccion').attr('readonly', false);
-			}
-			
-			//alert(data.direccion_completa);
-
-		}
-		else{
-			bootbox.alert("RUC Invalido,... revise el RUC digitado ¡");
-			return false;
-		}
-
-		
-	  });
 }
 
 function guardarCita__(){
@@ -349,24 +296,58 @@ function fn_save_estudio(){
     });
 }
 
-function fn_save_multa(){
+function fn_save_empresa(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var numero_cap = $('#numero_cap').val();
-	var periodo = $('#periodo').val();
-	var concepto = $('#concepto').val();
-	var moneda = $('#moneda').val();
-	var importe = $('#importe').val();
-	var estado = $('#estado').val();
+	var ruc = $('#ruc').val();
+	var nombre_comercial = $('#nombre_comercial').val();
+	var razon_social = $('#razon_social').val();
+	var direccion = $('#direccion').val();
+	var representante = $('#representante').val();
+	//var estado = $('#estado').val();
 	
 	//alert(id_agremiado);
 	//return false;
 	
     $.ajax({
-			url: "/multa/send_multa_nuevoMulta",
+			url: "/empresa/send_empresa_nuevoEmpresa",
             type: "POST",
-            data : {_token:_token,numero_cap:numero_cap,id:id,periodo:periodo,concepto:concepto,moneda:moneda,importe:importe,estado:estado},
+            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,representante:representante},
+            success: function (result) {
+				
+				$('#openOverlayOpc').modal('hide');
+				window.location.reload();
+				
+				/*
+				$('#openOverlayOpc').modal('hide');
+				if(result==1){
+					bootbox.alert("La persona o empresa ya se encuentra registrado");
+				}else{
+					window.location.reload();
+				}
+				*/
+            }
+    });
+}
+
+function fn_save_concepto(){
+    
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var id_regional = $('#id_regional').val();
+	var codigo = $('#codigo').val();
+	var denominacion = $('#denominacion').val();
+	var id_partida_presupuestal = $('#id_partida_presupuestal').val();
+	//var estado = $('#estado').val();
+	
+	//alert(id_agremiado);
+	//return false;
+	
+    $.ajax({
+			url: "/concepto/send_concepto_nuevoConcepto",
+            type: "POST",
+            data : {_token:_token,id:id,id_regional:id_regional,codigo:codigo,denominacion:denominacion,id_partida_presupuestal:id_partida_presupuestal},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -543,7 +524,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro Multas
+				Registro Concepto
 			</div>
 			
             <div class="card-body">
@@ -560,27 +541,12 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">N° CAP</label>
-								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $multa->numero_cap?>" type="text" >
-							
-							</div>
-						</div>
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Periodo</label>
-								<input id="periodo" name="periodo" on class="form-control form-control-sm"  value="<?php echo $multa->periodo?>" type="text" >
-							
-							</div>
-						</div>
-						
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Concepto</label>
-								<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onchange="">
+								<label class="control-label form-control-sm">Regional</label>
+								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onchange="">
 									<option value="">--Selecionar--</option>
 									<?php
-									foreach ($multa_concepto as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$multa->id_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									foreach ($region as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
 									}
 									?>
@@ -590,25 +556,25 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Moneda</label>
-								<select name="id_moneda" id="id_moneda" class="form-control form-control-sm" onchange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($moneda as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$multa->id_moneda)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
+								<label class="control-label form-control-sm">C&oacute;digo</label>
+								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" readonly="readonly" >						
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Importe</label>
-								<input id="importe" name="importe" class="form-control form-control-sm"  value="<?php echo $multa->importe?>" type="text" >																				
+								<label class="control-label form-control-sm">Denominaci&oacute;n</label>
+								<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="<?php echo $concepto->denominacion?>" type="text" >													
 							</div>
 						</div>
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Partida Presupuestal</label>
+								<input id="id_partida_presupuestal" name="id_partida_presupuestal" class="form-control form-control-sm"  value="<?php echo $concepto->id_partida_presupuestal?>" type="text" >
+							</div>
+						</div>
+						
 					</div>
 					
 					
@@ -616,7 +582,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_multa()" class="btn btn-sm btn-success">Registrar</a>
+								<a href="javascript:void(0)" onClick="fn_save_concepto()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

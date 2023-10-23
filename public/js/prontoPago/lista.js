@@ -7,26 +7,14 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
-	$('#numero_cap').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
-
-	$('#numero_documento').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
-
-	$('#agremiado').keypress(function(e){
+	$('#partida_presupuestalBus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalMulta(0);
+		modalProntoPago(0);
 	});
 		
 	datatablenew();
@@ -430,7 +418,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/multa/listar_datosAgremiado_ajax",
+        "sAjaxSource": "/prontoPago/listar_prontoPago_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -447,7 +435,7 @@ function datatablenew(){
                         {},
         ],
 		"dom": '<"top">rt<"bottom"flpi><"clear">',
-        "fnDrawCallback": function(json) {
+        "fnDrawCallback": function(json) {	
             $('[data-toggle="tooltip"]').tooltip();
         },
 
@@ -457,11 +445,8 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var numero_cap = $('#numero_cap').val();
-			var numero_documento = $('#numero_documento').val();
-			var agremiado = $('#agremiado').val();
 			var fecha_inicio = $('#fecha_inicio').val();
-			var fecha_fin = $('#fecha_fin').val();
+            var fecha_fin = $('#fecha_fin').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -470,7 +455,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						numero_cap:numero_cap,numero_documento:numero_documento,agremiado:agremiado,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
+						fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -485,101 +470,83 @@ function datatablenew(){
         "aoColumnDefs":
             [	
 				{
-                "mRender": function (data, type, row) {
-                	var regional = "";
-					if(row.regional!= null)regional = row.regional;
-					return regional;
-                },
-                "bSortable": false,
-                "aTargets": [0],
+				"mRender": function (data, type, row) {
+					var fecha_inicio = "";
+					if(row.fecha_inicio!= null)fecha_inicio = row.fecha_inicio;
+					return fecha_inicio;
+					},
+				"bSortable": false,
+				"aTargets": [0],
 				"className": "dt-center",
-				//"className": 'control'
-                },
-				/*{
+				},
+				{
                 "mRender": function (data, type, row) {
-                    var nombre_comercial = "";
-					if(row.nombre_comercial!= null)nombre_comercial = row.nombre_comercial;
-					return nombre_comercial;
-                },
-                "bSortable": false,
-                "aTargets": [1]
-                },*/
-                {
-                "mRender": function (data, type, row) {
-                	var numero_cap = "";
-					if(row.numero_cap!= null)numero_cap = row.numero_cap;
-					return numero_cap;
+                	var fecha_fin = "";
+					if(row.fecha_fin!= null)fecha_fin = row.fecha_fin;
+					return fecha_fin;
                 },
                 "bSortable": false,
                 "aTargets": [1],
 				"className": "dt-center",
+				//"className": 'control'
+                },
+                {
+                "mRender": function (data, type, row) {
+                	var porcentaje = "";
+					if(row.porcentaje!= null)porcentaje = row.porcentaje;
+					return porcentaje;
+                },
+                "bSortable": false,
+                "aTargets": [2]
                 },
 				{
 				"mRender": function (data, type, row) {
-					var numero_documento = "";
-					if(row.numero_documento!= null)numero_documento = row.numero_documento;
-					return numero_documento;
+					var codigo_documento = "";
+					if(row.codigo_documento!= null)codigo_documento = row.codigo_documento;
+					return codigo_documento;
 				},
 				"bSortable": false,
-				"aTargets": [2]
+				"aTargets": [3]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var agremiado = "";
-						if(row.agremiado!= null)agremiado = row.agremiado;
-						return agremiado;
-					},
-					"bSortable": false,
-					"aTargets": [3]
+				"mRender": function (data, type, row) {
+					var ruta_documento = "";
+					if(row.ruta_documento!= null)ruta_documento = row.ruta_documento;
+					return ruta_documento;
+				},
+				"bSortable": false,
+				"aTargets": [4]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var sexo = "";
-						if(row.sexo!= null)sexo = row.sexo;
-						return sexo;
-					},
-					"bSortable": false,
-					"aTargets": [4]
+				"mRender": function (data, type, row) {
+					var estado = "";
+					if(row.estado == 1){
+						estado = "Activo";
+					}
+					if(row.estado == 0){
+						estado = "Inactivo";
+					}
+					return estado;
+				},
+				"bSortable": false,
+				"aTargets": [5]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var fecha_nacimiento = "";
-						if(row.fecha_nacimiento!= null)fecha_nacimiento = row.fecha_nacimiento;
-						return fecha_nacimiento;
-					},
-					"bSortable": false,
-					"aTargets": [5]
-				},
-				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Pendiente";
-						}
-						if(row.estado == 0){
-							estado = "Pagado";
-						}
-						return estado;
-					},
-					"bSortable": false,
-					"aTargets": [6]
-				},
-				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						var clase = "";
-						if(row.estado == 1){
-							estado = "Eliminar";
-							clase = "btn-danger";
-						}
-						if(row.estado == 0){
-							estado = "Activar";
-							clase = "btn-success";
-						}
+				"mRender": function (data, type, row) {
+					var estado = "";
+					var clase = "";
+					if(row.estado == 1){
+						estado = "Eliminar";
+						clase = "btn-danger";
+					}
+					if(row.estado == 0){
+						estado = "Activar";
+						clase = "btn-success";
+					}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalMulta('+row.id+')" ><i class="fa fa-edit"></i> Historial</button>';
-						//html += '<a href="javascript:void(0)" onclick=eliminarMulta('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalProntoPago('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						html += '<a href="javascript:void(0)" onclick=eliminarProntoPago('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -587,11 +554,10 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [7],
+					"aTargets": [6],
 				},
 
             ]
-
 
     });
 
@@ -601,13 +567,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalMulta(id){
+function modalProntoPago(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/multa/modal_multa_nuevoMulta/"+id,
+			url: "/prontoPago/modal_prontoPago_nuevoProntoPago/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -626,14 +592,14 @@ function modalResponsable(id){
 			url: "/afiliacion/modal_afiliacion_empresa/"+id,
 			type: "GET",
 			success: function (result) {  
-					$("#diveditpregOpc").html(result);
+					$("#diveditpregOpc").html(result);			
 					$('#openOverlayOpc').modal('show');
 			}
 	});
 
 }
 
-function eliminarMulta(id,estado){
+function eliminarProntoPago(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -645,20 +611,20 @@ function eliminarMulta(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Multa?", 
+        message: "&iquest;Deseas "+act_estado+" Pronto Pago?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_multa(id,estado_);
+                fn_eliminar_prontoPago(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_multa(id,estado){
+function fn_eliminar_prontoPago(id,estado){
 	
     $.ajax({
-            url: "/multa/eliminar_multa/"+id+"/"+estado,
+            url: "/prontoPago/eliminar_prontoPago/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

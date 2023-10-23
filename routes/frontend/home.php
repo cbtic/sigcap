@@ -16,6 +16,8 @@ use App\Http\Controllers\Frontend\IngresoController;
 use App\Http\Controllers\Frontend\MunicipalidadController;
 use App\Http\Controllers\Frontend\SeguroController;
 
+use App\Http\Controllers\Frontend\ProntoPagoController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -130,6 +132,9 @@ Route::post('multa/send_multa_nuevoMulta', [MultaController::class, 'send_multa_
 
 Route::get('multa/eliminar_multa/{id}/{estado}', [MultaController::class, 'eliminar_multa'])->name('multa.eliminar_multa');
 
+Route::get('prontoPago/consulta_prontoPago', [ProntoPagoController::class, 'consulta_prontoPago'])->name('prontoPago.consulta_prontoPago');
+
+Route::post('prontoPago/listar_prontoPago_ajax', [ProntoPagoController::class, 'listar_prontoPago_ajax'])->name('prontoPago.listar_prontoPago_ajax');
 
 
 //Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
