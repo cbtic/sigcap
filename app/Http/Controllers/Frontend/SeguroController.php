@@ -203,15 +203,8 @@ class SeguroController extends Controller
 		
     }
     
-    public function eliminar_municipalidad($id,$estado)
-    {
-		$municipalidad = Seguroe::find($id);
-		$municipalidad->estado = $estado;
-		$municipalidad->save();
-
-		echo $municipalidad->id;
-
-    }
+    
+    
 }
 
 

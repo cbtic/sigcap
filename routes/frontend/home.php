@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\SeguroController;
 use App\Http\Controllers\Frontend\ConcursoController;
 
 use App\Http\Controllers\Frontend\ProntoPagoController;
+use App\Http\Controllers\Frontend\AfiliacionSeguroController;
 
 /*
  * Frontend Controllers

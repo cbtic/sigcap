@@ -1,4 +1,3 @@
---select * from sp_crud_automatico_agremiado_cuota('2023')
 CREATE OR REPLACE FUNCTION public.sp_crud_automatico_agremiado_cuota(p_anio character varying)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -22,11 +21,13 @@ declare
 	v_importe decimal;
 	v_id_moneda integer;
 	v_id_concepto integer;
+	
+	p_i_id_agremiado_cuota integer;
 
 begin
-	
+		
 	idp:=0;
-	
+
 	v_fecha_desde=p_anio||'-01-01';
 	v_fecha_hasta=p_anio||'-12-31';
 	
@@ -49,6 +50,11 @@ begin
 			insert into agremiado_cuotas(id_agremiado,id_regional,id_concepto,id_moneda,periodo,mes,importe,fecha_venc_pago,observacion,id_situacion,id_exonerado,id_pronto_pago,id_seguro_plan,id_usuario_inserta)
 			values (entradas.id_agremiado,5,v_id_concepto,v_id_moneda,v_anio::varchar,v_mes_,v_importe,v_last_day_month::date,'cuota del mes',1,0,0,1,1);
 			
+			p_i_id_agremiado_cuota := currval('agremiado_cuotas_id_seq');
+			
+			insert into valorizaciones(id_modulo,pk_registro,id_concepto,id_agremido,monto,id_moneda,estado,id_usuario_inserta)
+			values (2,p_i_id_agremiado_cuota,v_id_concepto,entradas.id_agremiado,v_importe,v_id_moneda,1,1);
+		
 		end loop;
 		
 	end loop;
@@ -61,5 +67,3 @@ begin
 end;
 $function$
 ;
-
-

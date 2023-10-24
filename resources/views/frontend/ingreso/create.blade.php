@@ -201,9 +201,23 @@ border-right: 2px solid #5cb85c!important;
 
                     <div class="row">
                         <div class="col">
+<!--
                             <div class="form-group">
                                 <label class="form-control-sm">N° Documento</label>
                                 <input type="text" name="numero_documento" id="numero_documento" onblur="obtenerBeneficiario()" value="{{old('clinum')}}"  placeholder="" class="form-control form-control-sm" />
+
+                                <input class="form-control input-sm text-uppercase" type="text" name="txtBusNroDocF" id="txtBusNroDocF" autocomplete="OFF" maxlength="12" required="" tabindex="0" disabled="">
+                            </div>
+                                        -->
+                            <label><small>Nro. de Documento</small></label>
+                            <div class="input-group input-group-sm">                             
+<!--
+                                <input type="text" name="numero_documento" id="numero_documento" onblur="obtenerBeneficiario()" value="{{old('clinum')}}"  placeholder="" class="form-control form-control-sm" />
+                                        -->
+                                <input class="form-control input-sm text-uppercase" type="text" name="numero_documento" id="numero_documento" autocomplete="OFF" maxlength="12" required="" tabindex="0" >
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerBeneficiario()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
+                                </span>
                             </div>
                         </div>
                     </div>
