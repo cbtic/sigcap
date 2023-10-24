@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Multa;
+use App\Models\Multa_concepto;
+use App\Models\Moneda;
 use Auth;
 
 class MultaController extends Controller
@@ -29,9 +31,9 @@ class MultaController extends Controller
 	
 		$multa_model = new Multa;
 		$p[]="";
-		$p[]="";
-		$p[]="";
-		$p[]="";
+		$p[]=$request->numero_cap;
+		$p[]=$request->numero_documento;
+		$p[]=$request->agremiado;
         $p[]="";
 		$p[]="";
 		$p[]=$request->estado;
@@ -67,17 +69,22 @@ class MultaController extends Controller
     public function modal_multa_nuevoMulta($id){
 		
 		$multa = new Multa;
+        $multa_concepto_model = new Multa_concepto;
+		$moneda_model = new Moneda;
+		
 		
 		if($id>0){
 			$multa = Multa::find($id);
 		}else{
 			$multa = new Multa;
 		}
+        $multa_concepto = $multa_concepto_model->getMulta_conceptoAll();
+		$moneda = $moneda_model->getMonedaAll();
 		
 		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.multa.modal_multa_nuevoMulta',compact('id','multa'));
+		return view('frontend.multa.modal_multa_nuevoMulta',compact('id','multa','multa_concepto','moneda'));
 	
 	}
 
