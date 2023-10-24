@@ -355,22 +355,22 @@ function fn_save_multa(){
 	var id = $('#id').val();
 	var numero_cap = $('#numero_cap').val();
 	var periodo = $('#periodo').val();
-	var concepto = $('#concepto').val();
-	var moneda = $('#moneda').val();
-	var importe = $('#importe').val();
-	var estado = $('#estado').val();
-	
+	var id_multa = $('#id_multa').val();
+	//var moneda = $('#moneda').val();
+	//var importe = $('#importe').val();
+	//var estado = $('#estado').val();
 	//alert(id_agremiado);
 	//return false;
 	
     $.ajax({
 			url: "/multa/send_multa_nuevoMulta",
             type: "POST",
-            data : {_token:_token,numero_cap:numero_cap,id:id,periodo:periodo,concepto:concepto,moneda:moneda,importe:importe,estado:estado},
+            data : {_token:_token,numero_cap:numero_cap,id:id,periodo:periodo,id_multa:id_multa},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//window.location.reload();
+				datatablenew();
 				
 				/*
 				$('#openOverlayOpc').modal('hide');
@@ -491,6 +491,16 @@ function cargar_tipo_proveedor(){
 	
 }
 
+function obtener_multa(){
+	
+	var moneda = $("#id_multa option:selected").attr("moneda");
+	var monto = $("#id_multa option:selected").attr("monto");
+	
+	$("#moneda").val(moneda);
+	$("#monto").val(monto);
+	
+}
+
 /*
 $('#fecha_solicitud').datepicker({
 	autoclose: true,
@@ -561,26 +571,42 @@ container: '#myModal modal-body'
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">N° CAP</label>
-								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $multa->numero_cap?>" type="text" >
+								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $agremiadoMulta->numero_cap?>" type="text" >
 							
 							</div>
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
-								<input id="periodo" name="periodo" on class="form-control form-control-sm"  value="<?php echo $multa->periodo?>" type="text" >
+								<input id="periodo" name="periodo" on class="form-control form-control-sm"  value="<?php echo $agremiadoMulta->periodo?>" type="text" >
 							
 							</div>
 						</div>
-						
+						<!--
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Concepto</label>
-								<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onchange="">
+								<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
-									foreach ($multa_concepto as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$multa->id_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									//foreach ($multa_concepto as $row) {?>
+									<option value="<?php //echo $row->id?>" <?php //if($row->id==$agremiadoMulta->id_multa)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
+									<?php 
+									//}
+									?>
+								</select>
+							</div>
+						</div>
+						-->
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Multa</label>
+								<select name="id_multa" id="id_multa" onChange="obtener_multa()" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($multa as $row) {?>
+									<option value="<?php echo $row->id?>" moneda="<?php echo $row->moneda?>" monto="<?php echo $row->monto?>" <?php if($row->id==$agremiadoMulta->id_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
 									}
 									?>
@@ -591,22 +617,14 @@ container: '#myModal modal-body'
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Moneda</label>
-								<select name="id_moneda" id="id_moneda" class="form-control form-control-sm" onchange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($moneda as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$multa->id_moneda)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
+								<input id="moneda" name="moneda" class="form-control form-control-sm" readonly="readonly"  value="" type="text" >
 							</div>
 						</div>
 						
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Importe</label>
-								<input id="importe" name="importe" class="form-control form-control-sm"  value="<?php echo $multa->importe?>" type="text" >																				
+								<input id="monto" name="monto" class="form-control form-control-sm" readonly="readonly"  value="" type="text" >																				
 							</div>
 						</div>
 					</div>

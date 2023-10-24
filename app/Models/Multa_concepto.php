@@ -12,10 +12,11 @@ class Multa_concepto extends Model
 	
 	function getMulta_conceptoAll(){
 
-        $cad = "select *
-                from multas
-                where estado='1' 
-                order by denominacion ";
+        $cad = "select m.*,tm.denominacion moneda
+from multas m
+inner join tabla_maestras tm on m.id_moneda::int=tm.codigo::int and tm.tipo='1'
+where m.estado='1' 
+order by m.denominacion ";
     
 		$data = DB::select($cad);
         return $data;
