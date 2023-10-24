@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Multa;
 use App\Models\Multa_concepto;
 use App\Models\Moneda;
+use App\Models\Valorizacione;
+use App\Models\AgremiadoMulta;
+use App\Models\Agremiado;
+use Carbon\Carbon;
 use Auth;
 
 class MultaController extends Controller
@@ -72,19 +76,21 @@ class MultaController extends Controller
         $multa_concepto_model = new Multa_concepto;
 		$moneda_model = new Moneda;
 		
-		
 		if($id>0){
-			$multa = Multa::find($id);
+			$agremiadoMulta = AgremiadoMulta::find($id);
 		}else{
-			$multa = new Multa;
+			$agremiadoMulta = new AgremiadoMulta;
 		}
-        $multa_concepto = $multa_concepto_model->getMulta_conceptoAll();
+		
+        $multa = $multa_concepto_model->getMulta_conceptoAll();
 		$moneda = $moneda_model->getMonedaAll();
+		
+		//$multa = Multa::where("estado","1")->get();
 		
 		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.multa.modal_multa_nuevoMulta',compact('id','multa','multa_concepto','moneda'));
+		return view('frontend.multa.modal_multa_nuevoMulta',compact('id','agremiadoMulta','multa','moneda'));
 	
 	}
 
@@ -93,21 +99,39 @@ class MultaController extends Controller
 		$id_user = Auth::user()->id;
 
 		if($request->id == 0){
-			$multa = new Multa;
+			$agremiadoMulta = new AgremiadoMulta;
 		}else{
-			$multa = Multa::find($request->id);
+			$agremiadoMulta = AgremiadoMulta::find($request->id);
 		}
-
-		$multa->cap = $request->cap;
-		$multa->periodo = $request->periodo;
-		$multa->concepto = $request->concepto;
-		$multa->moneda = $request->moneda;
-		$multa->importe = $request->importe;
-		$multa->fecha_inicio = $request->fecha_inicio;
-		$multa->fecha_fin = $request->fecha_fin;
-		$multa->estado = 1;
-		$multa->id_usuario_inserta = $id_user;
-		$multa->save();
+		
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+		
+		$agremiadoMulta->id_agremiado = $agremiado->id;
+		$agremiadoMulta->id_multa = $request->id_multa;
+		$agremiadoMulta->fecha = Carbon::now()->format('Y-m-d');
+		$agremiadoMulta->id_estado_pago = 1;
+		$agremiadoMulta->id_concepto = 29;
+		$agremiadoMulta->periodo = $request->periodo;
+		$agremiadoMulta->estado = 1;
+		$agremiadoMulta->id_usuario_inserta = $id_user;
+		$agremiadoMulta->save();
+		
+		$id_multa = $agremiadoMulta->id;
+		
+		$multa = Multa::find($request->id_multa);
+		
+		$valorizacion = new Valorizacione;
+		$valorizacion->id_modulo = 3;
+		$valorizacion->pk_registro = $id_multa;
+		$valorizacion->id_concepto = 29;
+		$valorizacion->id_agremido = $agremiado->id;
+		$valorizacion->monto = $multa->monto;
+		$valorizacion->id_moneda = $multa->id_moneda;
+		$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+		$valorizacion->estado = 1;
+		$valorizacion->id_usuario_inserta = $id_user;
+		$valorizacion->save();
+		
     }
 
 	public function eliminar_multa($id,$estado)

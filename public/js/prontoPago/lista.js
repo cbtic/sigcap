@@ -7,9 +7,10 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
-	$('#periodo').keypress(function(e){
+	$('#periodoBus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
+			return false;
 		}
 	});
 		
@@ -84,7 +85,9 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var periodo = $('#periodo').val();
+			var periodo = $('#periodoBus').val();
+			var fecha_inicio = $('#fecha_inicio').val();
+            var fecha_fin = $('#fecha_fin').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({

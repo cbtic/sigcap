@@ -143,22 +143,9 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				    <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="periodo" name="periodo" placeholder="Periodo">
-					</div><!--
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                        <div style="float:left;padding-top:7px">F. Ini</div>
-                        <div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-                            <input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control">
-                            
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                        <div style="float:left;padding-top:7px">F. Fin</div>
-                        <div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-                            <input placeholder="Fecha" type="date" id="fecha_fin" class="form-control">
-                        
-                        </div>
-                    </div>-->
+						<input class="form-control form-control-sm" id="periodoBus" name="periodoBus" placeholder="Periodo" />
+					</div>
+					
                     <div class="col-lg-2">
 								<div class="form-group">
 									<!--<label class="control-label form-control-sm">Concepto</label>-->
