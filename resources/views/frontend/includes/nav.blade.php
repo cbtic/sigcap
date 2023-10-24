@@ -79,9 +79,18 @@
 				
                     <li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">Registro</a>
+						   aria-haspopup="true" aria-expanded="false">Caja</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
+
+						   </div>
+					</li>
+
+                    <li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
+						   aria-haspopup="true" aria-expanded="false">Gesti&oacute;n</a>
+						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+								<a href="/prontoPago/consulta_prontoPago" class="dropdown-item">Pronto Pago</a>
 
 						   </div>
 					</li>
