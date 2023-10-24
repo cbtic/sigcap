@@ -558,14 +558,14 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-12">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">N° CAP</label>
 								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $multa->numero_cap?>" type="text" >
 							
 							</div>
 						</div>
-						<div class="col-lg-12">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
 								<input id="periodo" name="periodo" on class="form-control form-control-sm"  value="<?php echo $multa->periodo?>" type="text" >
@@ -573,7 +573,7 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 						
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Concepto</label>
 								<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onchange="">
@@ -588,7 +588,7 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 						
-						<div class="col-lg-12">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Moneda</label>
 								<select name="id_moneda" id="id_moneda" class="form-control form-control-sm" onchange="">
@@ -603,7 +603,7 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 						
-						<div class="col-lg-12">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Importe</label>
 								<input id="importe" name="importe" class="form-control form-control-sm"  value="<?php echo $multa->importe?>" type="text" >																				
