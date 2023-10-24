@@ -1,5 +1,11 @@
 
 $(document).ready(function () {
+
+	$('#numero_documento').keypress(function (e) {
+		if (e.keyCode == 13) {
+			obtenerBeneficiario();
+		}
+	});
 	
 	$('#example-select-all').on('click', function(){
 		if($(this).is(':checked')){
