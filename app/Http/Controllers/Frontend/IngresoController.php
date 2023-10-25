@@ -11,7 +11,6 @@ use App\Models\AgremidoCuota;
 use App\Models\CajaIngreso;
 use App\Models\Valorizacione;
 
-
 use Auth;
 
 class IngresoController extends Controller

@@ -9,13 +9,19 @@ foreach($valorizacion as $key=>$row):?>
 <tr style="font-size:13px">
 	<td class="text-center">
         <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-			
+			<input type="checkbox" class="mov" name="factura_detalles[<?php echo $key?>][smodulo]" value="<?php echo $row->monto?>" onchange="calcular_total(this)" />
         </div>
     </td>
 	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha))?></td>
     <td class="text-left"><?php echo $row->concepto//$row->vsm_smodulod?>
-	<td class="text-right"><?php echo $row->monto//$row->vsm_smodulod?>
 	
+	
+	</td>
+	<td class="text-right val_total_">
+	
+	<span class="val_descuento" style="float:left"></span>
+	<span class="val_total"><?php echo $row->monto?></span>
+	<input type="hidden" class="tipo_factura" value="FT" />
 	</td>
 
 </tr>

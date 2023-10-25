@@ -153,6 +153,7 @@ function calcular_total(obj){
 	//$("#tblValorizacion input[type='checkbox']:checked").each(function (){
 	if(cantidad == 0)$('#tipo_factura').val("");
 	var tipo_factura = $('#tipo_factura').val();
+	//alert(tipo_factura);
 	var tipo_factura_actual = $(obj).parent().parent().parent().find('.tipo_factura').val();
 	if(tipo_factura!="" && tipo_factura!=tipo_factura_actual){
 		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
@@ -160,6 +161,7 @@ function calcular_total(obj){
 		return false;
 	}
 	
+
 	$("#btnBoleta").prop('disabled', true);
     $("#btnFactura").prop('disabled', true);
 	$("#btnTicket").prop('disabled', true).hide();
@@ -175,6 +177,11 @@ function calcular_total(obj){
 		$("#btnTicket").show();
 		$("#btnBoleta").hide();
 	}
+
+
+$("#btnBoleta").prop('disabled', false);
+$("#btnFactura").prop('disabled', false);
+
 	//alert(tipo_factura_actual);
 	$(".mov:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
