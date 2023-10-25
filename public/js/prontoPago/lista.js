@@ -54,6 +54,7 @@ $(document).ready(function () {
 	});
 });
 
+
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
@@ -95,7 +96,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						periodo:periodo,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
+						periodo:periodo,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
