@@ -29,6 +29,16 @@ class Concepto extends Model
         $cad = "FETCH ALL IN ref_cursor;";
         $data = DB::select($cad);
         return $data;
-
     }
+
+    function getConceptoAll(){
+
+        $cad = "select *
+                from conceptos
+                where estado='1'and codigo = '00001'
+                order by denominacion ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }    
 }
