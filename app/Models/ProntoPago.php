@@ -12,7 +12,7 @@ class ProntoPago extends Model
 
     public function listar_prontoPago_ajax($p){
 
-        return $this->readFuntionPostgres('sp_listar_prontoPago_paginado',$p);
+        return $this->readFuntionPostgres('sp_listar_prontopago_paginado',$p);
 
     }
 

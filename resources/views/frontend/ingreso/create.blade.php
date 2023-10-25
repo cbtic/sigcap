@@ -59,7 +59,7 @@ border-right: 2px solid #5cb85c!important;
 
             <div class="card-body">
 
-            <form class="form-horizontal" method="post" action="{{ route('frontend.ingreso.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
+            <form class="form-horizontal" method="post" action="{{ route('frontend.factura.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -370,13 +370,16 @@ border-right: 2px solid #5cb85c!important;
                                         -->
                                     </tbody>
 									<tfoot>
+                                        <!--
 										<tr>
 											<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Pago a Cuenta</th>
 											<td style="padding-bottom:0px;margin-bottom:0px">
-												<!--<input type="text" readonly name="MonAd" id="total" value="0" class="form-control form-control-sm">-->
+
 												<input type="text" readonly name="MonAd" id="MonAd" value="0" class="form-control form-control-sm text-right" onkeyup="validarMonAd()"/>
 											</td>
 										</tr>
+                                        -->
+
 										<tr>
 											<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
 											<td style="padding-bottom:0px;margin-bottom:0px">
