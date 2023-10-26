@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ComprobantDetalle extends Model
+class ComprobanteDetalle extends Model
 {
     use HasFactory;
 }

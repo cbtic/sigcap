@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Comprobante;
 use App\Models\Empresa;
-use App\Models\ComprobantDetalle;
+use App\Models\ComprobanteDetalle;
 use App\Models\TablaMaestra;
 use App\Models\Valorizacione;
 use App\Models\Persona;
 
 use Auth;
 
-use Illuminate\Http\Request;
-
-class FacturaController extends Controller
+class ComprobanteController extends Controller
 {
     public function create(Request $request){
 
@@ -31,7 +30,7 @@ class FacturaController extends Controller
         //echo "persona_id=>".$request->persona_id."<br>";
 
 
-        print_r($request);exit();
+       // print_r($request);exit();
         
 
         $trans = $request->Trans;
@@ -42,7 +41,7 @@ class FacturaController extends Controller
 		if($id_caja==""){
 			$valorizaciones_model = new Valorizacione;
 			$id_user = Auth::user()->id;
-			$caja_usuario = $valorizaciones_model->getCajaIngresoByusuario($id_user,'CARRETA');
+			$caja_usuario = $valorizaciones_model->getCajaIngresoByusuario($id_user,'91');
 			//$id_caja = $caja_usuario->id_caja;
 			$id_caja = (isset($caja_usuario->id_caja))?$caja_usuario->id_caja:0;
 		}
@@ -65,7 +64,7 @@ class FacturaController extends Controller
 
 
         if ($trans == 'FA'){
-            $serie = $serie_model->getMaestro('SERIES',$TipoF);
+            $serie = $serie_model->getMaestro('95');
 
             $MonAd = $request->MonAd;
             $total   = $request->total;
@@ -88,15 +87,16 @@ class FacturaController extends Controller
 
 
 
-            $factura_detalle = $request->factura_detalle;
+            $comprobante_detalle = $request->comprobante_detalle;
 
             $ind = 0;
-            foreach($request->factura_detalles as $key=>$det){
-                $facturad[$ind] = $factura_detalle[$key];
+            foreach($request->comprobante_detalle as $key=>$det){
+                $facturad[$ind] = $comprobante_detalle[$key];
                 $ind++;
             }
 
-            $ubicacion = $request->id_ubicacion;
+            //$ubicacion = $request->id_ubicacion;
+            $ubicacion = 1;
             $persona = $request->persona_id;
             $tipoDocP = $request->tipo_documento;
             //echo $$tipoDocP;exit();
@@ -106,18 +106,20 @@ class FacturaController extends Controller
             }
 
             if ($TipoF == 'BV'){
-                $empresa = $empresa_model->getPersonaId($persona);
+                //$empresa = $empresa_model->getPersonaId($persona);
+                $empresa = Persona::find($persona);
             }
-            else{
-                $empresa = $empresa_model->getEmpresaId($ubicacion);
+            else{                
+                //$empresa = $empresa_model->getEmpresaId($ubicacion);
+                $empresa = Empresa::find($ubicacion);
             }
-            return view('frontend.factura.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd'));
         }
         if ($trans == 'FN'){
-            $serie = $serie_model->getMaestro('SERIES',$TipoF);
+            $serie = $serie_model->getMaestro('95');
 
 
-            return view('frontend.factura.create',compact('trans', 'titulo','TipoF','id_caja','serie'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','TipoF','id_caja','serie'));
         }
         if ($trans == 'FE'){
 
@@ -125,7 +127,7 @@ class FacturaController extends Controller
             $fac_id = $request->fac_id;
             //$facturas_model = new Factura;
             //$factura = $facturas_model->getFactura();
-            $facturas = Factura::where('id', $fac_id)->first();
+            $facturas = Comprobante::where('id', $fac_id)->first();
             //$facturas = Factura::where('fac_destinatario', 'like','$fac_id')->orderBy('fac_numero','asc')->paginate(5);
             //print_r($facturas);
             $TipoF =  $facturas->fac_tipo;
@@ -139,10 +141,10 @@ class FacturaController extends Controller
             if ($TipoF == 'TK') {$titulo = 'Edita Ticket';}
 
 
-            $facturad = FacturaDetalle::where([
-                'facd_serie' => $facturas->fac_serie,
-                'facd_numero' => $facturas->fac_numero,
-                'facd_tipo' => $facturas->fac_tipo
+            $facturad = ComprobanteDetalle::where([
+                'serie' => $facturas->fac_serie,
+                'numero' => $facturas->fac_numero,
+                'tipo' => $facturas->fac_tipo
             ])->get();
 /*
             $ind = 0;
@@ -156,7 +158,7 @@ class FacturaController extends Controller
 
             //print_r($facturad); //exit();
 
-            return view('frontend.factura.create',compact('trans', 'titulo','TipoF', 'facturas','facturad'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','TipoF', 'facturas','facturad'));
         }
     }
 }

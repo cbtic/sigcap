@@ -31,4 +31,8 @@ class Empresa extends Model
         return $data;
 
     }
+
+
+	
+
 }
