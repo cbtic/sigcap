@@ -21,6 +21,16 @@ class TablaMaestra extends Model
 		$data = DB::select($cad);
         return $data;
     }
+    function getMaestro($tipo){
+
+        $cad = "select id,denominacion 
+                from tabla_maestras 
+                where tipo='".$tipo."' 
+                order by orden ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 	
     function getCaja($tipo){
 

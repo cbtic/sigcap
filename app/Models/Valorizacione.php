@@ -13,17 +13,21 @@ class Valorizacione extends Model
     function getValorizacion($tipo_documento,$persona_id){
         if($tipo_documento=="RUC"){
             $cad = "
-            select v.id, v.fecha, c.denominacion concepto, v.monto 
+            select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda
             from valorizaciones v
-            inner join conceptos c  on c.id = v.id_concepto 
+            inner join conceptos c  on c.id = v.id_concepto
+            inner join agremiado_cuotas a  on a.id = v.pk_registro
+            inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
             where v.id_agremido = ".$persona_id."
             and v.estado = '1'
 			";
         }else{
             $cad = "
-            select v.id, v.fecha, c.denominacion concepto, v.monto 
+            select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda
             from valorizaciones v
-            inner join conceptos c  on c.id = v.id_concepto 
+            inner join conceptos c  on c.id = v.id_concepto
+            inner join agremiado_cuotas a  on a.id = v.pk_registro
+            inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
             where v.id_agremido = ".$persona_id."
             and v.estado = '1'
 			";
@@ -64,5 +68,25 @@ class Valorizacione extends Model
         $data = DB::select($cad);
         DB::select("END;");
         return $data;
+     }
+
+     function getCajaIngresoByusuario($id_usuario,$tipo){
+
+        $cad = "select t1.id,t1.id_caja,t1.saldo_inicial,
+		(select coalesce(Sum(total),0) from comprobantes where id_caja=t1.id_caja And fecha >= fecha_inicio And fecha <= (case when fecha_fin is null then now() else fecha_fin end))total_recaudado,
+		((select coalesce(Sum(total),0) from comprobantes where id_caja=t1.id_caja And fecha >= fecha_inicio And fecha <= (case when fecha_fin is null then now() else fecha_fin end)) + t1.saldo_inicial)saldo_total,
+		t1.estado,t2.denominacion caja,t3.name usuario
+        from caja_ingresos t1
+        inner join tabla_maestras t2 on t1.id_caja=t2.codigo::int 
+		inner join users t3 on t1.id_usuario = t3.id
+        where t1.id_usuario=".$id_usuario."
+		And t2.tipo='".$tipo."'
+		and t1.estado='1'
+		order by 1 desc
+        limit 1";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        if($data)return $data[0];
      }
 }
