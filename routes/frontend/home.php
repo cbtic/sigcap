@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\ConcursoController;
 
 use App\Http\Controllers\Frontend\ProntoPagoController;
 use App\Http\Controllers\Frontend\AfiliacionSeguroController;
+use App\Http\Controllers\Frontend\ComprobanteController;
 
 /*
  * Frontend Controllers
@@ -144,7 +145,7 @@ Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingres
 Route::get('ingreso/obtener_valorizacion/{tipo_documento}/{id_persona}', [IngresoController::class, 'obtener_valorizacion'])->name('ingreso.obtener_valorizacion')->where('tipo_documento', '(.*)');
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
 
-Route::post('factura/create', [FacturaController::class, 'create'])->name('factura.create');
+Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
 
 
 Route::get('seguro/consulta_seguro', [SeguroController::class, 'consulta_seguro'])->name('seguro.consulta_seguro');

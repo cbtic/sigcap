@@ -5,11 +5,18 @@ $descuento = 0;
 $valor_venta_bruto = 0;
 $valor_venta = 0;
 $igv = 0;
+
 foreach($valorizacion as $key=>$row):?>
 <tr style="font-size:13px">
 	<td class="text-center">
-        <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-			<input type="checkbox" class="mov" name="factura_detalles[<?php echo $key?>][smodulo]" value="<?php echo $row->monto?>" onchange="calcular_total(this)" />
+        <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">		
+			<input type="checkbox" class="mov" name="comprobante_detalle[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][fecha]" value="<?php echo $row->fecha?>" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][concepto]" value="<?php echo $row->concepto?>" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][monto]" value="<?php echo $row->monto?>" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][moneda]" value="<?php echo $row->moneda?>" />
+
+
         </div>
     </td>
 	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha))?></td>

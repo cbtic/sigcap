@@ -193,7 +193,7 @@ br {
 
 @extends('frontend.layouts.app1')
 
-@section('title', app_name() . ' | ' . __('labels.frontend.afiliacion.box_title'))
+
 
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
@@ -224,7 +224,7 @@ br {
             </div>
             <div class="row justify-content-center">
                 <div class="col col-sm-12 align-self-center">
-                    <form class="form-horizontal" method="post" action="{{ route('frontend.factura.create')}} "
+                    <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}} "
                         id="frmFacturacion" name="frmFacturacion" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans;?>">
@@ -263,7 +263,7 @@ br {
                                                                     <?php  endforeach;?>
                                                                 <?php } ?>
                                                                 <?php if ($trans == 'FE'){?>
-                                                                    <option value="<?php echo $facturas->fac_serie?>"><?php echo $facturas->fac_serie?></option>
+                                                                    <option value="<?php echo $comprobante->serie?>"><?php echo $comprobante->serie?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
@@ -272,7 +272,7 @@ br {
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Número</label>
                                                             <input type="text" name="numerof" readonly
-                                                                id="numerof" value="<?php if ($trans == 'FE'){echo $facturas->fac_numero;}?>"
+                                                                id="numerof" value="<?php if ($trans == 'FE'){echo $comprobante->numero;}?>"
                                                                 placeholder="" class="form-control form-control-sm text-center"  >
                                                         </div>
                                                     </div>
@@ -284,10 +284,10 @@ br {
                                                                 placeholder="" class="form-control form-control-sm datepicker">
                                                             <?php } ?>
                                                             <?php if ($trans == 'FE'){?>
-                                                                <input type="text" name="fechaFE" id="fechaFE" value="<?php echo date("d/m/Y", strtotime($facturas->fac_fecha)) ?>"
+                                                                <input type="text" name="fechaFE" id="fechaFE" value="<?php echo date("d/m/Y", strtotime($comprobante->fecha)) ?>"
                                                                 placeholder="" class="form-control form-control-sm text-center" readonly>
                                                             <?php } ?>
-                                                            <!--{!!Form::date('name', \Carbon\Carbon::now())!!} -->
+                                                           
                                                         </div>
                                                     </div>
                                                 </div>
@@ -296,7 +296,8 @@ br {
                                                         <label class="form-control-sm">RUC/DNI</label>
                                                             <div class="input-group">
                                                             <input type="text" name="numero_documento"  readonly
-                                                                id="numero_documento" value="<?php if ($trans == 'FA'){echo $empresa->ruc;} if ($trans == 'FE'){echo $facturas->fac_cod_tributario;} ?>"
+                                                            
+                                                                id="numero_documento" value="<?php if ($trans == 'FA'){echo $empresa->ruc;} if ($trans == 'FE'){echo $comprobante->cod_tributario;} ?>"
                                                                 placeholder="" class="form-control form-control-sm">
                                                             </div>
                                                             <button type="button" data-toggle="modal"
@@ -307,7 +308,7 @@ br {
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Razón Social/Nombre</label>
                                                             <input type="text" name="numero_documento" readonly
-                                                                id="numero_documento" value="<?php if ($trans == 'FA'){echo $empresa->razon_social;} if ($trans == 'FE'){echo $facturas->fac_destinatario;}?>"
+                                                                id="numero_documento" value="<?php if ($trans == 'FA'){echo $empresa->razon_social;} if ($trans == 'FE'){echo $comprobante->destinatario;}?>"
                                                                 placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
@@ -315,7 +316,7 @@ br {
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Dirección</label>
                                                             <input type="text" name="direccion" readonly
-                                                                id="numero_documento" value="<?php if ($trans == 'FA'){echo $empresa->direccion;} if ($trans == 'FE'){echo $facturas->fac_direccion;}?>"
+                                                                id="numero_documento" value="<?php if ($trans == 'FA'){echo $empresa->direccion;} if ($trans == 'FE'){echo $comprobante->direccion;}?>"
                                                                 placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
@@ -323,7 +324,7 @@ br {
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Email</label>
                                                             <input type="text" name="direccion" readonly
-                                                                id="numero_documento" value="<?php if ($trans == 'FA'){echo $empresa->email;} if ($trans == 'FE'){echo $facturas->fac_correo_des;}?>"
+                                                                id="numero_documento" value="<?php if ($trans == 'FA'){echo $empresa->email;} if ($trans == 'FE'){echo $comprobante->correo_des;}?>"
                                                                 placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
@@ -564,7 +565,7 @@ br {
                                                             <th></th>
                                                             <th></th>
                                                             <th class="text-right"><span
-                                                                    id="gravadas"></span> <?php if ($trans == 'FA'){echo number_format($stotal,2);} if ($trans == 'FE'){echo number_format($facturas->fac_subtotal,2);}?></th>
+                                                                    id="gravadas"></span> <?php if ($trans == 'FA'){echo number_format($stotal,2);} if ($trans == 'FE'){echo number_format($comprobante->subtotal,2);}?></th>
                                                         </tr>
                                                         <tr style="display:none">
                                                             <th></th>
@@ -588,7 +589,7 @@ br {
                                                             <th></th>
                                                             <th></th>
                                                             <th class="text-right"><span
-                                                                    id="igv"></span> <?php if ($trans == 'FA'){echo number_format($igv,2);} if ($trans == 'FE'){echo number_format($facturas->fac_impuesto,2);}?></th>
+                                                                    id="igv"></span> <?php if ($trans == 'FA'){echo number_format($igv,2);} if ($trans == 'FE'){echo number_format($comprobante->impuesto,2);}?></th>
                                                         </tr>
                                                         <tr>
                                                             <th></th>
@@ -596,7 +597,7 @@ br {
                                                             <th></th>
                                                             <th></th>
                                                             <th class="text-right"><span
-                                                                    id="totalP"></span> <?php if ($trans == 'FA'){echo number_format($total,2);} if ($trans == 'FE'){echo number_format($facturas->fac_total,2);}?></th>
+                                                                    id="totalP"></span> <?php if ($trans == 'FA'){echo number_format($total,2);} if ($trans == 'FE'){echo number_format($comprobante->total,2);}?></th>
                                                         </tr>
                                                     </tbody>
                                                 </table>
