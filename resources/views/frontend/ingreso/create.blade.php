@@ -121,7 +121,7 @@ border-right: 2px solid #5cb85c!important;
 									<select name="id_caja" id="id_caja" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach($caja as $row):?>
-											<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+											<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
 										<?php  endforeach;?>
 									</select>
 									<?php endif;?>
@@ -182,12 +182,13 @@ border-right: 2px solid #5cb85c!important;
                                 <label class="form-control-sm">Tipo Documento</label>
                                 <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_DNI?>"><?php echo $persona::TIPO_DOCUMENTO_DNI?></option>
+                                    <option selected="selected value="<?php echo $persona::TIPO_DOCUMENTO_CAP?>"><?php echo $persona::TIPO_DOCUMENTO_CAP?></option>
+                                    <option value="<?php echo $persona::TIPO_DOCUMENTO_RUC?>"><?php echo $persona::TIPO_DOCUMENTO_RUC?></option>
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA?>"><?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA?></option>
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_PASAPORTE?>"><?php echo $persona::TIPO_DOCUMENTO_PASAPORTE?></option>                                    
 									<option value="<?php echo $persona::TIPO_DOCUMENTO_CEDULA?>"><?php echo $persona::TIPO_DOCUMENTO_CEDULA?></option>
 									<option value="<?php echo $persona::TIPO_DOCUMENTO_PTP?>"><?php echo $persona::TIPO_DOCUMENTO_PTP?></option>
-                                    <option selected="selected value="<?php echo $persona::TIPO_DOCUMENTO_CAP?>"><?php echo $persona::TIPO_DOCUMENTO_CAP?></option>
-									
+                                    									
                                 </select>
 
                                 <input type="hidden" readonly name="empresa_id" id="empresa_id" value="" class="form-control form-control-sm">

@@ -89,4 +89,12 @@ class Valorizacione extends Model
 		$data = DB::select($cad);
         if($data)return $data[0];
      }
+
+     public function registrar_caja_ingreso($datos) {
+
+        $cad = "Select sp_crud_caja_ingreso(?,?,?,?,?,?,?,?)";
+        //echo "Select sp_crud_caja_ingreso(".$datos[0].",".$datos[1].",".$datos[2].",".$datos[3].",".$datos[4].",".$datos[5].",".$datos[6].",".$datos[7].")";
+		$data = DB::select($cad, array($datos[0],$datos[1],$datos[2],$datos[3],$datos[4],$datos[5],$datos[6],$datos[7]));
+        return $data[0]->sp_crud_caja_ingreso;
+    }
 }
