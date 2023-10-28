@@ -347,7 +347,7 @@ label.form-control-sm{
 
                         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
-                        <input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $agremiado->id?>">
+                        <input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $concursoInscripcion->id?>">
 						
                         <div class="row" id="divSolicitud">
 							
@@ -380,15 +380,7 @@ label.form-control-sm{
 															Tipo de concurso
 															</div>
 															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<select name="id_concurso" id="id_concurso" class="form-control form-control-sm" onchange="">
-																<option value="">--Selecionar--</option>
-																<?php
-																foreach ($concurso as $row) {?>
-																<option value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso?></option>
-																<?php 
-																}
-																?>
-															</select>
+															<input type="text" name="tipo_concurso" id="tipo_concurso" value="<?php echo $concursoInscripcion->tipo_concurso?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														<div class="row">
@@ -396,7 +388,7 @@ label.form-control-sm{
 															N&deg; CAP
 															</div>
 															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $concursoInscripcion->numero_cap?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														
@@ -405,7 +397,7 @@ label.form-control-sm{
 															Nombre
 															</div>
 															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="nombres" id="nombres" value="<?php echo $agremiado->apellido_paterno." ".$agremiado->apellido_materno." ".$agremiado->nombres?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="nombres" id="nombres" value="<?php echo $concursoInscripcion->apellido_paterno." ".$concursoInscripcion->apellido_materno." ".$concursoInscripcion->nombres?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														<div class="row">
@@ -413,7 +405,7 @@ label.form-control-sm{
 															DNI
 															</div>
 															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $agremiado->numero_documento?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $concursoInscripcion->numero_documento?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														
@@ -422,7 +414,7 @@ label.form-control-sm{
 															Regional
 															</div>
 															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="region" id="region" value="<?php echo $agremiado->region?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="region" id="region" value="<?php echo $concursoInscripcion->region?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														
@@ -431,7 +423,7 @@ label.form-control-sm{
 															Situaci&oacute;n
 															</div>
 															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="situacion" id="situacion" value="<?php echo $agremiado->situacion?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="situacion" id="situacion" value="<?php echo $concursoInscripcion->situacion?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 													

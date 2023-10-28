@@ -4,9 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Agremiado;
 use App\Models\Concurso;
 use App\Models\ConcursoPuesto;
+use App\Models\ConcursoInscripcione;
+use App\Models\Comprobante;
 use App\Models\TablaMaestra;
+use App\Models\Concepto;
+use Carbon\Carbon;
 use Auth;
 
 class ConcursoController extends Controller
@@ -18,10 +23,29 @@ class ConcursoController extends Controller
 	
 	public function create(){
 		
+		$agremiado_model = new Agremiado();
 		$concurso_model = new Concurso();
-		$concurso = $concurso_model->getConcurso();
 		
-        return view('frontend.concurso.create',compact('concurso'));
+		$id_persona = Auth::user()->id_persona;
+		//echo $id_user;
+		$concurso = $concurso_model->getConcurso();
+		$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
+		
+        return view('frontend.concurso.create',compact('concurso','agremiado'));
+    }
+	
+	public function editar_inscripcion($id){
+		
+		//$agremiado_model = new Agremiado();
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionById($id);
+		
+		//$id_persona = Auth::user()->id_persona;
+		//echo $id_user;
+		//$concurso = $concurso_model->getConcurso();
+		//$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
+		
+        return view('frontend.concurso.edit',compact('concursoInscripcion'));
     }
 	
 	public function listar_concurso(Request $request){
@@ -136,6 +160,51 @@ class ConcursoController extends Controller
 		$concursoPuesto->id_usuario_inserta = $id_user;
 		$concursoPuesto->save();
 		
+    }
+	
+	public function send_inscripcion(Request $request){
+		
+		$id_user = Auth::user()->id;
+		$comprobante_model = new Comprobante();
+		$agremiado_model = new Agremiado();
+		
+		if($request->id == 0){
+			$concursoInscripcione = new ConcursoInscripcione;
+		}else{
+			$concursoInscripcione = ConcursoInscripcione::find($request->id);
+		}
+		
+		$comprobante = $comprobante_model->getComprobanteByTipoSerieNumero($request->numero_comprobante);
+		
+		if($comprobante){
+			
+			$anio = Carbon::now()->format('Y');
+			$concursoInscripcione->id_agremiado = $request->id_agremiado;
+			$id_tipo_plaza = $agremiado_model->getTipoPlaza($request->id_agremiado);
+			$concursoPuesto = ConcursoPuesto::where("id_concurso",$request->id_concurso)->where("id_tipo_plaza",$id_tipo_plaza)->where("estado","1")->first();
+			$concepto = Concepto::where("codigo","00015")->where("periodo",$anio)->where("estado","1")->first();
+			$concurso = Concurso::find($request->id_concurso);
+			
+			$concursoInscripcione->id_concurso_puesto = $concursoPuesto->id;
+			$concursoInscripcione->puesto_postula = $id_tipo_plaza;
+			$concursoInscripcione->puntaje = NULL;
+			$concursoInscripcione->resultado = NULL;
+			$concursoInscripcione->puesto = NULL;
+			$concursoInscripcione->id_concepto = $concepto->id;
+			$concursoInscripcione->estado = 1;
+			$concursoInscripcione->id_usuario_inserta = $id_user;
+			$concursoInscripcione->save();
+		}
+		
+		/*
+		$concurso->id_tipo_concurso = $request->id_tipo_concurso;
+		$concurso->periodo = $request->periodo;
+		$concurso->fecha = $request->fecha;
+		$concurso->fecha_inscripcion = $request->fecha_inscripcion;
+		$concurso->estado = 1;
+		$concurso->id_usuario_inserta = $id_user;
+		$concurso->save();
+		*/
     }
 	
 	public function obtener_puesto($id){

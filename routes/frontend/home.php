@@ -178,3 +178,6 @@ Route::post('concurso/send_puesto', [ConcursoController::class, 'send_puesto'])-
 Route::get('concurso/obtener_puesto/{id}', [ConcursoController::class, 'obtener_puesto'])->name('concurso.obtener_puesto');
 
 Route::get('concurso/create', [ConcursoController::class, 'create'])->name('concurso.create');
+Route::post('concurso/send_inscripcion', [ConcursoController::class, 'send_inscripcion'])->name('concurso.send_inscripcion');
+Route::get('concurso/editar_inscripcion/{id}', [ConcursoController::class, 'editar_inscripcion'])->name('concurso.editar_inscripcion');
+
