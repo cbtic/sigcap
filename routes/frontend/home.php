@@ -177,3 +177,4 @@ Route::get('concurso/eliminar_puesto/{id}', [ConcursoController::class, 'elimina
 Route::post('concurso/send_puesto', [ConcursoController::class, 'send_puesto'])->name('concurso.send_puesto');
 Route::get('concurso/obtener_puesto/{id}', [ConcursoController::class, 'obtener_puesto'])->name('concurso.obtener_puesto');
 
+Route::get('concurso/create', [ConcursoController::class, 'create'])->name('concurso.create');

@@ -16,6 +16,14 @@ class ConcursoController extends Controller
         return view('frontend.concurso.all');
     }
 	
+	public function create(){
+		
+		$concurso_model = new Concurso();
+		$concurso = $concurso_model->getConcurso();
+		
+        return view('frontend.concurso.create',compact('concurso'));
+    }
+	
 	public function listar_concurso(Request $request){
 	
 		$concurso_model = new Concurso();
