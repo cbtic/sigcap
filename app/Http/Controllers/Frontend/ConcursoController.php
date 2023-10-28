@@ -11,6 +11,7 @@ use App\Models\ConcursoInscripcione;
 use App\Models\Comprobante;
 use App\Models\TablaMaestra;
 use App\Models\Concepto;
+use App\Models\Valorizacione;
 use Carbon\Carbon;
 use Auth;
 
@@ -180,6 +181,7 @@ class ConcursoController extends Controller
 			
 			$anio = Carbon::now()->format('Y');
 			$concursoInscripcione->id_agremiado = $request->id_agremiado;
+			//solo para edificaciones
 			$id_tipo_plaza = $agremiado_model->getTipoPlaza($request->id_agremiado);
 			$concursoPuesto = ConcursoPuesto::where("id_concurso",$request->id_concurso)->where("id_tipo_plaza",$id_tipo_plaza)->where("estado","1")->first();
 			$concepto = Concepto::where("codigo","00015")->where("periodo",$anio)->where("estado","1")->first();
@@ -194,6 +196,25 @@ class ConcursoController extends Controller
 			$concursoInscripcione->estado = 1;
 			$concursoInscripcione->id_usuario_inserta = $id_user;
 			$concursoInscripcione->save();
+			
+			$id_concursoInscripcion = $concursoInscripcione->id;
+		
+			$valorizacion = new Valorizacione;
+			$valorizacion->id_modulo = 1;
+			$valorizacion->pk_registro = $id_concursoInscripcion;
+			$valorizacion->id_concepto = $concepto->id;
+			$valorizacion->id_agremido = $request->id_agremiado;
+			$valorizacion->id_comprobante = $comprobante->id;
+			$valorizacion->monto = $concepto->importe;
+			$valorizacion->id_moneda = $concepto->id_moneda;
+			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+			$valorizacion->estado = 1;
+			$valorizacion->id_usuario_inserta = $id_user;
+			$valorizacion->save();
+			
+			echo $id_concursoInscripcion;
+			
 		}
 		
 		/*

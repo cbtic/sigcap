@@ -437,11 +437,9 @@ label.form-control-sm{
 															Codigo de Pago
 															</div>
 															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_comprobante" id="numero_comprobante" value="<?php //echo $agremiado->numero_cap?>" class="form-control form-control-sm">
+															<input type="text" name="numero_comprobante" id="numero_comprobante" value="<?php echo $concursoInscripcion->tipo.$concursoInscripcion->serie."-".$concursoInscripcion->numero?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
-															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-															<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;" />
-															</div>
+															
 														</div>
 														
 														<div class="row" style="padding:10px 0px 10px 0px">
