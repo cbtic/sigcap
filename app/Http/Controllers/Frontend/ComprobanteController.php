@@ -46,7 +46,7 @@ class ComprobanteController extends Controller
 			$id_caja = (isset($caja_usuario->id_caja))?$caja_usuario->id_caja:0;
 		}
 
-		//echo $id_caja;exit();
+		echo $id_caja;exit();
 
         $TipoF = $request->TipoF;
         //$TipoF = 'BVBV';
