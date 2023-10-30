@@ -149,201 +149,9 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	datatablenewPlan();
+	 
 
 });
-
-function datatablenewPlan(){
-    var oTable1 = $('#tblPlan').dataTable({
-        "bServerSide": true,
-        "sAjaxSource": "/seguro/listar_plan",
-        "bProcessing": true,
-        "sPaginationType": "full_numbers",
-        //"paging":false,
-        "bFilter": false,
-        "bSort": false,
-        "info": true,
-		//"responsive": true,
-        "language": {"url": "/js/Spanish.json"},
-        "autoWidth": false,
-        "bLengthChange": true,
-        "destroy": true,
-        "lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
-        "aoColumns": [
-                        {},
-        ],
-		"dom": '<"top">rt<"bottom"flpi><"clear">',
-        "fnDrawCallback": function(json) {
-            $('[data-toggle="tooltip"]').tooltip();
-        },
-
-        "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
-
-            var sEcho           = aoData[0].value;
-            var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
-            var iCantMostrar 	= aoData[4].value;
-			
-			var id_seguro = $('#id_seguro').val();
-			//var denominacion = $('#nombre').val();
-			var estado = $('#estado').val();
-			
-			var _token = $('#_token').val();
-            oSettings.jqXHR = $.ajax({
-				"dataType": 'json',
-                //"contentType": "application/json; charset=utf-8",
-                "type": "POST",
-                "url": sSource,
-                "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id_seguro:id_seguro,estado:estado,
-						_token:_token
-                       },
-                "success": function (result) {
-                    fnCallback(result);
-                },
-                "error": function (msg, textStatus, errorThrown) {
-                    //location.href="login";
-                }
-            });
-        },
-
-        "aoColumnDefs":
-            [	
-				{
-                "mRender": function (data, type, row) {
-                	var id = "";
-					if(row.id!= null)id = row.id;
-					return id;
-                },
-                "bSortable": false,
-                "aTargets": [0],
-				"className": "dt-center",
-				//"className": 'control'
-                },
-				
-				{
-                "mRender": function (data, type, row) {
-                	var nombre = "";
-					if(row.nombre!= null)nombre = row.nombre;
-					return nombre;
-                },
-                "bSortable": true,
-                "aTargets": [1]
-                },
-				
-
-				
-				{
-                "mRender": function (data, type, row) {
-                	var fecha_inicio = "";
-					if(row.fecha_inicio!= null)fecha_inicio = row.fecha_inicio;
-					return fecha_inicio;
-                },
-                "bSortable": true,
-                "aTargets": [2]
-                },
-				
-				{
-                "mRender": function (data, type, row) {
-                	var fecha_fin = "";
-					if(row.fecha_fin!= null)fecha_fin = row.fecha_fin;
-					return fecha_fin;
-                },
-                "bSortable": true,
-                "aTargets": [3]
-                },
-				
-				{
-                "mRender": function (data, type, row) {
-                	var monto = "";
-					if(row.monto!= null)monto = row.monto;
-					return monto;
-                },
-                "bSortable": true,
-                "aTargets": [4]
-                },
-				
-				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Activo";
-						}
-						if(row.estado == 0){
-							estado = "Inactivo";
-						}
-						return estado;
-					},
-					"bSortable": false,
-					"aTargets": [5]
-				},
-				
-				{
-					"mRender": function (data, type, row) {
-						
-						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarPlan('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						
-						html += '<a href="javascript:void(0)" onclick=eliminarPlan('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
-						
-						html += '</div>';
-						return html;
-					},
-					"bSortable": false,
-					"aTargets": [6],
-				},
-
-            ]
-
-
-    });
-
-}
-
-function editarPlan(id){
-
-	$.ajax({
-		url: '/seguro/obtener_plan/'+id,
-		dataType: "json",
-		success: function(result){
-			//alert(result);
-			console.log(result);
-			$('#id').val(result.id);
-			$('#nombre_plan_').val(result.nombre);
-			$('#descripcion_').val(result.descripcion);
-			$('#fecha_inicio').val(result.fecha_inicio);
-			$('#fecha_fin').val(result.fecha_fin);
-			$('#monto').val(result.monto);
-		}
-		
-	});
-
-}
-
-function eliminarPlan(id){
-	
-    bootbox.confirm({ 
-        size: "small",
-        message: "&iquest;Deseas eliminar el Plan?", 
-        callback: function(result){
-            if (result==true) {
-                fn_eliminar_plan(id);
-            }
-        }
-    });
-    //$(".modal-dialog").css("width","30%");
-}
-
-function fn_eliminar_plan(id){
-	
-	$.ajax({
-            url: "/seguro/eliminar_plan/"+id,
-            type: "GET",
-            success: function (result) {
-				datatablenewPlan();
-            }
-    });
-}
-
 
 function validacion(){
     
@@ -358,33 +166,23 @@ function validacion(){
     }
 }
 
-function limpiar(){
-	$('#id').val("0");
-	$('#nombre_plan_').val("");
-	$('#descripcion_').val("");
-	$('#fecha_inicio').val("");	
-	$('#fecha_fin').val("");
-	$('#monto').val("");
-}
 
-function fn_save_plan(){
+function fn_save(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var id_seguro = $('#id_seguro').val();
-	var nombre = $('#nombre_plan_').val();
-	var descripcion = $('#descripcion_').val();
-	var fecha_inicio =$('#fecha_inicio').val();	
-	var fecha_fin =$('#fecha_fin').val();	
-	var monto =$('#monto').val();	
+	var id_regional = $('#id_regional').val();
+	var nombre = $('#denominacion_').val();
+	var descripcion =$('#descripcion_').val();	
     $.ajax({
-			url: "/seguro/send_plan",
+			url: "/seguro/send_seguro",
             type: "POST",
-            data : {_token:_token,id:id,id_seguro:id_seguro,nombre:nombre,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,monto:monto},
-			success: function (result) {
-				//$('#openOverlayOpc').modal('hide');
-				datatablenewPlan();
-				limpiar();
+            data : {_token:_token,id:id,id_regional:id_regional,nombre:nombre,descripcion:descripcion},
+			//dataType: 'json',
+            success: function (result) {
+				$('#openOverlayOpc').modal('hide');
+				//window.location.reload();
+				datatablenew();
 								
             }
     });
@@ -410,7 +208,7 @@ function fn_save_plan(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Edici&oacute;n Planes
+				Edici&oacute;n Seguros
 			</div>
 			
             <div class="card-body">
@@ -420,68 +218,120 @@ function fn_save_plan(){
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
 					
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="id_seguro" id="id_seguro" value="<?php echo $id?>">
-					<input type="hidden" name="id" id="id" value="0">
+					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
+					
 					
 					<div class="row">
 						
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label">Nombre Plan</label>
-						</div>
-						<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
-							<input id="nombre_plan_" name="nombre_plan_" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="textarea"  >
-						</div>
-
-					</div>
-
-					<div class="row">
+						<?php 
+							$readonly=$id>0?"readonly='readonly'":'';
+							$readonly_=$id>0?'':"readonly='readonly'";
+						?>
 						
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label">Fecha Inicio</label>
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Regional</label>
+								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($region as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$seguro->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
 						</div>
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="date"  >
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label">Denominacion</label>
+								<input id="denominacion_" name="denominacion_" class="form-control form-control-sm"  value="<?php echo $seguro->nombre?>" type="text"  >
+							</div>
 						</div>
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label">Fecha Fin</label>
-						</div>
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="date"  >
-						</div>
-						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label">Monto</label>
-						</div>
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<input id="monto" name="monto" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="text"  >
-						</div>
-					</div>
-					
 
-					<div class="row">
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label">Descripcion</label>
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label">Descripción</label>
+								<input id="descripcion_" name="descripcion_" class="form-control form-control-sm"  value="<?php echo $seguro->descripcion?>" type="textarea"  >
+							</div>
 						</div>
-						<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-							<input id="descripcion_" name="descripcion_" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="textarea"  >
-						</div>
-					</div>
+					
 				
+					</div>
+					<!--
+					<div class="card">
+					<div class="card-header">
+						Detalles Plan
+					</div>
+					<div class="card-body">
+						
+						<div class="row">
+							<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"> 
+								<label class="control-label">Id</label>								
+							</div>
+							<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+								<input id="id_plan_" name="id_plan_" class="form-control form-control-sm"   type="text" readonly  >
+							</div>
+							<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+								<label class="control-label">Nombre Plan</label>
+							</div>
+							<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+								<input id="nombre_plan_" name="nombre_plan_" class="form-control form-control-sm"  value="<?php echo $seguro->descripcion?>" type="textarea"  >
+							</div>
+
+						</div>
+
+						<div class="row">
+							
+							<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+								<label class="control-label">Fecha Inicio</label>
+							</div>
+							<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+								<input id="descripcion_" name="descripcion_" class="form-control form-control-sm"  value="<?php echo $seguro->descripcion?>" type="date"  >
+							</div>
+							<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+								<label class="control-label">Fecha Fin</label>
+							</div>
+							<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+								<input id="descripcion_" name="descripcion_" class="form-control form-control-sm"  value="<?php echo $seguro->descripcion?>" type="date"  >
+							</div>
+							<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+								<label class="control-label">Monto</label>
+							</div>
+							<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+								<input id="descripcion_" name="descripcion_" class="form-control form-control-sm"  value="<?php echo $seguro->descripcion?>" type="text"  >
+							</div>
+						</div>
+						
+
+						<div class="row">
+							<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+								<label class="control-label">Descripcion</label>
+							</div>
+							<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+								<input id="descripcion_" name="descripcion_" class="form-control form-control-sm"  value="<?php echo $seguro->descripcion?>" type="textarea"  >
+							</div>
+						</div>
+					</div>
+					</div>
+
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_plan()" class="btn btn-sm btn-primary">Guardar</a>
-								
-								<a href="javascript:void(0)" onClick="limpiar()" class="btn btn-sm btn-warning" style="margin-left:10px">Limpiar</a>
+								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-primary">Añadir</a>
 								
 							</div>
 												
 						</div>
 					</div> 
+				<form class="form-horizontal" method="post" action="" id="grdPlanSeguro" autocomplete="off">
+				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
                 <div class="card-body">				
 
                     <div class="table-responsive">
-                    <table id="tblPlan" class="table table-hover table-sm">
+                    <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
                             <th>Id</th>
@@ -499,7 +349,6 @@ function fn_save_plan(){
 											//foreach($plan_seguro as $row){
 												//if(!isset($row->msg)){
 											?>
-											<!--
 											<tr>
 												
 												<td width="10%"><?php //echo $row->id?></td>
@@ -517,12 +366,12 @@ function fn_save_plan(){
 												//}
 												//}	
 											?>
-											-->
 										</tbody>
                     </table>
                 </div>
-				
-					<!--
+				-->
+			</form>
+					
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
@@ -532,7 +381,7 @@ function fn_save_plan(){
 												
 						</div>
 					</div> 
-					-->
+					
               </div>
 			  
               

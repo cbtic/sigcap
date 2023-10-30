@@ -20,5 +20,16 @@ class SegurosPlane extends Model
 		$data = DB::select($cad);
         return $data[0];
     }
+
+    function getPlanBySeguro($id){
+
+        $cad = "select *
+        from seguros_planes sp 
+        where id_seguro =".$id." and estado='1' 
+        order by nombre";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 	
 }
