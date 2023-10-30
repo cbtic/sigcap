@@ -60,6 +60,7 @@
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
                                 <a href="/multa/consulta_multa" class="dropdown-item">Multas</a>
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
+                                <a href="/concurso/create" class="dropdown-item">Concurso</a>
 						   </div>
 					</li>
 

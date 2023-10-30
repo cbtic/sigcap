@@ -34,4 +34,16 @@ class Comprobante extends Model
         return $data;
 
     }
+    use HasFactory;
+	
+	function getComprobanteByTipoSerieNumero($numero_comprobante){
+
+        $cad = "select * 
+				from comprobantes c 
+				where tipo||serie||'-'||numero='".$numero_comprobante."'";
+    
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
+	
 }

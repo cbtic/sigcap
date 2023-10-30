@@ -10,6 +10,17 @@ class Concurso extends Model
 {
     use HasFactory;
 	
+	function getConcurso(){
+
+        $cad = "select c.id,c.periodo,tm.denominacion tipo_concurso
+from concursos c
+inner join tabla_maestras tm on c.id_tipo_concurso=tm.codigo::int and tm.tipo='93' 
+where c.estado='1'";
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
 	public function listar_concurso($p){
 
         return $this->readFuntionPostgres('sp_listar_concurso_paginado',$p);
