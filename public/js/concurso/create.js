@@ -5,12 +5,11 @@ $(document).ready(function () {
 	
 	
 	$('#btnNuevoTrabajo').on('click', function () {
-		modalTrabajo(0);
+		modalTrab(0);
 	});
 	
-	
 	$('#btnNuevo').on('click', function () {
-		window.location.reload();
+		modalRequisito(0);
 	});
 	
 	$('#btnGuardar').on('click', function () {
@@ -101,7 +100,7 @@ function fn_save(){
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
-                    location.href="/concurso/editar_inscripcion/"+result;
+                    //location.href="/concurso/editar_inscripcion/"+result;
 					
 					//window.location.reload();
 					//Limpiar();
@@ -3073,13 +3072,13 @@ function modalParentesco(id){
 
 }
 
-function modalTrabajo(id){
+function modalRequisito(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/agremiado/modal_agremiado_trabajo/"+id,
+			url: "/concurso/modal_concurso_requisito/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);

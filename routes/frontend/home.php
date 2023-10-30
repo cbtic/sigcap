@@ -187,3 +187,10 @@ Route::post('concurso/listar_concurso_agremiado', [ConcursoController::class, 'l
 
 Route::get('concurso/obtener_concurso_inscripcion/{id}', [ConcursoController::class, 'obtener_concurso_inscripcion'])->name('concurso.obtener_concurso_inscripcion');
 
+Route::get('concurso/modal_concurso_requisito/{id}', [ConcursoController::class, 'modal_concurso_requisito'])->name('concurso.modal_concurso_requisito');
+Route::post('concurso/send_concurso_requisito', [ConcursoController::class, 'send_concurso_requisito'])->name('concurso.send_concurso_requisito');
+
+
+
+
+

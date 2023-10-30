@@ -348,6 +348,7 @@ label.form-control-sm{
                         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
                         <input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $agremiado->id?>">
+						<input type="hidden" name="id_concurso_inscripcion" id="id_concurso_inscripcion" value="1">
 						
                         <div class="row" id="divSolicitud">
 							
@@ -458,6 +459,8 @@ label.form-control-sm{
 															</div>
 														</div>
 														
+														<input class="btn btn-warning pull-rigth" value="Nuevo" type="button" id="btnNuevo" style="margin-left:15px" />
+														
 														<div class="row">	
 															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												
@@ -495,8 +498,9 @@ label.form-control-sm{
 															
 															</div>
 														</div>
-														
-														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
+														<!--
+														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
+														-->
 														
 													</div>
 													

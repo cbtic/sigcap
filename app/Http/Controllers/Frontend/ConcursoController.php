@@ -8,6 +8,7 @@ use App\Models\Agremiado;
 use App\Models\Concurso;
 use App\Models\ConcursoPuesto;
 use App\Models\ConcursoInscripcione;
+use App\Models\ConcursoRequisito;
 use App\Models\Comprobante;
 use App\Models\TablaMaestra;
 use App\Models\Concepto;
@@ -266,6 +267,7 @@ class ConcursoController extends Controller
 		
 		$concursoInscripcione_model = new ConcursoInscripcione;
 		$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionById($id);
+		$concursoInscripcionRequisito = $concursoInscripcione_model->getConcursoInscripcionRequisitoById($id);
 		
 		echo json_encode($concursoInscripcion);
 	}
@@ -279,5 +281,38 @@ class ConcursoController extends Controller
 		echo "success";
 
     }
+	
+	public function modal_concurso_requisito($id){
+		
+		$id_user = Auth::user()->id;
+		$tablaMaestra_model = new TablaMaestra;
+		
+		if($id>0) $concursoRequisito = ConcursoRequisito::find($id);else $concursoRequisito = new ConcursoRequisito;
+
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(93);
+
+		return view('frontend.concurso.modal_concurso_requisito',compact('id','concursoRequisito','tipo_documento'));
+
+    }
+	
+	public function send_concurso_requisito(Request $request){
+	
+		$id_user = Auth::user()->id;
+		
+		if($request->id == 0){
+			$concursoRequisito = new ConcursoRequisito;
+		}else{
+			$concursoRequisito = ConcursoRequisito::find($request->id);
+		}
+		
+		$concursoRequisito->id_concurso = $request->id_concurso;
+		$concursoRequisito->id_tipo_documento = $request->id_tipo_documento;
+		$concursoRequisito->denominacion = $request->denominacion;
+		$concursoRequisito->estado = 1;
+		$concursoRequisito->id_usuario_inserta = $id_user;
+		$concursoRequisito->save();
+			
+    }
+		
 	
 }

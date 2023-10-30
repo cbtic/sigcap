@@ -31,6 +31,17 @@ where t1.id=".$id;
         return $data[0];
     }
 	
+	function getConcursoInscripcionRequisitoById($id){
+
+        $cad = "select * 
+from concurso_requisitos t1
+left join tabla_maestras t2 on t1.id_tipo_documento = t2.codigo::int And t2.tipo ='93'
+where id_concurso=".$id;
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+	
 	public function listar_concurso_agremiado($p){
 
         return $this->readFuntionPostgres('sp_listar_concurso_agremiado_paginado',$p);
