@@ -285,6 +285,14 @@ border-right: 2px solid #5cb85c!important;
                         </div>
                     </div>
 
+                    <div class="row" >
+                        <div class="col">
+                            <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerBeneficiario()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Pago Otros Conceptos </button>                                                        
+                        </div>
+                    </div>
+
+                    
+
                     <div class="row" id="divFechaAfliado">
                         <div class="col">
                             <div class="form-group">

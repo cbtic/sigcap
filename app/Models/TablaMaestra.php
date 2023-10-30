@@ -12,7 +12,7 @@ class TablaMaestra extends Model
 	
 	function getMaestroByTipo($tipo){
 
-        $cad = "select codigo,codigo,denominacion 
+        $cad = "select codigo,denominacion 
                 from tabla_maestras 
                 where tipo='".$tipo."' 
 				and estado='1' 
@@ -26,6 +26,17 @@ class TablaMaestra extends Model
         $cad = "select id,denominacion 
                 from tabla_maestras 
                 where tipo='".$tipo."' 
+                order by orden ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+    function getMaestroC($tipo, $codigo){
+
+        $cad = "select id,denominacion 
+                from tabla_maestras 
+                where tipo='".$tipo."' 
+                and codigo ='".$codigo."'
                 order by orden ";
     
 		$data = DB::select($cad);

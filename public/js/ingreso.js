@@ -86,7 +86,7 @@ function fn_save(){
             success: function (result) {  
 					cargarValorizacion();
 					cargarPagos();
-					cargarDudoso();
+					//cargarDudoso();
                     /*$('#openOverlayOpc').modal('hide');
 					$('#calendar').fullCalendar("refetchEvents");
 					modalDelegar(fecha_atencion_original);*/
@@ -312,7 +312,7 @@ function obtenerBeneficiario(){
 				$('#empresa_direccion').val(result.agremiado.direccion);
 				$('#empresa_representante').val(result.agremiado.representante);
 				$('#empresa_id').val(result.agremiado.id);
-				//$('#id_ubicacion').val(result.agremiado.id_ubicacion);
+				$('#id_ubicacion').val(result.agremiado.id);
 			}else{
 				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
 				$('#nombre_afiliado').val(agremiado);
@@ -328,11 +328,13 @@ function obtenerBeneficiario(){
 				*/
 				$('#fecha_afiliado').val(result.agremiado.fecha_colegiado);
 
-				$('#persona_id').val(result.agremiado.id);		
-
+				$('#persona_id').val(result.agremiado.id_p);
+							
 			//	$('#id_ubicacion').val(result.agremiado.id_empresa);
 				$('#ruc_p').val(result.agremiado.numero_ruc);
-			//	$('#id_ubicacion_p').val(result.afiliado.id_ubicacion_p);
+				
+				//$('#id_ubicacion_p').val(result.afiliado.id_ubicacion_p);
+				$('#id_ubicacion_p').val("0");
 				/*
 				if(result.afiliado.tarjeta!=null){
 					$('#divTarjeta').show();
