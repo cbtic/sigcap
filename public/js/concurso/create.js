@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
 	
-	//datatablenew();
+	datatablenew();
 	
 	
 	$('#btnNuevoTrabajo').on('click', function () {
@@ -1633,9 +1633,9 @@ function ocultar_solicitud(){
 }
 
 function datatablenew(){
-    var oTable = $('#tblSolicitud').dataTable({
+    var oTable = $('#tblConcurso').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/expediente/listar_expediente_ajax",
+        "sAjaxSource": "/concurso/listar_concurso_agremiado",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         "bFilter": false,
@@ -1660,10 +1660,10 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var nombre_py_bus = $('#nombre_py_bus').val();
-			var detalle_py_bus = $('#detalle_py_bus').val();
-			var estado = $('#estado').val();
-			var estado_py = $('#estado_py_bus').val();
+			//var nombre_py_bus = $('#nombre_py_bus').val();
+			//var detalle_py_bus = $('#detalle_py_bus').val();
+			//var estado = $('#estado').val();
+			//var estado_py = $('#estado_py_bus').val();
 			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -1671,8 +1671,8 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						nombre_py_bus:nombre_py_bus,detalle_py_bus:detalle_py_bus,
-						estado:estado,estado_py:estado_py,
+						/*nombre_py_bus:nombre_py_bus,detalle_py_bus:detalle_py_bus,
+						estado:estado,estado_py:estado_py,*/
 						_token:_token
                        },
                 "success": function (result) {
@@ -1688,120 +1688,72 @@ function datatablenew(){
             });
         },
 		"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-			if (aData.moneda == "DOLARES") {
+			/*if (aData.moneda == "DOLARES") {
 				$('td', nRow).addClass('verde');
-			} 
+			}*/
 		},
         "aoColumnDefs":
             [	
 			 	{
                 "mRender": function (data, type, row, meta) {	
-                	var numero = "";
-					if(row.numero!= null)numero = row.numero;
-					return numero;
+                	var id = "";
+					if(row.id!= null)id = row.id;
+					return id;
                 },
                 "bSortable": false,
                 "aTargets": [0]
                 },
 				{
                 "mRender": function (data, type, row) {
-                	var anio = "";
-					if(row.anio!= null)anio = row.anio;
-					return anio;
+                	var periodo = "";
+					if(row.periodo!= null)periodo = row.periodo;
+					return periodo;
                 },
                 "bSortable": false,
                 "aTargets": [1],
 				},
 				{
                 "mRender": function (data, type, row) {
-					var glosa = "";
-					if(row.glosa!= null)glosa = row.glosa;
-					return glosa;
+					var tipo_concurso = "";
+					if(row.tipo_concurso!= null)tipo_concurso = row.tipo_concurso;
+					return tipo_concurso;
                 },
                 "bSortable": false,
                 "aTargets": [2],
                 },
 				{
                 "mRender": function (data, type, row) {
-					var descripcion = "";
-					if(row.descripcion!= null)descripcion = row.descripcion;
-					return descripcion;
+					var fecha_inscripcion = "";
+					if(row.fecha_inscripcion!= null)fecha_inscripcion = row.fecha_inscripcion;
+					return fecha_inscripcion;
                 },
                 "bSortable": false,
                 "aTargets": [3],
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var departamento = "";
-					if(row.departamento!= null)departamento = row.departamento;
-					return departamento;
+                	var pago = "";
+					if(row.numero!= null)pago = row.tipo+row.serie+"-"+row.numero;
+					return pago;
                 },
                 "bSortable": false,
                 "aTargets": [4]
                 },
-                {
-                "mRender": function (data, type, row) {
-                	var provincia = "";
-					if(row.provincia!= null)provincia = row.provincia;
-					return provincia;
-                },
-                "bSortable": false,
-                "aTargets": [5]
-                },
 				{
-                "mRender": function (data, type, row) {
-                	var distrito = "";
-					if(row.distrito!= null)distrito = row.distrito;
-					return distrito;
-                },
-                "bSortable": false,
-                "aTargets": [6]
-                },
-				{
-                "mRender": function (data, type, row) {
-                	var distrito_judicial = "";
-					if(row.distrito_judicial!= null)distrito_judicial = row.distrito_judicial;
-					return distrito_judicial;
-                },
-                "bSortable": false,
-                "aTargets": [7]
-                },
-				{
-                "mRender": function (data, type, row) {
-                	var organo_jurisdiccional = "";
-					if(row.organo_jurisdiccional!= null)organo_jurisdiccional = row.organo_jurisdiccional;
-					return organo_jurisdiccional;
-                },
-                "bSortable": false,
-                "aTargets": [8]
-                },
-				{
-                "mRender": function (data, type, row) {
-                	var nombre_materia = "";
-					if(row.nombre_materia!= null)nombre_materia = row.nombre_materia;
-					return nombre_materia;
-                },
-                "bSortable": false,
-                "aTargets": [9]
-                },
-				{
-                "mRender": function (data, type, row) {
-                	var estado_exp = "";
-					if(row.estado_exp!= null)estado_exp = row.estado_exp;
-					return estado_exp;
-                },
-                "bSortable": false,
-                "aTargets": [10]
-                },
-				{
-                "mRender": function (data, type, row) {
-                	var nombre_py = "";
-					if(row.nombre_py!= null)nombre_py = row.nombre_py;
-					return nombre_py;
-                },
-                "bSortable": false,
-                "aTargets": [11]
-                },
+					"mRender": function (data, type, row) {
+						
+						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarConcursoInscripcion('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						
+						html += '<a href="javascript:void(0)" onclick=eliminarPuesto('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+						
+						html += '</div>';
+						return html;
+					},
+					"bSortable": false,
+					"aTargets": [5],
+				},
+				
 				
             ]
 
@@ -1809,7 +1761,7 @@ function datatablenew(){
     });
 
 
-	fn_util_LineaDatatable("#tblSolicitud");
+	//fn_util_LineaDatatable("#tblSolicitud");
 	
 	/*
     $('#tblSolicitud tbody').on('click', 'tr', function () {
@@ -1829,7 +1781,7 @@ function datatablenew(){
     });
 	*/
 	
-	
+	/*
 	$('#tblSolicitud tbody').on('dblclick', 'tr', function () {
 		var anSelected = fn_util_ObtenerNumeroFila(oTable);
 		if (anSelected.length != 0) {
@@ -1841,6 +1793,28 @@ function datatablenew(){
 			obtenerExpediente(idExpediente);
 			
 		}
+	});
+	*/
+}
+
+function editarConcursoInscripcion(id){
+
+	$.ajax({
+		url: '/concurso/obtener_concurso_inscripcion/'+id,
+		dataType: "json",
+		success: function(result){
+			//alert(result);
+			console.log(result);
+			$('#id').val(result.id);
+			//$('#id_tipo_plaza').val(result.id_tipo_plaza);
+			//$('#numero_plazas').val(result.numero_plazas);
+			var numero_comprobante = result.tipo+result.serie+"-"+result.numero;
+			$('#numero_comprobante').val(numero_comprobante);
+			$('#id_concurso').val(result.id_concurso);
+			
+			
+		}
+		
 	});
 
 }

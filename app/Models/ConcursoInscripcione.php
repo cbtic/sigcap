@@ -14,7 +14,7 @@ class ConcursoInscripcione extends Model
 
         $cad = "select t1.id,t5.periodo,t6.denominacion tipo_concurso,
 t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,
-t7.denominacion situacion,t8.denominacion region,t10.tipo,t10.serie,t10.numero 
+t7.denominacion situacion,t8.denominacion region,t10.tipo,t10.serie,t10.numero,t4.id_concurso  
 from concurso_inscripciones t1 
 inner join agremiados t2 on t1.id_agremiado=t2.id
 inner join personas t3 on t2.id_persona=t3.id
@@ -30,5 +30,28 @@ where t1.id=".$id;
 		$data = DB::select($cad);
         return $data[0];
     }
+	
+	public function listar_concurso_agremiado($p){
+
+        return $this->readFuntionPostgres('sp_listar_concurso_agremiado_paginado',$p);
+
+    }
+	
+	public function readFuntionPostgres($function, $parameters = null){
+
+        $_parameters = '';
+        if (count($parameters) > 0) {
+            $_parameters = implode("','", $parameters);
+            $_parameters = "'" . $_parameters . "',";
+        }
+        $data = DB::select("BEGIN;");
+        $cad = "select " . $function . "(" . $_parameters . "'ref_cursor');";
+        $data = DB::select($cad);
+        $cad = "FETCH ALL IN ref_cursor;";
+        $data = DB::select($cad);
+        return $data;
+
+    }
+	
 	
 }

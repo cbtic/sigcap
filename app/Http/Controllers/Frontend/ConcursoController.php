@@ -74,6 +74,32 @@ class ConcursoController extends Controller
 	
 	}
 	
+	public function listar_concurso_agremiado(Request $request){
+	
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $concursoInscripcione_model->listar_concurso_agremiado($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
+	
 	public function modal_concurso($id){
 		
 		$id_user = Auth::user()->id;
@@ -234,6 +260,14 @@ class ConcursoController extends Controller
 		$puesto = $concursoPuesto_model->getConcursoPuestoById($id);
 		
 		echo json_encode($puesto);
+	}
+	
+	public function obtener_concurso_inscripcion($id){
+		
+		$concursoInscripcione_model = new ConcursoInscripcione;
+		$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionById($id);
+		
+		echo json_encode($concursoInscripcion);
 	}
 	
 	public function eliminar_puesto($id){

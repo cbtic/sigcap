@@ -508,22 +508,52 @@ label.form-control-sm{
 												</div>
 												
 												
-												
-                                                
+											<div class="card-body">				
+
+												<div class="table-responsive">
+												<table id="tblConcurso" class="table table-hover table-sm">
+													<thead>
+													<tr style="font-size:13px">
+														<th>Id</th>
+														<th>Periodo</th>
+														<th>Tipo Concurso</th>
+														<th>Fecha</th>
+														<th>Codigo Pago</th>
+														<th>Acciones</th>
+													</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+												</div><!--table-responsive-->	
 
                                             </div>
+											
+											
+											
                                             <!--card-body-->
                                         </div>
                                         <!--card-->
 										
+									
+									
 										
                                     </div>
+									
+									
 									
 									
                                 </div>
 
 
+	
+
+
                             </div>
+							
+							
+							
+							
                         </div>
 
 					
