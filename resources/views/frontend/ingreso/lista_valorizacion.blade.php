@@ -5,17 +5,44 @@ $descuento = 0;
 $valor_venta_bruto = 0;
 $valor_venta = 0;
 $igv = 0;
-foreach($valorizacion as $key=>$row):?>
+
+foreach($valorizacion as $key=>$row):
+	$monto = $row->monto;
+	$stotal = str_replace(",","",number_format($monto/1.18,1));
+	$igv_   = str_replace(",","",number_format($stotal * 0.18,1));
+?>
 <tr style="font-size:13px">
 	<td class="text-center">
-        <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-			
+        <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">		
+			<input type="checkbox" class="mov" name="comprobante_detalles[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][fecha]" value="<?php echo $row->fecha?>" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][denominacion]" value="<?php echo $row->concepto?>" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][monto]" value="<?php echo $row->monto?>" />
+
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][pu]" value="<?php echo $row->monto?>" />          
+            <input type="hidden" name="comprobante_detalle[<?php echo $key?>][igv]" value="<?php echo $igv_?>" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][pv]" value="<?php echo $stotal?>" />
+            <input type="hidden" name="comprobante_detalle[<?php echo $key?>][total]" value="<?php echo $row->monto?>" />
+
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][moneda]" value="<?php echo $row->moneda?>" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][id_moneda]" value="<?php echo $row->id_moneda?>" />
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][cantidad]" value="1" /> 
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][descuento]" value="" />   
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][cod_contable]" value="" />   
+
         </div>
     </td>
 	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha))?></td>
     <td class="text-left"><?php echo $row->concepto//$row->vsm_smodulod?>
-	<td class="text-right"><?php echo $row->monto//$row->vsm_smodulod?>
 	
+	
+	</td>
+	<td class="text-right val_total_">
+	
+	<span class="val_descuento" style="float:left"></span>
+	<span class="val_total"><?php echo $row->monto?></span>
+	<input type="hidden" class="tipo_factura" value="FT" />
 	</td>
 
 </tr>

@@ -15,7 +15,11 @@ use App\Http\Controllers\Frontend\IngresoController;
 
 use App\Http\Controllers\Frontend\MunicipalidadController;
 use App\Http\Controllers\Frontend\SeguroController;
+use App\Http\Controllers\Frontend\ConcursoController;
+
+use App\Http\Controllers\Frontend\ProntoPagoController;
 use App\Http\Controllers\Frontend\AfiliacionSeguroController;
+use App\Http\Controllers\Frontend\ComprobanteController;
 
 /*
  * Frontend Controllers
@@ -131,14 +135,31 @@ Route::post('multa/send_multa_nuevoMulta', [MultaController::class, 'send_multa_
 
 Route::get('multa/eliminar_multa/{id}/{estado}', [MultaController::class, 'eliminar_multa'])->name('multa.eliminar_multa');
 
+Route::get('prontoPago/consulta_prontoPago', [ProntoPagoController::class, 'consulta_prontoPago'])->name('prontoPago.consulta_prontoPago');
+
+Route::post('prontoPago/listar_prontoPago_ajax', [ProntoPagoController::class, 'listar_prontoPago_ajax'])->name('prontoPago.listar_prontoPago_ajax');
+
+Route::get('prontoPago/editar_prontoPago/{id}', [ProntoPagoController::class, 'editar_prontoPago'])->name('prontoPago.editar_prontoPago');
+
+Route::get('prontoPago/modal_prontoPago_nuevoProntoPago/{id}', [ProntoPagoController::class, 'modal_prontoPago_nuevoProntoPago'])->name('prontoPago.modal_prontoPago_nuevoProntoPago');
+
+Route::post('prontoPago/send_prontoPago_nuevoProntoPago', [ProntoPagoController::class, 'send_prontoPago_nuevoProntoPago'])->name('prontoPago.send_prontoPago_nuevoProntoPago');
+
+Route::get('prontoPago/eliminar_prontoPago/{id}/{estado}', [ProntoPagoController::class, 'eliminar_prontoPago'])->name('prontoPago.eliminar_prontoPago');
 
 
 //Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
-
 Route::get('ingreso/obtener_valorizacion/{tipo_documento}/{id_persona}', [IngresoController::class, 'obtener_valorizacion'])->name('ingreso.obtener_valorizacion')->where('tipo_documento', '(.*)');
-
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
+
+Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');
+
+//Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
+Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.create');
+Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
+Route::get('comprobante/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
+
 
 Route::get('seguro/consulta_seguro', [SeguroController::class, 'consulta_seguro'])->name('seguro.consulta_seguro');
 Route::post('seguro/listar_seguro', [SeguroController::class, 'listar_seguro'])->name('seguro.listar_seguro');
@@ -151,6 +172,7 @@ Route::get('seguro/eliminar_plan/{id}', [seguroController::class, 'eliminar_plan
 Route::post('seguro/send_plan', [SeguroController::class, 'send_plan'])->name('seguro.send_plan');
 Route::get('seguro/obtener_plan/{id}', [SeguroController::class, 'obtener_plan'])->name('seguro.obtener_plan');
 
+<<<<<<< HEAD
 Route::get('afiliacion_seguro/consulta_afiliacion_seguro', [AfiliacionSeguroController::class, 'consulta_afiliacion_seguro'])->name('afiliacion_seguro.consulta_afiliacion_seguro');
 Route::post('afiliacion_seguro/listar_afiliacion_seguro', [AfiliacionSeguroController::class, 'listar_afiliacion_seguro'])->name('afiliacion_seguro.listar_afiliacion_seguro');
 Route::get('afiliacion_seguro/modal_afiliado/{id}', [AfiliacionSeguroController::class, 'modal_afiliado'])->name('afiliacion_seguro.modal_afiliado');
@@ -162,4 +184,15 @@ Route::get('afiliacion_seguro/obtener_parentesco/{id}', [AfiliacionSeguroControl
 Route::get('afiliacion_seguro/obtener_agremiado/{id}', [AfiliacionSeguroController::class, 'obtener_agremiado'])->name('afiliacion_seguro.obtener_agremiado');
 Route::post('afiliacion_seguro/send_parentesco_fila', [AfiliacionSeguroController::class, 'send_parentesco_fila'])->name('afiliacion_seguro.send_parentesco_fila');
 
+=======
+Route::get('concurso', [ConcursoController::class, 'index'])->name('concurso');
+Route::post('concurso/listar_concurso', [ConcursoController::class, 'listar_concurso'])->name('concurso.listar_concurso');
+Route::get('concurso/modal_concurso/{id}', [ConcursoController::class, 'modal_concurso'])->name('concurso.modal_concurso');
+Route::post('concurso/send_concurso', [ConcursoController::class, 'send_concurso'])->name('concurso.send_concurso');
+Route::get('concurso/modal_puesto/{id}', [ConcursoController::class, 'modal_puesto'])->name('concurso.modal_puesto');
+Route::post('concurso/listar_puesto', [ConcursoController::class, 'listar_puesto'])->name('concurso.listar_puesto');
+Route::get('concurso/eliminar_puesto/{id}', [ConcursoController::class, 'eliminar_puesto'])->name('concurso.eliminar_puesto');
+Route::post('concurso/send_puesto', [ConcursoController::class, 'send_puesto'])->name('concurso.send_puesto');
+Route::get('concurso/obtener_puesto/{id}', [ConcursoController::class, 'obtener_puesto'])->name('concurso.obtener_puesto');
+>>>>>>> bac29122f49d4f8dd12fe03d5e3084337c882a32
 

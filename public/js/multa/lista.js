@@ -24,12 +24,6 @@ $(document).ready(function () {
 			datatablenew();
 		}
 	});
-
-	$('#razon_socialBus').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
 		
 	$('#btnNuevo').click(function () {
 		modalMulta(0);

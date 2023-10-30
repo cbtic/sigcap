@@ -59,7 +59,7 @@ border-right: 2px solid #5cb85c!important;
 
             <div class="card-body">
 
-            <form class="form-horizontal" method="post" action="{{ route('frontend.ingreso.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
+            <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -121,7 +121,7 @@ border-right: 2px solid #5cb85c!important;
 									<select name="id_caja" id="id_caja" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach($caja as $row):?>
-											<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+											<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
 										<?php  endforeach;?>
 									</select>
 									<?php endif;?>
@@ -182,13 +182,13 @@ border-right: 2px solid #5cb85c!important;
                                 <label class="form-control-sm">Tipo Documento</label>
                                 <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_DNI?>"><?php echo $persona::TIPO_DOCUMENTO_DNI?></option>
-                                    <option value="<?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA?>"><?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA?></option>
-                                    <option value="<?php echo $persona::TIPO_DOCUMENTO_PASAPORTE?>"><?php echo $persona::TIPO_DOCUMENTO_PASAPORTE?></option>
+                                    <option selected="selected value="<?php echo $persona::TIPO_DOCUMENTO_CAP?>"><?php echo $persona::TIPO_DOCUMENTO_CAP?></option>
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_RUC?>"><?php echo $persona::TIPO_DOCUMENTO_RUC?></option>
+                                    <option value="<?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA?>"><?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA?></option>
+                                    <option value="<?php echo $persona::TIPO_DOCUMENTO_PASAPORTE?>"><?php echo $persona::TIPO_DOCUMENTO_PASAPORTE?></option>                                    
 									<option value="<?php echo $persona::TIPO_DOCUMENTO_CEDULA?>"><?php echo $persona::TIPO_DOCUMENTO_CEDULA?></option>
 									<option value="<?php echo $persona::TIPO_DOCUMENTO_PTP?>"><?php echo $persona::TIPO_DOCUMENTO_PTP?></option>
-                                    <option selected="selected value="<?php echo $persona::TIPO_DOCUMENTO_CAP?>"><?php echo $persona::TIPO_DOCUMENTO_CAP?></option>
-									
+                                    									
                                 </select>
 
                                 <input type="hidden" readonly name="empresa_id" id="empresa_id" value="" class="form-control form-control-sm">
@@ -202,9 +202,23 @@ border-right: 2px solid #5cb85c!important;
 
                     <div class="row">
                         <div class="col">
+<!--
                             <div class="form-group">
                                 <label class="form-control-sm">N° Documento</label>
                                 <input type="text" name="numero_documento" id="numero_documento" onblur="obtenerBeneficiario()" value="{{old('clinum')}}"  placeholder="" class="form-control form-control-sm" />
+
+                                <input class="form-control input-sm text-uppercase" type="text" name="txtBusNroDocF" id="txtBusNroDocF" autocomplete="OFF" maxlength="12" required="" tabindex="0" disabled="">
+                            </div>
+                                        -->
+                            <label><small>Nro. de Documento</small></label>
+                            <div class="input-group input-group-sm">                             
+<!--
+                                <input type="text" name="numero_documento" id="numero_documento" onblur="obtenerBeneficiario()" value="{{old('clinum')}}"  placeholder="" class="form-control form-control-sm" />
+                                        -->
+                                <input class="form-control input-sm text-uppercase" type="text" name="numero_documento" id="numero_documento" autocomplete="OFF" maxlength="12" required="" tabindex="0" >
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerBeneficiario()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -251,14 +265,6 @@ border-right: 2px solid #5cb85c!important;
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label class="form-control-sm">Empresa</label>
-                                <input type="text" readonly name="empresa_afiliado" id="empresa_afiliado" value="{{old('clinom')}}" class="form-control form-control-sm" />
-                        </div>
-                        </div>
-                    </div>
 
                     <div class="row" id="divDireccionEmpresa" style="display:none">
                         <div class="col">
@@ -278,6 +284,14 @@ border-right: 2px solid #5cb85c!important;
                         </div>
                         </div>
                     </div>
+
+                    <div class="row" >
+                        <div class="col">
+                            <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerBeneficiario()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Pago Otros Conceptos </button>                                                        
+                        </div>
+                    </div>
+
+                    
 
                     <div class="row" id="divFechaAfliado">
                         <div class="col">
@@ -365,13 +379,16 @@ border-right: 2px solid #5cb85c!important;
                                         -->
                                     </tbody>
 									<tfoot>
+                                        <!--
 										<tr>
 											<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Pago a Cuenta</th>
 											<td style="padding-bottom:0px;margin-bottom:0px">
-												<!--<input type="text" readonly name="MonAd" id="total" value="0" class="form-control form-control-sm">-->
+
 												<input type="text" readonly name="MonAd" id="MonAd" value="0" class="form-control form-control-sm text-right" onkeyup="validarMonAd()"/>
 											</td>
 										</tr>
+                                        -->
+
 										<tr>
 											<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
 											<td style="padding-bottom:0px;margin-bottom:0px">

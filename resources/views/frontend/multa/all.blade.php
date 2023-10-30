@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Multas</li>
+            <li class="breadcrumb-item active">Consulta de Agremiado Multas</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Multas <!--<small class="text-muted">Usuarios activos</small>-->
+                        Agremiado Multas <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Multas
+                        Lista de Agremiado Multas
                     </strong>
                 </div><!--card-header-->
 				
@@ -163,14 +163,14 @@
 						<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 							<div style="float:left;padding-top:7px">F.Ini</div>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha" class="form-control">
+								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control">
 								
 							</div>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 							<div style="float:left;padding-top:7px">F.Fin</div>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha" class="form-control">
+								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control">
 							   
 							</div>
 							<!--<input class="form-control form-control-sm" id="fecha" name="fecha" placeholder="Fecha">-->

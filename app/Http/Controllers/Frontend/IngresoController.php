@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 use App\Models\Persona;
 use App\Models\Agremiado;
@@ -10,7 +11,6 @@ use App\Models\TablaMaestra;
 use App\Models\AgremidoCuota;
 use App\Models\CajaIngreso;
 use App\Models\Valorizacione;
-
 
 use Auth;
 
@@ -22,7 +22,7 @@ class IngresoController extends Controller
         $persona = new Persona;
         $caja_model = new TablaMaestra;
         $caja_ingreso_model = new CajaIngreso();
-        $caja = $caja_model->getCaja('CAJA');
+        $caja = $caja_model->getCaja('91');
         $caja_usuario = $caja_ingreso_model->getCajaIngresoByusuario($id_user,'91');
         
         //$caja_usuario = $caja_model;
@@ -48,6 +48,28 @@ class IngresoController extends Controller
         $pago = $valorizaciones_model->getPago($tipo_documento,$persona_id);
         return view('frontend.ingreso.lista_pago',compact('pago'));
 
+    }
+
+    public function sendCaja(Request $request)
+    {
+        $valorizaciones_model = new Valorizacione;
+		$id_user = Auth::user()->id;
+        $datos[] = $request->accion;
+        $datos[] = $id_user;
+		
+		$datos[] = $request->id_caja_ingreso;
+        $datos[] = $request->id_caja;
+        $datos[] = ($request->saldo_inicial=='')?0:$request->saldo_inicial;
+        $datos[] = ($request->total_recaudado=='')?0:$request->total_recaudado;
+        $datos[] = ($request->saldo_total=='')?0:$request->saldo_total;
+		
+        $datos[] = $request->estado;
+        //print_r($datos);
+        $id_caja_ingreso = $valorizaciones_model->registrar_caja_ingreso($datos);
+        echo $id_caja_ingreso;
+		
+		//Session::put('id_caja', $request->id_caja);
+        
     }
 
 }

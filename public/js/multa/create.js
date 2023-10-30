@@ -3141,7 +3141,7 @@ function modalMulta(id){
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/multa/modal_multa_nuevoMulta/"+id,
+			url: "/multa/listar_datosAgremiado_ajax/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);

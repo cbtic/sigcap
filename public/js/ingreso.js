@@ -1,5 +1,11 @@
 
 $(document).ready(function () {
+
+	$('#numero_documento').keypress(function (e) {
+		if (e.keyCode == 13) {
+			obtenerBeneficiario();
+		}
+	});
 	
 	$('#example-select-all').on('click', function(){
 		if($(this).is(':checked')){
@@ -80,7 +86,7 @@ function fn_save(){
             success: function (result) {  
 					cargarValorizacion();
 					cargarPagos();
-					cargarDudoso();
+					//cargarDudoso();
                     /*$('#openOverlayOpc').modal('hide');
 					$('#calendar').fullCalendar("refetchEvents");
 					modalDelegar(fecha_atencion_original);*/
@@ -147,6 +153,7 @@ function calcular_total(obj){
 	//$("#tblValorizacion input[type='checkbox']:checked").each(function (){
 	if(cantidad == 0)$('#tipo_factura').val("");
 	var tipo_factura = $('#tipo_factura').val();
+	//alert(tipo_factura);
 	var tipo_factura_actual = $(obj).parent().parent().parent().find('.tipo_factura').val();
 	if(tipo_factura!="" && tipo_factura!=tipo_factura_actual){
 		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
@@ -154,6 +161,7 @@ function calcular_total(obj){
 		return false;
 	}
 	
+
 	$("#btnBoleta").prop('disabled', true);
     $("#btnFactura").prop('disabled', true);
 	$("#btnTicket").prop('disabled', true).hide();
@@ -169,6 +177,11 @@ function calcular_total(obj){
 		$("#btnTicket").show();
 		$("#btnBoleta").hide();
 	}
+
+
+$("#btnBoleta").prop('disabled', false);
+$("#btnFactura").prop('disabled', false);
+
 	//alert(tipo_factura_actual);
 	$(".mov:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
@@ -299,7 +312,7 @@ function obtenerBeneficiario(){
 				$('#empresa_direccion').val(result.agremiado.direccion);
 				$('#empresa_representante').val(result.agremiado.representante);
 				$('#empresa_id').val(result.agremiado.id);
-				//$('#id_ubicacion').val(result.agremiado.id_ubicacion);
+				$('#id_ubicacion').val(result.agremiado.id);
 			}else{
 				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
 				$('#nombre_afiliado').val(agremiado);
@@ -315,11 +328,13 @@ function obtenerBeneficiario(){
 				*/
 				$('#fecha_afiliado').val(result.agremiado.fecha_colegiado);
 
-				$('#persona_id').val(result.agremiado.id);		
-
+				$('#persona_id').val(result.agremiado.id_p);
+							
 			//	$('#id_ubicacion').val(result.agremiado.id_empresa);
 				$('#ruc_p').val(result.agremiado.numero_ruc);
-			//	$('#id_ubicacion_p').val(result.afiliado.id_ubicacion_p);
+				
+				//$('#id_ubicacion_p').val(result.afiliado.id_ubicacion_p);
+				$('#id_ubicacion_p').val("0");
 				/*
 				if(result.afiliado.tarjeta!=null){
 					$('#divTarjeta').show();
