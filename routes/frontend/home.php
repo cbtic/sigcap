@@ -155,7 +155,10 @@ Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoControl
 
 Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');
 
-Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
+//Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
+Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.create');
+Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
+Route::get('comprobante/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
 
 
 Route::get('seguro/consulta_seguro', [SeguroController::class, 'consulta_seguro'])->name('seguro.consulta_seguro');

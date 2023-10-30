@@ -191,7 +191,7 @@ br {
 @stack('before-scripts')
 @stack('after-scripts')
 
-@extends('frontend.layouts.app1')
+@extends('frontend.layouts.app')
 
 
 
@@ -467,39 +467,36 @@ br {
 															$smodulo = "";
                                                             if ($trans == 'FA' || $trans == 'FE'){?>
                                                                 <?php foreach($facturad as $key=>$fac){ 
-																		$smodulo = $fac['smodulo'];
+																//		$smodulo = $fac['smodulo'];
 																?>
-                                                                    <input type="hidden" name="facturad[<?php echo $key?>][vestab]" value="<?php echo $fac['vestab']?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key?>][vcodigo]" value="<?php echo $fac['vcodigo']?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key?>][modulo]" value="<?php echo $fac['modulo']?>" />
+                                                                    <input type="hidden" name="facturad[<?php echo $key?>][id]" value="<?php echo $fac['id']?>" />
+                                                                    <input type="hidden" name="facturad[<?php echo $key?>][fecha]" value="<?php echo $fac['fecha']?>" />
                                                                     <input type="hidden" name="facturad[<?php echo $key?>][denominacion]" value="<?php echo $fac['denominacion']?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key?>][smodulo]" value="<?php echo $fac['smodulo']?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key?>][cantidad]" value="<?php echo $fac['cantidad']?>" />
-
-                                                                    <input type="hidden" name="facturad[<?php echo $key?>][subtotal]" value="<?php if ($trans == 'FA') {if ($adelanto == 'S'){echo ($MonAd-$MonAd*0.18);} else {echo $fac['valor_venta_bruto'];}}?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key?>][igv]" value="<?php if ($trans == 'FA') {if ($adelanto == 'S'){echo ($MonAd*0.18);} else {echo $fac['igv'];}}?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key?>][total]" value="<?php if ($trans == 'FA') {if ($adelanto == 'S'){echo $MonAd;} else {echo $fac['total'];}}?>" />
-
-                                                                    <input type="hidden" name="facturad[<?php echo $key?>][plancontable]" value="<?php echo $fac['plancontable']?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key?>][descuento_item]" value="<?php echo $fac['descuento_item']?>" />
+s
+                                                                    <input type="hidden" name="facturad[<?php echo $key?>][monto]" value="<?php echo $fac['monto']?>" />
+                                                                    <input type="hidden" name="facturad[<?php echo $key?>][moneda]" value="<?php echo $fac['moneda']?>" />
+                                                                    <input type="hidden" name="facturad[<?php echo $key?>][id_moneda]" value="<?php echo $fac['id_moneda']?>" />
                                                                     <input type="hidden" name="facturad[<?php echo $key?>][descuento]" value="<?php echo $fac['descuento']?>" />
+                                                                    <input type="hidden" name="facturad[<?php echo $key?>][cod_contable]" value="<?php echo $fac['cod_contable']?>" />
+                                                                    
                                                                     <tr>
                                                                         <td class="text-right"><?php $n = $n + 1; echo $n;?></td>
-                                                                        <td class="text-center"><?php if ($trans == 'FA'){echo $fac['cantidad'];}if ($trans == 'FE'){echo $fac['facd_cantidad'];}?></td>
+                                                                        <td class="text-center"><?php if ($trans == 'FA'){echo $fac['cantidad'];}if ($trans == 'FE'){echo $fac['cantidad'];}?></td>
                                                                         <td class="text-left">
 																		<?php 
 																		if ($trans == 'FA'){
 																			echo $fac['denominacion'];
 																		}if ($trans == 'FE'){
-																			echo $fac['facd_descripcion'];
+																			echo $fac['descripcion'];
 																		}?>
 																		</td>
-                                                                        <td class="text-left"><?php if ($trans == 'FA'){echo $fac['descuento'];}if ($trans == 'FE'){echo $fac['facd_descuento'];}?></td>
 
-                                                                        <td class="text-right"><?php if ($trans == 'FA') {if ($adelanto == 'S'){echo ($MonAd-$MonAd*0.18);} else {echo $fac['precio_venta'];}} if ($trans == 'FE'){echo number_format($fac['facd_importe'],2);} ?></td>
-                                                                        <td class="text-right"><?php if ($trans == 'FA') {if ($adelanto == 'S'){echo ($MonAd*0.18);} else {echo $fac['igv'];}} if ($trans == 'FE'){echo number_format($fac['facd_igv_total'],2);} ?></td>
-                                                                        <td class="text-right"><?php if ($trans == 'FA') {if ($adelanto == 'S'){echo ($MonAd-$MonAd*0.18);} else {echo $fac['valor_venta'];}} if ($trans == 'FE'){echo number_format($fac['facd_pu'],2);} ?></td>
-                                                                        <td class="text-right" ><?php if ($trans == 'FA') {if ($adelanto == 'S'){echo $MonAd;} else {echo $fac['total'];}} if ($trans == 'FE'){echo number_format($fac['facd_importe'],2);} ?></td>
+                                                                        <td class="text-left"><?php if ($trans == 'FA'){echo $fac['descuento'];}if ($trans == 'FE'){echo $fac['descuento'];}?></td>
+                                                                        
+                                                                        <td class="text-right"><?php if ($trans == 'FA') {if ($adelanto == 'S'){echo ($MonAd-$MonAd*0.18);} else {echo $fac['pu'];}} if ($trans == 'FE'){echo number_format($fac['importe'],2);} ?></td>
+                                                                        <td class="text-right"><?php if ($trans == 'FA') {if ($adelanto == 'S'){echo ($MonAd*0.18);} else {echo $fac['igv'];}} if ($trans == 'FE'){echo number_format($fac['igv_total'],2);} ?></td>
+                                                                        <td class="text-right"><?php if ($trans == 'FA') {if ($adelanto == 'S'){echo ($MonAd-$MonAd*0.18);} else {echo $fac['pv'];}} if ($trans == 'FE'){echo number_format($fac['pu'],2);} ?></td>
+                                                                        <td class="text-right" ><?php if ($trans == 'FA') {if ($adelanto == 'S'){echo $MonAd;} else {echo $fac['total'];}} if ($trans == 'FE'){echo number_format($fac['importe'],2);} ?></td>
 
                                                                         <?php
                                                                         if ($trans == 'FN'){?>
@@ -607,6 +604,16 @@ br {
                                         <!--card-body-->
                                     </div>
                                     <!--card-->
+
+                               
+                                    
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <div class="form-group">
+                                            <button type="button" id="guardar"
+                                                class="btn btn-primary btn-block" 
+                                                onclick="$('#guardar').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">GUARDAR COMPROBANTE</button>
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
 
@@ -840,87 +847,20 @@ br {
 								
                             </div>
                         </div>
-                                <a class='flotante' name="guardar" id="guardar" onclick="guardarFactura()" href='#' ><img src='/img/btn_save.png' border="0"/></a>
-                                <!--<a class='flotante' name="guardar" id="guardar" onclick="validaNumeroComprobante()" href='#' ><img src='/img/btn_save.png' border="0"/></a>-->
-
-                                <!-- <a class='flotante' href='#' ><img src='/img/deshacer.png' border="0"/></a>-->
-                        <br>
+                             <!--   <a class='flotante' name="guardar" id="guardar" onclick="guardarFactura()" href='#' ><img src='/img/btn_save.png' border="0"/></a>-->                        <br>
                     </form>
                 </div>
             </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="duenoCargaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    {!! Form::open(['id' => 'modalNuevoDuenoCargaForm','url' => route('frontend.chofer'), 'autocomplete'
-                    =>
-                    'off'] )
-                    !!}
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel3">Buscar Datos del Cliente</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="card-body">
-                                <div id="" class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                                        <div class="form-group">
-                                            <!-- Option: EMPRESA -->
-                                            {{ Form::label('empresa', 'EMPRESA', ['class' => 'control-label']) }}
-
-                                            {{ Form::radio('empresa_particular', 'empresa', 1, ['id' => 'empresa', 'onclick' => 'javascript:$("#modalNuevoDuenoCargaSaveBtn").removeClass("btn-success").addClass("btn-primary");$("#modalNuevoDuenoCargaSaveBtn").html("Buscar");$("#numero_ruc_dni").val("");$("#persona_nuevo_dueno_carga").val("");$("#numero_ruc_dni").attr("placeholder", "Escriba el RUC");$("#empresa_nuevo_dueno_carga").attr("style", "display:block");$("#persona_nuevo_dueno_carga").attr("style", "display:none");$("#modalNuevoEmpresaPersonaBtn").attr("style", "display:none")']) }}
-
-                                            <!-- Option: PARTICULAR -->
-                                            {{ Form::label('particular', 'PARTICULAR', ['class' => 'control-label']) }}
-
-                                            {{ Form::radio('empresa_particular', 'particular', 0, ['id' => 'particular', 'onclick' => 'javascript:$("#modalNuevoDuenoCargaSaveBtn").removeClass("btn-success").addClass("btn-primary");$("#modalNuevoDuenoCargaSaveBtn").html("Buscar");$("#numero_ruc_dni").val("");$("#empresa_nuevo_dueno_carga").val("");$("#numero_ruc_dni").attr("placeholder", "Escriba el DNI/PTP/PASAPORTE/CEDULA");$("#persona_nuevo_dueno_carga").attr("style", "display:block");$("#empresa_nuevo_dueno_carga").attr("style", "display:none");$("#modalNuevoEmpresaPersonaBtn").attr("style", "display:none")']) }}
-                                        </div>
-                                        <div class="form-group">
-                                            {{ Form::number('numero_ruc_dni', old('numero_ruc_dni') , ['id' => 'numero_ruc_dni', 'oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);', 'maxlength' => 11, 'class' => 'form-control form-control-sm', 'placeholder' => 'Escriba el RUC']) }}
-                                        </div>
-                                        <p>o ingrese</p>
-                                        <div class="form-group">
-                                            {{ Form::text('empresa_nuevo_dueno_carga', old('empresa_nuevo_dueno_carga'), ['id' => 'empresa_nuevo_dueno_carga', 'class' => 'form-control form-control-sm', 'placeholder' => 'Escriba la Razón Social']) }}
-                                            {{ Form::text('persona_nuevo_dueno_carga', old('persona_nuevo_dueno_carga'), ['id' => 'persona_nuevo_dueno_carga', 'class' => 'form-control form-control-sm', 'style' => 'display:none', 'placeholder' => 'Escriba los Apellidos de la persona']) }}
-                                        </div>
-										<div class="input-group" id="empresa_nuevo_dueno_carga_busqueda"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        {!! Form::button('Cancelar', ['id' => 'modalNuevoDuenoCargaCancelBtn', 'class' => 'btn
-                        btn-secondary', 'data-dismiss' => 'modal']) !!}
-                        {!! Form::button('Buscar', ['id' => 'modalNuevoDuenoCargaSaveBtn', 'class' => 'btn
-                        btn-primary'])
-                        !!}
-                        {!! Form::button('Nueva ', ['id' => 'modalNuevoEmpresaPersonaBtn', 'class' => 'btn btn-warning',
-                        'style' => 'display:none'])
-                        !!}
-                    </div>
-                    {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-        <!--ModalEnd-->
     </div>
 
     <!--row-->
     @endsection
 
+
+
     @push('after-scripts')
-    {!! script(asset('js/factura.js')) !!}
-    @if(config('access.captcha.contact'))
-    @captchaScripts
-    @endif
-    @endpush
+
+<script src="{{ asset('js/factura.js') }}"></script>
+@endpush
