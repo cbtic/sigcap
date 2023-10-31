@@ -180,6 +180,7 @@ border-right: 2px solid #5cb85c!important;
                             <div class="form-group">
                                 <?php ?>
                                 <label class="form-control-sm">Tipo Documento</label>
+<!--
                                 <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_DNI?>"><?php echo $persona::TIPO_DOCUMENTO_DNI?></option>
                                     <option selected="selected value="<?php echo $persona::TIPO_DOCUMENTO_CAP?>"><?php echo $persona::TIPO_DOCUMENTO_CAP?></option>
@@ -187,9 +188,18 @@ border-right: 2px solid #5cb85c!important;
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA?>"><?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA?></option>
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_PASAPORTE?>"><?php echo $persona::TIPO_DOCUMENTO_PASAPORTE?></option>                                    
 									<option value="<?php echo $persona::TIPO_DOCUMENTO_CEDULA?>"><?php echo $persona::TIPO_DOCUMENTO_CEDULA?></option>
-									<option value="<?php echo $persona::TIPO_DOCUMENTO_PTP?>"><?php echo $persona::TIPO_DOCUMENTO_PTP?></option>
-                                    									
+									<option value="<?php echo $persona::TIPO_DOCUMENTO_PTP?>"><?php echo $persona::TIPO_DOCUMENTO_PTP?></option>                                    									
                                 </select>
+                                        -->
+
+                                <select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="">									
+									<?php
+                                        foreach ($tipo_documento as $row) {?>
+                                        <option value="<?php echo $row->codigo?>" <?php if($row->codigo=="85")echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                        <?php 
+                                        }
+                                        ?>
+                                    </select>
 
                                 <input type="hidden" readonly name="empresa_id" id="empresa_id" value="" class="form-control form-control-sm">
 								<input type="hidden" readonly name="id_ubicacion" id="id_ubicacion" value="" class="form-control form-control-sm">
