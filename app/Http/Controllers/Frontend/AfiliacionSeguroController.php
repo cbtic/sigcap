@@ -230,7 +230,18 @@ class AfiliacionSeguroController extends Controller
 		
 		echo json_encode($plan);
 	}
+
+	public function obtener_parentesco($id_agremiado){
+
+        $parentesco_model = new Seguro_afiliado;
+        $sw = true;
+        $parentesco_lista = $parentesco_model->listar_parentesco_agremiado($id_agremiado);
+        //print_r($parentesco);exit();
+        return view('frontend.afiliacion_seguro.lista_parentesco',compact('parentesco_lista'));
+
+    }
 }
+
 
 
 
