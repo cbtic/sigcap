@@ -21,6 +21,24 @@ class Seguro_afiliado extends Model
 
     }
 
+
+
+     
+
+     public function listar_parentesco_agremiado($id_agremiado){
+
+        $cad = "select ap.id,0  id_afiliacion,id_agremiado,ap.id id_familia, extract(year from Age(ap.fecha_nacimiento)) edad,tms.denominacion  sexo,ap.estado, tm.denominacion  parentesco,ap.apellido_nombre nombre 
+        from  agremiado_parentecos ap inner join tabla_maestras tm on cast(tm.codigo as integer)=ap.id_parentesco and tm.tipo ='12' 
+                                        inner join tabla_maestras tms on cast(tms.codigo as integer) =ap.id_sexo  and tms.tipo ='2'
+
+           Where  id_agremiado = " .$id_agremiado. "
+            Order By id_familia;  ";
+    
+		$data = DB::select($cad);
+        return $data;
+
+    }
+
     public function datos_afiliacion_seguro($id){
 
         $cad = "select * ,s.id id_seguro 
