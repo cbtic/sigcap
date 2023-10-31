@@ -194,7 +194,8 @@ border-right: 2px solid #5cb85c!important;
                                 <input type="hidden" readonly name="empresa_id" id="empresa_id" value="" class="form-control form-control-sm">
 								<input type="hidden" readonly name="id_ubicacion" id="id_ubicacion" value="" class="form-control form-control-sm">
                                 <input type="hidden" readonly name="id_ubicacion_p" id="id_ubicacion_p" value="" class="form-control form-control-sm">
-								<input type="hidden" readonly name="persona_id" id="persona_id" value="" class="form-control form-control-sm">
+								<input type="hidden" readonly name="id_persona" id="id_persona" value="" class="form-control form-control-sm">
+                                <input type="hidden" readonly name="id_agremiado" id="id_agremiado" value="" class="form-control form-control-sm">
 
                             </div>
                         </div>
@@ -227,7 +228,7 @@ border-right: 2px solid #5cb85c!important;
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-sm">Nombres y Apellidos</label>
-                                <input type="text" readonly name="nombre_afiliado" id="nombre_afiliado" value="{{old('clinom')}}" class="form-control form-control-sm" />
+                                <input type="text" readonly name="nombre_" id="nombre_" value="{{old('clinom')}}" class="form-control form-control-sm" />
                             </div>
                         </div>
                     </div>
@@ -260,7 +261,7 @@ border-right: 2px solid #5cb85c!important;
 								
 								@endhasanyrole
 
-                                <input type="text" readonly name="codigo_afiliado" id="codigo_afiliado" value="{{old('clinom')}}" class="form-control form-control-sm" />
+                                <input type="text" readonly name="situacion_" id="situacion_" value="{{old('clinom')}}" class="form-control form-control-sm" />
                             </div>
                         </div>
                     </div>
@@ -297,7 +298,7 @@ border-right: 2px solid #5cb85c!important;
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-sm">Fecha Colegiatura</label>
-                                <input type="text" readonly name="fecha_afiliado" id="fecha_afiliado" value="{{old('clinom')}}" class="form-control form-control-sm">
+                                <input type="text" readonly name="fecha_colegiatura" id="fecha_colegiatura" value="{{old('clinom')}}" class="form-control form-control-sm">
                             </div>
                         </div>
                     </div>

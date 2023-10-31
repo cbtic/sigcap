@@ -86,7 +86,7 @@ class ComprobanteController extends Controller
             }
 
             $ubicacion = $request->id_ubicacion;
-            $persona = $request->persona_id;
+            $persona = $request->id_persona;
             $tipoDocP = $request->tipo_documento;
             //echo $$tipoDocP;exit();
 
@@ -187,13 +187,13 @@ class ComprobanteController extends Controller
 			$serieF = $request->serieF;
 			$tipoF = $request->TipoF;
 			$ubicacion_id = $request->ubicacion;
-			$persona_id = $request->persona;
+			$id_persona = $request->persona;
 			$id_caja = $request->id_caja;
 			$adelanto   = $request->adelanto;
 
 			$trans = $request->trans;
 
-			//$std =  $this->getTipoDocPersona($persona_id );
+			//$std =  $this->getTipoDocPersona($id_persona );
 
 			//print_r($std);
 			//exit();
@@ -226,7 +226,7 @@ class ComprobanteController extends Controller
 				
 				/*************************************/
 				
-				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     0, $tipoF, $ubicacion_id, $persona_id, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  $id_moneda);
+				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     0, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
 				$factura = Comprobante::where('id', $id_factura)->get()[0];
