@@ -10,7 +10,7 @@ use DB;
 
 class Valorizacione extends Model
 {
-    function getValorizacion($tipo_documento,$persona_id){
+    function getValorizacion($tipo_documento,$id_persona){
         if($tipo_documento=="RUC"){
             $cad = "
             select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
@@ -18,8 +18,9 @@ class Valorizacione extends Model
             inner join conceptos c  on c.id = v.id_concepto
             inner join agremiado_cuotas a  on a.id = v.pk_registro
             inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
-            where v.id_agremido = ".$persona_id."
-            and v.estado = '1'
+            where v.id_agremido = ".$id_persona."
+            and v.estado = '1' 
+            and id_comprobante is null
 			";
         }else{
             $cad = "
@@ -28,8 +29,9 @@ class Valorizacione extends Model
             inner join conceptos c  on c.id = v.id_concepto
             inner join agremiado_cuotas a  on a.id = v.pk_registro
             inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
-            where v.id_agremido = ".$persona_id."
+            where v.id_persona = ".$id_persona."
             and v.estado = '1'
+            and id_comprobante is null
 			";
         }
 
@@ -47,10 +49,9 @@ class Valorizacione extends Model
             (select string_agg(DISTINCT coalesce(d.descripcion), ',')  from comprobante_detalles d  where d.id_comprobante = c.id) descripcion
             from comprobantes c
             inner join comprobante_detalles d on d.id_comprobante = c.id
-            inner join valorizaciones v on v.id_comprobante = c.id
-            
+            inner join valorizaciones v on v.id_comprobante = c.id            
             left join users u  on u.id  = c.id_usuario_inserta 
-            where v.id_agremido = ".$persona_id."
+            where v.id_persona = ".$persona_id."
             order by c.fecha desc";
     
         }

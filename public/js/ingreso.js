@@ -285,6 +285,7 @@ function obtenerBeneficiario(){
 	var numero_documento = $("#numero_documento").val();
 	var msg = "";
 	
+	//alert(tipo_documento);
 	
 	if (msg != "") {
 		bootbox.alert(msg);
@@ -292,13 +293,13 @@ function obtenerBeneficiario(){
 	}
 	
 	$('#empresa_id').val("");
-	$('#persona_id').val("");
+	$('#id_persona').val("");
 	$('#divTarjeta').hide();
 	$('#numero_tarjeta').html("");
 	$('#codigo_afiliado').val("");
 	$('#btnDesafiliar').attr("disabled",true);
 	$('#btnInactivar').attr("disabled",true);
-	$('#foto').attr('src','/dist/img/profile-icon.png');
+	$('#foto').attr('src','/img/profile-icon.png');
 	
 	$.ajax({
 		url: '/agremiado/obtener_agremiado/' + tipo_documento + '/' + numero_documento,
@@ -313,44 +314,34 @@ function obtenerBeneficiario(){
 				$('#empresa_representante').val(result.agremiado.representante);
 				$('#empresa_id').val(result.agremiado.id);
 				$('#id_ubicacion').val(result.agremiado.id);
+			}else if(tipo_documento == "CAP"){
+				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
+				$('#nombre_').val(agremiado);
+				$('#fecha_colegiatura').val(result.agremiado.situacion);
+				$('#fecha_').val(result.agremiado.fecha_colegiado);
+				$('#id_persona').val(result.agremiado.id_p);
+				$('#id_agremiado').val(result.agremiado.id);
+				$('#ruc_p').val(result.agremiado.numero_ruc);
+				$('#id_ubicacion_p').val("0");	
+
 			}else{
 				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
-				$('#nombre_afiliado').val(agremiado);
-				$('#codigo_afiliado').val(result.agremiado.situacion);	
-				
-				//alert(result.afiliado.afiliacion);
-/*
-				if(result.afiliado.afiliacion!=null){
-					$('#codigo_afiliado').val(result.afiliado.afiliacion);
-					$('#btnDesafiliar').attr("disabled",false);
-				}
-				$('#empresa_afiliado').val(result.afiliado.razon_social);
-				*/
-				$('#fecha_afiliado').val(result.agremiado.fecha_colegiado);
-
-				$('#persona_id').val(result.agremiado.id_p);
-							
-			//	$('#id_ubicacion').val(result.agremiado.id_empresa);
+				$('#nombre_').val(agremiado);
+				$('#fecha_colegiatura').val(result.agremiado.situacion);	
+				$('#fecha_').val(result.agremiado.fecha_colegiado);
+				$('#id_persona').val(result.agremiado.id_p);
+				$('#id_agremiado').val(result.agremiado.id);
 				$('#ruc_p').val(result.agremiado.numero_ruc);
-				
-				//$('#id_ubicacion_p').val(result.afiliado.id_ubicacion_p);
 				$('#id_ubicacion_p').val("0");
-				/*
-				if(result.afiliado.tarjeta!=null){
-					$('#divTarjeta').show();
-					$('#numero_tarjeta').html(result.afiliado.tarjeta);
-					$('#btnInactivar').attr("disabled",false);
-				}
-				*/
-				
-				
-				if(result.agremiado.foto!=null && result.agremiado.foto!=""){
-					$('#foto').attr('src','/img/dni_asociados/'+result.agremiado.foto);
-				}else{
-					$('#foto').attr('src','/img/profile-icon.png');
-				}
-				
+												
 			}
+
+			if(result.agremiado.foto!=null && result.agremiado.foto!=""){
+				$('#foto').attr('src','/img/dni_asociados/'+result.agremiado.foto);
+			}else{
+				$('#foto').attr('src','/img/profile-icon.png');
+			}
+
 
 			cargarValorizacion();
 			cargarPagos();
@@ -365,8 +356,8 @@ function obtenerBeneficiario(){
 
 function eliminarAfiliado(id){
 	
-	var id = $('#persona_id').val();
-	//alert(persona_id);return false;
+	var id = $('#id_persona').val();
+	//alert(id_persona);return false;
     bootbox.confirm({ 
         size: "small",
         message: "&iquest;Seguro que deseas desafiliar?", 
@@ -401,7 +392,7 @@ function cargarValorizacion(){
 	var tipo_documento = $("#tipo_documento").val();
 	var id_persona = 0;
 	if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
-	else id_persona = $('#persona_id').val();
+	else id_persona = $('#id_persona').val();
 
     $("#tblValorizacion tbody").html("");
 	$.ajax({
@@ -420,15 +411,15 @@ function cargarPagos(){
     
 	//var numero_documento = $("#numero_documento").val();
 	var tipo_documento = $("#tipo_documento").val();
-	var persona_id = 0;
-	if(tipo_documento=="RUC")persona_id = $('#id_ubicacion').val();
-	else persona_id = $('#persona_id').val();
+	var id_persona = 0;
+	if(tipo_documento=="RUC")id_persona = $('#id_ubicacion').val();
+	else id_persona = $('#id_persona').val();
 	
 	$('#tblPago').dataTable().fnDestroy();
     $("#tblPago tbody").html("");
 	$.ajax({
 			//url: "/ingreso/obtener_pago/"+numero_documento,
-			url: "/ingreso/obtener_pago/"+tipo_documento+"/"+persona_id,
+			url: "/ingreso/obtener_pago/"+tipo_documento+"/"+id_persona,
 			type: "GET",
 			success: function (result) {  
 					$("#tblPago").html(result);
@@ -452,13 +443,13 @@ function cargarPagos(){
 function cargarDudoso(){
     
 	var tipo_documento = $("#tipo_documento").val();
-	var persona_id = 0;
-	if(tipo_documento=="RUC")persona_id = $('#id_ubicacion').val();
-	else persona_id = $('#persona_id').val();
+	var id_persona = 0;
+	if(tipo_documento=="RUC")id_persona = $('#id_ubicacion').val();
+	else id_persona = $('#id_persona').val();
 
     $("#tblDudoso tbody").html("");
 	$.ajax({
-			url: "/ingreso/obtener_dudoso/"+tipo_documento+"/"+persona_id,
+			url: "/ingreso/obtener_dudoso/"+tipo_documento+"/"+id_persona,
 			type: "GET",
 			success: function (result) {  
 					$("#tblDudoso tbody").html(result);
@@ -486,13 +477,13 @@ function validar(tipo) {
 	var total = $('#total').val();
 	
 	var tipo_documento = $('#tipo_documento').val();
-    var persona_id = $('#persona_id').val();
+    var id_persona = $('#id_persona').val();
 	var empresa_id = $('#empresa_id').val();
 	var mov = $('.mov:checked').length;
 
 	var id_ubicacion_p = $('#id_ubicacion_p').val();
 	
-	if(tipo_documento != "RUC" && persona_id == "")msg += "Debe ingresar el Numero de Documento <br>";
+	if(tipo_documento != "RUC" && id_persona == "")msg += "Debe ingresar el Numero de Documento <br>";
 	if(tipo_documento == "RUC" && empresa_id == "")msg += "Debe ingresar el Numero de Documento <br>";
 	if(mov=="0")msg+="Debe seleccionar minimo un Concepto del Estado de Cuenta <br>";
 
@@ -593,7 +584,7 @@ function fn_save_estado(estado){
 
 function eliminarPersonaTarjeta(){
 	
-	var id = $('#persona_id').val();
+	var id = $('#id_persona').val();
 	var act_estado = "";	
 	act_estado = "Inactivar";
 	estado_=2;
