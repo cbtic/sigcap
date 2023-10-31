@@ -1,4 +1,4 @@
-<title>Sistema de Empresas</title>
+<title>Sistema de Conceptos</title>
 
 <style>
 /*
@@ -524,7 +524,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro Concepto
+				Registro de Concepto
 			</div>
 			
             <div class="card-body">
@@ -539,7 +539,14 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-12">
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">C&oacute;digo</label>
+								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" readonly="readonly" >						
+							</div>
+						</div>
+
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
 								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
@@ -554,24 +561,57 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 						
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label class="control-label form-control-sm">C&oacute;digo</label>
-								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" readonly="readonly" >						
-							</div>
-						</div>
-						
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Denominaci&oacute;n</label>
 								<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="<?php echo $concepto->denominacion?>" type="text" >													
 							</div>
 						</div>
 						
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Partida Presupuestal</label>
 								<input id="id_partida_presupuestal" name="id_partida_presupuestal" class="form-control form-control-sm"  value="<?php echo $concepto->id_partida_presupuestal?>" type="text" >
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Importe</label>
+								<input id="importe" name="importe" class="form-control form-control-sm"  value="<?php echo $concepto->importe?>" type="text" >
+							</div>
+						</div>
+						<div class="col-lg-6">
+						<div class="form-group">
+							<label class="control-label form-control-sm">Tipo Afectaci&oacute;n</label>
+                            <select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onchange="">
+                                <option value="">--Selecionar--</option>
+                                <?php
+                                foreach ($tipo_afectacion as $row) {?>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+							<label class="control-label form-control-sm">Moneda</label>
+							<select name="moneda" id="moneda" class="form-control form-control-sm" onchange="">
+                                <option value="">--Selecionar--</option>
+                                <?php
+                                foreach ($moneda as $row) {?>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_moneda)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Centro de Costos</label>
+								<input id="centro_costo" name="centro_costo" class="form-control form-control-sm"  value="<?php echo $concepto->centro_costo?>" type="text" >
 							</div>
 						</div>
 						
