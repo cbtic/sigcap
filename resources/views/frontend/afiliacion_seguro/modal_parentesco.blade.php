@@ -154,9 +154,9 @@ $(document).ready(function() {
 });
 
 function datatablenewPlan(){
-    var oTable1 = $('#tblPlan').dataTable({
+    var oTable1 = $('#tblParentesco').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/seguro/listar_plan",
+        "sAjaxSource": "/afiliacion_seguro/listar_parentesco",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -183,7 +183,10 @@ function datatablenewPlan(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id_seguro = $('#id_seguro').val();
+			var id_afilliacion = $('#idagremiado_').val();
+
+			//print_r("dddddddddddd",id_afilliacion); exit();
+
 			//var denominacion = $('#nombre').val();
 			var estado = $('#estado').val();
 			
@@ -194,7 +197,7 @@ function datatablenewPlan(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id_seguro:id_seguro,estado:estado,
+					id_afilliacion:id_afilliacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -222,41 +225,40 @@ function datatablenewPlan(){
 				
 				{
                 "mRender": function (data, type, row) {
+                	var parentesco = "";
+					if(row.parentesco!= null)parentesco = row.parentesco;
+					return parentesco;
+                },
+                "bSortable": true,
+                "aTargets": [1]
+                },
+
+				{
+                "mRender": function (data, type, row) {
                 	var nombre = "";
 					if(row.nombre!= null)nombre = row.nombre;
 					return nombre;
                 },
                 "bSortable": true,
-                "aTargets": [1]
-                },
-				
-
-				
-				{
-                "mRender": function (data, type, row) {
-                	var fecha_inicio = "";
-					if(row.fecha_inicio!= null)fecha_inicio = row.fecha_inicio;
-					return fecha_inicio;
-                },
-                "bSortable": true,
                 "aTargets": [2]
                 },
 				
+				
 				{
                 "mRender": function (data, type, row) {
-                	var fecha_fin = "";
-					if(row.fecha_fin!= null)fecha_fin = row.fecha_fin;
-					return fecha_fin;
+                	var sexo = "";
+					if(row.sexo!= null)sexo = row.sexo;
+					return sexo;
                 },
                 "bSortable": true,
                 "aTargets": [3]
                 },
-				
+
 				{
                 "mRender": function (data, type, row) {
-                	var monto = "";
-					if(row.monto!= null)monto = row.monto;
-					return monto;
+                	var edad = "";
+					if(row.edad!= null)edad = row.edad;
+					return edad;
                 },
                 "bSortable": true,
                 "aTargets": [4]
@@ -280,10 +282,8 @@ function datatablenewPlan(){
 				{
 					"mRender": function (data, type, row) {
 						
-						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarPlan('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						
-						html += '<a href="javascript:void(0)" onclick=eliminarPlan('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+						var html = '<div class="form-check form-switch">';
+						html += '<input class="form-check-input"  onclick=fn_save_fila('+row.id+','+ row.id_familia +') type="checkbox" role="switch" id="check_" name="check_">';
 						
 						html += '</div>';
 						return html;
@@ -367,8 +367,14 @@ function limpiar(){
 	$('#monto').val("");
 }
 
-function fn_save_plan(){
-    
+function fn_save(){
+    //var familia= $('#tblParentesco').val();
+	var oTable1 = $('#tblParentesco').dataTable
+	print_r(oTable1);
+	print_r("111111");
+	exit();
+
+	/*
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_seguro = $('#id_seguro').val();
@@ -388,8 +394,31 @@ function fn_save_plan(){
 								
             }
     });
+	*/
 }
 
+function fn_save_fila(id,idfamilia){
+ 
+	var _token = $('#_token').val();
+	
+	var idafiliacion = $('#id_afiliacion').val();
+	var id_agremiado = $('#id_agremiado').val();
+	var id_plan = $('#id_plan').val();
+
+
+    $.ajax({
+			url: "/afiliacion_seguro/send_parentesco_fila",
+            type: "POST",
+            data : {_token:_token,id:id,idafiliacion:idafiliacion,id_agremiado:id_agremiado,idfamilia:idfamilia},
+			success: function (result) {
+				//$('#openOverlayOpc').modal('hide');
+				datatablenewPlan();
+				limpiar();
+								
+            }
+    });
+	
+}
 
 
 </script>
@@ -410,7 +439,7 @@ function fn_save_plan(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Edici&oacute;n Planes
+				Lista de Familiares
 			</div>
 			
             <div class="card-body">
@@ -420,75 +449,87 @@ function fn_save_plan(){
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
 					
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="id_seguro" id="id_seguro" value="<?php echo $id?>">
+					<input type="hidden" name="id_afiliacion" id="id_afiliacion" value="<?php echo $id?>">
 					<input type="hidden" name="id" id="id" value="0">
 					
-					<div class="row">
-						
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label">Nombre Plan</label>
-						</div>
-						<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
-							<input id="nombre_plan_" name="nombre_plan_" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="textarea"  >
-						</div>
-
+					<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label">Agremiado Titular</label>
 					</div>
 
 					<div class="row">
 						
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label">Fecha Inicio</label>
+						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label">CAP</label>
 						</div>
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="date"  >
+							<input id="cap_" name="cap_" class="form-control form-control-sm"  value="<?php echo $datos_seguro_agremiado->cap?>" type="textarea" readonly  >
+						</div>
+						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label">Agremiado</label>
+						</div>
+						<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+							<input id="agremiado_" name="agremiado_" class="form-control form-control-sm"  value="<?php echo $datos_seguro_agremiado->agremiado?>" type="textarea" readonly   >
+							<input id="idagremiado_" name="idagremiado_" class="form-control form-control-sm"  value="<?php echo $datos_seguro_agremiado->id_agremiado?>" type="hidden" readonly    >
+						
+						</div>
+
+					</div>
+					
+
+					<div class="row">						
+						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label">Seguro</label>
+						</div>
+						<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+							<input id="seguro_" name="seguro_" class="form-control form-control-sm"  value="<?php echo $datos_seguro_agremiado->seguro?>" type="textarea" readonly   >
+						</div>	
+						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label">Plan</label>
+						</div>
+						<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+							<input id="plan_" name="plan_" class="form-control form-control-sm"  value="<?php echo $datos_seguro_agremiado->plan?>" type="textarea" readonly   >
+						</div>
+				
+					</div>
+
+					<div class="row">						
+												
+						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label">F. ini.</label>
 						</div>
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label">Fecha Fin</label>
+							<input id="plan_" name="plan_" class="form-control form-control-sm"  value="<?php echo $datos_seguro_agremiado->fecha_inicio?>" type="textarea" readonly   >
+						</div>
+						
+						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label">F. fin</label>
 						</div>
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="date"  >
+							<input id="plan_" name="plan_" class="form-control form-control-sm"  value="<?php echo $datos_seguro_agremiado->fecha_fin?>" type="textarea" readonly   >
 						</div>
 						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 							<label class="control-label">Monto</label>
 						</div>
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<input id="monto" name="monto" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="text"  >
+							<input id="monto_" name="monto_" class="form-control form-control-sm"  value="<?php echo $datos_seguro_agremiado->monto?>" type="textarea" readonly   >
 						</div>
 					</div>
-					
 
-					<div class="row">
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label">Descripcion</label>
-						</div>
-						<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-							<input id="descripcion_" name="descripcion_" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="textarea"  >
-						</div>
-					</div>
-				
-					<div style="margin-top:10px" class="form-group">
-						<div class="col-sm-12 controls">
-							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_plan()" class="btn btn-sm btn-primary">Guardar</a>
-								
-								<a href="javascript:void(0)" onClick="limpiar()" class="btn btn-sm btn-warning" style="margin-left:10px">Limpiar</a>
-								
-							</div>
-												
-						</div>
-					</div> 
+			
 				
                 <div class="card-body">				
-
+					<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label">Familiares</label>
+					</div>
                     <div class="table-responsive">
-                    <table id="tblPlan" class="table table-hover table-sm">
+                    <table id="tblParentesco" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
                             <th>Id</th>
-                            <th>Plan</th>
-							<th>Fecha Inicio</th>
-							<th>Fecha Fin</th>
-							<th>Monto</th>                                                        
+                            <th>Parentesco</th>
+							<th>Apellidos y nombres</th>
+							<th>sexo</th>
+							<th>Edad</th>                                                        
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -522,17 +563,17 @@ function fn_save_plan(){
                     </table>
                 </div>
 				
-					<!--
+					
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_fila()" class="btn btn-sm btn-success">Guardar1</a>
 								
 							</div>
 												
 						</div>
 					</div> 
-					-->
+					
               </div>
 			  
               

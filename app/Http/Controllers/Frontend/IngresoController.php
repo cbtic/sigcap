@@ -31,21 +31,21 @@ class IngresoController extends Controller
 
     }
 
-    public function obtener_valorizacion($tipo_documento,$persona_id){
+    public function obtener_valorizacion($tipo_documento,$id_persona){
 
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$persona_id);
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);
         //print_r($valorizacion);exit();
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 
     }
     
-    public function obtener_pago($tipo_documento,$persona_id){
+    public function obtener_pago($tipo_documento,$id_persona){
 
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $pago = $valorizaciones_model->getPago($tipo_documento,$persona_id);
+        $pago = $valorizaciones_model->getPago($tipo_documento,$id_persona);
         return view('frontend.ingreso.lista_pago',compact('pago'));
 
     }
