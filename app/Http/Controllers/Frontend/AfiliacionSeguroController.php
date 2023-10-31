@@ -34,7 +34,7 @@ class AfiliacionSeguroController extends Controller
 		$afiliacionseguro_model = new AfiliacionSeguro();
 		$p[]=$request->cap;
         $p[]=$request->denominacion;
-		$p[]=$request->estado;          
+		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $afiliacionseguro_model->listar_afiliacion_seguro($p);
