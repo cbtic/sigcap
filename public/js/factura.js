@@ -82,7 +82,7 @@ function validaTipoDocumento(){
 	$('#codigo_afiliado').val("");
 	$('#fecha_afiliado').val("");
 
-	if(tipo_documento == "RUC"){
+	if(tipo_documento == "78"){
 		$('#divNombreApellido').hide();
 		$('#divCodigoAfliado').hide();
 		$('#divFechaAfliado').hide();
