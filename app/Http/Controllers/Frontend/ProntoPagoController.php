@@ -93,18 +93,26 @@ class ProntoPagoController extends Controller
 		}else{
 			$prontoPago = ProntoPago::find($request->id);
 		}
-		
-		$prontoPago->periodo = date("Y", strtotime($request->fecha_fin)) ;
+		$periodo1 = date("Y", strtotime($request->fecha_inicio));
+		$periodo2 = date("Y", strtotime($request->fecha_fin));
+		$separacion = " - ";
+		$prontoPago->periodo = $periodo1.$separacion.$periodo2;
 		$prontoPago->fecha_inicio = $request->fecha_inicio;
 		$prontoPago->fecha_fin = $request->fecha_fin;
 		$prontoPago->porcentaje = $request->porcentaje;
 		$prontoPago->codigo_documento = $request->codigo_documento;
 		$prontoPago->ruta_documento = $request->ruta_documento;
 		$prontoPago->id_concepto = $request->id_concepto;
-		if (date("Y", strtotime($request->fecha_fin)) == date("Y")){
+		/*if (date("Y", strtotime($request->fecha_inicio)) == date("Y")){
 			$prontoPago->estado = 1;
 		}else{
 			$prontoPago->estado = 2;}
+*/
+		if (strtotime(date("Y-m-d")) < strtotime($request->fecha_fin) && strtotime(date("Y-m-d")) > strtotime($request->fecha_inicio)){
+			$prontoPago->estado = 1;
+		}else{
+			$prontoPago->estado = 2;}
+		
 		$prontoPago->id_usuario_inserta = $id_user;
 		$prontoPago->save();
     }

@@ -21,6 +21,17 @@ class Seguro extends Model
 
     }
 
+    function getSeguroAll(){
+
+        $cad = "select *
+                from seguros
+                where estado='1' 
+                order by nombre ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';

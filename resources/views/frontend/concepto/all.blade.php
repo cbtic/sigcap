@@ -149,11 +149,24 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="denominacionBus" name="denominacionBus" placeholder="Nombre de Cuota">
 					</div>
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="partida_presupuestalBus" name="partida_presupuestalBus" placeholder="Partida Presupuestal">
+					</div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onchange="">
+                                <option value="">--Selecionar Tipo Afectaci&oacute;n--</option>
+                                <?php
+                                foreach ($tipo_afectacion as $row) {?>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
@@ -179,8 +192,12 @@
                         <tr style="font-size:13px">
                             <th>C&oacute;digo</th>
                             <th>Regional</th>
-                            <th>Denominaci&oacute;n</th>
+                            <th>Concepto</th>
                             <th>Partida Presupuestal</th>
+                            <th>Importe</th>
+                            <th>Tipo Afectaci&oacute;n</th>
+                            <th>Moneda</th>
+                            <th>Centro de Costos</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>

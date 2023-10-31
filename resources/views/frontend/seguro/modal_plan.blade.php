@@ -230,15 +230,7 @@ function datatablenewPlan(){
                 "aTargets": [1]
                 },
 				
-                {
-                "mRender": function (data, type, row) {
-                	var descripcion = "";
-					if(row.descripcion!= null)descripcion = row.descripcion;
-					return descripcion;
-                },
-                "bSortable": true,
-                "aTargets": [2]
-                },
+
 				
 				{
                 "mRender": function (data, type, row) {
@@ -247,7 +239,7 @@ function datatablenewPlan(){
 					return fecha_inicio;
                 },
                 "bSortable": true,
-                "aTargets": [3]
+                "aTargets": [2]
                 },
 				
 				{
@@ -257,7 +249,7 @@ function datatablenewPlan(){
 					return fecha_fin;
                 },
                 "bSortable": true,
-                "aTargets": [4]
+                "aTargets": [3]
                 },
 				
 				{
@@ -267,9 +259,9 @@ function datatablenewPlan(){
 					return monto;
                 },
                 "bSortable": true,
-                "aTargets": [5]
+                "aTargets": [4]
                 },
-				/*
+				
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -282,9 +274,9 @@ function datatablenewPlan(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [4]
+					"aTargets": [5]
 				},
-				*/
+				
 				{
 					"mRender": function (data, type, row) {
 						
@@ -432,14 +424,7 @@ function fn_save_plan(){
 					<input type="hidden" name="id" id="id" value="0">
 					
 					<div class="row">
-						<!--
-						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"> 
-							<label class="control-label">Id</label>								
-						</div>
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<input id="id_plan_" name="id_plan_" class="form-control form-control-sm"   type="text" readonly  >
-						</div>
-						-->
+						
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 							<label class="control-label">Nombre Plan</label>
 						</div>
