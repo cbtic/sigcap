@@ -153,7 +153,56 @@ $(document).ready(function() {
 
 });
 
+
+function cargarPagos(){
+       
+	
+	var tipo_documento = $("#tipo_documento").val();
+	var persona_id = 0;
+	if(tipo_documento=="RUC")persona_id = $('#id_ubicacion').val();
+	else persona_id = $('#persona_id').val();
+	
+	$('#tblPago').dataTable().fnDestroy();
+    $("#tblPago tbody").html("");
+	$.ajax({
+			//url: "/ingreso/obtener_pago/"+numero_documento,
+			url: "/ingreso/obtener_pago/"+tipo_documento+"/"+persona_id,
+			type: "GET",
+			success: function (result) {  
+					$("#tblPago").html(result);
+					$('[data-toggle="tooltip"]').tooltip();
+					
+					$('#tblPago').DataTable({
+						//"sPaginationType": "full_numbers",
+						//"paging":false,
+						"searching": false,
+						"info": false,
+						"bSort" : false,
+						"dom": '<"top">rt<"bottom"flpi><"clear">',
+						"language": {"url": "/js/Spanish.json"},
+					});
+							
+			}
+	});
+
+}
+
 function datatablenewPlan(){
+	
+	
+	var id_agremiado =  $('#idagremiado_').val();
+	
+    $("#tblParentesco tbody").html("");
+	$.ajax({
+			url: "/afiliacion_seguro/obtener_parentesco/"+id_agremiado,
+			type: "GET",
+			success: function (result) {  
+					$("#tblParentesco tbody").html(result);
+			}
+	});
+}
+
+function datatablenewPlan1(){
     var oTable1 = $('#tblParentesco').dataTable({
         "bServerSide": true,
         "sAjaxSource": "/afiliacion_seguro/listar_parentesco",
@@ -368,25 +417,20 @@ function limpiar(){
 }
 
 function fn_save(){
-    //var familia= $('#tblParentesco').val();
-	var oTable1 = $('#tblParentesco').dataTable
-	print_r(oTable1);
-	print_r("111111");
-	exit();
-
-	/*
 	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var id_seguro = $('#id_seguro').val();
-	var nombre = $('#nombre_plan_').val();
-	var descripcion = $('#descripcion_').val();
-	var fecha_inicio =$('#fecha_inicio').val();	
-	var fecha_fin =$('#fecha_fin').val();	
-	var monto =$('#monto').val();	
+	
+	var mov = $('.mov:checked').length;
+
+	var idafiliacion = $('#id_afiliacion').val();
+	var id_agremiado = $('#id_agremiado').val();
+	var id_plan = $('#id_plan').val();
+
+	if(mov=="0")msg+="Debe seleccionar por lo menos a un familiar <br>";
+
     $.ajax({
-			url: "/seguro/send_plan",
+			url: "/afiliacion_seguro/send_parentesco_fila",
             type: "POST",
-            data : {_token:_token,id:id,id_seguro:id_seguro,nombre:nombre,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,monto:monto},
+            data : {_token:_token,id:id,idafiliacion:idafiliacion,id_agremiado:id_agremiado,idfamilia:idfamilia},
 			success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
 				datatablenewPlan();
@@ -394,17 +438,33 @@ function fn_save(){
 								
             }
     });
-	*/
+}
+
+function Guardar() {
+
+	var msg = "";
+	var mov = $('.mov:checked').length;
+	if(mov=="0")msg+="Debe seleccionar al menos un familiar <br>";
+
+	if(msg!=""){
+		bootbox.alert(msg);
+	} else {
+		document.frmSeguroParentesco.submit();
+	}
+	return false;
 }
 
 function fn_save_fila(id,idfamilia){
  
 	var _token = $('#_token').val();
 	
+	var mov = $('.mov:checked').length;
+
 	var idafiliacion = $('#id_afiliacion').val();
 	var id_agremiado = $('#id_agremiado').val();
 	var id_plan = $('#id_plan').val();
 
+	if(mov=="0")msg+="Debe seleccionar por lo menos a un familiar <br>";
 
     $.ajax({
 			url: "/afiliacion_seguro/send_parentesco_fila",
@@ -447,6 +507,7 @@ function fn_save_fila(id,idfamilia){
 			<div class="row">
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
+				<form class="form-horizontal" method="post" action="{{ route('frontend.seguro.create')}}" id="frmSeguroParentesco" name="frmSeguroParentesco" autocomplete="off" >
 					
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id_afiliacion" id="id_afiliacion" value="<?php echo $id?>">
@@ -567,7 +628,7 @@ function fn_save_fila(id,idfamilia){
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_fila()" class="btn btn-sm btn-success">Guardar1</a>
+								<a href="javascript:void(0)" onClick="Guardar()" class="btn btn-sm btn-success">Guardar</a>
 								
 							</div>
 												
@@ -575,7 +636,7 @@ function fn_save_fila(id,idfamilia){
 					</div> 
 					
               </div>
-			  
+			  </form>
               
           </div>
           <!-- /.box -->

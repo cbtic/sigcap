@@ -202,6 +202,55 @@ class SeguroController extends Controller
 		$segurosPlan->save();
 		
     }
+
+
+	public function edit(Request $request)
+    {
+		
+
+		$parentesco = $request->parentesco;
+		//print_r ($parentesco);exit();
+
+		$ind = 0;
+		foreach($request->parentescos as $key=>$det){
+			
+			$parentesco_sel[$ind] = $parentesco[$key];
+			$ind++;
+		}
+
+		$ind = 0;
+		foreach($parentesco_sel as $key=>$det){
+			print_r ($parentesco_sel[$ind]["edad"]);
+			$ind++;
+		}
+
+
+
+		
+
+		exit();
+
+		if($request->id == 0){
+			$segurosPlan = new SegurosPlane;
+			$segurosPlan->id_seguro = $request->id_seguro;
+		}else{
+			$segurosPlan = SegurosPlane::find($request->id);
+		}
+		
+		$segurosPlan->nombre = $request->nombre;
+		$segurosPlan->descripcion = $request->descripcion;
+		$segurosPlan->fecha_inicio = $request->fecha_inicio;
+		$segurosPlan->fecha_fin = $request->fecha_fin;
+		$segurosPlan->monto = $request->monto;
+		$segurosPlan->estado = 1;
+		$segurosPlan->id_usuario_inserta = $id_user;
+		$segurosPlan->save();
+
+
+        return redirect('/ingreso/liquidacion_caja');
+		
+    }	
+
     
     
     

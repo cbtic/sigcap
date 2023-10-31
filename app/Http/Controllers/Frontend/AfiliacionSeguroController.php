@@ -218,7 +218,7 @@ class AfiliacionSeguroController extends Controller
 	public function obtener_agremiado($id){
 		
 		$seguroafiliado_model = new Agremiado();
-		$agremiado = $seguroafiliado_model->getAgremiado('NRO_CAP',$id);
+		$agremiado = $seguroafiliado_model->getAgremiado('85',$id);
 		
 		echo json_encode($agremiado);
 	}
@@ -230,7 +230,18 @@ class AfiliacionSeguroController extends Controller
 		
 		echo json_encode($plan);
 	}
+
+	public function obtener_parentesco($id_agremiado){
+
+        $parentesco_model = new Seguro_afiliado;
+        $sw = true;
+        $parentesco_lista = $parentesco_model->listar_parentesco_agremiado($id_agremiado);
+        //print_r($parentesco);exit();
+        return view('frontend.afiliacion_seguro.lista_parentesco',compact('parentesco_lista'));
+
+    }
 }
+
 
 
 
