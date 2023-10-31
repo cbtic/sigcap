@@ -16,6 +16,12 @@ class Multa extends Model
 
     }
 
+    public function listar_historialMulta_ajax($p){
+
+        return $this->readFuntionPostgres('sp_listar_historialmulta_paginado',$p);
+
+    }
+
     public function listar_multas_ajax($p){
 
         return $this->readFuntionPostgres('sp_listar_multa_paginado',$p);

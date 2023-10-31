@@ -1,4 +1,4 @@
-<title>Sistema de Empresas</title>
+<title>Sistema de Tipo de Conceptos</title>
 
 <style>
 /*
@@ -381,7 +381,8 @@ function fn_save_tipoConcepto(){
     $.ajax({
 			url: "/tipoConcepto/send_tipoConcepto_nuevoTipoConcepto",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,denominacion:denominacion},
+            data : {_token:_token,
+					id:id,id_regional:id_regional,denominacion:denominacion},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');

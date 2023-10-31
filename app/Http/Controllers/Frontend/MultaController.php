@@ -58,6 +58,33 @@ class MultaController extends Controller
 	
 	}
 
+	public function listar_historialMulta_ajax(Request $request){
+	
+		$historialMulta_model = new Multa;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $historialMulta_model->listar_historialMulta_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
+	}
+
     public function editar_multa($id){
         
 		$multa = Multa::find($id);
@@ -92,6 +119,24 @@ class MultaController extends Controller
 		
 		return view('frontend.multa.modal_multa_nuevoMulta',compact('id','agremiadoMulta','multa','moneda'));
 	
+	}
+
+	public function modal_multa_historialMulta($id){
+		
+		$historialMulta = new Multa;
+		
+		if($id>0){
+			$historialMulta = Multa::find($id);
+		}else{
+			$historialMulta = new Multa;
+		}
+		
+		//$multa = Multa::where("estado","1")->get();
+		
+		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
+		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
+		
+		return view('frontend.multa.modal_multa_historialMulta',compact('id','historialMulta'));
 	}
 
     public function send_multa_nuevoMulta(Request $request){
@@ -131,7 +176,6 @@ class MultaController extends Controller
 		$valorizacion->estado = 1;
 		$valorizacion->id_usuario_inserta = $id_user;
 		$valorizacion->save();
-		
     }
 
 	public function eliminar_multa($id,$estado)
@@ -141,7 +185,5 @@ class MultaController extends Controller
 		$multa->save();
 
 		echo $multa->id;
-
     }
-
 }

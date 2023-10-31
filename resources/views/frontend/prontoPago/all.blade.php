@@ -147,19 +147,19 @@
 					</div>
 					
                     <div class="col-lg-2">
-								<div class="form-group">
-									<!--<label class="control-label form-control-sm">Concepto</label>-->
-									<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onchange="">
-										<option value="">--Seleccionar Concepto--</option>
-										<?php
-                                            foreach ($concepto as $row) {?>
-                                            <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
-                                            <?php 
-										}
-										?>
-									</select>
-								</div>
-							</div>
+                        <div class="form-group">
+                            <!--<label class="control-label form-control-sm">Concepto</label>-->
+                            <select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onchange="">
+                                <option value="">--Seleccionar Concepto--</option>
+                                <?php
+                                    foreach ($concepto as $row) {?>
+                                    <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+                                    <?php 
+                                }
+                                ?>
+                            </select>
+                        </div>
+					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
