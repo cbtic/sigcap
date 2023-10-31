@@ -218,7 +218,7 @@ class AfiliacionSeguroController extends Controller
 	public function obtener_agremiado($id){
 		
 		$seguroafiliado_model = new Agremiado();
-		$agremiado = $seguroafiliado_model->getAgremiado('NRO_CAP',$id);
+		$agremiado = $seguroafiliado_model->getAgremiado('85',$id);
 		
 		echo json_encode($agremiado);
 	}
