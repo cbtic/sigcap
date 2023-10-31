@@ -1823,7 +1823,7 @@ function cargarRequisitos(id_concurso_inscripcion){
        
     $("#tblSolicitud tbody").html("");
 	$.ajax({
-			url: "/concurso/obtener_concurso_requisito/"+id_concurso_inscripcion,
+			url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
 			type: "GET",
 			success: function (result) {  
 					$("#tblSolicitud tbody").html(result);

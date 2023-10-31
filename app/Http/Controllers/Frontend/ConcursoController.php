@@ -9,6 +9,7 @@ use App\Models\Concurso;
 use App\Models\ConcursoPuesto;
 use App\Models\ConcursoInscripcione;
 use App\Models\ConcursoRequisito;
+use App\Models\InscripcionDocumento;
 use App\Models\Comprobante;
 use App\Models\TablaMaestra;
 use App\Models\Concepto;
@@ -341,11 +342,11 @@ class ConcursoController extends Controller
 		echo json_encode($concursoInscripcion);
 	}
 	
-	public function obtener_concurso_requisito($id_concurso_inscripcion){
+	public function obtener_concurso_documento($id_concurso_inscripcion){
 
-        $concursoInscripcione_model = new ConcursoInscripcione;
-        $concursoInscripcionRequisito = $concursoInscripcione_model->getConcursoInscripcionRequisitoById($id_concurso_inscripcion);
-        return view('frontend.concurso.lista_requisito',compact('concursoInscripcionRequisito'));
+        $inscripcionDocumento_model = new InscripcionDocumento;
+        $inscripcionDocumento = $inscripcionDocumento_model->getConcursoInscripcionDocumentoById($id_concurso_inscripcion);
+        return view('frontend.concurso.lista_requisito',compact('inscripcionDocumento'));
 
     }
 	
@@ -362,32 +363,32 @@ class ConcursoController extends Controller
 	public function modal_concurso_requisito($id){
 		
 		$id_user = Auth::user()->id;
-		$tablaMaestra_model = new TablaMaestra;
+		$tablaMaestra_model = new TablaMaestra; 
 		
-		if($id>0) $concursoRequisito = ConcursoRequisito::find($id);else $concursoRequisito = new ConcursoRequisito;
+		if($id>0) $inscripcionDocumento = InscripcionDocumento::find($id);else $inscripcionDocumento = new InscripcionDocumento;
 
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(97);
 
-		return view('frontend.concurso.modal_concurso_requisito',compact('id','concursoRequisito','tipo_documento'));
+		return view('frontend.concurso.modal_concurso_requisito',compact('id','inscripcionDocumento','tipo_documento'));
 
     }
 	
-	public function send_concurso_requisito(Request $request){
+	public function send_concurso_documento(Request $request){
 	
 		$id_user = Auth::user()->id;
 		
 		if($request->id == 0){
-			$concursoRequisito = new ConcursoRequisito;
+			$inscripcionDocumento = new InscripcionDocumento;
 		}else{
-			$concursoRequisito = ConcursoRequisito::find($request->id);
+			$inscripcionDocumento = InscripcionDocumento::find($request->id);
 		}
 		
-		$concursoRequisito->id_concurso_inscripcion = $request->id_concurso_inscripcion;
-		$concursoRequisito->id_tipo_documento = $request->id_tipo_documento;
-		$concursoRequisito->denominacion = $request->denominacion;
-		$concursoRequisito->estado = 1;
-		$concursoRequisito->id_usuario_inserta = $id_user;
-		$concursoRequisito->save();
+		$inscripcionDocumento->id_concurso_inscripcion = $request->id_concurso_inscripcion;
+		$inscripcionDocumento->id_tipo_documento = $request->id_tipo_documento;
+		$inscripcionDocumento->observacion = $request->observacion;
+		$inscripcionDocumento->estado = 1;
+		$inscripcionDocumento->id_usuario_inserta = $id_user;
+		$inscripcionDocumento->save();
 			
     }
 		

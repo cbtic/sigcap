@@ -172,23 +172,24 @@ function validacion(){
 }
 
 
-function fn_save_requisito(){
+function fn_save_documento(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_concurso_inscripcion = $("#id_concurso_inscripcion").val();
 	var id_tipo_documento = $('#id_tipo_documento').val();
-	var denominacion = $('#denominacion').val();
+	var observacion = $('#observacion').val();
 	
     $.ajax({
-			url: "/concurso/send_concurso_requisito",
+			url: "/concurso/send_concurso_documento",
             type: "POST",
-            data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,denominacion:denominacion},
+            data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,observacion:observacion},
 			//dataType: 'json',
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
 				datatablenew();
+				cargarRequisitos(id_concurso_inscripcion);
 								
             }
     });
@@ -214,7 +215,7 @@ function fn_save_requisito(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Edici&oacute;n Requisito
+				Edici&oacute;n Documento
 			</div>
 			
             <div class="card-body">
@@ -241,7 +242,7 @@ function fn_save_requisito(){
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_documento as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concursoRequisito->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$inscripcionDocumento->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
 									}
 									?>
@@ -251,8 +252,8 @@ function fn_save_requisito(){
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label">Requisito</label>
-								<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="<?php echo $concursoRequisito->denominacion?>" type="text"  >
+								<label class="control-label">Observaci&oacute;n</label>
+								<input id="observacion" name="observacion" class="form-control form-control-sm"  value="<?php echo $inscripcionDocumento->observacion?>" type="text"  >
 							</div>
 						</div>
 
@@ -261,7 +262,7 @@ function fn_save_requisito(){
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_requisito()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_documento()" class="btn btn-sm btn-success">Guardar</a>
 								
 							</div>
 												
