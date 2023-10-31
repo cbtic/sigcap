@@ -24,6 +24,14 @@ class TipoConcepto extends Model
         return $data[0]->codigo;
     }
 
+    function getCodigoTipoConceptoEdit(){
+
+        $cad = "select lpad((max(codigo::int))::varchar,5,'0') codigo from tipo_conceptos tc ";
+    
+		$data = DB::select($cad);
+        return $data[0]->codigo;
+    }
+
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';

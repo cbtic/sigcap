@@ -134,6 +134,10 @@ Route::post('multa/send_multa_nuevoMulta', [MultaController::class, 'send_multa_
 
 Route::get('multa/eliminar_multa/{id}/{estado}', [MultaController::class, 'eliminar_multa'])->name('multa.eliminar_multa');
 
+Route::get('multa/modal_multa_historialMulta/{id}', [MultaController::class, 'modal_multa_historialMulta'])->name('multa.modal_multa_historialMulta');
+
+Route::post('multa/listar_historialMulta_ajax', [MultaController::class, 'listar_historialMulta_ajax'])->name('multa.listar_historialMulta_ajax');
+
 Route::get('prontoPago/consulta_prontoPago', [ProntoPagoController::class, 'consulta_prontoPago'])->name('prontoPago.consulta_prontoPago');
 
 Route::post('prontoPago/listar_prontoPago_ajax', [ProntoPagoController::class, 'listar_prontoPago_ajax'])->name('prontoPago.listar_prontoPago_ajax');
