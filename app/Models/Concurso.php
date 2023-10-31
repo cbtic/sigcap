@@ -12,7 +12,8 @@ class Concurso extends Model
 	
 	function getConcurso(){
 
-        $cad = "select c.id,c.periodo,tm.denominacion tipo_concurso
+        $cad = "select c.id,c.periodo,tm.denominacion tipo_concurso,
+to_char(c.fecha,'dd-mm-yyyy')fecha,to_char(c.fecha_inscripcion,'dd-mm-yyyy')fecha_inscripcion,to_char(c.fecha_delegatura_inicio,'dd-mm-yyyy')fecha_delegatura_inicio,to_char(c.fecha_delegatura_fin,'dd-mm-yyyy')fecha_delegatura_fin 
 from concursos c
 inner join tabla_maestras tm on c.id_tipo_concurso=tm.codigo::int and tm.tipo='93' 
 where c.estado='1'";
@@ -30,6 +31,12 @@ where c.estado='1'";
 	public function listar_puesto($p){
 
         return $this->readFuntionPostgres('sp_listar_concurso_puesto_paginado',$p);
+
+    }
+	
+	public function listar_requisito($p){
+
+        return $this->readFuntionPostgres('sp_listar_concurso_requisito_paginado',$p);
 
     }
 	

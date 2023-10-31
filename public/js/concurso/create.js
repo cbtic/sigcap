@@ -5,12 +5,11 @@ $(document).ready(function () {
 	
 	
 	$('#btnNuevoTrabajo').on('click', function () {
-		modalTrabajo(0);
+		modalTrab(0);
 	});
 	
-	
 	$('#btnNuevo').on('click', function () {
-		window.location.reload();
+		modalRequisito(0);
 	});
 	
 	$('#btnGuardar').on('click', function () {
@@ -101,7 +100,7 @@ function fn_save(){
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
-                    location.href="/concurso/editar_inscripcion/"+result;
+                    //location.href="/concurso/editar_inscripcion/"+result;
 					
 					//window.location.reload();
 					//Limpiar();
@@ -1805,18 +1804,43 @@ function editarConcursoInscripcion(id){
 		success: function(result){
 			//alert(result);
 			console.log(result);
-			$('#id').val(result.id);
+			$('#id_concurso_inscripcion').val(result.id);
 			//$('#id_tipo_plaza').val(result.id_tipo_plaza);
 			//$('#numero_plazas').val(result.numero_plazas);
 			var numero_comprobante = result.tipo+result.serie+"-"+result.numero;
 			$('#numero_comprobante').val(numero_comprobante);
 			$('#id_concurso').val(result.id_concurso);
 			
+			cargarRequisitos(result.id);	
 			
 		}
 		
 	});
 
+}
+
+function cargarRequisitos(id_concurso_inscripcion){
+       
+    $("#tblSolicitud tbody").html("");
+	$.ajax({
+			url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
+			type: "GET",
+			success: function (result) {  
+					$("#tblSolicitud tbody").html(result);
+			}
+	});
+
+}
+
+
+function obtener_datos_concurso(){
+	
+	var fecha_delegatura_inicio = $("#id_concurso option:selected").attr("fecha_delegatura_inicio");
+	var fecha_delegatura_fin = $("#id_concurso option:selected").attr("fecha_delegatura_fin");
+	
+	$("#fecha_delegatura_inicio").val(fecha_delegatura_inicio);
+	$("#fecha_delegatura_fin").val(fecha_delegatura_fin);
+	
 }
 
 
@@ -3073,13 +3097,13 @@ function modalParentesco(id){
 
 }
 
-function modalTrabajo(id){
+function modalRequisito(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/agremiado/modal_agremiado_trabajo/"+id,
+			url: "/concurso/modal_concurso_requisito/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);

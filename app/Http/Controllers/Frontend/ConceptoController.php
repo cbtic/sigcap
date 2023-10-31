@@ -38,8 +38,8 @@ class ConceptoController extends Controller
 		$p[]=$request->denominacion;
         $p[]=$request->partida_presupuestal;
 		$p[]="";
-		$p[]=$request->tipo_afectacion;
 		$p[]="";
+		$p[]=$request->tipo_afectacion;
 		$p[]="";
 		$p[]="";
         $p[]=$request->estado;
@@ -143,9 +143,9 @@ class ConceptoController extends Controller
 		$concepto->id_partida_presupuestal = $request->id_partida_presupuestal;
 		$concepto->id_tipo_concepto = $request->id;
 		$concepto->importe = $request->importe;
-		$concepto->id_tipo_afectacion = 281;
+		$concepto->id_tipo_afectacion = $request->tipo_afectacion;
 		$concepto->moneda = $request->moneda;
-		$concepto->centro_costo = 00037;
+		$concepto->centro_costo = $request->centro_costo;
 		$concepto->estado = 1;
 		$concepto->id_usuario_inserta = $id_user;
 		$concepto->save();

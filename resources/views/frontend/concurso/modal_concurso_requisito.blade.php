@@ -143,18 +143,12 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 		autoclose: true,
 		container: '#openOverlayOpc modal-body'
      });
-	 
-	 $('#fecha_delegatura_inicio').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
+	 /*
+	 $('#hora_solicitud').timepicker({
+		showInputs: false,
 		container: '#openOverlayOpc modal-body'
-     });
-	 
-	 $('#fecha_delegatura_fin').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
-		container: '#openOverlayOpc modal-body'
-     });
+	});
+	*/
 	 
 });
 
@@ -178,26 +172,24 @@ function validacion(){
 }
 
 
-function fn_save(){
+function fn_save_documento(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var id_tipo_concurso = $('#id_tipo_concurso').val();
-	var periodo = $('#periodo').val();
-	var fecha =$('#fecha').val();
-	var fecha_inscripcion =$('#fecha_inscripcion').val();
-	var fecha_delegatura_inicio =$('#fecha_delegatura_inicio').val();
-	var fecha_delegatura_fin =$('#fecha_delegatura_fin').val();
+	var id_concurso_inscripcion = $("#id_concurso_inscripcion").val();
+	var id_tipo_documento = $('#id_tipo_documento').val();
+	var observacion = $('#observacion').val();
 	
     $.ajax({
-			url: "/concurso/send_concurso",
+			url: "/concurso/send_concurso_documento",
             type: "POST",
-            data : {_token:_token,id:id,id_tipo_concurso:id_tipo_concurso,periodo:periodo,fecha:fecha,fecha_inscripcion:fecha_inscripcion,fecha_delegatura_inicio:fecha_delegatura_inicio,fecha_delegatura_fin:fecha_delegatura_fin},
+            data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,observacion:observacion},
 			//dataType: 'json',
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
 				datatablenew();
+				cargarRequisitos(id_concurso_inscripcion);
 								
             }
     });
@@ -223,7 +215,7 @@ function fn_save(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Edici&oacute;n Concurso
+				Edici&oacute;n Documento
 			</div>
 			
             <div class="card-body">
@@ -243,14 +235,14 @@ function fn_save(){
 							$readonly_=$id>0?'':"readonly='readonly'";
 						?>
 						
-						<div class="col-lg-6">
+						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Tipo Concurso</label>
-								<select name="id_tipo_concurso" id="id_tipo_concurso" class="form-control form-control-sm" onChange="">
+								<label class="control-label form-control-sm">Tipo Documento</label>
+								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
-									foreach ($tipo_concurso as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concurso->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									foreach ($tipo_documento as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$inscripcionDocumento->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
 									}
 									?>
@@ -258,48 +250,19 @@ function fn_save(){
 							</div>
 						</div>
 						
-						<div class="col-lg-6">
+						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label">Periodo</label>
-								<input id="periodo" name="periodo" class="form-control form-control-sm"  value="<?php echo $concurso->periodo?>" type="text"  >
+								<label class="control-label">Observaci&oacute;n</label>
+								<input id="observacion" name="observacion" class="form-control form-control-sm"  value="<?php echo $inscripcionDocumento->observacion?>" type="text"  >
 							</div>
 						</div>
 
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label">Fecha Concurso</label>
-								<input id="fecha" name="fecha" class="form-control form-control-sm"  value="<?php if($concurso->fecha!="")echo date('d/m/Y',strtotime($concurso->fecha))?>" type="text"  >
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label">Fecha Inscripci&oacute;n</label>
-								<input id="fecha_inscripcion" name="fecha_inscripcion" class="form-control form-control-sm"  value="<?php if($concurso->fecha_inscripcion!="")echo date('d/m/Y',strtotime($concurso->fecha_inscripcion))?>" type="text"  >
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label">Fecha Delegatura Inicio</label>
-								<input id="fecha_delegatura_inicio" name="fecha_delegatura_inicio" class="form-control form-control-sm"  value="<?php if($concurso->fecha_delegatura_inicio!="")echo date('d/m/Y',strtotime($concurso->fecha_delegatura_inicio))?>" type="text"  >
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label">Fecha Delegatura Fin</label>
-								<input id="fecha_delegatura_fin" name="fecha_delegatura_fin" class="form-control form-control-sm"  value="<?php if($concurso->fecha_delegatura_fin!="")echo date('d/m/Y',strtotime($concurso->fecha_delegatura_fin))?>" type="text"  >
-							</div>
-						</div>
-					
-				
 					</div>
 					
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_documento()" class="btn btn-sm btn-success">Guardar</a>
 								
 							</div>
 												

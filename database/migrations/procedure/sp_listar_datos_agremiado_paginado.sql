@@ -25,7 +25,6 @@ Begin
 			inner join regiones r on a2.id_regional = r.id
 			inner join personas p on a2.id_persona = p.id
 			inner join tabla_maestras tm on p.id_sexo ::int=tm.codigo::int and tm.tipo=''2''
-			inner join agremiado_multas am on a2.id = am.id_agremiado
 			inner join multas m on am2.id_multa = m.id';
 	
 	v_where = ' Where 1=1  ';
@@ -65,3 +64,4 @@ End
 
 $function$
 ;
+

@@ -292,6 +292,22 @@ function modalPuestos(id){
 
 }
 
+function modalRequisitos(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/concurso/modal_requisito/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
 
 $('#modalEmpresaSaveBtn').click(function (e) {
 	e.preventDefault();
@@ -461,6 +477,26 @@ function datatablenew(){
                 },
 				
 				{
+                "mRender": function (data, type, row) {
+                	var fecha_delegatura_inicio = "";
+					if(row.fecha_delegatura_inicio!= null)fecha_delegatura_inicio = row.fecha_delegatura_inicio;
+					return fecha_delegatura_inicio;
+                },
+                "bSortable": true,
+                "aTargets": [5]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var fecha_delegatura_fin = "";
+					if(row.fecha_delegatura_fin!= null)fecha_delegatura_fin = row.fecha_delegatura_fin;
+					return fecha_delegatura_fin;
+                },
+                "bSortable": true,
+                "aTargets": [6]
+                },
+				
+				{
 					"mRender": function (data, type, row) {
 						var estado = "";
 						if(row.estado == 1){
@@ -472,7 +508,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [5]
+					"aTargets": [7]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -492,6 +528,8 @@ function datatablenew(){
 						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalConcurso('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						
 						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalPuestos('+row.id+')" ><i class="fa fa-edit"></i> Puestos</button>';
+						
+						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalRequisitos('+row.id+')" ><i class="fa fa-edit"></i> Requisitos</button>';
 
 						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
@@ -501,7 +539,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [6],
+					"aTargets": [8],
 				},
 
             ]
