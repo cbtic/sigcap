@@ -308,13 +308,15 @@ function obtenerBeneficiario(){
 			//alert(result.agremiado.id);
 			//alert(result);
 			
-			if(tipo_documento == "RUC"){
+			if(tipo_documento == "79")//RUC
+			{
 				$('#empresa_afiliado').val(result.agremiado.razon_social);
 				$('#empresa_direccion').val(result.agremiado.direccion);
 				$('#empresa_representante').val(result.agremiado.representante);
 				$('#empresa_id').val(result.agremiado.id);
 				$('#id_ubicacion').val(result.agremiado.id);
-			}else if(tipo_documento == "CAP"){
+			}else if(tipo_documento == "85") //CAP
+				{
 				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
 				$('#nombre_').val(agremiado);
 				$('#fecha_colegiatura').val(result.agremiado.situacion);
