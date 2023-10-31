@@ -24,10 +24,11 @@ class IngresoController extends Controller
         $caja_ingreso_model = new CajaIngreso();
         $caja = $caja_model->getCaja('91');
         $caja_usuario = $caja_ingreso_model->getCajaIngresoByusuario($id_user,'91');
+        $tipo_documento = $caja_model->getMaestroByTipo(16);
         
         //$caja_usuario = $caja_model;
         //print_r($caja_usuario);exit();
-        return view('frontend.ingreso.create',compact('persona','caja','caja_usuario'));
+        return view('frontend.ingreso.create',compact('persona','caja','caja_usuario','tipo_documento'));
 
     }
 
