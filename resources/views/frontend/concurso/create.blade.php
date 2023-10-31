@@ -495,7 +495,6 @@ label.form-control-sm{
 																			<th>Tipo de Doc</th>
 																			<th>Nombre del documento</th>
 																			<th>Fecha</th>
-																			<th>Horas Academ</th>
 																			<th class="text-center">Archivo</th>
 																		</tr>
 																	</thead>

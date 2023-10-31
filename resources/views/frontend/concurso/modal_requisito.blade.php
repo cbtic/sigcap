@@ -364,7 +364,7 @@ function fn_save_requisito(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Edici&oacute;n Puesto
+				Edici&oacute;n Requisito
 			</div>
 			
             <div class="card-body">
