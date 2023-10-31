@@ -1804,18 +1804,43 @@ function editarConcursoInscripcion(id){
 		success: function(result){
 			//alert(result);
 			console.log(result);
-			$('#id').val(result.id);
+			$('#id_concurso_inscripcion').val(result.id);
 			//$('#id_tipo_plaza').val(result.id_tipo_plaza);
 			//$('#numero_plazas').val(result.numero_plazas);
 			var numero_comprobante = result.tipo+result.serie+"-"+result.numero;
 			$('#numero_comprobante').val(numero_comprobante);
 			$('#id_concurso').val(result.id_concurso);
 			
+			cargarRequisitos(result.id);	
 			
 		}
 		
 	});
 
+}
+
+function cargarRequisitos(id_concurso_inscripcion){
+       
+    $("#tblSolicitud tbody").html("");
+	$.ajax({
+			url: "/concurso/obtener_concurso_requisito/"+id_concurso_inscripcion,
+			type: "GET",
+			success: function (result) {  
+					$("#tblSolicitud tbody").html(result);
+			}
+	});
+
+}
+
+
+function obtener_datos_concurso(){
+	
+	var fecha_delegatura_inicio = $("#id_concurso option:selected").attr("fecha_delegatura_inicio");
+	var fecha_delegatura_fin = $("#id_concurso option:selected").attr("fecha_delegatura_fin");
+	
+	$("#fecha_delegatura_inicio").val(fecha_delegatura_inicio);
+	$("#fecha_delegatura_fin").val(fecha_delegatura_fin);
+	
 }
 
 

@@ -32,7 +32,7 @@ begin
 	idp:=0;
 	
 	For entradas_mes in
-	select id id_agremiado,fecha_colegiado from agremiados a --where to_char(fecha_colegiado,'yyyy')=p_anio 
+	select id id_agremiado,id_persona,fecha_colegiado from agremiados a where to_char(fecha_colegiado,'yyyy')=p_anio 
 	loop
 		
 		v_dia := to_char(entradas_mes.fecha_colegiado,'dd')::int;
@@ -61,8 +61,8 @@ begin
 		
 			p_i_id_agremiado_cuota := currval('agremiado_cuotas_id_seq');
 		
-			insert into valorizaciones(id_modulo,pk_registro,id_concepto,id_agremido,monto,id_moneda,estado,id_usuario_inserta)
-			values (2,p_i_id_agremiado_cuota,v_id_concepto,entradas_mes.id_agremiado,v_importe,v_id_moneda,1,1);
+			insert into valorizaciones(id_modulo,pk_registro,id_concepto,id_agremido,id_persona,monto,id_moneda,fecha,fecha_proceso,estado,id_usuario_inserta,created_at,updated_at)
+			values (2,p_i_id_agremiado_cuota,v_id_concepto,entradas_mes.id_agremiado,entradas_mes.id_persona,v_importe,v_id_moneda,v_last_day_month::date,now(),1,1,now(),now());
 			
 		end loop;
 		
@@ -76,3 +76,4 @@ begin
 end;
 $function$
 ;
+

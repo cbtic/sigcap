@@ -183,7 +183,7 @@ function fn_save_requisito(){
     $.ajax({
 			url: "/concurso/send_concurso_requisito",
             type: "POST",
-            data : {_token:_token,id:id,id_concurso:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,denominacion:denominacion},
+            data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,denominacion:denominacion},
 			//dataType: 'json',
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
@@ -214,7 +214,7 @@ function fn_save_requisito(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Edici&oacute;n Seguros
+				Edici&oacute;n Requisito
 			</div>
 			
             <div class="card-body">
@@ -236,7 +236,7 @@ function fn_save_requisito(){
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Tipo Concurso</label>
+								<label class="control-label form-control-sm">Tipo Documento</label>
 								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php

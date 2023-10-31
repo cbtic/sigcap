@@ -177,8 +177,10 @@
                             <th>Id</th>
 							<th>Tipo Concurso</th>
                             <th>Periodo</th>
-							<th>Fecha</th>
+							<th>Fecha Concurso</th>
 							<th>Fecha Inscripci&oacute;n</th>
+							<th>Fecha Delegatura Inicio</th>
+							<th>Fecha Delegatura Fin</th>
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

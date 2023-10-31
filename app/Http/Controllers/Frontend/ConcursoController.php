@@ -128,6 +128,18 @@ class ConcursoController extends Controller
 
     }
 	
+	public function modal_requisito($id){
+		
+		$id_user = Auth::user()->id;
+		
+		$tablaMaestra_model = new TablaMaestra;
+		
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(97);
+		
+		return view('frontend.concurso.modal_requisito',compact('id','tipo_documento'));
+
+    }
+	
 	public function listar_puesto(Request $request){
 	
 		$puesto_model = new Concurso();
@@ -136,6 +148,30 @@ class ConcursoController extends Controller
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $puesto_model->listar_puesto($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
+	
+	public function listar_requisito(Request $request){
+	
+		$puesto_model = new Concurso();
+		$p[]=$request->id_concurso;
+		$p[]=1;          
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $puesto_model->listar_requisito($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -165,6 +201,8 @@ class ConcursoController extends Controller
 		$concurso->periodo = $request->periodo;
 		$concurso->fecha = $request->fecha;
 		$concurso->fecha_inscripcion = $request->fecha_inscripcion;
+		$concurso->fecha_delegatura_inicio = $request->fecha_delegatura_inicio;
+		$concurso->fecha_delegatura_fin = $request->fecha_delegatura_fin;
 		$concurso->estado = 1;
 		$concurso->id_usuario_inserta = $id_user;
 		$concurso->save();
@@ -190,11 +228,32 @@ class ConcursoController extends Controller
 		
     }
 	
+	public function send_requisito(Request $request){
+	
+		$id_user = Auth::user()->id;
+		
+		if($request->id == 0){
+			$concursoRequisito = new ConcursoRequisito;
+			$concursoRequisito->id_concurso = $request->id_concurso;
+		}else{
+			$concursoRequisito = ConcursoRequisito::find($request->id);
+		}
+		
+		$concursoRequisito->id_tipo_documento = $request->id_tipo_documento;
+		$concursoRequisito->denominacion = $request->denominacion;
+		$concursoRequisito->estado = 1;
+		$concursoRequisito->id_usuario_inserta = $id_user;
+		$concursoRequisito->save();
+		
+    }
+	
 	public function send_inscripcion(Request $request){
 		
 		$id_user = Auth::user()->id;
 		$comprobante_model = new Comprobante();
 		$agremiado_model = new Agremiado();
+		
+		$agremiado = Agremiado::find($request->id_agremiado);
 		
 		if($request->id == 0){
 			$concursoInscripcione = new ConcursoInscripcione;
@@ -231,6 +290,7 @@ class ConcursoController extends Controller
 			$valorizacion->pk_registro = $id_concursoInscripcion;
 			$valorizacion->id_concepto = $concepto->id;
 			$valorizacion->id_agremido = $request->id_agremiado;
+			$valorizacion->id_persona = $agremiado->id_persona;
 			$valorizacion->id_comprobante = $comprobante->id;
 			$valorizacion->monto = $concepto->importe;
 			$valorizacion->id_moneda = $concepto->id_moneda;
@@ -267,10 +327,17 @@ class ConcursoController extends Controller
 		
 		$concursoInscripcione_model = new ConcursoInscripcione;
 		$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionById($id);
-		$concursoInscripcionRequisito = $concursoInscripcione_model->getConcursoInscripcionRequisitoById($id);
 		
 		echo json_encode($concursoInscripcion);
 	}
+	
+	public function obtener_concurso_requisito($id_concurso_inscripcion){
+
+        $concursoInscripcione_model = new ConcursoInscripcione;
+        $concursoInscripcionRequisito = $concursoInscripcione_model->getConcursoInscripcionRequisitoById($id_concurso_inscripcion);
+        return view('frontend.concurso.lista_requisito',compact('concursoInscripcionRequisito'));
+
+    }
 	
 	public function eliminar_puesto($id){
 
@@ -289,7 +356,7 @@ class ConcursoController extends Controller
 		
 		if($id>0) $concursoRequisito = ConcursoRequisito::find($id);else $concursoRequisito = new ConcursoRequisito;
 
-		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(93);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(97);
 
 		return view('frontend.concurso.modal_concurso_requisito',compact('id','concursoRequisito','tipo_documento'));
 
@@ -305,7 +372,7 @@ class ConcursoController extends Controller
 			$concursoRequisito = ConcursoRequisito::find($request->id);
 		}
 		
-		$concursoRequisito->id_concurso = $request->id_concurso;
+		$concursoRequisito->id_concurso_inscripcion = $request->id_concurso_inscripcion;
 		$concursoRequisito->id_tipo_documento = $request->id_tipo_documento;
 		$concursoRequisito->denominacion = $request->denominacion;
 		$concursoRequisito->estado = 1;

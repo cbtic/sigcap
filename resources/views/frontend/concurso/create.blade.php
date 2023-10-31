@@ -348,7 +348,7 @@ label.form-control-sm{
                         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
                         <input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $agremiado->id?>">
-						<input type="hidden" name="id_concurso_inscripcion" id="id_concurso_inscripcion" value="1">
+						<input type="hidden" name="id_concurso_inscripcion" id="id_concurso_inscripcion" value="0">
 						
                         <div class="row" id="divSolicitud">
 							
@@ -381,17 +381,40 @@ label.form-control-sm{
 															Tipo de concurso
 															</div>
 															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<select name="id_concurso" id="id_concurso" class="form-control form-control-sm" onchange="">
+															<select name="id_concurso" id="id_concurso" class="form-control form-control-sm" onchange="obtener_datos_concurso()">
 																<option value="">--Selecionar--</option>
 																<?php
 																foreach ($concurso as $row) {?>
-																<option value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso?></option>
+																<option 
+																fecha_delegatura_inicio="<?php echo $row->fecha_delegatura_inicio?>"
+																fecha_delegatura_fin="<?php echo $row->fecha_delegatura_fin?>"
+																value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso?></option>
 																<?php 
 																}
 																?>
 															</select>
 															</div>
 														</div>
+														
+														<div class="row">
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															Fecha Deleg. Inicio
+															</div>
+															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<input type="text" name="fecha_delegatura_inicio" id="fecha_delegatura_inicio" value="" class="form-control form-control-sm" readonly="readonly">
+															</div>
+														</div>
+														
+														<div class="row">
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															Fecha Deleg. Fin
+															</div>
+															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<input type="text" name="fecha_delegatura_fin" id="fecha_delegatura_fin" value="" class="form-control form-control-sm" readonly="readonly">
+															</div>
+														</div>
+														
+														
 														<div class="row">
 															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 															N&deg; CAP
