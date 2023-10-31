@@ -31,7 +31,7 @@ foreach($pago as $row):?>
 		}else{
 			if($row->tipo=="FT")echo '&nbsp;&nbsp;<span id="badge_empresa" class="badge badge-success">RENTA</span>';
 			else if($row->tipo=="TK")echo '&nbsp;&nbsp;<span id="badge_empresa" class="badge badge-info">SERVICIOS</span>';
-			else echo '&nbsp;&nbsp;<span id="badge_empresa" class="badge badge-warning">PESAJE</span>';
+			else echo '&nbsp;&nbsp;<span id="badge_empresa" class="badge badge-warning">SERVICIOS</span>';
 		}
 	?>
 	</td>
