@@ -88,11 +88,14 @@ class ComprobanteController extends Controller
             $ubicacion = $request->id_ubicacion;
             $persona = $request->id_persona;
             $tipoDocP = $request->tipo_documento;
+			$empresa_id = $request->empresa_id;
             //echo $$tipoDocP;exit();
 
-            if($tipoDocP == "DNI" && $TipoF == 'FT'){
+			// DNI = 78
+
+            if($tipoDocP == "78" && $TipoF == 'FT'){
                 //$ubicacion = $request->id_ubicacion_p;
-                $ubicacion = $request->id_ubicacion_p;
+                $empresa_id = $request->empresa_id;
 
                 //echo $ubicacion;exit();
             }

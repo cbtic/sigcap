@@ -192,7 +192,7 @@ border-right: 2px solid #5cb85c!important;
                                 </select>
                                         -->
 
-                                <select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="">									
+                                <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="">									
 									<?php
                                         foreach ($tipo_documento as $row) {?>
                                         <option value="<?php echo $row->codigo?>" <?php if($row->codigo=="85")echo "selected='selected'"?>><?php echo $row->denominacion?></option>
