@@ -15,6 +15,27 @@ class Empresa extends Model
         return $this->readFuntionPostgres('sp_listar_empresa_paginado',$p);
 
     }
+
+    function getEmpresaId($id){
+
+
+        $cad = "ruc, nombre_comercial, razon_social, direccion, representante, estado, email, telefono
+        from empresas         
+        Where id='".$id."' ";
+    
+        $data = DB::select($cad);
+        if($data)return $data[0];
+    }
+	
+    function getPersonaId($id){
+
+        $cad = "select numero_documento ruc, apellido_paterno||' '||apellido_materno||' '||nombres nombre_comercial, apellido_paterno||' '||apellido_materno||' '||nombres razon_social, '' direccion, '' email
+        from personas
+        Where id='".$id."' ";
+    
+        $data = DB::select($cad);
+        if($data)return $data[0];
+    }
     
     public function readFuntionPostgres($function, $parameters = null){
 
@@ -31,4 +52,8 @@ class Empresa extends Model
         return $data;
 
     }
+
+
+	
+
 }

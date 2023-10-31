@@ -59,7 +59,7 @@ border-right: 2px solid #5cb85c!important;
 
             <div class="card-body">
 
-            <form class="form-horizontal" method="post" action="{{ route('frontend.ingreso.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
+            <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -121,7 +121,7 @@ border-right: 2px solid #5cb85c!important;
 									<select name="id_caja" id="id_caja" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach($caja as $row):?>
-											<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+											<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
 										<?php  endforeach;?>
 									</select>
 									<?php endif;?>
@@ -180,20 +180,32 @@ border-right: 2px solid #5cb85c!important;
                             <div class="form-group">
                                 <?php ?>
                                 <label class="form-control-sm">Tipo Documento</label>
+<!--
                                 <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_DNI?>"><?php echo $persona::TIPO_DOCUMENTO_DNI?></option>
+                                    <option selected="selected value="<?php echo $persona::TIPO_DOCUMENTO_CAP?>"><?php echo $persona::TIPO_DOCUMENTO_CAP?></option>
+                                    <option value="<?php echo $persona::TIPO_DOCUMENTO_RUC?>"><?php echo $persona::TIPO_DOCUMENTO_RUC?></option>
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA?>"><?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA?></option>
                                     <option value="<?php echo $persona::TIPO_DOCUMENTO_PASAPORTE?>"><?php echo $persona::TIPO_DOCUMENTO_PASAPORTE?></option>                                    
 									<option value="<?php echo $persona::TIPO_DOCUMENTO_CEDULA?>"><?php echo $persona::TIPO_DOCUMENTO_CEDULA?></option>
-									<option value="<?php echo $persona::TIPO_DOCUMENTO_PTP?>"><?php echo $persona::TIPO_DOCUMENTO_PTP?></option>
-                                    <option selected="selected value="<?php echo $persona::TIPO_DOCUMENTO_CAP?>"><?php echo $persona::TIPO_DOCUMENTO_CAP?></option>
-									
+									<option value="<?php echo $persona::TIPO_DOCUMENTO_PTP?>"><?php echo $persona::TIPO_DOCUMENTO_PTP?></option>                                    									
                                 </select>
+                                        -->
+
+                                <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="">									
+									<?php
+                                        foreach ($tipo_documento as $row) {?>
+                                        <option value="<?php echo $row->codigo?>" <?php if($row->codigo=="85")echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                        <?php 
+                                        }
+                                        ?>
+                                    </select>
 
                                 <input type="hidden" readonly name="empresa_id" id="empresa_id" value="" class="form-control form-control-sm">
 								<input type="hidden" readonly name="id_ubicacion" id="id_ubicacion" value="" class="form-control form-control-sm">
                                 <input type="hidden" readonly name="id_ubicacion_p" id="id_ubicacion_p" value="" class="form-control form-control-sm">
-								<input type="hidden" readonly name="persona_id" id="persona_id" value="" class="form-control form-control-sm">
+								<input type="hidden" readonly name="id_persona" id="id_persona" value="" class="form-control form-control-sm">
+                                <input type="hidden" readonly name="id_agremiado" id="id_agremiado" value="" class="form-control form-control-sm">
 
                             </div>
                         </div>
@@ -226,7 +238,7 @@ border-right: 2px solid #5cb85c!important;
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-sm">Nombres y Apellidos</label>
-                                <input type="text" readonly name="nombre_afiliado" id="nombre_afiliado" value="{{old('clinom')}}" class="form-control form-control-sm" />
+                                <input type="text" readonly name="nombre_" id="nombre_" value="{{old('clinom')}}" class="form-control form-control-sm" />
                             </div>
                         </div>
                     </div>
@@ -259,7 +271,7 @@ border-right: 2px solid #5cb85c!important;
 								
 								@endhasanyrole
 
-                                <input type="text" readonly name="codigo_afiliado" id="codigo_afiliado" value="{{old('clinom')}}" class="form-control form-control-sm" />
+                                <input type="text" readonly name="situacion_" id="situacion_" value="{{old('clinom')}}" class="form-control form-control-sm" />
                             </div>
                         </div>
                     </div>
@@ -284,11 +296,19 @@ border-right: 2px solid #5cb85c!important;
                         </div>
                     </div>
 
+                    <div class="row" >
+                        <div class="col">
+                            <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerBeneficiario()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Pago Otros Conceptos </button>                                                        
+                        </div>
+                    </div>
+
+                    
+
                     <div class="row" id="divFechaAfliado">
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-control-sm">Fecha Colegiatura</label>
-                                <input type="text" readonly name="fecha_afiliado" id="fecha_afiliado" value="{{old('clinom')}}" class="form-control form-control-sm">
+                                <input type="text" readonly name="fecha_colegiatura" id="fecha_colegiatura" value="{{old('clinom')}}" class="form-control form-control-sm">
                             </div>
                         </div>
                     </div>
@@ -370,13 +390,16 @@ border-right: 2px solid #5cb85c!important;
                                         -->
                                     </tbody>
 									<tfoot>
+                                        <!--
 										<tr>
 											<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Pago a Cuenta</th>
 											<td style="padding-bottom:0px;margin-bottom:0px">
-												<!--<input type="text" readonly name="MonAd" id="total" value="0" class="form-control form-control-sm">-->
+
 												<input type="text" readonly name="MonAd" id="MonAd" value="0" class="form-control form-control-sm text-right" onkeyup="validarMonAd()"/>
 											</td>
 										</tr>
+                                        -->
+
 										<tr>
 											<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
 											<td style="padding-bottom:0px;margin-bottom:0px">

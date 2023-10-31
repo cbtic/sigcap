@@ -339,19 +339,19 @@ function fn_save_concepto(){
 	var codigo = $('#codigo').val();
 	var denominacion = $('#denominacion').val();
 	var id_partida_presupuestal = $('#id_partida_presupuestal').val();
-	//var estado = $('#estado').val();
-	
-	//alert(id_agremiado);
-	//return false;
+	var tipo_afectacion = $('#tipo_afectacion').val();
+	var centro_costo = $('#centro_costo').val();
+	var importe = $('#importe').val();
 	
     $.ajax({
 			url: "/concepto/send_concepto_nuevoConcepto",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,codigo:codigo,denominacion:denominacion,id_partida_presupuestal:id_partida_presupuestal},
+            data : {_token:_token,id:id,id_regional:id_regional,codigo:codigo,denominacion:denominacion,id_partida_presupuestal:id_partida_presupuestal,tipo_afectacion:tipo_afectacion,centro_costo:centro_costo,importe:importe},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//window.location.reload();
+				datatablenew();
 				
 				/*
 				$('#openOverlayOpc').modal('hide');
@@ -583,7 +583,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-6">
 						<div class="form-group">
 							<label class="control-label form-control-sm">Tipo Afectaci&oacute;n</label>
-                            <select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onchange="">
+                            <select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onChange="">
                                 <option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($tipo_afectacion as $row) {?>
@@ -597,7 +597,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-6">
 							<div class="form-group">
 							<label class="control-label form-control-sm">Moneda</label>
-							<select name="moneda" id="moneda" class="form-control form-control-sm" onchange="">
+							<select name="moneda" id="moneda" class="form-control form-control-sm" onChange="">
                                 <option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($moneda as $row) {?>

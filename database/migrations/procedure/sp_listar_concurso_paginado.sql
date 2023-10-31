@@ -1,4 +1,6 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_concurso_paginado(p_id_tipo_concurso character varying,p_periodo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+
+
+CREATE OR REPLACE FUNCTION public.sp_listar_concurso_paginado(p_id_tipo_concurso character varying, p_periodo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,7 +20,7 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' c.id,tm.denominacion tipo_concurso,c.periodo,c.fecha,c.fecha_inscripcion,c.estado ';
+	v_campos=' c.id,tm.denominacion tipo_concurso,c.periodo,to_char(c.fecha,''dd-mm-yyyy'')fecha,to_char(c.fecha_inscripcion,''dd-mm-yyyy'')fecha_inscripcion,to_char(c.fecha_delegatura_inicio,''dd-mm-yyyy'')fecha_delegatura_inicio,to_char(c.fecha_delegatura_fin,''dd-mm-yyyy'')fecha_delegatura_fin,c.estado ';
 
 	v_tabla=' from concursos c
 		inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo=''93''';
@@ -52,3 +54,4 @@ End
 
 $function$
 ;
+

@@ -150,7 +150,7 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Denominacion">
+						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominacion">
 					</div>
 					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -175,9 +175,7 @@
                         <thead>
                         <tr style="font-size:13px">
                             <th>Id</th>
-							<th>Regional</th>
-                            <th>Nombre</th>
-							<th>Descripci&oacute;n</th>
+                            <th>Denominaci&oacute;n</th>                            
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

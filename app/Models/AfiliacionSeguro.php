@@ -20,7 +20,7 @@ class AfiliacionSeguro extends Model
         return $this->readFuntionPostgres('sp_listar_seguro_plan_paginado',$p);
 
     }
-
+    
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';

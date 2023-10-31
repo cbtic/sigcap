@@ -111,9 +111,9 @@ class SeguroController extends Controller
 		
 		$id_user = Auth::user()->id;
 		$seguro = new Seguro;
-		$regione_model = new Regione;
 		if($id>0) $seguro = Seguro::find($id);else $seguro = new Seguro;
 
+		$regione_model = new Regione;
         //$tablaMaestra_model = new TablaMaestra;
 		//$tipo_municipalidad = $tablaMaestra_model->getMaestroByTipo(43);
         //$tipo_comision = $tablaMaestra_model->getMaestroByTipo(24);
@@ -126,7 +126,7 @@ class SeguroController extends Controller
 
 		//$provincia = "";
 		//$distrito = "";
-
+		
 		$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
