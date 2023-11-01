@@ -373,14 +373,31 @@ class ConcursoController extends Controller
 			$inscripcionDocumento = InscripcionDocumento::find($request->id);
 		}
 		
+		if($request->img_foto!=""){
+			$filepath_tmp = public_path('img/frontend/tmp_documento/');
+			$filepath_nuevo = public_path('img/documento/');
+			if (file_exists($filepath_tmp.$request->img_foto)) {
+				copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+			}
+		}
+		
 		$inscripcionDocumento->id_concurso_inscripcion = $request->id_concurso_inscripcion;
 		$inscripcionDocumento->id_tipo_documento = $request->id_tipo_documento;
+		$inscripcionDocumento->ruta_archivo = $request->img_foto;
+		$inscripcionDocumento->fecha_documento = $request->fecha_documento;
 		$inscripcionDocumento->observacion = $request->observacion;
 		$inscripcionDocumento->estado = 1;
 		$inscripcionDocumento->id_usuario_inserta = $id_user;
 		$inscripcionDocumento->save();
 			
     }
-		
+	
+	public function upload_documento(Request $request){
+
+    	$filepath = public_path('img/frontend/tmp_documento/');
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		echo $_FILES['file']['name'];
+	}
+	
 	
 }
