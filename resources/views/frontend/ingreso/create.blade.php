@@ -371,10 +371,10 @@ border-right: 2px solid #5cb85c!important;
 										<!--<th class="text-right" width="5%">-->
 										<th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
                                         	<input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?> >
-										</th>
-										<th>Fecha</th>
-                                        <!--<th>Codigo</th>-->
+										</th>										
+                                        <th>F. Proceso</th>
                                         <th>Concepto</th>
+                                        <th>F. Vencimiento</th>
                                         <th class="text-right">Monto</th>
                                         <!--<th>Estado</th>-->
                                         <!--<th>Opc</th>-->

@@ -24,14 +24,16 @@ class Valorizacione extends Model
 			";
         }else{
             $cad = "
-            select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
+            --select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
+            select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso
             from valorizaciones v
             inner join conceptos c  on c.id = v.id_concepto
-            inner join agremiado_cuotas a  on a.id = v.pk_registro
+            --inner join agremiado_cuotas a  on a.id = v.pk_registro
             inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
             where v.id_persona = ".$id_persona."
             and v.estado = '1'
             and id_comprobante is null
+            order by v.fecha desc
 			";
         }
 
