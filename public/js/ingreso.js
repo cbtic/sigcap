@@ -164,23 +164,30 @@ function calcular_total(obj){
 
 	$("#btnBoleta").prop('disabled', true);
     $("#btnFactura").prop('disabled', true);
-	$("#btnTicket").prop('disabled', true).hide();
+	//$("#btnTicket").prop('disabled', true).hide();
 	
-	if(tipo_factura_actual=="FT"){
+	if(tipo_documento == "79"){//RUC
+		//$("#btnBoleta").prop('disabled', false);
+        //$("#btnFactura").prop('disabled', false);
+		//$("#btnBoleta").show();
+		//$("#btnTicket").hide();
+		$("#btnBoleta").prop('disabled', true);
+		$("#btnFactura").prop('disabled', false);
+	}else
+	{
 		$("#btnBoleta").prop('disabled', false);
-        $("#btnFactura").prop('disabled', false);
-		$("#btnBoleta").show();
-		$("#btnTicket").hide();
-	}
-	if(tipo_factura_actual=="TK"){
-		$("#btnTicket").prop('disabled', false);
-		$("#btnTicket").show();
-		$("#btnBoleta").hide();
+		$("#btnFactura").prop('disabled', true);
 	}
 
+	//if(tipo_factura_actual=="TK"){
+		//$("#btnTicket").prop('disabled', false);
+		//$("#btnTicket").show();
+		//$("#btnBoleta").hide();
+	//}
 
-$("#btnBoleta").prop('disabled', false);
-$("#btnFactura").prop('disabled', false);
+
+//$("#btnBoleta").prop('disabled', false);
+//$("#btnFactura").prop('disabled', false);
 
 	//alert(tipo_factura_actual);
 	$(".mov:checked").each(function (){
@@ -258,9 +265,11 @@ function validaTipoDocumento(){
 	$('#codigo_afiliado').val("");	
 	$('#fecha_afiliado').val("");
 	
-	$("#btnBoleta").prop('disabled', true);
-    $("#btnFactura").prop('disabled', true);
-	$("#btnTicket").prop('disabled', true).hide();
+
+	//$("#btnBoleta").prop('disabled', false);
+    //$("#btnFactura").prop('disabled', false);
+
+	//$("#btnTicket").prop('disabled', true).hide();
 	
 	if(tipo_documento == "RUC"){
 		$('#divNombreApellido').hide();
@@ -268,12 +277,21 @@ function validaTipoDocumento(){
 		$('#divFechaAfliado').hide();
 		$('#divDireccionEmpresa').show();
 		$('#divRepresentanteEmpresa').show();
+
+		//$("#btnBoleta").prop('disabled', false);
+		//$("#btnFactura").prop('disabled', true);
+	
+
 	}else{
 		$('#divNombreApellido').show();
 		$('#divCodigoAfliado').show();
 		$('#divFechaAfliado').show();
 		$('#divDireccionEmpresa').hide();
 		$('#divRepresentanteEmpresa').hide();
+
+		//$("#btnBoleta").prop('disabled', true);
+		//$("#btnFactura").prop('disabled', false);
+	
 	}
 	
 	obtenerBeneficiario();
@@ -418,7 +436,7 @@ function cargarConceptos(){
 
     $("#tblConceptos tbody").html("");
 	$.ajax({
-			url: "/ingreso/conceptos/"+periodo,
+			url: "/ingreso/obtener_conceptos/"+periodo,
 			type: "GET",
 			success: function (result) {  
 					$("#tblConceptos tbody").html(result);
