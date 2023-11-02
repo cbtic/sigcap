@@ -552,6 +552,33 @@ function datatablenew(){
 				},
 				{
 					"mRender": function (data, type, row) {
+						var periodo = "";
+						if(row.periodo!= null)periodo = row.periodo;
+						return periodo;
+					},
+					"bSortable": false,
+					"aTargets": [6]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var multa = "";
+						if(row.multa!= null)multa = row.multa;
+						return multa;
+					},
+					"bSortable": false,
+					"aTargets": [7]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var monto = "";
+						if(row.monto!= null)monto = row.monto;
+						return monto;
+					},
+					"bSortable": false,
+					"aTargets": [8]
+				},
+				{
+					"mRender": function (data, type, row) {
 						var estado = "";
 						if(row.estado == 1){
 							estado = "Pendiente";
@@ -562,7 +589,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [6]
+					"aTargets": [9]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -578,7 +605,7 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalHistorialMulta('+row.id+')" ><i class="fa fa-"></i> Historial</button>';
+						//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalHistorialMulta('+row.id+')" ><i class="fa fa-"></i> Historial</button>';
 						//html += '<a href="javascript:void(0)" onclick=eliminarMulta('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
@@ -587,7 +614,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [7],
+					"aTargets": [10],
 				},
 
             ]

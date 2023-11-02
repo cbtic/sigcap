@@ -57,41 +57,8 @@ class TipoConceptoController extends Controller
 		$tipoConcepto = TipoConcepto::find($id_tipoConcepto);
 		
         $tipoConcepto_model = new TipoConcepto;
- 
-		//$tablaMaestra_model = new TablaMaestra;
-		//$regione_model = new Regione;
-		//$region = $regione_model->getRegionAll();
-		//$ubigeo_model = new Ubigeo;
-		//$agremiadoEstudio_model = new AgremiadoEstudio;
-		//$agremiadoIdioma_model = new AgremiadoIdioma;
-		//$agremiadoParenteco_model = new AgremiadoParenteco;
-		//$agremiadoTrabajo_model = new AgremiadoTrabajo;
-		//$agremiadoTraslado_model = new AgremiadoTraslado;
-		//$agremiadoSituacione_model = new AgremiadoSituacione;
 		
-		/*$ruc = $tablaMaestra_model->getMaestroByTipo(16);
-		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
-		$estado_civil = $tablaMaestra_model->getMaestroByTipo(3);
-		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
-		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
-		$seguro_social = $tablaMaestra_model->getMaestroByTipo(13);
-		$actividad_gremial = $tablaMaestra_model->getMaestroByTipo(46);
-		$ubicacion_cliente = $tablaMaestra_model->getMaestroByTipo(63);
-		$autoriza_tramite = $tablaMaestra_model->getMaestroByTipo(45);
-		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
-		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
-		$categoria_cliente = $tablaMaestra_model->getMaestroByTipo(18);
-		$region = $regione_model->getRegionAll();
-		$departamento = $ubigeo_model->getDepartamento();
-		
-		$agremiado_estudio = $agremiadoEstudio_model->getAgremiadoEstudios($id);
-		$agremiado_idioma = $agremiadoIdioma_model->getAgremiadoIdiomas($id);
-		$agremiado_parentesco = $agremiadoParenteco_model->getAgremiadoParentesco($id);
-		$agremiado_trabajo = $agremiadoTrabajo_model->getAgremiadoTrabajo($id);
-		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
-		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);*/
-		
-		return view('frontend.tipoConcepto.create',compact('codigo','regional','denominacion','estado'));
+		return view('frontend.tipoConcepto.create',compact('id','codigo','regional','denominacion','estado'));
 		
     }
 
@@ -123,7 +90,7 @@ class TipoConceptoController extends Controller
 			$codigo = $tipoConcepto_model->getCodigoTipoConcepto();
 		}else{
 			$tipoConcepto = TipoConcepto::find($request->id);
-			$codigo = $tipoConcepto_model->getCodigoTipoConceptoEdit();
+			$codigo = $request->codigo;
 		}
 	
 		$tipoConcepto->codigo = $codigo;

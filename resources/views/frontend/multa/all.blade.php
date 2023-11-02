@@ -213,9 +213,10 @@
                         <th>Agremiado</th>
                         <th>Sexo</th>
                         <th>Fecha de Nacimiento</th>
+                        <th>Periodo</th>
+                        <th>Multa</th>
+                        <th>Importe</th>
                         <th>Estado</th>
-                        <!--<th>Estado</th>-->
-                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>

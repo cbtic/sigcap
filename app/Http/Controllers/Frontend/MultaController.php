@@ -54,7 +54,7 @@ class MultaController extends Controller
 		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
 		$result["aaData"] = $data;
 
-		echo json_encode($result);
+		echo json_encode($result);			
 	
 	}
 

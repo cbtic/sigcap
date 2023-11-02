@@ -371,6 +371,7 @@ function fn_save_tipoConcepto(){
 
 	var _token = $('#_token').val();
 	var id = $('#id').val();
+	var codigo = $('#codigo').val();
 	var id_regional = $('#id_regional').val();
 	var denominacion = $('#denominacion').val();
 	//var estado = $('#estado').val();
@@ -382,7 +383,7 @@ function fn_save_tipoConcepto(){
 			url: "/tipoConcepto/send_tipoConcepto_nuevoTipoConcepto",
             type: "POST",
             data : {_token:_token,
-					id:id,id_regional:id_regional,denominacion:denominacion},
+					id:id,codigo:codigo,id_regional:id_regional,denominacion:denominacion},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -579,6 +580,7 @@ container: '#myModal modal-body'
 					<div class="row" style="padding-left:10px">
 						
 						<?php if(isset($tipoConcepto->codigo) && $tipoConcepto->codigo!=""){?>
+						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">C&oacute;digo</label>
@@ -586,7 +588,8 @@ container: '#myModal modal-body'
 							</div>
 						</div>	
 						<?php }?>
-
+						
+						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>

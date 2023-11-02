@@ -186,9 +186,8 @@
                             <th>Periodo</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
-                            <th>Porcentaje</th>
+                            <th>N° de Cuotas</th>
                             <th>C&oacute;digo de Documento</th>
-                            <th>Ruta</th>
                             <th>Concepto</th>
                             <th>Estado</th>
                             <th>Acciones</th>
