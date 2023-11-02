@@ -315,6 +315,10 @@ function obtenerBeneficiario(){
 				$('#empresa_representante').val(result.agremiado.representante);
 				$('#empresa_id').val(result.agremiado.id);
 				$('#id_ubicacion').val(result.agremiado.id);
+
+				$('#nombre_').val(result.agremiado.razon_social);
+				$('#fecha_colegiatura').val(result.agremiado.representante);
+
 			}else if(tipo_documento == "85") //CAP
 				{
 				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
@@ -402,6 +406,22 @@ function cargarValorizacion(){
 			type: "GET",
 			success: function (result) {  
 					$("#tblValorizacion tbody").html(result);
+			}
+	});
+
+}
+
+function cargarConceptos(){
+        
+	//var numero_documento = $("#numero_documento").val();
+	var periodo = "2023";
+
+    $("#tblConceptos tbody").html("");
+	$.ajax({
+			url: "/ingreso/conceptos/"+periodo,
+			type: "GET",
+			success: function (result) {  
+					$("#tblConceptos tbody").html(result);
 			}
 	});
 
@@ -578,7 +598,7 @@ function fn_save_estado(estado){
             success: function (result) {  
 					cargarValorizacion();
 					cargarPagos();
-					cargarDudoso();
+					//cargarDudoso();
             }
     });
 }
@@ -617,5 +637,22 @@ function fn_eliminar_persona_tarjeta(id_persona,estado){
 				
             }
     });
+}
+
+function modal_otro_pago(){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+	var perido = "2023";
+
+	$.ajax({
+			url: "/ingreso/otro_pago/"+perido,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
 }
 
