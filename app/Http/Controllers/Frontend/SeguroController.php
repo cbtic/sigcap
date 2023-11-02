@@ -111,9 +111,9 @@ class SeguroController extends Controller
 		
 		$id_user = Auth::user()->id;
 		$seguro = new Seguro;
-		$regione_model = new Regione;
 		if($id>0) $seguro = Seguro::find($id);else $seguro = new Seguro;
 
+		$regione_model = new Regione;
         //$tablaMaestra_model = new TablaMaestra;
 		//$tipo_municipalidad = $tablaMaestra_model->getMaestroByTipo(43);
         //$tipo_comision = $tablaMaestra_model->getMaestroByTipo(24);
@@ -126,7 +126,7 @@ class SeguroController extends Controller
 
 		//$provincia = "";
 		//$distrito = "";
-
+		
 		$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
@@ -202,6 +202,55 @@ class SeguroController extends Controller
 		$segurosPlan->save();
 		
     }
+
+
+	public function edit(Request $request)
+    {
+		
+
+		$parentesco = $request->parentesco;
+		//print_r ($parentesco);exit();
+
+		$ind = 0;
+		foreach($request->parentescos as $key=>$det){
+			
+			$parentesco_sel[$ind] = $parentesco[$key];
+			$ind++;
+		}
+
+		$ind = 0;
+		foreach($parentesco_sel as $key=>$det){
+			print_r ($parentesco_sel[$ind]["edad"]);
+			$ind++;
+		}
+
+
+
+		
+
+		exit();
+
+		if($request->id == 0){
+			$segurosPlan = new SegurosPlane;
+			$segurosPlan->id_seguro = $request->id_seguro;
+		}else{
+			$segurosPlan = SegurosPlane::find($request->id);
+		}
+		
+		$segurosPlan->nombre = $request->nombre;
+		$segurosPlan->descripcion = $request->descripcion;
+		$segurosPlan->fecha_inicio = $request->fecha_inicio;
+		$segurosPlan->fecha_fin = $request->fecha_fin;
+		$segurosPlan->monto = $request->monto;
+		$segurosPlan->estado = 1;
+		$segurosPlan->id_usuario_inserta = $id_user;
+		$segurosPlan->save();
+
+
+        return redirect('/ingreso/liquidacion_caja');
+		
+    }	
+
     
     
     

@@ -21,7 +21,7 @@
 
         button.close{
             background:#1C77B9!important;
-            padding:0px 9px 4px 9px!important;
+            padding:0px 6px 2px 6px!important;
             -moz-border-radius: 30px 30px 30px 30px!important; /* Firefox */
             -webkit-border-radius: 30px 30px 30px 30px!important; /* Google Chrome y Safari */
             border-radius: 30px 30px 30px 30px!important; /* CSS3 (Opera 10.5 e Internet Explorer 9) */
@@ -30,7 +30,7 @@
         .close{
             color:#FFFFFF!important;
             opacity:1!important;
-            font-size:40px!important;
+            font-size:25px!important;
 
             position: absolute;
             z-index: 1000;

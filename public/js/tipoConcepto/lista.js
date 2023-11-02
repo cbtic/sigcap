@@ -509,7 +509,7 @@ function datatablenew(){
                 "bSortable": false,
                 "aTargets": [2]
                 },
-                {
+                /*{
                 "mRender": function (data, type, row) {
                 	var estado = "";
 					if(row.estado!= null)estado = row.estado;
@@ -517,7 +517,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "aTargets": [3]
-                },
+                },*/
 				{
 				"mRender": function (data, type, row) {
 					var estado = "";
@@ -530,7 +530,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [4]
+				"aTargets": [3]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -555,7 +555,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [4],
 				},
 
             ]

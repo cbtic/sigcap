@@ -13,7 +13,7 @@ class CreateNuevoSegurosTable extends Migration
      */
     public function up()
     {
-        Schema::create('seguros', function (Blueprint $table) {
+      /*  Schema::create('seguros', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_regional')->unsigned()->index();
             $table->string('nombre',255)->unsigned()->index();
@@ -23,6 +23,7 @@ class CreateNuevoSegurosTable extends Migration
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index();
             $table->timestamps();
         });
+        */
     }
 
     /**

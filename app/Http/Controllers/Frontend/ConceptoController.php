@@ -6,13 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Concepto;
 use App\Models\Regione;
+use App\Models\TablaMaestra;
 use Auth;
 
 class ConceptoController extends Controller
 {
     function consulta_concepto(){
-        
-        return view('frontend.concepto.all');
+
+		$tablaMaestra_model = new TablaMaestra;
+		$concepto = new Concepto;
+        $tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
+        return view('frontend.concepto.all',compact('tipo_afectacion','concepto'));
 
     }
 	
@@ -33,6 +37,11 @@ class ConceptoController extends Controller
 		$p[]="";
 		$p[]=$request->denominacion;
         $p[]=$request->partida_presupuestal;
+		$p[]="";
+		$p[]="";
+		$p[]=$request->tipo_afectacion;
+		$p[]="";
+		$p[]="";
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -53,9 +62,10 @@ class ConceptoController extends Controller
 	public function editar_concepto($id){
         
 		$concepto = Concepto::find($id);
+		$tablaMaestra_model = new TablaMaestra;
 		$id_concepto = $concepto->id_concepto;
 		$concepto = Concepto::find($id_concepto);
-		
+		$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
         $concepto_model = new concepto;
  
 		//$tablaMaestra_model = new TablaMaestra;
@@ -90,7 +100,7 @@ class ConceptoController extends Controller
 		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
 		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);*/
 		
-		return view('frontend.concepto.create',compact('regional','codigo','denominacion','partida_presupuestal','estado'));
+		return view('frontend.concepto.create',compact('regional','codigo','denominacion','partida_presupuestal','tipo_afectacion','estado'));
 		
     }
 
@@ -98,6 +108,9 @@ class ConceptoController extends Controller
 		
 		$concepto = new Concepto;
 		$regione_model = new Regione;
+		$tablaMaestra_model = new TablaMaestra;
+		$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
+		$moneda = $tablaMaestra_model->getMaestroByTipo(1);
 
 		if($id>0){
 			$concepto = Concepto::find($id);
@@ -107,28 +120,35 @@ class ConceptoController extends Controller
 		
 		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','concepto','region'));
+		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','concepto','region','tipo_afectacion','moneda'));
 	
 	}
 
     public function send_concepto_nuevoConcepto(Request $request){
 		
 		$id_user = Auth::user()->id;
+		$Concepto_model = new Concepto;
 
 		if($request->id == 0){
 			$concepto = new Concepto;
+			$codigo = $Concepto_model->getCodigoConcepto();
 		}else{
 			$concepto = Concepto::find($request->id);
+			$codigo = $Concepto_model->getCodigoConceptoEdit();
 		}
 		
 		$concepto->id_regional = $request->id_regional;
-		$concepto->codigo = $request->codigo;
+		$concepto->codigo = $codigo;
 		$concepto->denominacion = $request->denominacion;
 		$concepto->id_partida_presupuestal = $request->id_partida_presupuestal;
+		$concepto->id_tipo_concepto = $request->id;
+		$concepto->importe = $request->importe;
+		$concepto->id_tipo_afectacion = $request->tipo_afectacion;
+		$concepto->moneda = $request->moneda;
+		$concepto->centro_costo = $request->centro_costo;
 		$concepto->estado = 1;
 		$concepto->id_usuario_inserta = $id_user;
 		$concepto->save();
-			
     }
 
 	public function eliminar_concepto($id,$estado)

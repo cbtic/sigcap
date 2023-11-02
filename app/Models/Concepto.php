@@ -29,6 +29,32 @@ class Concepto extends Model
         $cad = "FETCH ALL IN ref_cursor;";
         $data = DB::select($cad);
         return $data;
+    }
 
+    function getConceptoAll(){
+
+        $cad = "select *
+                from conceptos
+                where estado='1'and codigo = '00001'
+                order by denominacion ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getCodigoConcepto(){
+
+        $cad = "select lpad((max(codigo::int)+1)::varchar,5,'0') codigo from conceptos c ";
+    
+		$data = DB::select($cad);
+        return $data[0]->codigo;
+    }
+
+    function getCodigoConceptoEdit(){
+
+        $cad = "select lpad((max(codigo::int))::varchar,5,'0') codigo from conceptos c ";
+    
+		$data = DB::select($cad);
+        return $data[0]->codigo;
     }
 }

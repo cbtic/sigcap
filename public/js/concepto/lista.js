@@ -12,6 +12,12 @@ $(document).ready(function () {
 			datatablenew();
 		}
 	});
+	
+	$('#tipo_afectacion').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
 
 	$('#partida_presupuestalBus').keypress(function(e){
 		if(e.which == 13) {
@@ -453,6 +459,7 @@ function datatablenew(){
 			
 			var denominacion = $('#denominacionBus').val();
             var partida_presupuestal = $('#partida_presupuestalBus').val();
+			var tipo_afectacion = $('#tipo_afectacion').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -461,7 +468,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,partida_presupuestal:partida_presupuestal,estado:estado,
+						denominacion:denominacion,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -516,6 +523,42 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
+					var importe = "";
+					if(row.importe!= null)importe = row.importe;
+					return importe;
+				},
+				"bSortable": false,
+				"aTargets": [4]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var tipo_afectacion = "";
+					if(row.tipo_afectacion!= null)tipo_afectacion = row.tipo_afectacion;
+					return tipo_afectacion;
+				},
+				"bSortable": false,
+				"aTargets": [5]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var moneda = "";
+					if(row.moneda!= null)moneda = row.moneda;
+					return moneda;
+				},
+				"bSortable": false,
+				"aTargets": [6]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var centro_costo = "";
+					if(row.centro_costo!= null)centro_costo = row.centro_costo;
+					return centro_costo;
+				},
+				"bSortable": false,
+				"aTargets": [7]
+				},
+				{
+				"mRender": function (data, type, row) {
 					var estado = "";
 					if(row.estado == 1){
 						estado = "Activo";
@@ -526,7 +569,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [4]
+				"aTargets": [8]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -551,7 +594,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [9],
 				},
 
             ]

@@ -110,12 +110,6 @@
 
 @section('content')
 
-    <!--<ol class="breadcrumb" style="padding-left:120px;margin-top:0px">
-        <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Afiliados</li>
-        </li>
-    </ol>
-    -->
 
 <div class="loader"></div>
 
@@ -148,32 +142,30 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-				
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                        <div style="float:left;padding-top:7px">F.Ini</div>
-                        <div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-                            <input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control">
-                            
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                        <div style="float:left;padding-top:7px">F.Fin</div>
-                        <div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-                            <input placeholder="Fecha" type="date" id="fecha_fin" class="form-control">
-                        
-                        </div>
-                    </div><!--
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacionBus" name="denominacionBus" placeholder="Nombre de Cuota">
+				    <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="periodoBus" name="periodoBus" placeholder="Periodo" />
 					</div>
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="partida_presupuestalBus" name="partida_presupuestalBus" placeholder="Partida Presupuestal">
-					</div>-->
+					
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <!--<label class="control-label form-control-sm">Concepto</label>-->
+                            <select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onchange="">
+                                <option value="">--Seleccionar Concepto--</option>
+                                <?php
+                                    foreach ($concepto as $row) {?>
+                                    <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+                                    <?php 
+                                }
+                                ?>
+                            </select>
+                        </div>
+					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
-							<option value="0">Inactivo</option>
+                            <option value="0">Eliminado</option>
+                            <option value="2">Inactivo</option>
 						</select>
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
@@ -191,11 +183,13 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
+                            <th>Periodo</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
                             <th>Porcentaje</th>
                             <th>C&oacute;digo de Documento</th>
                             <th>Ruta</th>
+                            <th>Concepto</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>

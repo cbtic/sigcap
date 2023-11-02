@@ -6,15 +6,24 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalSeguro(0);
+		modalAfiliado(0);
 	});
 
-	$('#denominacion').keypress(function(e){
+	$('#nombre').keypress(function(e){
 		if(e.which == 13) {
-			datatablenew();
+			fn_ListarBusqueda();
 		}
 	});
-		
+
+    $('#modal_afiliado #cap_').keypress(function(e){
+		if(e.which == 13) {
+            print_r("CAP"); exit();
+
+			fn_ListarBusqueda();
+		}
+	});
+
+    		
 	datatablenew();
 
 	$(function() {
@@ -260,13 +269,13 @@ function obtenerPlanDetalle(){
 	
 }
 
-function modalSeguro(id){
+function modalAfiliado(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/seguro/modal_seguro/"+id,
+			url: "/afiliacion_seguro/modal_afiliado/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -341,7 +350,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/seguro/listar_seguro",
+        "sAjaxSource": "/afiliacion_seguro/listar_afiliacion_seguro",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -368,7 +377,9 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#nombre').val();
+            var cap = $('#cap_').val();
+			var nombre = $('#nombre').val();
+            var seguro= $('#seguro_').val();
 			var estado = $('#estado').val();
 			
 			var _token = $('#_token').val();
@@ -378,7 +389,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,estado:estado,
+                    nombre:nombre,estado:estado,cap:cap,seguro:seguro,
 						_token:_token
                        },
                 "success": function (result) {
@@ -403,17 +414,53 @@ function datatablenew(){
 				"className": "dt-center",
 				//"className": 'control'
                 },
-				
+				{
+                    "mRender": function (data, type, row) {
+                        var numero_cap = "";
+                        if(row.numero_cap!= null)numero_cap = row.numero_cap;
+                        return numero_cap;
+                    },
+                    "bSortable": true,
+                    "aTargets": [1]
+                },
                 {
-                "mRender": function (data, type, row) {
-                	var denominacion = "";
-					if(row.nombre!= null)denominacion = row.nombre;
-					return denominacion;
+                    "mRender": function (data, type, row) {
+                        var desc_cliente = "";
+                        if(row.desc_cliente!= null)desc_cliente = row.desc_cliente;
+                        return desc_cliente;
+                    },
+                    "bSortable": true,
+                    "aTargets": [2]
                 },
-                "bSortable": true,
-                "aTargets": [1]
+                {
+                    "mRender": function (data, type, row) {
+                        var  nombre = "";
+                        if(row.nombre!= null)nombre = row.nombre;
+                        return nombre;
+                    },
+                    "bSortable": true,
+                    "aTargets": [3]
                 },
-				
+
+                {
+                    "mRender": function (data, type, row) {
+                        var  plan = "";
+                        if(row.plan!= null)plan = row.plan;
+                        return plan;
+                    },
+                    "bSortable": true,
+                    "aTargets": [4]
+                },
+                {
+                    "mRender": function (data, type, row) {
+                        var monto = "";
+                        if(row.monto!= null)monto = row.monto;
+                        return monto;
+                    },
+                    "bSortable": true,
+                    "aTargets": [5]
+                },
+                
 			
 				{
 					"mRender": function (data, type, row) {
@@ -427,7 +474,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [2]
+					"aTargets": [6]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -444,8 +491,8 @@ function datatablenew(){
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 						
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalSeguro('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalAfiliado('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+                        html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalParentesco('+row.id+')" ><i class="fa fa-edit"></i> Familiares</button>';    
 						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
@@ -454,13 +501,29 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [3],
+					"aTargets": [7],
 				},
 
             ]
 
 
     });
+
+}
+
+function modalParentesco(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/afiliacion_seguro/modal_parentesco/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
 
 }
 
@@ -534,3 +597,68 @@ function fn_eliminar(id,estado){
     });
 }
 
+
+function obtenerPlan(){
+	
+	var id = $('#id_seguro').val();
+	if(id=="")return false;
+	$('#id_plan').attr("disabled",true);
+	
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/afiliacion_seguro/obtener_plan/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_plan_').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_seguro+"'>"+oo.nombre+"</option>";
+			});
+			$('#id_plan_').html(option);
+			
+			
+			
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerAgremiado(){
+		
+	var cap = $("#modal_afiliado #cap_").val();
+	print_r (cap);exit();
+	var msg = "";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+	//$('#empresa_id').val("");
+	$('#nombre').val("");
+	
+	$.ajax({
+		url: '/agremiado/editar_agremiado/' + cap ,
+		dataType: "json",
+		success: function(result){
+			var nombre_titular = result.desc_cliente;
+			$('#nombre').val(nombre_titular);
+			//$('#titular_id').val(result.persona.id);
+		},
+		error: function(data) {
+			alert("Persona no encontrada en la Base de Datos.");
+			$('#modal_afiliado').modal('show');
+		}
+		
+	});
+	
+}

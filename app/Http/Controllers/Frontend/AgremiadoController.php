@@ -22,6 +22,15 @@ use Auth;
 
 class AgremiadoController extends Controller
 {
+	public function __construct(){
+
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+	}
 	
 	public function index(){
         

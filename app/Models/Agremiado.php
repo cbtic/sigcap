@@ -23,7 +23,7 @@ class Agremiado extends Model
 
         }elseif($tipo_documento=="85"){ //NRO_CAP
 			
-			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion
+			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, desc_cliente nombre_completo
 					--,razon_social,t1.foto,t2.codigo,t2.fecha_inicio,t2.ubicacion_id id_ubicacion,				
 					from personas t1 
 					inner join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
@@ -42,8 +42,39 @@ class Agremiado extends Model
 		}
 		//echo $cad;
 		$data = DB::select($cad);
+		
         return $data[0];
     }
+	
+	function getAgremiadoByIdPersona($id_persona){
+
+        $cad = "select t2.id,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion,t4.denominacion region 
+from personas t1 
+left join agremiados t2 on t1.id = t2.id_persona And t2.estado='1'
+left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14' 
+inner join regiones t4 on t2.id_regional = t4.id
+Where t2.id_persona=".$id_persona;
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+	
+	function getTipoPlaza($id_agremiado){
+		
+		$cad = "select 
+case 
+	when date_part('year', CURRENT_DATE)-date_part('year', fecha_colegiado)>20 then 1
+	when date_part('year', CURRENT_DATE)-date_part('year', fecha_colegiado)>5 and 
+		 date_part('year', CURRENT_DATE)-date_part('year', fecha_colegiado)<20 then 2
+	else 0 
+end id_tipo_plaza
+from agremiados a 
+where id=".$id_agremiado;
+		//echo $cad;
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0]->id_tipo_plaza;
+		
+	}
 	
 	public function readFunctionPostgres($function, $parameters = null){
 

@@ -143,12 +143,18 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 		autoclose: true,
 		container: '#openOverlayOpc modal-body'
      });
-	 /*
-	 $('#hora_solicitud').timepicker({
-		showInputs: false,
+	 
+	 $('#fecha_delegatura_inicio').datepicker({
+		format: "dd-mm-yyyy",
+		autoclose: true,
 		container: '#openOverlayOpc modal-body'
-	});
-	*/
+     });
+	 
+	 $('#fecha_delegatura_fin').datepicker({
+		format: "dd-mm-yyyy",
+		autoclose: true,
+		container: '#openOverlayOpc modal-body'
+     });
 	 
 });
 
@@ -180,11 +186,13 @@ function fn_save(){
 	var periodo = $('#periodo').val();
 	var fecha =$('#fecha').val();
 	var fecha_inscripcion =$('#fecha_inscripcion').val();
+	var fecha_delegatura_inicio =$('#fecha_delegatura_inicio').val();
+	var fecha_delegatura_fin =$('#fecha_delegatura_fin').val();
 	
     $.ajax({
 			url: "/concurso/send_concurso",
             type: "POST",
-            data : {_token:_token,id:id,id_tipo_concurso:id_tipo_concurso,periodo:periodo,fecha:fecha,fecha_inscripcion:fecha_inscripcion},
+            data : {_token:_token,id:id,id_tipo_concurso:id_tipo_concurso,periodo:periodo,fecha:fecha,fecha_inscripcion:fecha_inscripcion,fecha_delegatura_inicio:fecha_delegatura_inicio,fecha_delegatura_fin:fecha_delegatura_fin},
 			//dataType: 'json',
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
@@ -215,7 +223,7 @@ function fn_save(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Edici&oacute;n Seguros
+				Edici&oacute;n Concurso
 			</div>
 			
             <div class="card-body">
@@ -259,15 +267,29 @@ function fn_save(){
 
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label class="control-label">Fecha</label>
-								<input id="fecha" name="fecha" class="form-control form-control-sm"  value="<?php echo date('d/m/Y',strtotime($concurso->fecha))?>" type="text"  >
+								<label class="control-label">Fecha Concurso</label>
+								<input id="fecha" name="fecha" class="form-control form-control-sm"  value="<?php if($concurso->fecha!="")echo date('d/m/Y',strtotime($concurso->fecha))?>" type="text"  >
 							</div>
 						</div>
 						
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label">Fecha Inscripci&oacute;n</label>
-								<input id="fecha_inscripcion" name="fecha_inscripcion" class="form-control form-control-sm"  value="<?php echo date('d/m/Y',strtotime($concurso->fecha_inscripcion))?>" type="text"  >
+								<input id="fecha_inscripcion" name="fecha_inscripcion" class="form-control form-control-sm"  value="<?php if($concurso->fecha_inscripcion!="")echo date('d/m/Y',strtotime($concurso->fecha_inscripcion))?>" type="text"  >
+							</div>
+						</div>
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label">Fecha Delegatura Inicio</label>
+								<input id="fecha_delegatura_inicio" name="fecha_delegatura_inicio" class="form-control form-control-sm"  value="<?php if($concurso->fecha_delegatura_inicio!="")echo date('d/m/Y',strtotime($concurso->fecha_delegatura_inicio))?>" type="text"  >
+							</div>
+						</div>
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label">Fecha Delegatura Fin</label>
+								<input id="fecha_delegatura_fin" name="fecha_delegatura_fin" class="form-control form-control-sm"  value="<?php if($concurso->fecha_delegatura_fin!="")echo date('d/m/Y',strtotime($concurso->fecha_delegatura_fin))?>" type="text"  >
 							</div>
 						</div>
 					

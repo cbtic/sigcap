@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consulta de Seguros <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consulta de Afiliaci&oacute;n a Seguros <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,17 +140,25 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Seguros
+                        Lista de Afiliaciones
                     </strong>
                 </div><!--card-header-->
-				
-				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
+								
+                <form class="form-horizontal" method="post" action="{{ route('frontend.seguro.create')}}" id="frmSeguroParentesco" name="frmSeguroParentesco1" autocomplete="off" >
+
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-				
+                    <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="cap_" name="cap_" placeholder="CAP">
+					</div>
+
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Denominacion">
+						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Apellidos y Nombres">
+					</div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="seguro_" name="seguro_" placeholder="Seguro">
 					</div>
 					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -175,7 +183,11 @@
                         <thead>
                         <tr style="font-size:13px">
                             <th>Id</th>
-                            <th>Denominaci&oacute;n</th>                            
+                            <th>CAP</th>
+                            <th>Apellidos y nombres</th>
+                            <th>Seguro</th>
+                            <th>Plan</th>
+                            <th>Monto</th>                            
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

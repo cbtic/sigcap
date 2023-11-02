@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Multas</li>
+            <li class="breadcrumb-item active">Consulta de Agremiado Multas</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Multas <!--<small class="text-muted">Usuarios activos</small>-->
+                        Agremiado Multas <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Multas
+                        Lista de Agremiado Multas
                     </strong>
                 </div><!--card-header-->
 				
