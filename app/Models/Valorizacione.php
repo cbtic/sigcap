@@ -24,14 +24,16 @@ class Valorizacione extends Model
 			";
         }else{
             $cad = "
-            select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
+            --select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
+            select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso
             from valorizaciones v
             inner join conceptos c  on c.id = v.id_concepto
-            inner join agremiado_cuotas a  on a.id = v.pk_registro
+            --inner join agremiado_cuotas a  on a.id = v.pk_registro
             inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
             where v.id_persona = ".$id_persona."
             and v.estado = '1'
             and id_comprobante is null
+            order by v.fecha desc
 			";
         }
 
@@ -104,5 +106,13 @@ class Valorizacione extends Model
         //echo "Select sp_crud_caja_ingreso(".$datos[0].",".$datos[1].",".$datos[2].",".$datos[3].",".$datos[4].",".$datos[5].",".$datos[6].",".$datos[7].")";
 		$data = DB::select($cad, array($datos[0],$datos[1],$datos[2],$datos[3],$datos[4],$datos[5],$datos[6],$datos[7]));
         return $data[0]->sp_crud_caja_ingreso;
+    }
+    public function registrar_caja_ingreso_moneda($datos) {
+
+        //$cad = "Select sp_crud_caja_ingreso(?,?,?,?,?,?,?,?)";
+		$cad = "Select sp_crud_caja_ingreso_moneda(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        //echo "Select sp_crud_caja_ingreso(".$datos[0].",".$datos[1].",".$datos[2].",".$datos[3].",".$datos[4].",".$datos[5].",".$datos[6].",".$datos[7].",".$datos[8].",".$datos[9].",".$datos[10].",".$datos[11].",".$datos[12].")";
+		$data = DB::select($cad, array($datos[0],$datos[1],$datos[2],$datos[3],$datos[4],$datos[5],$datos[6],$datos[7],$datos[8],$datos[9],$datos[10],$datos[11],$datos[12]));
+        return $data[0]->sp_crud_caja_ingreso_moneda;
     }
 }
