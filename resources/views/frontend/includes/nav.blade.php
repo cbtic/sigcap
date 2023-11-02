@@ -68,18 +68,10 @@
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
-<<<<<<< HEAD
-								<a href="/empresa/consulta_empresa" class="dropdown-item">Consulta de Empresa</a>
-								<a href="/concepto/consulta_concepto" class="dropdown-item">Consulta de Concepto</a>
-                                <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Consulta de Tipo de Concepto</a>
-                                <a href="/municipalidad/consulta_municipalidad" class="dropdown-item">Municipalidades</a>
-								
-=======
 								<a href="/empresa/consulta_empresa" class="dropdown-item">Empresas</a>
                                 <a href="/municipalidad/consulta_municipalidad" class="dropdown-item">Municipalidades</a>
 								<a href="/concepto/consulta_concepto" class="dropdown-item">Conceptos</a>
                                 <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Tipo de Conceptos</a>
->>>>>>> 0fe3bbc06fdf33a46faa38910108710be7545313
                                 <a href="/seguro/consulta_seguro" class="dropdown-item">Seguros</a>
 								
 								<a href="/concurso" class="dropdown-item">Concurso</a>
