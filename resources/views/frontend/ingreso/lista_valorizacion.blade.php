@@ -33,10 +33,11 @@ foreach($valorizacion as $key=>$row):
 
         </div>
     </td>
-	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha))?></td>
+	
+	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha_proceso))?></td>
     <td class="text-left"><?php echo $row->concepto//$row->vsm_smodulod?>
-	
-	
+	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha))?></td>
+
 	</td>
 	<td class="text-right val_total_">
 	

@@ -12,7 +12,7 @@ class CreateSeguroAfiliadoParentesco extends Migration
      * @return void
      */
     public function up()
-    {
+    { 
         Schema::create('seguro_afiliado_parentesco', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_afiliacion')->unsigned()->index();
@@ -26,7 +26,7 @@ class CreateSeguroAfiliadoParentesco extends Migration
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index();
             $table->timestamps();
 
-            $table->foreign('id_afiliacion')->references('id')->on('seguro_afiliado');
+            $table->foreign('id_afiliacion')->references('id')->on('seguro_afiliados');
             
         });
     }
