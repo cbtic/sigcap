@@ -28,7 +28,7 @@ class CreateSegurosPlanesTable extends Migration
             $table->foreign('id_seguro')->references('id')->on('seguros');
         });
     }
-
+ 
     /**
      * Reverse the migrations.
      *

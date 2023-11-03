@@ -29,14 +29,16 @@ foreach($valorizacion as $key=>$row):
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][id_moneda]" value="<?php echo $row->id_moneda?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][cantidad]" value="1" /> 
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][descuento]" value="" />   
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][cod_contable]" value="" />   
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][cod_contable]" value="" /> 
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][descripcion]" value="<?php echo $row->descripcion?>" />  
 
         </div>
     </td>
+	
+	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha_proceso))?></td>
+    <td class="text-left"><?php echo $row->descripcion//$row->vsm_smodulod?>
 	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha))?></td>
-    <td class="text-left"><?php echo $row->concepto//$row->vsm_smodulod?>
-	
-	
+
 	</td>
 	<td class="text-right val_total_">
 	

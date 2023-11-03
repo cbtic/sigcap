@@ -472,6 +472,7 @@ br {
                                                                     <input type="hidden" name="facturad[<?php echo $key?>][id]" value="<?php echo $fac['id']?>" />
                                                                     <input type="hidden" name="facturad[<?php echo $key?>][fecha]" value="<?php echo $fac['fecha']?>" />
                                                                     <input type="hidden" name="facturad[<?php echo $key?>][denominacion]" value="<?php echo $fac['denominacion']?>" />
+                                                                    <input type="hidden" name="facturad[<?php echo $key?>][descripcion]" value="<?php echo $fac['descripcion']?>" />
 s
                                                                     <input type="hidden" name="facturad[<?php echo $key?>][monto]" value="<?php echo $fac['monto']?>" />
                                                                     <input type="hidden" name="facturad[<?php echo $key?>][moneda]" value="<?php echo $fac['moneda']?>" />
@@ -485,7 +486,7 @@ s
                                                                         <td class="text-left">
 																		<?php 
 																		if ($trans == 'FA'){
-																			echo $fac['denominacion'];
+																			echo $fac['descripcion'];
 																		}if ($trans == 'FE'){
 																			echo $fac['descripcion'];
 																		}?>

@@ -16,6 +16,21 @@ class Concepto extends Model
 
     }
 
+    function obtener_conceptos($periodo){
+ 
+        $cad = "
+        select *
+        from conceptos
+        where periodo = '".$periodo."'
+        and estado = '1'
+        order by denominacion
+        ";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';

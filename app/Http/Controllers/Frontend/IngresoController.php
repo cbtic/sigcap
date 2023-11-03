@@ -45,9 +45,9 @@ class IngresoController extends Controller
     public function obtener_conceptos($perido){
 
         $conceptos_model = new Concepto;        
-        $conceptos = $conceptos_model->getValorizacion($perido);
+        $conceptos = $conceptos_model->getConcepto($perido);
         //print_r($valorizacion);exit();
-        return view('frontend.ingreso.lista_valorizacion',compact('conceptos'));
+        return view('frontend.ingreso.lista_conceptos',compact('conceptos'));
 
     }
     
@@ -112,12 +112,12 @@ class IngresoController extends Controller
 
     public function otro_pago($periodo){
         $moneda_tabla = new TablaMaestra;		
-        $concepto = Concepto::where('periodo', '=', $periodo)->where('estado', '=', '1')->first();
+        //$concepto = Concepto::where('periodo', '=', $periodo)->where('estado', '=', '1')->first();
 		$moneda = $moneda_tabla->getMaestroByTipo("1");
 
-        print_r($moneda);exit();
+        //print_r($moneda);exit();
 		
-		return view('frontend.ingreso.modal_otro_pago',compact('concepto','moneda'));
+		return view('frontend.ingreso.modal_otro_pago',compact('moneda'));
 	}
 
 }
