@@ -150,7 +150,7 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+						<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm" >
 							<option value="">--Regional--</option>
 							<?php
 							foreach ($region as $row) {?>
@@ -160,20 +160,36 @@
 							?>
 						</select>
 					</div>
-					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Razon Social">
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="Numero Cap">
+					</div>
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="numero_documento_bus" name="numero_documento_bus" placeholder="Numero Documento">
+					</div>
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="fecha_inicio_bus" name="fecha_inicio_bus" placeholder="Fecha Desde">
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Hasta">
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado" id="estado" class="form-control form-control-sm">
-							<option value="">Todos</option>
-							<option value="1" selected="selected">Activo</option>
-							<option value="0">Eliminado</option>
+						<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm" >
+							<option value="">--Situaci&oacute;n--</option>
+							<?php
+							foreach ($situacion_cliente as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
 						</select>
 					</div>
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>
+						<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 					</div>
 				</div>
 				

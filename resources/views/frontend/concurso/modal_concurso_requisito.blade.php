@@ -284,7 +284,7 @@ function fn_save_documento(){
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha Documento</label>
-								<input id="fecha_documento" name="fecha_documento" class="form-control form-control-sm"  value="" type="text">
+								<input id="fecha_documento" name="fecha_documento" class="form-control form-control-sm"  value="<?php echo $inscripcionDocumento->fecha_documento?>" type="text">
 							</div>
 						</div>
 						
@@ -295,8 +295,11 @@ function fn_save_documento(){
 									Examinar <input id="image" name="image" type="file" />
 								</span>
 								<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:10px">
-								
-								<img src="/img/carnet_vacuna.jpg" id="img_ruta" width="240px" height="150px" alt="" style="margin-top:10px" />
+								<?php
+								$img = "/img/logo-sin-fondo2.png";
+								if($inscripcionDocumento->ruta_archivo!="")$img="/img/documento/".$inscripcionDocumento->ruta_archivo;
+								?>
+								<img src="<?php echo $img?>" id="img_ruta" width="240px" height="150px" alt="" style="margin-top:10px" />
 								<input type="hidden" id="img_foto" name="img_foto" value="" />
 							</div>	
 						</div>

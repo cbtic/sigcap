@@ -210,10 +210,15 @@ Route::post('concurso/send_concurso_documento', [ConcursoController::class, 'sen
 
 Route::get('concurso/obtener_concurso_documento/{id}', [ConcursoController::class, 'obtener_concurso_documento'])->name('concurso.obtener_concurso_documento');
 
+Route::get('concurso/obtener_concurso_requisito/{id}', [ConcursoController::class, 'obtener_concurso_requisito'])->name('concurso.obtener_concurso_requisito');
+
 Route::get('concurso/modal_requisito/{id}', [ConcursoController::class, 'modal_requisito'])->name('concurso.modal_requisito');
 
 Route::post('concurso/send_requisito', [ConcursoController::class, 'send_requisito'])->name('concurso.send_requisito');
 Route::post('concurso/listar_requisito', [ConcursoController::class, 'listar_requisito'])->name('concurso.listar_requisito');
 
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');
+
+Route::get('concurso/create_resultado', [ConcursoController::class, 'create_resultado'])->name('concurso.create_resultado');
+Route::post('concurso/send_inscripcion_resultado', [ConcursoController::class, 'send_inscripcion_resultado'])->name('concurso.send_inscripcion_resultado');
 
