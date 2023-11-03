@@ -560,26 +560,22 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">N° Documento/ Ruc</label>
+								<label class="control-label form-control-sm">N° Doc. / Nombre</label>
 								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="" type="text" readonly>
 							
 							</div>
 						</div>
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Monbre / Razón Social</label>
-								<input id="periodo" name="periodo" on class="form-control form-control-sm"  value="" type="text" >
-							
-							</div>
-						</div>
 
-						<div class="card-body">				
+						<div class="card-body">
+						<?php $seleccionar_todos="style='display:block'";?>				
 							<div class="table-responsive">
 								<table id="tblConceptos" class="table table-hover table-sm">
 									<thead>
 										<tr style="font-size:13px">
-											<th>Id</th>
-											<th>codigo</th>
+											<th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
+                                        		<input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?> >
+											</th>	
+											<th>Código</th>
 											<th>Denominación</th>
 											<th>Moneda</th>
 											<th>Importe</th>                                                        
