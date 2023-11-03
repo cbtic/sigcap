@@ -142,9 +142,5 @@ class EmpresaController extends Controller
 		$empresa->save();
 
 		echo $empresa->id;
-
     }
-
-
-
 }
