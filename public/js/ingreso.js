@@ -662,6 +662,7 @@ function modal_otro_pago(){
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 	var perido = "2023";
+	
 
 	$.ajax({
 			url: "/ingreso/otro_pago/"+perido,
@@ -669,8 +670,10 @@ function modal_otro_pago(){
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
+					
 			}
 	});
+	cargarConceptos();
 
 }
 

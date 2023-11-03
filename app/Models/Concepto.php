@@ -16,7 +16,7 @@ class Concepto extends Model
 
     }
 
-    function obtener_conceptos($periodo){
+    function getConceptoPeriodo($periodo){
  
         $cad = "
         select *
