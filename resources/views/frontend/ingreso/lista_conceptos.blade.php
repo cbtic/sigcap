@@ -6,7 +6,7 @@ $valor_venta = 0;
 $igv = 0;
 
 foreach($conceptos as $key=>$row):
-	$monto = $row->monto;
+	$monto = $row->importe;
 	$stotal = str_replace(",","",number_format($monto/1.18,1));
 	$igv_   = str_replace(",","",number_format($stotal * 0.18,1));
 ?>
@@ -29,22 +29,22 @@ foreach($conceptos as $key=>$row):
 			<input type="hidden" name="concepto[<?php echo $key?>][cantidad]" value="1" /> 
 			<input type="hidden" name="concepto[<?php echo $key?>][descuento]" value="" />   
 			<input type="hidden" name="concepto[<?php echo $key?>][centro_costo]" value="centro_costo" />   
-
-			<th>Id</th>
-											<th>codigo</th>
-											<th>Denominación</th>
-											<th>Moneda</th>
-											<th>Importe</th>  
 											
         </div>
     </td>
+	
 	<td class="text-left"><?php echo $row->codigo?></td>
     <td class="text-left"><?php echo $row->denominacion?></td>
+	<td class="text-left"><?php echo $row->moneda?></td>
+	<td class="text-left"><?php echo $row->importe?></td>
+
+	<!--
 	<td class="text-right val_total_">	
-	<span class="val_descuento" style="float:left"></span>
-	<span class="val_total"><?php echo $row->importe?></span>
-	<input type="hidden" class="tipo_factura" value="FT" />
+		<span class="val_descuento" style="float:left"></span>
+		<span class="val_total"><?php //echo $row->importe?></span>	
+		<input type="hidden" class="tipo_factura" value="FT" />
 	</td>
+-->
 
 </tr>
 <?php 

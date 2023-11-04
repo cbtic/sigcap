@@ -45,8 +45,8 @@ class IngresoController extends Controller
     public function obtener_conceptos($perido){
 
         $conceptos_model = new Concepto;        
-        $conceptos = $conceptos_model->getConcepto($perido);
-        //print_r($valorizacion);exit();
+        $conceptos = $conceptos_model->getConceptoPeriodo($perido);
+        //print_r($conceptos);exit();
         return view('frontend.ingreso.lista_conceptos',compact('conceptos'));
 
     }
