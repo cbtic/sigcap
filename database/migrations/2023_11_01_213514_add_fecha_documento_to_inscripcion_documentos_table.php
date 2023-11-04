@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCuentaContableToConceptos extends Migration
+class AddFechaDocumentoToInscripcionDocumentosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class AddCuentaContableToConceptos extends Migration
      */
     public function up()
     {
-        Schema::table('conceptos', function (Blueprint $table) {
-            $table->string('cuenta_contable_debe',20)->nullable();
-            $table->string('cuenta_contable_al_haber1',20)->nullable();
-            $table->string('cuenta_contable_al_haber2',20)->nullable();
+        Schema::table('inscripcion_documentos', function (Blueprint $table) {
+            $table->date('fecha_documento')->nullable();
         });
     }
 
@@ -27,7 +25,7 @@ class AddCuentaContableToConceptos extends Migration
      */
     public function down()
     {
-        Schema::table('conceptos', function (Blueprint $table) {
+        Schema::table('inscripcion_documentos', function (Blueprint $table) {
             //
         });
     }

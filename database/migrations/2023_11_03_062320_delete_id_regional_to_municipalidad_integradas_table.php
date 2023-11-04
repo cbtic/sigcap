@@ -22,7 +22,7 @@ class DeleteIdRegionalToMunicipalidadIntegradasTable extends Migration
             $table->bigInteger('id_periodo_comisiones')->unsigned()->index();
             $table->bigInteger('id_coodinador')->unsigned()->index();
   
-            $table->foreign('')->references('id_regional')->on('regiones');
+            //$table->foreign('')->references('id_regional')->on('regiones');
   
 
         });

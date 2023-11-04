@@ -13,7 +13,7 @@ $(document).ready(function () {
 	});
 	
 	$('#btnGuardar').on('click', function () {
-		guardar_inscripcion()
+		guardar_inscripcion_resultado()
 		//Limpiar();
 		//window.location.reload();
 	});
@@ -85,7 +85,7 @@ function aperturar(accion){
     });
 }
 
-function guardar_inscripcion(){
+function guardar_inscripcion_resultado(){
     //alert("cvvfv");
     var msg = "";
     
@@ -95,13 +95,13 @@ function guardar_inscripcion(){
 function fn_save(){
     
     $.ajax({
-			url: "/concurso/send_inscripcion",
+			url: "/concurso/send_inscripcion_resultado",
             type: "POST",
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
                     //location.href="/concurso/editar_inscripcion/"+result;
-					
+					datatablenew();
 					//window.location.reload();
 					//Limpiar();
 					/*$('#openOverlayOpc').modal('hide');
@@ -1740,12 +1740,39 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
+                	var numero_cap = "";
+					if(row.numero_cap!= null)numero_cap = row.numero_cap;
+					return numero_cap;
+                },
+                "bSortable": false,
+                "aTargets": [5]
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var numero_documento = "";
+					if(row.numero_documento!= null)numero_documento = row.numero_documento;
+					return numero_documento;
+                },
+                "bSortable": false,
+                "aTargets": [6]
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var apellido_paterno = "";
+					if(row.apellido_paterno!= null)apellido_paterno = row.apellido_paterno+" "+row.apellido_materno+" "+row.nombres;
+					return apellido_paterno;
+                },
+                "bSortable": false,
+                "aTargets": [7]
+                },
+				{
+                "mRender": function (data, type, row) {
                 	var puntaje = "";
 					if(row.puntaje!= null)puntaje = row.puntaje;
 					return puntaje;
                 },
                 "bSortable": false,
-                "aTargets": [5]
+                "aTargets": [8]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1754,7 +1781,7 @@ function datatablenew(){
 					return estado;
                 },
                 "bSortable": false,
-                "aTargets": [6]
+                "aTargets": [9]
                 },
 				{
 					"mRender": function (data, type, row) {
@@ -1762,13 +1789,13 @@ function datatablenew(){
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarConcursoInscripcion('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						
-						html += '<a href="javascript:void(0)" onclick=eliminarPuesto('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+						//html += '<a href="javascript:void(0)" onclick=eliminarPuesto('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
 						
 						html += '</div>';
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [7],
+					"aTargets": [10],
 				},
 				
 				
@@ -1820,19 +1847,27 @@ function editarConcursoInscripcion(id){
 		url: '/concurso/obtener_concurso_inscripcion/'+id,
 		dataType: "json",
 		success: function(result){
-			
+			//alert(result);
 			console.log(result);
 			$('#id_concurso_inscripcion').val(result.id);
+			//$('#id_tipo_plaza').val(result.id_tipo_plaza);
+			//$('#numero_plazas').val(result.numero_plazas);
 			var numero_comprobante = result.tipo+result.serie+"-"+result.numero;
 			$('#numero_comprobante').val(numero_comprobante);
 			
 			$('#fecha_delegatura_inicio').val(result.fecha_delegatura_inicio);
 			$('#fecha_delegatura_fin').val(result.fecha_delegatura_fin);
-			
+			$('#numero_cap').val(result.numero_cap);
+			$('#nombres').val(result.apellido_paterno+" "+result.apellido_materno+" "+result.nombres);
+			$('#numero_documento').val(result.numero_documento);
+			$('#region').val(result.region);
+			$('#situacion').val(result.situacion);
+			$('#puesto').val(result.puesto);
+			$('#tipo_concurso').val(result.periodo+" - "+result.tipo_concurso);
 			$('#id_concurso').val(result.id_concurso);
-			
-			cargarRequisitos(result.id);
-			cargarRequisitoConcurso(result.id_concurso);
+			$('#puntaje').val(result.puntaje);
+			$('#id_estado').val(result.resultado);
+			cargarRequisitos(result.id);	
 			
 		}
 		
@@ -1853,18 +1888,6 @@ function cargarRequisitos(id_concurso_inscripcion){
 
 }
 
-function cargarRequisitoConcurso(id_concurso_inscripcion){
-       
-    $("#tblSolicitud tbody").html("");
-	$.ajax({
-			url: "/concurso/obtener_concurso_requisito/"+id_concurso_inscripcion,
-			type: "GET",
-			success: function (result) {  
-					$("#tblRequisito tbody").html(result);
-			}
-	});
-
-}
 
 function obtener_datos_concurso(){
 	
@@ -1873,9 +1896,6 @@ function obtener_datos_concurso(){
 	
 	$("#fecha_delegatura_inicio").val(fecha_delegatura_inicio);
 	$("#fecha_delegatura_fin").val(fecha_delegatura_fin);
-	
-	var id_concurso = $("#id_concurso").val();
-	cargarRequisitoConcurso(id_concurso);
 	
 }
 

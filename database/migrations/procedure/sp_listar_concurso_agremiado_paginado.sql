@@ -20,7 +20,7 @@ begin
 	
 	v_campos=' t1.id,t5.periodo,t6.denominacion tipo_concurso,to_char(t1.created_at,''dd-mm-yyyy'')fecha_inscripcion,
 t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,
-t7.denominacion situacion,t8.denominacion region,t10.tipo,t10.serie,t10.numero ';
+t7.denominacion situacion,t8.denominacion region,t10.tipo,t10.serie,t10.numero,t1.puntaje,t1.resultado ';
 
 	v_tabla=' from concurso_inscripciones t1 
 inner join agremiados t2 on t1.id_agremiado=t2.id
@@ -61,4 +61,3 @@ End
 
 $function$
 ;
-

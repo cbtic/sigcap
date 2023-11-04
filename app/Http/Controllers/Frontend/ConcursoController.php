@@ -47,6 +47,19 @@ class ConcursoController extends Controller
         return view('frontend.concurso.create',compact('concurso','agremiado'));
     }
 	
+	public function create_resultado(){
+		
+		$agremiado_model = new Agremiado();
+		$concurso_model = new Concurso();
+		
+		$id_persona = Auth::user()->id_persona;
+		//echo $id_user;
+		$concurso = $concurso_model->getConcurso();
+		$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
+		
+        return view('frontend.concurso.create_resultado',compact('concurso','agremiado'));
+    }
+	
 	public function editar_inscripcion($id){
 		
 		//$agremiado_model = new Agremiado();
@@ -315,16 +328,20 @@ class ConcursoController extends Controller
 			
 		}
 		
-		/*
-		$concurso->id_tipo_concurso = $request->id_tipo_concurso;
-		$concurso->periodo = $request->periodo;
-		$concurso->fecha = $request->fecha;
-		$concurso->fecha_inscripcion = $request->fecha_inscripcion;
-		$concurso->estado = 1;
-		$concurso->id_usuario_inserta = $id_user;
-		$concurso->save();
-		*/
     }
+	
+	public function send_inscripcion_resultado(Request $request){
+		
+		$id_user = Auth::user()->id;
+		$concursoInscripcione = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+		$concursoInscripcione->puntaje = $request->puntaje;
+		$concursoInscripcione->resultado = $request->id_estado;
+		$concursoInscripcione->puesto = $concursoInscripcione->id_concurso_puesto;
+		$concursoInscripcione->save();
+		echo $concursoInscripcione->id;
+		
+    }
+	
 	
 	public function obtener_puesto($id){
 		
@@ -347,6 +364,15 @@ class ConcursoController extends Controller
         $inscripcionDocumento_model = new InscripcionDocumento;
         $inscripcionDocumento = $inscripcionDocumento_model->getConcursoInscripcionDocumentoById($id_concurso_inscripcion);
         return view('frontend.concurso.lista_requisito',compact('inscripcionDocumento'));
+
+    }
+	
+	public function obtener_concurso_requisito($id){
+
+        $concurso_model = new Concurso;
+        $concursoRequisito = $concurso_model->getConcursoRequisitoByIdConcurso($id);
+		
+        return view('frontend.concurso.lista_concurso_requisito',compact('concursoRequisito'));
 
     }
 	
@@ -378,19 +404,54 @@ class ConcursoController extends Controller
 		$id_user = Auth::user()->id;
 		
 		if($request->id == 0){
+		
 			$inscripcionDocumento = new InscripcionDocumento;
+			
+			if($request->img_foto!=""){
+				$filepath_tmp = public_path('img/frontend/tmp_documento/');
+				$filepath_nuevo = public_path('img/documento/');
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+				
+				$inscripcionDocumento->ruta_archivo = $request->img_foto;
+			}
+			
 		}else{
+		
 			$inscripcionDocumento = InscripcionDocumento::find($request->id);
+				
+			if($request->img_foto!="" && $inscripcionDocumento->ruta_archivo!=$request->img_foto){
+				$filepath_tmp = public_path('img/frontend/tmp_documento/');
+				$filepath_nuevo = public_path('img/documento/');
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+				
+				$inscripcionDocumento->ruta_archivo = $request->img_foto;
+			}
+			
 		}
+		
+		
 		
 		$inscripcionDocumento->id_concurso_inscripcion = $request->id_concurso_inscripcion;
 		$inscripcionDocumento->id_tipo_documento = $request->id_tipo_documento;
+		//$inscripcionDocumento->ruta_archivo = $request->img_foto;
+		$inscripcionDocumento->fecha_documento = $request->fecha_documento;
 		$inscripcionDocumento->observacion = $request->observacion;
 		$inscripcionDocumento->estado = 1;
 		$inscripcionDocumento->id_usuario_inserta = $id_user;
 		$inscripcionDocumento->save();
 			
     }
-		
+	
+	public function upload_documento(Request $request){
+
+    	$filepath = public_path('img/frontend/tmp_documento/');
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		echo $_FILES['file']['name'];
+	}
+	
 	
 }
