@@ -132,17 +132,18 @@ $(document).ready(function() {
 <script type="text/javascript">
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
-     $('#fecha').datepicker({
+     $('#fecha_documento').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
 		container: '#openOverlayOpc modal-body'
      });
-	 
+	 /*
 	 $('#fecha_inscripcion').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
 		container: '#openOverlayOpc modal-body'
      });
+	 */
 	 /*
 	 $('#hora_solicitud').timepicker({
 		showInputs: false,
@@ -172,6 +173,34 @@ function validacion(){
 }
 
 
+$(document).ready(function() {
+    $(".upload").on('click', function() {
+        var formData = new FormData();
+        var files = $('#image')[0].files[0];
+        formData.append('file',files);
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/concurso/upload_documento",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response != 0) {
+                    $("#img_ruta").attr("src", "/img/frontend/tmp_documento/"+response);
+					$("#img_foto").val(response);
+                } else {
+                    alert('Formato de imagen incorrecto.');
+                }
+            }
+        });
+        return false;
+    });
+});
+
+
 function fn_save_documento(){
     
 	var _token = $('#_token').val();
@@ -179,11 +208,13 @@ function fn_save_documento(){
 	var id_concurso_inscripcion = $("#id_concurso_inscripcion").val();
 	var id_tipo_documento = $('#id_tipo_documento').val();
 	var observacion = $('#observacion').val();
+	var img_foto = $('#img_foto').val();
+	var fecha_documento = $('#fecha_documento').val();
 	
     $.ajax({
 			url: "/concurso/send_concurso_documento",
             type: "POST",
-            data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,observacion:observacion},
+            data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,observacion:observacion,img_foto:img_foto,fecha_documento:fecha_documento},
 			//dataType: 'json',
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
@@ -248,6 +279,29 @@ function fn_save_documento(){
 									?>
 								</select>
 							</div>
+						</div>
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Documento</label>
+								<input id="fecha_documento" name="fecha_documento" class="form-control form-control-sm"  value="<?php echo $inscripcionDocumento->fecha_documento?>" type="text">
+							</div>
+						</div>
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+								
+								<span class="btn btn-sm btn-warning btn-file">
+									Examinar <input id="image" name="image" type="file" />
+								</span>
+								<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:10px">
+								<?php
+								$img = "/img/logo-sin-fondo2.png";
+								if($inscripcionDocumento->ruta_archivo!="")$img="/img/documento/".$inscripcionDocumento->ruta_archivo;
+								?>
+								<img src="<?php echo $img?>" id="img_ruta" width="240px" height="150px" alt="" style="margin-top:10px" />
+								<input type="hidden" id="img_foto" name="img_foto" value="" />
+							</div>	
 						</div>
 						
 						<div class="col-lg-12">

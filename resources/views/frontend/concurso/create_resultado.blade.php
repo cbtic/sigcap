@@ -361,7 +361,7 @@ label.form-control-sm{
                                                 <div id="" class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <strong>
-                                                            Registrar al concurso
+                                                            Resultado de concurso
                                                         </strong>
 														
                                                     </div>
@@ -373,199 +373,116 @@ label.form-control-sm{
 												<div style="clear:both"></div>
 												
 												<div class="row">
-												
-													<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 													
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-															Tipo concurso
-															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<select name="id_concurso" id="id_concurso" class="form-control form-control-sm" onchange="obtener_datos_concurso()">
-																<option value="">--Selecionar--</option>
-																<?php
-																foreach ($concurso as $row) {?>
-																<option 
-																fecha_delegatura_inicio="<?php echo $row->fecha_delegatura_inicio?>"
-																fecha_delegatura_fin="<?php echo $row->fecha_delegatura_fin?>"
-																value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso?></option>
-																<?php 
-																}
-																?>
-															</select>
-															</div>
-														</div>
-														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-															F. Deleg. Inicio
-															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_delegatura_inicio" id="fecha_delegatura_inicio" value="" class="form-control form-control-sm" readonly="readonly">
-															</div>
-														</div>
-														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-															F. Deleg. Fin
-															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_delegatura_fin" id="fecha_delegatura_fin" value="" class="form-control form-control-sm" readonly="readonly">
-															</div>
-														</div>
-														
-														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-															N&deg; CAP
-															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly="readonly">
-															</div>
-														</div>
-														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-															Nombre
-															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="nombres" id="nombres" value="<?php echo $agremiado->apellido_paterno." ".$agremiado->apellido_materno." ".$agremiado->nombres?>" class="form-control form-control-sm" readonly="readonly">
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-															DNI
-															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $agremiado->numero_documento?>" class="form-control form-control-sm" readonly="readonly">
-															</div>
-														</div>
-														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-															Regional
-															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="region" id="region" value="<?php echo $agremiado->region?>" class="form-control form-control-sm" readonly="readonly">
-															</div>
-														</div>
-														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-															Situaci&oacute;n
-															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="situacion" id="situacion" value="<?php echo $agremiado->situacion?>" class="form-control form-control-sm" readonly="readonly">
-															</div>
-														</div>
-													
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+														Tipo de concurso
 													</div>
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+														<input type="text" name="tipo_concurso" id="tipo_concurso" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Fecha Deleg. Inicio
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="fecha_delegatura_inicio" id="fecha_delegatura_inicio" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Fecha Deleg. Fin
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="fecha_delegatura_fin" id="fecha_delegatura_fin" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+												</div>
+														
+												<div class="row">
 													
-													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-														
-														<div class="row" style="padding:0px 0px 10px 0px">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
-																<strong>Requisitos</strong>
-															</div>
-														</div>
-														
-														<div class="row">	
-															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														N&deg; CAP
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="numero_cap" id="numero_cap" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Nombre
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="nombres" id="nombres" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														DNI
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="numero_documento" id="numero_documento" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+												</div>
 												
-																	<div class="table-responsive">
-																	<table id="tblRequisito" class="table table-hover table-sm">
-																	<thead>
-																		<tr style="font-size:13px">
-																			<th>N&deg;</th>
-																			<th>Tipo de Doc</th>
-																			<th>Requisito</th>
-																		</tr>
-																	</thead>
-																	<tbody style="font-size:13px">
-																	</tbody>							
-																	</table>
-																	
-																</div>
+												<div class="row">
+												
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Regional
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="region" id="region" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+														
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Situaci&oacute;n
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="situacion" id="situacion" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Puesto
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="puesto" id="puesto" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+												</div>
+														
+												<div class="row">
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Puntaje
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="puntaje" id="puntaje" value="" class="form-control form-control-sm">
+													</div>
+														
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Estado
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<select name="id_estado" id="id_estado" class="form-control form-control-sm">
+															<option value="">--Selecionar--</option>
+															<option value="Ingreso">Ingreso</option>
+															<option value="No Ingreso">No Ingreso</option>
+															<?php
+															//foreach ($concurso as $row) {?>
+															<!--<option value="<?php //echo $row->id?>"><?php //echo $row->periodo." - ".$row->tipo_concurso?></option>-->
+															<?php 
+															//}
+															?>
+														</select>
+													</div>
+												</div>
+													
+													<!--
+													<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+													
+														<div class="row">
 															
-															</div>
-														</div>
-														<!--
-														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
-														-->
-														
-													</div>
-													
-													
-													<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-													
-														<div class="row">
-															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px">
-															Codigo de Pago
-															</div>
-															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_comprobante" id="numero_comprobante" value="<?php //echo $agremiado->numero_cap?>" class="form-control form-control-sm">
-															</div>
 															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-															<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;" />
+																<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;" />
 															</div>
 														</div>
-														
-														<div class="row" style="padding:15px 0px 10px 0px">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
-																<strong>Registrar Documentos</strong>
-															</div>
-															<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
-																<input class="btn btn-warning pull-rigth" value="Nuevo" type="button" id="btnNuevo" style="margin-left:0px" />
-															</div>
-														</div>
-														
-														<div class="row">	
-															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												
-																	<div class="table-responsive">
-																	<table id="tblSolicitud" class="table table-hover table-sm">
-																	<thead>
-																		<tr style="font-size:13px">
-																			<th>N&deg;</th>
-																			<th>Tipo de Doc</th>
-																			<th>Nombre del documento</th>
-																			<th>Fecha</th>
-																			<th class="text-left">Archivo</th>
-																			<th class="text-left">Opc</th>
-																		</tr>
-																	</thead>
-																	<tbody style="font-size:13px">
-																	</tbody>							
-																	</table>
-																	
-																</div>
-															
-															</div>
-														</div>
-														<!--
-														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
-														-->
 														
 													</div>
-													
-													
-													
-												</div>
-												
-												
-												
-												</div>
-												
-											
-														
-											<div class="card-body">
-											
-												<div class="row" style="padding:15px 0px 10px 0px">
-													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
-														<strong>Historico de Concursos Participados</strong>
-													</div>
+													-->
 													
 												</div>
+												
+											</div>
+												
+											<div class="card-body">				
 
 												<div class="table-responsive">
 												<table id="tblConcurso" class="table table-hover table-sm">
@@ -576,6 +493,9 @@ label.form-control-sm{
 														<th>Tipo Concurso</th>
 														<th>Fecha</th>
 														<th>Codigo Pago</th>
+														<th>N&deg; CAP</th>
+														<th>N&deg; DNI</th>
+														<th>Nombre</th>
 														<th>Puntaje</th>
 														<th>Estado</th>
 														<th>Acciones</th>
@@ -649,7 +569,7 @@ label.form-control-sm{
     @push('after-scripts')
     
 	
-	<script src="{{ asset('js/concurso/create.js') }}"></script>
+	<script src="{{ asset('js/concurso/create_concurso.js') }}"></script>
 	<script>
 	/*
 	var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();

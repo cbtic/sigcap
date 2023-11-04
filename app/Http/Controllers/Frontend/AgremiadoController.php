@@ -176,18 +176,23 @@ class AgremiadoController extends Controller
 	public function consulta_agremiado(){
 		
 		$regione_model = new Regione;
+		$tablaMaestra_model = new TablaMaestra;
 		$region = $regione_model->getRegionAll();
-		return view('frontend.agremiado.all',compact('region'));
+		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		return view('frontend.agremiado.all',compact('region','situacion_cliente'));
 		
 	}
 	
 	public function listar_agremiado_ajax(Request $request){
 	
 		$agremiado_model = new Agremiado;
-		$p[]="";//$request->nombre;
-		$p[]="";
-		$p[]="";
-		$p[]="";
+		$p[]=$request->id_regional;
+		$p[]=$request->numero_cap;
+		$p[]=$request->numero_documento;
+		$p[]=$request->agremiado;
+		$p[]=$request->fecha_inicio;
+		$p[]=$request->fecha_fin;
+		$p[]=$request->id_situacion;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $agremiado_model->listar_agremiado_ajax($p);
