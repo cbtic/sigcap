@@ -16,7 +16,7 @@ class AddCuentaContableToConceptos extends Migration
         Schema::table('conceptos', function (Blueprint $table) {
             $table->string('cuenta_contable_debe',20)->nullable();
             $table->string('cuenta_contable_al_haber1',20)->nullable();
-            $table->string('cuenta_contable_al_haber1',20)->nullable();
+            $table->string('cuenta_contable_al_haber2',20)->nullable();
         });
     }
 
