@@ -17,9 +17,9 @@ class CreateCertificadosTable extends Migration
             $table->id();
             $table->datetime('fecha_solicitud')->nullable(); 
             $table->datetime('fecha_emision')->nullable(); 
-            $table->Integer('id_agremiado',1)->nullable()->default('0');  
-            $table->Integer('tipo_certificado')->unsigned()->index();
-            $table->integer('dias_validez',300)->nullable();
+            $table->Integer('id_agremiado')->nullable();  
+            $table->Integer('tipo_certificado')->nullable();
+            $table->integer('dias_validez')->nullable();
             $table->string('especie_valorada',20)->nullable();
             $table->string('codigo',20)->nullable();             
             $table->string('observaciones',400)->nullable();             
