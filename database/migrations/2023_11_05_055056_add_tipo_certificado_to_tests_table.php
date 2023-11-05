@@ -14,7 +14,7 @@ class AddTipoCertificadoToTestsTable extends Migration
     public function up()
     {
         Schema::table('certificados', function (Blueprint $table) {
-            //
+            $table->bigInteger('id_tipo')->unsigned()->index()->nullable();
         });
     }
 
