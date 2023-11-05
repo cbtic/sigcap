@@ -22,6 +22,17 @@ where c.estado='1'";
         return $data;
     }
 	
+	function getConcursoRequisitoByIdConcurso($id){
+
+        $cad = "select c.id,c.denominacion requisito,tm.denominacion tipo_documento
+from concurso_requisitos c 
+inner join tabla_maestras tm on c.id_tipo_documento::int=tm.codigo::int and tm.tipo='97'
+Where c.id_concurso = ".$id;
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+		
 	public function listar_concurso($p){
 
         return $this->readFuntionPostgres('sp_listar_concurso_paginado',$p);

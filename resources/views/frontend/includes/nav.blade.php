@@ -3,7 +3,7 @@
         <x-utils.link
             :href="route('frontend.index')"
             :text="appName()"
-            class="navbar-brand" />
+           o class="navbar-brand" />
 	-->
 	
 		<a href="{{ route('frontend.index') }}" class="navbar-brand">
@@ -56,10 +56,12 @@
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Agremiado</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
-								<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>
+								<!--<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>-->
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
                                 <a href="/multa/consulta_multa" class="dropdown-item">Multas</a>
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
+                                <a href="/concurso/create" class="dropdown-item">Concurso</a>
+								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
                                 <a href="/concurso" class="dropdown-item">Concurso</a>
 						   </div>
 					</li>

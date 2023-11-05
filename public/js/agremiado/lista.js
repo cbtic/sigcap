@@ -15,22 +15,20 @@ $(document).ready(function () {
 	/*	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
-	
-	$('#fecha_inicio').datepicker({
-        autoclose: true,
-		dateFormat: 'dd/mm/yy',
-		changeMonth: true,
-		changeYear: true,
-    });
-	
-	//$("#fecha_vencimiento").datepicker($.datepicker.regional["es"]);
-	$('#fecha_vencimiento').datepicker({
-        autoclose: true,
-        dateFormat: 'dd/mm/yy',
-		changeMonth: true,
-		changeYear: true,
-    });
 	*/
+	$('#fecha_inicio_bus').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
+	$('#fecha_fin_bus').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
 	
 	/*
     $('#tblAlquiler').dataTable({
@@ -439,9 +437,13 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var nombre = $('#nombre').val();
-            var ruc = $('#ruc').val();
-			var estado = $('#estado').val();
+			var id_regional = $('#id_regional_bus').val();
+            var numero_cap = $('#numero_cap_bus').val();
+			var numero_documento = $('#numero_documento_bus').val();
+			var agremiado = $('#agremiado_bus').val();
+			var fecha_inicio = $('#fecha_inicio_bus').val();
+			var fecha_fin = $('#fecha_fin_bus').val();
+			var id_situacion = $('#id_situacion_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -449,7 +451,8 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						nombre:nombre,ruc:ruc,estado:estado,
+						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
+						agremiado:agremiado,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,id_situacion:id_situacion,
 						_token:_token
                        },
                 "success": function (result) {
@@ -503,9 +506,9 @@ function datatablenew(){
 				},
 				{
 					"mRender": function (data, type, row) {
-						var fecha_inicio = "";
-						if(row.fecha_inicio!= null)fecha_inicio = row.fecha_inicio;
-						return fecha_inicio;
+						var fecha_colegiado = "";
+						if(row.fecha_colegiado!= null)fecha_colegiado = row.fecha_colegiado;
+						return fecha_colegiado;
 					},
 					"bSortable": false,
 					"aTargets": [4]
