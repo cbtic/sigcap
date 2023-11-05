@@ -10,9 +10,9 @@ class Comisione extends Model
 {
     use HasFactory;
 
-    public function listar_municipalidad_ajax($p){
+    public function listar_comision_ajax($p){
 
-        return $this->readFuntionPostgres('sp_listar_concepto_paginado',$p);
+        return $this->readFuntionPostgres('sp_listar_municipalidad_paginado',$p);
 
     }
 
