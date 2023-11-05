@@ -3125,7 +3125,7 @@ function modalTipoConcepto(id){
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/tipoConcepto/modal_tipoConcepto_nuevoTipoConcepto/"+id,
+			url: "/tipoConcepto/listar_tipoConcepto_ajax/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);

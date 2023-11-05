@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_listar_concepto_paginado(p_regional character varying, p_codigo character varying, p_denominacion character varying, p_partida_presupuestal character varying, p_tipo_concepto character varying, p_importe character varying, p_tipo_afectacion character varying, p_moneda character varying, p_centro_costo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -19,7 +18,7 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' c.id, r.denominacion regional, c.codigo, c.denominacion , c.id_partida_presupuestal partida_presupuestal, tc.denominacion tipo_concepto, c.importe, tm.denominacion tipo_afectacion, tm2.denominacion moneda, c.periodo, c.centro_costo  ';
+	v_campos=' c.id, r.denominacion regional, c.codigo, c.denominacion , c.id_partida_presupuestal partida_presupuestal, tc.denominacion tipo_concepto, c.importe, tm.denominacion tipo_afectacion, tm2.denominacion moneda, c.periodo, c.centro_costo, c.estado ';
 
 	v_tabla='from conceptos c
 			inner join regiones r on c.id_regional = r.id
