@@ -43,7 +43,11 @@ begin
 		select last_day_month into v_last_day_month from last_day_month(v_anio, v_mes);
 		
 		for entradas in 
-		select id id_agremiado,id_persona from agremiados a
+		select id id_agremiado,id_persona 
+		from agremiados a
+		where to_char(fecha_colegiado,'yyyy')::int < p_anio::int
+		and id_categoria!='90'
+		
 		loop
 			
 			select id,importe,id_moneda, denominacion into v_id_concepto,v_importe,v_id_moneda, v_denominacion from conceptos c where codigo='00001' and periodo=v_anio::varchar;
