@@ -22,6 +22,8 @@ use App\Http\Controllers\Frontend\AfiliacionSeguroController;
 use App\Http\Controllers\Frontend\ComprobanteController;
 use App\Http\Controllers\Frontend\CertificadoController;
 
+use App\Http\Controllers\Frontend\ComisionController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -230,6 +232,8 @@ Route::get('concurso/modal_requisito/{id}', [ConcursoController::class, 'modal_r
 Route::post('concurso/send_requisito', [ConcursoController::class, 'send_requisito'])->name('concurso.send_requisito');
 Route::post('concurso/listar_requisito', [ConcursoController::class, 'listar_requisito'])->name('concurso.listar_requisito');
 
+Route::get('comision/consulta_comision', [ComisionController::class, 'consulta_comision'])->name('comision.consulta_comision');
+Route::post('comision/listar_comision_ajax', [ComisionController::class, 'listar_comision_ajax'])->name('comision.listar_comision_ajax');
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');
 
 Route::get('concurso/create_resultado', [ConcursoController::class, 'create_resultado'])->name('concurso.create_resultado');
