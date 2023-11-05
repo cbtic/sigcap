@@ -89,6 +89,7 @@
 						   aria-haspopup="true" aria-expanded="false">Caja</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
+                                <a href="/certificado/consulta_certificado" class="dropdown-item">Certificado tipo 4</a>
 
 						   </div>
 					</li>

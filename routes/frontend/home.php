@@ -20,6 +20,7 @@ use App\Http\Controllers\Frontend\ConcursoController;
 use App\Http\Controllers\Frontend\ProntoPagoController;
 use App\Http\Controllers\Frontend\AfiliacionSeguroController;
 use App\Http\Controllers\Frontend\ComprobanteController;
+use App\Http\Controllers\Frontend\CertificadoController;
 
 /*
  * Frontend Controllers
@@ -234,3 +235,4 @@ Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_doc
 Route::get('concurso/create_resultado', [ConcursoController::class, 'create_resultado'])->name('concurso.create_resultado');
 Route::post('concurso/send_inscripcion_resultado', [ConcursoController::class, 'send_inscripcion_resultado'])->name('concurso.send_inscripcion_resultado');
 
+Route::get('certificado/consulta_certificado', [CertificadoController::class, 'consulta_certificado'])->name('certificado.consulta_certificado');
