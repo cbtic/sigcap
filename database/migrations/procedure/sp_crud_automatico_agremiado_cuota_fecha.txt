@@ -34,7 +34,11 @@ begin
 	idp:=0;
 	
 	For entradas_mes in
-	select id id_agremiado,id_persona,fecha_colegiado from agremiados a where to_char(fecha_colegiado,'yyyy')=p_anio 
+	select id id_agremiado,id_persona,fecha_colegiado from agremiados a 
+	where to_char(fecha_colegiado,'yyyy')=p_anio
+	and created_at > (now()::date-1)
+	and id_categoria!='90'
+	
 	loop
 		
 		v_dia := to_char(entradas_mes.fecha_colegiado,'dd')::int;
