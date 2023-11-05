@@ -1,6 +1,6 @@
-tipo;denominacion;codigo;tipo_nombre;sub_codigo;abreviarura;orden;estado
-1;SOLES;1;MONEDA;;;1;1
-1;DOLARES AMERICANOS;2;MONEDA;;;2;1
+tipo;denominacion;codigo;tipo_nombre;sub_codigo;abreviatura;orden;estado
+1;SOLES;1;MONEDA;;PEN;1;1
+1;DOLARES AMERICANOS;2;MONEDA;;USD;2;1
 2;MASCULINO;3;SEXO;;;1;1
 2;FEMENINO;4;SEXO;;;2;1
 3;SOLTERO(A);5;ESTADO CIVIL;;;1;1
@@ -1071,3 +1071,4 @@ tipo;denominacion;codigo;tipo_nombre;sub_codigo;abreviarura;orden;estado
 98;NO INGRESO;2;RESULTADO DE CONCURSO;;;2;1
 99;INTEGRADOS;1;TIPO DE AGRUPACION MUNICIPAL;;;1;1
 99;UNICOS;2;TIPO DE AGRUPACION MUNICIPAL;;;2;1
+53;AFECTO;1;TIPO AFECTACION;;;1;1

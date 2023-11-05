@@ -48,6 +48,9 @@ class ComprobanteController extends Controller
         $empresa_model = new Empresa;
         $serie_model = new TablaMaestra;
 
+		$tabla_model = new TablaMaestra;
+		$forma_pago = $tabla_model->getMaestroByTipo('19');
+
 
         if ($trans == 'FA'){
 
@@ -116,7 +119,7 @@ class ComprobanteController extends Controller
             else{
                 $empresa = $empresa_model->getEmpresaId($ubicacion);
             }
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago'));
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -236,6 +239,12 @@ class ComprobanteController extends Controller
 
 				$fac_serie = $factura->serie;
 				$fac_numero = $factura->numero;
+
+				$factura_upd = Comprobante::find($id_factura);
+				if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+				$factura_upd->save();
+
+
 				//echo "adelanto=>".$request->adelanto."<br>";
 				//echo "adelanto=>".$request->MonAd."<br>";
 				

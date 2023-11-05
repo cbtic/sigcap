@@ -375,6 +375,7 @@ border-right: 2px solid #5cb85c!important;
                                         <th>F. Proceso</th>
                                         <th>Concepto</th>
                                         <th>F. Vencimiento</th>
+                                        <th>Moneda</th>
                                         <th class="text-right">Monto</th>
                                         <!--<th>Estado</th>-->
                                         <!--<th>Opc</th>-->
