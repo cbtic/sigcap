@@ -100,7 +100,7 @@ class ConceptoController extends Controller
 		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
 		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);*/
 		
-		return view('frontend.concepto.create',compact('regional','codigo','denominacion','partida_presupuestal','tipo_afectacion','estado'));
+		return view('frontend.concepto.create',compact('id','regional','codigo','denominacion','partida_presupuestal','tipo_afectacion','estado'));
 		
     }
 
@@ -134,7 +134,7 @@ class ConceptoController extends Controller
 			$codigo = $Concepto_model->getCodigoConcepto();
 		}else{
 			$concepto = Concepto::find($request->id);
-			$codigo = $Concepto_model->getCodigoConceptoEdit();
+			$codigo = $request->codigo;
 		}
 		
 		$concepto->id_regional = $request->id_regional;

@@ -11,10 +11,8 @@ class CajaIngreso extends Model
     function getCajaIngresoByusuario($id_usuario,$tipo){
 
         $cad = "select t1.id,t1.id_caja,t1.saldo_inicial,
-		--(select coalesce(Sum(fac_total),0) from facturas where fac_caja_id=t1.id_caja And fac_fecha >= fecha_inicio And fac_fecha <= (case when fecha_fin is null then now() else fecha_fin end))total_recaudado,
-		1000 total_recaudado,
-        --((select coalesce(Sum(fac_total),0) from facturas where fac_caja_id=t1.id_caja And fac_fecha >= fecha_inicio And fac_fecha <= (case when fecha_fin is null then now() else fecha_fin end)) + t1.saldo_inicial)saldo_total,
-		10 saldo_total,
+		(select coalesce(Sum(total),0) from comprobantes where id_caja = t1.id_caja And fecha >= fecha_inicio And fecha <= (case when fecha_fin is null then now() else fecha_fin end))total_recaudado,
+	    ((select coalesce(Sum(total),0) from comprobantes where id_caja=t1.id_caja And fecha >= fecha_inicio And fecha <= (case when fecha_fin is null then now() else fecha_fin end)) + t1.saldo_inicial)saldo_total,
 		t1.estado,t2.denominacion caja,t3.name usuario		
 		from caja_ingresos t1
         inner join tabla_maestras t2 on t1.id_caja=t2.codigo::int

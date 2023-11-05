@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION public.sp_listar_afiliado_seguro_paginado(p_cap character varying, p_nombre character varying, p_seguro character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
-AS $function$
+AS $function$	
 
 Declare
 --v_id numeric;

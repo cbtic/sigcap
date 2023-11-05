@@ -238,11 +238,11 @@ br {
                                                             <img class="logoimpresora" src="/img/logo-sin-fondo.png">
                                                         </div>
                                                         <h3>
-                                                            COLEGIO DE ARQUITECTOS DEL PERU
+                                                            COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA
                                                         </h3><br>
                                                         @endif
-                                                        <p>Av. San Felipe Nro. 999 Res. San Felipe</p>
-                                                        <p>RUC 20140412491</p>
+                                                        <p>AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA</p>
+                                                        <p>RUC 20172977911</p>
                                                     </div>
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <strong>

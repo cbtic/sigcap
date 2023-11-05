@@ -457,6 +457,7 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
+			var id = $('#id').val();
 			var denominacion = $('#denominacionBus').val();
             var partida_presupuestal = $('#partida_presupuestalBus').val();
 			var tipo_afectacion = $('#tipo_afectacion').val();
@@ -468,7 +469,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,estado:estado,
+						id:id,denominacion:denominacion,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -615,7 +616,7 @@ function modalConcepto(id){
 	$.ajax({
 			url: "/concepto/modal_concepto_nuevoConcepto/"+id,
 			type: "GET",
-			success: function (result) {  
+			success: function (result) {
 					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
 			}

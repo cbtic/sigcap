@@ -294,7 +294,7 @@ function fn_save_prontoPago(){
 							
 							<div class="col-lg-3">
 								<div class="form-group">
-									<label class="control-label form-control-sm">Porcentaje</label>
+									<label class="control-label form-control-sm">N° de Cuotas</label>
 									<input id="porcentaje" name="porcentaje" class="form-control form-control-sm"  value="<?php echo $prontoPago->porcentaje?>" type="text" pattern="[0-1]{2}[A-Za-z]{1}" >						
 								</div>
 							</div>
@@ -305,14 +305,7 @@ function fn_save_prontoPago(){
 									<input id="codigo_documento" name="codigo_documento" class="form-control form-control-sm" required value="<?php echo $prontoPago->codigo_documento?>" type="text" required>													
 								</div>
 							</div>
-							
-							<div class="col-lg-4" required>
-								<div class="form-group">
-									<label class="control-label form-control-sm">Ruta</label>
-									<input id="ruta_documento" name="ruta_documento" class="form-control form-control-sm"  value="<?php echo $prontoPago->ruta_documento?>" type="text">
-								</div>
-							</div>
-							<div class="col-lg-12">
+							<div class="col-lg-5">
 								<div class="form-group">
 									<label class="control-label form-control-sm">Concepto</label>
 									<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onchange="" required>

@@ -678,16 +678,20 @@ s
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Forma de Pago</label>
-                                                            <select name="tipo_documento" id="serieF"
-                                                                class="form-control form-control-sm"
-                                                                onchange="validaTipoDocumento()">
-                                                                <option
-                                                                    value="P">
-                                                                    <?php echo "Transferencia Bancaria"?></option>
-                                                                <option
-                                                                    value="C">
-                                                                    <?php echo "Cancelado"?></option>
+                                                            <select name="forma_pago" id="forma_pago" class="form-control form-control-sm">                                                            
+                                                                <?php foreach($forma_pago as $row):?>
+                                                                    <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                                                                <?php  endforeach;?>                                                            
                                                             </select>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Tipo de Cambio</label>
+                                                            <input type="text" name="tipo_cambio"
+                                                                id="tipo_cambio" value="{{old('clinum')}}"
+                                                                placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -765,14 +769,7 @@ s
                                                                 placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Tipo de Cambio</label>
-                                                            <input type="text" name="direccion"
-                                                                id="numero_documento" value="{{old('clinum')}}"
-                                                                placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                                 <div id="" class="row">
                                                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">

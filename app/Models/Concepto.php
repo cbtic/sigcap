@@ -23,6 +23,7 @@ class Concepto extends Model
         from conceptos
         where periodo = '".$periodo."'
         and estado = '1'
+        and genera_pago = '1'
         order by denominacion
         ";
 

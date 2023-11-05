@@ -335,7 +335,7 @@ function fn_save_estudio(){
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//window.location.reload();
 				
 				/*
 				$('#openOverlayOpc').modal('hide');
@@ -369,7 +369,7 @@ function fn_save_multa(){
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
+				window.location.reload();
 				datatablenew();
 				
 				/*
