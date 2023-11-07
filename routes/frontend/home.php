@@ -20,6 +20,7 @@ use App\Http\Controllers\Frontend\ConcursoController;
 use App\Http\Controllers\Frontend\ProntoPagoController;
 use App\Http\Controllers\Frontend\AfiliacionSeguroController;
 use App\Http\Controllers\Frontend\ComprobanteController;
+use App\Http\Controllers\Frontend\CertificadoController;
 
 use App\Http\Controllers\Frontend\ComisionController;
 
@@ -243,3 +244,4 @@ Route::post('comision/listar_municipalidad_ajax', [ComisionController::class, 'l
 
 
 
+Route::get('certificado/consulta_certificado', [CertificadoController::class, 'consulta_certificado'])->name('certificado.consulta_certificado');

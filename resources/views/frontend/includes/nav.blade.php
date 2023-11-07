@@ -60,9 +60,16 @@
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
                                 <a href="/multa/consulta_multa" class="dropdown-item">Multas</a>
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
-                                <a href="/concurso/create" class="dropdown-item">Concurso</a>
-								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
                                 <a href="/concurso" class="dropdown-item">Concurso</a>
+								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
+						   </div>
+					</li>
+					
+					<li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
+						   aria-haspopup="true" aria-expanded="false">Colegiado</a>
+						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+								<a href="/concurso/create" class="dropdown-item">Concurso</a>
 						   </div>
 					</li>
 
@@ -89,7 +96,7 @@
                                 <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Tipo de Conceptos</a>
                                 <a href="/seguro/consulta_seguro" class="dropdown-item">Seguros</a>
 								
-								<a href="/concurso" class="dropdown-item">Concurso</a>
+								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
 						   </div>
 					</li>
 				
@@ -98,6 +105,7 @@
 						   aria-haspopup="true" aria-expanded="false">Caja</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
+                                <a href="/certificado/consulta_certificado" class="dropdown-item">Certificado tipo 4</a>
 
 						   </div>
 					</li>
