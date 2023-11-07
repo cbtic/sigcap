@@ -15,7 +15,7 @@ class Valorizacione extends Model
             $cad = "
             select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso,
             (case when descripcion is null then c.denominacion else v.descripcion end) descripcion,
-            (case when v.fecha < now() then '1' else '0' end) vencio
+            (case when v.fecha < now() then '1' else '0' end) vencio, v.id_tipo_concepto
             from valorizaciones v
             inner join conceptos c  on c.id = v.id_concepto
             inner join agremiado_cuotas a  on a.id = v.pk_registro
@@ -29,7 +29,7 @@ class Valorizacione extends Model
             --select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
             (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
-            (case when v.fecha < now() then '1' else '0' end) vencio
+            (case when v.fecha < now() then '1' else '0' end) vencio, v.id_tipo_concepto
             from valorizaciones v
             inner join conceptos c  on c.id = v.id_concepto
             --inner join agremiado_cuotas a  on a.id = v.pk_registro
