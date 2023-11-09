@@ -95,6 +95,7 @@
 								<a href="/concepto/consulta_concepto" class="dropdown-item">Conceptos</a>
                                 <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Tipo de Conceptos</a>
                                 <a href="/seguro/consulta_seguro" class="dropdown-item">Seguros</a>
+                                <a href="/periodoComision/consulta_periodoComision" class="dropdown-item">Periodo Comisi&oacute;n</a>
 								
 								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
 						   </div>

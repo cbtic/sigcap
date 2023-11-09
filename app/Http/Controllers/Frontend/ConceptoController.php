@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Concepto;
+use App\Models\TipoConcepto;
 use App\Models\Regione;
 use App\Models\TablaMaestra;
 use Auth;
@@ -36,11 +37,15 @@ class ConceptoController extends Controller
 		$p[]="";//$request->nombre;
 		$p[]="";
 		$p[]=$request->denominacion;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
         $p[]=$request->partida_presupuestal;
-		$p[]="";
-		$p[]="";
 		$p[]=$request->tipo_afectacion;
-		$p[]="";
 		$p[]="";
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
@@ -108,6 +113,7 @@ class ConceptoController extends Controller
 		
 		$concepto = new Concepto;
 		$regione_model = new Regione;
+		$tipoConcepto_model = new TipoConcepto;
 		$tablaMaestra_model = new TablaMaestra;
 		$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
 		$moneda = $tablaMaestra_model->getMaestroByTipo(1);
@@ -118,9 +124,11 @@ class ConceptoController extends Controller
 			$concepto = new Concepto;
 		}
 		
+		
+		$tipoConcepto = $tipoConcepto_model->getTipoConceptoAll();
 		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','concepto','region','tipo_afectacion','moneda'));
+		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','tipoConcepto','concepto','region','tipo_afectacion','moneda'));
 	
 	}
 

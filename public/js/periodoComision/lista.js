@@ -7,13 +7,19 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
-	$('#denominacionBus').keypress(function(e){
+	$('#descripcion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
 	});
 	
-	$('#tipo_afectacion').keypress(function(e){
+	$('#fechaIni').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#fechaFin').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
@@ -26,7 +32,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalConcepto(0);
+		modalPeriodoComision(0);
 	});
 		
 	datatablenew();
@@ -430,7 +436,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/concepto/listar_concepto_ajax",
+        "sAjaxSource": "/periodoComision/listar_consulta_periodoComision_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -458,9 +464,9 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			var id = $('#id').val();
-			var denominacion = $('#denominacionBus').val();
-            var partida_presupuestal = $('#partida_presupuestalBus').val();
-			var tipo_afectacion = $('#tipo_afectacion').val();
+			var descripcion = $('#descripcion').val();
+            var fecha_inicio = $('#fecha_inicio').val();
+			var fecha_fin = $('#fecha_fin').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -469,7 +475,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,denominacion:denominacion,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,estado:estado,
+						id:id,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -485,9 +491,9 @@ function datatablenew(){
             [	
 				{
 				"mRender": function (data, type, row) {
-					var codigo = "";
-					if(row.codigo!= null)codigo = row.codigo;
-					return codigo;
+					var descripcion = "";
+					if(row.descripcion!= null)descripcion = row.descripcion;
+					return descripcion;
 					},
 				"bSortable": false,
 				"aTargets": [0],
@@ -495,9 +501,9 @@ function datatablenew(){
 				},
 				{
                 "mRender": function (data, type, row) {
-                	var regional = "";
-					if(row.regional!= null)regional = row.regional;
-					return regional;
+                	var fecha_inicio = "";
+					if(row.fecha_inicio!= null)fecha_inicio = row.fecha_inicio;
+					return fecha_inicio;
                 },
                 "bSortable": false,
                 "aTargets": [1],
@@ -506,104 +512,13 @@ function datatablenew(){
                 },
                 {
                 "mRender": function (data, type, row) {
-                	var denominacion = "";
-					if(row.denominacion!= null)denominacion = row.denominacion;
-					return denominacion;
+                	var fecha_fin = "";
+					if(row.fecha_fin!= null)fecha_fin = row.fecha_fin;
+					return fecha_fin;
                 },
                 "bSortable": false,
                 "aTargets": [2]
                 },
-				{
-				"mRender": function (data, type, row) {
-					var partida_presupuestal = "";
-					if(row.partida_presupuestal!= null)partida_presupuestal = row.partida_presupuestal;
-					return partida_presupuestal;
-				},
-				"bSortable": false,
-				"aTargets": [3]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var tipo_concepto = "";
-					if(row.tipo_concepto!= null)tipo_concepto = row.tipo_concepto;
-					return tipo_concepto;
-				},
-				"bSortable": false,
-				"aTargets": [2]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var importe = "";
-					if(row.importe!= null)importe = row.importe;
-					return importe;
-				},
-				"bSortable": false,
-				"aTargets": [4]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var moneda = "";
-					if(row.moneda!= null)moneda = row.moneda;
-					return moneda;
-				},
-				"bSortable": false,
-				"aTargets": [6]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var periodo = "";
-					if(row.periodo!= null)periodo = row.periodo;
-					return periodo;
-				},
-				"bSortable": false,
-				"aTargets": [6]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var cuenta_contable_debe = "";
-					if(row.cuenta_contable_debe!= null)cuenta_contable_debe = row.cuenta_contable_debe;
-					return cuenta_contable_debe;
-				},
-				"bSortable": false,
-				"aTargets": [6]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var cuenta_contable_al_haber1 = "";
-					if(row.cuenta_contable_al_haber1!= null)cuenta_contable_al_haber1 = row.cuenta_contable_al_haber1;
-					return cuenta_contable_al_haber1;
-				},
-				"bSortable": false,
-				"aTargets": [6]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var cuenta_contable_al_haber2 = "";
-					if(row.cuenta_contable_al_haber2!= null)cuenta_contable_al_haber2 = row.cuenta_contable_al_haber2;
-					return cuenta_contable_al_haber2;
-				},
-				"bSortable": false,
-				"aTargets": [6]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var tipo_afectacion = "";
-					if(row.tipo_afectacion!= null)tipo_afectacion = row.tipo_afectacion;
-					return tipo_afectacion;
-				},
-				"bSortable": false,
-				"aTargets": [5]
-				},
-				
-				{
-				"mRender": function (data, type, row) {
-					var centro_costo = "";
-					if(row.centro_costo!= null)centro_costo = row.centro_costo;
-					return centro_costo;
-				},
-				"bSortable": false,
-				"aTargets": [7]
-				},
 				{
 				"mRender": function (data, type, row) {
 					var estado = "";
@@ -616,7 +531,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [8]
+				"aTargets": [3]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -632,8 +547,8 @@ function datatablenew(){
 					}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalConcepto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<a href="javascript:void(0)" onclick=eliminarConcepto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalPeriodoComision('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						html += '<a href="javascript:void(0)" onclick=eliminarperiodoComision('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -641,7 +556,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [4],
 				},
 
             ]
@@ -654,13 +569,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalConcepto(id){
+function modalPeriodoComision(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/concepto/modal_concepto_nuevoConcepto/"+id,
+			url: "/periodoComision/modal_periodoComision_nuevoPeriodoComision/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
@@ -686,7 +601,7 @@ function modalResponsable(id){
 
 }
 
-function eliminarConcepto(id,estado){
+function eliminarPeriodoComision(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -698,7 +613,7 @@ function eliminarConcepto(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" el Concepto?", 
+        message: "&iquest;Deseas "+act_estado+" el periodo de comision?", 
         callback: function(result){
             if (result==true) {
                 fn_eliminar_concepto(id,estado_);
@@ -708,10 +623,10 @@ function eliminarConcepto(id,estado){
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_concepto(id,estado){
+function fn_eliminar_periodoComision(id,estado){
 	
     $.ajax({
-            url: "/concepto/eliminar_concepto/"+id+"/"+estado,
+            url: "/periodoComision/eliminar_periodoComision/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

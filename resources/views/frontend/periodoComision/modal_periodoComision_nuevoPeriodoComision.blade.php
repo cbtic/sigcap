@@ -1,4 +1,4 @@
-<title>Sistema de Conceptos</title>
+<title>Sistema de Periodo de Comisiones</title>
 
 <style>
 /*
@@ -331,22 +331,17 @@ function fn_save_empresa(){
     });
 }
 
-function fn_save_concepto(){
+function fn_save_periodoComision(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var id_regional = $('#id_regional').val();
-	var codigo = $('#codigo').val();
-	var denominacion = $('#denominacion').val();
-	var id_partida_presupuestal = $('#id_partida_presupuestal').val();
-	var tipo_afectacion = $('#tipo_afectacion').val();
-	var centro_costo = $('#centro_costo').val();
-	var importe = $('#importe').val();
+	var fecha_inicio = $('#fecha_inicio').val();
+	var fecha_fin = $('#fecha_fin').val();
 	
     $.ajax({
-			url: "/concepto/send_concepto_nuevoConcepto",
+			url: "/periodoComision/send_periodoComision_nuevoPeriodoComision",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,codigo:codigo,denominacion:denominacion,id_partida_presupuestal:id_partida_presupuestal,tipo_afectacion:tipo_afectacion,centro_costo:centro_costo,importe:importe},
+            data : {_token:_token,id:id,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -524,7 +519,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro de Concepto
+				Registro de Periodo de Comisi&oacute;n
 			</div>
 			
             <div class="card-body">
@@ -539,103 +534,38 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 						
+						<!--<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Inicio</label>
+								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php /*echo $periodoComision->fecha_inicio*/?>" type="text">						
+							</div>
+						</div>-->
+						<div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+							<div style="float:left;padding-top:7px">Fecha Fin</div>
+							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
+								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control" value="<?php echo $periodoComision->fecha_inicio?>" type="text">
+								
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+							<div style="float:left;padding-top:7px">Fecha Fin</div>
+							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
+								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control" value="<?php echo $periodoComision->fecha_fin?>" type="text">
+								
+							</div>
+						</div>
+						<!--
 						<div class="col-lg-4">
 							<div class="form-group">
-								<label class="control-label form-control-sm">C&oacute;digo</label>
-								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" readonly="readonly" >						
+								<label class="control-label form-control-sm">Fecha Fin</label>
+								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php /*echo $periodoComision->fecha_fin*/?>" type="text">						
 							</div>
 						</div>
-
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Regional</label>
-								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($region as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-6">
-						<div class="form-group">
-								<label class="control-label form-control-sm">Tipo Concepto</label>
-								<select name="id_tipo_concepto" id="id_tipo_concepto" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($tipoConcepto as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_tipo_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Denominaci&oacute;n</label>
-								<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="<?php echo $concepto->denominacion?>" type="text" >													
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Partida Presupuestal</label>
-								<input id="id_partida_presupuestal" name="id_partida_presupuestal" class="form-control form-control-sm"  value="<?php echo $concepto->id_partida_presupuestal?>" type="text" >
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Importe</label>
-								<input id="importe" name="importe" class="form-control form-control-sm"  value="<?php echo $concepto->importe?>" type="text" >
-							</div>
-						</div>
-						<div class="col-lg-6">
-						<div class="form-group">
-							<label class="control-label form-control-sm">Tipo Afectaci&oacute;n</label>
-                            <select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onChange="">
-                                <option value="">--Selecionar--</option>
-                                <?php
-                                foreach ($tipo_afectacion as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-                        </div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-							<label class="control-label form-control-sm">Moneda</label>
-							<select name="moneda" id="moneda" class="form-control form-control-sm" onChange="">
-                                <option value="">--Selecionar--</option>
-                                <?php
-                                foreach ($moneda as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_moneda)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Centro de Costos</label>
-								<input id="centro_costo" name="centro_costo" class="form-control form-control-sm"  value="<?php echo $concepto->centro_costo?>" type="text" >
-							</div>
-						</div>
-						
-					</div>
-					
-					
-					
-					<div style="margin-top:15px" class="form-group">
+						</div>-->
+					<div style="margin-top:15px" class="form-group ">
 						<div class="col-sm-12 controls">
-							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_concepto()" class="btn btn-sm btn-success">Guardar</a>
+							<div class="btn-group btn-group-sm float-none " role="group" aria-label="Log Viewer Actions">
+								<a href="javascript:void(0)" onClick="fn_save_periodoComision()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

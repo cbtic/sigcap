@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Conceptos</li>
+            <li class="breadcrumb-item active">Consulta de Periodo de Comisiones</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consultar Conceptos <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consultar Periodo de Comisiones <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Conceptos
+                        Lista de Periodo de Comisiones
                     </strong>
                 </div><!--card-header-->
 				
@@ -150,22 +150,26 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacionBus" name="denominacionBus" placeholder="Nombre de Cuota">
+						<input class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripci&oacute;n de Periodo">
+					</div>
+                    <!--<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="partida_presupuestalBus" name="partida_presupuestalBus" placeholder="Partida Presupuestal">
+						<input class="form-control form-control-sm" id="fecha_fin" name="fecha_fin" placeholder="Fecha Fin">
+					</div>-->
+                    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                        <div style="float:left;padding-top:7px">Fecha Inicio</div>
+                        <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
+                            <input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control" placeholder="Fecha Inicio">
+                            
+                        </div>
 					</div>
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onchange="">
-                                <option value="">--Selecionar Tipo Afectaci&oacute;n--</option>
-                                <?php
-                                foreach ($tipo_afectacion as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
+                    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                        <div style="float:left;padding-top:7px">Fecha Fin</div>
+                        <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
+                            <input placeholder="Fecha" type="date" id="fecha_fin" class="form-control" placeholder="Fecha Fin">
+                            
                         </div>
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -175,6 +179,7 @@
 							<option value="0">Eliminado</option>
 						</select>
 					</div>
+                    
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 						
@@ -190,19 +195,9 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>C&oacute;digo</th>
-                            <th>Regional</th>
-                            <th>Concepto</th>
-                            <th>Tipo Concepto</th>
-                            <th>Importe</th>
-                            <th>Moneda</th>
-                            <th>Periodo</th>
-                            <th>Cuenta Contable Debe</th>
-                            <th>Cuenta Contable al Haber1</th>
-                            <th>Cuenta Contable al Haber2</th>
-                            <th>Partida Presupuestal</th>
-                            <th>Tipo Afectaci&oacute;n</th>
-                            <th>Centro de Costos</th>
+                            <th>Descripci&oacute;n de Periodo</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -241,6 +236,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/concepto/lista.js') }}"></script>
+<script src="{{ asset('js/periodoComision/lista.js') }}"></script>
 
 @endpush
