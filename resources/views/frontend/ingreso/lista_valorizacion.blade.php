@@ -16,7 +16,7 @@ foreach($valorizacion as $key=>$row):
 <tr style="font-size:13px">
 	<td class="text-center">
         <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">		
-			<input type="checkbox" class="mov" name="comprobante_detalles[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)" />
+			<input type="checkbox" class="mov" name="comprobante_detalles[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)" readonly="readonly" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][fecha]" value="<?php echo $row->fecha?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][denominacion]" value="<?php echo $row->concepto?>" />
@@ -36,8 +36,6 @@ foreach($valorizacion as $key=>$row):
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][cod_contable]" value="" /> 
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][descripcion]" value="<?php echo $row->descripcion?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][vencio]" value="<?php echo $row->vencio?>" /> 
-
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][id_tipo_concepto]" value="<?php echo $row->id_tipo_concepto?>" /> 
 
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][item]" value="<?php echo $n?>" /> 
         </div>

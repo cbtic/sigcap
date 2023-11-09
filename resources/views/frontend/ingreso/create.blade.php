@@ -370,7 +370,7 @@ border-right: 2px solid #5cb85c!important;
                                     <tr style="font-size:13px">
 										<!--<th class="text-right" width="5%">-->
 										<th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
-                                        	<input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?> >
+                                        	<input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?> readonly />
 										</th>										
                                         <th>F. Proceso</th>
                                         <th>Concepto</th>
