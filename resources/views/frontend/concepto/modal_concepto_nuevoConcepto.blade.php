@@ -560,7 +560,20 @@ container: '#myModal modal-body'
 								</select>
 							</div>
 						</div>
-						
+						<div class="col-lg-6">
+						<div class="form-group">
+								<label class="control-label form-control-sm">Tipo Concepto</label>
+								<select name="id_tipo_concepto" id="id_tipo_concepto" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipoConcepto as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_tipo_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Denominaci&oacute;n</label>
