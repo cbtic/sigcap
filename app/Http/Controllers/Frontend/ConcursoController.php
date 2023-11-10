@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Agremiado;
+use App\Models\Regione;
 use App\Models\Concurso;
 use App\Models\ConcursoPuesto;
 use App\Models\ConcursoInscripcione;
@@ -36,23 +37,30 @@ class ConcursoController extends Controller
 	
 	public function consulta_resultado(){
 		
-		//$regione_model = new Regione;
-		//$tablaMaestra_model = new TablaMaestra;
-		//$region = $regione_model->getRegionAll();
-		//$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
-		return view('frontend.concurso.all_resultado'/*,compact('region','situacion_cliente')*/);
+		$regione_model = new Regione;
+		$tablaMaestra_model = new TablaMaestra;
+		$concurso_model = new Concurso();
+		
+		$region = $regione_model->getRegionAll();
+		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		$concurso = $concurso_model->getConcurso();
+		
+		return view('frontend.concurso.all_resultado',compact('region','situacion_cliente','concurso'));
 		
 	}
 	
 	public function listar_resultado_ajax(Request $request){
 	
-		$concurso_model = new Concurso();
-		$p[]="";
-		$p[]="";
-		$p[]=$request->estado;          
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$p[]=$request->id_concurso;
+		$p[]=$request->numero_documento;
+		$p[]=$request->agremiado;
+		$p[]=$request->numero_cap;
+		$p[]=$request->id_regional;
+		$p[]=$request->id_situacion;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
-		$data = $concurso_model->listar_concurso($p);
+		$data = $concursoInscripcione_model->listar_concurso_agremiado($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -62,6 +70,8 @@ class ConcursoController extends Controller
 		$result["iTotalRecords"] = $iTotalDisplayRecords;
 		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
 		$result["aaData"] = $data;
+		
+		echo json_encode($result);
 	
 	}
 	
@@ -69,26 +79,38 @@ class ConcursoController extends Controller
 		
 		$agremiado_model = new Agremiado();
 		$concurso_model = new Concurso();
+		$regione_model = new Regione;
+		$tablaMaestra_model = new TablaMaestra;
 		
 		$id_persona = Auth::user()->id_persona;
 		//echo $id_user;
 		$concurso = $concurso_model->getConcurso();
 		$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
+		$region = $regione_model->getRegionAll();
+		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.concurso.create',compact('concurso','agremiado'));
+        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente'));
     }
 	
+	
+	
+	 
+
 	public function create_resultado(){
 		
 		$agremiado_model = new Agremiado();
 		$concurso_model = new Concurso();
+		$regione_model = new Regione;
+		$tablaMaestra_model = new TablaMaestra;
 		
 		$id_persona = Auth::user()->id_persona;
 		//echo $id_user;
 		$concurso = $concurso_model->getConcurso();
 		$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
+		$region = $regione_model->getRegionAll();
+		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.concurso.create_resultado',compact('concurso','agremiado'));
+        return view('frontend.concurso.create_resultado',compact('concurso','agremiado','region','situacion_cliente'));
     }
 	
 	public function editar_inscripcion($id){
@@ -133,10 +155,12 @@ class ConcursoController extends Controller
 	public function listar_concurso_agremiado(Request $request){
 	
 		$concursoInscripcione_model = new ConcursoInscripcione();
-		$p[]="";
-		$p[]="";
-		$p[]="";
-		$p[]="";
+		$p[]=$request->id_concurso;
+		$p[]=$request->numero_documento;
+		$p[]=$request->agremiado;
+		$p[]=$request->numero_cap;
+		$p[]=$request->id_regional;
+		$p[]=$request->id_situacion;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $concursoInscripcione_model->listar_concurso_agremiado($p);
