@@ -410,7 +410,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/agremiado/listar_agremiado_ajax",
+        "sAjaxSource": "/concurso/listar_resultado_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -441,9 +441,8 @@ function datatablenew(){
             var numero_cap = $('#numero_cap_bus').val();
 			var numero_documento = $('#numero_documento_bus').val();
 			var agremiado = $('#agremiado_bus').val();
-			var fecha_inicio = $('#fecha_inicio_bus').val();
-			var fecha_fin = $('#fecha_fin_bus').val();
 			var id_situacion = $('#id_situacion_bus').val();
+			var id_concurso = $('#id_concurso_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -452,7 +451,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
-						agremiado:agremiado,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,id_situacion:id_situacion,
+						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
 						_token:_token
                        },
                 "success": function (result) {
@@ -468,9 +467,9 @@ function datatablenew(){
             [	
 				{
                 "mRender": function (data, type, row) {
-                	var tipo_documento = "";
-					if(row.tipo_documento!= null)tipo_documento = row.tipo_documento;
-					return tipo_documento;
+                	var id = "";
+					if(row.id!= null)id = row.id;
+					return id;
                 },
                 "bSortable": false,
                 "aTargets": [0],
@@ -479,22 +478,67 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var numero_documento = "";
-					if(row.numero_documento!= null)numero_documento = row.numero_documento;
-					return numero_documento;
+                    var periodo = "";
+					if(row.periodo!= null)periodo = row.periodo;
+					return periodo;
                 },
                 "bSortable": false,
                 "aTargets": [1]
                 },
                 {
                 "mRender": function (data, type, row) {
-                	var numero_cap = "";
-					if(row.numero_cap!= null)numero_cap = row.numero_cap;
-					return numero_cap;
+                	var tipo_concurso = "";
+					if(row.tipo_concurso!= null)tipo_concurso = row.tipo_concurso;
+					return tipo_concurso;
                 },
                 "bSortable": false,
                 "aTargets": [2]
                 },
+				{
+					"mRender": function (data, type, row) {
+						var fecha_inscripcion = "";
+						if(row.fecha_inscripcion!= null)fecha_inscripcion = row.fecha_inscripcion;
+						return fecha_inscripcion;
+					},
+					"bSortable": false,
+					"aTargets": [3]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var pago = "";
+						if(row.numero!= null)pago = row.tipo+row.serie+'-'+row.numero;
+						return pago;
+					},
+					"bSortable": false,
+					"aTargets": [4]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var numero_cap = "";
+						if(row.numero_cap!= null)numero_cap = row.numero_cap;
+						return numero_cap;
+					},
+					"bSortable": false,
+					"aTargets": [5]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var numero_documento = "";
+						if(row.numero_documento!= null)numero_documento = row.numero_documento;
+						return numero_documento;
+					},
+					"bSortable": false,
+					"aTargets": [6]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var agremiado = "";
+						if(row.nombres!= null)agremiado = row.nombres+' '+row.apellido_paterno+' '+row.apellido_materno;
+						return agremiado;
+					},
+					"bSortable": false,
+					"aTargets": [7]
+				},
 				{
 					"mRender": function (data, type, row) {
 						var region = "";
@@ -502,34 +546,7 @@ function datatablenew(){
 						return region;
 					},
 					"bSortable": false,
-					"aTargets": [3]
-				},
-				{
-					"mRender": function (data, type, row) {
-						var fecha_colegiado = "";
-						if(row.fecha_colegiado!= null)fecha_colegiado = row.fecha_colegiado;
-						return fecha_colegiado;
-					},
-					"bSortable": false,
-					"aTargets": [4]
-				},
-				{
-					"mRender": function (data, type, row) {
-						var agremiado = "";
-						if(row.agremiado!= null)agremiado = row.agremiado;
-						return agremiado;
-					},
-					"bSortable": false,
-					"aTargets": [5]
-				},
-				{
-					"mRender": function (data, type, row) {
-						var fecha_nacimiento = "";
-						if(row.fecha_nacimiento!= null)fecha_nacimiento = row.fecha_nacimiento;
-						return fecha_nacimiento;
-					},
-					"bSortable": false,
-					"aTargets": [6]
+					"aTargets": [8]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -538,33 +555,36 @@ function datatablenew(){
 						return situacion;
 					},
 					"bSortable": false,
-					"aTargets": [7]
+					"aTargets": [9]
 				},
 				{
 					"mRender": function (data, type, row) {
-						var estado = "";
-						var clase = "";
-						if(row.estado == 1){
-							estado = "Eliminar";
-							clase = "btn-danger";
-						}
-						if(row.estado == 0){
-							estado = "Activar";
-							clase = "btn-success";
-						}
-						
-						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<a href="/agremiado/editar_agremiado/'+row.id+'" style="font-size:12px" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
-						//html += '<a href="javascript:void(0)" onclick=eliminarEmpresa('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
-						
-						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
-						
-						html += '</div>';
-						return html;
+						var puesto= "";
+						if(row.puesto!= null)puesto = row.puesto;
+						return puesto;
 					},
 					"bSortable": false,
-					"aTargets": [8],
+					"aTargets": [10]
 				},
+				{
+					"mRender": function (data, type, row) {
+						var puntaje = "";
+						if(row.puntaje!= null)puntaje = row.puntaje;
+						return puntaje;
+					},
+					"bSortable": false,
+					"aTargets": [11]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var resultado = "";
+						if(row.resultado!= null)resultado = row.resultado;
+						return resultado;
+					},
+					"bSortable": false,
+					"aTargets": [12]
+				},
+				
 
             ]
 
