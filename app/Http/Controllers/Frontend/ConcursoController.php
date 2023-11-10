@@ -34,6 +34,37 @@ class ConcursoController extends Controller
         return view('frontend.concurso.all');
     }
 	
+	public function consulta_resultado(){
+		
+		//$regione_model = new Regione;
+		//$tablaMaestra_model = new TablaMaestra;
+		//$region = $regione_model->getRegionAll();
+		//$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		return view('frontend.concurso.all_resultado'/*,compact('region','situacion_cliente')*/);
+		
+	}
+	
+	public function listar_resultado_ajax(Request $request){
+	
+		$concurso_model = new Concurso();
+		$p[]="";
+		$p[]="";
+		$p[]=$request->estado;          
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $concurso_model->listar_concurso($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+	
+	}
+	
 	public function create(){
 		
 		$agremiado_model = new Agremiado();

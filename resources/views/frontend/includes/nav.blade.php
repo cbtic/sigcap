@@ -62,6 +62,7 @@
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
                                 <a href="/concurso" class="dropdown-item">Concurso</a>
 								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
+								<a href="/concurso/consulta_resultado" class="dropdown-item">Consulta de Concurso</a>
 						   </div>
 					</li>
 					
