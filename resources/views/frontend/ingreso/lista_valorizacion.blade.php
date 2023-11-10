@@ -7,16 +7,25 @@ $valor_venta = 0;
 $igv = 0;
 $n = 0;
 
+//$count = $valorizacion->rowCount();
+$tot_reg = count($valorizacion);
+//print_r ("cuenta registros ->".$count);
+
 foreach($valorizacion as $key=>$row):
+	
+
+	$n++;
 	$monto = $row->monto;
 	$stotal = str_replace(",","",number_format($monto/1.18,1));
 	$igv_   = str_replace(",","",number_format($stotal * 0.18,1));
+	$disabled = "";
+	if($tot_reg!=$n) $disabled = "disabled";
 		
 ?>
 <tr style="font-size:13px">
 	<td class="text-center">
         <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">		
-			<input type="checkbox" class="mov" name="comprobante_detalles[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)" readonly="readonly" />
+			<input type="checkbox" class="mov" name="comprobante_detalles[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)"  <?php //echo $disabled?> />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][fecha]" value="<?php echo $row->fecha?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][denominacion]" value="<?php echo $row->concepto?>" />
@@ -59,7 +68,7 @@ foreach($valorizacion as $key=>$row):
 </tr>
 <?php 
 	$total += $row->monto;
-	$n++;
+	
 endforeach;
 ?>
 

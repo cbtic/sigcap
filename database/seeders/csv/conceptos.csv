@@ -1,7 +1,7 @@
-id_regional;codigo;denominacion;partida_presupuestal;estado;id_usuario_inserta;id_tipo_concepto;importe;id_tipo_afectacion;id_moneda;moneda;periodo;centro_costo;generar_pago;cuenta_contable_debe;cuenta_contable_al_haber1;cuenta_contable_al_haber2
-5;00001;VENTAS;;1;1;1;1;;1;SOLES;2023;;;;;70
+id_regional;codigo;denominacion;partida_presupuestal;estado;id_usuario_inserta;id_tipo_concepto;importe;id_tipo_afectacion;id_moneda;moneda;periodo;centro_costo;genera_pago;cuenta_contable_debe;cuenta_contable_al_haber1;cuenta_contable_al_haber2
+5;00001;VENTAS;;1;1;1;1;;1;SOLES;2023;;1;;;70
 5;00002;Servicios terminados;;1;1;2;1;;1;SOLES;2023;;;;;703
-5;00003;Servicios  local;;1;1;3;1;;1;SOLES;2023;;;;;7032
+5;00003;Servicios  local;;1;1;3;1;;1;SOLES;2023;;;;;7032
 5;00004;Terceros;;1;1;4;1;;1;SOLES;2023;;;;;70321
 5;00005;Colegiatura;G04010;1;1;5;1;281;1;SOLES;2023;100401;;12121;40111;703211
 5;00006;Cuota Gremial (Aportación Mensual);G02011;1;1;6;1;281;1;SOLES;2023;100201;;12121;40111;703212
@@ -12,24 +12,24 @@ id_regional;codigo;denominacion;partida_presupuestal;estado;id_usuario_inserta;i
 5;00011;Habilitaciones Urbanas de Obra;G06011;1;1;11;1;279;1;SOLES;2023;100602;;12121;40111;703217
 5;00012;Data de Proyectos y Otros;G05012;1;1;12;1;279;1;SOLES;2023;100503;;12121;40111;703218
 5;00013;Registro de Actividad Profesional de Revisores Urbanos;G06013;1;1;13;1;279;1;SOLES;2023;100604;;12121;40111;703219
-5;00014;OTROS INGRESOS DE GESTION;;1;1;14;1;;1;SOLES;2023;;;;;75
-5;00015;Alquileres;;1;1;15;1;;1;SOLES;2023;;;;;754
+5;00014;OTROS INGRESOS DE GESTION;;1;1;14;1;;1;SOLES;2023;;1;;;75
+5;00015;Alquileres;;1;1;15;1;;1;SOLES;2023;;1;;;754
 5;00016;Activos fijos, bienes no depreciables de transferencia a título gratuito;G05013;1;1;16;1;279;1;SOLES;2023;100504;;12121;40111;7546
-5;00017;Otros ingresos de gestión;;1;1;17;1;;1;SOLES;2023;;;;;759
+5;00017;Otros ingresos de gestión;;1;1;17;1;;1;SOLES;2023;;1;;;759
 5;00018;Donaciones;G11010;1;1;18;1;281;1;SOLES;2023;101101;;12121;40111;7593
 5;00019;Otros ingresos de gestión;;1;1;19;1;;1;SOLES;2023;;;;;7599
-5;00020;Venta de Libros - Folletos - Separatas;G05010;1;1;20;1;281;1;SOLES;2023;100501;;12121;40111;759910
+5;00020;Venta de Libros - Folletos - Separatas;G05010;1;1;20;1;281;1;SOLES;2023;100501;1;12121;40111;759910
 5;00021;Reglamento Nacional de Edificaciones;G05010;1;1;20;1;281;1;SOLES;2023;100501;;12121;40111;759910
 5;00022;Catálogo Bialima;G07706;1;1;20;1;281;1;SOLES;2023;100707;;12121;40111;759910
 5;00023;Multas por no Votar;G12010;1;1;21;1;281;1;SOLES;2023;101201;;12121;40111;759912
 5;00024;Material para nuevos Colegiado;G05011;1;1;22;1;281;1;SOLES;2023;100502;;12121;40111;759913
-5;00025;Seguro Oncológico;G09010;1;1;23;1;279;1;SOLES;2023;100901;;12121;40111;759914
-5;00026;Fotocopias;G10012;1;1;24;1;279;1;SOLES;2023;101003;;12121;40111;759915
+5;00025;Seguro Oncológico;G09010;1;1;23;1;279;1;SOLES;2023;100901;1;12121;40111;759914
+5;00026;Fotocopias;G10012;1;1;24;1;279;1;SOLES;2023;101003;1;12121;40111;759915
 5;00027;Auspicios Aniversario de la Regional Lima;G08010;1;1;25;1;279;1;SOLES;2023;100801;;12121;40111;759916
 5;00028;Auspicios para comunicaciones, capacitaciones y otros;G08011;1;1;25;1;279;1;SOLES;2023;100802;;12121;40111;759916
 5;00029;Ingresos por devolución de comisión bancaria;G12012;1;1;26;1;279;1;SOLES;2023;101203;;12121;40111;759919
 5;00030;Ingresos por devolución de Gastos administrativos - Comisiones Niubiz - Otras comisiones;G12011;1;1;26;1;279;1;SOLES;2023;101202;;12121;40111;759919
-5;00031;Otros ingresos;;1;1;27;1;;1;SOLES;2023;;;;;75992
+5;00031;Otros ingresos;;1;1;27;1;;1;SOLES;2023;;1;;;75992
 5;00032;Eventos - Cenas Para Aniversario Regional Lima;G08010;1;1;28;1;279;1;SOLES;2023;100801;;12121;40111;759920
 5;00033;Ajuste por Redondeo;G12016;1;1;29;1;281;1;SOLES;2023;101207;;12121;40111;759921
 5;00034;Alerta Médica;G09020;1;1;30;1;279;1;SOLES;2023;100902;;12121;40111;759922
@@ -39,7 +39,7 @@ id_regional;codigo;denominacion;partida_presupuestal;estado;id_usuario_inserta;i
 5;00038;Seguro Sanitas;G09031;1;1;34;1;279;1;SOLES;2023;100904;;12121;40111;759926
 5;00039;Evaluación y Selección de Peritos Judiciales;G07880;1;1;35;1;279;1;SOLES;2023;100710;;12121;40111;759930
 5;00040;Suscripción plataforma de Normas y Reglamento;G10016;1;1;36;1;279;1;SOLES;2023;101007;;12121;40111;759931
-5;00041;Seguro Privado de Salud;G09030;1;1;37;1;279;1;SOLES;2023;100903;;12121;40111;75993
+5;00041;Seguro Privado de Salud;G09030;1;1;37;1;279;1;SOLES;2023;100903;1;12121;40111;75993
 5;00042;Charla Técnica techos para cubiertas de Polipropileno Fibra Forte;G07001;1;1;38;1;279;1;SOLES;2023;100701;;12121;40111;75994
 5;00043;Conferencia significado de la plaza de Armas y la San Martín entre 1903 y 1952 y sus cambios en el Bicentenario;G07002;1;1;38;1;279;1;SOLES;2023;100701;;12121;40111;75994
 5;00044;Conferencia uso del Escaneo Láser y Bim en la restauración;G07003;1;1;38;1;279;1;SOLES;2023;100701;;12121;40111;75994
@@ -49,7 +49,7 @@ id_regional;codigo;denominacion;partida_presupuestal;estado;id_usuario_inserta;i
 5;00048;Curso de formación, capacitación y Actualización para delegados CAP de comisiones técnicas;G07101;1;1;38;1;279;1;SOLES;2023;100702;;12121;40111;75994
 5;00049;Curso taller Arquitecto Emprendedor módulo introductorio;G07102;1;1;38;1;279;1;SOLES;2023;100702;;12121;40111;75994
 5;00050;Curso Arquitecto Emprendedor módulo introductorio;G07103;1;1;38;1;279;1;SOLES;2023;100702;;12121;40111;75994
-5;00051;Curso de formulación de peritaciones tasaciones de inmuebles urbanos, metodologías, procedimientos y redacción eficaz;G07104;1;1;38;1;279;1;SOLES;2023;100705;;12121;40111;75994
+5;00051;Curso de formulación de peritaciones tasaciones de inmuebles urbanos, metodologías, procedimientos y redacción eficaz;G07104;1;1;38;1;279;1;SOLES;2023;100705;1;12121;40111;75994
 5;00052;Actualización ley regimen de propiedad horizontal 058;G07201;1;1;38;1;279;1;SOLES;2023;100703;;12121;40111;75994
 5;00053;Conferencia remodelación de viviendas antiguas, reto y estrategias hacia un proyecto rentable;G07403;1;1;38;1;279;1;SOLES;2023;100705;;12121;40111;75994
 5;00054;Charla paneles de aislamiento para la construcción;G07404;1;1;38;1;279;1;SOLES;2023;100705;;12121;40111;75994
@@ -57,12 +57,12 @@ id_regional;codigo;denominacion;partida_presupuestal;estado;id_usuario_inserta;i
 5;00056;Concurso de delegados;G07601;1;1;38;1;279;1;SOLES;2023;100706;;12121;40111;75994
 5;00057;Catálogo Bialima 2021;G07706;1;1;38;1;279;1;SOLES;2023;100707;;12121;40111;75994
 5;00058;Bienal 2023;G07707;1;1;38;1;279;1;SOLES;2023;100707;;12121;40111;75994
-5;00059;Concurso Postgrado;G07708;1;1;38;1;279;1;SOLES;2023;100707;;12121;40111;75994
-5;00060;Ingresos del Fondo de desarrollo a favor de la Bienal;G07709;1;1;38;1;279;1;SOLES;2023;100707;;12121;40111;75994
-5;00061;Taller de diseño y remodelación de espacios;G07851;1;1;38;1;279;1;SOLES;2023;100709;;12121;40111;75994
-5;00062;Bases: Concurso de delegados;G07601;1;1;39;1;279;1;SOLES;2023;100706;;12121;40111;75995
-5;00063;Bases: Concurso de Postgrado;G07708;1;1;39;1;279;1;SOLES;2023;100707;;12121;40111;75995
-5;00064;Consulta de Colegiados;G10014;1;1;40;1;279;1;SOLES;2023;101005;;12121;40111;75996
-5;00065;Trámite de Expediente Gremial;G10014;1;1;41;1;279;1;SOLES;2023;101005;;12121;40111;75997
-5;00066;Trámite de Expediente Técnico;G10013;1;1;42;1;279;1;SOLES;2023;101004;;12121;40111;75998
+5;00059;Concurso Postgrado;G07708;1;1;38;1;279;1;SOLES;2023;100707;1;12121;40111;75994
+5;00060;Ingresos del Fondo de desarrollo a favor de la Bienal;G07709;1;1;38;1;279;1;SOLES;2023;100707;1;12121;40111;75994
+5;00061;Taller de diseño y remodelación de espacios;G07851;1;1;38;1;279;1;SOLES;2023;100709;1;12121;40111;75994
+5;00062;Bases: Concurso de delegados;G07601;1;1;39;1;279;1;SOLES;2023;100706;1;12121;40111;75995
+5;00063;Bases: Concurso de Postgrado;G07708;1;1;39;1;279;1;SOLES;2023;100707;1;12121;40111;75995
+5;00064;Consulta de Colegiados;G10014;1;1;40;1;279;1;SOLES;2023;101005;1;12121;40111;75996
+5;00065;Trámite de Expediente Gremial;G10014;1;1;41;1;279;1;SOLES;2023;101005;1;12121;40111;75997
+5;00066;Trámite de Expediente Técnico;G10013;1;1;42;1;279;1;SOLES;2023;101004;1;12121;40111;75998
 5;00067;Ingresos del FDI y otros;G07709;1;1;43;1;279;1;SOLES;2023;100707;;12121;40111;75999

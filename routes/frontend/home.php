@@ -202,7 +202,7 @@ Route::post('afiliacion_seguro/listar_parentesco', [AfiliacionSeguroController::
 Route::get('afiliacion_seguro/obtener_parentesco/{id}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco');
 Route::get('afiliacion_seguro/obtener_agremiado/{id}', [AfiliacionSeguroController::class, 'obtener_agremiado'])->name('afiliacion_seguro.obtener_agremiado');
 Route::post('afiliacion_seguro/send_parentesco_fila', [AfiliacionSeguroController::class, 'send_parentesco_fila'])->name('afiliacion_seguro.send_parentesco_fila');
-Route::get('afiliacion_seguro/obtener_parentesco/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
+//Route::get('afiliacion_seguro/obtener_parentesco/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
 
 Route::get('concurso', [ConcursoController::class, 'index'])->name('concurso');
 Route::post('concurso/listar_concurso', [ConcursoController::class, 'listar_concurso'])->name('concurso.listar_concurso');
@@ -243,7 +243,8 @@ Route::post('concurso/send_inscripcion_resultado', [ConcursoController::class, '
 Route::get('comision/consulta_empresa', [ComisionController::class, 'consulta_empresa'])->name('comision.consulta_empresa');
 Route::post('comision/listar_municipalidad_ajax', [ComisionController::class, 'listar_municipalidad_ajax'])->name('comision.listar_municipalidad_ajax');
 
-
+Route::get('concurso/consulta_resultado', [ConcursoController::class, 'consulta_resultado'])->name('concurso.consulta_resultado');
+Route::post('concurso/listar_resultado_ajax', [ConcursoController::class, 'listar_resultado_ajax'])->name('concurso.listar_resultado_ajax');
 
 
 Route::get('certificado/consulta_certificado', [CertificadoController::class, 'consulta_certificado'])->name('certificado.consulta_certificado');
