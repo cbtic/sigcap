@@ -6,16 +6,11 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
-	
-	$('#codigo').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
 
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
+			return false;
 		}
 	});
 	
@@ -452,8 +447,8 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var codigo = $('#codigo').val();
-			var id_regional = $('#id_regional').val();
+			var id = $('#id').val();
+			var regional = $('#regional').val();
 			var denominacion = $('#denominacion').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
@@ -463,7 +458,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						codigo:codigo,id_regional:id_regional,denominacion:denominacion,estado:estado,
+						id:id,regional:regional,denominacion:denominacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -478,7 +473,7 @@ function datatablenew(){
         "aoColumnDefs":
             [	
 				
-				{
+				/*{
 				"mRender": function (data, type, row) {
 					var codigo = "";
 					if(row.codigo!= null)codigo = row.codigo;
@@ -488,7 +483,7 @@ function datatablenew(){
 				"aTargets": [0],
 				"className": "dt-center",
 				//"className": 'control'
-				},
+				},*/
 				{
                 "mRender": function (data, type, row) {
                 	var regional = "";
@@ -496,7 +491,7 @@ function datatablenew(){
 					return regional;
                 },
                 "bSortable": false,
-                "aTargets": [1],
+                "aTargets": [0],
 				"className": "dt-center",
 				//"className": 'control'
                 },
@@ -507,7 +502,7 @@ function datatablenew(){
 					return denominacion;
                 },
                 "bSortable": false,
-                "aTargets": [2]
+                "aTargets": [1]
                 },
                 /*{
                 "mRender": function (data, type, row) {
@@ -530,7 +525,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [3]
+				"aTargets": [2]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -555,7 +550,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [4],
+					"aTargets": [3],
 				},
 
             ]

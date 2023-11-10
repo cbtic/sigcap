@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_concepto_paginado(p_regional character varying, p_codigo character varying, p_denominacion character varying, p_partida_presupuestal character varying, p_tipo_concepto character varying, p_importe character varying, p_tipo_afectacion character varying, p_moneda character varying, p_centro_costo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_concepto_paginado(p_regional character varying, p_codigo character varying, p_denominacion character varying, p_tipo_concepto character varying, p_importe character varying, p_moneda character varying, p_periodo character varying, p_cuenta_contable_debe character varying, p_cuenta_contable_al_haber1 character varying, p_cuenta_contable_al_haber2 character varying, p_partida_presupuestal character varying, p_tipo_afectacion character varying, p_centro_costo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,13 +18,13 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' c.id, r.denominacion regional, c.codigo, c.denominacion , c.id_partida_presupuestal partida_presupuestal, tc.denominacion tipo_concepto, c.importe, tm.denominacion tipo_afectacion, tm2.denominacion moneda, c.periodo, c.centro_costo, c.estado ';
+	v_campos=' c.id, r.denominacion regional, c.codigo, c.denominacion , tc.denominacion tipo_concepto, c.importe, tm2.denominacion id_moneda, c.periodo, c.cuenta_contable_debe , c.cuenta_contable_al_haber1 , c.cuenta_contable_al_haber2 , c.partida_presupuestal , tm.denominacion tipo_afectacion, c.centro_costo, c.estado ';
 
 	v_tabla='from conceptos c
-			inner join regiones r on c.id_regional = r.id
-			inner join tipo_conceptos tc on c.id_tipo_concepto = tc.id 
-			inner join tabla_maestras tm on c.id_tipo_afectacion ::int=tm.codigo::int and tm.tipo=''53''
-			inner join tabla_maestras tm2 on c.id_moneda::int=tm2.codigo::int and tm2.tipo=''1''';
+			left join regiones r on c.id_regional = r.id
+			left join tipo_conceptos tc on c.id_tipo_concepto = tc.id 
+			left join tabla_maestras tm on c.id_tipo_afectacion ::int=tm.codigo::int and tm.tipo=''53''
+			left join tabla_maestras tm2 on c.id_moneda::int=tm2.codigo::int and tm2.tipo=''1''';
 	
 	v_where = ' Where 1=1  ';
 	

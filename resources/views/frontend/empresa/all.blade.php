@@ -146,12 +146,12 @@
 				
 				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="id_municipalidad" id="id_municipalidad" value="<?php echo $id?>">
+                <!--<input type="hidden" name="id_municipalidad" id="id_municipalidad" value="<?php /*echo $id*/?>">-->
                 <input type="hidden" name="id" id="id" value="0">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="rucBus" name="rucBus" placeholder="Ruc">
 					</div>
 					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">

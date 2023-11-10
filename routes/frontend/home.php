@@ -117,14 +117,14 @@ Route::post('concepto/send_concepto_nuevoConcepto', [ConceptoController::class, 
 
 Route::get('concepto/eliminar_concepto/{id}/{estado}', [ConceptoController::class, 'eliminar_concepto'])->name('concepto.eliminar_concepto');
 
-Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('tipoConcepto.consulta_tipoConcepto');
+Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('TipoConcepto.consulta_tipoConcepto');
 
 Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 Route::get('municipalidad/consulta_municipalidad', [MunicipalidadController::class, 'consulta_municipalidad'])->name('municipalidad.consulta_municipalidad');
 Route::post('municipalidad/listar_municipalidad', [MunicipalidadController::class, 'listar_municipalidad'])->name('municipalidad.listar_municipalidad');
 
 Route::get('municipalidad/modal_municipalidad/{id}', [MunicipalidadController::class, 'modal_municipalidad'])->name('municipalidad.modal_municipalidad');
-Route::post('TipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('TipoConcepto.listar_tipoConcepto_ajax');
+//Route::post('TipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('TipoConcepto.listar_tipoConcepto_ajax');
 Route::post('tipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('tipoConcepto.listar_tipoConcepto_ajax');
 
 Route::get('tipoConcepto/editar_tipoConcepto/{id}', [TipoConceptoController::class, 'editar_tipoConcepto'])->name('tipoConcepto.editar_tipoConcepto');

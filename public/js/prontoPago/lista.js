@@ -85,9 +85,13 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
+			var id = $('#id').val();
 			var periodo = $('#periodoBus').val();
 			var fecha_inicio = $('#fecha_inicio').val();
             var fecha_fin = $('#fecha_fin').val();
+			var concepto = $('#concepto').val();
+			var numero_cuotas = $('#numero_cuotas').val();
+			var codigo_documento = $('#codigo_documento').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -96,7 +100,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						periodo:periodo,estado:estado,
+						id:id,periodo:periodo,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,concepto:concepto,numero_cuotas:numero_cuotas,codigo_documento:codigo_documento,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -143,9 +147,9 @@ function datatablenew(){
                 },
                 {
                 "mRender": function (data, type, row) {
-                	var porcentaje = "";
-					if(row.porcentaje!= null)porcentaje = row.porcentaje;
-					return porcentaje;
+                	var numero_cuotas = "";
+					if(row.numero_cuotas!= null)numero_cuotas = row.numero_cuotas;
+					return numero_cuotas;
                 },
                 "bSortable": false,
                 "aTargets": [3]
@@ -159,7 +163,7 @@ function datatablenew(){
 				"bSortable": false,
 				"aTargets": [4]
 				},
-				{
+				/*{
 				"mRender": function (data, type, row) {
 					var ruta_documento = "";
 					if(row.ruta_documento!= null)ruta_documento = row.ruta_documento;
@@ -167,16 +171,16 @@ function datatablenew(){
 				},
 				"bSortable": false,
 				"aTargets": [5]
-				},
+				},*/
 				{
-					"mRender": function (data, type, row) {
-						var concepto = "";
-						if(row.concepto!= null)concepto = row.concepto;
-						return concepto;
-					},
-					"bSortable": false,
-					"aTargets": [6]
-					},
+				"mRender": function (data, type, row) {
+					var concepto = "";
+					if(row.concepto!= null)concepto = row.concepto;
+					return concepto;
+				},
+				"bSortable": false,
+				"aTargets": [5]
+				},
 				{
 				"mRender": function (data, type, row) {
 					var estado = "";
@@ -192,7 +196,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [7]
+				"aTargets": [6]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -217,7 +221,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [8],
+					"aTargets": [7],
 				},
 
             ]

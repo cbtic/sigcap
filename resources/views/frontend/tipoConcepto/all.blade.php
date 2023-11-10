@@ -143,7 +143,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Tipo de conceptos
+                        Lista de Tipo de Conceptos
                     </strong>
                 </div><!--card-header-->
 				
@@ -152,9 +152,9 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <!--<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="codigo" name="codigo" placeholder="Codigo">
-					</div>
+					</div>-->
 					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominacion">
 					</div>
@@ -178,7 +178,7 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>C&oacute;digo</th>
+                            <!--<th>C&oacute;digo</th>-->
                             <th>Regional</th>
                             <th>Denominaci&oacute;n</th>
                             <th>Estado</th>

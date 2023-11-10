@@ -335,18 +335,25 @@ function fn_save_concepto(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var id_regional = $('#id_regional').val();
 	var codigo = $('#codigo').val();
+	var id_regional = $('#id_regional').val();
+	var id_tipo_concepto = $('#id_tipo_concepto').val();
 	var denominacion = $('#denominacion').val();
-	var id_partida_presupuestal = $('#id_partida_presupuestal').val();
+	var importe = $('#importe').val();
+	var id_moneda = $('#id_moneda').val();
+	var periodo = $('#periodo').val();
+	var cuenta_contable_debe = $('#cuenta_contable_debe').val();
+	var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
+	var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2').val();
+	var partida_presupuestal = $('#partida_presupuestal').val();
 	var tipo_afectacion = $('#tipo_afectacion').val();
 	var centro_costo = $('#centro_costo').val();
-	var importe = $('#importe').val();
+	
 	
     $.ajax({
 			url: "/concepto/send_concepto_nuevoConcepto",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,codigo:codigo,denominacion:denominacion,id_partida_presupuestal:id_partida_presupuestal,tipo_afectacion:tipo_afectacion,centro_costo:centro_costo,importe:importe},
+            data : {_token:_token,id:id,codigo:codigo,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,centro_costo:centro_costo},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -506,131 +513,134 @@ container: '#myModal modal-body'
 
 
 <body class="hold-transition skin-blue sidebar-mini">
-
 	<div class="panel-heading close-heading">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     </div>
-
     <div>
-		<!--
-        <section class="content-header">
-          <h1>
-            <small style="font-size: 20px">Programados del Medicos del dia <?php //echo $fecha_atencion?></small>
-          </h1>
-        </section>
-		-->
 		<div class="justify-content-center">		
-
-		<div class="card">
-			
-			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro de Concepto
-			</div>
-			
-            <div class="card-body">
-
-			<div class="row">
-
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
+			<div class="card">
+				<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
+					Registro de Concepto
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 					
-					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
-					
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label class="control-label form-control-sm">C&oacute;digo</label>
-								<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" readonly="readonly" >						
-							</div>
-						</div>
-
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Regional</label>
-								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($region as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-6">
-						<div class="form-group">
-								<label class="control-label form-control-sm">Tipo Concepto</label>
-								<select name="id_tipo_concepto" id="id_tipo_concepto" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($tipoConcepto as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_tipo_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Denominaci&oacute;n</label>
-								<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="<?php echo $concepto->denominacion?>" type="text" >													
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Partida Presupuestal</label>
-								<input id="id_partida_presupuestal" name="id_partida_presupuestal" class="form-control form-control-sm"  value="<?php echo $concepto->id_partida_presupuestal?>" type="text" >
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Importe</label>
-								<input id="importe" name="importe" class="form-control form-control-sm"  value="<?php echo $concepto->importe?>" type="text" >
-							</div>
-						</div>
-						<div class="col-lg-6">
-						<div class="form-group">
-							<label class="control-label form-control-sm">Tipo Afectaci&oacute;n</label>
-                            <select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onChange="">
-                                <option value="">--Selecionar--</option>
-                                <?php
-                                foreach ($tipo_afectacion as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-                        </div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-							<label class="control-label form-control-sm">Moneda</label>
-							<select name="moneda" id="moneda" class="form-control form-control-sm" onChange="">
-                                <option value="">--Selecionar--</option>
-                                <?php
-                                foreach ($moneda as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_moneda)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Centro de Costos</label>
-								<input id="centro_costo" name="centro_costo" class="form-control form-control-sm"  value="<?php echo $concepto->centro_costo?>" type="text" >
-							</div>
-						</div>
+							<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+							<input type="hidden" name="id" id="id" value="<?php echo $id?>">
+							<div class="row" style="padding-left:10px">
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label class="control-label form-control-sm">C&oacute;digo</label>
+										<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" readonly="readonly" >						
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Regional</label>
+										<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
+											<option value="">--Selecionar--</option>
+												<?php
+												foreach ($region as $row) {?>
+													<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+												<?php 
+												}
+												?>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-10">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Tipo Concepto</label>
+										<select name="id_tipo_concepto" id="id_tipo_concepto" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($tipoConcepto as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_tipo_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<?php 
+											}
+											?>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-10">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Denominaci&oacute;n</label>
+										<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="<?php echo $concepto->denominacion?>" type="text" >													
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Importe</label>
+										<input id="importe" name="importe" class="form-control form-control-sm"  value="<?php echo $concepto->importe?>" type="text" >
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Moneda</label>
+										<select name="id_moneda" id="id_moneda" class="form-control form-control-sm" onChange="">
+											<option value="">--Selecionar--</option>
+											<?php
+											foreach ($moneda as $row) {?>
+											<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_moneda)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<?php
+											}
+											?>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Periodo</label>
+										<input id="periodo" name="periodo" class="form-control form-control-sm"  value="<?php echo $concepto->periodo?>" type="text" >
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Cuenta Contable Debe</label>
+										<input id="cuenta_contable_debe" name="cuenta_contable_debe" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_debe?>" type="text" >
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Cuenta Contable al Haber1</label>
+										<input id="cuenta_contable_al_haber1" name="cuenta_contable_al_haber1" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_al_haber1?>" type="text" >
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Cuenta Contable al Haber2</label>
+										<input id="cuenta_contable_al_haber2" name="cuenta_contable_al_haber2" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_al_haber2?>" type="text" >
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Partida Presupuestal</label>
+										<input id="partida_presupuestal" name="partida_presupuestal" class="form-control form-control-sm"  value="<?php echo $concepto->partida_presupuestal?>" type="text" >
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Tipo Afectaci&oacute;n</label>
+										<select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onChange="">
+											<option value="">--Selecionar--</option>
+											<?php
+												foreach ($tipo_afectacion as $row) {?>
+												<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+												<?php
+											}
+											?>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Centro de Costos</label>
+										<input id="centro_costo" name="centro_costo" class="form-control form-control-sm"  value="<?php echo $concepto->centro_costo?>" type="text" >
+									</div>
+								</div>
 						
 					</div>
-					
-					
 					
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
