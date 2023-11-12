@@ -12,6 +12,7 @@ use App\Models\AgremidoCuota;
 use App\Models\CajaIngreso;
 use App\Models\Valorizacione;
 use App\Models\Concepto;
+use Illuminate\Support\Carbon;
 
 use Auth;
 
@@ -42,14 +43,18 @@ class IngresoController extends Controller
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 
     }
-    public function obtener_conceptos($perido){
 
-        $conceptos_model = new Concepto;        
-        $conceptos = $conceptos_model->getConceptoPeriodo($perido);
-        //print_r($conceptos);exit();
-        return view('frontend.ingreso.lista_conceptos',compact('conceptos'));
+    public function listar_valorizacion(Request $request){
+
+        $valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);
+        //print_r($valorizacion);exit();
+        return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 
     }
+    
+
     
     public function obtener_pago($tipo_documento,$id_persona){
 
@@ -110,14 +115,76 @@ class IngresoController extends Controller
         
     }
 
-    public function otro_pago($periodo){
-        $moneda_tabla = new TablaMaestra;		
-        //$concepto = Concepto::where('periodo', '=', $periodo)->where('estado', '=', '1')->first();
-		$moneda = $moneda_tabla->getMaestroByTipo("1");
+    public function otro_pago($periodo, $id_persona, $id_agremiado ){
 
-        //print_r($moneda);exit();
+        
+        $conceptos_model = new Concepto;        
+        $conceptos = $conceptos_model->getConceptoPeriodo($periodo);
+
 		
-		return view('frontend.ingreso.modal_otro_pago',compact('moneda'));
+		return view('frontend.ingreso.modal_otro_pago',compact('conceptos','periodo','id_persona','id_agremiado' ));
 	}
+
+    public function obtener_conceptos($perido){
+
+        $conceptos_model = new Concepto;        
+        $conceptos = $conceptos_model->getConceptoPeriodo($perido);
+        //print_r($conceptos);exit();
+        return view('frontend.ingreso.lista_conceptos',compact('conceptos'));
+
+    }
+
+    public function send_concepto(Request $request){
+        $msg = "";
+        $id_user = Auth::user()->id;
+        $id_persona = $request->id_persona;
+        $id_agremiado = $request->id_agremiado;
+        
+        $concepto_detalle = $request->concepto_detalle;
+        $ind = 0;
+        foreach($request->concepto_detalles as $key=>$det){
+            $conceptod[$ind] = $concepto_detalle[$key];
+            $ind++;
+        }
+
+        foreach ($conceptod as $key => $value) {
+
+            //$id_val = $value['id'];
+            //echo( $id_val);
+
+            $valorizacion = new Valorizacione;
+            $valorizacion->id_modulo = 5;
+            $valorizacion->pk_registro = 0;
+            $valorizacion->id_concepto = $value['id'];
+            $valorizacion->id_agremido = $id_agremiado;
+            $valorizacion->id_persona = $id_persona;
+            $valorizacion->monto = $value['importe'];
+            $valorizacion->id_moneda = $value['id_moneda'];
+            $valorizacion->fecha = Carbon::now()->format('Y-m-d');
+            $valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');            
+            $valorizacion->id_usuario_inserta = $id_user;
+            $valorizacion->descripcion = $value['denominacion'];
+
+            $valorizacion->save();
+
+            $msg = "ok";
+
+        }
+
+        
+       // print_r($conceptod);
+       // exit();
+
+       echo $msg;
+
+/*
+
+        $valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $valorizacion = $valorizaciones_model->getValorizacion("89",$id_persona);
+        //print_r($valorizacion);exit();
+        return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
+*/
+    }
 
 }
