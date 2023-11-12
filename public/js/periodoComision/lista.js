@@ -10,18 +10,21 @@ $(document).ready(function () {
 	$('#descripcion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
+			return false;
 		}
 	});
 	
 	$('#fechaIni').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
+			return false;
 		}
 	});
 
 	$('#fechaFin').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
+			return false;
 		}
 	});
 

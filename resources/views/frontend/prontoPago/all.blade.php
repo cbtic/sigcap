@@ -146,20 +146,26 @@
 						<input class="form-control form-control-sm" id="periodoBus" name="periodoBus" placeholder="Periodo" />
 					</div>
 					
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <!--<label class="control-label form-control-sm">Concepto</label>-->
-                            <select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onchange="">
-                                <option value="">--Seleccionar Concepto--</option>
-                                <?php
-                                    foreach ($concepto as $row) {?>
-                                    <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
-                                    <?php 
-                                }
-                                ?>
-                            </select>
-                        </div>
-					</div>
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+							<div style="float:left;padding-top:7px">F.Ini</div>
+							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
+								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control">
+								
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+							<div style="float:left;padding-top:7px">F.Fin</div>
+							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
+								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control">
+							   
+							</div>
+							<!--<input class="form-control form-control-sm" id="fecha" name="fecha" placeholder="Fecha">-->
+						</div>
+
+                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						    <input class="form-control form-control-sm" id="codigo_documento" name="codigo_documento" placeholder="C&oacute;digo Documento" />
+					    </div>
+
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>

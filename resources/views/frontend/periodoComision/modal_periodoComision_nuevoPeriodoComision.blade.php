@@ -335,13 +335,14 @@ function fn_save_periodoComision(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
+	var descripcion = $('#descripcion').val();
 	var fecha_inicio = $('#fecha_inicio').val();
 	var fecha_fin = $('#fecha_fin').val();
 	
     $.ajax({
 			url: "/periodoComision/send_periodoComision_nuevoPeriodoComision",
             type: "POST",
-            data : {_token:_token,id:id,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin},
+            data : {_token:_token,id:id,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -540,11 +541,18 @@ container: '#myModal modal-body'
 								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php /*echo $periodoComision->fecha_inicio*/?>" type="text">						
 							</div>
 						</div>-->
+						
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Descripci&oacute;n</label>
+								<input id="descripcion" name="descripcion" on class="form-control form-control-sm"  value="<?php echo $periodoComision->descripcion?>" type="text" readonly="readonly" >
+							
+							</div>
+						</div>
 						<div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
 							<div style="float:left;padding-top:7px">Fecha Fin</div>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
 								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control" value="<?php echo $periodoComision->fecha_inicio?>" type="text">
-								
 							</div>
 						</div>
 						<div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">

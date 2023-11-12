@@ -1808,7 +1808,7 @@ label.form-control-sm{
     @push('after-scripts')
     
 	
-	<script src="{{ asset('js/concepto/create.js') }}"></script>
+	<script src="{{ asset('js/tipoConcepto/create.js') }}"></script>
 	<script>
 	/*
 	var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();

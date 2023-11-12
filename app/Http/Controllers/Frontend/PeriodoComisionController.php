@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PeriodoComisione;
+use Carbon\Carbon;
 use Auth;
 
 class PeriodoComisionController extends Controller
@@ -31,6 +32,7 @@ class PeriodoComisionController extends Controller
     public function listar_consulta_periodoComision_ajax(Request $request){
 	
 		$periodoComision_model = new PeriodoComisione;
+		$p[]=$request->descripcion;
 		$p[]=$request->fecha_inicio;//$request->nombre;
 		$p[]=$request->fecha_fin;
         $p[]=$request->estado;
@@ -64,7 +66,7 @@ class PeriodoComisionController extends Controller
 		//$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
         //$concepto_model = new concepto;
  
-		return view('frontend.periodoComision.create',compact('id','fecha_inicio','fecha_fin','estado'));
+		return view('frontend.periodoComision.create',compact('id','descripcion','fecha_inicio','fecha_fin','estado'));
 		
     }
 
@@ -99,7 +101,11 @@ class PeriodoComisionController extends Controller
 			$periodoComision = PeriodoComisione::find($request->id);
 			//$codigo = $request->codigo;
 		}
-		
+
+		$fecha = Carbon::parse($request->fecha_inicio);
+		$periodo_mes = $fecha->month;
+		$periodo_año = $fecha->year;
+		$periodoComision->descripcion = $periodo_mes.'/'.$periodo_año;
         $periodoComision->fecha_inicio = $request->fecha_inicio;
         $periodoComision->fecha_fin = $request->fecha_fin;
 		$periodoComision->id_usuario = 1;

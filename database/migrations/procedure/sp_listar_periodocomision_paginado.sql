@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_periodocomision_paginado(p_fechaini character varying, p_fechafin character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_periodocomision_paginado(p_descripcion character varying, p_fechaini character varying, p_fechafin character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -19,11 +19,23 @@ Begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' pc.fecha_inicio, pc.fecha_fin, pc.estado ';
+	v_campos=' pc.descripcion, pc.fecha_inicio, pc.fecha_fin, pc.estado ';
 
 	v_tabla='from periodo_comisiones pc';
 	
 	v_where = ' Where 1=1  ';
+
+	If p_descripcion<>'' Then
+	 v_where:=v_where||'And pc.descripcion ilike ''%'||p_descripcion||'%'' ';
+	End If;
+
+	If p_fechaini<>'' Then
+	 v_where:=v_where||'And pc.fecha_inicio = '''||p_fechaini||''' ';
+	End If;
+
+	If p_fechafin<>'' Then
+	 v_where:=v_where||'And pc.fecha_fin = '''||p_fechafin||''' ';
+	End If;
 
 	If p_estado<>'' Then
 	 v_where:=v_where||'And pc.estado = '''||p_estado||''' ';
