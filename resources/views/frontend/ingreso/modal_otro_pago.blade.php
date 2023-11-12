@@ -1,747 +1,521 @@
-<title>Sistema</title>
+<title>Sistema de Felmo</title>
 
 <style>
-/*
-.datepicker {
-  z-index: 1600 !important; 
+	/*
+.table-fixed thead,
+.table-fixed tfoot{
+  width: 97%;
+}
+
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tfoot,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+  display: block;
+}
+
+.table-fixed tbody td,
+.table-fixed thead > tr> th,
+.table-fixed tfoot > tr> td{
+  float: left;
+  border-bottom-width: 0;
 }
 */
-/*.datepicker{ z-index:99999 !important; }*/
+	/*****************/
+	.modal-dialog {
+		min-width: 70%;
+	}
 
-.datepicker,
-.table-condensed {
-  width: 250px;
-  height:250px;
+	#tablemodal {
+		border-spacing: 0;
+		display: flex;
+		/*Se ajuste dinamicamente al tamano del dispositivo**/
+		max-height: 80vh;
+		/*El alto que necesitemos**/
+		overflow-y: auto;
+		/**El scroll verticalmente cuando sea necesario*/
+		overflow-x: hidden;
+		/*Sin scroll horizontal*/
+		table-layout: fixed;
+		/**Forzamos a que las filas tenga el mismo ancho**/
+		width: 98vw;
+		/*El ancho que necesitemos*/
+		border: 1px solid #c4c0c9;
+	}
+
+	#tablemodal thead {
+		background-color: #e2e3e5;
+		position: fixed !important;
+	}
+
+
+	#tablemodal th {
+		border-bottom: 1px solid #c4c0c9;
+		border-right: 1px solid #c4c0c9;
+	}
+
+	#tablemodal th {
+		font-weight: normal;
+		margin: 0;
+		max-width: 9.5vw;
+		min-width: 9.5vw;
+		word-wrap: break-word;
+		font-size: 10px;
+		font-weight: bold;
+		height: 3.5vh !important;
+		line-height: 12px;
+		vertical-align: middle;
+		/*height:20px;*/
+		padding: 4px;
+		border-right: 1px solid #c4c0c9;
+	}
+
+	#tablemodal td {
+		font-weight: normal;
+		margin: 0;
+		max-width: 9.5vw;
+		min-width: 9.5vw;
+		word-wrap: break-word;
+		font-size: 11px;
+		height: 3.5vh !important;
+		padding: 4px;
+		border-right: 1px solid #c4c0c9;
+	}
+
+	#tablemodal tbody tr:hover td,
+	#tablemodal tbody tr:hover th {
+		/*background-color: red!important;*/
+		font-weight: bold;
+		/*mix-blend-mode: difference;*/
+
+	}
+
+	/*
+tr:nth-child(2n) {
+    background: none repeat scroll 0 0 #edebeb;
+}  
+*/
+
+	#tablemodalm {
+		/*
+	width: 30em;
+	overflow-x: auto;
+	white-space: nowrap;
+	*/
+
+		/*background-color: #fed9ff; 
+      width: 600px; 
+      height: 150px; 
+      overflow-x: hidden;
+      overflow-y: auto; 
+      text-align: center; 
+      padding: 20px;*/
+	}
+
+	/*
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
 }
 
-
-.modal-dialog {
-	width: 100%;
-	max-width:40%!important
-  }
-  
-#tablemodal{
-    border-spacing: 0;
-    display: flex;/*Se ajuste dinamicamente al tamano del dispositivo**/
-    max-height: 80vh; /*El alto que necesitemos**/
-    overflow-y: auto; /**El scroll verticalmente cuando sea necesario*/
-    overflow-x: hidden;/*Sin scroll horizontal*/
-    table-layout: fixed;/**Forzamos a que las filas tenga el mismo ancho**/
-    width: 98vw; /*El ancho que necesitemos*/
-    border:1px solid #c4c0c9;
+legend.scheduler-border {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
 }
+*/
+	fieldset.scheduler-border {
+		border: solid 2px #c6c8ca !important;
+		padding: 0 10px 10px 10px;
+		border-bottom: none;
+		width: 100%;
+		color: #6c757d;
+		font-weight: bold;
+		margin: 15px 0px 10px 0px
+	}
 
-#tablemodal thead{
-    background-color: #e2e3e5;
-    position: fixed !important;
-}
+	legend.scheduler-border {
+		width: auto !important;
+		border: none;
+		font-size: 14px;
+	}
 
+	/*********************************************************/
+	.switch {
+		position: relative;
+		display: inline-block;
+		width: 42px;
+		height: 24px;
+	}
 
-#tablemodal th{
-    border-bottom: 1px solid #c4c0c9;
-    border-right: 1px solid #c4c0c9;
-}
+	/* Hide default HTML checkbox */
+	.switch input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
 
-#tablemodal th{
-    font-weight: normal;
-    margin: 0;
-    max-width: 9.5vw; 
-    min-width: 9.5vw;
-    word-wrap: break-word;
-    font-size: 10px;
-	font-weight:bold;
-    height: 3.5vh !important;
-	line-height:12px;
-	vertical-align:middle;
-	/*height:20px;*/
-    padding: 4px;
-    border-right: 1px solid #c4c0c9;
-}
+	/* The slider */
+	.slider {
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #337ab7;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
 
-#tablemodal td{
-    font-weight: normal;
-    margin: 0;
-    max-width: 9.5vw; 
-    min-width: 9.5vw;
-    word-wrap: break-word;
-    font-size: 11px;
-    height: 3.5vh !important;
-    padding: 4px;
-    border-right: 1px solid #c4c0c9;
-}
+	.slider:before {
+		position: absolute;
+		content: "";
+		height: 18px;
+		width: 18px;
+		left: 0px;
+		bottom: 4px;
+		background-color: white;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
 
-#tablemodal tbody tr:hover td, #tablemodal tbody tr:hover th {
-  /*background-color: red!important;*/
-  font-weight:bold;
-  /*mix-blend-mode: difference;*/
-  
-}
+	input:checked+.slider {
+		background-color: #4cae4c;
+	}
 
-#tablemodalm{
-	
-}
+	input:focus+.slider {
+		box-shadow: 0 0 1px #4cae4c;
+	}
 
-/*********************************************************/
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 42px;
-  height: 24px;
-}
+	input:checked+.slider:before {
+		-webkit-transform: translateX(26px);
+		-ms-transform: translateX(26px);
+		transform: translateX(26px);
+	}
 
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+	/* Rounded sliders */
+	.slider.round {
+		border-radius: 34px;
+	}
 
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #337ab7;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+	.slider.round:before {
+		border-radius: 50%;
+	}
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 0px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+	.no {
+		padding-right: 3px;
+		padding-left: 0px;
+		display: block;
+		width: 20px;
+		float: left;
+		font-size: 11px;
+		text-align: right;
+		padding-top: 5px
+	}
 
-input:checked + .slider {
-  background-color: #4cae4c;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #4cae4c;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
-.no {padding-right:3px;padding-left:0px;display:block;width:100px;float:left;font-size:14px;text-align:right;padding-top:5px}
-.si {padding-right:0px;padding-left:3px;display:block;width:100px;float:left;font-size:14px;text-align:left;padding-top:5px}
-
+	.si {
+		padding-right: 0px;
+		padding-left: 3px;
+		display: block;
+		width: 20px;
+		float: left;
+		font-size: 11px;
+		text-align: left;
+		padding-top: 5px
+	}
 </style>
 
-<!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>-->
-<!--<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
-<!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>-->
-
-
-<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>-->
-
-<!--
-<script src="resources/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<link rel="stylesheet" href="resources/plugins/timepicker/bootstrap-timepicker.min.css">
--->
-
-<!--
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css">
--->
-
-<!--
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.4/js/bootstrap-datetimepicker.min.js" integrity="sha512-r/mHP22LKVhxWFlvCpzqMUT4dWScZc6WRhBMVUQh+SdofvvM1BS1Hdcy94XVOod7QqQMRjLQn5w/AQOfXTPvVA==" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.4/css/bootstrap-datetimepicker.css" integrity="sha512-HWqapTcU+yOMgBe4kFnMcJGbvFPbgk39bm0ExFn0ks6/n97BBHzhDuzVkvMVVHTJSK5mtrXGX4oVwoQsNcsYvg==" crossorigin="anonymous" />
--->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
 <script type="text/javascript">
-/*
-jQuery(function($){
-$.mask.definitions['H'] = "[0-1]";
-$.mask.definitions['h'] = "[0-9]";
-$.mask.definitions['M'] = "[0-5]";
-$.mask.definitions['m'] = "[0-9]";
-$.mask.definitions['P'] = "[AaPp]";
-$.mask.definitions['p'] = "[Mm]";
-});
-*/
-$(document).ready(function() {
-	//$('#hora_solicitud').focus();
-	//$('#hora_solicitud').mask('00:00');
-	//$("#id_empresa").select2({ width: '100%' });
+	$(document).ready(function() {
 
-	$('#ruc').blur(function () {
+	});
+
+	function cargar_calificacion() {
+
+		var id_ingreso_vehiculo = $('#id_ingreso_vehiculo').val();
 		var id = $('#id').val();
-			if(id==0) {
-				validaRuc(this.value);
+		var opc = $('#opc').val();
+		var flag_agrupar = 0;
+		if ($('#flag_agrupar_').is(":checked")) flag_agrupar = 1;
+
+		$("#divCalificacion").html("");
+		$.ajax({
+			url: "/supervision/cargar_calificacion/" + id + "/" + id_ingreso_vehiculo + "/" + flag_agrupar + "/" + opc,
+			type: "GET",
+			success: function(result) {
+				$("#divCalificacion").html(result);
 			}
-		//validaRuc(this.value);
-	});
+		});
+	}
 
-});
-</script>
+	function validacion() {
 
-<script type="text/javascript">
+		var msg = "";
+		var cobservaciones = $("#frmComentar #cobservaciones").val();
 
-$('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_egresado').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
-		container: '#openOverlayOpc modal-body'
-	});
-});
-
-$('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_graduado').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
-		container: '#openOverlayOpc modal-body'
-	});
-});
-
-$(document).ready(function() {
-	 
-	 
-
-});
-
-function validacion(){
-    
-    var msg = "";
-    var cobservaciones=$("#frmComentar #cobservaciones").val();
-    
-    if(cobservaciones==""){msg+="Debe ingresar una Observacion <br>";}
-    
-    if(msg!=""){
-        bootbox.alert(msg); 
-        return false;
-    }
-}
-
-function validaRuc(ruc){
-	var settings = {
-		"url": "https://apiperu.dev/api/ruc/"+ruc,
-		"method": "GET",
-		"timeout": 0,
-		"headers": {
-		  "Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
-		},
-	  };
-	  
-	  $.ajax(settings).done(function (response) {
-		console.log(response);
-		
-		if (response.success == true){
-
-			var data= response.data;
-
-			$('#razon_social').val('')
-			$('#direccion').val('')
-			$('#nombre_comercial').val('')
-			
-			$('#razon_social').val(data.nombre_o_razon_social).attr('readonly', true);
-			$('#nombre_comercial').val(data.nombre_o_razon_social).attr('readonly', true);
-			//$('#direccion').attr('readonly', true);
-
-			if (data.direccion_completa != ""){
-				$('#direccion').val(data.direccion_completa).attr('readonly', true);
-			}
-			else{
-				$('#direccion').attr('readonly', false);
-			}
-			
-			//alert(data.direccion_completa);
-
+		if (cobservaciones == "") {
+			msg += "Debe ingresar una Observacion <br>";
 		}
-		else{
-			bootbox.alert("RUC Invalido,... revise el RUC digitado ¡");
+
+		if (msg != "") {
+			bootbox.alert(msg);
 			return false;
 		}
+	}
 
-		
-	  });
-}
+	function guardarCita__() {
+		alert("fdssf");
+	}
 
-function guardarCita__(){
-	alert("fdssf");
-}
+	function guardarCita(id_medico, fecha_cita) {
 
-function guardarCita(id_medico,fecha_cita){
-    
-    var msg = "";
+		var msg = "";
+		var id_ipress = $('#id_ipress').val();
+		var id_consultorio = $('#id_consultorio').val();
+		var fecha_atencion = $('#fecha_atencion').val();
+		var dni_beneficiario = $("#dni_beneficiario").val();
+		//alert(id_ipress);
+		if (dni_beneficiario == "") msg += "Debe ingresar el numero de documento <br>";
+		if (id_ipress == "") {
+			msg += "Debe ingresar una Ipress<br>";
+		}
+		if (id_consultorio == "") {
+			msg += "Debe ingresar un Consultorio<br>";
+		}
+		if (fecha_atencion == "") {
+			msg += "Debe ingresar una fecha de atencion<br>";
+		}
+
+		if (msg != "") {
+			bootbox.alert(msg);
+			return false;
+		} else {
+			fn_save_cita(id_medico, fecha_cita);
+		}
+	}
+
+	function fn_save_cita(id_medico, fecha_cita) {
+		/*
+	var tipodoc_beneficiario = $('#tipodoc_beneficiario').val();
+	var nrodocafiliado = $('#nrodocafiliado').val();
+	var nrodocafiliado = $('#nrodocafiliado').val();
     var id_ipress = $('#id_ipress').val();
     var id_consultorio = $('#id_consultorio').val();
-    var fecha_atencion = $('#fecha_atencion').val();
-    var dni_beneficiario = $("#dni_beneficiario").val();
-	//alert(id_ipress);
-	if(dni_beneficiario == "")msg += "Debe ingresar el numero de documento <br>";
-    if(id_ipress==""){msg+="Debe ingresar una Ipress<br>";}
-    if(id_consultorio==""){msg+="Debe ingresar un Consultorio<br>";}
-    if(fecha_atencion==""){msg+="Debe ingresar una fecha de atencion<br>";}
-   
-    if(msg!=""){
-        bootbox.alert(msg); 
-        return false;
-    }
-    else{
-        fn_save_cita(id_medico,fecha_cita);
-    }
-}
+	*/
+		var fecha_atencion_original = $('#fecha_atencion').val();
 
-function fn_save_estudio(){
-    
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var id_agremiado = $('#id_agremiado').val();
-	var id_universidad = $('#id_universidad').val();
-	var id_especialidad = $('#id_especialidad').val();
-	var tesis = $('#tesis').val();
-	var fecha_egresado = $('#fecha_egresado').val();
-	var fecha_graduado = $('#fecha_graduado').val();
-	var libro = $('#libro').val();
-	var folio = $('#folio').val();
-	
-	//alert(id_agremiado);
-	//return false;
-	
-    $.ajax({
-			url: "/agremiado/send_agremiado_estudio",
-            type: "POST",
-            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_universidad:id_universidad,id_especialidad:id_especialidad,tesis:tesis,fecha_egresado:fecha_egresado,fecha_graduado:fecha_graduado,libro:libro,folio:folio},
-            success: function (result) {
-				
+		$.ajax({
+			url: "registrar_cita",
+			type: "POST",
+			//data:{id_medico:id_medico,id_ipress:id_ipress,id_consultorio:id_consultorio,fecha_atencion:fecha_cita},
+			data: $("#frmCita").serialize() + "&id_medico=" + id_medico + "&fecha_cita=" + fecha_cita,
+			success: function(result) {
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				
+				//parent.$('#idMaestroPersona').val(result);
+				//parent.obtenerinformacionpersona();
+
 				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
+				var date = new Date();
+				var d = date.getDate();
+				var m = date.getMonth();
+				var y = date.getFullYear();
+				fullCalendar();
 				*/
-            }
-    });
-}
+				//$('#calendar').fullCalendar({ events: "cronograma_cita",    });
+				$('#calendar').fullCalendar("refetchEvents");
+				modalDelegar(fecha_atencion_original);
 
-function fn_save_multa(){
-    
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var numero_cap = $('#numero_cap').val();
-	var periodo = $('#periodo').val();
-	var concepto = $('#concepto').val();
-	var moneda = $('#moneda').val();
-	var importe = $('#importe').val();
-	var estado = $('#estado').val();
-	
-	//alert(id_agremiado);
-	//return false;
-	
-    $.ajax({
-			url: "/multa/send_multa_nuevoMulta",
-            type: "POST",
-            data : {_token:_token,numero_cap:numero_cap,id:id,periodo:periodo,concepto:concepto,moneda:moneda,importe:importe,estado:estado},
-            success: function (result) {
-				
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
-            }
-    });
-}
-
-function fn_liberar(id){
-    
-	//var id_estacionamiento = $('#id_estacionamiento').val();
-	var _token = $('#_token').val();
-	
-    $.ajax({
-			url: "/estacionamiento/liberar_asignacion_estacionamiento_vehiculo",
-            type: "POST",
-            data : {_token:_token,id:id},
-            success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				cargarAsignarEstacionamiento();
-            }
-    });
-}
-
-
-function validarLiquidacion() {
-	
-	var msg = "";
-	var sw = true;
-	
-	var saldo_liquidado = $('#saldo_liquidado').val();
-	var estado = $('#estado').val();
-	
-	if(saldo_liquidado == "")msg += "Debe ingresar un saldo liquidado <br>";
-	if(estado == "")msg += "Debe ingresar una observacion <br>";
-	
-	if(msg!=""){
-		bootbox.alert(msg);
-		//return false;
-	} else {
-		//submitFrm();
-		document.frmLiquidacion.submit();
-	}
-	return false;
-}
-
-
-function obtenerVehiculo(id,obj){
-	
-	//$("#tblPlan tbody text-white").attr('class','bg-primary text-white');
-	if(obj!=undefined){
-		$("#tblSinReservaEstacionamiento tbody tr").each(function (ii, oo) {
-			var clase = $(this).attr("clase");
-			$(this).attr('class',clase);
+			}
 		});
-		
-		$(obj).attr('class','bg-success text-white');
 	}
-	//$('#tblPlanDetalle tbody').html("");
-	$('#id_empresa').val(id);
-	var id_estacionamiento = $('#id_estacionamiento').val();
-	$.ajax({
-		url: '/estacionamiento/obtener_vehiculo/'+id+'/'+id_estacionamiento,
-		dataType: "json",
-		success: function(result){
-			
-			var newRow = "";
-			$('#tblPlanDetalle').dataTable().fnDestroy(); //la destruimos
-			$('#tblPlanDetalle tbody').html("");
-			$(result).each(function (ii, oo) {
-				newRow += "<tr class='normal'><td>"+oo.placa+"</td>";
-				newRow += '<td class="text-left" style="padding:0px!important;margin:0px!important">';
-				newRow += '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-				newRow += '<a href="javascript:void(0)" onClick=fn_save("'+oo.id_vehiculo+'") class="btn btn-sm btn-normal">';
-				newRow += '<i class="fa fa-2x fa-check" style="color:green"></i></a></a></div></td></tr>';
-			});
-			$('#tblPlanDetalle tbody').html(newRow);
-			
-			$('#tblPlanDetalle').DataTable({
-				//"sPaginationType": "full_numbers",
-				"paging":false,
-				"dom": '<"top">rt<"bottom"flpi><"clear">',
-				"language": {"url": "/js/Spanish.json"},
-			});
-			
-			$("#system-search2").keyup(function() {
-				var dataTable = $('#tblPlanDetalle').dataTable();
-			   dataTable.fnFilter(this.value);
-			});
-			
+
+
+	function validarLiquidacion() {
+
+		var msg = "";
+		var sw = true;
+
+		var saldo_liquidado = $('#saldo_liquidado').val();
+		var estado = $('#estado').val();
+
+		if (saldo_liquidado == "") msg += "Debe ingresar un saldo liquidado <br>";
+		if (estado == "") msg += "Debe ingresar una observacion <br>";
+
+		if (msg != "") {
+			bootbox.alert(msg);
+			//return false;
+		} else {
+			//submitFrm();
+			document.frmLiquidacion.submit();
 		}
-		
-	});
-	
-}
-
-function cargar_tipo_proveedor(){
-	
-	var tipo_proveedor = 0;
-	if($('#tipo_proveedor_').is(":checked"))tipo_proveedor = 1;
-	
-	$("#divPersona").hide();
-	$("#divEmpresa").hide();
-	
-	$("#empresa_").val("");
-	$("#persona_").val("");
-	
-	$("#id_empresa").val("");
-	$("#id_persona").val("");
-	
-	if(tipo_proveedor==0)$("#divPersona").show();
-	if(tipo_proveedor==1)$("#divEmpresa").show();
-	
-}
-
-/*
-$('#fecha_solicitud').datepicker({
-	autoclose: true,
-	dateFormat: 'dd-mm-yy',
-	changeMonth: true,
-	changeYear: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-/*
-$('#fecha_solicitud').datepicker({
-	format: "dd/mm/yyyy",
-	startDate: "01-01-2015",
-	endDate: "01-01-2020",
-	todayBtn: "linked",
-	autoclose: true,
-	todayHighlight: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-
-/*				
-format: "dd/mm/yyyy",
-startDate: "01-01-2015",
-endDate: "01-01-2020",
-todayBtn: "linked",
-autoclose: true,
-todayHighlight: true,
-container: '#myModal modal-body'
-*/	
+		return false;
+	}
 </script>
 
 
 <body class="hold-transition skin-blue sidebar-mini">
 
-	<div class="panel-heading close-heading">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    </div>
-
-    <div>
+	<div>
 		<!--
         <section class="content-header">
           <h1>
-            <small style="font-size: 20px">Programados del Medicos del dia <?php //echo $fecha_atencion?></small>
+            <small style="font-size: 20px">Programados del Medicos del dia <?php //echo $fecha_atencion
+																			?></small>
           </h1>
         </section>
 		-->
-		<div class="justify-content-center">		
+		<div class="justify-content-center">
 
-		<div class="card">
-			
-			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Otros Pagos
-			</div>
-			
-            <div class="card-body">
+			<div class="card">
 
-			<div class="row">
+				<div class="card-body" style="padding:5px!important;">
 
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
-					
-					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="id" id="id" value="">
-					
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label class="control-label form-control-sm">N° Doc. / Nombre</label>
-								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="" type="text" readonly>
-							
+					<div class="row">
+
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
+
+							<div class="card">
+								<div class="card-header">
+									<strong>
+										Otros Pagos
+									</strong>
+								</div>
+
+								<form class="form-horizontal" method="post" action="" id="frmOtroPago" autocomplete="off">
+
+									<div class="card-body" style="padding:5px!important;">
+
+										<div class="row">
+
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
+
+												<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+											
+
+												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona?>">
+												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado?>">
+												<input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo?>">
+
+												<div class="row" style="padding-left:10px">
+<!--
+													<div class="col-lg-12">
+														<div class="form-group">
+															<label class="control-label form-control-sm">N° Doc. / Nombre</label>
+															<input id="nombres_o" name="nombres_o" on class="form-control form-control-sm" value="" type="text" readonly>
+														</div>
+													</div>
+-->
+													<div class="card-body">
+
+														<?php $seleccionar_todos = "style='display:block'"; ?>
+														<div class="table-responsive">
+															<table id="tblConceptos" class="table table-hover table-sm">
+																<thead>
+																	<tr style="font-size:13px">
+																		<th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
+																		</th>
+																		<th>Código</th>
+																		<th>Denominación</th>
+																		<th>Moneda</th>
+																		<th>Importe</th>
+																	</tr>
+																</thead>
+																<tbody style="font-size:13px">
+																	<?php
+																	$total = 0;
+																	$descuento = 0;
+																	$valor_venta_bruto = 0;
+																	$valor_venta = 0;
+																	$igv = 0;
+
+																	foreach ($conceptos as $key => $row) :
+																		$monto = $row->importe;
+																		$stotal = str_replace(",", "", number_format($monto / 1.18, 1));
+																		$igv_   = str_replace(",", "", number_format($stotal * 0.18, 1));
+																	?>
+																		<tr style="font-size:13px">
+																			<td class="text-center">
+																				<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+																					<input type="checkbox" class="mov_" name="concepto_detalles[<?php echo $key ?>][id]" value="<?php echo $row->id ?>" onchange="calcular_total_(this)" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][id]" value="<?php echo $row->id ?>" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][codigo]" value="<?php echo $row->codigo ?>" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][denominacion]" value="<?php echo $row->denominacion ?>" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][importe]" value="<?php echo $row->importe ?>" />
+
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][pu]" value="<?php echo $row->importe ?>" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][igv]" value="<?php echo $igv_ ?>" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][pv]" value="<?php echo $stotal ?>" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][total]" value="<?php echo $row->importe ?>" />
+
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][moneda]" value="<?php echo $row->moneda ?>" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][id_moneda]" value="<?php echo $row->id_moneda ?>" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][cantidad]" value="1" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][descuento]" value="" />
+																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][centro_costo]" value="centro_costo" />
+
+																				</div>
+																			</td>
+
+																			<td class="text-left"><?php echo $row->codigo ?></td>
+																			<td class="text-left"><?php echo $row->denominacion ?></td>
+																			<td class="text-left"><?php echo $row->moneda ?></td>
+																			<td class="text-right val_total_">
+																				<span class="val_total"><?php echo $row->importe ?></span>
+																			</td>
+
+
+																		</tr>
+																	<?php
+																	//$total += $row->importe;	
+																	endforeach;
+																	?>
+
+																	<tr>
+																		<th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px"> Total</th>
+																		<td style="padding-bottom:0px;margin-bottom:0px">
+																			<input type="text" readonly name="total_concepto_" id="total_concepto_" value="" class="form-control form-control-sm text-right" />
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+
+												</div>
+												<div style="margin-top:15px" class="form-group">
+													<div class="col-sm-12 controls">
+														<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+															<a href="javascript:void(0)" onClick="guardar_concepto_valorizacion()" class="btn btn-sm btn-success">Guardar</a>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+
 							</div>
+
 						</div>
 
-						<div class="card-body">
-						<?php $seleccionar_todos="style='display:block'";?>				
-							<div class="table-responsive">
-								<table id="tblConceptos" class="table table-hover table-sm">
-									<thead>
-										<tr style="font-size:13px">
-											<th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
-                                        		<input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?> >
-											</th>	
-											<th>Código</th>
-											<th>Denominación</th>
-											<th>Moneda</th>
-											<th>Importe</th>                                                        
-										</tr>
-									</thead>
-									<tbody style="font-size:13px">
 
-									</tbody>
-								</table>
-							</div>
-						</div>
-						
 					</div>
-					
-					
-					
-					<div style="margin-top:15px" class="form-group">
-						<div class="col-sm-12 controls">
-							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
-							</div>
-												
-						</div>
-					</div> 
-					
-              </div>
-			  
-              
-          </div>
-          <!-- /.box -->
-          
+				</div>
+			</div>
 
-        </div>
-        <!--/.col (left) -->
-            
-     
-          </div>
-          <!-- /.row -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    
-<script type="text/javascript">
-$(document).ready(function () {
-	
-	
-	$('#tblReservaEstacionamiento').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-search").keyup(function() {
-		var dataTable = $('#tblReservaEstacionamiento').dataTable();
-		dataTable.fnFilter(this.value);
-	}); 
-	
-	$('#tblReservaEstacionamientoPreferente').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-searchp").keyup(function() {
-		var dataTable = $('#tblReservaEstacionamientoPreferente').dataTable();
-		dataTable.fnFilter(this.value);
-	});
-	
-	$('#tblSinReservaEstacionamiento').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-search2").keyup(function() {
-		var dataTable = $('#tblSinReservaEstacionamiento').dataTable();
-		dataTable.fnFilter(this.value);
-	}); 
-	
-	
-});
+			</section>
 
-</script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-	
-	$('#persona_').keyup(function() {
-		this.value = this.value.toLocaleUpperCase();
-	});
-		
-	$('#persona_').focusin(function() { $('#persona_').select(); });
-	/*
-	$('#usuario_').autocomplete({
-		appendTo: "#usuario_busqueda",
-		source: function(request, response) {
-			$.ajax({
-			url: '/empresa/list_usuario/'+$('#usuario_').val(),
-			dataType: "json",
-			success: function(data){
-			   var resp = $.map(data,function(obj){
-					var hash = {key: obj.id, value: obj.usuario};
-					return hash;
-			   }); 
-			   response(resp);
-			},
-			error: function() {
-			}
-		});
-		},
-		select: function (event, ui) {
-			$("#user_id").val(ui.item.key);
-		},
-			minLength: 2,
-			delay: 100
-	  });
-	*/
-	
-	$('#empresa_').keyup(function() {
-		this.value = this.value.toLocaleUpperCase();
-	});
-		
-	$('#empresa_').focusin(function() { $('#empresa_').select(); });
-	
-	$('#empresa_').autocomplete({
-		appendTo: "#empresa_busqueda",
-		source: function(request, response) {
-			$.ajax({
-			url: '/empresa/list_empresa/'+$('#empresa_').val(),
-			dataType: "json",
-			success: function(data){
-			   var resp = $.map(data,function(obj){
-					var hash = {key: obj.id, value: obj.razon_social, ruc: obj.ruc};
-					return hash;
-			   }); 
-			   response(resp);
-			},
-			error: function() {
-			}
-		});
-		},
-		select: function (event, ui) {
-			$("#id_empresa").val(ui.item.key);
-		},
-			minLength: 1,
-			delay: 100
-	  });
-	  
-	  $('#persona_').autocomplete({
-		appendTo: "#persona_busqueda",
-		source: function(request, response) {
-			$.ajax({
-			url: '/persona/list_persona/'+$('#persona_').val(),
-			dataType: "json",
-			success: function(data){
-			   var resp = $.map(data,function(obj){
-					var hash = {key: obj.id, value: obj.persona};
-					return hash;
-			   }); 
-			   response(resp);
-			},
-			error: function() {
-			}
-		});
-		},
-		select: function (event, ui) {
-			$("#id_persona").val(ui.item.key);
-		},
-			minLength: 1,
-			delay: 100
-	  });
-	  
-	
-});
-
-</script>
-
+		</div>

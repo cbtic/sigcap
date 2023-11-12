@@ -3,3 +3,4 @@ id;nombre_tabla;estado;id_usuario_inserta
 2;agremiado_cuotas;1;1
 3;agremiado_multas;1;1
 4;seguros;1;1
+5;otro_pago;1;1

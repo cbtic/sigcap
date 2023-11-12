@@ -206,6 +206,8 @@ border-right: 2px solid #5cb85c!important;
                                 <input type="hidden" readonly name="id_ubicacion_p" id="id_ubicacion_p" value="" class="form-control form-control-sm">
 								<input type="hidden" readonly name="id_persona" id="id_persona" value="" class="form-control form-control-sm">
                                 <input type="hidden" readonly name="id_agremiado" id="id_agremiado" value="" class="form-control form-control-sm">
+                                <input type="hidden" readonly name="numero_documento_" id="numero_documento_" value="" class="form-control form-control-sm">
+                                <input type="hidden" readonly name="id_tipo_documento_" id="id_tipo_documento_" value="" class="form-control form-control-sm">
 
                             </div>
                         </div>
@@ -345,19 +347,27 @@ border-right: 2px solid #5cb85c!important;
 
                         <div class="card-body">
 
-                            <!--
+                            
                             <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
                                     <div class="form-group form-group-sm">
-                                        <label>Area</label>
-                                        <select name="tdicod" id="tdicod" class="form-control">
-                                            <option></option>
+                                        <select name="cboAnio_f" id="cboAnio_f" class="form-control form-control-sm" onchange="getOpciones()">
+                                            <option value="2022">2022</option>
+                                            <option value="2023" selected>2023</option>                                                    
                                         </select>
                                     </div>
                                 </div>
-
+                                <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
+                                    <div class="form-group form-group-sm">
+                                        <select name="cboTipoCuota_f" id="cboTipoCuota_f" class="form-control form-control-sm" onchange="getOpciones()">
+                                            <option value="" selected>Todas cuotas</option>
+                                            <option value="1">Cuotas vencidas</option>
+                                            <option value="0">Cuotas pendientes</option>                                                    
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            -->
+                            
 							<?php $seleccionar_todos="style='display:none'";?>
 							@hasanyrole('administrator')
 							<?php $seleccionar_todos="style='display:block'";?>
@@ -495,31 +505,32 @@ border-right: 2px solid #5cb85c!important;
 
             </div>
 
-
-
         </div><!--col-->
+
+
+        <div id="openOverlayOpc" class="modal fade" role="dialog">
+            <div class="modal-dialog" >
+
+                <div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">
+
+                <div class="modal-body" style="padding: 0px;margin: 0px">
+
+                        <div id="diveditpregOpc"></div>
+
+                </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
         </form>
 
     </div><!--row-->
 @endsection
 
-<div id="openOverlayOpc" class="modal fade" role="dialog">
-  <div class="modal-dialog" >
 
-    <div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">
-
-      <div class="modal-body" style="padding: 0px;margin: 0px">
-
-            <div id="diveditpregOpc"></div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
 
 
 @push('after-scripts')
