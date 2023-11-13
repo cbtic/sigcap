@@ -208,7 +208,7 @@ border-right: 2px solid #5cb85c!important;
                                 <input type="hidden" readonly name="id_agremiado" id="id_agremiado" value="" class="form-control form-control-sm">
                                 <input type="hidden" readonly name="numero_documento_" id="numero_documento_" value="" class="form-control form-control-sm">
                                 <input type="hidden" readonly name="id_tipo_documento_" id="id_tipo_documento_" value="" class="form-control form-control-sm">
-
+                                
                             </div>
                         </div>
                     </div>
@@ -351,7 +351,7 @@ border-right: 2px solid #5cb85c!important;
                             <div class="row">
                                 <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
                                     <div class="form-group form-group-sm">
-                                        <select name="cboAnio_f" id="cboAnio_f" class="form-control form-control-sm" onchange="getOpciones()">
+                                        <select name="cboPeriodo_b" id="cboPeriodo_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
                                             <option value="2022">2022</option>
                                             <option value="2023" selected>2023</option>                                                    
                                         </select>
@@ -359,7 +359,7 @@ border-right: 2px solid #5cb85c!important;
                                 </div>
                                 <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
                                     <div class="form-group form-group-sm">
-                                        <select name="cboTipoCuota_f" id="cboTipoCuota_f" class="form-control form-control-sm" onchange="getOpciones()">
+                                        <select name="cboTipoCuota_b" id="cboTipoCuota_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
                                             <option value="" selected>Todas cuotas</option>
                                             <option value="1">Cuotas vencidas</option>
                                             <option value="0">Cuotas pendientes</option>                                                    
@@ -412,7 +412,7 @@ border-right: 2px solid #5cb85c!important;
                                         -->
 
 										<tr>
-											<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
+											<th colspan="5" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
 											<td style="padding-bottom:0px;margin-bottom:0px">
 												<input type="text" readonly name="total" id="total" value="0" class="form-control form-control-sm text-right">
 											</td>
@@ -441,6 +441,8 @@ border-right: 2px solid #5cb85c!important;
 								<input class="btn btn-success pull-rigth" value="FACTURA" type="button" id="btnFactura" disabled="disabled" onclick="enviarTipo(1)" />
 								<input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnBoleta" disabled="disabled" onclick="enviarTipo(2)" />
 								<input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnTicket" disabled="disabled" onclick="enviarTipo(3)" style="display:none" />
+
+                                <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="modal_fraccionar()" />
 
 
                                     <!--<input class="btn btn-primary pull-right" value="BOLETA" name="crea" type="button" form="prestacionescrea" id="btnGuardar" onclick="guardarValorizacion()" />-->
