@@ -263,7 +263,8 @@
                                                     <div class="col-md-4">Estado</div></div>-->
                                                 <th>Seleccionar</th>
                                                 <th>Denominaci&oacute;n</th>
-                                                <th>Tipo de Agrupaci&oacute;n</th>
+                                                <th>Tipo</th>
+                                                <th>Movilidad</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -308,7 +309,8 @@
                                                     <div class="col-md-4">Estado</div></div>-->
                                                 <th>Seleccionar</th>
                                                 <th>Denominaci&oacute;n</th>
-                                                <th>Tipo de Municipalidad</th>
+                                                <th>Tipo Muni</th>
+                                                <th>Movilidad</th>
                                             </tr>
                                         </thead>
                                         <tbody>
