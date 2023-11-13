@@ -284,8 +284,3 @@ Route::post('certificado/send_certificado', [CertificadoController::class, 'send
 Route::get('certificado/eliminar_certificado/{id}/{estado}', [CertificadoController::class, 'eliminar_certificado'])->name('certificado.eliminar_certificado');
 Route::get('certificado/certificado_vista/{id}', [CertificadoController::class, 'certificado_vista'])->name('certificado.certificado_vista');
 Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 8a930674bdd24e05d9f3ea4fd730f7074b7de783
