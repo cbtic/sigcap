@@ -62,15 +62,6 @@
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
                                 <a href="/concurso/create" class="dropdown-item">Concurso</a>
 								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
-                                <a href="/concurso" class="dropdown-item">Concurso</a>
-						   </div>
-					</li>
-
-                    <li class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">Asuntos Tecnicos</a>
-						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
-								<a href="/comision/consulta_comision" class="dropdown-item">Comisiones</a>
 						   </div>
 					</li>
 
@@ -98,7 +89,7 @@
 						   aria-haspopup="true" aria-expanded="false">Caja</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
-                                <a href="/certificado/consulta_certificado" class="dropdown-item">Certificado tipo 4</a>
+                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>
 
 						   </div>
 					</li>
