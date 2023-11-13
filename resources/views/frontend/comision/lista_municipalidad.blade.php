@@ -3,7 +3,7 @@
 foreach($municipalidad as $row):?>
 <tr style="font-size:13px">
 	<td class="text-center">
-	<input value="<?php //echo $row->id?>"  type="checkbox" id="check_" name="check_[]">
+	<input value="<?php echo $row->id?>"  type="checkbox" id="check_" name="check_[]">
 	</td>
 	<td class="text-left"><?php echo $row->denominacion?></td>
 	<td class="text-left"><?php echo $row->tipo_municipalidad?></td>
