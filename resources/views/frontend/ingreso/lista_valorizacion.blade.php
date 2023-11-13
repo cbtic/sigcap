@@ -63,7 +63,8 @@ foreach($valorizacion as $key=>$row):
 	<td class="text-right val_total_">	
 		<span class="val_descuento" style="float:left"></span>	
 		<span class="val_total"><?php echo $row->monto?></span>
-		<input type="hidden" class="tipo_factura" value="FT" />
+		
+		<input type="hidden" class="tipo_factura" value="<?php echo $row->id_concepto?>" />
 	</td>
 
 </tr>
@@ -74,7 +75,7 @@ endforeach;
 ?>
 
 <tr>
-	<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda Total</th>
+	<th colspan="5" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda Total</th>
 	<td style="padding-bottom:0px;margin-bottom:0px">
 		<input type="text" readonly name="deudaTotal" id="deudaTotal" value="<?php echo $total?>" class="form-control form-control-sm text-right"/>
 	</td>

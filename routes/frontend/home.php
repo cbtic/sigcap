@@ -21,6 +21,7 @@ use App\Http\Controllers\Frontend\ProntoPagoController;
 use App\Http\Controllers\Frontend\AfiliacionSeguroController;
 use App\Http\Controllers\Frontend\ComprobanteController;
 use App\Http\Controllers\Frontend\CertificadoController;
+use App\Models\Certificado;
 
 use App\Http\Controllers\Frontend\ComisionController;
 
@@ -167,13 +168,16 @@ Route::get('prontoPago/eliminar_prontoPago/{id}/{estado}', [ProntoPagoController
 //Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 Route::get('ingreso/obtener_valorizacion/{tipo_documento}/{id_persona}', [IngresoController::class, 'obtener_valorizacion'])->name('ingreso.obtener_valorizacion')->where('tipo_documento', '(.*)');
-Route::post('ingreso/listar_valorizacion/', [IngresoController::class, 'listar_valorizacion'])->name('ingreso.listar_valorizacion');
+Route::post('ingreso/listar_valorizacion', [IngresoController::class, 'listar_valorizacion'])->name('ingreso.listar_valorizacion');
 
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
 Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');
 Route::get('ingreso/otro_pago/{periodo}/{idpersona}/{idagremiado}', [IngresoController::class, 'otro_pago'])->name('multa.otro_pago');
 Route::get('ingreso/obtener_conceptos/{periodo}', [IngresoController::class, 'obtener_conceptos'])->name('ingreso.obtener_conceptos')->where('periodo', '(.*)');
 Route::post('ingreso/send_concepto', [IngresoController::class, 'send_concepto'])->name('ingreso.send_concepto');
+Route::post('ingreso/fracciona_deuda', [IngresoController::class, 'fracciona_deuda'])->name('ingreso.fracciona_deuda');
+
+Route::get('ingreso/modal_valorizacion_factura/{id}', [IngresoController::class, 'modal_valorizacion_factura'])->name('ingreso.modal_valorizacion_factura');
 
 
 //Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
@@ -272,5 +276,16 @@ Route::get('periodoComision/eliminar_periodoComision/{id}/{estado}', [PeriodoCom
 
 
 
+Route::get('certificado/consultar_certificado', [CertificadoController::class, 'consultar_certificado'])->name('certificado.consultar_certificado');
+Route::post('certificado/listar_certificado', [CertificadoController::class, 'listar_certificado'])->name('certificado.listar_certificado');
+Route::get('certificado/modal_certificado/{id}', [CertificadoController::class, 'modal_certificado'])->name('certificado.modal_certificado');
+Route::get('certificado/valida_pago/{idagremiado}/{serie}/{numero}/{concepto}', [CertificadoController::class, 'valida_pago'])->name('certificado.valida_pago');
+Route::post('certificado/send_certificado', [CertificadoController::class, 'send_certificado'])->name('certificado.send_certificado');
+Route::get('certificado/eliminar_certificado/{id}/{estado}', [CertificadoController::class, 'eliminar_certificado'])->name('certificado.eliminar_certificado');
+Route::get('certificado/certificado_vista/{id}', [CertificadoController::class, 'certificado_vista'])->name('certificado.certificado_vista');
+Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 8a930674bdd24e05d9f3ea4fd730f7074b7de783

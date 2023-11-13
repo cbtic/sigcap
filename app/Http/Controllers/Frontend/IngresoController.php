@@ -38,7 +38,7 @@ class IngresoController extends Controller
 
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);
+        //$valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);
         //print_r($valorizacion);exit();
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 
@@ -46,15 +46,19 @@ class IngresoController extends Controller
 
     public function listar_valorizacion(Request $request){
 
+        $id_persona = $request->id_persona;
+        $tipo_documento = $request->id_tipo_documento_;
+        $periodo = $request->cboPeriodo_b;
+        $tipo_couta = $request->cboTipoCuota_b;
+
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta);
         //print_r($valorizacion);exit();
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 
     }
-    
-
+ 
     
     public function obtener_pago($tipo_documento,$id_persona){
 
@@ -186,5 +190,63 @@ class IngresoController extends Controller
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 */
     }
+
+    public function fracciona_deuda(Request $request){
+
+        $msg = "";
+        $id_user = Auth::user()->id;
+        $id_persona = $request->id_persona;
+        $id_agremiado = $request->id_agremiado;
+        
+        $concepto_detalle = $request->concepto_detalle;
+        $ind = 0;
+        foreach($request->concepto_detalles as $key=>$det){
+            $conceptod[$ind] = $concepto_detalle[$key];
+            $ind++;
+        }
+
+        foreach ($conceptod as $key => $value) {
+
+            //$id_val = $value['id'];
+            //echo( $id_val);
+
+            $valorizacion = new Valorizacione;
+            $valorizacion->id_modulo = 5;
+            $valorizacion->pk_registro = 0;
+            $valorizacion->id_concepto = $value['id'];
+            $valorizacion->id_agremido = $id_agremiado;
+            $valorizacion->id_persona = $id_persona;
+            $valorizacion->monto = $value['importe'];
+            $valorizacion->id_moneda = $value['id_moneda'];
+            $valorizacion->fecha = Carbon::now()->format('Y-m-d');
+            $valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');            
+            $valorizacion->id_usuario_inserta = $id_user;
+            $valorizacion->descripcion = $value['denominacion'];
+
+            $valorizacion->save();
+
+            $msg = "ok";
+
+        }
+
+
+
+
+
+        $valorizaciones_model = new Valorizacione;
+        $sw = true;
+        //$valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta);
+        //print_r($valorizacion);exit();
+        return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
+
+    }
+
+    public function modal_valorizacion_factura($id){
+		
+		$valorizaciones_model = new Valorizacione;
+		$valorizacion = $valorizaciones_model->getValorizacionFactura($id);
+		return view('frontend.ingreso.modal_valorizacion_factura',compact('valorizacion'));
+	
+	}
 
 }
