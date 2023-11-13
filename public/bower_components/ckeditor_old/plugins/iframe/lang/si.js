@@ -1,0 +1,1 @@
+CKEDITOR.plugins.setLang("iframe","si",{border:"ස�?කිල්ලේ කඩයිම් ",noUrl:"කරුණ�?කර රුපයේ URL ලියන්න",scrolling:"සක්ක්�?රිය කරන්න",title:"IFrame Properties",toolbar:"IFrame"});

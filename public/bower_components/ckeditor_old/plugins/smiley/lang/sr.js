@@ -1,0 +1,1 @@
+CKEDITOR.plugins.setLang("smiley","sr",{options:"Smiley Options",title:"Уне�?и �?мајлија",toolbar:"Смајли"});
