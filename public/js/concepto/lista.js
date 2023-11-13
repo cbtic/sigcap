@@ -7,7 +7,40 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
+	$('#estado').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
 	$('#denominacionBus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+	
+
+	/*$("#denominacionBus").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
+		("#tblAfiliado *").filter(function() {
+		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});*/
+
+	$('#cuenta_contable_debe').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#cuenta_contable_al_haber1').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#cuenta_contable_al_haber2').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
@@ -459,6 +492,9 @@ function datatablenew(){
 			
 			var id = $('#id').val();
 			var denominacion = $('#denominacionBus').val();
+			var cuenta_contable_debe = $('#cuenta_contable_debe').val();
+			var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
+			var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2').val();
             var partida_presupuestal = $('#partida_presupuestalBus').val();
 			var tipo_afectacion = $('#tipo_afectacion').val();
 			var estado = $('#estado').val();
@@ -469,7 +505,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,denominacion:denominacion,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,estado:estado,
+						id:id,denominacion:denominacion,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {

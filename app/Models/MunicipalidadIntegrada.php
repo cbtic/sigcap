@@ -6,23 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
-class Municipalidade extends Model
+class MunicipalidadIntegrada extends Model
 {
-   
-    public function listar_municipalidad($p){
+    use HasFactory;
 
-        return $this->readFuntionPostgres('sp_listar_municipalidad_paginado',$p);
+    public function listar_municipalidadIntegrada($p){
 
-    }
+        return $this->readFuntionPostgres('sp_listar_municipalidad_integrada_paginado',$p);
 
-    function getMunicipalidadAll(){
-
-        $cad = "select t1.*,tm.denominacion tipo_municipalidad
-        from municipalidades t1
-        inner join tabla_maestras tm on t1.id_tipo_municipalidad::int =tm.codigo::int and tm.tipo='43'
-        where t1.estado='1' ";
-		$data = DB::select($cad);
-        return $data;
     }
 
     public function readFuntionPostgres($function, $parameters = null){
@@ -39,5 +30,15 @@ class Municipalidade extends Model
         $data = DB::select($cad);
         return $data;
 
+    }
+
+    function getMunicipalidadIntegradaAll(){
+
+        $cad = "select mi.*,tm.denominacion tipo_agrupacion 
+        from municipalidad_integradas mi
+        inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
+        where mi.estado='1'  ";
+		$data = DB::select($cad);
+        return $data;
     }
 }

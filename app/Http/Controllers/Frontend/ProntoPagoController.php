@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProntoPago;
 use App\Models\Concepto;
+use Carbon\Carbon;
 use Auth;
 
 class ProntoPagoController extends Controller
@@ -95,7 +96,11 @@ class ProntoPagoController extends Controller
 		$periodo1 = date("Y", strtotime($request->fecha_inicio));
 		$periodo2 = date("Y", strtotime($request->fecha_fin));
 		$separacion = " - ";
-		$prontoPago->periodo = $periodo1.$separacion.$periodo2;
+		if ($periodo1 == $periodo2){
+			$prontoPago->periodo = $periodo1;
+		}else{
+			$prontoPago->periodo = $periodo1.$separacion.$periodo2;}
+		
 		$prontoPago->fecha_inicio = $request->fecha_inicio;
 		$prontoPago->fecha_fin = $request->fecha_fin;
 		//$prontoPago->porcentaje = $request->porcentaje;
