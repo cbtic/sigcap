@@ -26,7 +26,7 @@ class CreateComisionMovilidadesTable extends Migration
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index();
 
             $table->foreign('id_municipalidad_integrada')->references('id')->on('municipalidad_integradas');
-            $table->foreign('periodo_comisiones')->references('id')->on('periodo_comisiones');
+            $table->foreign('id_periodo_comisiones')->references('id')->on('periodo_comisiones');
 
             $table->timestamps();
         });
