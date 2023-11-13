@@ -21,6 +21,7 @@ use App\Http\Controllers\Frontend\ProntoPagoController;
 use App\Http\Controllers\Frontend\AfiliacionSeguroController;
 use App\Http\Controllers\Frontend\ComprobanteController;
 use App\Http\Controllers\Frontend\CertificadoController;
+use App\Models\Certificado;
 
 use App\Http\Controllers\Frontend\ComisionController;
 
@@ -275,5 +276,16 @@ Route::get('periodoComision/eliminar_periodoComision/{id}/{estado}', [PeriodoCom
 
 
 
+Route::get('certificado/consultar_certificado', [CertificadoController::class, 'consultar_certificado'])->name('certificado.consultar_certificado');
+Route::post('certificado/listar_certificado', [CertificadoController::class, 'listar_certificado'])->name('certificado.listar_certificado');
+Route::get('certificado/modal_certificado/{id}', [CertificadoController::class, 'modal_certificado'])->name('certificado.modal_certificado');
+Route::get('certificado/valida_pago/{idagremiado}/{serie}/{numero}/{concepto}', [CertificadoController::class, 'valida_pago'])->name('certificado.valida_pago');
+Route::post('certificado/send_certificado', [CertificadoController::class, 'send_certificado'])->name('certificado.send_certificado');
+Route::get('certificado/eliminar_certificado/{id}/{estado}', [CertificadoController::class, 'eliminar_certificado'])->name('certificado.eliminar_certificado');
+Route::get('certificado/certificado_vista/{id}', [CertificadoController::class, 'certificado_vista'])->name('certificado.certificado_vista');
+Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 8a930674bdd24e05d9f3ea4fd730f7074b7de783
