@@ -1,4 +1,8 @@
-$(document).ready(function () {	
+//alert("ok");
+//jQuery.noConflict(true);
+
+$(document).ready(function () {
+	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
@@ -140,7 +144,11 @@ function cargarMunicipalidades(){
 			type: "GET",
 			success: function (result) {  
 			
+					$('#tblMunicipalidad').dataTable().fnDestroy(); //la destruimos
+					$("#tblMunicipalidad tbody").html("");
+					
 					$("#tblMunicipalidad tbody").html(result);
+					//alert("ok");
 					$('#tblMunicipalidad').DataTable({
 						"paging":false,
 						"dom": '<"top">rt<"bottom"flpi><"clear">',
