@@ -23,6 +23,10 @@ use App\Http\Controllers\Frontend\ComprobanteController;
 use App\Http\Controllers\Frontend\CertificadoController;
 use App\Models\Certificado;
 
+use App\Http\Controllers\Frontend\ComisionController;
+
+use App\Http\Controllers\Frontend\PeriodoComisionController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -114,14 +118,14 @@ Route::post('concepto/send_concepto_nuevoConcepto', [ConceptoController::class, 
 
 Route::get('concepto/eliminar_concepto/{id}/{estado}', [ConceptoController::class, 'eliminar_concepto'])->name('concepto.eliminar_concepto');
 
-Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('tipoConcepto.consulta_tipoConcepto');
+Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('TipoConcepto.consulta_tipoConcepto');
 
 Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 Route::get('municipalidad/consulta_municipalidad', [MunicipalidadController::class, 'consulta_municipalidad'])->name('municipalidad.consulta_municipalidad');
 Route::post('municipalidad/listar_municipalidad', [MunicipalidadController::class, 'listar_municipalidad'])->name('municipalidad.listar_municipalidad');
 
 Route::get('municipalidad/modal_municipalidad/{id}', [MunicipalidadController::class, 'modal_municipalidad'])->name('municipalidad.modal_municipalidad');
-Route::post('TipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('TipoConcepto.listar_tipoConcepto_ajax');
+//Route::post('TipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('TipoConcepto.listar_tipoConcepto_ajax');
 Route::post('tipoConcepto/listar_tipoConcepto_ajax', [TipoConceptoController::class, 'listar_tipoConcepto_ajax'])->name('tipoConcepto.listar_tipoConcepto_ajax');
 
 Route::get('tipoConcepto/editar_tipoConcepto/{id}', [TipoConceptoController::class, 'editar_tipoConcepto'])->name('tipoConcepto.editar_tipoConcepto');
@@ -164,16 +168,20 @@ Route::get('prontoPago/eliminar_prontoPago/{id}/{estado}', [ProntoPagoController
 //Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 Route::get('ingreso/obtener_valorizacion/{tipo_documento}/{id_persona}', [IngresoController::class, 'obtener_valorizacion'])->name('ingreso.obtener_valorizacion')->where('tipo_documento', '(.*)');
+Route::post('ingreso/listar_valorizacion/', [IngresoController::class, 'listar_valorizacion'])->name('ingreso.listar_valorizacion');
+
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
 Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');
-Route::get('ingreso/otro_pago/{periodo}', [IngresoController::class, 'otro_pago'])->name('multa.otro_pago');
+Route::get('ingreso/otro_pago/{periodo}/{idpersona}/{idagremiado}', [IngresoController::class, 'otro_pago'])->name('multa.otro_pago');
 Route::get('ingreso/obtener_conceptos/{periodo}', [IngresoController::class, 'obtener_conceptos'])->name('ingreso.obtener_conceptos')->where('periodo', '(.*)');
+Route::post('ingreso/send_concepto', [IngresoController::class, 'send_concepto'])->name('ingreso.send_concepto');
 
 
 //Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.create');
 Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
 Route::get('comprobante/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
+
 
 
 Route::get('seguro/consulta_seguro', [SeguroController::class, 'consulta_seguro'])->name('seguro.consulta_seguro');
@@ -196,9 +204,10 @@ Route::get('afiliacion_seguro/obtener_plan/{id}', [AfiliacionSeguroController::c
 Route::post('afiliacion_seguro/send_afiliacion', [AfiliacionSeguroController::class, 'send_afiliacion'])->name('afiliacion_seguro.send_afiliacion');
 Route::get('afiliacion_seguro/modal_parentesco/{id}', [AfiliacionSeguroController::class, 'modal_parentesco'])->name('afiliacion_seguro.modal_parentesco');
 Route::post('afiliacion_seguro/listar_parentesco', [AfiliacionSeguroController::class, 'listar_parentesco'])->name('afiliacion_seguro.listar_parentesco');
-Route::get('afiliacion_seguro/obtener_parentesco/{id}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco');
 Route::get('afiliacion_seguro/obtener_agremiado/{id}', [AfiliacionSeguroController::class, 'obtener_agremiado'])->name('afiliacion_seguro.obtener_agremiado');
 Route::post('afiliacion_seguro/send_parentesco_fila', [AfiliacionSeguroController::class, 'send_parentesco_fila'])->name('afiliacion_seguro.send_parentesco_fila');
+//Route::get('afiliacion_seguro/obtener_parentesco/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
+//Route::get('afiliacion_seguro/obtener_parentesco/{id}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco');
 Route::get('afiliacion_seguro/obtener_parentesco/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
 
 Route::get('concurso', [ConcursoController::class, 'index'])->name('concurso');
@@ -231,12 +240,30 @@ Route::get('concurso/modal_requisito/{id}', [ConcursoController::class, 'modal_r
 Route::post('concurso/send_requisito', [ConcursoController::class, 'send_requisito'])->name('concurso.send_requisito');
 Route::post('concurso/listar_requisito', [ConcursoController::class, 'listar_requisito'])->name('concurso.listar_requisito');
 
+Route::get('comision/consulta_comision', [ComisionController::class, 'consulta_comision'])->name('comision.consulta_comision');
+Route::post('comision/listar_comision_ajax', [ComisionController::class, 'listar_comision_ajax'])->name('comision.listar_comision_ajax');
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');
 
 Route::get('concurso/create_resultado', [ConcursoController::class, 'create_resultado'])->name('concurso.create_resultado');
 Route::post('concurso/send_inscripcion_resultado', [ConcursoController::class, 'send_inscripcion_resultado'])->name('concurso.send_inscripcion_resultado');
 Route::get('comision/consulta_empresa', [ComisionController::class, 'consulta_empresa'])->name('comision.consulta_empresa');
 Route::post('comision/listar_municipalidad_ajax', [ComisionController::class, 'listar_municipalidad_ajax'])->name('comision.listar_municipalidad_ajax');
+
+Route::get('concurso/consulta_resultado', [ConcursoController::class, 'consulta_resultado'])->name('concurso.consulta_resultado');
+Route::post('concurso/listar_resultado_ajax', [ConcursoController::class, 'listar_resultado_ajax'])->name('concurso.listar_resultado_ajax');
+
+
+Route::get('certificado/consulta_certificado', [CertificadoController::class, 'consulta_certificado'])->name('certificado.consulta_certificado');
+
+
+Route::get('periodoComision/consulta_periodoComision', [PeriodoComisionController::class, 'consulta_periodoComision'])->name('periodoComision.consulta_periodoComision');
+Route::post('periodoComision/listar_consulta_periodoComision_ajax', [PeriodoComisionController::class, 'listar_consulta_periodoComision_ajax'])->name('periodoComision.listar_consulta_periodoComision_ajax');
+Route::get('periodoComision/editar_consulta_periodoComision/{id}', [PeriodoComisionController::class, 'editar_consulta_periodoComision'])->name('periodoComision.editar_consulta_periodoComision');
+Route::get('periodoComision/modal_periodoComision_nuevoPeriodoComision/{id}', [PeriodoComisionController::class, 'modal_periodoComision_nuevoPeriodoComision'])->name('periodoComision.modal_periodoComision_nuevoPeriodoComision');
+Route::post('periodoComision/send_periodoComision_nuevoPeriodoComision', [PeriodoComisionController::class, 'send_periodoComision_nuevoPeriodoComision'])->name('periodoComision.send_periodoComision_nuevoPeriodoComision');
+Route::get('periodoComision/eliminar_periodoComision/{id}/{estado}', [PeriodoComisionController::class, 'eliminar_periodoComision'])->name('periodoComision.eliminar_periodoComision');
+
+
 
 
 Route::get('certificado/consultar_certificado', [CertificadoController::class, 'consultar_certificado'])->name('certificado.consultar_certificado');
@@ -248,3 +275,7 @@ Route::get('certificado/eliminar_certificado/{id}/{estado}', [CertificadoControl
 Route::get('certificado/certificado_vista/{id}', [CertificadoController::class, 'certificado_vista'])->name('certificado.certificado_vista');
 Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8a930674bdd24e05d9f3ea4fd730f7074b7de783

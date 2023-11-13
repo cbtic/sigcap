@@ -19,7 +19,7 @@ function guardarFactura(){
 	var tipo_cambio = $('#tipo_cambio').val();
 	
 	var forma_pago = $('#forma_pago').val();
-	alert(forma_pago); exit();
+	//alert(forma_pago); exit();
 
     if(smodulo_guia=="32"){
 		var guia_llegada_direccion = $('#guia_llegada_direccion').val();

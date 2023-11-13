@@ -221,15 +221,15 @@ function fn_save_prontoPago(){
 	//var periodo = $('#periodo').val();
 	var fecha_inicio = $('#fecha_inicio').val();
 	var fecha_fin = $('#fecha_fin').val();
-	var porcentaje = $('#porcentaje').val();
+	var numero_cuotas = $('#numero_cuotas').val();
 	var codigo_documento = $('#codigo_documento').val();
-	var ruta_documento = $('#ruta_documento').val();
+	//var ruta_documento = $('#ruta_documento').val();
 	var id_concepto = $('#id_concepto').val();
 	
     $.ajax({
 			url: "/prontoPago/send_prontoPago_nuevoProntoPago",
             type: "POST",
-            data : {_token:_token,id:id,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,porcentaje:porcentaje,codigo_documento:codigo_documento,ruta_documento:ruta_documento,id_concepto:id_concepto},
+            data : {_token:_token,id:id,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,numero_cuotas:numero_cuotas,codigo_documento:codigo_documento,id_concepto:id_concepto},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -295,7 +295,7 @@ function fn_save_prontoPago(){
 							<div class="col-lg-3">
 								<div class="form-group">
 									<label class="control-label form-control-sm">N° de Cuotas</label>
-									<input id="porcentaje" name="porcentaje" class="form-control form-control-sm"  value="<?php echo $prontoPago->porcentaje?>" type="text" pattern="[0-1]{2}[A-Za-z]{1}" >						
+									<input id="numero_cuotas" name="numero_cuotas" class="form-control form-control-sm"  value="<?php echo $prontoPago->numero_cuotas?>" type="text" pattern="[0-1]{2}[A-Za-z]{1}" >						
 								</div>
 							</div>
 							
@@ -305,6 +305,7 @@ function fn_save_prontoPago(){
 									<input id="codigo_documento" name="codigo_documento" class="form-control form-control-sm" required value="<?php echo $prontoPago->codigo_documento?>" type="text" required>													
 								</div>
 							</div>
+							
 							<div class="col-lg-5">
 								<div class="form-group">
 									<label class="control-label form-control-sm">Concepto</label>

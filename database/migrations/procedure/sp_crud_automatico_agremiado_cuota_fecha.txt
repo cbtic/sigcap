@@ -34,7 +34,11 @@ begin
 	idp:=0;
 	
 	For entradas_mes in
-	select id id_agremiado,id_persona,fecha_colegiado from agremiados a where to_char(fecha_colegiado,'yyyy')=p_anio 
+	select id id_agremiado,id_persona,fecha_colegiado from agremiados a 
+	where to_char(fecha_colegiado,'yyyy')=p_anio
+	and created_at > (now()::date-1)
+	and id_categoria!='90'
+	
 	loop
 		
 		v_dia := to_char(entradas_mes.fecha_colegiado,'dd')::int;
@@ -56,7 +60,7 @@ begin
 		
 			select last_day_month into v_last_day_month from last_day_month(p_anio::int, v_mes_agremiado);
 
-			select id,importe,id_moneda, denominacion into v_id_concepto,v_importe,v_id_moneda, v_denominacion from conceptos c where codigo='00001' and periodo=p_anio::varchar;
+			select id,importe,id_moneda, denominacion into v_id_concepto,v_importe,v_id_moneda, v_denominacion from conceptos c where codigo='00006' and periodo=p_anio::varchar;
 			
 			insert into agremiado_cuotas(id_agremiado,id_regional,id_concepto,id_moneda,periodo,mes,importe,fecha_venc_pago,observacion,id_situacion,id_exonerado,id_pronto_pago,id_seguro_plan,id_usuario_inserta)
 			values (entradas_mes.id_agremiado,5,v_id_concepto,v_id_moneda,p_anio::varchar,v_mes_agremiado_,v_importe,v_last_day_month::date,'cuota del mes',1,0,0,1,1);

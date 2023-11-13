@@ -36,7 +36,8 @@ begin
 	select id id_agremiado,fecha_colegiado 
 	from agremiados a
 	where date_part('year', CURRENT_DATE)-date_part('year', fecha_colegiado)>=40
-	and id_situacion!='268'
+	--and id_situacion!='268'
+	and id_categoria!='90'
 	
 	loop
 		
@@ -52,8 +53,9 @@ begin
 		
 		v_fecha=v_anio||'-'||v_mes||'-01';
 		
-		update agremiados set id_situacion='268' where id=entradas_mes.id_agremiado;
-		
+		--update agremiados set id_situacion='268' where id=entradas_mes.id_agremiado;
+		update agremiados set id_categoria='90' where id=entradas_mes.id_agremiado;
+	
 		for entradas in 
 		select id from agremiado_cuotas where id_agremiado=entradas_mes.id_agremiado
 		and fecha_venc_pago::date>=v_fecha::date

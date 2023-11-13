@@ -47,4 +47,15 @@ class TipoConcepto extends Model
         return $data;
 
     }
+
+    function getTipoConceptoAll(){
+
+        $cad = "select *
+                from tipo_conceptos
+                where estado='1' 
+                order by denominacion ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 }

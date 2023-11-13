@@ -43,10 +43,14 @@ begin
 		select last_day_month into v_last_day_month from last_day_month(v_anio, v_mes);
 		
 		for entradas in 
-		select id id_agremiado,id_persona from agremiados a
+		select id id_agremiado,id_persona 
+		from agremiados a
+		where to_char(fecha_colegiado,'yyyy')::int < p_anio::int
+		and id_categoria!='90'
+		
 		loop
 			
-			select id,importe,id_moneda, denominacion into v_id_concepto,v_importe,v_id_moneda, v_denominacion from conceptos c where codigo='00001' and periodo=v_anio::varchar;
+			select id,importe,id_moneda, denominacion into v_id_concepto,v_importe,v_id_moneda, v_denominacion from conceptos c where codigo='00006' and periodo=v_anio::varchar;
 			
 			insert into agremiado_cuotas(id_agremiado,id_regional,id_concepto,id_moneda,periodo,mes,importe,fecha_venc_pago,observacion,id_situacion,id_exonerado,id_pronto_pago,id_seguro_plan,id_usuario_inserta)
 			values (entradas.id_agremiado,5,v_id_concepto,v_id_moneda,v_anio::varchar,v_mes_,v_importe,v_last_day_month::date,'cuota del mes',1,0,0,1,1);

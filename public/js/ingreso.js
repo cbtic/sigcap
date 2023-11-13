@@ -155,6 +155,7 @@ function calcular_total(obj){
 	var tipo_factura = $('#tipo_factura').val();
 	//alert(tipo_factura);
 	var tipo_factura_actual = $(obj).parent().parent().parent().find('.tipo_factura').val();
+	
 	if(tipo_factura!="" && tipo_factura!=tipo_factura_actual){
 		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
 		$(obj).prop("checked",false);
@@ -217,6 +218,20 @@ function calcular_total(obj){
 		$('#MonAd').attr("readonly",false);
 		$('#MonAd').val(total.toFixed(2));
 	}
+	
+}
+function calcular_total_(obj){
+		
+	var total = 0;
+	var cantidad = $(".mov_:checked").length;
+	
+	$(".mov_:checked").each(function (){
+		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		total += Number(val_total);
+	});
+	
+	$('#total_concepto_').val(total.toFixed(2));
+
 	
 }
 
@@ -346,7 +361,10 @@ function obtenerBeneficiario(){
 				$('#id_persona').val(result.agremiado.id_p);
 				$('#id_agremiado').val(result.agremiado.id);
 				$('#ruc_p').val(result.agremiado.numero_ruc);
-				$('#id_ubicacion_p').val("0");	
+				$('#id_ubicacion_p').val("0");
+				
+				$('#numero_documento_').val(result.agremiado.numero_documento);
+				$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
 
 			}else{
 				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
@@ -357,6 +375,9 @@ function obtenerBeneficiario(){
 				$('#id_agremiado').val(result.agremiado.id);
 				$('#ruc_p').val(result.agremiado.numero_ruc);
 				$('#id_ubicacion_p').val("0");
+
+				$('#numero_documento_').val(result.agremiado.numero_documento);
+				$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
 												
 			}
 
@@ -429,21 +450,7 @@ function cargarValorizacion(){
 
 }
 
-function cargarConceptos(){
-        
-	//var numero_documento = $("#numero_documento").val();
-	var periodo = "2023";
 
-    $("#tblConceptos tbody").html("");
-	$.ajax({
-			url: "/ingreso/obtener_conceptos/"+periodo,
-			type: "GET",
-			success: function (result) {  
-					$("#tblConceptos tbody").html(result);
-			}
-	});
-
-}
 
 
 function cargarPagos(){
@@ -558,24 +565,6 @@ function modalLiquidacion(id){
 }
 
 
-function modalValorizacionFactura(id){
-	
-	$(".modal-dialog").css("width","80%");
-	$('#openOverlayOpc').modal('show');
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
-
-	$.ajax({
-			url: "/ingreso/modal_valorizacion_factura/"+id,
-			type: "GET",
-			success: function (result) {  
-					$("#diveditpregOpc").html(result);
-			}
-	});
-
-}
-
-
-
 function guardarEstado(estado){
     
     var msg = "";
@@ -658,22 +647,82 @@ function fn_eliminar_persona_tarjeta(id_persona,estado){
 }
 
 function modal_otro_pago(){
-	
+
 	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc').modal('show');
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 	var perido = "2023";
+	var idPersona = $('#id_persona').val();
+	var idAgremiado = $('#id_agremiado').val();
 	
-
+	
 	$.ajax({
-			url: "/ingreso/otro_pago/"+perido,
+			url: "/ingreso/otro_pago/"+perido+"/"+idPersona+"/"+idAgremiado,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
+					//$('#openOverlayOpc').modal('show');
 					
 			}
 	});
-	cargarConceptos();
+	//cargarConceptos();
 
 }
 
+function cargarConceptos(){
+        
+	//var numero_documento = $("#numero_documento").val();
+	var periodo = "2023";
+
+    $("#tblConceptos tbody").html("");
+	$.ajax({
+			url: "/ingreso/obtener_conceptos/"+periodo,
+			type: "GET",
+			success: function (result) {  
+					$("#tblConceptos tbody").html(result);
+			}
+	});
+
+}
+
+function modalValorizacionFactura(id){
+	
+	$(".modal-dialog").css("width","80%");
+	$('#openOverlayOpc').modal('show');
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/ingreso/modal_valorizacion_factura/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+			}
+	});
+
+}
+
+
+
+function guardar_concepto_valorizacion(){
+
+    $.ajax({
+			url: "/ingreso/send_concepto",
+            type: "POST",
+            //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
+            data : $("#frmOtroPago").serialize(),
+            success: function (result) {				
+
+				//alert(result);
+								
+				$('#openOverlayOpc').modal('hide');
+
+				cargarValorizacion();
+
+				//var jsondata = JSON.parse(result);
+
+				//alert(jsondata[0].idcomprobante);
+				//$('#idsolicitud').val(jsondata[0].idcomprobante);
+					
+            }
+    });
+}

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DeleteTipoCertificado2ToTestsTable extends Migration
+class DeleteTipoComisionToMunicipalidades extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class DeleteTipoCertificado2ToTestsTable extends Migration
      */
     public function up()
     {
-        Schema::table('certificados', function (Blueprint $table) {
-            $table->dropColumn('tipo_certificado');
+        Schema::table('municipalidades', function (Blueprint $table) {
+            $table->dropColumn('id_tipo_comision');
+            $table->dropColumn('id_instancia_municipalidad');
         });
     }
 
@@ -25,7 +26,7 @@ class DeleteTipoCertificado2ToTestsTable extends Migration
      */
     public function down()
     {
-        Schema::table('certificados', function (Blueprint $table) {
+        Schema::table('municipalidades', function (Blueprint $table) {
             //
         });
     }

@@ -504,6 +504,15 @@ function datatablenew(){
 				"className": "dt-center",
 				//"className": 'control'
                 },
+				{
+				"mRender": function (data, type, row) {
+					var tipo_concepto = "";
+					if(row.tipo_concepto!= null)tipo_concepto = row.tipo_concepto;
+					return tipo_concepto;
+				},
+				"bSortable": false,
+				"aTargets": [2]
+				},
                 {
                 "mRender": function (data, type, row) {
                 	var denominacion = "";
@@ -511,17 +520,8 @@ function datatablenew(){
 					return denominacion;
                 },
                 "bSortable": false,
-                "aTargets": [2]
+                "aTargets": [3]
                 },
-				{
-				"mRender": function (data, type, row) {
-					var partida_presupuestal = "";
-					if(row.partida_presupuestal!= null)partida_presupuestal = row.partida_presupuestal;
-					return partida_presupuestal;
-				},
-				"bSortable": false,
-				"aTargets": [3]
-				},
 				{
 				"mRender": function (data, type, row) {
 					var importe = "";
@@ -533,22 +533,68 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var tipo_afectacion = "";
-					if(row.tipo_afectacion!= null)tipo_afectacion = row.tipo_afectacion;
-					return tipo_afectacion;
+					var id_moneda = "";
+					if(row.id_moneda!= null)id_moneda = row.id_moneda;
+					return id_moneda;
 				},
 				"bSortable": false,
 				"aTargets": [5]
 				},
 				{
 				"mRender": function (data, type, row) {
-					var moneda = "";
-					if(row.moneda!= null)moneda = row.moneda;
-					return moneda;
+					var periodo = "";
+					if(row.periodo!= null)periodo = row.periodo;
+					return periodo;
 				},
 				"bSortable": false,
 				"aTargets": [6]
 				},
+				{
+				"mRender": function (data, type, row) {
+					var cuenta_contable_debe = "";
+					if(row.cuenta_contable_debe!= null)cuenta_contable_debe = row.cuenta_contable_debe;
+					return cuenta_contable_debe;
+				},
+				"bSortable": false,
+				"aTargets": [7]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var cuenta_contable_al_haber1 = "";
+					if(row.cuenta_contable_al_haber1!= null)cuenta_contable_al_haber1 = row.cuenta_contable_al_haber1;
+					return cuenta_contable_al_haber1;
+				},
+				"bSortable": false,
+				"aTargets": [8]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var cuenta_contable_al_haber2 = "";
+					if(row.cuenta_contable_al_haber2!= null)cuenta_contable_al_haber2 = row.cuenta_contable_al_haber2;
+					return cuenta_contable_al_haber2;
+				},
+				"bSortable": false,
+				"aTargets": [9]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var partida_presupuestal = "";
+					if(row.partida_presupuestal!= null)partida_presupuestal = row.partida_presupuestal;
+					return partida_presupuestal;
+				},
+				"bSortable": false,
+				"aTargets": [10]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var tipo_afectacion = "";
+					if(row.tipo_afectacion!= null)tipo_afectacion = row.tipo_afectacion;
+					return tipo_afectacion;
+				},
+				"bSortable": false,
+				"aTargets": [11]
+				},
+				
 				{
 				"mRender": function (data, type, row) {
 					var centro_costo = "";
@@ -556,7 +602,7 @@ function datatablenew(){
 					return centro_costo;
 				},
 				"bSortable": false,
-				"aTargets": [7]
+				"aTargets": [12]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -570,7 +616,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [8]
+				"aTargets": [13]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -595,7 +641,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [14],
 				},
 
             ]

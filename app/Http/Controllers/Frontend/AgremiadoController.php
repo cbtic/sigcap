@@ -622,7 +622,8 @@ class AgremiadoController extends Controller
 			$agremiado->clave = 0;
 			$agremiado->id_ubicacion = 334;
 			
-			$agremiado->id_situacion = "74";
+			//$agremiado->id_situacion = "74";
+			$agremiado->id_situacion = "73";
 			$agremiado->id_usuario_inserta = 1;
 			$agremiado->save();
 			$id_agremiado = $agremiado->id;	

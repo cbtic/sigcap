@@ -16,10 +16,10 @@ class Concepto extends Model
 
     }
 
-    function getConceptoPeriodo($periodo){
- 
+    function getConceptoPeriodo($periodo){      
         $cad = "
-        select *
+        select id, id_regional, codigo, denominacion, estado, id_tipo_concepto, importe, id_moneda, moneda, periodo, cuenta_contable, cuenta_contable_debe, 
+        cuenta_contable_al_haber1, cuenta_contable_al_haber2, partida_presupuestal, id_tipo_afectacion, centro_costo, genera_pago
         from conceptos
         where periodo = '".$periodo."'
         and estado = '1'
@@ -51,7 +51,7 @@ class Concepto extends Model
 
         $cad = "select *
                 from conceptos
-                where estado='1'and codigo = '00001'
+                where estado='1'and codigo = '00006'
                 order by denominacion ";
     
 		$data = DB::select($cad);

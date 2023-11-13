@@ -29,8 +29,7 @@ class TipoConceptoController extends Controller
     public function listar_tipoConcepto_ajax(Request $request){
 	
 		$tipoConcepto_model = new TipoConcepto;
-		$p[]=$request->codigo;
-		$p[]=$request->id_regional;
+		$p[]=$request->regional;
 		$p[]=$request->denominacion;
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
@@ -58,7 +57,7 @@ class TipoConceptoController extends Controller
 		
         $tipoConcepto_model = new TipoConcepto;
 		
-		return view('frontend.tipoConcepto.create',compact('id','codigo','regional','denominacion','estado'));
+		return view('frontend.tipoConcepto.create',compact('id','regional','denominacion','estado'));
 		
     }
 
@@ -83,18 +82,18 @@ class TipoConceptoController extends Controller
 		
 		$id_user = Auth::user()->id;
 
-		$tipoConcepto_model = new TipoConcepto;
+		//$tipoConcepto_model = new TipoConcepto;
 
 		if($request->id == 0){
 			$tipoConcepto = new TipoConcepto;
-			$codigo = $tipoConcepto_model->getCodigoTipoConcepto();
+			//$codigo = $tipoConcepto_model->getCodigoTipoConcepto();
 		}else{
 			$tipoConcepto = TipoConcepto::find($request->id);
-			$codigo = $request->codigo;
+			//$codigo = $request->codigo;
 		}
 	
-		$tipoConcepto->codigo = $codigo;
-		$tipoConcepto->id_regional = $request->id_regional;
+		//$tipoConcepto->codigo = $codigo;
+		$tipoConcepto->id_regional = $request->regional;
 		$tipoConcepto->denominacion = $request->denominacion;
 		$tipoConcepto->estado = 1;
 		$tipoConcepto->id_usuario_inserta = $id_user;

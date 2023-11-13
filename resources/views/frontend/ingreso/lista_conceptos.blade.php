@@ -13,22 +13,22 @@ foreach($conceptos as $key=>$row):
 <tr style="font-size:13px">
 	<td class="text-center">
         <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">		
-			<input type="checkbox" class="mov" name="conceptos[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)" />
-			<input type="hidden" name="concepto[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
-			<input type="hidden" name="concepto[<?php echo $key?>][codigo]" value="<?php echo $row->codigo?>" />
-			<input type="hidden" name="concepto[<?php echo $key?>][denominacion]" value="<?php echo $row->denominacion?>" />
-			<input type="hidden" name="concepto[<?php echo $key?>][importe]" value="<?php echo $row->importe?>" />
+			<input type="checkbox" class="mov_" name="concepto_detalles_[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total_(this)" />
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][codigo]" value="<?php echo $row->codigo?>" />
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][denominacion]" value="<?php echo $row->denominacion?>" />
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][importe]" value="<?php echo $row->importe?>" />
 
-			<input type="hidden" name="concepto[<?php echo $key?>][pu]" value="<?php echo $row->importe?>" />          
-            <input type="hidden" name="concepto[<?php echo $key?>][igv]" value="<?php echo $igv_?>" />
-			<input type="hidden" name="concepto[<?php echo $key?>][pv]" value="<?php echo $stotal?>" />
-            <input type="hidden" name="concepto[<?php echo $key?>][total]" value="<?php echo $row->importe?>" />
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][pu]" value="<?php echo $row->importe?>" />          
+            <input type="hidden" name="concepto_detalle_[<?php echo $key?>][igv]" value="<?php echo $igv_?>" />
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][pv]" value="<?php echo $stotal?>" />
+            <input type="hidden" name="concepto_detalle_[<?php echo $key?>][total]" value="<?php echo $row->importe?>" />
 
-			<input type="hidden" name="concepto[<?php echo $key?>][moneda]" value="<?php echo $row->moneda?>" />
-			<input type="hidden" name="concepto[<?php echo $key?>][id_moneda]" value="<?php echo $row->id_moneda?>" />
-			<input type="hidden" name="concepto[<?php echo $key?>][cantidad]" value="1" /> 
-			<input type="hidden" name="concepto[<?php echo $key?>][descuento]" value="" />   
-			<input type="hidden" name="concepto[<?php echo $key?>][centro_costo]" value="centro_costo" />   
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][moneda]" value="<?php echo $row->moneda?>" />
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][id_moneda]" value="<?php echo $row->id_moneda?>" />
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][cantidad]" value="1" /> 
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][descuento]" value="" />   
+			<input type="hidden" name="concepto_detalle_[<?php echo $key?>][centro_costo]" value="centro_costo" />   
 											
         </div>
     </td>
@@ -36,25 +36,20 @@ foreach($conceptos as $key=>$row):
 	<td class="text-left"><?php echo $row->codigo?></td>
     <td class="text-left"><?php echo $row->denominacion?></td>
 	<td class="text-left"><?php echo $row->moneda?></td>
-	<td class="text-left"><?php echo $row->importe?></td>
-
-	<!--
-	<td class="text-right val_total_">	
-		<span class="val_descuento" style="float:left"></span>
-		<span class="val_total"><?php //echo $row->importe?></span>	
-		<input type="hidden" class="tipo_factura" value="FT" />
+	<td class="text-right val_total_">			
+		<span class="val_total"><?php echo $row->importe?></span>			
 	</td>
--->
+
 
 </tr>
 <?php 
-	$total += $row->importe;	
+	//$total += $row->importe;	
 endforeach;
 ?>
 
 <tr>
-	<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda Total</th>
+	<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px"> Total</th>
 	<td style="padding-bottom:0px;margin-bottom:0px">
-		<input type="text" readonly name="deudaTotal" id="deudaTotal" value="<?php echo $total?>" class="form-control form-control-sm text-right"/>
+		<input type="text" readonly name="total_concepto__" id="total_concepto__" value="" class="form-control form-control-sm text-right"/>
 	</td>
 </tr>

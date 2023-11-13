@@ -34,8 +34,7 @@ class ProntoPagoController extends Controller
 		$p[]=$request->periodo;
 		$p[]=$request->fecha_inicio;//$request->nombre;
 		$p[]=$request->fecha_fin;
-		$p[]="";
-        $p[]="";
+		$p[]=$request->codigo_documento;
         $p[]="";
 		$p[]="";
         $p[]=$request->estado;
@@ -63,7 +62,7 @@ class ProntoPagoController extends Controller
 		
         $prontoPago_model = new ProntoPago;
 		
-		return view('frontend.prontoPago.create',compact('periodo','fecha_inicio','fecha_fin','porcentaje','codigo_documento','ruta_documento','concepto','estado'));
+		return view('frontend.prontoPago.create',compact('periodo','fecha_inicio','fecha_fin','codigo_documento','concepto','numero_cuotas','estado'));
 		
     }
 
@@ -99,9 +98,10 @@ class ProntoPagoController extends Controller
 		$prontoPago->periodo = $periodo1.$separacion.$periodo2;
 		$prontoPago->fecha_inicio = $request->fecha_inicio;
 		$prontoPago->fecha_fin = $request->fecha_fin;
-		$prontoPago->porcentaje = $request->porcentaje;
+		//$prontoPago->porcentaje = $request->porcentaje;
 		$prontoPago->codigo_documento = $request->codigo_documento;
-		$prontoPago->ruta_documento = $request->ruta_documento;
+		//$prontoPago->ruta_documento = $request->ruta_documento;
+		$prontoPago->numero_cuotas = $request->numero_cuotas;
 		$prontoPago->id_concepto = $request->id_concepto;
 		/*if (date("Y", strtotime($request->fecha_inicio)) == date("Y")){
 			$prontoPago->estado = 1;

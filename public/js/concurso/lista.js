@@ -400,8 +400,12 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#nombre').val();
-			var estado = $('#estado').val();
+			var id_regional = $('#id_regional_bus').val();
+            var numero_cap = $('#numero_cap_bus').val();
+			var numero_documento = $('#numero_documento_bus').val();
+			var agremiado = $('#agremiado_bus').val();
+			var id_situacion = $('#id_situacion_bus').val();
+			var id_concurso = $('#id_concurso_bus').val();
 			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -410,7 +414,8 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,estado:estado,
+						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
+						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
 						_token:_token
                        },
                 "success": function (result) {

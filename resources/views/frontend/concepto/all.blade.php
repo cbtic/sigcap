@@ -150,7 +150,7 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacionBus" name="denominacionBus" placeholder="Nombre de Cuota">
+						<input class="form-control form-control-sm" id="denominacionBus" name="denominacionBus" placeholder="Nombre de Concepto">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="partida_presupuestalBus" name="partida_presupuestalBus" placeholder="Partida Presupuestal">
@@ -192,11 +192,16 @@
                         <tr style="font-size:13px">
                             <th>C&oacute;digo</th>
                             <th>Regional</th>
+                            <th>Tipo Concepto</th>
                             <th>Concepto</th>
-                            <th>Partida Presupuestal</th>
                             <th>Importe</th>
-                            <th>Tipo Afectaci&oacute;n</th>
                             <th>Moneda</th>
+                            <th>Periodo</th>
+                            <th>Cuenta Contable Debe</th>
+                            <th>Cuenta Contable al Haber1</th>
+                            <th>Cuenta Contable al Haber2</th>
+                            <th>Partida Presupuestal</th>
+                            <th>Tipo Afectaci&oacute;n</th>
                             <th>Centro de Costos</th>
                             <th>Estado</th>
                             <th>Acciones</th>

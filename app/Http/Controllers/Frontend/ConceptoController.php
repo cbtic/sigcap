@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Concepto;
+use App\Models\TipoConcepto;
 use App\Models\Regione;
 use App\Models\TablaMaestra;
 use Auth;
@@ -36,11 +37,15 @@ class ConceptoController extends Controller
 		$p[]="";//$request->nombre;
 		$p[]="";
 		$p[]=$request->denominacion;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
         $p[]=$request->partida_presupuestal;
-		$p[]="";
-		$p[]="";
 		$p[]=$request->tipo_afectacion;
-		$p[]="";
 		$p[]="";
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
@@ -67,40 +72,8 @@ class ConceptoController extends Controller
 		$concepto = Concepto::find($id_concepto);
 		$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
         $concepto_model = new concepto;
- 
-		//$tablaMaestra_model = new TablaMaestra;
-		//$regione_model = new Regione;
-		//$ubigeo_model = new Ubigeo;
-		//$agremiadoEstudio_model = new AgremiadoEstudio;
-		//$agremiadoIdioma_model = new AgremiadoIdioma;
-		//$agremiadoParenteco_model = new AgremiadoParenteco;
-		//$agremiadoTrabajo_model = new AgremiadoTrabajo;
-		//$agremiadoTraslado_model = new AgremiadoTraslado;
-		//$agremiadoSituacione_model = new AgremiadoSituacione;
 		
-		/*$ruc = $tablaMaestra_model->getMaestroByTipo(16);
-		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
-		$estado_civil = $tablaMaestra_model->getMaestroByTipo(3);
-		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
-		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
-		$seguro_social = $tablaMaestra_model->getMaestroByTipo(13);
-		$actividad_gremial = $tablaMaestra_model->getMaestroByTipo(46);
-		$ubicacion_cliente = $tablaMaestra_model->getMaestroByTipo(63);
-		$autoriza_tramite = $tablaMaestra_model->getMaestroByTipo(45);
-		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
-		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
-		$categoria_cliente = $tablaMaestra_model->getMaestroByTipo(18);
-		$region = $regione_model->getRegionAll();
-		$departamento = $ubigeo_model->getDepartamento();
-		
-		$agremiado_estudio = $agremiadoEstudio_model->getAgremiadoEstudios($id);
-		$agremiado_idioma = $agremiadoIdioma_model->getAgremiadoIdiomas($id);
-		$agremiado_parentesco = $agremiadoParenteco_model->getAgremiadoParentesco($id);
-		$agremiado_trabajo = $agremiadoTrabajo_model->getAgremiadoTrabajo($id);
-		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
-		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);*/
-		
-		return view('frontend.concepto.create',compact('id','regional','codigo','denominacion','partida_presupuestal','tipo_afectacion','estado'));
+		return view('frontend.concepto.create',compact('id','regional','codigo','tipo_concepto','denominacion','partida_presupuestal','tipo_afectacion','estado'));
 		
     }
 
@@ -108,6 +81,7 @@ class ConceptoController extends Controller
 		
 		$concepto = new Concepto;
 		$regione_model = new Regione;
+		$tipoConcepto_model = new TipoConcepto;
 		$tablaMaestra_model = new TablaMaestra;
 		$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
 		$moneda = $tablaMaestra_model->getMaestroByTipo(1);
@@ -118,9 +92,11 @@ class ConceptoController extends Controller
 			$concepto = new Concepto;
 		}
 		
+		
+		$tipoConcepto = $tipoConcepto_model->getTipoConceptoAll();
 		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','concepto','region','tipo_afectacion','moneda'));
+		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','tipoConcepto','concepto','region','tipo_afectacion','moneda'));
 	
 	}
 
@@ -137,14 +113,18 @@ class ConceptoController extends Controller
 			$codigo = $request->codigo;
 		}
 		
-		$concepto->id_regional = $request->id_regional;
 		$concepto->codigo = $codigo;
+		$concepto->id_regional = $request->id_regional;
+		$concepto->id_tipo_concepto = $request->id_tipo_concepto;
 		$concepto->denominacion = $request->denominacion;
-		$concepto->id_partida_presupuestal = $request->id_partida_presupuestal;
-		$concepto->id_tipo_concepto = $request->id;
 		$concepto->importe = $request->importe;
+		$concepto->id_moneda = $request->id_moneda;
+		$concepto->periodo = $request->periodo;
+		$concepto->cuenta_contable_debe = $request->cuenta_contable_debe;
+		$concepto->cuenta_contable_al_haber1 = $request->cuenta_contable_al_haber1;
+		$concepto->cuenta_contable_al_haber2 = $request->cuenta_contable_al_haber2;
+		$concepto->partida_presupuestal = $request->partida_presupuestal;
 		$concepto->id_tipo_afectacion = $request->tipo_afectacion;
-		$concepto->moneda = $request->moneda;
 		$concepto->centro_costo = $request->centro_costo;
 		$concepto->estado = 1;
 		$concepto->id_usuario_inserta = $id_user;
