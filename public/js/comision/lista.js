@@ -716,7 +716,9 @@ function fn_guardar(){
             type: "POST",
             data : $("#frmComision").serialize(),
             success: function (result) {  
-					datatablenew();
+					//datatablenew();
+				cargarMunicipalidades();
+				cargarMunicipalidadesIntegradas();
             }
     });
 }

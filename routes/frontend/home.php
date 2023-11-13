@@ -253,7 +253,7 @@ Route::post('comision/send_comision', [ComisionController::class, 'send_comision
 Route::get('comision/obtener_municipalidades', [ComisionController::class, 'obtener_municipalidades'])->name('comision.obtener_municipalidades');
 Route::get('comision/obtener_municipalidadesIntegradas', [ComisionController::class, 'obtener_municipalidadesIntegradas'])->name('comision.obtener_municipalidadesIntegradas');
 Route::post('comision/listar_municipalidadIntegrada_ajax', [ComisionController::class, 'listar_municipalidadIntegrada_ajax'])->name('comision.listar_municipalidadIntegrada_ajax');
-
+Route::get('comision/consulta_consulta_municipalidadIntegrada', [ComisionController::class, 'consulta_municipalidadIntegrada'])->name('comision.consulta_municipalidadIntegrada');
 
 Route::get('concurso/consulta_resultado', [ConcursoController::class, 'consulta_resultado'])->name('concurso.consulta_resultado');
 Route::post('concurso/listar_resultado_ajax', [ConcursoController::class, 'listar_resultado_ajax'])->name('concurso.listar_resultado_ajax');
