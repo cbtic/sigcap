@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Agremiados</li>
+            <li class="breadcrumb-item active">Consulta de Resultado de Concurso</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consultar Agremiados <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consultar Resultado de Concurso <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Agremiados
+                        Lista de Resultado de Concurso
                     </strong>
                 </div><!--card-header-->
 				
@@ -148,15 +148,25 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-				
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="id_concurso_bus" id="id_concurso_bus" class="form-control form-control-sm" >
+							<option value="">--Concurso--</option>
+							<?php
+							foreach ($concurso as $row) {?>
+							<option value="<?php echo $row->id?>"><?php echo $row->periodo." ".$row->tipo_concurso?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm" >
 							<option value="">--Regional--</option>
 							<?php
-							//foreach ($region as $row) {?>
-							<option value="<?php //echo $row->id?>"><?php //echo $row->denominacion?></option>
+							foreach ($region as $row) {?>
+							<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
 							<?php 
-							//}
+							}
 							?>
 						</select>
 					</div>
@@ -169,20 +179,14 @@
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
 					</div>
-					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_inicio_bus" name="fecha_inicio_bus" placeholder="Fecha Desde">
-					</div>
-					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Hasta">
-					</div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm" >
 							<option value="">--Situaci&oacute;n--</option>
 							<?php
-							//foreach ($situacion_cliente as $row) {?>
-							<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
+							foreach ($situacion_cliente as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
 							<?php 
-							//}
+							}
 							?>
 						</select>
 					</div>
@@ -199,15 +203,19 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Tipo Documento</th>
-                            <th>Numero Documento</th>
-							<th>Numero Cap</th>
-                            <th>Regi&oacute;n</th>
-                            <th>Fecha Inicio</th>
-							<th>Agremiado</th>
-							<th>Fecha Nacimiento</th>
+                            <th>Id</th>
+                            <th>Periodo</th>
+							<th>Tipo Concurso</th>
+                            <th>Fecha</th>
+                            <th>Codigo Pago</th>
+							<th>N&deg; CAP</th>
+							<th>N&deg; DNI</th>
+							<th>Nombre</th>
+							<th>Regi&oacute;n</th>
 							<th>Situaci&oacute;n</th>
-							<th>Acciones</th>
+							<th>Puesto</th>
+							<th>Puntaje</th>
+							<th>Estado</th>
                         </tr>
                         </thead>
                         <tbody>

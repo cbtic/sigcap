@@ -1,4 +1,13 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_concurso_agremiado_paginado(p_id_tipo_concurso character varying, p_periodo character varying, p_numero_documento character varying, p_agremiado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+
+CREATE OR REPLACE FUNCTION public.sp_listar_concurso_agremiado_paginado(
+p_id_concurso character varying, 
+p_numero_documento character varying, 
+p_agremiado character varying, 
+p_numero_cap character varying,
+p_id_regional character varying,
+p_id_situacion character varying,
+p_pagina character varying, p_limit character varying, p_ref refcursor)
+
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -20,7 +29,7 @@ begin
 	
 	v_campos=' t1.id,t5.periodo,t6.denominacion tipo_concurso,to_char(t1.created_at,''dd-mm-yyyy'')fecha_inscripcion,
 t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,
-t7.denominacion situacion,t8.denominacion region,t10.tipo,t10.serie,t10.numero,t1.puntaje,t1.resultado ';
+t7.denominacion situacion,t8.denominacion region,t10.tipo,t10.serie,t10.numero,t1.puntaje,t1.resultado,t11.denominacion puesto ';
 
 	v_tabla=' from concurso_inscripciones t1 
 inner join agremiados t2 on t1.id_agremiado=t2.id
@@ -31,19 +40,36 @@ inner join tabla_maestras t6 on t5.id_tipo_concurso=t6.codigo::int and t6.tipo='
 inner join tabla_maestras t7 on t2.id_situacion = t7.codigo::int And t7.tipo =''14'' 
 inner join regiones t8 on t2.id_regional = t8.id
 inner join valorizaciones t9 on t1.id=t9.pk_registro and t9.id_modulo=''1''
-inner join comprobantes t10 on t9.id_comprobante=t10.id ';
+inner join comprobantes t10 on t9.id_comprobante=t10.id 
+left join tabla_maestras t11 on t1.puesto_postula::int = t11.codigo::int And t11.tipo =''94'' ';
 	
 	
 	v_where = ' Where 1=1  ';
-	/*
-	If p_id_concurso<>'' Then
-	 v_where:=v_where||'And c.id_concurso = '''||p_id_concurso||''' ';
+	
+	If p_numero_documento<>'' Then
+	 v_where:=v_where||'And t3.numero_documento = '''||p_numero_documento||''' ';
+	End If;
+	
+	If p_agremiado<>'' Then
+	 v_where:=v_where||'And t3.nombres||'' ''||t3.apellido_paterno||'' ''||t3.apellido_materno ilike ''%'||p_agremiado||'%'' ';
+	End If;
+	
+	If p_numero_cap<>'' Then
+	 v_where:=v_where||'And t2.numero_cap = '''||p_numero_cap||''' ';
 	End If;
 
-	If p_estado<>'' Then
-	 v_where:=v_where||'And c.estado = '''||p_estado||''' ';
+	If p_id_concurso<>'' Then
+	 v_where:=v_where||'And t4.id_concurso = '''||p_id_concurso||''' ';
 	End If;
-	*/
+
+	If p_id_regional<>'' Then
+	 v_where:=v_where||'And t2.id_regional = '''||p_id_regional||''' ';
+	End If;
+
+	If p_id_situacion<>'' Then
+	 v_where:=v_where||'And t2.id_situacion = '''||p_id_situacion||''' ';
+	End If;
+	
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
@@ -61,3 +87,4 @@ End
 
 $function$
 ;
+
