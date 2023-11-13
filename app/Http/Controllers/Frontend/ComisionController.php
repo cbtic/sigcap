@@ -98,8 +98,8 @@ class ComisionController extends Controller
 	function obtener_municipalidadesIntegradas(){
 
         $municipalidadIntegrada_model = new MunicipalidadIntegrada;
-		$municipalidadIntegrada = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll();
-        return view('frontend.comision.lista_municipalidadIntegrada',compact('municipalidadIntegrada'));
+		$municipalidad_integradas = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll();
+        return view('frontend.comision.lista_municipalidadIntegrada',compact('municipalidad_integradas'));
     }
 
 	public function send_comision(Request $request){
