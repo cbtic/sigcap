@@ -14,14 +14,14 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#fechaIni').keypress(function(e){
+	$('#fecha_inicio').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
 		}
 	});
 
-	$('#fechaFin').keypress(function(e){
+	$('#fecha_fin').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
@@ -31,6 +31,13 @@ $(document).ready(function () {
 	$('#partida_presupuestalBus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
+		}
+	});
+
+	$('#estado').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
 		}
 	});
 		
@@ -604,7 +611,7 @@ function modalResponsable(id){
 
 }
 
-function eliminarPeriodoComision(id,estado){
+function eliminarperiodoComision(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -619,7 +626,7 @@ function eliminarPeriodoComision(id,estado){
         message: "&iquest;Deseas "+act_estado+" el periodo de comision?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_concepto(id,estado_);
+                fn_eliminar_periodoComision(id,estado_);
             }
         }
     });

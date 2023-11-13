@@ -177,9 +177,15 @@
                     </div>
                 </div>
                 
+
+                <form class="form-horizontal" method="post" action="" id="frmComision" autocomplete="off">
                 <div class="row justify-content-left">
-        
-                    <div class="col col-sm-6 align-self-left">
+
+                    
+                    <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+
+
+                    <div class="col col-sm-4 align-self-left">
 
                         <div class="card">
                             <div class="card-header">
@@ -197,7 +203,7 @@
 				
 				            <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="tblAfiliado" class="table table-hover table-sm">
+                                    <table id="tblMunicipalidad" class="table table-hover table-sm">
                                         <thead>
                                             <tr style="font-size:13px">
                                                 <!--<div class="row">
@@ -208,21 +214,27 @@
                                                     <div class="col-md-4">Estado</div></div>-->
                                                 <th>Seleccionar</th>
                                                 <th>Denominaci&oacute;n</th>
+                                                <th>Tipo de Municipalidad</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+
+
                                         </tbody>
                                     </table>
                                 </div><!--table-responsive-->
                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-                                        <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+                                        <!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />-->
                                         <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
-                                        <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
+                                        <input class="btn btn-success" value="CREAR" type="button" id="btnNuevo" style="margin-left:15px"/>
                                     </div>
                             </div>
 				        </div>
                     </div>
-                    <div class="col col-sm-6 align-self-right">
+                    </form>
+
+
+                    <div class="col col-sm-4 align-self-right">
 
                         <div class="card">
                             <div class="card-header">
@@ -240,7 +252,7 @@
 				
 				            <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="tblAfiliado" class="table table-hover table-sm">
+                                    <table id="tblMunicipalidadIntegrada" class="table table-hover table-sm">
                                         <thead>
                                             <tr style="font-size:13px">
                                                 <!--<div class="row">
@@ -251,6 +263,7 @@
                                                     <div class="col-md-4">Estado</div></div>-->
                                                 <th>Seleccionar</th>
                                                 <th>Denominaci&oacute;n</th>
+                                                <th>Tipo de Agrupaci&oacute;n</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -258,8 +271,59 @@
                                     </table>
                                 </div><!--table-responsive-->
                             </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                                <!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />-->
+                                <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                                <input class="btn btn-success" value="CREAR COMISION" type="button" id="btnNuevoComision" style="margin-left:15px"/>
+                            </div>
 				        </div>
                     </div>
+
+                    <div class="col col-sm-4 align-self-left">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row" style="padding:20px 20px 0px 20px;">
+                                    <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+                                        <input class="form-control form-control-sm" id="denominacion_muni" name="denominacion_muni" placeholder="Denominaci&oacute;n">
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                                        <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+                                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                                        <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
+                                    </div>
+                                </div>
+                            </div><!--card-header-->
+				
+				            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="tblComision" class="table table-hover table-sm">
+                                        <thead>
+                                            <tr style="font-size:13px">
+                                                <!--<div class="row">
+                                                    <div class="col-md-2">Seleccionar</div>
+                                                    
+                                                    <div class="col-md-6">Denominaci&oacute;n</div>
+                                                    
+                                                    <div class="col-md-4">Estado</div></div>-->
+                                                <th>Seleccionar</th>
+                                                <th>Denominaci&oacute;n</th>
+                                                <th>Tipo de Municipalidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div><!--table-responsive-->
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                                        <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+                                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                                        <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
+                                    </div>
+                            </div>
+				        </div>
+                    </div>
+
                 </div>
 
             </div>

@@ -18,6 +18,13 @@ $(document).ready(function () {
 			datatablenew();
 		}
 	});
+
+	$('#estado').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
 		
 	$('#btnNuevo').click(function () {
 		modalEmpresa(0);

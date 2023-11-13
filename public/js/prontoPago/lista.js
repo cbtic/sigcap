@@ -13,6 +13,34 @@ $(document).ready(function () {
 			return false;
 		}
 	});
+
+	$('#fecha_inicio').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#fecha_fin').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#codigo_documento').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#estado').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});	
 		
 	$('#btnNuevo').click(function () {
 		modalProntoPago(0);
@@ -202,7 +230,7 @@ function datatablenew(){
 				"mRender": function (data, type, row) {
 					var estado = "";
 					var clase = "";
-					if(row.estado == 1){
+					if(row.estado == 1 || row.estado == 2){
 						estado = "Eliminar";
 						clase = "btn-danger";
 					}

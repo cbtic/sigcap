@@ -40,6 +40,9 @@ class MultaController extends Controller
 		$p[]=$request->agremiado;
         $p[]="";
 		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -61,6 +64,9 @@ class MultaController extends Controller
 	public function listar_historialMulta_ajax(Request $request){
 	
 		$historialMulta_model = new Multa;
+		$p[]="";
+		$p[]="";
+		$p[]="";
 		$p[]="";
 		$p[]="";
 		$p[]="";

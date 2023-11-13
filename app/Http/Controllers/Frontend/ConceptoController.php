@@ -41,9 +41,9 @@ class ConceptoController extends Controller
 		$p[]="";
 		$p[]="";
 		$p[]="";
-		$p[]="";
-		$p[]="";
-		$p[]="";
+		$p[]=$request->cuenta_contable_debe;
+		$p[]=$request->cuenta_contable_al_haber1;
+		$p[]=$request->cuenta_contable_al_haber2;
         $p[]=$request->partida_presupuestal;
 		$p[]=$request->tipo_afectacion;
 		$p[]="";
@@ -71,9 +71,10 @@ class ConceptoController extends Controller
 		$id_concepto = $concepto->id_concepto;
 		$concepto = Concepto::find($id_concepto);
 		$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
+		$moneda = $tablaMaestra_model->getMaestroByTipo(1);
         $concepto_model = new concepto;
 		
-		return view('frontend.concepto.create',compact('id','regional','codigo','tipo_concepto','denominacion','partida_presupuestal','tipo_afectacion','estado'));
+		return view('frontend.concepto.create',compact('id','regional','codigo','tipo_concepto','denominacion','importe','moneda','periodo','cuenta_contable_debe','cuenta_contable_al_haber1','cuenta_contable_al_haber2','partida_presupuestal','tipo_afectacion','estado'));
 		
     }
 
