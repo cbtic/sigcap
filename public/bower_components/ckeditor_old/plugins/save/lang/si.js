@@ -1,0 +1,1 @@
+CKEDITOR.plugins.setLang("save","si",{toolbar:"ආරක්ෂ�? කරන්න"});

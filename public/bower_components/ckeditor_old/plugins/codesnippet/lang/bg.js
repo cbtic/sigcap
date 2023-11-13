@@ -1,0 +1,5 @@
+/*
+ Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+ For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+CKEDITOR.plugins.setLang("codesnippet","bg",{button:"Въвеждане на блок �? код",codeContents:"Съдържание на кода",emptySnippetError:"Блока �? код не може да бъде празен.",language:"Език",title:"Блок �? код",pathName:"блок �? код"});
