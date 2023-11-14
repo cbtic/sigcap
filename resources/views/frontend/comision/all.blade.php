@@ -201,26 +201,22 @@
                                 </div>
                             </div><!--card-header-->
 				
-				            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="tblMunicipalidad" class="table table-hover table-sm">
+				            <div class="col-lg-12 col-md-4 col-sm-12 col-xs-12" style="padding:0px">
+							
+							<div class="col-md-12" style="padding-top:10px">
+								<input class="form-control" id="system-search" name="q" placeholder="Buscar ...">
+							</div>
+							
+                                <div class="table-responsive" style="overflow-y: visible; height:470px;width:100%">
+                                    <table id="tblMunicipalidad" class="table table-sm">
                                         <thead>
                                             <tr style="font-size:13px">
-                                                <!--<div class="row">
-                                                    <div class="col-md-2">Seleccionar</div>
-                                                    
-                                                    <div class="col-md-6">Denominaci&oacute;n</div>
-                                                    
-                                                    <div class="col-md-4">Estado</div></div>-->
                                                 <th>Seleccionar</th>
                                                 <th>Denominaci&oacute;n</th>
                                                 <th>Tipo de Municipalidad</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-
-
-                                        </tbody>
+                                        <tbody></tbody>
                                     </table>
                                 </div><!--table-responsive-->
                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
@@ -263,7 +259,8 @@
                                                     <div class="col-md-4">Estado</div></div>-->
                                                 <th>Seleccionar</th>
                                                 <th>Denominaci&oacute;n</th>
-                                                <th>Tipo de Agrupaci&oacute;n</th>
+                                                <th>Tipo</th>
+                                                <th>Movilidad</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -308,7 +305,8 @@
                                                     <div class="col-md-4">Estado</div></div>-->
                                                 <th>Seleccionar</th>
                                                 <th>Denominaci&oacute;n</th>
-                                                <th>Tipo de Municipalidad</th>
+                                                <th>Tipo Muni</th>
+                                                <th>Movilidad</th>
                                             </tr>
                                         </thead>
                                         <tbody>

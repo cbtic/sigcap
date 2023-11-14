@@ -1,0 +1,1 @@
+CKEDITOR.plugins.setLang("save","bn",{toolbar:"সংরক�?ষন করি"});

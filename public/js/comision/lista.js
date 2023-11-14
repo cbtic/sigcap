@@ -138,26 +138,31 @@ function habiliarTitular(){
 
 
 function cargarMunicipalidades(){
-    
-	$('#tblMunicipalidad').dataTable().fnDestroy(); //la destruimos
-	$("#tblMunicipalidad tbody").html("");
 
 	$.ajax({
 			url: "/comision/obtener_municipalidades/",
 			type: "GET",
 			success: function (result) {  
-					$("#tblMunicipalidad tbody").html(result);
+			
+					$('#tblMunicipalidad').dataTable().fnDestroy(); //la destruimos
+					$("#tblMunicipalidad tbody").html("");
 					
+					$("#tblMunicipalidad tbody").html(result);
+					//alert("ok");
 					$('#tblMunicipalidad').DataTable({
 						"paging":false,
 						"dom": '<"top">rt<"bottom"flpi><"clear">',
 						"language": {"url": "/js/Spanish.json"},
 					});
 					
+					$("#system-search").keyup(function() {
+						var dataTable = $('#tblMunicipalidad').dataTable();
+					   dataTable.fnFilter(this.value);
+					});
+					
 			}
 	});
 
-	
 }
 
 function cargarMunicipalidadesIntegradas(){

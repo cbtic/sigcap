@@ -68,7 +68,7 @@ class ComisionController extends Controller
 	
 		$municipalidadIntegrada_model = new MunicipalidadIntegrada;
 		$p[]=$request->denominacion;
-		$p[]=$request->tipo_municipalidad;
+		$p[]=$request->tipo_agrupacion;
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;

@@ -7,7 +7,7 @@ foreach($municipalidad_integradas as $row):?>
 	<input value="<?php echo $row->id?>"  type="checkbox" id="check_" name="check_[]">
 	</td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->denominacion?></td>
-	<td class="text-left" style="vertical-align:middle"><?php echo $row->id_tipo_agrupacion?></td>
+	<td class="text-left" style="vertical-align:middle"><?php echo $row->tipo_agrupacion?></td>
 </tr>
 <?php
 endforeach;
