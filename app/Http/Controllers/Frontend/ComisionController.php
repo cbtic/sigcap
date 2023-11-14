@@ -58,13 +58,13 @@ class ComisionController extends Controller
 	function consulta_municipalidadIntegrada(){
 
         $tablaMaestra_model = new TablaMaestra;
-		$comision = new Comisione;
+		$municipalidadIntegrada = new Comisione;
         //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
 
-        return view('frontend.comision.all',compact('comision'));
+        return view('frontend.comision.all',compact('municipalidadIntegrada'));
     }
 
-    public function listar_municipalidadIntegrada_ajax(Request $request){
+    public function listar_municipalidad_integrada_ajax(Request $request){
 	
 		$municipalidadIntegrada_model = new MunicipalidadIntegrada;
 		$p[]=$request->denominacion;
@@ -72,7 +72,7 @@ class ComisionController extends Controller
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
-		$data = $municipalidadIntegrada_model->listar_municipalidadIntegrada_ajax($p);
+		$data = $municipalidadIntegrada_model->listar_municipalidad_integrada_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -137,6 +137,45 @@ class ComisionController extends Controller
 				$mucipalidadDetalle->save();
 			}
 		}
+
+    }
+
+	public function send_municipalidad_integrada(Request $request){
+		$id_user = Auth::user()->id;
+		
+		$municipalidadesIntegradas = $request->check_;
+		/*$denominacion = "";
+		foreach($municipalidades as $row){	
+			$municipalidad = Municipalidade::find($row);
+			$denominacion .= $municipalidad->denominacion." - ";
+		}
+
+		if($denominacion!=""){
+
+			$denominacion = substr($denominacion,0,strlen($denominacion)-3);
+		*/
+			$municipalidadIntegrada = new MunicipalidadIntegrada();
+			
+			$municipalidadIntegrada->denominacion = $denominacion;
+			$municipalidadIntegrada->id_vigencia = 374;
+			$municipalidadIntegrada->id_tipo_agrupacion = 1;
+			$municipalidadIntegrada->id_regional = 5;
+			$municipalidadIntegrada->id_periodo_comisiones = 4;
+			$municipalidadIntegrada->id_coodinador = 1;
+			$municipalidadIntegrada->id_usuario_inserta = $id_user;
+			$municipalidadIntegrada->estado = "1";
+			$municipalidadIntegrada->save();
+			$id_municipalidad_integrada = $municipalidadIntegrada->id;
+
+			/*foreach($municipalidades as $row){	
+				$mucipalidadDetalle = new MucipalidadDetalle();
+				$mucipalidadDetalle->id_municipalidad = $row;
+				$mucipalidadDetalle->id_municipalidad_integrada = $id_municipalidad_integrada;
+				$mucipalidadDetalle->id_usuario_inserta = $id_user;
+				$mucipalidadDetalle->estado = "1";
+				$mucipalidadDetalle->save();
+			}*/
+		/*}*/
 
     }
 	
