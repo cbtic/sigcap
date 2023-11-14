@@ -17,7 +17,12 @@ use Auth;
 
 class ComprobanteController extends Controller
 {
-    public function edit(Request $request){
+    public function consultar(){
+		print_r("OK");exit();
+        return view('frontend.comprobante.all');
+    }
+
+	public function edit(Request $request){
 
         $trans = $request->Trans;
         $id_caja=$request->id_caja;
@@ -359,5 +364,48 @@ class ComprobanteController extends Controller
         //print_r($factura_detalles);
 
         return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia'));
-    }    
+    }
+	public function listar_comprobante(Request $request){
+		$factura_model = new comprobante();
+		$p[]=$request->fecha_ini;
+		$p[]=$request->fecha_fin;
+		$p[]=$request->tipo_documento;
+        $p[]=$request->serie;
+        $p[]=$request->numero;
+        $p[]=$request->razon_social;
+        $p[]=$request->estado_pago;
+        $p[]=$request->anulado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		print_r($p);exit();
+		$data = $factura_model->listar_comprobante($p);
+		
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+		//print_r($afiliacion);exit();
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+
+	}
+
+    public function modal_factura($id){
+		$id_user = Auth::user()->id;
+		$factura = new comprobante;
+		$negativo = "";
+		if($id>0){
+			$factura = comprobante::find($id);
+			//$negativo = Negativo::where('factura_id',$id)->orderBy('id', 'desc')->first();
+		} else {
+			$factura = new comprobante;
+		}
+        //print ("hola");exit();
+		return view('frontend.factura.modal_factura',compact('id','factura','negativo'));
+	}    
 }

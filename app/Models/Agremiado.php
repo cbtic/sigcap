@@ -23,10 +23,15 @@ class Agremiado extends Model
 
         }elseif($tipo_documento=="85"){ //NRO_CAP
 			
+<<<<<<< HEAD
 			//$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, desc_cliente nombre_completo,t2.email1
 			//		--,razon_social,t1.foto,t2.codigo,t2.fecha_inicio,t2.ubicacion_id id_ubicacion,				
 			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,
 					t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, desc_cliente nombre_completo,t1.id_tipo_documento
+=======
+			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,
+					t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, desc_cliente nombre_completo,t1.id_tipo_documento 								
+>>>>>>> aa6ef787cdbbcc6631ed58c85769717bbbb6a156
 					from personas t1 
 					inner join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
 					left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'                    

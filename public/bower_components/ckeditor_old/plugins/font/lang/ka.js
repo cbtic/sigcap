@@ -1,0 +1,1 @@
+CKEDITOR.plugins.setLang("font","ka",{fontSize:{label:"ზ�?მ�?",voiceLabel:"ტექსტის ზ�?მ�?",panelTitle:"ტექსტის ზ�?მ�?"},label:"ფ�?ნტი",panelTitle:"ფ�?ნტის ს�?ხელი",voiceLabel:"ფ�?ნტი"});

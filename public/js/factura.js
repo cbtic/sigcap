@@ -12,6 +12,7 @@ $(document).ready(function () {
 
 });
 
+
 function guardarFactura(){
 
     var msg = "";
@@ -257,6 +258,151 @@ function obtenerTitular(){
         }
 	});
 
-
+	function datatablenew(){
+                      
+		var oTable1 = $('#tblFactura').dataTable({
+			"bServerSide": true,
+			"sAjaxSource": "/comprobante/listar_comprobante",
+			"bProcessing": true,
+			"sPaginationType": "full_numbers",
+			//"paging":false,
+			"bFilter": false,
+			"bSort": false,
+			"info": true,
+			//"responsive": true,
+			"language": {"url": "/js/Spanish.json"},
+			"autoWidth": false,
+			"bLengthChange": true,
+			"destroy": true,
+			"lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
+			"aoColumns": [
+							{},
+			],
+			"dom": '<"top">rt<"bottom"flpi><"clear">',
+			"fnDrawCallback": function(json) {
+				$('[data-toggle="tooltip"]').tooltip();
+			},
+	
+			"fnServerData": function (sSource, aoData, fnCallback, oSettings) {
+	
+				var sEcho           = aoData[0].value;
+				var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
+				var iCantMostrar 	= aoData[4].value;
+				
+				var cap = $('#cap_').val();
+				var nombre = $('#denominacion').val();
+				var estado = $('#estado').val();
+				
+				var _token = $('#_token').val();
+				oSettings.jqXHR = $.ajax({
+					"dataType": 'json',
+					//"contentType": "application/json; charset=utf-8",
+					"type": "POST",
+					"url": sSource,
+					"data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
+							nombre:nombre,cap:cap,estado:estado,
+							_token:_token
+						   },
+					"success": function (result) {
+						fnCallback(result);
+					},
+					"error": function (msg, textStatus, errorThrown) {
+						//location.href="login";
+					}
+				});
+			},
+	
+			"aoColumnDefs":
+				[	
+					{
+					"mRender": function (data, type, row) {
+						var id = "";
+						if(row.id!= null)id = row.id;
+						return id;
+					},
+					"bSortable": false,
+					"aTargets": [0],
+					"className": "dt-center",
+					//"className": 'control'
+					},
+					
+					{
+					"mRender": function (data, type, row) {
+						var numero_cap = "";
+						if(row.numero_cap!= null)numero_cap = row.numero_cap;
+						return numero_cap;
+					},
+					"bSortable": true,
+					"aTargets": [1]
+					},
+					
+					{
+					"mRender": function (data, type, row) {
+						var desc_cliente = "";
+						if(row.desc_cliente!= null)desc_cliente = row.desc_cliente;
+						return desc_cliente;
+					},
+					"bSortable": true,
+					"aTargets": [2]
+					},
+					
+					{
+					"mRender": function (data, type, row) {
+						var tipo_certificado = "";
+						if(row.tipo_certificado!= null)tipo_certificado = row.tipo_certificado;
+						return tipo_certificado;
+					},
+					"bSortable": true,
+					"aTargets": [3]
+					},
+					
+					{
+						"mRender": function (data, type, row) {
+							var estado = "";
+							if(row.estado == 1){
+								estado = "Activo";
+							}
+							if(row.estado == 0){
+								estado = "Inactivo";
+							}
+							return estado;
+						},
+						"bSortable": false,
+						"aTargets": [4]
+					},
+					{
+						"mRender": function (data, type, row) {
+							var estado = "";
+							var clase = "";
+							if(row.estado == 1){
+								estado = "Eliminar";
+								clase = "btn-danger";
+							}
+							if(row.estado == 0){
+								estado = "Activar";
+								clase = "btn-success";
+							}
+							
+							var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+							
+							html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalCertificado('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+							html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="Certificado_pdf('+row.id+')" ><i class="fa fa-edit"></i> Ver Certificado</button>';    
+							html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+							
+							//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
+							
+							html += '</div>';
+							return html;
+						},
+						"bSortable": false,
+						"aTargets": [5],
+					},
+	
+				]
+	
+	
+		});
+	
+	}
 }
 
