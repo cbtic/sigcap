@@ -872,7 +872,7 @@ s
 
 
 
-    @push('after-scripts')
+ @push('after-scripts')
 
 <script src="{{ asset('js/factura.js') }}"></script>
 @endpush

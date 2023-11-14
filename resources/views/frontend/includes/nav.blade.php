@@ -60,11 +60,8 @@
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
                                 <a href="/multa/consulta_multa" class="dropdown-item">Multas</a>
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
-<<<<<<< HEAD
-=======
                                 <a href="/concurso/create" class="dropdown-item">Concurso</a>
 								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
->>>>>>> aa6ef787cdbbcc6631ed58c85769717bbbb6a156
                                 <a href="/concurso" class="dropdown-item">Concurso</a>
 								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
 								<a href="/concurso/consulta_resultado" class="dropdown-item">Consulta de Resultado de Concurso</a>

@@ -181,8 +181,10 @@ Route::get('ingreso/modal_valorizacion_factura/{id}', [IngresoController::class,
 
 
 //Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
+Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.create');
 Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
+Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
 Route::get('comprobante/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
 
 
@@ -283,12 +285,8 @@ Route::get('certificado/valida_pago/{idagremiado}/{serie}/{numero}/{concepto}', 
 Route::post('certificado/send_certificado', [CertificadoController::class, 'send_certificado'])->name('certificado.send_certificado');
 Route::get('certificado/eliminar_certificado/{id}/{estado}', [CertificadoController::class, 'eliminar_certificado'])->name('certificado.eliminar_certificado');
 Route::get('certificado/certificado_vista/{id}', [CertificadoController::class, 'certificado_vista'])->name('certificado.certificado_vista');
-<<<<<<< HEAD
-Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
-=======
 Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
 
 Route::get('comprobante/consultar', [ComprobanteController::class, 'consultar'])->name('comprobante.consultar');
 Route::post('comprobante/listar_comprobante', [ComprobanteController::class, 'listar_comprobante'])->name('comprobante.listar_comprobante');
 Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
->>>>>>> aa6ef787cdbbcc6631ed58c85769717bbbb6a156
