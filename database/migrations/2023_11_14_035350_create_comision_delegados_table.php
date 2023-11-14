@@ -16,7 +16,7 @@ class CreateComisionDelegadosTable extends Migration
         Schema::create('comision_delegados', function (Blueprint $table) {
             $table->id();
             $table->integer('id_regional')->nullable()->unsigned()->index();
-			$table->integer('id_comsion')->nullable()->unsigned()->index();
+			$table->integer('id_comision')->nullable()->unsigned()->index();
             $table->integer('id_agremiado')->nullable()->unsigned()->index();
 			$table->integer('id_puesto')->nullable()->unsigned()->index();
             $table->integer('id_situacion')->nullable()->unsigned()->index();            
@@ -29,10 +29,9 @@ class CreateComisionDelegadosTable extends Migration
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index();
 
             $table->foreign('id_regional')->references('id')->on('regiones');
-            $table->foreign('id_comsion')->references('id')->on('comisiones');
+            $table->foreign('id_comision')->references('id')->on('comisiones');
             $table->foreign('id_agremiado')->references('id')->on('agremiados');
             
-
             $table->timestamps();
         });
     }
