@@ -383,13 +383,13 @@ label.form-control-sm{
 															N&deg; CAP
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly="readonly" >
+															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?> >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
 															</div>
 														</div>
 														<div class="row">
@@ -397,7 +397,7 @@ label.form-control-sm{
 															N&deg; Regional
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_regional" id="numero_regional" value="<?php echo $agremiado->numero_regional?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="numero_regional" id="numero_regional" value="<?php echo $agremiado->numero_regional?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
@@ -443,7 +443,7 @@ label.form-control-sm{
 															N&deg; Doc
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
 															</div>
 														</div>
 														
@@ -464,13 +464,13 @@ label.form-control-sm{
 															Folio
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="folio_nacional" id="folio_nacional" value="<?php echo $agremiado->folio_nacional?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="folio_nacional" id="folio_nacional" value="<?php echo $agremiado->folio_nacional?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Fecha Colegiado
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
 															</div>
 														</div>
 														
@@ -565,19 +565,36 @@ label.form-control-sm{
 												</div>
 												
 												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-													
+													<!--
 													<div class="row">
 														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 															Fotografia
 														</div>
 													</div>	
-														
+													-->
 													<div class="row">
-														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-															<a href="{{ route('frontend.index') }}" class="navbar-brand">
-																<img src="<?php echo URL::to('/') ?>/img/logo_1.jpg" alt="" width="80" height="50" style="padding:0px;margin:0px">
-															</a>
-														</div>
+									
+													<div class="form-group">
+														
+													<span class="btn btn-sm btn-warning btn-file">
+														Examinar <input id="image" name="image" type="file" />
+													</span>
+													<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:0px">
+													<?php
+														$img = "/img/logo-sin-fondo2.png";
+								if($persona->foto!="")$img="/img/agremiado/".$persona->foto;
+													?>
+													<a href="/img/agremiado/<?php echo $persona->foto?>" target="_blank" class="btn btn-sm btn-secondary"><img src="<?php echo $img?>" id="img_ruta" width="80" height="50" alt="" style="margin-top:10px" /></a>
+													<input type="hidden" id="img_foto" name="img_foto" value="" />
+													
+													<!--
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+														<a href="{{ route('frontend.index') }}" class="navbar-brand">
+															<img src="<?php echo URL::to('/') ?>/img/logo_1.jpg" alt="" width="80" height="50" style="padding:0px;margin:0px">
+														</a>
+													</div>
+													-->
+												</div>
 														
 														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
 														

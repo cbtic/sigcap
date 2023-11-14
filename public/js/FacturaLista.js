@@ -10,7 +10,7 @@ $(document).ready(function () {
     $('#btnNuevo').click(function () {
 		modalFactura(0);
 	});
-    alert("Ok");
+    
 	datatablenew();
 
 	$("#plan_id").select2();

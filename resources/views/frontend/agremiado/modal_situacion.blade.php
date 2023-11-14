@@ -278,7 +278,8 @@ function fn_save_situacion(){
             data : {_token:_token,id:id,id_agremiado:id_agremiado,id_pais_destino:id_pais_destino,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,ruta_documento:ruta_documento},
             success: function (result) {
 				
-				$('#openOverlayOpc').modal('hide');
+				//$('#openOverlayOpc').modal('hide');
+				//modalSituacion(id_agremiado);
 				window.location.reload();
 				
 				/*

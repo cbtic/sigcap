@@ -17,11 +17,6 @@ use Auth;
 
 class ComprobanteController extends Controller
 {
-    public function consultar(){
-		print_r("OK");exit();
-        return view('frontend.comprobante.all');
-    }
-
 	public function index(){
         //$facturas_model = new Factura;
         //$facturas = $facturas_model->getFactura();

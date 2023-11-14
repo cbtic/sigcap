@@ -33,13 +33,26 @@ class AgremiadoController extends Controller
 	}
 	
 	public function index(){
-        
-		$agremiado = new Agremiado;
-		$persona = new Persona;
+        /*
+		$agremiado = Agremiado::find($id);
+		$id_persona = $agremiado->id_persona;
+		$persona = Persona::find($id_persona);
+		*/
+		$id = 0;
+		$id_persona = 0;
+		$agremiado = new Agremiado();
+		$persona = new Persona();
 		
 		$tablaMaestra_model = new TablaMaestra;
 		$regione_model = new Regione;
 		$ubigeo_model = new Ubigeo;
+		$agremiadoEstudio_model = new AgremiadoEstudio;
+		$agremiadoIdioma_model = new AgremiadoIdioma;
+		$agremiadoParenteco_model = new AgremiadoParenteco;
+		$agremiadoTrabajo_model = new AgremiadoTrabajo;
+		$agremiadoTraslado_model = new AgremiadoTraslado;
+		$agremiadoSituacione_model = new AgremiadoSituacione;
+		
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$estado_civil = $tablaMaestra_model->getMaestroByTipo(3);
@@ -55,7 +68,14 @@ class AgremiadoController extends Controller
 		$region = $regione_model->getRegionAll();
 		$departamento = $ubigeo_model->getDepartamento();
 		
-		return view('frontend.agremiado.create',compact('id','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente'));
+		$agremiado_estudio = $agremiadoEstudio_model->getAgremiadoEstudios($id);
+		$agremiado_idioma = $agremiadoIdioma_model->getAgremiadoIdiomas($id);
+		$agremiado_parentesco = $agremiadoParenteco_model->getAgremiadoParentesco($id);
+		$agremiado_trabajo = $agremiadoTrabajo_model->getAgremiadoTrabajo($id);
+		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
+		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);
+		
+		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion'));
     }
 	
 	public function editar_agremiado($id){
@@ -109,10 +129,60 @@ class AgremiadoController extends Controller
 		$id_agremiado = $request->id_agremiado;
 		$id_persona = $request->id_persona;
 		
+		if($id_persona> 0){
+			$persona = Persona::find($id_persona);
+			
+			if($request->img_foto!=""){
+				$filepath_tmp = public_path('img/frontend/tmp_agremiado/');
+				$filepath_nuevo = public_path('img/agremiado/');
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+				
+				$persona->foto = $request->img_foto;
+			}
+			
+		}else{
+			$persona = new Persona;
+			$persona->estado = 1;
+			$persona->id_usuario_inserta = 1;
+			
+			if($request->img_foto!="" && $persona->foto!=$request->img_foto){
+				$filepath_tmp = public_path('img/frontend/persona/');
+				$filepath_nuevo = public_path('img/agremiado/');
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+				
+				$persona->foto = $request->img_foto;
+			}
+			
+			
+			
+		}
+		
+		$persona->id_tipo_documento = $request->id_tipo_documento;
+		$persona->numero_documento = $request->numero_documento;
+		$persona->apellido_paterno = $request->apellido_paterno;
+		$persona->apellido_materno = $request->apellido_materno;
+		$persona->nombres = $request->nombres;
+		$persona->numero_ruc = $request->numero_ruc;
+		$persona->fecha_nacimiento = $request->fecha_nacimiento;
+		$persona->id_sexo = $request->id_sexo;
+		$persona->lugar_nacimiento = $request->lugar_nacimiento;
+		$persona->grupo_sanguineo = $request->grupo_sanguineo;
+		$persona->id_nacionalidad = $request->id_nacionalidad;
+		$persona->id_ubigeo_nacimiento = $request->id_distrito;
+		$persona->estado = 1;
+		$persona->save();
+		
 		if($id_agremiado> 0){
 			$agremiado = Agremiado::find($id_agremiado);
 		}else{
 			$agremiado = new Agremiado;
+			$agremiado->id_persona = $persona->id;
+			$agremiado->id_usuario_inserta = 1;
+			//$agremiado->id_situacion = "73";
 		}
 		//exit($request->id_distrito_domiciliario);
 		$agremiado->numero_cap = $request->numero_cap;
@@ -144,33 +214,20 @@ class AgremiadoController extends Controller
 		$agremiado->id_ubicacion = $request->id_ubicacion;
 		$agremiado->id_autoriza_tramite = $request->id_autoriza_tramite;
 		$agremiado->id_categoria = $request->id_categoria;
-		$agremiado->id_situacion = $request->id_situacion;
+		$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
 		$agremiado->desc_situacion_otro = $request->desc_situacion_otro;
 		$agremiado->fecha_fallecido = $request->fecha_fallecido;
 		//$agremiado->estado = 1;
 		$agremiado->save();
 		
-		if($id_persona> 0){
-			$persona = Persona::find($id_persona);
-		}else{
-			$persona = new Persona;
-		}
 		
-		$persona->id_tipo_documento = $request->id_tipo_documento;
-		$persona->numero_documento = $request->numero_documento;
-		$persona->apellido_paterno = $request->apellido_paterno;
-		$persona->apellido_materno = $request->apellido_materno;
-		$persona->nombres = $request->nombres;
-		$persona->numero_ruc = $request->numero_ruc;
-		$persona->fecha_nacimiento = $request->fecha_nacimiento;
-		$persona->id_sexo = $request->id_sexo;
-		$persona->lugar_nacimiento = $request->lugar_nacimiento;
-		$persona->grupo_sanguineo = $request->grupo_sanguineo;
-		$persona->id_nacionalidad = $request->id_nacionalidad;
-		$persona->id_ubigeo_nacimiento = $request->id_distrito;
-		$persona->estado = 1;
-		$persona->save();
-		
+	}
+	
+	public function upload_agremiado(Request $request){
+
+    	$filepath = public_path('img/frontend/tmp_agremiado/');
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		echo $_FILES['file']['name'];
 	}
 	
 	public function consulta_agremiado(){
