@@ -1,0 +1,1 @@
+CKEDITOR.plugins.setLang("font","gu",{fontSize:{label:"ફૉન�?ટ સાઇ�?/કદ",voiceLabel:"ફોન�?ટ સાઈ�?",panelTitle:"ફૉન�?ટ સાઇ�?/કદ"},label:"ફૉન�?ટ",panelTitle:"ફૉન�?ટ",voiceLabel:"ફોન�?ટ"});

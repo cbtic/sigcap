@@ -1,0 +1,1 @@
+CKEDITOR.plugins.setLang("sourcedialog","zh-cn",{toolbar:"ц║?ча?",title:"ц║?ча?"});

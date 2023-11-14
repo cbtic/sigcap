@@ -1,0 +1,1 @@
+CKEDITOR.plugins.setLang("font","tt",{fontSize:{label:"Зурлык",voiceLabel:"Шрифт зурлыклары",panelTitle:"Шрифт зурлыклары"},label:"Шрифт",panelTitle:"Шрифт и�?еме",voiceLabel:"Шрифт"});

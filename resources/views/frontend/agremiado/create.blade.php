@@ -383,13 +383,13 @@ label.form-control-sm{
 															N&deg; CAP
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly="readonly" >
+															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?> >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
 															</div>
 														</div>
 														<div class="row">
@@ -397,7 +397,7 @@ label.form-control-sm{
 															N&deg; Regional
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_regional" id="numero_regional" value="<?php echo $agremiado->numero_regional?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="numero_regional" id="numero_regional" value="<?php echo $agremiado->numero_regional?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
@@ -443,7 +443,7 @@ label.form-control-sm{
 															N&deg; Doc
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
 															</div>
 														</div>
 														
@@ -464,13 +464,13 @@ label.form-control-sm{
 															Folio
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="folio_nacional" id="folio_nacional" value="<?php echo $agremiado->folio_nacional?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="folio_nacional" id="folio_nacional" value="<?php echo $agremiado->folio_nacional?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Fecha Colegiado
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
 															</div>
 														</div>
 														

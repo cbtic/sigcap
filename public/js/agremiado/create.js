@@ -49,6 +49,14 @@ $(document).ready(function () {
 		modalTrabajo(0);
 	});
 	
+	$('#btnNuevoTraslado').on('click', function () {
+		modalTraslado(0);
+	});
+	
+	$('#btnNuevoSituacion').on('click', function () {
+		modalSituacion(0);
+	});
+	
 	$('#btnNuevoSeg').on('click', function () {
 		modalSeguimiento(0);
 	});
@@ -81,21 +89,21 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 	
-	/*
-	$('#fecha_desde').datepicker({
+	
+	$('#fecha_colegiado').datepicker({
         autoclose: true,
 		format: 'dd/mm/yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 	
-	$('#fecha_hasta').datepicker({
+	$('#fecha_actualiza').datepicker({
         autoclose: true,
 		format: 'dd/mm/yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
-	*/
+	
 	
 });
 
@@ -3161,6 +3169,39 @@ function modalTrabajo(id){
 	});
 
 }
+
+function modalTraslado(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/agremiado/modal_agremiado_traslado/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modalSituacion(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/agremiado/modal_agremiado_situacion/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
 function modalSeguimiento(id){
 	
 	$(".modal-dialog").css("width","85%");
