@@ -138,43 +138,56 @@ function habiliarTitular(){
 
 
 function cargarMunicipalidades(){
-    
-	$('#tblMunicipalidad').dataTable().fnDestroy(); //la destruimos
-	$("#tblMunicipalidad tbody").html("");
 
 	$.ajax({
 			url: "/comision/obtener_municipalidades/",
 			type: "GET",
 			success: function (result) {  
-					$("#tblMunicipalidad tbody").html(result);
+			
+					$('#tblMunicipalidad').dataTable().fnDestroy(); //la destruimos
+					$("#tblMunicipalidad tbody").html("");
 					
+					$("#tblMunicipalidad tbody").html(result);
+					//alert("ok");
 					$('#tblMunicipalidad').DataTable({
 						"paging":false,
 						"dom": '<"top">rt<"bottom"flpi><"clear">',
 						"language": {"url": "/js/Spanish.json"},
 					});
 					
+					$("#system-search").keyup(function() {
+						var dataTable = $('#tblMunicipalidad').dataTable();
+					   dataTable.fnFilter(this.value);
+					});
+					
 			}
 	});
 
-	
 }
 
 function cargarMunicipalidadesIntegradas(){
     
-	$('#tblMunicipalidadIntegrada').dataTable().fnDestroy(); //la destruimos
-	$("#tblMunicipalidadIntegrada tbody").html("");
+	//$('#tblMunicipalidadIntegrada').dataTable().fnDestroy(); //la destruimos
+	//$("#tblMunicipalidadIntegrada tbody").html("");
 
 	$.ajax({
 			url: "/comision/obtener_municipalidadesIntegradas/",
 			type: "GET",
 			success: function (result) {
+					$('#tblMunicipalidadIntegrada').dataTable().fnDestroy(); //la destruimos
+					$("#tblMunicipalidadIntegrada tbody").html("");
+
 					$("#tblMunicipalidadIntegrada tbody").html(result);
 					
 					$('#tblMunicipalidadIntegrada').DataTable({
 						"paging":false,
 						"dom": '<"top">rt<"bottom"flpi><"clear">',
 						"language": {"url": "/js/Spanish.json"},
+					});
+
+					$("#system-search2").keyup(function() {
+						var dataTable = $('#tblMunicipalidadIntegrada').dataTable();
+					   dataTable.fnFilter(this.value);
 					});
 					
 			}
@@ -715,7 +728,7 @@ function fn_guardar(){
 			url: "/comision/send_comision",
             type: "POST",
             data : $("#frmComision").serialize(),
-            success: function (result) {  
+            success: function (result) {
 					//datatablenew();
 				cargarMunicipalidades();
 				cargarMunicipalidadesIntegradas();
@@ -730,7 +743,7 @@ function fn_guardarMunicipalidadIntegrada(){
             type: "POST",
             data : $("#frmComision").serialize(),
             success: function (result) {  
-					datatablenew();
+					//datatablenew();
             }
     });
 }
