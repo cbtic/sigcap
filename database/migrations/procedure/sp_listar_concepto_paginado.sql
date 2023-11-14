@@ -33,18 +33,33 @@ Begin
 	End If;
 	
 	If p_partida_presupuestal<>'' Then
-	 v_where:=v_where||'And c.id_partida_presupuestal::varchar ilike ''%'||p_partida_presupuestal||'%'' ';
+	 v_where:=v_where||'And c.partida_presupuestal::varchar ilike ''%'||p_partida_presupuestal||'%'' ';
 	End If;
 	
 	If p_tipo_afectacion<>'' Then
-	 v_where:=v_where||'And c.id_tipo_afectacion='||p_tipo_afectacion;
+	 v_where:=v_where||'And c.id_tipo_afectacion = '''||p_tipo_afectacion||''' ';
+	End If;
+
+	If p_cuenta_contable_debe<>'' Then
+	 v_where:=v_where||'And c.cuenta_contable_debe = '''||p_cuenta_contable_debe||''' ';
 	End If;
 	
+	If p_cuenta_contable_al_haber1<>'' Then
+	 v_where:=v_where||'And c.cuenta_contable_al_haber1 = '''||p_cuenta_contable_al_haber1||''' ';
+	End If;
 
+	If p_cuenta_contable_al_haber2<>'' Then
+	 v_where:=v_where||'And c.cuenta_contable_al_haber2 = '''||p_cuenta_contable_al_haber2||''' ';
+	End If;
+/*
+	If p_tipo_afectacion<>'' Then
+	 v_where:=v_where||'And tm.denominacion ilike ''%'||p_tipo_afectacion||'%'' ';
+	End If;
+	*/
 	If p_estado<>'' Then
 	 v_where:=v_where||'And c.estado = '''||p_estado||''' ';
 	End If;
-	
+
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 

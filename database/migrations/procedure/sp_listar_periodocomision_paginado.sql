@@ -19,7 +19,7 @@ Begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' pc.descripcion, pc.fecha_inicio, pc.fecha_fin, pc.estado ';
+	v_campos=' pc.id, pc.descripcion, pc.fecha_inicio, pc.fecha_fin, pc.estado ';
 
 	v_tabla='from periodo_comisiones pc';
 	

@@ -153,6 +153,15 @@
 						<input class="form-control form-control-sm" id="denominacionBus" name="denominacionBus" placeholder="Nombre de Concepto">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="cuenta_contable_debe" name="cuenta_contable_debe" placeholder="Cuenta Contable Debe">
+					</div>
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="cuenta_contable_al_haber1" name="cuenta_contable_al_haber1" placeholder="Cuenta Contable al Haber 1">
+					</div>
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="cuenta_contable_al_haber2" name="cuenta_contable_al_haber2" placeholder="Cuenta Contable al Haber 2">
+					</div>
+                    <div class="col-lg-1-5 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="partida_presupuestalBus" name="partida_presupuestalBus" placeholder="Partida Presupuestal">
 					</div>
                     <div class="col-lg-2">

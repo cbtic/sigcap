@@ -13,6 +13,13 @@ $(document).ready(function () {
 			return false;
 		}
 	});
+
+	$('#estado').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
 	
 
 	$('#btnNuevo').click(function () {

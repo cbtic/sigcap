@@ -1,0 +1,1 @@
+CKEDITOR.plugins.setLang("iframe","bg",{border:"Показва рамка на карето",noUrl:"Мол�? въведете URL за iFrame",scrolling:"Вкл. �?кролбаровете",title:"IFrame на�?тройки",toolbar:"IFrame"});

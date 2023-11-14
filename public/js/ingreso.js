@@ -166,6 +166,11 @@ function calcular_total(obj){
 	$("#btnBoleta").prop('disabled', true);
     $("#btnFactura").prop('disabled', true);
 	//$("#btnTicket").prop('disabled', true).hide();
+
+	$("#btnFracciona").prop('disabled', true);
+	if(cantidad != 0)$("#btnFracciona").prop('disabled', false);
+
+	
 	
 	if(tipo_documento == "79"){//RUC
 		//$("#btnBoleta").prop('disabled', false);
@@ -217,9 +222,9 @@ function calcular_total(obj){
 	}else{
 		$('#MonAd').attr("readonly",false);
 		$('#MonAd').val(total.toFixed(2));
-	}
-	
+	}	
 }
+
 function calcular_total_(obj){
 		
 	var total = 0;
@@ -430,7 +435,7 @@ function fn_eliminar_afiliado(id){
 }
 
 
-function cargarValorizacion(){
+function cargarValorizacion1(){
     
     
 	//var numero_documento = $("#numero_documento").val();
@@ -447,6 +452,26 @@ function cargarValorizacion(){
 					$("#tblValorizacion tbody").html(result);
 			}
 	});
+
+}
+function cargarValorizacion(){
+    
+    
+	//var numero_documento = $("#numero_documento").val();
+	var tipo_documento = $("#tipo_documento").val();
+	var id_persona = 0;
+	if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
+	else id_persona = $('#id_persona').val();
+
+    $("#tblValorizacion tbody").html("");
+	$.ajax({
+		url: "/ingreso/listar_valorizacion",
+		type: "POST",
+		data : $("#frmValorizacion").serialize(),
+		success: function (result) {  
+			$("#tblValorizacion tbody").html(result);
+		}
+});
 
 }
 
@@ -665,6 +690,33 @@ function modal_otro_pago(){
 					
 			}
 	});
+	//cargarConceptos();
+
+}
+
+function modal_fraccionar(){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc').modal('show');
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$('#txtTotalFrac').val("5000");
+
+	var perido = "2023";
+	var idPersona = $('#id_persona').val();
+	var idAgremiado = $('#id_agremiado').val();
+	
+	/*
+	$.ajax({
+			url: "/ingreso/otro_pago/"+perido+"/"+idPersona+"/"+idAgremiado,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
+*/
 	//cargarConceptos();
 
 }
