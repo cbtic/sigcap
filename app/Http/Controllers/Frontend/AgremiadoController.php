@@ -131,10 +131,34 @@ class AgremiadoController extends Controller
 		
 		if($id_persona> 0){
 			$persona = Persona::find($id_persona);
+			
+			if($request->img_foto!=""){
+				$filepath_tmp = public_path('img/frontend/tmp_agremiado/');
+				$filepath_nuevo = public_path('img/agremiado/');
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+				
+				$persona->foto = $request->img_foto;
+			}
+			
 		}else{
 			$persona = new Persona;
 			$persona->estado = 1;
 			$persona->id_usuario_inserta = 1;
+			
+			if($request->img_foto!="" && $persona->foto!=$request->img_foto){
+				$filepath_tmp = public_path('img/frontend/persona/');
+				$filepath_nuevo = public_path('img/agremiado/');
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+				
+				$persona->foto = $request->img_foto;
+			}
+			
+			
+			
 		}
 		
 		$persona->id_tipo_documento = $request->id_tipo_documento;
@@ -197,6 +221,13 @@ class AgremiadoController extends Controller
 		$agremiado->save();
 		
 		
+	}
+	
+	public function upload_agremiado(Request $request){
+
+    	$filepath = public_path('img/frontend/tmp_agremiado/');
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		echo $_FILES['file']['name'];
 	}
 	
 	public function consulta_agremiado(){

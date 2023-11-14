@@ -104,6 +104,30 @@ $(document).ready(function () {
 		changeYear: true,
     });
 	
+	$(".upload").on('click', function() {
+        var formData = new FormData();
+        var files = $('#image')[0].files[0];
+        formData.append('file',files);
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/agremiado/upload_agremiado",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response != 0) {
+                    $("#img_ruta").attr("src", "/img/frontend/tmp_agremiado/"+response);
+					$("#img_foto").val(response);
+                } else {
+                    alert('Formato de imagen incorrecto.');
+                }
+            }
+        });
+        return false;
+    });
 	
 });
 

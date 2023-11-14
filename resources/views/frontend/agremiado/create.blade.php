@@ -565,19 +565,36 @@ label.form-control-sm{
 												</div>
 												
 												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-													
+													<!--
 													<div class="row">
 														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 															Fotografia
 														</div>
 													</div>	
-														
+													-->
 													<div class="row">
-														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-															<a href="{{ route('frontend.index') }}" class="navbar-brand">
-																<img src="<?php echo URL::to('/') ?>/img/logo_1.jpg" alt="" width="80" height="50" style="padding:0px;margin:0px">
-															</a>
-														</div>
+									
+													<div class="form-group">
+														
+													<span class="btn btn-sm btn-warning btn-file">
+														Examinar <input id="image" name="image" type="file" />
+													</span>
+													<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:0px">
+													<?php
+														$img = "/img/logo-sin-fondo2.png";
+								if($persona->foto!="")$img="/img/agremiado/".$persona->foto;
+													?>
+													<a href="/img/agremiado/<?php echo $persona->foto?>" target="_blank" class="btn btn-sm btn-secondary"><img src="<?php echo $img?>" id="img_ruta" width="80" height="50" alt="" style="margin-top:10px" /></a>
+													<input type="hidden" id="img_foto" name="img_foto" value="" />
+													
+													<!--
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+														<a href="{{ route('frontend.index') }}" class="navbar-brand">
+															<img src="<?php echo URL::to('/') ?>/img/logo_1.jpg" alt="" width="80" height="50" style="padding:0px;margin:0px">
+														</a>
+													</div>
+													-->
+												</div>
 														
 														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
 														
