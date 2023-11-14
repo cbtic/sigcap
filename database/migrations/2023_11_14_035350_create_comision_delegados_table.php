@@ -32,7 +32,6 @@ class CreateComisionDelegadosTable extends Migration
             $table->foreign('id_comision')->references('id')->on('comisiones');
             $table->foreign('id_agremiado')->references('id')->on('agremiados');
             
-
             $table->timestamps();
         });
     }
