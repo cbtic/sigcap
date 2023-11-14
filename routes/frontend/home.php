@@ -181,8 +181,10 @@ Route::get('ingreso/modal_valorizacion_factura/{id}', [IngresoController::class,
 
 
 //Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
+Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.create');
 Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
+Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
 Route::get('comprobante/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
 
 
