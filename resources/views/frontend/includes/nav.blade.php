@@ -60,10 +60,8 @@
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
                                 <a href="/multa/consulta_multa" class="dropdown-item">Multas</a>
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
-<<<<<<< HEAD
                                 <a href="/concurso/create" class="dropdown-item">Concurso</a>
 								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
-=======
                                 <a href="/concurso" class="dropdown-item">Concurso</a>
 								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
 								<a href="/concurso/consulta_resultado" class="dropdown-item">Consulta de Resultado de Concurso</a>
@@ -83,7 +81,6 @@
 						   aria-haspopup="true" aria-expanded="false">Asuntos Tecnicos</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/comision/consulta_comision" class="dropdown-item">Comisiones</a>
->>>>>>> 8a930674bdd24e05d9f3ea4fd730f7074b7de783
 						   </div>
 					</li>
 
@@ -113,6 +110,7 @@
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
                                 <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>
+                                <a href="/comprobante/consultar" class="dropdown-item">Lista de comprobantes</a>
 
 						   </div>
 					</li>
