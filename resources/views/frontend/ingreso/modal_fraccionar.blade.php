@@ -406,7 +406,7 @@ legend.scheduler-border {
 
 												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona?>">
 												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado?>">
-												<input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo?>">
+												<input type="hidden" name="total_fraccionar" id="total_fraccionar" value="<?php echo $total_fraccionar?>">
 
 												<div class="row" style="padding-left:10px">
 <!--
@@ -434,7 +434,7 @@ legend.scheduler-border {
 														<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
 															<div class="form-group form-group-sm">
 																<label class="form-control-sm">Total Fraccionar</label>
-																<input type="text" readonly name="txtTotalFrac" id="txtTotalFrac" value="" class="form-control form-control-sm">
+																<input type="text" readonly name="txtTotalFrac" id="txtTotalFrac" value="<?php echo $total_fraccionar?>" class="form-control form-control-sm">
 															</div>
 														</div>
 														
