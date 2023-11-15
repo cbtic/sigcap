@@ -181,10 +181,7 @@ class ComprobanteController extends Controller
 
         //echo "vestab=>".$request->vestab."<br>";
         //echo "persona_id=>".$request->persona_id."<br>";
-
-
-        print_r($request);exit();
-        
+    
 
         $trans = $request->Trans;
         $id_caja=$request->id_caja;
