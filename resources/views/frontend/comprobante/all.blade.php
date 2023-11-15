@@ -78,7 +78,7 @@
 }
 
 </style>
-@extends('frontend.layouts.app1')
+@extends('frontend.layouts.app')
 
 
 
@@ -300,7 +300,14 @@
                     </div>
                     <div class="modal-body">
 
-     
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card-body">
+                                <div id="" class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
