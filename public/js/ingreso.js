@@ -702,13 +702,15 @@ function modal_fraccionar(){
 
 	$('#txtTotalFrac').val("5000");
 
-	var perido = "2023";
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
+	var TotalFraccionar = $('#id_agremiado').val();
+	var idConcepto = $('#id_agremiado').val();
 	
-	/*
+	
+	
 	$.ajax({
-			url: "/ingreso/otro_pago/"+perido+"/"+idPersona+"/"+idAgremiado,
+			url: "/ingreso/otro_pago/"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -716,7 +718,7 @@ function modal_fraccionar(){
 					
 			}
 	});
-*/
+
 	//cargarConceptos();
 
 }
