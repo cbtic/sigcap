@@ -529,7 +529,7 @@ class ComprobanteController extends Controller
         $p[]=$request->anulado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
-		print_r($p);exit();
+		
 		$data = $factura_model->listar_comprobante($p);
 		
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;

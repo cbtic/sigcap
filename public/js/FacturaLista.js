@@ -185,9 +185,9 @@ function datatablenew(){
             [
 				{
                 "mRender": function (data, type, row) {
-                	var fac_serie = "";
-					if(row.fac_serie!= null)fac_serie = row.fac_serie;
-					return fac_serie;
+                	var serie = "";
+					if(row.serie!= null)serie = row.serie;
+					return serie;
                 },
                 "bSortable": false,
                 "aTargets": [0],
@@ -196,18 +196,18 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var fac_numero = "";
-					if(row.fac_numero!= null)fac_numero = row.fac_numero;
-					return fac_numero;
+                    var numero = "";
+					if(row.numero!= null)numero = row.numero;
+					return numero;
                 },
                 "bSortable": false,
                 "aTargets": [1]
                 },
                 {
                 "mRender": function (data, type, row) {
-					var fac_tipo = "";
-					if(row.fac_tipo!= null)fac_tipo = row.fac_tipo;
-					return fac_tipo;
+					var tipo = "";
+					if(row.tipo!= null)tipo = row.tipo;
+					return tipo;
                 },
                 "bSortable": false,
                 //"className": "dt-center",
@@ -215,9 +215,9 @@ function datatablenew(){
                 },
                 {
                     "mRender": function (data, type, row) {
-                        var fac_fecha = "";
-                        if(row.fac_fecha!= null)fac_fecha = row.fac_fecha;
-                        return fac_fecha;
+                        var fecha = "";
+                        if(row.fecha!= null)fecha = row.fecha;
+                        return fecha;
                     },
                     "bSortable": false,
                     //"className": "dt-center",
@@ -225,9 +225,9 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var fac_cod_tributario = "";
-					if(row.fac_cod_tributario!= null)fac_cod_tributario = row.fac_cod_tributario;
-					return fac_cod_tributario;
+                    var cod_tributario = "";
+					if(row.cod_tributario!= null)cod_tributario = row.cod_tributario;
+					return cod_tributario;
                 },
                 "bSortable": false,
                 "aTargets": [4],
@@ -235,9 +235,9 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var fac_destinatario = "";
-					if(row.fac_destinatario!= null)fac_destinatario = row.fac_destinatario;
-					return fac_destinatario;
+                    var destinatario = "";
+					if(row.destinatario!= null)destinatario = row.destinatario;
+					return destinatario;
                 },
                 "bSortable": false,
                 "aTargets": [5]
@@ -253,9 +253,9 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var fac_subtotal = "";
-					if(row.fac_subtotal!= null)fac_subtotal = parseFloat(row.fac_subtotal).toFixed(2);
-					return fac_subtotal;
+                    var subtotal = "";
+					if(row.subtotal!= null)subtotal = parseFloat(row.subtotal).toFixed(2);
+					return subtotal;
                 },
                 "bSortable": false,
                 "className": "text-right",
@@ -263,9 +263,9 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var fac_impuesto = "";
-					if(row.fac_impuesto!= null)fac_impuesto = parseFloat(row.fac_impuesto).toFixed(2);
-					return fac_impuesto;
+                    var impuesto = "";
+					if(row.impuesto!= null)impuesto = parseFloat(row.impuesto).toFixed(2);
+					return impuesto;
                 },
                 "bSortable": false,
                 "className": "text-right",
@@ -273,9 +273,9 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var fac_total = "";
-					if(row.fac_total!= null)fac_total = parseFloat(row.fac_total).toFixed(2);
-					return fac_total;
+                    var total = "";
+					if(row.total!= null)total = parseFloat(row.total).toFixed(2);
+					return total;
                 },
                 "bSortable": false,
                 "className": "text-right",
@@ -283,18 +283,18 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var fac_estado_pago = "";
-					if(row.fac_estado_pago!= null)fac_estado_pago = row.fac_estado_pago;
-					return fac_estado_pago;
+                    var estado_pago = "";
+					if(row.estado_pago!= null)estado_pago = row.estado_pago;
+					return estado_pago;
                 },
                 "bSortable": false,
                 "aTargets": [10]
                 },
 				{
                 "mRender": function (data, type, row) {
-                    var fac_anulado = "";
-					if(row.fac_anulado!= null)fac_anulado = row.fac_anulado;
-					return fac_anulado;
+                    var anulado = "";
+					if(row.anulado!= null)anulado = row.anulado;
+					return anulado;
                 },
                 "bSortable": false,
                 "aTargets": [11]
@@ -348,7 +348,7 @@ function datatablenew(){
                              
                             today = yyyy+'-'+mm+'-'+dd;
 
-                            if ((row.fac_tipo=="FT" || row.fac_tipo=="BV")&&(row.fac_fecha).slice(0, -9)==today){
+                            if ((row.tipo=="FT" || row.tipo=="BV")&&(row.fecha).slice(0, -9)==today){
                                 var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
                                 html += '<a href="/factura/firmar/'+row.id+'" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-paper-plane"></i></a>';
                                 return html;
