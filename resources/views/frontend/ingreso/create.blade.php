@@ -59,7 +59,7 @@ border-right: 2px solid #5cb85c!important;
 
             <div class="card-body">
 
-            <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
+            <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.edit')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
 
                 <div class="row">
                     <div class="col-sm-12">

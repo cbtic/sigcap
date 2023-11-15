@@ -172,7 +172,8 @@ Route::post('ingreso/listar_valorizacion', [IngresoController::class, 'listar_va
 
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
 Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');
-Route::get('ingreso/otro_pago/{periodo}/{idpersona}/{idagremiado}', [IngresoController::class, 'otro_pago'])->name('multa.otro_pago');
+Route::get('ingreso/modal_otro_pago/{periodo}/{idpersona}/{idagremiado}', [IngresoController::class, 'modal_otro_pago'])->name('ingreso.modal_otro_pago');
+
 Route::get('ingreso/obtener_conceptos/{periodo}', [IngresoController::class, 'obtener_conceptos'])->name('ingreso.obtener_conceptos')->where('periodo', '(.*)');
 Route::post('ingreso/send_concepto', [IngresoController::class, 'send_concepto'])->name('ingreso.send_concepto');
 Route::post('ingreso/fracciona_deuda', [IngresoController::class, 'fracciona_deuda'])->name('ingreso.fracciona_deuda');
@@ -180,9 +181,9 @@ Route::post('ingreso/fracciona_deuda', [IngresoController::class, 'fracciona_deu
 Route::get('ingreso/modal_valorizacion_factura/{id}', [IngresoController::class, 'modal_valorizacion_factura'])->name('ingreso.modal_valorizacion_factura');
 
 
-//Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
+Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
-Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.create');
+Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
 Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
 Route::get('comprobante/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
 
@@ -288,11 +289,4 @@ Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'c
 
 Route::get('comprobante/consultar', [ComprobanteController::class, 'consultar'])->name('comprobante.consultar');
 Route::post('comprobante/listar_comprobante', [ComprobanteController::class, 'listar_comprobante'])->name('comprobante.listar_comprobante');
-<<<<<<< HEAD
 Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
-
-Route::post('agremiado/upload_agremiado', [AgremiadoController::class, 'upload_agremiado'])->name('agremiado.upload_agremiado');
-
-=======
-Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
->>>>>>> 1a6b694451df4012b3dca7eb8e392c528a107594
