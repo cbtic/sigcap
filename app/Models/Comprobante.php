@@ -9,9 +9,9 @@ use DB;
 class Comprobante extends Model
 {
     public function listar_comprobante($p){
-		return $this->readFunctionPostgres('sp_listar_comprobante_paginado',$p);
+		return $this->readFuntionPostgres('sp_listar_comprobante_paginado',$p);
     }
-    
+
 	public function registrar_factura_moneda($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda) {
                                           //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
 

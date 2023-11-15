@@ -311,6 +311,94 @@
                         </div>
 
                     </div>
+                     <!-- Modal -->
+         <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel2">Seleccione Tipo de Documento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card-body">
+                                <div id="" class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div id="" class="row">
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    {!! Form::open(['url' => 'comprobante/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+                                                    {{ Form::hidden('TipoF', 'FTFT') }}
+                                                    {{ Form::hidden('Trans', 'FN') }}
+                                                    {!! Form::submit('Factura') !!}
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <!-- <button type="button" id="Save" style="height:30px!important;line-height:10px" class="btn btn-info btn-xs" ><i class="fa fa-file"></i> Boleta</button>-->
+                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+                                                    {{ Form::hidden('TipoF', 'BVBV') }}
+                                                    {{ Form::hidden('Trans', 'FN') }}
+                                                    {!! Form::submit('Boleta') !!}
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="" class="row">
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <!--<button type="button" id="Save" style="height:30px!important;line-height:10px" class="btn btn-primary btn-xs" ><i class="fa fa-file"></i> NC Factura</button>-->
+                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+                                                    {{ Form::hidden('TipoF', 'NCFT') }}
+                                                    {{ Form::hidden('Trans', 'FN') }}
+                                                    {!! Form::submit('NC Factura') !!}
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <!--<button type="button" id="Save" style="height:30px!important;line-height:10px" class="btn btn-info btn-xs" ><i class="fa fa-file"></i> NC Boleta</button>-->
+                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+                                                    {{ Form::hidden('TipoF', 'NCBV') }}
+                                                    {{ Form::hidden('Trans', 'FN') }}
+                                                    {!! Form::submit('NC Boleta') !!}
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="" class="row">
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <!--<button type="button" id="Save" style="height:30px!important;line-height:10px" class="btn btn-primary btn-xs" ><i class="fa fa-file"></i> ND Factura</button>-->
+                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+                                                    {{ Form::hidden('TipoF', 'NDFT') }}
+                                                    {{ Form::hidden('Trans', 'FN') }}
+                                                    {!! Form::submit('ND Factura') !!}
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <!--<button type="button" id="Save" style="height:30px!important;line-height:10px" class="btn btn-info btn-xs" ><i class="fa fa-file"></i> ND Boleta</button>-->
+                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+                                                    {{ Form::hidden('TipoF', 'NDBV') }}
+                                                    {{ Form::hidden('Trans', 'FN') }}
+                                                    {!! Form::submit('ND Boleta') !!}
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
 <!--
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

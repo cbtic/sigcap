@@ -180,7 +180,7 @@ Route::post('ingreso/fracciona_deuda', [IngresoController::class, 'fracciona_deu
 Route::get('ingreso/modal_valorizacion_factura/{id}', [IngresoController::class, 'modal_valorizacion_factura'])->name('ingreso.modal_valorizacion_factura');
 
 
-//Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
+Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.create');
 Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
