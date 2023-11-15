@@ -143,8 +143,8 @@
                         Lista de Seguros
                     </strong>
                 </div><!--card-header-->
+                <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
 				
-				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
