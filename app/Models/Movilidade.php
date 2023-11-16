@@ -10,7 +10,7 @@ class Movilidade extends Model
 {
     use HasFactory;
 
-    public function listar_movilidad_ajax($p){
+    public function listar_movilidad2_ajax($p){
 
         return $this->readFuntionPostgres('sp_listar_movilidad_paginado',$p);
 

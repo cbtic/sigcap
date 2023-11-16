@@ -276,6 +276,7 @@ br {
                                                                 placeholder="" class="form-control form-control-sm text-center"  >
                                                         </div>
                                                     </div>
+                                                    
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Fecha Emisión</label>
@@ -430,6 +431,20 @@ br {
                                             <!--card-body-->
                                         </div>
                                         <!--card-->
+                                        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Tipo Operaci&oacute;</label>
+                                                            <?php if ($trans == 'FA'||$trans == 'FN'){?>
+                                                                <input type="text" name="fechaF" id="fechaF" value="<?php echo date("d/m/Y")?>"
+                                                                placeholder="" class="form-control form-control-sm datepicker">
+                                                            <?php } ?>
+                                                            <?php if ($trans == 'FE'){?>
+                                                                <input type="text" name="fechaFE" id="fechaFE" value="<?php echo date("d/m/Y", strtotime($comprobante->fecha)) ?>"
+                                                                placeholder="" class="form-control form-control-sm text-center" readonly>
+                                                            <?php } ?>
+                                                           
+                                                        </div>
+                                                    </div>
                                     </div>
                                 </div>
                                 <br>

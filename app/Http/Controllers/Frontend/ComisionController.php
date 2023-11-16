@@ -9,6 +9,7 @@ use App\Models\TablaMaestra;
 use App\Models\Municipalidade;
 use App\Models\MunicipalidadIntegrada;
 use App\Models\MucipalidadDetalle;
+use App\Models\PeriodoComisione;
 use Auth;
 
 class ComisionController extends Controller
@@ -27,9 +28,13 @@ class ComisionController extends Controller
 
         $tablaMaestra_model = new TablaMaestra;
 		$comision = new Comisione;
+		$periodoComision_model = new PeriodoComisione;
+
+		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
+		
         //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
 
-        return view('frontend.comision.all',compact('comision'));
+        return view('frontend.comision.all',compact('comision','periodoComision'));
     }
 
     public function listar_comision_ajax(Request $request){
@@ -69,6 +74,7 @@ class ComisionController extends Controller
 		$municipalidadIntegrada_model = new MunicipalidadIntegrada;
 		$p[]=$request->denominacion;
 		$p[]=$request->tipo_agrupacion;
+		$p[]="";
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -91,8 +97,10 @@ class ComisionController extends Controller
 	function obtener_municipalidades(){
 
         $municipalidade_model = new Municipalidade;
+		$periodoComision_model = new PeriodoComisione;
 		$municipalidad = $municipalidade_model->getMunicipalidadAll();
-        return view('frontend.comision.lista_municipalidad',compact('municipalidad'));
+		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
+        return view('frontend.comision.lista_municipalidad',compact('municipalidad','periodoComision'));
     }
 
 	function obtener_municipalidadesIntegradas(){
@@ -103,8 +111,11 @@ class ComisionController extends Controller
     }
 
 	public function send_comision(Request $request){
+
+		
 		$id_user = Auth::user()->id;
 		
+
 		$municipalidades = $request->check_;
 		$denominacion = "";
 		foreach($municipalidades as $row){	
@@ -121,7 +132,7 @@ class ComisionController extends Controller
 			$municipalidadIntegrada->id_vigencia = 374;
 			$municipalidadIntegrada->id_tipo_agrupacion = 1;
 			$municipalidadIntegrada->id_regional = 5;
-			$municipalidadIntegrada->id_periodo_comisiones = 4;
+			$municipalidadIntegrada->id_periodo_comisiones = $request->periodo;
 			$municipalidadIntegrada->id_coodinador = 1;
 			$municipalidadIntegrada->id_usuario_inserta = $id_user;
 			$municipalidadIntegrada->estado = "1";
@@ -141,30 +152,32 @@ class ComisionController extends Controller
     }
 
 	public function send_municipalidad_integrada(Request $request){
+		
 		$id_user = Auth::user()->id;
 		
 		$municipalidadesIntegradas = $request->check_;
-		/*$denominacion = "";
-		foreach($municipalidades as $row){	
-			$municipalidad = Municipalidade::find($row);
-			$denominacion .= $municipalidad->denominacion." - ";
+		//$municipalidadIntegrada = MunicipalidadIntegrada::find($row);
+		//$denominacion = $municipalidadIntegrada->denominacion;
+		$denominacion = "";
+		foreach($municipalidadIntegrada as $row){	
+			$municipalidadIntegrada = MunicipalidadIntegrada::find($row);
+			$denominacion = $municipalidadIntegrada->denominacion;
 		}
-
+/*
 		if($denominacion!=""){
 
 			$denominacion = substr($denominacion,0,strlen($denominacion)-3);
 		*/
-			$municipalidadIntegrada = new MunicipalidadIntegrada();
-			$municipalidadIntegrada->denominacion = $denominacion;
-			$municipalidadIntegrada->id_vigencia = 374;
-			$municipalidadIntegrada->id_tipo_agrupacion = 1;
-			$municipalidadIntegrada->id_regional = 5;
-			$municipalidadIntegrada->id_periodo_comisiones = 4;
-			$municipalidadIntegrada->id_coodinador = 1;
-			$municipalidadIntegrada->id_usuario_inserta = $id_user;
-			$municipalidadIntegrada->estado = "1";
-			$municipalidadIntegrada->save();
-			$id_municipalidad_integrada = $municipalidadIntegrada->id;
+			$comisiones = new Comisione();
+			$comisiones->id_regional = 5;
+			$comisiones->id_periodo_comisiones = 8;
+			$comisiones->id_tipo_comision = 1;
+			$comisiones->id_dia_semana = 1;
+			$comisiones->denominacion = $denominacion;
+			$comisiones->id_usuario_inserta = $id_user;
+			$comisiones->estado = "1";
+			$comisiones->save();
+			//$id_municipalidad_integrada = $municipalidadIntegrada->id;
 
 			/*foreach($municipalidades as $row){	
 				$mucipalidadDetalle = new MucipalidadDetalle();

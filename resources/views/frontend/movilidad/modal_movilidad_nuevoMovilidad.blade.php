@@ -371,7 +371,7 @@ function fn_save_movilidad(){
 				
 				$('#openOverlayOpc').modal('hide');
 				window.location.reload();
-				//datatablenew();
+				datatablenew();
 				
 				/*
 				$('#openOverlayOpc').modal('hide');

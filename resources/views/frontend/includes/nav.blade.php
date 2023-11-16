@@ -57,6 +57,9 @@
 						   aria-haspopup="true" aria-expanded="false">Agremiado</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<!--<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>-->
+								
+								<a href="/agremiado" class="dropdown-item">Nuevo Agremiado</a>
+								
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
                                 <a href="/multa/consulta_multa" class="dropdown-item">Multas</a>
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
@@ -108,7 +111,8 @@
 						   aria-haspopup="true" aria-expanded="false">Caja</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
-                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>
+                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>                            
+                                <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas </a>
 
 						   </div>
 					</li>

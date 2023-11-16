@@ -174,7 +174,8 @@ Route::post('ingreso/listar_valorizacion', [IngresoController::class, 'listar_va
 
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
 Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');
-Route::get('ingreso/otro_pago/{periodo}/{idpersona}/{idagremiado}', [IngresoController::class, 'otro_pago'])->name('multa.otro_pago');
+Route::get('ingreso/modal_otro_pago/{periodo}/{idpersona}/{idagremiado}', [IngresoController::class, 'modal_otro_pago'])->name('ingreso.modal_otro_pago');
+
 Route::get('ingreso/obtener_conceptos/{periodo}', [IngresoController::class, 'obtener_conceptos'])->name('ingreso.obtener_conceptos')->where('periodo', '(.*)');
 Route::post('ingreso/send_concepto', [IngresoController::class, 'send_concepto'])->name('ingreso.send_concepto');
 Route::post('ingreso/fracciona_deuda', [IngresoController::class, 'fracciona_deuda'])->name('ingreso.fracciona_deuda');
@@ -182,8 +183,9 @@ Route::post('ingreso/fracciona_deuda', [IngresoController::class, 'fracciona_deu
 Route::get('ingreso/modal_valorizacion_factura/{id}', [IngresoController::class, 'modal_valorizacion_factura'])->name('ingreso.modal_valorizacion_factura');
 
 
-//Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
-Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.create');
+Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
+Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
+Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
 Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
 Route::get('comprobante/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
 
@@ -292,3 +294,9 @@ Route::post('movilidad/listar_movilidad_ajax', [MovilidadController::class, 'lis
 Route::get('movilidad/editar_movilidad/{id}', [MovilidadController::class, 'editar_movilidad'])->name('movilidad.editar_movilidad');
 Route::get('movilidad/modal_movilidad_nuevoMovilidad/{id}', [MovilidadController::class, 'modal_movilidad_nuevoMovilidad'])->name('movilidad.modal_movilidad_nuevoMovilidad');
 Route::post('movilidad/send_movilidad_nuevoMovilidad', [MovilidadController::class, 'send_movilidad_nuevoMovilidad'])->name('movilidad.send_movilidad_nuevoMovilidad');
+Route::get('comprobante/consultar', [ComprobanteController::class, 'consultar'])->name('comprobante.consultar');
+Route::post('comprobante/listar_comprobante', [ComprobanteController::class, 'listar_comprobante'])->name('comprobante.listar_comprobante');
+Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
+Route::get('movilidad/eliminar_movilidad/{id}/{estado}', [MovilidadController::class, 'eliminar_movilidad'])->name('movilidad.eliminar_movilidad');
+
+Route::post('comision/send_municipalidad_integrada', [ComisionController::class, 'send_municipalidad_integrada'])->name('comision.send_municipalidad_integrada');

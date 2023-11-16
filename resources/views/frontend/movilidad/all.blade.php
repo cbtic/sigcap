@@ -123,83 +123,103 @@
         
         <div class="card">
 
-        <div class="card-body">
+            <div class="card-body">
 
-            <div class="row">
-                <div class="col-sm-5">
-                    <h4 class="card-title mb-0 text-primary">
-                        Consultar Movilidad <!--<small class="text-muted">Usuarios activos</small>-->
-                    </h4>
-                </div><!--col-->
-            </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h4 class="card-title mb-0 text-primary">
+                            Consultar Movilidad <!--<small class="text-muted">Usuarios activos</small>-->
+                        </h4>
+                    </div><!--col-->
+                </div>
 
-        <div class="row justify-content-center">
+                <div class="row justify-content-center">
         
-        <div class="col col-sm-12 align-self-center">
+                    <div class="col col-sm-12 align-self-center">
 
-            <div class="card">
-                <div class="card-header">
-                    <strong>
-                        Lista de Movilidad
-                    </strong>
-                </div><!--card-header-->
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>
+                                    Lista de Movilidad
+                                </strong>
+                            </div><!--card-header-->
 				
-				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
-				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                            <form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
+                            <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
-				<div class="row" style="padding:20px 20px 0px 20px;">
-				
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="municipalidad_integrada" name="municipalidad_integrada" placeholder="Municipalidad Integrada">
-					</div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="periodo" name="periodo" placeholder="Periodo">
-					</div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="monto" name="monto" placeholder="Monto">
-					</div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado" id="estado" class="form-control form-control-sm">
-							<option value="">Todos</option>
-							<option value="1" selected="selected">Activo</option>
-							<option value="0">Eliminado</option>
-						</select>
-					</div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-						
-                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
-                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+                            <div class="row" style="padding:20px 20px 0px 20px;">
+                        
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            
+                                            <select name="municipalidad_integrada" id="municipalidad_integrada" class="form-control form-control-sm" onChange="">
+                                                <option value="">--Selecionar Municipalidad Integrada--</option>
+                                                    <?php
+                                                    foreach ($municipalidadIntegrada as $row) {?>
+                                                        <option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_municipalidad_integrada)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                                    <?php 
+                                                    }
+                                                    ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <select name="periodo" id="periodo" class="form-control form-control-sm" onChange="">
+                                                <option value="">--Selecionar Periodo--</option>
+                                                    <?php
+                                                    foreach ($periodoComision as $row) {?>
+                                                        <option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                                    <?php 
+                                                    }
+                                                    ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                        <select name="estado" id="estado" class="form-control form-control-sm">
+                                            <option value="">Todos</option>
+                                            <option value="1" selected="selected">Activo</option>
+                                            <option value="0">Eliminado</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                                        <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+                                        
+                                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
 
-					</div>
-				</div>
-				
-                <div class="card-body">
+                                    </div>
+                                </div>
+                            <div class="card-body">
 
-                    <div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
-                        <thead>
-                        <tr style="font-size:13px">
-                            <th>Municipalidad Integrada</th>
-                            <th>Periodo</th>
-                            <th>Regional</th>
-                            <th>Importe</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div><!--table-responsive-->
-                </form>
-
-
-
-                </div><!--card-body-->
-            </div><!--card-->
-        <!--</div>--><!--col-->
-    <!--</div>--><!--row-->
+                                    <div class="table-responsive">
+                                    <table id="tblAfiliado" class="table table-hover table-sm">
+                                        <thead>
+                                            <tr style="font-size:13px">
+                                                <th>Municipalidad Integrada</th>
+                                                <th>Periodo</th>
+                                                <th>Regional</th>
+                                                <th>Importe</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    </div><!--table-responsive-->
+                                </div><!--card-body-->
+                                </form>
+                            </div>
+                        </div><!--card-->
+                    </div>
+                </div>
+                <!--</div>--><!--col-->
+            <!--</div>--><!--row-->
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 

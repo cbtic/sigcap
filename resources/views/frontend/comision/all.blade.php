@@ -187,11 +187,21 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row" style="padding:20px 20px 0px 20px;">
-                                    <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
-                                        <input class="form-control form-control-sm" id="denominacion_muni" name="denominacion_muni" placeholder="Denominaci&oacute;n">
+                                <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <select name="periodo" id="periodo" class="form-control form-control-sm" onChange="obtenerPeriodo" >
+                                                <option value="">--Selecionar Periodo--</option>
+                                                    <?php
+                                                    foreach ($periodoComision as $row) {?>
+                                                        <option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                                    <?php 
+                                                    }
+                                                    ?>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-                                        <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+                                        <!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />-->
                                         <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
                                         <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
                                     </div>

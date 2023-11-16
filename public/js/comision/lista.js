@@ -30,6 +30,11 @@ $(document).ready(function () {
 		//modalComision(0);
 		fn_guardar();
 	});
+
+	$('#btnNuevoComision').click(function () {
+		//modalComision(0);
+		fn_guardarMunicipalidadIntegrada();
+	});
 		
 	//datatablenew();
 	cargarMunicipalidades();
@@ -134,6 +139,13 @@ function habiliarTitular(){
     	$('#divTitular').show();
 	}
 	*/
+}
+
+
+function obtenerPeriodo(){
+
+	$periodo = document.getElementById("periodo").value;
+
 }
 
 
@@ -598,13 +610,22 @@ function datatablenew(){
                 },
 
 				{
+				"mRender": function (data, type, row) {
+					var tipo_municipalidad = "";
+					if(row.tipo_municipalidad!= null)tipo_municipalidad = row.tipo_municipalidad;
+					return tipo_municipalidad;
+				},
+				"bSortable": false,
+				"aTargets": [2]
+				},
+				{
 					"mRender": function (data, type, row) {
-						var tipo_municipalidad = "";
-						if(row.tipo_municipalidad!= null)tipo_municipalidad = row.tipo_municipalidad;
-						return tipo_municipalidad;
+						var monto = "";
+						if(row.monto!= null)monto = row.monto;
+						return monto;
 					},
 					"bSortable": false,
-					"aTargets": [2]
+					"aTargets": [3]
 					},
 				/*{
 				"mRender": function (data, type, row) {
@@ -739,7 +760,7 @@ function fn_guardar(){
 function fn_guardarMunicipalidadIntegrada(){
     
     $.ajax({
-			url: "/comision/send_comision",
+			url: "/comision/send_municipalidad_integrada",
             type: "POST",
             data : $("#frmComision").serialize(),
             success: function (result) {  

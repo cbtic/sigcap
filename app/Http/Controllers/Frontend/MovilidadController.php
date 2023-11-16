@@ -24,11 +24,16 @@ class MovilidadController extends Controller
 
     function consulta_movilidad(){
 
+		$municipalidadIntegrada_model = new MunicipalidadIntegrada;
+		$comision_movilidades = new ComisionMovilidade;
+		$periodoComision_model = new PeriodoComisione;
         //$tablaMaestra_model = new TablaMaestra;
 		//$movilidad = new Movilidade;
         //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
+		$municipalidadIntegrada = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll();
+		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
 
-        return view('frontend.movilidad.all');
+        return view('frontend.movilidad.all',compact('municipalidadIntegrada','comision_movilidades','periodoComision'));
     }
 
     public function listar_movilidad_ajax(Request $request){
@@ -55,6 +60,24 @@ class MovilidadController extends Controller
 		echo json_encode($result);
 	
 	}
+
+	public function editar_movilidad($id){
+        
+		$municipalidadIntegrada_model = new MunicipalidadIntegrada;
+		$periodoComision_model = new PeriodoComisione;
+		$regione_model = new Regione;
+        //$tablaMaestra_model = new TablaMaestra;
+		//$movilidad = new Movilidade;
+        //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
+		$municipalidadIntegrada = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll();
+		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
+		$comision_movilidades = ComisionMovilidade::find($id);
+        $movilidad_model = new ComisionMovilidade;
+		$region = $regione_model->getRegionAll();
+		
+		return view('frontend.concepto.create',compact('id','municipalidadIntegrada','periodoComision','region','importe','estado'));
+		
+    }
 
     public function modal_movilidad_nuevoMovilidad($id){
 		

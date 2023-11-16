@@ -129,6 +129,13 @@ class IngresoController extends Controller
 		return view('frontend.ingreso.modal_otro_pago',compact('conceptos','periodo','id_persona','id_agremiado' ));
 	}
 
+    public function modal_fraccionar($idConcepto, $idPersona, $id_agremiado,$TotalFraccionar ){
+
+        $concepto = Concepto::find($idConcepto);
+		
+		return view('frontend.ingreso.modal_otro_pago',compact('concepto','TotalFraccionar','id_persona','id_agremiado' ));
+	}
+
     public function obtener_conceptos($perido){
 
         $conceptos_model = new Concepto;        

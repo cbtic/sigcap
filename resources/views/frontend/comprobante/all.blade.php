@@ -78,9 +78,9 @@
 }
 
 </style>
-@extends('frontend.layouts.app1')
+@extends('frontend.layouts.app')
 
-@section('title', app_name() . ' | ' . __('labels.frontend.contact.box_title'))
+
 
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
@@ -120,8 +120,8 @@
                     </strong>
                 </div><!--card-header-->
 
-				<form class="form-horizontal" method="post" action="{{ route('frontend.contact.send')}}" id="frmAfiliacion" autocomplete="off">
-                 <!--<form class="form-horizontal" method="post" action="{{ route('frontend.factura.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >-->
+				<form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.send')}}" id="frmAfiliacion" autocomplete="off">
+                 
 
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
@@ -304,77 +304,14 @@
                             <div class="card-body">
                                 <div id="" class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div id="" class="row">
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="form-group">
-                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
-                                                    {{ Form::hidden('TipoF', 'FTFT') }}
-                                                    {{ Form::hidden('Trans', 'FN') }}
-                                                    {!! Form::submit('Factura') !!}
-                                                    {!! Form::close() !!}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <!-- <button type="button" id="Save" style="height:30px!important;line-height:10px" class="btn btn-info btn-xs" ><i class="fa fa-file"></i> Boleta</button>-->
-                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
-                                                    {{ Form::hidden('TipoF', 'BVBV') }}
-                                                    {{ Form::hidden('Trans', 'FN') }}
-                                                    {!! Form::submit('Boleta') !!}
-                                                    {!! Form::close() !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="" class="row">
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <!--<button type="button" id="Save" style="height:30px!important;line-height:10px" class="btn btn-primary btn-xs" ><i class="fa fa-file"></i> NC Factura</button>-->
-                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
-                                                    {{ Form::hidden('TipoF', 'NCFT') }}
-                                                    {{ Form::hidden('Trans', 'FN') }}
-                                                    {!! Form::submit('NC Factura') !!}
-                                                    {!! Form::close() !!}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <!--<button type="button" id="Save" style="height:30px!important;line-height:10px" class="btn btn-info btn-xs" ><i class="fa fa-file"></i> NC Boleta</button>-->
-                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
-                                                    {{ Form::hidden('TipoF', 'NCBV') }}
-                                                    {{ Form::hidden('Trans', 'FN') }}
-                                                    {!! Form::submit('NC Boleta') !!}
-                                                    {!! Form::close() !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="" class="row">
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <!--<button type="button" id="Save" style="height:30px!important;line-height:10px" class="btn btn-primary btn-xs" ><i class="fa fa-file"></i> ND Factura</button>-->
-                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
-                                                    {{ Form::hidden('TipoF', 'NDFT') }}
-                                                    {{ Form::hidden('Trans', 'FN') }}
-                                                    {!! Form::submit('ND Factura') !!}
-                                                    {!! Form::close() !!}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <!--<button type="button" id="Save" style="height:30px!important;line-height:10px" class="btn btn-info btn-xs" ><i class="fa fa-file"></i> ND Boleta</button>-->
-                                                    {!! Form::open(['url' => 'factura/create', 'class' => 'form-horizontal', 'role' => 'form']) !!}
-                                                    {{ Form::hidden('TipoF', 'NDBV') }}
-                                                    {{ Form::hidden('Trans', 'FN') }}
-                                                    {!! Form::submit('ND Boleta') !!}
-                                                    {!! Form::close() !!}
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
+                  
 <!--
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -388,9 +325,9 @@
 @endsection
 
 
-@push('after-scripts')
-{!! script(asset('js/FacturaLista.js')) !!}
-<script type="text/javascript">
 
-</script>
+@push('after-scripts')
+
+<script src="{{ asset('js/FacturaLista.js') }}"></script>
 @endpush
+
