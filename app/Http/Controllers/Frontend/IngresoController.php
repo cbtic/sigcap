@@ -132,6 +132,8 @@ class IngresoController extends Controller
     public function modal_fraccionar($idConcepto, $id_persona, $id_agremiado, $total_fraccionar ){
 
         $concepto = Concepto::find($idConcepto);
+
+        print_r($concepto); exit();
 		
 		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado' ));
 	}
