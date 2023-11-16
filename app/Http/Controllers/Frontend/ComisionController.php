@@ -155,7 +155,6 @@ class ComisionController extends Controller
 			$denominacion = substr($denominacion,0,strlen($denominacion)-3);
 		*/
 			$municipalidadIntegrada = new MunicipalidadIntegrada();
-			
 			$municipalidadIntegrada->denominacion = $denominacion;
 			$municipalidadIntegrada->id_vigencia = 374;
 			$municipalidadIntegrada->id_tipo_agrupacion = 1;
