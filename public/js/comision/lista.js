@@ -220,7 +220,7 @@ function cargarComisiones(){
 						"language": {"url": "/js/Spanish.json"},
 					});
 					
-					$("#system-search").keyup(function() {
+					$("#system-search3").keyup(function() {
 						var dataTable = $('#tblComision').dataTable();
 					   dataTable.fnFilter(this.value);
 					});
