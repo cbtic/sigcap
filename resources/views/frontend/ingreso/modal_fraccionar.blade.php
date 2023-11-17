@@ -371,9 +371,17 @@ legend.scheduler-border {
 	var cuentaproductos = 0;
 
 	function generarConceptoNuevo() {
-		cuentaproductos = cuentaproductos + 1;
+
+		for (let i = 0; i < 5; i++) {
+
+			  $('#tblConceptos tr:last').after('<tr id="fila' + pad(i, 2) + '"> <td>'+i+'</td>  <td>'+$("#denominacion").val()+'</td> <td>SOLES</td> <td>100.00</td></tr>');
+		}
+
+		//cuentaproductos = cuentaproductos + 1;
 		//alert(cuentaproductos);
-		$('#tblConceptos tr:last').after('<tr id="fila' + pad(cuentaproductos, 2) + '"><td class="text-right">#</td></tr>');
+		//$('#tblConceptos tr:last').after('<tr id="fila' + pad(cuentaproductos, 2) + '"><td class="text-right">#</td></tr>');
+
+
 
 	}
 </script>
@@ -421,16 +429,11 @@ legend.scheduler-border {
 												<input type="hidden" name="total_fraccionar" id="total_fraccionar" value="<?php echo $total_fraccionar ?>">
 
 
+												<input type="hidden" name="id_concepto" id="id_concepto" value="<?php echo $concepto["id"]?>">
+												<input type="hidden" name="denominacion" id="denominacion" value="<?php echo $concepto["denominacion"] ?>">
+												<input type="hidden" name="id_moneda" id="id_moneda" value="<?php echo $concepto["id_moneda"] ?>">
+												
 
-												<?php
-												foreach ($conceptos as $row) { ?>
-
-													<input type="hidden" name="id_concepto" id="id_concepto" value="<?php echo $row->denominacion ?>">
-
-
-												<?php
-												}
-												?>
 
 												<div class="row" style="padding-left:10px">
 													<div class="card-body">
@@ -473,9 +476,7 @@ legend.scheduler-border {
 															<table id="tblConceptos" class="table table-hover table-sm">
 																<thead>
 																	<tr style="font-size:13px">
-																		<th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
-																		</th>
-																		<th>Código</th>
+																		<th>Id</th>																		
 																		<th>Denominación</th>
 																		<th>Moneda</th>
 																		<th>Importe</th>
