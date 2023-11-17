@@ -141,14 +141,6 @@ function habiliarTitular(){
 	*/
 }
 
-
-function obtenerPeriodo(){
-
-	$periodo = document.getElementById("periodo").value;
-
-}
-
-
 function cargarMunicipalidades(){
 
 	$.ajax({
@@ -208,7 +200,33 @@ function cargarMunicipalidadesIntegradas(){
 	
 }
 
+function cargarComisiones(){
 
+	$.ajax({
+			url: "/comision/obtener_comision/",
+			type: "GET",
+			success: function (result) {  
+			
+					$('#tblComision').dataTable().fnDestroy(); //la destruimos
+					$("#tblComision tbody").html("");
+					
+					$("#tblComision tbody").html(result);
+					//alert("ok");
+					$('#tblComision').DataTable({
+						"paging":false,
+						"dom": '<"top">rt<"bottom"flpi><"clear">',
+						"language": {"url": "/js/Spanish.json"},
+					});
+					
+					$("#system-search").keyup(function() {
+						var dataTable = $('#tblComision').dataTable();
+					   dataTable.fnFilter(this.value);
+					});
+					
+			}
+	});
+
+}
 
 function guardarAfiliacion(){
     

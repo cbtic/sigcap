@@ -220,7 +220,7 @@
                                             <tr style="font-size:13px">
                                                 <th>Seleccionar</th>
                                                 <th>Denominaci&oacute;n</th>
-                                                <th>Tipo de Municipalidad</th>
+                                                <th>Tipo de Muni</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -229,7 +229,7 @@
                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
                                     <!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />-->
                                     <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
-                                    <input class="btn btn-success" value="CREAR" type="button" id="btnNuevo" style="margin-left:15px"/>
+                                    <input class="btn btn-success" value="CREAR" type="button" id="btnNuevo" style="margin-left:15px;margin-top:10px;margin-bottom:10px"/>
                                 </div>
                             </div>
 				        </div>
@@ -242,6 +242,7 @@
                             <div class="card-header">
                                 <div class="row" style="padding:20px 20px 0px 20px;">
                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        
                                         <input class="form-control form-control-sm" id="denominacion_integra" name="denominacion_integra" placeholder="Denominaci&oacute;n">
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
@@ -263,7 +264,7 @@
                                             <tr style="font-size:13px">
                                                 <th>Seleccionar</th>
                                                 <th>Denominaci&oacute;n</th>
-                                                <th>Tipo</th>
+                                                <th>Tipo Agrup</th>
                                                 <th>Movilidad</th>
                                             </tr>
                                         </thead>
@@ -274,7 +275,7 @@
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
                                 <!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />-->
                                 <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
-                                <input class="btn btn-success" value="CREAR COMISION" type="button" id="btnNuevoComision" style="margin-left:15px"/>
+                                <input class="btn btn-success" value="CREAR COMISION" type="button" id="btnNuevoComision" style="margin-left:15px;margin-top:10px;margin-bottom:10px"/>
                             </div>
 				        </div>
                     </div>
@@ -308,7 +309,7 @@
                                                     <div class="col-md-4">Estado</div></div>-->
                                                 <th>Seleccionar</th>
                                                 <th>Denominaci&oacute;n</th>
-                                                <th>Tipo Muni</th>
+                                                <th>Tipo Agrup</th>
                                                 <th>Movilidad</th>
                                             </tr>
                                         </thead>

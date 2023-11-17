@@ -37,4 +37,14 @@ class Comisione extends Model
         return $data;
 
     }
+
+    function getComisionAll(){
+
+        $cad = "select c.*,tm.denominacion tipo_comision
+        from comisiones c
+        inner join tabla_maestras tm on c.id_tipo_comision::int =tm.codigo::int and tm.tipo='102'
+        where c.estado='1'  ";
+		$data = DB::select($cad);
+        return $data;
+    }
 }
