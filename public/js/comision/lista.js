@@ -224,10 +224,8 @@ function cargarComisiones(){
 						var dataTable = $('#tblComision').dataTable();
 					   dataTable.fnFilter(this.value);
 					});
-					
 			}
 	});
-
 }
 
 function guardarAfiliacion(){
