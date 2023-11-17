@@ -141,6 +141,34 @@ function calcular_total(obj){
 		return false;
 	}
 	
+	if($(obj).is(':checked')){
+		var key = $(obj).attr("key");
+		//console.log($(obj).parent().parent().parent().prev().find(".mov").html());
+		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',false);
+		//var key2 = $(obj).parent().parent().parent().prev().find(".mov").attr("key");
+		//alert(key+"|"+key2);
+	}else{
+		var key = $(obj).attr("key");
+		var key2 = 0;
+		$(".mov:checked").each(function (i){
+			if(i==0)key2 = $(this).attr("key")-1;
+		});
+		
+		if(key!=key2){
+			bootbox.alert("Debe seleccionar el ultimo registro");
+			$(obj).prop("checked",true);
+			return false;
+		}
+		
+		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',true);
+		
+		
+		//alert(key2);
+		//var key2 = $(obj).parent().parent().parent().prev().find(".mov").attr("key");
+		
+		//$('.mov').prop('checked', false);
+	}
+		
 	
 	var total = 0;
 	var descuento = 0;
