@@ -75,10 +75,48 @@ class ComisionController extends Controller
 		$p[]=$request->denominacion;
 		$p[]=$request->tipo_agrupacion;
 		$p[]="";
+		$p[]="";
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $municipalidadIntegrada_model->listar_municipalidad_integrada_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
+	}
+
+	function consulta_comision_integrada(){
+
+        //$tablaMaestra_model = new TablaMaestra;
+		$comision = new Comisione;
+		//$periodoComision_model = new PeriodoComisione;
+
+		//$periodoComision = $periodoComision_model->getPeriodoComisionAll();
+		
+        //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
+
+        return view('frontend.comision.all',compact('comision'));
+    }
+
+    public function listar_comision_integrada_ajax(Request $request){
+	
+		$comisionIntegrada_model = new Comisione;
+		$p[]=$request->denominacion;
+		$p[]=$request->tipo_agupacion;
+		$p[]=$request->movilidad;
+		$p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $empresa_model->listar_comision_integrada_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -110,6 +148,13 @@ class ComisionController extends Controller
         return view('frontend.comision.lista_municipalidadIntegrada',compact('municipalidad_integradas'));
     }
 
+	function obtener_comision(){
+
+        $comision_model = new Comisione;
+		$comision = $comision_model->getComisionAll();
+        return view('frontend.comision.lista_comision',compact('comision'));
+    }
+	
 	public function send_comision(Request $request){
 
 		
@@ -155,28 +200,46 @@ class ComisionController extends Controller
 		
 		$id_user = Auth::user()->id;
 		
-		$municipalidadesIntegradas = $request->check_;
-		//$municipalidadIntegrada = MunicipalidadIntegrada::find($row);
-		//$denominacion = $municipalidadIntegrada->denominacion;
+		/*$municipalidadesIntegradas = $request->check_;
+		$municipalidadIntegrada = MunicipalidadIntegrada::find($row);
+		$denominacion = $municipalidadIntegrada->denominacion;
 		$denominacion = "";
-		foreach($municipalidadIntegrada as $row){	
-			$municipalidadIntegrada = MunicipalidadIntegrada::find($row);
-			$denominacion = $municipalidadIntegrada->denominacion;
-		}
+		foreach($municipalidadIntegrada as $row){
+			$municipalidadesIntegradas = MunicipalidadIntegrada::find($row);
+			$denominacion = $municipalidadesIntegradas->denominacion;
+		}*/
 /*
 		if($denominacion!=""){
 
 			$denominacion = substr($denominacion,0,strlen($denominacion)-3);
 		*/
-			$comisiones = new Comisione();
-			$comisiones->id_regional = 5;
-			$comisiones->id_periodo_comisiones = 8;
-			$comisiones->id_tipo_comision = 1;
-			$comisiones->id_dia_semana = 1;
-			$comisiones->denominacion = $denominacion;
-			$comisiones->id_usuario_inserta = $id_user;
-			$comisiones->estado = "1";
-			$comisiones->save();
+				//$municipalidad = new Municipalidade();
+				//$denominacion=$municipalidad->denominacion;
+			//$municipalidadesIntegradas = $request->denominacion;
+			$municipalidadesIntegradas = $request->check_;
+		$denominacion = "";
+		foreach($municipalidadesIntegradas as $row){
+			$municipalidadesIntegradas = MunicipalidadIntegrada::find($row);
+			$denominacion .= $municipalidadesIntegradas->denominacion." - ";}
+			//$id = $municipalidadesIntegradas->id;
+			//$id_tipo_agrupacion = $municipalidadesIntegradas->id_tipo_agrupacion;
+			//$id_periodo_comisiones = $municipalidadesIntegradas->id_periodo_comisiones;
+			//$id_regionale = $municipalidadesIntegradas->id_regional;
+		
+			//print_r($id_regional).exit();
+			if($denominacion!=""){
+
+			$denominacion = substr($denominacion,0,strlen($denominacion)-3);
+			$comision = new Comisione();
+			$comision->id_regional = $municipalidadesIntegradas->id_regional;
+			$comision->id_periodo_comisiones = $municipalidadesIntegradas->id_periodo_comisiones;
+			$comision->id_tipo_comision = 1;
+			$comision->id_dia_semana = 1;
+			$comision->denominacion = $denominacion;
+			$comision->id_municipalidad_integrada = $municipalidadesIntegradas->id;
+			$comision->id_usuario_inserta = $id_user;
+			$comision->estado = "1";
+			$comision->save();
 			//$id_municipalidad_integrada = $municipalidadIntegrada->id;
 
 			/*foreach($municipalidades as $row){	
@@ -188,6 +251,46 @@ class ComisionController extends Controller
 				$mucipalidadDetalle->save();
 			}*/
 		/*}*/
+		}
+
+    }
+
+	public function send_comisiones_integradas(Request $request){
+		
+		$id_user = Auth::user()->id;
+
+		$comision = $request->check_;
+		/*$denominacion = "";
+		foreach($municipalidades as $row){	
+			$municipalidad = Municipalidade::find($row);
+			$denominacion .= $municipalidad->denominacion." - ";
+		}*/
+
+		/*if($denominacion!=""){
+
+			$denominacion = substr($denominacion,0,strlen($denominacion)-3);
+		*/
+			$comision = new MunicipalidadIntegrada();
+			$comision->id_regional = 5;
+			$comision->id_periodo_comisiones = 7;
+			$comision->id_tipo_comision = 1;
+			$comision->id_dia_semana = 1;
+			$comision->denominacion = $request->denominacion;
+			//$comision->observacion = ;
+			$comision->id_usuario_inserta = $id_user;
+			$comision->estado = "1";
+			$comision->save();
+			//$id_municipalidad_integrada = $municipalidadIntegrada->id;
+/*
+			foreach($municipalidades as $row){	
+				$mucipalidadDetalle = new MucipalidadDetalle();
+				$mucipalidadDetalle->id_municipalidad = $row;
+				$mucipalidadDetalle->id_municipalidad_integrada = $id_municipalidad_integrada;
+				$mucipalidadDetalle->id_usuario_inserta = $id_user;
+				$mucipalidadDetalle->estado = "1";
+				$mucipalidadDetalle->save();
+			}
+		}*/
 
     }
 	
