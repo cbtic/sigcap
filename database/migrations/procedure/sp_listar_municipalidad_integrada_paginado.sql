@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_municipalidad_integrada_paginado2(p_denominacion character varying, p_tipo_municipalidad character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_municipalidad_integrada_paginado(p_denominacion character varying, p_tipo_agrupacion character varying, p_monto character varying, p_periodo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,10 +18,13 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' mi.id, mi.denominacion, tm.denominacion tipo_agrupacion';
+	v_campos=' mi.id, mi.denominacion, tm.denominacion tipo_agrupacion, cm.monto, r.denominacion regional, mi.estado ';
 
 	v_tabla=' from municipalidad_integradas mi 
-inner join tabla_maestras tm on mi.id_tipo_agrupacion::int =tm.codigo:: int and tm.tipo = ''99''';
+inner join tabla_maestras tm on mi.id_tipo_agrupacion::int =tm.codigo:: int and tm.tipo = ''99''
+left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
+left join periodo_comisiones pc on mi.id_periodo_comisiones = pc.id 
+inner join regiones r on mi.id_regional = r.id';
 	
 	
 	v_where = ' Where 1=1  ';
