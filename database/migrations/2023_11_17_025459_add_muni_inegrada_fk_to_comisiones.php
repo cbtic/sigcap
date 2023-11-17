@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMuniInegradaToComisiones extends Migration
+class AddMuniInegradaFkToComisiones extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddMuniInegradaToComisiones extends Migration
     public function up()
     {
         Schema::table('comisiones', function (Blueprint $table) {
-            //
+            $table->foreign('id_municipalidad_integrada')->references('id')->on('municipalidad_integradas');
         });
     }
 
@@ -26,9 +26,7 @@ class AddMuniInegradaToComisiones extends Migration
     public function down()
     {
         Schema::table('comisiones', function (Blueprint $table) {
-            $table->integer('id_municipalidad_integrada');
-            $table->foreign('id_municipalidad_integrada')->references('id')->on('municipalidad_integradas');
-
+            //
         });
     }
 }
