@@ -295,27 +295,29 @@
                             </div>
                         </div><!--card-header-->
         
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="tblComision" class="table table-hover table-sm">
-                                    <thead>
-                                        <tr style="font-size:13px">
-                                            <!--<div class="row">
-                                                <div class="col-md-2">Seleccionar</div>
-                                                
-                                                <div class="col-md-6">Denominaci&oacute;n</div>
-                                                
-                                                <div class="col-md-4">Estado</div></div>-->
-                                            <th>Seleccionar</th>
-                                            <th>Denominaci&oacute;n</th>
-                                            <th>Tipo Agrup</th>
-                                            <th>Movilidad</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div><!--table-responsive-->
+                        <!--<div class="card-body">-->
+                        <div class="col-md-12" style="padding-top:10px">
+                            <input class="form-control" id="system-search3" name="buscarIntegrada" placeholder="Buscar ...">
                         </div>
+                        <div class="table-responsive" style="overflow-y: visible; height:470px;width:100%">
+                            <table id="tblComision" class="table table-hover table-sm">
+                                <thead>
+                                    <tr style="font-size:13px">
+                                        <!--<div class="row">
+                                            <div class="col-md-2">Seleccionar</div>
+                                            
+                                            <div class="col-md-6">Denominaci&oacute;n</div>
+                                            
+                                            <div class="col-md-4">Estado</div></div>-->
+                                        <th>Seleccionar</th>
+                                        <th>Denominaci&oacute;n</th>
+                                        <th>Tipo Agrup</th>
+                                        <th>Movilidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div><!--table-responsive-->
                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
                             <input class="btn btn-success" value="Dar de Baja" type="button" id="btnBuscar" style="margin-left:15px;margin-top:10px;margin-bottom:10px"/>
                                 <!--<input class="btn btn-success" value="CREAR COMISION" type="button" id="btnNuevoComision" style="margin-left:15px;margin-top:10px;margin-bottom:10px"/>-->
@@ -324,12 +326,11 @@
                                 <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
                         </div>
                     </div>
-                    </div>
                 </div>
             </div>
-
-            </div>
         </div>
+    </div>
+</div>
 @endsection
 
 <div id="openOverlayOpc" class="modal fade" role="dialog">
