@@ -420,7 +420,17 @@ legend.scheduler-border {
 												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado ?>">
 												<input type="hidden" name="total_fraccionar" id="total_fraccionar" value="<?php echo $total_fraccionar ?>">
 
-												<input type="hidden" name="id_concepto" id="id_concepto" value="<?php echo $concepto[0]->denominacion ?>">
+
+
+												<?php
+												foreach ($conceptos as $row) { ?>
+
+													<input type="hidden" name="id_concepto" id="id_concepto" value="<?php echo $row->denominacion ?>">
+
+
+												<?php
+												}
+												?>
 
 												<div class="row" style="padding-left:10px">
 													<div class="card-body">
@@ -470,7 +480,7 @@ legend.scheduler-border {
 																		<th>Moneda</th>
 																		<th>Importe</th>
 																	</tr>
-															
+
 																</thead>
 																<tbody style="font-size:13px">
 

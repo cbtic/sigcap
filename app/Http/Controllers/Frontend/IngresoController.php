@@ -125,6 +125,8 @@ class IngresoController extends Controller
         $conceptos_model = new Concepto;        
         $conceptos = $conceptos_model->getConceptoPeriodo($periodo);
 
+        print_r($conceptos);
+
 		
 		return view('frontend.ingreso.modal_otro_pago',compact('conceptos','periodo','id_persona','id_agremiado' ));
 	}
@@ -133,7 +135,7 @@ class IngresoController extends Controller
 
         $concepto = Concepto::find($idConcepto);
 
-        print_r($concepto); exit();
+        //print_r($concepto); exit();
 		
 		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado' ));
 	}
