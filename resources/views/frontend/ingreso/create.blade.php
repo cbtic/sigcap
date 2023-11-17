@@ -208,6 +208,7 @@ border-right: 2px solid #5cb85c!important;
                                 <input type="hidden" readonly name="id_agremiado" id="id_agremiado" value="" class="form-control form-control-sm">
                                 <input type="hidden" readonly name="numero_documento_" id="numero_documento_" value="" class="form-control form-control-sm">
                                 <input type="hidden" readonly name="id_tipo_documento_" id="id_tipo_documento_" value="" class="form-control form-control-sm">
+
                                 
                             </div>
                         </div>
@@ -415,6 +416,7 @@ border-right: 2px solid #5cb85c!important;
 											<th colspan="5" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
 											<td style="padding-bottom:0px;margin-bottom:0px">
 												<input type="text" readonly name="total" id="total" value="0" class="form-control form-control-sm text-right">
+                                                <input type="hidden" readonly name="idConcepto" id="idConcepto" value="" class="form-control form-control-sm">
 											</td>
 										</tr>
 									</tfoot>

@@ -155,6 +155,9 @@ function calcular_total(obj){
 	var tipo_factura = $('#tipo_factura').val();
 	//alert(tipo_factura);
 	var tipo_factura_actual = $(obj).parent().parent().parent().find('.tipo_factura').val();
+
+	$('#idConcepto').val(tipo_factura_actual);
+	
 	
 	if(tipo_factura!="" && tipo_factura!=tipo_factura_actual){
 		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
@@ -216,6 +219,7 @@ function calcular_total(obj){
 	$('#tipo_factura').val(tipo_factura);
 	//total -= descuento;
 	$('#total').val(total.toFixed(2));
+
 	if(cantidad > 1){
 		$('#MonAd').attr("readonly",true);
 		$('#MonAd').val("0");
@@ -479,9 +483,6 @@ function cargarValorizacion(){
 
 
 function cargarPagos(){
-    
-    
-	//var numero_documento = $("#numero_documento").val();
 	var tipo_documento = $("#tipo_documento").val();
 	var id_persona = 0;
 	if(tipo_documento=="RUC")id_persona = $('#id_ubicacion').val();
@@ -682,7 +683,7 @@ function modal_otro_pago(){
 	
 	
 	$.ajax({
-			url: "/ingreso/otro_pago/"+perido+"/"+idPersona+"/"+idAgremiado,
+			url: "/ingreso/modal_otro_pago/"+perido+"/"+idPersona+"/"+idAgremiado,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -700,17 +701,16 @@ function modal_fraccionar(){
 	$('#openOverlayOpc').modal('show');
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
-	$('#txtTotalFrac').val("5000");
-
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
-	var TotalFraccionar = $('#id_agremiado').val();
-	var idConcepto = $('#id_agremiado').val();
-	
+	var TotalFraccionar = $('#total').val();
+	//alert(TotalFraccionar);
+	var idConcepto = $('#idConcepto').val();
+	//alert(idConcepto);
 	
 	
 	$.ajax({
-			url: "/ingreso/otro_pago/"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
+			url: "/ingreso/modal_fraccionar/"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
