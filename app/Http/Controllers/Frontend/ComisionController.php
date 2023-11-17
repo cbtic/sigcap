@@ -104,7 +104,7 @@ class ComisionController extends Controller
 		
         //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
 
-        return view('frontend.comisionIntegrada.all',compact('comision'));
+        return view('frontend.comision.all',compact('comision'));
     }
 
     public function listar_comision_integrada_ajax(Request $request){
@@ -112,11 +112,11 @@ class ComisionController extends Controller
 		$comisionIntegrada_model = new Comisione;
 		$p[]=$request->denominacion;
 		$p[]=$request->tipo_agupacion;
-		$p[]=$request->estado;
 		$p[]=$request->movilidad;
+		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
-		$data = $empresa_model->listar_comision_ajax($p);
+		$data = $empresa_model->listar_comision_integrada_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -218,17 +218,25 @@ class ComisionController extends Controller
 			//$municipalidadesIntegradas = $request->denominacion;
 			$municipalidadesIntegradas = $request->check_;
 		$denominacion = "";
-		foreach($municipalidadesIntegradas as $row){	
+		foreach($municipalidadesIntegradas as $row){
 			$municipalidadesIntegradas = MunicipalidadIntegrada::find($row);
-			$denominacion .= $municipalidadesIntegradas->denominacion." - ";
+			$denominacion .= $municipalidadesIntegradas->denominacion." - ";}
+			//$id = $municipalidadesIntegradas->id;
+			//$id_tipo_agrupacion = $municipalidadesIntegradas->id_tipo_agrupacion;
+			//$id_periodo_comisiones = $municipalidadesIntegradas->id_periodo_comisiones;
+			//$id_regionale = $municipalidadesIntegradas->id_regional;
 		
-			//print_r($denominacion).exit();
+			//print_r($id_regional).exit();
+			if($denominacion!=""){
+
+			$denominacion = substr($denominacion,0,strlen($denominacion)-3);
 			$comision = new Comisione();
-			$comision->id_regional = 5;
-			$comision->id_periodo_comisiones = 8;
+			$comision->id_regional = $municipalidadesIntegradas->id_regional;
+			$comision->id_periodo_comisiones = $municipalidadesIntegradas->id_periodo_comisiones;
 			$comision->id_tipo_comision = 1;
 			$comision->id_dia_semana = 1;
 			$comision->denominacion = $denominacion;
+			$comision->id_municipalidad_integrada = $municipalidadesIntegradas->id;
 			$comision->id_usuario_inserta = $id_user;
 			$comision->estado = "1";
 			$comision->save();
@@ -243,7 +251,7 @@ class ComisionController extends Controller
 				$mucipalidadDetalle->save();
 			}*/
 		/*}*/
-	}
+		}
 
     }
 

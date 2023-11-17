@@ -41,6 +41,8 @@ $(document).ready(function () {
 
 	cargarMunicipalidadesIntegradas();
 
+	cargarComisiones();
+
 	/*	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
@@ -771,6 +773,7 @@ function fn_guardar(){
 					//datatablenew();
 				cargarMunicipalidades();
 				cargarMunicipalidadesIntegradas();
+				cargarComisiones();
             }
     });
 }
@@ -783,6 +786,9 @@ function fn_guardarMunicipalidadIntegrada(){
             data : $("#frmComision").serialize(),
             success: function (result) {  
 					//datatablenew();
+				cargarMunicipalidades();
+				cargarMunicipalidadesIntegradas();
+				cargarComisiones();
             }
     });
 }

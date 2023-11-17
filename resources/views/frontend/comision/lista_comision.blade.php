@@ -6,8 +6,8 @@ foreach($comision as $row):?>
 	<input value="<?php echo $row->id?>"  type="checkbox" id="check_" name="check_[]">
 	</td>
 	<td class="text-left"><?php echo $row->denominacion?></td>
-	<td class="text-left"><?php echo $row->tipo_comision?></td>
-	<!--<td class="text-left"><?php /*echo $row->monto*/?></td>-->
+	<td class="text-left"><?php echo $row->tipo_agrupacion?></td>
+	<td class="text-left"><?php echo $row->monto?></td>
 </tr>
 <?php
 endforeach;
