@@ -32,18 +32,12 @@ class MunicipalidadIntegrada extends Model
 
     }
 
-    function obtenerPeriodo(){
-
-        $periodo = document.getElementById("periodo").value;
-    
-    }
-
     function getMunicipalidadIntegradaAll(){
 
         $cad = "select mi.*,tm.denominacion tipo_agrupacion, cm.monto from municipalidad_integradas mi
         inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
-        inner join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
-        where mi.estado='1'   ";
+        left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
+        where mi.estado='1' ";
 		$data = DB::select($cad);
         return $data;
     }

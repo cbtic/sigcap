@@ -41,6 +41,8 @@ $(document).ready(function () {
 
 	cargarMunicipalidadesIntegradas();
 
+	cargarComisiones();
+
 	/*	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
@@ -141,14 +143,6 @@ function habiliarTitular(){
 	*/
 }
 
-
-function obtenerPeriodo(){
-
-	$periodo = document.getElementById("periodo").value;
-
-}
-
-
 function cargarMunicipalidades(){
 
 	$.ajax({
@@ -208,7 +202,33 @@ function cargarMunicipalidadesIntegradas(){
 	
 }
 
+function cargarComisiones(){
 
+	$.ajax({
+			url: "/comision/obtener_comision/",
+			type: "GET",
+			success: function (result) {  
+			
+					$('#tblComision').dataTable().fnDestroy(); //la destruimos
+					$("#tblComision tbody").html("");
+					
+					$("#tblComision tbody").html(result);
+					//alert("ok");
+					$('#tblComision').DataTable({
+						"paging":false,
+						"dom": '<"top">rt<"bottom"flpi><"clear">',
+						"language": {"url": "/js/Spanish.json"},
+					});
+					
+					$("#system-search").keyup(function() {
+						var dataTable = $('#tblComision').dataTable();
+					   dataTable.fnFilter(this.value);
+					});
+					
+			}
+	});
+
+}
 
 function guardarAfiliacion(){
     
@@ -753,6 +773,7 @@ function fn_guardar(){
 					//datatablenew();
 				cargarMunicipalidades();
 				cargarMunicipalidadesIntegradas();
+				cargarComisiones();
             }
     });
 }
@@ -765,6 +786,9 @@ function fn_guardarMunicipalidadIntegrada(){
             data : $("#frmComision").serialize(),
             success: function (result) {  
 					//datatablenew();
+				cargarMunicipalidades();
+				cargarMunicipalidadesIntegradas();
+				cargarComisiones();
             }
     });
 }
