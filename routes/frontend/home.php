@@ -304,7 +304,7 @@ Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'c
 Route::get('movilidad/eliminar_movilidad/{id}/{estado}', [MovilidadController::class, 'eliminar_movilidad'])->name('movilidad.eliminar_movilidad');
 
 Route::post('comision/send_municipalidad_integrada', [ComisionController::class, 'send_municipalidad_integrada'])->name('comision.send_municipalidad_integrada');
-Route::get('comision/obtener_comision', [ComisionController::class, 'obtener_comision'])->name('comision.obtener_comision');
+Route::get('comision/obtener_comision/{cad_id}', [ComisionController::class, 'obtener_comision'])->name('comision.obtener_comision');
 Route::post('comision/send_comisiones_integradas', [ComisionController::class, 'send_comisiones_integradas'])->name('comision.send_comisiones_integradas');
 Route::post('comision/listar_comision_integrada_ajax', [ComisionController::class, 'listar_comision_integrada_ajax'])->name('comision.listar_comision_integrada_ajax');
 Route::get('comision/consulta_comision_integrada', [ComisionController::class, 'consulta_comision_integrada'])->name('comision.consulta_comision_integrada');

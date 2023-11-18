@@ -312,6 +312,7 @@
                                         <th>Seleccionar</th>
                                         <th>Denominaci&oacute;n</th>
                                         <th>Tipo Agrup</th>
+                                        <th>Comisi&oacute;n</th>
                                         <th>Movilidad</th>
                                     </tr>
                                 </thead>

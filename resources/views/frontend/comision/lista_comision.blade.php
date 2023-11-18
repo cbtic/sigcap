@@ -7,6 +7,7 @@ foreach($comision as $row):?>
 	</td>
 	<td class="text-left"><?php echo $row->denominacion?></td>
 	<td class="text-left"><?php echo $row->tipo_agrupacion?></td>
+	<td class="text-left"><?php echo $row->comision?></td>
 	<td class="text-left"><?php echo $row->monto?></td>
 </tr>
 <?php
