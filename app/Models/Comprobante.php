@@ -51,6 +51,7 @@ class Comprobante extends Model
     }
 	
     
+    
 
 	
 }
