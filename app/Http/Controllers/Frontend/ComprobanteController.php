@@ -60,6 +60,8 @@ class ComprobanteController extends Controller
 
 		$tabla_model = new TablaMaestra;
 		$forma_pago = $tabla_model->getMaestroByTipo('19');
+        $tipooperacion = $tabla_model->getMaestroByTipo('102');
+        $formapago = $tabla_model->getMaestroByTipo('103');
 
 
         if ($trans == 'FA'){
@@ -129,7 +131,7 @@ class ComprobanteController extends Controller
             else{
                 $empresa = $empresa_model->getEmpresaId($ubicacion);
             }
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago'));
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
