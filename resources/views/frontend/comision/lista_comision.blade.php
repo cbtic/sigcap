@@ -1,6 +1,6 @@
 <!--<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">-->
 <?php 
-foreach($municipalidad_integradas as $row):?>
+foreach($comision as $row):?>
 <tr style="font-size:13px">
 	<td class="text-center">
 	<input value="<?php echo $row->id?>"  type="checkbox" id="check_" name="check_[]">

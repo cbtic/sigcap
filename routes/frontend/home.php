@@ -26,6 +26,8 @@ use App\Models\Certificado;
 use App\Http\Controllers\Frontend\ComisionController;
 
 use App\Http\Controllers\Frontend\PeriodoComisionController;
+use App\Http\Controllers\Frontend\MovilidadController;
+
 
 /*
  * Frontend Controllers
@@ -173,6 +175,7 @@ Route::post('ingreso/listar_valorizacion', [IngresoController::class, 'listar_va
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
 Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');
 Route::get('ingreso/modal_otro_pago/{periodo}/{idpersona}/{idagremiado}', [IngresoController::class, 'modal_otro_pago'])->name('ingreso.modal_otro_pago');
+Route::get('ingreso/modal_fraccionar/{idConcepto}/{idpersona}/{idagremiado}/{TotalFraccionar}', [IngresoController::class, 'modal_fraccionar'])->name('ingreso.modal_fraccionar');
 
 Route::get('ingreso/obtener_conceptos/{periodo}', [IngresoController::class, 'obtener_conceptos'])->name('ingreso.obtener_conceptos')->where('periodo', '(.*)');
 Route::post('ingreso/send_concepto', [IngresoController::class, 'send_concepto'])->name('ingreso.send_concepto');
@@ -258,8 +261,8 @@ Route::post('comision/send_comision_fila', [ComisionController::class, 'send_com
 Route::post('comision/send_comision', [ComisionController::class, 'send_comision'])->name('comision.send_comision');
 Route::get('comision/obtener_municipalidades', [ComisionController::class, 'obtener_municipalidades'])->name('comision.obtener_municipalidades');
 Route::get('comision/obtener_municipalidadesIntegradas', [ComisionController::class, 'obtener_municipalidadesIntegradas'])->name('comision.obtener_municipalidadesIntegradas');
-Route::post('comision/listar_municipalidadIntegrada_ajax', [ComisionController::class, 'listar_municipalidadIntegrada_ajax'])->name('comision.listar_municipalidadIntegrada_ajax');
-Route::get('comision/consulta_consulta_municipalidadIntegrada', [ComisionController::class, 'consulta_municipalidadIntegrada'])->name('comision.consulta_municipalidadIntegrada');
+Route::post('comision/listar_municipalidad_integrada_ajax', [ComisionController::class, 'listar_municipalidad_integrada_ajax'])->name('comision.listar_municipalidad_integrada_ajax');
+Route::get('comision/consulta_municipalidadIntegrada', [ComisionController::class, 'consulta_municipalidadIntegrada'])->name('comision.consulta_municipalidadIntegrada');
 
 Route::get('concurso/consulta_resultado', [ConcursoController::class, 'consulta_resultado'])->name('concurso.consulta_resultado');
 Route::post('concurso/listar_resultado_ajax', [ConcursoController::class, 'listar_resultado_ajax'])->name('concurso.listar_resultado_ajax');
@@ -290,3 +293,19 @@ Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'c
 Route::get('comprobante/consultar', [ComprobanteController::class, 'consultar'])->name('comprobante.consultar');
 Route::post('comprobante/listar_comprobante', [ComprobanteController::class, 'listar_comprobante'])->name('comprobante.listar_comprobante');
 Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
+Route::get('movilidad/consulta_movilidad', [MovilidadController::class, 'consulta_movilidad'])->name('movilidad.consulta_movilidad');
+Route::post('movilidad/listar_movilidad_ajax', [MovilidadController::class, 'listar_movilidad_ajax'])->name('movilidad.listar_movilidad_ajax');
+Route::get('movilidad/editar_movilidad/{id}', [MovilidadController::class, 'editar_movilidad'])->name('movilidad.editar_movilidad');
+Route::get('movilidad/modal_movilidad_nuevoMovilidad/{id}', [MovilidadController::class, 'modal_movilidad_nuevoMovilidad'])->name('movilidad.modal_movilidad_nuevoMovilidad');
+Route::post('movilidad/send_movilidad_nuevoMovilidad', [MovilidadController::class, 'send_movilidad_nuevoMovilidad'])->name('movilidad.send_movilidad_nuevoMovilidad');
+Route::get('comprobante/consultar', [ComprobanteController::class, 'consultar'])->name('comprobante.consultar');
+Route::post('comprobante/listar_comprobante', [ComprobanteController::class, 'listar_comprobante'])->name('comprobante.listar_comprobante');
+Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
+Route::get('movilidad/eliminar_movilidad/{id}/{estado}', [MovilidadController::class, 'eliminar_movilidad'])->name('movilidad.eliminar_movilidad');
+
+Route::post('comision/send_municipalidad_integrada', [ComisionController::class, 'send_municipalidad_integrada'])->name('comision.send_municipalidad_integrada');
+Route::get('comision/obtener_comision', [ComisionController::class, 'obtener_comision'])->name('comision.obtener_comision');
+Route::post('comision/send_comisiones_integradas', [ComisionController::class, 'send_comisiones_integradas'])->name('comision.send_comisiones_integradas');
+Route::post('comision/listar_comision_integrada_ajax', [ComisionController::class, 'listar_comision_integrada_ajax'])->name('comision.listar_comision_integrada_ajax');
+Route::get('comision/consulta_comision_integrada', [ComisionController::class, 'consulta_comision_integrada'])->name('comision.consulta_comision_integrada');
+

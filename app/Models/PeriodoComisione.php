@@ -30,4 +30,15 @@ class PeriodoComisione extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+    function getPeriodoComisionAll(){
+
+        $cad = "select *
+                from periodo_comisiones
+                where estado='1'
+                order by descripcion ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 }

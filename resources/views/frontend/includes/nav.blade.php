@@ -100,6 +100,7 @@
                                 <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Tipo de Conceptos</a>
                                 <a href="/seguro/consulta_seguro" class="dropdown-item">Seguros</a>
                                 <a href="/periodoComision/consulta_periodoComision" class="dropdown-item">Periodo Comisi&oacute;n</a>
+                                <a href="/movilidad/consulta_movilidad" class="dropdown-item">Movilidad</a>
 								
 								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
 						   </div>
@@ -110,9 +111,8 @@
 						   aria-haspopup="true" aria-expanded="false">Caja</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
-                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>
-                            
-                                <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas</a>
+                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>                            
+                                <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas </a>
 
 						   </div>
 					</li>

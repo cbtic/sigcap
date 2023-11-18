@@ -119,21 +119,26 @@ class IngresoController extends Controller
         
     }
 
-    public function otro_pago($periodo, $id_persona, $id_agremiado ){
+    public function modal_otro_pago($periodo, $id_persona, $id_agremiado ){
 
         
         $conceptos_model = new Concepto;        
         $conceptos = $conceptos_model->getConceptoPeriodo($periodo);
 
+    
 		
 		return view('frontend.ingreso.modal_otro_pago',compact('conceptos','periodo','id_persona','id_agremiado' ));
 	}
 
-    public function modal_fraccionar($idConcepto, $idPersona, $id_agremiado,$TotalFraccionar ){
+    public function modal_fraccionar($idConcepto, $id_persona, $id_agremiado, $total_fraccionar ){
 
         $concepto = Concepto::find($idConcepto);
+
+        //$concepto = json_encode($concepto_model);
+
+        //print_r(json_encode($concepto)); exit();
 		
-		return view('frontend.ingreso.modal_otro_pago',compact('concepto','TotalFraccionar','id_persona','id_agremiado' ));
+		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado' ));
 	}
 
     public function obtener_conceptos($perido){
