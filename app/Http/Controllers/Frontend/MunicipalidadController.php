@@ -32,7 +32,8 @@ class MunicipalidadController extends Controller
 	
 		$municipalidad_model = new Municipalidade();
 		$p[]=$request->denominacion;
-		$p[]=$request->estado;          
+		$p[]=$request->tipo_municipalidad;
+		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $municipalidad_model->listar_municipalidad($p);
