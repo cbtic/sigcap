@@ -60,8 +60,8 @@ class ComprobanteController extends Controller
 
 		$tabla_model = new TablaMaestra;
 		$forma_pago = $tabla_model->getMaestroByTipo('19');
-        $tipooperacion = $tabla_model->getMaestroByTipo('102');
-        $formapago = $tabla_model->getMaestroByTipo('103');
+        $tipooperacion = $tabla_model->getMaestroByTipo('103');
+        $formapago = $tabla_model->getMaestroByTipo('104');
 
 
         if ($trans == 'FA'){

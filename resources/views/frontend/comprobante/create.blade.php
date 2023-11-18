@@ -430,8 +430,9 @@
                                         </div>
                                         <!--card-->
                                         <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="form-control-sm">Tipo Operaci&oacute;n</label>
+                                           
+                                            <div id="" class="row">
+                                                <label class="form-group">Tipo Operaci&oacute;n</label>
                                                 <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
                                                     <option value="">--Selecionar--</option>
                                                     <?php
@@ -442,24 +443,22 @@
                                                     ?>
                                                 </select>
 
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="form-control-sm">Tipo Operaci&oacute;n</label>
+                                            
+                                                <label class="form-group">Forma de pago</label>
                                                 <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
                                                     <option value="">--Selecionar--</option>
                                                     <?php
-                                                    foreach ($tipooperacion as $row) {?>
+                                                    foreach ($formapago as $row) {?>
                                                     <option value="<?php echo $row->codigo?>" <?php if($row->codigo==1)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                                     <?php 
                                                     }
                                                     ?>
                                                 </select>
-
                                             </div>
+                                           
                                         </div>
+
+                                        
                                     </div>
                                 </div>
                                 <br>
@@ -860,7 +859,13 @@
                                                 <div id="" class="row">
                                                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
-                                                            <label class="form-control-sm">Sujeto a Detracción</label>
+                                                            <label class="form-control-sm">porcentaje Detracción</label>
+                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Monto Detracción</label>
                                                             <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
@@ -872,17 +877,44 @@
                                                     </div>
                                                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
-                                                            <label class="form-control-sm">Afecta a:</label>
+                                                            <label class="form-control-sm">Tipo de Detraccion:</label>
                                                             <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                                                 <option value="">
                                                                     <?php echo "" ?></option>
                                                                 <option value="004">
-                                                                    <?php echo "Recursos hidrobiológicos" ?></option>
+                                                                    <?php echo "Operación sujeta al Sistema de Pago de Obligaciones Tributarias con el Gobierno Central" ?></option>
                                                                 <option value="017">
-                                                                    <?php echo "Harina, polvo y (pellets) de pescado, crustáceos,   moluscos y demás invertebrados acuáticos" ?></option>
+                                                                    <?php echo "Operación sujeta al Sistema de Pago de Obligaciones Tributarias con el Gobierno Central – Servicio de Transporte de Pasajeros" ?></option>
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Afecta a:</label>
+                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                                <option value="">
+                                                                    <?php echo "" ?></option>
+                                                                <option value="022">
+                                                                    <?php echo "Otro servicios empresariales" ?></option>
+                                                                <option value="017">
+                                                                    <?php echo "Contratos de construcción" ?></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Medio de Pago:</label>
+                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                                <option value="">
+                                                                    <?php echo "" ?></option>
+                                                                <option value="004">
+                                                                    <?php echo "Efectivo" ?></option>
+                                                                <option value="017">
+                                                                    <?php echo "Deposito en cuenta" ?></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <!--card-body-->
