@@ -372,17 +372,37 @@ legend.scheduler-border {
 
 	function generarConceptoNuevo() {
 
-		for (let i = 0; i < 5; i++) {
+		var cantidad = $("#tblConceptos tr").length;
+		if (cantidad>1)$("#tblConceptos tr").remove(); 
+		//alert(cantidad);
 
-			  $('#tblConceptos tr:last').after('<tr id="fila' + pad(i, 2) + '"> <td>'+i+'</td>  <td>'+$("#denominacion").val()+'</td> <td>SOLES</td> <td>100.00</td></tr>');
+		var n = 0;
+		var nroCuotas = $('#cboCuotas').val();
+		//$("#tblConceptos tr").remove(); 
+
+		for (let i = 0; i < nroCuotas; i++) {
+			n++;
+
+			$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td>  <td>' + $("#denominacion").val() + '</td> <td>SOLES</td> <td>100.00</td></tr>');
 		}
+
+		
+	
 
 		//cuentaproductos = cuentaproductos + 1;
 		//alert(cuentaproductos);
 		//$('#tblConceptos tr:last').after('<tr id="fila' + pad(cuentaproductos, 2) + '"><td class="text-right">#</td></tr>');
 
+	}
 
-
+	function eliminaFila(fila) {
+		if (fila > 1) {
+			cuentaproductos = cuentaproductos - 1;
+			$('#fila' + pad(fila, 2)).remove();
+		} else {
+			$('#producto01').val("");
+			$('#producto01').attr("readonly", false);
+		}
 	}
 </script>
 
@@ -429,10 +449,10 @@ legend.scheduler-border {
 												<input type="hidden" name="total_fraccionar" id="total_fraccionar" value="<?php echo $total_fraccionar ?>">
 
 
-												<input type="hidden" name="id_concepto" id="id_concepto" value="<?php echo $concepto["id"]?>">
+												<input type="hidden" name="id_concepto" id="id_concepto" value="<?php echo $concepto["id"] ?>">
 												<input type="hidden" name="denominacion" id="denominacion" value="<?php echo $concepto["denominacion"] ?>">
 												<input type="hidden" name="id_moneda" id="id_moneda" value="<?php echo $concepto["id_moneda"] ?>">
-												
+
 
 
 												<div class="row" style="padding-left:10px">
@@ -458,8 +478,8 @@ legend.scheduler-border {
 
 															<div class="col-lg-3">
 																<div class="form-group">
-																	<label class="form-control-sm">Porcentaje</label>
-																	<input type="text" name="txtPorcentaje" id="txtPorcentaje" value="" placeholder="" class="form-control form-control-sm">
+																	<label class="form-control-sm">Porcentaje 1° Couta</label>
+																	<input type="text" name="txtPorcentaje" id="txtPorcentaje" value="20" placeholder="" class="form-control form-control-sm">
 																</div>
 															</div>
 															<div class="col-lg-2" style="padding-top:12px;padding-left:0px;padding-right:0px">
@@ -476,7 +496,7 @@ legend.scheduler-border {
 															<table id="tblConceptos" class="table table-hover table-sm">
 																<thead>
 																	<tr style="font-size:13px">
-																		<th>Id</th>																		
+																		<th>Id</th>
 																		<th>Denominación</th>
 																		<th>Moneda</th>
 																		<th>Importe</th>

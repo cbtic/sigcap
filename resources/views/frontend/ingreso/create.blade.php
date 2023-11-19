@@ -367,6 +367,14 @@ border-right: 2px solid #5cb85c!important;
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12">
+                                    <div class="form-group form-group-sm">
+                                        <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                                        </select>
+                                    </div>
+                                </div>
+
+
                             </div>
                             
 							<?php $seleccionar_todos="style='display:none'";?>
