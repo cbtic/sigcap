@@ -252,6 +252,12 @@ Route::get('comision/consulta_comision', [ComisionController::class, 'consulta_c
 Route::post('comision/listar_comision_ajax', [ComisionController::class, 'listar_comision_ajax'])->name('comision.listar_comision_ajax');
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');
 
+Route::get('comision/lista_comision', [ComisionController::class, 'lista_comision'])->name('comision.lista_comision');
+Route::post('comision/lista_comision_ajax', [ComisionController::class, 'lista_comision_ajax'])->name('comision.lista_comision_ajax');
+Route::get('comision/modal_asignar_delegado/{id}', [ComisionController::class, 'modal_asignar_delegado'])->name('comision.modal_asignar_delegado');
+Route::post('comision/send_delegado', [ComisionController::class, 'send_delegado'])->name('comision.send_delegado');
+Route::get('comision/obtener_comision_delegado/{id}', [ComisionController::class, 'obtener_comision_delegado'])->name('comision.obtener_comision_delegado');
+
 Route::get('concurso/create_resultado', [ConcursoController::class, 'create_resultado'])->name('concurso.create_resultado');
 Route::post('concurso/send_inscripcion_resultado', [ConcursoController::class, 'send_inscripcion_resultado'])->name('concurso.send_inscripcion_resultado');
 Route::get('comision/consulta_empresa', [ComisionController::class, 'consulta_empresa'])->name('comision.consulta_empresa');
