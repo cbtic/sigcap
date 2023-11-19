@@ -177,7 +177,7 @@
                             <th>Id</th>
                             <th>Denominaci&oacute;n</th>
                             <th>Tipo Municipalidad</th>
-                            <th>Tipo Comisi&oacute;n</th>
+                            <!--<th>Tipo Comisi&oacute;n</th>-->
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

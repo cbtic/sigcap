@@ -41,7 +41,7 @@ $(document).ready(function () {
 
 	cargarMunicipalidadesIntegradas();
 
-	cargarComisiones();
+	cargarComisiones("0");
 
 	/*	
 	$("#plan_id").select2();
@@ -202,10 +202,10 @@ function cargarMunicipalidadesIntegradas(){
 	
 }
 
-function cargarComisiones(){
-
+function cargarComisiones(cad_id){
+	
 	$.ajax({
-			url: "/comision/obtener_comision/",
+			url: "/comision/obtener_comision/"+cad_id,
 			type: "GET",
 			success: function (result) {  
 			
@@ -220,7 +220,7 @@ function cargarComisiones(){
 						"language": {"url": "/js/Spanish.json"},
 					});
 					
-					$("#system-search").keyup(function() {
+					$("#system-search3").keyup(function() {
 						var dataTable = $('#tblComision').dataTable();
 					   dataTable.fnFilter(this.value);
 					});
@@ -711,6 +711,34 @@ function modalComision(id){
 
 }
 
+function filtrar_comision(obj){
+
+	//alert("ok");
+	if($(obj).is(':checked')){
+
+		var cad_id="";
+		$("#tblMunicipalidadIntegrada input[name^='check_[]']:checked").each(function (i){
+			var id = $(this).val();
+			cad_id += ","+id;
+		});
+
+		if(cad_id!="")cad_id=cad_id.substring(1);
+		cargarComisiones(cad_id);
+	}else{
+		
+		var cad_id="";
+		$("#tblMunicipalidadIntegrada input[name^='check_[]']:checked").each(function (i){
+			var id = $(this).val();
+			cad_id += ","+id;
+		});
+
+		if(cad_id!="")cad_id=cad_id.substring(1);
+		cargarComisiones(cad_id);
+		
+	}
+
+}
+
 function modalResponsable(id){
 	
 	$(".modal-dialog").css("width","85%");
@@ -771,7 +799,7 @@ function fn_guardar(){
 					//datatablenew();
 				cargarMunicipalidades();
 				cargarMunicipalidadesIntegradas();
-				cargarComisiones();
+				cargarComisiones("0");
             }
     });
 }
@@ -786,7 +814,7 @@ function fn_guardarMunicipalidadIntegrada(){
 					//datatablenew();
 				cargarMunicipalidades();
 				cargarMunicipalidadesIntegradas();
-				cargarComisiones();
+				cargarComisiones("0");
             }
     });
 }
