@@ -68,5 +68,14 @@ class Comisione extends Model
         return $data[0]->codigo;
     }
 
+    function getCodigoComision2($id_municipalidad_integrada,$id_tipo_comision){
+
+        //$cad = "select lpad((count(*)+1)::varchar,2,'0') codigo from comisiones c where id_municipalidad_integrada=".$id_municipalidad_integrada." and estado ='1'";
+        $cad = "select lpad((count(*)+1)::varchar,2,'0') codigo from comisiones c where id_municipalidad_integrada=".$id_municipalidad_integrada." and id_tipo_comision = '2' and estado ='1'";
+
+        //echo $cad;exit();
+		$data = DB::select($cad);
+        return $data[0]->codigo;
+    }
 
 }
