@@ -433,16 +433,19 @@ legend.scheduler-border {
 	
 		$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td> <td> ' + fecha_cuota + ' </td> <td>' + $("#denominacion").val() + '- Fraccionado '+ n + '</td> <td>SOLES</td> <td>' + cuota_uno + '</td></tr>');
 
-		//$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[n][fecha_cuota]" value="fecha_cuota"> </td>');
-
+		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
+		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado '+ n + '"> </td>');
+		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][total_frac]" value="' + cuota_uno + '"> </td>');
+		
 		total_frac =parseFloat((total_frac - cuota_uno) / (nroCuotas - 1)).toFixed(1);
-
-
-
 		for (let i = 0; i < nroCuotas - 1; i++) {
 			n++;
 			fecha_cuota = FormatFecha(sumarDias(d, 30))
 			$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td> <td>' + fecha_cuota + '</td>  <td>' + $("#denominacion").val() + '- Fraccionado '+ n + '</td> <td>SOLES</td> <td>' + total_frac + '</td></tr>');
+
+			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
+			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado '+ n + '"> </td>');
+			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][total_frac]" value="' + total_frac + '"> </td>');
 		}
 
 

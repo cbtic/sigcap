@@ -201,6 +201,8 @@ function calcular_total(obj){
 	//$("#tblValorizacion input[type='checkbox']:checked").each(function (){
 	if(cantidad == 0)$('#tipo_factura').val("");
 	var tipo_factura = $('#tipo_factura').val();
+	$('#id_concepto_sel').val(tipo_factura);
+	
 	//alert(tipo_factura);
 	var tipo_factura_actual = $(obj).parent().parent().parent().find('.tipo_factura').val();
 
@@ -587,6 +589,13 @@ function enviarTipo(tipo){
 	if(tipo == 1)$('#TipoF').val("FTFT");
 	if(tipo == 2)$('#TipoF').val("BVBV");
 	if(tipo == 3)$('#TipoF').val("TKTK");
+	if(tipo == 4)$('#NCFT').val("NCFT"); //'Nueva Nota Crédito Factura'
+	if(tipo == 5)$('#NCBV').val("NCBV"); //'Nueva Nota Crédito Boleta de Venta'
+	if(tipo == 6)$('#NDFT').val("NDFT"); //'Nueva Nota Dévito Factura'
+	if(tipo == 7)$('#NDBV').val("NDBV"); //'Nueva Nota Dévito Boleta de Venta'
+
+
+
 	validar(tipo);
 }
 
@@ -744,33 +753,6 @@ function modal_otro_pago(){
 
 }
 
-function modal_fraccionar(){
-
-	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc').modal('show');
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
-
-	var idPersona = $('#id_persona').val();
-	var idAgremiado = $('#id_agremiado').val();
-	var TotalFraccionar = $('#total').val();
-	//alert(TotalFraccionar);
-	var idConcepto = $('#idConcepto').val();
-	//alert(idConcepto);
-	
-	
-	$.ajax({
-			url: "/ingreso/modal_fraccionar/"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
-			type: "GET",
-			success: function (result) {  
-					$("#diveditpregOpc").html(result);
-					//$('#openOverlayOpc').modal('show');
-					
-			}
-	});
-
-	//cargarConceptos();
-
-}
 
 function cargarConceptos(){
         
@@ -810,6 +792,87 @@ function guardar_concepto_valorizacion(){
 
     $.ajax({
 			url: "/ingreso/send_concepto",
+            type: "POST",
+            //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
+            data : $("#frmOtroPago").serialize(),
+            success: function (result) {				
+
+				//alert(result);
+								
+				$('#openOverlayOpc').modal('hide');
+
+				cargarValorizacion();
+
+				//var jsondata = JSON.parse(result);
+
+				//alert(jsondata[0].idcomprobante);
+				//$('#idsolicitud').val(jsondata[0].idcomprobante);
+					
+            }
+    });
+}
+
+function modal_fraccionar(){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc').modal('show');
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	var idPersona = $('#id_persona').val();
+	var idAgremiado = $('#id_agremiado').val();
+	var TotalFraccionar = $('#total').val();
+	//alert(TotalFraccionar);
+	var idConcepto = $('#idConcepto').val();
+	//alert(idConcepto);
+	
+	
+	$.ajax({
+			url: "/ingreso/modal_fraccionar"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
+			type: "GET",
+			//data : $("#frmOtroPago").serialize(),
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
+
+	//cargarConceptos();
+
+}
+function modal_fraccionamiento(){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc').modal('show');
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	var idPersona = $('#id_persona').val();
+	var idAgremiado = $('#id_agremiado').val();
+	var TotalFraccionar = $('#total').val();
+	//alert(TotalFraccionar);
+	var idConcepto = $('#idConcepto').val();
+	//alert(idConcepto);
+	
+	
+	$.ajax({
+			url: "/ingreso/modal_fraccionamiento",
+			type: "POST",
+			data : $("#frmValorizacion").serialize(),
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
+
+	//cargarConceptos();
+
+}
+
+function guardar_fracciona_deuda(){
+
+    $.ajax({
+			url: "/ingreso/fracciona_deuda",
             type: "POST",
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmOtroPago").serialize(),

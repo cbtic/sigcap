@@ -153,6 +153,28 @@ class IngresoController extends Controller
 		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado' ));
 	}
 
+    public function modal_fraccionamiento(Request $request){
+
+        $id_concepto = $request->id_concepto_sel;
+        //print_r($id_concepto); exit();
+
+        $id_persona = $request->id_persona;
+        $id_agremiado = $request->id_agremiado;
+        $total_fraccionar = 100;
+        
+        $concepto_detalle = $request->concepto_detalle;
+        $ind = 0;
+        foreach($request->concepto_detalles as $key=>$det){
+            $conceptod[$ind] = $concepto_detalle[$key];
+            $ind++;
+        }
+
+        $concepto = Concepto::find($id_concepto);		
+       //echo $id_concepto;
+		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado','conceptod' ));
+	}
+    
+
     public function obtener_conceptos($perido){
 
         $conceptos_model = new Concepto;        
