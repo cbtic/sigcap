@@ -146,23 +146,43 @@
 				
 				            <form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
                                 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+
+                                <input type="hidden" name="cad_id" id="cad_id" value="0">
                     
                                 <div class="row" style="padding:20px 20px 0px 20px;">
-                                <div class="col-lg-6 mx-auto" >
-                                        <div class="form-group ">
-                                            
-                                            <label class="control-label form-control-sm">Periodo</label>
-                                            <select name="periodo" id="periodo" class="form-control form-control-sm" onChange="obtenerPeriodo" >
-                                                <option value="">--Selecionar--</option>
-                                                    <?php
-                                                    foreach ($periodoComision as $row) {?>
-                                                        <option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
-                                                    <?php 
-                                                    }
-                                                    ?>
-                                            </select>
-                                            </div>
-                                         <!--</div>-->
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mx-auto">
+                                        <div class="form-group">
+                                            <div style="float:left;padding-top:7px">Periodo</div>
+                                                <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
+                                                <select name="periodo" id="periodo" class="form-control" onChange="obtenerPeriodo" >
+                                                    <option value="">--Selecionar--</option>
+                                                        <?php
+                                                        foreach ($periodoComision as $row) {?>
+                                                            <option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                                        <?php 
+                                                        }
+                                                        ?>
+                                                </select>
+                                                </div>
+                                        </div>
+                                    <!--<input class="form-control form-control-sm" id="denominacion_integra" name="denominacion_integra" placeholder="Denominaci&oacute;n">-->
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mx-auto">
+                                        <div class="form-group">
+                                            <div style="float:left;padding-top:7px">Tipo Comisi&oacute;n</div>
+                                                <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
+                                                <select name="tipo_comision" id="tipo_comision" class="form-control" onchange="">
+                                                    <option value="">--Selecionar--</option>
+                                                        <?php
+                                                        foreach ($tipo_comision as $row) {?>
+                                                            <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$municipalidadIntegrada->id_tipo_comision)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                </select>
+                                                </div>
+                                        </div>
+                                    <!--<input class="form-control form-control-sm" id="denominacion_integra" name="denominacion_integra" placeholder="Denominaci&oacute;n">-->
                                     </div>
                                     <!--<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                                         <input class="form-control form-control-sm" id="periodo_ini" name="periodo_ini" placeholder="Periodo Inicio">
@@ -200,7 +220,6 @@
                     <div class="col col-sm-4 align-self-left ">
 
                         <div class="card">
-                            <div class="card-header " >
                                 <div class="row" style="padding:0px 20px 0px 20px;" >
                                 <!--<div class="col-lg-6 mx-auto" >
                                         <div class="form-group ">
@@ -224,12 +243,11 @@
                                         <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
                                     </div>
                                 </div>
-                            </div><!--card-header-->
 				
 				            <div class="col-lg-12 col-md-4 col-sm-12 col-xs-12" style="padding:0px">
 							
                                 <div class="col-md-12" style="padding-top:10px">
-                                    <input class="form-control" id="system-search" name="q" placeholder="Buscar ...">
+                                    <input class="form-control" id="system-search" name="q" placeholder="Buscar Municipalidad ...">
                                 </div>
                                 
                                 <div class="table-responsive" style="overflow-y: visible; height:470px;width:100%">
@@ -257,9 +275,9 @@
                 <div class="col col-sm-4 align-self-right">
 
                     <div class="card">
-                        <div class="card-header">
                             <div class="row" style="padding:0px 20px 0px 20px;">
-                                <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12 mx-auto">
+                            
+                                <!--<div class="col-lg-8 col-md-4 col-sm-12 col-xs-12 mx-auto">
                                 <div class="form-group">
                                             <div style="float:left;padding-top:7px">Tipo Comisi&oacute;n</div>
                                             <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
@@ -274,21 +292,36 @@
                                             </select>
                                         </div>
                                         </div>
-                                    <!--<input class="form-control form-control-sm" id="denominacion_integra" name="denominacion_integra" placeholder="Denominaci&oacute;n">-->
-                                </div>
+                                    <input class="form-control form-control-sm" id="denominacion_integra" name="denominacion_integra" placeholder="Denominaci&oacute;n">
+                                </div>-->
                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
                                     <!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />-->
                                     <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
                                     <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
                                 </div>
-                            </div>
-                        </div><!--card-header-->
+                        </div>
             
                         <div class="col-md-12 col-md-4 col-sm-12 col-xs-12" style="padding:0px">
+                        <div class="row" style="padding:00px 20px 0px 20px;">
 
-                            <div class="col-md-12" style="padding-top:10px">
-                                <input class="form-control" id="system-search2" name="buscarIntegrada" placeholder="Buscar ...">
+                            <div class="col-md-6" style="padding-top:10px">
+                                <input class="form-control" id="system-search2" name="buscarIntegrada" placeholder="Buscar Muni. Integrada/Unica ...">
                             </div>
+                            <div class="col-lg-6" style="padding: 10px 0px 10px 0px">
+                                <div class="form-group">
+                                    <select name="tipo_agrupacion" id="tipo_agrupacion" class="form-control" onChange="cargarMunicipalidadesIntegradas()" >
+                                        <option value="0">--Selec. Tip. Agrupaci&oacute;n--</option>
+                                            <?php
+                                            foreach ($tipoAgrupacion as $row) {?>
+                                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$municipalidadIntegrada->id_tipo_agrupacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                            <?php 
+                                            }
+                                            ?>
+                                    </select>
+                                    </div> 
+                                </div> 
+                            </div>
+                            
                             <div class="table-responsive" style="overflow-y: visible; height:470px;width:100%">
                                 <table id="tblMunicipalidadIntegrada" class="table table-sm">
                                     <thead>
@@ -313,51 +346,8 @@
                 <div class="col col-sm-4 align-self-left">
 
                     <div class="card">
-                        <div class="card-header">
-                            <div class="row" style="padding:00px 20px 0px 20px;">
-                            <div class="col-lg-6" >
-                                <div class="form-group ">
-                                    <div style="float:left;padding-top:7px">Periodo</div>
-                                    <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
-                                    <select name="periodo" id="periodo" class="form-control form-control-sm" onChange="obtenerPeriodo" >
-                                        <option value="">--Selecionar--</option>
-                                            <?php
-                                            foreach ($periodoComision as $row) {?>
-                                                <option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
-                                            <?php 
-                                            }
-                                            ?>
-                                    </select>
-                                </div> 
-                                </div> 
-                            </div>
-                            <div class="col-lg-8" >
-                                <div class="form-group ">
-                                    <div style="float:left;padding-top:7px">Tipo Agrupaci&oacute;n</div>
-                                    <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
-                                    <select name="tipo_agrupacion" id="tipo_agrupacion" class="form-control form-control-sm" onChange="" >
-                                        <option value="">--Selecionar--</option>
-                                            <?php
-                                            foreach ($tipoAgrupacion as $row) {?>
-                                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$municipalidadIntegrada->id_tipo_agrupacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                            <?php 
-                                            }
-                                            ?>
-                                    </select>
-                                </div> 
-                                
-                                </div> 
-                            </div>
-                                    
-                            <div class="col-lg-5 col-md-2 col-sm-12 col-xs-12">
-                            <div style="float:left;padding-top:7px">Estado</div>
-                                    <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
-                                <select name="estado" id="estado" class="form-control form-control-sm">
-                                    <option value="">Todos</option>
-                                    <option value="1" selected="selected">Activo</option>
-                                    <option value="0">Eliminado</option>
-                                </select>
-                                </div>
+                       
+                            
                             <!--
                                 <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
                                     <input class="form-control form-control-sm" id="denominacion_muni" name="denominacion_muni" placeholder="Denominaci&oacute;n">
@@ -368,12 +358,20 @@
                                     <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
                                     <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
                                 </div>-->
-                            </div>
-                        </div><!--card-header-->
+                        <!--card-header-->
         
                         <!--<div class="card-body">-->
-                        <div class="col-md-12" style="padding-top:10px">
-                            <input class="form-control" id="system-search3" name="buscarIntegrada" placeholder="Buscar ...">
+                        <div class="row" style="padding:00px 20px 0px 20px;">
+                            <div class="col-md-6" style="padding-top:10px">
+                                <input class="form-control" id="system-search3" name="buscarIntegrada" placeholder="Buscar Comision ...">
+                            </div>
+                            <div class="col-lg-6 col-md-2 col-sm-12 col-xs-12" style="padding: 10px 0px 10px 0px">
+                                    <select name="estado" id="estado" class="form-control" onChange="cargarComisiones()">
+                                        <option value="-9">--Seleccionar Estado--</option>
+                                        <option value="1" selected="selected">Activo</option>
+                                        <option value="0">Eliminado</option>
+                                    </select>
+                                </div>
                         </div>
                         <div class="table-responsive" style="overflow-y: visible; height:470px;width:100%">
                             <table id="tblComision" class="table table-hover table-sm">
@@ -387,9 +385,9 @@
                                             <div class="col-md-4">Estado</div></div>-->
                                         <th>Seleccionar</th>
                                         <th>Denominaci&oacute;n</th>
-                                        <th>Tipo Agrup</th>
                                         <th>Comisi&oacute;n</th>
                                         <th>Movilidad</th>
+                                        <th>Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
