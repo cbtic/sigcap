@@ -27,6 +27,7 @@ class IngresoController extends Controller
         $caja = $caja_model->getCaja('91');
         $caja_usuario = $caja_ingreso_model->getCajaIngresoByusuario($id_user,'91');
         $tipo_documento = $caja_model->getMaestroByTipo(16);
+
         
         //$caja_usuario = $caja_model;
         //print_r($caja_usuario);exit();
@@ -50,15 +51,26 @@ class IngresoController extends Controller
         $tipo_documento = $request->id_tipo_documento_;
         $periodo = $request->cboPeriodo_b;
         $tipo_couta = $request->cboTipoCuota_b;
-
+        $concepto = $request->cboTipoConcepto_b;
+         //print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta);
-        //print_r($valorizacion);exit();
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto);
+       
+       
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 
     }
  
+    public function listar_valorizacion_concepto(Request $request){
+        $id_persona = $request->id_persona;
+        $tipo_documento = $request->id_tipo_documento_;
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getValorizacionConcepto($tipo_documento,$id_persona);
+        //print_r($valorizacion);exit();
+		return $resultado;
+
+    }
     
     public function obtener_pago($tipo_documento,$id_persona){
 
@@ -223,7 +235,7 @@ class IngresoController extends Controller
             //echo( $id_val);
 
             $valorizacion = new Valorizacione;
-            $valorizacion->id_modulo = 5;
+            $valorizacion->id_modulo = 6;
             $valorizacion->pk_registro = 0;
             $valorizacion->id_concepto = $value['id'];
             $valorizacion->id_agremido = $id_agremiado;
