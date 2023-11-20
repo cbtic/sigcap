@@ -235,7 +235,7 @@ class IngresoController extends Controller
             //echo( $id_val);
 
             $valorizacion = new Valorizacione;
-            $valorizacion->id_modulo = 5;
+            $valorizacion->id_modulo = 6;
             $valorizacion->pk_registro = 0;
             $valorizacion->id_concepto = $value['id'];
             $valorizacion->id_agremido = $id_agremiado;

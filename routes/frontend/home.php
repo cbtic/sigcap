@@ -182,6 +182,7 @@ Route::get('ingreso/obtener_conceptos/{periodo}', [IngresoController::class, 'ob
 Route::post('ingreso/send_concepto', [IngresoController::class, 'send_concepto'])->name('ingreso.send_concepto');
 Route::post('ingreso/fracciona_deuda', [IngresoController::class, 'fracciona_deuda'])->name('ingreso.fracciona_deuda');
 
+
 Route::get('ingreso/modal_valorizacion_factura/{id}', [IngresoController::class, 'modal_valorizacion_factura'])->name('ingreso.modal_valorizacion_factura');
 
 
