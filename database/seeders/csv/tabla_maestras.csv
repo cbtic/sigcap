@@ -1099,6 +1099,16 @@ tipo;denominacion;codigo;tipo_nombre;sub_codigo;abreviatura;orden;estado
 105;Gravado – Bonificaciones;6;TIPO_IGV;;;6;1
 105;Gravado – Retiro por entrega a trabajadores;7;TIPO_IGV;;;7;1
 105;Gravado – IVAP;8;TIPO_IGV;;;8;1
+105;Exonerado - Operación Onerosa;9;TIPO_IGV;;;9;1
+105;Exonerado – Transferencia Gratuita;10;TIPO_IGV;;;10;1
+105;Inafecto - Operación Onerosa;11;TIPO_IGV;;;11;1
+105;Inafecto – Retiro por Bonificación;12;TIPO_IGV;;;12;1
+105;Inafecto – Retiro;13;TIPO_IGV;;;13;1
+105;Inafecto – Retiro por Muestras Médicas;14;TIPO_IGV;;;14;1
+105;Inafecto - Retiro por Convenio Colectivo;15;TIPO_IGV;;;15;1
+105;Inafecto – Retiro por premio;16;TIPO_IGV;;;16;1
+105;Inafecto - Retiro por publicidad;17;TIPO_IGV;;;17;1
+105;Exportación;18;TIPO_IGV;;;18;1
 106;Recursos hidrobiológicos;4;COD. BIENES Y SERVICIOS - DETRACCIÓN;;;2;1
 106;Maíz amarillo duro;5;COD. BIENES Y SERVICIOS - DETRACCIÓN;;;3;1
 106;Madera;8;COD. BIENES Y SERVICIOS - DETRACCIÓN;;;4;1
