@@ -10,6 +10,9 @@ use App\Models\Municipalidade;
 use App\Models\MunicipalidadIntegrada;
 use App\Models\MucipalidadDetalle;
 use App\Models\PeriodoComisione;
+use App\Models\ComisionDelegado;
+use App\Models\Regione;
+use App\Models\ConcursoInscripcione;
 use Auth;
 
 class ComisionController extends Controller
@@ -41,7 +44,86 @@ class ComisionController extends Controller
 
         return view('frontend.comision.all',compact('comision','periodoComision','tipo_comision','municipalidadIntegrada','tipoAgrupacion'));
     }
+	
+	function lista_comision(){
 
+        return view('frontend.comision.all_listar_comision');
+    }
+	
+	public function lista_comision_ajax(Request $request){
+	
+		$comision_model = new Comisione(); 
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]=$request->estado;          
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $comision_model->lista_comision_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
+	
+	public function modal_asignar_delegado($id){
+		
+		$id_user = Auth::user()->id;
+		
+		$regione_model = new Regione;
+		$comision_model = new Comisione;
+		$comisionDelegado_model = new ComisionDelegado;
+		
+		$comision = $comision_model->getComisionAll("");
+		if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
+
+		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
+		$region = $regione_model->getRegionAll();
+		
+		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region'));
+
+    }
+	
+	public function send_delegado(Request $request){
+		$id_user = Auth::user()->id;
+		
+		if($request->id == 0){
+			$comisionDelegado = new ComisionDelegado;
+		}else{
+			$comisionDelegado = ComisionDelegado::find($request->id);
+		}
+		
+		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+		
+		$comisionDelegado->id_regional = $request->id_regional;
+		$comisionDelegado->id_comision = $request->id_comision;
+		$comisionDelegado->id_agremiado = $concursoInscripcion->id_agremiado;
+		$comisionDelegado->id_puesto = $concursoInscripcion->puesto_postula;
+		$comisionDelegado->estado = 1;
+		$comisionDelegado->id_usuario_inserta = $id_user;
+		$comisionDelegado->save();
+			
+    }
+	
+	public function obtener_comision_delegado($id){
+	
+		$comisionDelegado_model = new ComisionDelegado;
+		$delegado = $comisionDelegado_model->getComisionDelegadoByComision($id);
+		echo json_encode($delegado);
+	
+	}
+	
+	
     public function listar_comision_ajax(Request $request){
 	
 		$empresa_model = new Comisione;

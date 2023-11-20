@@ -82,6 +82,7 @@
 						   aria-haspopup="true" aria-expanded="false">Asuntos Tecnicos</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 								<a href="/comision/consulta_comision" class="dropdown-item">Comisiones</a>
+								<a href="/comision/lista_comision" class="dropdown-item">Consulta de Comisiones</a>
 						   </div>
 					</li>
 

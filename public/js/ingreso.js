@@ -132,6 +132,26 @@ function aperturar(accion){
             }
     });
 }
+function cargarcboTipoConcepto(){    	
+
+	$.ajax({
+		url: "/ingreso/listar_valorizacion_concepto",
+		type: "POST",
+		data : $("#frmValorizacion").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
+			$('#cboTipoConcepto_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			$('#cboTipoConcepto_b').html(option);
+			$('#cboTipoConcepto_b').select2();
+			
+			//$('.loader').hide();			
+		}
+		
+	});
+}
 
 function calcular_total(obj){
 	
@@ -427,6 +447,7 @@ function obtenerBeneficiario(){
 
 			cargarValorizacion();
 			cargarPagos();
+			cargarcboTipoConcepto();
 			//cargarDudoso();
 			
 		}

@@ -15,6 +15,12 @@ class Comisione extends Model
         return $this->readFuntionPostgres('sp_listar_municipalidad_comision_paginado',$p);
 
     }
+	
+	public function lista_comision_ajax($p){
+
+        return $this->readFuntionPostgres('sp_listar_comisiones_paginado',$p);
+
+    }
 
     public function listar_municipalidad_integrada_ajax($p){
 
