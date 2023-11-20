@@ -1099,3 +1099,6 @@ tipo;denominacion;codigo;tipo_nombre;sub_codigo;abreviatura;orden;estado
 105;Gravado - Bonificaciones;6;TIPO_IGV;;;6;1
 105;Gravado - Retiro por entrega a trabajadores;7;TIPO_IGV;;;7;1
 105;Gravado - IVAP;8;TIPO_IGV;;;8;1
+106;PENDIENTE;1;COMISIONES;;;1;1
+106;EN PROCESO;2;COMISIONES;;;2;1
+106;COMPLETADO;3;COMISIONES;;;3;1
