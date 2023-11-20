@@ -1077,3 +1077,28 @@ tipo;denominacion;codigo;tipo_nombre;sub_codigo;abreviatura;orden;estado
 101;DELEGADO;3;TIPO CONCURSO;;;3;1
 102;EDIFICACIONES;1;TIPO COMISION;;;1;1
 102;HABILITACION URBANA;2;TIPO COMISION;;;2;1
+103;VENTA INTERNA;1;TIPO DE OPERACIÓN;;;1;1
+103;OPERACIÓN SUJETA A DETRACCION;2;TIPO DE OPERACIÓN;;;2;1
+104;CONTADO;1;FORMA PAGO;;;1;1
+104;CREDITO;2;FORMA PAGO;;;2;1
+103;Exportación;1;TIPO DE OPERACIÓN;;;1;1
+103;No Domiciliados;2;TIPO DE OPERACIÓN;;;2;1
+103;Venta Interna - Anticipos;3;TIPO DE OPERACIÓN;;;3;1
+103;Venta Itinerante;4;TIPO DE OPERACIÓN;;;4;1
+103;Factura Guía;5;TIPO DE OPERACIÓN;;;5;1
+103;Venta Arroz Pilado;6;TIPO DE OPERACIÓN;;;6;1
+103;Factura - Comprobante de Percepción;7;TIPO DE OPERACIÓN;;;7;1
+103;Factura - Guia Remitente;8;TIPO DE OPERACIÓN;;;8;1
+103;Factura - Guia Transportista;9;TIPO DE OPERACIÓN;;;9;1
+103;Boleta de Venta - Comprobante de Percepción;10;TIPO DE OPERACIÓN;;;10;1
+105;Gravado - Operación Onerosa;1;TIPO_IGV;;;1;1
+105;Gravado - Retiro por premio;2;TIPO_IGV;;;2;1
+105;Gravado - Retiro por donación;3;TIPO_IGV;;;3;1
+105;Gravado - Retiro;4;TIPO_IGV;;;4;1
+105;Gravado - Retiro por publicidad;5;TIPO_IGV;;;5;1
+105;Gravado - Bonificaciones;6;TIPO_IGV;;;6;1
+105;Gravado - Retiro por entrega a trabajadores;7;TIPO_IGV;;;7;1
+105;Gravado - IVAP;8;TIPO_IGV;;;8;1
+106;PENDIENTE;1;COMISIONES;;;1;1
+106;EN PROCESO;2;COMISIONES;;;2;1
+106;COMPLETADO;3;COMISIONES;;;3;1

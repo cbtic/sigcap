@@ -8,6 +8,8 @@
 	<th class="sum">Monto</th>
 	<th>Pago</th>
 	<th>Deuda</th>
+	<th>NC</th>
+	<th>ND</th>
 </tr>
 </thead>
 <tbody>
@@ -48,6 +50,20 @@ foreach($pago as $row):?>
 			<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalValorizacionFactura(<?php echo $row->id_comprobante?>)" >
 				<i class="fa fa-search" style="font-size:9px!important"></i>
 			</button>
+		</div>
+	</td>
+	<td class="text-left">
+		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+			<a href="/comprobante/<?php echo $row->id_comprobante?>" class="btn btn-sm btn-success" style="font-size:9px!important" target="_blank">
+				<i class="fa fa-search" style="font-size:9px!important"></i>
+			</a>
+		</div>
+	</td>
+	<td class="text-left">
+		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+			<a href="/comprobante/<?php echo $row->id_comprobante?>" class="btn btn-sm btn-success" style="font-size:9px!important" target="_blank">
+				<i class="fa fa-search" style="font-size:9px!important"></i>
+			</a>
 		</div>
 	</td>
 </tr>
