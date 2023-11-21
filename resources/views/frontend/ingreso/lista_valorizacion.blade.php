@@ -19,7 +19,12 @@ foreach($valorizacion as $key=>$row):
 	$stotal = str_replace(",","",number_format($monto/1.18,1));
 	$igv_   = str_replace(",","",number_format($stotal * 0.18,1));
 	$disabled = "";
-	if($tot_reg!=$n) $disabled = "disabled";
+	if($tot_reg!=$n) {
+
+		$disabled = "disabled";
+	}
+	
+	
 		
 ?>
 <tr style="font-size:13px">

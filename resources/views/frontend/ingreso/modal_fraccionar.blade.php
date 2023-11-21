@@ -239,8 +239,21 @@ legend.scheduler-border {
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		let date = new Date()
+		let day = date.getDate()
+		let month = date.getMonth() + 1
+		let year = date.getFullYear()
 
+		if (month < 10) {
+			$('#txtFechaIni').val(`${day}-0${month}-${year}`);
+			//console.log('${day}-0${month}-${year}')
+		} else {
+			//console.log('${day}-${month}-${year}')
+			$('#txtFechaIni').val(`${day}-${month}-${year}`);
+		}
 	});
+
+
 
 	function cargar_calificacion() {
 
@@ -368,21 +381,90 @@ legend.scheduler-border {
 		return str.length < max ? pad("0" + str, max) : str;
 	}
 
+	function reformatDateString(s) {
+		var b = s.split(/\D/);
+		return b.reverse().join('/');
+	}
+
+	function sumarDias(fecha, dias) {
+		fecha.setDate(fecha.getDate() + dias);
+		return fecha;
+	}
+	function FormatFecha(fecha){
+		//let date = new Date()
+		let date = new Date(fecha)
+		let day = date.getDate()
+		let month = date.getMonth() + 1
+		let year = date.getFullYear()
+
+		let fechaFormat
+		if (month < 10) {
+			fechaFormat = `${day}-0${month}-${year}`
+		} else {			
+			fechaFormat = `${day}-${month}-${year}`
+		}
+		return fechaFormat;
+	}
+
 	var cuentaproductos = 0;
 
 	function generarConceptoNuevo() {
 
-		for (let i = 0; i < 5; i++) {
+		var cantidad = $("#tblConceptos tr").length;
+		if (cantidad > 1) $("#tblConceptos tr").remove();
+		//alert(cantidad);
 
-			  $('#tblConceptos tr:last').after('<tr id="fila' + pad(i, 2) + '"> <td>'+i+'</td>  <td>'+$("#denominacion").val()+'</td> <td>SOLES</td> <td>100.00</td></tr>');
+		var n = 0;
+		var nroCuotas = $('#cboCuotas').val();
+		//$("#tblConceptos tr").remove(); 
+
+		var total_frac = $('#txtTotalFrac').val();
+		var porcentaje = $('#txtPorcentaje').val();
+		var cuota_uno = 0;
+		var fecha_cuota = $('#txtFechaIni').val();
+
+		n++;
+		cuota_uno = parseFloat((total_frac * porcentaje) / 100).toFixed(1);
+		//fecha_cuota = reformatDateString($('#txtFechaIni').val());
+
+		var d = new Date();
+		//alert(FormatFecha(sumarDias(d, -5)));
+
+	
+		$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td> <td> ' + fecha_cuota + ' </td> <td>' + $("#denominacion").val() + '- Fraccionado '+ n + '</td> <td>SOLES</td> <td>' + cuota_uno + '</td></tr>');
+
+		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
+		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado '+ n + '"> </td>');
+		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][total_frac]" value="' + cuota_uno + '"> </td>');
+		
+		total_frac =parseFloat((total_frac - cuota_uno) / (nroCuotas - 1)).toFixed(1);
+		for (let i = 0; i < nroCuotas - 1; i++) {
+			n++;
+			fecha_cuota = FormatFecha(sumarDias(d, 30))
+			$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td> <td>' + fecha_cuota + '</td>  <td>' + $("#denominacion").val() + '- Fraccionado '+ n + '</td> <td>SOLES</td> <td>' + total_frac + '</td></tr>');
+
+			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
+			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado '+ n + '"> </td>');
+			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][total_frac]" value="' + total_frac + '"> </td>');
 		}
+
+
+
 
 		//cuentaproductos = cuentaproductos + 1;
 		//alert(cuentaproductos);
 		//$('#tblConceptos tr:last').after('<tr id="fila' + pad(cuentaproductos, 2) + '"><td class="text-right">#</td></tr>');
 
+	}
 
-
+	function eliminaFila(fila) {
+		if (fila > 1) {
+			cuentaproductos = cuentaproductos - 1;
+			$('#fila' + pad(fila, 2)).remove();
+		} else {
+			$('#producto01').val("");
+			$('#producto01').attr("readonly", false);
+		}
 	}
 </script>
 
@@ -429,16 +511,16 @@ legend.scheduler-border {
 												<input type="hidden" name="total_fraccionar" id="total_fraccionar" value="<?php echo $total_fraccionar ?>">
 
 
-												<input type="hidden" name="id_concepto" id="id_concepto" value="<?php echo $concepto["id"]?>">
+												<input type="hidden" name="id_concepto" id="id_concepto" value="<?php echo $concepto["id"] ?>">
 												<input type="hidden" name="denominacion" id="denominacion" value="<?php echo $concepto["denominacion"] ?>">
 												<input type="hidden" name="id_moneda" id="id_moneda" value="<?php echo $concepto["id_moneda"] ?>">
-												
+
 
 
 												<div class="row" style="padding-left:10px">
 													<div class="card-body">
 														<div class="row">
-															<div class="col-lg-3">
+															<div class="col-lg-2">
 																<div class="form-group form-group-sm">
 																	<label class="form-control-sm">Nro Cuotas</label>
 																	<select name="cboCuotas" id="cboCuotas" class="form-control form-control-sm" onchange="cargarValorizacion()">
@@ -449,19 +531,27 @@ legend.scheduler-border {
 																	</select>
 																</div>
 															</div>
-															<div class="col-lg-3">
+															<div class="col-lg-2">
 																<div class="form-group form-group-sm">
 																	<label class="form-control-sm">Total Fraccionar</label>
 																	<input type="text" readonly name="txtTotalFrac" id="txtTotalFrac" value="<?php echo $total_fraccionar ?>" class="form-control form-control-sm">
 																</div>
 															</div>
 
-															<div class="col-lg-3">
+															<div class="col-lg-2">
 																<div class="form-group">
-																	<label class="form-control-sm">Porcentaje</label>
-																	<input type="text" name="txtPorcentaje" id="txtPorcentaje" value="" placeholder="" class="form-control form-control-sm">
+																	<label class="form-control-sm">Porcentaje 1° Couta</label>
+																	<input type="text" name="txtPorcentaje" id="txtPorcentaje" value="20" placeholder="" class="form-control form-control-sm">
 																</div>
 															</div>
+
+															<div class="col-lg-2">
+																<div class="form-group">
+																	<label class="form-control-sm">Fecha Inicio</label>
+																	<input type="text" name="txtFechaIni" id="txtFechaIni" value="" placeholder="" class="form-control form-control-sm">
+																</div>
+															</div>
+
 															<div class="col-lg-2" style="padding-top:12px;padding-left:0px;padding-right:0px">
 																<br>
 																<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarConceptoNuevo(cuentaproductos)">
@@ -476,7 +566,8 @@ legend.scheduler-border {
 															<table id="tblConceptos" class="table table-hover table-sm">
 																<thead>
 																	<tr style="font-size:13px">
-																		<th>Id</th>																		
+																		<th>Id</th>
+																		<th>Fecha</th>
 																		<th>Denominación</th>
 																		<th>Moneda</th>
 																		<th>Importe</th>
