@@ -328,6 +328,35 @@
 
                                                         </div>
                                                     </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
+
+                                                        <label class="form-group">Tipo Operaci&oacute;n</label>
+                                                        <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
+                                                            <option value="">--Selecionar--</option>
+                                                            <?php
+                                                            foreach ($tipooperacion as $row) { ?>
+                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                        </div>
+
+                                                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
+                                                        <label class="form-group">Forma de pago</label>
+                                                        <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
+                                                            <option value="">--Selecionar--</option>
+                                                            <?php
+                                                            foreach ($formapago as $row) { ?>
+                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                            <?php
+    }
+    ?>
+</select>
+</div>               
+                                                    
                                                 </div>
                                                 <div id="" class="row">
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
@@ -459,34 +488,7 @@
                                             </div>
                                             <div id="fsFiltro" class="card-body">
                                                 <div id="" class="row">
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-
-
-                                                        <label class="form-group">Tipo Operaci&oacute;n</label>
-                                                        <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
-                                                            <option value="">--Selecionar--</option>
-                                                            <?php
-                                                            foreach ($tipooperacion as $row) { ?>
-                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-
-                                                        <label class="form-group">Forma de pago</label>
-                                                        <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
-                                                            <option value="">--Selecionar--</option>
-                                                            <?php
-                                                            foreach ($formapago as $row) { ?>
-                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
+                                                    
 
                                                 </div>
                                             </div>
@@ -496,7 +498,7 @@
                                 </div>
                             </div>
                             <br>
-
+                        </div>                                                  
                             <div id="" class="row">
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                     <div class="card">
@@ -781,37 +783,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="" class="row">
-                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">Forma de Pago</label>
-                                                        <select name="forma_pago" id="forma_pago" class="form-control form-control-sm">
-                                                            <?php foreach ($forma_pago as $row) : ?>
-                                                                <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">Tipo de Cambio</label>
-                                                        <input type="text" name="tipo_cambio" id="tipo_cambio" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">Condición de Pago</label>
-                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">F. Programado</label>
-                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                         <!--card-body-->
                                     </div>
