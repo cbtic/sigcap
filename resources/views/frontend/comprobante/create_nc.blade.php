@@ -443,7 +443,7 @@
                                         <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                            
                                             <div id="" class="row">
-                                                <label class="form-group">Tipo Operaci&oacute;n</label>
+                                                <label class="form-group">Tipo de Nota</label>
                                                 <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
                                                     <option value="">--Selecionar--</option>
                                                     <?php
@@ -455,16 +455,8 @@
                                                 </select>
 
                                             
-                                                <label class="form-group">Forma de pago</label>
-                                                <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
-                                                    <option value="">--Selecionar--</option>
-                                                    <?php
-                                                    foreach ($formapago as $row) {?>
-                                                    <option value="<?php echo $row->codigo?>" <?php if($row->codigo==1)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                                    <?php 
-                                                    }
-                                                    ?>
-                                                </select>
+                                                <label class="form-group">Motivo</label>
+                                                <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                             </div>
                                            
                                         </div>
