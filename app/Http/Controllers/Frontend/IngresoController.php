@@ -156,22 +156,13 @@ class IngresoController extends Controller
     public function modal_fraccionamiento(Request $request){
 
         $id_concepto = $request->id_concepto_sel;
-        print_r($id_concepto); exit();
+        //print_r($id_concepto); exit();
 
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
-<<<<<<< HEAD
-        $total_fraccionar = 100;
-        
-        $concepto_detalle = $request->concepto_detalle;
-        print_r($concepto_detalle); exit();
-
-
-=======
         $total_fraccionar = $request->total;
         //print_r($request->comprobante_detalle); exit();
         $comprobante_detalle = $request->comprobante_detalle;
->>>>>>> 850cd889b10f30c3b6ca88761e78bb92efe3e60e
         $ind = 0;
         foreach($request->comprobante_detalles as $key=>$det){
             
