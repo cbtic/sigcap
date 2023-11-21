@@ -101,6 +101,7 @@
                                 <a href="/seguro/consulta_seguro" class="dropdown-item">Seguros</a>
                                 <a href="/periodoComision/consulta_periodoComision" class="dropdown-item">Periodo Comisi&oacute;n</a>
                                 <a href="/movilidad/consulta_movilidad" class="dropdown-item">Movilidad</a>
+                                <a href="/persona/consulta_persona" class="dropdown-item">Persona</a>
 								
 								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
 						   </div>
