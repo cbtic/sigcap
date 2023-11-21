@@ -160,18 +160,22 @@ class IngresoController extends Controller
 
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
-        $total_fraccionar = 100;
-        
-        $concepto_detalle = $request->concepto_detalle;
+        $total_fraccionar = $request->total;
+        //print_r($request->comprobante_detalle); exit();
+        $comprobante_detalle = $request->comprobante_detalle;
         $ind = 0;
-        foreach($request->concepto_detalles as $key=>$det){
-            $conceptod[$ind] = $concepto_detalle[$key];
+        foreach($request->comprobante_detalles as $key=>$det){
+            
+            $comprobanted[$ind] = $comprobante_detalle[$key];
             $ind++;
         }
 
-        $concepto = Concepto::find($id_concepto);		
-       //echo $id_concepto;
-		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado','conceptod' ));
+        //print_r($comprobanted); exit();
+        $concepto = Concepto::find($id_concepto);
+        
+        //$comprobanted = json_encode($comprobanted_);
+    
+		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado','comprobanted' ));
 	}
     
 
@@ -237,12 +241,34 @@ class IngresoController extends Controller
 */
     }
 
-    public function fracciona_deuda(Request $request){
+    public function send_fracciona_deuda(Request $request){
 
         $msg = "";
         $id_user = Auth::user()->id;
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
+
+        $id_pk = 0;
+
+        foreach($request->valorizacion as $key=>$val){
+            $id_pk = $val['id'];
+            exit();
+        }
+
+        foreach($request->valorizacion as $key=>$val){
+
+            $id = $val['id'];
+
+            $valorizacion = Valorizacione::find($id);
+            $valorizacion-> pk_fraccionamiento = $id_pk;
+			$valorizacion->save();          
+
+        }
+
+        exit();
+
+
+
         
         $concepto_detalle = $request->concepto_detalle;
         $ind = 0;
