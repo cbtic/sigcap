@@ -464,6 +464,7 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
+			var id = $('#id').val();
 			var numero_cap = $('#numero_cap').val();
 			var numero_documento = $('#numero_documento').val();
 			var agremiado = $('#agremiado').val();
@@ -477,7 +478,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						numero_cap:numero_cap,numero_documento:numero_documento,agremiado:agremiado,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
+						id:id,numero_cap:numero_cap,numero_documento:numero_documento,agremiado:agremiado,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -585,18 +586,18 @@ function datatablenew(){
 					"aTargets": [8]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Pendiente";
-						}
-						if(row.estado == 0){
-							estado = "Pagado";
-						}
-						return estado;
-					},
-					"bSortable": false,
-					"aTargets": [9]
+				"mRender": function (data, type, row) {
+					var estado = "";
+					if(row.estado == 1){
+						estado = "Activo";
+					}
+					if(row.estado == 0){
+						estado = "Inactivo";
+					}
+					return estado;
+				},
+				"bSortable": false,
+				"aTargets": [9]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -612,8 +613,8 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalHistorialMulta('+row.id+')" ><i class="fa fa-"></i> Historial</button>';
-						//html += '<a href="javascript:void(0)" onclick=eliminarMulta('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalMulta('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						html += '<a href="javascript:void(0)" onclick=eliminarMulta('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
