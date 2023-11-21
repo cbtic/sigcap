@@ -392,6 +392,10 @@ function obtenerBeneficiario(){
 	$('#btnDesafiliar').attr("disabled",true);
 	$('#btnInactivar').attr("disabled",true);
 	$('#foto').attr('src','/img/profile-icon.png');
+
+	$('#btnOtroConcepto').attr("disabled",true);
+
+	
 	
 	$.ajax({
 		url: '/agremiado/obtener_agremiado/' + tipo_documento + '/' + numero_documento,
@@ -411,6 +415,8 @@ function obtenerBeneficiario(){
 				$('#nombre_').val(result.agremiado.razon_social);
 				$('#fecha_colegiatura').val(result.agremiado.representante);
 
+				$('#btnOtroConcepto').attr("disabled",false);
+
 			}else if(tipo_documento == "85") //CAP
 				{
 				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
@@ -424,6 +430,7 @@ function obtenerBeneficiario(){
 				
 				$('#numero_documento_').val(result.agremiado.numero_documento);
 				$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
+				$('#btnOtroConcepto').attr("disabled",false);
 
 			}else{
 				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
@@ -437,6 +444,7 @@ function obtenerBeneficiario(){
 
 				$('#numero_documento_').val(result.agremiado.numero_documento);
 				$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
+				$('#btnOtroConcepto').attr("disabled",false);
 												
 			}
 
