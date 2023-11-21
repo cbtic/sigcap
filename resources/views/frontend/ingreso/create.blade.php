@@ -368,6 +368,7 @@
                                                     <select name="cboPeriodo_b" id="cboPeriodo_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
                                                         <option value="2022">2022</option>
                                                         <option value="2023" selected>2023</option>
+                                                        <option value="2024">2024</option>
                                                     </select>
                                                 </div>
                                             </div>
