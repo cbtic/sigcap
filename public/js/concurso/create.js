@@ -100,6 +100,8 @@ function fn_save(){
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
+			
+					datatablenew();
                     //location.href="/concurso/editar_inscripcion/"+result;
 					
 					//window.location.reload();
