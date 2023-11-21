@@ -96,10 +96,15 @@ class MultaController extends Controller
 		$multa = Multa::find($id);
 		$id_multa = $multa->id_multa;
 		$multa = Multa::find($id_multa);
+
+		$agremiado = Multa::find($id);
+		$numero_cap = $agremiado->numero_cap;
+		$agremiado = Multa::find($numero_cap);
 		
-        $multa_model = new empresas;
+        $multa_model = new Multa;
+		print_r($agremiado).exit();
 		
-		return view('frontend.multa.create',compact('periodo','concepto','moneda','importe','fecha_inicio','fecha_fin','estado'));
+		return view('frontend.multa.create',compact('agremiado','periodo','concepto','moneda','importe','fecha_inicio','fecha_fin','estado'));
 		
     }
 
@@ -109,10 +114,17 @@ class MultaController extends Controller
         $multa_concepto_model = new Multa_concepto;
 		$moneda_model = new Moneda;
 		
+		
 		if($id>0){
 			$agremiadoMulta = AgremiadoMulta::find($id);
+			$id_agremiado = $agremiadoMulta->id_agremiado;
+			$agremiado = Agremiado::find($id_agremiado);
+			$numero_cap = $agremiado->numero_cap;
 		}else{
 			$agremiadoMulta = new AgremiadoMulta;
+			$id_agremiado = "";
+			$agremiado = new Agremiado;
+			$numero_cap = "";
 		}
 		
         $multa = $multa_concepto_model->getMulta_conceptoAll();
@@ -123,7 +135,7 @@ class MultaController extends Controller
 		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.multa.modal_multa_nuevoMulta',compact('id','agremiadoMulta','multa','moneda'));
+		return view('frontend.multa.modal_multa_nuevoMulta',compact('id','id_agremiado','agremiado','numero_cap','agremiadoMulta','multa','moneda'));
 	
 	}
 
@@ -188,10 +200,12 @@ class MultaController extends Controller
 
 	public function eliminar_multa($id,$estado)
     {
-		$multa = Multa::find($id);
-		$multa->estado = $estado;
-		$multa->save();
+		$agremiadoMulta = AgremiadoMulta::find($id);
+		//$multa = Multa::find($id);
+		//print_r($agremiadoMulta->id).exit();
+		$agremiadoMulta->estado = $estado;
+		$agremiadoMulta->save();
 
-		echo $multa->id;
+		echo $agremiadoMulta->id;
     }
 }

@@ -365,7 +365,7 @@ function fn_save_multa(){
     $.ajax({
 			url: "/multa/send_multa_nuevoMulta",
             type: "POST",
-            data : {_token:_token,numero_cap:numero_cap,id:id,periodo:periodo,id_multa:id_multa},
+            data : {_token:_token,id:id,numero_cap:numero_cap,periodo:periodo,id_multa:id_multa},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -571,7 +571,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">N° CAP</label>
-								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $agremiadoMulta->numero_cap?>" type="text" >
+								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $agremiado->numero_cap?>" type="text" >
 							
 							</div>
 						</div>
@@ -606,7 +606,7 @@ container: '#myModal modal-body'
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($multa as $row) {?>
-									<option value="<?php echo $row->id?>" moneda="<?php echo $row->moneda?>" monto="<?php echo $row->monto?>" <?php if($row->id==$agremiadoMulta->id_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->id?>" moneda="<?php echo $row->moneda?>" monto="<?php echo $row->monto?>" <?php if($row->id==$multa->id_moneda)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
 									}
 									?>

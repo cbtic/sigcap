@@ -167,6 +167,9 @@ function calcular_total(obj){
 		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',false);
 		//var key2 = $(obj).parent().parent().parent().prev().find(".mov").attr("key");
 		//alert(key+"|"+key2);
+		$(obj).parent().parent().parent().find('.chek').val("1");
+
+
 	}else{
 		var key = $(obj).attr("key");
 		var key2 = 0;
@@ -181,6 +184,8 @@ function calcular_total(obj){
 		}
 		
 		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',true);
+
+		$(obj).parent().parent().parent().find('.chek').val("");
 		
 		
 		//alert(key2);
@@ -214,6 +219,9 @@ function calcular_total(obj){
 		$(obj).prop("checked",false);
 		return false;
 	}
+	
+	
+	
 	
 
 	$("#btnBoleta").prop('disabled', true);
@@ -249,6 +257,7 @@ function calcular_total(obj){
 //$("#btnFactura").prop('disabled', false);
 
 	//alert(tipo_factura_actual);
+	
 	$(".mov:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
 		var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
@@ -263,6 +272,8 @@ function calcular_total(obj){
 		}else{
 			total += Number(val_total);
 		}
+		//alert(val_total);
+		
 
 	});
 	
@@ -880,10 +891,10 @@ function modal_fraccionamiento(){
 function guardar_fracciona_deuda(){
 
     $.ajax({
-			url: "/ingreso/fracciona_deuda",
+			url: "/ingreso/send_fracciona_deuda",
             type: "POST",
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
-            data : $("#frmOtroPago").serialize(),
+            data : $("#frmFracionaDeuda").serialize(),
             success: function (result) {				
 
 				//alert(result);

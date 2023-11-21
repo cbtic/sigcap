@@ -390,7 +390,8 @@ legend.scheduler-border {
 		fecha.setDate(fecha.getDate() + dias);
 		return fecha;
 	}
-	function FormatFecha(fecha){
+
+	function FormatFecha(fecha) {
 		//let date = new Date()
 		let date = new Date(fecha)
 		let day = date.getDate()
@@ -400,7 +401,7 @@ legend.scheduler-border {
 		let fechaFormat
 		if (month < 10) {
 			fechaFormat = `${day}-0${month}-${year}`
-		} else {			
+		} else {
 			fechaFormat = `${day}-${month}-${year}`
 		}
 		return fechaFormat;
@@ -430,22 +431,22 @@ legend.scheduler-border {
 		var d = new Date();
 		//alert(FormatFecha(sumarDias(d, -5)));
 
-	
-		$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td> <td> ' + fecha_cuota + ' </td> <td>' + $("#denominacion").val() + '- Fraccionado '+ n + '</td> <td>SOLES</td> <td>' + cuota_uno + '</td></tr>');
 
-		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
-		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado '+ n + '"> </td>');
-		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][total_frac]" value="' + cuota_uno + '"> </td>');
-		
-		total_frac =parseFloat((total_frac - cuota_uno) / (nroCuotas - 1)).toFixed(1);
+		$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td> <td> ' + fecha_cuota + ' </td> <td>' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td>SOLES</td> <td>' + cuota_uno + '</td></tr>');
+
+		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
+		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado ' + n + '"> </td>');
+		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][total_frac]" value="' + cuota_uno + '"> </td>');
+
+		total_frac = parseFloat((total_frac - cuota_uno) / (nroCuotas - 1)).toFixed(1);
 		for (let i = 0; i < nroCuotas - 1; i++) {
 			n++;
 			fecha_cuota = FormatFecha(sumarDias(d, 30))
-			$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td> <td>' + fecha_cuota + '</td>  <td>' + $("#denominacion").val() + '- Fraccionado '+ n + '</td> <td>SOLES</td> <td>' + total_frac + '</td></tr>');
+			$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td> <td>' + fecha_cuota + '</td>  <td>' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td>SOLES</td> <td>' + total_frac + '</td></tr>');
 
-			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
-			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado '+ n + '"> </td>');
-			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento['+n+'][total_frac]" value="' + total_frac + '"> </td>');
+			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
+			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado ' + n + '"> </td>');
+			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '"> </td>');
 		}
 
 
@@ -497,7 +498,7 @@ legend.scheduler-border {
 									</strong>
 								</div>
 
-								<form class="form-horizontal" method="post" action="" id="frmOtroPago" autocomplete="off">
+								<form class="form-horizontal" method="post" action="" id="frmFracionaDeuda" autocomplete="off">
 
 									<div class="card-body" style="padding:5px!important;">
 
@@ -515,7 +516,35 @@ legend.scheduler-border {
 												<input type="hidden" name="denominacion" id="denominacion" value="<?php echo $concepto["denominacion"] ?>">
 												<input type="hidden" name="id_moneda" id="id_moneda" value="<?php echo $concepto["id_moneda"] ?>">
 
+												<?php
+												
+												foreach ($comprobanted as $key => $row) :	
+													//print_r($row);
+												?>
+													
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][id]" value="<?php echo $row['id'] ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][fecha]" value="<?php echo $row['fecha'] ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][denominacion]" value="<?php echo $row['denominacion'] ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][monto]" value="<?php echo $row['monto'] ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][pu]" value="<?php echo $row['pu'] ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][igv]" value="<?php echo $row['igv'] ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][pv]" value="<?php echo $row['pv'] ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][total]" value="<?php echo $row['total']  ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][moneda]" value="<?php echo $row['moneda']  ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][id_moneda]" value="<?php echo $row['id_moneda']  ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][abreviatura]" value="<?php echo $row['abreviatura']  ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][cantidad]" value="<?php echo $row['cantidad']  ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][descuento]" value="<?php echo $row['descuento']  ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][cod_contable]" value="<?php echo $row['cod_contable']  ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][descripcion]" value="<?php echo $row['descripcion'] ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][vencio]" value="<?php echo $row['vencio'] ?>" />
+													<input type="hidden" name="valorizacion[<?php echo $key ?>][id_concepto]" value="<?php echo $row['id_concepto'] ?>" />
+													
+													
 
+												<?php
+												endforeach;
+												?>
 
 												<div class="row" style="padding-left:10px">
 													<div class="card-body">
@@ -585,7 +614,7 @@ legend.scheduler-border {
 												<div style="margin-top:15px" class="form-group">
 													<div class="col-sm-12 controls">
 														<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-															<a href="javascript:void(0)" onClick="guardar_concepto_valorizacion()" class="btn btn-sm btn-success">Guardar</a>
+															<a href="javascript:void(0)" onClick="guardar_fracciona_deuda()" class="btn btn-sm btn-success">Guardar</a>
 														</div>
 
 													</div>
