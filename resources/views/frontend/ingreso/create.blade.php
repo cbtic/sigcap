@@ -32,11 +32,6 @@
         border-right: 2px solid #5cb85c !important;
     }
 
-    td {
-        border: 1px #DDD solid;
-        padding: 5px;
-        cursor: pointer;
-    }
 
     .selected {
         background-color: brown;

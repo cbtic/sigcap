@@ -503,7 +503,7 @@
                                                                     <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac['fecha'] ?>" />
                                                                     <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac['denominacion'] ?>" />
                                                                     <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac['descripcion'] ?>" />
-                                                                    s
+                                                                    
                                                                     <input type="hidden" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
                                                                     <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo $fac['moneda'] ?>" />
                                                                     <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo $fac['id_moneda'] ?>" />
