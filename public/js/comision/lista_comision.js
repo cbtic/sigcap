@@ -1,112 +1,29 @@
-//alert("ok");
-//jQuery.noConflict(true);
 
 $(document).ready(function () {
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
-
-	$('#denominacion_muni').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-			return false;
-		}
-	});
-	
-	$('#tipo_afectacion').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
-
-	$('#partida_presupuestalBus').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-		}
-	});
 		
 	$('#btnNuevo').click(function () {
-		//modalComision(0);
-		fn_guardar();
+		modalAsignarDelegado(0);
 	});
 
-	$('#btnNuevoComision').click(function () {
-		//modalComision(0);
-		fn_guardarMunicipalidadIntegrada();
+	$('#denominacion').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
 	});
 		
-	//datatablenew();
-	cargarMunicipalidades();
-
-	cargarMunicipalidadesIntegradas();
-
-	cargarComisiones();
-
-	/*	
-	$("#plan_id").select2();
-	$("#ubicacion_id").select2();
-	
-	$('#fecha_inicio').datepicker({
-        autoclose: true,
-		dateFormat: 'dd/mm/yy',
-		changeMonth: true,
-		changeYear: true,
-    });
-	
-	//$("#fecha_vencimiento").datepicker($.datepicker.regional["es"]);
-	$('#fecha_vencimiento').datepicker({
-        autoclose: true,
-        dateFormat: 'dd/mm/yy',
-		changeMonth: true,
-		changeYear: true,
-    });
-	*/
-	
-	/*
-    $('#tblAlquiler').dataTable({
-    	"language": {
-    	"emptyTable": "No se encontraron resultados"
-    	}
-	});
-	*/
-	/*
-	$('#tblAlquiler').dataTable( {
-            "language": {
-                "sProcessing":     "Procesando...",
-                "sLengthMenu":     "Mostrar _MENU_ registros",
-                "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningun dato disponible en esta tabla",
-                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix":    "",
-                "sSearch":         "Buscar:",
-                "sUrl":            "",
-                "sInfoThousands":  ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                        "sFirst":    "Primero",
-                        "sLast":     "ultimo",
-                        "sNext":     "Siguiente",
-                        "sPrevious": "Anterior"
-                },
-                "oAria": {
-                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                }
-            }
-        } );
-	*/
-
+	datatablenew();
 
 	$(function() {
-		$('#modalEmpresaForm #apellido_paterno').keyup(function() {
+		$('#modalSeguro #nombre_plan_').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
 	$(function() {
-		$('#modalEmpresaForm #apellido_materno').keyup(function() {
+		$('#nombre').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
@@ -141,98 +58,6 @@ function habiliarTitular(){
     	$('#divTitular').show();
 	}
 	*/
-}
-
-function cargarMunicipalidades(){
-
-	$.ajax({
-			url: "/comision/obtener_municipalidades/",
-			type: "GET",
-			success: function (result) {  
-			
-					$('#tblMunicipalidad').dataTable().fnDestroy(); //la destruimos
-					$("#tblMunicipalidad tbody").html("");
-					
-					$("#tblMunicipalidad tbody").html(result);
-					//alert("ok");
-					$('#tblMunicipalidad').DataTable({
-						"paging":false,
-						"dom": '<"top">rt<"bottom"flpi><"clear">',
-						"language": {"url": "/js/Spanish.json"},
-					});
-					
-					$("#system-search").keyup(function() {
-						var dataTable = $('#tblMunicipalidad').dataTable();
-					   dataTable.fnFilter(this.value);
-					});
-					
-			}
-	});
-
-}
-
-function cargarMunicipalidadesIntegradas(){
-    
-	//$('#tblMunicipalidadIntegrada').dataTable().fnDestroy(); //la destruimos
-	//$("#tblMunicipalidadIntegrada tbody").html("");
-
-	var tipo_agrupacion = $("#tipo_agrupacion").val();
-
-	$.ajax({
-			url: "/comision/obtener_municipalidadesIntegradas/"+tipo_agrupacion,
-			type: "GET",
-			success: function (result) {
-					$('#tblMunicipalidadIntegrada').dataTable().fnDestroy(); //la destruimos
-					$("#tblMunicipalidadIntegrada tbody").html("");
-
-					$("#tblMunicipalidadIntegrada tbody").html(result);
-					
-					$('#tblMunicipalidadIntegrada').DataTable({
-						"paging":false,
-						"dom": '<"top">rt<"bottom"flpi><"clear">',
-						"language": {"url": "/js/Spanish.json"},
-					});
-
-					$("#system-search2").keyup(function() {
-						var dataTable = $('#tblMunicipalidadIntegrada').dataTable();
-					   dataTable.fnFilter(this.value);
-					});
-					
-			}
-	});
-
-	
-}
-
-function cargarComisiones(){
-	
-	var cad_id = $("#cad_id").val();
-	if(cad_id=="")cad_id="0";
-
-	var estado = $("#estado").val();
-
-	$.ajax({
-			url: "/comision/obtener_comision/"+cad_id+"/"+estado,
-			type: "GET",
-			success: function (result) {  
-			
-					$('#tblComision').dataTable().fnDestroy(); //la destruimos
-					$("#tblComision tbody").html("");
-					
-					$("#tblComision tbody").html(result);
-					//alert("ok");
-					$('#tblComision').DataTable({
-						"paging":false,
-						"dom": '<"top">rt<"bottom"flpi><"clear">',
-						"language": {"url": "/js/Spanish.json"},
-					});
-					
-					$("#system-search3").keyup(function() {
-						var dataTable = $('#tblComision').dataTable();
-					   dataTable.fnFilter(this.value);
-					});
-			}
-	});
 }
 
 function guardarAfiliacion(){
@@ -435,40 +260,53 @@ function obtenerPlanDetalle(){
 	
 }
 
-/*
-function cargarAlquiler(){
-    
-    var empresa_id = $('#empresa_id').val();
-	if(empresa_id == "")empresa_id=0;
+function modalAsignarDelegado(id){
 	
-    $("#tblAlquiler tbody").html("");
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
 	$.ajax({
-			url: "/alquiler/obtener_alquiler/"+empresa_id,
+			url: "/comision/modal_asignar_delegado/"+id,
 			type: "GET",
 			success: function (result) {  
-					$("#tblAlquiler tbody").html(result);
-					//$('#tblAlquiler').dataTable();
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
 			}
 	});
 
 }
 
+function modalPuestos(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
-function cargarDevolucion(){
-    
-    
-    var numero_documento = $("#numero_documento").val();
-    $("#tblPago tbody").html("");
 	$.ajax({
-			url: "/alquiler/obtener_devolucion/"+numero_documento,
+			url: "/concurso/modal_puesto/"+id,
 			type: "GET",
 			success: function (result) {  
-					$("#tblDevolucion tbody").html(result);
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
 			}
 	});
 
 }
-*/
+
+function modalRequisitos(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/concurso/modal_requisito/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
 
 
 $('#modalEmpresaSaveBtn').click(function (e) {
@@ -531,36 +369,11 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
   });
 });
 
-function fn_save_fila(id,id_municipalidad){
- 
-	var _token = $('#_token').val();
-	
-	var mov = $('.mov:checked').length;
-
-	var id_municipalidad = $('#id_municipalidad').val();
-	//var id_agremiado = $('#id_agremiado').val();
-	var id_plan = $('#id_plan').val();
-
-	if(mov=="0")msg+="Debe seleccionar por lo menos a una municipalidad <br>";
-
-    $.ajax({
-			url: "/comision/send_parentesco_fila",
-            type: "POST",
-            data : {_token:_token,id:id,idafiliacion:idafiliacion,id_agremiado:id_agremiado,idfamilia:idfamilia},
-			success: function (result) {
-				//$('#openOverlayOpc').modal('hide');
-				Plan();
-				limpiar();
-								
-            }
-    });
-	
-}
 
 function datatablenew(){
-    var oTable1 = $('#tblAfiliado').dataTable({
+    var oTable = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/comision/listar_comision_ajax",
+        "sAjaxSource": "/comision/lista_comision_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -577,7 +390,7 @@ function datatablenew(){
                         {},
         ],
 		"dom": '<"top">rt<"bottom"flpi><"clear">',
-        "fnDrawCallback": function(json) {	
+        "fnDrawCallback": function(json) {
             $('[data-toggle="tooltip"]').tooltip();
         },
 
@@ -587,10 +400,13 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id = $('#id').val();
-			var denominacion = $('#denominacion_muni').val();
-			var tipo_municipalidad = $('#tipo_municipalidad').val();
-			var estado = $('#estado').val();
+			var id_regional = $('#id_regional_bus').val();
+            var numero_cap = $('#numero_cap_bus').val();
+			var numero_documento = $('#numero_documento_bus').val();
+			var agremiado = $('#agremiado_bus').val();
+			var id_situacion = $('#id_situacion_bus').val();
+			var id_concurso = $('#id_concurso_bus').val();
+			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -598,90 +414,116 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,denominacion:denominacion,tipo_municipalidad:tipo_municipalidad,estado:estado,
+						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
+						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
 						_token:_token
                        },
                 "success": function (result) {
                     fnCallback(result);
+					/*		
+					var rowIndex = oTable.fnGetData().length - 1;
+                       var strNameIdImg = 'ima_1_' + rowIndex;
+                       var strHtml = "<img id='" + strNameIdImg + "' src='/img/details_open.png' style='cursor:pointer;' title='Editar' onclick=fn_AbrirDetalle(" + rowIndex + ",'" + row.id +"') />";
+                       return strHtml;
+					*/
                 },
                 "error": function (msg, textStatus, errorThrown) {
                     //location.href="login";
                 }
             });
         },
-
+		"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+			fn_AbrirDetalle(iDisplayIndex,aData.id);
+		},
         "aoColumnDefs":
             [	
+			 	
 				{
-					"mRender": function (data, type, row) {
-						
-						var html = '<div class="form-check form-switch">';
-						html += '<input class="form-check-input" value="'+row.id+'"  onclick=fn_save_fila('+row.id+','+ row.id_familia +') type="checkbox" role="switch" id="check_" name="check_[]">';
-						
-						html += '</div>';
-						return html;
-					},
-					"bSortable": false,
-					"aTargets": [0],
-				},
+                "mRender": function (data, type, row) {
+                       var rowIndex = oTable.fnGetData().length - 1;
+                       var strNameIdImg = 'ima_1_' + rowIndex;
+                       var strHtml = "<img id='" + strNameIdImg + "' src='/img/details_open.png' style='cursor:pointer;' title='Editar' onclick=fn_AbrirDetalle(" + rowIndex + ",'" + row.id +"') />";
+                       return strHtml;
+                   },
+                "bSortable": false,
+                "aTargets": [0],
+				"className": "dt-center",
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var id = "";
+					if(row.id!= null)id = row.id;
+					return id;
+                },
+                "bSortable": false,
+                "aTargets": [1],
+				"className": "dt-center",
+				//"className": 'control'
+                },
+				
 				{
                 "mRender": function (data, type, row) {
                 	var denominacion = "";
 					if(row.denominacion!= null)denominacion = row.denominacion;
 					return denominacion;
                 },
-                "bSortable": false,
-                "aTargets": [1]
+                "bSortable": true,
+                "aTargets": [2]
                 },
-
+				
+                {
+                "mRender": function (data, type, row) {
+                	var comision = "";
+					if(row.comision!= null)comision = row.comision;
+					return comision;
+                },
+                "bSortable": true,
+                "aTargets": [3]
+                },
+				
 				{
-				"mRender": function (data, type, row) {
-					var tipo_municipalidad = "";
-					if(row.tipo_municipalidad!= null)tipo_municipalidad = row.tipo_municipalidad;
-					return tipo_municipalidad;
-				},
-				"bSortable": false,
-				"aTargets": [2]
-				},
+                "mRender": function (data, type, row) {
+                	var tipo_agrupacion = "";
+					if(row.tipo_agrupacion!= null)tipo_agrupacion = row.tipo_agrupacion;
+					return tipo_agrupacion;
+                },
+                "bSortable": true,
+                "aTargets": [4]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var estado = "";
+					if(row.estado!= null)estado = row.estado;
+					return estado;
+                },
+                "bSortable": true,
+                "aTargets": [5]
+                },
+				
 				{
 					"mRender": function (data, type, row) {
-						var monto = "";
-						if(row.monto!= null)monto = row.monto;
-						return monto;
-					},
-					"bSortable": false,
-					"aTargets": [3]
-					},
-				/*{
-				"mRender": function (data, type, row) {
-					var estado = "";
-					if(row.estado == 1){
-						estado = "Activo";
-					}
-					if(row.estado == 0){
-						estado = "Inactivo";
-					}
-					return estado;
-				},
-				"bSortable": false,
-				"aTargets": [2]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var estado = "";
-					var clase = "";
-					if(row.estado == 1){
-						estado = "Eliminar";
-						clase = "btn-danger";
-					}
-					if(row.estado == 0){
-						estado = "Activar";
-						clase = "btn-success";
-					}
+						var estado = "";
+						var clase = "";
+						if(row.estado == 1){
+							estado = "Eliminar";
+							clase = "btn-danger";
+						}
+						if(row.estado == 0){
+							estado = "Activar";
+							clase = "btn-success";
+						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalConcepto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<a href="javascript:void(0)" onclick=eliminarConcepto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						
+						//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalConcurso('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						
+						//html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalPuestos('+row.id+')" ><i class="fa fa-edit"></i> Puestos</button>';
+						
+						//html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalRequisitos('+row.id+')" ><i class="fa fa-edit"></i> Requisitos</button>';
+
+						//html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -689,10 +531,11 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
-				},*/
+					"aTargets": [6],
+				},
 
             ]
+
 
     });
 
@@ -702,52 +545,159 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalComision(id){
+function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
+    //fn_util_bloquearPantalla("Buscando");
+    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, 001);//500
+}
+
+function fn_CargaSuGrilla(pValor, piIdMovimientoCompra) {
+
+    var iRow = pValor;
+
+
+    var tr = $("#ima_1_" + iRow).closest('tr');
+    var row = $("#tblAfiliado").DataTable().row(tr);
+
+    if (row.child.isShown()) {
+        row.child.hide();
+        tr.removeClass('shown');
+
+
+        $("#ima_1_" + iRow).attr("src", "/img/details_open.png");
+    } else {
+        $("#ima_1_" + iRow).attr("src", "/img/details_close.png");
+
+        var iNumeroLinea = $("#lbl_0_" + pValor).text();
+        var iCodigoOficina = $("#lbl_1_" + pValor).text();
+
+        var vNombreSubGrilla = "SubGrd" + iRow;
+		//var vNombreSubGrilla2 = "SubGrd2" + iRow;
+        fn_DevuelveSubGrilla(piIdMovimientoCompra, vNombreSubGrilla,row,tr);
+        
+    }
+
+    //fn_util_desbloquearPantalla();
+}
+
+function fn_DevuelveSubGrilla(piIdMovimientoCompra, vNombreSubDataTable,row,tr) {
+	
+	//var id_moneda = $('#id_moneda').val();
+	
+	$.ajax({
+		type: "GET",
+		url: "/comision/obtener_comision_delegado/"+piIdMovimientoCompra,
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		async :  "false",
+		success: function (result) {
+			if(result=="")return false;
+			var sInicio = '<div>';
+			//var sInicio = ''; 
+			sInicio += '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 3px 8px 10px 30px;float:left">';
+			sInicio += '<table width="100%" id="' + vNombreSubDataTable + '" class="table table-hover table-sm">';
+        	sInicio += '<thead>';
+            sInicio += '<tr style="font-size:13px">';
+			sInicio += '<th style="text-align: left;">Delegado</th>';
+			sInicio += '<th style="text-align: right;">N&deg; CAP</th>';
+			sInicio += '<th style="text-align: right;">Situaci&oacute;n</th>';
+			sInicio += '<th style="text-align: right;">Tipo de Titular</th>';
+			sInicio += '<th style="text-align: right;">Vigencia</th>';
+			sInicio += '<th style="text-align: right;">Programaci&oacute;n</th>';
+            sInicio += '</tr>';
+        	sInicio += '</thead>';
+		
+			var sIntermedio = '';
+			var vImagen = "";
+			var monto_pagado = "";
+			var delegado = "";
+			$.each(result, function (index , value) {
+				delegado = value.apellido_paterno + " " + value.apellido_materno + " " + value.nombres;
+				sIntermedio += '<tr style="font-size:13px">';
+				sIntermedio +='<td style="text-align: left;">' + delegado+ '</td>';
+				sIntermedio +='<td style="text-align: right;">' + value.numero_cap+ '</td>';
+				sIntermedio +='<td style="text-align: right;">' + value.situacion+ '</td>';
+				sIntermedio +='<td style="text-align: right;">' + value.puesto+ '</td>';
+				sIntermedio +='<td style="text-align: right;"></td>';
+				sIntermedio +='<td style="text-align: right;"></td>';
+				sIntermedio +='</tr>';
+			});
+			
+			var sFinal = '</table></div></div>';
+			
+			var sResultado = sInicio + sIntermedio + sFinal;
+			
+			//alert(sResultado);
+			row.child(sResultado).show();
+        	fn_Datatable_Cast(vNombreSubDataTable);
+        	tr.addClass('shown');
+	
+		},
+		error: function (resultado) {
+			var error = "Ocurrio un Error";
+			//parent.fn_util_MuestraMensaje(error, "E");
+		
+		}
+	});
+	    
+}
+
+function fn_Datatable_Cast(vNombreSubGrilla) {
+
+    $("#" + vNombreSubGrilla).dataTable({
+        bDestroy: true,
+        bFilter: false,
+        bSort: false,
+        bLengthChange: false,
+        bPaginate: false,
+        bInfo: false,
+        aoColumnDefs: [
+            /*{
+                "sWidth": "100px",
+                "aTargets": [0]
+            },
+			{
+				"sClass": "center",
+                "sWidth": "150px",
+                "aTargets": [1]
+            },*/
+			/*
+			{
+				"sClass": "right",
+                "sWidth": "100px",
+                "aTargets": [3]
+            },
+			{
+				"sClass": "right",
+                "sWidth": "100px",
+                "aTargets": [4]
+            },
+			{
+				"sClass": "right",
+                "sWidth": "100px",
+                "aTargets": [5]
+            }
+		*/
+        ]
+		
+    });
+
+    //fn_util_LineaDatatable("#tbaDetalleSolicitud");
+}
+
+
+function modalEmpresa(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/concepto/modal_comision_nuevoComision/"+id,
+			url: "/empresa/modal_empresa/"+id,
 			type: "GET",
-			success: function (result) {
+			success: function (result) {  
 					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
 			}
 	});
-
-}
-
-function filtrar_comision(obj){
-
-	//alert("ok");
-	if($(obj).is(':checked')){
-
-		var cad_id="";
-		$("#tblMunicipalidadIntegrada input[name^='check_[]']:checked").each(function (i){
-			var id = $(this).val();
-			cad_id += ","+id;
-		});
-
-		if(cad_id!="")cad_id=cad_id.substring(1);
-
-		$("#cad_id").val(cad_id);
-
-		cargarComisiones();
-	}else{
-		
-		var cad_id="";
-		$("#tblMunicipalidadIntegrada input[name^='check_[]']:checked").each(function (i){
-			var id = $(this).val();
-			cad_id += ","+id;
-		});
-
-		if(cad_id!="")cad_id=cad_id.substring(1);
-		$("#cad_id").val(cad_id);
-
-		cargarComisiones();
-		
-	}
 
 }
 
@@ -760,14 +710,14 @@ function modalResponsable(id){
 			url: "/afiliacion/modal_afiliacion_empresa/"+id,
 			type: "GET",
 			success: function (result) {  
-					$("#diveditpregOpc").html(result);			
+					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
 			}
 	});
 
 }
 
-function eliminarComision(id,estado){
+function eliminar(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -779,20 +729,20 @@ function eliminarComision(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la comision?", 
+        message: "&iquest;Deseas "+act_estado+" la Municipalidad?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_concepto(id,estado_);
+                fn_eliminar(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_comision(id,estado){
+function fn_eliminar(id,estado){
 	
     $.ajax({
-            url: "/comision/eliminar_comision/"+id+"/"+estado,
+            url: "/municipalidad/eliminar_municipalidad/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
@@ -801,32 +751,3 @@ function fn_eliminar_comision(id,estado){
     });
 }
 
-function fn_guardar(){
-    
-    $.ajax({
-			url: "/comision/send_comision",
-            type: "POST",
-            data : $("#frmComision").serialize(),
-            success: function (result) {
-					//datatablenew();
-				cargarMunicipalidades();
-				cargarMunicipalidadesIntegradas();
-				cargarComisiones();
-            }
-    });
-}
-
-function fn_guardarMunicipalidadIntegrada(){
-    
-    $.ajax({
-			url: "/comision/send_municipalidad_integrada",
-            type: "POST",
-            data : $("#frmComision").serialize(),
-            success: function (result) {  
-					//datatablenew();
-				cargarMunicipalidades();
-				cargarMunicipalidadesIntegradas();
-				cargarComisiones();
-            }
-    });
-}
