@@ -44,6 +44,20 @@
                 $("#fsFiltro").show();
             }
         });
+
+        $('#id_formapago_').change(function() {
+           // console.log('Opción seleccionada:', $(this).val());
+            //print_r($(this).val());
+            if ($(this).val()==1){
+
+                OcultarTarjeta()
+            }
+
+            if ($(this).val()==2){
+                MostrarTarjeta()
+            }
+            //
+        });
     });
 
     function openCity(evt, cityName) {
@@ -65,6 +79,16 @@
         // Show the current tab, and add an "active" class to the button that opened the tab
         document.getElementById(cityName).style.display = "block";
         evt.currentTarget.className += " active";
+    }
+
+    function MostrarTarjeta() {
+        var tarjeta = document.getElementById('card_cuotas');
+        tarjeta.style.display = 'inline';
+    }
+
+    function OcultarTarjeta() {
+        var tarjeta = document.getElementById('card_cuotas');
+        tarjeta.style.display = 'none';
     }
 </script>
 
@@ -429,519 +453,567 @@
                                             <!--card-body-->
                                         </div>
                                         <!--card-->
-                                        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                           
-                                            <div id="" class="row">
-                                                <label class="form-group">Tipo Operaci&oacute;n</label>
-                                                <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
-                                                    <option value="">--Selecionar--</option>
-                                                    <?php
-                                                    foreach ($tipooperacion as $row) {?>
-                                                    <option value="<?php echo $row->codigo?>" <?php if($row->codigo==1)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                                    <?php 
-                                                    }
-                                                    ?>
-                                                </select>
 
-                                            
-                                                <label class="form-group">Forma de pago</label>
-                                                <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
-                                                    <option value="">--Selecionar--</option>
-                                                    <?php
-                                                    foreach ($formapago as $row) {?>
-                                                    <option value="<?php echo $row->codigo?>" <?php if($row->codigo==1)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                                    <?php 
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                           
-                                        </div>
-
-                                        
-                                    </div>
-                                </div>
-                                <br>
-
-                                <div id="" class="row">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                        <div class="card">
+                                        <div class="card" id="">
                                             <div class="card-header">
-                                                <strong>
-                                                    <!--@lang('labels.frontend.asistencia.box_asistencia')-->
-                                                    Detalle Resumen
-                                                    <?php
-                                                    if ($trans == 'FN') { ?>
-                                                        <button type="button" id="addRow" style="margin-left:10px" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Agregar Item(s)</button>
-                                                    <?php } ?>
-                                                </strong>
                                             </div>
-                                            <div class="card-body">
-                                                <div class="table-responsive overflow-auto" style="max-height: 500px;">
-                                                    <table id="tblDetalle" class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-right" width="5%">#</th>
-                                                                <th class="text-center" width="10%">Cant.</th>
-                                                                <th width="40%">Descripción</th>
-                                                                <th width="40%">%Dscto.</th>
-                                                                <th class="text-right" width="15%">PU</th>
-                                                                <th class="text-right" width="15%">IGV</th>
-                                                                <th class="text-right" width="15%">P.Venta</th>
-                                                                <th class="text-right" width="15%">Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php $n = 0;
-                                                            $smodulo = "";
-                                                            if ($trans == 'FA' || $trans == 'FE') { ?>
-                                                                <?php foreach ($facturad as $key => $fac) {
-                                                                    //		$smodulo = $fac['smodulo'];
-                                                                ?>
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][id]" value="<?php echo $fac['id'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac['fecha'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac['denominacion'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac['descripcion'] ?>" />
-                                                                    s
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo $fac['moneda'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo $fac['id_moneda'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][descuento]" value="<?php echo $fac['descuento'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][cod_contable]" value="<?php echo $fac['cod_contable'] ?>" />
+                                            <div id="fsFiltro" class="card-body">
+                                                <div id="" class="row">
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 
-                                                                    <tr>
-                                                                        <td class="text-right"><?php $n = $n + 1;
-                                                                                                echo $n; ?></td>
-                                                                        <td class="text-center"><?php if ($trans == 'FA') {
-                                                                                                    echo $fac['cantidad'];
-                                                                                                }
-                                                                                                if ($trans == 'FE') {
-                                                                                                    echo $fac['cantidad'];
-                                                                                                } ?></td>
-                                                                        <td class="text-left">
-                                                                            <?php
-                                                                            if ($trans == 'FA') {
-                                                                                echo $fac['descripcion'];
-                                                                            }
-                                                                            if ($trans == 'FE') {
-                                                                                echo $fac['descripcion'];
-                                                                            } ?>
-                                                                        </td>
 
-                                                                        <td class="text-left"><?php if ($trans == 'FA') {
-                                                                                                    echo $fac['descuento'];
-                                                                                                }
-                                                                                                if ($trans == 'FE') {
-                                                                                                    echo $fac['descuento'];
-                                                                                                } ?></td>
+                                                        <label class="form-group">Tipo Operaci&oacute;n</label>
+                                                        <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
+                                                            <option value="">--Selecionar--</option>
+                                                            <?php
+                                                            foreach ($tipooperacion as $row) { ?>
+                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 
-                                                                        <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                                    if ($adelanto == 'S') {
-                                                                                                        echo ($MonAd - $MonAd * 0.18);
-                                                                                                    } else {
-                                                                                                        echo $fac['pu'];
-                                                                                                    }
-                                                                                                }
-                                                                                                if ($trans == 'FE') {
-                                                                                                    echo number_format($fac['importe'], 2);
-                                                                                                } ?></td>
-                                                                        <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                                    if ($adelanto == 'S') {
-                                                                                                        echo ($MonAd * 0.18);
-                                                                                                    } else {
-                                                                                                        echo $fac['igv'];
-                                                                                                    }
-                                                                                                }
-                                                                                                if ($trans == 'FE') {
-                                                                                                    echo number_format($fac['igv_total'], 2);
-                                                                                                } ?></td>
-                                                                        <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                                    if ($adelanto == 'S') {
-                                                                                                        echo ($MonAd - $MonAd * 0.18);
-                                                                                                    } else {
-                                                                                                        echo $fac['pv'];
-                                                                                                    }
-                                                                                                }
-                                                                                                if ($trans == 'FE') {
-                                                                                                    echo number_format($fac['pu'], 2);
-                                                                                                } ?></td>
-                                                                        <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                                    if ($adelanto == 'S') {
-                                                                                                        echo $MonAd;
-                                                                                                    } else {
-                                                                                                        echo $fac['total'];
-                                                                                                    }
-                                                                                                }
-                                                                                                if ($trans == 'FE') {
-                                                                                                    echo number_format($fac['importe'], 2);
-                                                                                                } ?></td>
+                                                        <label class="form-group">Forma de pago</label>
+                                                        <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
+                                                            <option value="">--Selecionar--</option>
+                                                            <?php
+                                                            foreach ($formapago as $row) { ?>
+                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
 
-                                                                        <?php
-                                                                        if ($trans == 'FN') { ?>
-                                                                            <td class="text-center">
-                                                                                <div data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Editar Factura</b>">
-                                                                                    <a href="/editar_receta_vale/1" class="btn btn-success btn-xs"><i class="fa fa-edit"></i></a>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="text-center">
-                                                                                <div data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Anular Factura</b>">
-                                                                                    <a href="/ver_receta_atendida/1/" class="btn btn-danger btn-xs"><i class="fa fa-xing"></i></a>
-                                                                                </div>
-                                                                            </td>
-                                                                        <?php } ?>
-                                                                    </tr>
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
-                                                                <?php } ?>
-                                                            <?php } ?>
-
-                                                            <input type="hidden" name="smodulo_guia" id="smodulo_guia" value="<?php echo $smodulo ?>" />
-
-                                                        </tbody>
-                                                    </table>
                                                 </div>
-                                                <!--table-responsive-->
                                             </div>
-                                            <!--card-body-->
                                         </div>
-                                        <!--card-->
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br>
+
+                            <div id="" class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong>
+                                                <!--@lang('labels.frontend.asistencia.box_asistencia')-->
+                                                Detalle Resumen
+                                                <?php
+                                                if ($trans == 'FN') { ?>
+                                                    <button type="button" id="addRow" style="margin-left:10px" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Agregar Item(s)</button>
+                                                <?php } ?>
+                                            </strong>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive overflow-auto" style="max-height: 500px;">
+                                                <table id="tblDetalle" class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-right" width="5%">#</th>
+                                                            <th class="text-center" width="10%">Cant.</th>
+                                                            <th width="40%">Descripción</th>
+                                                            <th width="40%">%Dscto.</th>
+                                                            <th class="text-right" width="15%">PU</th>
+                                                            <th class="text-right" width="15%">IGV</th>
+                                                            <th class="text-right" width="15%">P.Venta</th>
+                                                            <th class="text-right" width="15%">Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php $n = 0;
+                                                        $smodulo = "";
+                                                        if ($trans == 'FA' || $trans == 'FE') { ?>
+                                                            <?php foreach ($facturad as $key => $fac) {
+                                                                //		$smodulo = $fac['smodulo'];
+                                                            ?>
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][id]" value="<?php echo $fac['id'] ?>" />
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac['fecha'] ?>" />
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac['denominacion'] ?>" />
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac['descripcion'] ?>" />
+                                                                s
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo $fac['moneda'] ?>" />
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo $fac['id_moneda'] ?>" />
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][descuento]" value="<?php echo $fac['descuento'] ?>" />
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][cod_contable]" value="<?php echo $fac['cod_contable'] ?>" />
+
+                                                                <tr>
+                                                                    <td class="text-right"><?php $n = $n + 1;
+                                                                                            echo $n; ?></td>
+                                                                    <td class="text-center"><?php if ($trans == 'FA') {
+                                                                                                echo $fac['cantidad'];
+                                                                                            }
+                                                                                            if ($trans == 'FE') {
+                                                                                                echo $fac['cantidad'];
+                                                                                            } ?></td>
+                                                                    <td class="text-left">
+                                                                        <?php
+                                                                        if ($trans == 'FA') {
+                                                                            echo $fac['descripcion'];
+                                                                        }
+                                                                        if ($trans == 'FE') {
+                                                                            echo $fac['descripcion'];
+                                                                        } ?>
+                                                                    </td>
+
+                                                                    <td class="text-left"><?php if ($trans == 'FA') {
+                                                                                                echo $fac['descuento'];
+                                                                                            }
+                                                                                            if ($trans == 'FE') {
+                                                                                                echo $fac['descuento'];
+                                                                                            } ?></td>
+
+                                                                    <td class="text-right"><?php if ($trans == 'FA') {
+                                                                                                if ($adelanto == 'S') {
+                                                                                                    echo ($MonAd - $MonAd * 0.18);
+                                                                                                } else {
+                                                                                                    echo $fac['pu'];
+                                                                                                }
+                                                                                            }
+                                                                                            if ($trans == 'FE') {
+                                                                                                echo number_format($fac['importe'], 2);
+                                                                                            } ?></td>
+                                                                    <td class="text-right"><?php if ($trans == 'FA') {
+                                                                                                if ($adelanto == 'S') {
+                                                                                                    echo ($MonAd * 0.18);
+                                                                                                } else {
+                                                                                                    echo $fac['igv'];
+                                                                                                }
+                                                                                            }
+                                                                                            if ($trans == 'FE') {
+                                                                                                echo number_format($fac['igv_total'], 2);
+                                                                                            } ?></td>
+                                                                    <td class="text-right"><?php if ($trans == 'FA') {
+                                                                                                if ($adelanto == 'S') {
+                                                                                                    echo ($MonAd - $MonAd * 0.18);
+                                                                                                } else {
+                                                                                                    echo $fac['pv'];
+                                                                                                }
+                                                                                            }
+                                                                                            if ($trans == 'FE') {
+                                                                                                echo number_format($fac['pu'], 2);
+                                                                                            } ?></td>
+                                                                    <td class="text-right"><?php if ($trans == 'FA') {
+                                                                                                if ($adelanto == 'S') {
+                                                                                                    echo $MonAd;
+                                                                                                } else {
+                                                                                                    echo $fac['total'];
+                                                                                                }
+                                                                                            }
+                                                                                            if ($trans == 'FE') {
+                                                                                                echo number_format($fac['importe'], 2);
+                                                                                            } ?></td>
+
+                                                                    <?php
+                                                                    if ($trans == 'FN') { ?>
+                                                                        <td class="text-center">
+                                                                            <div data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Editar Factura</b>">
+                                                                                <a href="/editar_receta_vale/1" class="btn btn-success btn-xs"><i class="fa fa-edit"></i></a>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <div data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Anular Factura</b>">
+                                                                                <a href="/ver_receta_atendida/1/" class="btn btn-danger btn-xs"><i class="fa fa-xing"></i></a>
+                                                                            </div>
+                                                                        </td>
+                                                                    <?php } ?>
+                                                                </tr>
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
+                                                            <?php } ?>
+                                                        <?php } ?>
+
+                                                        <input type="hidden" name="smodulo_guia" id="smodulo_guia" value="<?php echo $smodulo ?>" />
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--table-responsive-->
+                                        </div>
+                                        <!--card-body-->
                                     </div>
                                     <!--card-->
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <strong>
-                                                    <!--@lang('labels.frontend.asistencia.box_asistencia')-->
-                                                    Información de Pago
-                                                </strong>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table id="tblPago" class="table table-hover">
-                                                        <tbody>
-                                                            <tr style="display:none">
-                                                                <th></th>
-                                                                <th>Anticipos</th>
-                                                                <th></th>
-                                                                <th></th>
-                                                                <th class="text-right"><span id="anticipos"></span> 0.00</th>
-                                                            </tr>
-                                                            <tr style="display:none">
-                                                                <th></th>
-                                                                <th>Descuentos</th>
-                                                                <th></th>
-                                                                <th></th>
-                                                                <th class="text-right"><span id="descuentos"></span> 0.00</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th>Ope Gravadas</th>
-                                                                <th></th>
-                                                                <th></th>
-                                                                <th class="text-right"><span id="gravadas"></span> <?php if ($trans == 'FA') {
-                                                                                                                        echo number_format($stotal, 2);
-                                                                                                                    }
-                                                                                                                    if ($trans == 'FE') {
-                                                                                                                        echo number_format($comprobante->subtotal, 2);
-                                                                                                                    } ?></th>
-                                                            </tr>
-                                                            <tr style="display:none">
-                                                                <th></th>
-                                                                <th>Ope Inafectas</th>
-                                                                <th></th>
-                                                                <th></th>
-                                                                <th class="text-right"><span id="inafectas"></span> 0.00</th>
-                                                            </tr>
-                                                            <tr style="display:none">
-                                                                <th></th>
-                                                                <th>Ope Exoneradas</th>
-                                                                <th></th>
-                                                                <th></th>
-                                                                <th class="text-right"><span id="exoneradas"></span> 0.00</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th>I.G.V.</th>
-                                                                <th></th>
-                                                                <th></th>
-                                                                <th class="text-right"><span id="igv"></span> <?php if ($trans == 'FA') {
-                                                                                                                    echo number_format($igv, 2);
+                                </div>
+                                <!--card-->
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong>
+                                                <!--@lang('labels.frontend.asistencia.box_asistencia')-->
+                                                Información de Pago
+                                            </strong>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="tblPago" class="table table-hover">
+                                                    <tbody>
+                                                        <tr style="display:none">
+                                                            <th></th>
+                                                            <th>Anticipos</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th class="text-right"><span id="anticipos"></span> 0.00</th>
+                                                        </tr>
+                                                        <tr style="display:none">
+                                                            <th></th>
+                                                            <th>Descuentos</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th class="text-right"><span id="descuentos"></span> 0.00</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Ope Gravadas</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th class="text-right"><span id="gravadas"></span> <?php if ($trans == 'FA') {
+                                                                                                                    echo number_format($stotal, 2);
                                                                                                                 }
                                                                                                                 if ($trans == 'FE') {
-                                                                                                                    echo number_format($comprobante->impuesto, 2);
+                                                                                                                    echo number_format($comprobante->subtotal, 2);
                                                                                                                 } ?></th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th>Total</th>
-                                                                <th></th>
-                                                                <th></th>
-                                                                <th class="text-right"><span id="totalP"></span> <?php if ($trans == 'FA') {
-                                                                                                                        echo number_format($total, 2);
-                                                                                                                    }
-                                                                                                                    if ($trans == 'FE') {
-                                                                                                                        echo number_format($comprobante->total, 2);
-                                                                                                                    } ?></th>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <!--table-responsive-->
+                                                        </tr>
+                                                        <tr style="display:none">
+                                                            <th></th>
+                                                            <th>Ope Inafectas</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th class="text-right"><span id="inafectas"></span> 0.00</th>
+                                                        </tr>
+                                                        <tr style="display:none">
+                                                            <th></th>
+                                                            <th>Ope Exoneradas</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th class="text-right"><span id="exoneradas"></span> 0.00</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>I.G.V.</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th class="text-right"><span id="igv"></span> <?php if ($trans == 'FA') {
+                                                                                                                echo number_format($igv, 2);
+                                                                                                            }
+                                                                                                            if ($trans == 'FE') {
+                                                                                                                echo number_format($comprobante->impuesto, 2);
+                                                                                                            } ?></th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Total</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th class="text-right"><span id="totalP"></span> <?php if ($trans == 'FA') {
+                                                                                                                    echo number_format($total, 2);
+                                                                                                                }
+                                                                                                                if ($trans == 'FE') {
+                                                                                                                    echo number_format($comprobante->total, 2);
+                                                                                                                } ?></th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                            <!--card-body-->
+                                            <!--table-responsive-->
                                         </div>
-                                        <!--card-->
+                                        <!--card-body-->
+                                    </div>
+                                    <!--card-->
 
 
 
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                            <div class="form-group">
-                                                <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardar').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">GUARDAR COMPROBANTE</button>
-                                            </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <div class="form-group">
+                                            <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardar').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">GUARDAR COMPROBANTE</button>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <br>
+                            <br>
 
-                                <div id="" class="row">
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="card">
+                            <div id="" class="row">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div id="" class="row">
+                                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                    <strong>
+                                                        Cobros y Vencimientos
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="fsFiltro" class="card-body">
+                                            <div id="" class="row">
+                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Estado de Pago</label>
+                                                        <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                            <option value="P">
+                                                                <?php echo "Pendiente" ?></option>
+                                                            <option value="C">
+                                                                <?php echo "Cancelado" ?></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">F. Pago</label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Fecha Vence</label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">F. Recepción</label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="" class="row">
+                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Forma de Pago</label>
+                                                        <select name="forma_pago" id="forma_pago" class="form-control form-control-sm">
+                                                            <?php foreach ($forma_pago as $row) : ?>
+                                                                <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Tipo de Cambio</label>
+                                                        <input type="text" name="tipo_cambio" id="tipo_cambio" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Condición de Pago</label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">F. Programado</label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--card-body-->
+                                    </div>
+                                    <!--card-->
+
+
+                                    <?php if ($smodulo == 32) { ?>
+                                        <div class="card" style="margin-top:15px">
                                             <div class="card-header">
                                                 <div id="" class="row">
                                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                                                         <strong>
-                                                            Cobros y Vencimientos
+                                                            Datos de la Guia
                                                         </strong>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div id="fsFiltro" class="card-body">
                                                 <div id="" class="row">
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
-                                                            <label class="form-control-sm">Estado de Pago</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
-                                                                <option value="P">
-                                                                    <?php echo "Pendiente" ?></option>
-                                                                <option value="C">
-                                                                    <?php echo "Cancelado" ?></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">F. Pago</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Fecha Vence</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">F. Recepción</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="" class="row">
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Forma de Pago</label>
-                                                            <select name="forma_pago" id="forma_pago" class="form-control form-control-sm">
-                                                                <?php foreach ($forma_pago as $row) : ?>
-                                                                    <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
-                                                                <?php endforeach; ?>
-                                                            </select>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Tipo de Cambio</label>
-                                                            <input type="text" name="tipo_cambio" id="tipo_cambio" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Condición de Pago</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">F. Programado</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                            <label class="form-control-sm">Direcci&oacute;n del punto de llegada</label>
+                                                            <input type="text" name="guia_llegada_direccion" id="guia_llegada_direccion" value="" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--card-body-->
                                         </div>
-                                        <!--card-->
+                                    <?php } ?>
 
 
-                                        <?php if ($smodulo == 32) { ?>
-                                            <div class="card" style="margin-top:15px">
-                                                <div class="card-header">
-                                                    <div id="" class="row">
-                                                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                                            <strong>
-                                                                Datos de la Guia
-                                                            </strong>
-                                                        </div>
+
+
+
+
+                                </div>
+                                <!--card-->
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div id="" class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <strong>
+                                                        Impuestos
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="fsFiltro" class="card-body">
+                                            <div id="" class="row">
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Descuento Global</label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
-                                                <div id="fsFiltro" class="card-body">
-                                                    <div id="" class="row">
-                                                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <label class="form-control-sm">Direcci&oacute;n del punto de llegada</label>
-                                                                <input type="text" name="guia_llegada_direccion" id="guia_llegada_direccion" value="" placeholder="" class="form-control form-control-sm">
-                                                            </div>
-                                                        </div>
+
+                                            </div>
+                                            <div id="" class="row">
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Monto de Percepción</label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm"></label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Monto Total</label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                     </div>
                                                 </div>
                                             </div>
-                                        <?php } ?>
+                                            <div id="" class="row">
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">porcentaje Detracción</label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Monto Detracción</label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm"></label>
+                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Tipo de Detraccion:</label>
+                                                        <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                            <option value="">
+                                                                <?php echo "" ?></option>
+                                                            <option value="004">
+                                                                <?php echo "Operación sujeta al Sistema de Pago de Obligaciones Tributarias con el Gobierno Central" ?></option>
+                                                            <option value="017">
+                                                                <?php echo "Operación sujeta al Sistema de Pago de Obligaciones Tributarias con el Gobierno Central – Servicio de Transporte de Pasajeros" ?></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Afecta a:</label>
+                                                        <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                            <option value="">
+                                                                <?php echo "" ?></option>
+                                                            <option value="022">
+                                                                <?php echo "Otro servicios empresariales" ?></option>
+                                                            <option value="017">
+                                                                <?php echo "Contratos de construcción" ?></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Medio de Pago:</label>
+                                                        <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+                                                            <option value="">
+                                                                <?php echo "" ?></option>
+                                                            <option value="004">
+                                                                <?php echo "Efectivo" ?></option>
+                                                            <option value="017">
+                                                                <?php echo "Deposito en cuenta" ?></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-
-
-
-
-
+                                            </div>
+                                        </div>
+                                        <!--card-body-->
                                     </div>
                                     <!--card-->
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div id="" class="row">
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <strong>
-                                                            Impuestos
-                                                        </strong>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="fsFiltro" class="card-body">
-                                                <div id="" class="row">
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Descuento Global</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
+                                </div>
+                            </div>
 
-                                                </div>
-                                                <div id="" class="row">
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Monto de Percepción</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm"></label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Monto Total</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="" class="row">
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">porcentaje Detracción</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Monto Detracción</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm"></label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Tipo de Detraccion:</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
-                                                                <option value="">
-                                                                    <?php echo "" ?></option>
-                                                                <option value="004">
-                                                                    <?php echo "Operación sujeta al Sistema de Pago de Obligaciones Tributarias con el Gobierno Central" ?></option>
-                                                                <option value="017">
-                                                                    <?php echo "Operación sujeta al Sistema de Pago de Obligaciones Tributarias con el Gobierno Central – Servicio de Transporte de Pasajeros" ?></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Afecta a:</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
-                                                                <option value="">
-                                                                    <?php echo "" ?></option>
-                                                                <option value="022">
-                                                                    <?php echo "Otro servicios empresariales" ?></option>
-                                                                <option value="017">
-                                                                    <?php echo "Contratos de construcción" ?></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Medio de Pago:</label>
-                                                            <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
-                                                                <option value="">
-                                                                    <?php echo "" ?></option>
-                                                                <option value="004">
-                                                                    <?php echo "Efectivo" ?></option>
-                                                                <option value="017">
-                                                                    <?php echo "Deposito en cuenta" ?></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <!--card-body-->
+                            <div class="card" id="card_cuotas">
+                                <div class="card-header">
+                                    <div id="" class="row">
+                                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                            <strong>
+                                                Cuotas
+                                            </strong>
                                         </div>
-                                        <!--card-->
                                     </div>
                                 </div>
+                                <div id="fsFiltro" class="card-body">
+                                    <div id="" class="row">
+                                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="form-control-sm">Nume. Cuotas</label>
+                                                <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                            </div>
+                                        </div>
 
+                                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="form-control-sm">Monto total del credito</label>
+                                                <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                            </div>
+                                        </div>
 
+                                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="form-control-sm">Plazo</label>
+                                                <input type="text" name="fechaF" id="fechaF" value="<?php echo date("d/m/Y") ?>" placeholder="" class="form-control form-control-sm datepicker">
 
-
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--card-body-->
                             </div>
+
+
                         </div>
-                        <!--   <a class='flotante' name="guardar" id="guardar" onclick="guardarFactura()" href='#' ><img src='/img/btn_save.png' border="0"/></a>--> <br>
-                    </form>
                 </div>
+
+
+                <!--   <a class='flotante' name="guardar" id="guardar" onclick="guardarFactura()" href='#' ><img src='/img/btn_save.png' border="0"/></a>--> <br>
+                </form>
             </div>
         </div>
-
     </div>
 
-    <!--row-->
-    @endsection
+</div>
+
+<!--row-->
+@endsection
 
 
 
-    @push('after-scripts')
+@push('after-scripts')
 
-    <script src="{{ asset('js/factura.js') }}"></script>
-    @endpush
+<script src="{{ asset('js/factura.js') }}"></script>
+@endpush
