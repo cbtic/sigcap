@@ -6,9 +6,9 @@ foreach($comision as $row):?>
 	<input value="<?php echo $row->id?>"  type="checkbox" id="check_" name="check_[]">
 	</td>
 	<td class="text-left"><?php echo $row->denominacion?></td>
-	<td class="text-left"><?php echo $row->tipo_agrupacion?></td>
 	<td class="text-left"><?php echo $row->comision?></td>
 	<td class="text-left"><?php echo $row->monto?></td>
+	<td class="text-left"><?php if($row->estado=='1') {echo "Activo";} else {echo "Inactivo";}?></td>
 </tr>
 <?php
 endforeach;

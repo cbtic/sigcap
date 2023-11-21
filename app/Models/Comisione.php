@@ -50,13 +50,13 @@ class Comisione extends Model
 
     }
 
-    function getComisionAll($cad_id){
+    function getComisionAll($cad_id,$estado){
 
         $cad = " select c.*,tm.denominacion tipo_agrupacion, cm.monto from comisiones c
         inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
         inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
         left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
-        where mi.estado='1' ";
+        where c.estado ilike '%".$estado."'";
 
         if($cad_id!="" && $cad_id!="0"){
             $cad .= "and c.id_municipalidad_integrada in (".$cad_id.")";
@@ -74,5 +74,14 @@ class Comisione extends Model
         return $data[0]->codigo;
     }
 
+    function getCodigoComision2($id_municipalidad_integrada,$id_tipo_comision){
+
+        //$cad = "select lpad((count(*)+1)::varchar,2,'0') codigo from comisiones c where id_municipalidad_integrada=".$id_municipalidad_integrada." and estado ='1'";
+        $cad = "select lpad((count(*)+1)::varchar,2,'0') codigo from comisiones c where id_municipalidad_integrada=".$id_municipalidad_integrada." and id_tipo_comision = '2' and estado ='1'";
+
+        //echo $cad;exit();
+		$data = DB::select($cad);
+        return $data[0]->codigo;
+    }
 
 }
