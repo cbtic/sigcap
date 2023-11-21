@@ -182,9 +182,13 @@
 					
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 							<select name="estado" id="estado" class="form-control form-control-sm">
-								<option value="">Todos</option>
+                                <option value="">Todos</option>
+								<option value="1" selected="selected">Activo</option>
+                                <option value="0">Inactivo</option>
+								<!--<option value="">Todos</option>
 								<option value="1" selected="selected">Pendientes</option>
-								<option value="0">Pagados</option>
+                                <option value="0">Eliminado</option>
+								<option value="2">Pagados</option>-->
 							</select>
 						</div>
 			
@@ -217,6 +221,7 @@
                         <th>Multa</th>
                         <th>Importe</th>
                         <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
