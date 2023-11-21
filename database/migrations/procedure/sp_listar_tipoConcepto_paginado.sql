@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_tipoconcepto_paginado(p_codigo character varying, p_regional character varying, p_denominacion character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_tipoconcepto_paginado(p_regional character varying, p_denominacion character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,17 +18,17 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' tc.id , tc.codigo , r.denominacion regional, tc.denominacion, tc.estado ';
+	v_campos=' tc.id , r.denominacion regional, tc.denominacion, tc.estado ';
 
 	v_tabla='from tipo_conceptos tc
 			inner join regiones r on tc.id_regional = r.id';
 	
 	v_where = ' Where 1=1  ';
-	
+	/*
 	If p_codigo<>'' Then
 	 v_where:=v_where||'And tc.codigo ilike ''%'||p_codigo||'%'' ';
 	End If;
-
+*/
 	If p_denominacion<>'' Then
 	 v_where:=v_where||'And tc.denominacion ilike ''%'||p_denominacion||'%'' ';
 	End If;

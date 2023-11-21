@@ -32,11 +32,6 @@
         border-right: 2px solid #5cb85c !important;
     }
 
-    td {
-        border: 1px #DDD solid;
-        padding: 5px;
-        cursor: pointer;
-    }
 
     .selected {
         background-color: brown;
@@ -319,7 +314,7 @@
 
                                         <div class="row">
                                             <div class="col">
-                                                <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="modal_otro_pago()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Pago Otros Conceptos </button>
+                                                <button class="btn btn-success btn-sm" type="button" name="btnOtroConcepto" id="btnOtroConcepto" onClick="modal_otro_pago()" tabindex="0" disabled><i class="glyphicon glyphicon-search"></i> Pago Otros Conceptos </button>
                                             </div>
                                         </div>
 
@@ -373,6 +368,7 @@
                                                     <select name="cboPeriodo_b" id="cboPeriodo_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
                                                         <option value="2022">2022</option>
                                                         <option value="2023" selected>2023</option>
+                                                        <option value="2024">2024</option>
                                                     </select>
                                                 </div>
                                             </div>

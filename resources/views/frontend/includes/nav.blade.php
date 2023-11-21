@@ -63,9 +63,7 @@
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
                                 <a href="/multa/consulta_multa" class="dropdown-item">Multas</a>
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
-                                <a href="/concurso" class="dropdown-item">Concurso</a>
-								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
-								<a href="/concurso/consulta_resultado" class="dropdown-item">Consulta de Resultado de Concurso</a>
+                                
 						   </div>
 					</li>
 					
@@ -81,8 +79,12 @@
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Asuntos Tecnicos</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+                           <a href="/concurso" class="dropdown-item">Concurso</a>
+								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
+								<a href="/concurso/consulta_resultado" class="dropdown-item">Consulta de Resultado de Concurso</a>
 								<a href="/comision/consulta_comision" class="dropdown-item">Comisiones</a>
 								<a href="/comision/lista_comision" class="dropdown-item">Consulta de Comisiones</a>
+
 						   </div>
 					</li>
 
@@ -90,9 +92,6 @@
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
-								<a href="/empresa/consulta_empresa" class="dropdown-item">Consulta de Empresa</a>
-								<a href="/concepto/consulta_concepto" class="dropdown-item">Consulta de Concepto</a>
-                                <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Consulta de Tipo de Concepto</a>
                                 <a href="/municipalidad/consulta_municipalidad" class="dropdown-item">Municipalidades</a>
 								
 								<a href="/empresa/consulta_empresa" class="dropdown-item">Empresas</a>

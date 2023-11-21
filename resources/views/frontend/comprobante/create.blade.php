@@ -488,7 +488,34 @@
                                             </div>
                                             <div id="fsFiltro" class="card-body">
                                                 <div id="" class="row">
-                                                    
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
+
+                                                        <label class="form-group">Tipo Operaci&oacute;n</label>
+                                                        <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
+                                                            <option value="">--Selecionar--</option>
+                                                            <?php
+                                                            foreach ($tipooperacion as $row) { ?>
+                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
+                                                        <label class="form-group">Forma de pago</label>
+                                                        <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
+                                                            <option value="">--Selecionar--</option>
+                                                            <?php
+                                                            foreach ($formapago as $row) { ?>
+                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
 
                                                 </div>
                                             </div>

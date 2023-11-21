@@ -156,22 +156,26 @@ class IngresoController extends Controller
     public function modal_fraccionamiento(Request $request){
 
         $id_concepto = $request->id_concepto_sel;
-        //print_r($id_concepto); exit();
+        print_r($id_concepto); exit();
 
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
-        $total_fraccionar = 100;
-        
-        $concepto_detalle = $request->concepto_detalle;
+        $total_fraccionar = $request->total;
+        //print_r($request->comprobante_detalle); exit();
+        $comprobante_detalle = $request->comprobante_detalle;
         $ind = 0;
-        foreach($request->concepto_detalles as $key=>$det){
-            $conceptod[$ind] = $concepto_detalle[$key];
+        foreach($request->comprobante_detalles as $key=>$det){
+            
+            $comprobanted[$ind] = $comprobante_detalle[$key];
             $ind++;
         }
 
-        $concepto = Concepto::find($id_concepto);		
-       //echo $id_concepto;
-		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado','conceptod' ));
+        //print_r($comprobanted); exit();
+        $concepto = Concepto::find($id_concepto);
+        
+        //$comprobanted = json_encode($comprobanted_);
+    
+		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado','comprobanted' ));
 	}
     
 
@@ -237,52 +241,72 @@ class IngresoController extends Controller
 */
     }
 
-    public function fracciona_deuda(Request $request){
+    public function send_fracciona_deuda(Request $request){
 
         $msg = "";
         $id_user = Auth::user()->id;
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
-        
-        $concepto_detalle = $request->concepto_detalle;
-        $ind = 0;
-        foreach($request->concepto_detalles as $key=>$det){
-            $conceptod[$ind] = $concepto_detalle[$key];
-            $ind++;
+
+        $id_pk = 0;
+        $id_concepto = 0;
+
+        //print_r($request->fraccionamiento);
+
+
+        foreach($request->valorizacion as $key=>$tmp){
+            $id_pk = $tmp['id'];
+            $id_concepto = $tmp['id_concepto'];
         }
 
-        foreach ($conceptod as $key => $value) {
 
-            //$id_val = $value['id'];
-            //echo( $id_val);
+        foreach($request->valorizacion as $key=>$tmp){
+            $id_pk = $tmp['id'];
+        }
 
+        foreach($request->valorizacion as $key=>$val){
+
+            $id = $val['id'];
+
+            $valorizacion = Valorizacione::find($id);
+            $valorizacion-> pk_fraccionamiento = $id_pk;
+            $valorizacion-> estado = 0;
+			$valorizacion->save();          
+        }
+        
+
+
+        foreach($request->fraccionamiento as $key=>$frac){
             $valorizacion = new Valorizacione;
             $valorizacion->id_modulo = 6;
             $valorizacion->pk_registro = 0;
-            $valorizacion->id_concepto = $value['id'];
+            $valorizacion->id_concepto = $id_concepto;
             $valorizacion->id_agremido = $id_agremiado;
             $valorizacion->id_persona = $id_persona;
-            $valorizacion->monto = $value['importe'];
-            $valorizacion->id_moneda = $value['id_moneda'];
-            $valorizacion->fecha = Carbon::now()->format('Y-m-d');
+            $valorizacion->monto = $frac['total_frac'];
+            $valorizacion->id_moneda = 1;
+            $valorizacion->fecha = $frac['fecha_cuota'];
             $valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');            
             $valorizacion->id_usuario_inserta = $id_user;
-            $valorizacion->descripcion = $value['denominacion'];
+            $valorizacion->descripcion = $frac['denominacion'];
+            $valorizacion->codigo_fraccionamiento =  $id_pk;
 
             $valorizacion->save();
 
-            $msg = "ok";
-
         }
+        
 
-
-
-
-
+        $id_persona = $request->id_persona;
+        $tipo_documento = $request->id_tipo_documento_;
+        $periodo = $request->cboPeriodo_b;
+        $tipo_couta = $request->cboTipoCuota_b;
+        $concepto = $request->cboTipoConcepto_b;
+         //print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        //$valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta);
-        //print_r($valorizacion);exit();
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto);
+       
+       
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 
     }

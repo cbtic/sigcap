@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_comision_paginado(p_denominacion character varying, p_tipo_comision character varying, p_monto character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_comision_paginado(p_denominacion character varying, p_tipo_comision character varying, p_monto character varying, p_comision character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,7 +18,7 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' c.id, c.denominacion, c.id_tipo_comision, cm.monto, c.estado';
+	v_campos=' c.id, c.denominacion, c.id_tipo_comision, cm.monto, c.comision, c.estado';
 
 	v_tabla=' from comisiones c 
 inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
