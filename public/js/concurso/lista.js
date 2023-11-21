@@ -400,22 +400,19 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id_regional = $('#id_regional_bus').val();
-            var numero_cap = $('#numero_cap_bus').val();
-			var numero_documento = $('#numero_documento_bus').val();
-			var agremiado = $('#agremiado_bus').val();
-			var id_situacion = $('#id_situacion_bus').val();
-			var id_concurso = $('#id_concurso_bus').val();
-			
+			var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
+            var id_sub_tipo_concurso = $('#id_sub_tipo_concurso_bus').val();
+			var periodo = $('#periodo_bus').val();
+			var estado = $('#estado').val();
 			var _token = $('#_token').val();
+			
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 //"contentType": "application/json; charset=utf-8",
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
-						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
+						id_tipo_concurso:id_tipo_concurso,id_sub_tipo_concurso:id_sub_tipo_concurso,periodo:periodo,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -451,6 +448,16 @@ function datatablenew(){
                 "aTargets": [1]
                 },
 				
+				{
+                "mRender": function (data, type, row) {
+                	var sub_tipo_concurso = "";
+					if(row.sub_tipo_concurso!= null)sub_tipo_concurso = row.sub_tipo_concurso;
+					return sub_tipo_concurso;
+                },
+                "bSortable": true,
+                "aTargets": [2]
+                },
+				
                 {
                 "mRender": function (data, type, row) {
                 	var periodo = "";
@@ -458,7 +465,7 @@ function datatablenew(){
 					return periodo;
                 },
                 "bSortable": true,
-                "aTargets": [2]
+                "aTargets": [3]
                 },
 				
 				{
@@ -468,7 +475,7 @@ function datatablenew(){
 					return fecha;
                 },
                 "bSortable": true,
-                "aTargets": [3]
+                "aTargets": [4]
                 },
 				
 				{
@@ -478,7 +485,7 @@ function datatablenew(){
 					return fecha_inscripcion;
                 },
                 "bSortable": true,
-                "aTargets": [4]
+                "aTargets": [5]
                 },
 				
 				{
@@ -488,7 +495,7 @@ function datatablenew(){
 					return fecha_delegatura_inicio;
                 },
                 "bSortable": true,
-                "aTargets": [5]
+                "aTargets": [6]
                 },
 				
 				{
@@ -498,7 +505,7 @@ function datatablenew(){
 					return fecha_delegatura_fin;
                 },
                 "bSortable": true,
-                "aTargets": [6]
+                "aTargets": [7]
                 },
 				
 				{
@@ -513,7 +520,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [7]
+					"aTargets": [8]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -544,7 +551,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [8],
+					"aTargets": [9],
 				},
 
             ]
@@ -553,6 +560,28 @@ function datatablenew(){
     });
 
 }
+
+
+function obtenerSubTipoConcursoBus(){
+	
+	var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/93/'+id_tipo_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_sub_tipo_concurso_bus").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_sub_tipo_concurso_bus").html(option);
+		}
+		
+	});
+	
+}
+
 
 function fn_ListarBusqueda() {
     datatablenew();

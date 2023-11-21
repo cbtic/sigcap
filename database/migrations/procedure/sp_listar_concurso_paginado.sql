@@ -1,6 +1,7 @@
-
-
-CREATE OR REPLACE FUNCTION public.sp_listar_concurso_paginado(p_id_tipo_concurso character varying, p_periodo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_concurso_paginado(
+p_id_tipo_concurso character varying, 
+p_id_sub_tipo_concurso character varying,
+p_periodo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -20,23 +21,31 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' c.id,tm.denominacion tipo_concurso,c.periodo,to_char(c.fecha,''dd-mm-yyyy'')fecha,to_char(c.fecha_inscripcion,''dd-mm-yyyy'')fecha_inscripcion,to_char(c.fecha_delegatura_inicio,''dd-mm-yyyy'')fecha_delegatura_inicio,to_char(c.fecha_delegatura_fin,''dd-mm-yyyy'')fecha_delegatura_fin,c.estado ';
+	v_campos=' c.id,tm.denominacion tipo_concurso,c.periodo,c.fecha,c.fecha_inscripcion,c.estado,tms.denominacion sub_tipo_concurso ';
 
 	v_tabla=' from concursos c
-		inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo=''93''';
+		inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo=''101''
+		left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo=''93''';
 	
 	
 	v_where = ' Where 1=1  ';
 	
-	/*
-	If p_denominacion<>'' Then
-	 v_where:=v_where||'And s.nombre ilike ''%'||p_denominacion||'%'' ';
+	If p_id_tipo_concurso<>'' and p_id_tipo_concurso<>'0' Then
+	 v_where:=v_where||'And c.id_tipo_concurso = '''||p_id_tipo_concurso||''' ';
+	End If;
+
+	If p_id_sub_tipo_concurso<>'' and p_id_sub_tipo_concurso<>'0' Then
+	 v_where:=v_where||'And c.id_sub_tipo_concurso = '''||p_id_sub_tipo_concurso||''' ';
+	End If;
+	
+	If p_periodo<>'' Then
+	 v_where:=v_where||'And c.periodo ilike ''%'||p_periodo||'%'' ';
 	End If;
 
 	If p_estado<>'' Then
-	 v_where:=v_where||'And s.estado = '''||p_estado||''' ';
+	 v_where:=v_where||'And c.estado = '''||p_estado||''' ';
 	End If;
-	*/
+	
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
@@ -54,4 +63,3 @@ End
 
 $function$
 ;
-
