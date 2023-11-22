@@ -393,5 +393,61 @@ class PersonaController extends Controller
 	
 	}
 
+	function consulta_persona(){
+
+		//$tablaMaestra_model = new TablaMaestra;
+		$persona = new Persona;
+        //$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+        return view('frontend.persona.all_lista_persona',compact('persona'));
+
+    }
+
+	public function listar_persona2_ajax(Request $request){
+	
+		$persona_model = new Persona;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]=$request->sexo;
+        $p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $persona_model->listar_persona2_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	}
+
+	public function modal_persona_nuevoPersona($id){
+		
+		$persona = new Persona;
+		
+		if($id>0){
+			$persona = Persona::find($id);
+		}else{
+			$persona = new Persona;
+		}
+		
+		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
+		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
+		
+		return view('frontend.persona.modal_persona_nuevoPersona',compact('id','persona'));
+	
+	}
+
+
 
 }

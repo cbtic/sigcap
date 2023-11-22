@@ -110,6 +110,7 @@ class MultaController extends Controller
 
     public function modal_multa_nuevoMulta($id){
 		
+		//$id->moneda;
 		$multa = new Multa;
         $multa_concepto_model = new Multa_concepto;
 		$moneda_model = new Moneda;
