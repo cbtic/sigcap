@@ -9,6 +9,7 @@ use App\Models\SegurosPlane;
 use App\Models\Ubigeo;
 use App\Models\TablaMaestra;
 use App\Models\Regione;
+use App\Models\Seguro_afiliado_parentesco;
 
 use Auth;
 
@@ -206,8 +207,7 @@ class SeguroController extends Controller
 
 	public function edit(Request $request)
     {
-		
-
+		$id_user = Auth::user()->id;
 		$parentesco = $request->parentesco;
 		//print_r ($parentesco);exit();
 
@@ -220,31 +220,30 @@ class SeguroController extends Controller
 
 		$ind = 0;
 		foreach($parentesco_sel as $key=>$det){
-			print_r ($parentesco_sel[$ind]["edad"]);
+			//print_r ($parentesco_sel[$ind]["edad"]);
 			$ind++;
 		}
 
 
 
-		
-
-		exit();
+		//exit();
 
 		if($request->id == 0){
-			$segurosPlan = new SegurosPlane;
-			$segurosPlan->id_seguro = $request->id_seguro;
+			$seguroPatentesco = new Seguro_afiliado_parentesco();
+			$seguroPatentesco->id = $request->id;
 		}else{
-			$segurosPlan = SegurosPlane::find($request->id);
+			$seguroPatentesco = Seguro_afiliado_parentesco::find($request->id);
 		}
+			print_r ($request); exit();
 		
-		$segurosPlan->nombre = $request->nombre;
-		$segurosPlan->descripcion = $request->descripcion;
-		$segurosPlan->fecha_inicio = $request->fecha_inicio;
-		$segurosPlan->fecha_fin = $request->fecha_fin;
-		$segurosPlan->monto = $request->monto;
-		$segurosPlan->estado = 1;
-		$segurosPlan->id_usuario_inserta = $id_user;
-		$segurosPlan->save();
+		$seguroPatentesco->id_afiliacion = $request->id_afiliacion;
+		$seguroPatentesco->id_agremiado = $request->id_agremiado;
+		$seguroPatentesco->id_familia = $request->id_familia;
+		$seguroPatentesco->edad = $request->edad;
+		$seguroPatentesco->sexo = $request->sexo;
+		$seguroPatentesco->estado = 1;
+		$seguroPatentesco->id_usuario_inserta = $id_user;
+		$seguroPatentesco->save();
 
 
         return redirect('/ingreso/liquidacion_caja');

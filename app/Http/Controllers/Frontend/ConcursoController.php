@@ -31,8 +31,12 @@ class ConcursoController extends Controller
 	}
 
     function index(){
-
-        return view('frontend.concurso.all');
+		
+		$tablaMaestra_model = new TablaMaestra;
+		
+		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
+		
+        return view('frontend.concurso.all',compact('tipo_concurso'));
     }
 	
 	public function consulta_resultado(){
@@ -103,14 +107,13 @@ class ConcursoController extends Controller
 		$regione_model = new Regione;
 		$tablaMaestra_model = new TablaMaestra;
 		
-		$id_persona = Auth::user()->id_persona;
-		//echo $id_user;
+		//$id_persona = Auth::user()->id_persona;
 		$concurso = $concurso_model->getConcurso();
-		$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
+		//$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.concurso.create_resultado',compact('concurso','agremiado','region','situacion_cliente'));
+        return view('frontend.concurso.create_resultado',compact('concurso',/*'agremiado',*/'region','situacion_cliente'));
     }
 	
 	public function editar_inscripcion($id){
@@ -130,9 +133,10 @@ class ConcursoController extends Controller
 	public function listar_concurso(Request $request){
 	
 		$concurso_model = new Concurso();
-		$p[]="";
-		$p[]="";
-		$p[]=$request->estado;          
+		$p[]=$request->id_tipo_concurso;
+		$p[]=$request->id_sub_tipo_concurso;
+		$p[]=$request->periodo;
+		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $concurso_model->listar_concurso($p);
@@ -188,11 +192,21 @@ class ConcursoController extends Controller
 		
 		if($id>0) $concurso = Concurso::find($id);else $concurso = new Concurso;
 
-		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(93);
+		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
 
 		return view('frontend.concurso.modal_concurso',compact('id','concurso','tipo_concurso'));
 
     }
+	
+	public function listar_maestro_by_tipo_subtipo($tipo,$sub_codigo){
+	
+		$tablaMaestra_model = new TablaMaestra;
+		$sub_tipo_concurso = $tablaMaestra_model->getMaestroByTipoAndSubTipo($tipo,$sub_codigo);
+		
+		echo json_encode($sub_tipo_concurso);
+
+	
+	}
 	
 	public function modal_puesto($id){
 		
@@ -277,6 +291,7 @@ class ConcursoController extends Controller
 		}
 		
 		$concurso->id_tipo_concurso = $request->id_tipo_concurso;
+		$concurso->id_sub_tipo_concurso = $request->id_sub_tipo_concurso;
 		$concurso->periodo = $request->periodo;
 		$concurso->fecha = $request->fecha;
 		$concurso->fecha_inscripcion = $request->fecha_inscripcion;

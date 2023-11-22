@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_datos_agremiado_paginado(p_regional character varying, p_numero_cap character varying, p_numero_documento character varying, p_agremiado character varying, p_sexo character varying, p_fecha_nacimiento character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_datos_agremiado_paginado(p_regional character varying, p_numero_cap character varying, p_numero_documento character varying, p_agremiado character varying, p_sexo character varying, p_fecha_nacimiento character varying, p_periodo character varying, p_multa character varying, p_monto character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,7 +18,7 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' a2.id, r.denominacion regional, a2.numero_cap, p.numero_documento, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, tm.denominacion sexo, p.fecha_nacimiento, m.estado  ';
+	v_campos=' am2.id, r.denominacion regional, a2.numero_cap, p.numero_documento, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, tm.denominacion sexo, p.fecha_nacimiento,am2.periodo, m.denominacion multa, m.monto, m.estado  ';
 
 	v_tabla='from agremiado_multas am2 
 			inner join agremiados a2 on am2.id_agremiado =a2.id
@@ -64,4 +64,3 @@ End
 
 $function$
 ;
-

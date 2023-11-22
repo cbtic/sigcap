@@ -314,7 +314,7 @@
 
                                         <div class="row">
                                             <div class="col">
-                                                <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="modal_otro_pago()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Pago Otros Conceptos </button>
+                                                <button class="btn btn-success btn-sm" type="button" name="btnOtroConcepto" id="btnOtroConcepto" onClick="modal_otro_pago()" tabindex="0" disabled><i class="glyphicon glyphicon-search"></i> Pago Otros Conceptos </button>
                                             </div>
                                         </div>
 

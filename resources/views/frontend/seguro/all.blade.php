@@ -175,7 +175,9 @@
                         <thead>
                         <tr style="font-size:13px">
                             <th>Id</th>
+                            <th>Regional</th>
                             <th>Denominaci&oacute;n</th>                            
+                            <th>Descripci&oacute;n</th>                            
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

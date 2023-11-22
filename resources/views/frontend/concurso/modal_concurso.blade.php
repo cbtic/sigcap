@@ -183,6 +183,7 @@ function fn_save(){
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_tipo_concurso = $('#id_tipo_concurso').val();
+	var id_sub_tipo_concurso = $('#id_sub_tipo_concurso').val();
 	var periodo = $('#periodo').val();
 	var fecha =$('#fecha').val();
 	var fecha_inscripcion =$('#fecha_inscripcion').val();
@@ -192,7 +193,7 @@ function fn_save(){
     $.ajax({
 			url: "/concurso/send_concurso",
             type: "POST",
-            data : {_token:_token,id:id,id_tipo_concurso:id_tipo_concurso,periodo:periodo,fecha:fecha,fecha_inscripcion:fecha_inscripcion,fecha_delegatura_inicio:fecha_delegatura_inicio,fecha_delegatura_fin:fecha_delegatura_fin},
+            data : {_token:_token,id:id,id_tipo_concurso:id_tipo_concurso,id_sub_tipo_concurso:id_sub_tipo_concurso,periodo:periodo,fecha:fecha,fecha_inscripcion:fecha_inscripcion,fecha_delegatura_inicio:fecha_delegatura_inicio,fecha_delegatura_fin:fecha_delegatura_fin},
 			//dataType: 'json',
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
@@ -201,6 +202,26 @@ function fn_save(){
 								
             }
     });
+}
+
+function obtenerSubTipoConcurso(){
+	
+	var id_tipo_concurso = $('#id_tipo_concurso').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/93/'+id_tipo_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_sub_tipo_concurso").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_sub_tipo_concurso").html(option);
+		}
+		
+	});
+	
 }
 
 
@@ -246,7 +267,7 @@ function fn_save(){
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tipo Concurso</label>
-								<select name="id_tipo_concurso" id="id_tipo_concurso" class="form-control form-control-sm" onChange="">
+								<select name="id_tipo_concurso" id="id_tipo_concurso" class="form-control form-control-sm" onChange="obtenerSubTipoConcurso()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_concurso as $row) {?>
@@ -260,10 +281,21 @@ function fn_save(){
 						
 						<div class="col-lg-6">
 							<div class="form-group">
+								<label class="control-label form-control-sm">SubTipo Concurso</label>
+								<select name="id_sub_tipo_concurso" id="id_sub_tipo_concurso" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-lg-6">
+							<div class="form-group">
 								<label class="control-label">Periodo</label>
 								<input id="periodo" name="periodo" class="form-control form-control-sm"  value="<?php echo $concurso->periodo?>" type="text"  >
 							</div>
 						</div>
+						
+						<div class="col-lg-6"></div>
 
 						<div class="col-lg-6">
 							<div class="form-group">
