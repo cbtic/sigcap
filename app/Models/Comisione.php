@@ -18,7 +18,7 @@ class Comisione extends Model
 	
 	public function lista_comision_ajax($p){
 
-        return $this->readFuntionPostgres('sp_listar_comisiones_paginado',$p);
+        return $this->readFuntionPostgres('sp_listar_comision_new_paginado',$p);
 
     }
 
