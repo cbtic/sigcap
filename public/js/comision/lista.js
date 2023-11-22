@@ -802,11 +802,11 @@ function fn_eliminar_comision(id,estado){
 }
 
 function fn_guardar(){
-    
+    var periodo = $("#periodo").val();
     $.ajax({
 			url: "/comision/send_comision",
             type: "POST",
-            data : $("#frmComision").serialize(),
+            data : $("#frmComision").serialize()+"&periodo="+periodo,
             success: function (result) {
 					//datatablenew();
 				cargarMunicipalidades();
@@ -818,10 +818,11 @@ function fn_guardar(){
 
 function fn_guardarMunicipalidadIntegrada(){
     
+	var tipo_comision=$("#tipo_comision").val();
     $.ajax({
 			url: "/comision/send_municipalidad_integrada",
             type: "POST",
-            data : $("#frmComision").serialize(),
+            data : $("#frmComision").serialize()+"&tipo_comision="+tipo_comision,
             success: function (result) {  
 					//datatablenew();
 				cargarMunicipalidades();
