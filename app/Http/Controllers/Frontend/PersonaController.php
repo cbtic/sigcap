@@ -509,5 +509,4 @@ class PersonaController extends Controller
 		$persona->id_usuario_inserta = $id_user;
 		$persona->save();
     }
-
 }

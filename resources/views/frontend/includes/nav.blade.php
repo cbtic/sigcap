@@ -103,6 +103,7 @@
                                 <a href="/movilidad/consulta_movilidad" class="dropdown-item">Movilidad</a>
                                 <a href="/persona/consulta_persona" class="dropdown-item">Persona</a>
 								<a href="/profesion/consulta_profesion" class="dropdown-item">Profesi&oacute;n</a>
+                                <a href="/profesionalesOtro/consulta_profesionalesOtro" class="dropdown-item">Otros Profesionales</a>
 								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
 						   </div>
 					</li>

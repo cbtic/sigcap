@@ -28,7 +28,7 @@ use App\Http\Controllers\Frontend\ComisionController;
 use App\Http\Controllers\Frontend\PeriodoComisionController;
 use App\Http\Controllers\Frontend\MovilidadController;
 use App\Http\Controllers\Frontend\ProfesionController;
-
+use App\Http\Controllers\Frontend\ProfesionalesOtroController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -332,3 +332,10 @@ Route::get('profesion/editar_profesion/{id}', [ProfesionController::class, 'edit
 Route::get('profesion/modal_profesion_nuevoProfesion/{id}', [ProfesionController::class, 'modal_profesion_nuevoProfesion'])->name('profesion.modal_profesion_nuevoProfesion');
 Route::post('profesion/send_profesion_nuevoProfesion', [ProfesionController::class, 'send_profesion_nuevoProfesion'])->name('profesion.send_profesion_nuevoProfesion');
 Route::get('profesion/eliminar_profesion/{id}/{estado}', [ProfesionController::class, 'eliminar_profesion'])->name('profesion.eliminar_profesion');
+
+Route::get('profesionalesOtro/consulta_profesionalesOtro', [ProfesionalesOtroController::class, 'consulta_profesionalesOtro'])->name('profesionalesOtro.consulta_profesionalesOtro');
+Route::post('profesionalesOtro/listar_profesionalesOtro_ajax', [ProfesionalesOtroController::class, 'listar_profesionalesOtro_ajax'])->name('profesionalesOtro.listar_profesionalesOtro_ajax');
+Route::get('profesionalesOtro/editar_profesionalesOtro/{id}', [ProfesionalesOtroController::class, 'editar_profesionalesOtro'])->name('profesionalesOtro.editar_profesionalesOtro');
+Route::get('profesionalesOtro/modal_profesionalesOtro_nuevoProfesionalesOtro/{id}', [ProfesionalesOtroController::class, 'modal_profesionalesOtro_nuevoProfesionalesOtro'])->name('profesionalesOtro.modal_profesionalesOtro_nuevoProfesionalesOtro');
+Route::post('profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro', [ProfesionalesOtroController::class, 'send_profesionalesOtro_nuevoProfesionalesOtro'])->name('profesionalesOtro.send_profesionalesOtro_nuevoProfesionalesOtro');
+Route::get('profesionalesOtro/eliminar_profesionalesOtro/{id}/{estado}', [ProfesionalesOtroController::class, 'eliminar_profesionalesOtro'])->name('profesionalesOtro.eliminar_profesionalesOtro');
