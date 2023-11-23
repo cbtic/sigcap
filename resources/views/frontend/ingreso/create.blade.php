@@ -563,6 +563,60 @@
 
             </form>
 
+
+            <!-- Modal -->
+            <div class="modal fade" id="choferModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        {!! Form::open(['id' => 'modalChoferForm','url' => route('frontend.chofer'), 'autocomplete' =>
+                        'off'] )
+                        !!}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ingrese los datos del nuevo conductor
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="card-body">
+                                    <div id="" class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                            <div class="form-group">
+                                                {{ Form::select('tipo_documento', ['DNI' => 'DNI', 'CARNET_EXTRANJERIA' => 'Carnet Extranjeria', 'PASAPORTE' => 'Pasaporte', 'CEDULA' => 'Cedula', 'PTP/PTEP' => 'PTP'],null, ['id' => 'tipo_documento_chofer', 'class' => 'form-control form-control-sm']) }}
+                                            </div>
+
+                                            <div class="form-group">
+                                                {{ Form::number('numero_documento', old('numdoc'), ['id' => 'numero_documento_', 'oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);', 'maxlength' => '11', 'class' => 'form-control form-control-sm', 'placeholder' => 'N° Documento']) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ Form::text('apellido_paterno', old('apepat'), ['id' => 'apellido_paterno_', 'class' => 'form-control form-control-sm', 'readonly', 'placeholder' => 'Apellido Paterno']) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ Form::text('apellido_materno', old('apemat'), ['id' => 'apellido_materno_', 'class' => 'form-control form-control-sm', 'readonly', 'placeholder' => 'Apellido Materno']) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ Form::text('nombres', old('nombresold'), ['id' => 'nombres_chofer_', 'class' => 'form-control form-control-sm', 'readonly', 'placeholder' => 'Nombres']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::button('Cancelar', ['id' => 'modalPersonaCancelBtn','class' => 'btn btn-secondary',
+                            'data-dismiss' => 'modal']) !!}
+                            {!! Form::button('Grabar', ['id' => 'modalChoferSaveBtn','class' => 'btn btn-primary']) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>
+
         </div><!--row-->
         @endsection
 

@@ -24,6 +24,9 @@ class CreateComisionSesionesTable extends Migration
             $table->date('hora_fin')->nullable();
             $table->integer('id_aprobado')->nullable();
             $table->string('observaciones',5000)->nullable();
+            $table->integer('id_comision')->nullable();
+            $table->integer('id_estado_sesion')->nullable();
+
             $table->string('estado',1)->nullable()->default('1');
  
             $table->bigInteger('id_usuario_inserta')->unsigned()->index();
@@ -32,7 +35,8 @@ class CreateComisionSesionesTable extends Migration
 
             $table->foreign('id_regional')->references('id')->on('regiones');
             $table->foreign('id_periodo_comisione')->references('id')->on('periodo_comisiones');
-
+            $table->foreign('id_comision')->references('id')->on('comisiones');
+           
         });
     }
 
