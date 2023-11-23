@@ -6,7 +6,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalAsignarDelegado(0);
+		modalSesion(0);
 	});
 
 	$('#denominacion').keypress(function(e){
@@ -260,13 +260,13 @@ function obtenerPlanDetalle(){
 	
 }
 
-function modalAsignarDelegado(id){
+function modalSesion(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/comision/modal_asignar_delegado/"+id,
+			url: "/sesion/modal_sesion/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);

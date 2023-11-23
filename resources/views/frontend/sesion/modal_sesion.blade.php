@@ -269,7 +269,7 @@ function fn_save(){
 	var id_concurso_inscripcion = $('#id_concurso_inscripcion').val();
 	
     $.ajax({
-			url: "/comision/send_delegado",
+			url: "/sesion/send_sesion",
             type: "POST",
             data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion},
             success: function (result) {
@@ -438,7 +438,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Delegado
+				Registro Programacion de Sesi&oacute;n
 			</div>
 			
             <div class="card-body">
@@ -449,32 +449,6 @@ container: '#myModal modal-body'
 					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
-					
-					<?php
-					
-					$display_empresa="display:none";
-					$display_persona="display:block";
-					/*
-					$checked_tipo = "";
-					$checked_flag_web = "";
-					
-					if($proveedor->id > 0){
-						if($proveedor->tipo == 0){
-							$display_empresa="display:none";
-							$display_persona="display:block";
-							$checked_tipo = "";
-						}
-						
-						if($proveedor->tipo == 1){
-							$display_empresa="display:block";
-							$display_persona="display:none";
-							$checked_tipo = "checked='checked'";
-						}
-						
-						if($proveedor->flag_web == 1)$checked_flag_web = "checked='checked'";
-					}
-					*/
-					?>
 					
 					<div class="row" style="padding-left:10px">
 						
@@ -522,7 +496,7 @@ container: '#myModal modal-body'
 								<select name="id_concurso_inscripcion" id="id_concurso_inscripcion" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar--</option>
 									<?php
-									foreach ($concurso_inscripcion as $row) {?>
+									foreach ($delegados as $row) {?>
 									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
 									<?php 
 									}

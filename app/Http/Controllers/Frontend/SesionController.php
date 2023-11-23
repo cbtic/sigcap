@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ComisionSesione;
+use App\Models\ComisionSesionDelegado;
 use Auth;
 
 class SesionController extends Controller
@@ -57,15 +58,20 @@ class SesionController extends Controller
 		
 		$regione_model = new Regione;
 		$comision_model = new Comisione;
-		$comisionDelegado_model = new ComisionDelegado;
+		$comisionSesionDelegado_model = new ComisionSesionDelegado;
 		
 		$comision = $comision_model->getComisionAll("","1");
-		if($id>0) $comisionSesion = ComisionSesione::find($id);else $comisionSesion = new ComisionSesione;
-
-		//$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
 		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','comision','concurso_inscripcion','region'));
+		if($id>0){
+			$comisionSesion = ComisionSesione::find($id);
+			$delegados = $comisionSesionDelegado_model->getComisionSesionDelegadosByIdComisionSesion($id);
+		}else{
+			$comisionSesion = new ComisionSesione;
+			$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision($request->id_comision);
+		}
+		
+		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','comision','delegados','region'));
 
     }
 	

@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consulta de Comisiones <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consulta de Programaci&oacute;n de Sesi&oacute;n <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Comisiones
+                        Lista de Programaci&oacute;n de Sesiones
                     </strong>
                 </div><!--card-header-->
 				
