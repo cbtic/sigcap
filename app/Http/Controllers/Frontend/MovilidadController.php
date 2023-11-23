@@ -30,7 +30,7 @@ class MovilidadController extends Controller
         //$tablaMaestra_model = new TablaMaestra;
 		//$movilidad = new Movilidade;
         //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
-		$municipalidadIntegrada = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll();
+		$municipalidadIntegrada = $municipalidadIntegrada_model->getMuniIntegradaAll();
 		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
 
         return view('frontend.movilidad.all',compact('municipalidadIntegrada','comision_movilidades','periodoComision'));

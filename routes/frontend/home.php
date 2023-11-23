@@ -27,7 +27,7 @@ use App\Http\Controllers\Frontend\ComisionController;
 
 use App\Http\Controllers\Frontend\PeriodoComisionController;
 use App\Http\Controllers\Frontend\MovilidadController;
-
+use App\Http\Controllers\Frontend\ProfesionController;
 
 /*
  * Frontend Controllers
@@ -326,3 +326,9 @@ Route::get('persona/modal_persona_nuevoPersona/{id}', [PersonaController::class,
 Route::get('persona/editar_persona/{id}', [PersonaController::class, 'editar_persona'])->name('persona.editar_persona');
 Route::post('persona/send_persona_nuevoPersona', [PersonaController::class, 'send_persona_nuevoPersona'])->name('persona.send_persona_nuevoPersona');
 //Route::get('persona/eliminar_persona/{id}/{estado}', [PersonaController::class, 'eliminar_persona'])->name('persona.eliminar_persona');
+Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
+Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
+Route::get('profesion/editar_profesion/{id}', [ProfesionController::class, 'editar_profesion'])->name('profesion.editar_profesion');
+Route::get('profesion/modal_profesion_nuevoProfesion/{id}', [ProfesionController::class, 'modal_profesion_nuevoProfesion'])->name('profesion.modal_profesion_nuevoProfesion');
+Route::post('profesion/send_profesion_nuevoProfesion', [ProfesionController::class, 'send_profesion_nuevoProfesion'])->name('profesion.send_profesion_nuevoProfesion');
+Route::get('profesion/eliminar_profesion/{id}/{estado}', [ProfesionController::class, 'eliminar_profesion'])->name('profesion.eliminar_profesion');
