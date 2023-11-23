@@ -132,11 +132,11 @@ class MovilidadController extends Controller
 
     public function eliminar_movilidad($id,$estado)
     {
-		$movilidad = ComisionMovilidade::find($id);
-		$movilidad->estado = $estado;
-		$movilidad->save();
+		$comision_movilidades = ComisionMovilidade::find($id);
+		$comision_movilidades->estado = $estado;
+		$comision_movilidades->save();
 
-		echo $movilidad->id;
+		echo $comision_movilidades->id;
 
     }
 

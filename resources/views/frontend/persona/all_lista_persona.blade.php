@@ -153,10 +153,21 @@
 						<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="Numero Documento">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombres">
+						<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
 					</div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="sexo" name="sexo" placeholder="Sexo">
+
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select name="sexo" id="sexo" class="form-control form-control-sm" onchange="">
+                                <option value="">--Selecionar Sexo--</option>
+                                <?php
+                                foreach ($sexo as $row) {?>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_sexo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
 					</div>
                     
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">

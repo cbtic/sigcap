@@ -395,10 +395,13 @@ class PersonaController extends Controller
 
 	function consulta_persona(){
 
-		//$tablaMaestra_model = new TablaMaestra;
+		$tablaMaestra_model = new TablaMaestra;
 		$persona = new Persona;
-        //$sexo = $tablaMaestra_model->getMaestroByTipo(2);
-        return view('frontend.persona.all_lista_persona',compact('persona'));
+        $sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
+		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
+        return view('frontend.persona.all_lista_persona',compact('persona','sexo','tipo_documento','grupo_sanguineo','nacionalidad'));
 
     }
 
@@ -406,8 +409,8 @@ class PersonaController extends Controller
 	
 		$persona_model = new Persona;
 		$p[]="";
-		$p[]="";
-		$p[]="";
+		$p[]=$request->numero_documento;
+		$p[]=$request->agremiado;
 		$p[]="";
 		$p[]="";
 		$p[]="";
@@ -433,7 +436,10 @@ class PersonaController extends Controller
 
 	public function modal_persona_nuevoPersona($id){
 		
+		$tablaMaestra_model = new TablaMaestra;
 		$persona = new Persona;
+
+		//$persona = new Persona;
 		
 		if($id>0){
 			$persona = Persona::find($id);
@@ -441,13 +447,67 @@ class PersonaController extends Controller
 			$persona = new Persona;
 		}
 		
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
+		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
+        
+
 		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.persona.modal_persona_nuevoPersona',compact('id','persona'));
+		return view('frontend.persona.modal_persona_nuevoPersona',compact('id','persona','sexo','tipo_documento','grupo_sanguineo','nacionalidad'));
 	
 	}
 
+	public function editar_persona($id){
+        
+		$persona = Persona::find($id);
+		$tablaMaestra_model = new TablaMaestra;
+		$id_persona = $persona->id_persona;
+		
+		$persona = Persona::find($id_persona);
 
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
+		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
+		$persona_model = new Persona;
+        //$concepto_model = new concepto;
+		
+		return view('frontend.persona.create_mantenimiento',compact('persona','tipo_documento','sexo','grupo_sanguineo','nacionalidad','estado'));
+		
+    }
+
+	public function send_persona_nuevoPersona(Request $request){
+
+		$id_user = Auth::user()->id;
+		//$persona_model = new Persona;
+		
+		if($request->id == 0){
+			$persona = new Persona;
+			//$codigo = $Concepto_model->getCodigoConcepto();
+		}else{
+			$persona = Persona::find($request->id);
+			//$codigo = $request->codigo;
+		}
+
+		$persona->id_tipo_documento = $request->tipo_documento;
+		$persona->numero_documento = $request->numero_documento;
+		$persona->apellido_paterno = $request->apellido_paterno;
+		$persona->apellido_materno = $request->apellido_materno;
+		$persona->nombres = $request->nombre;
+		$persona->fecha_nacimiento = $request->fecha_nacimiento;
+		$persona->id_tipo_persona = 1;
+		$persona->grupo_sanguineo = $request->grupo_sanguineo;
+		$persona->id_ubigeo_nacimiento =150101;
+		$persona->lugar_nacimiento = $request->lugar_nacimiento;
+		$persona->id_nacionalidad = $request->nacionalidad;
+		$persona->numero_ruc = 12345678910;
+		$persona->id_sexo = $request->sexo;
+		$persona->estado = 1;
+		$persona->id_usuario_inserta = $id_user;
+		$persona->save();
+    }
 
 }

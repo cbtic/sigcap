@@ -321,3 +321,6 @@ Route::get('comision/consulta_comision_integrada', [ComisionController::class, '
 Route::get('persona/consulta_persona', [PersonaController::class, 'consulta_persona'])->name('persona.consulta_persona');
 Route::post('persona/listar_persona2_ajax', [PersonaController::class, 'listar_persona2_ajax'])->name('persona.listar_persona2_ajax');
 Route::get('persona/modal_persona_nuevoPersona/{id}', [PersonaController::class, 'modal_persona_nuevoPersona'])->name('persona.modal_persona_nuevoPersona');
+Route::get('persona/editar_persona/{id}', [PersonaController::class, 'editar_persona'])->name('persona.editar_persona');
+Route::post('persona/send_persona_nuevoPersona', [PersonaController::class, 'send_persona_nuevoPersona'])->name('persona.send_persona_nuevoPersona');
+//Route::get('persona/eliminar_persona/{id}/{estado}', [PersonaController::class, 'eliminar_persona'])->name('persona.eliminar_persona');
