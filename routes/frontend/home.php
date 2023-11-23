@@ -251,6 +251,8 @@ Route::get('concurso/modal_requisito/{id}', [ConcursoController::class, 'modal_r
 Route::post('concurso/send_requisito', [ConcursoController::class, 'send_requisito'])->name('concurso.send_requisito');
 Route::post('concurso/listar_requisito', [ConcursoController::class, 'listar_requisito'])->name('concurso.listar_requisito');
 
+Route::get('concurso/listar_maestro_by_tipo_subtipo/{tipo}/{sub_codigo}', [ConcursoController::class, 'listar_maestro_by_tipo_subtipo'])->name('concurso.listar_maestro_by_tipo_subtipo');
+
 Route::get('comision/consulta_comision', [ComisionController::class, 'consulta_comision'])->name('comision.consulta_comision');
 Route::post('comision/listar_comision_ajax', [ComisionController::class, 'listar_comision_ajax'])->name('comision.listar_comision_ajax');
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');

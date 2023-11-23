@@ -586,13 +586,14 @@ function fn_save_fila(id,idfamilia){
                     <table id="tblParentesco" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Id</th>
+							<th>Sel.</th>
+							<th>Id</th>
                             <th>Parentesco</th>
 							<th>Apellidos y nombres</th>
 							<th>sexo</th>
 							<th>Edad</th>                                                        
-							<th>Estado</th>
-                            <th>Acciones</th>
+							
+                            
                         </tr>
                         </thead>
                         <tbody style="font-size:13px">

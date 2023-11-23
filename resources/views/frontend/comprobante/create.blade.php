@@ -328,6 +328,35 @@
 
                                                         </div>
                                                     </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
+
+                                                        <label class="form-group">Tipo Operaci&oacute;n</label>
+                                                        <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
+                                                            <option value="">--Selecionar--</option>
+                                                            <?php
+                                                            foreach ($tipooperacion as $row) { ?>
+                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                        </div>
+
+                                                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
+                                                        <label class="form-group">Forma de pago</label>
+                                                        <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
+                                                            <option value="">--Selecionar--</option>
+                                                            <?php
+                                                            foreach ($formapago as $row) { ?>
+                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                            <?php
+    }
+    ?>
+</select>
+</div>               
+                                                    
                                                 </div>
                                                 <div id="" class="row">
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
@@ -454,78 +483,13 @@
                                         </div>
                                         <!--card-->
 
-                                        <div class="card" id="">
-                                            <div class="card-header">
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="table-responsive overflow-auto" style="max-height: 500px;">
-                                                    <table id="tblDetalle" class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-right" width="5%">#</th>
-                                                                <th class="text-center" width="10%">Cant.</th>
-                                                                <th width="40%">Descripción</th>
-                                                                <th width="40%">%Dscto.</th>
-                                                                <th class="text-right" width="15%">PU</th>
-                                                                <th class="text-right" width="15%">IGV</th>
-                                                                <th class="text-right" width="15%">P.Venta</th>
-                                                                <th class="text-right" width="15%">Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php $n = 0;
-                                                            $smodulo = "";
-                                                            if ($trans == 'FA' || $trans == 'FE') { ?>
-                                                                <?php foreach ($facturad as $key => $fac) {
-                                                                    //		$smodulo = $fac['smodulo'];
-                                                                ?>
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][id]" value="<?php echo $fac['id'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac['fecha'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac['denominacion'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac['descripcion'] ?>" />
-                                                                    
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo $fac['moneda'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo $fac['id_moneda'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][descuento]" value="<?php echo $fac['descuento'] ?>" />
-                                                                    <input type="hidden" name="facturad[<?php echo $key ?>][cod_contable]" value="<?php echo $fac['cod_contable'] ?>" />
-
-
-                                                        <label class="form-group">Tipo Operaci&oacute;n</label>
-                                                        <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
-                                                            <option value="">--Selecionar--</option>
-                                                            <?php
-                                                            foreach ($tipooperacion as $row) { ?>
-                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-
-                                                        <label class="form-group">Forma de pago</label>
-                                                        <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
-                                                            <option value="">--Selecionar--</option>
-                                                            <?php
-                                                            foreach ($formapago as $row) { ?>
-                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
 
                                 </div>
                             </div>
                             <br>
-
+                        </div>                                                  
                             <div id="" class="row">
                                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                     <div class="card">
@@ -810,37 +774,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="" class="row">
-                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">Forma de Pago</label>
-                                                        <select name="forma_pago" id="forma_pago" class="form-control form-control-sm">
-                                                            <?php foreach ($forma_pago as $row) : ?>
-                                                                <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">Tipo de Cambio</label>
-                                                        <input type="text" name="tipo_cambio" id="tipo_cambio" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">Condición de Pago</label>
-                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">F. Programado</label>
-                                                        <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                         <!--card-body-->
                                     </div>
