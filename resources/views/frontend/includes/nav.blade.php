@@ -84,6 +84,7 @@
 								<a href="/concurso/consulta_resultado" class="dropdown-item">Consulta de Resultado de Concurso</a>
 								<a href="/comision/consulta_comision" class="dropdown-item">Comisiones</a>
 								<a href="/comision/lista_comision" class="dropdown-item">Consulta de Comisiones</a>
+								<a href="/sesion/lista_programacion_sesion" class="dropdown-item">Programaci&oacute;n de Sesiones</a>
 
 						   </div>
 					</li>

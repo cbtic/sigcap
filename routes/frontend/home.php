@@ -24,6 +24,7 @@ use App\Http\Controllers\Frontend\CertificadoController;
 use App\Models\Certificado;
 
 use App\Http\Controllers\Frontend\ComisionController;
+use App\Http\Controllers\Frontend\SesionController;
 
 use App\Http\Controllers\Frontend\PeriodoComisionController;
 use App\Http\Controllers\Frontend\MovilidadController;
@@ -323,3 +324,13 @@ Route::get('comision/consulta_comision_integrada', [ComisionController::class, '
 Route::get('persona/consulta_persona', [PersonaController::class, 'consulta_persona'])->name('persona.consulta_persona');
 Route::post('persona/listar_persona2_ajax', [PersonaController::class, 'listar_persona2_ajax'])->name('persona.listar_persona2_ajax');
 Route::get('persona/modal_persona_nuevoPersona/{id}', [PersonaController::class, 'modal_persona_nuevoPersona'])->name('persona.modal_persona_nuevoPersona');
+
+Route::get('sesion/lista_programacion_sesion', [SesionController::class, 'lista_programacion_sesion'])->name('sesion.lista_programacion_sesion');
+Route::post('sesion/lista_programacion_sesion_ajax', [SesionController::class, 'lista_programacion_sesion_ajax'])->name('sesion.lista_programacion_sesion_ajax');
+Route::get('sesion/modal_sesion/{id}', [SesionController::class, 'modal_sesion'])->name('sesion.modal_sesion');
+Route::post('sesion/send_sesion', [SesionController::class, 'send_sesion'])->name('sesion.send_sesion');
+
+
+
+
+
