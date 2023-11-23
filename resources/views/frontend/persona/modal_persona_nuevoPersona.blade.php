@@ -1,4 +1,4 @@
-<title>Sistema de Multas</title>
+<title>Sistema de Empresas</title>
 
 <style>
 /*
@@ -335,7 +335,7 @@ function fn_save_estudio(){
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
+				window.location.reload();
 				
 				/*
 				$('#openOverlayOpc').modal('hide');
@@ -349,28 +349,30 @@ function fn_save_estudio(){
     });
 }
 
-function fn_save_multa(){
+function fn_save_empresa(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var numero_cap = $('#numero_cap').val();
-	var periodo = $('#periodo').val();
-	var id_multa = $('#id_multa').val();
-	//var moneda = $('#moneda').val();
-	//var importe = $('#importe').val();
+	var ruc = $('#ruc').val();
+	var nombre_comercial = $('#nombre_comercial').val();
+	var razon_social = $('#razon_social').val();
+	var direccion = $('#direccion').val();
+	var email = $('#email').val();
+	var telefono = $('#telefono').val();
+	var representante = $('#representante').val();
 	//var estado = $('#estado').val();
+	
 	//alert(id_agremiado);
 	//return false;
 	
     $.ajax({
-			url: "/multa/send_multa_nuevoMulta",
+			url: "/empresa/send_empresa_nuevoEmpresa",
             type: "POST",
-            data : {_token:_token,id:id,numero_cap:numero_cap,periodo:periodo,id_multa:id_multa},
+            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,email:email,telefono:telefono,representante:representante},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
 				window.location.reload();
-				datatablenew();
 				
 				/*
 				$('#openOverlayOpc').modal('hide');
@@ -491,16 +493,6 @@ function cargar_tipo_proveedor(){
 	
 }
 
-function obtener_multa(){
-	
-	var moneda = $("#id_multa option:selected").attr("moneda");
-	var monto = $("#id_multa option:selected").attr("monto");
-	
-	$("#moneda").val(moneda);
-	$("#monto").val(monto);
-	
-}
-
 /*
 $('#fecha_solicitud').datepicker({
 	autoclose: true,
@@ -553,7 +545,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro Multas
+				Registro Personas
 			</div>
 			
             <div class="card-body">
@@ -570,71 +562,81 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-3">
 							<div class="form-group">
-								<label class="control-label form-control-sm">N° CAP</label>
-								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $agremiado->numero_cap?>" type="text" >
+								<label class="control-label form-control-sm">Tipo Documento</label>
+								<input id="tipo_documento" name="tipo_documento" on class="form-control form-control-sm"  value="<?php echo $persona->id_tipo_documento?>" type="text" >
 							
 							</div>
 						</div>
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">N&uacute;mero Documento</label>
+								<input id="numero_documento" name="numero_documento" class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text">						
+							</div>
+						</div>
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Nombres</label>
+								<input id="nombre" name="nombre" class="form-control form-control-sm"  value="<?php echo $persona->nombres?>" type="text">													
+							</div>
+						</div>
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Apellido Paterno</label>
+								<input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm"  value="<?php echo $persona->apellido_paterno?>" type="text">													
+							</div>
+						</div>
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Apellido Materno</label>
+								<input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm"  value="<?php echo $persona->apellido_materno?>" type="text">													
+							</div>
+						</div>
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Nacimiento</label>
+								<input id="fecha_nacimiento" name="fecha_nacimiento" class="form-control form-control-sm"  value="<?php echo $persona->fecha_nacimiento?>" type="text" >																				
+							</div>
+						</div>
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Grupo Sanguineo</label>
+								<input id="grupo_sanguineo" name="grupo_sanguineo" class="form-control form-control-sm"  value="<?php echo $persona->grupo_sanguineo?>" type="text" >																				
+							</div>
+						</div>
+
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Lugar Nacimiento</label>
+								<input id="lugar_nacimiento" name="lugar_nacimiento" class="form-control form-control-sm"  value="<?php echo $persona->lugar_nacimiento?>" type="text" >																				
+							</div>
+						</div>
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Nacionalidad</label>
+								<input id="nacionalidad" name="nacionalidad" class="form-control form-control-sm"  value="<?php echo $persona->id_nacionalidad?>" type="text" >																				
+							</div>
+						</div>
+
 						<div class="col-lg-3">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Periodo</label>
-								<input id="periodo" name="periodo" on class="form-control form-control-sm"  value="<?php echo $agremiadoMulta->periodo?>" type="text" >
-							
-							</div>
-						</div>
-						<!--
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Concepto</label>
-								<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									//foreach ($multa_concepto as $row) {?>
-									<option value="<?php //echo $row->id?>" <?php //if($row->id==$agremiadoMulta->id_multa)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
-									<?php 
-									//}
-									?>
-								</select>
-							</div>
-						</div>
-						-->
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Multa</label>
-								<select name="id_multa" id="id_multa" onChange="obtener_multa()" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($multa as $row) {?>
-									<option value="<?php echo $row->id?>" moneda="<?php echo $row->moneda?>" monto="<?php echo $row->monto?>" <?php if($row->id==$agremiadoMulta->id_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
+								<label class="control-label form-control-sm">Sexo</label>
+								<input id="sexo" name="sexo" class="form-control form-control-sm"  value="<?php echo $persona->id_sexo?>" type="text" >																				
 							</div>
 						</div>
 						
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Moneda</label>
-								<input id="moneda" name="moneda" class="form-control form-control-sm" readonly="readonly"  value="" type="text" >
-							</div>
-						</div>
-						
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Importe</label>
-								<input id="monto" name="monto" class="form-control form-control-sm" readonly="readonly"  value="" type="text" >																				
-							</div>
-						</div>
 					</div>
-					
-					
 					
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_multa()" class="btn btn-sm btn-success">Registrar</a>
+								<a href="javascript:void(0)" onClick="fn_save_empresa()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

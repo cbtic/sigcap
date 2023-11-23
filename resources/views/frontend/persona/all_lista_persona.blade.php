@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Agremiados</li>
+            <li class="breadcrumb-item active">Consulta de Personas</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consultar Agremiados <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consultar Personas <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Agremiados
+                        Lista de Personas
                     </strong>
                 </div><!--card-header-->
 				
@@ -149,67 +149,48 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm" >
-							<option value="">--Regional--</option>
-							<?php
-							foreach ($region as $row) {?>
-							<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
-							<?php 
-							}
-							?>
-						</select>
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="Numero Documento">
 					</div>
-					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="Numero Cap">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombres">
 					</div>
-					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="numero_documento_bus" name="numero_documento_bus" placeholder="Numero Documento">
-					</div>
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
-					</div>
-					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_inicio_bus" name="fecha_inicio_bus" placeholder="Fecha Desde">
-					</div>
-					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Hasta">
-					</div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm" >
-							<option value="">--Situaci&oacute;n--</option>
-							<?php
-							foreach ($situacion_cliente as $row) {?>
-							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
-							<?php 
-							}
-							?>
-						</select>
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="sexo" name="sexo" placeholder="Sexo">
 					</div>
                     
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-                        <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-							
-						<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
-	
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="estado" id="estado" class="form-control form-control-sm">
+							<option value="">Todos</option>
+							<option value="1" selected="selected">Activo</option>
+							<option value="0">Eliminado</option>
+						</select>
+					</div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						
+                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+
 					</div>
 				</div>
 				
-                <div class="card-body">				
+                <div class="card-body">
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
                             <th>Tipo Documento</th>
-                            <th>Numero Documento</th>
-							<th>Numero Cap</th>
-                            <th>Regional</th>
-                            <th>Fecha Inicio</th>
-							<th>Agremiado</th>
-							<th>Fecha Nacimiento</th>
-							<th>Situaci&oacute;n</th>
-							<th>Acciones</th>
+                            <th>N&uacute;mero Documento</th>
+                            <th>Nombre</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Grupo Sanguineo</th>
+                            <th>Lugar Nacimiento</th>
+                            <th>Nacionalidad</th>
+                            <th>Sexo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -246,6 +227,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/agremiado/lista.js') }}"></script>
+<script src="{{ asset('js/persona/lista2.js') }}"></script>
 
 @endpush
