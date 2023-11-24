@@ -47,6 +47,7 @@ Route::get('terms', [TermsController::class, 'index'])
     });
 
 Route::get('persona', [personaController::class, 'index'])->name('persona');
+Route::post('personas', [personaController::class, 'store'])->name('personas');
 Route::post('persona/listar_persona_ajax', [PersonaController::class, 'listar_persona_ajax'])->name('persona.listar_persona_ajax');
 Route::get('persona/modal_persona/{id}', [PersonaController::class, 'modal_persona'])->name('persona.modal_persona');
 Route::post('persona/send_persona', [PersonaController::class, 'send_persona'])->name('persona.send_persona');

@@ -241,9 +241,9 @@
                                             <div class="col-lg-2" style="padding-left:0px;padding-right:0px">
 
                                                 <br>
-                                                <button type="button" <?php echo $disabled ?> class="btn btn-warning btn-sm" data-toggle="modal" data-target="#choferModal">
+                                                <button type="button" <?php echo $disabled ?> class="btn btn-warning btn-sm" data-toggle="modal" data-target="#personaModal">
                                                     <i class="fas fa-plus-circle"></i>
-                                                    Conductor
+                                                    Persona
                                                 </button>
                                             </div>
                                         </div>
@@ -558,26 +558,25 @@
                         </div>
 
                     </div>
+                </div>
 
             </form>
+        </div>
+    </div>
+</div>
+@endsection
 
 
+@push('after-scripts')
+<script type="text/javascript">
+    var id_caja_usuario = "<?php echo ($caja_usuario) ? $caja_usuario->id_caja : 0 ?>";
+    //alert(id_caja_usuario);
+</script>
 
-            @endsection
-
-
-
-
-            @push('after-scripts')
-            <script type="text/javascript">
-                var id_caja_usuario = "<?php echo ($caja_usuario) ? $caja_usuario->id_caja : 0 ?>";
-                //alert(id_caja_usuario);
-            </script>
-
-            @endpush
+@endpush
 
 
-            @push('after-scripts')
+@push('after-scripts')
 
-            <script src="{{ asset('js/ingreso.js') }}"></script>
-            @endpush
+<script src="{{ asset('js/ingreso.js') }}"></script>
+@endpush
