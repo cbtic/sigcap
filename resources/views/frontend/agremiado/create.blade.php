@@ -397,7 +397,7 @@ label.form-control-sm{
 															N&deg; Regional
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_regional" id="numero_regional" value="<?php echo $agremiado->numero_regional?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
+															<input type="text" name="numero_regional" id="numero_regional" value="<?php echo $agremiado->numero_regional?>" class="form-control form-control-sm" <?php if($id!=0)?>>
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
