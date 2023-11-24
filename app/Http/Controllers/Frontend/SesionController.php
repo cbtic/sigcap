@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ComisionSesione;
 use App\Models\ComisionSesionDelegado;
+use App\Models\Regione;
+use App\Models\Comisione;
+use App\Models\TablaMaestra;
 use Auth;
 
 class SesionController extends Controller
@@ -59,19 +62,23 @@ class SesionController extends Controller
 		$regione_model = new Regione;
 		$comision_model = new Comisione;
 		$comisionSesionDelegado_model = new ComisionSesionDelegado;
+		$tablaMaestra_model = new TablaMaestra;
 		
 		$comision = $comision_model->getComisionAll("","1");
 		$region = $regione_model->getRegionAll();
+		
+		$tipo_programacion = $tablaMaestra_model->getMaestroByTipo(71);
+		$estado_sesion = $tablaMaestra_model->getMaestroByTipo(56);
 		
 		if($id>0){
 			$comisionSesion = ComisionSesione::find($id);
 			$delegados = $comisionSesionDelegado_model->getComisionSesionDelegadosByIdComisionSesion($id);
 		}else{
 			$comisionSesion = new ComisionSesione;
-			$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision($request->id_comision);
+			$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision(0/*$request->id_comision*/);
 		}
 		
-		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','comision','delegados','region'));
+		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','comision','delegados','region','tipo_programacion','estado_sesion'));
 
     }
 	

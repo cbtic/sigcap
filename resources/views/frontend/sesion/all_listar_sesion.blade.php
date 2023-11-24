@@ -217,6 +217,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/comision/lista_sesion.js') }}"></script>
+<script src="{{ asset('js/sesion/lista_sesion.js') }}"></script>
 
 @endpush

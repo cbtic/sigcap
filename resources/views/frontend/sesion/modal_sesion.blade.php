@@ -200,14 +200,22 @@ $(document).ready(function() {
 <script type="text/javascript">
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
-     $('#fecha_solicitud').datepicker({
+     $('#fecha_programado').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
 		//container: '#openOverlayOpc modal-body'
 		container: '#openOverlayOpc modal-body'
      });
+	 
+	 $('#fecha_ejecucion').datepicker({
+		format: "dd-mm-yyyy",
+		autoclose: true,
+		//container: '#openOverlayOpc modal-body'
+		container: '#openOverlayOpc modal-body'
+     });
+	 
 	 /*
-	 $('#hora_solicitud').timepicker({
+	 $('#hora_inicio').timepicker({
 		showInputs: false,
 		container: '#openOverlayOpc modal-body'
 	});
@@ -452,7 +460,7 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Comision</label>
 								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
@@ -467,11 +475,7 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 						
-					</div>
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
 								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
@@ -490,6 +494,59 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Tipo Programaci&oacute;n</label>
+								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_programacion as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php //if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Programaci&oacute;n</label>
+								<input id="fecha_programado" name="fecha_programado" class="form-control form-control-sm"  value="<?php //echo $inscripcionDocumento->fecha_documento?>" type="text">
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Hora Inicio</label>
+								<input id="hora_inicio" name="hora_inicio" class="form-control form-control-sm" value="<?php //echo $papeleta->horainicope?>" type="time">
+								
+							</div>
+						</div>
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Hora Fin</label>
+								<input id="hora_fin" name="hora_fin" class="form-control form-control-sm" value="<?php //echo $papeleta->horainicope?>" type="time">
+								
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Ejecuci&oacute;n</label>
+								<input id="fecha_ejecucion" name="fecha_ejecucion" class="form-control form-control-sm"  value="<?php //echo $inscripcionDocumento->fecha_documento?>" type="text">
+							</div>
+						</div>
+						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado</label>
@@ -498,6 +555,37 @@ container: '#myModal modal-body'
 									<?php
 									foreach ($delegados as $row) {?>
 									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+					
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Observaciones</label>
+								<textarea id="observaciones" name="observaciones" class="form-control form-control-sm"  value="<?php //echo $papeleta->obse_oper_ope?>" type="text"></textarea>
+								
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Estado Sesi&oacute;n</label>
+								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($estado_sesion as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php //if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
 									}
 									?>
