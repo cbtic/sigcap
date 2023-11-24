@@ -949,10 +949,13 @@
                                         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                                 <label class="form-control-sm">Plazo</label>
-                                                <input type="text" name="fechaF" id="fechaF" value="<?php echo date("d/m/Y") ?>" placeholder="" class="form-control form-control-sm datepicker">
+                                                <input type="text" name="fechaF" id="fechaF" value="<?php echo date("d/m/Y") ?>" placeholder="" class="form-control form-control-sm">
 
                                             </div>
                                         </div>
+                                        <button type="button" id="btnFraciona" name="btnFraciona" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarConceptoNuevo(cuentaproductos)">
+																	<i class="fas fa-plus-circle"></i> Fracionar
+										</button>
                                     </div>
                                 </div>
                                 <!--card-body-->
