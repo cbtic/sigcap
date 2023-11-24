@@ -148,16 +148,23 @@ input:checked + .slider:before {
 <script type="text/javascript">
 
 
-function fn_save_profesion(){
+function fn_save_profesionalesOtro(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var nombre = $('#nombre').val();
+	var colegiatura = $('#colegiatura').val();
+  var colegiatura_abrev = $('#colegiatura_abrev').val();
+  var tipo_documento = $('#tipo_documento').val();
+  var numero_documento = $('#numero_documento').val();
+  var agremiado = $('#agremiado').val();
+  var fecha_nacimiento = $('#fecha_nacimiento').val();
+  var profesion = $('#profesion').val();
+  var ruta_firma = $('#ruta_firma').val();
 	
     $.ajax({
-			url: "/profesion/send_profesion_nuevoProfesion",
+			url: "/profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro",
             type: "POST",
-            data : {_token:_token,id:id,nombre:nombre},
+            data : {_token:_token,id:id,colegiatura:colegiatura,colegiatura_abrev:colegiatura_abrev,tipo_documento:tipo_documento,numero_documento:numero_documento,agremiado:agremiado,fecha_nacimiento:fecha_nacimiento,profesion:profesion,ruta_firma:ruta_firma},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -182,7 +189,7 @@ function fn_save_profesion(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro Profesi&oacute;n
+				Registro Profesionales Otros
 			</div>
 			
             <div class="card-body">

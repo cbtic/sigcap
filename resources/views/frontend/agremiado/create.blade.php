@@ -389,7 +389,7 @@ label.form-control-sm{
 															Libro
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" <?php if($id!=0)echo ?>>
+															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" <?php if($id!=0)?>>
 															</div>
 														</div>
 														<div class="row">
@@ -928,8 +928,8 @@ label.form-control-sm{
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<input type="text" name="email1" id="email1" value="<?php echo $agremiado->email1?>" class="form-control form-control-sm" >
 												</div>
-											</div>
-											<div class="row">
+												</div>
+												<div class="row">
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												
 												</div>

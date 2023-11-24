@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ProfesionalesOtro;
 use App\Models\Persona;
 use App\Models\Profesione;
+use Auth;
 
 class ProfesionalesOtroController extends Controller
 {
@@ -25,18 +26,21 @@ class ProfesionalesOtroController extends Controller
         return view('frontend.profesionalesOtro.all');
     }
 	
-    public function listar_profesionarlesOtro_ajax(Request $request){
+    public function listar_profesionalesOtro_ajax(Request $request){
 	
 		$profesionOtro_model = new ProfesionalesOtro;
 		$p[]=$request->colegiatura;
 		$p[]="";
-		$p[]=$request->nombres;
+        $p[]="";
+        $p[]=$request->numero_documento;
+		$p[]=$request->agremiado;
+        $p[]="";
 		$p[]=$request->profesion;
         $p[]="";
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
-		$data = $profesionOtro_model->listar_profesionarlesOtro_ajax($p);
+		$data = $profesionOtro_model->listar_profesionalesOtro_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;

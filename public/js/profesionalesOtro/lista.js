@@ -5,7 +5,35 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
-	$('#nombre').keypress(function(e){
+	$('#colegiatura').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#colegiatura_abrev').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#nombres').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#dni').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#profesion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
@@ -30,7 +58,7 @@ $(document).ready(function () {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/profesion/listar_profesion_ajax",
+        "sAjaxSource": "/profesionalesOtro/listar_profesionalesOtro_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         "bFilter": false,
@@ -55,7 +83,10 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var nombre = $('#nombre').val();
+			var colegiatura = $('#colegiatura').val();
+			var numero_documento = $('#numero_documento').val();
+			var agremiado = $('#agremiado').val();
+			var profesion = $('#profesion').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -63,7 +94,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						nombre:nombre,estado:estado,
+						colegiatura:colegiatura,numero_documento:numero_documento,agremiado:agremiado,profesion:profesion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -78,14 +109,84 @@ function datatablenew(){
             [	
 				{
                 "mRender": function (data, type, row) {
-                	var nombre = "";
-					if(row.nombre!= null)nombre = row.nombre;
-					return nombre;
+                	var colegiatura = "";
+					if(row.colegiatura!= null)colegiatura = row.colegiatura;
+					return colegiatura;
                 },
                 "bSortable": false,
                 "aTargets": [0],
 				"className": "dt-center",
                 },
+				{
+				"mRender": function (data, type, row) {
+					var colegiatura_abreviatura = "";
+					if(row.colegiatura_abreviatura!= null)colegiatura_abreviatura = row.colegiatura_abreviatura;
+					return colegiatura_abreviatura;
+				},
+				"bSortable": false,
+				"aTargets": [1],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var tipo_documento = "";
+					if(row.tipo_documento!= null)tipo_documento = row.tipo_documento;
+					return tipo_documento;
+				},
+				"bSortable": false,
+				"aTargets": [2],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var numero_documento = "";
+					if(row.numero_documento!= null)numero_documento = row.numero_documento;
+					return numero_documento;
+				},
+				"bSortable": false,
+				"aTargets": [3],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var agremiado = "";
+					if(row.agremiado!= null)agremiado = row.agremiado;
+					return agremiado;
+				},
+				"bSortable": false,
+				"aTargets": [4],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var fecha_nacimiento = "";
+					if(row.fecha_nacimiento!= null)fecha_nacimiento = row.fecha_nacimiento;
+					return fecha_nacimiento;
+				},
+				"bSortable": false,
+				"aTargets": [5],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var profesion = "";
+					if(row.profesion!= null)profesion = row.profesion;
+					return profesion;
+				},
+				"bSortable": false,
+				"aTargets": [6],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var ruta_firma = "";
+					if(row.ruta_firma!= null)ruta_firma = row.ruta_firma;
+					return ruta_firma;
+				},
+				"bSortable": false,
+				"aTargets": [7],
+				"className": "dt-center",
+				},
 				{
 				"mRender": function (data, type, row) {
 					var estado = "";
@@ -98,7 +199,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [1]
+				"aTargets": [8]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -114,14 +215,14 @@ function datatablenew(){
 					}
 				
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalProfesion('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-					html += '<a href="javascript:void(0)" onclick=eliminarProfesion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalProfesionalesOtro('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					html += '<a href="javascript:void(0)" onclick=eliminarProfesionalesOtro('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [2],
+					"aTargets": [9],
 				},
             ]
     });
@@ -131,13 +232,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalProfesion(id){
+function modalProfesionalesOtro(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/profesion/modal_profesion_nuevoProfesion/"+id,
+			url: "/profesionalesOtro/modal_profesionalesOtro_nuevoProfesionalesOtro/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -147,7 +248,7 @@ function modalProfesion(id){
 
 }
 
-function eliminarProfesion(id,estado){
+function eliminarProfesionalesOtro(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -159,20 +260,20 @@ function eliminarProfesion(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Profesion?", 
+        message: "&iquest;Deseas "+act_estado+" el Profesional?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_profesion(id,estado_);
+                fn_eliminar_profesionalesOtro(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_profesion(id,estado){
+function fn_eliminar_profesionalesOtro(id,estado){
 	
     $.ajax({
-            url: "/profesion/eliminar_profesion/"+id+"/"+estado,
+            url: "/profesionalesOtro/eliminar_profesionalesOtro/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
 				datatablenew();
