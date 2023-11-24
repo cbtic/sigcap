@@ -432,7 +432,7 @@ legend.scheduler-border {
 		//alert(FormatFecha(sumarDias(d, -5)));
 
 
-		$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td> <td> ' + fecha_cuota + ' </td> <td>' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td>SOLES</td> <td>' + cuota_uno + '</td></tr>');
+		$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> <td td width="10%"> ' + fecha_cuota + ' </td> <td width="55%">' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td width="10%">SOLES</td> <td width="20%">' + cuota_uno + '</td></tr>');
 
 		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
 		$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado ' + n + '"> </td>');
@@ -442,7 +442,7 @@ legend.scheduler-border {
 		for (let i = 0; i < nroCuotas - 1; i++) {
 			n++;
 			fecha_cuota = FormatFecha(sumarDias(d, 30))
-			$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td>' + n + '</td> <td>' + fecha_cuota + '</td>  <td>' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td>SOLES</td> <td>' + total_frac + '</td></tr>');
+			$('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> <td width="10%">' + fecha_cuota + '</td>  <td width="55%">' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td width="10%">SOLES</td> <td width="20%">' + total_frac + '</td></tr>');
 
 			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '"> </td>');
 			$('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado ' + n + '"> </td>');
@@ -450,7 +450,8 @@ legend.scheduler-border {
 		}
 
 
-
+		
+		$('#btnFraciona').attr("disabled",true);
 
 		//cuentaproductos = cuentaproductos + 1;
 		//alert(cuentaproductos);
@@ -583,7 +584,7 @@ legend.scheduler-border {
 
 															<div class="col-lg-2" style="padding-top:12px;padding-left:0px;padding-right:0px">
 																<br>
-																<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarConceptoNuevo(cuentaproductos)">
+																<button type="button" id="btnFraciona" name="btnFraciona" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarConceptoNuevo(cuentaproductos)">
 																	<i class="fas fa-plus-circle"></i> Fracionar
 																</button>
 															</div>
@@ -601,6 +602,7 @@ legend.scheduler-border {
 																		<th>Moneda</th>
 																		<th>Importe</th>
 																	</tr>
+																	
 
 																</thead>
 																<tbody style="font-size:13px">

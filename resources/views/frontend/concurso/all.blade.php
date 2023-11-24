@@ -149,8 +149,26 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Denominacion">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						<select name="id_tipo_concurso_bus" id="id_tipo_concurso_bus" class="form-control form-control-sm" onChange="obtenerSubTipoConcursoBus()">
+							<option value="">--TIPO CONCURSO--</option>
+							<?php
+							foreach ($tipo_concurso as $row) {?>
+							<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$concurso->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						<select name="id_sub_tipo_concurso_bus" id="id_sub_tipo_concurso_bus" class="form-control form-control-sm">
+							<option value="">--SUBTIPO CONCURSO--</option>
+						</select>
+					</div>
+					
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="periodo_bus" name="periodo_bus" placeholder="Periodo">
 					</div>
 					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -176,6 +194,7 @@
                         <tr style="font-size:13px">
                             <th>Id</th>
 							<th>Tipo Concurso</th>
+							<th>SubTipo Concurso</th>
                             <th>Periodo</th>
 							<th>Fecha Concurso</th>
 							<th>Fecha Inscripci&oacute;n</th>

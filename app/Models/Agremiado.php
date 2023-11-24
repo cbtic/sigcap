@@ -65,7 +65,7 @@ Where t2.id_persona=".$id_persona;
 		
 		$cad = "select 
 case 
-	when date_part('year', CURRENT_DATE)-date_part('year', fecha_colegiado)>20 then 1
+	when date_part('year', CURRENT_DATE)-date_part('year', fecha_colegiado)>=20 then 1
 	when date_part('year', CURRENT_DATE)-date_part('year', fecha_colegiado)>5 and 
 		 date_part('year', CURRENT_DATE)-date_part('year', fecha_colegiado)<20 then 2
 	else 0 
