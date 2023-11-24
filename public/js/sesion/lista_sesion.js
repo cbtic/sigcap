@@ -235,6 +235,49 @@ function obtenerTitular(){
 	
 }
 
+function obtenerComision(){
+	
+	var id_periodo = $('#id_periodo').val();
+	$.ajax({
+		url: '/sesion/obtener_comision/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_comision').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+			});
+			$('#id_comision').html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerComisionDelegado(){
+	
+	var id_comision = $('#id_comision').val();
+	$.ajax({
+		url: '/sesion/obtener_comision_delegado/'+id_comision,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#tblDelegado tbody').html("");
+			$(result).each(function (ii, oo) {
+				option += "<tr style='font-size:13px'>";
+				option += "<td class='text-left'>"+oo.puesto+"</td>";
+				option += "<td class='text-left'>"+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</td>";
+				option += "<td class='text-left'>"+oo.numero_cap+"</td>";
+				option += "<td class='text-left'>"+oo.situacion+"</td>";
+				option += "</tr>";
+			});
+			$('#tblDelegado tbody').html(option);
+		}
+		
+	});
+	
+}
+
 function obtenerPlanDetalle(){
 	
 	var plan_costo = $('#plan_id option:selected').attr("plan_costo");
@@ -373,7 +416,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/comision/lista_comision_ajax",
+        "sAjaxSource": "/sesion/lista_programacion_sesion_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -433,15 +476,15 @@ function datatablenew(){
             });
         },
 		"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-			fn_AbrirDetalle(iDisplayIndex,aData.id);
+			//fn_AbrirDetalle(iDisplayIndex,aData.id);
 		},
         "aoColumnDefs":
             [	
 				{
                 "mRender": function (data, type, row) {
-                	var id = "";
-					if(row.id!= null)id = row.id;
-					return id;
+                	var fecha_programado = "";
+					if(row.fecha_programado!= null)fecha_programado = row.fecha_programado;
+					return fecha_programado;
                 },
                 "bSortable": false,
                 "aTargets": [0],
@@ -451,9 +494,9 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var denominacion = "";
-					if(row.denominacion!= null)denominacion = row.denominacion;
-					return denominacion;
+                	var fecha_ejecucion = "";
+					if(row.fecha_ejecucion!= null)fecha_ejecucion = row.fecha_ejecucion;
+					return fecha_ejecucion;
                 },
                 "bSortable": true,
                 "aTargets": [1]
@@ -461,9 +504,9 @@ function datatablenew(){
 				
                 {
                 "mRender": function (data, type, row) {
-                	var comision = "";
-					if(row.comision!= null)comision = row.comision;
-					return comision;
+                	var hora_inicio = "";
+					if(row.hora_inicio!= null)hora_inicio = row.hora_inicio;
+					return hora_inicio;
                 },
                 "bSortable": true,
                 "aTargets": [2]
@@ -471,9 +514,9 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var tipo_agrupacion = "";
-					if(row.tipo_agrupacion!= null)tipo_agrupacion = row.tipo_agrupacion;
-					return tipo_agrupacion;
+                	var hora_fin = "";
+					if(row.hora_fin!= null)hora_fin = row.hora_fin;
+					return hora_fin;
                 },
                 "bSortable": true,
                 "aTargets": [3]
@@ -481,45 +524,23 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var estado = "";
-					if(row.estado!= null)estado = row.estado;
-					return estado;
+                	var tipo_sesion = "";
+					if(row.tipo_sesion!= null)tipo_sesion = row.tipo_sesion;
+					return tipo_sesion;
                 },
                 "bSortable": true,
                 "aTargets": [4]
                 },
 				
 				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						var clase = "";
-						if(row.estado == 1){
-							estado = "Eliminar";
-							clase = "btn-danger";
-						}
-						if(row.estado == 0){
-							estado = "Activar";
-							clase = "btn-success";
-						}
-						
-						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						
-						//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalConcurso('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						
-						//html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalPuestos('+row.id+')" ><i class="fa fa-edit"></i> Puestos</button>';
-						
-						//html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalRequisitos('+row.id+')" ><i class="fa fa-edit"></i> Requisitos</button>';
-
-						//html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
-						
-						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
-						
-						html += '</div>';
-						return html;
-					},
-					"bSortable": false,
-					"aTargets": [5],
-				},
+                "mRender": function (data, type, row) {
+                	var estado_sesion = "";
+					if(row.estado_sesion!= null)estado_sesion = row.estado_sesion;
+					return estado_sesion;
+                },
+                "bSortable": true,
+                "aTargets": [5]
+                },
 
             ]
 

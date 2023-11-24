@@ -9,6 +9,7 @@ use App\Models\ComisionSesionDelegado;
 use App\Models\Regione;
 use App\Models\Comisione;
 use App\Models\TablaMaestra;
+use App\Models\PeriodoComisione;
 use Auth;
 
 class SesionController extends Controller
@@ -60,27 +61,46 @@ class SesionController extends Controller
 		$id_user = Auth::user()->id;
 		
 		$regione_model = new Regione;
-		$comision_model = new Comisione;
+		//$comision_model = new Comisione;
 		$comisionSesionDelegado_model = new ComisionSesionDelegado;
 		$tablaMaestra_model = new TablaMaestra;
+		$periodoComisione_model = new PeriodoComisione;
 		
-		$comision = $comision_model->getComisionAll("","1");
+		
+		//$comision = $comision_model->getComisionAll("","1");
 		$region = $regione_model->getRegionAll();
 		
 		$tipo_programacion = $tablaMaestra_model->getMaestroByTipo(71);
 		$estado_sesion = $tablaMaestra_model->getMaestroByTipo(56);
+		$periodo = $periodoComisione_model->getPeriodoAll();
 		
 		if($id>0){
 			$comisionSesion = ComisionSesione::find($id);
-			$delegados = $comisionSesionDelegado_model->getComisionSesionDelegadosByIdComisionSesion($id);
+			//$delegados = $comisionSesionDelegado_model->getComisionSesionDelegadosByIdComisionSesion($id);
 		}else{
 			$comisionSesion = new ComisionSesione;
-			$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision(0/*$request->id_comision*/);
+			//$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision(0/*$request->id_comision*/);
 		}
 		
-		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','comision','delegados','region','tipo_programacion','estado_sesion'));
+		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion',/*'delegados',*/'region','tipo_programacion','estado_sesion','periodo'));
 
     }
+	
+	public function obtener_comision($id_periodo){
+			
+		$comision_model = new Comisione;
+		$comision = $comision_model->getComisionByPeriodo($id_periodo);
+		echo json_encode($comision);
+		
+	}
+	
+	public function obtener_comision_delegado($id_comision){
+			
+		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
+		$delegado = $comisionSesionDelegado_model->getComisionDelegadosByIdComision($id_comision);
+		echo json_encode($delegado);
+		
+	}
 	
 	public function send_sesion(Request $request){
 		$id_user = Auth::user()->id;

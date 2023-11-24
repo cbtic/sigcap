@@ -274,12 +274,18 @@ function fn_save(){
 	var id = $('#id').val();
 	var id_comision = $('#id_comision').val();
 	var id_regional = $('#id_regional').val();
-	var id_concurso_inscripcion = $('#id_concurso_inscripcion').val();
+	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var fecha_programado = $('#fecha_programado').val();
+	var hora_inicio = $('#hora_inicio').val();
+	var hora_fin = $('#hora_fin').val();
+	var fecha_ejecucion = $('#fecha_ejecucion').val();
+	var observaciones = $('#observaciones').val();
+	var id_estado_sesion = $('#id_estado_sesion').val();
 	
     $.ajax({
 			url: "/sesion/send_sesion",
             type: "POST",
-            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion},
+            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_tipo_sesion:id_tipo_sesion,fecha_programado:fecha_programado,hora_inicio:hora_inicio,hora_fin:hora_fin,fecha_ejecucion:fecha_ejecucion,observaciones:observaciones,id_estado_sesion:id_estado_sesion},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				datatablenew();
@@ -462,12 +468,12 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Comision</label>
-								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
-									<option value="">--Seleccionar--</option>
+								<label class="control-label form-control-sm">Regional</label>
+								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
 									<?php
-									foreach ($comision as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->comision." ".$row->denominacion?></option>
+									foreach ($region as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==5)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
 									}
 									?>
@@ -477,12 +483,12 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Regional</label>
-								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
+								<label class="control-label form-control-sm">Periodo</label>
+								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComision()">
+									<option value="">--Seleccionar--</option>
 									<?php
-									foreach ($region as $row) {?>
-									<option value="<?php echo $row->id?>" <?php //if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									foreach ($periodo as $row) {?>
+									<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
 									<?php 
 									}
 									?>
@@ -493,6 +499,15 @@ container: '#myModal modal-body'
 					</div>
 					
 					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Comision</label>
+								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="obtenerComisionDelegado()">
+									<option value="">--Seleccionar--</option>
+								</select>
+							</div>
+						</div>
 						
 						<div class="col-lg-6">
 							<div class="form-group">
@@ -508,14 +523,18 @@ container: '#myModal modal-body'
 								</select>
 							</div>
 						</div>
-						
+												
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+					
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha Programaci&oacute;n</label>
 								<input id="fecha_programado" name="fecha_programado" class="form-control form-control-sm"  value="<?php //echo $inscripcionDocumento->fecha_documento?>" type="text">
 							</div>
 						</div>
-						
+					
 					</div>
 					
 					<div class="row" style="padding-left:10px">
@@ -549,16 +568,22 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Delegado</label>
-								<select name="id_concurso_inscripcion" id="id_concurso_inscripcion" class="form-control form-control-sm" onChange="">
-									<option value="">--Seleccionar--</option>
-									<?php
-									foreach ($delegados as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
-									<?php 
-									}
-									?>
-								</select>
+								<!--<label class="control-label form-control-sm">Delegado</label>-->
+								
+								<div class="table-responsive">
+									<table id="tblDelegado" class="table table-hover table-sm">
+										<thead>
+										<tr style="font-size:13px">
+											<th>Puesto</th>
+											<th>Delegado</th>
+											<th>CAP</th>
+											<th>Situaci&oacute;n</th>
+										</tr>
+										</thead>
+										<tbody style="font-size:13px"></tbody>
+									</table>
+                				</div>
+								
 							</div>
 						</div>
 					
@@ -581,7 +606,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Estado Sesi&oacute;n</label>
-								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="">
+								<select name="id_estado_sesion" id="id_estado_sesion" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($estado_sesion as $row) {?>

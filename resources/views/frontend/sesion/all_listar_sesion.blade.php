@@ -164,7 +164,7 @@
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success pull-rigth" value="Nuevo Titular" type="button" id="btnNuevo" style="margin-left:15px" />
+						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>
 				
@@ -174,13 +174,12 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th></th>
-							<th>Id</th>
-							<th>Denomincaci&oacute;n</th>
-                            <th>Tipo Agrupaci&oacute;n</th>
-							<th>Comisi&oacute;n</th>
-							<th>Estado</th>
-                            <th>Acciones</th>
+							<th>Fecha Programada</th>
+							<th>Fecha Ejecuci&oacute;n</th>
+                            <th>Hora Inicio</th>
+							<th>Hora Fin</th>
+							<th>Sesi&oacute;n Programada</th>
+                            <th>Estado</th>
                         </tr>
                         </thead>
                         <tbody>
