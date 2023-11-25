@@ -154,31 +154,16 @@
 						<div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
 							<input class="form-control form-control-sm" id="numero_cap" name="numero_cap" placeholder="N° de CAP">
 						</div>
-						<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
 							<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="DNI">
 						</div>
-						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+						<div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
 							<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombre Agremiado">
 						</div>
-						<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-							<div style="float:left;padding-top:7px">F.Ini</div>
-							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control">
-								
-							</div>
+
+						<div class="col-lg-1-5 col-md-4 col-sm-12 col-xs-12">
+							<input class="form-control form-control-sm" id="periodo" name="periodo" placeholder="Periodo">
 						</div>
-						<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-							<div style="float:left;padding-top:7px">F.Fin</div>
-							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control">
-							   
-							</div>
-							<!--<input class="form-control form-control-sm" id="fecha" name="fecha" placeholder="Fecha">-->
-						</div>
-						
-					</div>
-					
-					<div class="row">
 					
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 							<select name="estado" id="estado" class="form-control form-control-sm">
@@ -190,8 +175,8 @@
                                 <option value="0">Eliminado</option>
 								<option value="2">Pagados</option>-->
 							</select>
-						</div>
-			
+						
+                        </div>
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 							<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 							

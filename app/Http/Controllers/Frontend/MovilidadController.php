@@ -30,7 +30,7 @@ class MovilidadController extends Controller
         //$tablaMaestra_model = new TablaMaestra;
 		//$movilidad = new Movilidade;
         //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
-		$municipalidadIntegrada = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll();
+		$municipalidadIntegrada = $municipalidadIntegrada_model->getMuniIntegradaAll();
 		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
 
         return view('frontend.movilidad.all',compact('municipalidadIntegrada','comision_movilidades','periodoComision'));
@@ -69,7 +69,7 @@ class MovilidadController extends Controller
         //$tablaMaestra_model = new TablaMaestra;
 		//$movilidad = new Movilidade;
         //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
-		$municipalidadIntegrada = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll();
+		$municipalidadIntegrada = $municipalidadIntegrada_model->getMuniIntegradaAll();
 		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
 		$comision_movilidades = ComisionMovilidade::find($id);
         $movilidad_model = new ComisionMovilidade;
@@ -101,7 +101,7 @@ class MovilidadController extends Controller
 		
 		//$tipoConcepto = $tipoConcepto_model->getTipoConceptoAll();
 		$region = $regione_model->getRegionAll();
-        $municipalidadIntegrada = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll();
+        $municipalidadIntegrada = $municipalidadIntegrada_model->getMuniIntegradaAll();
         $periodoComision = $periodoComision_model->getPeriodoComisionAll();
 		
 		return view('frontend.movilidad.modal_movilidad_nuevoMovilidad',compact('id','comision_movilidades','region','municipalidadIntegrada','periodoComision'));
@@ -132,11 +132,11 @@ class MovilidadController extends Controller
 
     public function eliminar_movilidad($id,$estado)
     {
-		$movilidad = ComisionMovilidade::find($id);
-		$movilidad->estado = $estado;
-		$movilidad->save();
+		$comision_movilidades = ComisionMovilidade::find($id);
+		$comision_movilidades->estado = $estado;
+		$comision_movilidades->save();
 
-		echo $movilidad->id;
+		echo $comision_movilidades->id;
 
     }
 

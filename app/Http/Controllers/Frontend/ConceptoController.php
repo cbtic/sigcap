@@ -69,7 +69,9 @@ class ConceptoController extends Controller
 		$concepto = Concepto::find($id);
 		$tablaMaestra_model = new TablaMaestra;
 		$id_concepto = $concepto->id_concepto;
+
 		$concepto = Concepto::find($id_concepto);
+		
 		$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
 		$moneda = $tablaMaestra_model->getMaestroByTipo(1);
         $concepto_model = new concepto;

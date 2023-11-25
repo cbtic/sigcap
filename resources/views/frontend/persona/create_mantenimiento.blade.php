@@ -301,7 +301,7 @@ label.form-control-sm{
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
     <li class="breadcrumb-item text-primary">Inicio</li>
-    <li class="breadcrumb-item active">Registro de Solicitud</li>
+    <li class="breadcrumb-item active">Registro de Persona</li>
     </li>
 </ol>
 
@@ -347,7 +347,7 @@ label.form-control-sm{
 
                         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
-                        <input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id?>">
+                        <input type="hidden" name="id_concepto" id="id_concepto" value="<?php echo $id?>">
 						<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona?>">
 						
                         <div class="row" id="divSolicitud">
@@ -383,13 +383,13 @@ label.form-control-sm{
 															N&deg; CAP
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?> >
+															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly="readonly" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" <?php if($id!=0)?>>
+															<input type="text" name="libro_nacional" id="libro_nacional" value="<?php echo $agremiado->libro_nacional?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														<div class="row">
@@ -397,7 +397,7 @@ label.form-control-sm{
 															N&deg; Regional
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_regional" id="numero_regional" value="<?php echo $agremiado->numero_regional?>" class="form-control form-control-sm" <?php if($id!=0)?>>
+															<input type="text" name="numero_regional" id="numero_regional" value="<?php echo $agremiado->numero_regional?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Libro
@@ -426,7 +426,7 @@ label.form-control-sm{
 														
 														<div class="row">
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															Tipo de Documento
+															Documento
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="">
@@ -443,7 +443,7 @@ label.form-control-sm{
 															N&deg; Doc
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
+															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														
@@ -464,13 +464,13 @@ label.form-control-sm{
 															Folio
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="folio_nacional" id="folio_nacional" value="<?php echo $agremiado->folio_nacional?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
+															<input type="text" name="folio_nacional" id="folio_nacional" value="<?php echo $agremiado->folio_nacional?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															Fecha Colegiado
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" <?php if($id!=0)echo "readonly='readonly'"?>>
+															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														
@@ -551,7 +551,7 @@ label.form-control-sm{
 															<input type="text" name="apellido_materno" id="apellido_materno" value="<?php echo $persona->apellido_materno?>" class="form-control form-control-sm" >
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															Nombres
+															Nombre
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="nombres" id="nombres" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" >
@@ -565,36 +565,19 @@ label.form-control-sm{
 												</div>
 												
 												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-													<!--
+													
 													<div class="row">
 														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 															Fotografia
 														</div>
 													</div>	
-													-->
-													<div class="row">
-									
-													<div class="form-group">
 														
-													<span class="btn btn-sm btn-warning btn-file">
-														Examinar <input id="image" name="image" type="file" />
-													</span>
-													<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:0px">
-													<?php
-														$img = "/img/logo-sin-fondo2.png";
-								if($persona->foto!="")$img="/img/agremiado/".$persona->foto;
-													?>
-													<a href="/img/agremiado/<?php echo $persona->foto?>" target="_blank" class="btn btn-sm btn-secondary"><img src="<?php echo $img?>" id="img_ruta" width="80" height="50" alt="" style="margin-top:10px" /></a>
-													<input type="hidden" id="img_foto" name="img_foto" value="" />
-													
-													<!--
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<a href="{{ route('frontend.index') }}" class="navbar-brand">
-															<img src="<?php echo URL::to('/') ?>/img/logo_1.jpg" alt="" width="80" height="50" style="padding:0px;margin:0px">
-														</a>
-													</div>
-													-->
-												</div>
+													<div class="row">
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<a href="{{ route('frontend.index') }}" class="navbar-brand">
+																<img src="<?php echo URL::to('/') ?>/img/logo_1.jpg" alt="" width="80" height="50" style="padding:0px;margin:0px">
+															</a>
+														</div>
 														
 														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
 														
@@ -928,8 +911,8 @@ label.form-control-sm{
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<input type="text" name="email1" id="email1" value="<?php echo $agremiado->email1?>" class="form-control form-control-sm" >
 												</div>
-												</div>
-												<div class="row">
+											</div>
+											<div class="row">
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												
 												</div>
@@ -1150,7 +1133,6 @@ label.form-control-sm{
 																<th>F. Graduado</th>
 																<th>Libro</th>
 																<th>Folio</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1163,12 +1145,6 @@ label.form-control-sm{
 																<th><?php echo $row->fecha_graduado?></th>
 																<th><?php echo $row->libro?></th>
 																<th><?php echo $row->folio?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarEstudio(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>														
 															<?php }?>
 														</tbody>							
@@ -1216,7 +1192,6 @@ label.form-control-sm{
 															<tr style="font-size:13px">
 																<th>Idioma</th>
 																<th>Grado Conocimiento</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1224,12 +1199,6 @@ label.form-control-sm{
 															<tr>
 																<th><?php echo $row->idioma?></th>
 																<th><?php echo $row->grado?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalIdioma(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarIdioma(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>						
 															<?php }?>
 														</tbody>							
@@ -1292,7 +1261,6 @@ label.form-control-sm{
 																<th>Sexo</th>
 																<th>Apellidos y Nombres</th>
 																<th>F.Nacimiento</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1302,12 +1270,6 @@ label.form-control-sm{
 																<th><?php echo $row->sexo?></th>
 																<th><?php echo $row->apellido_nombre?></th>
 																<th><?php echo $row->fecha_nacimiento?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalParentesco(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarParentesco(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>						
 															<?php }?>
 														</tbody>							
@@ -1381,7 +1343,6 @@ label.form-control-sm{
 																<th>Tel&eacute;fono</th>
 																<th>Celular</th>
 																<th>Correo</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1400,12 +1361,6 @@ label.form-control-sm{
 																<th><?php echo ($row->telefono="0")?$row->telefono:"-"?></th>
 																<th><?php echo $row->celular?></th>
 																<th><?php echo $row->email?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalTrabajo(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarTrabajo(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>						
 															<?php }?>
 														</tbody>							
@@ -1451,9 +1406,7 @@ label.form-control-sm{
 										</div>
 
 										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-											
-											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoTraslado" style="width:120px;margin-right:15px"/>
-											
+										
 											<div style="clear:both"></div>
 											
 											<div class="row">
@@ -1471,7 +1424,6 @@ label.form-control-sm{
 																<th>Fecha Inicio</th>
 																<th>Fecha Fin</th>
 																<th>Observaci&oacute;n</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1482,12 +1434,6 @@ label.form-control-sm{
 																<th><?php echo $row->fecha_inicio?></th>
 																<th><?php echo $row->fecha_fin?></th>
 																<th><?php echo $row->observacion?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalTraslado(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarTraslado(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>						
 															<?php }?>
 														</tbody>							
@@ -1534,8 +1480,6 @@ label.form-control-sm{
 
 										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
 										
-											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoSituacion" style="width:120px;margin-right:15px"/>
-											
 											<div style="clear:both"></div>
 											
 											<div class="row">
@@ -1552,7 +1496,6 @@ label.form-control-sm{
 																<th>Fecha Inicio</th>
 																<th>Fecha Fin</th>
 																<th>Pa&iacute;s</th>
-																<th class="text-center">Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1562,12 +1505,6 @@ label.form-control-sm{
 																<th><?php echo $row->fecha_inicio?></th>
 																<th><?php echo $row->fecha_fin?></th>
 																<th><?php echo $row->pais?></th>
-																<th>
-					<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalSituacion(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-					<a href="javascript:void(0)" onclick="eliminarSituacion(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-					</div>
-																</th>
 															</tr>
 															<?php }?>
 														</tbody>							
@@ -1871,7 +1808,7 @@ label.form-control-sm{
     @push('after-scripts')
     
 	
-	<script src="{{ asset('js/agremiado/create.js') }}"></script>
+	<script src="{{ asset('js/persona/create.js') }}"></script>
 	<script>
 	/*
 	var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();

@@ -32,6 +32,13 @@ $(document).ready(function () {
 		}
 	});
 		
+	$('#periodo').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
 	$('#btnNuevo').click(function () {
 		modalMulta(0);
 	});
@@ -836,6 +843,7 @@ function eliminarMulta(id,estado){
 
 function fn_eliminar_multa(id,estado){
 	
+	//alert(id,estado);
     $.ajax({
             url: "/multa/eliminar_multa/"+id+"/"+estado,
             type: "GET",
