@@ -24,6 +24,7 @@ use App\Http\Controllers\Frontend\CertificadoController;
 use App\Models\Certificado;
 
 use App\Http\Controllers\Frontend\ComisionController;
+use App\Http\Controllers\Frontend\SesionController;
 
 use App\Http\Controllers\Frontend\PeriodoComisionController;
 use App\Http\Controllers\Frontend\MovilidadController;
@@ -342,3 +343,14 @@ Route::post('profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro', [
 Route::get('profesionalesOtro/eliminar_profesionalesOtro/{id}/{estado}', [ProfesionalesOtroController::class, 'eliminar_profesionalesOtro'])->name('profesionalesOtro.eliminar_profesionalesOtro');
 
 Route::post('persona/upload', [PersonaController::class, 'upload'])->name('persona.upload');
+
+Route::get('sesion/lista_programacion_sesion', [SesionController::class, 'lista_programacion_sesion'])->name('sesion.lista_programacion_sesion');
+Route::post('sesion/lista_programacion_sesion_ajax', [SesionController::class, 'lista_programacion_sesion_ajax'])->name('sesion.lista_programacion_sesion_ajax');
+Route::get('sesion/modal_sesion/{id}', [SesionController::class, 'modal_sesion'])->name('sesion.modal_sesion');
+Route::post('sesion/send_sesion', [SesionController::class, 'send_sesion'])->name('sesion.send_sesion');
+Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
+Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
+
+
+
+
