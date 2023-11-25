@@ -487,6 +487,18 @@ class PersonaController extends Controller
 
 		$id_user = Auth::user()->id;
 		//$persona_model = new Persona;
+
+		if($request->img_foto!=""){
+			$filepath_tmp = public_path('img/frontend/tmp_agremiado/');
+			$filepath_nuevo = public_path('img/agremiado/');
+			if (file_exists($filepath_tmp.$request->img_foto)) {
+				copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+			}
+		}
+
+		if($request->img_foto=="")$request->img_foto="ruta";
+
+
 		
 		if($request->id == 0){
 			$persona = new Persona;
@@ -512,6 +524,7 @@ class PersonaController extends Controller
 		$persona->id_sexo = $request->sexo;
 		$persona->numero_celular = $request->numero_celular;
 		$persona->correo = $request->correo;
+		$persona->foto = $request->img_foto;
 		$persona->direccion = $request->direccion;
 		$persona->estado = 1;
 		$persona->id_usuario_inserta = $id_user;

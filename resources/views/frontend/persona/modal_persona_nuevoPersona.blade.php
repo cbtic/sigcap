@@ -442,6 +442,7 @@ $.mask.definitions['p'] = "[Mm]";
 		var numero_celular = $('#numero_celular').val();
 		var correo = $('#correo').val();
 		var direccion = $('#direccion').val();
+		var img_foto = $('#img_foto').val();
 		//var estado = $('#estado').val();
 
 		//alert(id_agremiado);
@@ -465,7 +466,8 @@ $.mask.definitions['p'] = "[Mm]";
 				sexo: sexo,
 				numero_celular: numero_celular,
 				correo: correo,
-				direccion: direccion
+				direccion: direccion,
+				img_foto:img_foto
 			},
 			success: function(result) {
 
@@ -611,9 +613,13 @@ $.mask.definitions['p'] = "[Mm]";
 				contentType: false,
 				processData: false,
 				success: function(response) {
+					//alert(response);
 					if (response != 0) {
 						$("#img_ruta").attr("src", "/img/frontend/tmp_agremiado/" + response);
+						//alert("/img/frontend/tmp_agremiado/" + response);
 						$("#img_foto").val(response);
+						//alert($("#img_foto").val());
+						
 					} else {
 						alert('Formato de imagen incorrecto.');
 					}
