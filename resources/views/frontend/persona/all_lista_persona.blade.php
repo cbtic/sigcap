@@ -200,6 +200,9 @@
                             <th>Lugar Nacimiento</th>
                             <th>Nacionalidad</th>
                             <th>Sexo</th>
+                            <th>N&uacute;mero Celular</th>
+                            <th>Correo</th>
+                            <th>Direcci&oacute;n</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>

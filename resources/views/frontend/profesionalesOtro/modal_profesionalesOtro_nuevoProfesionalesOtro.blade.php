@@ -156,7 +156,9 @@ function fn_save_profesionalesOtro(){
   var colegiatura_abrev = $('#colegiatura_abrev').val();
   var tipo_documento = $('#tipo_documento').val();
   var numero_documento = $('#numero_documento').val();
-  var agremiado = $('#agremiado').val();
+  var nombres = $('#nombres').val();
+  var apellido_paterno = $('#apellido_paterno').val();
+  var apellido_materno = $('#apellido_materno').val();
   var fecha_nacimiento = $('#fecha_nacimiento').val();
   var profesion = $('#profesion').val();
   var ruta_firma = $('#ruta_firma').val();
@@ -164,7 +166,7 @@ function fn_save_profesionalesOtro(){
     $.ajax({
 			url: "/profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro",
             type: "POST",
-            data : {_token:_token,id:id,colegiatura:colegiatura,colegiatura_abrev:colegiatura_abrev,tipo_documento:tipo_documento,numero_documento:numero_documento,agremiado:agremiado,fecha_nacimiento:fecha_nacimiento,profesion:profesion,ruta_firma:ruta_firma},
+            data : {_token:_token,id:id,colegiatura:colegiatura,colegiatura_abrev:colegiatura_abrev,tipo_documento:tipo_documento,numero_documento:numero_documento,nombres:nombres,apellido_paterno:apellido_paterno,apellido_materno:apellido_materno,fecha_nacimiento:fecha_nacimiento,profesion:profesion,ruta_firma:ruta_firma},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -204,18 +206,97 @@ function fn_save_profesionalesOtro(){
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-12">
+						<div class="col-lg-4">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Nombre</label>
-								<input id="nombre" name="nombre" on class="form-control form-control-sm"  value="<?php echo $profesion->nombre?>" type="text" >
-							
+								<label class="control-label form-control-sm">Colegiatura</label>
+								<input id="colegiatura" name="colegiatura" on class="form-control form-control-sm"  value="<?php echo $profesionalOtro->colegiatura?>" type="text" >
 							</div>
 						</div>
+
+            <div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Colegiatura Abreviatura</label>
+								<input id="colegiatura_brev" name="colegiatura_abrev" on class="form-control form-control-sm"  value="<?php echo $profesionalOtro->colegiatura_abrev?>" type="text" >							
+							</div>
+						</div>
+
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="control-label form-control-sm">Tipo Documento</label>
+                <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onChange="">
+                  <option value="">--Selecionar--</option>
+                  <?php
+                  foreach ($tipo_documento as $row) {?>
+                  <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$profesionalOtro->id_persona)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                  <?php
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">N&uacute;mero Documento</label>
+								<input id="numero_documento" name="numero_documento" on class="form-control form-control-sm"  value="<?php echo $profesionalOtro->numero_documento?>" type="text" >							
+							</div>
+						</div>
+
+            <div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Nombres</label>
+								<input id="nombres" name="nombres" on class="form-control form-control-sm"  value="<?php echo $persona->nombres?>" type="text" >							
+							</div>
+						</div>
+
+            <div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Apellido Paterno</label>
+								<input id="apellido_paterno" name="apellido_paterno" on class="form-control form-control-sm"  value="<?php echo $persona->apellido_paterno?>" type="text" >							
+							</div>
+						</div>
+
+            <div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Apellido Materno</label>
+								<input id="apellido_materno" name="apellido_materno" on class="form-control form-control-sm"  value="<?php echo $persona->apellido_materno?>" type="text" >							
+							</div>
+						</div>
+
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="control-label form-control-sm">Fecha Nacimiento</label>
+                <input placeholder="Fecha" type="date" id="fecha_nacimiento" class="form-control" value="<?php echo $profesionalOtro->fecha_nacimiento?>" type="text">
+              </div>
+						</div>
+
+            <div class="col-lg-4">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Profesi&oacute;n</label>
+										<select name="profesion" id="profesion" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($profesion as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$profesionalOtro->is_profesion)echo "selected='selected'"?>><?php echo $row->nombre?></option>
+											<?php 
+											}
+											?>
+										</select>
+									</div>
+								</div>
+
+            <div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Ruta Firma</label>
+								<input id="ruta_firma" name="ruta_firma" on class="form-control form-control-sm"  value="<?php echo $profesionalOtro->ruta_firma?>" type="text" >							
+							</div>
+						</div>
+
 					</div>
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_profesion()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_profesionalesOtro()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

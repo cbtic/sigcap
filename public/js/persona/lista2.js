@@ -499,17 +499,8 @@ function datatablenew(){
                 "bSortable": false,
                 "aTargets": [0],
 				"className": "dt-center",
-				//"className": 'control'
                 },
-				/*{
-                "mRender": function (data, type, row) {
-                    var nombre_comercial = "";
-					if(row.nombre_comercial!= null)nombre_comercial = row.nombre_comercial;
-					return nombre_comercial;
-                },
-                "bSortable": false,
-                "aTargets": [1]
-                },*/
+				
                 {
                 "mRender": function (data, type, row) {
                 	var numero_documento = "";
@@ -530,49 +521,76 @@ function datatablenew(){
 				"aTargets": [2]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var fecha_nacimiento = "";
-						if(row.fecha_nacimiento!= null)fecha_nacimiento = row.fecha_nacimiento;
-						return fecha_nacimiento;
-					},
-					"bSortable": false,
-					"aTargets": [3]
+				"mRender": function (data, type, row) {
+					var fecha_nacimiento = "";
+					if(row.fecha_nacimiento!= null)fecha_nacimiento = row.fecha_nacimiento;
+					return fecha_nacimiento;
+				},
+				"bSortable": false,
+				"aTargets": [3]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var grupo_sanguineo = "";
-						if(row.grupo_sanguineo!= null)grupo_sanguineo = row.grupo_sanguineo;
-						return grupo_sanguineo;
-					},
-					"bSortable": false,
-					"aTargets": [4]
+				"mRender": function (data, type, row) {
+					var grupo_sanguineo = "";
+					if(row.grupo_sanguineo!= null)grupo_sanguineo = row.grupo_sanguineo;
+					return grupo_sanguineo;
+				},
+				"bSortable": false,
+				"aTargets": [4]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var lugar_nacimiento = "";
-						if(row.lugar_nacimiento!= null)lugar_nacimiento = row.lugar_nacimiento;
-						return lugar_nacimiento;
-					},
-					"bSortable": false,
-					"aTargets": [5]
+				"mRender": function (data, type, row) {
+					var lugar_nacimiento = "";
+					if(row.lugar_nacimiento!= null)lugar_nacimiento = row.lugar_nacimiento;
+					return lugar_nacimiento;
+				},
+				"bSortable": false,
+				"aTargets": [5]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var nacionalidad = "";
-						if(row.nacionalidad!= null)nacionalidad = row.nacionalidad;
-						return nacionalidad;
-					},
-					"bSortable": false,
-					"aTargets": [6]
+				"mRender": function (data, type, row) {
+					var nacionalidad = "";
+					if(row.nacionalidad!= null)nacionalidad = row.nacionalidad;
+					return nacionalidad;
+				},
+				"bSortable": false,
+				"aTargets": [6]
 				},
 				{
-					"mRender": function (data, type, row) {
-						var sexo = "";
-						if(row.sexo!= null)sexo = row.sexo;
-						return sexo;
-					},
-					"bSortable": false,
-					"aTargets": [7]
+				"mRender": function (data, type, row) {
+					var sexo = "";
+					if(row.sexo!= null)sexo = row.sexo;
+					return sexo;
+				},
+				"bSortable": false,
+				"aTargets": [7]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var numero_celular = "";
+					if(row.numero_celular!= null)numero_celular = row.numero_celular;
+					return numero_celular;
+				},
+				"bSortable": false,
+				"aTargets": [8]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var correo = "";
+					if(row.correo!= null)correo = row.correo;
+					return correo;
+				},
+				"bSortable": false,
+				"aTargets": [9]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var direccion = "";
+					if(row.direccion!= null)direccion = row.direccion;
+					return direccion;
+				},
+				"bSortable": false,
+				"aTargets": [10]
 				},
 				/*
 				{
@@ -596,7 +614,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [8]
+					"aTargets": [11]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -621,7 +639,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [12],
 				},
 
             ]

@@ -202,7 +202,7 @@ class PersonaController extends Controller
 	public function buscar_persona($tipo_documento,$numero_documento){
 
 
-		$sw = 1;//encontrado en Felmo
+		$sw = 1;//encontrado
 		//$tarjeta = NULL;
 		$persona = Persona::where('tipo_documento',$tipo_documento)->where('numero_documento',$numero_documento)->where('estado','A')->first();
 
@@ -417,6 +417,10 @@ class PersonaController extends Controller
 		$p[]="";
 		$p[]="";
 		$p[]=$request->sexo;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -502,11 +506,23 @@ class PersonaController extends Controller
 		$persona->grupo_sanguineo = $request->grupo_sanguineo;
 		$persona->id_ubigeo_nacimiento =150101;
 		$persona->lugar_nacimiento = $request->lugar_nacimiento;
+		//$persona->lugar_nacimiento = $request->img_foto;
 		$persona->id_nacionalidad = $request->nacionalidad;
-		$persona->numero_ruc = 12345678910;
+		$persona->numero_ruc = $request->ruc;
 		$persona->id_sexo = $request->sexo;
+		$persona->numero_celular = $request->numero_celular;
+		$persona->correo = $request->correo;
+		$persona->direccion = $request->direccion;
 		$persona->estado = 1;
 		$persona->id_usuario_inserta = $id_user;
 		$persona->save();
     }
+
+	public function upload(Request $request){
+
+    	$filepath = public_path('img/frontend/tmp_agremiado/');
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		echo $_FILES['file']['name'];
+	}
+
 }

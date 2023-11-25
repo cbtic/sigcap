@@ -125,8 +125,18 @@
 						<input class="form-control form-control-sm" id="dni" name="dni" placeholder="DNI">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="profesion" name="profesion" placeholder="Profesion">
-					</div>
+                        <div class="form-group">
+                            <select name="profesion" id="profesion" class="form-control form-control-sm" onChange="">
+                                <option value="">--Selecionar Profesi&oacute;n--</option>
+                                    <?php
+                                    foreach ($profesion as $row) {?>
+                                        <option value="<?php echo $row->id?>" <?php if($row->id==$profesion_Otro->id_profesion)echo "selected='selected'"?>><?php echo $row->nombre?></option>
+                                    <?php 
+                                    }
+                                    ?>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
@@ -150,7 +160,10 @@
                         <tr style="font-size:13px">
                             <th>Colegiatura</th>
                             <th>Colegiatura Abrev.</th>
+                            <th>Tipo Documento</th>
+                            <th>N&uacute;mero Documento</th>
 							<th>Nombres</th>
+                            <th>Fecha Nacimiento</th>
                             <th>Profesion</th>
                             <th>Ruta Firma</th>
                             <th>Estado</th>

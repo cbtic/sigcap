@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ProfesionalesOtro;
 use App\Models\Persona;
 use App\Models\Profesione;
+use App\Models\TablaMaestra;
 use Auth;
 
 class ProfesionalesOtroController extends Controller
@@ -23,7 +24,13 @@ class ProfesionalesOtroController extends Controller
 
     function consulta_profesionalesOtro(){
 
-        return view('frontend.profesionalesOtro.all');
+        $profesion_model = new Profesione;
+        $persona_model = new Persona;
+        $profesion = $profesion_model->getProfesionAll();
+        $persona = $persona_model->getPersona_ListaAll();
+        $profesion_Otro = new ProfesionalesOtro;
+        
+        return view('frontend.profesionalesOtro.all',compact('profesion_Otro','profesion','persona'));
     }
 	
     public function listar_profesionalesOtro_ajax(Request $request){
@@ -71,9 +78,8 @@ class ProfesionalesOtroController extends Controller
 
 		//$profesion_model = new Profesione;
 		//$profesion = $profesion_model->getProfesionAll();
-
-
         //$empresas_model = new empresas;
+
 		
 		return view('frontend.profesionalesOtro.create',compact('colegiatura','colegiatura_abreviatura','persona','profesion','ruta_firma','estado'));
 		
@@ -81,18 +87,26 @@ class ProfesionalesOtroController extends Controller
 
     public function modal_profesionalesOtro_nuevoProfesionalesOtro($id){
 		
-		$profesionalesOtro = new ProfesionalesOtro;
+		$profesionalOtro = new ProfesionalesOtro;
+        $persona = new Persona;
+		$tablaMaestra_model = new TablaMaestra;
+        $profesion_model = new Profesione;
 		
 		if($id>0){
-			$profesionalesOtro = ProfesionalesOtro::find($id);
+			$profesionalOtro = ProfesionalesOtro::find($id);
+            $empresa = Persona::find($id);
 		}else{
-			$profesionalesOtro = new ProfesionalesOtro;
+			$profesionalOtro = new ProfesionalesOtro;
+            $persona = new Persona;
 		}
 		
+        //$persona = $persona_model->getPersona_ListaAll();
+        $tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+        $profesion = $profesion_model->getProfesionAll();
 		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.profesionalesOtro.modal_profesionalesOtro_nuevoProfesionalesOtro',compact('id','profesionalesOtro'));
+		return view('frontend.profesionalesOtro.modal_profesionalesOtro_nuevoProfesionalesOtro',compact('id','profesionalOtro','persona','tipo_documento','profesion'));
 	
 	}
 

@@ -48,7 +48,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalProfesion(0);
+		modalProfesionalesOtro(0);
 	});
 		
 	datatablenew();

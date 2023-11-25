@@ -148,5 +148,14 @@ class Persona extends Model
 
 	
 	}
+
+    function getPersona_ListaAll(){
+
+        $cad = "select * from personas
+        where estado='1'
+        order by id desc";
+		$data = DB::select($cad);
+        return $data;
+    }
  
 }

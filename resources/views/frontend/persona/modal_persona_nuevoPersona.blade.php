@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:40%!important
+	max-width:50%!important
   }
   
 #tablemodal{
@@ -68,6 +68,43 @@
     height: 3.5vh !important;
     padding: 4px;
     border-right: 1px solid #c4c0c9;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.img_ruta{
+	position:relative;
+	float:left
+}
+
+.delete_ruta{
+	background-image:url(img/delete.png);
+	top:0px;
+	left:110px;
+	background-size: 100%;
+	position:absolute;
+	display:block;
+	width:30px;
+	height:30px;
+	cursor:pointer
 }
 
 #tablemodal tbody tr:hover td, #tablemodal tbody tr:hover th {
@@ -363,6 +400,9 @@ function fn_save_persona(){
 	var lugar_nacimiento = $('#lugar_nacimiento').val();
 	var nacionalidad = $('#nacionalidad').val();
 	var sexo = $('#sexo').val();
+	var numero_celular = $('#numero_celular').val();
+	var correo = $('#correo').val();
+	var direccion = $('#direccion').val();
 	//var estado = $('#estado').val();
 	
 	//alert(id_agremiado);
@@ -371,7 +411,7 @@ function fn_save_persona(){
     $.ajax({
 			url: "/persona/send_persona_nuevoPersona",
             type: "POST",
-            data : {_token:_token,id:id,tipo_documento:tipo_documento,numero_documento:numero_documento,nombre:nombre,apellido_paterno:apellido_paterno,apellido_materno:apellido_materno,fecha_nacimiento:fecha_nacimiento,grupo_sanguineo:grupo_sanguineo,lugar_nacimiento:lugar_nacimiento,nacionalidad:nacionalidad,sexo:sexo},
+            data : {_token:_token,id:id,tipo_documento:tipo_documento,numero_documento:numero_documento,nombre:nombre,apellido_paterno:apellido_paterno,apellido_materno:apellido_materno,fecha_nacimiento:fecha_nacimiento,grupo_sanguineo:grupo_sanguineo,lugar_nacimiento:lugar_nacimiento,nacionalidad:nacionalidad,sexo:sexo,numero_celular:numero_celular,correo:correo,direccion:direccion},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -496,6 +536,39 @@ function cargar_tipo_proveedor(){
 	
 }
 
+$(document).ready(function() {
+    $(".upload").on('click', function() {
+        var formData = new FormData();
+        var files = $('#image')[0].files[0];
+        formData.append('file',files);
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/persona/upload",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response != 0) {
+                    $("#img_ruta").attr("src", "/img/frontend/tmp_agremiado/"+response);
+					$("#img_foto").val(response);
+                } else {
+                    alert('Formato de imagen incorrecto.');
+                }
+            }
+        });
+        return false;
+    });
+
+	$(".delete").on('click', function() {
+		$("#img_ruta").attr("src", "/img/profile-icon.png");
+		$("#img_foto").val("");
+	});
+
+});
+
 /*
 $('#fecha_solicitud').datepicker({
 	autoclose: true,
@@ -554,67 +627,95 @@ container: '#myModal modal-body'
             <div class="card-body">
 
 			<div class="row">
-
+<!--aaaa-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
 					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Tipo Documento</label>
-								<select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
+					<div class="row">
+						<div class="col-lg-7">
+							<div class="col-lg-7">
+								<div class="form-group">
+									<label class="control-label form-control-sm">Tipo Documento</label>
+									<select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($tipo_documento as $row) {?>
+										<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+							</div>
+
+
+							<div class="col-lg-7">
+								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
+									<label class="control-label form-control-sm">N&uacute;mero Documento</label>
+									<input id="numero_documento" name="numero_documento" class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text">						
+								</div>
+							</div>
+							<div class="col-lg-7">
+                                <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
+                                    <label class="control-label form-control-sm">RUC</label>
+                                    <input id="ruc" name="ruc" class="form-control form-control-sm"  value="<?php echo $persona->numero_ruc?>" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+						<div class="col-lg-5">
+							<div class="form-group">	
+								<span class="btn btn-sm btn-warning btn-file">
+									Examinar <input id="image" name="image" type="file" />
+								</span>
+								<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:0px">
 									<?php
-									foreach ($tipo_documento as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
-									}
+									$img = "/img/profile-icon.png";
+									if($persona->foto!="")$img="/img/agremiado/".$persona->foto;
 									?>
-								</select>
+								<a href="/img/agremiado/<?php echo $persona->foto?>" target="_blank" class="btn btn-sm btn-secondary"><img src="<?php echo $img?>" id="img_ruta" width="100" height="100" alt="" style="margin-top:10px" /></a>
+								<input type="hidden" id="img_foto" name="img_foto" value="" />
+							
+								<!--
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<a href="{{ route('frontend.index') }}" class="navbar-brand">
+										<img src="<?php echo URL::to('/') ?>/img/logo_1.jpg" alt="" width="80" height="50" style="padding:0px;margin:0px">
+									</a>
+								</div>
+								-->
 							</div>
+								<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
 						</div>
-
-
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label class="control-label form-control-sm">N&uacute;mero Documento</label>
-								<input id="numero_documento" name="numero_documento" class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text">						
-							</div>
-						</div>
-						
+					</div>
+					<div class="row">	
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Nombres</label>
-								<input id="nombre" name="nombre" class="form-control form-control-sm"  value="<?php echo $persona->nombres?>" type="text">													
+								<input id="nombre" name="nombre" class="form-control form-control-sm"  value="<?php echo $persona->nombres?>" type="text" readonly="readonly">													
 							</div>
 						</div>
-
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Apellido Paterno</label>
-								<input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm"  value="<?php echo $persona->apellido_paterno?>" type="text">													
+								<input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm"  value="<?php echo $persona->apellido_paterno?>" type="text" readonly="readonly">													
 							</div>
 						</div>
-
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Apellido Materno</label>
-								<input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm"  value="<?php echo $persona->apellido_materno?>" type="text">													
+								<input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm"  value="<?php echo $persona->apellido_materno?>" type="text" readonly="readonly">													
 							</div>
 						</div>
-
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha Nacimiento</label>
 								<input placeholder="fecha_nacimiento" type="date" id="fecha_nacimiento" class="form-control form-control-sm" value="<?php echo $persona->fecha_nacimiento?>" type="text">
 							</div>
 						</div>
-
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Grupo Sanguineo</label>
 								<select name="grupo_sanguineo" id="grupo_sanguineo" class="form-control form-control-sm" onChange="">
@@ -628,15 +729,13 @@ container: '#myModal modal-body'
 								</select>
 							</div>
 						</div>
-
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Lugar Nacimiento</label>
 								<input id="lugar_nacimiento" name="lugar_nacimiento" class="form-control form-control-sm"  value="<?php echo $persona->lugar_nacimiento?>" type="text" >																				
 							</div>
 						</div>
-						
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Nacionalidad</label>
 								<select name="nacionalidad" id="nacionalidad" class="form-control form-control-sm" onChange="">
@@ -650,7 +749,7 @@ container: '#myModal modal-body'
 								</select>
 							</div>
 						</div>
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Sexo</label>
 								<select name="sexo" id="sexo" class="form-control form-control-sm" onChange="">
@@ -662,6 +761,24 @@ container: '#myModal modal-body'
 									}
 									?>
 								</select>
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="control-label form-control-sm">N&uacute;mero Celular</label>
+								<input id="numero_celular" name="numero_celular" class="form-control form-control-sm"  value="<?php echo $persona->numero_celular?>" type="text" >																				
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Correo</label>
+								<input id="correo" name="correo" class="form-control form-control-sm"  value="<?php echo $persona->correo?>" type="text" >																				
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Direcci&oacute;n</label>
+								<input id="direccion" name="direccion" class="form-control form-control-sm"  value="<?php echo $persona->direccion?>" type="text" >																				
 							</div>
 						</div>
 					</div>
@@ -696,6 +813,13 @@ container: '#myModal modal-body'
 $(document).ready(function () {
 	
 	
+	$('#numero_documento').blur(function () {
+		var id = $('#id').val();
+			if(id==0) {
+				validaDni(this.value);
+			}
+	});
+
 	$('#tblReservaEstacionamiento').DataTable({
 		"dom": '<"top">rt<"bottom"flpi><"clear">'
 		});
@@ -815,6 +939,56 @@ $(document).ready(function() {
 	  
 	
 });
+
+function validaDni(dni){
+
+	var numero_documento = $("#numero_documento").val();
+	var msg = "";
+
+	if (msg != "") {
+			bootbox.alert(msg);
+			return false;
+	}
+
+	if (tipo_documento == "0" || numero_documento == "") {
+		bootbox.alert(msg);
+		return false;
+	}
+
+	var settings = {
+		"url": "https://apiperu.dev/api/dni/"+dni,
+		"method": "GET",
+		"timeout": 0,
+		"headers": {
+		  "Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
+		},
+	  };
+
+	  $.ajax(settings).done(function (response) {
+		console.log(response);
+
+		if (response.success == true){
+
+			var data= response.data;
+
+			$('#apellido_paterno').val('')
+			$('#apellido_materno').val('')
+			$('#nombre').val('')
+
+			$('#apellido_paterno').val(data.apellido_paterno);
+			$('#apellido_materno').val(data.apellido_materno);
+			$('#nombre').val(data.nombres);
+
+			//alert(data.nombre_o_razon_social);
+
+		}
+		else{
+			bootbox.alert("DNI Invalido,... revise el DNI digitado ¡");
+			return false;
+		}
+
+	  });
+}
 
 </script>
 

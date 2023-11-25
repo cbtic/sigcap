@@ -339,3 +339,5 @@ Route::get('profesionalesOtro/editar_profesionalesOtro/{id}', [ProfesionalesOtro
 Route::get('profesionalesOtro/modal_profesionalesOtro_nuevoProfesionalesOtro/{id}', [ProfesionalesOtroController::class, 'modal_profesionalesOtro_nuevoProfesionalesOtro'])->name('profesionalesOtro.modal_profesionalesOtro_nuevoProfesionalesOtro');
 Route::post('profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro', [ProfesionalesOtroController::class, 'send_profesionalesOtro_nuevoProfesionalesOtro'])->name('profesionalesOtro.send_profesionalesOtro_nuevoProfesionalesOtro');
 Route::get('profesionalesOtro/eliminar_profesionalesOtro/{id}/{estado}', [ProfesionalesOtroController::class, 'eliminar_profesionalesOtro'])->name('profesionalesOtro.eliminar_profesionalesOtro');
+
+Route::post('persona/upload', [PersonaController::class, 'upload'])->name('persona.upload');
