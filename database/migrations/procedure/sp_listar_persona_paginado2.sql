@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_persona_paginado2(p_tipo_documento character varying, p_numero_documento character varying, p_agremiado character varying, p_fecha_nacimiento character varying, p_tipo_persona character varying, p_grupo_sanguineo character varying, p_lugar_nacimiento character varying, p_nacionalidad character varying, p_sexo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_persona_paginado2(p_tipo_documento character varying, p_numero_documento character varying, p_agremiado character varying, p_fecha_nacimiento character varying, p_tipo_persona character varying, p_grupo_sanguineo character varying, p_lugar_nacimiento character varying, p_nacionalidad character varying, p_sexo character varying, p_numero_celular character varying, p_correo character varying, p_direccion character varying, p_ruc character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,7 +18,7 @@ begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' p.id, tm.denominacion tipo_documento, p.numero_documento, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, p.fecha_nacimiento, p.id_tipo_persona, tm2.denominacion grupo_sanguineo, p.lugar_nacimiento, tm3.denominacion nacionalidad, tm4.denominacion sexo, p.estado  ';
+	v_campos=' p.id, tm.denominacion tipo_documento, p.numero_documento, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, p.fecha_nacimiento, p.id_tipo_persona, tm2.denominacion grupo_sanguineo, p.lugar_nacimiento, tm3.denominacion nacionalidad, tm4.denominacion sexo, p.numero_celular, p.correo, p.direccion, p.numero_ruc , p.estado ';
 
 	v_tabla='from personas p 
 	inner join tabla_maestras tm on p.id_tipo_documento ::int = tm.codigo ::int and tm.tipo =''16''
