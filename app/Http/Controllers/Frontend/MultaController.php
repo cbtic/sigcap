@@ -102,7 +102,7 @@ class MultaController extends Controller
 		$agremiado = Multa::find($numero_cap);
 		
         $multa_model = new Multa;
-		print_r($agremiado).exit();
+		//print_r($agremiado).exit();
 		
 		return view('frontend.multa.create',compact('agremiado','periodo','concepto','moneda','importe','fecha_inicio','fecha_fin','estado'));
 		

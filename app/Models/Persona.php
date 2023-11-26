@@ -50,7 +50,7 @@ class Persona extends Model
     }
 
     public function listar_persona2_ajax($p){
-		return $this->readFunctionPostgres('sp_listar_persona_paginado2',$p);
+		return $this->readFunctionPostgres('sp_listar_persona_paginado',$p);
     }
 
     public function readFunctionPostgres($function, $parameters = null){
@@ -148,5 +148,14 @@ class Persona extends Model
 
 	
 	}
+
+    function getPersona_ListaAll(){
+
+        $cad = "select * from personas
+        where estado='1'
+        order by id desc";
+		$data = DB::select($cad);
+        return $data;
+    }
  
 }

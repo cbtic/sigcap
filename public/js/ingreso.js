@@ -900,6 +900,25 @@ function modal_fraccionamiento(){
 					
 			}
 	});
+}
+
+function modal_persona_new(){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc').modal('show');
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	
+	$.ajax({
+			url: "/ingreso/modal_fraccionamiento",
+			type: "POST",
+			data : $("#frmValorizacion").serialize(),
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
 
 	//cargarConceptos();
 

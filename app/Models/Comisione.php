@@ -52,15 +52,31 @@ class Comisione extends Model
 
     function getComisionAll($cad_id,$estado){
 
-        $cad = " select c.*,tm.denominacion tipo_agrupacion, cm.monto from comisiones c
+        $cad = " select c.*,tm.denominacion tipo_agrupacion, cm.monto,pc.descripcion periodo 
+		from comisiones c
         inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
         inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
         left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
+		inner join periodo_comisiones pc on c.id_periodo_comisiones=pc.id
         where c.estado ilike '%".$estado."'";
 
         if($cad_id!="" && $cad_id!="0"){
             $cad .= "and c.id_municipalidad_integrada in (".$cad_id.")";
         }
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	function getComisionByPeriodo($id_periodo){
+
+        $cad = " select c.*,tm.denominacion tipo_agrupacion, cm.monto,pc.descripcion periodo 
+		from comisiones c
+        inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
+        inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
+        left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
+		inner join periodo_comisiones pc on c.id_periodo_comisiones=pc.id
+        where c.id_periodo_comisiones=".$id_periodo;
 
 		$data = DB::select($cad);
         return $data;

@@ -15,7 +15,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" >
             <ul class="navbar-nav col-lg-9 col-md-9 col-sm-12 col-xs-12">
                 @if(config('boilerplate.locale.status') && count(config('boilerplate.locale.languages')) > 1)
                     <li class="nav-item dropdown">
@@ -84,6 +84,7 @@
 								<a href="/concurso/consulta_resultado" class="dropdown-item">Consulta de Resultado de Concurso</a>
 								<a href="/comision/consulta_comision" class="dropdown-item">Comisiones</a>
 								<a href="/comision/lista_comision" class="dropdown-item">Consulta de Comisiones</a>
+								<a href="/sesion/lista_programacion_sesion" class="dropdown-item">Programaci&oacute;n de Sesiones</a>
 
 						   </div>
 					</li>
@@ -102,7 +103,8 @@
                                 <a href="/periodoComision/consulta_periodoComision" class="dropdown-item">Periodo Comisi&oacute;n</a>
                                 <a href="/movilidad/consulta_movilidad" class="dropdown-item">Movilidad</a>
                                 <a href="/persona/consulta_persona" class="dropdown-item">Persona</a>
-								
+								<a href="/profesion/consulta_profesion" class="dropdown-item">Profesi&oacute;n</a>
+                                <a href="/profesionalesOtro/consulta_profesionalesOtro" class="dropdown-item">Otros Profesionales</a>
 								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
 						   </div>
 					</li>
