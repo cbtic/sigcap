@@ -331,7 +331,7 @@ Route::get('sesion/modal_sesion/{id}', [SesionController::class, 'modal_sesion']
 Route::post('sesion/send_sesion', [SesionController::class, 'send_sesion'])->name('sesion.send_sesion');
 Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
 Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
-
+Route::get('sesion/modal_asignar_delegado_sesion/{id}', [SesionController::class, 'modal_asignar_delegado_sesion'])->name('sesion.modal_asignar_delegado_sesion');
 
 
 
