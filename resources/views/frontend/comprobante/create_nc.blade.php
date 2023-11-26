@@ -226,7 +226,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        <?php echo $titulo ?>
+                        <small class="text-muted">Nota de Credito</small>
                         <!--Edita Factura-->
                         <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
@@ -235,7 +235,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col col-sm-12 align-self-center">
-                    <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}} " id="frmFacturacion" name="frmFacturacion" autocomplete="off">
+                    <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}} " id="frmNC" name="frmNC" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
                         <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
@@ -751,17 +751,7 @@
                                                     </div>
                                                 </div>
                                                 <div id="" class="row">
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                            <label class="form-control-sm">Forma de Pago</label>
-                                                            <select name="forma_pago" id="forma_pago" class="form-control form-control-sm">
-                                                                <?php foreach ($forma_pago as $row) : ?>
-                                                                    <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
-                                                                <?php endforeach; ?>
-                                                            </select>
-
-                                                        </div>
-                                                    </div>
+                                             
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Tipo de Cambio</label>

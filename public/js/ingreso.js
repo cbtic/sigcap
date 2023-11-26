@@ -158,6 +158,8 @@ function cargarcboTipoConcepto(){
 	});
 }
 
+
+
 function calcular_total(obj){
 	
 	if(id_caja_usuario=="0"){
@@ -640,18 +642,33 @@ function validar(tipo) {
 	
 	if(tipo_documento != "RUC" && id_persona == "")msg += "Debe ingresar el Numero de Documento <br>";
 	if(tipo_documento == "RUC" && empresa_id == "")msg += "Debe ingresar el Numero de Documento <br>";
-	if(mov=="0")msg+="Debe seleccionar minimo un Concepto del Estado de Cuenta <br>";
-
+	/*
+	if (tipo != 4) {
+		if(mov=="0")msg+="Debe seleccionar minimo un Concepto del Estado de Cuenta <br>";
+	}
+*/
 	if(tipo_documento == "DNI" && id_ubicacion_p == "" && tipo == 1)msg += "Para crear la Factura requiere RUC Personal <br>";
 
 	
 	if(msg!=""){
 		bootbox.alert(msg);
 		//return false;
-	} else {
+	} else{
+		if(tipo == 1 || tipo==2 || tipo==3) {
 		//submitFrm();
 		document.frmValorizacion.submit();
+		//document.frmPagos.submit();
+		}
+
+		if(tipo = 5){
+
+			
+
+
+			//fn_nota_credito();
+		}
 	}
+
 	return false;
 }
 
@@ -934,4 +951,38 @@ function guardar_fracciona_deuda(){
 					
             }
     });
+}
+
+function ncnd(){
+	/*
+	var id = $(obj).parent().parent().parent().find('.id_comprobante').val();
+
+	$('#id_comprobante_').val(id);
+
+	document.frmPagos.submit();
+	*/
+	
+	document.frmPagos.submit();
+	return false;
+};
+
+
+
+function fn_nota_credito(id){
+	
+	var id_caja = $('#id_caja').val();
+
+
+	$.ajax({
+			url: "/comprobante/nc_edit/"+id+"/"+id_caja,
+			type: "GET",
+			data : $("#frmNC").serialize(),
+			success: function (result) {  
+
+				//	$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
+	//cargarConceptos();
 }

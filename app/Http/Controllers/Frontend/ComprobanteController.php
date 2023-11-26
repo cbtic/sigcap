@@ -27,6 +27,7 @@ class ComprobanteController extends Controller
     }
 
 
+
 	public function edit(Request $request){
 
         $trans = $request->Trans;
@@ -558,5 +559,79 @@ class ComprobanteController extends Controller
 		}
         //print ("hola");exit();
 		return view('frontend.factura.modal_factura',compact('id','factura','negativo'));
-	}    
+	}
+    
+    public function nc_edit($id, $id_caja){
+
+        $trans = "I";
+       
+        
+		if($id_caja==""){
+			$valorizaciones_model = new Valorizacione;
+			$id_user = Auth::user()->id;
+			$caja_usuario = $valorizaciones_model->getCajaIngresoByusuario($id_user,'91');
+			//$id_caja = $caja_usuario->id_caja;
+			$id_caja = (isset($caja_usuario->id_caja))?$caja_usuario->id_caja:0;
+		}
+       
+      
+
+        $comprobante_model=new Comprobante;
+        $comprobante=$comprobante_model->getComprobanteById($id);
+       
+
+        $empresa_model = new Empresa;
+        $serie_model = new TablaMaestra;
+
+		$tabla_model = new TablaMaestra;
+		$forma_pago = $tabla_model->getMaestroByTipo('19');
+        $tipooperacion = $tabla_model->getMaestroByTipo('103');
+        $formapago = $tabla_model->getMaestroByTipo('104');
+
+
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion'));
+        
+
+    }
+
+    public function nc_edita(Request $request){
+
+        //echo("hola");
+		echo $request->id_comprobante;
+		exit();
+
+        $id_caja = $request->id_caja_;
+        $id = $request->id_comprobante_;
+
+        $trans = "I";
+       
+        
+		if($id_caja==""){
+			$valorizaciones_model = new Valorizacione;
+			$id_user = Auth::user()->id;
+			$caja_usuario = $valorizaciones_model->getCajaIngresoByusuario($id_user,'91');
+			//$id_caja = $caja_usuario->id_caja;
+			$id_caja = (isset($caja_usuario->id_caja))?$caja_usuario->id_caja:0;
+		}
+       
+      
+
+        $comprobante_model=new Comprobante;
+        $comprobante=$comprobante_model->getComprobanteById($id);
+       
+
+        $empresa_model = new Empresa;
+        $serie_model = new TablaMaestra;
+
+		$tabla_model = new TablaMaestra;
+		$forma_pago = $tabla_model->getMaestroByTipo('19');
+        $tipooperacion = $tabla_model->getMaestroByTipo('103');
+        $formapago = $tabla_model->getMaestroByTipo('104');
+
+
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion'));
+        
+
+    }
+	
 }
