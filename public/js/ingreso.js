@@ -6,6 +6,11 @@ $(document).ready(function () {
 			obtenerBeneficiario();
 		}
 	});
+
+	
+	$('#btnPersonaNew').click(function () {
+		modal_persona_new();
+	});
 	
 	$('#example-select-all').on('click', function(){
 		if($(this).is(':checked')){
@@ -893,8 +898,8 @@ function modal_persona_new(){
 
 	
 	$.ajax({
-			url: "/ingreso/modal_fraccionamiento",
-			type: "POST",
+			url: "/persona/modal_persona_new",
+			type: "get",
 			data : $("#frmValorizacion").serialize(),
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
