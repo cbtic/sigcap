@@ -11,6 +11,7 @@ use App\Models\Comisione;
 use App\Models\TablaMaestra;
 use App\Models\PeriodoComisione;
 use App\Models\ComisionDelegado;
+use App\Models\ProfesionalesOtro;
 use Auth;
 
 class SesionController extends Controller
@@ -152,6 +153,48 @@ class SesionController extends Controller
 			
     }
 	
+	public function send_profesion_otro(Request $request){
+		
+		$id_user = Auth::user()->id;
+		
+		if($request->id == 0){
+			$comisionSesionDelegado = new ComisionSesionDelegado();
+		}else{
+			$comisionSesionDelegado = ComisionSesionDelegado::find($request->id);
+		}
+		
+		$comisionSesionDelegado->id_comision_sesion = $request->id_comision_sesion;
+		$comisionSesionDelegado->id_delegado = NULL;
+		$comisionSesionDelegado->id_profesion_otro = $request->id_profesion_otro;
+		$comisionSesionDelegado->id_aprobar_pago = NULL;
+		$comisionSesionDelegado->observaciones = NULL;
+		$comisionSesionDelegado->estado = 1;
+		$comisionSesionDelegado->id_usuario_inserta = $id_user;
+		$comisionSesionDelegado->save();
+				
+    }
+	
+	public function send_delegado_sesion(Request $request){
+		
+		$id_user = Auth::user()->id;
+		
+		if($request->id == 0){
+			$comisionSesionDelegado = new ComisionSesionDelegado();
+		}else{
+			$comisionSesionDelegado = ComisionSesionDelegado::find($request->id);
+		}
+		
+		$comisionSesionDelegado->id_comision_sesion = $request->id_comision_sesion;
+		$comisionSesionDelegado->id_delegado = $request->id_delegado;
+		$comisionSesionDelegado->id_profesion_otro = NULL;
+		$comisionSesionDelegado->id_aprobar_pago = NULL;
+		$comisionSesionDelegado->observaciones = NULL;
+		$comisionSesionDelegado->estado = 1;
+		$comisionSesionDelegado->id_usuario_inserta = $id_user;
+		$comisionSesionDelegado->save();
+			
+    }
+	
 	public function modal_asignar_delegado_sesion($id){
 		
 		$id_user = Auth::user()->id;
@@ -160,9 +203,23 @@ class SesionController extends Controller
 		
 		//if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
 		
-		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
+		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
 		
 		return view('frontend.sesion.modal_asignar_delegado_sesion',compact('id','concurso_inscripcion'));
+
+    }
+	
+	public function modal_asignar_profesion_sesion($id){
+		
+		$id_user = Auth::user()->id;
+		
+		$profesionalesOtro_model = new ProfesionalesOtro;
+		
+		//if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
+		
+		$profesion_sesion = $profesionalesOtro_model->getProfesionSesion();
+		
+		return view('frontend.sesion.modal_asignar_profesion_sesion',compact('id','profesion_sesion'));
 
     }
 	

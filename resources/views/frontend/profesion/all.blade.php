@@ -15,22 +15,11 @@
     .table-sortable tbody tr {
         cursor: move;
     }
-	/*
-    #global {        
-        width: 95%;        
-        margin: 15px 15px 15px 15px;     
-        height: 380px !important;        
-        border: 1px solid #ddd;
-        overflow-y: scroll !important;
-    }
-	*/
 	#global {
         height: 650px !important;
         width: auto;
         border: 1px solid #ddd;
 		margin:15px
-       /* background: #f1f1f1;*/
-        /*overflow-y: scroll !important;*/
     }
 	
     .margin{
@@ -41,22 +30,9 @@
         margin-bottom: 5px;
         margin-top: 5px;
     }
-
-    /*.row{
-        margin-top:10px;
-        padding: 0 10px;
-    }*/
     .clickable{
         cursor: pointer;   
     }
-
-    /*.panel-heading div {
-        margin-top: -18px;
-        font-size: 15px;        
-    }
-    .panel-heading div span{
-        margin-left:5px;
-    }*/
     .panel-body{
         display: block;
     }
@@ -68,7 +44,6 @@
 .loader {
 	width: 100%;
 	height: 100%;
-	/*height: 1500px;*/
 	overflow: hidden; 
 	top: 0px;
 	left: 0px;
@@ -103,19 +78,12 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Personas</li>
+            <li class="breadcrumb-item active">Consulta de Profesi&oacute;n</li>
         </li>
     </ol>
 @endsection
 
 @section('content')
-
-    <!--<ol class="breadcrumb" style="padding-left:120px;margin-top:0px">
-        <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Afiliados</li>
-        </li>
-    </ol>
-    -->
 
 <div class="loader"></div>
 
@@ -128,7 +96,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consultar Personas <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consultar Profesi&oacute;n <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,36 +108,19 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Personas
+                        Lista de Profesi&oacute;n
                     </strong>
-                </div><!--card-header-->
+                </div>
 				
 				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="id" id="id" value="0">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="Numero Documento">
+						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre">
 					</div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
-					</div>
-
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <select name="sexo" id="sexo" class="form-control form-control-sm" onchange="">
-                                <option value="">--Selecionar Sexo--</option>
-                                <?php
-                                foreach ($sexo as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_sexo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-                        </div>
-					</div>
-                    
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
@@ -177,34 +128,23 @@
 							<option value="0">Eliminado</option>
 						</select>
 					</div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                    
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-						
-                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
-                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+						<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
 
 					</div>
 				</div>
 				
-                <div class="card-body">
+                <div class="card-body">				
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Tipo Documento</th>
-                            <th>N&uacute;mero Documento</th>
                             <th>Nombre</th>
-                            <th>Fecha Nacimiento</th>
-                            <th>Grupo Sanguineo</th>
-                            <th>Lugar Nacimiento</th>
-                            <th>Nacionalidad</th>
-                            <th>Sexo</th>
-                            <th>N&uacute;mero Celular</th>
-                            <th>Correo</th>
-                            <th>Direcci&oacute;n</th>
                             <th>Estado</th>
-                            <th>Acciones</th>
+							<th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -212,13 +152,8 @@
                     </table>
                 </div><!--table-responsive-->
                 </form>
-
-
-
                 </div><!--card-body-->
-            </div><!--card-->
-        <!--</div>--><!--col-->
-    <!--</div>--><!--row-->
+            </div>
 
 @endsection
 
@@ -230,17 +165,13 @@
 	  <div class="modal-body" style="padding: 0px;margin: 0px">
 
 			<div id="diveditpregOpc"></div>
-
 	  </div>
-	
 	</div>
-
   </div>
-	
 </div>
 
 @push('after-scripts')
 
-<script src="{{ asset('js/persona/lista2.js') }}"></script>
+<script src="{{ asset('js/profesion/lista.js') }}"></script>
 
 @endpush

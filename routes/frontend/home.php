@@ -28,8 +28,8 @@ use App\Http\Controllers\Frontend\SesionController;
 
 use App\Http\Controllers\Frontend\PeriodoComisionController;
 use App\Http\Controllers\Frontend\MovilidadController;
-
-
+use App\Http\Controllers\Frontend\ProfesionController;
+use App\Http\Controllers\Frontend\ProfesionalesOtroController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -332,6 +332,26 @@ Route::post('sesion/send_sesion', [SesionController::class, 'send_sesion'])->nam
 Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
 Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
 Route::get('sesion/modal_asignar_delegado_sesion/{id}', [SesionController::class, 'modal_asignar_delegado_sesion'])->name('sesion.modal_asignar_delegado_sesion');
+Route::get('sesion/modal_asignar_profesion_sesion/{id}', [SesionController::class, 'modal_asignar_profesion_sesion'])->name('sesion.modal_asignar_profesion_sesion');
+Route::post('sesion/send_profesion_otro', [SesionController::class, 'send_profesion_otro'])->name('sesion.send_profesion_otro');
+Route::post('sesion/send_delegado_sesion', [SesionController::class, 'send_delegado_sesion'])->name('sesion.send_delegado_sesion');
 
 
+Route::get('persona/editar_persona/{id}', [PersonaController::class, 'editar_persona'])->name('persona.editar_persona');
+Route::post('persona/send_persona_nuevoPersona', [PersonaController::class, 'send_persona_nuevoPersona'])->name('persona.send_persona_nuevoPersona');
+//Route::get('persona/eliminar_persona/{id}/{estado}', [PersonaController::class, 'eliminar_persona'])->name('persona.eliminar_persona');
+Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
+Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
+Route::get('profesion/editar_profesion/{id}', [ProfesionController::class, 'editar_profesion'])->name('profesion.editar_profesion');
+Route::get('profesion/modal_profesion_nuevoProfesion/{id}', [ProfesionController::class, 'modal_profesion_nuevoProfesion'])->name('profesion.modal_profesion_nuevoProfesion');
+Route::post('profesion/send_profesion_nuevoProfesion', [ProfesionController::class, 'send_profesion_nuevoProfesion'])->name('profesion.send_profesion_nuevoProfesion');
+Route::get('profesion/eliminar_profesion/{id}/{estado}', [ProfesionController::class, 'eliminar_profesion'])->name('profesion.eliminar_profesion');
 
+Route::get('profesionalesOtro/consulta_profesionalesOtro', [ProfesionalesOtroController::class, 'consulta_profesionalesOtro'])->name('profesionalesOtro.consulta_profesionalesOtro');
+Route::post('profesionalesOtro/listar_profesionalesOtro_ajax', [ProfesionalesOtroController::class, 'listar_profesionalesOtro_ajax'])->name('profesionalesOtro.listar_profesionalesOtro_ajax');
+Route::get('profesionalesOtro/editar_profesionalesOtro/{id}', [ProfesionalesOtroController::class, 'editar_profesionalesOtro'])->name('profesionalesOtro.editar_profesionalesOtro');
+Route::get('profesionalesOtro/modal_profesionalesOtro_nuevoProfesionalesOtro/{id}', [ProfesionalesOtroController::class, 'modal_profesionalesOtro_nuevoProfesionalesOtro'])->name('profesionalesOtro.modal_profesionalesOtro_nuevoProfesionalesOtro');
+Route::post('profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro', [ProfesionalesOtroController::class, 'send_profesionalesOtro_nuevoProfesionalesOtro'])->name('profesionalesOtro.send_profesionalesOtro_nuevoProfesionalesOtro');
+Route::get('profesionalesOtro/eliminar_profesionalesOtro/{id}/{estado}', [ProfesionalesOtroController::class, 'eliminar_profesionalesOtro'])->name('profesionalesOtro.eliminar_profesionalesOtro');
+
+Route::post('persona/upload', [PersonaController::class, 'upload'])->name('persona.upload');

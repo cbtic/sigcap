@@ -296,6 +296,23 @@ function modalAsignarDelegadoSesion(id){
 
 }
 
+function modalAsignarProfesionSesion(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc2 .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/sesion/modal_asignar_profesion_sesion/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc2").html(result);
+					$('#openOverlayOpc2').modal('show');
+			}
+	});
+
+}
+
+
 function obtenerPlanDetalle(){
 	
 	var plan_costo = $('#plan_id option:selected').attr("plan_costo");

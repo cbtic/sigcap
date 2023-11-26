@@ -263,15 +263,14 @@ function guardarCita(id_medico,fecha_cita){
 function fn_save(){
     
 	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var id_comision = $('#id_comision').val();
-	var id_regional = $('#id_regional').val();
-	var id_concurso_inscripcion = $('#id_concurso_inscripcion').val();
+	var id = $('#id_').val();
+	var id_comision_sesion = $('#id').val();
+	var id_delegado = $('#id_delegado').val();
 	
     $.ajax({
-			url: "/comision/send_delegado",
+			url: "/sesion/send_delegado_sesion",
             type: "POST",
-            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion},
+            data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				datatablenew();
@@ -448,14 +447,14 @@ container: '#myModal modal-body'
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px">
 					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
+					<input type="hidden" name="id_" id="id_" value="<?php echo $id?>">
 					
 					<div class="row" style="padding-left:10px">
 						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado</label>
-								<select name="id_concurso_inscripcion" id="id_concurso_inscripcion" class="form-control form-control-sm" onChange="">
+								<select name="id_delegado" id="id_delegado" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($concurso_inscripcion as $row) {?>
