@@ -262,9 +262,8 @@ function fn_save_profesionalesOtro(){
                       </div>
                     </div>
                   </div> 
-                </div>
                 <div class="col-lg-5">
-                  <div class="form-group">	
+                  <div class="form-group">
                     <span class="btn btn-sm btn-warning btn-file">
                       Examinar <input id="image" name="image" type="file" />
                     </span>

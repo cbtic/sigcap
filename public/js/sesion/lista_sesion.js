@@ -265,10 +265,12 @@ function obtenerComisionDelegado(){
 			$('#tblDelegado tbody').html("");
 			$(result).each(function (ii, oo) {
 				option += "<tr style='font-size:13px'>";
+				option += "<input type='hidden' name='id_delegado[]' value='"+oo.id+"'>";
 				option += "<td class='text-left'>"+oo.puesto+"</td>";
 				option += "<td class='text-left'>"+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</td>";
 				option += "<td class='text-left'>"+oo.numero_cap+"</td>";
 				option += "<td class='text-left'>"+oo.situacion+"</td>";
+				option += "<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('"+oo.id+"') ><i class='fa fa-edit'></i> Editar</button></td>";
 				option += "</tr>";
 			});
 			$('#tblDelegado tbody').html(option);
@@ -277,6 +279,39 @@ function obtenerComisionDelegado(){
 	});
 	
 }
+
+function modalAsignarDelegadoSesion(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc2 .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/sesion/modal_asignar_delegado_sesion/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc2").html(result);
+					$('#openOverlayOpc2').modal('show');
+			}
+	});
+
+}
+
+function modalAsignarProfesionSesion(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc2 .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/sesion/modal_asignar_profesion_sesion/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc2").html(result);
+					$('#openOverlayOpc2').modal('show');
+			}
+	});
+
+}
+
 
 function obtenerPlanDetalle(){
 	
@@ -540,6 +575,16 @@ function datatablenew(){
                 },
                 "bSortable": true,
                 "aTargets": [5]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var newRow = "";
+					newRow="<button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalSesion('"+row.id+"') ><i class='fa fa-edit'></i> Editar</button>"
+					return newRow;
+                },
+                "bSortable": true,
+                "aTargets": [6]
                 },
 
             ]

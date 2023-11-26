@@ -104,22 +104,6 @@ tr:nth-child(2n) {
 }  
 */
 
-	#tablemodalm {
-		/*
-	width: 30em;
-	overflow-x: auto;
-	white-space: nowrap;
-	*/
-
-		/*background-color: #fed9ff; 
-      width: 600px; 
-      height: 150px; 
-      overflow-x: hidden;
-      overflow-y: auto; 
-      text-align: center; 
-      padding: 20px;*/
-	}
-
 	/*
 fieldset.scheduler-border {
     border: 1px groove #ddd !important;

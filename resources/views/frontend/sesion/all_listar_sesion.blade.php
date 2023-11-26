@@ -180,6 +180,7 @@
 							<th>Hora Fin</th>
 							<th>Sesi&oacute;n Programada</th>
                             <th>Estado</th>
+							<th>Editar</th>
                         </tr>
                         </thead>
                         <tbody>
