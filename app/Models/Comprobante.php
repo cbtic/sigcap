@@ -49,6 +49,16 @@ class Comprobante extends Model
 		$data = DB::select($cad);
         if(isset($data[0]))return $data[0];
     }
+
+    function getComprobanteById($numero_comprobante){
+
+        $cad = "select * 
+				from comprobantes c 
+				where c.id='".$numero_comprobante."'";
+    
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
 	
     
     

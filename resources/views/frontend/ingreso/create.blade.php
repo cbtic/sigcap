@@ -462,6 +462,7 @@
                                                     <input type="hidden" name="Trans" id="Trans" value="FA" />
                                                     <input class="btn btn-success pull-rigth" value="FACTURA" type="button" id="btnFactura" disabled="disabled" onclick="enviarTipo(1)" />
                                                     <input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnBoleta" disabled="disabled" onclick="enviarTipo(2)" />
+                                                    
                                                     <input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnTicket" disabled="disabled" onclick="enviarTipo(3)" style="display:none" />
 
                                                     <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="modal_fraccionamiento()" />
@@ -476,30 +477,18 @@
                                 <br />
                             </div>
 
+
                             <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 
                                 <div class="card">
                                     <div class="card-header">
                                         <strong>
-                                            <!--@lang('labels.frontend.asistencia.box_asistencia')-->
                                             Registro de Pagos
                                         </strong>
                                     </div>
 
+
                                     <div class="card-body">
-
-                                        <!--<div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                                    <div class="form-group form-group-sm">
-                                        <label>Area</label>
-                                        <select name="tdicod" id="tdicod" class="form-control">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            -->
                                         <div class="table-responsive">
                                             <table id="tblPago" class="table table-hover table-sm">
                                                 <thead>
@@ -517,25 +506,14 @@
                                                 <tbody>
                                                 </tbody>
                                             </table>
-                                        </div><!--table-responsive-->
-
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group mb-0 clearfix">
-
-                                                    <input class="btn btn-success pull-rigth" value="NOTA CREDITO" type="button" id="btnNc_boleta" disabled="disabled" onclick="enviarTipo(5)" />
-                                                    <input class="btn btn-info pull-rigth" value="NOTA DEBITO" type="button" id="btnNd_boleta" disabled="disabled" onclick="enviarTipo(7)" />
-
-                                                    <input class="btn btn-success pull-rigth" value="NOTA CREDITO" type="button" id="btnNc_factura" disabled="disabled" onclick="enviarTipo(4)" visibility: hidden />
-                                                    <input class="btn btn-info pull-rigth" value="NOTA DEBITO" type="button" id="btnNd_factura" disabled="disabled" onclick="enviarTipo(6)" visibility: hidden />
-
-                                                </div><!--form-group-->
-                                            </div><!--col-->
-                                        </div><!--row-->
-                                    </div><!--card-body-->
-                                </div><!--card-->
-
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+
+
+
 
                         </div>
 
@@ -558,8 +536,15 @@
                         </div>
 
                     </div>
+                </div>
 
             </form>
+
+            <form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmPagos" name="frmPagos" autocomplete="off">
+                <input type="hidden" name="id_comprobante_" id="id_comprobante_" value="" />
+                <input type="hidden" name="id_caja_" id="id_caja_" value="<?php echo $caja_usuario->id_caja ?>" />
+            </form>
+
 
 
 

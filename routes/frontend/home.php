@@ -195,6 +195,10 @@ Route::post('comprobante/create', [ComprobanteController::class, 'create'])->nam
 Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
 Route::get('comprobante/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
 
+Route::get('comprobante/nc_edit/{id}/{id_caja}', [ComprobanteController::class, 'nc_edit'])->name('comprobante.nc_edit');
+
+Route::post('comprobante/nc_edita', [ComprobanteController::class, 'nc_edita'])->name('comprobante.nc_edita');
+
 
 
 Route::get('seguro/consulta_seguro', [SeguroController::class, 'consulta_seguro'])->name('seguro.consulta_seguro');

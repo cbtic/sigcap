@@ -25,8 +25,12 @@ foreach($pago as $row):?>
 		//if($row->fac_tipo=="TK") echo "TICKET";
 	?>
 	</td>-->
+
     <td class="text-left"><?php echo $row->serie?></td>
-	<td class="text-left"><?php echo $row->numero?></td>
+	<td class="text-left" ><?php echo $row->numero?>
+	<input type="hidden" class="id_comprobante" value="<?php echo $row->id_comprobante?>" />
+	</td>
+
 	<td class="text-left"><?php echo $row->descripcion;
 		if($row->descripcion=="OTPHID SERVICIO"){
 			echo '&nbsp;&nbsp;<span id="badge_empresa" class="badge badge-warning">PESAJE</span>';
@@ -53,17 +57,17 @@ foreach($pago as $row):?>
 		</div>
 	</td>
 	<td class="text-left">
-		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-			<a href="/comprobante/<?php echo $row->id_comprobante?>" class="btn btn-sm btn-success" style="font-size:9px!important" target="_blank">
+		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions" >
+			<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="ncnd(this)" >
 				<i class="fa fa-search" style="font-size:9px!important"></i>
-			</a>
+			</button>
 		</div>
 	</td>
 	<td class="text-left">
 		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-			<a href="/comprobante/<?php echo $row->id_comprobante?>" class="btn btn-sm btn-success" style="font-size:9px!important" target="_blank">
+			<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="ncnd(this)" >
 				<i class="fa fa-search" style="font-size:9px!important"></i>
-			</a>
+			</button>
 		</div>
 	</td>
 </tr>
