@@ -948,14 +948,17 @@ function guardar_fracciona_deuda(){
     });
 }
 
-function ncnd(obj){
+function ncnd(){
+	/*
 	var id = $(obj).parent().parent().parent().find('.id_comprobante').val();
 
 	$('#id_comprobante_').val(id);
 
 	document.frmPagos.submit();
+	*/
 	
-		
+	document.frmPagos.submit();
+	return false;
 };
 
 

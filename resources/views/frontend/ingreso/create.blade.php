@@ -543,12 +543,14 @@
     </div>
 </div>
 @endsection
-
+			
+			
+			<!--
             <form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmPagos" name="frmPagos" autocomplete="off">
                 <input type="hidden" name="id_comprobante_" id="id_comprobante_" value="" />
-                <input type="hidden" name="id_caja_" id="id_caja_" value="<?php echo $caja_usuario->id_caja ?>" />
+                <input type="hidden" name="id_caja_" id="id_caja_" value="<?php //echo $caja_usuario->id_caja ?>" />
             </form>
-
+			-->
 
 
 @push('after-scripts')

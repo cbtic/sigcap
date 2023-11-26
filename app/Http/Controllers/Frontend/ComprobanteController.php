@@ -27,6 +27,7 @@ class ComprobanteController extends Controller
     }
 
 
+
 	public function edit(Request $request){
 
         $trans = $request->Trans;
@@ -595,7 +596,9 @@ class ComprobanteController extends Controller
 
     public function nc_edita(Request $request){
 
-        echo("hola");exit();
+        //echo("hola");
+		echo $request->id_comprobante;
+		exit();
 
         $id_caja = $request->id_caja_;
         $id = $request->id_comprobante_;
@@ -630,4 +633,5 @@ class ComprobanteController extends Controller
         
 
     }
+	
 }
