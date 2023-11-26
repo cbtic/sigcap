@@ -200,22 +200,14 @@ $(document).ready(function() {
 <script type="text/javascript">
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
-     $('#fecha_programado').datepicker({
+     $('#fecha_solicitud').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
 		//container: '#openOverlayOpc modal-body'
 		container: '#openOverlayOpc modal-body'
      });
-	 
-	 $('#fecha_ejecucion').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
-		//container: '#openOverlayOpc modal-body'
-		container: '#openOverlayOpc modal-body'
-     });
-	 
 	 /*
-	 $('#hora_inicio').timepicker({
+	 $('#hora_solicitud').timepicker({
 		showInputs: false,
 		container: '#openOverlayOpc modal-body'
 	});
@@ -271,22 +263,14 @@ function guardarCita(id_medico,fecha_cita){
 function fn_save(){
     
 	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var id_comision = $('#id_comision').val();
-	var id_regional = $('#id_regional').val();
-	var id_tipo_sesion = $('#id_tipo_sesion').val();
-	var fecha_programado = $('#fecha_programado').val();
-	var hora_inicio = $('#hora_inicio').val();
-	var hora_fin = $('#hora_fin').val();
-	var fecha_ejecucion = $('#fecha_ejecucion').val();
-	var observaciones = $('#observaciones').val();
-	var id_estado_sesion = $('#id_estado_sesion').val();
-	//alert($('#frmSesion').serialize());return false;
+	var id = $('#id_').val();
+	var id_comision_sesion = $('#id').val();
+	var id_profesion_otro = $('#id_profesion_otro').val();
+	
     $.ajax({
-			url: "/sesion/send_sesion",
+			url: "/sesion/send_profesion_otro",
             type: "POST",
-			data : $('#frmSesion').serialize(),
-            //data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_tipo_sesion:id_tipo_sesion,fecha_programado:fecha_programado,hora_inicio:hora_inicio,hora_fin:hora_fin,fecha_ejecucion:fecha_ejecucion,observaciones:observaciones,id_estado_sesion:id_estado_sesion},
+            data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_profesion_otro:id_profesion_otro},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				datatablenew();
@@ -435,35 +419,6 @@ autoclose: true,
 todayHighlight: true,
 container: '#myModal modal-body'
 */	
-
-var id = "<?php echo $id?>";
-var id_periodo = "<?php echo $comision->id_periodo_comisiones?>";
-var id_comision = "<?php echo $comisionSesion->id_comision?>";
-//alert(id);
-
-if(id>0)obtenerComisionEdit(id_periodo,id_comision);
-
-function obtenerComisionEdit(id_periodo,id_comision){
-	
-	$.ajax({
-		url: '/sesion/obtener_comision/'+id_periodo,
-		dataType: "json",
-		success: function(result){
-			var option = "";
-			$('#id_comision').html("");
-			var sel = "";
-			$(result).each(function (ii, oo) {
-				sel = "";
-				if(id_comision==oo.id)sel = "selected='selected'";
-				option += "<option value='"+oo.id+"' "+sel+">"+oo.comision+" "+oo.denominacion+"</option>";
-			});
-			$('#id_comision').html(option);
-		}
-		
-	});
-	
-}
-
 </script>
 
 
@@ -482,7 +437,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Programacion de Sesi&oacute;n
+				Registro Delegado
 			</div>
 			
             <div class="card-body">
@@ -491,171 +446,19 @@ function obtenerComisionEdit(id_periodo,id_comision){
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px">
 					
-					<form class="form-horizontal" method="post" action="" id="frmSesion" autocomplete="off">
-					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Regional</label>
-								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($region as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==5)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Periodo</label>
-								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComision()">
-									<option value="">--Seleccionar--</option>
-									<?php
-									foreach ($periodo as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-						
-					</div>
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Comision</label>
-								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="obtenerComisionDelegado()">
-									<option value="">--Seleccionar--</option>
-								</select>
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Tipo Programaci&oacute;n</label>
-								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($tipo_programacion as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comisionSesion->id_tipo_sesion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-												
-					</div>
-					
-					<div class="row" style="padding-left:10px">
-					
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha Programaci&oacute;n</label>
-								<input id="fecha_programado" name="fecha_programado" class="form-control form-control-sm"  value="<?php if($comisionSesion->fecha_programado!="")echo date("d-m-Y", strtotime($comisionSesion->fecha_programado))?>" type="text">
-							</div>
-						</div>
-					
-					</div>
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Hora Inicio</label>
-								<input id="hora_inicio" name="hora_inicio" class="form-control form-control-sm" value="<?php echo $comisionSesion->hora_inicio?>" type="time">
-								
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Hora Fin</label>
-								<input id="hora_fin" name="hora_fin" class="form-control form-control-sm" value="<?php echo $comisionSesion->hora_fin?>" type="time">
-								
-							</div>
-						</div>
-						
-					</div>
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha Ejecuci&oacute;n</label>
-								<input id="fecha_ejecucion" name="fecha_ejecucion" class="form-control form-control-sm"  value="<?php if($comisionSesion->fecha_ejecucion!="")echo date("d-m-Y", strtotime($comisionSesion->fecha_ejecucion))?>" type="text">
-							</div>
-						</div>
-						
-						<div class="col-lg-12">
-							<div class="form-group">
-								<!--<label class="control-label form-control-sm">Delegado</label>-->
-								
-								<button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick="modalAsignarProfesionSesion(0)" ><i class='fa fa-edit'></i> Agregar</button>
-								
-								<div class="table-responsive">
-									<table id="tblDelegado" class="table table-hover table-sm">
-										<thead>
-										<tr style="font-size:13px">
-											<th>Puesto</th>
-											<th>Delegado</th>
-											<th>CAP</th>
-											<th>Situaci&oacute;n</th>
-											<th>Editar</th>
-										</tr>
-										</thead>
-										<tbody>
-										<?php foreach ($delegados as $row) {?>
-										<tr style='font-size:13px'>
-											<input type='hidden' name='id_delegado[]' value='"+oo.id+"'>
-											<td class='text-left'><?php echo $row->puesto; echo $row->profesion ?></td>
-											<td class='text-left'><?php echo $row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></td>
-											<td class='text-left'><?php echo $row->numero_cap?></td>
-											<td class='text-left'><?php echo $row->situacion?></td>
-											<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('<?php echo $row->id?>') ><i class='fa fa-edit'></i> Editar</button></td>
-										<?php } ?>
-										</tbody>
-									</table>
-                				</div>
-								
-							</div>
-						</div>
-					
-					</div>
+					<input type="hidden" name="id_" id="id_" value="<?php echo $id?>">
 					
 					<div class="row" style="padding-left:10px">
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Observaciones</label>
-								<textarea id="observaciones" name="observaciones" class="form-control form-control-sm"><?php echo $comisionSesion->observaciones?></textarea>
-								
-							</div>
-						</div>
-						
-					</div>
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Estado Sesi&oacute;n</label>
-								<select name="id_estado_sesion" id="id_estado_sesion" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
+								<label class="control-label form-control-sm">Otra Profesi&oacute;n</label>
+								<select name="id_profesion_otro" id="id_profesion_otro" class="form-control form-control-sm" onChange="">
+									<option value="">--Seleccionar--</option>
 									<?php
-									foreach ($estado_sesion as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comisionSesion->id_estado_sesion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									foreach ($profesion_sesion as $row) {?>
+									<option value="<?php echo $row->id?>"><?php echo $row->numero_documento." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->profesion?></option>
 									<?php 
 									}
 									?>
@@ -677,8 +480,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 					
               </div>
 			  
-              </form>
-			  
+              
           </div>
           <!-- /.box -->
           
@@ -693,26 +495,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-	
-	
-	<div id="openOverlayOpc2" class="modal fade" role="dialog">
-	  <div class="modal-dialog" >
-	
-		<div id="id_content_OverlayoneOpc2" class="modal-content" style="padding: 0px;margin: 0px">
-		
-		  <div class="modal-body" style="padding: 0px;margin: 0px">
-	
-				<div id="diveditpregOpc2"></div>
-	
-		  </div>
-		
-		</div>
-	
-	  </div>
-		
-	</div>
-
-	    
+    
 <script type="text/javascript">
 $(document).ready(function () {
 	

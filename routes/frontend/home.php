@@ -325,6 +325,19 @@ Route::get('comision/consulta_comision_integrada', [ComisionController::class, '
 Route::get('persona/consulta_persona', [PersonaController::class, 'consulta_persona'])->name('persona.consulta_persona');
 Route::post('persona/listar_persona2_ajax', [PersonaController::class, 'listar_persona2_ajax'])->name('persona.listar_persona2_ajax');
 Route::get('persona/modal_persona_nuevoPersona/{id}', [PersonaController::class, 'modal_persona_nuevoPersona'])->name('persona.modal_persona_nuevoPersona');
+
+Route::get('sesion/lista_programacion_sesion', [SesionController::class, 'lista_programacion_sesion'])->name('sesion.lista_programacion_sesion');
+Route::post('sesion/lista_programacion_sesion_ajax', [SesionController::class, 'lista_programacion_sesion_ajax'])->name('sesion.lista_programacion_sesion_ajax');
+Route::get('sesion/modal_sesion/{id}', [SesionController::class, 'modal_sesion'])->name('sesion.modal_sesion');
+Route::post('sesion/send_sesion', [SesionController::class, 'send_sesion'])->name('sesion.send_sesion');
+Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
+Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
+Route::get('sesion/modal_asignar_delegado_sesion/{id}', [SesionController::class, 'modal_asignar_delegado_sesion'])->name('sesion.modal_asignar_delegado_sesion');
+Route::get('sesion/modal_asignar_profesion_sesion/{id}', [SesionController::class, 'modal_asignar_profesion_sesion'])->name('sesion.modal_asignar_profesion_sesion');
+Route::post('sesion/send_profesion_otro', [SesionController::class, 'send_profesion_otro'])->name('sesion.send_profesion_otro');
+Route::post('sesion/send_delegado_sesion', [SesionController::class, 'send_delegado_sesion'])->name('sesion.send_delegado_sesion');
+
+
 Route::get('persona/editar_persona/{id}', [PersonaController::class, 'editar_persona'])->name('persona.editar_persona');
 Route::post('persona/send_persona_nuevoPersona', [PersonaController::class, 'send_persona_nuevoPersona'])->name('persona.send_persona_nuevoPersona');
 //Route::get('persona/eliminar_persona/{id}/{estado}', [PersonaController::class, 'eliminar_persona'])->name('persona.eliminar_persona');
