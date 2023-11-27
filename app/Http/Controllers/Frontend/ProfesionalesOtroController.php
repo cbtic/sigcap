@@ -126,7 +126,8 @@ class ProfesionalesOtroController extends Controller
 		//$profesionalesOtro->ruta_firma = $request->ruta_firma;
 		$profesionOtro->estado = 1;
 		$profesionOtro->id_usuario_inserta = $id_user;
-		$profesionOtro->save();
+		
+		if($profesionOtro->id_persona)$profesionOtro->save();
     }
 
 	public function eliminar_profesionalesOtro($id,$estado)

@@ -26,7 +26,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#dni').keypress(function(e){
+	$('#numero_documento').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
