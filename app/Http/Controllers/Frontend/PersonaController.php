@@ -188,7 +188,7 @@ class PersonaController extends Controller
 			$persona->save();
 		}
     }
-	
+
 	public function eliminar_persona($id,$estado)
     {
 		$persona = Persona::find($id);
@@ -552,6 +552,100 @@ class PersonaController extends Controller
 		
     }
 
+	public function send_persona_new_(Request $request){
+		$id_user = Auth::user()->id;
+		
+		if($request->id == 0){
+			/*
+			$codigo=$request->codigo;
+			$telefono = $request->telefono;
+			$email = $request->email;
+			
+			if($codigo==""){
+				$array_tipo_documento = array('DNI' => 'DNI','CARNET_EXTRANJERIA' => 'CE','PASAPORTE' => 'PAS','RUC' => 'RUC','CEDULA' => 'CED','PTP/PTEP' => 'PTP/PTEP');
+				$codigo = $array_tipo_documento[$request->tipo_documento]."-".$request->numero_documento;
+			}
+			if($telefono=="")$telefono="999999999";
+			if($email=="")$email="mail@mail.com";
+
+			*/
+			
+			$persona = new Persona;
+			$persona->id_tipo_documento = $request->tipo_documento;
+			$persona->numero_documento = $request->numero_documento;
+			$persona->apellido_paterno = $request->apellido_paterno;
+			$persona->apellido_materno = $request->apellido_materno;
+			$persona->nombres = $request->nombres;
+			$persona->id_usuario_inserta = $id_user;
+			
+			/*
+			$persona->codigo = $codigo;
+			$persona->ocupacion = $request->ocupacion;
+			$persona->fecha_nacimiento = "1990-01-01";
+			$persona->sexo = "M";
+			//$persona->telefono = "999999999";
+			$persona->telefono = $telefono;
+			//$persona->email = "mail@mail.com";
+			$persona->email = $email;
+			$persona->foto = "mail@mail.com";
+			$persona->estado = "1";
+            $persona->ruc = $request->ruc;
+*/
+			$persona->save();
+			
+		}else{
+			$persona = Persona::find($request->id);
+			$persona->tipo_documento = $request->tipo_documento;
+			$persona->numero_documento = $request->numero_documento;
+			$persona->apellido_paterno = $request->apellido_paterno;
+			$persona->apellido_materno = $request->apellido_materno;
+			$persona->nombres = $request->nombres;
+/*
+			$persona->codigo = $request->codigo;
+			$persona->ocupacion = $request->ocupacion;
+			$persona->telefono = $request->telefono;
+			$persona->email = $request->email;
+            $persona->ruc = $request->ruc;
+            */
+			$persona->save();
+		}
+    }
+
+	public function send_persona_new(Request $request){
+
+		$id_user = Auth::user()->id;
+		
+		if($request->id == 0){
+			$persona = new Persona;
+			$persona->id_usuario_inserta = $id_user;
+		}else{
+			$persona = Persona::find($request->id);
+			$persona->id_usuario_actualiza = $id_user;
+		}
+
+		$persona->id_tipo_documento = $request->tipo_documento;
+		$persona->numero_documento = $request->numero_documento;
+		$persona->apellido_paterno = $request->apellido_paterno;
+		$persona->apellido_materno = $request->apellido_materno;
+		$persona->nombres = $request->nombres;
+/*
+		$persona->fecha_nacimiento = $request->fecha_nacimiento;
+		$persona->id_tipo_persona = 1;
+		$persona->grupo_sanguineo = $request->grupo_sanguineo;
+		$persona->id_ubigeo_nacimiento =150101;
+		$persona->lugar_nacimiento = $request->lugar_nacimiento;
+		$persona->id_nacionalidad = $request->nacionalidad;
+		$persona->numero_ruc = $request->ruc;
+		$persona->id_sexo = $request->sexo;
+		$persona->numero_celular = $request->numero_celular;
+		$persona->correo = $request->correo;
+		$persona->foto = $request->img_foto;
+		$persona->direccion = $request->direccion;
+		$persona->estado = 1;
+*/		
+		
+		$persona->save();
+    }
 	public function upload(Request $request){
 
     	$filepath = public_path('img/frontend/tmp_agremiado/');
