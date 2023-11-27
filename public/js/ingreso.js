@@ -6,6 +6,11 @@ $(document).ready(function () {
 			obtenerBeneficiario();
 		}
 	});
+
+	
+	$('#btnPersonaNew').click(function () {
+		modal_persona_new();
+	});
 	
 	$('#example-select-all').on('click', function(){
 		if($(this).is(':checked')){
@@ -414,66 +419,80 @@ function obtenerBeneficiario(){
 		url: '/agremiado/obtener_agremiado/' + tipo_documento + '/' + numero_documento,
 		dataType: "json",
 		success: function(result){
-			//alert(result.agremiado.id);
-			//alert(result);
-			
-			if(tipo_documento == "79")//RUC
-			{
-				$('#empresa_afiliado').val(result.agremiado.razon_social);
-				$('#empresa_direccion').val(result.agremiado.direccion);
-				$('#empresa_representante').val(result.agremiado.representante);
-				$('#empresa_id').val(result.agremiado.id);
-				$('#id_ubicacion').val(result.agremiado.id);
 
-				$('#nombre_').val(result.agremiado.razon_social);
-				$('#fecha_colegiatura').val(result.agremiado.representante);
+			if (result) {
+				//alert(result.agremiado.id);
+				//alert(result);
 
-				$('#btnOtroConcepto').attr("disabled",false);
-
-			}else if(tipo_documento == "85") //CAP
+				if (tipo_documento == "79")//RUC
 				{
-				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
-				$('#nombre_').val(agremiado);
-				$('#fecha_colegiatura').val(result.agremiado.situacion);
-				$('#fecha_').val(result.agremiado.fecha_colegiado);
-				$('#id_persona').val(result.agremiado.id_p);
-				$('#id_agremiado').val(result.agremiado.id);
-				$('#ruc_p').val(result.agremiado.numero_ruc);
-				$('#id_ubicacion_p').val("0");
-				
-				$('#numero_documento_').val(result.agremiado.numero_documento);
-				$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
-				$('#btnOtroConcepto').attr("disabled",false);
+					$('#empresa_afiliado').val(result.agremiado.razon_social);
+					$('#empresa_direccion').val(result.agremiado.direccion);
+					$('#empresa_representante').val(result.agremiado.representante);
+					$('#empresa_id').val(result.agremiado.id);
+					$('#id_ubicacion').val(result.agremiado.id);
 
-			}else{
-				var agremiado = result.agremiado.apellido_paterno+" "+result.agremiado.apellido_materno+", "+result.agremiado.nombres;
-				$('#nombre_').val(agremiado);
-				$('#fecha_colegiatura').val(result.agremiado.situacion);	
-				$('#fecha_').val(result.agremiado.fecha_colegiado);
-				$('#id_persona').val(result.agremiado.id_p);
-				$('#id_agremiado').val(result.agremiado.id);
-				$('#ruc_p').val(result.agremiado.numero_ruc);
-				$('#id_ubicacion_p').val("0");
+					$('#nombre_').val(result.agremiado.razon_social);
+					$('#fecha_colegiatura').val(result.agremiado.representante);
 
-				$('#numero_documento_').val(result.agremiado.numero_documento);
-				$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
-				$('#btnOtroConcepto').attr("disabled",false);
-												
+					$('#btnOtroConcepto').attr("disabled", false);
+
+				} else if (tipo_documento == "85") //CAP
+				{
+					var agremiado = result.agremiado.apellido_paterno + " " + result.agremiado.apellido_materno + ", " + result.agremiado.nombres;
+					$('#nombre_').val(agremiado);
+					$('#fecha_colegiatura').val(result.agremiado.situacion);
+					$('#fecha_').val(result.agremiado.fecha_colegiado);
+					$('#id_persona').val(result.agremiado.id_p);
+					$('#id_agremiado').val(result.agremiado.id);
+					$('#ruc_p').val(result.agremiado.numero_ruc);
+					$('#id_ubicacion_p').val("0");
+
+					$('#numero_documento_').val(result.agremiado.numero_documento);
+					$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
+					$('#btnOtroConcepto').attr("disabled", false);
+
+				} else {
+					var agremiado = result.agremiado.apellido_paterno + " " + result.agremiado.apellido_materno + ", " + result.agremiado.nombres;
+					$('#nombre_').val(agremiado);
+					$('#fecha_colegiatura').val(result.agremiado.situacion);
+					$('#fecha_').val(result.agremiado.fecha_colegiado);
+					$('#id_persona').val(result.agremiado.id_p);
+					$('#id_agremiado').val(result.agremiado.id);
+					$('#ruc_p').val(result.agremiado.numero_ruc);
+					$('#id_ubicacion_p').val("0");
+
+					$('#numero_documento_').val(result.agremiado.numero_documento);
+					$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
+					$('#btnOtroConcepto').attr("disabled", false);
+
+				}
+
+				if (result.agremiado.foto != null && result.agremiado.foto != "") {
+					$('#foto').attr('src', '/img/dni_asociados/' + result.agremiado.foto);
+				} else {
+					$('#foto').attr('src', '/img/profile-icon.png');
+				}
+
+
+				cargarValorizacion();
+				cargarPagos();
+				cargarcboTipoConcepto();
+				//cargarDudoso();
 			}
+			else {
 
-			if(result.agremiado.foto!=null && result.agremiado.foto!=""){
-				$('#foto').attr('src','/img/dni_asociados/'+result.agremiado.foto);
-			}else{
-				$('#foto').attr('src','/img/profile-icon.png');
+				alert("registro no registrado");
+
 			}
-
-
-			cargarValorizacion();
-			cargarPagos();
-			cargarcboTipoConcepto();
-			//cargarDudoso();
 			
+		},
+		"error": function (msg, textStatus, errorThrown) {
+			
+			bootbox.alert("Numero de Documento NO registrado");
+
 		}
+		
 		
 	});
 	
@@ -910,8 +929,8 @@ function modal_persona_new(){
 
 	
 	$.ajax({
-			url: "/ingreso/modal_fraccionamiento",
-			type: "POST",
+			url: "/persona/modal_persona_new",
+			type: "get",
 			data : $("#frmValorizacion").serialize(),
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);

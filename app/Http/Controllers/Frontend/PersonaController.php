@@ -464,6 +464,19 @@ class PersonaController extends Controller
 	
 	}
 
+	public function modal_persona_new(Request $request){
+		
+		$id_tipo_documento = $request->tipo_documento;
+		$numero_documento = $request->numero_documento;
+		
+
+		$tablaMaestra_model = new TablaMaestra;		
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(110);
+
+		return view('frontend.persona.modal_persona_new',compact('sexo','tipo_documento', 'id_tipo_documento', 'numero_documento'));
+	}
+
 	public function editar_persona($id){
         
 		$persona = Persona::find($id);
