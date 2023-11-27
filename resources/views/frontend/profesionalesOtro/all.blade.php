@@ -165,7 +165,6 @@
 							<th>Nombres</th>
                             <th>Fecha Nacimiento</th>
                             <th>Profesion</th>
-                            <th>Ruta Firma</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
