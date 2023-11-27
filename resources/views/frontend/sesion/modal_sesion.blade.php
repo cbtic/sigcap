@@ -1,4 +1,4 @@
-<title>Sistema de Felmo</title>
+<title>Sistema de CAP</title>
 
 <style>
 /*
@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:40%!important
+	max-width:60%!important
   }
   
 #tablemodal{
@@ -489,16 +489,16 @@ function obtenerComisionEdit(id_periodo,id_comision){
 
 			<div class="row">
 
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:0px">
 					
 					<form class="form-horizontal" method="post" action="" id="frmSesion" autocomplete="off">
 					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
-					<div class="row" style="padding-left:10px">
+					<div class="row" style="padding-left:0px">
 						
-						<div class="col-lg-6">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
 								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
@@ -513,7 +513,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 							</div>
 						</div>
 						
-						<div class="col-lg-6">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
 								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComision()">
@@ -527,12 +527,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 								</select>
 							</div>
 						</div>
-						
-					</div>
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-6">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Comision</label>
 								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="obtenerComisionDelegado()">
@@ -541,7 +536,11 @@ function obtenerComisionEdit(id_periodo,id_comision){
 							</div>
 						</div>
 						
-						<div class="col-lg-6">
+					</div>
+					
+					<div class="row" style="padding-left:5px">
+														
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tipo Programaci&oacute;n</label>
 								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="">
@@ -555,23 +554,14 @@ function obtenerComisionEdit(id_periodo,id_comision){
 								</select>
 							</div>
 						</div>
-												
-					</div>
-					
-					<div class="row" style="padding-left:10px">
-					
-						<div class="col-lg-6">
+
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha Programaci&oacute;n</label>
 								<input id="fecha_programado" name="fecha_programado" class="form-control form-control-sm"  value="<?php if($comisionSesion->fecha_programado!="")echo date("d-m-Y", strtotime($comisionSesion->fecha_programado))?>" type="text">
 							</div>
 						</div>
-					
-					</div>
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-6">
+						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Hora Inicio</label>
 								<input id="hora_inicio" name="hora_inicio" class="form-control form-control-sm" value="<?php echo $comisionSesion->hora_inicio?>" type="time">
@@ -579,22 +569,38 @@ function obtenerComisionEdit(id_periodo,id_comision){
 							</div>
 						</div>
 						
-						<div class="col-lg-6">
+						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Hora Fin</label>
 								<input id="hora_fin" name="hora_fin" class="form-control form-control-sm" value="<?php echo $comisionSesion->hora_fin?>" type="time">
 								
 							</div>
 						</div>
-						
+																		
 					</div>
 					
-					<div class="row" style="padding-left:10px">
+									
+					<div class="row" style="padding-left:5px">
 						
-						<div class="col-lg-6">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha Ejecuci&oacute;n</label>
 								<input id="fecha_ejecucion" name="fecha_ejecucion" class="form-control form-control-sm"  value="<?php if($comisionSesion->fecha_ejecucion!="")echo date("d-m-Y", strtotime($comisionSesion->fecha_ejecucion))?>" type="text">
+							</div>
+						</div>
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Estado Sesi&oacute;n</label>
+								<select name="id_estado_sesion" id="id_estado_sesion" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($estado_sesion as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comisionSesion->id_estado_sesion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
 							</div>
 						</div>
 						
@@ -634,7 +640,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 					
 					</div>
 					
-					<div class="row" style="padding-left:10px">
+					<div class="row" style="padding-left:5px">
 						
 						<div class="col-lg-12">
 							<div class="form-group">
@@ -645,27 +651,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 						</div>
 						
 					</div>
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Estado Sesi&oacute;n</label>
-								<select name="id_estado_sesion" id="id_estado_sesion" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($estado_sesion as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comisionSesion->id_estado_sesion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-						
-					</div>
-					
-					
+										
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
