@@ -219,7 +219,7 @@ class AfiliacionSeguroController extends Controller
 		
 		$seguroafiliado_model = new Agremiado();
 		$agremiado = $seguroafiliado_model->getAgremiado('85',$id);
-		
+
 		echo json_encode($agremiado);
 	}
 

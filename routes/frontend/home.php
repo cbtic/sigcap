@@ -58,6 +58,9 @@ Route::get('persona/buscar_persona/{tipo_documento}/{numero_documento}', [Person
 Route::get('persona/create', [personaController::class, 'create'])->name('persona.create');
 Route::get('persona/list_persona/{term}', [personaController::class, 'list_persona'])->name('persona.list_persona');
 
+Route::get('persona/modal_persona_new', [PersonaController::class, 'modal_persona_new'])->name('persona.modal_persona_new');
+
+
 Route::get('agremiado', [AgremiadoController::class, 'index'])->name('agremiado');
 Route::get('agremiado/editar_agremiado/{id}', [AgremiadoController::class, 'editar_agremiado'])->name('agremiado.editar_agremiado');
 Route::get('agremiado/importar_agremiado', [AgremiadoController::class, 'importar_agremiado'])->name('agremiado.importar_agremiado');

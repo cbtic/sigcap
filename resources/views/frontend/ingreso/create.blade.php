@@ -235,17 +235,15 @@
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerBeneficiario()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
                                                     </span>
+
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-warning btn-sm" type="button" id="btnPersonaNew" tabindex="0"><i class="glyphicon glyphicon-search"></i> Persona </button>
+                                                    </span>
+
+
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2" style="padding-left:0px;padding-right:0px">
-
-                                                <br>
-                                                <button type="button" <?php echo $disabled ?> class="btn btn-warning btn-sm" data-toggle="modal" data-target="#personaModal">
-                                                    <i class="fas fa-plus-circle"></i>
-                                                    Persona
-                                                </button>
-                                            </div>
                                         </div>
 
                                         <div class="row" id="divNombreApellido">
