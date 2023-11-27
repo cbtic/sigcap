@@ -948,7 +948,7 @@ function guardar_fracciona_deuda(){
     });
 }
 
-function ncnd(){
+function nc(){
 	/*
 	var id = $(obj).parent().parent().parent().find('.id_comprobante').val();
 
@@ -957,9 +957,16 @@ function ncnd(){
 	document.frmPagos.submit();
 	*/
 	
-	document.frmPagos.submit();
+	document.forms["frmPagos"].submit();
 	return false;
 };
+
+function nd(){
+	
+	document.forms["frmPagos_nd"].submit();
+	return false;
+};
+
 
 
 

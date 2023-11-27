@@ -41,6 +41,36 @@ function guardarFactura(){
 
 }
 
+function guardarnc(){
+
+    var msg = "";
+    var smodulo_guia = $('#smodulo_guia').val();
+	var tipo_cambio = $('#tipo_cambio').val();
+	
+	var forma_pago = $('#forma_pago').val();
+	//alert(forma_pago); exit();
+
+    if(smodulo_guia=="32"){
+		var guia_llegada_direccion = $('#guia_llegada_direccion').val();
+		if(guia_llegada_direccion=="")msg+="Debe ingresar un direcci&oacute;n de punto de llegada<br>";	
+	}
+	
+	if (tipo_cambio==""&& forma_pago=="EFECTIVO DOLARES"){msg+="Debe ingresar el tipo de cambio<br>";	}
+
+
+    if(msg!=""){
+        bootbox.alert(msg);
+        return false;
+    }
+    else{
+		
+        fn_save_nc();
+	}
+	
+
+}
+
+
 function fn_save(){
 
     //var fecha_atencion_original = $('#fecha_atencion').val();
@@ -72,6 +102,35 @@ function fn_save(){
 				//$('#divNumeroF').show();
 				//location.href=urlApp+"/factura/"+result;
 				$('.loader').hide();
+				
+				$('#numerof').val(result.id_factura);
+				$('#divNumeroF').show();
+				location.href=urlApp+"/comprobante/"+result.id_factura;
+
+            }
+    });
+}
+
+function fn_save_nc(){
+
+    /*
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	$('#guardar').hide();
+	*/
+    $.ajax({
+			url: "/comprobante/send_nc",
+            type: "POST",
+
+			//data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
+            data : $("#frmNC").serialize(),
+			dataType: 'json',
+            success: function (result) {
+				
+			//	$('.loader').hide();
 				
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();

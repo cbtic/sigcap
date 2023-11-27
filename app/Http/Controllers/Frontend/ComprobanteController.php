@@ -481,6 +481,121 @@ class ComprobanteController extends Controller
 
         //return redirect()->back()->withFlashSuccess(__('alerts.frontend.contact.sent'));
     }
+
+    public function send_nc(Request $request)
+    {
+        $sw = true;
+		$msg = "";
+
+		$id_user = Auth::user()->id;
+        $facturas_model = new Comprobante;
+		$guia_model = new Guia;
+
+			/**********RUC***********/
+
+			$tarifa = $request->facturad;
+
+			$total = $request->totalF;
+			$serieF = $request->serieF;
+			$tipoF = $request->TipoF;
+			$ubicacion_id = $request->ubicacion;
+			$id_persona = $request->persona;
+			$id_caja = $request->id_caja;
+			$adelanto   = $request->adelanto;
+
+			$trans = $request->trans;
+            
+			//1	DOLARES
+			//2	SOLES
+            
+			if ($trans == 'FA' || $trans == 'FN'){
+
+				$ws_model = new TablaMaestra;
+				
+				/*************************************/
+				
+				foreach ($tarifa as $key => $value) {
+					//$vestab = $value['vestab'];
+					//$vcodigo = $value['vcodigo'];
+                    $id_val = $value['id'];
+
+				}
+				
+				//$valoriza = Valorizacione::where('val_aten_estab', '=', $vestab)->where('val_codigo', '=', $vcodigo)->first();                
+                //$valoriza = Valorizacione::find($id_val);
+
+				$id_moneda=1;
+				
+				//echo $valoriza->val_codigo."-----";
+				//$ingreso = IngresoVehiculo::where('aten_establecimiento', '=', $valoriza->val_estab)->where('aten_numero', '=', $valoriza->val_aten_codigo)->first();
+				
+				/*************************************/
+				
+				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     0, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  $id_moneda);
+																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
+                print_r($id_factura); exit();                                                                     
+
+				$factura = Comprobante::where('id', $id_factura)->get()[0];
+
+				$fac_serie = $factura->serie;
+				$fac_numero = $factura->numero;
+
+				$factura_upd = Comprobante::find($id_factura);
+				if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+                
+				$factura_upd->save();
+
+				
+				foreach ($tarifa as $key => $value) {
+					//echo "denominacion=>".$value['denominacion']."<br>";
+					if ($adelanto == 'S'){
+						$total   = $request->MonAd;
+					}
+					else{
+						$total   = $value['monto'];
+					}
+					$descuento = $value['descuento'];
+					if ($value['descuento']=='') $descuento = 0;
+					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['item'],       0, $total, $value['descripcion'], $value['cod_contable'], $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
+																				 //(  serie,      numero,   tipo,      ubicacion, persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
+					
+				
+				}
+
+				$estado_ws = $ws_model->getMaestroByTipo('96');
+				$flagWs = isset($estado_ws[0]->codigo)?$estado_ws[0]->codigo:1;
+
+				if ($flagWs==2 && $id_factura>0 && ($tipoF=="FT" || $tipoF=="BV")){
+					$this->firmar($id_factura);
+				}
+
+				//echo $id_factura;
+
+
+			}
+			if ($trans == 'FE') {
+				//echo $request->id_factura;
+				$id_factura = $request->id_factura;
+			}
+
+		//}else{
+			//$sw = false;
+			//$msg = "La Factura ingresada ya existe !!!";
+			//$id_factura = 0;
+		//}
+
+		$array["sw"] = $sw;
+        $array["msg"] = $msg;
+		$array["id_factura"] = $id_factura;
+        echo json_encode($array);
+
+        //echo 1;
+
+        //Mail::send(new SendContact($request));
+
+        //return redirect()->back()->withFlashSuccess(__('alerts.frontend.contact.sent'));
+    }
+
 	public function show($id){
         $factura_model = new Comprobante;
 
@@ -596,15 +711,17 @@ class ComprobanteController extends Controller
 
     public function nc_edita(Request $request){
 
-        //echo("hola");
-		echo $request->id_comprobante;
-		exit();
-
         $id_caja = $request->id_caja_;
-        $id = $request->id_comprobante_;
+        $id = $request->id_comprobante;
+        $id_nc = $request->id_comprobante_nc;
 
-        $trans = "I";
-       
+        if ($id=="" ){
+            $trans = "FE";
+        }
+        else{
+            $trans = "FN";
+        }
+        
         
 		if($id_caja==""){
 			$valorizaciones_model = new Valorizacione;
@@ -615,10 +732,91 @@ class ComprobanteController extends Controller
 		}
        
       
+        if ( $trans == "FN"){
+            $comprobante_model=new Comprobante;
+            $comprobante=$comprobante_model->getComprobanteById($id);
 
-        $comprobante_model=new Comprobante;
-        $comprobante=$comprobante_model->getComprobanteById($id);
+            $facturad = ComprobanteDetalle::where([
+                'serie' => $comprobante->serie,
+                'numero' => $comprobante->numero,
+                'tipo' => $comprobante->tipo
+            ])->get();
+
+           // print_r($facturad);
+            //exit();
+        }
+        else {
+            $comprobante_model=new Comprobante;
+            $comprobante=$comprobante_model->getComprobanteById($id_nc);
+
+            $facturad = ComprobanteDetalle::where([
+                'serie' => $comprobante->serie,
+                'numero' => $comprobante->numero,
+                'tipo' => $comprobante->tipo
+            ])->get();
+        }
+        
+        $empresa_model = new Empresa;
+        $serie_model = new TablaMaestra;
+
+		$tabla_model = new TablaMaestra;
+		$forma_pago = $tabla_model->getMaestroByTipo('19');
+        $tipooperacion = $tabla_model->getMaestroByTipo('51');
+        $formapago = $tabla_model->getMaestroByTipo('104');
+
+        $serie = $serie_model->getMaestro('95');
+
+
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad'));
+        
+    }
+
+    public function nd_edita(Request $request){
+
+        $id_caja = $request->id_caja_;
+        $id = $request->id_comprobante;
+        $id_nc = $request->id_comprobante_nc;
+
+        if ($id=="" ){
+            $trans = "FE";
+        }
+        else{
+            $trans = "FN";
+        }
+        
+        
+		if($id_caja==""){
+			$valorizaciones_model = new Valorizacione;
+			$id_user = Auth::user()->id;
+			$caja_usuario = $valorizaciones_model->getCajaIngresoByusuario($id_user,'91');
+			//$id_caja = $caja_usuario->id_caja;
+			$id_caja = (isset($caja_usuario->id_caja))?$caja_usuario->id_caja:0;
+		}
        
+      
+        if ( $trans == "FN"){
+            $comprobante_model=new Comprobante;
+            $comprobante=$comprobante_model->getComprobanteById($id);
+
+            $facturad = ComprobanteDetalle::where([
+                'serie' => $comprobante->serie,
+                'numero' => $comprobante->numero,
+                'tipo' => $comprobante->tipo
+            ])->get();
+
+           // print_r($facturad);
+            //exit();
+        }
+        else {
+            $comprobante_model=new Comprobante;
+            $comprobante=$comprobante_model->getComprobanteById($id_nc);
+
+            $facturad = ComprobanteDetalle::where([
+                'serie' => $comprobante->serie,
+                'numero' => $comprobante->numero,
+                'tipo' => $comprobante->tipo
+            ])->get();
+        }
 
         $empresa_model = new Empresa;
         $serie_model = new TablaMaestra;
@@ -628,10 +826,13 @@ class ComprobanteController extends Controller
         $tipooperacion = $tabla_model->getMaestroByTipo('103');
         $formapago = $tabla_model->getMaestroByTipo('104');
 
+        $serie = $serie_model->getMaestro('95');
 
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion'));
+
+        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad'));
         
 
     }
+
 	
 }

@@ -64,7 +64,7 @@
 
                 $('#numcuota_').val("1");
                 var $total=$('#total_fac').val();
-                alert($('#totalP').val());
+                //alert($('#totalP').val());
                 $('#totalcredito_').val($total)
                 $('#plazo_ ').val("30");
                 generarCuotas();
@@ -786,11 +786,7 @@
 
 
 
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                    <div class="form-group">
-                                        <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardar').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">GUARDAR COMPROBANTE</button>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
 
@@ -1055,7 +1051,14 @@
                 </div>
             </div>
 
-
+            <div class="col-lg-3 col-md-8 col-sm-8 col-xs-8">
+                <div class="form-group">
+                    <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardar').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">GUARDAR COMPROBANTE</button>
+                </div>
+                <div class="form-group">
+                    <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardarX').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">CANCELAR</button>
+                </div>
+            </div>
             <!--   <a class='flotante' name="guardar" id="guardar" onclick="guardarFactura()" href='#' ><img src='/img/btn_save.png' border="0"/></a>--> <br>
             </form>
         </div>
