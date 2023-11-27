@@ -15,6 +15,16 @@ class PeriodoComisione extends Model
         return $this->readFuntionPostgres('sp_listar_periodoComision_paginado',$p);
 
     }
+	
+	public function getPeriodoAll(){
+		
+		$cad = "select pc.id,pc.descripcion 
+		from periodo_comisiones pc where pc.estado='1'";
+
+		$data = DB::select($cad);
+        return $data;
+		
+	}
 
     public function readFuntionPostgres($function, $parameters = null){
 

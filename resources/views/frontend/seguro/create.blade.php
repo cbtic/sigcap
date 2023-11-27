@@ -89,9 +89,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
 
 ul.ui-autocomplete {
     z-index: 1100;
@@ -264,8 +261,8 @@ label.form-control-sm{
 	max-height: 50px;
 	cursor: pointer;
 	display:inline-block;
-	*display:inline;
-	*zoom:1;
+	display:inline;
+	zoom:1;
 	vertical-align:top;
 }
 

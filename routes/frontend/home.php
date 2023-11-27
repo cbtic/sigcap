@@ -24,6 +24,7 @@ use App\Http\Controllers\Frontend\CertificadoController;
 use App\Models\Certificado;
 
 use App\Http\Controllers\Frontend\ComisionController;
+use App\Http\Controllers\Frontend\SesionController;
 
 use App\Http\Controllers\Frontend\PeriodoComisionController;
 use App\Http\Controllers\Frontend\MovilidadController;
@@ -47,6 +48,7 @@ Route::get('terms', [TermsController::class, 'index'])
     });
 
 Route::get('persona', [personaController::class, 'index'])->name('persona');
+Route::post('personas', [personaController::class, 'store'])->name('personas');
 Route::post('persona/listar_persona_ajax', [PersonaController::class, 'listar_persona_ajax'])->name('persona.listar_persona_ajax');
 Route::get('persona/modal_persona/{id}', [PersonaController::class, 'modal_persona'])->name('persona.modal_persona');
 Route::post('persona/send_persona', [PersonaController::class, 'send_persona'])->name('persona.send_persona');
@@ -341,3 +343,16 @@ Route::post('profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro', [
 Route::get('profesionalesOtro/eliminar_profesionalesOtro/{id}/{estado}', [ProfesionalesOtroController::class, 'eliminar_profesionalesOtro'])->name('profesionalesOtro.eliminar_profesionalesOtro');
 
 Route::post('persona/upload', [PersonaController::class, 'upload'])->name('persona.upload');
+
+Route::get('sesion/lista_programacion_sesion', [SesionController::class, 'lista_programacion_sesion'])->name('sesion.lista_programacion_sesion');
+Route::post('sesion/lista_programacion_sesion_ajax', [SesionController::class, 'lista_programacion_sesion_ajax'])->name('sesion.lista_programacion_sesion_ajax');
+Route::get('sesion/modal_sesion/{id}', [SesionController::class, 'modal_sesion'])->name('sesion.modal_sesion');
+Route::post('sesion/send_sesion', [SesionController::class, 'send_sesion'])->name('sesion.send_sesion');
+Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
+Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
+
+Route::get('persona/buscar_persona2/{numero_documento}', [PersonaController::class, 'buscar_persona2'])->name('persona.buscar_persona2');
+Route::get('persona/buscar_numero_documento/{numero_documento}', [PersonaController::class, 'buscar_numero_documento'])->name('persona.buscar_numero_documento');
+
+
+

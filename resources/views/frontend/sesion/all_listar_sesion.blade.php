@@ -15,11 +15,22 @@
     .table-sortable tbody tr {
         cursor: move;
     }
+	/*
+    #global {        
+        width: 95%;        
+        margin: 15px 15px 15px 15px;     
+        height: 380px !important;        
+        border: 1px solid #ddd;
+        overflow-y: scroll !important;
+    }
+	*/
 	#global {
         height: 650px !important;
         width: auto;
         border: 1px solid #ddd;
 		margin:15px
+       /* background: #f1f1f1;*/
+        /*overflow-y: scroll !important;*/
     }
 	
     .margin{
@@ -30,9 +41,22 @@
         margin-bottom: 5px;
         margin-top: 5px;
     }
+
+    /*.row{
+        margin-top:10px;
+        padding: 0 10px;
+    }*/
     .clickable{
         cursor: pointer;   
     }
+
+    /*.panel-heading div {
+        margin-top: -18px;
+        font-size: 15px;        
+    }
+    .panel-heading div span{
+        margin-left:5px;
+    }*/
     .panel-body{
         display: block;
     }
@@ -44,6 +68,7 @@
 .loader {
 	width: 100%;
 	height: 100%;
+	/*height: 1500px;*/
 	overflow: hidden; 
 	top: 0px;
 	left: 0px;
@@ -78,12 +103,19 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Otros Profesionales</li>
+            <li class="breadcrumb-item active">Consulta de Empresas</li>
         </li>
     </ol>
 @endsection
 
 @section('content')
+
+    <!--<ol class="breadcrumb" style="padding-left:120px;margin-top:0px">
+        <li class="breadcrumb-item text-primary">Inicio</li>
+            <li class="breadcrumb-item active">Consulta de Afiliados</li>
+        </li>
+    </ol>
+    -->
 
 <div class="loader"></div>
 
@@ -96,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consultar Otros Profesionales <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consulta de Programaci&oacute;n de Sesi&oacute;n <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -108,35 +140,19 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Otros Profesionales
+                        Lista de Programaci&oacute;n de Sesiones
                     </strong>
-                </div>
+                </div><!--card-header-->
 				
 				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="id" id="id" value="0">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="colegiatura" name="colegiatura" placeholder="Colegiatura">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Denominacion">
 					</div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="dni" name="dni" placeholder="DNI">
-					</div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <select name="profesion" id="profesion" class="form-control form-control-sm" onChange="">
-                                <option value="">--Selecionar Profesi&oacute;n--</option>
-                                    <?php
-                                    foreach ($profesion as $row) {?>
-                                        <option value="<?php echo $row->id?>" <?php if($row->id==$profesion_Otro->id_profesion)echo "selected='selected'"?>><?php echo $row->nombre?></option>
-                                    <?php 
-                                    }
-                                    ?>
-                            </select>
-                        </div>
-                    </div>
+					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
@@ -144,11 +160,11 @@
 							<option value="0">Eliminado</option>
 						</select>
 					</div>
+
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
-
+						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
+						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>
 				
@@ -158,15 +174,12 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Colegiatura</th>
-                            <th>Colegiatura Abrev.</th>
-                            <th>Tipo Documento</th>
-                            <th>N&uacute;mero Documento</th>
-							<th>Nombres</th>
-                            <th>Fecha Nacimiento</th>
-                            <th>Profesion</th>
+							<th>Fecha Programada</th>
+							<th>Fecha Ejecuci&oacute;n</th>
+                            <th>Hora Inicio</th>
+							<th>Hora Fin</th>
+							<th>Sesi&oacute;n Programada</th>
                             <th>Estado</th>
-                            <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -174,8 +187,13 @@
                     </table>
                 </div><!--table-responsive-->
                 </form>
+
+
+
                 </div><!--card-body-->
-            </div>
+            </div><!--card-->
+        <!--</div>--><!--col-->
+    <!--</div>--><!--row-->
 
 @endsection
 
@@ -187,13 +205,17 @@
 	  <div class="modal-body" style="padding: 0px;margin: 0px">
 
 			<div id="diveditpregOpc"></div>
+
 	  </div>
+	
 	</div>
+
   </div>
+	
 </div>
 
 @push('after-scripts')
 
-<script src="{{ asset('js/profesionalesOtro/lista.js') }}"></script>
+<script src="{{ asset('js/sesion/lista_sesion.js') }}"></script>
 
 @endpush

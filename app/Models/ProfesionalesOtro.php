@@ -10,6 +10,8 @@ class ProfesionalesOtro extends Model
 {
     use HasFactory;
 
+    protected $table = 'profesion_otros';
+
     public function listar_profesionalesOtro_ajax($p){
 
         return $this->readFuntionPostgres('sp_listar_profesionotro_paginado',$p);

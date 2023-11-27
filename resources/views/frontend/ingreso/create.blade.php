@@ -192,17 +192,6 @@
                                                 <div class="form-group">
                                                     <?php ?>
                                                     <label class="form-control-sm">Tipo Documento</label>
-                                                    <!--
-                                <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="validaTipoDocumento()">
-                                    <option value="<?php echo $persona::TIPO_DOCUMENTO_DNI ?>"><?php echo $persona::TIPO_DOCUMENTO_DNI ?></option>
-                                    <option selected="selected value="<?php echo $persona::TIPO_DOCUMENTO_CAP ?>"><?php echo $persona::TIPO_DOCUMENTO_CAP ?></option>
-                                    <option value="<?php echo $persona::TIPO_DOCUMENTO_RUC ?>"><?php echo $persona::TIPO_DOCUMENTO_RUC ?></option>
-                                    <option value="<?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA ?>"><?php echo $persona::TIPO_DOCUMENTO_CARNET_EXTRANJERIA ?></option>
-                                    <option value="<?php echo $persona::TIPO_DOCUMENTO_PASAPORTE ?>"><?php echo $persona::TIPO_DOCUMENTO_PASAPORTE ?></option>                                    
-									<option value="<?php echo $persona::TIPO_DOCUMENTO_CEDULA ?>"><?php echo $persona::TIPO_DOCUMENTO_CEDULA ?></option>
-									<option value="<?php echo $persona::TIPO_DOCUMENTO_PTP ?>"><?php echo $persona::TIPO_DOCUMENTO_PTP ?></option>                                    									
-                                </select>
-                                        -->
 
                                                     <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="">
                                                         <?php
@@ -247,6 +236,15 @@
                                                         <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerBeneficiario()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
                                                     </span>
                                                 </div>
+                                            </div>
+
+                                            <div class="col-lg-2" style="padding-left:0px;padding-right:0px">
+
+                                                <br>
+                                                <button type="button" <?php echo $disabled ?> class="btn btn-warning btn-sm" data-toggle="modal" data-target="#personaModal">
+                                                    <i class="fas fa-plus-circle"></i>
+                                                    Persona
+                                                </button>
                                             </div>
                                         </div>
 
@@ -560,79 +558,25 @@
                         </div>
 
                     </div>
+                </div>
 
             </form>
+        </div>
+    </div>
+</div>
+@endsection
 
 
-            <!-- Modal -->
-            <div class="modal fade" id="choferModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        {!! Form::open(['id' => 'modalChoferForm','url' => route('frontend.chofer'), 'autocomplete' =>
-                        'off'] )
-                        !!}
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ingrese los datos del nuevo conductor
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
+@push('after-scripts')
+<script type="text/javascript">
+    var id_caja_usuario = "<?php echo ($caja_usuario) ? $caja_usuario->id_caja : 0 ?>";
+    //alert(id_caja_usuario);
+</script>
 
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="card-body">
-                                    <div id="" class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                                            <div class="form-group">
-                                                {{ Form::select('tipo_documento', ['DNI' => 'DNI', 'CARNET_EXTRANJERIA' => 'Carnet Extranjeria', 'PASAPORTE' => 'Pasaporte', 'CEDULA' => 'Cedula', 'PTP/PTEP' => 'PTP'],null, ['id' => 'tipo_documento_chofer', 'class' => 'form-control form-control-sm']) }}
-                                            </div>
-
-                                            <div class="form-group">
-                                                {{ Form::number('numero_documento', old('numdoc'), ['id' => 'numero_documento_', 'oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);', 'maxlength' => '11', 'class' => 'form-control form-control-sm', 'placeholder' => 'N° Documento']) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ Form::text('apellido_paterno', old('apepat'), ['id' => 'apellido_paterno_', 'class' => 'form-control form-control-sm', 'readonly', 'placeholder' => 'Apellido Paterno']) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ Form::text('apellido_materno', old('apemat'), ['id' => 'apellido_materno_', 'class' => 'form-control form-control-sm', 'readonly', 'placeholder' => 'Apellido Materno']) }}
-                                            </div>
-                                            <div class="form-group">
-                                                {{ Form::text('nombres', old('nombresold'), ['id' => 'nombres_chofer_', 'class' => 'form-control form-control-sm', 'readonly', 'placeholder' => 'Nombres']) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            {!! Form::button('Cancelar', ['id' => 'modalPersonaCancelBtn','class' => 'btn btn-secondary',
-                            'data-dismiss' => 'modal']) !!}
-                            {!! Form::button('Grabar', ['id' => 'modalChoferSaveBtn','class' => 'btn btn-primary']) !!}
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-
-        </div><!--row-->
-        @endsection
+@endpush
 
 
+@push('after-scripts')
 
-
-        @push('after-scripts')
-        <script type="text/javascript">
-            var id_caja_usuario = "<?php echo ($caja_usuario) ? $caja_usuario->id_caja : 0 ?>";
-            //alert(id_caja_usuario);
-        </script>
-
-        @endpush
-
-
-        @push('after-scripts')
-
-        <script src="{{ asset('js/ingreso.js') }}"></script>
-        @endpush
+<script src="{{ asset('js/ingreso.js') }}"></script>
+@endpush

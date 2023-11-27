@@ -1,4 +1,4 @@
-<title>Sistema de Multas</title>
+<title>Sistema de Felmo</title>
 
 <style>
 /*
@@ -192,35 +192,35 @@ $.mask.definitions['p'] = "[Mm]";
 $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
-	//$("#id_empresa").select2({ width: '100%' });
-
-	$('#ruc').blur(function () {
-		var id = $('#id').val();
-			if(id==0) {
-				validaRuc(this.value);
-			}
-		//validaRuc(this.value);
-	});
-
+	$("#id_regional").select2({ width: '100%' });
+	$("#id_concurso_inscripcion").select2({ width: '100%' });
 });
 </script>
 
 <script type="text/javascript">
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_egresado').datepicker({
+     $('#fecha_programado').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
+		//container: '#openOverlayOpc modal-body'
 		container: '#openOverlayOpc modal-body'
-	});
-});
-
-$('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_graduado').datepicker({
+     });
+	 
+	 $('#fecha_ejecucion').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
+		//container: '#openOverlayOpc modal-body'
+		container: '#openOverlayOpc modal-body'
+     });
+	 
+	 /*
+	 $('#hora_inicio').timepicker({
+		showInputs: false,
 		container: '#openOverlayOpc modal-body'
 	});
+	*/
+	 
 });
 
 $(document).ready(function() {
@@ -240,50 +240,6 @@ function validacion(){
         bootbox.alert(msg); 
         return false;
     }
-}
-
-function validaRuc(ruc){
-	var settings = {
-		"url": "https://apiperu.dev/api/ruc/"+ruc,
-		"method": "GET",
-		"timeout": 0,
-		"headers": {
-		  "Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
-		},
-	  };
-	  
-	  $.ajax(settings).done(function (response) {
-		console.log(response);
-		
-		if (response.success == true){
-
-			var data= response.data;
-
-			$('#razon_social').val('')
-			$('#direccion').val('')
-			$('#nombre_comercial').val('')
-			
-			$('#razon_social').val(data.nombre_o_razon_social).attr('readonly', true);
-			$('#nombre_comercial').val(data.nombre_o_razon_social).attr('readonly', true);
-			//$('#direccion').attr('readonly', true);
-
-			if (data.direccion_completa != ""){
-				$('#direccion').val(data.direccion_completa).attr('readonly', true);
-			}
-			else{
-				$('#direccion').attr('readonly', false);
-			}
-			
-			//alert(data.direccion_completa);
-
-		}
-		else{
-			bootbox.alert("RUC Invalido,... revise el RUC digitado ¡");
-			return false;
-		}
-
-		
-	  });
 }
 
 function guardarCita__(){
@@ -312,74 +268,31 @@ function guardarCita(id_medico,fecha_cita){
     }
 }
 
-function fn_save_estudio(){
+function fn_save(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var id_agremiado = $('#id_agremiado').val();
-	var id_universidad = $('#id_universidad').val();
-	var id_especialidad = $('#id_especialidad').val();
-	var tesis = $('#tesis').val();
-	var fecha_egresado = $('#fecha_egresado').val();
-	var fecha_graduado = $('#fecha_graduado').val();
-	var libro = $('#libro').val();
-	var folio = $('#folio').val();
-	
-	//alert(id_agremiado);
-	//return false;
+	var id_comision = $('#id_comision').val();
+	var id_regional = $('#id_regional').val();
+	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var fecha_programado = $('#fecha_programado').val();
+	var hora_inicio = $('#hora_inicio').val();
+	var hora_fin = $('#hora_fin').val();
+	var fecha_ejecucion = $('#fecha_ejecucion').val();
+	var observaciones = $('#observaciones').val();
+	var id_estado_sesion = $('#id_estado_sesion').val();
 	
     $.ajax({
-			url: "/agremiado/send_agremiado_estudio",
+			url: "/sesion/send_sesion",
             type: "POST",
-            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_universidad:id_universidad,id_especialidad:id_especialidad,tesis:tesis,fecha_egresado:fecha_egresado,fecha_graduado:fecha_graduado,libro:libro,folio:folio},
+            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_tipo_sesion:id_tipo_sesion,fecha_programado:fecha_programado,hora_inicio:hora_inicio,hora_fin:hora_fin,fecha_ejecucion:fecha_ejecucion,observaciones:observaciones,id_estado_sesion:id_estado_sesion},
             success: function (result) {
-				
 				$('#openOverlayOpc').modal('hide');
+				datatablenew();
+				//obtenerInversionista(0);
+				//obtenerDetalleInversionista(0);
 				//window.location.reload();
 				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
-            }
-    });
-}
-
-function fn_save_multa(){
-    
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var numero_cap = $('#numero_cap').val();
-	var periodo = $('#periodo').val();
-	var id_multa = $('#id_multa').val();
-	//var moneda = $('#moneda').val();
-	//var importe = $('#importe').val();
-	//var estado = $('#estado').val();
-	//alert(id_agremiado);
-	//return false;
-	
-    $.ajax({
-			url: "/multa/send_multa_nuevoMulta",
-            type: "POST",
-            data : {_token:_token,id:id,numero_cap:numero_cap,periodo:periodo,id_multa:id_multa},
-            success: function (result) {
-				
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				datatablenew();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
             }
     });
 }
@@ -491,16 +404,6 @@ function cargar_tipo_proveedor(){
 	
 }
 
-function obtener_multa(){
-	
-	var moneda = $("#id_multa option:selected").attr("moneda");
-	var monto = $("#id_multa option:selected").attr("monto");
-	
-	$("#moneda").val(moneda);
-	$("#monto").val(monto);
-	
-}
-
 /*
 $('#fecha_solicitud').datepicker({
 	autoclose: true,
@@ -536,10 +439,6 @@ container: '#myModal modal-body'
 
 <body class="hold-transition skin-blue sidebar-mini">
 
-	<div class="panel-heading close-heading">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    </div>
-
     <div>
 		<!--
         <section class="content-header">
@@ -552,89 +451,180 @@ container: '#myModal modal-body'
 
 		<div class="card">
 			
-			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro Multas
+			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
+				Registro Programacion de Sesi&oacute;n
 			</div>
 			
             <div class="card-body">
 
 			<div class="row">
 
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px">
 					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
-					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-3">
-							<div class="form-group">
-								<label class="control-label form-control-sm">N° CAP</label>
-								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $agremiado->numero_cap?>" type="text" >
-							
-							</div>
-						</div>
-						<div class="col-lg-3">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Periodo</label>
-								<input id="periodo" name="periodo" on class="form-control form-control-sm"  value="<?php echo $agremiadoMulta->periodo?>" type="text" >
-							
-							</div>
-						</div>
-						<!--
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Concepto</label>
-								<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onChange="">
+								<label class="control-label form-control-sm">Regional</label>
+								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
-									//foreach ($multa_concepto as $row) {?>
-									<option value="<?php //echo $row->id?>" <?php //if($row->id==$agremiadoMulta->id_multa)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
+									foreach ($region as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==5)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
-									//}
-									?>
-								</select>
-							</div>
-						</div>
-						-->
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Multa</label>
-								<select name="id_multa" id="id_multa" onChange="obtener_multa()" class="form-control form-control-sm">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($multa as $row) {?>
-									<option value="<?php echo $row->id?>" moneda="<?php echo $row->moneda?>" monto="<?php echo $row->monto?>" <?php if($row->id==$agremiadoMulta->id_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
 									}
 									?>
 								</select>
 							</div>
 						</div>
 						
-						<div class="col-lg-4">
+						<div class="col-lg-6">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Moneda</label>
-								<input id="moneda" name="moneda" class="form-control form-control-sm" readonly="readonly"  value="" type="text" >
+								<label class="control-label form-control-sm">Periodo</label>
+								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComision()">
+									<option value="">--Seleccionar--</option>
+									<?php
+									foreach ($periodo as $row) {?>
+									<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+									<?php 
+									}
+									?>
+								</select>
 							</div>
 						</div>
 						
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Importe</label>
-								<input id="monto" name="monto" class="form-control form-control-sm" readonly="readonly"  value="" type="text" >																				
-							</div>
-						</div>
 					</div>
 					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Comision</label>
+								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="obtenerComisionDelegado()">
+									<option value="">--Seleccionar--</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Tipo Programaci&oacute;n</label>
+								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_programacion as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php //if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+												
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+					
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Programaci&oacute;n</label>
+								<input id="fecha_programado" name="fecha_programado" class="form-control form-control-sm"  value="<?php //echo $inscripcionDocumento->fecha_documento?>" type="text">
+							</div>
+						</div>
+					
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Hora Inicio</label>
+								<input id="hora_inicio" name="hora_inicio" class="form-control form-control-sm" value="<?php //echo $papeleta->horainicope?>" type="time">
+								
+							</div>
+						</div>
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Hora Fin</label>
+								<input id="hora_fin" name="hora_fin" class="form-control form-control-sm" value="<?php //echo $papeleta->horainicope?>" type="time">
+								
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Ejecuci&oacute;n</label>
+								<input id="fecha_ejecucion" name="fecha_ejecucion" class="form-control form-control-sm"  value="<?php //echo $inscripcionDocumento->fecha_documento?>" type="text">
+							</div>
+						</div>
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<!--<label class="control-label form-control-sm">Delegado</label>-->
+								
+								<div class="table-responsive">
+									<table id="tblDelegado" class="table table-hover table-sm">
+										<thead>
+										<tr style="font-size:13px">
+											<th>Puesto</th>
+											<th>Delegado</th>
+											<th>CAP</th>
+											<th>Situaci&oacute;n</th>
+										</tr>
+										</thead>
+										<tbody style="font-size:13px"></tbody>
+									</table>
+                				</div>
+								
+							</div>
+						</div>
+					
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Observaciones</label>
+								<textarea id="observaciones" name="observaciones" class="form-control form-control-sm"  value="<?php //echo $papeleta->obse_oper_ope?>" type="text"></textarea>
+								
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Estado Sesi&oacute;n</label>
+								<select name="id_estado_sesion" id="id_estado_sesion" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($estado_sesion as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php //if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						
+					</div>
 					
 					
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_multa()" class="btn btn-sm btn-success">Registrar</a>
+								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>
