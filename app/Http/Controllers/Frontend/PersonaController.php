@@ -655,15 +655,23 @@ class PersonaController extends Controller
 
 	public function buscar_numero_documento($numero_documento){
 
+		$sw = true;
+		$msg = "";
+
 		$persona = Persona::where('numero_documento',$numero_documento)->where('estado','1')->first();
 
 		if($persona){
 
 			$array["persona"] = $persona;
 		}else{
-			$array["error"] = "Persona no encontrada";
+			$sw = false;
+			$msg = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
+			//$array["error"] = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
+			$array["sw"] = $sw;
+			$array["msg"] = $msg;
 		}
 		
+	
         echo json_encode($array);
 	}
 }

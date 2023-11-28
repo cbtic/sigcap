@@ -215,17 +215,18 @@ function obtener_profesional(){
       url: '/persona/buscar_numero_documento/'+numero_documento,
       dataType: "json",
       success: function(result){
-			
-        //var id_persona = result.persona.id;
-        $("#id_persona").val(result.persona.id);
-        $("#ruc").val(result.persona.numero_ruc);
-        $("#nombres").val(result.persona.nombres);
-        $("#apellido_paterno").val(result.persona.apellido_paterno);
-        $("#apellido_materno").val(result.persona.apellido_materno);
-        $("#fecha_nacimiento").val(result.persona.fecha_nacimiento);
 
-        //("#nombre").val(result.persona.nombres);
-			
+        if(result.sw==false){
+					bootbox.alert(result.msg);
+					$('#openOverlayOpc').modal('hide');
+				}else{
+					$("#id_persona").val(result.persona.id);
+          $("#ruc").val(result.persona.numero_ruc);
+          $("#nombres").val(result.persona.nombres);
+          $("#apellido_paterno").val(result.persona.apellido_paterno);
+          $("#apellido_materno").val(result.persona.apellido_materno);
+          $("#fecha_nacimiento").val(result.persona.fecha_nacimiento);
+				}
 		}
     });
 	/*var ruc = $("#numero_documento option:selected").attr("numero_ruc");
