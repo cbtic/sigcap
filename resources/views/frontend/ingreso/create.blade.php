@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--<script src="<?php echo URL::to('/') ?>/js/manifest.js"></script>
 <script src="<?php echo URL::to('/') ?>/js/vendor.js"></script>
 <script src="<?php echo URL::to('/') ?>/js/frontend.js"></script>-->
@@ -235,11 +236,6 @@
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerBeneficiario()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
                                                     </span>
-
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-warning btn-sm" type="button" id="btnPersonaNew" tabindex="0"><i class="glyphicon glyphicon-search"></i> Persona </button>
-                                                    </span>
-
 
                                                 </div>
                                             </div>
