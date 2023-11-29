@@ -406,7 +406,7 @@ function fn_save_requisito(){
 					<div class="row" style="padding-top:10px">
 						
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label form-control-sm">Requisito</label>
+							<label class="control-label form-control-sm form-control-sm">Requisito</label>
 						</div>
 						<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
 							<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="" type="text"  >
