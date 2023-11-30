@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--<script src="<?php echo URL::to('/') ?>/js/manifest.js"></script>
 <script src="<?php echo URL::to('/') ?>/js/vendor.js"></script>
 <script src="<?php echo URL::to('/') ?>/js/frontend.js"></script>-->
