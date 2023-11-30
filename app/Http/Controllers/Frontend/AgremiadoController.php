@@ -79,7 +79,15 @@ class AgremiadoController extends Controller
     }
 	
 	public function editar_agremiado($id){
-        
+		//echo date('Y-m-d');exit();
+        /*
+		$firstDate = "2019-01-01";
+		$secondDate = "2020-03-04";
+		$dateDifference = abs(strtotime($secondDate) - strtotime($firstDate));
+		$years  = floor($dateDifference / (365 * 60 * 60 * 24));
+		echo $years;
+		exit();
+		*/
 		$agremiado = Agremiado::find($id);
 		$id_persona = $agremiado->id_persona;
 		$persona = Persona::find($id_persona);

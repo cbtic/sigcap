@@ -499,6 +499,9 @@ class PersonaController extends Controller
 	public function send_persona_nuevoPersona(Request $request){
 
 		$id_user = Auth::user()->id;
+		$sw = true;
+		$msg = "";
+
 		//$persona_model = new Persona;
 
 		if($request->img_foto!=""){
@@ -510,38 +513,43 @@ class PersonaController extends Controller
 		}
 
 		if($request->img_foto=="")$request->img_foto="ruta";
-
-
 		
 		if($request->id == 0){
-			$persona = new Persona;
-			//$codigo = $Concepto_model->getCodigoConcepto();
-		}else{
-			$persona = Persona::find($request->id);
-			//$codigo = $request->codigo;
-		}
+			$buscapersona = Persona::where("numero_documento", $request->numero_documento)->where("estado", "1")->get();
 
-		$persona->id_tipo_documento = $request->tipo_documento;
-		$persona->numero_documento = $request->numero_documento;
-		$persona->apellido_paterno = $request->apellido_paterno;
-		$persona->apellido_materno = $request->apellido_materno;
-		$persona->nombres = $request->nombre;
-		$persona->fecha_nacimiento = $request->fecha_nacimiento;
-		$persona->id_tipo_persona = 1;
-		$persona->grupo_sanguineo = $request->grupo_sanguineo;
-		$persona->id_ubigeo_nacimiento =150101;
-		$persona->lugar_nacimiento = $request->lugar_nacimiento;
-		//$persona->lugar_nacimiento = $request->img_foto;
-		$persona->id_nacionalidad = $request->nacionalidad;
-		$persona->numero_ruc = $request->ruc;
-		$persona->id_sexo = $request->sexo;
-		$persona->numero_celular = $request->numero_celular;
-		$persona->correo = $request->correo;
-		$persona->foto = $request->img_foto;
-		$persona->direccion = $request->direccion;
-		$persona->estado = 1;
-		$persona->id_usuario_inserta = $id_user;
-		$persona->save();
+			if ($buscapersona->count()==0){
+
+				$persona = new Persona;
+				$persona->id_tipo_documento = $request->tipo_documento;
+				$persona->numero_documento = $request->numero_documento;
+				$persona->apellido_paterno = $request->apellido_paterno;
+				$persona->apellido_materno = $request->apellido_materno;
+				$persona->nombres = $request->nombres;
+				$persona->fecha_nacimiento = $request->fecha_nacimiento;
+				$persona->id_tipo_persona = 1;
+				$persona->grupo_sanguineo = $request->grupo_sanguineo;
+				$persona->id_ubigeo_nacimiento =150101;
+				$persona->lugar_nacimiento = $request->lugar_nacimiento;
+				//$persona->lugar_nacimiento = $request->img_foto;
+				$persona->id_nacionalidad = $request->nacionalidad;
+				$persona->numero_ruc = $request->ruc;
+				$persona->id_sexo = $request->sexo;
+				$persona->numero_celular = $request->numero_celular;
+				$persona->correo = $request->correo;
+				$persona->foto = $request->img_foto;
+				$persona->direccion = $request->direccion;
+				$persona->estado = 1;
+				$persona->id_usuario_inserta = $id_user;
+				$persona->save();
+			}else{
+				$sw = false;
+				$msg = "El DNI ingresado ya existe !!!";
+			}
+		}
+			$array["sw"] = $sw;
+			$array["msg"] = $msg;
+			echo json_encode($array);
+		
     }
 
 	public function send_persona_new_(Request $request){
@@ -645,4 +653,25 @@ class PersonaController extends Controller
 		echo $_FILES['file']['name'];
 	}
 
+	public function buscar_numero_documento($numero_documento){
+
+		$sw = true;
+		$msg = "";
+
+		$persona = Persona::where('numero_documento',$numero_documento)->where('estado','1')->first();
+
+		if($persona){
+
+			$array["persona"] = $persona;
+		}else{
+			$sw = false;
+			$msg = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
+			//$array["error"] = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
+			$array["sw"] = $sw;
+			$array["msg"] = $msg;
+		}
+		
+	
+        echo json_encode($array);
+	}
 }

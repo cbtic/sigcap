@@ -149,19 +149,60 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Denominacion">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm">
+							<option value="">--Regi&oacute;n--</option>
+							<?php
+							foreach ($region as $row) {?>
+							<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
 					</div>
 					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado" id="estado" class="form-control form-control-sm">
-							<option value="">Todos</option>
-							<option value="1" selected="selected">Activo</option>
-							<option value="0">Eliminado</option>
+						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
+							<option value="">--Periodo--</option>
+							<?php
+							foreach ($periodo as $row) {?>
+							<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+							<?php 
+							}
+							?>
 						</select>
 					</div>
-
-                    
+					
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="id_comision_bus" id="id_comision_bus" class="form-control form-control-sm">
+							<option value="">--Comisi&oacute;n--</option>
+						</select>
+					</div>
+					
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    	<select name="id_tipo_sesion_bus" id="id_tipo_sesion_bus" class="form-control form-control-sm" onChange="">
+							<option value="">--Tipo Programci&oacute;n--</option>
+							<?php
+							foreach ($tipo_programacion as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    	<select name="id_estado_sesion_bus" id="id_estado_sesion_bus" class="form-control form-control-sm">
+							<option value="">--Estado Sesi&oacute;n--</option>
+							<?php
+							foreach ($estado_sesion as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
@@ -174,6 +215,9 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
+							<th>Regi&oacute;n</th>
+							<th>Periodo</th>
+							<th>Comisi&oacute;n</th>
 							<th>Fecha Programada</th>
 							<th>Fecha Ejecuci&oacute;n</th>
                             <th>Hora Inicio</th>

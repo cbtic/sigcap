@@ -132,9 +132,15 @@
 
 	$(document).ready(function() {
 
-		if($id_tipo_documento=="")
+		if($id_tipo_documento=="78")
+		{
+			validaDni();
 
-		validaDni();
+		}
+		else{
+
+		}
+
 
 		/*
 		$('#numero_documento').blur(function() {
@@ -240,7 +246,7 @@
 									<div class="col-lg-12">
 										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 
-											<select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="validaTipoDocumento()">
+											<select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="validaTipoDocumento();" readonly>
 												<?php
 												foreach ($tipo_documento as $row) { ?>
 													<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $id_tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
@@ -256,7 +262,7 @@
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:10px;margin-bottom:0px">
-											<input id="numero_documento" name="numero_documento" class="form-control form-control-sm" placeholder="Número Documento" onblur="validaDni()" value="<?php echo $numero_documento ?>" type="text">
+											<input id="numero_documento" name="numero_documento" class="form-control form-control-sm" placeholder="Número Documento" onblur="validaDni()" value="<?php echo $numero_documento ?>" type="text" readonly>
 										</div>
 									</div>
 								</div>
