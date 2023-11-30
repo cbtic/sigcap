@@ -8,9 +8,6 @@ $(document).ready(function () {
 	});
 
 	
-	$('#btnPersonaNew').click(function () {
-		modal_persona_new();
-	});
 	
 	$('#example-select-all').on('click', function(){
 		if($(this).is(':checked')){
@@ -488,8 +485,10 @@ function obtenerBeneficiario(){
 			
 		},
 		"error": function (msg, textStatus, errorThrown) {
+
+			confirma_accion();
 			
-			bootbox.alert("Numero de Documento NO registrado");
+			//bootbox.alert("Numero de Documento NO registrado");
 
 		}
 		
@@ -497,6 +496,24 @@ function obtenerBeneficiario(){
 	});
 	
 }
+
+function confirma_accion(){
+	Swal.fire({
+	  title: 'El numero de documento no existe',
+	  text: "¿Desea registrar como  nueva persona?",
+	  type: 'warning',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+	  cancelButtonColor: '#d33',
+	  confirmButtonText: 'Si, Crear!'
+	}).then((result) => {
+	  if (result.value) {
+		modal_persona_new();
+		//document.location="eliminar.php?codigo="+id;
+		
+	  }
+	});
+  }
 
 
 function eliminarAfiliado(id){

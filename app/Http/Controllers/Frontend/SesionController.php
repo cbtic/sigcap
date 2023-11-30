@@ -28,17 +28,30 @@ class SesionController extends Controller
 	}
 
     public function lista_programacion_sesion(){
-
-        return view('frontend.sesion.all_listar_sesion');
+		
+		$regione_model = new Regione;
+		$comisionSesionDelegado_model = new ComisionSesionDelegado;
+		$tablaMaestra_model = new TablaMaestra;
+		$periodoComisione_model = new PeriodoComisione;
+		
+		$region = $regione_model->getRegionAll();
+		$tipo_programacion = $tablaMaestra_model->getMaestroByTipo(71);
+		$estado_sesion = $tablaMaestra_model->getMaestroByTipo(56);
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		
+		
+        return view('frontend.sesion.all_listar_sesion',compact('region','periodo','tipo_programacion','estado_sesion'));
     }
 	
 	public function lista_programacion_sesion_ajax(Request $request){
 	
 		$comisionSesion_model = new ComisionSesione(); 
+		$p[]=$request->id_regional;
+		$p[]=$request->id_periodo;
+		$p[]=$request->id_comision;
+		$p[]=$request->id_tipo_sesion;
 		$p[]="";
-		$p[]="";
-		$p[]="";
-		$p[]=$request->estado;          
+		$p[]=$request->id_estado_sesion;      
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comisionSesion_model->lista_programacion_sesion_ajax($p);

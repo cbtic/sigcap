@@ -1,6 +1,8 @@
 
 $(document).ready(function () {
 	
+	$("#id_regional_bus").select2({ width: '100%' });
+	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
@@ -254,6 +256,25 @@ function obtenerComision(){
 	
 }
 
+function obtenerComisionBus(){
+	
+	var id_periodo = $('#id_periodo_bus').val();
+	$.ajax({
+		url: '/sesion/obtener_comision/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_comision_bus').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+			});
+			$('#id_comision_bus').html(option);
+		}
+		
+	});
+	
+}
+
 function obtenerComisionDelegado(){
 	
 	var id_comision = $('#id_comision').val();
@@ -479,11 +500,11 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			var id_regional = $('#id_regional_bus').val();
-            var numero_cap = $('#numero_cap_bus').val();
-			var numero_documento = $('#numero_documento_bus').val();
-			var agremiado = $('#agremiado_bus').val();
-			var id_situacion = $('#id_situacion_bus').val();
-			var id_concurso = $('#id_concurso_bus').val();
+            var id_periodo = $('#id_periodo_bus').val();
+			var id_comision = $('#id_comision_bus').val();
+			var id_tipo_sesion = $('#id_tipo_sesion_bus').val();
+			var id_estado_sesion = $('#id_estado_sesion_bus').val();
+			//var id_concurso = $('#id_concurso_bus').val();
 			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -492,8 +513,8 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
-						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
+						id_regional:id_regional,id_periodo:id_periodo,id_comision:id_comision,
+						id_tipo_sesion:id_tipo_sesion,id_estado_sesion:id_estado_sesion,/*id_concurso:id_concurso,*/
 						_token:_token
                        },
                 "success": function (result) {
@@ -515,6 +536,40 @@ function datatablenew(){
 		},
         "aoColumnDefs":
             [	
+			 
+			 	{
+                "mRender": function (data, type, row) {
+                	var region = "";
+					if(row.region!= null)region = row.region;
+					return region;
+                },
+                "bSortable": false,
+                "aTargets": [0],
+				"className": "dt-center",
+				},
+				
+				{
+                "mRender": function (data, type, row) {
+                	var periodo = "";
+					if(row.periodo!= null)periodo = row.periodo;
+					return periodo;
+                },
+                "bSortable": false,
+                "aTargets": [1],
+				"className": "dt-center",
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var comision = "";
+					if(row.comision!= null)comision = row.comision;
+					return comision;
+                },
+                "bSortable": false,
+                "aTargets": [2],
+				"className": "dt-center",
+                },
+				
 				{
                 "mRender": function (data, type, row) {
                 	var fecha_programado = "";
@@ -522,9 +577,8 @@ function datatablenew(){
 					return fecha_programado;
                 },
                 "bSortable": false,
-                "aTargets": [0],
+                "aTargets": [3],
 				"className": "dt-center",
-				//"className": 'control'
                 },
 				
 				{
@@ -534,7 +588,7 @@ function datatablenew(){
 					return fecha_ejecucion;
                 },
                 "bSortable": true,
-                "aTargets": [1]
+                "aTargets": [4]
                 },
 				
                 {
@@ -544,7 +598,7 @@ function datatablenew(){
 					return hora_inicio;
                 },
                 "bSortable": true,
-                "aTargets": [2]
+                "aTargets": [5]
                 },
 				
 				{
@@ -554,7 +608,7 @@ function datatablenew(){
 					return hora_fin;
                 },
                 "bSortable": true,
-                "aTargets": [3]
+                "aTargets": [6]
                 },
 				
 				{
@@ -564,7 +618,7 @@ function datatablenew(){
 					return tipo_sesion;
                 },
                 "bSortable": true,
-                "aTargets": [4]
+                "aTargets": [7]
                 },
 				
 				{
@@ -574,7 +628,7 @@ function datatablenew(){
 					return estado_sesion;
                 },
                 "bSortable": true,
-                "aTargets": [5]
+                "aTargets": [8]
                 },
 				
 				{
@@ -584,7 +638,7 @@ function datatablenew(){
 					return newRow;
                 },
                 "bSortable": true,
-                "aTargets": [6]
+                "aTargets": [9]
                 },
 
             ]
