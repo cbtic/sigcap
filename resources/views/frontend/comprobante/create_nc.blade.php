@@ -235,12 +235,10 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col col-sm-12 align-self-center">
-                    <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}} " id="frmNC" name="frmNC" autocomplete="off">
+                    <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.nc_edita')}} " id="frmNC" name="frmNC" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
-                        <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
-                                                                        echo $TipoF;
-                                                                    } ?>">
+                        <input type="hidden" name="tipoF" value="<?php  echo $tipoF;  ?>">
                         <input type="hidden" name="vestab" value="1">
                         <input type="hidden" name="totalF" value="<?php if ($trans == 'FA') {
                                                                         echo $total;
@@ -251,9 +249,8 @@
                         <input type="hidden" name="persona" value="<?php if ($trans == 'FA') {
                                                                         echo $persona;
                                                                     } ?>">
-                        <input type="hidden" name="id_caja" value="<?php if ($trans == 'FA') {
-                                                                        echo $id_caja;
-                                                                    } ?>">
+                        <input type="hidden" name="id_caja" value="<?php  echo $id_caja; ?>">
+
                         <input type="hidden" name="MonAd" value="<?php if ($trans == 'FA') {
                                                                         echo $MonAd;
                                                                     } ?>">
@@ -333,7 +330,7 @@
                                                         <div class="form-group">
 
                                                             <label class="form-group">Motivo</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                            <input type="text" name="motivo_" id="motivo_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -348,13 +345,13 @@
                                                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Razón Social/Nombre</label>
-                                                            <input type="text" name="numero_documento" readonly id="numero_documento" value="<?php echo $comprobante->destinatario;?>" placeholder="" class="form-control form-control-sm">
+                                                            <input type="text" name="nombre_razon" readonly id="nombre_razon" value="<?php echo $comprobante->destinatario;?>" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Dirección</label>
-                                                            <input type="text" name="direccion" readonly id="numero_documento" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="direccion" readonly id="direccion" value="<?php if ($trans == 'FA') {
                                                                                                                                             echo $empresa->direccion;
                                                                                                                                         }
                                                                                                                                         if ($trans == 'FE') {
@@ -386,7 +383,7 @@
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                     <div class="form-group">
                                                         <label class="form-control-sm">Serie</label>
-                                                        <select readonly name="serieF" id="serieF" class="form-control form-control-sm">
+                                                        <select readonly name="serie_n" id="serie_n" class="form-control form-control-sm">
                                                             <?php if ($trans == 'FA' || $trans == 'FN') { ?>
                                                                 <?php foreach ($serie as $row) : ?>
                                                                     <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
@@ -402,7 +399,7 @@
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                     <div class="form-group">
                                                         <label class="form-control-sm">Número</label>
-                                                        <input type="text" name="numerof" readonly id="numerof" value="<?php if ($trans == 'FN') {
+                                                        <input type="text" name="numero_n" readonly id="numero_n" value="<?php if ($trans == 'FN') {
                                                                                                                             echo $comprobante->numero;
                                                                                                                         } ?> 
                                                                                                                             if ($trans == 'FE') {

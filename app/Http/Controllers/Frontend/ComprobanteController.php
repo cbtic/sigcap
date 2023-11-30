@@ -484,6 +484,7 @@ class ComprobanteController extends Controller
 
     public function send_nc(Request $request)
     {
+          // print_r($request); exit();
         $sw = true;
 		$msg = "";
 
@@ -497,9 +498,9 @@ class ComprobanteController extends Controller
 
 			$total = $request->totalF;
 			$serieF = $request->serieF;
-			$tipoF = $request->TipoF;
+			$tipoF = $request->tipoF;
 			$ubicacion_id = $request->ubicacion;
-			$id_persona = $request->persona;
+			$cod_tributario = $request->numero_documento;
 			$id_caja = $request->id_caja;
 			$adelanto   = $request->adelanto;
 
@@ -520,21 +521,15 @@ class ComprobanteController extends Controller
                     $id_val = $value['id'];
 
 				}
+               
 				
-				//$valoriza = Valorizacione::where('val_aten_estab', '=', $vestab)->where('val_codigo', '=', $vcodigo)->first();                
-                //$valoriza = Valorizacione::find($id_val);
+			//	$id_moneda=1;
+			
+				                                                                   
 
-				$id_moneda=1;
-				
-				//echo $valoriza->val_codigo."-----";
-				//$ingreso = IngresoVehiculo::where('aten_establecimiento', '=', $valoriza->val_estab)->where('aten_numero', '=', $valoriza->val_aten_codigo)->first();
-				
-				/*************************************/
-				
-				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     0, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  $id_moneda);
-																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
-                print_r($id_factura); exit();                                                                     
-
+				$id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF, $ubicacion_id, $cod_tributario, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  1);
+                print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
+              
 				$factura = Comprobante::where('id', $id_factura)->get()[0];
 
 				$fac_serie = $factura->serie;
@@ -676,44 +671,14 @@ class ComprobanteController extends Controller
 		return view('frontend.factura.modal_factura',compact('id','factura','negativo'));
 	}
     
-    public function nc_edit($id, $id_caja){
-
-        $trans = "I";
-       
-        
-		if($id_caja==""){
-			$valorizaciones_model = new Valorizacione;
-			$id_user = Auth::user()->id;
-			$caja_usuario = $valorizaciones_model->getCajaIngresoByusuario($id_user,'91');
-			//$id_caja = $caja_usuario->id_caja;
-			$id_caja = (isset($caja_usuario->id_caja))?$caja_usuario->id_caja:0;
-		}
-       
-      
-
-        $comprobante_model=new Comprobante;
-        $comprobante=$comprobante_model->getComprobanteById($id);
-       
-
-        $empresa_model = new Empresa;
-        $serie_model = new TablaMaestra;
-
-		$tabla_model = new TablaMaestra;
-		$forma_pago = $tabla_model->getMaestroByTipo('19');
-        $tipooperacion = $tabla_model->getMaestroByTipo('103');
-        $formapago = $tabla_model->getMaestroByTipo('104');
-
-
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion'));
-        
-
-    }
+    
 
     public function nc_edita(Request $request){
 
         $id_caja = $request->id_caja_;
         $id = $request->id_comprobante;
         $id_nc = $request->id_comprobante_nc;
+        $tipoF="NC";
 
         if ($id=="" ){
             $trans = "FE";
@@ -765,9 +730,9 @@ class ComprobanteController extends Controller
         $formapago = $tabla_model->getMaestroByTipo('104');
 
         $serie = $serie_model->getMaestro('95');
+        //print_r($tipoF); exit();
 
-
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad'));
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','tipoF','id_caja'));
         
     }
 
