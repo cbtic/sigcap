@@ -1092,24 +1092,24 @@ tipo;denominacion;codigo;tipo_nombre;sub_codigo;abreviatura;orden;estado
 103;Factura - Guia Remitente;8;TIPO DE OPERACIÓN;;;8;1
 103;Factura - Guia Transportista;9;TIPO DE OPERACIÓN;;;9;1
 103;Boleta de Venta - Comprobante de Percepción;10;TIPO DE OPERACIÓN;;;10;1
-105;Gravado - Operación Onerosa;1;TIPO_IGV;;;1;1
-105;Gravado – Retiro por premio;2;TIPO_IGV;;;2;1
-105;Gravado – Retiro por donación;3;TIPO_IGV;;;3;1
-105;Gravado – Retiro;4;TIPO_IGV;;;4;1
-105;Gravado – Retiro por publicidad;5;TIPO_IGV;;;5;1
-105;Gravado – Bonificaciones;6;TIPO_IGV;;;6;1
-105;Gravado – Retiro por entrega a trabajadores;7;TIPO_IGV;;;7;1
-105;Gravado – IVAP;8;TIPO_IGV;;;8;1
-105;Exonerado - Operación Onerosa;9;TIPO_IGV;;;9;1
-105;Exonerado – Transferencia Gratuita;10;TIPO_IGV;;;10;1
-105;Inafecto - Operación Onerosa;11;TIPO_IGV;;;11;1
-105;Inafecto – Retiro por Bonificación;12;TIPO_IGV;;;12;1
-105;Inafecto – Retiro;13;TIPO_IGV;;;13;1
-105;Inafecto – Retiro por Muestras Médicas;14;TIPO_IGV;;;14;1
-105;Inafecto - Retiro por Convenio Colectivo;15;TIPO_IGV;;;15;1
-105;Inafecto – Retiro por premio;16;TIPO_IGV;;;16;1
-105;Inafecto - Retiro por publicidad;17;TIPO_IGV;;;17;1
-105;Exportación;18;TIPO_IGV;;;18;1
+105;Gravado - Operación Onerosa;10;TIPO_IGV;;;1;1
+105;Gravado - Retiro por premio;11;TIPO_IGV;;;2;1
+105;Gravado - Retiro por donación;12;TIPO_IGV;;;3;1
+105;Gravado - Retiro;13;TIPO_IGV;;;4;1
+105;Gravado - Retiro por publicidad;14;TIPO_IGV;;;5;1
+105;Gravado - Bonificaciones;15;TIPO_IGV;;;6;1
+105;Gravado - Retiro por entrega a trabajadores;16;TIPO_IGV;;;7;1
+105;Gravado - IVAP;17;TIPO_IGV;;;8;1
+105;Exonerado - Operación Onerosa;20;TIPO_IGV;;;9;1
+105;Exonerado - Transferencia Gratuita;21;TIPO_IGV;;;10;1
+105;Inafecto - Operación Onerosa;30;TIPO_IGV;;;11;1
+105;Inafecto - Retiro por Bonificación;31;TIPO_IGV;;;12;1
+105;Inafecto - Retiro;32;TIPO_IGV;;;13;1
+105;Inafecto - Retiro por Muestras Médicas;33;TIPO_IGV;;;14;1
+105;Inafecto - Retiro por Convenio Colectivo;34;TIPO_IGV;;;15;1
+105;Inafecto - Retiro por premio;35;TIPO_IGV;;;16;1
+105;Inafecto - Retiro por publicidad;36;TIPO_IGV;;;17;1
+105;Inafecto - Transferencia Gratuita;37;TIPO_IGV;;;18;1
 106;Recursos hidrobiológicos;4;COD. BIENES Y SERVICIOS - DETRACCIÓN;;;2;1
 106;Maíz amarillo duro;5;COD. BIENES Y SERVICIOS - DETRACCIÓN;;;3;1
 106;Madera;8;COD. BIENES Y SERVICIOS - DETRACCIÓN;;;4;1

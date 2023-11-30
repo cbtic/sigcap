@@ -26,7 +26,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#dni').keypress(function(e){
+	$('#numero_documento').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
@@ -179,16 +179,6 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var ruta_firma = "";
-					if(row.ruta_firma!= null)ruta_firma = row.ruta_firma;
-					return ruta_firma;
-				},
-				"bSortable": false,
-				"aTargets": [7],
-				"className": "dt-center",
-				},
-				{
-				"mRender": function (data, type, row) {
 					var estado = "";
 					if(row.estado == 1){
 						estado = "Activo";
@@ -199,7 +189,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [8]
+				"aTargets": [7]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -222,7 +212,7 @@ function datatablenew(){
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [8],
 				},
             ]
     });

@@ -166,7 +166,16 @@ $(document).ready(function() {
             processData: false,
             success: function(response) {
                 if (response != 0) {
-                    $("#img_ruta").attr("src", "/img/frontend/tmp_documento_requisito/"+response);
+					var extension = "";
+					//extension = response.split(".");
+					//extension = split(".", limit).pop();;
+					extension = response.substring(response.lastIndexOf('.') + 1);
+					//alert(extension);
+					if(extension=="pdf"){
+						$("#img_ruta").attr("src", "/img/pdf.png");
+					}else{
+                    	$("#img_ruta").attr("src", "/img/frontend/tmp_documento_requisito/"+response);
+					}
 					$("#img_foto").val(response);
                 } else {
                     alert('Formato de imagen incorrecto.');
@@ -265,6 +274,17 @@ function datatablenewRequisito(){
                 "bSortable": true,
                 "aTargets": [2]
                 },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var newRow = "";
+					if(row.requisito_archivo!=null)newRow = '<a href="/img/documento_requisito/'+row.requisito_archivo+'" target="_blank" class="btn btn-sm btn-secondary">Ver Archivo</a>';
+					return newRow;
+                },
+                "bSortable": true,
+                "aTargets": [3]
+                },
+				
 				{
 					"mRender": function (data, type, row) {
 						
@@ -277,7 +297,7 @@ function datatablenewRequisito(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [3],
+					"aTargets": [4],
 				},
 
             ]
@@ -345,8 +365,9 @@ function validacion(){
 
 function limpiar(){
 	$('#id').val("0");
-	$('#id_tipo_plaza').val("");
-	$('#numero_plazas').val("");
+	$('#id_tipo_documento').val("");
+	$('#denominacion').val("");
+	$('#img_foto').val("");
 }
 
 function fn_save_requisito(){
@@ -433,7 +454,7 @@ function fn_save_requisito(){
 					<div class="row" style="padding-top:10px">
 						
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<label class="control-label">Requisito</label>
+							<label class="control-label form-control-sm form-control-sm">Requisito</label>
 						</div>
 						<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
 							<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="" type="text"  >
@@ -451,10 +472,10 @@ function fn_save_requisito(){
 							</span>
 							<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:10px">
 							<?php
-							$img = "/img/logo-sin-fondo2.png";
+							$img = "/img/sin_imagen.jpg";
 							//if($inscripcionDocumento->ruta_archivo!="")$img="/img/documento/".$inscripcionDocumento->ruta_archivo;
 							?>
-							<img src="<?php echo $img?>" id="img_ruta" width="240px" height="150px" alt="" style="margin-top:10px" />
+							<img src="<?php echo $img?>" id="img_ruta" width="200px" height="150px" alt="" style="margin-top:10px" />
 							<input type="hidden" id="img_foto" name="img_foto" value="" />
 						</div>	
 					</div>
@@ -481,6 +502,7 @@ function fn_save_requisito(){
                             <th>Id</th>
                             <th>Tipo Documento</th>
 							<th>Requisito</th>
+							<th>Archivo</th>
 							<th>Acciones</th>
                         </tr>
                         </thead>

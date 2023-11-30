@@ -122,7 +122,7 @@
 						<input class="form-control form-control-sm" id="colegiatura" name="colegiatura" placeholder="Colegiatura">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="dni" name="dni" placeholder="DNI">
+						<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="N&uacute;mero Documento">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                         <div class="form-group">
@@ -165,7 +165,6 @@
 							<th>Nombres</th>
                             <th>Fecha Nacimiento</th>
                             <th>Profesion</th>
-                            <th>Ruta Firma</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>

@@ -602,7 +602,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Multa</label>
-								<select name="id_multa" id="id_multa" onChange="obtener_multa()" class="form-control form-control-sm" onChange="">
+								<select name="id_multa" id="id_multa" onChange="obtener_multa()" class="form-control form-control-sm">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($multa as $row) {?>
