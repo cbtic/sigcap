@@ -132,6 +132,8 @@
 
 	$(document).ready(function() {
 
+		if($id_tipo_documento=="")
+
 		validaDni();
 
 		/*
