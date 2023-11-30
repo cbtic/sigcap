@@ -14,7 +14,7 @@ class AddRequisitoArchivoToConcursoRequisitos extends Migration
     public function up()
     {
         Schema::table('concurso_requisitos', function (Blueprint $table) {
-            $table->string('requisito_archivo',100)->nullable();
+            $table->string('requisito_archivo',50)->nullable();
         });
     }
 
