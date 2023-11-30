@@ -244,6 +244,7 @@ Route::post('concurso/listar_puesto', [ConcursoController::class, 'listar_puesto
 Route::get('concurso/eliminar_puesto/{id}', [ConcursoController::class, 'eliminar_puesto'])->name('concurso.eliminar_puesto');
 Route::post('concurso/send_puesto', [ConcursoController::class, 'send_puesto'])->name('concurso.send_puesto');
 Route::get('concurso/obtener_puesto/{id}', [ConcursoController::class, 'obtener_puesto'])->name('concurso.obtener_puesto');
+Route::get('concurso/eliminar_inscripcion_concurso/{id}', [ConcursoController::class, 'eliminar_inscripcion_concurso'])->name('concurso.eliminar_inscripcion_concurso');
 
 Route::get('concurso/create', [ConcursoController::class, 'create'])->name('concurso.create');
 Route::post('concurso/send_inscripcion', [ConcursoController::class, 'send_inscripcion'])->name('concurso.send_inscripcion');
@@ -270,6 +271,7 @@ Route::get('concurso/listar_maestro_by_tipo_subtipo/{tipo}/{sub_codigo}', [Concu
 Route::get('comision/consulta_comision', [ComisionController::class, 'consulta_comision'])->name('comision.consulta_comision');
 Route::post('comision/listar_comision_ajax', [ComisionController::class, 'listar_comision_ajax'])->name('comision.listar_comision_ajax');
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');
+Route::post('concurso/upload_documento_requisito', [ConcursoController::class, 'upload_documento_requisito'])->name('concurso.upload_documento_requisito');
 
 Route::get('comision/lista_comision', [ComisionController::class, 'lista_comision'])->name('comision.lista_comision');
 Route::post('comision/lista_comision_ajax', [ComisionController::class, 'lista_comision_ajax'])->name('comision.lista_comision_ajax');
