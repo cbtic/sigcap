@@ -94,6 +94,74 @@
 	color: #FFFFFF;
 }
 
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.wrapper { 
+	/*background:#EFEFEF; */
+	/*box-shadow: 1px 1px 10px #999; */
+	margin: auto; 
+	text-align: center; 
+	position: relative;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	margin-bottom: 20px !important;
+	width: 800px;
+	padding-top: 5px;
+}
+.scrolls { 
+	overflow-x: scroll;
+	overflow-y: hidden;
+	height: 200px;
+	white-space:nowrap
+} 
+.imageDiv img { 
+	box-shadow: 1px 1px 10px #999; 
+	margin: 2px;
+	max-height: 50px;
+	cursor: pointer;
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	vertical-align:top;
+}
+
+
+.img_ruta{
+	position:relative;
+	float:left
+}
+
+.delete_ruta{
+	background-image:url(img/delete.png);
+	top:0px;
+	left:110px;
+	background-size: 100%;
+	position:absolute;
+	display:block;
+	width:30px;
+	height:30px;
+	cursor:pointer
+}
+
 </style>
 
 @extends('frontend.layouts.app')

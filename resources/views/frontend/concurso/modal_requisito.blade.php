@@ -151,6 +151,32 @@ $(document).ready(function() {
 	 
 	datatablenewRequisito();
 
+	$(".upload").on('click', function() {
+        var formData = new FormData();
+        var files = $('#image')[0].files[0];
+        formData.append('file',files);
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/concurso/upload_documento_requisito",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response != 0) {
+                    $("#img_ruta").attr("src", "/img/frontend/tmp_documento_requisito/"+response);
+					$("#img_foto").val(response);
+                } else {
+                    alert('Formato de imagen incorrecto.');
+                }
+            }
+        });
+        return false;
+    });
+
+
 });
 
 function datatablenewRequisito(){
@@ -330,11 +356,12 @@ function fn_save_requisito(){
 	var id_concurso = $('#id_concurso').val();
 	var id_tipo_documento = $('#id_tipo_documento').val();
 	var denominacion = $('#denominacion').val();
+	var img_foto = $('#img_foto').val();
 	
 	$.ajax({
 			url: "/concurso/send_requisito",
             type: "POST",
-            data : {_token:_token,id:id,id_concurso:id_concurso,id_tipo_documento:id_tipo_documento,denominacion:denominacion},
+            data : {_token:_token,id:id,id_concurso:id_concurso,id_tipo_documento:id_tipo_documento,denominacion:denominacion,img_foto:img_foto},
 			success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
 				datatablenewRequisito();
@@ -408,10 +435,29 @@ function fn_save_requisito(){
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 							<label class="control-label">Requisito</label>
 						</div>
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+						<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
 							<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="" type="text"  >
 						</div>
 						
+					</div>
+					
+					<div class="row" style="padding-top:10px">
+					
+					<div class="col-lg-12">
+						<div class="form-group">
+							
+							<span class="btn btn-sm btn-warning btn-file">
+								Examinar <input id="image" name="image" type="file" />
+							</span>
+							<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:10px">
+							<?php
+							$img = "/img/logo-sin-fondo2.png";
+							//if($inscripcionDocumento->ruta_archivo!="")$img="/img/documento/".$inscripcionDocumento->ruta_archivo;
+							?>
+							<img src="<?php echo $img?>" id="img_ruta" width="240px" height="150px" alt="" style="margin-top:10px" />
+							<input type="hidden" id="img_foto" name="img_foto" value="" />
+						</div>	
+					</div>
 					</div>
 					
 					<div style="margin-top:10px" class="form-group">

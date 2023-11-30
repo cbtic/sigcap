@@ -329,8 +329,30 @@ class ConcursoController extends Controller
 		if($request->id == 0){
 			$concursoRequisito = new ConcursoRequisito;
 			$concursoRequisito->id_concurso = $request->id_concurso;
+			
+			if($request->img_foto!=""){
+				$filepath_tmp = public_path('img/frontend/tmp_documento_requisito/');
+				$filepath_nuevo = public_path('img/documento_requisito/');
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+				
+				$concursoRequisito->ruta_archivo = $request->img_foto;
+			}
+			
 		}else{
 			$concursoRequisito = ConcursoRequisito::find($request->id);
+			
+			if($request->img_foto!="" && $inscripcionDocumento->ruta_archivo!=$request->img_foto){
+				$filepath_tmp = public_path('img/frontend/tmp_documento_requisito/');
+				$filepath_nuevo = public_path('img/documento_requisito/');
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+				
+				$concursoRequisito->ruta_archivo = $request->img_foto;
+			}
+			
 		}
 		
 		$concursoRequisito->id_tipo_documento = $request->id_tipo_documento;
@@ -519,6 +541,13 @@ class ConcursoController extends Controller
 	public function upload_documento(Request $request){
 
     	$filepath = public_path('img/frontend/tmp_documento/');
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		echo $_FILES['file']['name'];
+	}
+	
+	public function upload_documento_requisito(Request $request){
+
+    	$filepath = public_path('img/frontend/tmp_documento_requisito/');
 		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
 		echo $_FILES['file']['name'];
 	}
