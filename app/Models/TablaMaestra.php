@@ -56,6 +56,8 @@ class TablaMaestra extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    
 	
     function getCaja($tipo){
 
