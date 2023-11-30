@@ -5250,7 +5250,7 @@
     "picocolors" "^1.0.0"
     "stable" "^0.1.8"
 
-"sweetalert2@^9.8.2":
+"sweetalert2@^9.17.4":
   "integrity" "sha512-T6Js/kjtGmpekE1tPT+drdgsedEnaet03mMadKUMvtBlFzVLcYy8kvIuchaQJ09rhG5bdmRRMQ2sEK0ZnHi1vg=="
   "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-9.17.4.tgz"
   "version" "9.17.4"
