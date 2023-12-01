@@ -329,8 +329,30 @@ class ConcursoController extends Controller
 		if($request->id == 0){
 			$concursoRequisito = new ConcursoRequisito;
 			$concursoRequisito->id_concurso = $request->id_concurso;
+			
+			if($request->img_foto!=""){
+				$filepath_tmp = public_path('img/frontend/tmp_documento_requisito/');
+				$filepath_nuevo = public_path('img/documento_requisito/');
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+				
+				$concursoRequisito->requisito_archivo = $request->img_foto;
+			}
+			
 		}else{
 			$concursoRequisito = ConcursoRequisito::find($request->id);
+			
+			if($request->img_foto!="" && $concursoRequisito->requisito_archivo!=$request->img_foto){
+				$filepath_tmp = public_path('img/frontend/tmp_documento_requisito/');
+				$filepath_nuevo = public_path('img/documento_requisito/');
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+				
+				$concursoRequisito->requisito_archivo = $request->img_foto;
+			}
+			
 		}
 		
 		$concursoRequisito->id_tipo_documento = $request->id_tipo_documento;
@@ -355,9 +377,9 @@ class ConcursoController extends Controller
 			$concursoInscripcione = ConcursoInscripcione::find($request->id);
 		}
 		
-		$comprobante = $comprobante_model->getComprobanteByTipoSerieNumero($request->numero_comprobante);
+		//$comprobante = $comprobante_model->getComprobanteByTipoSerieNumero($request->numero_comprobante);
 		
-		if($comprobante){
+		//if($comprobante){
 			
 			$anio = Carbon::now()->format('Y');
 			$concursoInscripcione->id_agremiado = $request->id_agremiado;
@@ -378,7 +400,7 @@ class ConcursoController extends Controller
 			$concursoInscripcione->save();
 			
 			$id_concursoInscripcion = $concursoInscripcione->id;
-		
+			/*
 			$valorizacion = new Valorizacione;
 			$valorizacion->id_modulo = 1;
 			$valorizacion->pk_registro = $id_concursoInscripcion;
@@ -393,10 +415,10 @@ class ConcursoController extends Controller
 			$valorizacion->estado = 1;
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
-			
+			*/
 			echo $id_concursoInscripcion;
 			
-		}
+		//}
 		
     }
 	
@@ -451,6 +473,16 @@ class ConcursoController extends Controller
 		$concursoPuesto = ConcursoPuesto::find($id);
 		$concursoPuesto->estado= "0";
 		$concursoPuesto->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_inscripcion_concurso($id){
+
+		$concursoInscripcione = ConcursoInscripcione::find($id);
+		$concursoInscripcione->estado= "0";
+		$concursoInscripcione->save();
 		
 		echo "success";
 
@@ -519,6 +551,13 @@ class ConcursoController extends Controller
 	public function upload_documento(Request $request){
 
     	$filepath = public_path('img/frontend/tmp_documento/');
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		echo $_FILES['file']['name'];
+	}
+	
+	public function upload_documento_requisito(Request $request){
+
+    	$filepath = public_path('img/frontend/tmp_documento_requisito/');
 		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
 		echo $_FILES['file']['name'];
 	}

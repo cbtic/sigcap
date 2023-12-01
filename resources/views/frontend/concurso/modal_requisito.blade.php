@@ -151,6 +151,41 @@ $(document).ready(function() {
 	 
 	datatablenewRequisito();
 
+	$(".upload").on('click', function() {
+        var formData = new FormData();
+        var files = $('#image')[0].files[0];
+        formData.append('file',files);
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/concurso/upload_documento_requisito",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response != 0) {
+					var extension = "";
+					//extension = response.split(".");
+					//extension = split(".", limit).pop();;
+					extension = response.substring(response.lastIndexOf('.') + 1);
+					//alert(extension);
+					if(extension=="pdf"){
+						$("#img_ruta").attr("src", "/img/pdf.png");
+					}else{
+                    	$("#img_ruta").attr("src", "/img/frontend/tmp_documento_requisito/"+response);
+					}
+					$("#img_foto").val(response);
+                } else {
+                    alert('Formato de imagen incorrecto.');
+                }
+            }
+        });
+        return false;
+    });
+
+
 });
 
 function datatablenewRequisito(){
@@ -239,6 +274,17 @@ function datatablenewRequisito(){
                 "bSortable": true,
                 "aTargets": [2]
                 },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var newRow = "";
+					if(row.requisito_archivo!=null)newRow = '<a href="/img/documento_requisito/'+row.requisito_archivo+'" target="_blank" class="btn btn-sm btn-secondary">Ver Archivo</a>';
+					return newRow;
+                },
+                "bSortable": true,
+                "aTargets": [3]
+                },
+				
 				{
 					"mRender": function (data, type, row) {
 						
@@ -251,7 +297,7 @@ function datatablenewRequisito(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [3],
+					"aTargets": [4],
 				},
 
             ]
@@ -319,8 +365,9 @@ function validacion(){
 
 function limpiar(){
 	$('#id').val("0");
-	$('#id_tipo_plaza').val("");
-	$('#numero_plazas').val("");
+	$('#id_tipo_documento').val("");
+	$('#denominacion').val("");
+	$('#img_foto').val("");
 }
 
 function fn_save_requisito(){
@@ -330,11 +377,12 @@ function fn_save_requisito(){
 	var id_concurso = $('#id_concurso').val();
 	var id_tipo_documento = $('#id_tipo_documento').val();
 	var denominacion = $('#denominacion').val();
+	var img_foto = $('#img_foto').val();
 	
 	$.ajax({
 			url: "/concurso/send_requisito",
             type: "POST",
-            data : {_token:_token,id:id,id_concurso:id_concurso,id_tipo_documento:id_tipo_documento,denominacion:denominacion},
+            data : {_token:_token,id:id,id_concurso:id_concurso,id_tipo_documento:id_tipo_documento,denominacion:denominacion,img_foto:img_foto},
 			success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
 				datatablenewRequisito();
@@ -408,10 +456,29 @@ function fn_save_requisito(){
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 							<label class="control-label form-control-sm form-control-sm">Requisito</label>
 						</div>
-						<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+						<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
 							<input id="denominacion" name="denominacion" class="form-control form-control-sm"  value="" type="text"  >
 						</div>
 						
+					</div>
+					
+					<div class="row" style="padding-top:10px">
+					
+					<div class="col-lg-12">
+						<div class="form-group">
+							
+							<span class="btn btn-sm btn-warning btn-file">
+								Examinar <input id="image" name="image" type="file" />
+							</span>
+							<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:10px">
+							<?php
+							$img = "/img/sin_imagen.jpg";
+							//if($inscripcionDocumento->ruta_archivo!="")$img="/img/documento/".$inscripcionDocumento->ruta_archivo;
+							?>
+							<img src="<?php echo $img?>" id="img_ruta" width="200px" height="150px" alt="" style="margin-top:10px" />
+							<input type="hidden" id="img_foto" name="img_foto" value="" />
+						</div>	
+					</div>
 					</div>
 					
 					<div style="margin-top:10px" class="form-group">
@@ -435,6 +502,7 @@ function fn_save_requisito(){
                             <th>Id</th>
                             <th>Tipo Documento</th>
 							<th>Requisito</th>
+							<th>Archivo</th>
 							<th>Acciones</th>
                         </tr>
                         </thead>
