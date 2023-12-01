@@ -132,12 +132,13 @@
 
 	$(document).ready(function() {
 
-		if($id_tipo_documento=="78")
-		{
+		if ($id_tipo_documento == "78") {
 			validaDni();
 
-		}
-		else{
+		} else {
+			$('#apellido_paterno').attr('readonly', false);
+			$('#apellido_materno').attr('readonly', false);
+			$('#nombres').attr('readonly', false);
 
 		}
 
@@ -294,14 +295,18 @@
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:10px;margin-bottom:0px">
-											<input placeholder="fecha_nacimiento" type="date" id="fecha_nacimiento" class="form-control form-control-sm" placeholder="Fecha Nacimiento" value="" type="text">
+
+											<input placeholder="fecha_nacimiento" type="date" id="fecha_nacimiento" class="form-control form-control-sm" placeholder="Fecha Nacimiento" value="" type="text" required>
+
+
+
 										</div>
 									</div>
 								</div>
 
 								<div class="row">
 									<div class="col-lg-12">
-										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:10px;margin-bottom:0px">										
+										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:10px;margin-bottom:0px">
 											<select name="sexo" id="sexo" class="form-control form-control-sm" onChange="">
 												<option value="">--Selecionar Género--</option>
 												<?php
@@ -319,7 +324,7 @@
 									<div style="margin-top:10px" class="form-group">
 										<div class="col-sm-12 controls">
 											<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions" style="float:right">
-												<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+												<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success" type="submit">Guardar</a>
 											</div>
 										</div>
 									</div>
