@@ -101,7 +101,7 @@ class TipoConceptoController extends Controller
 		//$tipoConcepto->codigo = $codigo;
 		$tipoConcepto->id_regional = $request->regional;
 		$tipoConcepto->denominacion = $request->denominacion;
-		$tipoConcepto->estado = 1;
+		//$tipoConcepto->estado = 1;
 		$tipoConcepto->id_usuario_inserta = $id_user;
 		$tipoConcepto->save();
     }

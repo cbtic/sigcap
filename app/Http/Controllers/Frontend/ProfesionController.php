@@ -90,7 +90,7 @@ class ProfesionController extends Controller
 		}
 		
 		$profesion->nombre = $request->nombre;
-		$profesion->estado = 1;
+		//$profesion->estado = 1;
 		$profesion->id_usuario_inserta = $id_user;
 		$profesion->save();
     }

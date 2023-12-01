@@ -451,7 +451,7 @@ $.mask.definitions['p'] = "[Mm]";
 		//alert(id_agremiado);
 		//return false;
 
-		if(tipo_documento == "")msg += "Debe ingresar el tipo de documento <br>";
+		/*if(tipo_documento == "")msg += "Debe ingresar el tipo de documento <br>";
 		if(numero_documento==""){msg+="Debe ingresar el numero de documento <br>";}
 		if(nombre==""){msg+="Debe ingresar un nombre <br>";}
 		if(apellido_paterno==""){msg+="Debe ingresar un apellido paterno <br>";}
@@ -462,7 +462,7 @@ $.mask.definitions['p'] = "[Mm]";
 		if(sexo == ""){msg += "Debe ingresar el sexo <br>";}
 		if(numero_celular==""){msg+="Debe ingresar un numero de celular <br>";}
 		if(correo==""){msg+="Debe ingresar un correo <br>";}
-		if(direccion==""){msg+="Debe ingresar unaa direccion <br>";}
+		if(direccion==""){msg+="Debe ingresar unaa direccion <br>";}*/
 
 		if(msg!=""){
 			bootbox.alert(msg);

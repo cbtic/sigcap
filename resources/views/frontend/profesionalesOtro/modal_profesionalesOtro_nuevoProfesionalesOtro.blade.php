@@ -221,15 +221,20 @@ function obtener_profesional(){
         if(result.sw==false){
 
           Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.",
-
-            //$('#openOverlayOpc').modal('hide');
-            //window.location.reload();
-
-            //footer: '<a href="#">Why do I have this issue?</a>'
-          });$('#openOverlayOpc').modal('hide');
+            title: 'El numero de documento no existe',
+            text: "¿Desea registrar como  nueva persona?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Crear!'
+          }).then((result) => {
+            if (result.value) {
+            modal_personaNuevo();
+            //document.location="eliminar.php?codigo="+id;
+            
+            }
+          });//$('#openOverlayOpc').modal('hide');
             
           /*
 					bootbox.alert(result.msg);
@@ -254,6 +259,26 @@ function obtener_profesional(){
 	$("#moneda").val(moneda);
 	$("#monto").val(monto);*/
 	
+}
+
+function modal_personaNuevo(){
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc').modal('show');
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/persona/modal_personaNuevo",
+			type: "get",
+			data : $("#frmValorizacion").serialize(),
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
+
+	//cargarConceptos();
+
 }
 
   function fn_save_profesionalesOtro() {

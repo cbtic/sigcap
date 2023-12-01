@@ -133,7 +133,7 @@ class MovilidadController extends Controller
 		$comision_movilidades->id_periodo_comisiones = $request->periodo;
 		$comision_movilidades->id_regional = $request->regional;
 		$comision_movilidades->monto = $request->monto;
-		$comision_movilidades->estado = 1;
+		//$comision_movilidades->estado = 1;
 		$comision_movilidades->id_usuario_inserta = $id_user;
 		$comision_movilidades->save();
     }

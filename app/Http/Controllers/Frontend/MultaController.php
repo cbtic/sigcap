@@ -194,7 +194,7 @@ class MultaController extends Controller
 		$valorizacion->id_moneda = $multa->id_moneda;
 		$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 		$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-		$valorizacion->estado = 1;
+		//$valorizacion->estado = 1;
 		$valorizacion->id_usuario_inserta = $id_user;
 		$valorizacion->save();
     }

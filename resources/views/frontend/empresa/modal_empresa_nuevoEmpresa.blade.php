@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <title>Sistema SIGCAP</title>
 
 <style>
@@ -351,6 +353,7 @@ function fn_save_estudio(){
 
 function fn_save_empresa(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var ruc = $('#ruc').val();
@@ -364,7 +367,12 @@ function fn_save_empresa(){
 	
 	//alert(id_agremiado);
 	//return false;
-	
+
+	if(msg!=""){
+			bootbox.alert(msg);
+			return false;
+	}
+	else{
     $.ajax({
 			url: "/empresa/send_empresa_nuevoEmpresa",
             type: "POST",
@@ -372,8 +380,22 @@ function fn_save_empresa(){
             dataType: 'json',
 			success: function (result) {
 
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				if(result.sw==false){
+					Swal.fire({
+					icon: "error",
+					title: "Error",
+					text: "El RUC ingresado ya existe !!!",
+
+            //$('#openOverlayOpc').modal('hide');
+            //window.location.reload();
+
+            //footer: '<a href="#">Why do I have this issue?</a>'
+          })
+					$('#openOverlayOpc').modal('hide');
+				}else{
+					$('#openOverlayOpc').modal('hide');
+					window.location.reload();
+				}
 				
 				/*
 				$('#openOverlayOpc').modal('hide');
@@ -384,8 +406,9 @@ function fn_save_empresa(){
 				}
 				*/
             }
+			
     });
-}
+}}
 
 function fn_liberar(id){
     

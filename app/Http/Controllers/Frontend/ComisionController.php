@@ -281,9 +281,9 @@ class ComisionController extends Controller
 			
 			$municipalidadIntegrada->id_regional = 5;
 			$municipalidadIntegrada->id_periodo_comisiones = $request->periodo;
-			$municipalidadIntegrada->id_coodinador = 1;
+			//$municipalidadIntegrada->id_coodinador = 1;
 			$municipalidadIntegrada->id_usuario_inserta = $id_user;
-			$municipalidadIntegrada->estado = "1";
+			//$municipalidadIntegrada->estado = "1";
 			$municipalidadIntegrada->save();
 			$id_municipalidad_integrada = $municipalidadIntegrada->id;
 
@@ -292,7 +292,7 @@ class ComisionController extends Controller
 				$mucipalidadDetalle->id_municipalidad = $row;
 				$mucipalidadDetalle->id_municipalidad_integrada = $id_municipalidad_integrada;
 				$mucipalidadDetalle->id_usuario_inserta = $id_user;
-				$mucipalidadDetalle->estado = "1";
+				//$mucipalidadDetalle->estado = "1";
 				$mucipalidadDetalle->save();
 			}
 		}

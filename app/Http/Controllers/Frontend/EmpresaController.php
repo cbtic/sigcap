@@ -116,33 +116,45 @@ class EmpresaController extends Controller
 
     public function send_empresa_nuevoEmpresa(Request $request){
 		
-		/*$request->validate([
-			'ruc'=>'required | numeric | unique | size:11',
+		$request->validate([
+			//'ruc'=>'required | numeric | unique | digits:11',
 			'email'=>'required | email',
 			'direccion'=>'required',
-			'telefono'=>'required | numeric | size:9',
+			'telefono'=>'required | numeric | digits:9',
 			'representante'=>'required',
 		]
-		);*/
+		);
 
 		$id_user = Auth::user()->id;
+		$sw = true;
+		//$msg = "";
 
-		if($request->id == 0){
-			$empresa = new Empresa;
-		}else{
-			$empresa = Empresa::find($request->id);
-		}
 		
-		$empresa->ruc = $request->ruc;
-		$empresa->nombre_comercial = $request->nombre_comercial;
-		$empresa->razon_social = $request->razon_social;
-		$empresa->direccion = $request->direccion;
-		$empresa->email = $request->email;
-		$empresa->telefono = $request->telefono;
-		$empresa->representante = $request->representante;
-		$empresa->estado = 1;
-		$empresa->id_usuario_inserta = $id_user;
-		$empresa->save();
+		if($request->id == 0){
+			//$empresa = new Empresa;
+			$buscaempresa = Empresa::where("ruc", $request->ruc)->where("estado", "1")->get();
+
+			if ($buscaempresa->count()==0){
+				$empresa = new Empresa;
+				$empresa->ruc = $request->ruc;
+				$empresa->nombre_comercial = $request->nombre_comercial;
+				$empresa->razon_social = $request->razon_social;
+				$empresa->direccion = $request->direccion;
+				$empresa->email = $request->email;
+				$empresa->telefono = $request->telefono;
+				$empresa->representante = $request->representante;
+				//$empresa->estado = 1;
+				$empresa->id_usuario_inserta = $id_user;
+				$empresa->save();
+			}else{
+				$sw = false;
+				//$msg = "El RUC ingresado ya existe !!!";
+			}
+		}	
+			//$empresa = Empresa::find($request->id);
+			$array["sw"] = $sw;
+			//$array["msg"] = $msg;
+			echo json_encode($array);
     }
 
 	public function eliminar_empresa($id,$estado)

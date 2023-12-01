@@ -117,8 +117,8 @@ class PeriodoComisionController extends Controller
 		$periodoComision->descripcion = $periodo_mes_ini.'/'.$periodo_año_ini.' - '.$periodo_mes_fin.'/'.$periodo_año_fin;
         $periodoComision->fecha_inicio = $request->fecha_inicio;
         $periodoComision->fecha_fin = $request->fecha_fin;
-		$periodoComision->id_usuario = 1;
-		$periodoComision->estado = 1;
+		//$periodoComision->id_usuario = 1;
+		//$periodoComision->estado = 1;
 		$periodoComision->id_usuario_inserta = $id_user;
 		$periodoComision->save();
     }
