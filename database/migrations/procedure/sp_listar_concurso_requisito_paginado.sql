@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_listar_concurso_requisito_paginado(p_id_concurso character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -19,7 +18,7 @@ begin
 	 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' c.id,c.denominacion requisito,tm.denominacion tipo_documento';
+	v_campos=' c.id,c.denominacion requisito,tm.denominacion tipo_documento,c.requisito_archivo';
 
 	v_tabla=' from concurso_requisitos c 
 	inner join tabla_maestras tm on c.id_tipo_documento::int=tm.codigo::int and tm.tipo=''97'' ';

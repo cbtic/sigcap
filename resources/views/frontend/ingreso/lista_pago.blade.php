@@ -58,29 +58,21 @@ foreach($pago as $row):?>
 	</td>
 	<td class="text-left">
 	
-		<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmPagos" name="frmPagos" autocomplete="off">
-		<!--
-		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions" >
-			<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="ncnd(this)" >
-				<i class="fa fa-search" style="font-size:9px!important"></i>
-			</button>
-		</div>
-		-->
-		<input type='hidden' name='id_comprobante' id="id_comprobante" value='<?php echo $row->id_comprobante?>'>
-		
-		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-		
-		<input class="btn btn-info pull-rigth" value="NC" type="button" id="btnBoleta" onclick="ncnd()">
+		<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmPagos" name="frmPagos" autocomplete="off">		
+		<input type='hidden' name='id_comprobante' id="id_comprobante" value='<?php echo $row->id_comprobante?>'>		
+		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">		
+		<input class="btn btn-info pull-rigth" value="NC" type="button" id="btnBoleta" onclick="nc()">
 		
 		</form>
 		
 	</td>
 	<td class="text-left">
-		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-			<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="ncnd(this)" >
-				<i class="fa fa-search" style="font-size:9px!important"></i>
-			</button>
-		</div>
+	<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nd_edita')}}" id="frmPagos_nd" name="frmPagos_nd" autocomplete="off">		
+		<input type='hidden' name='id_comprobante' id="id_comprobante" value='<?php echo $row->id_comprobante?>'>		
+		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">		
+		<input class="btn btn-info pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd()">
+		
+		</form>
 	</td>
 </tr>
 <?php 

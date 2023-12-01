@@ -1726,12 +1726,21 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
+					var sub_tipo_concurso = "";
+					if(row.sub_tipo_concurso!= null)sub_tipo_concurso = row.sub_tipo_concurso;
+					return sub_tipo_concurso;
+                },
+                "bSortable": false,
+                "aTargets": [3],
+                },
+				{
+                "mRender": function (data, type, row) {
 					var fecha_inscripcion = "";
 					if(row.fecha_inscripcion!= null)fecha_inscripcion = row.fecha_inscripcion;
 					return fecha_inscripcion;
                 },
                 "bSortable": false,
-                "aTargets": [3],
+                "aTargets": [4],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1740,7 +1749,7 @@ function datatablenew(){
 					return pago;
                 },
                 "bSortable": false,
-                "aTargets": [4]
+                "aTargets": [5]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1749,7 +1758,7 @@ function datatablenew(){
 					return puntaje;
                 },
                 "bSortable": false,
-                "aTargets": [5]
+                "aTargets": [6]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1758,21 +1767,21 @@ function datatablenew(){
 					return estado;
                 },
                 "bSortable": false,
-                "aTargets": [6]
+                "aTargets": [7]
                 },
 				{
 					"mRender": function (data, type, row) {
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarConcursoInscripcion('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="editarConcursoInscripcion('+row.id+')" ><i class="fa fa-edit"></i> Registrar Doc</button>';
 						
-						html += '<a href="javascript:void(0)" onclick=eliminarPuesto('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+						html += '<a href="javascript:void(0)" onclick=eliminarInscripcionConcurso('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
 						
 						html += '</div>';
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [7],
+					"aTargets": [8],
 				},
 				
 				
@@ -1819,13 +1828,17 @@ function datatablenew(){
 }
 
 function editarConcursoInscripcion(id){
-
+	
+	$("#divDocumentos").hide();
+	
 	$.ajax({
 		url: '/concurso/obtener_concurso_inscripcion/'+id,
 		dataType: "json",
 		success: function(result){
 			
 			console.log(result);
+			$("#divDocumentos").show();
+			
 			$('#id_concurso_inscripcion').val(result.id);
 			var numero_comprobante = result.tipo+result.serie+"-"+result.numero;
 			$('#numero_comprobante').val(numero_comprobante);
@@ -3410,3 +3423,27 @@ function fn_eliminar_seg(id){
 
 
 
+function eliminarInscripcionConcurso(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas eliminar la Inscripción del Concurso?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_inscripcion_concurso(id);
+            }
+        }
+    });
+    //$(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_inscripcion_concurso(id){
+	
+	$.ajax({
+            url: "/concurso/eliminar_inscripcion_concurso/"+id,
+            type: "GET",
+            success: function (result) {
+				datatablenew();
+            }
+    });
+}
