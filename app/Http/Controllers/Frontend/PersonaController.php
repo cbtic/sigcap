@@ -498,6 +498,23 @@ class PersonaController extends Controller
 
 	public function send_persona_nuevoPersona(Request $request){
 
+		$request->validate([
+			'tipo_documento'=>'required',
+			'numero_documento'=>'required | numeric',
+			'ruc'=>'numeric | size:11',
+			'nombre'=>'required',
+			'apellido_paterno'=>'required',
+			'apellido_materno'=>'required',
+			'fecha_nacimiento'=>'required',
+			'lugar_nacimiento'=>'required',
+			'nacionalidad'=>'required',
+			'sexo'=>'required',
+			'numero_celular'=>'required | numeric | size:9',
+			'correo'=>'required | email',
+			'direccion'=>'required',
+		]
+		);
+
 		$id_user = Auth::user()->id;
 		$sw = true;
 		$msg = "";
@@ -665,13 +682,12 @@ class PersonaController extends Controller
 			$array["persona"] = $persona;
 		}else{
 			$sw = false;
-			$msg = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
+			//$msg = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
 			//$array["error"] = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
 			$array["sw"] = $sw;
-			$array["msg"] = $msg;
+			//$array["msg"] = $msg;
 		}
 		
-	
         echo json_encode($array);
 	}
 }

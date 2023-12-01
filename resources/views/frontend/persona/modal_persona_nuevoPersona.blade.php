@@ -1,4 +1,6 @@
-<title>Sistema de Personas</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<title>Sistema SIGCAP</title>
 
 <style>
 	/*
@@ -427,6 +429,7 @@ $.mask.definitions['p'] = "[Mm]";
 
 	function fn_save_persona() {
 
+		var msg = "";
 		var _token = $('#_token').val();
 		var id = $('#id').val();
 		var tipo_documento = $('#tipo_documento').val();
@@ -448,7 +451,25 @@ $.mask.definitions['p'] = "[Mm]";
 		//alert(id_agremiado);
 		//return false;
 
-		$.ajax({
+		if(tipo_documento == "")msg += "Debe ingresar el tipo de documento <br>";
+		if(numero_documento==""){msg+="Debe ingresar el numero de documento <br>";}
+		if(nombre==""){msg+="Debe ingresar un nombre <br>";}
+		if(apellido_paterno==""){msg+="Debe ingresar un apellido paterno <br>";}
+		if(apellido_materno == ""){msg += "Debe ingresar un apellido materno <br>";}
+		if(fecha_nacimiento==""){msg+="Debe ingresar una fecha de nacimiento <br>";}
+		if(lugar_nacimiento==""){msg+="Debe ingresar un lugar de nacimiento <br>";}
+		if(nacionalidad==""){msg+="Debe ingresar una nacionalidad<br>";}
+		if(sexo == ""){msg += "Debe ingresar el sexo <br>";}
+		if(numero_celular==""){msg+="Debe ingresar un numero de celular <br>";}
+		if(correo==""){msg+="Debe ingresar un correo <br>";}
+		if(direccion==""){msg+="Debe ingresar unaa direccion <br>";}
+
+		if(msg!=""){
+			bootbox.alert(msg);
+			return false;
+		}
+		else{
+			$.ajax({
 			url: "/persona/send_persona_nuevoPersona",
 			type: "POST",
 			data: {
@@ -480,6 +501,9 @@ $.mask.definitions['p'] = "[Mm]";
 				}
             }
 		});
+		}
+
+		
 	}
 
 	function fn_liberar(id) {
@@ -818,7 +842,7 @@ $.mask.definitions['p'] = "[Mm]";
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($tipo_documento as $row) { ?>
-														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '78') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
 													<?php
 													}
 													?>
@@ -920,6 +944,48 @@ $.mask.definitions['p'] = "[Mm]";
 											<div class="form-group">
 												<label class="control-label form-control-sm">Nacionalidad</label>
 												<select name="nacionalidad" id="nacionalidad" class="form-control form-control-sm" onChange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($nacionalidad as $row) { ?>
+														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_nacionalidad) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+													<?php
+													}
+													?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-3">
+											<div class="form-group">
+												<label class="control-label form-control-sm">Departamento</label>
+												<select name="departamento" id="departamento" class="form-control form-control-sm" onChange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($nacionalidad as $row) { ?>
+														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_nacionalidad) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+													<?php
+													}
+													?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-3">
+											<div class="form-group">
+												<label class="control-label form-control-sm">Provincia</label>
+												<select name="provincia" id="provincia" class="form-control form-control-sm" onChange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($nacionalidad as $row) { ?>
+														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_nacionalidad) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+													<?php
+													}
+													?>
+												</select>
+											</div>
+										</div>
+										<div class="col-lg-3">
+											<div class="form-group">
+												<label class="control-label form-control-sm">Distrito</label>
+												<select name="distrito" id="distrito" class="form-control form-control-sm" onChange="">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($nacionalidad as $row) { ?>

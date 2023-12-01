@@ -80,6 +80,12 @@ class TipoConceptoController extends Controller
 
 	public function send_tipoConcepto_nuevoTipoConcepto(Request $request){
 		
+		$request->validate([
+			'regional'=>'required',
+			'denominacion'=>'required',
+		]
+		);
+
 		$id_user = Auth::user()->id;
 
 		//$tipoConcepto_model = new TipoConcepto;

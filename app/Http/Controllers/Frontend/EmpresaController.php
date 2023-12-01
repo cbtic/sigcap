@@ -98,6 +98,7 @@ class EmpresaController extends Controller
 
     public function modal_empresa_nuevoEmpresa($id){
 		
+		
 		$empresa = new Empresa;
 		
 		if($id>0){
@@ -115,6 +116,15 @@ class EmpresaController extends Controller
 
     public function send_empresa_nuevoEmpresa(Request $request){
 		
+		/*$request->validate([
+			'ruc'=>'required | numeric | unique | size:11',
+			'email'=>'required | email',
+			'direccion'=>'required',
+			'telefono'=>'required | numeric | size:9',
+			'representante'=>'required',
+		]
+		);*/
+
 		$id_user = Auth::user()->id;
 
 		if($request->id == 0){

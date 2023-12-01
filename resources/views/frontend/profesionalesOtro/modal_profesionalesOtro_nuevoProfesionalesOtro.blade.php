@@ -1,4 +1,6 @@
-<title>SigCap</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<title>Sistema SIGCAP</title>
 
 <style>
   .datepicker,
@@ -217,8 +219,21 @@ function obtener_profesional(){
       success: function(result){
 
         if(result.sw==false){
+
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.",
+
+            //$('#openOverlayOpc').modal('hide');
+            //window.location.reload();
+
+            //footer: '<a href="#">Why do I have this issue?</a>'
+          });$('#openOverlayOpc').modal('hide');
+            
+          /*
 					bootbox.alert(result.msg);
-					$('#openOverlayOpc').modal('hide');
+					$('#openOverlayOpc').modal('hide');*/
 				}else{
 					$("#id_persona").val(result.persona.id);
           $("#ruc").val(result.persona.numero_ruc);
@@ -318,7 +333,7 @@ function obtener_profesional(){
                           <option value="">--Selecionar--</option>
                           <?php
                           foreach ($tipo_documento as $row) { ?>
-                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '78') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
                           <?php
                           }
                           ?>

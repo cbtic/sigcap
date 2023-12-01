@@ -1,4 +1,4 @@
-<title>Sistema de Empresas</title>
+<title>Sistema SIGCAP</title>
 
 <style>
 /*
@@ -369,8 +369,9 @@ function fn_save_empresa(){
 			url: "/empresa/send_empresa_nuevoEmpresa",
             type: "POST",
             data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,email:email,telefono:telefono,representante:representante},
-            success: function (result) {
-				
+            dataType: 'json',
+			success: function (result) {
+
 				$('#openOverlayOpc').modal('hide');
 				window.location.reload();
 				
@@ -543,28 +544,32 @@ container: '#myModal modal-body'
 		<div class="justify-content-center">		
 
 		<div class="card">
-			
+		
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
 				Registro Empresas
 			</div>
 			
             <div class="card-body">
+				
 
 			<div class="row">
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
-					
+			
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
 					
-					<div class="row" style="padding-left:10px">
-						
+					
+					
+					<div class="row"  style="padding-left:10px">
+
+
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Ruc</label>
-								<input id="ruc" name="ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" >
-							
+								<label class="control-label required-field form-control-sm">Ruc</label>
+								<input id="ruc" name="ruc" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" type="text" >
+							    @error('ruc')<span ...>Dato requerido</span> @enderror
 							</div>
 						</div>
 						
@@ -585,39 +590,44 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Direcci&oacute;n</label>
-								<input id="direccion" name="direccion" class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text" >																				
+								<input id="direccion" name="direccion" class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text">																				
 							</div>
 						</div>
 
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Email</label>
-								<input id="email" name="email" class="form-control form-control-sm"  value="<?php echo $empresa->email?>" type="text" >																				
+								<input id="email" name="email" class="form-control form-control-sm "  value="<?php echo $empresa->email?>" type="text">																				
+								@error('email')
+								<small>
+									<strong>{{$message}}</strong>
+								</small>
+								@enderror
 							</div>
 						</div>
 
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tel&eacute;fono</label>
-								<input id="telefono" name="telefono" class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text" >																				
+								<input id="telefono" name="telefono" class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text">																				
 							</div>
 						</div>
 						
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Representante</label>
-								<input id="representante" name="representante" class="form-control form-control-sm"  value="<?php echo $empresa->representante?>" type="text" >																				
+								<input id="representante" name="representante" class="form-control form-control-sm"  value="<?php echo $empresa->representante?>" type="text">																				
 							</div>
 						</div>
 						
 					</div>
-					
-					
-					
+
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+							
 								<a href="javascript:void(0)" onClick="fn_save_empresa()" class="btn btn-sm btn-success">Guardar</a>
+								
 							</div>
 												
 						</div>

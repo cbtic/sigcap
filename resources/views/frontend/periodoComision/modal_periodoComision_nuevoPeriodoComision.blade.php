@@ -1,4 +1,4 @@
-<title>Sistema de Periodo de Comisiones</title>
+<title>Sistema SIGCAP</title>
 
 <style>
 /*
@@ -545,23 +545,26 @@ container: '#myModal modal-body'
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Descripci&oacute;n</label>
-								<input id="descripcion" name="descripcion" on class="form-control form-control-sm"  value="<?php echo $periodoComision->descripcion?>" type="text" readonly="readonly" >
+								<input id="descripcion" name="descripcion" class="form-control form-control-sm"  value="<?php echo $periodoComision->descripcion?>" type="text" readonly="readonly" >
 							
 							</div>
 						</div>
-						<div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
-							<div style="float:left;padding-top:7px">Fecha Fin</div>
+					</div>
+					<div class="row" style="padding-left:10px">
+						<div class="col-lg-6">
+							<label class="control-label form-control-sm">Fecha Fin</label>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control" value="<?php echo $periodoComision->fecha_inicio?>" type="text">
+								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control form-control-sm" value="<?php echo $periodoComision->fecha_inicio?>" type="text">
 							</div>
 						</div>
-						<div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
-							<div style="float:left;padding-top:7px">Fecha Fin</div>
+						<div class="col-lg-6">
+							<label class="control-label form-control-sm">Fecha Fin</label>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control" value="<?php echo $periodoComision->fecha_fin?>" type="text">
+								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control form-control-sm" value="<?php echo $periodoComision->fecha_fin?>" type="text">
 								
 							</div>
 						</div>
+					</div>
 						<!--
 						<div class="col-lg-4">
 							<div class="form-group">
@@ -572,7 +575,7 @@ container: '#myModal modal-body'
 						</div>-->
 					<div style="margin-top:15px" class="form-group ">
 						<div class="col-sm-12 controls">
-							<div class="btn-group btn-group-sm float-none " role="group" aria-label="Log Viewer Actions">
+							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 								<a href="javascript:void(0)" onClick="fn_save_periodoComision()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												

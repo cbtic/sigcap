@@ -110,6 +110,14 @@ class MovilidadController extends Controller
 
     public function send_movilidad_nuevoMovilidad(Request $request){
 		
+		$request->validate([
+			'comision'=>'required',
+			'periodo'=>'required',
+			'regional'=>'required',
+			'monto'=>'required | numeric',
+		]
+		);
+
 		$id_user = Auth::user()->id;
 		//$movilidad_model = new Movilidade;
 
