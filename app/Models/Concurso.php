@@ -12,10 +12,11 @@ class Concurso extends Model
 	
 	function getConcurso(){
 
-        $cad = "select c.id,c.periodo,tm.denominacion tipo_concurso,
+        $cad = "select c.id,c.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
 to_char(c.fecha,'dd-mm-yyyy')fecha,to_char(c.fecha_inscripcion,'dd-mm-yyyy')fecha_inscripcion,to_char(c.fecha_delegatura_inicio,'dd-mm-yyyy')fecha_delegatura_inicio,to_char(c.fecha_delegatura_fin,'dd-mm-yyyy')fecha_delegatura_fin 
 from concursos c
-inner join tabla_maestras tm on c.id_tipo_concurso=tm.codigo::int and tm.tipo='93' 
+inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
+left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
 where c.estado='1'";
 
 		$data = DB::select($cad);

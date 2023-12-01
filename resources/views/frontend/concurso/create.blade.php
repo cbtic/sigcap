@@ -388,7 +388,7 @@ label.form-control-sm{
 																<option 
 																fecha_delegatura_inicio="<?php echo $row->fecha_delegatura_inicio?>"
 																fecha_delegatura_fin="<?php echo $row->fecha_delegatura_fin?>"
-																value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso?></option>
+																value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso." ".$row->sub_tipo_concurso?></option>
 																<?php 
 																}
 																?>
@@ -461,41 +461,6 @@ label.form-control-sm{
 													
 													</div>
 													
-													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-														
-														<div class="row" style="padding:0px 0px 10px 0px">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
-																<strong>Requisitos</strong>
-															</div>
-														</div>
-														
-														<div class="row">	
-															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												
-																	<div class="table-responsive">
-																	<table id="tblRequisito" class="table table-hover table-sm">
-																	<thead>
-																		<tr style="font-size:13px">
-																			<th>N&deg;</th>
-																			<th>Tipo de Doc</th>
-																			<th>Requisito</th>
-																		</tr>
-																	</thead>
-																	<tbody style="font-size:13px">
-																	</tbody>							
-																	</table>
-																	
-																</div>
-															
-															</div>
-														</div>
-														<!--
-														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
-														-->
-														
-													</div>
-													
-													
 													<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
 													
 														<div class="row">
@@ -548,6 +513,39 @@ label.form-control-sm{
 														
 													</div>
 													
+													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+														
+														<div class="row" style="padding:0px 0px 10px 0px">
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
+																<strong>Requisitos</strong>
+															</div>
+														</div>
+														
+														<div class="row">	
+															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												
+																	<div class="table-responsive">
+																	<table id="tblRequisito" class="table table-hover table-sm">
+																	<thead>
+																		<tr style="font-size:13px">
+																			<th>N&deg;</th>
+																			<th>Tipo de Doc</th>
+																			<th>Requisito</th>
+																		</tr>
+																	</thead>
+																	<tbody style="font-size:13px">
+																	</tbody>							
+																	</table>
+																	
+																</div>
+															
+															</div>
+														</div>
+														<!--
+														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
+														-->
+														
+													</div>
 													
 													
 												</div>

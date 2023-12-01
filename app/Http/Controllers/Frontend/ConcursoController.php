@@ -523,5 +523,14 @@ class ConcursoController extends Controller
 		echo $_FILES['file']['name'];
 	}
 	
-	
+	public function eliminar_concurso($id,$estado)
+    {
+		$concurso = Concurso::find($id);
+		$concurso->estado = $estado;
+		$concurso->save();
+
+		echo $concurso->id;
+
+    }
+		
 }

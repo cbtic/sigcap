@@ -644,7 +644,7 @@ function eliminar(id,estado){
 function fn_eliminar(id,estado){
 	
     $.ajax({
-            url: "/municipalidad/eliminar_municipalidad/"+id+"/"+estado,
+            url: "/concurso/eliminar_concurso/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
