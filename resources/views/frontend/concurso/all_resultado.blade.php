@@ -9,6 +9,9 @@
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
 <style>
+	#tblConcurso tbody tr{
+		font-size:13px
+	}
 	#tblAfiliado tbody tr{
 		font-size:13px
 	}
@@ -153,18 +156,7 @@
 							<option value="">--Concurso--</option>
 							<?php
 							foreach ($concurso as $row) {?>
-							<option value="<?php echo $row->id?>"><?php echo $row->periodo." ".$row->tipo_concurso?></option>
-							<?php 
-							}
-							?>
-						</select>
-					</div>
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm" >
-							<option value="">--Regional--</option>
-							<?php
-							foreach ($region as $row) {?>
-							<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+							<option value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 							<?php 
 							}
 							?>
@@ -174,7 +166,7 @@
 						<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="Numero Cap">
 					</div>
 					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="numero_documento_bus" name="numero_documento_bus" placeholder="Numero Documento">
+							<input class="form-control form-control-sm" id="numero_documento_bus" name="numero_documento_bus" placeholder="Numero Documento">
 					</div>
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
@@ -190,38 +182,47 @@
 							?>
 						</select>
 					</div>
-                    
+					
+					<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+						<select name="id_estado_bus" id="id_estado_bus" class="form-control form-control-sm">
+							<option value="">--Estado--</option>
+							<option value="Ingreso">Ingreso</option>
+							<option value="No Ingreso">No Ingreso</option>
+						</select>
+					</div>
+					
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 					</div>
 				</div>
-				
-                <div class="card-body">				
+			
+			<div class="card-body">				
 
-                    <div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
-                        <thead>
-                        <tr style="font-size:13px">
-                            <th>Id</th>
-                            <th>Periodo</th>
-							<th>Tipo Concurso</th>
-                            <th>Fecha</th>
-                            <th>Codigo Pago</th>
-							<th>N&deg; CAP</th>
-							<th>N&deg; DNI</th>
-							<th>Nombre</th>
-							<th>Regi&oacute;n</th>
-							<th>Situaci&oacute;n</th>
-							<th>Puesto</th>
-							<th>Puntaje</th>
-							<th>Estado</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div><!--table-responsive-->
+				<div class="table-responsive">
+				<table id="tblConcurso" class="table table-hover table-sm">
+					<thead>
+					<tr style="font-size:13px">
+						<th>Id</th>
+						<th>Periodo</th>
+						<th>Tipo Concurso</th>
+						<th>Puesto</th>
+						<th>Fecha Inscripci&oacute;n</th>
+						<th>Codigo Pago</th>
+						<th>N&deg; CAP</th>
+						<th>N&deg; DNI</th>
+						<th>Nombre</th>
+						<th>Situaci&oacute;n</th>
+						<th>Puntaje</th>
+						<th>Estado</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				</div><!--table-responsive-->	
+
+			</div>
                 </form>
 
 

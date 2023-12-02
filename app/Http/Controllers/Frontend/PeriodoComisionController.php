@@ -92,6 +92,12 @@ class PeriodoComisionController extends Controller
 
     public function send_periodoComision_nuevoPeriodoComision(Request $request){
 		
+		$request->validate([
+			'fecha_inicio'=>'required',
+			'fecha_fin'=>'required',
+		]
+		);
+
 		$id_user = Auth::user()->id;
 
 		if($request->id == 0){
@@ -102,14 +108,23 @@ class PeriodoComisionController extends Controller
 			//$codigo = $request->codigo;
 		}
 
-		$fecha = Carbon::parse($request->fecha_inicio);
-		$periodo_mes = $fecha->month;
-		$periodo_año = $fecha->year;
-		$periodoComision->descripcion = $periodo_mes.'/'.$periodo_año;
+		$fecha_ini = Carbon::parse($request->fecha_inicio);
+		$periodo_mes_ini = $fecha_ini->month;
+		$periodo_año_ini = $fecha_ini->year;
+		$fecha_fi = Carbon::parse($request->fecha_fin);
+		$periodo_mes_fin = $fecha_fi->month;
+		$periodo_año_fin= $fecha_fi->year;
+		$periodoComision->descripcion = $periodo_mes_ini.'/'.$periodo_año_ini.' - '.$periodo_mes_fin.'/'.$periodo_año_fin;
         $periodoComision->fecha_inicio = $request->fecha_inicio;
         $periodoComision->fecha_fin = $request->fecha_fin;
-		$periodoComision->id_usuario = 1;
-		$periodoComision->estado = 1;
+		$fecha_actual = Carbon::now()->format('Y-m-d');
+		if(($fecha_actual >= $request->fecha_inicio) && ($fecha_actual <= $request->fecha_fin)) {
+			$periodoComision->estado = 1;		
+		}else{
+			$periodoComision->estado = 0;	
+		}
+		//$periodoComision->id_usuario = 1;
+		//$periodoComision->estado = 1;
 		$periodoComision->id_usuario_inserta = $id_user;
 		$periodoComision->save();
     }

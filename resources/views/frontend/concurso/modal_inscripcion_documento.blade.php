@@ -132,43 +132,71 @@ $(document).ready(function() {
 <script type="text/javascript">
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
-     $('#fecha').datepicker({
+     $('#fecha_solicitud').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
+		//container: '#openOverlayOpc modal-body'
 		container: '#openOverlayOpc modal-body'
      });
-	 
-	 $('#fecha_inscripcion_inicio').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
+	 /*
+	 $('#hora_solicitud').timepicker({
+		showInputs: false,
 		container: '#openOverlayOpc modal-body'
-     });
-	 
-	 $('#fecha_inscripcion_fin').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
-		container: '#openOverlayOpc modal-body'
-     });
-	 
-	 $('#fecha_acreditacion_inicio').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
-		container: '#openOverlayOpc modal-body'
-     });
-	 
-	 $('#fecha_acreditacion_fin').datepicker({
-		format: "dd-mm-yyyy",
-		autoclose: true,
-		container: '#openOverlayOpc modal-body'
-     });
+	});
+	*/
 	 
 });
 
 $(document).ready(function() {
 	 
-	 
+	
+	
 
 });
+
+
+function editarPuesto(id){
+
+	$.ajax({
+		url: '/concurso/obtener_puesto/'+id,
+		dataType: "json",
+		success: function(result){
+			//alert(result);
+			console.log(result);
+			$('#id').val(result.id);
+			$('#id_tipo_plaza').val(result.id_tipo_plaza);
+			$('#numero_plazas').val(result.numero_plazas);
+		}
+		
+	});
+
+}
+
+function eliminarPuesto(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas eliminar el Puesto?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_puesto(id);
+            }
+        }
+    });
+    //$(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_puesto(id){
+	
+	$.ajax({
+            url: "/concurso/eliminar_puesto/"+id,
+            type: "GET",
+            success: function (result) {
+				datatablenewRequisito();
+            }
+    });
+}
+
 
 function validacion(){
     
@@ -183,52 +211,33 @@ function validacion(){
     }
 }
 
+function limpiar(){
+	$('#id').val("0");
+	$('#id_tipo_documento').val("");
+	$('#denominacion').val("");
+	$('#img_foto').val("");
+}
 
-function fn_save(){
+function fn_save_requisito(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var id_tipo_concurso = $('#id_tipo_concurso').val();
-	var id_sub_tipo_concurso = $('#id_sub_tipo_concurso').val();
-	var periodo = $('#periodo').val();
-	var fecha =$('#fecha').val();
-	var fecha_inscripcion_inicio =$('#fecha_inscripcion_inicio').val();
-	var fecha_inscripcion_fin =$('#fecha_inscripcion_fin').val();
-	var fecha_acreditacion_inicio =$('#fecha_acreditacion_inicio').val();
-	var fecha_acreditacion_fin =$('#fecha_acreditacion_fin').val();
+	var id_concurso = $('#id_concurso').val();
+	var id_tipo_documento = $('#id_tipo_documento').val();
+	var denominacion = $('#denominacion').val();
+	var img_foto = $('#img_foto').val();
 	
-    $.ajax({
-			url: "/concurso/send_concurso",
+	$.ajax({
+			url: "/concurso/send_requisito",
             type: "POST",
-            data : {_token:_token,id:id,id_tipo_concurso:id_tipo_concurso,id_sub_tipo_concurso:id_sub_tipo_concurso,periodo:periodo,fecha:fecha,fecha_inscripcion_inicio:fecha_inscripcion_inicio,fecha_inscripcion_fin:fecha_inscripcion_fin,fecha_acreditacion_inicio:fecha_acreditacion_inicio,fecha_acreditacion_fin:fecha_acreditacion_fin},
-			//dataType: 'json',
-            success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
-				datatablenew();
+            data : {_token:_token,id:id,id_concurso:id_concurso,id_tipo_documento:id_tipo_documento,denominacion:denominacion,img_foto:img_foto},
+			success: function (result) {
+				//$('#openOverlayOpc').modal('hide');
+				datatablenewRequisito();
+				limpiar();
 								
             }
     });
-}
-
-function obtenerSubTipoConcurso(){
-	
-	var id_tipo_concurso = $('#id_tipo_concurso').val();
-	
-	$.ajax({
-		url: '/concurso/listar_maestro_by_tipo_subtipo/93/'+id_tipo_concurso,
-		dataType: "json",
-		success: function(result){
-			var option = "<option value='0'>Seleccionar</option>";
-			$("#id_sub_tipo_concurso").html("");
-			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
-			});
-			$("#id_sub_tipo_concurso").html(option);
-		}
-		
-	});
-	
 }
 
 
@@ -251,7 +260,7 @@ function obtenerSubTipoConcurso(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Edici&oacute;n Concurso
+				Ver Documentos
 			</div>
 			
             <div class="card-body">
@@ -260,90 +269,41 @@ function obtenerSubTipoConcurso(){
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
 					
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
-					
-					
-					<div class="row">
-						
-						<?php 
-							$readonly=$id>0?"readonly='readonly'":'';
-							$readonly_=$id>0?'':"readonly='readonly'";
-						?>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Tipo Concurso</label>
-								<select name="id_tipo_concurso" id="id_tipo_concurso" class="form-control form-control-sm" onChange="obtenerSubTipoConcurso()">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($tipo_concurso as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concurso->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">SubTipo Concurso</label>
-								<select name="id_sub_tipo_concurso" id="id_sub_tipo_concurso" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-								</select>
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label">Periodo</label>
-								<input id="periodo" name="periodo" class="form-control form-control-sm"  value="<?php echo $concurso->periodo?>" type="text"  >
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label">Fecha Concurso</label>
-								<input id="fecha" name="fecha" class="form-control form-control-sm"  value="<?php if($concurso->fecha!="")echo date('d/m/Y',strtotime($concurso->fecha))?>" type="text"  >
-							</div>
-						</div>
+                <div class="card-body">				
 
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label">Fecha Inscripci&oacute;n Inicio</label>
-								<input id="fecha_inscripcion_inicio" name="fecha_inscripcion_inicio" class="form-control form-control-sm"  value="<?php if($concurso->fecha_inscripcion_inicio!="")echo date('d-m-Y',strtotime($concurso->fecha_inscripcion_inicio))?>" type="text"  >
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label">Fecha Inscripci&oacute;n Fin</label>
-								<input id="fecha_inscripcion_fin" name="fecha_inscripcion_fin" class="form-control form-control-sm"  value="<?php if($concurso->fecha_inscripcion_fin!="")echo date('d-m-Y',strtotime($concurso->fecha_inscripcion_fin))?>" type="text"  >
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label">Fecha Acreditaci&oacute;n Inicio</label>
-								<input id="fecha_acreditacion_inicio" name="fecha_acreditacion_inicio" class="form-control form-control-sm"  value="<?php if($concurso->fecha_acreditacion_inicio!="")echo date('d-m-Y',strtotime($concurso->fecha_delegatura_inicio))?>" type="text"  >
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label">Fecha Acreditaci&oacute;n Fin</label>
-								<input id="fecha_acreditacion_fin" name="fecha_acreditacion_fin" class="form-control form-control-sm"  value="<?php if($concurso->fecha_acreditacion_fin!="")echo date('d-m-Y',strtotime($concurso->fecha_acreditacion_fin))?>" type="text"  >
-							</div>
-						</div>
-					
+                    <div class="table-responsive">
+                    <table id="tblPuesto" class="table table-hover table-sm">
+                        <thead>
+                        <tr style="font-size:13px">
+                            <th>Tipo de Doc	</th>
+                            <th>Nombre del documento</th>
+							<th>Fecha</th>
+							<th>Archivo</th>
+                        </tr>
+                        </thead>
+                        <tbody style="font-size:13px">
+						<?php  
+						foreach($inscripcionDocumento as $row){
+						?>
+						<tr>
+							<td class="text-left" style="vertical-align:middle"><?php echo $row->tipo_documento?></td>
+							<td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
+							<td class="text-left" style="vertical-align:middle"><?php echo $row->fecha_documento?></td>
+							<td class="text-left" style="vertical-align:middle">
+								<a href="/img/documento/<?php echo $row->ruta_archivo?>" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>
+							</td>
+						</tr>
+						<?php 
+							}	
+						?>
+						</tbody>
+                    </table>
+                </div>
 				
-					</div>
-					
-					<div style="margin-top:10px" class="form-group">
+					<div class="form-group">
 						<div class="col-sm-12 controls">
-							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+							<div class="btn-group btn-group-md float-right" role="group" aria-label="Log Viewer Actions">
+								<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide');" class="btn btn-md btn-success" style="margin-bottom:15px;">Cerrar</a>
 								
 							</div>
 												

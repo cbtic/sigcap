@@ -76,6 +76,11 @@ class ProfesionController extends Controller
 
     public function send_profesion_nuevoProfesion(Request $request){
 		
+		$request->validate([
+			'nombre'=>'required',
+		]
+		);
+
 		$id_user = Auth::user()->id;
 
 		if($request->id == 0){
@@ -85,7 +90,7 @@ class ProfesionController extends Controller
 		}
 		
 		$profesion->nombre = $request->nombre;
-		$profesion->estado = 1;
+		//$profesion->estado = 1;
 		$profesion->id_usuario_inserta = $id_user;
 		$profesion->save();
     }

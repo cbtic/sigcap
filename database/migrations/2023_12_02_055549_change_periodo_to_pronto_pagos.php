@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DeleteIdCoodinadorToMunicipalidadIntegradas extends Migration
+class ChangePeriodoToProntoPagos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DeleteIdCoodinadorToMunicipalidadIntegradas extends Migration
      */
     public function up()
     {
-        Schema::table('municipalidad_integradas', function (Blueprint $table) {
-            $table->dropColumn('id_coodinador');
+        Schema::table('pronto_pagos', function (Blueprint $table) {
+            $table->string('periodo', 25)->nullable()->change();
         });
     }
 
@@ -25,7 +25,7 @@ class DeleteIdCoodinadorToMunicipalidadIntegradas extends Migration
      */
     public function down()
     {
-        Schema::table('municipalidad_integradas', function (Blueprint $table) {
+        Schema::table('pronto_pagos', function (Blueprint $table) {
             //
         });
     }

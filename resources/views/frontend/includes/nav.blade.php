@@ -51,83 +51,141 @@
                         </li>
                     @endif
                 @else
-				
+					
+					@if(Gate::check('Nuevo Agremiado') || Gate::check('Consulta de Agremiado') || Gate::check('Multas') || Gate::check('Afiliciacion a Seguro'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Agremiado</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
-								<!--<a href="/agremiado" class="dropdown-item">Registro de Agremiado</a>-->
-								
+								@can('Nuevo Agremiado')
 								<a href="/agremiado" class="dropdown-item">Nuevo Agremiado</a>
-								
+								@endcan
+								@can('Consulta de Agremiado')
 								<a href="/agremiado/consulta_agremiado" class="dropdown-item">Consulta de Agremiado</a>
+								@endcan
+								@can('Multas')
                                 <a href="/multa/consulta_multa" class="dropdown-item">Multas</a>
+								@endcan
+								@can('Afiliciacion a Seguro')
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
+								@endcan
                                 
 						   </div>
 					</li>
+					@endif
 					
+					@if(Gate::check('Concurso Postula'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Colegiado</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+						   		@can('Concurso Postula')
 								<a href="/concurso/create" class="dropdown-item">Concurso</a>
+								@endcan
 						   </div>
 					</li>
+					@endif
 
-                    <li class="nav-item dropdown">
+                    @if(Gate::check('Concurso') || Gate::check('Resultado de Concurso') || Gate::check('Consulta de Resultado de Concurso') || Gate::check('Comisiones') || Gate::check('Consulta de Comisiones') || Gate::check('Programacion de Sesiones'))
+					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Asuntos Tecnicos</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
-                           <a href="/concurso" class="dropdown-item">Concurso</a>
+                           		@can('Concurso')
+								<a href="/concurso" class="dropdown-item">Concurso</a>
+						   		@endcan
+								@can('Resultado de Concurso')
 								<a href="/concurso/create_resultado" class="dropdown-item">Resultado de Concurso</a>
+								@endcan
+								@can('Consulta de Resultado de Concurso')
 								<a href="/concurso/consulta_resultado" class="dropdown-item">Consulta de Resultado de Concurso</a>
+								@endcan
+								@can('Comisiones')
 								<a href="/comision/consulta_comision" class="dropdown-item">Comisiones</a>
+								@endcan
+								@can('Consulta de Comisiones')
 								<a href="/comision/lista_comision" class="dropdown-item">Consulta de Comisiones</a>
+								@endcan
+								@can('Programacion de Sesiones')
 								<a href="/sesion/lista_programacion_sesion" class="dropdown-item">Programaci&oacute;n de Sesiones</a>
+								@endcan
 
 						   </div>
 					</li>
+					@endif
 
-                    <li class="nav-item dropdown">
+                    @if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales'))
+					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
-                                <!--<a href="/municipalidad/consulta_municipalidad" class="dropdown-item">Municipalidades</a>-->
-								
+								@can('Empresas')
 								<a href="/empresa/consulta_empresa" class="dropdown-item">Empresas</a>
+								@endcan
+								@can('Municipalidades')
                                 <a href="/municipalidad/consulta_municipalidad" class="dropdown-item">Municipalidades</a>
+								@endcan
+								@can('Conceptos')
 								<a href="/concepto/consulta_concepto" class="dropdown-item">Conceptos</a>
+								@endcan
+								@can('Tipo de Conceptos')
                                 <a href="/TipoConcepto/consulta_tipoConcepto" class="dropdown-item">Tipo de Conceptos</a>
+								@endcan
+								@can('Seguros')
                                 <a href="/seguro/consulta_seguro" class="dropdown-item">Seguros</a>
+								@endcan
+								@can('Periodo Comision')
                                 <a href="/periodoComision/consulta_periodoComision" class="dropdown-item">Periodo Comisi&oacute;n</a>
+								@endcan
+								@can('Movilidad')
                                 <a href="/movilidad/consulta_movilidad" class="dropdown-item">Movilidad</a>
+								@endcan
+								@can('Persona')
                                 <a href="/persona/consulta_persona" class="dropdown-item">Persona</a>
+								@endcan
+								@can('Profesion')
 								<a href="/profesion/consulta_profesion" class="dropdown-item">Profesi&oacute;n</a>
+								@endcan
+								@can('Otros Profesionales')
                                 <a href="/profesionalesOtro/consulta_profesionalesOtro" class="dropdown-item">Otros Profesionales</a>
+								@endcan
 								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
 						   </div>
 					</li>
-				
+					@endif
+					
+					@if(Gate::check('Estado de Cuenta') || Gate::check('Certificado Tipo 4') || Gate::check('Consulta de Facturas'))
                     <li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Caja</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+						   		@can('Estado de Cuenta')
 								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
-                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>                            
+								@endcan
+								@can('Certificado Tipo 4')
+                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>
+								@endcan
+								@can('Consulta de Facturas')
                                 <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas </a>
+								@endcan
 
 						   </div>
 					</li>
+					@endif
 
-                    <li class="nav-item dropdown">
+                    @if(Gate::check('Pronto Pago'))
+					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Gesti&oacute;n</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+						   		@can('Pronto Pago')
 								<a href="/prontoPago/consulta_prontoPago" class="dropdown-item">Pronto Pago</a>
+								@endcan
 
 						   </div>
 					</li>
+					@endif
+					
                     <li class="nav-item dropdown">
                         <x-utils.link
                             href="#"

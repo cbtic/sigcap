@@ -1,4 +1,4 @@
-<title>Sistema de Tipo de Conceptos</title>
+<title>Sistema SIGCAP</title>
 
 <style>
 /*
@@ -599,7 +599,7 @@ container: '#myModal modal-body'
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($region as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$tipoConcepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->id?>" <?php if($row->id=='5')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
 									}
 									?>

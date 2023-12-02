@@ -1,5 +1,4 @@
-
-CREATE OR REPLACE FUNCTION public.sp_listar_concurso_agremiado_paginado(p_id_concurso character varying, p_numero_documento character varying, p_agremiado character varying, p_numero_cap character varying, p_id_regional character varying, p_id_situacion character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_concurso_agremiado_paginado(p_id_concurso character varying, p_numero_documento character varying, p_agremiado character varying, p_numero_cap character varying, p_id_regional character varying, p_id_situacion character varying, p_id_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -63,6 +62,10 @@ And t1.estado=''1''';
 	If p_id_situacion<>'' Then
 	 v_where:=v_where||'And t2.id_situacion = '''||p_id_situacion||''' ';
 	End If;
+
+	If p_id_estado<>'' Then
+	 v_where:=v_where||'And t1.resultado = '''||p_id_estado||''' ';
+	End If;
 	
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
@@ -81,4 +84,3 @@ End
 
 $function$
 ;
-

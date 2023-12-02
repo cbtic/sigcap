@@ -115,23 +115,13 @@ class SeguroController extends Controller
 		if($id>0) $seguro = Seguro::find($id);else $seguro = new Seguro;
 
 		$regione_model = new Regione;
-        //$tablaMaestra_model = new TablaMaestra;
-		//$tipo_municipalidad = $tablaMaestra_model->getMaestroByTipo(43);
-        //$tipo_comision = $tablaMaestra_model->getMaestroByTipo(24);
         
-        //$PlanSeguro_Model = new SegurosPlane;
-        //$plan_seguro=$PlanSeguro_Model::where('id_seguro', $id)->get()->all();
-       
-        //$ubigeo_model = new Ubigeo;
-		//$departamento = $ubigeo_model->getDepartamento("PER");
-
-		//$provincia = "";
-		//$distrito = "";
 		
 		$region = $regione_model->getRegionAll();
+		$id_regional="5";
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.seguro.modal_seguro',compact('id','seguro',/*'plan_seguro',*/'region'));
+		return view('frontend.seguro.modal_seguro',compact('id','seguro',/*'plan_seguro',*/'region','id_regional'));
 
     }
 	

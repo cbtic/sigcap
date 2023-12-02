@@ -111,6 +111,21 @@ class ProfesionalesOtroController extends Controller
 
     public function send_profesionalesOtro_nuevoProfesionalesOtro(Request $request){
 		
+		$request->validate([
+			'tipo_documento'=>'required',
+			'numero_documento'=>'required | numeric | digits:8',
+			/*'ruc'=>'required | numeric | size:11',
+			'nombres'=>'required',
+			'apellido_paterno'=>'required',
+			'apellido_materno'=>'required',
+			'fecha_nacimiento'=>'required',*/
+			'profesion'=>'required',
+			'colegiatura'=>'required',
+			//'colegiatura_abreviatura'=>'required',
+		]
+		);
+
+
 		$id_user = Auth::user()->id;
 
 		if($request->id == 0){
@@ -124,7 +139,7 @@ class ProfesionalesOtroController extends Controller
 		$profesionOtro->id_persona = $request->id_persona;
 		$profesionOtro->id_profesion = $request->profesion;
 		//$profesionalesOtro->ruta_firma = $request->ruta_firma;
-		$profesionOtro->estado = 1;
+		//$profesionOtro->estado = 1;
 		$profesionOtro->id_usuario_inserta = $id_user;
 		
 		if($profesionOtro->id_persona)$profesionOtro->save();

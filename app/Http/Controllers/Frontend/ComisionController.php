@@ -257,7 +257,8 @@ class ComisionController extends Controller
 
 		//print_r($request->periodo).exit();
 		$id_user = Auth::user()->id;
-		
+		$sw = true;
+		//$msg = "";
 
 		$municipalidades = $request->check_;
 		$denominacion = "";
@@ -268,34 +269,44 @@ class ComisionController extends Controller
 
 		if($denominacion!=""){
 
-			$denominacion = substr($denominacion,0,strlen($denominacion)-3);
+			if($request->periodo!="")
+			{
+				$denominacion = substr($denominacion,0,strlen($denominacion)-3);
 		
-			$municipalidadIntegrada = new MunicipalidadIntegrada();
-			$municipalidadIntegrada->denominacion = $denominacion;
-			$municipalidadIntegrada->id_vigencia = 374;
-			/*if(count($municipalidades)>1){
-				$municipalidadIntegrada->id_tipo_agrupacion = 1;
-			}else{*/
-				$municipalidadIntegrada->id_tipo_agrupacion = 2;
-			/*}*/
-			
-			$municipalidadIntegrada->id_regional = 5;
-			$municipalidadIntegrada->id_periodo_comisiones = $request->periodo;
-			$municipalidadIntegrada->id_coodinador = 1;
-			$municipalidadIntegrada->id_usuario_inserta = $id_user;
-			$municipalidadIntegrada->estado = "1";
-			$municipalidadIntegrada->save();
-			$id_municipalidad_integrada = $municipalidadIntegrada->id;
-
-			foreach($municipalidades as $row){	
-				$mucipalidadDetalle = new MucipalidadDetalle();
-				$mucipalidadDetalle->id_municipalidad = $row;
-				$mucipalidadDetalle->id_municipalidad_integrada = $id_municipalidad_integrada;
-				$mucipalidadDetalle->id_usuario_inserta = $id_user;
-				$mucipalidadDetalle->estado = "1";
-				$mucipalidadDetalle->save();
+				$municipalidadIntegrada = new MunicipalidadIntegrada();
+				$municipalidadIntegrada->denominacion = $denominacion;
+				$municipalidadIntegrada->id_vigencia = 374;
+				if(count($municipalidades)>1){
+					$municipalidadIntegrada->id_tipo_agrupacion = 1;
+				}else{
+					$municipalidadIntegrada->id_tipo_agrupacion = 2;}
+				/*}*/
+				
+				$municipalidadIntegrada->id_regional = 5;
+				$municipalidadIntegrada->id_periodo_comisiones = $request->periodo;
+				$municipalidadIntegrada->id_coodinador = 1;
+				$municipalidadIntegrada->id_usuario_inserta = $id_user;
+				//$municipalidadIntegrada->estado = "1";
+				$municipalidadIntegrada->save();
+				$id_municipalidad_integrada = $municipalidadIntegrada->id;
+	
+				foreach($municipalidades as $row){	
+					$mucipalidadDetalle = new MucipalidadDetalle();
+					$mucipalidadDetalle->id_municipalidad = $row;
+					$mucipalidadDetalle->id_municipalidad_integrada = $id_municipalidad_integrada;
+					$mucipalidadDetalle->id_usuario_inserta = $id_user;
+					//$mucipalidadDetalle->estado = "1";
+					$mucipalidadDetalle->save();
+				}
+			}
+			else {
+				$sw = false;
+				//$msg = "Debe ingresar el periodo !!!";
 			}
 		}
+		$array["sw"] = $sw;
+			//$array["msg"] = $msg;
+			echo json_encode($array);
 
     }
 

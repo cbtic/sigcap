@@ -1,4 +1,4 @@
-<title>Sistema de Movilidad</title>
+<title>Sistema SIGCAP</title>
 
 <style>
 /*
@@ -622,7 +622,7 @@ container: '#myModal modal-body'
 									<option value="">--Selecionar--</option>
 										<?php
 										foreach ($region as $row) {?>
-											<option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<option value="<?php echo $row->id?>" <?php if($row->id=='5')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 										<?php 
 										}
 										?>
@@ -643,7 +643,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_movilidad()" class="btn btn-sm btn-success">Registrar</a>
+								<a href="javascript:void(0)" onClick="fn_save_movilidad()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>
