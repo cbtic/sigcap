@@ -480,9 +480,9 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var fecha_inscripcion = "";
-					if(row.fecha_inscripcion!= null)fecha_inscripcion = row.fecha_inscripcion;
-					return fecha_inscripcion;
+                	var fecha_inscripcion_inicio = "";
+					if(row.fecha_inscripcion_inicio!= null)fecha_inscripcion_inicio = row.fecha_inscripcion_inicio;
+					return fecha_inscripcion_inicio;
                 },
                 "bSortable": true,
                 "aTargets": [5]
@@ -490,9 +490,9 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var fecha_delegatura_inicio = "";
-					if(row.fecha_delegatura_inicio!= null)fecha_delegatura_inicio = row.fecha_delegatura_inicio;
-					return fecha_delegatura_inicio;
+                	var fecha_inscripcion_fin = "";
+					if(row.fecha_inscripcion_fin!= null)fecha_inscripcion_fin = row.fecha_inscripcion_fin;
+					return fecha_inscripcion_fin;
                 },
                 "bSortable": true,
                 "aTargets": [6]
@@ -500,12 +500,22 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var fecha_delegatura_fin = "";
-					if(row.fecha_delegatura_fin!= null)fecha_delegatura_fin = row.fecha_delegatura_fin;
-					return fecha_delegatura_fin;
+                	var fecha_acreditacion_inicio = "";
+					if(row.fecha_acreditacion_inicio!= null)fecha_acreditacion_inicio = row.fecha_acreditacion_inicio;
+					return fecha_acreditacion_inicio;
                 },
                 "bSortable": true,
                 "aTargets": [7]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var fecha_acreditacion_fin = "";
+					if(row.fecha_acreditacion_fin!= null)fecha_acreditacion_fin = row.fecha_acreditacion_fin;
+					return fecha_acreditacion_fin;
+                },
+                "bSortable": true,
+                "aTargets": [8]
                 },
 				
 				{
@@ -520,7 +530,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [8]
+					"aTargets": [9]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -551,7 +561,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [10],
 				},
 
             ]

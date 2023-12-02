@@ -265,11 +265,12 @@
 							<th>SubTipo Concurso</th>
                             <th>Periodo</th>
 							<th>Fecha Concurso</th>
-							<th>Fecha Inscripci&oacute;n</th>
-							<th>Fecha Delegatura Inicio</th>
-							<th>Fecha Delegatura Fin</th>
+							<th>Fecha Inscripci&oacute;n Inicio</th>
+							<th>Fecha Inscripci&oacute;n Fin</th>
+							<th>Fecha Acreditaci&oacute;n Inicio</th>
+							<th>Fecha Acreditaci&oacute;n Fin</th>
 							<th>Estado</th>
-                            <th>Acciones</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
