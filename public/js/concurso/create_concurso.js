@@ -32,6 +32,8 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 	
+	$("#id_concurso_bus").select2();
+	
 	/*
 	$('#fecha_desde').datepicker({
         autoclose: true,
@@ -1659,10 +1661,12 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			//var nombre_py_bus = $('#nombre_py_bus').val();
-			//var detalle_py_bus = $('#detalle_py_bus').val();
-			//var estado = $('#estado').val();
-			//var estado_py = $('#estado_py_bus').val();
+			var id_concurso= $('#id_concurso_bus').val();
+			var numero_cap = $('#numero_cap_bus').val();
+			var numero_documento = $('#numero_documento_bus').val();
+			var agremiado = $('#agremiado_bus').val();
+			var id_situacion = $('#id_situacion_bus').val();
+			var id_estado = $('#id_estado_bus').val();
 			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -1670,8 +1674,9 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						/*nombre_py_bus:nombre_py_bus,detalle_py_bus:detalle_py_bus,
-						estado:estado,estado_py:estado_py,*/
+						id_concurso:id_concurso,numero_cap:numero_cap,
+						numero_documento:numero_documento,agremiado:agremiado,
+						id_situacion:id_situacion,id_estado:id_estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -1722,12 +1727,21 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
+					var puesto = "";
+					if(row.puesto!= null)puesto = row.puesto;
+					return puesto;
+                },
+                "bSortable": false,
+                "aTargets": [3],
+                },
+				{
+                "mRender": function (data, type, row) {
 					var fecha_inscripcion = "";
 					if(row.fecha_inscripcion!= null)fecha_inscripcion = row.fecha_inscripcion;
 					return fecha_inscripcion;
                 },
                 "bSortable": false,
-                "aTargets": [3],
+                "aTargets": [4],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1736,7 +1750,7 @@ function datatablenew(){
 					return pago;
                 },
                 "bSortable": false,
-                "aTargets": [4]
+                "aTargets": [5]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1745,7 +1759,7 @@ function datatablenew(){
 					return numero_cap;
                 },
                 "bSortable": false,
-                "aTargets": [5]
+                "aTargets": [6]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1754,7 +1768,7 @@ function datatablenew(){
 					return numero_documento;
                 },
                 "bSortable": false,
-                "aTargets": [6]
+                "aTargets": [7]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1763,8 +1777,18 @@ function datatablenew(){
 					return apellido_paterno;
                 },
                 "bSortable": false,
-                "aTargets": [7]
+                "aTargets": [8]
                 },
+				{
+                "mRender": function (data, type, row) {
+                	var situacion = "";
+					if(row.situacion!= null)situacion = row.situacion;
+					return situacion;
+                },
+                "bSortable": false,
+                "aTargets": [9]
+                },
+				
 				{
                 "mRender": function (data, type, row) {
                 	var puntaje = "";
@@ -1772,8 +1796,9 @@ function datatablenew(){
 					return puntaje;
                 },
                 "bSortable": false,
-                "aTargets": [8]
+                "aTargets": [10]
                 },
+				
 				{
                 "mRender": function (data, type, row) {
                 	var estado = "";
@@ -1781,7 +1806,7 @@ function datatablenew(){
 					return estado;
                 },
                 "bSortable": false,
-                "aTargets": [9]
+                "aTargets": [11]
                 },
 				{
 					"mRender": function (data, type, row) {
@@ -1789,13 +1814,15 @@ function datatablenew(){
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarConcursoInscripcion('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						
+						html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerDocumento('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Documentos</button>';
+			
 						//html += '<a href="javascript:void(0)" onclick=eliminarPuesto('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
 						
 						html += '</div>';
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [10],
+					"aTargets": [12],
 				},
 				
 				
@@ -3168,6 +3195,24 @@ function modalRequisito(id){
 	});
 
 }
+
+function modalVerDocumento(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/concurso/modal_inscripcion_documento/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+
 function modalSeguimiento(id){
 	
 	$(".modal-dialog").css("width","85%");
