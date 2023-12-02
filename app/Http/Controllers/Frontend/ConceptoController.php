@@ -104,6 +104,19 @@ class ConceptoController extends Controller
 	}
 
     public function send_concepto_nuevoConcepto(Request $request){
+
+		$request->validate([
+			'id_regional'=>'required',
+			'id_tipo_concepto'=>'required',
+			'denominacion'=>'required',
+			'importe'=>'required | numeric',
+			'id_moneda'=>'required',
+			'periodo'=>'required',
+			'partida_presupuestal'=>'required',
+			'tipo_afectacion'=>'required',
+			'centro_costo'=>'required',
+		]
+		);
 		
 		$id_user = Auth::user()->id;
 		$Concepto_model = new Concepto;
@@ -129,7 +142,7 @@ class ConceptoController extends Controller
 		$concepto->partida_presupuestal = $request->partida_presupuestal;
 		$concepto->id_tipo_afectacion = $request->tipo_afectacion;
 		$concepto->centro_costo = $request->centro_costo;
-		$concepto->estado = 1;
+		//$concepto->estado = 1;
 		$concepto->id_usuario_inserta = $id_user;
 		$concepto->save();
     }

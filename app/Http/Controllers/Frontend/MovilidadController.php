@@ -110,6 +110,14 @@ class MovilidadController extends Controller
 
     public function send_movilidad_nuevoMovilidad(Request $request){
 		
+		$request->validate([
+			'comision'=>'required',
+			'periodo'=>'required',
+			'regional'=>'required',
+			'monto'=>'required | numeric',
+		]
+		);
+
 		$id_user = Auth::user()->id;
 		//$movilidad_model = new Movilidade;
 
@@ -125,7 +133,7 @@ class MovilidadController extends Controller
 		$comision_movilidades->id_periodo_comisiones = $request->periodo;
 		$comision_movilidades->id_regional = $request->regional;
 		$comision_movilidades->monto = $request->monto;
-		$comision_movilidades->estado = 1;
+		//$comision_movilidades->estado = 1;
 		$comision_movilidades->id_usuario_inserta = $id_user;
 		$comision_movilidades->save();
     }

@@ -165,13 +165,14 @@
                             
                         </div>
 					</div>
+                    <!--
                     <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
                         <div style="float:left;padding-top:7px">Fecha Fin</div>
                         <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
                             <input placeholder="Fecha" type="date" id="fecha_fin" class="form-control" placeholder="Fecha Fin">
                             
                         </div>
-					</div>
+					</div>-->
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>

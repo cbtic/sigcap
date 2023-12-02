@@ -386,5 +386,6 @@ Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'ob
 Route::get('persona/buscar_persona2/{numero_documento}', [PersonaController::class, 'buscar_persona2'])->name('persona.buscar_persona2');
 Route::get('persona/buscar_numero_documento/{numero_documento}', [PersonaController::class, 'buscar_numero_documento'])->name('persona.buscar_numero_documento');
 
+Route::get('persona/modal_personaNuevo', [PersonaController::class, 'modal_personaNuevo'])->name('persona.modal_personaNuevo');
 
 

@@ -115,6 +115,7 @@ class MunicipalidadController extends Controller
 	
 		//$municipalidad->estado = $request->estado_;
         $municipalidad->id_tipo_municipalidad = $request->tipo_municipalidad;
+		$municipalidad->id_regional = 5;
 		$municipalidad->id_usuario_inserta = $id_user;
         
         

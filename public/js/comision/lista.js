@@ -1,6 +1,7 @@
 //alert("ok");
 //jQuery.noConflict(true);
 
+
 $(document).ready(function () {
 	
 	$('#btnBuscar').click(function () {
@@ -133,6 +134,7 @@ $(document).ready(function () {
 		});
 	});
 });
+
 
 function habiliarTitular(){
 	/*
@@ -802,19 +804,29 @@ function fn_eliminar_comision(id,estado){
 }
 
 function fn_guardar(){
+
     var periodo = $("#periodo").val();
+	
+	
     $.ajax({
 			url: "/comision/send_comision",
             type: "POST",
             data : $("#frmComision").serialize()+"&periodo="+periodo,
+			dataType: 'json',
             success: function (result) {
 					//datatablenew();
-				cargarMunicipalidades();
-				cargarMunicipalidadesIntegradas();
-				cargarComisiones();
+					cargarMunicipalidades();
+					cargarMunicipalidadesIntegradas();
+					cargarComisiones();
+					
+				if(result.sw=='false'){
+					Swal.fire("El RUC ingresado ya existe !!!")
+				}
+					
             }
     });
 }
+
 
 function fn_guardarMunicipalidadIntegrada(){
     

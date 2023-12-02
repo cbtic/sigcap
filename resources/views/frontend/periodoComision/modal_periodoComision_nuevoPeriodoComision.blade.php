@@ -1,4 +1,4 @@
-<title>Sistema de Periodo de Comisiones</title>
+<title>Sistema SIGCAP</title>
 
 <style>
 /*
@@ -361,143 +361,7 @@ function fn_save_periodoComision(){
     });
 }
 
-function fn_liberar(id){
-    
-	//var id_estacionamiento = $('#id_estacionamiento').val();
-	var _token = $('#_token').val();
-	
-    $.ajax({
-			url: "/estacionamiento/liberar_asignacion_estacionamiento_vehiculo",
-            type: "POST",
-            data : {_token:_token,id:id},
-            success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				cargarAsignarEstacionamiento();
-            }
-    });
-}
 
-
-function validarLiquidacion() {
-	
-	var msg = "";
-	var sw = true;
-	
-	var saldo_liquidado = $('#saldo_liquidado').val();
-	var estado = $('#estado').val();
-	
-	if(saldo_liquidado == "")msg += "Debe ingresar un saldo liquidado <br>";
-	if(estado == "")msg += "Debe ingresar una observacion <br>";
-	
-	if(msg!=""){
-		bootbox.alert(msg);
-		//return false;
-	} else {
-		//submitFrm();
-		document.frmLiquidacion.submit();
-	}
-	return false;
-}
-
-
-function obtenerVehiculo(id,obj){
-	
-	//$("#tblPlan tbody text-white").attr('class','bg-primary text-white');
-	if(obj!=undefined){
-		$("#tblSinReservaEstacionamiento tbody tr").each(function (ii, oo) {
-			var clase = $(this).attr("clase");
-			$(this).attr('class',clase);
-		});
-		
-		$(obj).attr('class','bg-success text-white');
-	}
-	//$('#tblPlanDetalle tbody').html("");
-	$('#id_empresa').val(id);
-	var id_estacionamiento = $('#id_estacionamiento').val();
-	$.ajax({
-		url: '/estacionamiento/obtener_vehiculo/'+id+'/'+id_estacionamiento,
-		dataType: "json",
-		success: function(result){
-			
-			var newRow = "";
-			$('#tblPlanDetalle').dataTable().fnDestroy(); //la destruimos
-			$('#tblPlanDetalle tbody').html("");
-			$(result).each(function (ii, oo) {
-				newRow += "<tr class='normal'><td>"+oo.placa+"</td>";
-				newRow += '<td class="text-left" style="padding:0px!important;margin:0px!important">';
-				newRow += '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-				newRow += '<a href="javascript:void(0)" onClick=fn_save("'+oo.id_vehiculo+'") class="btn btn-sm btn-normal">';
-				newRow += '<i class="fa fa-2x fa-check" style="color:green"></i></a></a></div></td></tr>';
-			});
-			$('#tblPlanDetalle tbody').html(newRow);
-			
-			$('#tblPlanDetalle').DataTable({
-				//"sPaginationType": "full_numbers",
-				"paging":false,
-				"dom": '<"top">rt<"bottom"flpi><"clear">',
-				"language": {"url": "/js/Spanish.json"},
-			});
-			
-			$("#system-search2").keyup(function() {
-				var dataTable = $('#tblPlanDetalle').dataTable();
-			   dataTable.fnFilter(this.value);
-			});
-			
-		}
-		
-	});
-	
-}
-
-function cargar_tipo_proveedor(){
-	
-	var tipo_proveedor = 0;
-	if($('#tipo_proveedor_').is(":checked"))tipo_proveedor = 1;
-	
-	$("#divPersona").hide();
-	$("#divEmpresa").hide();
-	
-	$("#empresa_").val("");
-	$("#persona_").val("");
-	
-	$("#id_empresa").val("");
-	$("#id_persona").val("");
-	
-	if(tipo_proveedor==0)$("#divPersona").show();
-	if(tipo_proveedor==1)$("#divEmpresa").show();
-	
-}
-
-/*
-$('#fecha_solicitud').datepicker({
-	autoclose: true,
-	dateFormat: 'dd-mm-yy',
-	changeMonth: true,
-	changeYear: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-/*
-$('#fecha_solicitud').datepicker({
-	format: "dd/mm/yyyy",
-	startDate: "01-01-2015",
-	endDate: "01-01-2020",
-	todayBtn: "linked",
-	autoclose: true,
-	todayHighlight: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-
-/*				
-format: "dd/mm/yyyy",
-startDate: "01-01-2015",
-endDate: "01-01-2020",
-todayBtn: "linked",
-autoclose: true,
-todayHighlight: true,
-container: '#myModal modal-body'
-*/	
 </script>
 
 
@@ -545,23 +409,26 @@ container: '#myModal modal-body'
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Descripci&oacute;n</label>
-								<input id="descripcion" name="descripcion" on class="form-control form-control-sm"  value="<?php echo $periodoComision->descripcion?>" type="text" readonly="readonly" >
+								<input id="descripcion" name="descripcion" class="form-control form-control-sm"  value="<?php echo $periodoComision->descripcion?>" type="text" readonly="readonly" >
 							
 							</div>
 						</div>
-						<div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
-							<div style="float:left;padding-top:7px">Fecha Fin</div>
+					</div>
+					<div class="row" style="padding-left:10px">
+						<div class="col-lg-6">
+							<label class="control-label form-control-sm">Fecha Fin</label>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control" value="<?php echo $periodoComision->fecha_inicio?>" type="text">
+								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control form-control-sm" value="<?php echo $periodoComision->fecha_inicio?>" type="text">
 							</div>
 						</div>
-						<div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
-							<div style="float:left;padding-top:7px">Fecha Fin</div>
+						<div class="col-lg-6">
+							<label class="control-label form-control-sm">Fecha Fin</label>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control" value="<?php echo $periodoComision->fecha_fin?>" type="text">
+								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control form-control-sm" value="<?php echo $periodoComision->fecha_fin?>" type="text">
 								
 							</div>
 						</div>
+					</div>
 						<!--
 						<div class="col-lg-4">
 							<div class="form-group">
@@ -572,7 +439,7 @@ container: '#myModal modal-body'
 						</div>-->
 					<div style="margin-top:15px" class="form-group ">
 						<div class="col-sm-12 controls">
-							<div class="btn-group btn-group-sm float-none " role="group" aria-label="Log Viewer Actions">
+							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 								<a href="javascript:void(0)" onClick="fn_save_periodoComision()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
