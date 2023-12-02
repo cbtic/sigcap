@@ -14,7 +14,7 @@ class DeleteIdCoodinadorToMunicipalidadIntegradas extends Migration
     public function up()
     {
         Schema::table('municipalidad_integradas', function (Blueprint $table) {
-            $table->dropColumn('coodinador');
+            $table->dropColumn('id_coodinador');
         });
     }
 
