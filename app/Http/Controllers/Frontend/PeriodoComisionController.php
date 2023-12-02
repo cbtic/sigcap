@@ -117,6 +117,12 @@ class PeriodoComisionController extends Controller
 		$periodoComision->descripcion = $periodo_mes_ini.'/'.$periodo_año_ini.' - '.$periodo_mes_fin.'/'.$periodo_año_fin;
         $periodoComision->fecha_inicio = $request->fecha_inicio;
         $periodoComision->fecha_fin = $request->fecha_fin;
+		$fecha_actual = Carbon::now()->format('Y-m-d');
+		if(($fecha_actual >= $request->fecha_inicio) && ($fecha_actual <= $request->fecha_fin)) {
+			$periodoComision->estado = 1;		
+		}else{
+			$periodoComision->estado = 0;	
+		}
 		//$periodoComision->id_usuario = 1;
 		//$periodoComision->estado = 1;
 		$periodoComision->id_usuario_inserta = $id_user;
