@@ -1,4 +1,4 @@
-<title>Sistema de Multas</title>
+<title>Sistema SIGCAP</title>
 
 <style>
 /*

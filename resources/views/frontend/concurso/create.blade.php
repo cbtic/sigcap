@@ -2,6 +2,16 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
 <style type="text/css">
 
+#tblConcurso tbody tr{
+		font-size:13px
+}
+#tblAfiliado tbody tr{
+	font-size:13px
+}
+.table-sortable tbody tr {
+	cursor: move;
+}
+
 .row_selected{
 	background:#CAE983 !important
 }
@@ -374,7 +384,7 @@ label.form-control-sm{
 												
 												<div class="row">
 												
-													<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 													
 														<div class="row">
 															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
@@ -386,8 +396,8 @@ label.form-control-sm{
 																<?php
 																foreach ($concurso as $row) {?>
 																<option 
-																fecha_delegatura_inicio="<?php echo $row->fecha_delegatura_inicio?>"
-																fecha_delegatura_fin="<?php echo $row->fecha_delegatura_fin?>"
+																fecha_acreditacion_inicio="<?php echo $row->fecha_acreditacion_inicio?>"
+																fecha_acreditacion_fin="<?php echo $row->fecha_acreditacion_fin?>"
 																value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 																<?php 
 																}
@@ -398,19 +408,30 @@ label.form-control-sm{
 														
 														<div class="row">
 															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-															F. Deleg. Inicio
+															Puesto
 															</div>
 															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_delegatura_inicio" id="fecha_delegatura_inicio" value="" class="form-control form-control-sm" readonly="readonly">
+															<select name="id_concurso_puesto" id="id_concurso_puesto" class="form-control form-control-sm">
+																<option value="">--Selecionar--</option>
+															</select>
 															</div>
 														</div>
 														
 														<div class="row">
 															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-															F. Deleg. Fin
+															F. Acreditaci&oacute;n. Inicio
 															</div>
 															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_delegatura_fin" id="fecha_delegatura_fin" value="" class="form-control form-control-sm" readonly="readonly">
+															<input type="text" name="fecha_acreditacion_inicio" id="fecha_acreditacion_inicio" value="" class="form-control form-control-sm" readonly="readonly">
+															</div>
+														</div>
+														
+														<div class="row">
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															F. Acreditaci&oacute;n. Fin
+															</div>
+															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<input type="text" name="fecha_acreditacion_fin" id="fecha_acreditacion_fin" value="" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
 														
@@ -488,7 +509,7 @@ label.form-control-sm{
 																	<table id="tblRequisito" class="table table-hover table-sm">
 																	<thead>
 																		<tr style="font-size:13px">
-																			<th>N&deg;</th>
+																			<!--<th>N&deg;</th>-->
 																			<th>Tipo de Doc</th>
 																			<th>Requisito</th>
 																			<th>Archivo</th>
@@ -509,7 +530,7 @@ label.form-control-sm{
 													</div>
 													
 													
-													<div id="divDocumentos" style="display:none" class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+													<div id="divDocumentos" style="display:none" class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 														
 														<div class="row" style="padding:15px 0px 10px 0px">
 															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
@@ -527,7 +548,7 @@ label.form-control-sm{
 																	<table id="tblSolicitud" class="table table-hover table-sm">
 																	<thead>
 																		<tr style="font-size:13px">
-																			<th>N&deg;</th>
+																			<!--<th>N&deg;</th>-->
 																			<th>Tipo de Doc</th>
 																			<th>Nombre del documento</th>
 																			<th>Fecha</th>
@@ -674,7 +695,8 @@ label.form-control-sm{
 														<th>Periodo</th>
 														<th>Tipo Concurso</th>
 														<th>SubTipo Concurso</th>
-														<th>Fecha</th>
+														<th>Puesto</th>
+														<th>Fecha Inscripci&oacute;n</th>
 														<th>Codigo Pago</th>
 														<th>Puntaje</th>
 														<th>Estado</th>

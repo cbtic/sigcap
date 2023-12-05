@@ -12,8 +12,9 @@ $(document).ready(function () {
 	});
 		
 	datatablenew();
-	/*	
-	$("#plan_id").select2();
+		
+	$("#id_concurso_bus").select2();
+	/*
 	$("#ubicacion_id").select2();
 	*/
 	$('#fecha_inicio_bus').datepicker({
@@ -408,7 +409,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 
 
 function datatablenew(){
-    var oTable1 = $('#tblAfiliado').dataTable({
+    var oTable1 = $('#tblConcurso').dataTable({
         "bServerSide": true,
         "sAjaxSource": "/concurso/listar_resultado_ajax",
         "bProcessing": true,
@@ -437,12 +438,13 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id_regional = $('#id_regional_bus').val();
-            var numero_cap = $('#numero_cap_bus').val();
+			var id_concurso= $('#id_concurso_bus').val();
+			var numero_cap = $('#numero_cap_bus').val();
 			var numero_documento = $('#numero_documento_bus').val();
 			var agremiado = $('#agremiado_bus').val();
 			var id_situacion = $('#id_situacion_bus').val();
-			var id_concurso = $('#id_concurso_bus').val();
+			var id_estado = $('#id_estado_bus').val();
+			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -450,8 +452,9 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
-						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
+						id_concurso:id_concurso,numero_cap:numero_cap,
+						numero_documento:numero_documento,agremiado:agremiado,
+						id_situacion:id_situacion,id_estado:id_estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -495,13 +498,22 @@ function datatablenew(){
                 "aTargets": [2]
                 },
 				{
+                "mRender": function (data, type, row) {
+					var puesto = "";
+					if(row.puesto!= null)puesto = row.puesto;
+					return puesto;
+                },
+                "bSortable": false,
+                "aTargets": [3],
+                },
+				{
 					"mRender": function (data, type, row) {
 						var fecha_inscripcion = "";
 						if(row.fecha_inscripcion!= null)fecha_inscripcion = row.fecha_inscripcion;
 						return fecha_inscripcion;
 					},
 					"bSortable": false,
-					"aTargets": [3]
+					"aTargets": [4]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -510,7 +522,7 @@ function datatablenew(){
 						return pago;
 					},
 					"bSortable": false,
-					"aTargets": [4]
+					"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -519,7 +531,7 @@ function datatablenew(){
 						return numero_cap;
 					},
 					"bSortable": false,
-					"aTargets": [5]
+					"aTargets": [6]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -528,7 +540,7 @@ function datatablenew(){
 						return numero_documento;
 					},
 					"bSortable": false,
-					"aTargets": [6]
+					"aTargets": [7]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -537,8 +549,9 @@ function datatablenew(){
 						return agremiado;
 					},
 					"bSortable": false,
-					"aTargets": [7]
+					"aTargets": [8]
 				},
+				/*
 				{
 					"mRender": function (data, type, row) {
 						var region = "";
@@ -548,6 +561,7 @@ function datatablenew(){
 					"bSortable": false,
 					"aTargets": [8]
 				},
+				*/
 				{
 					"mRender": function (data, type, row) {
 						var situacion = "";
@@ -559,22 +573,24 @@ function datatablenew(){
 				},
 				{
 					"mRender": function (data, type, row) {
-						var puesto= "";
-						if(row.puesto!= null)puesto = row.puesto;
-						return puesto;
-					},
-					"bSortable": false,
-					"aTargets": [10]
-				},
-				{
-					"mRender": function (data, type, row) {
 						var puntaje = "";
 						if(row.puntaje!= null)puntaje = row.puntaje;
 						return puntaje;
 					},
 					"bSortable": false,
+					"aTargets": [10]
+				},
+				/*
+				{
+					"mRender": function (data, type, row) {
+						var puesto= "";
+						if(row.puesto!= null)puesto = row.puesto;
+						return puesto;
+					},
+					"bSortable": false,
 					"aTargets": [11]
 				},
+				*/
 				{
 					"mRender": function (data, type, row) {
 						var resultado = "";
@@ -582,7 +598,7 @@ function datatablenew(){
 						return resultado;
 					},
 					"bSortable": false,
-					"aTargets": [12]
+					"aTargets": [11]
 				},
 				
 

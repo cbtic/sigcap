@@ -2,7 +2,7 @@
 <?php 
 foreach($inscripcionDocumento as $row):?>
 <tr style="font-size:13px">
-	<td class="text-left" style="vertical-align:middle"><?php echo $row->id?></td>
+	<!--<td class="text-left" style="vertical-align:middle"><?php //echo $row->id?></td>-->
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->tipo_documento?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->fecha_documento?></td>
@@ -15,6 +15,7 @@ foreach($inscripcionDocumento as $row):?>
 			<button style="font-size:12px;color:#FFFFFF" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalRequisito(<?php echo $row->id?>)" >
 				<i class="fa fa-edit" style="font-size:9px!important"></i> Editar
 			</button>
+			<a href="javascript:void(0)" onclick="eliminarInscripcionDocumento('<?php echo $row->id?>')" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 		</div>
 	</td>
 </tr>
