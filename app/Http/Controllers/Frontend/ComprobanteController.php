@@ -484,7 +484,7 @@ class ComprobanteController extends Controller
 
     public function send_nc(Request $request)
     {
-          // print_r($request); exit();
+         //print_r($request); exit();
         $sw = true;
 		$msg = "";
 
@@ -523,12 +523,10 @@ class ComprobanteController extends Controller
 				}
                
 				
-			//	$id_moneda=1;
+				$id_moneda=1;
 			
-				                                                                   
-
-				$id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF, $ubicacion_id, $cod_tributario, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  1);
-                print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
+				$id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  1);
+               // print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
               
 				$factura = Comprobante::where('id', $id_factura)->get()[0];
 
@@ -540,18 +538,19 @@ class ComprobanteController extends Controller
                 
 				$factura_upd->save();
 
-				
+				//print_r($tarifa); exit();
 				foreach ($tarifa as $key => $value) {
 					//echo "denominacion=>".$value['denominacion']."<br>";
 					if ($adelanto == 'S'){
 						$total   = $request->MonAd;
 					}
 					else{
-						$total   = $value['monto'];
+						//$total   = $value['monto'];
+                        $total   ="1";
 					}
 					$descuento = $value['descuento'];
 					if ($value['descuento']=='') $descuento = 0;
-					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['item'],       0, $total, $value['descripcion'], $value['cod_contable'], $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
+					$id_factura_detalle = $facturas_model->registrar_comprobante($serieF, $fac_numero, $tipoF, $value['item'], $total, $value['descripcion'], "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
 																				 //(  serie,      numero,   tipo,      ubicacion, persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
 					
 				

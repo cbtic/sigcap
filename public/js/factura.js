@@ -31,7 +31,8 @@ function guardarFactura(){
 
 
     if(msg!=""){
-        bootbox.alert(msg);
+		
+		bootbox.alert(msg);
         return false;
     }
     else{
@@ -43,23 +44,19 @@ function guardarFactura(){
 
 function guardarnc(){
 
+	
     var msg = "";
-    var smodulo_guia = $('#smodulo_guia').val();
-	var tipo_cambio = $('#tipo_cambio').val();
+    var tiponota = $('#tiponota_').val();
+	var motivo = $('#motivo_').val();
 	
-	var forma_pago = $('#forma_pago').val();
-	//alert(forma_pago); exit();
 
-    if(smodulo_guia=="32"){
-		var guia_llegada_direccion = $('#guia_llegada_direccion').val();
-		if(guia_llegada_direccion=="")msg+="Debe ingresar un direcci&oacute;n de punto de llegada<br>";	
-	}
-	
-	if (tipo_cambio==""&& forma_pago=="EFECTIVO DOLARES"){msg+="Debe ingresar el tipo de cambio<br>";	}
-
+		if(tiponota=="")msg+="Debe ingresar un el tipo de nota<br>";	
+		if(motivo=="")msg+="Debe ingresar el motivo<br>";	
+		
 
     if(msg!=""){
-        bootbox.alert(msg);
+		
+        Swal.fire(msg);
         return false;
     }
     else{
