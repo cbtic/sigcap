@@ -84,7 +84,7 @@ class ComisionController extends Controller
 		$comision_model = new Comisione;
 		$comisionDelegado_model = new ComisionDelegado;
 		
-		$comision = $comision_model->getComisionAll("","1");
+		$comision = $comision_model->getComisionAll("","","1");
 		if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
 
 		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
