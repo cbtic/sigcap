@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Frontend;
-
+use Auth;
 /**
  * Class HomeController.
  */
@@ -14,6 +14,13 @@ class HomeController
     {
 		
         //return view('frontend.index');
-		return redirect("/login"); 
+		//return redirect("/login"); 
+		
+		if(!Auth::check()) {
+			return redirect('login');
+		}else{
+			return redirect('account');
+		}
+		
     }
 }
