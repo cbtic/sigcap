@@ -14,6 +14,11 @@ $(document).ready(function () {
 		}
 	});
 
+	/*	
+	$("#plan_id").select2();
+	$("#ubicacion_id").select2();
+	*/
+
 	$('#denominacionBus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();

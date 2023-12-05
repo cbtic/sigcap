@@ -543,7 +543,7 @@ class PersonaController extends Controller
 				$persona->apellido_materno = $request->apellido_materno;
 				$persona->nombres = $request->nombres;
 				$persona->fecha_nacimiento = $request->fecha_nacimiento;
-				$persona->id_tipo_persona = 1;
+				//$persona->id_tipo_persona = 1;
 				$persona->grupo_sanguineo = $request->grupo_sanguineo;
 				$persona->id_ubigeo_nacimiento =150101;
 				$persona->lugar_nacimiento = $request->lugar_nacimiento;

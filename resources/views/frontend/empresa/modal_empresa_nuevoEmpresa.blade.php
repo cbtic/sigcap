@@ -351,6 +351,43 @@ function fn_save_estudio(){
     });
 }
 
+function valida(){
+	var msg = "0";
+
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var ruc = $('#ruc').val();
+	var nombre_comercial = $('#nombre_comercial').val();
+	var razon_social = $('#razon_social').val();
+	var direccion = $('#direccion').val();
+	var email = $('#email').val();
+	var telefono = $('#telefono').val();
+	var representante = $('#representante').val();
+
+	if (ruc==""){
+		msg= "Falta ingresar el RUC";
+
+	}elseif (direccion==""){
+		msg= "Falta ingresar la direcci&oacuten";
+
+	}elseif (email==""){
+		msg= "Falta ingresar el Email";
+
+	}elseif (telefono==""){
+		msg= "Falta ingresar el tel&eacute;fono";
+
+	}
+
+	if (msg=="0"){
+		fn_save_empresa()		
+	}
+	else {
+		Swal.fire(msg);
+	}
+
+}
+
+
 function fn_save_empresa(){
     
 	var msg = "";
@@ -368,34 +405,31 @@ function fn_save_empresa(){
 	//alert(id_agremiado);
 	//return false;
 
-	if(msg!=""){
-			bootbox.alert(msg);
-			return false;
-	}
-	else{
+	
     $.ajax({
 			url: "/empresa/send_empresa_nuevoEmpresa",
             type: "POST",
             data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,email:email,telefono:telefono,representante:representante},
             dataType: 'json',
 			success: function (result) {
-
+				
+				//alert("El RUC ingresado ya existe !!!");
 				if(result.sw==false){
 					Swal.fire({
 					icon: "error",
 					title: "Error",
 					text: "El RUC ingresado ya existe !!!",
-
-            //$('#openOverlayOpc').modal('hide');
+					})
+					$('#openOverlayOpc').modal('hide');
             //window.location.reload();
 
             //footer: '<a href="#">Why do I have this issue?</a>'
-          })
+          /*
 					$('#openOverlayOpc').modal('hide');
 				}else{
 					$('#openOverlayOpc').modal('hide');
 					window.location.reload();
-				}
+				}*/
 				
 				/*
 				$('#openOverlayOpc').modal('hide');
@@ -403,12 +437,12 @@ function fn_save_empresa(){
 					bootbox.alert("La persona o empresa ya se encuentra registrado");
 				}else{
 					window.location.reload();
-				}
-				*/
-            }
+				}*/
+				
+            }}
 			
     });
-}}
+}
 
 function fn_liberar(id){
     
@@ -591,7 +625,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label required-field form-control-sm">Ruc</label>
-								<input id="ruc" name="ruc" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" type="text" >
+								<input id="ruc" name="ruc" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" required type="text" >
 							    @error('ruc')<span ...>Dato requerido</span> @enderror
 							</div>
 						</div>
@@ -599,28 +633,28 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Nombre Comercial</label>
-								<input id="nombre_comercial" name="nombre_comercial" class="form-control form-control-sm"  value="<?php echo $empresa->nombre_comercial?>" type="text" readonly="readonly">						
+								<input id="nombre_comercial" name="nombre_comercial" class="form-control form-control-sm"  value="<?php echo $empresa->nombre_comercial?>" required type="text" readonly="readonly">						
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Raz&oacute;n Social</label>
-								<input id="razon_social" name="razon_social" class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" readonly="readonly">													
+								<input id="razon_social" name="razon_social" class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" required type="text" readonly="readonly">													
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Direcci&oacute;n</label>
-								<input id="direccion" name="direccion" class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text">																				
+								<input id="direccion" name="direccion" class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" required type="text">																				
 							</div>
 						</div>
 
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Email</label>
-								<input id="email" name="email" class="form-control form-control-sm "  value="<?php echo $empresa->email?>" type="text">																				
+								<input id="email" name="email" class="form-control form-control-sm "  value="<?php echo $empresa->email?>" required type="text">																				
 								@error('email')
 								<small>
 									<strong>{{$message}}</strong>
@@ -632,14 +666,14 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tel&eacute;fono</label>
-								<input id="telefono" name="telefono" class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text">																				
+								<input id="telefono" name="telefono" class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" required type="text">																				
 							</div>
 						</div>
 						
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Representante</label>
-								<input id="representante" name="representante" class="form-control form-control-sm"  value="<?php echo $empresa->representante?>" type="text">																				
+								<input id="representante" name="representante" class="form-control form-control-sm"  value="<?php echo $empresa->representante?>" required type="text">																				
 							</div>
 						</div>
 						
@@ -649,7 +683,7 @@ container: '#myModal modal-body'
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 							
-								<a href="javascript:void(0)" onClick="fn_save_empresa()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 								
 							</div>
 												

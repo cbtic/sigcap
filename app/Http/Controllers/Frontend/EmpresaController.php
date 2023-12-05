@@ -122,13 +122,13 @@ class EmpresaController extends Controller
 			'direccion'=>'required',
 			'telefono'=>'required | numeric | digits:9',
 			'representante'=>'required',
-		]
+		]	
 		);
 
 		$id_user = Auth::user()->id;
 		$sw = true;
 		//$msg = "";
-
+		
 		
 		if($request->id == 0){
 			//$empresa = new Empresa;

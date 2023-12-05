@@ -178,6 +178,7 @@
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
 							<option value="0">Eliminado</option>
+                            <option value="2">Inactivo</option>
 						</select>
 					</div>
                     
