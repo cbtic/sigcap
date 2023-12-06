@@ -84,7 +84,7 @@ class ComisionController extends Controller
 		$comision_model = new Comisione;
 		$comisionDelegado_model = new ComisionDelegado;
 		
-		$comision = $comision_model->getComisionAll("","1");
+		$comision = $comision_model->getComisionAll("","","1");
 		if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
 
 		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
@@ -234,22 +234,22 @@ class ComisionController extends Controller
         return view('frontend.comision.lista_municipalidad',compact('municipalidad','periodoComision'));
     }
 
-	function obtener_municipalidadesIntegradas($tipo_agrupacion){
+	function obtener_municipalidadesIntegradas($periodo,$tipo_agrupacion){
 
 		if ($tipo_agrupacion == "0")$tipo_agrupacion ="";
 
         $municipalidadIntegrada_model = new MunicipalidadIntegrada;
-		$municipalidad_integradas = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll($tipo_agrupacion);
+		$municipalidad_integradas = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll($periodo,$tipo_agrupacion);
         return view('frontend.comision.lista_municipalidadIntegrada',compact('municipalidad_integradas'));
     }
 
-	function obtener_comision($cad_id,$estado){
+	function obtener_comision($tipo_comision,$cad_id,$estado){
 
 		if ($estado == "-9")$estado ="";
 		if ($cad_id == "0")$cad_id ="";
 
         $comision_model = new Comisione;
-		$comision = $comision_model->getComisionAll($cad_id,$estado);
+		$comision = $comision_model->getComisionAll($tipo_comision,$cad_id,$estado);
         return view('frontend.comision.lista_comision',compact('comision'));
     }
 	

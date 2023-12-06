@@ -37,7 +37,7 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Numero Documento</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Name') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
                                 </div>
                             </div><!--form-group-->
 							
