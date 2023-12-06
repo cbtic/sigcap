@@ -209,6 +209,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
 <script type="text/javascript">
 
+
+$("#profesion").select2();
+
 function obtener_profesional(){
 	
   var numero_documento = $('#numero_documento').val();

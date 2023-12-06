@@ -25,6 +25,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.css">
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 <script>
@@ -240,9 +241,12 @@
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
                         <input type="hidden" name="tipoF" value="<?php  echo $tipoF;  ?>">
                         <input type="hidden" name="vestab" value="1">
-                        <input type="hidden" name="totalF" value="<?php if ($trans == 'FA') {
-                                                                        echo $total;
-                                                                    } ?>">
+                        <input type="hidden" name="totalF" value=" <?php if ($trans == 'FA') {
+                                                                                                                    echo number_format($total, 2);
+                                                                                                                }
+                                                                                                                if ($trans == 'FE' || $trans == 'FN') {
+                                                                                                                    echo number_format($comprobante->total, 2);
+                                                                                                                } ?>">
                         <input type="hidden" name="ubicacion" value="<?php if ($trans == 'FA') {
                                                                             echo $ubicacion;
                                                                         } ?>">
@@ -315,7 +319,7 @@
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-group">Tipo de Nota</label>
-                                                            <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
+                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" onChange="">
                                                                 <option value="">--Selecionar--</option>
                                                                 <?php
                                                                 foreach ($tipooperacion as $row) { ?>

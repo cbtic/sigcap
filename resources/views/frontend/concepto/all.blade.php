@@ -96,6 +96,8 @@
 
 </style>
 
+
+
 @extends('frontend.layouts.app')
 
 @section('title', ' | ' . __('labels.frontend.contact.box_title'))

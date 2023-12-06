@@ -346,7 +346,7 @@ function fn_save_periodoComision(){
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
+				window.location.reload();
 				datatablenew();
 				
 				/*

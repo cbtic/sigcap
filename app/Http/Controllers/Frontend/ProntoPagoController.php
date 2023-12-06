@@ -86,6 +86,16 @@ class ProntoPagoController extends Controller
 
     public function send_prontoPago_nuevoProntoPago(Request $request){
 		
+		$request->validate([
+			//'ruc'=>'required | numeric | unique | digits:11',
+			'fecha_inicio'=>'required | date',
+			'fecha_fin'=>'required | date',
+			'numero_cuotas'=>'required | numeric',
+			//'codigo_documento'=>'required',
+			'id_concepto'=>'required',
+		]
+		);
+
 		$id_user = Auth::user()->id;
 
 		if($request->id == 0){
