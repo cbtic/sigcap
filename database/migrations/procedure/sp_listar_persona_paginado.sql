@@ -22,7 +22,7 @@ begin
 
 	v_tabla='from personas p 
 	inner join tabla_maestras tm on p.id_tipo_documento ::int = tm.codigo ::int and tm.tipo =''16''
-	inner join tabla_maestras tm2 on p.grupo_sanguineo ::int = tm2.codigo ::int and tm2.tipo =''90''
+	left join tabla_maestras tm2 on p.grupo_sanguineo ::int = tm2.codigo ::int and tm2.tipo =''90''
 	inner join tabla_maestras tm3 on p.id_nacionalidad ::int = tm3.codigo ::int and tm3.tipo =''5''
 	inner join tabla_maestras tm4 on p.id_sexo ::int = tm4.codigo ::int and tm4.tipo =''2''';
 	
