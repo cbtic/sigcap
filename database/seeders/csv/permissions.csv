@@ -31,28 +31,3 @@ id;type;guard_name;name;description;parent_id;sort;created_at;updated_at
 30;user;web;Certificado Tipo 4;Certificado Tipo 4;;1;2023-12-02 05:51:10.000;2023-12-02 05:51:10.000
 31;user;web;Consulta de Facturas;Consulta de Facturas;;1;2023-12-02 05:51:10.000;2023-12-02 05:51:10.000
 32;user;web;Pronto Pago;Pronto Pago;;1;2023-12-02 05:51:10.000;2023-12-02 05:51:10.000
-33;user;web;Nuevo Agremiado;Nuevo Agremiado;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-34;user;web;Consulta de Agremiado;Consulta de Agremiado;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-35;user;web;Multas;Multas;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-36;user;web;Afiliciacion a Seguro;Afiliciacion a Seguro;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-37;user;web;Concurso;Concurso;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-38;user;web;Concurso Postula;Concurso Postula;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-39;user;web;Resultado de Concurso;Resultado de Concurso;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-40;user;web;Consulta de Resultado de Concurso;Consulta de Resultado de Concurso;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-41;user;web;Comisiones;Comisiones;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-42;user;web;Consulta de Comisiones;Consulta de Comisiones;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-43;user;web;Programacion de Sesiones;Programacion de Sesiones;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-44;user;web;Empresas;Empresas;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-45;user;web;Municipalidades;Municipalidades;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-46;user;web;Conceptos;Conceptos;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-47;user;web;Tipo de Conceptos;Tipo de Conceptos;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-48;user;web;Seguros;Seguros;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-49;user;web;Periodo Comision;Periodo Comision;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-50;user;web;Movilidad;Movilidad;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-51;user;web;Persona;Persona;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-52;user;web;Profesion;Profesion;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-53;user;web;Otros Profesionales;Otros Profesionales;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-54;user;web;Estado de Cuenta;Estado de Cuenta;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-55;user;web;Certificado Tipo 4;Certificado Tipo 4;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-56;user;web;Consulta de Facturas;Consulta de Facturas;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
-57;user;web;Pronto Pago;Pronto Pago;;1;2023-12-05 23:43:39.000;2023-12-05 23:43:39.000
