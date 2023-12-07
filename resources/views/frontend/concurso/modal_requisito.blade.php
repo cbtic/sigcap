@@ -171,8 +171,10 @@ $(document).ready(function() {
 					//extension = split(".", limit).pop();;
 					extension = response.substring(response.lastIndexOf('.') + 1);
 					//alert(extension);
-					if(extension=="pdf"){
-						$("#img_ruta").attr("src", "/img/pdf.png");
+					//$("#img_ruta").attr("src", "/img/pdf.png");
+					
+					if(extension=="doc" || extension=="docx" || extension=="pdf" || extension=="xls" || extension=="xlsx"){
+						$("#img_ruta").attr("src", "/img/check.png");
 					}else{
                     	$("#img_ruta").attr("src", "/img/frontend/tmp_documento_requisito/"+response);
 					}
