@@ -323,8 +323,8 @@ function editarRequisito(id){
 			
 			var extension = "";
 			extension = result.requisito_archivo.substring(result.requisito_archivo.lastIndexOf('.') + 1);
-			if(extension=="pdf"){
-				$("#img_ruta").attr("src", "/img/pdf.png");
+			if(extension=="doc" || extension=="docx" || extension=="pdf" || extension=="xls" || extension=="xlsx"){
+						$("#img_ruta").attr("src", "/img/check.png");
 			}else{
 				$("#img_ruta").attr("src", "/img/frontend/tmp_documento_requisito/"+result.requisito_archivo);
 			}
