@@ -289,9 +289,9 @@ function datatablenewRequisito(){
 					"mRender": function (data, type, row) {
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarPuesto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarRequisito('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						
-						html += '<a href="javascript:void(0)" onclick=eliminarPuesto('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+						html += '<a href="javascript:void(0)" onclick=eliminarRequisito('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
 						
 						html += '</div>';
 						return html;
@@ -307,41 +307,52 @@ function datatablenewRequisito(){
 
 }
 
-function editarPuesto(id){
+function editarRequisito(id){
 
 	$.ajax({
-		url: '/concurso/obtener_puesto/'+id,
+		url: '/concurso/obtener_requisito/'+id,
 		dataType: "json",
 		success: function(result){
 			//alert(result);
 			console.log(result);
 			$('#id').val(result.id);
-			$('#id_tipo_plaza').val(result.id_tipo_plaza);
-			$('#numero_plazas').val(result.numero_plazas);
+			$('#id_tipo_documento').val(result.id_tipo_documento);
+			$('#denominacion').val(result.denominacion);
+			
+			var extension = "";
+			extension = result.requisito_archivo.substring(result.requisito_archivo.lastIndexOf('.') + 1);
+			if(extension=="pdf"){
+				$("#img_ruta").attr("src", "/img/pdf.png");
+			}else{
+				$("#img_ruta").attr("src", "/img/frontend/tmp_documento_requisito/"+result.requisito_archivo);
+			}
+			$("#img_foto").val(result.requisito_archivo);
+			
+			
 		}
 		
 	});
 
 }
 
-function eliminarPuesto(id){
+function eliminarRequisito(id){
 	
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas eliminar el Puesto?", 
+        message: "&iquest;Deseas eliminar el Requisito?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_puesto(id);
+                fn_eliminar_requisito(id);
             }
         }
     });
     //$(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_puesto(id){
+function fn_eliminar_requisito(id){
 	
 	$.ajax({
-            url: "/concurso/eliminar_puesto/"+id,
+            url: "/concurso/eliminar_requisito/"+id,
             type: "GET",
             success: function (result) {
 				datatablenewRequisito();
