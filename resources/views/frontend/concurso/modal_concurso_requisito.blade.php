@@ -189,7 +189,16 @@ $(document).ready(function() {
             processData: false,
             success: function(response) {
                 if (response != 0) {
-                    $("#img_ruta").attr("src", "/img/frontend/tmp_documento/"+response);
+					
+					var extension = "";
+					extension = response.substring(response.lastIndexOf('.') + 1);
+					
+					if(extension=="doc" || extension=="docx" || extension=="pdf" || extension=="xls" || extension=="xlsx"){
+						$("#img_ruta").attr("src", "/img/check.png");
+					}else{
+						$("#img_ruta").attr("src", "/img/frontend/tmp_documento/"+response);
+					}
+					
 					$("#img_foto").val(response);
                 } else {
                     alert('Formato de imagen incorrecto.');
