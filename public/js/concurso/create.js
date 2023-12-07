@@ -1664,6 +1664,7 @@ function datatablenew(){
 			var id_regional = $('#id_regional_bus').val();
             var numero_cap = $('#numero_cap_bus').val();
 			var numero_documento = $('#numero_documento_bus').val();
+			var id_agremiado = $('#id_agremiado').val();
 			var agremiado = $('#agremiado_bus').val();
 			var id_situacion = $('#id_situacion_bus').val();
 			var id_concurso = $('#id_concurso_bus').val();
@@ -1676,6 +1677,7 @@ function datatablenew(){
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
 						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
+						id_agremiado:id_agremiado,
 						_token:_token
                        },
                 "success": function (result) {
