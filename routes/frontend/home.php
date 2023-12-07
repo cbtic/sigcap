@@ -242,8 +242,10 @@ Route::post('concurso/send_concurso', [ConcursoController::class, 'send_concurso
 Route::get('concurso/modal_puesto/{id}', [ConcursoController::class, 'modal_puesto'])->name('concurso.modal_puesto');
 Route::post('concurso/listar_puesto', [ConcursoController::class, 'listar_puesto'])->name('concurso.listar_puesto');
 Route::get('concurso/eliminar_puesto/{id}', [ConcursoController::class, 'eliminar_puesto'])->name('concurso.eliminar_puesto');
+Route::get('concurso/eliminar_requisito/{id}', [ConcursoController::class, 'eliminar_requisito'])->name('concurso.eliminar_requisito');
 Route::post('concurso/send_puesto', [ConcursoController::class, 'send_puesto'])->name('concurso.send_puesto');
 Route::get('concurso/obtener_puesto/{id}', [ConcursoController::class, 'obtener_puesto'])->name('concurso.obtener_puesto');
+Route::get('concurso/obtener_requisito/{id}', [ConcursoController::class, 'obtener_requisito'])->name('concurso.obtener_requisito');
 Route::get('concurso/eliminar_inscripcion_concurso/{id}', [ConcursoController::class, 'eliminar_inscripcion_concurso'])->name('concurso.eliminar_inscripcion_concurso');
 Route::get('concurso/eliminar_inscripcion_documento/{id}', [ConcursoController::class, 'eliminar_inscripcion_documento'])->name('concurso.eliminar_inscripcion_documento');
 
