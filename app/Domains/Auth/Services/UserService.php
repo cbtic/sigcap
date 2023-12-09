@@ -324,7 +324,7 @@ class UserService extends BaseService
      */
     protected function createUser(array $data = []): User
     {
-        return $this->model::create([
+        $user = $this->model::create([
             'type' => $data['type'] ?? $this->model::TYPE_USER,
             'name' => $data['name'] ?? null,
             'email' => $data['email'] ?? null,
@@ -333,7 +333,13 @@ class UserService extends BaseService
             'provider_id' => $data['provider_id'] ?? null,
             'email_verified_at' => $data['email_verified_at'] ?? null,
             'active' => $data['active'] ?? true,
-			'id_persona' => $data['id_persona'],
+			'id_persona' => (isset($data['id_persona']) && $data['id_persona']>0)?$data['id_persona']:null,
         ]);
+		
+		//User::find(1)->assignRole(config('boilerplate.access.role.admin'));
+		if(isset($data['id_persona']) && $data['id_persona']>0){
+			$user->assignRole("colegiado");
+		}
+		return $user;
     }
 }

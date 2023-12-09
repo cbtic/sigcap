@@ -8,5 +8,17 @@ use DB;
 
 class ConcursoRequisito extends Model
 {
-    use HasFactory;
+    
+	function getConcursoRequisitoById($id){
+
+        $cad = "select *
+                from concurso_requisitos
+                where id=".$id." 
+				and estado='1'";
+    
+		$data = DB::select($cad);
+        return $data[0];
+    }
+	
+	
 }
