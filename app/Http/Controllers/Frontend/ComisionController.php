@@ -283,9 +283,10 @@ class ComisionController extends Controller
 				/*}*/
 				
 				$municipalidadIntegrada->id_regional = 5;
-				$municipalidadIntegrada->id_periodo_comisiones = $request->periodo;
+				$municipalidadIntegrada->id_periodo_comision = $request->periodo;
 				//$municipalidadIntegrada->id_coodinador = 1;
 				$municipalidadIntegrada->id_usuario_inserta = $id_user;
+
 				$municipalidadIntegrada->save();
 				$id_municipalidad_integrada = $municipalidadIntegrada->id;
 	
@@ -353,7 +354,7 @@ class ComisionController extends Controller
 				$denominacion = substr($denominacion,0,strlen($denominacion)-3);
 				$comision = new Comisione();
 				$comision->id_regional = $municipalidadesIntegrada->id_regional;
-				$comision->id_periodo_comisiones = $municipalidadesIntegrada->id_periodo_comisiones;
+				$comision->id_periodo_comisiones = $municipalidadesIntegrada->id_periodo_comision;
 				$comision->id_tipo_comision = $request->tipo_comision;
 				$comision->id_dia_semana = 1;
 				$comision->denominacion = $denominacion;
@@ -382,7 +383,7 @@ class ComisionController extends Controller
 				$denominacion = substr($denominacion,0,strlen($denominacion)-3);
 				$comision = new Comisione();
 				$comision->id_regional = $municipalidadesIntegrada->id_regional;
-				$comision->id_periodo_comisiones = $municipalidadesIntegrada->id_periodo_comisiones;
+				$comision->id_periodo_comision = $municipalidadesIntegrada->id_periodo_comisiones;
 				$comision->id_tipo_comision = $request->tipo_comision;
 				$comision->id_dia_semana = 1;
 				$comision->denominacion = $denominacion;
@@ -412,7 +413,7 @@ class ComisionController extends Controller
 		*/
 			$comision = new MunicipalidadIntegrada();
 			$comision->id_regional = 5;
-			$comision->id_periodo_comisiones = 7;
+			$comision->id_periodo_comision = 7;
 			$comision->id_tipo_comision = 1;
 			$comision->id_dia_semana = 1;
 			$comision->denominacion = $request->denominacion;
