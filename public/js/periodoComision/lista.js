@@ -3,6 +3,13 @@
 
 $(document).ready(function () {
 	
+	$('#fecha_inicio').datepicker({
+		autoclose: true,
+		dateFormat: 'dd/mm/yy',
+		changeMonth: true,
+		changeYear: true,
+	});
+
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});

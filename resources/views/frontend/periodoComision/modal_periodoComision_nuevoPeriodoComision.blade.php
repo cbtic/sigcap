@@ -199,7 +199,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_egresado').datepicker({
+	$('#fecha_inicio').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
 		container: '#openOverlayOpc modal-body'
@@ -207,7 +207,7 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 });
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_graduado').datepicker({
+	$('#fecha_fin').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
 		container: '#openOverlayOpc modal-body'
@@ -415,19 +415,34 @@ function fn_save_periodoComision(){
 						</div>
 					</div>
 					<div class="row" style="padding-left:10px">
-						<div class="col-lg-6">
-							<label class="control-label form-control-sm">Fecha Fin</label>
+						<!--<div class="col-lg-6">
+							<label class="control-label form-control-sm">Fecha Inicio</label>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
 								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control form-control-sm" value="<?php echo $periodoComision->fecha_inicio?>" type="text">
 							</div>
-						</div>
+						</div>-->
+
 						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Inicio</label>
+								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php if($periodoComision->fecha_inicio!="")echo date('d-m-Y',strtotime($periodoComision->fecha_inicio))?>" type="text"  >
+							</div>
+						</div>
+
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Fin</label>
+								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php if($periodoComision->fecha_fin!="")echo date('d-m-Y',strtotime($periodoComision->fecha_fin))?>" type="text"  >
+							</div>
+						</div>
+						
+						<!--<div class="col-lg-6">
 							<label class="control-label form-control-sm">Fecha Fin</label>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
 								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control form-control-sm" value="<?php echo $periodoComision->fecha_fin?>" type="text">
 								
 							</div>
-						</div>
+						</div>-->
 					</div>
 						<!--
 						<div class="col-lg-4">

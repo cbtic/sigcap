@@ -286,7 +286,6 @@ class ComisionController extends Controller
 				$municipalidadIntegrada->id_periodo_comisiones = $request->periodo;
 				//$municipalidadIntegrada->id_coodinador = 1;
 				$municipalidadIntegrada->id_usuario_inserta = $id_user;
-				//$municipalidadIntegrada->estado = "1";
 				$municipalidadIntegrada->save();
 				$id_municipalidad_integrada = $municipalidadIntegrada->id;
 	
