@@ -4,18 +4,19 @@
 $(document).ready(function () {
 	
 	$('#fecha_inicio').datepicker({
-		autoclose: true,
-		dateFormat: 'dd/mm/yy',
+        autoclose: true,
+		format: 'dd/mm/yyyy',
 		changeMonth: true,
 		changeYear: true,
-	});
+    });
 
 	$('#fecha_fin').datepicker({
-		autoclose: true,
-		dateFormat: 'dd/mm/yy',
+        autoclose: true,
+		format: 'dd/mm/yyyy',
 		changeMonth: true,
 		changeYear: true,
-	});
+    });
+
 
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
