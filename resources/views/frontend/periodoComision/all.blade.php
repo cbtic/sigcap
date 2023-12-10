@@ -159,12 +159,19 @@
 						<input class="form-control form-control-sm" id="fecha_fin" name="fecha_fin" placeholder="Fecha Fin">
 					</div>-->
                     <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-                        <div style="float:left;padding-top:7px">Fecha Inicio</div>
+                        <!--<div style="float:left;padding-top:7px">Fecha Inicio</div>
                         <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
                             <input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control" placeholder="Fecha Inicio">
-                            
+                        </div>-->
+                        <div class="form-group">
+                            <!--<label class="control-label">Fecha Inicio</label>-->
+                            <input id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio" class="form-control form-control-sm"  value="<?php if($periodoComision->fecha_inicio!="")echo date('d-m-Y',strtotime($periodoComision->fecha_inicio))?>" type="text"  >
                         </div>
 					</div>
+
+                    
+							
+						
                     <!--
                     <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
                         <div style="float:left;padding-top:7px">Fecha Fin</div>

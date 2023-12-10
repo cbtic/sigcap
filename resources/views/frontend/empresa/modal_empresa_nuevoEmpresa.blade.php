@@ -210,7 +210,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_egresado').datepicker({
+	$('#Fecha').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
 		container: '#openOverlayOpc modal-body'
@@ -366,8 +366,16 @@ function valida(){
 
 	if (ruc==""){
 		msg= "Falta ingresar el RUC";
-
-	}elseif (direccion==""){
+	}else if (email==""){
+		msg= "Falta ingresar el Email";
+	}else if (telefono==""){
+		msg= "Falta ingresar el tel&eacute;fono";
+	}else if (representante==""){
+		msg= "Falta ingresar el representante";
+	}
+	
+	
+	/*elseif (direccion==""){
 		msg= "Falta ingresar la direcci&oacuten";
 
 	}elseif (email==""){
@@ -376,7 +384,7 @@ function valida(){
 	}elseif (telefono==""){
 		msg= "Falta ingresar el tel&eacute;fono";
 
-	}
+	}*/
 
 	if (msg=="0"){
 		fn_save_empresa()		
@@ -412,7 +420,7 @@ function fn_save_empresa(){
             data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,email:email,telefono:telefono,representante:representante},
             dataType: 'json',
 			success: function (result) {
-				
+    
 				//alert("El RUC ingresado ya existe !!!");
 				if(result.sw==false){
 					Swal.fire({
@@ -624,9 +632,13 @@ container: '#myModal modal-body'
 
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label required-field form-control-sm">Ruc</label>
-								<input id="ruc" name="ruc" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" required type="text" >
-							    @error('ruc')<span ...>Dato requerido</span> @enderror
+								<label for="ruc" class="control-label required-field form-control-sm">Ruc</label>
+								<input id="ruc" name="ruc" class="form-control form-control-sm" value="{{ old('ruc') }}" required type="text" >
+							    @error('ruc')
+								<small>
+									<strong>{{ $message }}</strong>
+								</small> 
+								@enderror
 							</div>
 						</div>
 						
@@ -653,7 +665,7 @@ container: '#myModal modal-body'
 
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Email</label>
+								<label for="email" class="control-label form-control-sm">Email</label>
 								<input id="email" name="email" class="form-control form-control-sm "  value="<?php echo $empresa->email?>" required type="text">																				
 								@error('email')
 								<small>
