@@ -434,5 +434,16 @@ class ComisionController extends Controller
 		}*/
 
     }
+
+	public function modal_dia_semana($id){
+		
+		$comision_model = new Comisione;
+		$tablaMaestra_model = new TablaMaestra;
+		$tipoAgrupacion = $tablaMaestra_model2->getMaestroByTipo(99);
+
+		
+		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region'));
+
+    }
 	
 }
