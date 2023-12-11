@@ -25,7 +25,7 @@ where c.estado='1'";
 	
 	function getConcursoRequisitoByIdConcurso($id){
 
-        $cad = "select c.id,c.denominacion requisito,tm.denominacion tipo_documento
+        $cad = "select c.id,c.denominacion requisito,tm.denominacion tipo_documento,c.requisito_archivo 
 from concurso_requisitos c 
 inner join tabla_maestras tm on c.id_tipo_documento::int=tm.codigo::int and tm.tipo='97'
 Where c.id_concurso = ".$id;

@@ -43,7 +43,6 @@ class ProfesionalesOtroController extends Controller
 		$p[]=$request->agremiado;
         $p[]="";
 		$p[]=$request->profesion;
-        $p[]="";
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -94,7 +93,7 @@ class ProfesionalesOtroController extends Controller
 		
 		if($id>0){
 			$profesionalOtro = ProfesionalesOtro::find($id);
-            $empresa = Persona::find($id);
+            $persona = Persona::find($id);
 		}else{
 			$profesionalOtro = new ProfesionalesOtro;
             $persona = new Persona;
@@ -115,27 +114,28 @@ class ProfesionalesOtroController extends Controller
 		$id_user = Auth::user()->id;
 
 		if($request->id == 0){
-			$profesionalesOtro = new ProfesionalesOtro;
+			$profesionOtro = new ProfesionalesOtro;
 		}else{
-			$profesionalesOtro = ProfesionalesOtro::find($request->id);
+			$profesionOtro = ProfesionalesOtro::find($request->id);
 		}
 		
-		$profesionalesOtro->colegiatura = $request->colegiatura;
-		$profesionalesOtro->colegiatura_abreviatura = $request->colegiatura_abreviatura;
-		$profesionalesOtro->id_persona = $request->nombres;
-		$profesionalesOtro->id_profesion = $request->profesion;
-		$profesionalesOtro->ruta_firma = $request->ruta_firma;
-		$profesionalesOtro->estado = 1;
-		$profesionalesOtro->id_usuario_inserta = $id_user;
-		$profesionalesOtro->save();
+		$profesionOtro->colegiatura = $request->colegiatura;
+		$profesionOtro->colegiatura_abreviatura = $request->colegiatura_abreviatura;
+		$profesionOtro->id_persona = $request->id_persona;
+		$profesionOtro->id_profesion = $request->profesion;
+		//$profesionalesOtro->ruta_firma = $request->ruta_firma;
+		$profesionOtro->estado = 1;
+		$profesionOtro->id_usuario_inserta = $id_user;
+		
+		if($profesionOtro->id_persona)$profesionOtro->save();
     }
 
 	public function eliminar_profesionalesOtro($id,$estado)
     {
-		$profesionalesOtro = ProfesionalesOtro::find($id);
-		$profesionalesOtro->estado = $estado;
-		$profesionalesOtro->save();
+		$profesionOtro = ProfesionalesOtro::find($id);
+		$profesionOtro->estado = $estado;
+		$profesionOtro->save();
 
-		echo $profesionalesOtro->id;
+		echo $profesionOtro->id;
     }
 }

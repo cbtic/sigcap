@@ -8,9 +8,6 @@ $(document).ready(function () {
 	});
 
 	
-	$('#btnPersonaNew').click(function () {
-		modal_persona_new();
-	});
 	
 	$('#example-select-all').on('click', function(){
 		if($(this).is(':checked')){
@@ -488,8 +485,13 @@ function obtenerBeneficiario(){
 			
 		},
 		"error": function (msg, textStatus, errorThrown) {
+
+			if(tipo_documento == "85"){
+				Swal.fire("Numero de documento no fue registrado!");
+			}else{
+				confirma_accion();
+			}
 			
-			bootbox.alert("Numero de Documento NO registrado");
 
 		}
 		
@@ -497,6 +499,24 @@ function obtenerBeneficiario(){
 	});
 	
 }
+
+function confirma_accion(){
+	Swal.fire({
+	  title: 'El numero de documento no existe',
+	  text: "¿Desea registrar como  nueva persona?",
+	  type: 'warning',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+	  cancelButtonColor: '#d33',
+	  confirmButtonText: 'Si, Crear!'
+	}).then((result) => {
+	  if (result.value) {
+		modal_persona_new();
+		//document.location="eliminar.php?codigo="+id;
+		
+	  }
+	});
+  }
 
 
 function eliminarAfiliado(id){
@@ -922,12 +942,10 @@ function modal_fraccionamiento(){
 }
 
 function modal_persona_new(){
-
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
-	
 	$.ajax({
 			url: "/persona/modal_persona_new",
 			type: "get",
@@ -967,7 +985,7 @@ function guardar_fracciona_deuda(){
     });
 }
 
-function ncnd(){
+function nc(){
 	/*
 	var id = $(obj).parent().parent().parent().find('.id_comprobante').val();
 
@@ -976,9 +994,16 @@ function ncnd(){
 	document.frmPagos.submit();
 	*/
 	
-	document.frmPagos.submit();
+	document.forms["frmPagos"].submit();
 	return false;
 };
+
+function nd(){
+	
+	document.forms["frmPagos_nd"].submit();
+	return false;
+};
+
 
 
 

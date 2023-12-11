@@ -388,7 +388,7 @@ label.form-control-sm{
 																<option 
 																fecha_delegatura_inicio="<?php echo $row->fecha_delegatura_inicio?>"
 																fecha_delegatura_fin="<?php echo $row->fecha_delegatura_fin?>"
-																value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso." ".$row->sub_tipo_concurso?></option>
+																value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 																<?php 
 																}
 																?>
@@ -461,19 +461,55 @@ label.form-control-sm{
 													
 													</div>
 													
-													<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-													
+													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+														
 														<div class="row">
-															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px">
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px">
 															Codigo de Pago
 															</div>
-															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="numero_comprobante" id="numero_comprobante" value="<?php //echo $agremiado->numero_cap?>" class="form-control form-control-sm">
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															<input type="text" name="numero_comprobante" id="numero_comprobante" value="<?php //echo $agremiado->numero_cap?>" class="form-control form-control-sm" disabled="disabled">
 															</div>
 															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;" />
 															</div>
 														</div>
+														
+														<div class="row" style="padding:15px 0px 10px 0px">
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
+																<strong>Requisitos</strong>
+															</div>
+														</div>
+														
+														<div class="row">	
+															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												
+																	<div class="table-responsive">
+																	<table id="tblRequisito" class="table table-hover table-sm">
+																	<thead>
+																		<tr style="font-size:13px">
+																			<th>N&deg;</th>
+																			<th>Tipo de Doc</th>
+																			<th>Requisito</th>
+																			<th>Archivo</th>
+																		</tr>
+																	</thead>
+																	<tbody style="font-size:13px">
+																	</tbody>							
+																	</table>
+																	
+																</div>
+															
+															</div>
+														</div>
+														<!--
+														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
+														-->
+														
+													</div>
+													
+													
+													<div id="divDocumentos" style="display:none" class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
 														
 														<div class="row" style="padding:15px 0px 10px 0px">
 															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
@@ -670,6 +706,7 @@ label.form-control-sm{
 														<th>Id</th>
 														<th>Periodo</th>
 														<th>Tipo Concurso</th>
+														<th>SubTipo Concurso</th>
 														<th>Fecha</th>
 														<th>Codigo Pago</th>
 														<th>Puntaje</th>
