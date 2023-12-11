@@ -33,7 +33,7 @@ $(document).ready(function () {
 	});
 
 	$('#btnNuevoComision').click(function () {
-		//modalComision(0);
+		modalDiaSemana(0);
 		fn_guardarMunicipalidadIntegrada();
 	});
 		
@@ -723,18 +723,17 @@ function fn_ListarBusqueda() {
 
 function modalComision(id){
 	
-	$(".modal-dialog").css("width","85%");
+	$(".modal-dialog").css("width","40%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/concepto/modal_comision_nuevoComision/"+id,
+			url: "/comision/modal_dia_semana/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
 			}
 	});
-
 }
 
 function filtrar_comision(obj){
