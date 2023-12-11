@@ -46,17 +46,23 @@ class ComisionController extends Controller
     }
 	
 	function lista_comision(){
-
-        return view('frontend.comision.all_listar_comision');
+		
+		$periodoComisione_model = new PeriodoComisione;
+		$tablaMaestra_model = new TablaMaestra;
+		
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$tipoAgrupacion = $tablaMaestra_model->getMaestroByTipo(99);
+		
+        return view('frontend.comision.all_listar_comision',compact('periodo','tipoAgrupacion'));
     }
 	
 	public function lista_comision_ajax(Request $request){
 	
 		$comision_model = new Comisione(); 
-		$p[]="";
-		$p[]="";
-		$p[]="";
-		$p[]=$request->estado;          
+		$p[]=$request->id_periodo;
+		$p[]=$request->tipo_agrupacion;
+		$p[]=$request->id_comision;
+		$p[]=$request->estado;      
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comision_model->lista_comision_ajax($p);
@@ -99,6 +105,7 @@ class ComisionController extends Controller
 		
 		if($request->id == 0){
 			$comisionDelegado = new ComisionDelegado;
+			$comisionDelegado2 = new ComisionDelegado;
 		}else{
 			$comisionDelegado = ComisionDelegado::find($request->id);
 		}
@@ -112,6 +119,16 @@ class ComisionController extends Controller
 		$comisionDelegado->estado = 1;
 		$comisionDelegado->id_usuario_inserta = $id_user;
 		$comisionDelegado->save();
+		
+		$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
+		
+		$comisionDelegado2->id_regional = $request->id_regional;
+		$comisionDelegado2->id_comision = $request->id_comision;
+		$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
+		$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
+		$comisionDelegado2->estado = 1;
+		$comisionDelegado2->id_usuario_inserta = $id_user;
+		$comisionDelegado2->save();
 			
     }
 	
