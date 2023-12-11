@@ -246,6 +246,7 @@ function obtenerComision(){
 		success: function(result){
 			var option = "";
 			$('#id_comision').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
 				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
 			});
