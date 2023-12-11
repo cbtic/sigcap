@@ -116,14 +116,18 @@ class EmpresaController extends Controller
 
     public function send_empresa_nuevoEmpresa(Request $request){
 		
-		$request->validate([
-			//'ruc'=>'required | numeric | unique | digits:11',
+		$validator = $request->validate([
+			//'ruc'=>'required | numeric | unique::Empresa | digits:11',
 			'email'=>'required | email',
 			'direccion'=>'required',
 			'telefono'=>'required | numeric | digits:9',
 			'representante'=>'required',
-		]	
-		);
+		]);
+
+		/*if ($validator->fails()) {
+			// Los mensajes de error están disponibles en $validator->errors()
+			return response()->json(['errors' => $validator->errors(), 'input' => request()->all()], 422);
+		}*/
 
 		$id_user = Auth::user()->id;
 		$sw = true;
@@ -154,7 +158,10 @@ class EmpresaController extends Controller
 			//$empresa = Empresa::find($request->id);
 			$array["sw"] = $sw;
 			//$array["msg"] = $msg;
-			echo json_encode($array);
+			//echo json_encode($array);
+			//return response()->json(['success' => true]);
+			return back()->with('success','validado');
+			//return response()->json(['errors' => $validator->errors(), 'input' => request()->all()], 422);
     }
 
 	public function eliminar_empresa($id,$estado)
