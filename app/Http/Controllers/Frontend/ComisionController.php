@@ -109,7 +109,7 @@ class ComisionController extends Controller
 		$comisionDelegado->id_comision = $request->id_comision;
 		$comisionDelegado->id_agremiado = $concursoInscripcion->id_agremiado;
 		$comisionDelegado->id_puesto = $concursoInscripcion->puesto_postula;
-		$comisionDelegado->estado = 1;
+		//$comisionDelegado->estado = 1;
 		$comisionDelegado->id_usuario_inserta = $id_user;
 		$comisionDelegado->save();
 			
@@ -356,7 +356,7 @@ class ComisionController extends Controller
 				$comision->id_regional = $municipalidadesIntegrada->id_regional;
 				$comision->id_periodo_comisiones = $municipalidadesIntegrada->id_periodo_comision;
 				$comision->id_tipo_comision = $request->tipo_comision;
-				$comision->id_dia_semana = 1;
+				//$comision->id_dia_semana = 1;
 				$comision->denominacion = $denominacion;
 				$comision->comision = $comision_desc;
 				$comision->id_municipalidad_integrada = $municipalidadesIntegrada->id;
@@ -385,12 +385,12 @@ class ComisionController extends Controller
 				$comision->id_regional = $municipalidadesIntegrada->id_regional;
 				$comision->id_periodo_comision = $municipalidadesIntegrada->id_periodo_comisiones;
 				$comision->id_tipo_comision = $request->tipo_comision;
-				$comision->id_dia_semana = 1;
+				//$comision->id_dia_semana = 1;
 				$comision->denominacion = $denominacion;
 				$comision->comision = $comision_desc;
 				$comision->id_municipalidad_integrada = $municipalidadesIntegrada->id;
 				$comision->id_usuario_inserta = $id_user;
-				$comision->estado = "1";
+				//$comision->estado = "1";
 				$comision->save();
 			}
 
@@ -415,11 +415,11 @@ class ComisionController extends Controller
 			$comision->id_regional = 5;
 			$comision->id_periodo_comision = 7;
 			$comision->id_tipo_comision = 1;
-			$comision->id_dia_semana = 1;
+			//$comision->id_dia_semana = 1;
 			$comision->denominacion = $request->denominacion;
 			//$comision->observacion = ;
 			$comision->id_usuario_inserta = $id_user;
-			$comision->estado = "1";
+			//$comision->estado = "1";
 			$comision->save();
 			//$id_municipalidad_integrada = $municipalidadIntegrada->id;
 /*
