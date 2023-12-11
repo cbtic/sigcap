@@ -498,6 +498,23 @@ class PersonaController extends Controller
 
 	public function send_persona_nuevoPersona(Request $request){
 
+		$request->validate([
+			'tipo_documento'=>'required',
+			'numero_documento'=>'required | numeric | digits:8',
+			'ruc'=>'numeric | digits:11',
+			'nombre'=>'required',
+			'apellido_paterno'=>'required',
+			'apellido_materno'=>'required',
+			'fecha_nacimiento'=>'required',
+			'lugar_nacimiento'=>'required',
+			'nacionalidad'=>'required',
+			'sexo'=>'required',
+			'numero_celular'=>'required | numeric | digits:9',
+			'correo'=>'required | email',
+			'direccion'=>'required',
+		]
+		);
+
 		$id_user = Auth::user()->id;
 		$sw = true;
 		$msg = "";
@@ -526,7 +543,7 @@ class PersonaController extends Controller
 				$persona->apellido_materno = $request->apellido_materno;
 				$persona->nombres = $request->nombres;
 				$persona->fecha_nacimiento = $request->fecha_nacimiento;
-				$persona->id_tipo_persona = 1;
+				//$persona->id_tipo_persona = 1;
 				$persona->grupo_sanguineo = $request->grupo_sanguineo;
 				$persona->id_ubigeo_nacimiento =150101;
 				$persona->lugar_nacimiento = $request->lugar_nacimiento;
@@ -538,7 +555,7 @@ class PersonaController extends Controller
 				$persona->correo = $request->correo;
 				$persona->foto = $request->img_foto;
 				$persona->direccion = $request->direccion;
-				$persona->estado = 1;
+				//$persona->estado = 1;
 				$persona->id_usuario_inserta = $id_user;
 				$persona->save();
 			}else{
@@ -546,6 +563,8 @@ class PersonaController extends Controller
 				$msg = "El DNI ingresado ya existe !!!";
 			}
 		}
+			//$persona = Persona::find($request->id);
+
 			$array["sw"] = $sw;
 			$array["msg"] = $msg;
 			echo json_encode($array);
@@ -665,13 +684,25 @@ class PersonaController extends Controller
 			$array["persona"] = $persona;
 		}else{
 			$sw = false;
-			$msg = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
+			//$msg = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
 			//$array["error"] = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
 			$array["sw"] = $sw;
-			$array["msg"] = $msg;
+			//$array["msg"] = $msg;
 		}
 		
-	
         echo json_encode($array);
+	}
+
+	public function modal_personaNuevo(Request $request){
+		
+		$id_tipo_documento = $request->tipo_documento;
+		$numero_documento = $request->numero_documento;
+		
+
+		$tablaMaestra_model = new TablaMaestra;		
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+
+		return view('frontend.persona.modal_personaNuevo',compact('sexo','tipo_documento', 'id_tipo_documento', 'numero_documento'));
 	}
 }

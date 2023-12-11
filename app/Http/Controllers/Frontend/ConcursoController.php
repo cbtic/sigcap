@@ -41,15 +41,15 @@ class ConcursoController extends Controller
 	
 	public function consulta_resultado(){
 		
-		$regione_model = new Regione;
+		//$regione_model = new Regione;
 		$tablaMaestra_model = new TablaMaestra;
 		$concurso_model = new Concurso();
 		
-		$region = $regione_model->getRegionAll();
+		//$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		$concurso = $concurso_model->getConcurso();
 		
-		return view('frontend.concurso.all_resultado',compact('region','situacion_cliente','concurso'));
+		return view('frontend.concurso.all_resultado',compact(/*'region',*/'situacion_cliente','concurso'));
 		
 	}
 	
@@ -58,10 +58,12 @@ class ConcursoController extends Controller
 		$concursoInscripcione_model = new ConcursoInscripcione();
 		$p[]=$request->id_concurso;
 		$p[]=$request->numero_documento;
+		$p[]="";
 		$p[]=$request->agremiado;
 		$p[]=$request->numero_cap;
 		$p[]=$request->id_regional;
 		$p[]=$request->id_situacion;
+		$p[]=$request->id_estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $concursoInscripcione_model->listar_concurso_agremiado($p);
@@ -88,7 +90,7 @@ class ConcursoController extends Controller
 		
 		$id_persona = Auth::user()->id_persona;
 		//echo $id_user;
-		$concurso = $concurso_model->getConcurso();
+		$concurso = $concurso_model->getConcursoVigente();
 		$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
@@ -104,16 +106,16 @@ class ConcursoController extends Controller
 		
 		$agremiado_model = new Agremiado();
 		$concurso_model = new Concurso();
-		$regione_model = new Regione;
+		//$regione_model = new Regione;
 		$tablaMaestra_model = new TablaMaestra;
 		
 		//$id_persona = Auth::user()->id_persona;
 		$concurso = $concurso_model->getConcurso();
 		//$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
-		$region = $regione_model->getRegionAll();
+		//$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.concurso.create_resultado',compact('concurso',/*'agremiado',*/'region','situacion_cliente'));
+        return view('frontend.concurso.create_resultado',compact('concurso',/*'agremiado',*//*'region',*/'situacion_cliente'));
     }
 	
 	public function editar_inscripcion($id){
@@ -161,10 +163,12 @@ class ConcursoController extends Controller
 		$concursoInscripcione_model = new ConcursoInscripcione();
 		$p[]=$request->id_concurso;
 		$p[]=$request->numero_documento;
+		$p[]=$request->id_agremiado;
 		$p[]=$request->agremiado;
 		$p[]=$request->numero_cap;
 		$p[]=$request->id_regional;
 		$p[]=$request->id_situacion;
+		$p[]=$request->id_estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $concursoInscripcione_model->listar_concurso_agremiado($p);
@@ -198,6 +202,16 @@ class ConcursoController extends Controller
 
     }
 	
+	public function modal_inscripcion_documento($id){
+		 
+		$inscripcionDocumento_model = new InscripcionDocumento;
+        $inscripcionDocumento = $inscripcionDocumento_model->getConcursoInscripcionDocumentoById($id);
+		
+        return view('frontend.concurso.modal_inscripcion_documento',compact('inscripcionDocumento'));
+		
+    }
+	
+	
 	public function listar_maestro_by_tipo_subtipo($tipo,$sub_codigo){
 	
 		$tablaMaestra_model = new TablaMaestra;
@@ -205,6 +219,14 @@ class ConcursoController extends Controller
 		
 		echo json_encode($sub_tipo_concurso);
 
+	}
+	
+	public function listar_puesto_concurso($id_concurso){
+	
+		$concurso_model = new Concurso;
+		$puesto = $concurso_model->getPuestoByIdConcurso($id_concurso);
+		 
+		echo json_encode($puesto);
 	
 	}
 	
@@ -294,9 +316,10 @@ class ConcursoController extends Controller
 		$concurso->id_sub_tipo_concurso = $request->id_sub_tipo_concurso;
 		$concurso->periodo = $request->periodo;
 		$concurso->fecha = $request->fecha;
-		$concurso->fecha_inscripcion = $request->fecha_inscripcion;
-		$concurso->fecha_delegatura_inicio = $request->fecha_delegatura_inicio;
-		$concurso->fecha_delegatura_fin = $request->fecha_delegatura_fin;
+		$concurso->fecha_inscripcion_inicio = $request->fecha_inscripcion_inicio;
+		$concurso->fecha_inscripcion_fin = $request->fecha_inscripcion_fin;
+		$concurso->fecha_acreditacion_inicio = $request->fecha_acreditacion_inicio;
+		$concurso->fecha_acreditacion_fin = $request->fecha_acreditacion_fin;
 		$concurso->estado = 1;
 		$concurso->id_usuario_inserta = $id_user;
 		$concurso->save();
@@ -383,13 +406,22 @@ class ConcursoController extends Controller
 			
 			$anio = Carbon::now()->format('Y');
 			$concursoInscripcione->id_agremiado = $request->id_agremiado;
+			
 			//solo para edificaciones
+			/*
 			$id_tipo_plaza = $agremiado_model->getTipoPlaza($request->id_agremiado);
 			$concursoPuesto = ConcursoPuesto::where("id_concurso",$request->id_concurso)->where("id_tipo_plaza",$id_tipo_plaza)->where("estado","1")->first();
+			$id_concurso_puesto = $concursoPuesto->id;
+			*/
+			
+			$id_concurso_puesto = $request->id_concurso_puesto;
+			$concursoPuesto = ConcursoPuesto::find($id_concurso_puesto);
+			$id_tipo_plaza = $concursoPuesto->id_tipo_plaza;
+			
 			$concepto = Concepto::where("codigo","00015")->where("periodo",$anio)->where("estado","1")->first();
 			$concurso = Concurso::find($request->id_concurso);
 			
-			$concursoInscripcione->id_concurso_puesto = $concursoPuesto->id;
+			$concursoInscripcione->id_concurso_puesto = $id_concurso_puesto;
 			$concursoInscripcione->puesto_postula = $id_tipo_plaza;
 			$concursoInscripcione->puntaje = NULL;
 			$concursoInscripcione->resultado = NULL;
@@ -443,6 +475,14 @@ class ConcursoController extends Controller
 		echo json_encode($puesto);
 	}
 	
+	public function obtener_requisito($id){
+		
+		$concursoRequisito_model = new ConcursoRequisito;
+		$requisito = $concursoRequisito_model->getConcursoRequisitoById($id);
+		
+		echo json_encode($requisito);
+	}
+	
 	public function obtener_concurso_inscripcion($id){
 		
 		$concursoInscripcione_model = new ConcursoInscripcione;
@@ -478,11 +518,31 @@ class ConcursoController extends Controller
 
     }
 	
+	public function eliminar_requisito($id){
+
+		$concursoRequisito = ConcursoRequisito::find($id);
+		$concursoRequisito->estado= "0";
+		$concursoRequisito->save();
+		
+		echo "success";
+
+    }
+	
 	public function eliminar_inscripcion_concurso($id){
 
 		$concursoInscripcione = ConcursoInscripcione::find($id);
 		$concursoInscripcione->estado= "0";
 		$concursoInscripcione->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_inscripcion_documento($id){
+
+		$inscripcionDocumento = InscripcionDocumento::find($id);
+		$inscripcionDocumento->estado= "0";
+		$inscripcionDocumento->save();
 		
 		echo "success";
 

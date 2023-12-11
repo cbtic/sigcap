@@ -12,6 +12,15 @@ $(document).ready(function () {
 		}
 	});
 
+	$('#profesion').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+	
+	$('#profesion').select2();
+
 	$('#colegiatura_abrev').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -33,12 +42,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#profesion').keypress(function(e){
-		if(e.which == 13) {
-			datatablenew();
-			return false;
-		}
-	});
+	
 
 	$('#estado').keypress(function(e){
 		if(e.which == 13) {

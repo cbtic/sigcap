@@ -1,4 +1,6 @@
-<title>SigCap</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<title>Sistema SIGCAP</title>
 
 <style>
   .datepicker,
@@ -207,6 +209,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
 <script type="text/javascript">
 
+
+$("#profesion").select2();
+
 function obtener_profesional(){
 	
   var numero_documento = $('#numero_documento').val();
@@ -217,8 +222,26 @@ function obtener_profesional(){
       success: function(result){
 
         if(result.sw==false){
+
+          Swal.fire({
+            title: 'El numero de documento no existe',
+            text: "¿Desea registrar como  nueva persona?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Crear!'
+          }).then((result) => {
+            if (result.value) {
+            modal_personaNuevo();
+            //document.location="eliminar.php?codigo="+id;
+            
+            }
+          });//$('#openOverlayOpc').modal('hide');
+            
+          /*
 					bootbox.alert(result.msg);
-					$('#openOverlayOpc').modal('hide');
+					$('#openOverlayOpc').modal('hide');*/
 				}else{
 					$("#id_persona").val(result.persona.id);
           $("#ruc").val(result.persona.numero_ruc);
@@ -239,6 +262,26 @@ function obtener_profesional(){
 	$("#moneda").val(moneda);
 	$("#monto").val(monto);*/
 	
+}
+
+function modal_personaNuevo(){
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc').modal('show');
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/persona/modal_personaNuevo",
+			type: "get",
+			data : $("#frmValorizacion").serialize(),
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
+
+	//cargarConceptos();
+
 }
 
   function fn_save_profesionalesOtro() {
@@ -318,7 +361,7 @@ function obtener_profesional(){
                           <option value="">--Selecionar--</option>
                           <?php
                           foreach ($tipo_documento as $row) { ?>
-                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '78') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
                           <?php
                           }
                           ?>

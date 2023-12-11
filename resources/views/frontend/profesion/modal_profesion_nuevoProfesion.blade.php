@@ -1,4 +1,4 @@
-<title>SigCap</title>
+<title>Sistema SIGCAP</title>
 
 <style>
 

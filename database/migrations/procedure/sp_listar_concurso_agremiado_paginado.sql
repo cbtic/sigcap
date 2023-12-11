@@ -1,5 +1,4 @@
-
-CREATE OR REPLACE FUNCTION public.sp_listar_concurso_agremiado_paginado(p_id_concurso character varying, p_numero_documento character varying, p_agremiado character varying, p_numero_cap character varying, p_id_regional character varying, p_id_situacion character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_concurso_agremiado_paginado(p_id_concurso character varying, p_numero_documento character varying, p_id_agremiado character varying, p_agremiado character varying, p_numero_cap character varying, p_id_regional character varying, p_id_situacion character varying, p_id_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -48,6 +47,10 @@ And t1.estado=''1''';
 	 v_where:=v_where||'And t3.nombres||'' ''||t3.apellido_paterno||'' ''||t3.apellido_materno ilike ''%'||p_agremiado||'%'' ';
 	End If;
 	
+	If p_id_agremiado<>'' Then
+	 v_where:=v_where||'And t1.id_agremiado = '''||p_id_agremiado||''' ';
+	End If;
+
 	If p_numero_cap<>'' Then
 	 v_where:=v_where||'And t2.numero_cap = '''||p_numero_cap||''' ';
 	End If;
@@ -62,6 +65,10 @@ And t1.estado=''1''';
 
 	If p_id_situacion<>'' Then
 	 v_where:=v_where||'And t2.id_situacion = '''||p_id_situacion||''' ';
+	End If;
+
+	If p_id_estado<>'' Then
+	 v_where:=v_where||'And t1.resultado = '''||p_id_estado||''' ';
 	End If;
 	
 
@@ -81,4 +88,3 @@ End
 
 $function$
 ;
-

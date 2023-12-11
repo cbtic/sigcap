@@ -13,11 +13,25 @@ class Concurso extends Model
 	function getConcurso(){
 
         $cad = "select c.id,c.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
-to_char(c.fecha,'dd-mm-yyyy')fecha,to_char(c.fecha_inscripcion,'dd-mm-yyyy')fecha_inscripcion,to_char(c.fecha_delegatura_inicio,'dd-mm-yyyy')fecha_delegatura_inicio,to_char(c.fecha_delegatura_fin,'dd-mm-yyyy')fecha_delegatura_fin 
+to_char(c.fecha,'dd-mm-yyyy')fecha,to_char(c.fecha_inscripcion_inicio,'dd-mm-yyyy')fecha_inscripcion_inicio,to_char(c.fecha_inscripcion_fin,'dd-mm-yyyy')fecha_inscripcion_fin,to_char(c.fecha_acreditacion_inicio,'dd-mm-yyyy')fecha_acreditacion_inicio,to_char(c.fecha_acreditacion_fin,'dd-mm-yyyy')fecha_acreditacion_fin 
 from concursos c
 inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
 left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
 where c.estado='1'";
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	function getConcursoVigente(){
+
+        $cad = "select c.id,c.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
+to_char(c.fecha,'dd-mm-yyyy')fecha,to_char(c.fecha_inscripcion_inicio,'dd-mm-yyyy')fecha_inscripcion_inicio,to_char(c.fecha_inscripcion_fin,'dd-mm-yyyy')fecha_inscripcion_fin,to_char(c.fecha_acreditacion_inicio,'dd-mm-yyyy')fecha_acreditacion_inicio,to_char(c.fecha_acreditacion_fin,'dd-mm-yyyy')fecha_acreditacion_fin 
+from concursos c
+inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
+left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
+where c.estado='1'
+and now() between (to_char(c.fecha_inscripcion_inicio,'dd-mm-yyyy')||' 00:00')::timestamp  and (to_char(c.fecha_inscripcion_fin,'dd-mm-yyyy')||' 23:59')::timestamp";
 
 		$data = DB::select($cad);
         return $data;
@@ -29,6 +43,18 @@ where c.estado='1'";
 from concurso_requisitos c 
 inner join tabla_maestras tm on c.id_tipo_documento::int=tm.codigo::int and tm.tipo='97'
 Where c.id_concurso = ".$id;
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	function getPuestoByIdConcurso($id){
+
+        $cad = "select cp.id,tm.denominacion puesto
+from concurso_puestos cp 
+inner join tabla_maestras tm on cp.id_tipo_plaza::int=tm.codigo::int and tm.tipo='94'
+where cp.estado='1'
+And cp.id_concurso = ".$id;
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;

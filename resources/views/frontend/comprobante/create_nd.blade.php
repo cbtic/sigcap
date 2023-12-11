@@ -25,6 +25,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.css">
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 <script>
@@ -318,7 +319,7 @@
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-group">Tipo de Nota</label>
-                                                            <select name="id_tipooperacion_" id="id_tipooperacion_" class="form-control form-control-sm" onChange="">
+                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" onChange="">
                                                                 <option value="">--Selecionar--</option>
                                                                 <?php
                                                                 foreach ($tipooperacion as $row) { ?>
@@ -333,7 +334,7 @@
                                                         <div class="form-group">
 
                                                             <label class="form-group">Motivo</label>
-                                                            <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                            <input type="text" name="motivo_" id="motivo_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>

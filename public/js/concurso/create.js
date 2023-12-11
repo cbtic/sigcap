@@ -1664,6 +1664,7 @@ function datatablenew(){
 			var id_regional = $('#id_regional_bus').val();
             var numero_cap = $('#numero_cap_bus').val();
 			var numero_documento = $('#numero_documento_bus').val();
+			var id_agremiado = $('#id_agremiado').val();
 			var agremiado = $('#agremiado_bus').val();
 			var id_situacion = $('#id_situacion_bus').val();
 			var id_concurso = $('#id_concurso_bus').val();
@@ -1676,6 +1677,7 @@ function datatablenew(){
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
 						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
+						id_agremiado:id_agremiado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -1733,6 +1735,17 @@ function datatablenew(){
                 "bSortable": false,
                 "aTargets": [3],
                 },
+				
+				{
+                "mRender": function (data, type, row) {
+					var puesto = "";
+					if(row.puesto!= null)puesto = row.puesto;
+					return puesto;
+                },
+                "bSortable": false,
+                "aTargets": [4],
+                },
+				
 				{
                 "mRender": function (data, type, row) {
 					var fecha_inscripcion = "";
@@ -1740,7 +1753,7 @@ function datatablenew(){
 					return fecha_inscripcion;
                 },
                 "bSortable": false,
-                "aTargets": [4],
+                "aTargets": [5],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1749,7 +1762,7 @@ function datatablenew(){
 					return pago;
                 },
                 "bSortable": false,
-                "aTargets": [5]
+                "aTargets": [6]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1758,7 +1771,7 @@ function datatablenew(){
 					return puntaje;
                 },
                 "bSortable": false,
-                "aTargets": [6]
+                "aTargets": [7]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1767,7 +1780,7 @@ function datatablenew(){
 					return estado;
                 },
                 "bSortable": false,
-                "aTargets": [7]
+                "aTargets": [8]
                 },
 				{
 					"mRender": function (data, type, row) {
@@ -1781,7 +1794,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [8],
+					"aTargets": [9],
 				},
 				
 				
@@ -1843,8 +1856,8 @@ function editarConcursoInscripcion(id){
 			var numero_comprobante = result.tipo+result.serie+"-"+result.numero;
 			$('#numero_comprobante').val(numero_comprobante);
 			
-			$('#fecha_delegatura_inicio').val(result.fecha_delegatura_inicio);
-			$('#fecha_delegatura_fin').val(result.fecha_delegatura_fin);
+			$('#fecha_acreditacion_inicio').val(result.fecha_acreditacion_inicio);
+			$('#fecha_acreditacion_fin').val(result.fecha_acreditacion_fin);
 			
 			$('#id_concurso').val(result.id_concurso);
 			
@@ -1885,14 +1898,33 @@ function cargarRequisitoConcurso(id_concurso_inscripcion){
 
 function obtener_datos_concurso(){
 	
-	var fecha_delegatura_inicio = $("#id_concurso option:selected").attr("fecha_delegatura_inicio");
-	var fecha_delegatura_fin = $("#id_concurso option:selected").attr("fecha_delegatura_fin");
+	var fecha_acreditacion_inicio = $("#id_concurso option:selected").attr("fecha_acreditacion_inicio");
+	var fecha_acreditacion_fin = $("#id_concurso option:selected").attr("fecha_acreditacion_fin");
 	
-	$("#fecha_delegatura_inicio").val(fecha_delegatura_inicio);
-	$("#fecha_delegatura_fin").val(fecha_delegatura_fin);
+	$("#fecha_acreditacion_inicio").val(fecha_acreditacion_inicio);
+	$("#fecha_acreditacion_fin").val(fecha_acreditacion_fin);
 	
 	var id_concurso = $("#id_concurso").val();
 	cargarRequisitoConcurso(id_concurso);
+	obtenerPuesto(id_concurso);
+		
+}
+
+function obtenerPuesto(id_concurso){
+	
+	$.ajax({
+		url: '/concurso/listar_puesto_concurso/'+id_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_concurso_puesto").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.puesto+"</option>";
+			});
+			$("#id_concurso_puesto").html(option);
+		}
+		
+	});
 	
 }
 
@@ -3447,3 +3479,32 @@ function fn_eliminar_inscripcion_concurso(id){
             }
     });
 }
+
+function eliminarInscripcionDocumento(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas eliminar el Documento?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_inscripcion_documento(id);
+            }
+        }
+    });
+    //$(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_inscripcion_documento(id){
+	
+	var id_concurso_inscripcion = $("#id_concurso_inscripcion").val();
+	$.ajax({
+            url: "/concurso/eliminar_inscripcion_documento/"+id,
+            type: "GET",
+            success: function (result) {
+				datatablenew();
+				//cargarRequisitoConcurso(id_concurso);
+				cargarRequisitos(id_concurso_inscripcion);
+            }
+    });
+}
+

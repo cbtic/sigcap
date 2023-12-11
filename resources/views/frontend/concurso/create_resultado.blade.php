@@ -1,6 +1,15 @@
 <!--<link rel="stylesheet" href="<?php //echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">-->
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
 <style type="text/css">
+#tblConcurso tbody tr{
+		font-size:13px
+}
+#tblAfiliado tbody tr{
+	font-size:13px
+}
+.table-sortable tbody tr {
+	cursor: move;
+}
 
 .row_selected{
 	background:#CAE983 !important
@@ -381,13 +390,13 @@ label.form-control-sm{
 														<input type="text" name="tipo_concurso" id="tipo_concurso" value="" class="form-control form-control-sm" readonly="readonly">
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-														Fecha Deleg. Inicio
+														Fecha Acreditaci&oacute;n Inicio
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														<input type="text" name="fecha_delegatura_inicio" id="fecha_delegatura_inicio" value="" class="form-control form-control-sm" readonly="readonly">
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-														Fecha Deleg. Fin
+														Fecha Acreditaci&oacute;n Fin
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														<input type="text" name="fecha_delegatura_fin" id="fecha_delegatura_fin" value="" class="form-control form-control-sm" readonly="readonly">
@@ -491,18 +500,7 @@ label.form-control-sm{
 															<option value="">--Concurso--</option>
 															<?php
 															foreach ($concurso as $row) {?>
-															<option value="<?php echo $row->id?>"><?php echo $row->periodo." ".$row->tipo_concurso?></option>
-															<?php 
-															}
-															?>
-														</select>
-													</div>
-													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-														<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm" >
-															<option value="">--Regional--</option>
-															<?php
-															foreach ($region as $row) {?>
-															<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+															<option value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 															<?php 
 															}
 															?>
@@ -529,6 +527,14 @@ label.form-control-sm{
 														</select>
 													</div>
 													
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<select name="id_estado_bus" id="id_estado_bus" class="form-control form-control-sm">
+															<option value="">--Estado--</option>
+															<option value="Ingreso">Ingreso</option>
+															<option value="No Ingreso">No Ingreso</option>
+														</select>
+													</div>
+													
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 														<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
@@ -544,14 +550,16 @@ label.form-control-sm{
 														<th>Id</th>
 														<th>Periodo</th>
 														<th>Tipo Concurso</th>
-														<th>Fecha</th>
+														<th>Puesto</th>
+														<th>Fecha Inscripci&oacute;n</th>
 														<th>Codigo Pago</th>
 														<th>N&deg; CAP</th>
 														<th>N&deg; DNI</th>
 														<th>Nombre</th>
+														<th>Situaci&oacute;n</th>
 														<th>Puntaje</th>
 														<th>Estado</th>
-														<th>Acciones</th>
+														<th class="text-center">Acciones</th>
 													</tr>
 													</thead>
 													<tbody>

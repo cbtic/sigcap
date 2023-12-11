@@ -1,4 +1,4 @@
-<title>Sistema de Conceptos</title>
+<title>Sistema SIGCAP</title>
 
 <style>
 /*

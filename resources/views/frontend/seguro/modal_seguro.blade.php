@@ -109,6 +109,7 @@
 
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>-->
 <script type="text/javascript">
+
 /*
 jQuery(function($){
 $.mask.definitions['H'] = "[0-1]";
@@ -164,6 +165,29 @@ function validacion(){
 }
 
 
+function valida(){
+	var mensaje= "0";
+
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var id_regional = $('#id_regional').val();
+	var nombre = $('#denominacion_').val();
+	var descripcion =$('#descripcion_').val();	
+
+	if (nombre==""){
+	   mensaje= "Falta ingresar la denominacion del Seguro";
+
+	}
+
+	if (mensaje=="0")[
+		fn_save()		
+		]
+	else {
+		Swal.fire(mensaje);
+	}
+
+}
+
 function fn_save(){
     
 	var _token = $('#_token').val();
@@ -171,6 +195,7 @@ function fn_save(){
 	var id_regional = $('#id_regional').val();
 	var nombre = $('#denominacion_').val();
 	var descripcion =$('#descripcion_').val();	
+
     $.ajax({
 			url: "/seguro/send_seguro",
             type: "POST",
@@ -183,6 +208,7 @@ function fn_save(){
 								
             }
     });
+
 }
 
 
@@ -228,11 +254,11 @@ function fn_save(){
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
-								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
+								<select name="id_regional" readonly id="id_regional" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($region as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$seguro->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php 
 									}
 									?>
@@ -372,7 +398,7 @@ function fn_save(){
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 								
 							</div>
 												
