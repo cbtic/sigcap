@@ -283,9 +283,11 @@ function obtenerComisionDelegado(){
 		url: '/sesion/obtener_comision_delegado/'+id_comision,
 		dataType: "json",
 		success: function(result){
+			var delegado = result.delegado;
+			var dia_semana = result.dia_semana[0];
 			var option = "";
 			$('#tblDelegado tbody').html("");
-			$(result).each(function (ii, oo) {
+			$(delegado).each(function (ii, oo) {
 				option += "<tr style='font-size:13px'>";
 				option += "<input type='hidden' name='id_delegado[]' value='"+oo.id+"'>";
 				option += "<td class='text-left'>"+oo.puesto+"</td>";
@@ -296,6 +298,9 @@ function obtenerComisionDelegado(){
 				option += "</tr>";
 			});
 			$('#tblDelegado tbody').html(option);
+			
+			$("#dia_semana").val(dia_semana.denominacion);
+			$("#id_dia_semana").val(dia_semana.codigo);
 		}
 		
 	});

@@ -113,11 +113,17 @@ class SesionController extends Controller
 	}
 	
 	public function obtener_comision_delegado($id_comision){
-			
+		
+		$tablaMaestra_model = new TablaMaestra;	
 		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
 		$delegado = $comisionSesionDelegado_model->getComisionDelegadosByIdComision($id_comision);
-		echo json_encode($delegado);
-		
+		$comision = Comisione::find($id_comision);
+		$dia_semana = $tablaMaestra_model->getMaestroC("70", $comision->id_dia_semana);
+		//print_r($dia_semana);
+		$data["dia_semana"] = $dia_semana;
+		$data["delegado"] = $delegado;
+		//echo json_encode($delegado);
+		echo json_encode($data);
 	}
 	
 	public function send_sesion(Request $request){
@@ -131,21 +137,22 @@ class SesionController extends Controller
 			$comisionSesion = ComisionSesione::find($request->id);
 		}
 		
-		//$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+		$comision = Comisione::find($request->id_comision);
+		$fecha_inicio = $comision->fecha_inicio;
+		$fecha_fin = $comision->fecha_fin;
+		exit();
 		
 		$comisionSesion->id_regional = $request->id_regional;
 		$comisionSesion->id_periodo_comisione = $request->id_periodo_comisione;
 		$comisionSesion->id_tipo_sesion = $request->id_tipo_sesion;
-		$comisionSesion->fecha_programado = $request->fecha_programado;
-		$comisionSesion->fecha_ejecucion = $request->fecha_ejecucion;
-		$comisionSesion->hora_inicio = $request->hora_inicio;
-		$comisionSesion->hora_fin = $request->hora_fin;
-		$comisionSesion->id_aprobado = $request->id_aprobado;
+		//$comisionSesion->fecha_programado = $request->fecha_programado;
+		//$comisionSesion->fecha_ejecucion = $request->fecha_ejecucion;
+		//$comisionSesion->hora_inicio = $request->hora_inicio;
+		//$comisionSesion->hora_fin = $request->hora_fin;
+		//$comisionSesion->id_aprobado = $request->id_aprobado;
 		$comisionSesion->observaciones = $request->observaciones;
 		$comisionSesion->id_comision = $request->id_comision;
-		$comisionSesion->id_estado_sesion = $request->id_estado_sesion;
-		//$comisionDelegado->id_agremiado = $concursoInscripcion->id_agremiado;
-		//$comisionDelegado->id_puesto = $concursoInscripcion->puesto_postula;
+		$comisionSesion->id_estado_sesion = 288;
 		$comisionSesion->estado = 1;
 		$comisionSesion->id_usuario_inserta = $id_user;
 		$comisionSesion->save();

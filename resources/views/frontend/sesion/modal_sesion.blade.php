@@ -275,12 +275,12 @@ function fn_save(){
 	var id_comision = $('#id_comision').val();
 	var id_regional = $('#id_regional').val();
 	var id_tipo_sesion = $('#id_tipo_sesion').val();
-	var fecha_programado = $('#fecha_programado').val();
-	var hora_inicio = $('#hora_inicio').val();
-	var hora_fin = $('#hora_fin').val();
-	var fecha_ejecucion = $('#fecha_ejecucion').val();
+	//var fecha_programado = $('#fecha_programado').val();
+	//var hora_inicio = $('#hora_inicio').val();
+	//var hora_fin = $('#hora_fin').val();
+	//var fecha_ejecucion = $('#fecha_ejecucion').val();
 	var observaciones = $('#observaciones').val();
-	var id_estado_sesion = $('#id_estado_sesion').val();
+	//var id_estado_sesion = $('#id_estado_sesion').val();
 	//alert($('#frmSesion').serialize());return false;
     $.ajax({
 			url: "/sesion/send_sesion",
@@ -545,6 +545,7 @@ function obtenerComisionEdit(id_periodo,id_comision){
 							<div class="form-group">
 								<label class="control-label form-control-sm">Dia Semana</label>
 								<input type="text" id="dia_semana" name="dia_semana" class="form-control form-control-sm" value="" readonly="readonly">
+								<input type="hidden" id="id_dia_semana" name="id_dia_semana" class="form-control form-control-sm" value="">
 							</div>
 						</div>
 														

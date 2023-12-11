@@ -47,7 +47,7 @@ class TablaMaestra extends Model
     }
     function getMaestroC($tipo, $codigo){
 
-        $cad = "select id,denominacion 
+        $cad = "select id,denominacion,codigo  
                 from tabla_maestras 
                 where tipo='".$tipo."' 
                 and codigo ='".$codigo."'
