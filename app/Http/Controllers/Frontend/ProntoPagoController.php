@@ -15,7 +15,8 @@ class ProntoPagoController extends Controller
         
 		$concepto_model = new Concepto;
 		$concepto = $concepto_model->getConceptoAll();
-        return view('frontend.prontoPago.all',compact('concepto'));
+		$prontoPago = new ProntoPago;
+        return view('frontend.prontoPago.all',compact('concepto','prontoPago'));
 
     }
 	

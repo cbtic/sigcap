@@ -147,18 +147,22 @@
 					</div>
 					
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-							<div style="float:left;padding-top:7px">F.Ini</div>
+							<!--<div style="float:left;padding-top:7px">F.Ini</div>
 							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
 								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control">
 								
-							</div>
+							</div>-->
+                            
+                            
+                            <input id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio" class="form-control form-control-sm"  value="<?php if($prontoPago->fecha_inicio!="")echo date('d-m-Y',strtotime($prontoPago->fecha_inicio))?>" type="text"  >
+                           
 						</div>
+
+                        
+
 						<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-							<div style="float:left;padding-top:7px">F.Fin</div>
-							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control">
-							   
-							</div>
+                            <input id="fecha_fin" name="fecha_fin" placeholder="Fecha Fin" class="form-control form-control-sm"  value="<?php if($prontoPago->fecha_fin!="")echo date('d-m-Y',strtotime($prontoPago->fecha_fin))?>" type="text"  >
+                           
 							<!--<input class="form-control form-control-sm" id="fecha" name="fecha" placeholder="Fecha">-->
 						</div>
 
