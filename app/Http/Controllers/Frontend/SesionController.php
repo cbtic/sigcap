@@ -131,19 +131,64 @@ class SesionController extends Controller
 		
 		$id_delegado = $request->id_delegado;
 		
+		/*
 		if($request->id == 0){
 			$comisionSesion = new ComisionSesione;
 		}else{
 			$comisionSesion = ComisionSesione::find($request->id);
 		}
+		*/
 		
-		$comision = Comisione::find($request->id_comision);
-		$fecha_inicio = $comision->fecha_inicio;
-		$fecha_fin = $comision->fecha_fin;
-		exit();
+		//$comision = Comisione::find($request->id_comision);
+		$periodoComision = PeriodoComisione::find($request->id_periodo);
+		$fecha_inicio = $periodoComision->fecha_inicio;
+		$fecha_fin = $periodoComision->fecha_fin;
+		//echo $fecha_inicio;
+		//echo $fecha_fin;
+		$fechaInicio=strtotime($fecha_inicio);
+		$fechaFin=strtotime($fecha_fin);
 		
+		$dia_semana = $request->dia_semana;
+		
+		$dias = array('LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO','DOMINGO');
+		//$dia = $dias[(date('N', $fechaInicio)) - 1];
+		//echo utf8_encode($dia);
+		//exit();
+		
+		//echo "dia es : ".date("w");
+		//86400 es el número de segundos que tiene 1 día
+		for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
+			$fechaInicioTemp = date("d-m-Y", $i);
+			//echo $fechaInicioTemp;
+			$dia = $dias[(date('N', strtotime($fechaInicioTemp))) - 1];
+			//echo $dia_semana."|".$dia;
+			if($dia_semana == $dia){
+				//echo $fechaInicioTemp;
+				$comisionSesion = new ComisionSesione;
+				$comisionSesion->id_regional = $request->id_regional;
+				$comisionSesion->id_periodo_comisione = $request->id_periodo;
+				$comisionSesion->id_tipo_sesion = $request->id_tipo_sesion;
+				$comisionSesion->fecha_programado = $fechaInicioTemp;
+				//$comisionSesion->fecha_ejecucion = $request->fecha_ejecucion;
+				//$comisionSesion->hora_inicio = $request->hora_inicio;
+				//$comisionSesion->hora_fin = $request->hora_fin;
+				//$comisionSesion->id_aprobado = $request->id_aprobado;
+				$comisionSesion->observaciones = $request->observaciones;
+				$comisionSesion->id_comision = $request->id_comision;
+				$comisionSesion->id_estado_sesion = 288;
+				$comisionSesion->estado = 1;
+				$comisionSesion->id_usuario_inserta = $id_user;
+				$comisionSesion->save();
+				//$id_comision_sesion = $comisionSesion->id;
+				
+			}
+		}
+		
+		//exit();
+		
+		/*
 		$comisionSesion->id_regional = $request->id_regional;
-		$comisionSesion->id_periodo_comisione = $request->id_periodo_comisione;
+		$comisionSesion->id_periodo_comisione = $request->id_periodo;
 		$comisionSesion->id_tipo_sesion = $request->id_tipo_sesion;
 		//$comisionSesion->fecha_programado = $request->fecha_programado;
 		//$comisionSesion->fecha_ejecucion = $request->fecha_ejecucion;
@@ -169,7 +214,7 @@ class SesionController extends Controller
 			$comisionSesionDelegado->id_usuario_inserta = $id_user;
 			$comisionSesionDelegado->save();
 		}
-		
+		*/
 			
     }
 	
