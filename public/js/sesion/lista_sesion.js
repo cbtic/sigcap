@@ -16,7 +16,21 @@ $(document).ready(function () {
 			datatablenew();
 		}
 	});
-		
+	
+	$('#fecha_inicio_bus').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
+	$('#fecha_fin_bus').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
 	datatablenew();
 
 	$(function() {
@@ -510,9 +524,11 @@ function datatablenew(){
 			var id_comision = $('#id_comision_bus').val();
 			var id_tipo_sesion = $('#id_tipo_sesion_bus').val();
 			var id_estado_sesion = $('#id_estado_sesion_bus').val();
-			//var id_concurso = $('#id_concurso_bus').val();
-			
+			var id_estado_aprobacion = $('#id_estado_aprobacion_bus').val();
+			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
+			var fecha_fin_bus = $('#fecha_fin_bus').val();
 			var _token = $('#_token').val();
+			
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 //"contentType": "application/json; charset=utf-8",
@@ -520,7 +536,9 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_regional:id_regional,id_periodo:id_periodo,id_comision:id_comision,
-						id_tipo_sesion:id_tipo_sesion,id_estado_sesion:id_estado_sesion,/*id_concurso:id_concurso,*/
+						id_tipo_sesion:id_tipo_sesion,id_estado_sesion:id_estado_sesion,
+						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
+						id_estado_aprobacion:id_estado_aprobacion,
 						_token:_token
                        },
                 "success": function (result) {
@@ -586,7 +604,6 @@ function datatablenew(){
                 "aTargets": [3],
 				"className": "dt-center",
                 },
-				
 				{
                 "mRender": function (data, type, row) {
                 	var fecha_ejecucion = "";
@@ -596,7 +613,7 @@ function datatablenew(){
                 "bSortable": true,
                 "aTargets": [4]
                 },
-				
+				/*
                 {
                 "mRender": function (data, type, row) {
                 	var hora_inicio = "";
@@ -616,7 +633,7 @@ function datatablenew(){
                 "bSortable": true,
                 "aTargets": [6]
                 },
-				
+				*/
 				{
                 "mRender": function (data, type, row) {
                 	var tipo_sesion = "";
@@ -624,7 +641,7 @@ function datatablenew(){
 					return tipo_sesion;
                 },
                 "bSortable": true,
-                "aTargets": [7]
+                "aTargets": [5]
                 },
 				
 				{
@@ -634,17 +651,27 @@ function datatablenew(){
 					return estado_sesion;
                 },
                 "bSortable": true,
-                "aTargets": [8]
+                "aTargets": [6]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var estado_aprobacion = "";
+					if(row.estado_aprobacion!= null)estado_aprobacion = row.estado_aprobacion;
+					return estado_aprobacion;
+                },
+                "bSortable": true,
+                "aTargets": [7]
                 },
 				
 				{
                 "mRender": function (data, type, row) {
                 	var newRow = "";
-					newRow="<button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalSesion('"+row.id+"') ><i class='fa fa-edit'></i> Editar</button>"
+					newRow="<button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalSesion('"+row.id+"') ><i class='fa fa-edit'></i> Editar - Ejecutar</button>"
 					return newRow;
                 },
                 "bSortable": true,
-                "aTargets": [9]
+                "aTargets": [8]
                 },
 
             ]

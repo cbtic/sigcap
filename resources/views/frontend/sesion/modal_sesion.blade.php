@@ -441,7 +441,20 @@ var id_periodo = "<?php echo $comision->id_periodo_comisiones?>";
 var id_comision = "<?php echo $comisionSesion->id_comision?>";
 //alert(id);
 
-if(id>0)obtenerComisionEdit(id_periodo,id_comision);
+$("#id_comision").attr("disabled",false);
+$("#id_tipo_sesion").attr("disabled",false);
+$("#id_periodo").attr("disabled",false);
+$("#id_regional").attr("disabled",false);
+$("#observaciones").attr("disabled",false);
+
+if(id>0){
+	obtenerComisionEdit(id_periodo,id_comision);
+	$("#id_comision").attr("disabled",true);
+	$("#id_tipo_sesion").attr("disabled",true);
+	$("#id_periodo").attr("disabled",true);
+	$("#id_regional").attr("disabled",true);
+	$("#observaciones").attr("disabled",true);
+}
 
 function obtenerComisionEdit(id_periodo,id_comision){
 	
@@ -544,8 +557,8 @@ function obtenerComisionEdit(id_periodo,id_comision){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Dia Semana</label>
-								<input type="text" id="dia_semana" name="dia_semana" class="form-control form-control-sm" value="" readonly="readonly">
-								<input type="hidden" id="id_dia_semana" name="id_dia_semana" class="form-control form-control-sm" value="">
+								<input type="text" id="dia_semana" name="dia_semana" class="form-control form-control-sm" value="<?php if($dia_semana!=null){echo $dia_semana[0]->denominacion;}?>" readonly="readonly">
+								<input type="hidden" id="id_dia_semana" name="id_dia_semana" class="form-control form-control-sm" value="<?php if($dia_semana!=null){echo $dia_semana[0]->codigo;}?>">
 							</div>
 						</div>
 														
@@ -564,17 +577,23 @@ function obtenerComisionEdit(id_periodo,id_comision){
 							</div>
 						</div>
 						
-						<!--
+						<?php if($id>0){?>
 						<div class="col-lg-4">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha Programaci&oacute;n</label>
-								<input id="fecha_programado" name="fecha_programado" class="form-control form-control-sm"  value="<?php //if($comisionSesion->fecha_programado!="")echo date("d-m-Y", strtotime($comisionSesion->fecha_programado))?>" type="text">
+								<label class="control-label form-control-sm">F. Programaci&oacute;n</label>
+								<input id="fecha_programado" name="fecha_programado" class="form-control form-control-sm"  value="<?php if($comisionSesion->fecha_programado!="")echo date("d-m-Y", strtotime($comisionSesion->fecha_programado))?>" type="text" disabled="disabled">
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Ejecuci&oacute;n</label>
+								<input id="fecha_ejecucion" name="fecha_ejecucion" class="form-control form-control-sm"  value="<?php if($comisionSesion->fecha_ejecucion!="")echo date("d-m-Y", strtotime($comisionSesion->fecha_ejecucion))?>" type="text">
 							</div>
 						</div>
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Hora Inicio</label>
-								<input id="hora_inicio" name="hora_inicio" class="form-control form-control-sm" value="<?php //echo $comisionSesion->hora_inicio?>" type="time">
+								<input id="hora_inicio" name="hora_inicio" class="form-control form-control-sm" value="<?php echo $comisionSesion->hora_inicio?>" type="time">
 								
 							</div>
 						</div>
@@ -582,11 +601,52 @@ function obtenerComisionEdit(id_periodo,id_comision){
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Hora Fin</label>
-								<input id="hora_fin" name="hora_fin" class="form-control form-control-sm" value="<?php //echo $comisionSesion->hora_fin?>" type="time">
+								<input id="hora_fin" name="hora_fin" class="form-control form-control-sm" value="<?php echo $comisionSesion->hora_fin?>" type="time">
 								
 							</div>
 						</div>
-						-->
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Estado Sesi&oacute;n</label>
+								<select name="id_estado_sesion" id="id_estado_sesion" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($estado_sesion as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comisionSesion->id_estado_sesion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Aprobaci&oacute;n Sesi&oacute;n</label>
+								<select name="id_estado_aprobacion" id="id_estado_aprobacion" class="form-control form-control-sm">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($estado_sesion_aprobado as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php 
+									if($comisionSesion->id_estado_aprobacion>0){
+										if($row->codigo==$comisionSesion->id_estado_aprobacion){
+											echo "selected='selected'";
+										}
+									}else{
+										if($row->codigo=="1"){
+											echo "selected='selected'";
+										}
+									}
+									?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						
+						<?php } ?>
 																	
 					</div>
 					
@@ -666,7 +726,12 @@ function obtenerComisionEdit(id_periodo,id_comision){
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+								<?php //if($id==0){?>
 								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<?php //}else{?>
+								<!--<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide')" class="btn btn-sm btn-warning">Cerrar</a>-->
+								<?php //} ?>
+								
 							</div>
 												
 						</div>
