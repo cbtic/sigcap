@@ -594,6 +594,7 @@ function fn_DevuelveSubGrilla(piIdMovimientoCompra, vNombreSubDataTable,row,tr) 
         	sInicio += '<thead>';
             sInicio += '<tr style="font-size:13px">';
 			sInicio += '<th style="text-align: left;">Delegado</th>';
+			sInicio += '<th style="text-align: left;">Coordinador</th>';
 			sInicio += '<th style="text-align: right;">N&deg; CAP</th>';
 			sInicio += '<th style="text-align: right;">Situaci&oacute;n</th>';
 			sInicio += '<th style="text-align: right;">Tipo de Titular</th>';
@@ -608,8 +609,11 @@ function fn_DevuelveSubGrilla(piIdMovimientoCompra, vNombreSubDataTable,row,tr) 
 			var delegado = "";
 			$.each(result, function (index , value) {
 				delegado = value.apellido_paterno + " " + value.apellido_materno + " " + value.nombres;
+				var coordinador = "NO";
+				if(value.coordinador==1)coordinador = "SI";
 				sIntermedio += '<tr style="font-size:13px">';
 				sIntermedio +='<td style="text-align: left;">' + delegado+ '</td>';
+				sIntermedio +='<td style="text-align: left;">' + coordinador+ '</td>';
 				sIntermedio +='<td style="text-align: right;">' + value.numero_cap+ '</td>';
 				sIntermedio +='<td style="text-align: right;">' + value.situacion+ '</td>';
 				sIntermedio +='<td style="text-align: right;">' + value.puesto+ '</td>';

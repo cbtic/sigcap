@@ -689,17 +689,25 @@ function obtenerComisionEdit(id_periodo,id_comision){
 											<th>Delegado</th>
 											<th>CAP</th>
 											<th>Situaci&oacute;n</th>
+											<th>Coordinador</th>
+											<th>Aprobar Pago</th>
 											<th>Editar</th>
 										</tr>
 										</thead>
 										<tbody>
 										<?php foreach ($delegados as $row) {?>
 										<tr style='font-size:13px'>
-											<input type='hidden' name='id_delegado[]' value='"+oo.id+"'>
+											<input type='hidden' name='id_delegado[]' value='<?php echo $row->id_delegado?>'>
 											<td class='text-left'><?php echo $row->puesto; echo $row->profesion ?></td>
 											<td class='text-left'><?php echo $row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></td>
 											<td class='text-left'><?php echo $row->numero_cap?></td>
 											<td class='text-left'><?php echo $row->situacion?></td>
+											<td class='text-center'>
+											<input type="radio" name="coordinador" value="<?php echo $row->id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> />
+											</td>
+											<td class='text-center'>
+											<input type="checkbox" name="id_aprobar_pago[<?php echo $row->id_delegado?>]" value="<?php echo $row->id_delegado?>" <?php if($row->id_aprobar_pago==2)echo "checked='checked'"?> />
+											</td>
 											<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('<?php echo $row->id?>') ><i class='fa fa-edit'></i> Editar</button></td>
 										<?php } ?>
 										</tbody>
