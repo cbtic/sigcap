@@ -335,16 +335,18 @@ function fn_save_comision(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
+	var dia_semana = $('#dia_semana').val();
 	
     $.ajax({
-			url: "/concepto/send_concepto_nuevoConcepto",
+			url: "/comision/send_dia_semana",
             type: "POST",
-            data : {_token:_token,id:id},
+            data : {_token:_token,id:id,dia_semana:dia_semana},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
-				datatablenew();
+				fn_guardarMunicipalidadIntegrada();
+				//datatablenew();
 				
 				/*
 				$('#openOverlayOpc').modal('hide');
@@ -535,15 +537,15 @@ container: '#myModal modal-body'
 						<div class="col-lg-6">
 						<div class="form-group">
 							<label class="control-label form-control-sm">D&iacute;a de Semana</label>
-                            <select name="dia_semana" id="dia_semana" class="form-control form-control-sm" onChange="">
+                            <!--<select name="dia_semana" id="dia_semana" class="form-control form-control-sm" onChange="">
                                 <option value="">--Selecionar--</option>
                                 <?php
-                                foreach ($dia_semana as $row) {?>
+                                /*foreach ($dia_semana as $row) {?>
                                 <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comision->id_dia_semana)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
-                                }
+                                }*/
                                 ?>
-                            </select>
+                            </select>-->
                         </div>
 						</div>
 					</div>

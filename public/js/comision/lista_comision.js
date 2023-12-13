@@ -9,6 +9,10 @@ $(document).ready(function () {
 		modalAsignarDelegado(0);
 	});
 
+	/*$('#btnNuevoComision').click(function () {
+		modal_dia_semana(0);
+	});*/
+
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -275,6 +279,22 @@ function modalAsignarDelegado(id){
 	});
 
 }
+
+/*function modal_dia_semana(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/comision/modal_dia_semana/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}*/
 
 function modalPuestos(id){
 	
@@ -547,7 +567,7 @@ function fn_ListarBusqueda() {
 
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
     //fn_util_bloquearPantalla("Buscando");
-    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, 001);//500
+    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) });//500
 }
 
 function fn_CargaSuGrilla(pValor, piIdMovimientoCompra) {

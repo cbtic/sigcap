@@ -30,6 +30,8 @@ use App\Http\Controllers\Frontend\PeriodoComisionController;
 use App\Http\Controllers\Frontend\MovilidadController;
 use App\Http\Controllers\Frontend\ProfesionController;
 use App\Http\Controllers\Frontend\ProfesionalesOtroController;
+use App\Http\Controllers\Frontend\RevisorUrbanoController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -389,5 +391,11 @@ Route::get('persona/buscar_persona2/{numero_documento}', [PersonaController::cla
 Route::get('persona/buscar_numero_documento/{numero_documento}', [PersonaController::class, 'buscar_numero_documento'])->name('persona.buscar_numero_documento');
 
 Route::get('persona/modal_personaNuevo', [PersonaController::class, 'modal_personaNuevo'])->name('persona.modal_personaNuevo');
+Route::get('comision/modalDiaSemana/{id}', [ComisionController::class, 'modalDiaSemana'])->name('comision.modalDiaSemana');
+
+Route::get('revisorUrbano/consulta_revisorUrbano', [RevisorUrbanoController::class, 'consulta_revisorUrbano'])->name('revisorUrbano.consulta_revisorUrbano');
+Route::post('revisorUrbano/listar_revisorUrbano_ajax', [RevisorUrbanoController::class, 'listar_revisorUrbano_ajax'])->name('revisorUrbano.listar_revisorUrbano_ajax');
+Route::get('revisorUrbano/editar_revisorUrbano/{id}', [RevisorUrbanoController::class, 'editar_revisorUrbano'])->name('revisorUrbano.editar_revisorUrbano');
+Route::get('revisorUrbano/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [RevisorUrbanoController::class, 'modal_revisorUrbano_nuevoRevisorUrbano'])->name('revisorUrbano.modal_revisorUrbano_nuevoRevisorUrbano');
 
 
