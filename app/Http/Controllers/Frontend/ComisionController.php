@@ -454,71 +454,31 @@ class ComisionController extends Controller
 
 	public function modalDiaSemana($id){
 		
-		$comision_model = Comisione::find($id);
-		$comision = $comision_model->id_comision;
+		//$comision = Comisione::find($id);
+		$comision_model = new Comisione;
+		$comision = new Comisione;
+		//$comision = $comision_model->id_comision;
+		//$comision = $comision_model->getDiaComisionAll();
 		$tablaMaestra_model = new TablaMaestra;
 		//$comision = $comision_model
 		$dia_semana = $tablaMaestra_model->getMaestroByTipo(70);
-
 		
-		return view('frontend.comision.modalDiaSemana',compact('id','dia_semana'));
+		return view('frontend.comision.modalDiaSemana',compact('id','dia_semana','comision'));
 
     }
 
 	public function send_dia_semana(Request $request){
 
-		//print_r($request->periodo).exit();
 		$id_user = Auth::user()->id;
-		$sw = true;
-		//$msg = "";
-
-		$municipalidades = $request->check_;
-		$denominacion = "";
-		foreach($municipalidades as $row){	
-			$municipalidad = Municipalidade::find($row);
-			$denominacion .= $municipalidad->denominacion." - ";
+		print_r($request->dia_semana).exit();
+		if($request->id == 0){
+			$comision = new Comisione;
+		}else{
+			$comision = Comisione::find($request->id);
 		}
-
-		if($denominacion!=""){
-
-			if($request->periodo!="")
-			{
-				$denominacion = substr($denominacion,0,strlen($denominacion)-3);
 		
-				$municipalidadIntegrada = new MunicipalidadIntegrada();
-				$municipalidadIntegrada->denominacion = $denominacion;
-				$municipalidadIntegrada->id_vigencia = 374;
-				if(count($municipalidades)>1){
-					$municipalidadIntegrada->id_tipo_agrupacion = 1;
-				}else{
-					$municipalidadIntegrada->id_tipo_agrupacion = 2;}
-				/*}*/
-				
-				$municipalidadIntegrada->id_regional = 5;
-				$municipalidadIntegrada->id_periodo_comision = $request->periodo;
-				//$municipalidadIntegrada->id_coodinador = 1;
-				$municipalidadIntegrada->id_usuario_inserta = $id_user;
-
-				$municipalidadIntegrada->save();
-				$id_municipalidad_integrada = $municipalidadIntegrada->id;
-	
-				foreach($municipalidades as $row){	
-					$mucipalidadDetalle = new MucipalidadDetalle();
-					$mucipalidadDetalle->id_municipalidad = $row;
-					$mucipalidadDetalle->id_municipalidad_integrada = $id_municipalidad_integrada;
-					$mucipalidadDetalle->id_usuario_inserta = $id_user;
-					//$mucipalidadDetalle->estado = "1";
-					$mucipalidadDetalle->save();
-				}
-			}
-			else {
-				$sw = false;
-				//$msg = "Debe ingresar el periodo !!!";
-			}
-		}
-		$array["sw"] = $sw;
-			//$array["msg"] = $msg;
-			echo json_encode($array);
-
+		$comision->id_dia_semana = $request->dia_semana;
+		
+		//$comision->save();
     }
 }

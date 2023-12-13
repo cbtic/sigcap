@@ -727,7 +727,7 @@ function modalDiaSemana(id){
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/comision/modal_dia_semana/"+id,
+			url: "/comision/modalDiaSemana/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);

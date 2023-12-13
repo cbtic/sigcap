@@ -233,110 +233,13 @@ function validacion(){
     }
 }
 
-function guardarCita__(){
-	alert("fdssf");
-}
-
-function guardarCita(id_medico,fecha_cita){
-    
-    var msg = "";
-    var id_ipress = $('#id_ipress').val();
-    var id_consultorio = $('#id_consultorio').val();
-    var fecha_atencion = $('#fecha_atencion').val();
-    var dni_beneficiario = $("#dni_beneficiario").val();
-	//alert(id_ipress);
-	if(dni_beneficiario == "")msg += "Debe ingresar el numero de documento <br>";
-    if(id_ipress==""){msg+="Debe ingresar una Ipress<br>";}
-    if(id_consultorio==""){msg+="Debe ingresar un Consultorio<br>";}
-    if(fecha_atencion==""){msg+="Debe ingresar una fecha de atencion<br>";}
-   
-    if(msg!=""){
-        bootbox.alert(msg); 
-        return false;
-    }
-    else{
-        fn_save_cita(id_medico,fecha_cita);
-    }
-}
-
-function fn_save_estudio(){
-    
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var id_agremiado = $('#id_agremiado').val();
-	var id_universidad = $('#id_universidad').val();
-	var id_especialidad = $('#id_especialidad').val();
-	var tesis = $('#tesis').val();
-	var fecha_egresado = $('#fecha_egresado').val();
-	var fecha_graduado = $('#fecha_graduado').val();
-	var libro = $('#libro').val();
-	var folio = $('#folio').val();
-	
-	//alert(id_agremiado);
-	//return false;
-	
-    $.ajax({
-			url: "/agremiado/send_agremiado_estudio",
-            type: "POST",
-            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_universidad:id_universidad,id_especialidad:id_especialidad,tesis:tesis,fecha_egresado:fecha_egresado,fecha_graduado:fecha_graduado,libro:libro,folio:folio},
-            success: function (result) {
-				
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
-            }
-    });
-}
-
-function fn_save_empresa(){
-    
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var ruc = $('#ruc').val();
-	var nombre_comercial = $('#nombre_comercial').val();
-	var razon_social = $('#razon_social').val();
-	var direccion = $('#direccion').val();
-	var representante = $('#representante').val();
-	//var estado = $('#estado').val();
-	
-	//alert(id_agremiado);
-	//return false;
-	
-    $.ajax({
-			url: "/empresa/send_empresa_nuevoEmpresa",
-            type: "POST",
-            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,representante:representante},
-            success: function (result) {
-				
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
-            }
-    });
-}
-
-function fn_save_comision(){
+function fn_save_dia_semana(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var dia_semana = $('#dia_semana').val();
-	
+	//alert(dia_semana).exit();
+	//alert(_token).exit();
     $.ajax({
 			url: "/comision/send_dia_semana",
             type: "POST",
@@ -344,8 +247,10 @@ function fn_save_comision(){
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
+				window.location.reload();
+				datatablenew();
 				//window.location.reload();
-				fn_guardarMunicipalidadIntegrada();
+				//fn_guardarMunicipalidadIntegrada(); ---quitar
 				//datatablenew();
 				
 				/*
@@ -360,143 +265,6 @@ function fn_save_comision(){
     });
 }
 
-function fn_liberar(id){
-    
-	//var id_estacionamiento = $('#id_estacionamiento').val();
-	var _token = $('#_token').val();
-	
-    $.ajax({
-			url: "/estacionamiento/liberar_asignacion_estacionamiento_vehiculo",
-            type: "POST",
-            data : {_token:_token,id:id},
-            success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				cargarAsignarEstacionamiento();
-            }
-    });
-}
-
-
-function validarLiquidacion() {
-	
-	var msg = "";
-	var sw = true;
-	
-	var saldo_liquidado = $('#saldo_liquidado').val();
-	var estado = $('#estado').val();
-	
-	if(saldo_liquidado == "")msg += "Debe ingresar un saldo liquidado <br>";
-	if(estado == "")msg += "Debe ingresar una observacion <br>";
-	
-	if(msg!=""){
-		bootbox.alert(msg);
-		//return false;
-	} else {
-		//submitFrm();
-		document.frmLiquidacion.submit();
-	}
-	return false;
-}
-
-
-function obtenerVehiculo(id,obj){
-	
-	//$("#tblPlan tbody text-white").attr('class','bg-primary text-white');
-	if(obj!=undefined){
-		$("#tblSinReservaEstacionamiento tbody tr").each(function (ii, oo) {
-			var clase = $(this).attr("clase");
-			$(this).attr('class',clase);
-		});
-		
-		$(obj).attr('class','bg-success text-white');
-	}
-	//$('#tblPlanDetalle tbody').html("");
-	$('#id_empresa').val(id);
-	var id_estacionamiento = $('#id_estacionamiento').val();
-	$.ajax({
-		url: '/estacionamiento/obtener_vehiculo/'+id+'/'+id_estacionamiento,
-		dataType: "json",
-		success: function(result){
-			
-			var newRow = "";
-			$('#tblPlanDetalle').dataTable().fnDestroy(); //la destruimos
-			$('#tblPlanDetalle tbody').html("");
-			$(result).each(function (ii, oo) {
-				newRow += "<tr class='normal'><td>"+oo.placa+"</td>";
-				newRow += '<td class="text-left" style="padding:0px!important;margin:0px!important">';
-				newRow += '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-				newRow += '<a href="javascript:void(0)" onClick=fn_save("'+oo.id_vehiculo+'") class="btn btn-sm btn-normal">';
-				newRow += '<i class="fa fa-2x fa-check" style="color:green"></i></a></a></div></td></tr>';
-			});
-			$('#tblPlanDetalle tbody').html(newRow);
-			
-			$('#tblPlanDetalle').DataTable({
-				//"sPaginationType": "full_numbers",
-				"paging":false,
-				"dom": '<"top">rt<"bottom"flpi><"clear">',
-				"language": {"url": "/js/Spanish.json"},
-			});
-			
-			$("#system-search2").keyup(function() {
-				var dataTable = $('#tblPlanDetalle').dataTable();
-			   dataTable.fnFilter(this.value);
-			});
-			
-		}
-		
-	});
-	
-}
-
-function cargar_tipo_proveedor(){
-	
-	var tipo_proveedor = 0;
-	if($('#tipo_proveedor_').is(":checked"))tipo_proveedor = 1;
-	
-	$("#divPersona").hide();
-	$("#divEmpresa").hide();
-	
-	$("#empresa_").val("");
-	$("#persona_").val("");
-	
-	$("#id_empresa").val("");
-	$("#id_persona").val("");
-	
-	if(tipo_proveedor==0)$("#divPersona").show();
-	if(tipo_proveedor==1)$("#divEmpresa").show();
-	
-}
-
-/*
-$('#fecha_solicitud').datepicker({
-	autoclose: true,
-	dateFormat: 'dd-mm-yy',
-	changeMonth: true,
-	changeYear: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-/*
-$('#fecha_solicitud').datepicker({
-	format: "dd/mm/yyyy",
-	startDate: "01-01-2015",
-	endDate: "01-01-2020",
-	todayBtn: "linked",
-	autoclose: true,
-	todayHighlight: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-
-/*				
-format: "dd/mm/yyyy",
-startDate: "01-01-2015",
-endDate: "01-01-2020",
-todayBtn: "linked",
-autoclose: true,
-todayHighlight: true,
-container: '#myModal modal-body'
-*/	
 </script>
 
 
@@ -519,7 +287,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro de D&iacute; de Semana
+				Registrar D&iacute;a de Semanana
 			</div>
 			
             <div class="card-body">
@@ -537,15 +305,15 @@ container: '#myModal modal-body'
 						<div class="col-lg-6">
 						<div class="form-group">
 							<label class="control-label form-control-sm">D&iacute;a de Semana</label>
-                            <!--<select name="dia_semana" id="dia_semana" class="form-control form-control-sm" onChange="">
+                            <select name="dia_semana" id="dia_semana" class="form-control form-control-sm" onChange="">
                                 <option value="">--Selecionar--</option>
                                 <?php
-                                /*foreach ($dia_semana as $row) {?>
+                                foreach ($dia_semana as $row) {?>
                                 <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comision->id_dia_semana)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
-                                }*/
+                                }
                                 ?>
-                            </select>-->
+                            </select>
                         </div>
 						</div>
 					</div>
@@ -553,7 +321,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_comision()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_dia_semana()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 
 						</div>

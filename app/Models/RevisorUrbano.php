@@ -10,7 +10,7 @@ class RevisorUrbano extends Model
 {
     use HasFactory;
 
-    public function listar_empresa_ajax($p){
+    public function listar_revisorUrbano_ajax($p){
 
         return $this->readFuntionPostgres('sp_listar_revisorurbano_paginado',$p);
 
