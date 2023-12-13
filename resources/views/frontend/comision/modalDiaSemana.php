@@ -247,7 +247,7 @@ function fn_save_dia_semana(){
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//window.location.reload();
 				datatablenew();
 				//window.location.reload();
 				//fn_guardarMunicipalidadIntegrada(); ---quitar
@@ -296,7 +296,9 @@ function fn_save_dia_semana(){
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 					
-					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+					<form class="form-horizontal" method="post" action="" id="frmSesion" autocomplete="off">
+					
+					<!--<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">-->
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
 					
@@ -321,12 +323,14 @@ function fn_save_dia_semana(){
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_dia_semana()" class="btn btn-sm btn-success">Guardar</a>
+								<!-- fn_save_dia_semana() -->
+								<a href="javascript:void(0)" onClick="fn_guardarMunicipalidadIntegrada()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 
 						</div>
 					</div> 
 					
+					</form>
               </div>
 			  
               

@@ -382,6 +382,7 @@ class ComisionController extends Controller
 				$comision->comision = $comision_desc;
 				$comision->id_municipalidad_integrada = $municipalidadesIntegrada->id;
 				$comision->id_usuario_inserta = $id_user;
+				$comision->id_dia_semana = $request->dia_semana;
 				$comision->estado = "1";
 				$comision->save();
 			//$id_municipalidad_integrada = $municipalidadIntegrada->id;
@@ -411,6 +412,7 @@ class ComisionController extends Controller
 				$comision->comision = $comision_desc;
 				$comision->id_municipalidad_integrada = $municipalidadesIntegrada->id;
 				$comision->id_usuario_inserta = $id_user;
+				$comision->id_dia_semana = $request->dia_semana;
 				//$comision->estado = "1";
 				$comision->save();
 			}
@@ -474,7 +476,7 @@ class ComisionController extends Controller
 	public function send_dia_semana(Request $request){
 
 		$id_user = Auth::user()->id;
-		print_r($request->dia_semana).exit();
+		//print_r($request->dia_semana).exit();
 		if($request->id == 0){
 			$comision = new Comisione;
 		}else{
@@ -483,6 +485,6 @@ class ComisionController extends Controller
 		
 		$comision->id_dia_semana = $request->dia_semana;
 		
-		//$comision->save();
+		$comision->save();
     }
 }
