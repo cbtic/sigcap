@@ -110,20 +110,24 @@ class ComisionController extends Controller
 			$comisionDelegado = ComisionDelegado::find($request->id);
 		}
 		
+		$coordinador = 0;
+		if($request->coordinador == 1)$coordinador = 1;
 		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
-		
 		$comisionDelegado->id_regional = $request->id_regional;
 		$comisionDelegado->id_comision = $request->id_comision;
+		$comisionDelegado->coordinador = $coordinador;
 		$comisionDelegado->id_agremiado = $concursoInscripcion->id_agremiado;
 		$comisionDelegado->id_puesto = $concursoInscripcion->puesto_postula;
 		//$comisionDelegado->estado = 1;
 		$comisionDelegado->id_usuario_inserta = $id_user;
 		$comisionDelegado->save();
 		
+		$coordinador = 0;
+		if($request->coordinador == 2)$coordinador = 1;
 		$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
-		
 		$comisionDelegado2->id_regional = $request->id_regional;
 		$comisionDelegado2->id_comision = $request->id_comision;
+		$comisionDelegado2->coordinador = $coordinador;
 		$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
 		$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
 		$comisionDelegado2->estado = 1;

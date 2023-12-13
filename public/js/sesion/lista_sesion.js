@@ -303,11 +303,14 @@ function obtenerComisionDelegado(){
 			$('#tblDelegado tbody').html("");
 			$(delegado).each(function (ii, oo) {
 				option += "<tr style='font-size:13px'>";
-				option += "<input type='hidden' name='id_delegado[]' value='"+oo.id+"'>";
+				option += "<input type='hidden' name='id_delegado[]' value='"+oo.id+"' >";
 				option += "<td class='text-left'>"+oo.puesto+"</td>";
 				option += "<td class='text-left'>"+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</td>";
 				option += "<td class='text-left'>"+oo.numero_cap+"</td>";
 				option += "<td class='text-left'>"+oo.situacion+"</td>";
+				var sel = "";
+				if(oo.coordinador==1)sel = "checked='checked'";
+				option += "<td class='text-center'><input type='radio' name='coordinador' "+sel+" value='"+oo.id+"' /></td>";
 				option += "<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('"+oo.id+"') ><i class='fa fa-edit'></i> Editar</button></td>";
 				option += "</tr>";
 			});
