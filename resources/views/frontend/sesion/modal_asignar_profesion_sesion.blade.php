@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:40%!important
+	max-width:60%!important
   }
   
 #tablemodal{
@@ -192,7 +192,7 @@ $.mask.definitions['p'] = "[Mm]";
 $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
-	$("#id_regional").select2({ width: '100%' });
+	$("#id_profesion_otro").select2({ width: '100%' });
 	$("#id_concurso_inscripcion").select2({ width: '100%' });
 });
 </script>
@@ -458,7 +458,7 @@ container: '#myModal modal-body'
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($profesion_sesion as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->numero_documento." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->profesion?></option>
+									<option value="<?php echo $row->id?>"><?php echo $row->numero_documento." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></option>
 									<?php 
 									}
 									?>
