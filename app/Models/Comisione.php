@@ -52,7 +52,7 @@ class Comisione extends Model
 
     function getComisionAll($tipo_comision,$cad_id,$estado){
 
-        $cad = " select c.*,tm.denominacion tipo_agrupacion, cm.monto,pc.descripcion periodo 
+        $cad = " select c.*,tm.denominacion tipo_agrupacion, cm.monto,pc.descripcion periodo
 		from comisiones c
         inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
         inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
@@ -85,6 +85,15 @@ class Comisione extends Model
         return $data;
     }
 
+    function getDiaComisionAll(){
+
+        $cad = " select c.id_dia_semana from comisiones c 
+        inner join tabla_maestras tm on c.id_dia_semana ::int =tm.codigo:: int and tm.tipo = '70'";
+
+		$data = DB::select($cad);
+        return $data;  
+    }
+
     function getCodigoComision($id_municipalidad_integrada){
 
         $cad = "select lpad((count(*)+1)::varchar,2,'0') codigo from comisiones c where id_municipalidad_integrada=".$id_municipalidad_integrada." and estado ='1'";
@@ -102,5 +111,6 @@ class Comisione extends Model
 		$data = DB::select($cad);
         return $data[0]->codigo;
     }
-
+    
+    
 }

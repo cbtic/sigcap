@@ -456,15 +456,33 @@ class ComisionController extends Controller
 
     }
 
-	public function modal_dia_semana($id){
+	public function modalDiaSemana($id){
 		
+		//$comision = Comisione::find($id);
 		$comision_model = new Comisione;
+		$comision = new Comisione;
+		//$comision = $comision_model->id_comision;
+		//$comision = $comision_model->getDiaComisionAll();
 		$tablaMaestra_model = new TablaMaestra;
-		$tipoAgrupacion = $tablaMaestra_model2->getMaestroByTipo(99);
-
+		//$comision = $comision_model
+		$dia_semana = $tablaMaestra_model->getMaestroByTipo(70);
 		
-		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region'));
+		return view('frontend.comision.modalDiaSemana',compact('id','dia_semana','comision'));
 
     }
-	
+
+	public function send_dia_semana(Request $request){
+
+		$id_user = Auth::user()->id;
+		print_r($request->dia_semana).exit();
+		if($request->id == 0){
+			$comision = new Comisione;
+		}else{
+			$comision = Comisione::find($request->id);
+		}
+		
+		$comision->id_dia_semana = $request->dia_semana;
+		
+		//$comision->save();
+    }
 }
