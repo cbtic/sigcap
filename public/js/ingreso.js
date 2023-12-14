@@ -370,19 +370,25 @@ function validaTipoDocumento(){
 	$('#empresa_representante').val("");
 	$('#codigo_afiliado').val("");	
 	$('#fecha_afiliado').val("");
+	$('#numero_documento').val("");
+	$('#empresa_razon_social').val("");
+	$('#nombre_').val("");
 	
 
 	//$("#btnBoleta").prop('disabled', false);
     //$("#btnFactura").prop('disabled', false);
 
 	//$("#btnTicket").prop('disabled', true).hide();
-	
-	if(tipo_documento == "RUC"){
+	//alert(tipo_documento);
+	if(tipo_documento == "79"){ //RUC
 		$('#divNombreApellido').hide();
 		$('#divCodigoAfliado').hide();
 		$('#divFechaAfliado').hide();
+		$('#divRucP').hide();		
 		$('#divDireccionEmpresa').show();
 		$('#divRepresentanteEmpresa').show();
+		$('#divEmpresaRazonSocial').show();
+		
 
 		//$("#btnBoleta").prop('disabled', false);
 		//$("#btnFactura").prop('disabled', true);
@@ -392,15 +398,18 @@ function validaTipoDocumento(){
 		$('#divNombreApellido').show();
 		$('#divCodigoAfliado').show();
 		$('#divFechaAfliado').show();
+		$('#divRucP').show();
 		$('#divDireccionEmpresa').hide();
 		$('#divRepresentanteEmpresa').hide();
+		$('#divEmpresaRazonSocial').hide();
+		
 
 		//$("#btnBoleta").prop('disabled', true);
 		//$("#btnFactura").prop('disabled', false);
 	
 	}
 	
-	obtenerBeneficiario();
+	//obtenerBeneficiario();
 }
 
 function obtenerBeneficiario(){
@@ -444,7 +453,7 @@ function obtenerBeneficiario(){
 
 				if (tipo_documento == "79")//RUC
 				{
-					$('#empresa_afiliado').val(result.agremiado.razon_social);
+					$('#empresa_razon_social').val(result.agremiado.razon_social);
 					$('#empresa_direccion').val(result.agremiado.direccion);
 					$('#empresa_representante').val(result.agremiado.representante);
 					$('#empresa_id').val(result.agremiado.id);
@@ -454,12 +463,14 @@ function obtenerBeneficiario(){
 					$('#fecha_colegiatura').val(result.agremiado.representante);
 
 					$('#btnOtroConcepto').attr("disabled", false);
+					
 
 				} else if (tipo_documento == "85") //CAP
 				{
 					var agremiado = result.agremiado.apellido_paterno + " " + result.agremiado.apellido_materno + ", " + result.agremiado.nombres;
 					$('#nombre_').val(agremiado);
-					$('#fecha_colegiatura').val(result.agremiado.situacion);
+					$('#situacion_').val(result.agremiado.situacion);
+					$('#fecha_colegiatura').val(result.agremiado.actividad);
 					$('#fecha_').val(result.agremiado.fecha_colegiado);
 					$('#id_persona').val(result.agremiado.id_p);
 					$('#id_agremiado').val(result.agremiado.id);
@@ -469,11 +480,13 @@ function obtenerBeneficiario(){
 					$('#numero_documento_').val(result.agremiado.numero_documento);
 					$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
 					$('#btnOtroConcepto').attr("disabled", false);
+					 
 
 				} else {
 					var agremiado = result.agremiado.apellido_paterno + " " + result.agremiado.apellido_materno + ", " + result.agremiado.nombres;
 					$('#nombre_').val(agremiado);
-					$('#fecha_colegiatura').val(result.agremiado.situacion);
+					$('#situacion_').val(result.agremiado.situacion);
+					$('#fecha_colegiatura').val(result.agremiado.actividad);
 					$('#fecha_').val(result.agremiado.fecha_colegiado);
 					$('#id_persona').val(result.agremiado.id_p);
 					$('#id_agremiado').val(result.agremiado.id);
@@ -483,6 +496,8 @@ function obtenerBeneficiario(){
 					$('#numero_documento_').val(result.agremiado.numero_documento);
 					$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
 					$('#btnOtroConcepto').attr("disabled", false);
+					
+					
 
 				}
 
@@ -507,7 +522,7 @@ function obtenerBeneficiario(){
 		},
 		"error": function (msg, textStatus, errorThrown) {
 
-			if(tipo_documento == "85"){
+			if(tipo_documento == "85" || tipo_documento == "79"){
 				Swal.fire("Numero de documento no fue registrado!");
 			}else{
 				confirma_accion();

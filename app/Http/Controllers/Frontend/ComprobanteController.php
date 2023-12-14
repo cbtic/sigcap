@@ -68,16 +68,12 @@ class ComprobanteController extends Controller
         if ($trans == 'FA'){
 
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
-            $serie = $serie_model->getMaestroC('95',$TipoF);
-            
+            $serie = $serie_model->getMaestroC('95',$TipoF);            
 
             //$MonAd = $request->MonAd;
             $MonAd = 0;
             $total   = $request->total;
-
             $adelanto   = 'N';
-
-
 
             if ($MonAd != '0' && $total <> $MonAd){
                 $total   = $MonAd;
@@ -130,7 +126,14 @@ class ComprobanteController extends Controller
 
             }
             else{
-                $empresa = $empresa_model->getEmpresaId($ubicacion);
+                //echo $TipoF;exit();
+                if ($tipoDocP == "79"){
+                    $empresa = $empresa_model->getEmpresaId($ubicacion);
+                }
+                else{
+                    $empresa = $empresa_model->getPersonaId($persona);
+                }
+                
             }
             return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago'));
         }
