@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\DerechoRevision;
 use App\Models\Agremiado;
 use App\Models\Persona;
+use App\Models\Liquidacione;
 use Auth;
 
 class DerechoRevisionController extends Controller
@@ -28,15 +29,15 @@ class DerechoRevisionController extends Controller
 		$derecho_revision = new DerechoRevision;
         $agremiado = new Agremiado;
         $persona = new Persona;
+        $liquidacion = new Liquidacione;
         
-        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona'));
+        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona','liquidacion'));
     }
 
     public function listar_derecho_revision_ajax(Request $request){
 	
 		$derecho_revision_model = new DerechoRevision;
 		$p[]="";//$request->nombre;
-        $p[]="";
         $p[]="";
         $p[]="";
         $p[]="";

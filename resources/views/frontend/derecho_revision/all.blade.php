@@ -208,14 +208,14 @@
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                         <input type="text" name="numero_revision" id="numero_revision" value="<?php echo $derecho_revision->numero_revision?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
-                    <!--
+                    
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Credipago
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="credipago" id="credipago" value="<?php /*echo $liquidaciones->credipago*/?>" class="form-control form-control-sm" <?php /*"readonly='readonly'"*/?> >
+                        <input type="text" name="credipago" id="credipago" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
-                    -->
+                    
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     &Aacute;rea Total
                     </div>
@@ -229,6 +229,7 @@
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                         <input type="text" name="valor_obra" id="valor_obra" value="<?php echo $derecho_revision->valor_obra?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
+                    
 
                     
                     <!--
@@ -253,7 +254,16 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Nombre</th>
+                            <th>Nombre Proyecto</th>
+                            <th>Tipo Proyecto</th>
+                            <th>N&uacute;mero Revisi&oacute;n</th>
+                            <th>Credipago</th>
+                            <th>Municipalidad</th>
+                            <th>N&uacute;mero CAP</th>
+                            <th>Proyectista</th>
+                            <th>N&uacute;mero Doc</th>
+                            <th>Propietario</th>
+                            <th>Fecha Registro</th>
                             <th>Estado</th>
 							<th>Acciones</th>
                         </tr>
@@ -283,6 +293,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/profesion/lista.js') }}"></script>
+<script src="{{ asset('js/derecho_revision/lista.js') }}"></script>
 
 @endpush
