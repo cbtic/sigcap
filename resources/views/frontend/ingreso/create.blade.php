@@ -194,7 +194,7 @@
                                                     <?php ?>
                                                     <label class="form-control-sm">Tipo Documento</label>
 
-                                                    <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="">
+                                                    <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onblur="validaTipoDocumento();">
                                                         <?php
                                                         foreach ($tipo_documento as $row) { ?>
                                                             <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == "85") echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
@@ -258,28 +258,17 @@
                                         <div class="row" id="divCodigoAfliado">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <!--
-                                <label class="form-control-sm">Afiliado</label>
-								-->
-
-                                                    <!--<span style="cursor:pointer;float:right;font-size:15px" class="badge badge-danger" onclick="eliminarAfiliado()">Desafiliar</span>-->
-
-                                                    @hasanyrole('administrator')
-
-
-                                                    <input class="btn btn-danger btn-sm" value="Inactivar Tarjeta" type="button" disabled="disabled" id="btnInactivar" onclick="eliminarPersonaTarjeta()" style="cursor:pointer;float:left;font-size:15px;margin-bottom:15px">
-
-                                                    <input class="btn btn-danger btn-sm float-right" value="Desafiliar Plan" type="button" disabled="disabled" id="btnDesafiliar" onclick="eliminarAfiliado()" style="cursor:pointer;float:right;font-size:15px;margin-bottom:15px">
-
-                                                    <!--
-								<button class="btn btn-danger btn-sm float-left" disabled="disabled" id="btnInactivar" onclick="eliminarPersonaTarjeta()" style="cursor:pointer;float:right;font-size:15px;margin-bottom:15px;">Inactivar<br/>Tarjeta</button>
-								
-								<button class="btn btn-danger btn-sm float-right" disabled="disabled" id="btnDesafiliar" onclick="eliminarAfiliado()" style="cursor:pointer;float:right;font-size:15px;margin-bottom:15px;">Desafiliar<br/>Plan</button>
-								-->
-
-                                                    @endhasanyrole
-
+                                                <label class="form-control-sm">Situación</label>
                                                     <input type="text" readonly name="situacion_" id="situacion_" value="{{old('clinom')}}" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" id="divEmpresaRazonSocial" style="display:none">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Razón Social</label>
+                                                    <input type="text" readonly name="empresa_razon_social" id="empresa_razon_social" value="{{old('clinom')}}" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                         </div>
@@ -304,18 +293,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col">
-                                                <button class="btn btn-success btn-sm" type="button" name="btnOtroConcepto" id="btnOtroConcepto" onClick="modal_otro_pago()" tabindex="0" disabled><i class="glyphicon glyphicon-search"></i> Pago Otros Conceptos </button>
-                                            </div>
-                                        </div>
-
-
-
                                         <div class="row" id="divFechaAfliado">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label class="form-control-sm">Fecha Colegiatura</label>
+                                                    <label class="form-control-sm">Actividad</label>
                                                     <input type="text" readonly name="fecha_colegiatura" id="fecha_colegiatura" value="{{old('clinom')}}" class="form-control form-control-sm">
                                                 </div>
                                             </div>
@@ -329,6 +310,14 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <button class="btn btn-success btn-sm" type="button" name="btnOtroConcepto" id="btnOtroConcepto" onClick="modal_otro_pago()" tabindex="0" disabled><i class="glyphicon glyphicon-search"></i> Pago Otros Conceptos </button>
+                                            </div>
+                                        </div>
+
 
                                         <!--</div>-->
 

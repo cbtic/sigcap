@@ -126,7 +126,14 @@ class ComprobanteController extends Controller
 
             }
             else{
-                $empresa = $empresa_model->getEmpresaId($ubicacion);
+                //echo $TipoF;exit();
+                if ($tipoDocP == "79"){
+                    $empresa = $empresa_model->getEmpresaId($ubicacion);
+                }
+                else{
+                    $empresa = $empresa_model->getPersonaId($persona);
+                }
+                
             }
             return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago'));
         }
