@@ -18,7 +18,7 @@ class DeleteIdMunicipalidadIntegradaToSolicitudes extends Migration
             
         });
     }
-
+ 
     /**
      * Reverse the migrations.
      *

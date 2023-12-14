@@ -19,7 +19,7 @@ class AddIdMunicipalidadToSolicitudes extends Migration
             $table->foreign('id_municipalidad')->references('id')->on('municipalidades');
         });
     }
-
+  
     /**
      * Reverse the migrations.
      *
