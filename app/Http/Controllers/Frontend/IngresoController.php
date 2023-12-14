@@ -48,7 +48,13 @@ class IngresoController extends Controller
     public function listar_valorizacion(Request $request){
 
         $id_persona = $request->id_persona;
-        $tipo_documento = $request->id_tipo_documento_;
+        
+        $tipo_documento = $request->tipo_documento;
+
+       //echo($tipo_documento);exit();
+
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+
         $periodo = $request->cboPeriodo_b;
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = $request->cboTipoConcepto_b;
