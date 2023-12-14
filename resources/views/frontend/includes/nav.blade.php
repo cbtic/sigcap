@@ -109,6 +109,8 @@
 								@can('Programacion de Sesiones')
 								<a href="/sesion/lista_programacion_sesion" class="dropdown-item">Programaci&oacute;n de Sesiones</a>
 								@endcan
+								<a href="/derecho_revision/consulta_derecho_revision" class="dropdown-item">Derecho Revisi&oacute;n</a>
+								
 								<a href="/revisorUrbano/consulta_revisorUrbano" class="dropdown-item">Registro Revisor Urbano</a>
 
 						   </div>
