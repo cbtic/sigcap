@@ -1,3 +1,4 @@
+const { truncate } = require("lodash");
 
 $(document).ready(function () {
 
@@ -233,7 +234,22 @@ function calcular_total(obj){
 	//$("#btnTicket").prop('disabled', true).hide();
 
 	$("#btnFracciona").prop('disabled', true);
-	if(cantidad != 0)$("#btnFracciona").prop('disabled', false);
+	if(cantidad != 0){
+		$("#btnFracciona").prop('disabled', false);
+		//$("#btnBoleta").prop('disabled', false);
+		//$("#btnFactura").prop('disabled', false);
+
+		if(tipo_documento == "79"){//RUC
+			
+			$("#btnBoleta").prop('disabled', true);
+			$("#btnFactura").prop('disabled', false);
+		}else
+		{
+			$("#btnBoleta").prop('disabled', false);
+			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
+		}
+	}
+	
 
 	
 	
@@ -242,12 +258,13 @@ function calcular_total(obj){
         //$("#btnFactura").prop('disabled', false);
 		//$("#btnBoleta").show();
 		//$("#btnTicket").hide();
-		$("#btnBoleta").prop('disabled', true);
-		$("#btnFactura").prop('disabled', false);
+
+		//$("#btnBoleta").prop('disabled', true);
+		//$("#btnFactura").prop('disabled', false);
 	}else
 	{
-		$("#btnBoleta").prop('disabled', false);
-		$("#btnFactura").prop('disabled', true);
+		//$("#btnBoleta").prop('disabled', false);
+		//$("#btnFactura").prop('disabled', true);
 	}
 
 	//if(tipo_factura_actual=="TK"){
@@ -409,6 +426,10 @@ function obtenerBeneficiario(){
 	$('#foto').attr('src','/img/profile-icon.png');
 
 	$('#btnOtroConcepto').attr("disabled",true);
+
+	$("#btnFracciona").prop('disabled', true);
+	$("#btnBoleta").prop('disabled', true);
+	$("#btnFactura").prop('disabled', true);
 
 	
 	
