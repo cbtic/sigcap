@@ -126,7 +126,7 @@ class ComprobanteController extends Controller
 
             }
             else{
-                //echo $TipoF;exit();
+                //echo $ubicacion;exit();
                 if ($tipoDocP == "79"){
                     $empresa = $empresa_model->getEmpresaId($ubicacion);
                 }

@@ -19,7 +19,7 @@ class Empresa extends Model
     function getEmpresaId($id){
 
 
-        $cad = "ruc, nombre_comercial, razon_social, direccion, representante, estado, email, telefono
+        $cad = "select ruc, nombre_comercial, razon_social, direccion, representante, estado, email, telefono
         from empresas         
         Where id='".$id."' ";
     

@@ -461,8 +461,12 @@ function obtenerBeneficiario(){
 
 					$('#nombre_').val(result.agremiado.razon_social);
 					$('#fecha_colegiatura').val(result.agremiado.representante);
+					$('#id_tipo_documento_').val(tipo_documento);
+					$('#id_tipo_documento').val(tipo_documento);
+
 
 					$('#btnOtroConcepto').attr("disabled", false);
+
 					
 
 				} else if (tipo_documento == "85") //CAP
@@ -478,7 +482,9 @@ function obtenerBeneficiario(){
 					$('#id_ubicacion_p').val("0");
 
 					$('#numero_documento_').val(result.agremiado.numero_documento);
-					$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
+					$('#id_tipo_documento_').val(tipo_documento);
+					$('#id_tipo_documento').val(tipo_documento);
+					
 					$('#btnOtroConcepto').attr("disabled", false);
 					 
 
@@ -493,8 +499,8 @@ function obtenerBeneficiario(){
 					$('#ruc_p').val(result.agremiado.numero_ruc);
 					$('#id_ubicacion_p').val("0");
 
-					$('#numero_documento_').val(result.agremiado.numero_documento);
-					$('#id_tipo_documento_').val(result.agremiado.id_tipo_documento);
+					$('#numero_documento_').val(tipo_documento);
+					$('#id_tipo_documento_').val(tipo_documento);
 					$('#btnOtroConcepto').attr("disabled", false);
 					
 					
@@ -611,8 +617,9 @@ function cargarValorizacion(){
 	//var numero_documento = $("#numero_documento").val();
 	var tipo_documento = $("#tipo_documento").val();
 	var id_persona = 0;
-	if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
-	else id_persona = $('#id_persona').val();
+
+	//if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
+	//else id_persona = $('#id_persona').val();
 
     $("#tblValorizacion tbody").html("");
 	$.ajax({
@@ -632,7 +639,7 @@ function cargarValorizacion(){
 function cargarPagos(){
 	var tipo_documento = $("#tipo_documento").val();
 	var id_persona = 0;
-	if(tipo_documento=="RUC")id_persona = $('#id_ubicacion').val();
+	if(tipo_documento=="79")id_persona = $('#id_ubicacion').val();
 	else id_persona = $('#id_persona').val();
 	
 	$('#tblPago').dataTable().fnDestroy();
@@ -709,15 +716,19 @@ function validar(tipo) {
 	var mov = $('.mov:checked').length;
 
 	var id_ubicacion_p = $('#id_ubicacion_p').val();
+
+	//alert("id_persona-->"+ tipo_documento);
+	//alert("id_persona-->"+ id_persona);
+	//alert("empresa_id-->"+ empresa_id);
 	
-	if(tipo_documento != "RUC" && id_persona == "")msg += "Debe ingresar el Numero de Documento <br>";
-	if(tipo_documento == "RUC" && empresa_id == "")msg += "Debe ingresar el Numero de Documento <br>";
+	if(tipo_documento != "79" && id_persona == "")msg += "Debe ingresar el Numero de Documento <br>";
+	if(tipo_documento == "79" && empresa_id == "")msg += "Debe ingresar el Numero de Documento <br>";
 	/*
 	if (tipo != 4) {
 		if(mov=="0")msg+="Debe seleccionar minimo un Concepto del Estado de Cuenta <br>";
 	}
 */
-	if(tipo_documento == "DNI" && id_ubicacion_p == "" && tipo == 1)msg += "Para crear la Factura requiere RUC Personal <br>";
+	//if(tipo_documento == "DNI" && id_ubicacion_p == "" && tipo == 1)msg += "Para crear la Factura requiere RUC Personal <br>";
 
 	
 	if(msg!=""){
