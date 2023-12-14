@@ -639,7 +639,7 @@ function cargarValorizacion(){
 function cargarPagos(){
 	var tipo_documento = $("#tipo_documento").val();
 	var id_persona = 0;
-	if(tipo_documento=="RUC")id_persona = $('#id_ubicacion').val();
+	if(tipo_documento=="79")id_persona = $('#id_ubicacion').val();
 	else id_persona = $('#id_persona').val();
 	
 	$('#tblPago').dataTable().fnDestroy();

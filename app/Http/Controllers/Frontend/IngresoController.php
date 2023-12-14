@@ -70,7 +70,8 @@ class IngresoController extends Controller
  
     public function listar_valorizacion_concepto(Request $request){
         $id_persona = $request->id_persona;
-        $tipo_documento = $request->id_tipo_documento_;
+        $tipo_documento = $request->tipo_documento;
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
         $valorizaciones_model = new Valorizacione;
         $resultado = $valorizaciones_model->getValorizacionConcepto($tipo_documento,$id_persona);
         //print_r($valorizacion);exit();
