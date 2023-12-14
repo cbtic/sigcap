@@ -30,5 +30,5 @@ npm-debug.log
 output.txt
 Thumbs.db
 yarn-error.log
-.composer.json
+.package.json
 .yarn.lock

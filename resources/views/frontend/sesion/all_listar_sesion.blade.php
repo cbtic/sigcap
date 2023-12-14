@@ -148,19 +148,19 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-				
+					<!--
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm">
 							<option value="">--Regi&oacute;n--</option>
 							<?php
-							foreach ($region as $row) {?>
-							<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+							//foreach ($region as $row) {?>
+							<option value="<?php //echo $row->id?>"><?php //echo $row->denominacion?></option>
 							<?php 
-							}
+							//}
 							?>
 						</select>
 					</div>
-					
+					-->
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
 							<option value="">--Periodo--</option>
@@ -179,7 +179,14 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="fecha_inicio_bus" name="fecha_inicio_bus" placeholder="Fecha Desde">
+					</div>
+					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Hasta">
+					</div>
+					
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                     	<select name="id_tipo_sesion_bus" id="id_tipo_sesion_bus" class="form-control form-control-sm" onChange="">
 							<option value="">--Tipo Programci&oacute;n--</option>
 							<?php
@@ -191,7 +198,7 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                     	<select name="id_estado_sesion_bus" id="id_estado_sesion_bus" class="form-control form-control-sm">
 							<option value="">--Estado Sesi&oacute;n--</option>
 							<?php
@@ -203,7 +210,19 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    	<select name="id_estado_aprobacion_bus" id="id_estado_aprobacion_bus" class="form-control form-control-sm">
+							<option value="">--Estado Aprobaci&oacute;n--</option>
+							<?php
+							foreach ($estado_aprobacion as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
@@ -220,10 +239,11 @@
 							<th>Comisi&oacute;n</th>
 							<th>Fecha Programada</th>
 							<th>Fecha Ejecuci&oacute;n</th>
-                            <th>Hora Inicio</th>
-							<th>Hora Fin</th>
+                            <!--<th>Hora Inicio</th>
+							<th>Hora Fin</th>-->
 							<th>Sesi&oacute;n Programada</th>
-                            <th>Estado</th>
+                            <th>Estado Sesi&oacute;n</th>
+							<th>Estado Aprobaci&oacute;n</th>
 							<th>Editar</th>
                         </tr>
                         </thead>

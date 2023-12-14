@@ -109,6 +109,7 @@
 								@can('Programacion de Sesiones')
 								<a href="/sesion/lista_programacion_sesion" class="dropdown-item">Programaci&oacute;n de Sesiones</a>
 								@endcan
+								<a href="/revisorUrbano/consulta_revisorUrbano" class="dropdown-item">Registro Revisor Urbano</a>
 
 						   </div>
 					</li>
@@ -149,6 +150,7 @@
 								@can('Otros Profesionales')
                                 <a href="/profesionalesOtro/consulta_profesionalesOtro" class="dropdown-item">Otros Profesionales</a>
 								@endcan
+								
 								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
 						   </div>
 					</li>

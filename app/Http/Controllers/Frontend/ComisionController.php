@@ -46,17 +46,23 @@ class ComisionController extends Controller
     }
 	
 	function lista_comision(){
-
-        return view('frontend.comision.all_listar_comision');
+		
+		$periodoComisione_model = new PeriodoComisione;
+		$tablaMaestra_model = new TablaMaestra;
+		
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$tipoAgrupacion = $tablaMaestra_model->getMaestroByTipo(99);
+		
+        return view('frontend.comision.all_listar_comision',compact('periodo','tipoAgrupacion'));
     }
 	
 	public function lista_comision_ajax(Request $request){
 	
 		$comision_model = new Comisione(); 
-		$p[]="";
-		$p[]="";
-		$p[]="";
-		$p[]=$request->estado;          
+		$p[]=$request->id_periodo;
+		$p[]=$request->tipo_agrupacion;
+		$p[]=$request->id_comision;
+		$p[]=$request->estado;      
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comision_model->lista_comision_ajax($p);
@@ -99,19 +105,34 @@ class ComisionController extends Controller
 		
 		if($request->id == 0){
 			$comisionDelegado = new ComisionDelegado;
+			$comisionDelegado2 = new ComisionDelegado;
 		}else{
 			$comisionDelegado = ComisionDelegado::find($request->id);
 		}
 		
+		$coordinador = 0;
+		if($request->coordinador == 1)$coordinador = 1;
 		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
-		
 		$comisionDelegado->id_regional = $request->id_regional;
 		$comisionDelegado->id_comision = $request->id_comision;
+		$comisionDelegado->coordinador = $coordinador;
 		$comisionDelegado->id_agremiado = $concursoInscripcion->id_agremiado;
 		$comisionDelegado->id_puesto = $concursoInscripcion->puesto_postula;
-		$comisionDelegado->estado = 1;
+		//$comisionDelegado->estado = 1;
 		$comisionDelegado->id_usuario_inserta = $id_user;
 		$comisionDelegado->save();
+		
+		$coordinador = 0;
+		if($request->coordinador == 2)$coordinador = 1;
+		$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
+		$comisionDelegado2->id_regional = $request->id_regional;
+		$comisionDelegado2->id_comision = $request->id_comision;
+		$comisionDelegado2->coordinador = $coordinador;
+		$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
+		$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
+		$comisionDelegado2->estado = 1;
+		$comisionDelegado2->id_usuario_inserta = $id_user;
+		$comisionDelegado2->save();
 			
     }
 	
@@ -283,10 +304,10 @@ class ComisionController extends Controller
 				/*}*/
 				
 				$municipalidadIntegrada->id_regional = 5;
-				$municipalidadIntegrada->id_periodo_comisiones = $request->periodo;
+				$municipalidadIntegrada->id_periodo_comision = $request->periodo;
 				//$municipalidadIntegrada->id_coodinador = 1;
 				$municipalidadIntegrada->id_usuario_inserta = $id_user;
-				//$municipalidadIntegrada->estado = "1";
+
 				$municipalidadIntegrada->save();
 				$id_municipalidad_integrada = $municipalidadIntegrada->id;
 	
@@ -354,13 +375,14 @@ class ComisionController extends Controller
 				$denominacion = substr($denominacion,0,strlen($denominacion)-3);
 				$comision = new Comisione();
 				$comision->id_regional = $municipalidadesIntegrada->id_regional;
-				$comision->id_periodo_comisiones = $municipalidadesIntegrada->id_periodo_comisiones;
+				$comision->id_periodo_comisiones = $municipalidadesIntegrada->id_periodo_comision;
 				$comision->id_tipo_comision = $request->tipo_comision;
-				$comision->id_dia_semana = 1;
+				//$comision->id_dia_semana = 1;
 				$comision->denominacion = $denominacion;
 				$comision->comision = $comision_desc;
 				$comision->id_municipalidad_integrada = $municipalidadesIntegrada->id;
 				$comision->id_usuario_inserta = $id_user;
+				$comision->id_dia_semana = $request->dia_semana;
 				$comision->estado = "1";
 				$comision->save();
 			//$id_municipalidad_integrada = $municipalidadIntegrada->id;
@@ -383,14 +405,15 @@ class ComisionController extends Controller
 				$denominacion = substr($denominacion,0,strlen($denominacion)-3);
 				$comision = new Comisione();
 				$comision->id_regional = $municipalidadesIntegrada->id_regional;
-				$comision->id_periodo_comisiones = $municipalidadesIntegrada->id_periodo_comisiones;
+				$comision->id_periodo_comision = $municipalidadesIntegrada->id_periodo_comisiones;
 				$comision->id_tipo_comision = $request->tipo_comision;
-				$comision->id_dia_semana = 1;
+				//$comision->id_dia_semana = 1;
 				$comision->denominacion = $denominacion;
 				$comision->comision = $comision_desc;
 				$comision->id_municipalidad_integrada = $municipalidadesIntegrada->id;
 				$comision->id_usuario_inserta = $id_user;
-				$comision->estado = "1";
+				$comision->id_dia_semana = $request->dia_semana;
+				//$comision->estado = "1";
 				$comision->save();
 			}
 
@@ -413,13 +436,13 @@ class ComisionController extends Controller
 		*/
 			$comision = new MunicipalidadIntegrada();
 			$comision->id_regional = 5;
-			$comision->id_periodo_comisiones = 7;
+			$comision->id_periodo_comision = 7;
 			$comision->id_tipo_comision = 1;
-			$comision->id_dia_semana = 1;
+			//$comision->id_dia_semana = 1;
 			$comision->denominacion = $request->denominacion;
 			//$comision->observacion = ;
 			$comision->id_usuario_inserta = $id_user;
-			$comision->estado = "1";
+			//$comision->estado = "1";
 			$comision->save();
 			//$id_municipalidad_integrada = $municipalidadIntegrada->id;
 /*
@@ -434,5 +457,34 @@ class ComisionController extends Controller
 		}*/
 
     }
-	
+
+	public function modalDiaSemana($id){
+		
+		//$comision = Comisione::find($id);
+		$comision_model = new Comisione;
+		$comision = new Comisione;
+		//$comision = $comision_model->id_comision;
+		//$comision = $comision_model->getDiaComisionAll();
+		$tablaMaestra_model = new TablaMaestra;
+		//$comision = $comision_model
+		$dia_semana = $tablaMaestra_model->getMaestroByTipo(70);
+		
+		return view('frontend.comision.modalDiaSemana',compact('id','dia_semana','comision'));
+
+    }
+
+	public function send_dia_semana(Request $request){
+
+		$id_user = Auth::user()->id;
+		//print_r($request->dia_semana).exit();
+		if($request->id == 0){
+			$comision = new Comisione;
+		}else{
+			$comision = Comisione::find($request->id);
+		}
+		
+		$comision->id_dia_semana = $request->dia_semana;
+		
+		$comision->save();
+    }
 }

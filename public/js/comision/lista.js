@@ -33,8 +33,8 @@ $(document).ready(function () {
 	});
 
 	$('#btnNuevoComision').click(function () {
-		//modalComision(0);
-		fn_guardarMunicipalidadIntegrada();
+		modalDiaSemana(0);
+		//fn_guardarMunicipalidadIntegrada();
 	});
 		
 	//datatablenew();
@@ -721,20 +721,19 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalComision(id){
+function modalDiaSemana(id){
 	
-	$(".modal-dialog").css("width","85%");
+	$(".modal-dialog").css("width","40%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/concepto/modal_comision_nuevoComision/"+id,
+			url: "/comision/modalDiaSemana/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
 			}
 	});
-
 }
 
 function filtrar_comision(obj){
@@ -846,17 +845,20 @@ function fn_guardar(){
 
 
 function fn_guardarMunicipalidadIntegrada(){
-    
+
 	var tipo_comision=$("#tipo_comision").val();
+	var dia_semana = $('#dia_semana').val();
+	
     $.ajax({
 			url: "/comision/send_municipalidad_integrada",
             type: "POST",
-            data : $("#frmComision").serialize()+"&tipo_comision="+tipo_comision,
+            data : $("#frmComision").serialize()+"&tipo_comision="+tipo_comision+"&dia_semana="+dia_semana,
             success: function (result) {  
 					//datatablenew();
 				cargarMunicipalidades();
 				cargarMunicipalidadesIntegradas();
 				cargarComisiones();
+				$('#openOverlayOpc').modal('hide');
             }
     });
 }

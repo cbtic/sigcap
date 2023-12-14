@@ -9,6 +9,10 @@ $(document).ready(function () {
 		modalAsignarDelegado(0);
 	});
 
+	/*$('#btnNuevoComision').click(function () {
+		modal_dia_semana(0);
+	});*/
+
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -276,6 +280,22 @@ function modalAsignarDelegado(id){
 
 }
 
+/*function modal_dia_semana(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/comision/modal_dia_semana/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}*/
+
 function modalPuestos(id){
 	
 	$(".modal-dialog").css("width","85%");
@@ -400,13 +420,10 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id_regional = $('#id_regional_bus').val();
-            var numero_cap = $('#numero_cap_bus').val();
-			var numero_documento = $('#numero_documento_bus').val();
-			var agremiado = $('#agremiado_bus').val();
-			var id_situacion = $('#id_situacion_bus').val();
-			var id_concurso = $('#id_concurso_bus').val();
-			
+			var id_periodo = $('#id_periodo_bus').val();
+            var id_comision = $('#id_comision_bus').val();
+			var tipo_agrupacion = $('#tipo_agrupacion_bus').val();
+			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -414,8 +431,8 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
-						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
+						id_periodo:id_periodo,id_comision:id_comision,
+						tipo_agrupacion:tipo_agrupacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -472,16 +489,6 @@ function datatablenew(){
                 "aTargets": [2]
                 },
 				
-                {
-                "mRender": function (data, type, row) {
-                	var comision = "";
-					if(row.comision!= null)comision = row.comision;
-					return comision;
-                },
-                "bSortable": true,
-                "aTargets": [3]
-                },
-				
 				{
                 "mRender": function (data, type, row) {
                 	var tipo_agrupacion = "";
@@ -489,9 +496,18 @@ function datatablenew(){
 					return tipo_agrupacion;
                 },
                 "bSortable": true,
-                "aTargets": [4]
+                "aTargets": [3]
                 },
 				
+                {
+                "mRender": function (data, type, row) {
+                	var comision = "";
+					if(row.comision!= null)comision = row.comision;
+					return comision;
+                },
+                "bSortable": true,
+                "aTargets": [4]
+                },
 				{
                 "mRender": function (data, type, row) {
                 	var estado = "";
@@ -547,7 +563,7 @@ function fn_ListarBusqueda() {
 
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
     //fn_util_bloquearPantalla("Buscando");
-    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, 001);//500
+    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) });//500
 }
 
 function fn_CargaSuGrilla(pValor, piIdMovimientoCompra) {
@@ -598,6 +614,7 @@ function fn_DevuelveSubGrilla(piIdMovimientoCompra, vNombreSubDataTable,row,tr) 
         	sInicio += '<thead>';
             sInicio += '<tr style="font-size:13px">';
 			sInicio += '<th style="text-align: left;">Delegado</th>';
+			sInicio += '<th style="text-align: left;">Coordinador</th>';
 			sInicio += '<th style="text-align: right;">N&deg; CAP</th>';
 			sInicio += '<th style="text-align: right;">Situaci&oacute;n</th>';
 			sInicio += '<th style="text-align: right;">Tipo de Titular</th>';
@@ -612,8 +629,11 @@ function fn_DevuelveSubGrilla(piIdMovimientoCompra, vNombreSubDataTable,row,tr) 
 			var delegado = "";
 			$.each(result, function (index , value) {
 				delegado = value.apellido_paterno + " " + value.apellido_materno + " " + value.nombres;
+				var coordinador = "NO";
+				if(value.coordinador==1)coordinador = "SI";
 				sIntermedio += '<tr style="font-size:13px">';
 				sIntermedio +='<td style="text-align: left;">' + delegado+ '</td>';
+				sIntermedio +='<td style="text-align: left;">' + coordinador+ '</td>';
 				sIntermedio +='<td style="text-align: right;">' + value.numero_cap+ '</td>';
 				sIntermedio +='<td style="text-align: right;">' + value.situacion+ '</td>';
 				sIntermedio +='<td style="text-align: right;">' + value.puesto+ '</td>';
@@ -749,5 +769,25 @@ function fn_eliminar(id,estado){
 				datatablenew();
             }
     });
+}
+
+function obtenerComision(){
+	
+	var id_periodo = $('#id_periodo_bus').val();
+	$.ajax({
+		url: '/sesion/obtener_comision/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_comision_bus').html("");
+			option += "<option value='0'>--Comisi&oacute;n--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+			});
+			$('#id_comision_bus').html(option);
+		}
+		
+	});
+	
 }
 

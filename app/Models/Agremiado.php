@@ -14,6 +14,17 @@ class Agremiado extends Model
 		return $this->readFunctionPostgres('sp_listar_agremiado_paginado',$p);
     }
 
+	function getAgremiadoAll(){
+		$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, desc_cliente nombre_completo,t1.id_tipo_documento 								
+		from personas t1 
+		inner join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
+		left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'                    
+		Where  t1.estado='1' ";
+		$data = DB::select($cad);
+		
+        return $data;
+	}
+
 	function getAgremiado($tipo_documento,$numero_documento){
 
         if($tipo_documento=="79"){  //RUC

@@ -58,6 +58,7 @@ class ConcursoController extends Controller
 		$concursoInscripcione_model = new ConcursoInscripcione();
 		$p[]=$request->id_concurso;
 		$p[]=$request->numero_documento;
+		$p[]="";
 		$p[]=$request->agremiado;
 		$p[]=$request->numero_cap;
 		$p[]=$request->id_regional;
@@ -162,6 +163,7 @@ class ConcursoController extends Controller
 		$concursoInscripcione_model = new ConcursoInscripcione();
 		$p[]=$request->id_concurso;
 		$p[]=$request->numero_documento;
+		$p[]=$request->id_agremiado;
 		$p[]=$request->agremiado;
 		$p[]=$request->numero_cap;
 		$p[]=$request->id_regional;
@@ -473,6 +475,14 @@ class ConcursoController extends Controller
 		echo json_encode($puesto);
 	}
 	
+	public function obtener_requisito($id){
+		
+		$concursoRequisito_model = new ConcursoRequisito;
+		$requisito = $concursoRequisito_model->getConcursoRequisitoById($id);
+		
+		echo json_encode($requisito);
+	}
+	
 	public function obtener_concurso_inscripcion($id){
 		
 		$concursoInscripcione_model = new ConcursoInscripcione;
@@ -503,6 +513,16 @@ class ConcursoController extends Controller
 		$concursoPuesto = ConcursoPuesto::find($id);
 		$concursoPuesto->estado= "0";
 		$concursoPuesto->save();
+		
+		echo "success";
+
+    }
+	
+	public function eliminar_requisito($id){
+
+		$concursoRequisito = ConcursoRequisito::find($id);
+		$concursoRequisito->estado= "0";
+		$concursoRequisito->save();
 		
 		echo "success";
 
@@ -595,6 +615,16 @@ class ConcursoController extends Controller
 		echo $_FILES['file']['name'];
 	}
 	
+	public function eliminar_concurso($id,$estado)
+    {
+		$concurso = Concurso::find($id);
+		$concurso->estado = $estado;
+		$concurso->save();
+
+		echo $concurso->id;
+
+    }
+		
 	public function upload_documento_requisito(Request $request){
 
     	$filepath = public_path('img/frontend/tmp_documento_requisito/');

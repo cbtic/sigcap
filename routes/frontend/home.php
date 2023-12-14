@@ -30,6 +30,8 @@ use App\Http\Controllers\Frontend\PeriodoComisionController;
 use App\Http\Controllers\Frontend\MovilidadController;
 use App\Http\Controllers\Frontend\ProfesionController;
 use App\Http\Controllers\Frontend\ProfesionalesOtroController;
+use App\Http\Controllers\Frontend\RevisorUrbanoController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -242,8 +244,10 @@ Route::post('concurso/send_concurso', [ConcursoController::class, 'send_concurso
 Route::get('concurso/modal_puesto/{id}', [ConcursoController::class, 'modal_puesto'])->name('concurso.modal_puesto');
 Route::post('concurso/listar_puesto', [ConcursoController::class, 'listar_puesto'])->name('concurso.listar_puesto');
 Route::get('concurso/eliminar_puesto/{id}', [ConcursoController::class, 'eliminar_puesto'])->name('concurso.eliminar_puesto');
+Route::get('concurso/eliminar_requisito/{id}', [ConcursoController::class, 'eliminar_requisito'])->name('concurso.eliminar_requisito');
 Route::post('concurso/send_puesto', [ConcursoController::class, 'send_puesto'])->name('concurso.send_puesto');
 Route::get('concurso/obtener_puesto/{id}', [ConcursoController::class, 'obtener_puesto'])->name('concurso.obtener_puesto');
+Route::get('concurso/obtener_requisito/{id}', [ConcursoController::class, 'obtener_requisito'])->name('concurso.obtener_requisito');
 Route::get('concurso/eliminar_inscripcion_concurso/{id}', [ConcursoController::class, 'eliminar_inscripcion_concurso'])->name('concurso.eliminar_inscripcion_concurso');
 Route::get('concurso/eliminar_inscripcion_documento/{id}', [ConcursoController::class, 'eliminar_inscripcion_documento'])->name('concurso.eliminar_inscripcion_documento');
 
@@ -271,6 +275,7 @@ Route::post('concurso/listar_requisito', [ConcursoController::class, 'listar_req
 
 Route::get('concurso/listar_maestro_by_tipo_subtipo/{tipo}/{sub_codigo}', [ConcursoController::class, 'listar_maestro_by_tipo_subtipo'])->name('concurso.listar_maestro_by_tipo_subtipo');
 
+Route::get('concurso/eliminar_concurso/{id}/{estado}', [ConcursoController::class, 'eliminar_concurso'])->name('concurso.eliminar_concurso');
 Route::get('concurso/listar_puesto_concurso/{id_concurso}', [ConcursoController::class, 'listar_puesto_concurso'])->name('concurso.listar_puesto_concurso');
 
 Route::get('comision/consulta_comision', [ComisionController::class, 'consulta_comision'])->name('comision.consulta_comision');
@@ -387,5 +392,12 @@ Route::get('persona/buscar_persona2/{numero_documento}', [PersonaController::cla
 Route::get('persona/buscar_numero_documento/{numero_documento}', [PersonaController::class, 'buscar_numero_documento'])->name('persona.buscar_numero_documento');
 
 Route::get('persona/modal_personaNuevo', [PersonaController::class, 'modal_personaNuevo'])->name('persona.modal_personaNuevo');
+Route::get('comision/modalDiaSemana/{id}', [ComisionController::class, 'modalDiaSemana'])->name('comision.modalDiaSemana');
+Route::post('comision/send_dia_semana', [ComisionController::class, 'send_dia_semana'])->name('comision.send_dia_semana');
+
+Route::get('revisorUrbano/consulta_revisorUrbano', [RevisorUrbanoController::class, 'consulta_revisorUrbano'])->name('revisorUrbano.consulta_revisorUrbano');
+Route::post('revisorUrbano/listar_revisorUrbano_ajax', [RevisorUrbanoController::class, 'listar_revisorUrbano_ajax'])->name('revisorUrbano.listar_revisorUrbano_ajax');
+Route::get('revisorUrbano/editar_revisorUrbano/{id}', [RevisorUrbanoController::class, 'editar_revisorUrbano'])->name('revisorUrbano.editar_revisorUrbano');
+Route::get('revisorUrbano/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [RevisorUrbanoController::class, 'modal_revisorUrbano_nuevoRevisorUrbano'])->name('revisorUrbano.modal_revisorUrbano_nuevoRevisorUrbano');
 
 

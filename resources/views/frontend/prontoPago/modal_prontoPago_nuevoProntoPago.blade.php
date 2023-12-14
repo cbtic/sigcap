@@ -1,4 +1,4 @@
-<title>Sistema de Pronto Pago</title>
+<title>SigCap</title>
 
 <style>
 
@@ -225,7 +225,7 @@ function fn_save_prontoPago(){
 	var codigo_documento = $('#codigo_documento').val();
 	//var ruta_documento = $('#ruta_documento').val();
 	var id_concepto = $('#id_concepto').val();
-	
+	//alert(_token).exit();
     $.ajax({
 			url: "/prontoPago/send_prontoPago_nuevoProntoPago",
             type: "POST",

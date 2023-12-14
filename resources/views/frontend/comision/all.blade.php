@@ -394,7 +394,7 @@
                             </table>
                         </div><!--table-responsive-->
                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-                            <input class="btn btn-success" value="Dar de Baja" type="button" id="btnBuscar" style="margin-left:15px;margin-top:10px;margin-bottom:10px"/>
+                            <input class="btn btn-success" value="Dar de Baja" type="button" id="btnEliminar" style="margin-left:15px;margin-top:10px;margin-bottom:10px"/>
                                 <!--<input class="btn btn-success" value="CREAR COMISION" type="button" id="btnNuevoComision" style="margin-left:15px;margin-top:10px;margin-bottom:10px"/>-->
                                 
                                 <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->

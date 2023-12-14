@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:40%!important
+	max-width:60%!important
   }
   
 #tablemodal{
@@ -194,6 +194,7 @@ $(document).ready(function() {
 	//$('#hora_solicitud').mask('00:00');
 	$("#id_regional").select2({ width: '100%' });
 	$("#id_concurso_inscripcion").select2({ width: '100%' });
+	$("#id_concurso_inscripcion2").select2({ width: '100%' });
 });
 </script>
 
@@ -267,11 +268,14 @@ function fn_save(){
 	var id_comision = $('#id_comision').val();
 	var id_regional = $('#id_regional').val();
 	var id_concurso_inscripcion = $('#id_concurso_inscripcion').val();
+	var id_concurso_inscripcion2 = $('#id_concurso_inscripcion2').val();
+	var coordinador = $('input[name=coordinador]:checked').val();
+	//alert(coordinador);return false;
 	
     $.ajax({
 			url: "/comision/send_delegado",
             type: "POST",
-            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion},
+            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion,id_concurso_inscripcion2:id_concurso_inscripcion2,coordinador:coordinador},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				datatablenew();
@@ -454,27 +458,26 @@ container: '#myModal modal-body'
 					
 					$display_empresa="display:none";
 					$display_persona="display:block";
-					/*
-					$checked_tipo = "";
-					$checked_flag_web = "";
-					
-					if($proveedor->id > 0){
-						if($proveedor->tipo == 0){
-							$display_empresa="display:none";
-							$display_persona="display:block";
-							$checked_tipo = "";
-						}
-						
-						if($proveedor->tipo == 1){
-							$display_empresa="display:block";
-							$display_persona="display:none";
-							$checked_tipo = "checked='checked'";
-						}
-						
-						if($proveedor->flag_web == 1)$checked_flag_web = "checked='checked'";
-					}
-					*/
 					?>
+					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Regional</label>
+								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($region as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==5)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						
+					</div>
 					
 					<div class="row" style="padding-left:10px">
 						
@@ -497,28 +500,9 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-12">
+						<div class="col-lg-8">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Regional</label>
-								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($region as $row) {?>
-									<option value="<?php echo $row->id?>" <?php //if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-						
-					</div>
-					
-					<div class="row" style="padding-left:10px">
-						
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Delegado</label>
+								<label class="control-label form-control-sm">Delegado Titular 1</label>
 								<select name="id_concurso_inscripcion" id="id_concurso_inscripcion" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar--</option>
 									<?php
@@ -528,6 +512,41 @@ container: '#myModal modal-body'
 									}
 									?>
 								</select>
+							</div>
+						</div>
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Coordinador</label>
+								<br>
+								<input type="radio" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" />
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="row" style="padding-left:10px">
+						
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Delegado Titular 2</label>
+								<select name="id_concurso_inscripcion2" id="id_concurso_inscripcion2" class="form-control form-control-sm" onChange="">
+									<option value="">--Seleccionar--</option>
+									<?php
+									foreach ($concurso_inscripcion as $row) {?>
+									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Coordinador</label>
+								<br>
+								<input type="radio" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" />
 							</div>
 						</div>
 						

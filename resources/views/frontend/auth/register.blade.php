@@ -24,7 +24,7 @@
                             			<option value="">--Seleccionar--</option>
 										<?php
 										foreach ($tipo_documento as $row) {?>
-										<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+										<option value="<?php echo $row->codigo?>" <?php if($row->codigo==78)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 										<?php 
 										}
 										?>										        

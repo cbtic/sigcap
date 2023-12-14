@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:40%!important
+	max-width:60%!important
   }
   
 #tablemodal{
@@ -192,8 +192,8 @@ $.mask.definitions['p'] = "[Mm]";
 $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
-	$("#id_regional").select2({ width: '100%' });
-	$("#id_concurso_inscripcion").select2({ width: '100%' });
+	$("#id_delegado").select2({ width: '100%' });
+	//$("#id_concurso_inscripcion").select2({ width: '100%' });
 });
 </script>
 
