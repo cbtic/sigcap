@@ -8,6 +8,8 @@ use App\Models\DerechoRevision;
 use App\Models\Agremiado;
 use App\Models\Persona;
 use App\Models\Liquidacione;
+use App\Models\Municipalidade;
+use App\Models\Ubigeo;
 use Auth;
 
 class DerechoRevisionController extends Controller
@@ -30,8 +32,13 @@ class DerechoRevisionController extends Controller
         $agremiado = new Agremiado;
         $persona = new Persona;
         $liquidacion = new Liquidacione;
+        $municipalidad_modal = new Municipalidade;
+        $ubigeo_model = new Ubigeo;
+        $departamento = $ubigeo_model->getDepartamento();
+        $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
         
-        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona','liquidacion'));
+        
+        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','departamento'));
     }
 
     public function listar_derecho_revision_ajax(Request $request){

@@ -136,21 +136,32 @@
                     Departamento
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="departamento" id="departamento" value="<?php echo $derecho_revision->id_ubigeo/*sacar de ubigeo*/?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    <input type="hidden" name="id_ubigeo_domicilio" id="id_ubigeo_domicilio" value="<?php echo $agremiado->id_ubigeo_domicilio?>">
+                    <select name="id_departamento_domiciliario" id="id_departamento_domiciliario" class="form-control form-control-sm" onchange="obtenerProvinciaDomiciliario()">
+                        <option value="">--Selecionar--</option>
+                        <?php
+                        foreach ($departamento as $row) {?>
+                        <option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($agremiado->id_ubigeo_domicilio,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
+                        <?php 
+                        }
+                        ?>
+                    </select>
                     </div>
-
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Provincia
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="provincia" id="provincia" value="<?php echo $derecho_revision->id_ubigeo/*sacar de ubigeo*/?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    <select name="id_provincia_domiciliario" id="id_provincia_domiciliario" class="form-control form-control-sm" onchange="obtenerDistritoDomiciliario()">
+                        <option value="">--Selecionar--</option>
+                    </select>
                     </div>
-
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Distrito
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="distrito" id="distrito" value="<?php echo $derecho_revision->id_ubigeo/*sacar de ubigeo*/?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    <select name="id_distrito_domiciliario" id="id_distrito_domiciliario" class="form-control form-control-sm" onchange="">
+                        <option value="">--Selecionar--</option>
+                    </select>
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
@@ -184,8 +195,16 @@
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Municipalidad
                     </div>
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="municipalidad" id="municipalidad" value="<?php echo $derecho_revision->id_municipalidad_integrada/*debe ser solo municipalidad en la bd*/?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">					
+                    <select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="">
+                        <option value="">--Selecionar--</option>
+                            <?php
+                            foreach ($municipalidad as $row) {?>
+                                <option value="<?php echo $row->id?>" <?php if($row->id==$derecho_revision->id_municipalidad)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                            <?php 
+                            }
+                            ?>
+                    </select>
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
@@ -208,13 +227,13 @@
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                         <input type="text" name="numero_revision" id="numero_revision" value="<?php echo $derecho_revision->numero_revision?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
-                    
+                    <!--
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Credipago
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="credipago" id="credipago" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                    </div>
+                        <input type="text" name="credipago" id="credipago" value="<?php /*echo $liquidacion->credipago*/?>" class="form-control form-control-sm" <?php /*"readonly='readonly'"*/?> >
+                    </div>-->
                     
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     &Aacute;rea Total
@@ -257,7 +276,6 @@
                             <th>Nombre Proyecto</th>
                             <th>Tipo Proyecto</th>
                             <th>N&uacute;mero Revisi&oacute;n</th>
-                            <th>Credipago</th>
                             <th>Municipalidad</th>
                             <th>N&uacute;mero CAP</th>
                             <th>Proyectista</th>

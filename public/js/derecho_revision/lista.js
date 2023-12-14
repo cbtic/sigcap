@@ -27,6 +27,77 @@ $(document).ready(function () {
 	
 });
 
+function obtenerProvinciaDomiciliario(){
+	
+	var id = $('#id_departamento_domiciliario').val();
+	if(id=="")return false;
+	$('#id_provincia_domiciliario').attr("disabled",true);
+	$('#id_distrito_domiciliario').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_provincia/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_provincia_domiciliario').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_provincia+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#id_provincia_domiciliario').html(option);
+			
+			var option2 = "<option value=''>Seleccionar</option>";
+			$('#id_distrito_domiciliario').html(option2);
+			
+			$('#id_provincia_domiciliario').attr("disabled",false);
+			$('#id_distrito_domiciliario').attr("disabled",false);
+			
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerDistritoDomiciliario(){
+	
+	var id_departamento = $('#id_departamento_domiciliario').val();
+	var id = $('#id_provincia_domiciliario').val();
+	if(id=="")return false;
+	$('#id_distrito_domiciliario').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_distrito/'+id_departamento+'/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value=''>Seleccionar</option>";
+			$('#id_distrito_domiciliario').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_ubigeo+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#id_distrito_domiciliario').html(option);
+			
+			$('#id_distrito_domiciliario').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
