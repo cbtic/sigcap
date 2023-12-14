@@ -52,7 +52,7 @@ left join tabla_maestras t11 on t1.id_puesto::int = t11.codigo::int And t11.tipo
 	function getComisionDelegadoByComision($id_comision){
 
         $cad = " select cd.id,r.denominacion region,tm.denominacion situacion,tm2.denominacion puesto,
-p.numero_documento,p.nombres,p.apellido_paterno,p.apellido_materno,a.numero_cap
+p.numero_documento,p.nombres,p.apellido_paterno,p.apellido_materno,a.numero_cap,cd.coordinador 
 from comision_delegados cd 
 inner join regiones r on cd.id_regional=r.id 
 inner join agremiados a on cd.id_agremiado=a.id

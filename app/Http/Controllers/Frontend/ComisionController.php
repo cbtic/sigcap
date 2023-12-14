@@ -110,20 +110,24 @@ class ComisionController extends Controller
 			$comisionDelegado = ComisionDelegado::find($request->id);
 		}
 		
+		$coordinador = 0;
+		if($request->coordinador == 1)$coordinador = 1;
 		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
-		
 		$comisionDelegado->id_regional = $request->id_regional;
 		$comisionDelegado->id_comision = $request->id_comision;
+		$comisionDelegado->coordinador = $coordinador;
 		$comisionDelegado->id_agremiado = $concursoInscripcion->id_agremiado;
 		$comisionDelegado->id_puesto = $concursoInscripcion->puesto_postula;
 		//$comisionDelegado->estado = 1;
 		$comisionDelegado->id_usuario_inserta = $id_user;
 		$comisionDelegado->save();
 		
+		$coordinador = 0;
+		if($request->coordinador == 2)$coordinador = 1;
 		$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
-		
 		$comisionDelegado2->id_regional = $request->id_regional;
 		$comisionDelegado2->id_comision = $request->id_comision;
+		$comisionDelegado2->coordinador = $coordinador;
 		$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
 		$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
 		$comisionDelegado2->estado = 1;
@@ -378,6 +382,7 @@ class ComisionController extends Controller
 				$comision->comision = $comision_desc;
 				$comision->id_municipalidad_integrada = $municipalidadesIntegrada->id;
 				$comision->id_usuario_inserta = $id_user;
+				$comision->id_dia_semana = $request->dia_semana;
 				$comision->estado = "1";
 				$comision->save();
 			//$id_municipalidad_integrada = $municipalidadIntegrada->id;
@@ -407,6 +412,7 @@ class ComisionController extends Controller
 				$comision->comision = $comision_desc;
 				$comision->id_municipalidad_integrada = $municipalidadesIntegrada->id;
 				$comision->id_usuario_inserta = $id_user;
+				$comision->id_dia_semana = $request->dia_semana;
 				//$comision->estado = "1";
 				$comision->save();
 			}
@@ -452,15 +458,33 @@ class ComisionController extends Controller
 
     }
 
-	public function modal_dia_semana($id){
+	public function modalDiaSemana($id){
 		
+		//$comision = Comisione::find($id);
 		$comision_model = new Comisione;
+		$comision = new Comisione;
+		//$comision = $comision_model->id_comision;
+		//$comision = $comision_model->getDiaComisionAll();
 		$tablaMaestra_model = new TablaMaestra;
-		$tipoAgrupacion = $tablaMaestra_model2->getMaestroByTipo(99);
-
+		//$comision = $comision_model
+		$dia_semana = $tablaMaestra_model->getMaestroByTipo(70);
 		
-		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region'));
+		return view('frontend.comision.modalDiaSemana',compact('id','dia_semana','comision'));
 
     }
-	
+
+	public function send_dia_semana(Request $request){
+
+		$id_user = Auth::user()->id;
+		//print_r($request->dia_semana).exit();
+		if($request->id == 0){
+			$comision = new Comisione;
+		}else{
+			$comision = Comisione::find($request->id);
+		}
+		
+		$comision->id_dia_semana = $request->dia_semana;
+		
+		$comision->save();
+    }
 }

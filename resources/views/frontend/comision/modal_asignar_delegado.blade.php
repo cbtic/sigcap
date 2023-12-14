@@ -269,11 +269,13 @@ function fn_save(){
 	var id_regional = $('#id_regional').val();
 	var id_concurso_inscripcion = $('#id_concurso_inscripcion').val();
 	var id_concurso_inscripcion2 = $('#id_concurso_inscripcion2').val();
+	var coordinador = $('input[name=coordinador]:checked').val();
+	//alert(coordinador);return false;
 	
     $.ajax({
 			url: "/comision/send_delegado",
             type: "POST",
-            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion,id_concurso_inscripcion2:id_concurso_inscripcion2},
+            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion,id_concurso_inscripcion2:id_concurso_inscripcion2,coordinador:coordinador},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				datatablenew();
@@ -498,7 +500,7 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-12">
+						<div class="col-lg-8">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado Titular 1</label>
 								<select name="id_concurso_inscripcion" id="id_concurso_inscripcion" class="form-control form-control-sm" onChange="">
@@ -513,11 +515,19 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Coordinador</label>
+								<br>
+								<input type="radio" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" />
+							</div>
+						</div>
+						
 					</div>
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-12">
+						<div class="col-lg-8">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado Titular 2</label>
 								<select name="id_concurso_inscripcion2" id="id_concurso_inscripcion2" class="form-control form-control-sm" onChange="">
@@ -529,6 +539,14 @@ container: '#myModal modal-body'
 									}
 									?>
 								</select>
+							</div>
+						</div>
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Coordinador</label>
+								<br>
+								<input type="radio" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" />
 							</div>
 						</div>
 						

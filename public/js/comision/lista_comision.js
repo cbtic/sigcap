@@ -9,6 +9,10 @@ $(document).ready(function () {
 		modalAsignarDelegado(0);
 	});
 
+	/*$('#btnNuevoComision').click(function () {
+		modal_dia_semana(0);
+	});*/
+
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -275,6 +279,22 @@ function modalAsignarDelegado(id){
 	});
 
 }
+
+/*function modal_dia_semana(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/comision/modal_dia_semana/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}*/
 
 function modalPuestos(id){
 	
@@ -543,7 +563,7 @@ function fn_ListarBusqueda() {
 
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
     //fn_util_bloquearPantalla("Buscando");
-    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, 001);//500
+    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) });//500
 }
 
 function fn_CargaSuGrilla(pValor, piIdMovimientoCompra) {
@@ -594,6 +614,7 @@ function fn_DevuelveSubGrilla(piIdMovimientoCompra, vNombreSubDataTable,row,tr) 
         	sInicio += '<thead>';
             sInicio += '<tr style="font-size:13px">';
 			sInicio += '<th style="text-align: left;">Delegado</th>';
+			sInicio += '<th style="text-align: left;">Coordinador</th>';
 			sInicio += '<th style="text-align: right;">N&deg; CAP</th>';
 			sInicio += '<th style="text-align: right;">Situaci&oacute;n</th>';
 			sInicio += '<th style="text-align: right;">Tipo de Titular</th>';
@@ -608,8 +629,11 @@ function fn_DevuelveSubGrilla(piIdMovimientoCompra, vNombreSubDataTable,row,tr) 
 			var delegado = "";
 			$.each(result, function (index , value) {
 				delegado = value.apellido_paterno + " " + value.apellido_materno + " " + value.nombres;
+				var coordinador = "NO";
+				if(value.coordinador==1)coordinador = "SI";
 				sIntermedio += '<tr style="font-size:13px">';
 				sIntermedio +='<td style="text-align: left;">' + delegado+ '</td>';
+				sIntermedio +='<td style="text-align: left;">' + coordinador+ '</td>';
 				sIntermedio +='<td style="text-align: right;">' + value.numero_cap+ '</td>';
 				sIntermedio +='<td style="text-align: right;">' + value.situacion+ '</td>';
 				sIntermedio +='<td style="text-align: right;">' + value.puesto+ '</td>';
