@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DerechoRevision;
+use App\Models\Agremiado;
+use App\Models\Persona;
 use Auth;
 
 class DerechoRevisionController extends Controller
@@ -22,7 +24,12 @@ class DerechoRevisionController extends Controller
 
     function consulta_derecho_revision(){
 
-        return view('frontend.derecho_revision.all');
+        //$tablaMaestra_model = new TablaMaestra;
+		$derecho_revision = new DerechoRevision;
+        $agremiado = new Agremiado;
+        $persona = new Persona;
+        
+        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona'));
     }
 
     public function listar_derecho_revision_ajax(Request $request){

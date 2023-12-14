@@ -10,6 +10,8 @@ class DerechoRevision extends Model
 {
     use HasFactory;
 
+    protected $table = 'solicitudes';
+
     public function listar_derecho_revision_ajax($p){
 
         return $this->readFuntionPostgres('sp_listar_derecho_revision_paginado',$p);
