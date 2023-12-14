@@ -68,16 +68,12 @@ class ComprobanteController extends Controller
         if ($trans == 'FA'){
 
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
-            $serie = $serie_model->getMaestroC('95',$TipoF);
-            
+            $serie = $serie_model->getMaestroC('95',$TipoF);            
 
             //$MonAd = $request->MonAd;
             $MonAd = 0;
             $total   = $request->total;
-
             $adelanto   = 'N';
-
-
 
             if ($MonAd != '0' && $total <> $MonAd){
                 $total   = $MonAd;
