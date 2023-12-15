@@ -25,6 +25,16 @@ class Municipalidade extends Model
         return $data;
     }
 
+    function getMunicipalidadOrden(){
+
+        $cad = "select t1.*,tm.denominacion tipo_municipalidad
+        from municipalidades t1
+        inner join tabla_maestras tm on t1.id_tipo_municipalidad::int =tm.codigo::int and tm.tipo='43'
+        where t1.estado='1' order by denominacion asc ";
+		$data = DB::select($cad);
+        return $data;
+    }
+
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';

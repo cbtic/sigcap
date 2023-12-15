@@ -227,13 +227,13 @@ function calcular_total(obj){
 	
 	
 	
-	
+	var ruc_p = $('#ruc_p').val();
 
 	$("#btnBoleta").prop('disabled', true);
     $("#btnFactura").prop('disabled', true);
 	//$("#btnTicket").prop('disabled', true).hide();
-
 	$("#btnFracciona").prop('disabled', true);
+
 	if(cantidad != 0){
 		$("#btnFracciona").prop('disabled', false);
 		//$("#btnBoleta").prop('disabled', false);
@@ -246,6 +246,7 @@ function calcular_total(obj){
 		}else
 		{
 			$("#btnBoleta").prop('disabled', false);
+			
 			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
 		}
 	}

@@ -32,6 +32,8 @@ use App\Http\Controllers\Frontend\ProfesionController;
 use App\Http\Controllers\Frontend\ProfesionalesOtroController;
 use App\Http\Controllers\Frontend\RevisorUrbanoController;
 
+use App\Http\Controllers\Frontend\DerechoRevisionController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -399,5 +401,11 @@ Route::get('revisorUrbano/consulta_revisorUrbano', [RevisorUrbanoController::cla
 Route::post('revisorUrbano/listar_revisorUrbano_ajax', [RevisorUrbanoController::class, 'listar_revisorUrbano_ajax'])->name('revisorUrbano.listar_revisorUrbano_ajax');
 Route::get('revisorUrbano/editar_revisorUrbano/{id}', [RevisorUrbanoController::class, 'editar_revisorUrbano'])->name('revisorUrbano.editar_revisorUrbano');
 Route::get('revisorUrbano/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [RevisorUrbanoController::class, 'modal_revisorUrbano_nuevoRevisorUrbano'])->name('revisorUrbano.modal_revisorUrbano_nuevoRevisorUrbano');
+
+Route::get('derecho_revision/consulta_derecho_revision', [DerechoRevisionController::class, 'consulta_derecho_revision'])->name('derecho_revision.consulta_derecho_revision');
+Route::get('derecho_revision/consulta_solicitud_derecho_revision', [DerechoRevisionController::class, 'consulta_solicitud_derecho_revision'])->name('derecho_revision.consulta_solicitud_derecho_revision');
+Route::post('derecho_revision/listar_derecho_revision_ajax', [DerechoRevisionController::class, 'listar_derecho_revision_ajax'])->name('derecho_revision.listar_derecho_revision_ajax');
+//Route::get('derecho_revision/editar_revisorUrbano/{id}', [DerechoRevisionController::class, 'editar_revisorUrbano'])->name('derecho_revision.editar_revisorUrbano');
+//Route::get('derecho_revision/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [DerechoRevisionController::class, 'modal_revisorUrbano_nuevoRevisorUrbano'])->name('derecho_revision.modal_revisorUrbano_nuevoRevisorUrbano');
 
 
