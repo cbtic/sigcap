@@ -114,10 +114,13 @@ class ComprobanteController extends Controller
 
             //echo "persona:".$persona." ubicacion".$ubicacion; exit();
 			//echo $ubicacion; exit();
-			//echo $TipoF;exit();
-			if($ubicacion=="")$ubicacion=3070;
+			
+			//if($ubicacion=="")$ubicacion=3070;
             if ($TipoF == 'BV' || $TipoF == 'TK'){
-                $empresa = $empresa_model->getPersonaId($persona);
+
+                //echo $persona;exit();
+
+                $empresa = $empresa_model->getPersonaId_BV($persona);
 
 				if(!$empresa){
 					//echo $ubicacion;exit();
