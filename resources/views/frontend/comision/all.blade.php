@@ -254,7 +254,7 @@
                                     <table id="tblMunicipalidad" class="table table-sm">
                                         <thead>
                                             <tr style="font-size:13px">
-                                                <th>Seleccionar</th>
+                                                <th>Selec</th>
                                                 <th>Denominaci&oacute;n</th>
                                                 <th>Tipo de Muni</th>
                                             </tr>
@@ -284,10 +284,10 @@
                                             <select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onchange="">
                                                 <option value="">--Selecionar--</option>
                                                     <?php
-                                                    foreach ($tipo_comision as $row) {?>
-                                                        <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$municipalidadIntegrada->id_tipo_comision)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                                    //foreach ($tipo_comision as $row) {?>
+                                                        <option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$municipalidadIntegrada->id_tipo_comision)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
                                                     <?php
-                                                    }
+                                                    //}
                                                     ?>
                                             </select>
                                         </div>
@@ -326,7 +326,7 @@
                                 <table id="tblMunicipalidadIntegrada" class="table table-sm">
                                     <thead>
                                         <tr style="font-size:13px">
-                                            <th>Seleccionar</th>
+                                            <th>Selec</th>
                                             <th>Denominaci&oacute;n</th>
                                             <th>Tipo Agrup</th>
                                             <th>Movilidad</th>
@@ -383,11 +383,12 @@
                                             <div class="col-md-6">Denominaci&oacute;n</div>
                                             
                                             <div class="col-md-4">Estado</div></div>-->
-                                        <th>Seleccionar</th>
+                                        <th>Selec</th>
                                         <th>Denominaci&oacute;n</th>
                                         <th>Comisi&oacute;n</th>
-                                        <th>Movilidad</th>
+                                        <!--<th>Movilidad</th>-->
                                         <th>Estado</th>
+										<th>Nuevo Titular</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

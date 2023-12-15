@@ -862,3 +862,24 @@ function fn_guardarMunicipalidadIntegrada(){
             }
     });
 }
+
+
+function modalAsignarDelegado(id){
+	
+	//var id = 0;
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/comision/modal_asignar_delegado_comision/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+

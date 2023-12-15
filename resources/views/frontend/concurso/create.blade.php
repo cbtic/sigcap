@@ -538,6 +538,9 @@ label.form-control-sm{
 															</div>
 															<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
 																<input class="btn btn-warning pull-rigth" value="Nuevo" type="button" id="btnNuevo" style="margin-left:0px" />
+																
+																<input class="btn btn-success pull-rigth" value="Traer Req. Guardados" type="button" id="btnDuplicar" style="margin-left:8px" />
+																
 															</div>
 														</div>
 														
