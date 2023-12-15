@@ -69,6 +69,8 @@
 								@can('Afiliciacion a Seguro')
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
 								@endcan
+								<a href="/derecho_revision/consulta_solicitud_derecho_revision" class="dropdown-item">Solicitud de Derecho Revisi&oacute;n</a>
+								
                                 
 						   </div>
 					</li>
@@ -109,6 +111,8 @@
 								@can('Programacion de Sesiones')
 								<a href="/sesion/lista_programacion_sesion" class="dropdown-item">Programaci&oacute;n de Sesiones</a>
 								@endcan
+								<a href="/derecho_revision/consulta_derecho_revision" class="dropdown-item">Derecho Revisi&oacute;n</a>
+								
 								<a href="/revisorUrbano/consulta_revisorUrbano" class="dropdown-item">Registro Revisor Urbano</a>
 
 						   </div>
