@@ -7,8 +7,11 @@ foreach($comision as $row):?>
 	</td>
 	<td class="text-left"><?php echo $row->denominacion?></td>
 	<td class="text-left"><?php echo $row->comision?></td>
-	<td class="text-left"><?php echo $row->monto?></td>
+	<!--<td class="text-left"><?php //echo $row->monto?></td>-->
 	<td class="text-left"><?php if($row->estado=='1') {echo "Activo";} else {echo "Inactivo";}?></td>
+	<td class="text-left">
+	<input class="btn btn-success pull-rigth" value="Titular" type="button" id="btnNuevo" style="margin-left:15px" onclick="modalAsignarDelegado(<?php echo $row->id?>);" />
+	</td>
 </tr>
 <?php
 endforeach;

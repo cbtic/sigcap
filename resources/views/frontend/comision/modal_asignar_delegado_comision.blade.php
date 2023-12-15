@@ -287,7 +287,10 @@ function fn_save(){
             data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion,id_concurso_inscripcion2:id_concurso_inscripcion2,coordinador:coordinador},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				datatablenew();
+				//datatablenew();
+				cargarMunicipalidades();
+				cargarMunicipalidadesIntegradas();
+				cargarComisiones();
 				//obtenerInversionista(0);
 				//obtenerDetalleInversionista(0);
 				//window.location.reload();
@@ -461,7 +464,8 @@ container: '#myModal modal-body'
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px">
 					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
+					<!--<input type="hidden" name="id" id="id" value="<?php //echo $id?>">-->
+					<input type="hidden" name="id" id="id" value="0">
 					
 					<?php
 					
@@ -474,7 +478,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
-								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
+								<select name="id_regional" id="id_regional" class="form-control form-control-sm" disabled="disabled" >
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($region as $row) {?>
@@ -493,11 +497,11 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Comision</label>
-								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
+								<select name="id_comision" id="id_comision" class="form-control form-control-sm" disabled="disabled" >
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($comision as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->comision." ".$row->denominacion?></option>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$id)echo "selected='selected'"?>><?php echo $row->comision." ".$row->denominacion?></option>
 									<?php 
 									}
 									?>

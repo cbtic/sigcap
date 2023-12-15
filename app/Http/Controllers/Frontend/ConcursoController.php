@@ -466,6 +466,37 @@ class ConcursoController extends Controller
 		
     }
 	
+	public function send_duplicar_concurso(Request $request){
+		
+		$id_user = Auth::user()->id;
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$concursoInscripcione = $concursoInscripcione_model->getConcursoUltimoByIdAgremiado($request->id_concurso_inscripcion,$request->id_agremiado);
+		$id_concurso_inscripcion = $concursoInscripcione->id;
+		
+		$inscripcionDocumento = InscripcionDocumento::where("id_concurso_inscripcion",$id_concurso_inscripcion)->where("estado",1)->get();
+		foreach($inscripcionDocumento as $row){
+			
+			$inscripcionDocumento = new InscripcionDocumento;
+			$inscripcionDocumento->id_concurso_inscripcion = $request->id_concurso_inscripcion;
+			$inscripcionDocumento->ruta_archivo = $row->ruta_archivo;
+			$inscripcionDocumento->observacion = $row->observacion;
+			$inscripcionDocumento->id_tipo_documento = $row->id_tipo_documento;
+			$inscripcionDocumento->fecha_documento = $row->fecha_documento;
+			$inscripcionDocumento->estado = 1;
+			$inscripcionDocumento->id_usuario_inserta = $id_user;
+			$inscripcionDocumento->save();
+		}
+		
+		/*
+		$id_user = Auth::user()->id;
+		$concursoInscripcione = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+		$concursoInscripcione->puntaje = $request->puntaje;
+		$concursoInscripcione->resultado = $request->id_estado;
+		$concursoInscripcione->puesto = $concursoInscripcione->id_concurso_puesto;
+		$concursoInscripcione->save();
+		echo $concursoInscripcione->id;
+		*/
+    }
 	
 	public function obtener_puesto($id){
 		

@@ -35,6 +35,18 @@ where t1.id=".$id;
         return $data[0];
     }
 	
+	function getConcursoUltimoByIdAgremiado($id_concurso_inscripcion,$id_agremiado){
+
+        $cad = "select id 
+from concurso_inscripciones ci
+where id_agremiado=".$id_agremiado."
+and id<".$id_concurso_inscripcion."
+limit 1";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+	
 	function getConcursoInscripcionRequisitoById($id){
 
         $cad = "select t1.id,t1.denominacion,t2.denominacion tipo_documento 
