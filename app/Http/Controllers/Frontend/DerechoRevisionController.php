@@ -41,6 +41,22 @@ class DerechoRevisionController extends Controller
         return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','departamento'));
     }
 
+	function consulta_solicitud_derecho_revision(){
+
+        //$tablaMaestra_model = new TablaMaestra;
+		$derecho_revision = new DerechoRevision;
+        $agremiado = new Agremiado;
+        $persona = new Persona;
+        $liquidacion = new Liquidacione;
+        $municipalidad_modal = new Municipalidade;
+        $ubigeo_model = new Ubigeo;
+        $departamento = $ubigeo_model->getDepartamento();
+        $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
+        
+        
+        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','departamento'));
+    }
+
     public function listar_derecho_revision_ajax(Request $request){
 	
 		$derecho_revision_model = new DerechoRevision;
