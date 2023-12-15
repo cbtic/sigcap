@@ -22,8 +22,8 @@ class AddForeignToSolicitudes extends Migration
             $table->foreign('id_uso_edificacion')->references('id')->on('uso_edificaciones');
             $table->foreign('id_solicitud_documento')->references('id')->on('solicitud_documentos');
             $table->foreign('id_proyecto')->references('id')->on('proyectos');
-            //$table->foreign('id_usuario_revisa')->references('id')->on('usuario_revisa');
-            //$table->foreign('id_usuario_aprueba')->references('id')->on('usuario_aprueba');
+            $table->foreign('id_usuario_revisa')->references('id')->on('users');
+            $table->foreign('id_usuario_aprueba')->references('id')->on('users');
             $table->foreign('id_solicitud_observacion')->references('id')->on('solicitud_observaciones');
             //$table->foreign('id_resultado')->references('id')->on('resultados');
             $table->foreign('id_liquidacion')->references('id')->on('liquidaciones');
