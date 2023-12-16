@@ -18,13 +18,20 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' s.nombre_proyecto, s.tipo_proyecto, s.numero_revision, l.credipago, m.denominacion, a.numero_cap, a.desc_cliente, p.numero_documento, p.nombres, s.fecha_registro, s.estado ';
+	v_campos=' s.nombre_proyecto, s.tipo_proyecto, s.numero_revision, m.denominacion, a.numero_cap, a.desc_cliente, s.fecha_registro, s.estado, CASE 
+      WHEN p.id_tipo_propietario = ''78'' THEN (select p2.numero_documento from personas p2 where p2.id = p.id_persona)
+      WHEN p.id_tipo_propietario = ''79'' THEN (select e.ruc from empresas e where e.id = p.id_empresa)
+		end as numero_documento, CASE 
+      WHEN p.id_tipo_propietario = ''78'' THEN (select p2.apellido_paterno||'' ''||p2.apellido_materno||'' ''||p2.nombres agremiado from personas p2 where p2.id = p.id_persona)
+      WHEN p.id_tipo_propietario = ''79'' THEN (select e.razon_social from empresas e where e.id = p.id_empresa)
+		end as propietario ';
 
 	v_tabla=' from solicitudes s
-	inner join liquidaciones l on s.id_liquidacion = l.id 
-	inner join municipalidades m on s.id_municipalidad = m.id 
-	inner join agremiados a on s.id_proyectista = a.id
-	inner join personas p on s.id_propietario = p.id';
+	left join municipalidades m on s.id_municipalidad = m.id
+	left join proyectistas pr on s.id_proyectista = pr.id
+	left join agremiados a on pr.id_agremiado = a.id
+	left join propietarios p on s.id_propietario = p.id
+	left join empresas e on p.id_empresa = e.id';
 	
 	
 	v_where = ' Where 1=1  ';
