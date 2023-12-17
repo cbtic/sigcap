@@ -33,6 +33,7 @@ use App\Http\Controllers\Frontend\ProfesionalesOtroController;
 use App\Http\Controllers\Frontend\RevisorUrbanoController;
 
 use App\Http\Controllers\Frontend\DerechoRevisionController;
+use App\Http\Controllers\Frontend\ParametroController;
 
 /*
  * Frontend Controllers
@@ -410,4 +411,8 @@ Route::post('derecho_revision/listar_derecho_revision_ajax', [DerechoRevisionCon
 //Route::get('derecho_revision/editar_revisorUrbano/{id}', [DerechoRevisionController::class, 'editar_revisorUrbano'])->name('derecho_revision.editar_revisorUrbano');
 //Route::get('derecho_revision/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [DerechoRevisionController::class, 'modal_revisorUrbano_nuevoRevisorUrbano'])->name('derecho_revision.modal_revisorUrbano_nuevoRevisorUrbano');
 
+Route::get('parametro/consulta_parametro', [ParametrosController::class, 'consulta_parametro'])->name('parametro.consulta_parametro');
+Route::post('parametro/listar_parametro_ajax', [ParametrosController::class, 'listar_parametro_ajax'])->name('parametro.listar_parametro_ajax');
+Route::get('parametro/editar_parametro/{id}', [ParametrosController::class, 'editar_parametro'])->name('parametro.editar_parametro');
+Route::get('parametro/modal_parametro_nuevoParametro/{id}', [ParametrosController::class, 'modal_parametro_nuevoParametro'])->name('parametro.modal_parametro_nuevoParametro');
 
