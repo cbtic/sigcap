@@ -20,12 +20,26 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalProfesion(0);
+		//modalProfesion(0);
+		guardar_credipago()
 	});
 		
 	datatablenew();
 	
 });
+
+function guardar_credipago(){
+    
+    $.ajax({
+			url: "/derecho_revision/send_credipago",
+            type: "POST",
+            data : $("#frmExpediente").serialize(),
+            success: function (result) {  
+					datatablenew();
+            }
+    });
+}
+
 
 function obtenerProvinciaDomiciliario(){
 	
@@ -177,7 +191,7 @@ function datatablenew(){
 				"aTargets": [2],
 				"className": "dt-center",
 				},
-				{
+				/*{
 				"mRender": function (data, type, row) {
 					var credipago = "";
 					if(row.credipago!= null)credipago = row.credipago;
@@ -186,7 +200,7 @@ function datatablenew(){
 				"bSortable": false,
 				"aTargets": [3],
 				"className": "dt-center",
-				},
+				},*/
 				{
 				"mRender": function (data, type, row) {
 					var municipalidad = "";
@@ -194,7 +208,7 @@ function datatablenew(){
 					return municipalidad;
 				},
 				"bSortable": false,
-				"aTargets": [4],
+				"aTargets": [3],
 				"className": "dt-center",
 				},
 				{
@@ -204,17 +218,17 @@ function datatablenew(){
 					return numero_cap;
 				},
 				"bSortable": false,
-				"aTargets": [5],
+				"aTargets": [4],
 				"className": "dt-center",
 				},
 				{
 				"mRender": function (data, type, row) {
 					var nombre_agremiado = "";
-					if(row.nombre_agremiado!= null)nombre_agremiado = row.nombre_agremiado;
+					if(row.desc_cliente!= null)nombre_agremiado = row.desc_cliente;
 					return nombre_agremiado;
 				},
 				"bSortable": false,
-				"aTargets": [6],
+				"aTargets": [5],
 				"className": "dt-center",
 				},
 				{
@@ -224,17 +238,17 @@ function datatablenew(){
 					return numero_documento;
 				},
 				"bSortable": false,
-				"aTargets": [7],
+				"aTargets": [6],
 				"className": "dt-center",
 				},
 				{
 				"mRender": function (data, type, row) {
 					var nombre_propietario = "";
-					if(row.nombre_propietario!= null)nombre_propietario = row.nombre_propietario;
+					if(row.propietario!= null)nombre_propietario = row.propietario;
 					return nombre_propietario;
 				},
 				"bSortable": false,
-				"aTargets": [8],
+				"aTargets": [7],
 				"className": "dt-center",
 				},
 				{
@@ -244,7 +258,7 @@ function datatablenew(){
 					return fecha_registro;
 				},
 				"bSortable": false,
-				"aTargets": [9],
+				"aTargets": [8],
 				"className": "dt-center",
 				},
 				{
@@ -259,7 +273,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [10]
+				"aTargets": [9]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -275,14 +289,17 @@ function datatablenew(){
 					}
 				
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalProfesion('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarSolicitud('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					
+					html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerCredipago('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Credipago</button>';
+					
 					html += '<a href="javascript:void(0)" onclick=eliminarProfesion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [11],
+					"aTargets": [10],
 				},
             ]
     });
@@ -341,3 +358,50 @@ function fn_eliminar_profesion(id,estado){
     });
 }
 
+function editarSolicitud(id){
+	
+	//$("#divDocumentos").hide();
+	
+	$.ajax({
+		url: '/derecho_revision/obtener_solicitud/'+id,
+		dataType: "json",
+		success: function(result){
+			
+			$('#id').val(result.id);
+			$('#nombre_proyecto').val(result.nombre_proyecto);
+			$('#direccion').val(result.direccion);
+			$('#departamento_domiciliario').val(result.departamento);
+			$('#provincia_domiciliario').val(result.provincia);
+			$('#distrito_domiciliario').val(result.distrito);
+			$('#numero_cap').val(result.numero_cap);
+			$('#proyectista').val(result.desc_cliente);
+			$('#numero_documento').val(result.numero_documento);
+			$('#propietario').val(result.propietario);
+			$('#municipalidad').val(result.municipalidad);
+			$('#tipo_solicitud').val(result.tipo_solicitud);
+			$('#tipo_proyecto').val(result.tipo_proyecto);
+			$('#numero_revision').val(result.numero_revision);
+			$('#area_techada').val(result.area_total);
+			$('#valor_obra').val(result.valor_obra);
+			
+		}
+		
+	});
+
+}
+
+function modalVerCredipago(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_credipago/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
