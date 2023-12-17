@@ -418,3 +418,8 @@ Route::get('parametro/modal_parametro_nuevoParametro/{id}', [ParametrosControlle
 Route::post('parametro/send_parametro_nuevoParametro', [ParametrosController::class, 'send_parametro_nuevoParametro'])->name('parametro.send_parametro_nuevoParametro');
 Route::get('parametro/eliminar_parametro/{id}/{estado}', [ParametrosController::class, 'eliminar_parametro'])->name('parametro.eliminar_parametro');
 
+Route::get('sesion/consulta_calendarioComputo', [SesionController::class, 'consulta_calendarioComputo'])->name('sesion.consulta_calendarioComputo');
+Route::post('sesion/lista_calendario_computo', [SesionController::class, 'lista_calendario_computo'])->name('sesion.lista_calendario_computo');
+
+Route::get('sesion/consulta_computoSesion', [SesionController::class, 'consulta_computoSesion'])->name('sesion.consulta_computoSesion');
+Route::post('sesion/lista_computoSesion', [SesionController::class, 'lista_computoSesion'])->name('sesion.lista_computoSesion');

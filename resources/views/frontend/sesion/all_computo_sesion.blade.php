@@ -15,11 +15,22 @@
     .table-sortable tbody tr {
         cursor: move;
     }
+	/*
+    #global {        
+        width: 95%;        
+        margin: 15px 15px 15px 15px;     
+        height: 380px !important;        
+        border: 1px solid #ddd;
+        overflow-y: scroll !important;
+    }
+	*/
 	#global {
         height: 650px !important;
         width: auto;
         border: 1px solid #ddd;
 		margin:15px
+       /* background: #f1f1f1;*/
+        /*overflow-y: scroll !important;*/
     }
 	
     .margin{
@@ -30,9 +41,22 @@
         margin-bottom: 5px;
         margin-top: 5px;
     }
+
+    /*.row{
+        margin-top:10px;
+        padding: 0 10px;
+    }*/
     .clickable{
         cursor: pointer;   
     }
+
+    /*.panel-heading div {
+        margin-top: -18px;
+        font-size: 15px;        
+    }
+    .panel-heading div span{
+        margin-left:5px;
+    }*/
     .panel-body{
         display: block;
     }
@@ -44,6 +68,7 @@
 .loader {
 	width: 100%;
 	height: 100%;
+	/*height: 1500px;*/
 	overflow: hidden; 
 	top: 0px;
 	left: 0px;
@@ -78,12 +103,19 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Par&aacute;metros</li>
+            <li class="breadcrumb-item active">C&oacute;mputo de Sesiones</li>
         </li>
     </ol>
 @endsection
 
 @section('content')
+
+    <!--<ol class="breadcrumb" style="padding-left:120px;margin-top:0px">
+        <li class="breadcrumb-item text-primary">Inicio</li>
+            <li class="breadcrumb-item active">Consulta de Afiliados</li>
+        </li>
+    </ol>
+    -->
 
 <div class="loader"></div>
 
@@ -96,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Par&aacute;metros <!--<small class="text-muted">Usuarios activos</small>-->
+						C&oacute;mputo de Sesiones <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -108,31 +140,42 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Par&aacute;metros
+						C&oacute;mputo de Sesiones
                     </strong>
-                </div>
+                </div><!--card-header-->
 				
 				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="id" id="id" value="0">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-				
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombre">
-					</div>
+					<!--
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado" id="estado" class="form-control form-control-sm">
-							<option value="">Todos</option>
-							<option value="1" selected="selected">Activo</option>
-							<option value="0">Eliminado</option>
+						<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm">
+							<option value="">--Regi&oacute;n--</option>
+							<?php
+							//foreach ($region as $row) {?>
+							<option value="<?php //echo $row->id?>"><?php //echo $row->denominacion?></option>
+							<?php 
+							//}
+							?>
 						</select>
 					</div>
-                    
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+					-->
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
+							<option value="">--Periodo--</option>
+							<?php
+							foreach ($periodo as $row) {?>
+							<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
 
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
+						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
+						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>
 				
@@ -142,13 +185,14 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Año</th>
-                            <th>Porcentaje calculo Edificaciones</th>
-                            <th>Valor metro cuadrado habilitacion urbana</th>
-                            <th>Valor UIT</th>
-                            <th>IGV</th>
-                            <th>Estado</th>
-							<th>Acciones</th>
+							<th>Comisi&oacute;n</th>
+							<th>N&uacute;mero Comisi&oacute;n</th>
+							<th>Delegado</th>
+							<th>N&uacute;mero CAP</th>
+							<th>Puesto</th>
+							<th>Sesiones Computadas</th>
+							<th>Sesiones Adicionales</th>
+							<th>Total</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -156,8 +200,13 @@
                     </table>
                 </div><!--table-responsive-->
                 </form>
+
+
+
                 </div><!--card-body-->
-            </div>
+            </div><!--card-->
+        <!--</div>--><!--col-->
+    <!--</div>--><!--row-->
 
 @endsection
 
@@ -169,13 +218,17 @@
 	  <div class="modal-body" style="padding: 0px;margin: 0px">
 
 			<div id="diveditpregOpc"></div>
+
 	  </div>
+	
 	</div>
+
   </div>
+	
 </div>
 
 @push('after-scripts')
 
-<script src="{{ asset('js/parametro/lista.js') }}"></script>
+<script src="{{ asset('js/sesion/all_listar_computo_sesion.js') }}"></script>
 
 @endpush
