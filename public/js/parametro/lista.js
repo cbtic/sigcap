@@ -30,7 +30,7 @@ $(document).ready(function () {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/profesion/listar_profesion_ajax",
+        "sAjaxSource": "/parametro/listar_parametro_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         "bFilter": false,
@@ -55,7 +55,11 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var nombre = $('#nombre').val();
+			var anio = $('#anio').val();
+			var porcentaje_calculo_edificaciones = $('#porcentaje_calculo_edificaciones').val();
+			var valor_metro_cuadrado_habilitacion_urbana = $('#valor_metro_cuadrado_habilitacion_urbana').val();
+			var valor_uit = $('#valor_uit').val();
+			var igv = $('#igv').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -63,7 +67,9 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						nombre:nombre,estado:estado,
+						anio:anio,porcentaje_calculo_edificaciones:porcentaje_calculo_edificaciones,estado:estado,
+						valor_metro_cuadrado_habilitacion_urbana:valor_metro_cuadrado_habilitacion_urbana,
+						valor_uit:valor_uit,igv:igv,
 						_token:_token
                        },
                 "success": function (result) {
@@ -78,14 +84,54 @@ function datatablenew(){
             [	
 				{
                 "mRender": function (data, type, row) {
-                	var nombre = "";
-					if(row.nombre!= null)nombre = row.nombre;
-					return nombre;
+                	var anio = "";
+					if(row.anio!= null)anio = row.anio;
+					return anio;
                 },
                 "bSortable": false,
                 "aTargets": [0],
 				"className": "dt-center",
                 },
+				{
+				"mRender": function (data, type, row) {
+					var porcentaje_calculo_edificaciones = "";
+					if(row.porcentaje_calculo_edificaciones!= null)porcentaje_calculo_edificaciones = row.porcentaje_calculo_edificaciones;
+					return porcentaje_calculo_edificaciones;
+				},
+				"bSortable": false,
+				"aTargets": [1],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var valor_metro_cuadrado_habilitacion_urbana = "";
+					if(row.valor_metro_cuadrado_habilitacion_urbana!= null)valor_metro_cuadrado_habilitacion_urbana = row.valor_metro_cuadrado_habilitacion_urbana;
+					return valor_metro_cuadrado_habilitacion_urbana;
+				},
+				"bSortable": false,
+				"aTargets": [2],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var valor_uit = "";
+					if(row.valor_uit!= null)valor_uit = row.valor_uit;
+					return valor_uit;
+				},
+				"bSortable": false,
+				"aTargets": [3],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var igv = "";
+					if(row.igv!= null)igv = row.igv;
+					return igv;
+				},
+				"bSortable": false,
+				"aTargets": [4],
+				"className": "dt-center",
+				},
 				{
 				"mRender": function (data, type, row) {
 					var estado = "";
@@ -98,7 +144,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [1]
+				"aTargets": [5]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -114,14 +160,14 @@ function datatablenew(){
 					}
 				
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalProfesion('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-					html += '<a href="javascript:void(0)" onclick=eliminarProfesion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalParametro('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					html += '<a href="javascript:void(0)" onclick=eliminarParametro('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [2],
+					"aTargets": [6],
 				},
             ]
     });
@@ -131,13 +177,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalProfesion(id){
+function modalParametro(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/profesion/modal_profesion_nuevoProfesion/"+id,
+			url: "/parametro/modal_parametro_nuevoParametro/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -147,7 +193,7 @@ function modalProfesion(id){
 
 }
 
-function eliminarProfesion(id,estado){
+function eliminarParametro(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -159,20 +205,20 @@ function eliminarProfesion(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Profesion?", 
+        message: "&iquest;Deseas "+act_estado+" el Parametro?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_profesion(id,estado_);
+                fn_eliminar_parametro(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_profesion(id,estado){
+function fn_eliminar_parametro(id,estado){
 	
     $.ajax({
-            url: "/profesion/eliminar_profesion/"+id+"/"+estado,
+            url: "/parametro/eliminar_parametro/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
 				datatablenew();

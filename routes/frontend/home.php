@@ -33,7 +33,7 @@ use App\Http\Controllers\Frontend\ProfesionalesOtroController;
 use App\Http\Controllers\Frontend\RevisorUrbanoController;
 
 use App\Http\Controllers\Frontend\DerechoRevisionController;
-use App\Http\Controllers\Frontend\ParametroController;
+use App\Http\Controllers\Frontend\ParametrosController;
 
 /*
  * Frontend Controllers

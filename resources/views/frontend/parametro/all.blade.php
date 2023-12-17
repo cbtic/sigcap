@@ -142,8 +142,11 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Nombre</th>
-                            <th>Estado</th>
+                            <th>Año</th>
+                            <th>Porcentaje calculo Edificaciones</th>
+                            <th>Valor metro cuadrado habilitacion urbana</th>
+                            <th>valor_uit</th>
+                            <th>igv</th>
 							<th>Acciones</th>
                         </tr>
                         </thead>
@@ -172,6 +175,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/profesion/lista.js') }}"></script>
+<script src="{{ asset('js/parametro/lista.js') }}"></script>
 
 @endpush
