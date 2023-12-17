@@ -415,4 +415,6 @@ Route::get('parametro/consulta_parametro', [ParametrosController::class, 'consul
 Route::post('parametro/listar_parametro_ajax', [ParametrosController::class, 'listar_parametro_ajax'])->name('parametro.listar_parametro_ajax');
 Route::get('parametro/editar_parametro/{id}', [ParametrosController::class, 'editar_parametro'])->name('parametro.editar_parametro');
 Route::get('parametro/modal_parametro_nuevoParametro/{id}', [ParametrosController::class, 'modal_parametro_nuevoParametro'])->name('parametro.modal_parametro_nuevoParametro');
+Route::post('parametro/send_parametro_nuevoParametro', [ParametrosController::class, 'send_parametro_nuevoParametro'])->name('parametro.send_parametro_nuevoParametro');
+Route::get('parametro/eliminar_parametro/{id}/{estado}', [ParametrosController::class, 'eliminar_parametro'])->name('parametro.eliminar_parametro');
 

@@ -6,11 +6,11 @@ $(document).ready(function () {
 	});
 	
 	$('#btnGuardar').on('click', function () {
-		guardar_profesion()
+		guardar_parametro()
 	});
 
-	$('#btnNuevoProfesion').on('click', function () {
-		modalProfesion(0);
+	$('#btnNuevoParametro').on('click', function () {
+		modalParametro(0);
 	});
 	
 	$('#btnBuscar').click(function () {
@@ -19,7 +19,7 @@ $(document).ready(function () {
 });
 
 
-function guardar_profesion(){
+function guardar_parametro(){
     var msg = "";
 	fn_save();
 }
@@ -219,13 +219,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalProfesion(id){
+function modalParametro(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/profesion/modal_profesion_nuevoProfesion/"+id,
+			url: "/parametro/modal_parametro_nuevoParametro/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);

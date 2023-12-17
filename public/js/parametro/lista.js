@@ -20,7 +20,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalProfesion(0);
+		modalParametro(0);
 	});
 		
 	datatablenew();
@@ -55,6 +55,7 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
+			var id = $('#id').val();
 			var anio = $('#anio').val();
 			var porcentaje_calculo_edificaciones = $('#porcentaje_calculo_edificaciones').val();
 			var valor_metro_cuadrado_habilitacion_urbana = $('#valor_metro_cuadrado_habilitacion_urbana').val();
@@ -67,7 +68,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						anio:anio,porcentaje_calculo_edificaciones:porcentaje_calculo_edificaciones,estado:estado,
+						id:id,anio:anio,porcentaje_calculo_edificaciones:porcentaje_calculo_edificaciones,estado:estado,
 						valor_metro_cuadrado_habilitacion_urbana:valor_metro_cuadrado_habilitacion_urbana,
 						valor_uit:valor_uit,igv:igv,
 						_token:_token
@@ -94,9 +95,9 @@ function datatablenew(){
                 },
 				{
 				"mRender": function (data, type, row) {
-					var porcentaje_calculo_edificaciones = "";
-					if(row.porcentaje_calculo_edificaciones!= null)porcentaje_calculo_edificaciones = row.porcentaje_calculo_edificaciones;
-					return porcentaje_calculo_edificaciones;
+					var porcentaje_calculo_edificacion = "";
+					if(row.porcentaje_calculo_edificacion!= null)porcentaje_calculo_edificacion = row.porcentaje_calculo_edificacion;
+					return porcentaje_calculo_edificacion;
 				},
 				"bSortable": false,
 				"aTargets": [1],

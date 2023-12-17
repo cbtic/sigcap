@@ -28,6 +28,10 @@ class ParametrosController extends Controller
 	
 		$parametro_model = new Parametro;
 		$p[]="";//$request->nombre;
+        $p[]="";
+        $p[]="";
+        $p[]="";
+        $p[]="";
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -45,4 +49,66 @@ class ParametrosController extends Controller
 		echo json_encode($result);
 	
 	}
+
+    public function editar_parametro($id){
+        
+		$parametro = Parametro::find($id);
+		$id_parametro = $parametro->id_parametro;
+        //$anio = $parametro->anio;
+        $parametro = Parametro::find($id_profesion);
+		
+		return view('frontend.parametro.create',compact('anio','porcentaje_calculo_edificacion','valor_metro_cuadrado_habilitacion_urbana','valor_uit','igv','parametro','estado'));
+		
+    }
+
+    public function modal_parametro_nuevoParametro($id){
+		
+		$parametro = new Parametro;
+		
+		if($id>0){
+			$parametro = Parametro::find($id);
+		}else{
+			$parametro = new Parametro;
+		}
+		
+		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
+		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
+		
+		return view('frontend.parametro.modal_parametro_nuevoParametro',compact('id','parametro'));
+	
+	}
+
+    public function send_parametro_nuevoParametro(Request $request){
+		
+		/*$request->validate([
+			'nombre'=>'required',
+		]
+		);*/
+
+		$id_user = Auth::user()->id;
+
+		if($request->id == 0){
+			$parametro = new Parametro;
+		}else{
+			$parametro = Parametro::find($request->id);
+		}
+		
+		$parametro->anio = $request->anio;
+        $parametro->porcentaje_calculo_edificacion = $request->porcentaje_calculo_edificacion;
+        $parametro->valor_metro_cuadrado_habilitacion_urbana = $request->valor_metro_cuadrado_habilitacion_urbana;
+        $parametro->valor_uit = $request->valor_uit;
+        $parametro->igv = $request->igv;
+		$parametro->id_usuario_inserta = $id_user;
+		$parametro->save();
+    }
+
+	public function eliminar_parametro($id,$estado)
+    {
+		$parametro = Parametro::find($id);
+		$parametro->estado = $estado;
+		$parametro->save();
+
+		echo $parametro->id;
+    }
+
 }
