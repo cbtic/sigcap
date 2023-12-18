@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Calendario de C&oacute;mputo de Sesiones</li>
+            <li class="breadcrumb-item active">Consulta de Empresas</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-						Calendario de C&oacute;mputo de Sesiones <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consulta de Programaci&oacute;n de Sesi&oacute;n <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-						Calendario de C&oacute;mputo de Sesiones
+                        Lista de Programaci&oacute;n de Sesiones
                     </strong>
                 </div><!--card-header-->
 				
@@ -173,50 +173,55 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-						<select name="anio" id="anio" class="form-control form-control-sm">
-							@foreach ($anio as $anio)
-								<option value="{{ $anio }}">{{ $anio }}</option>
-							@endforeach
-						</select>
-					</div>
-
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="mes" id="mes" class="form-control form-control-sm">
-							@foreach ($mes as $mes)
-								<option value="{{ $mes }}">{{ $mes }}</option>
-							@endforeach
+						<select name="id_comision_bus" id="id_comision_bus" class="form-control form-control-sm">
+							<option value="">--Comisi&oacute;n--</option>
 						</select>
 					</div>
-
-					<div class="col-lg-3">
-						<div class="form-group">
-							<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
-								<option value="">--Seleccionar Comisi&oacute;n--</option>
-								<?php
-								foreach ($comision as $row) {?>
-								<option value="<?php echo $row->id?>"><?php echo $row->comision." ".$row->denominacion?></option>
-								<?php 
-								}
-								?>
-							</select>
-						</div>
+					
+					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="fecha_inicio_bus" name="fecha_inicio_bus" placeholder="Fecha Desde">
 					</div>
-
-					<div class="col-lg-4">
-						<div class="form-group">
-							<select name="id_delegado" id="id_delegado" class="form-control form-control-sm" onChange="">
-								<option value="">--Seleccionar Delegado--</option>
-								<?php
-								foreach ($concurso_inscripcion as $row) {?>
-								<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
-								<?php 
-								}
-								?>
-							</select>
-						</div>
+					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Hasta">
 					</div>
-
+					
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    	<select name="id_tipo_sesion_bus" id="id_tipo_sesion_bus" class="form-control form-control-sm" onChange="">
+							<option value="">--Tipo Programci&oacute;n--</option>
+							<?php
+							foreach ($tipo_programacion as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    	<select name="id_estado_sesion_bus" id="id_estado_sesion_bus" class="form-control form-control-sm">
+							<option value="">--Estado Sesi&oacute;n--</option>
+							<?php
+							foreach ($estado_sesion as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    	<select name="id_estado_aprobacion_bus" id="id_estado_aprobacion_bus" class="form-control form-control-sm">
+							<option value="">--Estado Aprobaci&oacute;n--</option>
+							<?php
+							foreach ($estado_aprobacion as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					
 					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
@@ -229,22 +234,17 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>Puesto</th>
+							<th>Regi&oacute;n</th>
+							<th>Periodo</th>
 							<th>Comisi&oacute;n</th>
-							<th>N&uacute;mero CAP</th>
-							<th>D&iacute;a</th>
-							<th>Semana 1</th>
-							<th>D&iacute;a</th>
-							<th>Semana 2</th>
-							<th>D&iacute;a</th>
-							<th>Semana 3</th>
-							<th>D&iacute;a</th>
-							<th>Semana 4</th>
-							<th>D&iacute;a</th>
-							<th>Semana 5</th>
-							<th>D&iacute;a</th>
-							<th>Semana 6</th>
-							<th>Total</th>
+							<th>Fecha Programada</th>
+							<th>Fecha Ejecuci&oacute;n</th>
+                            <!--<th>Hora Inicio</th>
+							<th>Hora Fin</th>-->
+							<th>Sesi&oacute;n Programada</th>
+                            <th>Estado Sesi&oacute;n</th>
+							<th>Estado Aprobaci&oacute;n</th>
+							<th>Editar</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -281,6 +281,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/sesion/lista_calendario_computo.js') }}"></script>
+<script src="{{ asset('js/sesion/lista_sesion.js') }}"></script>
 
 @endpush

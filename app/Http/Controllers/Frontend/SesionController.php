@@ -304,10 +304,24 @@ class SesionController extends Controller
 	function consulta_calendarioComputo(){
 
 		$periodoComisione_model = new PeriodoComisione;
+		$anio = range(date('Y'), date('Y') - 20); 
+		$mes = [
+            '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
+            '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
+            '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
+            '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
+        ];
+		$comisionDelegado_model = new ComisionDelegado;
+		
+		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
+
+		$comision_model = new Comisione;
+		
+		$comision = $comision_model->getComisionAll("","","1");
 		
 		$periodo = $periodoComisione_model->getPeriodoAll();
 
-        return view('frontend.sesion.all_calendario_computo',compact('periodo'));
+        return view('frontend.sesion.all_calendario_computo',compact('periodo','anio','mes','comision','concurso_inscripcion'));
     }
 
 	public function lista_calendario_computo(){
@@ -330,10 +344,26 @@ class SesionController extends Controller
 	function consulta_computoSesion(){
 
 		$periodoComisione_model = new PeriodoComisione;
+
+		$anio = range(date('Y'), date('Y') - 20); 
+		$mes = [
+            '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
+            '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
+            '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
+            '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
+        ];
+		
+		$comisionDelegado_model = new ComisionDelegado;
+		
+		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
+
+		$comision_model = new Comisione;
+		
+		$comision = $comision_model->getComisionAll("","","1");
 		
 		$periodo = $periodoComisione_model->getPeriodoAll();
 
-        return view('frontend.sesion.all_computo_sesion',compact('periodo'));
+        return view('frontend.sesion.all_computo_sesion',compact('periodo','anio','mes','comision','concurso_inscripcion'));
     }
 
 	public function lista_computoSesion(){

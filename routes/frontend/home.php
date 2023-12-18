@@ -35,6 +35,8 @@ use App\Http\Controllers\Frontend\RevisorUrbanoController;
 use App\Http\Controllers\Frontend\DerechoRevisionController;
 use App\Http\Controllers\Frontend\ParametrosController;
 
+use App\Http\Controllers\Frontend\FondoComunController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -423,3 +425,6 @@ Route::post('sesion/lista_calendario_computo', [SesionController::class, 'lista_
 
 Route::get('sesion/consulta_computoSesion', [SesionController::class, 'consulta_computoSesion'])->name('sesion.consulta_computoSesion');
 Route::post('sesion/lista_computoSesion', [SesionController::class, 'lista_computoSesion'])->name('sesion.lista_computoSesion');
+
+Route::get('fondoComun/consulta_fondo_comun', [FondoComunController::class, 'consulta_fondo_comun'])->name('fondoComun.consulta_fondo_comun');
+Route::post('fondoComun/listar_fondo_comun_ajax', [FondoComunController::class, 'listar_fondo_comun_ajax'])->name('fondoComun.listar_fondo_comun_ajax');

@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Calendario de C&oacute;mputo de Sesiones</li>
+            <li class="breadcrumb-item active">Fondo Com&uacute;n</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-						Calendario de C&oacute;mputo de Sesiones <!--<small class="text-muted">Usuarios activos</small>-->
+						Fondo Com&uacute;n <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-						Calendario de C&oacute;mputo de Sesiones
+						Fondo Com&uacute;n
                     </strong>
                 </div><!--card-header-->
 				
@@ -148,74 +148,84 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-					<!--
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm">
-							<option value="">--Regi&oacute;n--</option>
-							<?php
-							//foreach ($region as $row) {?>
-							<option value="<?php //echo $row->id?>"><?php //echo $row->denominacion?></option>
-							<?php 
-							//}
-							?>
-						</select>
+				
+                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row" style="padding:20px 20px 0px 20px;">
+						
+
+						<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+							<select name="anio" id="anio" class="form-control form-control-sm">
+								@foreach ($anio as $anio)
+									<option value="{{ $anio }}">{{ $anio }}</option>
+								@endforeach
+							</select>
+						</div>
+
+						<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+							<select name="mes" id="mes" class="form-control form-control-sm">
+								@foreach ($mes as $mes)
+									<option value="{{ $mes }}">{{ $mes }}</option>
+								@endforeach
+							</select>
+						</div>
+
+						<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+							<select name="distrito" id="distrito" class="form-control form-control-sm">
+							<option value="">--Seleccionar Municipalidad--</option>
+								<?php
+								/*foreach ($municipalidad as $row) {*/?>
+									<!--<option value="<?php /*echo $row->id*/?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/?>><?php /*echo $row->denominacion*/?></option>-->
+								<?php
+								/*}*/
+								?>
+							</select>
+						</div>
 					</div>
-					-->
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
-							<option value="">--Periodo--</option>
-							<?php
-							foreach ($periodo as $row) {?>
-							<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
-							<?php 
-							}
-							?>
-						</select>
+					<div class="row" style="padding:20px 20px 0px 20px;">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
+									<option value="">--Seleccionar Comisi&oacute;n--</option>
+									<?php
+									foreach ($comision as $row) {?>
+									<option value="<?php echo $row->id?>"><?php echo $row->comision." ".$row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="credipago" name="credipago" placeholder="Credipago">
 					</div>
+
+					</div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+					<div class="table-responsive">
+                    <table id="tblAfiliado" class="table table-hover table-sm">
+                        <thead>
+                        <tr style="font-size:13px">
+							<th>N° de C&oacute;mputo</th>
+							<th>Periodo</th>
+							<th>Año</th>
+							<th>Mes</th>
+							<th>Correlativo</th>
+							<th>Fecha C&oacute;mputo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    </div>
+				</div>
 					
-					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-						<select name="anio" id="anio" class="form-control form-control-sm">
-							@foreach ($anio as $anio)
-								<option value="{{ $anio }}">{{ $anio }}</option>
-							@endforeach
-						</select>
-					</div>
+				</div>
 
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="mes" id="mes" class="form-control form-control-sm">
-							@foreach ($mes as $mes)
-								<option value="{{ $mes }}">{{ $mes }}</option>
-							@endforeach
-						</select>
-					</div>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-					<div class="col-lg-3">
-						<div class="form-group">
-							<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
-								<option value="">--Seleccionar Comisi&oacute;n--</option>
-								<?php
-								foreach ($comision as $row) {?>
-								<option value="<?php echo $row->id?>"><?php echo $row->comision." ".$row->denominacion?></option>
-								<?php 
-								}
-								?>
-							</select>
-						</div>
-					</div>
-
-					<div class="col-lg-4">
-						<div class="form-group">
-							<select name="id_delegado" id="id_delegado" class="form-control form-control-sm" onChange="">
-								<option value="">--Seleccionar Delegado--</option>
-								<?php
-								foreach ($concurso_inscripcion as $row) {?>
-								<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
-								<?php 
-								}
-								?>
-							</select>
-						</div>
-					</div>
+				</div>
 
 					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
@@ -229,21 +239,13 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>Puesto</th>
 							<th>Comisi&oacute;n</th>
+							<th>N&uacute;mero Comisi&oacute;n</th>
+							<th>Delegado</th>
 							<th>N&uacute;mero CAP</th>
-							<th>D&iacute;a</th>
-							<th>Semana 1</th>
-							<th>D&iacute;a</th>
-							<th>Semana 2</th>
-							<th>D&iacute;a</th>
-							<th>Semana 3</th>
-							<th>D&iacute;a</th>
-							<th>Semana 4</th>
-							<th>D&iacute;a</th>
-							<th>Semana 5</th>
-							<th>D&iacute;a</th>
-							<th>Semana 6</th>
+							<th>Puesto</th>
+							<th>Sesiones Computadas</th>
+							<th>Sesiones Adicionales</th>
 							<th>Total</th>
                         </tr>
                         </thead>
@@ -281,6 +283,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/sesion/lista_calendario_computo.js') }}"></script>
+<script src="{{ asset('js/fondoComun/all_listar_fondo_comun.js') }}"></script>
 
 @endpush
