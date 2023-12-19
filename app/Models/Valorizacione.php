@@ -50,7 +50,11 @@ class Valorizacione extends Model
 			";
         }
 
+<<<<<<< HEAD
         //echo $cad;
+=======
+        echo $cad;
+>>>>>>> 7ae6824d72473245bb7e64e60883418a0d434256
 		$data = DB::select($cad);
         return $data;
     }

@@ -207,19 +207,19 @@ function calcular_total(obj){
 	var igv = 0;
 	//var cantidad = $("#tblValorizacion input[type='checkbox']:checked").length;
 	var cantidad = $(".mov:checked").length;
-	//alert(cantidad);
+	alert(cantidad);
 	//$("#tblValorizacion input[type='checkbox']:checked").each(function (){
-	if(cantidad == 0)$('#tipo_factura').val("");
-	var tipo_factura = $('#tipo_factura').val();
-	$('#id_concepto_sel').val(tipo_factura);
+	if(cantidad == 0)$('#id_concepto_modal_sel').val("");
+	var id_concepto = $('#id_concepto_modal_sel').val();
+	$('#id_concepto_sel').val(id_concepto);
 	
-	//alert(tipo_factura);
-	var tipo_factura_actual = $(obj).parent().parent().parent().find('.tipo_factura').val();
+	alert(id_concepto);
+	var id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
 
-	$('#idConcepto').val(tipo_factura_actual);
+	$('#idConcepto').val(id_concepto_actual);
 	
 	
-	if(tipo_factura!="" && tipo_factura!=tipo_factura_actual){
+	if(id_concepto!="" && id_concepto!=id_concepto_actual){
 		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
 		$(obj).prop("checked",false);
 		return false;

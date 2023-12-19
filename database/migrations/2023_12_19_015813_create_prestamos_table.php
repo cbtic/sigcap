@@ -19,7 +19,7 @@ class CreatePrestamosTable extends Migration
             $table->bigInteger('id_periodo_delegado')->nullable();
             $table->bigInteger('id_tipo_prestamo')->nullable();
             $table->date('fecha')->nullable();
-            $table->Integer('nro_total_cuotas',10)->nullable();
+            $table->bigInteger('nro_total_cuotas')->nullable();
             $table->double('total_prestamo',15,8)->nullable();
             $table->string('estado',1)->nullable()->default('1');
  
