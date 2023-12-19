@@ -33,6 +33,9 @@ use App\Http\Controllers\Frontend\ProfesionalesOtroController;
 use App\Http\Controllers\Frontend\RevisorUrbanoController;
 
 use App\Http\Controllers\Frontend\DerechoRevisionController;
+use App\Http\Controllers\Frontend\ParametrosController;
+
+use App\Http\Controllers\Frontend\FondoComunController;
 
 /*
  * Frontend Controllers
@@ -288,11 +291,13 @@ Route::post('concurso/upload_documento_requisito', [ConcursoController::class, '
 Route::get('comision/lista_comision', [ComisionController::class, 'lista_comision'])->name('comision.lista_comision');
 Route::post('comision/lista_comision_ajax', [ComisionController::class, 'lista_comision_ajax'])->name('comision.lista_comision_ajax');
 Route::get('comision/modal_asignar_delegado/{id}', [ComisionController::class, 'modal_asignar_delegado'])->name('comision.modal_asignar_delegado');
+Route::get('comision/modal_asignar_delegado_comision/{id}', [ComisionController::class, 'modal_asignar_delegado_comision'])->name('comision.modal_asignar_delegado_comision');
 Route::post('comision/send_delegado', [ComisionController::class, 'send_delegado'])->name('comision.send_delegado');
 Route::get('comision/obtener_comision_delegado/{id}', [ComisionController::class, 'obtener_comision_delegado'])->name('comision.obtener_comision_delegado');
 
 Route::get('concurso/create_resultado', [ConcursoController::class, 'create_resultado'])->name('concurso.create_resultado');
 Route::post('concurso/send_inscripcion_resultado', [ConcursoController::class, 'send_inscripcion_resultado'])->name('concurso.send_inscripcion_resultado');
+Route::post('concurso/send_duplicar_concurso', [ConcursoController::class, 'send_duplicar_concurso'])->name('concurso.send_duplicar_concurso');
 Route::get('comision/consulta_empresa', [ComisionController::class, 'consulta_empresa'])->name('comision.consulta_empresa');
 Route::post('comision/listar_municipalidad_ajax', [ComisionController::class, 'listar_municipalidad_ajax'])->name('comision.listar_municipalidad_ajax');
 Route::post('comision/send_comision_fila', [ComisionController::class, 'send_comision_fila'])->name('tipoConcepto.send_comision_fila');
@@ -405,7 +410,26 @@ Route::get('revisorUrbano/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [Revisor
 Route::get('derecho_revision/consulta_derecho_revision', [DerechoRevisionController::class, 'consulta_derecho_revision'])->name('derecho_revision.consulta_derecho_revision');
 Route::get('derecho_revision/consulta_solicitud_derecho_revision', [DerechoRevisionController::class, 'consulta_solicitud_derecho_revision'])->name('derecho_revision.consulta_solicitud_derecho_revision');
 Route::post('derecho_revision/listar_derecho_revision_ajax', [DerechoRevisionController::class, 'listar_derecho_revision_ajax'])->name('derecho_revision.listar_derecho_revision_ajax');
+
+Route::get('derecho_revision/obtener_solicitud/{id}', [DerechoRevisionController::class, 'obtener_solicitud'])->name('derecho_revision.obtener_solicitud');
+Route::get('derecho_revision/modal_credipago/{id}', [DerechoRevisionController::class, 'modal_credipago'])->name('derecho_revision.modal_credipago');
+Route::post('derecho_revision/send_credipago', [DerechoRevisionController::class, 'send_credipago'])->name('derecho_revision.send_credipago');
+
 //Route::get('derecho_revision/editar_revisorUrbano/{id}', [DerechoRevisionController::class, 'editar_revisorUrbano'])->name('derecho_revision.editar_revisorUrbano');
 //Route::get('derecho_revision/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [DerechoRevisionController::class, 'modal_revisorUrbano_nuevoRevisorUrbano'])->name('derecho_revision.modal_revisorUrbano_nuevoRevisorUrbano');
 
+Route::get('parametro/consulta_parametro', [ParametrosController::class, 'consulta_parametro'])->name('parametro.consulta_parametro');
+Route::post('parametro/listar_parametro_ajax', [ParametrosController::class, 'listar_parametro_ajax'])->name('parametro.listar_parametro_ajax');
+Route::get('parametro/editar_parametro/{id}', [ParametrosController::class, 'editar_parametro'])->name('parametro.editar_parametro');
+Route::get('parametro/modal_parametro_nuevoParametro/{id}', [ParametrosController::class, 'modal_parametro_nuevoParametro'])->name('parametro.modal_parametro_nuevoParametro');
+Route::post('parametro/send_parametro_nuevoParametro', [ParametrosController::class, 'send_parametro_nuevoParametro'])->name('parametro.send_parametro_nuevoParametro');
+Route::get('parametro/eliminar_parametro/{id}/{estado}', [ParametrosController::class, 'eliminar_parametro'])->name('parametro.eliminar_parametro');
 
+Route::get('sesion/consulta_calendarioComputo', [SesionController::class, 'consulta_calendarioComputo'])->name('sesion.consulta_calendarioComputo');
+Route::post('sesion/lista_calendario_computo', [SesionController::class, 'lista_calendario_computo'])->name('sesion.lista_calendario_computo');
+
+Route::get('sesion/consulta_computoSesion', [SesionController::class, 'consulta_computoSesion'])->name('sesion.consulta_computoSesion');
+Route::post('sesion/lista_computoSesion', [SesionController::class, 'lista_computoSesion'])->name('sesion.lista_computoSesion');
+
+Route::get('fondoComun/consulta_fondo_comun', [FondoComunController::class, 'consulta_fondo_comun'])->name('fondoComun.consulta_fondo_comun');
+Route::post('fondoComun/listar_fondo_comun_ajax', [FondoComunController::class, 'listar_fondo_comun_ajax'])->name('fondoComun.listar_fondo_comun_ajax');

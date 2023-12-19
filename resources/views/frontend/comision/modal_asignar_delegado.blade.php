@@ -261,6 +261,15 @@ function guardarCita(id_medico,fecha_cita){
     }
 }
 
+function habilitar(obj){
+
+	if($(obj).is(":checked")){
+		$('input[name=coordinador]').prop("checked",false);
+		$(obj).prop("checked",true);
+	}
+
+}
+
 function fn_save(){
     
 	var _token = $('#_token').val();
@@ -519,7 +528,7 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Coordinador</label>
 								<br>
-								<input type="radio" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" />
+								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" onChange="habilitar(this)" />
 							</div>
 						</div>
 						
@@ -546,7 +555,7 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Coordinador</label>
 								<br>
-								<input type="radio" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" />
+								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" onChange="habilitar(this)" />
 							</div>
 						</div>
 						

@@ -68,6 +68,20 @@
 	background: #3c8dbc;
 	color: #FFFFFF;
 }
+/*
+.form-control:disabled, .form-control[readonly]{
+	background-color:#fff3cd!important;
+	border-color:#ffecb5!important;
+	color:#664d03!important;
+	opacity:1
+}
+*/
+.form-control:disabled, .form-control[readonly]{
+	background-color:#cff4fc!important;
+	border-color:#b6effb!important;
+	color:#055160!important;
+	opacity:1
+}
 
 </style>
 
@@ -112,7 +126,7 @@
                     </strong>
                 </div>
 				
-				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
+				<form class="form-horizontal" method="post" action="" id="frmExpediente" autocomplete="off">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" id="id" value="0">
 				
@@ -122,14 +136,14 @@
                     Nombre Proyecto
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="nombre_proyecto" id="nombre_proyecto" value="<?php echo $derecho_revision->nombre_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="nombre_proyecto" id="nombre_proyecto" value="<?php echo $derecho_revision->nombre_proyecto?>" class="form-control form-control-sm celeste" readonly='readonly'>
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Direcci&oacute;n
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="direccion" id="direccion" value="<?php echo $derecho_revision->direccion?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="direccion" id="direccion" value="<?php echo $derecho_revision->direccion?>" class="form-control form-control-sm" readonly='readonly'>
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
@@ -137,95 +151,75 @@
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                     <input type="hidden" name="id_ubigeo_domicilio" id="id_ubigeo_domicilio" value="<?php echo $agremiado->id_ubigeo_domicilio?>">
-                    <select name="id_departamento_domiciliario" id="id_departamento_domiciliario" class="form-control form-control-sm" onchange="obtenerProvinciaDomiciliario()">
-                        <option value="">--Selecionar--</option>
-                        <?php
-                        foreach ($departamento as $row) {?>
-                        <option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($agremiado->id_ubigeo_domicilio,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
-                        <?php 
-                        }
-                        ?>
-                    </select>
+                    <input type="text" name="departamento_domiciliario" id="departamento_domiciliario" value="<?php echo $derecho_revision->departamento_domiciliario?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Provincia
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                    <select name="id_provincia_domiciliario" id="id_provincia_domiciliario" class="form-control form-control-sm" onchange="obtenerDistritoDomiciliario()">
-                        <option value="">--Selecionar--</option>
-                    </select>
+                    <input type="text" name="provincia_domiciliario" id="provincia_domiciliario" value="<?php echo $derecho_revision->provincia_domiciliario?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Distrito
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                    <select name="id_distrito_domiciliario" id="id_distrito_domiciliario" class="form-control form-control-sm" onchange="">
-                        <option value="">--Selecionar--</option>
-                    </select>
+                    <input type="text" name="distrito_domiciliario" id="distrito_domiciliario" value="<?php echo $derecho_revision->distrito_domiciliario?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     N° CAP
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Proyectista
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="proyectista" id="proyectista" value="<?php echo $agremiado->desc_cliente?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="proyectista" id="proyectista" value="<?php echo $agremiado->desc_cliente?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     N° Documento
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Propietario
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="propietario" id="propietario" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="propietario" id="propietario" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Municipalidad
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">					
-                    <select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="">
-                        <option value="">--Selecionar--</option>
-                            <?php
-                            foreach ($municipalidad as $row) {?>
-                                <option value="<?php echo $row->id?>" <?php if($row->id==$derecho_revision->id_municipalidad)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                            <?php 
-                            }
-                            ?>
-                    </select>
+                    <input type="text" name="municipalidad" id="municipalidad" value="<?php echo $derecho_revision->municipalidad?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Tipo Solicitud
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="tipo_solicitud" id="tipo_solicitud" value="<?php echo $derecho_revision->id_tipo_solicitud?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="tipo_solicitud" id="tipo_solicitud" value="<?php echo $derecho_revision->id_tipo_solicitud?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Tipo Proyecto
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="tipo_proyecto" id="tipo_proyecto" value="<?php echo $derecho_revision->tipo_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="tipo_proyecto" id="tipo_proyecto" value="<?php echo $derecho_revision->tipo_proyecto?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     N&uacute;mero Revisi&oacute;n
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="numero_revision" id="numero_revision" value="<?php echo $derecho_revision->numero_revision?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="numero_revision" id="numero_revision" value="<?php echo $derecho_revision->numero_revision?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
                     <!--
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
@@ -239,14 +233,14 @@
                     &Aacute;rea Total
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="area_techada" id="area_techada" value="<?php echo $derecho_revision->area_total?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="area_techada" id="area_techada" value="<?php echo $derecho_revision->area_total?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Valor de Obra
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="valor_obra" id="valor_obra" value="<?php echo $derecho_revision->valor_obra?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="valor_obra" id="valor_obra" value="<?php echo $derecho_revision->valor_obra?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
                     
 

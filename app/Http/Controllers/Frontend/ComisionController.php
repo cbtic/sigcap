@@ -100,6 +100,24 @@ class ComisionController extends Controller
 
     }
 	
+	public function modal_asignar_delegado_comision($id){
+		
+		$id_user = Auth::user()->id;
+		
+		$regione_model = new Regione;
+		$comision_model = new Comisione;
+		$comisionDelegado_model = new ComisionDelegado;
+		
+		$comision = $comision_model->getComisionAll("","","1");
+		if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
+
+		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
+		$region = $regione_model->getRegionAll();
+		
+		return view('frontend.comision.modal_asignar_delegado_comision',compact('id','comisionDelegado','comision','concurso_inscripcion','region'));
+
+    }
+	
 	public function send_delegado(Request $request){
 		$id_user = Auth::user()->id;
 		

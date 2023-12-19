@@ -20,7 +20,7 @@ Begin
 
 	v_campos=' ru.id, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, a.fecha_colegiado, tm.denominacion situacion, ru.codigo_itf, ru.codigo_ru, ru.estado ';
 
-	v_tabla=' from revisor_urbano ru 
+	v_tabla=' from revisor_urbanos ru 
 	inner join agremiados a on ru.id_agremiado= a.id
 	inner join personas p on a.id_persona = p.id
 	inner join tabla_maestras tm on a.id_situacion::int =tm.codigo:: int and tm.tipo = ''14''';

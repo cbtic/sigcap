@@ -14,7 +14,7 @@ class DeleteIdPeriodoDelegadoToMunicipalidadIntegradas extends Migration
     public function up()
     {
         Schema::table('municipalidad_integradas', function (Blueprint $table) {
-            $table->dropColumn('id_periodo_delegado');
+           $table->dropColumn('id_periodo_delegado');
         });
     }
 

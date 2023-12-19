@@ -152,7 +152,7 @@ class SesionController extends Controller
 			
 			$dia_semana = $request->dia_semana;
 			
-			$dias = array('LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO','DOMINGO');
+			$dias = array('LUNES','MARTES','MIï¿½RCOLES','JUEVES','VIERNES','Sï¿½BADO','DOMINGO');
 			
 			for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
 				$fechaInicioTemp = date("d-m-Y", $i);
@@ -301,6 +301,76 @@ class SesionController extends Controller
 
     }
 	
+	function consulta_calendarioComputo(){
+
+		$periodoComisione_model = new PeriodoComisione;
+		$anio = range(date('Y'), date('Y') - 20); 
+		$mes = [
+            '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
+            '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
+            '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
+            '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
+        ];
+		$comisionDelegado_model = new ComisionDelegado;
 		
+		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
+
+		$comision_model = new Comisione;
+		
+		$comision = $comision_model->getComisionAll("","","1");
+		
+		$periodo = $periodoComisione_model->getPeriodoAll();
+
+        return view('frontend.sesion.all_calendario_computo',compact('periodo','anio','mes','comision','concurso_inscripcion'));
+    }
+
+	public function lista_calendario_computo(){
+		
+		//$regione_model = new Regione;
+		/*$comisionSesionDelegado_model = new ComisionSesionDelegado;
+		$tablaMaestra_model = new TablaMaestra;
+		$periodoComisione_model = new PeriodoComisione;
+		
+		//$region = $regione_model->getRegionAll();
+		$tipo_programacion = $tablaMaestra_model->getMaestroByTipo(71);
+		$estado_sesion = $tablaMaestra_model->getMaestroByTipo(56);
+		$estado_aprobacion = $tablaMaestra_model->getMaestroByTipo(109);
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		*/
+		
+        return view('frontend.sesion.all_listar_sesion');
+    }
 	
+	function consulta_computoSesion(){
+
+		$periodoComisione_model = new PeriodoComisione;
+
+		$anio = range(date('Y'), date('Y') - 20); 
+		$mes = [
+            '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
+            '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
+            '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
+            '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
+        ];
+		
+		$comisionDelegado_model = new ComisionDelegado;
+		
+		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
+
+		$comision_model = new Comisione;
+		
+		$comision = $comision_model->getComisionAll("","","1");
+		
+		$periodo = $periodoComisione_model->getPeriodoAll();
+
+        return view('frontend.sesion.all_computo_sesion',compact('periodo','anio','mes','comision','concurso_inscripcion'));
+    }
+
+	public function lista_computoSesion(){
+		
+		
+		
+        return view('frontend.sesion.all_listar_computo_sesion');
+    }
+
 }

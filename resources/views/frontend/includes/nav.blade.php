@@ -115,11 +115,48 @@
 								
 								<a href="/revisorUrbano/consulta_revisorUrbano" class="dropdown-item">Registro Revisor Urbano</a>
 
+								<a href="/sesion/consulta_calendarioComputo" class="dropdown-item">Calendario de C&oacute;mputo de Sesiones</a>
+								
+								<a href="/sesion/consulta_computoSesion" class="dropdown-item">C&oacute;mputo de Sesiones</a>
+
 						   </div>
 					</li>
 					@endif
 
-                    @if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales'))
+					@if(Gate::check('Estado de Cuenta') || Gate::check('Certificado Tipo 4') || Gate::check('Consulta de Facturas'))
+                    <li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
+						   aria-haspopup="true" aria-expanded="false">Caja</a>
+						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+						   		@can('Estado de Cuenta')
+								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
+								@endcan
+								@can('Certificado Tipo 4')
+                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>
+								@endcan
+								@can('Consulta de Facturas')
+                                <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas </a>
+								@endcan
+
+						   </div>
+					</li>
+					@endif
+
+					<li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
+						   aria-haspopup="true" aria-expanded="false">Contabilidad</a>
+						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+						   		
+						   	<a href="/fondoComun/consulta_fondo_comun" class="dropdown-item">Fondo Com&uacute;n Planilla</a>
+							<a href="/fondoComun/consulta_fondo_comun" class="dropdown-item">Adelantos y Descuentos Delegado</a>	
+						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
+								
+
+						   </div>
+					</li>
+
+
+					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
@@ -154,27 +191,8 @@
 								@can('Otros Profesionales')
                                 <a href="/profesionalesOtro/consulta_profesionalesOtro" class="dropdown-item">Otros Profesionales</a>
 								@endcan
-								
+								<a href="/parametro/consulta_parametro" class="dropdown-item">Par&aacute;metros</a>
 								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
-						   </div>
-					</li>
-					@endif
-					
-					@if(Gate::check('Estado de Cuenta') || Gate::check('Certificado Tipo 4') || Gate::check('Consulta de Facturas'))
-                    <li class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">Caja</a>
-						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
-						   		@can('Estado de Cuenta')
-								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
-								@endcan
-								@can('Certificado Tipo 4')
-                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>
-								@endcan
-								@can('Consulta de Facturas')
-                                <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas </a>
-								@endcan
-
 						   </div>
 					</li>
 					@endif

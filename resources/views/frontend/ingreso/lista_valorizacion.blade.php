@@ -1,4 +1,4 @@
-<input type="hidden" name="tipo_factura" id="tipo_factura" value="" />
+<input type="hidden" name="id_concepto_modal_sel" id="id_concepto_modal_sel" value="" />
 <?php 
 $total = 0;
 $descuento = 0;
@@ -70,7 +70,7 @@ foreach($valorizacion as $key=>$row):
 		<span class="val_descuento" style="float:left"></span>	
 		<span class="val_total"><?php echo $row->monto?></span>
 		
-		<input type="hidden" class="tipo_factura" value="<?php echo $row->id_concepto?>" />
+		<input type="hidden" class="id_concepto_modal_sel" value="<?php echo $row->id_concepto?>" />
 	</td>
 
 </tr>

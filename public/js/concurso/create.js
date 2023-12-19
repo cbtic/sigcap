@@ -12,6 +12,10 @@ $(document).ready(function () {
 		modalRequisito(0);
 	});
 	
+	$('#btnDuplicar').on('click', function () {
+		duplicar_concurso();
+	});
+	
 	$('#btnGuardar').on('click', function () {
 		guardar_inscripcion()
 		//Limpiar();
@@ -3508,3 +3512,18 @@ function fn_eliminar_inscripcion_documento(id){
     });
 }
 
+function duplicar_concurso(){
+    
+	var id_concurso_inscripcion = $("#id_concurso_inscripcion").val();
+	
+    $.ajax({
+			url: "/concurso/send_duplicar_concurso",
+            type: "POST",
+            data : $("#frmExpediente").serialize(),
+            success: function (result) {  
+                    datatablenew();
+					//cargarRequisitos(id_concurso_inscripcion);
+					editarConcursoInscripcion(id_concurso_inscripcion);
+            }
+    });
+}

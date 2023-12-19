@@ -220,6 +220,18 @@ function fn_save_documento(){
 	var img_foto = $('#img_foto').val();
 	var fecha_documento = $('#fecha_documento').val();
 	
+	var msg = "";
+	
+	if(id_tipo_documento == "0")msg += "Debe seleccionar un Tipo de documento <br>";
+	if(fecha_documento == "")msg += "Debe ingresar una Fecha de documento <br>";
+	if(img_foto == "")msg += "Debe subir un documento <br>";
+	if(observacion == "")msg += "Debe ingresar una Observaci&oacute;n o Nombre del documento <br>";
+
+	if(msg!=""){
+        bootbox.alert(msg);
+        return false;
+    }
+	
     $.ajax({
 			url: "/concurso/send_concurso_documento",
             type: "POST",
@@ -279,7 +291,7 @@ function fn_save_documento(){
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tipo Documento</label>
 								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
+									<option value="0">--Selecionar--</option>
 									<?php
 									foreach ($tipo_documento as $row) {?>
 									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$inscripcionDocumento->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
@@ -315,7 +327,7 @@ function fn_save_documento(){
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label">Observaci&oacute;n</label>
+								<label class="control-label">Observaci&oacute;n / Nombre del documento</label>
 								<input id="observacion" name="observacion" class="form-control form-control-sm"  value="<?php echo $inscripcionDocumento->observacion?>" type="text"  >
 							</div>
 						</div>
