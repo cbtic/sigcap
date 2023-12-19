@@ -224,7 +224,7 @@
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 					<div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
+                    <table id="tblAfiliado_" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
 							<th>N° de C&oacute;mputo</th>
@@ -259,11 +259,12 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
+							<th>Municipalidad</th>
 							<th>Comisi&oacute;n</th>
-							<th>N&uacute;mero Comisi&oacute;n</th>
 							<th>Delegado</th>
 							<th>N&uacute;mero CAP</th>
 							<th>Puesto</th>
+							<th>Coordinador</th>
 							<th>Sesiones Computadas</th>
 							<th>Sesiones Adicionales</th>
 							<th>Total</th>
@@ -303,6 +304,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/sesion/all_listar_computo_sesion.js') }}"></script>
+<script src="{{ asset('js/sesion/lista_computo.js') }}"></script>
 
 @endpush

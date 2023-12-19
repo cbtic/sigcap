@@ -76,6 +76,30 @@ class SesionController extends Controller
 	
 	}
 	
+	public function lista_computo_sesion_ajax(Request $request){
+	
+		$comisionSesion_model = new ComisionSesione(); 
+		$p[]=$request->id_periodo;
+		$p[]="";
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $comisionSesion_model->lista_computo_sesion_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
+	
 	public function modal_sesion($id){
 		
 		$id_user = Auth::user()->id;
