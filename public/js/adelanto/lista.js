@@ -33,7 +33,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalPrestamo(0);
+		modalAdelanto(0);
 	});
 		
 	datatablenew();
@@ -437,7 +437,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/prestamo/listar_prestamo_ajax",
+        "sAjaxSource": "/adelanto/listar_adelanto_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -512,21 +512,12 @@ function datatablenew(){
                 },
 				{
 				"mRender": function (data, type, row) {
-					var id_tipo_prestamo = "";
-					if(row.id_tipo_prestamo!= null)id_tipo_prestamo = row.id_tipo_prestamo;
-					return id_tipo_prestamo;
+					var total_adelanto = "";
+					if(row.total_adelanto!= null)total_adelanto = row.total_adelanto;
+					return total_adelanto;
 				},
 				"bSortable": false,
 				"aTargets": [2]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var total_prestamo = "";
-					if(row.total_prestamo!= null)total_prestamo = row.total_prestamo;
-					return total_prestamo;
-				},
-				"bSortable": false,
-				"aTargets": [3]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -535,7 +526,7 @@ function datatablenew(){
 					return nro_total_cuotas;
 				},
 				"bSortable": false,
-				"aTargets": [4]
+				"aTargets": [3]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -549,7 +540,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [5]
+					"aTargets": [4]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -565,8 +556,8 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalPrestamo('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<a href="javascript:void(0)" onclick=eliminarPrestamo('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalAdelanto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						html += '<a href="javascript:void(0)" onclick=eliminarAdelanto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -574,7 +565,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [6],
+					"aTargets": [5],
 				},
 
             ]
@@ -586,14 +577,14 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalPrestamo(id){
+function modalAdelanto(id){
 	
 	//alert(id);
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/prestamo/modal_prestamo_nuevoPrestamo/"+id,
+			url: "/adelanto/modal_adelanto_nuevoAdelanto/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
@@ -620,7 +611,7 @@ function modalResponsable(id){
 
 }
 
-function eliminarPersona(id,estado){
+function eliminarAdelanto(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -632,20 +623,20 @@ function eliminarPersona(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Persona?", 
+        message: "&iquest;Deseas "+act_estado+" el Adelanto?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_persona(id,estado_);
+                fn_eliminar_adelanto(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_persona(id,estado){
+function fn_eliminar_adelanto(id,estado){
 
     $.ajax({
-            url: "/persona/eliminar_persona/"+id+"/"+estado,
+            url: "/adelanto/eliminar_adelanto/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

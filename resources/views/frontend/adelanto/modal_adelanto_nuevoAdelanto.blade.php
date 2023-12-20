@@ -217,7 +217,7 @@ function obtener_profesional(){
   var numero_cap = $('#numero_cap').val();
   //console.log(numero_documento);
   $.ajax({
-      url: '/prestamo/buscar_numero_cap/'+numero_cap,
+      url: '/adelanto/buscar_numero_cap/'+numero_cap,
       dataType: "json",
       success: function(result){
 
@@ -284,7 +284,7 @@ function modal_personaNuevo(){
 
 }
 
-  function fn_save_prestamo() {
+  function fn_save_adelanto() {
 
     var _token = $('#_token').val();
     var id_persona = $('#id_persona').val();
@@ -294,12 +294,11 @@ function modal_personaNuevo(){
     var nombres = $('#nombres').val();
     var apellido_paterno = $('#apellido_paterno').val();
     var apellido_materno = $('#apellido_materno').val();
-    var id_tipo_prestamo = $('#id_tipo_prestamo').val();
     var monto = $('#monto').val();
     var numero_cuota = $('#numero_cuota').val();
 
     $.ajax({
-      url: "/prestamo/send_prestamo_nuevoPrestamo",
+      url: "/adelanto/send_adelanto_nuevoAdelanto",
       type: "POST",
       data: {
         _token: _token,
@@ -310,7 +309,6 @@ function modal_personaNuevo(){
         nombres: nombres,
         apellido_paterno: apellido_paterno,
         apellido_materno: apellido_materno,
-        id_tipo_prestamo: id_tipo_prestamo,
         monto: monto,
         numero_cuota: numero_cuota
       },
@@ -344,7 +342,7 @@ function modal_personaNuevo(){
               <form method="post" action="#" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
-                <input type="hidden" name="id_persona" id="id_persona">
+                <!--<input type="hidden" name="id_persona" id="id_persona">-->
                 
                 <div class="row">
                   <div class="col-lg-7">
@@ -427,27 +425,21 @@ function modal_personaNuevo(){
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
-                        <label class="control-label form-control-sm">Tipo Pr&eacute;stamo</label>
-                        <input id="tipo_prestamo" name="tipo_prestamo" class="form-control form-control-sm" value="<?php echo $prestamo->id_tipo_prestamo ?>" type="text">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
                         <label class="control-label form-control-sm">Monto</label>
-                        <input id="monto" name="monto" class="form-control form-control-sm" value="<?php echo $prestamo->total_prestamo ?>" type="text">
+                        <input id="monto" name="monto" class="form-control form-control-sm" value="<?php echo $adelanto->total_prestamo ?>" type="text">
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="control-label form-control-sm">N&uacute;mero Cuotas</label>
-                        <input id="numero_cuota" name="numero_cuota" class="form-control form-control-sm" value="<?php echo $prestamo->nro_total_cuotas ?>" type="text">
+                        <input id="numero_cuota" name="numero_cuota" class="form-control form-control-sm" value="<?php echo $adelanto->nro_total_cuotas ?>" type="text">
                       </div>
                     </div>
                   </div>
                   <div style="margin-top:15px" class="form-group">
                     <div class="col-sm-12 controls">
                       <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-                        <a href="javascript:void(0)" onClick="fn_save_prestamo()" class="btn btn-sm btn-success">Guardar</a>
+                        <a href="javascript:void(0)" onClick="fn_save_adelanto()" class="btn btn-sm btn-success">Guardar</a>
                       </div>
                     </div>
                   </div>

@@ -194,7 +194,6 @@
                         <tr style="font-size:13px">
                             <th>N° CAP</th>
                             <th>Nombre</th>
-                            <th>Tipo Pr&eacute;stamo</th>
                             <th>Monto</th>
                             <th>N° Cuotas</th>
                             <th>Estado</th>
@@ -235,6 +234,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/prestamo/lista.js') }}"></script>
+<script src="{{ asset('js/adelanto/lista.js') }}"></script>
 
 @endpush

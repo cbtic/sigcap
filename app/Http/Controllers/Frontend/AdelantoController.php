@@ -42,7 +42,6 @@ class AdelantoController extends Controller
 		$p[]="";//$request->numero_documento;
 		$p[]="";
 		$p[]="";
-		$p[]="";
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -128,13 +127,14 @@ class AdelantoController extends Controller
 			$adelanto = Adelanto::find($request->id);
 		}
 		
-        $id_agremiado = buscar_numero_cap($numero_cap);
+        //$id_agremiado = buscar_numero_cap($numero_cap);
+        $agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 
-		$adelanto->id_agremiado = $request->id_agremiado;
+		$adelanto->id_agremiado = $agremiado->id;
         $adelanto->id_periodo_delegado = '1';
         $adelanto->fecha = Carbon::now()->format('Y-m-d');
         $adelanto->nro_total_cuotas = $request->numero_cuota;
-        $adelanto->total_prestamo = $request->monto;
+        $adelanto->total_adelanto = $request->monto;
 		//$profesion->estado = 1;
 		$adelanto->id_usuario_inserta = $id_user;
 		$adelanto->save();
