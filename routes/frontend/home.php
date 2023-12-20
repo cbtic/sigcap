@@ -370,6 +370,7 @@ Route::get('sesion/modal_asignar_profesion_sesion/{id}', [SesionController::clas
 Route::post('sesion/send_profesion_otro', [SesionController::class, 'send_profesion_otro'])->name('sesion.send_profesion_otro');
 Route::post('sesion/send_delegado_sesion', [SesionController::class, 'send_delegado_sesion'])->name('sesion.send_delegado_sesion');
 
+Route::post('sesion/lista_computo_sesion_ajax', [SesionController::class, 'lista_computo_sesion_ajax'])->name('sesion.lista_computo_sesion_ajax');
 
 Route::get('persona/editar_persona/{id}', [PersonaController::class, 'editar_persona'])->name('persona.editar_persona');
 Route::post('persona/send_persona_nuevoPersona', [PersonaController::class, 'send_persona_nuevoPersona'])->name('persona.send_persona_nuevoPersona');
