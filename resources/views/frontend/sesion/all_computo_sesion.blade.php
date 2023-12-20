@@ -9,7 +9,7 @@
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
 <style>
-	#tblAfiliado tbody tr{
+	#tblAfiliado,#tblComputoCerrado tbody tr{
 		font-size:13px
 	}
     .table-sortable tbody tr {
@@ -149,7 +149,7 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
                     <div class="row" style="padding:20px 20px 0px 20px;">
 						<!--
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -186,8 +186,8 @@
 
 						<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
 							<select name="mes" id="mes" class="form-control form-control-sm">
-								@foreach ($mes as $mes)
-									<option value="{{ $mes }}">{{ $mes }}</option>
+								@foreach ($mes as $key=>$mes)
+									<option value="{{ $key }}">{{ $mes }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -222,17 +222,17 @@
 						</div>
 					</div>
                     </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
 					<div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
+                    <table id="tblComputoCerrado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
 							<th>N° de C&oacute;mputo</th>
-							<th>Periodo</th>
 							<th>Año</th>
 							<th>Mes</th>
-							<th>Correlativo</th>
 							<th>Fecha C&oacute;mputo</th>
+							<th>Computo Mes Actual</th>
+							<th>Computo Meses Anteriores</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -249,7 +249,7 @@
 
 					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
+						<input class="btn btn-success pull-rigth" value="Nuevo Computo" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>
 				
@@ -259,11 +259,12 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
+							<th>Municipalidad</th>
 							<th>Comisi&oacute;n</th>
-							<th>N&uacute;mero Comisi&oacute;n</th>
 							<th>Delegado</th>
 							<th>N&uacute;mero CAP</th>
 							<th>Puesto</th>
+							<th>Coordinador</th>
 							<th>Sesiones Computadas</th>
 							<th>Sesiones Adicionales</th>
 							<th>Total</th>
@@ -303,6 +304,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/sesion/all_listar_computo_sesion.js') }}"></script>
+<script src="{{ asset('js/sesion/lista_computo.js') }}"></script>
 
 @endpush

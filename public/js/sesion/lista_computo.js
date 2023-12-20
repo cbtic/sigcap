@@ -8,7 +8,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalSesion(0);
+		guardar_computo()
 	});
 
 	$('#denominacion').keypress(function(e){
@@ -32,6 +32,7 @@ $(document).ready(function () {
     });
 	
 	datatablenew();
+	datatablenewComputoCerrado();
 
 	$(function() {
 		$('#modalSeguro #nombre_plan_').keyup(function() {
@@ -66,6 +67,18 @@ $(document).ready(function () {
 		});
 	});
 });
+
+function guardar_computo(){
+    
+    $.ajax({
+			url: "/sesion/send_computo_sesion",
+            type: "POST",
+            data : $("#frmAfiliacion").serialize(),
+            success: function (result) {
+					datatablenew();
+            }
+    });
+}
 
 function habiliarTitular(){
 	/*
@@ -495,7 +508,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/sesion/lista_programacion_sesion_ajax",
+        "sAjaxSource": "/sesion/lista_computo_sesion_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -522,11 +535,10 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id_regional = $('#id_regional_bus').val();
-            var id_periodo = $('#id_periodo_bus').val();
+			var id_periodo = $('#id_periodo_bus').val();
 			var id_comision = $('#id_comision_bus').val();
-			var id_tipo_sesion = $('#id_tipo_sesion_bus').val();
-			var id_estado_sesion = $('#id_estado_sesion_bus').val();
+			var anio = $('#anio').val();
+			var mes = $('#mes').val();
 			var id_estado_aprobacion = $('#id_estado_aprobacion_bus').val();
 			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
 			var fecha_fin_bus = $('#fecha_fin_bus').val();
@@ -538,8 +550,8 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id_regional:id_regional,id_periodo:id_periodo,id_comision:id_comision,
-						id_tipo_sesion:id_tipo_sesion,id_estado_sesion:id_estado_sesion,
+						id_periodo:id_periodo,id_comision:id_comision,
+						anio:anio,mes:mes,
 						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
 						id_estado_aprobacion:id_estado_aprobacion,
 						_token:_token
@@ -566,9 +578,9 @@ function datatablenew(){
 			 
 			 	{
                 "mRender": function (data, type, row) {
-                	var region = "";
-					if(row.region!= null)region = row.region;
-					return region;
+                	var municipalidad = "";
+					if(row.municipalidad!= null)municipalidad = row.municipalidad;
+					return municipalidad;
                 },
                 "bSortable": false,
                 "aTargets": [0],
@@ -577,9 +589,9 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var periodo = "";
-					if(row.periodo!= null)periodo = row.periodo;
-					return periodo;
+                	var comision = "";
+					if(row.comision!= null)comision = row.comision;
+					return comision;
                 },
                 "bSortable": false,
                 "aTargets": [1],
@@ -588,9 +600,9 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var comision = "";
-					if(row.comision!= null)comision = row.comision;
-					return comision;
+                	var delegado = "";
+					if(row.delegado!= null)delegado = row.delegado;
+					return delegado;
                 },
                 "bSortable": false,
                 "aTargets": [2],
@@ -599,9 +611,9 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var fecha_programado = "";
-					if(row.fecha_programado!= null)fecha_programado = row.fecha_programado;
-					return fecha_programado;
+                	var numero_cap = "";
+					if(row.numero_cap!= null)numero_cap = row.numero_cap;
+					return numero_cap;
                 },
                 "bSortable": false,
                 "aTargets": [3],
@@ -609,24 +621,24 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                	var fecha_ejecucion = "";
-					if(row.fecha_ejecucion!= null)fecha_ejecucion = row.fecha_ejecucion;
-					return fecha_ejecucion;
+                	var puesto = "";
+					if(row.puesto!= null)puesto = row.puesto;
+					return puesto;
                 },
                 "bSortable": true,
                 "aTargets": [4]
                 },
-				/*
+				
                 {
                 "mRender": function (data, type, row) {
-                	var hora_inicio = "";
-					if(row.hora_inicio!= null)hora_inicio = row.hora_inicio;
-					return hora_inicio;
+                	var coordinador = "";
+					if(row.coordinador!= null)coordinador = row.coordinador;
+					return coordinador;
                 },
                 "bSortable": true,
                 "aTargets": [5]
                 },
-				
+				/*
 				{
                 "mRender": function (data, type, row) {
                 	var hora_fin = "";
@@ -639,19 +651,9 @@ function datatablenew(){
 				*/
 				{
                 "mRender": function (data, type, row) {
-                	var tipo_sesion = "";
-					if(row.tipo_sesion!= null)tipo_sesion = row.tipo_sesion;
-					return tipo_sesion;
-                },
-                "bSortable": true,
-                "aTargets": [5]
-                },
-				
-				{
-                "mRender": function (data, type, row) {
-                	var estado_sesion = "";
-					if(row.estado_sesion!= null)estado_sesion = row.estado_sesion;
-					return estado_sesion;
+                	var computada = "";
+					if(row.computada!= null)computada = row.computada;
+					return computada;
                 },
                 "bSortable": true,
                 "aTargets": [6]
@@ -659,14 +661,24 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var estado_aprobacion = "";
-					if(row.estado_aprobacion!= null)estado_aprobacion = row.estado_aprobacion;
-					return estado_aprobacion;
+                	var adicional = "";
+					if(row.adicional!= null)adicional = row.adicional;
+					return adicional;
                 },
                 "bSortable": true,
                 "aTargets": [7]
                 },
 				
+				{
+                "mRender": function (data, type, row) {
+                	var total = "";
+					if(row.total!= null)total = row.total;
+					return total;
+                },
+                "bSortable": true,
+                "aTargets": [8]
+                },
+				/*
 				{
                 "mRender": function (data, type, row) {
                 	var newRow = "";
@@ -676,7 +688,148 @@ function datatablenew(){
                 "bSortable": true,
                 "aTargets": [8]
                 },
+				*/
+            ]
 
+
+    });
+
+}
+
+function datatablenewComputoCerrado(){
+    var oTable = $('#tblComputoCerrado').dataTable({
+        "bServerSide": true,
+        "sAjaxSource": "/sesion/lista_computo_cerrado_ajax",
+        "bProcessing": true,
+        "sPaginationType": "full_numbers",
+        //"paging":false,
+        "bFilter": false,
+        "bSort": false,
+        "info": true,
+		//"responsive": true,
+        "language": {"url": "/js/Spanish.json"},
+        "autoWidth": false,
+        "bLengthChange": true,
+        "destroy": true,
+        "lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
+        "aoColumns": [
+                        {},
+        ],
+		"dom": '<"top">rt<"bottom"flpi><"clear">',
+        "fnDrawCallback": function(json) {
+            $('[data-toggle="tooltip"]').tooltip();
+        },
+
+        "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
+
+            var sEcho           = aoData[0].value;
+            var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
+            var iCantMostrar 	= aoData[4].value;
+			
+			var id_periodo = $('#id_periodo_bus').val();
+			var id_comision = $('#id_comision_bus').val();
+			var anio = $('#anio').val();
+			var mes = $('#mes').val();
+			var id_estado_aprobacion = $('#id_estado_aprobacion_bus').val();
+			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
+			var fecha_fin_bus = $('#fecha_fin_bus').val();
+			var _token = $('#_token').val();
+			
+            oSettings.jqXHR = $.ajax({
+				"dataType": 'json',
+                //"contentType": "application/json; charset=utf-8",
+                "type": "POST",
+                "url": sSource,
+                "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
+						id_periodo:id_periodo,id_comision:id_comision,
+						anio:anio,mes:mes,
+						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
+						id_estado_aprobacion:id_estado_aprobacion,
+						_token:_token
+                       },
+                "success": function (result) {
+                    fnCallback(result);
+					/*		
+					var rowIndex = oTable.fnGetData().length - 1;
+                       var strNameIdImg = 'ima_1_' + rowIndex;
+                       var strHtml = "<img id='" + strNameIdImg + "' src='/img/details_open.png' style='cursor:pointer;' title='Editar' onclick=fn_AbrirDetalle(" + rowIndex + ",'" + row.id +"') />";
+                       return strHtml;
+					*/
+                },
+                "error": function (msg, textStatus, errorThrown) {
+                    //location.href="login";
+                }
+            });
+        },
+		"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+			//fn_AbrirDetalle(iDisplayIndex,aData.id);
+		},
+        "aoColumnDefs":
+            [	
+			 
+			 	{
+                "mRender": function (data, type, row) {
+                	var id = "";
+					if(row.id!= null)id = row.id;
+					return id;
+                },
+                "bSortable": false,
+                "aTargets": [0],
+				"className": "dt-center",
+				},
+				
+				{
+                "mRender": function (data, type, row) {
+                	var anio = "";
+					if(row.anio!= null)anio = row.anio;
+					return anio;
+                },
+                "bSortable": false,
+                "aTargets": [1],
+				"className": "dt-center",
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var mes = "";
+					if(row.mes!= null)mes = row.mes;
+					return mes;
+                },
+                "bSortable": false,
+                "aTargets": [2],
+				"className": "dt-center",
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var fecha = "";
+					if(row.fecha!= null)fecha = row.fecha;
+					return fecha;
+                },
+                "bSortable": false,
+                "aTargets": [3],
+				"className": "dt-center",
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var computo_mes_actual = "";
+					if(row.computo_mes_actual!= null)computo_mes_actual = row.computo_mes_actual;
+					return computo_mes_actual;
+                },
+                "bSortable": true,
+                "aTargets": [4]
+                },
+				
+                {
+                "mRender": function (data, type, row) {
+                	var computo_meses_anteriores = "";
+					if(row.computo_meses_anteriores!= null)computo_meses_anteriores = row.computo_meses_anteriores;
+					return computo_meses_anteriores;
+                },
+                "bSortable": true,
+                "aTargets": [5]
+                },
+				
             ]
 
 
@@ -686,6 +839,7 @@ function datatablenew(){
 
 function fn_ListarBusqueda() {
     datatablenew();
+	datatablenewComputoCerrado();
 };
 
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {

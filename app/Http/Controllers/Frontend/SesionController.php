@@ -13,6 +13,8 @@ use App\Models\TablaMaestra;
 use App\Models\PeriodoComisione;
 use App\Models\ComisionDelegado;
 use App\Models\ProfesionalesOtro;
+use App\Models\ComputoSesione;
+use Carbon\Carbon;
 use Auth;
 
 class SesionController extends Controller
@@ -60,6 +62,58 @@ class SesionController extends Controller
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comisionSesion_model->lista_programacion_sesion_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
+	
+	public function lista_computo_sesion_ajax(Request $request){
+	
+		$comisionSesion_model = new ComisionSesione(); 
+		$p[]=$request->id_periodo;
+		$p[]="";
+		$p[]=$request->anio;
+		$p[]=$request->mes;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $comisionSesion_model->lista_computo_sesion_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
+	
+	public function lista_computo_cerrado_ajax(Request $request){
+	
+		$comisionSesion_model = new ComisionSesione(); 
+		$p[]=$request->id_periodo;
+		$p[]="";
+		$p[]=$request->anio;
+		$p[]=$request->mes;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $comisionSesion_model->lista_computo_cerrado_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -221,6 +275,7 @@ class SesionController extends Controller
 				
 				$comisionSesionDelegado->coordinador = $coordinador;
 				$comisionSesionDelegado->id_aprobar_pago = $id_aprobar_pago_;
+				if($id_aprobar_pago_==2)$comisionSesionDelegado->fecha_aprobar_pago = Carbon::now()->format('Y-m-d');
 				$comisionSesionDelegado->save();
 				
 			}
@@ -228,6 +283,32 @@ class SesionController extends Controller
 		}
 			
     }
+	
+	public function send_computo_sesion(Request $request){
+		
+		$id_user = Auth::user()->id;
+		
+		$computoSesion = new ComputoSesione;
+		$computoSesion->anio = $request->anio;
+		$computoSesion->mes = $request->mes;
+		$computoSesion->fecha = Carbon::now()->format('Y-m-d');
+		$computoSesion->computo_mes_actual = 10;
+		$computoSesion->computo_meses_anteriores = 10;
+		$computoSesion->estado = 1;
+		$computoSesion->id_usuario_inserta = $id_user;
+		$computoSesion->save();
+		$id_computo_sesion = $computoSesion->id;
+		
+		$computoSesion_model = new ComputoSesione;
+		$comisionSesion=$computoSesion_model->getComisionSesionByAnioMes($request->anio,$request->mes);
+		
+		foreach($comisionSesion as $row){
+			$ComisionSesion = ComisionSesione::find($row->id_comision_sesion);
+			$ComisionSesion->id_computo_sesion = $id_computo_sesion;
+			$ComisionSesion->save();
+		}
+		
+	}
 	
 	public function send_profesion_otro(Request $request){
 		

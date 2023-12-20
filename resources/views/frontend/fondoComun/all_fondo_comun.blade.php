@@ -207,7 +207,7 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>N° de C&oacute;mputo</th>
+						<th>N° de C&oacute;mputo</th>
 							<th>Periodo</th>
 							<th>Año</th>
 							<th>Mes</th>
@@ -239,14 +239,12 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>Comisi&oacute;n</th>
-							<th>N&uacute;mero Comisi&oacute;n</th>
-							<th>Delegado</th>
-							<th>N&uacute;mero CAP</th>
-							<th>Puesto</th>
-							<th>Sesiones Computadas</th>
-							<th>Sesiones Adicionales</th>
-							<th>Total</th>
+							<th>Municipalidad</th>
+							<th>Importe Bruto</th>
+							<th>IGV 18%</th>
+							<th>Comisi&oacute;n CAP RL 30%</th>
+							<th>Fondo Asistencia 2%</th>
+							<th>Saldo a favor de Delegados</th>
                         </tr>
                         </thead>
                         <tbody>
