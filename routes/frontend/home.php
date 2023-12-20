@@ -369,6 +369,7 @@ Route::post('sesion/send_profesion_otro', [SesionController::class, 'send_profes
 Route::post('sesion/send_delegado_sesion', [SesionController::class, 'send_delegado_sesion'])->name('sesion.send_delegado_sesion');
 
 Route::post('sesion/lista_computo_sesion_ajax', [SesionController::class, 'lista_computo_sesion_ajax'])->name('sesion.lista_computo_sesion_ajax');
+Route::post('sesion/lista_computo_cerrado_ajax', [SesionController::class, 'lista_computo_cerrado_ajax'])->name('sesion.lista_computo_cerrado_ajax');
 
 Route::post('sesion/send_computo_sesion', [SesionController::class, 'send_computo_sesion'])->name('sesion.send_computo_sesion');
 

@@ -32,6 +32,7 @@ $(document).ready(function () {
     });
 	
 	datatablenew();
+	datatablenewComputoCerrado();
 
 	$(function() {
 		$('#modalSeguro #nombre_plan_').keyup(function() {
@@ -695,8 +696,150 @@ function datatablenew(){
 
 }
 
+function datatablenewComputoCerrado(){
+    var oTable = $('#tblComputoCerrado').dataTable({
+        "bServerSide": true,
+        "sAjaxSource": "/sesion/lista_computo_cerrado_ajax",
+        "bProcessing": true,
+        "sPaginationType": "full_numbers",
+        //"paging":false,
+        "bFilter": false,
+        "bSort": false,
+        "info": true,
+		//"responsive": true,
+        "language": {"url": "/js/Spanish.json"},
+        "autoWidth": false,
+        "bLengthChange": true,
+        "destroy": true,
+        "lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
+        "aoColumns": [
+                        {},
+        ],
+		"dom": '<"top">rt<"bottom"flpi><"clear">',
+        "fnDrawCallback": function(json) {
+            $('[data-toggle="tooltip"]').tooltip();
+        },
+
+        "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
+
+            var sEcho           = aoData[0].value;
+            var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
+            var iCantMostrar 	= aoData[4].value;
+			
+			var id_periodo = $('#id_periodo_bus').val();
+			var id_comision = $('#id_comision_bus').val();
+			var anio = $('#anio').val();
+			var mes = $('#mes').val();
+			var id_estado_aprobacion = $('#id_estado_aprobacion_bus').val();
+			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
+			var fecha_fin_bus = $('#fecha_fin_bus').val();
+			var _token = $('#_token').val();
+			
+            oSettings.jqXHR = $.ajax({
+				"dataType": 'json',
+                //"contentType": "application/json; charset=utf-8",
+                "type": "POST",
+                "url": sSource,
+                "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
+						id_periodo:id_periodo,id_comision:id_comision,
+						anio:anio,mes:mes,
+						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
+						id_estado_aprobacion:id_estado_aprobacion,
+						_token:_token
+                       },
+                "success": function (result) {
+                    fnCallback(result);
+					/*		
+					var rowIndex = oTable.fnGetData().length - 1;
+                       var strNameIdImg = 'ima_1_' + rowIndex;
+                       var strHtml = "<img id='" + strNameIdImg + "' src='/img/details_open.png' style='cursor:pointer;' title='Editar' onclick=fn_AbrirDetalle(" + rowIndex + ",'" + row.id +"') />";
+                       return strHtml;
+					*/
+                },
+                "error": function (msg, textStatus, errorThrown) {
+                    //location.href="login";
+                }
+            });
+        },
+		"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+			//fn_AbrirDetalle(iDisplayIndex,aData.id);
+		},
+        "aoColumnDefs":
+            [	
+			 
+			 	{
+                "mRender": function (data, type, row) {
+                	var id = "";
+					if(row.id!= null)id = row.id;
+					return id;
+                },
+                "bSortable": false,
+                "aTargets": [0],
+				"className": "dt-center",
+				},
+				
+				{
+                "mRender": function (data, type, row) {
+                	var anio = "";
+					if(row.anio!= null)anio = row.anio;
+					return anio;
+                },
+                "bSortable": false,
+                "aTargets": [1],
+				"className": "dt-center",
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var mes = "";
+					if(row.mes!= null)mes = row.mes;
+					return mes;
+                },
+                "bSortable": false,
+                "aTargets": [2],
+				"className": "dt-center",
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var fecha = "";
+					if(row.fecha!= null)fecha = row.fecha;
+					return fecha;
+                },
+                "bSortable": false,
+                "aTargets": [3],
+				"className": "dt-center",
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var computo_mes_actual = "";
+					if(row.computo_mes_actual!= null)computo_mes_actual = row.computo_mes_actual;
+					return computo_mes_actual;
+                },
+                "bSortable": true,
+                "aTargets": [4]
+                },
+				
+                {
+                "mRender": function (data, type, row) {
+                	var computo_meses_anteriores = "";
+					if(row.computo_meses_anteriores!= null)computo_meses_anteriores = row.computo_meses_anteriores;
+					return computo_meses_anteriores;
+                },
+                "bSortable": true,
+                "aTargets": [5]
+                },
+				
+            ]
+
+
+    });
+
+}
+
 function fn_ListarBusqueda() {
     datatablenew();
+	datatablenewComputoCerrado();
 };
 
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {

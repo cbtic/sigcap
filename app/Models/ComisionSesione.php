@@ -20,6 +20,12 @@ class ComisionSesione extends Model
 
     }
 	
+	public function lista_computo_cerrado_ajax($p){
+
+        return $this->readFunctionPostgres('sp_listar_computo_cerrado_paginado',$p);
+
+    }
+	
 	public function readFunctionPostgres($function, $parameters = null){
 
       $_parameters = '';
