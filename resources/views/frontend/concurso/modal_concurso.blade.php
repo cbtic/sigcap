@@ -326,7 +326,7 @@ function obtenerSubTipoConcurso(){
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label">Fecha Acreditaci&oacute;n Inicio</label>
-								<input id="fecha_acreditacion_inicio" name="fecha_acreditacion_inicio" class="form-control form-control-sm"  value="<?php if($concurso->fecha_acreditacion_inicio!="")echo date('d-m-Y',strtotime($concurso->fecha_delegatura_inicio))?>" type="text"  >
+								<input id="fecha_acreditacion_inicio" name="fecha_acreditacion_inicio" class="form-control form-control-sm"  value="<?php if($concurso->fecha_acreditacion_inicio!="")echo date('d-m-Y',strtotime($concurso->fecha_acreditacion_inicio))?>" type="text"  >
 							</div>
 						</div>
 						

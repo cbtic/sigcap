@@ -13,6 +13,8 @@ use App\Models\TablaMaestra;
 use App\Models\PeriodoComisione;
 use App\Models\ComisionDelegado;
 use App\Models\ProfesionalesOtro;
+use App\Models\ComputoSesione;
+use Carbon\Carbon;
 use Auth;
 
 class SesionController extends Controller
@@ -81,6 +83,8 @@ class SesionController extends Controller
 		$comisionSesion_model = new ComisionSesione(); 
 		$p[]=$request->id_periodo;
 		$p[]="";
+		$p[]=$request->anio;
+		$p[]=$request->mes;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comisionSesion_model->lista_computo_sesion_ajax($p);
@@ -245,6 +249,7 @@ class SesionController extends Controller
 				
 				$comisionSesionDelegado->coordinador = $coordinador;
 				$comisionSesionDelegado->id_aprobar_pago = $id_aprobar_pago_;
+				if($id_aprobar_pago_==2)$comisionSesionDelegado->fecha_aprobar_pago = Carbon::now()->format('Y-m-d');;;
 				$comisionSesionDelegado->save();
 				
 			}
@@ -252,6 +257,21 @@ class SesionController extends Controller
 		}
 			
     }
+	
+	public function send_computo_sesion(Request $request){
+		
+		$id_user = Auth::user()->id;
+		
+		$computoSesione = new ComputoSesione;
+		$computoSesione->anio = 2023;
+		$computoSesione->mes = 12;
+		$computoSesione->fecha = 2023;
+		$computoSesione->computo_mes_actual = 2023;
+		$computoSesione->estado = 1;
+		$computoSesione->id_usuario_inserta = $id_user;
+		$computoSesione->save();
+		
+	}
 	
 	public function send_profesion_otro(Request $request){
 		

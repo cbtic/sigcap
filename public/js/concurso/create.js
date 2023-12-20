@@ -1789,10 +1789,12 @@ function datatablenew(){
 				{
 					"mRender": function (data, type, row) {
 						
+						var valida = "";
+						if(row.valida==1)valida = "disabled='disabled'";
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="editarConcursoInscripcion('+row.id+')" ><i class="fa fa-edit"></i> Registrar Doc</button>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="editarConcursoInscripcion('+row.id+')" '+valida+' ><i class="fa fa-edit"></i> Registrar Doc</button>';
 						
-						html += '<a href="javascript:void(0)" onclick=eliminarInscripcionConcurso('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+						html += '<button onclick=eliminarInscripcionConcurso('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px" '+valida+'> Eliminar</button>';
 						
 						html += '</div>';
 						return html;

@@ -8,7 +8,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalSesion(0);
+		guardar_computo()
 	});
 
 	$('#denominacion').keypress(function(e){
@@ -66,6 +66,18 @@ $(document).ready(function () {
 		});
 	});
 });
+
+function guardar_computo(){
+    
+    $.ajax({
+			url: "/sesion/send_computo_sesion",
+            type: "POST",
+            data : $("#frmAfiliacion").serialize(),
+            success: function (result) {
+					datatablenew();
+            }
+    });
+}
 
 function habiliarTitular(){
 	/*
@@ -524,8 +536,8 @@ function datatablenew(){
 			
 			var id_periodo = $('#id_periodo_bus').val();
 			var id_comision = $('#id_comision_bus').val();
-			var id_tipo_sesion = $('#id_tipo_sesion_bus').val();
-			var id_estado_sesion = $('#id_estado_sesion_bus').val();
+			var anio = $('#anio').val();
+			var mes = $('#mes').val();
 			var id_estado_aprobacion = $('#id_estado_aprobacion_bus').val();
 			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
 			var fecha_fin_bus = $('#fecha_fin_bus').val();
@@ -538,7 +550,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_periodo:id_periodo,id_comision:id_comision,
-						id_tipo_sesion:id_tipo_sesion,id_estado_sesion:id_estado_sesion,
+						anio:anio,mes:mes,
 						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
 						id_estado_aprobacion:id_estado_aprobacion,
 						_token:_token

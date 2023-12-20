@@ -1,4 +1,11 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(p_id_periodo_comisiones character varying, p_id_comision character varying,p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(
+p_id_periodo_comisiones character varying, 
+p_id_comision character varying,
+p_anio character varying,
+p_mes character varying,
+p_pagina character varying, 
+p_limit character varying, 
+p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -45,6 +52,14 @@ where t0.id_aprobar_pago=2';
 	
 	If p_id_periodo_comisiones<>'' Then
 	 v_tabla:=v_tabla||'And t1.id_periodo_comisione = '''||p_id_periodo_comisiones||''' ';
+	End If;
+
+	If p_anio<>'' Then
+	 v_tabla:=v_tabla||'And to_char(t0.fecha_aprobar_pago,''yyyy'') = '''||p_anio||''' ';
+	End If;
+
+	If p_mes<>'' Then
+	 v_tabla:=v_tabla||'And to_char(t0.fecha_aprobar_pago,''mm'') = '''||p_mes||''' ';
 	End If;
 
 	v_tabla:=v_tabla||'group by t0.coordinador,mi.denominacion,t4.comision,p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres,a.numero_cap,tmp.denominacion, t5.descripcion

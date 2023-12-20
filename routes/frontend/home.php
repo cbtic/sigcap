@@ -370,6 +370,8 @@ Route::post('sesion/send_delegado_sesion', [SesionController::class, 'send_deleg
 
 Route::post('sesion/lista_computo_sesion_ajax', [SesionController::class, 'lista_computo_sesion_ajax'])->name('sesion.lista_computo_sesion_ajax');
 
+Route::post('sesion/send_computo_sesion', [SesionController::class, 'send_computo_sesion'])->name('sesion.send_computo_sesion');
+
 Route::get('persona/editar_persona/{id}', [PersonaController::class, 'editar_persona'])->name('persona.editar_persona');
 Route::post('persona/send_persona_nuevoPersona', [PersonaController::class, 'send_persona_nuevoPersona'])->name('persona.send_persona_nuevoPersona');
 //Route::get('persona/eliminar_persona/{id}/{estado}', [PersonaController::class, 'eliminar_persona'])->name('persona.eliminar_persona');

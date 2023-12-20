@@ -186,8 +186,8 @@
 
 						<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
 							<select name="mes" id="mes" class="form-control form-control-sm">
-								@foreach ($mes as $mes)
-									<option value="{{ $mes }}">{{ $mes }}</option>
+								@foreach ($mes as $key=>$mes)
+									<option value="{{ $key }}">{{ $mes }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -249,7 +249,7 @@
 
 					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
+						<input class="btn btn-success pull-rigth" value="Nuevo Computo" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>
 				
