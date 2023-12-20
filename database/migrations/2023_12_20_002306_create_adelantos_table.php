@@ -27,7 +27,7 @@ class CreateAdelantosTable extends Migration
             $table->timestamps();
 
             $table->foreign('id_agremiado')->references('id')->on('agremiados');
-            $table->foreign('id_periodo_delegado')->references('id')->on('periodo_delegados');
+            $table->foreign('id_periodo_delegado')->references('id')->on('periodo_delegados'); 
         });
     }
 
