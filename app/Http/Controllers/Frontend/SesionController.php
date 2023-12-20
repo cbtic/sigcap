@@ -293,6 +293,7 @@ class SesionController extends Controller
 		$computoSesion->mes = $request->mes;
 		$computoSesion->fecha = Carbon::now()->format('Y-m-d');
 		$computoSesion->computo_mes_actual = 10;
+		$computoSesion->computo_meses_anteriores = 10;
 		$computoSesion->estado = 1;
 		$computoSesion->id_usuario_inserta = $id_user;
 		$computoSesion->save();

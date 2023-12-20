@@ -822,9 +822,9 @@ function datatablenewComputoCerrado(){
 				
                 {
                 "mRender": function (data, type, row) {
-                	var computo_mes_actual = "";
-					if(row.computo_mes_actual!= null)computo_mes_actual = row.computo_mes_actual;
-					return computo_mes_actual;
+                	var computo_meses_anteriores = "";
+					if(row.computo_meses_anteriores!= null)computo_meses_anteriores = row.computo_meses_anteriores;
+					return computo_meses_anteriores;
                 },
                 "bSortable": true,
                 "aTargets": [5]
