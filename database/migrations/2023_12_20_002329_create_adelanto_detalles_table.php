@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFondoComunPlanillasTable extends Migration
+class CreateAdelantoDetallesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFondoComunPlanillasTable extends Migration
      */
     public function up()
     {
-        Schema::create('fondo_comun_planillas', function (Blueprint $table) {
+        Schema::create('adelanto_detalles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateFondoComunPlanillasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fondo_comun_planillas');
+        Schema::dropIfExists('adelanto_detalles');
     }
 }
