@@ -149,7 +149,7 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
                     <div class="row" style="padding:20px 20px 0px 20px;">
 						<!--
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -222,17 +222,17 @@
 						</div>
 					</div>
                     </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
 					<div class="table-responsive">
-                    <table id="tblAfiliado_" class="table table-hover table-sm">
+                    <table id="tblComputoCerrado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
 							<th>N° de C&oacute;mputo</th>
-							<th>Periodo</th>
 							<th>Año</th>
 							<th>Mes</th>
-							<th>Correlativo</th>
 							<th>Fecha C&oacute;mputo</th>
+							<th>Computo Mes Actual</th>
+							<th>Computo Meses Anteriores</th>
                         </tr>
                         </thead>
                         <tbody>
