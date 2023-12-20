@@ -27,7 +27,7 @@ class CreateAdelantoDetallesTable extends Migration
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index(); 
             $table->timestamps();
 
-            $table->foreign('id_adelanto')->references('id')->on('adelantos');
+            $table->foreign('id_adelento')->references('id')->on('adelantos');
             $table->foreign('id_periodo_delegado')->references('id')->on('periodo_delegados'); 
         });
     }
