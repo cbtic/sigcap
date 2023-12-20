@@ -210,21 +210,21 @@
 <script type="text/javascript">
 
 
-$("#profesion").select2({ width: '100%' });
+$("#profesion").select2();
 
 function obtener_profesional(){
 	
-  var numero_documento = $('#numero_documento').val();
+  var numero_cap = $('#numero_cap').val();
   //console.log(numero_documento);
   $.ajax({
-      url: '/persona/buscar_numero_documento/'+numero_documento,
+      url: '/prestamo/buscar_numero_cap/'+numero_cap,
       dataType: "json",
       success: function(result){
 
         if(result.sw==false){
 
           Swal.fire({
-            title: 'El numero de documento no existe',
+            title: 'El numero cap no existe',
             text: "¿Desea registrar como  nueva persona?",
             type: 'warning',
             showCancelButton: true,
@@ -243,8 +243,8 @@ function obtener_profesional(){
 					bootbox.alert(result.msg);
 					$('#openOverlayOpc').modal('hide');*/
 				}else{
-					$("#id_persona").val(result.persona.id);
-          $("#ruc").val(result.persona.numero_ruc);
+					$("#id_agremiado").val(result.persona.id);
+          //$("#ruc").val(result.persona.numero_ruc);
           $("#nombres").val(result.persona.nombres);
           $("#apellido_paterno").val(result.persona.apellido_paterno);
           $("#apellido_materno").val(result.persona.apellido_materno);
@@ -284,39 +284,35 @@ function modal_personaNuevo(){
 
 }
 
-  function fn_save_profesionalesOtro() {
+  function fn_save_prestamo() {
 
     var _token = $('#_token').val();
     var id_persona = $('#id_persona').val();
     var id = $('#id').val();
-    var colegiatura = $('#colegiatura').val();
-    var colegiatura_abreviatura = $('#colegiatura_abreviatura').val();
     var tipo_documento = $('#tipo_documento').val();
-    var numero_documento = $('#numero_documento').val();
+    var numero_cap = $('#numero_cap').val();
     var nombres = $('#nombres').val();
     var apellido_paterno = $('#apellido_paterno').val();
     var apellido_materno = $('#apellido_materno').val();
-    var fecha_nacimiento = $('#fecha_nacimiento').val();
-    var profesion = $('#profesion').val();
-    var ruta_firma = $('#ruta_firma').val();
+    var id_tipo_prestamo = $('#id_tipo_prestamo').val();
+    var monto = $('#monto').val();
+    var numero_cuota = $('#numero_cuota').val();
 
     $.ajax({
-      url: "/profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro",
+      url: "/prestamo/send_prestamo_nuevoPrestamo",
       type: "POST",
       data: {
         _token: _token,
         id: id,
-        colegiatura: colegiatura,
         id_persona:id_persona,
-        colegiatura_abreviatura: colegiatura_abreviatura,
         tipo_documento: tipo_documento,
-        numero_documento: numero_documento,
+        numero_cap: numero_cap,
         nombres: nombres,
         apellido_paterno: apellido_paterno,
         apellido_materno: apellido_materno,
-        fecha_nacimiento: fecha_nacimiento,
-        profesion: profesion,
-        ruta_firma: ruta_firma
+        id_tipo_prestamo: id_tipo_prestamo,
+        monto: monto,
+        numero_cuota: numero_cuota
       },
       success: function(result) {
 
@@ -338,7 +334,7 @@ function modal_personaNuevo(){
     <div class="justify-content-center">
       <div class="card">
         <div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-          Registro Profesionales Otros
+          Registro Adelantos
         </div>
         <div class="card-body">
           <div class="row">
@@ -350,8 +346,6 @@ function modal_personaNuevo(){
                 <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
                 <input type="hidden" name="id_persona" id="id_persona">
                 
-
-
                 <div class="row">
                   <div class="col-lg-7">
                     <div class="col-lg-7">
@@ -361,7 +355,7 @@ function modal_personaNuevo(){
                           <option value="">--Selecionar--</option>
                           <?php
                           foreach ($tipo_documento as $row) { ?>
-                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '78') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '85') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
                           <?php
                           }
                           ?>
@@ -379,17 +373,9 @@ function modal_personaNuevo(){
                         -->
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="control-label form-control-sm">N&uacute;mero Documento</label>
-                        <input name="numero_documento" id="numero_documento" type="text" class="form-control form-control-sm" value="<?php echo $persona->numero_documento?>" onblur="obtener_profesional()">
+                        <label class="control-label form-control-sm">N&uacute;mero CAP</label>
+                        <input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="obtener_profesional()">
                           
-                      </div>
-                    </div>
-                    
-
-                    <div class="col-lg-7">
-                      <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-                        <label class="control-label form-control-sm">RUC</label>
-                        <input id="ruc" name="ruc" class="form-control form-control-sm" value="<?php echo $persona->numero_ruc ?>" type="text" readonly="readonly">
                       </div>
                     </div>
 
@@ -439,55 +425,29 @@ function modal_personaNuevo(){
                         <input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm" value="<?php echo $persona->apellido_materno ?>" type="text" readonly="readonly">
                       </div>
                     </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                       <div class="form-group">
-                        <label class="control-label form-control-sm">Fecha Nacimiento</label>
-                        <input placeholder="fecha_nacimiento" type="date" id="fecha_nacimiento" class="form-control form-control-sm" value="<?php echo $persona->fecha_nacimiento ?>" type="text" readonly="readonly">
+                        <label class="control-label form-control-sm">Tipo Pr&eacute;stamo</label>
+                        <input id="tipo_prestamo" name="tipo_prestamo" class="form-control form-control-sm" value="<?php echo $prestamo->id_tipo_prestamo ?>" type="text">
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
-                        <label class="control-label form-control-sm">Profesi&oacute;n</label>
-                        <select name="profesion" id="profesion" class="form-control form-control-sm" onChange="">
-                          <option value="">--Selecionar--</option>
-                          <?php
-                          foreach ($profesion as $row) { ?>
-                            <option value="<?php echo $row->id ?>" <?php if ($row->id == $profesionalOtro->is_profesion) echo "selected='selected'" ?>><?php echo $row->nombre ?></option>
-                          <?php
-                          }
-                          ?>
-                        </select>
+                        <label class="control-label form-control-sm">Monto</label>
+                        <input id="monto" name="monto" class="form-control form-control-sm" value="<?php echo $prestamo->total_prestamo ?>" type="text">
                       </div>
                     </div>
-
                     <div class="col-lg-4">
                       <div class="form-group">
-                        <label class="control-label form-control-sm">Colegiatura</label>
-                        <input id="colegiatura" name="colegiatura" on class="form-control form-control-sm" value="<?php echo $profesionalOtro->colegiatura ?>" type="text">
+                        <label class="control-label form-control-sm">N&uacute;mero Cuotas</label>
+                        <input id="numero_cuota" name="numero_cuota" class="form-control form-control-sm" value="<?php echo $prestamo->nro_total_cuotas ?>" type="text">
                       </div>
                     </div>
-
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Colegiatura Abreviatura</label>
-                        <input id="colegiatura_abreviatura" name="colegiatura_abreviatura" on class="form-control form-control-sm" value="<?php echo $profesionalOtro->colegiatura_abreviatura ?>" type="text">
-                      </div>
-                    </div>
-                    <!--
-                  <div class="col-lg-4">
-                    <div class="form-group">
-                      <label class="control-label form-control-sm">Ruta Firma</label>
-                      <input id="ruta_firma" name="ruta_firma" on class="form-control form-control-sm" value="<?php /*echo $profesionalOtro->ruta_firma */?>" type="text">
-                    </div>
-                  </div>-->
                   </div>
                   <div style="margin-top:15px" class="form-group">
                     <div class="col-sm-12 controls">
                       <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-                        <a href="javascript:void(0)" onClick="fn_save_profesionalesOtro()" class="btn btn-sm btn-success">Guardar</a>
+                        <a href="javascript:void(0)" onClick="fn_save_prestamo()" class="btn btn-sm btn-success">Guardar</a>
                       </div>
                     </div>
                   </div>
