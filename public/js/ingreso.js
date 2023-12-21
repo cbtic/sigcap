@@ -209,27 +209,22 @@ function calcular_total(obj){
 	var cantidad = $(".mov:checked").length;
 	//alert(cantidad);
 	//$("#tblValorizacion input[type='checkbox']:checked").each(function (){
-	if(cantidad == 0)$('#id_concepto_modal_sel').val("");
-	var id_concepto = $('#id_concepto_modal_sel').val();
-	$('#id_concepto_sel').val(id_concepto);
-	
+	if(cantidad == 0)$('#idConcepto').val("");
+	var id_concepto = $('#idConcepto').val();
+	//$('#id_concepto_sel').val(id_concepto);
 	//alert(id_concepto);
 	var id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
-
 	//alert(id_concepto_actual);
 	//$('#id_concepto_sel').val(id_concepto);
-
-	$('#idConcepto').val(id_concepto_actual);
-	
+	//$('#idConcepto').val(id_concepto_actual);
 	
 	if(id_concepto!="" && id_concepto!=id_concepto_actual){
 		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
-		$(obj).prop("checked",false);
-		
+		$(obj).prop("checked",false);		
 		return false;
 	}
 	
-	$('#id_concepto_sel').val(id_concepto_actual);
+	//$('#id_concepto_sel').val(id_concepto_actual);
 	
 	
 	var ruc_p = $('#ruc_p').val();
@@ -290,7 +285,9 @@ function calcular_total(obj){
 	$(".mov:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
 		var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
-		tipo_factura = $(this).parent().parent().parent().find('.tipo_factura').val();
+		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
+
+		//alert(id_concepto);
 		
 		if(val_descuento!=""){
 			valor_venta_bruto = val_total/1.18;
@@ -306,7 +303,7 @@ function calcular_total(obj){
 
 	});
 	
-	$('#tipo_factura').val(tipo_factura);
+	$('#idConcepto').val(id_concepto);
 	//total -= descuento;
 	$('#total').val(total.toFixed(2));
 
