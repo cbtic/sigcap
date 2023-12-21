@@ -225,9 +225,11 @@ function calcular_total(obj){
 	if(id_concepto!="" && id_concepto!=id_concepto_actual){
 		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
 		$(obj).prop("checked",false);
+		
 		return false;
 	}
 	
+	$('#id_concepto_sel').val(id_concepto_actual);
 	
 	
 	var ruc_p = $('#ruc_p').val();
