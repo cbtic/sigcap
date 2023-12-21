@@ -52,6 +52,24 @@ class DerechoRevisionController extends Controller
 		
     }
 	
+	public function modal_proyectista($id){
+		 
+		$DerechoRevision_model = new DerechoRevision;
+        $proyectista = $DerechoRevision_model->getProyectistaByIdSolicitud($id);
+		
+        return view('frontend.derecho_revision.modal_proyectista',compact('proyectista'));
+		
+    }
+	
+	public function modal_propietario($id){
+		 
+		$DerechoRevision_model = new DerechoRevision;
+        $propietario = $DerechoRevision_model->getPropietarioByIdSolicitud($id);
+		
+        return view('frontend.derecho_revision.modal_propietario',compact('propietario'));
+		
+    }
+	
 	function consulta_solicitud_derecho_revision(){
 
         //$tablaMaestra_model = new TablaMaestra;
@@ -125,6 +143,8 @@ class DerechoRevisionController extends Controller
 	
 	public function send_credipago(Request $request){
 		
+		$derechoRevision_model = new DerechoRevision;
+		
 		$solicitud = Solicitude::find($request->id);
 		$valor_obra = $solicitud->valor_obra;
 		$area_total = $solicitud->area_total;
@@ -182,11 +202,15 @@ class DerechoRevisionController extends Controller
 			
 		}
 		
+		$codigo1 = $derechoRevision_model->getCodigoSolicitud($id_tipo_solicitud);
+		$codigo2 = $derechoRevision_model->getCountProyectoTipoSolicitud($solicitud->id_proyecto,$id_tipo_solicitud);
+		$codigo = $codigo1.$codigo2;
+		
 		$id_user = Auth::user()->id;		
 		$liquidacion = new Liquidacione;
 		$liquidacion->id_solicitud = $request->id;
 		$liquidacion->fecha = Carbon::now()->format('Y-m-d');;
-		$liquidacion->credipago = "123";
+		$liquidacion->credipago = $codigo;
 		$liquidacion->sub_total = $sub_total;
 		$liquidacion->igv = $igv;
 		$liquidacion->total = $total;

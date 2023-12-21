@@ -76,6 +76,7 @@ function guardar_computo(){
             data : $("#frmAfiliacion").serialize(),
             success: function (result) {
 					datatablenew();
+					datatablenewComputoCerrado();
             }
     });
 }

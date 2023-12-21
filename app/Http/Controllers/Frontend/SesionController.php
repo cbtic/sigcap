@@ -292,8 +292,6 @@ class SesionController extends Controller
 		$computoSesion->anio = $request->anio;
 		$computoSesion->mes = $request->mes;
 		$computoSesion->fecha = Carbon::now()->format('Y-m-d');
-		$computoSesion->computo_mes_actual = 10;
-		$computoSesion->computo_meses_anteriores = 10;
 		$computoSesion->estado = 1;
 		$computoSesion->id_usuario_inserta = $id_user;
 		$computoSesion->save();
@@ -307,6 +305,13 @@ class SesionController extends Controller
 			$ComisionSesion->id_computo_sesion = $id_computo_sesion;
 			$ComisionSesion->save();
 		}
+		
+		$computo_mes = $computoSesion_model->getMesComputoById($id_computo_sesion,$request->anio,$request->mes);
+		
+		$computoSesionUpd = ComputoSesione::find($id_computo_sesion);
+		$computoSesionUpd->computo_mes_actual = $computo_mes->computo_mes_actual;
+		$computoSesionUpd->computo_meses_anteriores = $computo_mes->computo_meses_anteriores;
+		$computoSesionUpd->save();
 		
 	}
 	

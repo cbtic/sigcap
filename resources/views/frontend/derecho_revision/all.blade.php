@@ -165,35 +165,34 @@
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                     <input type="text" name="distrito_domiciliario" id="distrito_domiciliario" value="<?php echo $derecho_revision->distrito_domiciliario?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
-
+					<!--
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     N° CAP
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly='readonly' >
+                        <input type="text" name="numero_cap" id="numero_cap" value="<?php //echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
-
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Proyectista
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="proyectista" id="proyectista" value="<?php echo $agremiado->desc_cliente?>" class="form-control form-control-sm" readonly='readonly' >
+                        <input type="text" name="proyectista" id="proyectista" value="<?php //echo $agremiado->desc_cliente?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
-
+					
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     N° Documento
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="numero_documento" id="numero_documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" readonly='readonly' >
+                        <input type="text" name="numero_documento" id="numero_documento" value="<?php //echo $persona->numero_documento?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
-
+					
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Propietario
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="propietario" id="propietario" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" readonly='readonly' >
+                        <input type="text" name="propietario" id="propietario" value="<?php //echo $persona->nombres?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
-
+					-->
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     Municipalidad
                     </div>
@@ -271,9 +270,9 @@
                             <th>Tipo Proyecto</th>
                             <th>N&uacute;mero Revisi&oacute;n</th>
                             <th>Municipalidad</th>
-                            <th>N&uacute;mero CAP</th>
+                            <!--<th>N&uacute;mero CAP</th>-->
                             <th>Proyectista</th>
-                            <th>N&uacute;mero Doc</th>
+                            <!--<th>N&uacute;mero Doc</th>-->
                             <th>Propietario</th>
                             <th>Fecha Registro</th>
                             <th>Estado</th>
