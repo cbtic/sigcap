@@ -419,6 +419,9 @@ Route::get('derecho_revision/obtener_solicitud/{id}', [DerechoRevisionController
 Route::get('derecho_revision/modal_credipago/{id}', [DerechoRevisionController::class, 'modal_credipago'])->name('derecho_revision.modal_credipago');
 Route::post('derecho_revision/send_credipago', [DerechoRevisionController::class, 'send_credipago'])->name('derecho_revision.send_credipago');
 
+Route::get('derecho_revision/modal_proyectista/{id}', [DerechoRevisionController::class, 'modal_proyectista'])->name('derecho_revision.modal_proyectista');
+Route::get('derecho_revision/modal_propietario/{id}', [DerechoRevisionController::class, 'modal_propietario'])->name('derecho_revision.modal_propietario');
+
 //Route::get('derecho_revision/editar_revisorUrbano/{id}', [DerechoRevisionController::class, 'editar_revisorUrbano'])->name('derecho_revision.editar_revisorUrbano');
 //Route::get('derecho_revision/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [DerechoRevisionController::class, 'modal_revisorUrbano_nuevoRevisorUrbano'])->name('derecho_revision.modal_revisorUrbano_nuevoRevisorUrbano');
 
