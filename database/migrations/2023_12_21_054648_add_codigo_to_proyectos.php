@@ -16,7 +16,7 @@ class AddCodigoToProyectos extends Migration
         Schema::table('proyectos', function (Blueprint $table) {
             $table->string('codigo',50)->nullable();
            // $table->string('direccion',300)->nullable();
-            $table->string('nombre',250)->nullable();
+           // $table->string('nombre',250)->nullable();
         });
     }
 
