@@ -440,6 +440,7 @@ Route::post('fondoComun/listar_fondo_comun_ajax', [FondoComunController::class, 
 Route::get('adelanto/consulta_adelanto', [AdelantoController::class, 'consulta_adelanto'])->name('adelanto.consulta_adelanto');
 Route::post('adelanto/listar_adelanto_ajax', [AdelantoController::class, 'listar_adelanto_ajax'])->name('adelanto.listar_adelanto_ajax');
 Route::get('adelanto/modal_adelanto_nuevoAdelanto/{id}', [AdelantoController::class, 'modal_adelanto_nuevoAdelanto'])->name('adelanto.modal_adelanto_nuevoAdelanto');
+Route::get('adelanto/modal_detalle_adelanto/{id}', [AdelantoController::class, 'modal_detalle_adelanto'])->name('adelanto.modal_detalle_adelanto');
 Route::get('adelanto/buscar_numero_cap/{numero_cap}', [AdelantoController::class, 'buscar_numero_cap'])->name('adelanto.buscar_numero_cap');
 Route::post('adelanto/send_adelanto_nuevoAdelanto', [AdelantoController::class, 'send_adelanto_nuevoAdelanto'])->name('adelanto.send_adelanto_nuevoAdelanto');
 Route::get('adelanto/eliminar_adelanto/{id}/{estado}', [AdelantoController::class, 'eliminar_adelanto'])->name('adelanto.eliminar_adelanto');

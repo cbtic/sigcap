@@ -150,24 +150,10 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="Numero Documento">
+						<input class="form-control form-control-sm" id="numero_cap" name="numero_cap" placeholder="N&uacute;mero CAP">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
-					</div>
-
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <select name="sexo" id="sexo" class="form-control form-control-sm" onchange="">
-                                <option value="">--Selecionar Sexo--</option>
-                                <?php
-                                foreach ($sexo as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_sexo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-                        </div>
 					</div>
                     
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -196,6 +182,7 @@
                             <th>Nombre</th>
                             <th>Monto</th>
                             <th>N° Cuotas</th>
+                            <th>Fecha</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>

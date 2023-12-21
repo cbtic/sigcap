@@ -15,7 +15,7 @@ class CreateAdelantoDetallesTable extends Migration
     {
         Schema::create('adelanto_detalles', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_adelento')->nullable();
+            $table->bigInteger('id_adelanto')->nullable();
             $table->bigInteger('id_periodo_delegado')->nullable();
             $table->bigInteger('numero_cuota')->nullable();
             $table->date('fecha_pago')->nullable();
@@ -27,7 +27,7 @@ class CreateAdelantoDetallesTable extends Migration
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index(); 
             $table->timestamps();
 
-            $table->foreign('id_prestamo')->references('id')->on('prestamos');
+            $table->foreign('id_adelanto')->references('id')->on('adelantos');
             $table->foreign('id_periodo_delegado')->references('id')->on('periodo_delegados'); 
         });
     }

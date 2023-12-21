@@ -301,16 +301,16 @@ function modal_personaNuevo(){
       url: "/adelanto/send_adelanto_nuevoAdelanto",
       type: "POST",
       data: {
-        _token:_token,
-        id:id,
+        _token: _token,
+        id: id,
         id_persona:id_persona,
-        tipo_documento:tipo_documento,
-        numero_cap:numero_cap,
-        nombres:nombres,
-        apellido_paterno:apellido_paterno,
-        apellido_materno:apellido_materno,
-        monto:monto,
-        numero_cuota:numero_cuota
+        tipo_documento: tipo_documento,
+        numero_cap: numero_cap,
+        nombres: nombres,
+        apellido_paterno: apellido_paterno,
+        apellido_materno: apellido_materno,
+        monto: monto,
+        numero_cuota: numero_cuota
       },
       success: function(result) {
 
@@ -332,114 +332,40 @@ function modal_personaNuevo(){
     <div class="justify-content-center">
       <div class="card">
         <div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-          Registro Adelantos
+          Detalle Adelantos
         </div>
         <div class="card-body">
           <div class="row">
             <!--aaaa-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 
-              <form method="post" action="#" enctype="multipart/form-data">
-                <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
-                <!--<input type="hidden" name="id_persona" id="id_persona">-->
-                
-                <div class="row">
-                  <div class="col-lg-7">
-                    <div class="col-lg-7">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Tipo Documento</label>
-                        <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onChange="">
-                          <option value="">--Selecionar--</option>
-                          <?php
-                          foreach ($tipo_documento as $row) { ?>
-                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '85') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-                          <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
+              <div class="card-body">				
 
-                    <!--
-                    <div class="col-lg-7">
-                      <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-                        <label class="control-label form-control-sm">N&uacute;mero Documento</label>
-                        <input id="numero_documento" name="numero_documento" class="form-control form-control-sm" value="<?php /*echo $persona->numero_documento */?>" type="text">
-                      </div>
-                    </div>
-                        -->
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">N&uacute;mero CAP</label>
-                        <input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="obtener_profesional()">
-                          
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <div class="col-lg-5">
-                    <div class="form-group" style="text-align:center">
-                      <!--<span class="btn btn-sm btn-warning btn-file">
-												Examinar <input id="image" name="image" type="file" />
-											</span>
-
-											<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:10px">
-
-											<input type="button" class="btn btn-sm btn-danger delete" value="Eliminar" style="margin-left:10px">
-                        -->
-                      <?php
-                      $url_foto = "/img/profile-icon.png";
-                      if ($persona->foto != "") $url_foto = "/img/agremiado/" . $persona->foto;
-
-                      $foto = "";
-                      if ($persona->foto != "") $foto = $persona->foto;
-                      ?>
-                      <img src="<?php echo $url_foto ?>" id="img_ruta" width="130px" height="165px" alt="" style="text-align:center;margin-top:8px" />
-                      <input type="hidden" id="img_foto" name="img_foto" value="<?php echo $foto ?>" />
-
-                    </div>
-                  </div>
+                <div class="table-responsive">
+                <table id="tblPuesto" class="table table-hover table-sm">
+                    <thead>
+                    <tr style="font-size:13px">
+                        <th>Detalle Cuota</th>
+                        <th>Monto</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Estado</th>
+                    </tr>
+                    </thead>
+                    <tbody style="font-size:13px">
+                    <?php foreach ($adelanto_detalle as $row) {?>
+										<tr style='font-size:13px'>
+											<input type='hidden' name='id_adelanto_detalle[]' value='<?php echo $row->id?>'>
+											<td class='text-left'><?php echo 'cuota '.$row->numero_cuota?></td>
+											<td class='text-left'><?php echo $row->adelanto_pagar?></td>
+											<td class='text-left'><?php echo $row->fecha_pago?></td>
+											<td class='text-left'><?php echo $row->estado?></td>
+										<?php } ?>
+										</tbody>
+                </table>
                 </div>
-
-                <div style="padding-left:15px">
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Nombres</label>
-                        <input id="nombres" name="nombres" class="form-control form-control-sm" value="<?php echo $persona->nombres ?>" type="text" readonly="readonly">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Apellido Paterno</label>
-                        <input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm" value="<?php echo $persona->apellido_paterno ?>" type="text" readonly="readonly">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Apellido Materno</label>
-                        <input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm" value="<?php echo $persona->apellido_materno ?>" type="text" readonly="readonly">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Monto</label>
-                        <input id="monto" name="monto" class="form-control form-control-sm" value="<?php echo $adelanto->total_adelanto ?>" type="text">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">N&uacute;mero Cuotas</label>
-                        <input id="numero_cuota" name="numero_cuota" class="form-control form-control-sm" value="<?php echo $adelanto->nro_total_cuotas ?>" type="text">
-                      </div>
-                    </div>
-                  </div>
                   <div style="margin-top:15px" class="form-group">
                     <div class="col-sm-12 controls">
                       <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-                        <a href="javascript:void(0)" onClick="fn_save_adelanto()" class="btn btn-sm btn-success">Guardar</a>
                       </div>
                     </div>
                   </div>
