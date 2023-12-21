@@ -173,7 +173,7 @@ class IngresoController extends Controller
 
     public function modal_fraccionamiento(Request $request){
 
-        $id_concepto = $request->id_concepto_sel;
+        $id_concepto = $request->idConcepto;
        // print_r($id_concepto); exit();
 
         $id_persona = $request->id_persona;
