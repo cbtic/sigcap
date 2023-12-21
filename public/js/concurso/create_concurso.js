@@ -17,6 +17,15 @@ $(document).ready(function () {
 		//Limpiar();
 		//window.location.reload();
 	});
+
+	$('#btnDescargar').on('click', function () {
+		DescargarArchivos()
+
+	});
+
+
+	
+	
 	/*
 	$('.delete_ruta').on('click', function () {
 		DeleteImagen(this);
@@ -86,6 +95,12 @@ function aperturar(accion){
             }
     });
 }
+
+
+function DescargarArchivos(){
+	
+}
+
 
 function guardar_inscripcion_resultado(){
     //alert("cvvfv");
