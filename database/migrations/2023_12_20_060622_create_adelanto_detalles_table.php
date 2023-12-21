@@ -15,7 +15,7 @@ class CreateAdelantoDetallesTable extends Migration
     {
         Schema::create('adelanto_detalles', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_adelento')->nullable();
+            $table->bigInteger('id_adelanto')->nullable();
             $table->bigInteger('id_periodo_delegado')->nullable();
             $table->bigInteger('numero_cuota')->nullable();
             $table->date('fecha_pago')->nullable();

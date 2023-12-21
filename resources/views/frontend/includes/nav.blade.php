@@ -148,7 +148,7 @@
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 						   		
 						   	<a href="/fondoComun/consulta_fondo_comun" class="dropdown-item">Fondo Com&uacute;n Planilla</a>
-							<a href="/fondoComun/consulta_fondo_comun" class="dropdown-item">Adelantos y Descuentos Delegado</a>	
+							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>	
 						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
 								
 
