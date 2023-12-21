@@ -207,14 +207,17 @@ function calcular_total(obj){
 	var igv = 0;
 	//var cantidad = $("#tblValorizacion input[type='checkbox']:checked").length;
 	var cantidad = $(".mov:checked").length;
-	alert(cantidad);
+	//alert(cantidad);
 	//$("#tblValorizacion input[type='checkbox']:checked").each(function (){
 	if(cantidad == 0)$('#id_concepto_modal_sel').val("");
 	var id_concepto = $('#id_concepto_modal_sel').val();
 	$('#id_concepto_sel').val(id_concepto);
 	
-	alert(id_concepto);
+	//alert(id_concepto);
 	var id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
+
+	//alert(id_concepto_actual);
+	//$('#id_concepto_sel').val(id_concepto);
 
 	$('#idConcepto').val(id_concepto_actual);
 	
@@ -238,6 +241,8 @@ function calcular_total(obj){
 		$("#btnFracciona").prop('disabled', false);
 		//$("#btnBoleta").prop('disabled', false);
 		//$("#btnFactura").prop('disabled', false);
+
+		var tipo_documento = $('#tipo_documento').val();
 
 		if(tipo_documento == "79"){//RUC
 			

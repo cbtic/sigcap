@@ -18,6 +18,17 @@ use Auth;
 
 class IngresoController extends Controller
 {
+
+    public function __construct(){
+
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+	}
+       
     public function create(){      
          
 		$id_user = Auth::user()->id;

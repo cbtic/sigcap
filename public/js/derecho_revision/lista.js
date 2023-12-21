@@ -191,16 +191,6 @@ function datatablenew(){
 				"aTargets": [2],
 				"className": "dt-center",
 				},
-				/*{
-				"mRender": function (data, type, row) {
-					var credipago = "";
-					if(row.credipago!= null)credipago = row.credipago;
-					return credipago;
-				},
-				"bSortable": false,
-				"aTargets": [3],
-				"className": "dt-center",
-				},*/
 				{
 				"mRender": function (data, type, row) {
 					var municipalidad = "";
@@ -211,16 +201,31 @@ function datatablenew(){
 				"aTargets": [3],
 				"className": "dt-center",
 				},
+				
 				{
 				"mRender": function (data, type, row) {
-					var numero_cap = "";
-					if(row.numero_cap!= null)numero_cap = row.numero_cap;
-					return numero_cap;
+					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					html += '<button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerProyectista('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i>Proyectista</button>';
+					html += '</div>';
+					return html;
 				},
 				"bSortable": false,
 				"aTargets": [4],
 				"className": "dt-center",
 				},
+				
+				{
+				"mRender": function (data, type, row) {
+					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					html += '<button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerPropietario('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i>Propietario</button>';
+					html += '</div>';
+					return html;
+				},
+				"bSortable": false,
+				"aTargets": [5],
+				"className": "dt-center",
+				},
+				/*
 				{
 				"mRender": function (data, type, row) {
 					var nombre_agremiado = "";
@@ -251,6 +256,7 @@ function datatablenew(){
 				"aTargets": [7],
 				"className": "dt-center",
 				},
+				*/
 				{
 				"mRender": function (data, type, row) {
 					var fecha_registro = "";
@@ -258,7 +264,7 @@ function datatablenew(){
 					return fecha_registro;
 				},
 				"bSortable": false,
-				"aTargets": [8],
+				"aTargets": [6],
 				"className": "dt-center",
 				},
 				{
@@ -273,7 +279,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [9]
+				"aTargets": [7]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -299,7 +305,7 @@ function datatablenew(){
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [10],
+					"aTargets": [8],
 				},
             ]
     });
@@ -397,6 +403,38 @@ function modalVerCredipago(id){
 
 	$.ajax({
 			url: "/derecho_revision/modal_credipago/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modalVerProyectista(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_proyectista/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modalVerPropietario(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_propietario/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
