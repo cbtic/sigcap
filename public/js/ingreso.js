@@ -216,8 +216,8 @@ function calcular_total(obj){
 	//alert(id_concepto);
 	var id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
 
-	alert(id_concepto_actual);
-
+	//alert(id_concepto_actual);
+	//$('#id_concepto_sel').val(id_concepto);
 
 	$('#idConcepto').val(id_concepto_actual);
 	
@@ -241,6 +241,8 @@ function calcular_total(obj){
 		$("#btnFracciona").prop('disabled', false);
 		//$("#btnBoleta").prop('disabled', false);
 		//$("#btnFactura").prop('disabled', false);
+
+		var tipo_documento = $('#tipo_documento').val();
 
 		if(tipo_documento == "79"){//RUC
 			
