@@ -455,11 +455,18 @@ class AgremiadoController extends Controller
 		}else{
 			$agremiadoTrabajo = AgremiadoTrabajo::find($request->id);
 		}
+		/*
+		$id_departamento = str_pad($request->id_departamento_trabajo, 2, "0", STR_PAD_LEFT);
+		$id_provincia = str_pad($request->id_provincia_trabajo, 2, "0", STR_PAD_LEFT);
+		$id_distrito = str_pad($request->id_distrito_trabajo, 2, "0", STR_PAD_LEFT);
+		$id_ubigeo = $id_departamento.$id_provincia.$id_distrito;
+		*/
 		
+		$id_ubigeo = $request->id_distrito_trabajo;
 		$agremiadoTrabajo->id_agremiado = $request->id_agremiado;
 		$agremiadoTrabajo->id_cliente_cargo = $request->id_cliente_cargo;
 		$agremiadoTrabajo->rubro_negocio = $request->rubro_negocio;
-		$agremiadoTrabajo->id_ubigeo = $request->id_departamento_trabajo;
+		$agremiadoTrabajo->id_ubigeo = $id_ubigeo;
 		$agremiadoTrabajo->numero_documento = $request->numero_documento;
 		$agremiadoTrabajo->razon_social = $request->razon_social;
 		$agremiadoTrabajo->direccion = $request->direccion;

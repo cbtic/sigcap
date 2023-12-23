@@ -17,7 +17,7 @@ $(document).ready(function () {
 	});
 	
 	$('#btnGuardar').on('click', function () {
-		guardar_inscripcion()
+		guardar_inscripcion();
 		//Limpiar();
 		//window.location.reload();
 	});
@@ -96,6 +96,8 @@ function guardar_inscripcion(){
 	fn_save();
 }
 
+
+
 function fn_save(){
     
     $.ajax({
@@ -104,9 +106,14 @@ function fn_save(){
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
-			
+					/*
+					var id_agremiado = $("#id_agremiado").val();
+					obtenerConcursoVigentePendiente(id_agremiado);
 					datatablenew();
-                    //location.href="/concurso/editar_inscripcion/"+result;
+					$("#id_concurso_puesto").val(0);
+                    */
+					location.reload();
+					//location.href="/concurso/editar_inscripcion/"+result;
 					
 					//window.location.reload();
 					//Limpiar();
@@ -118,6 +125,28 @@ function fn_save(){
 					//location.href="ver_cita/"+id_user+"/"+result;
             }
     });
+}
+
+function obtenerConcursoVigentePendiente(id_agremiado){
+	
+	$.ajax({
+		url: '/concurso/obtener_concurso_vigente_pendiente/'+id_agremiado,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_concurso").html("");
+			var subtipo = "";
+			$(result).each(function (ii, oo) {
+				subtipo = "";
+				//console.log(oo.tipo_concurso);
+				if(oo.sub_tipo_concurso!=null)subtipo = " - "+oo.sub_tipo_concurso;
+				option += "<option fecha_acreditacion_inicio='"+oo.fecha_acreditacion_inicio+"' fecha_acreditacion_fin='"+oo.fecha_acreditacion_fin+"' value='"+oo.id+"'>"+oo.periodo+" - "+oo.tipo_concurso+subtipo+"</option>";
+			});
+			$("#id_concurso").html(option);
+		}
+		
+	});
+	
 }
 
 function Limpiar(){

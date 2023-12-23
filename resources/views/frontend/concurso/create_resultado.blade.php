@@ -561,6 +561,7 @@ label.form-control-sm{
 														<th>Id</th>
 														<th>Periodo</th>
 														<th>Tipo Concurso</th>
+														<th>SubTipo Concurso</th>
 														<th>Puesto</th>
 														<th>Fecha Inscripci&oacute;n</th>
 														<th>Codigo Pago</th>

@@ -59,6 +59,41 @@ And cp.id_concurso = ".$id;
 		$data = DB::select($cad);
         return $data;
     }
+	
+	function getConcursoVigentePendienteByAgremiado($id_agremiado){
+
+        $cad = "select c.id,c.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
+to_char(c.fecha,'dd-mm-yyyy')fecha,to_char(c.fecha_inscripcion_inicio,'dd-mm-yyyy')fecha_inscripcion_inicio,to_char(c.fecha_inscripcion_fin,'dd-mm-yyyy')fecha_inscripcion_fin,to_char(c.fecha_acreditacion_inicio,'dd-mm-yyyy')fecha_acreditacion_inicio,to_char(c.fecha_acreditacion_fin,'dd-mm-yyyy')fecha_acreditacion_fin 
+from concursos c
+inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
+left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
+where c.estado='1'
+and now() between (to_char(c.fecha_inscripcion_inicio,'dd-mm-yyyy')||' 00:00')::timestamp  and (to_char(c.fecha_inscripcion_fin,'dd-mm-yyyy')||' 23:59')::timestamp
+and c.id not in (
+select cp.id_concurso  
+from concurso_inscripciones ci 
+inner join concurso_puestos cp on ci.id_concurso_puesto=cp.id
+where id_agremiado=".$id_agremiado." and ci.estado='1'
+)";
+
+		$data = DB::select($cad);
+        return $data;
+    }
+		
+	function getInscripcionDocumentoPendienteByAgremiado($id_agremiado){
+
+        $cad = "select cp.id_concurso,c.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso  
+from concurso_inscripciones ci 
+inner join concurso_puestos cp on ci.id_concurso_puesto=cp.id
+inner join concursos c on cp.id_concurso=c.id
+inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
+left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
+where id_agremiado=".$id_agremiado." and ci.estado='1'
+and (select count(*) from inscripcion_documentos id where id_concurso_inscripcion=ci.id and estado='1')='0'";
+
+		$data = DB::select($cad);
+        return $data;
+    }
 		
 	public function listar_concurso($p){
 

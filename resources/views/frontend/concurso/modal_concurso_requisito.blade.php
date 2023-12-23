@@ -242,7 +242,7 @@ function fn_save_documento(){
 				//window.location.reload();
 				datatablenew();
 				cargarRequisitos(id_concurso_inscripcion);
-								
+				$("#divAlertaDocumento").hide();
             }
     });
 }
