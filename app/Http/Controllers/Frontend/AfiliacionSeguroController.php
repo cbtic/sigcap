@@ -180,6 +180,8 @@ class AfiliacionSeguroController extends Controller
     public function send_afiliacion(Request $request){
 		$id_user = Auth::user()->id;
 
+		$seguroPlan = new SegurosPlane();
+
         //print_r ($id_user);exit();
         
 		if($request->id == 0){
@@ -190,9 +192,12 @@ class AfiliacionSeguroController extends Controller
 			$afiliacion->id_usuario_actualiza = $id_user;
 		}
 		//id|id_regional|||     ||estado
+		
+		$id_planes = $seguroPlan->getPlanIdBySeguro($request->$id_plan);
 
+		//print_r($id_planes).exit();
 		$afiliacion->id_regional = $request->id_regional;
-        $afiliacion->id_plan = $request->id_plan;
+        $afiliacion->id_plan = $request->$id_planes;
 		$afiliacion->id_agremiado = $request->id_agremiado;
 		$afiliacion->fecha = $request->fecha;
 		$afiliacion->observaciones = $request->observaciones;

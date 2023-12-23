@@ -38,7 +38,7 @@ class MunicipalidadIntegrada extends Model
         inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
         left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
         where mi.estado='1' and mi.id_tipo_agrupacion::varchar ilike '%".$tipo_agrupacion."'
-		and mi.id_periodo_comision='".$periodo."'";
+		and mi.id_periodo_comision='".$periodo."' and mi.estado='1' order by 1 desc ";
 		$data = DB::select($cad);
         return $data;
     }
