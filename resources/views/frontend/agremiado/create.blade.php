@@ -1158,7 +1158,7 @@ label.form-control-sm{
 																<th>F. Graduado</th>
 																<th>Libro</th>
 																<th>Folio</th>
-																<th class="text-center">Opciones</th>
+																<th>Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1224,7 +1224,7 @@ label.form-control-sm{
 															<tr style="font-size:13px">
 																<th>Idioma</th>
 																<th>Grado Conocimiento</th>
-																<th class="text-center">Opciones</th>
+																<th>Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1300,7 +1300,7 @@ label.form-control-sm{
 																<th>Sexo</th>
 																<th>Apellidos y Nombres</th>
 																<th>F.Nacimiento</th>
-																<th class="text-center">Opciones</th>
+																<th>Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1389,7 +1389,7 @@ label.form-control-sm{
 																<th>Tel&eacute;fono</th>
 																<th>Celular</th>
 																<th>Correo</th>
-																<th class="text-center">Opciones</th>
+																<th>Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1479,7 +1479,7 @@ label.form-control-sm{
 																<th>Fecha Inicio</th>
 																<th>Fecha Fin</th>
 																<th>Observaci&oacute;n</th>
-																<th class="text-center">Opciones</th>
+																<th>Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
@@ -1560,7 +1560,7 @@ label.form-control-sm{
 																<th>Fecha Inicio</th>
 																<th>Fecha Fin</th>
 																<th>Pa&iacute;s</th>
-																<th class="text-center">Opciones</th>
+																<th>Opciones</th>
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">

@@ -549,7 +549,7 @@ function eliminar(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Municipalidad?", 
+        message: "&iquest;Deseas "+act_estado+" el Seguro?", 
         callback: function(result){
             if (result==true) {
                 fn_eliminar(id,estado_);
@@ -562,7 +562,7 @@ function eliminar(id,estado){
 function fn_eliminar(id,estado){
 	
     $.ajax({
-            url: "/municipalidad/eliminar_municipalidad/"+id+"/"+estado,
+            url: "/seguro/eliminar_seguro/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

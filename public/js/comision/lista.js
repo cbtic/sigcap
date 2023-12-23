@@ -785,6 +785,28 @@ function modalResponsable(id){
 
 }
 
+function eliminarMuniIntegrada(id,estado){
+	var act_estado = "";
+	if(estado==1){
+		act_estado = "Eliminar";
+		estado_=0;
+	}
+	if(estado==0){
+		act_estado = "Activar";
+		estado_=1;
+	}
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas "+act_estado+" la Municipalidad Integrada?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_muniIntegrada(id,estado_);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
 function eliminarComision(id,estado){
 	var act_estado = "";
 	if(estado==1){
@@ -797,24 +819,39 @@ function eliminarComision(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la comision?", 
+        message: "&iquest;Deseas "+act_estado+" la Comisi&oacute;n?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_concepto(id,estado_);
+                fn_eliminar_comision(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_comision(id,estado){
+
+function fn_eliminar_muniIntegrada(id,estado){
 	
     $.ajax({
-            url: "/comision/eliminar_comision/"+id+"/"+estado,
+            url: "/comision/eliminar_muniIntegrada/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
 				datatablenew();
+				cargarMunicipalidadesIntegradas();
+            }
+    });
+}
+
+function fn_eliminar_comision(id,estado){
+	
+    $.ajax({
+            url: "/comision/eliminarComision/"+id+"/"+estado,
+            type: "GET",
+            success: function (result) {
+                //if(result="success")obtenerPlanDetalle(id_plan);
+				datatablenew();
+				cargarComisiones();
             }
     });
 }
@@ -822,12 +859,13 @@ function fn_eliminar_comision(id,estado){
 function fn_guardar(){
 
     var periodo = $("#periodo").val();
+	var tipo_comision = $("#tipo_comision").val();
 	
 	
     $.ajax({
 			url: "/comision/send_comision",
             type: "POST",
-            data : $("#frmComision").serialize()+"&periodo="+periodo,
+            data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
 			dataType: 'json',
             success: function (result) {
 					//datatablenew();

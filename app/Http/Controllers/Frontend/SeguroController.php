@@ -96,6 +96,16 @@ class SeguroController extends Controller
 		echo "success";
 
     }
+
+	public function eliminar_seguro($id,$estado){
+
+		$seguro = Seguro::find($id);
+		$seguro->estado=  $estado;
+		$seguro->save();
+		
+		echo "success";
+
+    }
 	
     public function editar_municipalidad($id){
         
