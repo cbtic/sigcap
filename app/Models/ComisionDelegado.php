@@ -23,7 +23,10 @@ inner join concursos t5 on t4.id_concurso=t5.id
 inner join tabla_maestras t6 on t5.id_tipo_concurso=t6.codigo::int and t6.tipo='93'
 inner join tabla_maestras t7 on t2.id_situacion = t7.codigo::int And t7.tipo ='14' 
 inner join regiones t8 on t2.id_regional = t8.id
-left join tabla_maestras t11 on t1.puesto_postula::int = t11.codigo::int And t11.tipo ='94' ";
+left join tabla_maestras t11 on t1.puesto_postula::int = t11.codigo::int And t11.tipo ='94' 
+where t1.estado='1' and t2.estado='1' and t3.estado='1' 
+and t5.estado='1' and t6.estado='1' and t7.estado='1'
+";
 
 		$data = DB::select($cad);
         return $data;

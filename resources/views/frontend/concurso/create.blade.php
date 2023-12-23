@@ -526,6 +526,17 @@ label.form-control-sm{
 														<!--
 														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
 														-->
+														<?php if(count($documento_pendiente)>0){?>
+														<div id="divAlertaDocumento" class="alert alert-warning" role="alert" style="font-size:20px">
+															<?php 
+															foreach($documento_pendiente as $row){
+															?>
+													  		El concurso <?php echo $row->periodo." ".$row->tipo_concurso;if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?> esta pendiente de adjuntar documentos, hacer click en el boton registrar documento para adjuntar documentos
+															<?php 
+															echo "<br>";
+															}?>
+														</div>
+														<?php }?>
 														
 													</div>
 													
@@ -572,7 +583,6 @@ label.form-control-sm{
 														-->
 														
 													</div>
-													
 													
 													
 													

@@ -2629,12 +2629,12 @@ function obtenerBeneficiario(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono').attr("disabled",false);
 				$('#email').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento').attr("disabled",false);
 				$('#nombres').attr("disabled",false).attr("placeholder","Ingrese Nombres");
@@ -2693,11 +2693,11 @@ function obtenerBeneficiario_c(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono_c').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento_c').attr("disabled",false);
 				$('#nombres_c').attr("disabled",false).attr("placeholder","Ingrese Nombres");
@@ -2755,11 +2755,11 @@ function obtenerBeneficiario_a(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono_a').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento_a').attr("disabled",false);
 				$('#nombres_a').attr("disabled",false).attr("placeholder","Ingrese Nombres");
@@ -2975,6 +2975,79 @@ function obtenerProvinciaDomiciliarioEdit(idProvincia){
 	
 }
 
+function obtenerProvinciaTrabajoEdit(idProvincia){
+	
+	var id = $('#id_departamento_trabajo').val();
+	if(id=="")return false;
+	$('#id_provincia_trabajo').attr("disabled",true);
+	$('#id_distrito_trabajo').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_provincia/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_provincia_trabajo').html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(idProvincia == oo.id_provincia)selected = "selected='selected'";
+				option += "<option value='"+oo.id_provincia+"' "+selected+" >"+oo.desc_ubigeo+"</option>";
+			});
+			$('#id_provincia_trabajo').html(option);
+			$('#id_provincia_trabajo').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+
+function obtenerProvinciaTrabajo(){
+	
+	var id = $('#id_departamento_trabajo').val();
+	if(id=="")return false;
+	$('#id_provincia_trabajo').attr("disabled",true);
+	$('#id_distrito_trabajo').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_provincia/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_provincia_trabajo').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_provincia+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#id_provincia_trabajo').html(option);
+			
+			var option2 = "<option value=''>Seleccionar</option>";
+			$('#id_distrito_trabajo').html(option2);
+			
+			$('#id_provincia_trabajo').attr("disabled",false);
+			$('#id_distrito_trabajo').attr("disabled",false);
+			
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
 
 
 function obtenerDistrito(){
@@ -3035,6 +3108,39 @@ function obtenerDistritoDomiciliario(){
 			$('#id_distrito_domiciliario').html(option);
 			
 			$('#id_distrito_domiciliario').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerDistritoTrabajo(){
+	
+	var id_departamento = $('#id_departamento_trabajo').val();
+	var id = $('#id_provincia_trabajo').val();
+	if(id=="")return false;
+	$('#id_distrito_trabajo').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_distrito/'+id_departamento+'/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value=''>Seleccionar</option>";
+			$('#id_distrito_trabajo').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_ubigeo+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#id_distrito_trabajo').html(option);
+			
+			$('#id_distrito_trabajo').attr("disabled",false);
 			$('.loader').hide();
 			
 		}
@@ -3105,6 +3211,41 @@ function obtenerDistritoDomiciliarioEdit(idProvincia,idDistrito){
 			});
 			$('#id_distrito_domiciliario').html(option);
 			$('#id_distrito_domiciliario').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerDistritoTrabajoEdit(idProvincia,idDistrito){
+	
+	var id_departamento = $('#id_departamento_trabajo').val();
+	var id = idProvincia;
+	if(id=="")return false;
+	$('#id_distrito_trabajo').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_distrito/'+id_departamento+'/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value=''>Seleccionar</option>";
+			$('#id_distrito_trabajo').html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(id_departamento+idProvincia+idDistrito == oo.id_ubigeo)selected = "selected='selected'";
+				option += "<option value='"+oo.id_ubigeo+"' "+selected+" >"+oo.desc_ubigeo+"</option>";
+			});
+			$('#id_distrito_trabajo').html(option);
+			$('#id_distrito_trabajo').attr("disabled",false);
 			$('.loader').hide();
 			
 		}

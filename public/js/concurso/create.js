@@ -17,7 +17,7 @@ $(document).ready(function () {
 	});
 	
 	$('#btnGuardar').on('click', function () {
-		guardar_inscripcion()
+		guardar_inscripcion();
 		//Limpiar();
 		//window.location.reload();
 	});
@@ -96,6 +96,8 @@ function guardar_inscripcion(){
 	fn_save();
 }
 
+
+
 function fn_save(){
     
     $.ajax({
@@ -104,9 +106,14 @@ function fn_save(){
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
-			
+					/*
+					var id_agremiado = $("#id_agremiado").val();
+					obtenerConcursoVigentePendiente(id_agremiado);
 					datatablenew();
-                    //location.href="/concurso/editar_inscripcion/"+result;
+					$("#id_concurso_puesto").val(0);
+                    */
+					location.reload();
+					//location.href="/concurso/editar_inscripcion/"+result;
 					
 					//window.location.reload();
 					//Limpiar();
@@ -118,6 +125,28 @@ function fn_save(){
 					//location.href="ver_cita/"+id_user+"/"+result;
             }
     });
+}
+
+function obtenerConcursoVigentePendiente(id_agremiado){
+	
+	$.ajax({
+		url: '/concurso/obtener_concurso_vigente_pendiente/'+id_agremiado,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_concurso").html("");
+			var subtipo = "";
+			$(result).each(function (ii, oo) {
+				subtipo = "";
+				//console.log(oo.tipo_concurso);
+				if(oo.sub_tipo_concurso!=null)subtipo = " - "+oo.sub_tipo_concurso;
+				option += "<option fecha_acreditacion_inicio='"+oo.fecha_acreditacion_inicio+"' fecha_acreditacion_fin='"+oo.fecha_acreditacion_fin+"' value='"+oo.id+"'>"+oo.periodo+" - "+oo.tipo_concurso+subtipo+"</option>";
+			});
+			$("#id_concurso").html(option);
+		}
+		
+	});
+	
 }
 
 function Limpiar(){
@@ -2639,12 +2668,12 @@ function obtenerBeneficiario(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono').attr("disabled",false);
 				$('#email').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento').attr("disabled",false);
 				$('#nombres').attr("disabled",false).attr("placeholder","Ingrese Nombres");
@@ -2703,11 +2732,11 @@ function obtenerBeneficiario_c(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono_c').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento_c').attr("disabled",false);
 				$('#nombres_c').attr("disabled",false).attr("placeholder","Ingrese Nombres");
@@ -2765,11 +2794,11 @@ function obtenerBeneficiario_a(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono_a').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento_a').attr("disabled",false);
 				$('#nombres_a').attr("disabled",false).attr("placeholder","Ingrese Nombres");

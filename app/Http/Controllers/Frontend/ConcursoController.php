@@ -90,12 +90,14 @@ class ConcursoController extends Controller
 		
 		$id_persona = Auth::user()->id_persona;
 		//echo $id_user;
-		$concurso = $concurso_model->getConcursoVigente();
+		//$concurso = $concurso_model->getConcursoVigente();
 		$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
+		$concurso = $concurso_model->getConcursoVigentePendienteByAgremiado($agremiado->id);
+		$documento_pendiente = $concurso_model->getInscripcionDocumentoPendienteByAgremiado($agremiado->id);
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente'));
+        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente','documento_pendiente'));
     }
 	
 	
@@ -227,6 +229,15 @@ class ConcursoController extends Controller
 		$puesto = $concurso_model->getPuestoByIdConcurso($id_concurso);
 		 
 		echo json_encode($puesto);
+	
+	}
+	
+	public function obtener_concurso_vigente_pendiente($id_agremiado){
+	
+		$concurso_model = new Concurso;
+		$concurso = $concurso_model->getConcursoVigentePendienteByAgremiado($id_agremiado);
+		 
+		echo json_encode($concurso);
 	
 	}
 	

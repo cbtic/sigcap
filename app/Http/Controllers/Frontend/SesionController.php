@@ -14,6 +14,7 @@ use App\Models\PeriodoComisione;
 use App\Models\ComisionDelegado;
 use App\Models\ProfesionalesOtro;
 use App\Models\ComputoSesione;
+use App\Models\ComisionSesionDictamene;
 use Carbon\Carbon;
 use Auth;
 
@@ -45,6 +46,14 @@ class SesionController extends Controller
 		
 		
         return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion'));
+    }
+	
+	public function obtener_dictamen($id_comision_sesion){
+
+        $comisionSesionDictamene_model = new ComisionSesionDictamene;
+        $dictamen = $comisionSesionDictamene_model->getComisionSesionDictameneByIdComisionSesion($id_comision_sesion);
+        return view('frontend.sesion.lista_dictamen',compact('dictamen'));
+
     }
 	
 	public function lista_programacion_sesion_ajax(Request $request){

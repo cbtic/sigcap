@@ -1,4 +1,4 @@
-<title>Sistema de Felmo</title>
+<title>Sistema de CAP - Lima</title>
 
 <style>
 /*
@@ -193,6 +193,7 @@ $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
 	$("#id_regional").select2({ width: '100%' });
+	$("#id_comision").select2({ width: '100%' });
 	$("#id_concurso_inscripcion").select2({ width: '100%' });
 	$("#id_concurso_inscripcion2").select2({ width: '100%' });
 });
