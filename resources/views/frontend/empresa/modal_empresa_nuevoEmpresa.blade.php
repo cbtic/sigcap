@@ -280,7 +280,7 @@ function validaRuc(ruc){
 
 		}
 		else{
-			bootbox.alert("RUC Invalido,... revise el RUC digitado ¡");
+			Swal.fire("RUC Inv&aacute;lido. Revise el RUC digitado!");
 			return false;
 		}
 
@@ -368,24 +368,16 @@ function valida(){
 		msg= "Falta ingresar el RUC";
 	}else if (email==""){
 		msg= "Falta ingresar el Email";
+	}else if (!validateEmail(email)) {
+		msg = "Ingrese un Correo Electr&oacute;nico V&aacute;lida";
 	}else if (telefono==""){
 		msg= "Falta ingresar el tel&eacute;fono";
+	}else if (!validarCelular(telefono)) { 
+		msg = "Ingrese un Número de Celular V&aacute;lido";
 	}else if (representante==""){
 		msg= "Falta ingresar el representante";
 	}
 	
-	
-	/*elseif (direccion==""){
-		msg= "Falta ingresar la direcci&oacuten";
-
-	}elseif (email==""){
-		msg= "Falta ingresar el Email";
-
-	}elseif (telefono==""){
-		msg= "Falta ingresar el tel&eacute;fono";
-
-	}*/
-
 	if (msg=="0"){
 		fn_save_empresa()		
 	}
@@ -395,6 +387,15 @@ function valida(){
 
 }
 
+function validateEmail(email) {
+	var re = /\S+@\S+\.\S+/;
+	return re.test(email);
+}
+
+function validarCelular(celular) {
+		var re = /^\d{7,9}$/;
+		return re.test(celular);
+	}
 
 function fn_save_empresa(){
     
@@ -633,12 +634,8 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label for="ruc" class="control-label required-field form-control-sm">Ruc</label>
-								<input id="ruc" name="ruc" class="form-control form-control-sm" value="{{ old('ruc') }}" required type="text" >
-							    @error('ruc')
-								<small>
-									<strong>{{ $message }}</strong>
-								</small> 
-								@enderror
+								<input id="ruc" name="ruc" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" required type="text" >
+							    
 							</div>
 						</div>
 						
@@ -667,11 +664,7 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label for="email" class="control-label form-control-sm">Email</label>
 								<input id="email" name="email" class="form-control form-control-sm "  value="<?php echo $empresa->email?>" required type="text">																				
-								@error('email')
-								<small>
-									<strong>{{$message}}</strong>
-								</small>
-								@enderror
+								
 							</div>
 						</div>
 

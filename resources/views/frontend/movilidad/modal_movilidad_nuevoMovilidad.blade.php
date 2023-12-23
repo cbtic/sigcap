@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Sistema SIGCAP</title>
 
 <style>
@@ -349,6 +350,36 @@ function fn_save_estudio(){
     });
 }
 
+function valida(){
+	var msg = "0";
+
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var comision = $('#comision').val();
+	var periodo = $('#periodo').val();
+	var regional = $('#regional').val();
+	var monto = $('#monto').val();
+
+	if (comision==""){
+		msg= "Falta seleccionar una Comisi&oacute;n";
+	}else if (periodo==""){
+		msg= "Falta seleccionar un Periodo";
+	}else if (regional==""){
+		msg= "Falta seleccionar una Regional";
+	}else if (monto==""){
+		msg= "Falta ingresar un Importe";
+	}
+
+	if (msg=="0"){
+		fn_save_movilidad()		
+	}
+	else {
+		Swal.fire(msg);
+	}
+
+}
+
+
 function fn_save_movilidad(){
     
 	var _token = $('#_token').val();
@@ -643,7 +674,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_movilidad()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

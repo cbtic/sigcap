@@ -16,8 +16,8 @@ class ConceptoController extends Controller
 
 		$tablaMaestra_model = new TablaMaestra;
 		$concepto = new Concepto;
-        $tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
-        return view('frontend.concepto.all',compact('tipo_afectacion','concepto'));
+        $id_tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(105);
+        return view('frontend.concepto.all',compact('id_tipo_afectacion','concepto'));
 
     }
 	
@@ -45,7 +45,7 @@ class ConceptoController extends Controller
 		$p[]=$request->cuenta_contable_al_haber1;
 		$p[]=$request->cuenta_contable_al_haber2;
         $p[]=$request->partida_presupuestal;
-		$p[]=$request->tipo_afectacion;
+		$p[]=$request->id_tipo_afectacion;
 		$p[]="";
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
@@ -86,7 +86,7 @@ class ConceptoController extends Controller
 		$regione_model = new Regione;
 		$tipoConcepto_model = new TipoConcepto;
 		$tablaMaestra_model = new TablaMaestra;
-		$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
+		$id_tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(105);
 		$moneda = $tablaMaestra_model->getMaestroByTipo(1);
 
 		if($id>0){
@@ -99,7 +99,7 @@ class ConceptoController extends Controller
 		$tipoConcepto = $tipoConcepto_model->getTipoConceptoAll();
 		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','tipoConcepto','concepto','region','tipo_afectacion','moneda'));
+		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','tipoConcepto','concepto','region','id_tipo_afectacion','moneda'));
 	
 	}
 
@@ -113,7 +113,7 @@ class ConceptoController extends Controller
 			'id_moneda'=>'required',
 			'periodo'=>'required',
 			'partida_presupuestal'=>'required',
-			'tipo_afectacion'=>'required',
+			'id_tipo_afectacion'=>'required',
 			'centro_costo'=>'required',
 		]
 		);
@@ -140,7 +140,7 @@ class ConceptoController extends Controller
 		$concepto->cuenta_contable_al_haber1 = $request->cuenta_contable_al_haber1;
 		$concepto->cuenta_contable_al_haber2 = $request->cuenta_contable_al_haber2;
 		$concepto->partida_presupuestal = $request->partida_presupuestal;
-		$concepto->id_tipo_afectacion = $request->tipo_afectacion;
+		$concepto->id_tipo_afectacion = $request->id_tipo_afectacion;
 		$concepto->centro_costo = $request->centro_costo;
 		//$concepto->estado = 1;
 		$concepto->id_usuario_inserta = $id_user;
