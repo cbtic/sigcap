@@ -670,17 +670,40 @@ function datatablenew(){
 				{
                 "mRender": function (data, type, row) {
                 	var newRow = "";
-					newRow="<button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalSesion('"+row.id+"') ><i class='fa fa-edit'></i> Editar - Ejecutar</button>"
+					newRow="<button style='font-size:12px' type='button' class='btn btn-sm btn-info' data-toggle='modal' onclick=cargarDictamen('"+row.id+"') ><i class='fa fa-edit'></i> Ver Dictamen</button>"
 					return newRow;
                 },
                 "bSortable": true,
                 "aTargets": [8]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var newRow = "";
+					newRow="<button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalSesion('"+row.id+"') ><i class='fa fa-edit'></i> Editar - Ejecutar</button>"
+					return newRow;
+                },
+                "bSortable": true,
+                "aTargets": [9]
                 },
 
             ]
 
 
     });
+
+}
+
+function cargarDictamen(id_concurso_inscripcion){
+       
+    $("#tblDictamen tbody").html("");
+	$.ajax({
+			url: "/sesion/obtener_dictamen/"+id_concurso_inscripcion,
+			type: "GET",
+			success: function (result) {  
+					$("#tblDictamen tbody").html(result);
+			}
+	});
 
 }
 

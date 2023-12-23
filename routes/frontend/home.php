@@ -375,6 +375,8 @@ Route::post('sesion/lista_computo_cerrado_ajax', [SesionController::class, 'list
 
 Route::post('sesion/send_computo_sesion', [SesionController::class, 'send_computo_sesion'])->name('sesion.send_computo_sesion');
 
+Route::get('sesion/obtener_dictamen/{id}', [SesionController::class, 'obtener_dictamen'])->name('sesion.obtener_dictamen');
+
 Route::get('persona/editar_persona/{id}', [PersonaController::class, 'editar_persona'])->name('persona.editar_persona');
 Route::post('persona/send_persona_nuevoPersona', [PersonaController::class, 'send_persona_nuevoPersona'])->name('persona.send_persona_nuevoPersona');
 //Route::get('persona/eliminar_persona/{id}/{estado}', [PersonaController::class, 'eliminar_persona'])->name('persona.eliminar_persona');

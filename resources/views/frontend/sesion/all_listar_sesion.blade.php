@@ -244,12 +244,28 @@
 							<th>Sesi&oacute;n Programada</th>
                             <th>Estado Sesi&oacute;n</th>
 							<th>Estado Aprobaci&oacute;n</th>
+							<th>Dictamen</th>
 							<th>Editar</th>
                         </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
+					
+					<table id="tblDictamen" class="table table-hover table-sm">
+                        <thead>
+                        <tr style="font-size:13px">
+							<th>Id</th>
+							<th>Ruta</th>
+							<th>Observaci&oacute;n</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+					
+					
+					
                 </div><!--table-responsive-->
                 </form>
 

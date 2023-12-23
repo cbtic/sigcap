@@ -210,7 +210,12 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	 
+var id_ubigeo_trabajo = $("#id_ubigeo_trabajo").val();
+var idProvinciaTrabajo = id_ubigeo_trabajo.substring(2,4);
+var idDistritoTrabajo = id_ubigeo_trabajo.substring(4,6);
+
+obtenerProvinciaTrabajoEdit(idProvinciaTrabajo);	 
+obtenerDistritoTrabajoEdit(idProvinciaTrabajo,idDistritoTrabajo);
 
 });
 
@@ -261,6 +266,8 @@ function fn_save_trabajo(){
 	var id_cliente_cargo = $('#id_cliente_cargo').val();
 	var rubro_negocio = $('#rubro_negocio').val();
 	var id_departamento_trabajo = $('#id_departamento_trabajo').val();
+	var id_provincia_trabajo = $('#id_provincia_trabajo').val();
+	var id_distrito_trabajo = $('#id_distrito_trabajo').val();
 	var numero_documento = $('#numero_documento').val();
 	var razon_social = $('#razon_social').val();
 	var direccion = $('#direccion').val();
@@ -273,7 +280,7 @@ function fn_save_trabajo(){
     $.ajax({
 			url: "/agremiado/send_agremiado_trabajo",
             type: "POST",
-            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_cliente_cargo:id_cliente_cargo,rubro_negocio:rubro_negocio,id_departamento_trabajo:id_departamento_trabajo,numero_documento:numero_documento,razon_social:razon_social,direccion:direccion,codigo_postal:codigo_postal,referencia:referencia,telefono:telefono,celular:celular,email:email},
+            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_cliente_cargo:id_cliente_cargo,rubro_negocio:rubro_negocio,id_departamento_trabajo:id_departamento_trabajo,id_provincia_trabajo:id_provincia_trabajo,id_distrito_trabajo:id_distrito_trabajo,numero_documento:numero_documento,razon_social:razon_social,direccion:direccion,codigo_postal:codigo_postal,referencia:referencia,telefono:telefono,celular:celular,email:email},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -488,7 +495,7 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Departamento</label>
 								<input type="hidden" name="id_ubigeo_trabajo" id="id_ubigeo_trabajo" value="<?php echo $agremiadoTrabajo->id_ubigeo?>">
-								<select name="id_departamento_trabajo" id="id_departamento_trabajo" class="form-control form-control-sm" onchange="obtenerProvincia()">
+								<select name="id_departamento_trabajo" id="id_departamento_trabajo" class="form-control form-control-sm" onChange="obtenerProvinciaTrabajo()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($departamento as $row) {?>
@@ -503,7 +510,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Provincia</label>
-								<select name="id_provincia_trabajo" id="id_provincia_trabajo" class="form-control form-control-sm" onchange="obtenerDistrito()">
+								<select name="id_provincia_trabajo" id="id_provincia_trabajo" class="form-control form-control-sm" onChange="obtenerDistritoTrabajo()">
 									<option value="">--Selecionar--</option>
 								</select>
 															
@@ -513,7 +520,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Distrito</label>
-								<select name="id_distrito_trabajo" id="id_distrito_trabajo" class="form-control form-control-sm" onchange="">
+								<select name="id_distrito_trabajo" id="id_distrito_trabajo" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 								</select>
 							</div>
