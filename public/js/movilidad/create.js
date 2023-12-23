@@ -2605,12 +2605,12 @@ function obtenerBeneficiario(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono').attr("disabled",false);
 				$('#email').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento').attr("disabled",false);
 				$('#nombres').attr("disabled",false).attr("placeholder","Ingrese Nombres");
@@ -2669,11 +2669,11 @@ function obtenerBeneficiario_c(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono_c').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento_c').attr("disabled",false);
 				$('#nombres_c').attr("disabled",false).attr("placeholder","Ingrese Nombres");
@@ -2731,11 +2731,11 @@ function obtenerBeneficiario_a(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono_a').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento_a').attr("disabled",false);
 				$('#nombres_a').attr("disabled",false).attr("placeholder","Ingrese Nombres");
