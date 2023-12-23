@@ -450,3 +450,6 @@ Route::get('adelanto/modal_detalle_adelanto/{id}', [AdelantoController::class, '
 Route::get('adelanto/buscar_numero_cap/{numero_cap}', [AdelantoController::class, 'buscar_numero_cap'])->name('adelanto.buscar_numero_cap');
 Route::post('adelanto/send_adelanto_nuevoAdelanto', [AdelantoController::class, 'send_adelanto_nuevoAdelanto'])->name('adelanto.send_adelanto_nuevoAdelanto');
 Route::get('adelanto/eliminar_adelanto/{id}/{estado}', [AdelantoController::class, 'eliminar_adelanto'])->name('adelanto.eliminar_adelanto');
+
+Route::get('comision/eliminar_muniIntegrada/{id}/{estado}', [ComisionController::class, 'eliminar_muniIntegrada'])->name('comision.eliminar_muniIntegrada');
+Route::get('comision/eliminarComision/{id}/{estado}', [ComisionController::class, 'eliminarComision'])->name('comision.eliminarComision');

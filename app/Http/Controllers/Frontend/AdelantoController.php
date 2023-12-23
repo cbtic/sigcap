@@ -95,7 +95,6 @@ class AdelantoController extends Controller
         $persona = new Persona;
         $agremiado = new Agremiado;
 		
-
 		//$persona = new Persona;
 		
 		if($id>0){

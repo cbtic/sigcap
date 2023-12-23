@@ -437,7 +437,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Movimiento
+				Registro Familiares
 			</div>
 			
             <div class="card-body">

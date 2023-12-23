@@ -14,7 +14,7 @@ class DeleteIdComputoSesionToComisionSesionesTable extends Migration
     public function up()
     {
         Schema::table('comision_sesiones', function (Blueprint $table) {
-            $table->dropColumn('id_computo_sesiones');
+            $table->dropColumn('id_computo_sesion');
         });
     }
 

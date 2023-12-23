@@ -320,7 +320,7 @@ class ComisionController extends Controller
 				}else{
 					$municipalidadIntegrada->id_tipo_agrupacion = 2;}
 				/*}*/
-				
+				$municipalidadIntegrada->id_tipo_comision = $request->tipo_comision;
 				$municipalidadIntegrada->id_regional = 5;
 				$municipalidadIntegrada->id_periodo_comision = $request->periodo;
 				//$municipalidadIntegrada->id_coodinador = 1;
@@ -504,5 +504,23 @@ class ComisionController extends Controller
 		$comision->id_dia_semana = $request->dia_semana;
 		
 		$comision->save();
+    }
+
+	public function eliminar_muniIntegrada($id,$estado)
+    {
+		$municipalidadesIntegrada = MunicipalidadIntegrada::find($id);
+		$municipalidadesIntegrada->estado = $estado;
+		$municipalidadesIntegrada->save();
+
+		echo $municipalidadesIntegrada->id;
+    }
+
+	public function eliminarComision($id,$estado)
+    {
+		$comision = Comisione::find($id);
+		$comision->estado = $estado;
+		$comision->save();
+
+		echo $comision->id;
     }
 }
