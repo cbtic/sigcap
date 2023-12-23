@@ -507,7 +507,7 @@ function datatablenew(){
         "autoWidth": false,
         "bLengthChange": true,
         "destroy": true,
-        "lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
+        "lengthMenu": [[8,10, 50, 100, 200, 60000], [8,10, 50, 100, 200, "Todos"]],
         "aoColumns": [
                         {},
         ],
