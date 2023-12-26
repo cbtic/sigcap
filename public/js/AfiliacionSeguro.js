@@ -575,11 +575,7 @@ function eliminar(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-<<<<<<< HEAD
-        message: "&iquest;Deseas "+act_estado+" el Seguro?", 
-=======
         message: "&iquest;Deseas "+act_estado+" la afiliacion de esta persona?", 
->>>>>>> a0728a6ef4fa8a236857b0f5f51437e63ae51bf9
         callback: function(result){
             if (result==true) {
                 fn_eliminar(id,estado_);
@@ -592,11 +588,7 @@ function eliminar(id,estado){
 function fn_eliminar(id,estado){
 	
     $.ajax({
-<<<<<<< HEAD
-            url: "/afiliacion_seguro/eliminar_afiliacion_seguro/"+id+"/"+estado,
-=======
             url: "/afiliacion_seguro/eliminar_afiliacion/"+id+"/"+estado,
->>>>>>> a0728a6ef4fa8a236857b0f5f51437e63ae51bf9
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
@@ -626,20 +618,11 @@ function obtenerPlan(){
 			var option = "<option value='' selected='selected'>Seleccionar</option>";
 			$('#id_plan_').html("");
 			$(result).each(function (ii, oo) {
-<<<<<<< HEAD
-				option += "<option value='"+oo.id_plan+"'>"+oo.nombre+"</option>";
-=======
 				option += "<option value='"+oo.id+"'>"+oo.nombre+"</option>";
->>>>>>> a0728a6ef4fa8a236857b0f5f51437e63ae51bf9
 			});
 			$('#id_plan_').html(option);
 			
 			$('#id_plan_').attr("disabled",false);
-<<<<<<< HEAD
-			
-=======
-
->>>>>>> a0728a6ef4fa8a236857b0f5f51437e63ae51bf9
 			$('.loader').hide();
 			
 

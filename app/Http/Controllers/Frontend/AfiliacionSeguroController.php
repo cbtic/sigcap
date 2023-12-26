@@ -182,9 +182,7 @@ class AfiliacionSeguroController extends Controller
     public function send_afiliacion(Request $request){
 		$id_user = Auth::user()->id;
 
-		$seguroPlan = new SegurosPlane();
-
-        //print_r ($request->id_plan);exit();
+        //print_r ($id_user);exit();
         
 		if($request->id == 0){
 			$afiliacion = new Seguro_afiliado();

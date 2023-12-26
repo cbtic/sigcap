@@ -290,21 +290,12 @@ $.mask.definitions['p'] = "[Mm]";
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<div class="form-group">
 												<label class="control-label">Fecha</label>
-<<<<<<< HEAD
-												<input id="fecha_" name="fecha_" class="form-control form-control-sm" value="<?php if($id==0)echo date('Y-m-d'); else echo $afiliado->fecha ?>" type="date">
-=======
 												<input readonly id="fecha_" name="fecha_" class="form-control form-control-sm" value="<?php if($id==0)echo date('Y-m-d'); else echo $afiliado->fecha ?>" type="date">
->>>>>>> a0728a6ef4fa8a236857b0f5f51437e63ae51bf9
 											</div>
 										</div>
 
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Seguro</label>
-<<<<<<< HEAD
-												
-=======
-
->>>>>>> a0728a6ef4fa8a236857b0f5f51437e63ae51bf9
 											<select name="id_seguro" id="id_seguro" class="form-control form-control-sm" onchange="obtenerPlan()">
 												<option value="">--Selecionar--</option>
 												<?php
