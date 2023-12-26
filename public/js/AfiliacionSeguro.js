@@ -632,6 +632,42 @@ function obtenerPlan(){
 	
 }
 
+function obtenerPlanEdit(id,id_plan){
+	
+	//var id = $('#id_seguro').val();
+	//if(id=="")return false;
+	$('#id_plan_').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/afiliacion_seguro/obtener_plan/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_plan_').html("");
+			var sel="";
+			$(result).each(function (ii, oo) {
+				sel="";
+				if(oo.id==id_plan)sel="selected='selected'"
+				option += "<option value='"+oo.id+"' "+sel+" >"+oo.nombre+"</option>";
+			});
+			$('#id_plan_').html(option);
+			
+			$('#id_plan_').attr("disabled",false);
+			$('.loader').hide();
+			
+
+		}
+		
+	});
+	
+}
+
 
 function obtenerAgremiado(){
 		
