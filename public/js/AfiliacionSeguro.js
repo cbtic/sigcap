@@ -618,11 +618,11 @@ function obtenerPlan(){
 			var option = "<option value='' selected='selected'>Seleccionar</option>";
 			$('#id_plan_').html("");
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id_seguro+"'>"+oo.nombre+"</option>";
+				option += "<option value='"+oo.id_plan+"'>"+oo.nombre+"</option>";
 			});
 			$('#id_plan_').html(option);
 			
-			
+			$('#id_plan_').attr("disabled",false);
 			
 			$('.loader').hide();
 			
