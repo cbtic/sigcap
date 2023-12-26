@@ -14,7 +14,6 @@ use App\Models\SegurosPlane;
 use App\Models\Ubigeo;
 use App\Models\TablaMaestra;
 use Carbon\Carbon;
-
 use Auth;
 
 
@@ -188,10 +187,12 @@ class AfiliacionSeguroController extends Controller
 		if($request->id == 0){
 			$afiliacion = new Seguro_afiliado();
 			$afiliacion->id_usuario_inserta = $id_user;
+			//$afiliacion->fecha = Carbon::now()->format('Y-m-d');
 			//$seguroPlan = new SegurosPlane();
 		}else{
 			$afiliacion =Seguro_afiliado::find($request->id);
 			$afiliacion->id_usuario_actualiza = $id_user;
+			//$afiliacion->fecha = $request->fecha;
 		}
 		//id|id_regional|||     ||estado
 		
@@ -218,7 +219,7 @@ class AfiliacionSeguroController extends Controller
 		$municipalidad->estado = $estado;
 		$municipalidad->save();
 
-		echo $municipalidad->id;
+		echo $afiliacion_seguro->id;
 
     }
 					

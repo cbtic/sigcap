@@ -39,8 +39,8 @@ class AdelantoController extends Controller
 	public function listar_adelanto_ajax(Request $request){
 	
 		$adelanto_model = new Adelanto;
-		$p[]="";
-		$p[]="";//$request->numero_documento;
+		$p[]=$request->numero_cap;
+		$p[]=$request->agremiado;//$request->numero_documento;
 		$p[]="";
 		$p[]="";
 		$p[]="";

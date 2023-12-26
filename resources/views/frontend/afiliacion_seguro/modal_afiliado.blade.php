@@ -296,7 +296,6 @@ $.mask.definitions['p'] = "[Mm]";
 
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Seguro</label>
-
 											<select name="id_seguro" id="id_seguro" class="form-control form-control-sm" onchange="obtenerPlan()">
 												<option value="">--Selecionar--</option>
 												<?php
