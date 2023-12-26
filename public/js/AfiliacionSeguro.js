@@ -575,7 +575,7 @@ function eliminar(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" el Seguro?", 
+        message: "&iquest;Deseas "+act_estado+" la afiliacion de esta persona?", 
         callback: function(result){
             if (result==true) {
                 fn_eliminar(id,estado_);
@@ -588,7 +588,7 @@ function eliminar(id,estado){
 function fn_eliminar(id,estado){
 	
     $.ajax({
-            url: "/afiliacion_seguro/eliminar_afiliacion_seguro/"+id+"/"+estado,
+            url: "/afiliacion_seguro/eliminar_afiliacion/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
@@ -602,7 +602,7 @@ function obtenerPlan(){
 	
 	var id = $('#id_seguro').val();
 	if(id=="")return false;
-	$('#id_plan').attr("disabled",true);
+	$('#id_plan_').attr("disabled",true);
 	
 	
 	var msgLoader = "";
@@ -618,19 +618,56 @@ function obtenerPlan(){
 			var option = "<option value='' selected='selected'>Seleccionar</option>";
 			$('#id_plan_').html("");
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id_plan+"'>"+oo.nombre+"</option>";
+				option += "<option value='"+oo.id+"'>"+oo.nombre+"</option>";
 			});
 			$('#id_plan_').html(option);
 			
 			$('#id_plan_').attr("disabled",false);
-			
 			$('.loader').hide();
 			
+
 		}
 		
 	});
 	
 }
+
+function obtenerPlanEdit(id,id_plan){
+	
+	//var id = $('#id_seguro').val();
+	//if(id=="")return false;
+	$('#id_plan_').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/afiliacion_seguro/obtener_plan/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_plan_').html("");
+			var sel="";
+			$(result).each(function (ii, oo) {
+				sel="";
+				if(oo.id==id_plan)sel="selected='selected'"
+				option += "<option value='"+oo.id+"' "+sel+" >"+oo.nombre+"</option>";
+			});
+			$('#id_plan_').html(option);
+			
+			$('#id_plan_').attr("disabled",false);
+			$('.loader').hide();
+			
+
+		}
+		
+	});
+	
+}
+
 
 function obtenerAgremiado(){
 		
@@ -662,3 +699,43 @@ function obtenerAgremiado(){
 	});
 	
 }
+
+
+function obtenerPlanes(){
+	
+	var id = $('#idseguro').val();
+	if(id=="")return false;
+	$('#id_provincia').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_provincia/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_provincia').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_provincia+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#id_provincia').html(option);
+			
+			var option2 = "<option value=''>Seleccionar</option>";
+			$('#id_distrito').html(option2);
+			
+			$('#id_provincia').attr("disabled",false);
+			$('#id_distrito').attr("disabled",false);
+			
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+

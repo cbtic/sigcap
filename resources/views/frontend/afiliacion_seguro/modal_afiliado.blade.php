@@ -177,6 +177,7 @@ $.mask.definitions['p'] = "[Mm]";
 		var _token = $('#_token').val();
 		var id = $('#id').val();
 		var id_regional = 5;
+		
 		var id_plan = $('#id_plan_').val();
 		var id_agremiado = $('#idagremiado_').val();
 		var fecha = $('#fecha_').val();
@@ -224,6 +225,12 @@ $.mask.definitions['p'] = "[Mm]";
 		});
 
 	}
+	
+	var id = "<?php echo $id ?>";
+	var id_plan_ = "<?php echo $afiliado->id_plan ?>";
+	if(id!=0)obtenerPlanEdit(id,id_plan_);
+	
+	
 </script>
 
 
@@ -276,7 +283,7 @@ $.mask.definitions['p'] = "[Mm]";
 										<div class="col-lg-6 col-md-0 col-sm-0 col-xs-0" style="padding-top:0px;padding-left:0px;padding-right:0px">
 											<label class="control-label">Apellidos y Nombres</label>
 											<input id="nombre_" name="nombre_" class="form-control form-control-sm" value="<?php echo $desc_cliente ?>" type="text" readonly>
-											<input id="idagremiado_" name="idagremiado_" class="form-control form-control-sm" value="" type="hidden" readonly>
+											<input id="idagremiado_" name="idagremiado_" class="form-control form-control-sm" value="<?php echo $afiliado->id_agremiado ?>" type="hidden" readonly>
 										</div>
 										<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Situaci&oacute;n</label>
@@ -289,18 +296,18 @@ $.mask.definitions['p'] = "[Mm]";
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<div class="form-group">
 												<label class="control-label">Fecha</label>
-												<input id="fecha_" name="fecha_" class="form-control form-control-sm" value="<?php if($id==0)echo date('Y-m-d'); else echo $afiliado->fecha ?>" type="date">
+												<input readonly id="fecha_" name="fecha_" class="form-control form-control-sm" value="<?php if($id==0)echo date('Y-m-d'); else echo $afiliado->fecha ?>" type="date">
 											</div>
 										</div>
 
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Seguro</label>
-												
-											<select name="id_seguro" id="id_seguro" class="form-control form-control-sm" onchange="obtenerPlan()">
+											<select name="id_seguro" id="id_seguro" class="form-control form-control-sm" onChange="obtenerPlan()">
 												<option value="">--Selecionar--</option>
 												<?php
 												foreach ($seguro as $row) { ?>
-													<option value="<?php echo $row->id ?>" <?php if ($row->id == $id_seguro) echo "selected='selected'" ?>><?php echo $row->nombre ?></option>
+													<option value="<?php echo $row->id?>" <?php if ($row->id == $id_seguro) echo "selected='selected'" ?>><?php echo $row->nombre ?></option>
+									
 												<?php
 												}
 												?>
@@ -309,7 +316,7 @@ $.mask.definitions['p'] = "[Mm]";
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Plan</label>
 
-											<select name="id_plan_" id="id_plan_" class="form-control form-control-sm" onchange="">
+											<select name="id_plan_" id="id_plan_" class="form-control form-control-sm" onChange="ObtenerMonto()">
 												<option value="">--Selecionar--</option>
 											</select>
 										</div>
@@ -320,7 +327,7 @@ $.mask.definitions['p'] = "[Mm]";
 										<div class="col-lg-12">
 											<div class="form-group">
 												<label class="control-label">Observaciones</label>
-												<input id="observacion_" name="observacion_" class="form-control form-control-sm" value="<?php $afiliado->observaciones ?>" type="textarea">
+												<input id="observacion_" name="observacion_" class="form-control form-control-sm" value="<?php echo $afiliado->observaciones ?>" type="text">
 											</div>
 										</div>
 									</div>

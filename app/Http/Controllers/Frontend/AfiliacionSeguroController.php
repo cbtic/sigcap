@@ -115,7 +115,8 @@ class AfiliacionSeguroController extends Controller
 			$cap_numero=$datosafiliado[0]->numero_cap;
 			$desc_cliente=$datosafiliado[0]->desc_cliente;
 			$situacion=$datosafiliado[0]->denominacion;
-			$id_seguro=$datosafiliado[0]->id_seguro;		
+			$id_seguro=$datosafiliado[0]->id_seguro;
+			$id_plan = $datosafiliado[0]->id_plan;
 		} 
 		else{
 			$afiliado = new Seguro_afiliado;
@@ -123,6 +124,7 @@ class AfiliacionSeguroController extends Controller
 			$desc_cliente="";
 			$situacion="";
 			$id_seguro="";
+			$fecha=Carbon::now()->format('Y-m-d');
 		} 
 		
 			
@@ -193,12 +195,10 @@ class AfiliacionSeguroController extends Controller
 			//$afiliacion->fecha = $request->fecha;
 		}
 		//id|id_regional|||     ||estado
-		//$seguroPlan = SegurosPlane::find($request->id_plan);
-        //$id_planes = optional($seguroPlan)->id;
-
+		
 		//$id_planes = $seguroPlan->getPlanIdBySeguro($request->id_plan);
 
-		//print_r($id_planes).exit();
+		
 		$afiliacion->id_regional = $request->id_regional;
         $afiliacion->id_plan = $request->id_plan;
 		$afiliacion->id_agremiado = $request->id_agremiado;
@@ -213,11 +213,11 @@ class AfiliacionSeguroController extends Controller
 			
     }
     
-    public function eliminar_afiliacion_seguro($id,$estado)
+    public function eliminar_afiliacion($id,$estado)
     {
-		$afiliacion_seguro = AfiliacionSeguro::find($id);
-		$afiliacion_seguro->estado = $estado;
-		$afiliacion_seguro->save();
+		$municipalidad = AfiliacionSeguro::find($id);
+		$municipalidad->estado = $estado;
+		$municipalidad->save();
 
 		echo $afiliacion_seguro->id;
 
@@ -227,7 +227,7 @@ class AfiliacionSeguroController extends Controller
 		
 		$seguroafiliado_model = new Agremiado();
 		$agremiado = $seguroafiliado_model->getAgremiado('85',$id);
-
+		//print_r($agremiado); exit();
 		echo json_encode($agremiado);
 	}
 
