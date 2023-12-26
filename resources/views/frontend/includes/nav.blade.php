@@ -111,6 +111,7 @@
 								@can('Programacion de Sesiones')
 								<a href="/sesion/lista_programacion_sesion" class="dropdown-item">Programaci&oacute;n de Sesiones</a>
 								@endcan
+								@can('Derecho Revision')
 								<a href="/derecho_revision/consulta_derecho_revision" class="dropdown-item">Derecho Revisi&oacute;n</a>
 								
 								<a href="/revisorUrbano/consulta_revisorUrbano" class="dropdown-item">Registro Revisor Urbano</a>
@@ -146,12 +147,11 @@
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Contabilidad</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
-						   		
+						   	@can('Fondo Comun Planilla')
 						   	<a href="/fondoComun/consulta_fondo_comun" class="dropdown-item">Fondo Com&uacute;n Planilla</a>
 							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>	
 						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
-								
-
+							@endcan
 						   </div>
 					</li>
 
@@ -193,7 +193,7 @@
 								@endcan
 								<a href="/parametro/consulta_parametro" class="dropdown-item">Par&aacute;metros</a>
 								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
-						   </div>
+						   </div>	
 					</li>
 					@endif
 

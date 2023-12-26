@@ -10,6 +10,7 @@ use App\Models\Moneda;
 use App\Models\Valorizacione;
 use App\Models\AgremiadoMulta;
 use App\Models\Agremiado;
+use App\Models\TablaMaestra;
 use Carbon\Carbon;
 use Auth;
 
@@ -121,22 +122,26 @@ class MultaController extends Controller
 			$id_agremiado = $agremiadoMulta->id_agremiado;
 			$agremiado = Agremiado::find($id_agremiado);
 			$numero_cap = $agremiado->numero_cap;
+			$multa_1 = Multa::find($agremiadoMulta->id_multa);
+			$moneda_1 = TablaMaestra::find($multa_1->id_moneda);
 		}else{
 			$agremiadoMulta = new AgremiadoMulta;
 			$id_agremiado = "";
 			$agremiado = new Agremiado;
 			$numero_cap = "";
+			$multa_1 = NULL;
+			$moneda_1 = NULL;
 		}
 		
         $multa = $multa_concepto_model->getMulta_conceptoAll();
-		$moneda = $moneda_model->getMonedaAll();
+		//$moneda = $moneda_model->getMonedaAll();
 		
 		//$multa = Multa::where("estado","1")->get();
 		
 		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.multa.modal_multa_nuevoMulta',compact('id','id_agremiado','agremiado','numero_cap','agremiadoMulta','multa','moneda'));
+		return view('frontend.multa.modal_multa_nuevoMulta',compact('id','id_agremiado','agremiado','numero_cap','agremiadoMulta','multa'/*,'moneda'*/,'multa_1','moneda_1','moneda_1'));
 	
 	}
 
@@ -187,7 +192,7 @@ class MultaController extends Controller
 		$valorizacion = new Valorizacione;
 		$valorizacion->id_modulo = 3;
 		$valorizacion->pk_registro = $id_multa;
-		$valorizacion->id_concepto = 29;
+		$valorizacion->id_concepto = 23;
 		$valorizacion->id_agremido = $agremiado->id;
 		$valorizacion->id_persona = $agremiado->id_persona;
 		$valorizacion->monto = $multa->monto;

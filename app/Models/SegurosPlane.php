@@ -23,7 +23,7 @@ class SegurosPlane extends Model
 
     function getPlanBySeguro($id){
 
-        $cad = "select *
+        $cad = "select id,nombre,monto
         from seguros_planes sp 
         where id_seguro = '".$id."' and estado='1' 
         order by nombre";
