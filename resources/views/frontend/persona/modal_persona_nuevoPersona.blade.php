@@ -340,7 +340,7 @@ $.mask.definitions['p'] = "[Mm]";
 				//alert(data.direccion_completa);
 
 			} else {
-				bootbox.alert("RUC Invalido,... revise el RUC digitado ¡");
+				Swal.fire("RUC Inv&aacute;lido. Revise el RUC digitado!");
 				return false;
 			}
 
@@ -425,6 +425,74 @@ $.mask.definitions['p'] = "[Mm]";
 				*/
 			}
 		});
+	}
+
+	function valida(){
+		var msg = "0";
+
+		var _token = $('#_token').val();
+		var id = $('#id').val();
+		var tipo_documento = $('#tipo_documento').val();
+		var numero_documento = $('#numero_documento').val();
+		var ruc = $('#ruc').val();
+		var nombre = $('#nombre').val();
+		var apellido_paterno = $('#apellido_paterno').val();
+		var apellido_materno = $('#apellido_materno').val();
+		var fecha_nacimiento = $('#fecha_nacimiento').val();
+		var lugar_nacimiento = $('#lugar_nacimiento').val();
+		var nacionalidad = $('#nacionalidad').val();
+		var sexo = $('#sexo').val();
+		var numero_celular = $('#numero_celular').val();
+		var correo = $('#correo').val();
+		var direccion = $('#direccion').val();
+
+		if (tipo_documento==""){
+			msg= "Falta seleccionar un Tipo de Documento";
+		}else if (numero_documento==""){
+			msg= "Falta ingresar una N&uacute;mero de Documento";
+		}else if (nombre==""){
+			msg= "Falta ingresar un Nombre";
+		}else if (apellido_paterno==""){
+			msg= "Falta ingresar un Apellido Paterno";
+		}else if (apellido_materno==""){
+			msg= "Falta ingresar un Apellido Materno";
+		}else if (fecha_nacimiento==""){
+			msg= "Falta seleccionar una Fecha de Nacimiento";
+		}else if (lugar_nacimiento==""){
+			msg= "Falta ingresar un Lugar de Nacimiento";
+		}else if (nacionalidad==""){
+			msg= "Falta seleccionar una Nacionalidad";
+		}else if (sexo==""){
+			msg= "Falta seleccionar un Sexo";
+		}else if (numero_celular==""){
+			msg= "Falta ingresar un N&uacute;mero de Celular";
+		}else if (!validarCelular(numero_celular)) { 
+			msg = "Ingrese un Número de Celular V&aacute;lido";
+		}else if (correo==""){
+			msg= "Falta ingresar un Correo";
+		}else if (!validateEmail(correo)) {
+        	msg = "Ingrese un Correo Electr&oacute;nico V&aacute;lida";
+    	}else if (direccion==""){
+			msg= "Falta ingresar una Direcci&oacute;n";
+		}
+
+		if (msg=="0"){
+			fn_save_persona()		
+		}
+		else {
+			Swal.fire(msg);
+		}
+
+	}
+
+	function validateEmail(email) {
+		var re = /\S+@\S+\.\S+/;
+		return re.test(email);
+	}
+
+	function validarCelular(celular) {
+		var re = /^\d{7,9}$/;
+		return re.test(celular);
 	}
 
 	function fn_save_persona() {
@@ -1039,7 +1107,7 @@ $.mask.definitions['p'] = "[Mm]";
 									<div style="margin-top:15px" class="form-group">
 										<div class="col-sm-12 controls">
 											<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-												<a href="javascript:void(0)" onClick="fn_save_persona()" class="btn btn-sm btn-success">Guardar</a>
+												<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 											</div>
 
 										</div>
@@ -1243,7 +1311,7 @@ $.mask.definitions['p'] = "[Mm]";
 						//alert(data.nombre_o_razon_social);
 
 					} else {
-						bootbox.alert("DNI Invalido,... revise el DNI digitado ¡");
+						Swal.fire("DNI Inv&aacute;lido. Revise el DNI digitado!");
 						return false;
 					}
 

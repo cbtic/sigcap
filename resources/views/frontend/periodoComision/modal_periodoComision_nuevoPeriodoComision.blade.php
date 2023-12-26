@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Sistema SIGCAP</title>
 
 <style>
@@ -331,6 +332,29 @@ function fn_save_empresa(){
     });
 }
 
+function valida(){
+	var msg = "0";
+
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var fecha_inicio = $('#fecha_inicio').val();
+	var fecha_fin = $('#fecha_fin').val();
+
+	if (fecha_inicio==""){
+		msg= "Falta ingresar una Fecha Inicio";
+	}else if (fecha_fin==""){
+		msg= "Falta ingresar una Fecha Fin";
+	}
+
+	if (msg=="0"){
+		fn_save_periodoComision()		
+	}
+	else {
+		Swal.fire(msg);
+	}
+
+}
+
 function fn_save_periodoComision(){
     
 	var _token = $('#_token').val();
@@ -455,7 +479,7 @@ function fn_save_periodoComision(){
 					<div style="margin-top:15px" class="form-group ">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_periodoComision()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

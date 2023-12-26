@@ -118,9 +118,9 @@ class EmpresaController extends Controller
 		
 		$validator = $request->validate([
 			//'ruc'=>'required | numeric | unique::Empresa | digits:11',
-			'email'=>'required | email',
+			//'email'=>'required | email',
 			'direccion'=>'required',
-			'telefono'=>'required | numeric | digits:9',
+			//'telefono'=>'required | numeric | digits:9',
 			'representante'=>'required',
 		]);
 
