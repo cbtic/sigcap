@@ -447,6 +447,8 @@ Route::post('sesion/lista_computoSesion', [SesionController::class, 'lista_compu
 Route::get('fondoComun/consulta_fondo_comun', [FondoComunController::class, 'consulta_fondo_comun'])->name('fondoComun.consulta_fondo_comun');
 Route::post('fondoComun/listar_fondo_comun_ajax', [FondoComunController::class, 'listar_fondo_comun_ajax'])->name('fondoComun.listar_fondo_comun_ajax');
 
+Route::get('fondoComun/calcula_fondo_comun', [FondoComunController::class, 'calcula_fondo_comun'])->name('fondoComun.calcula_fondo_comun');
+
 Route::get('adelanto/consulta_adelanto', [AdelantoController::class, 'consulta_adelanto'])->name('adelanto.consulta_adelanto');
 Route::post('adelanto/listar_adelanto_ajax', [AdelantoController::class, 'listar_adelanto_ajax'])->name('adelanto.listar_adelanto_ajax');
 Route::get('adelanto/modal_adelanto_nuevoAdelanto/{id}', [AdelantoController::class, 'modal_adelanto_nuevoAdelanto'])->name('adelanto.modal_adelanto_nuevoAdelanto');

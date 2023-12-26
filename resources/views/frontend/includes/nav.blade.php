@@ -155,10 +155,10 @@
 						   	<a href="/fondoComun/consulta_fondo_comun" class="dropdown-item">Fondo Com&uacute;n Planilla</a>
 							@endcan
 							@can('Adelantos y Descuentos Delegado')
-							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>	
+							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>
 							@endcan
 							@can('Planilla Delegados')
-							<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
+						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
 							@endcan
 						   </div>
 					</li>
