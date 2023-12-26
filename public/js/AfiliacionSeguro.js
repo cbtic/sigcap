@@ -632,38 +632,6 @@ function obtenerPlan(){
 	
 }
 
-function obtenerPlan(){
-	
-	var id = $('#id_plan_').val();
-	if(id=="")return false;
-	
-	var msgLoader = "";
-	msgLoader = "Procesando, espere un momento por favor";
-	var heightBrowser = $(window).width()/2;
-	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-    $('.loader').show();
-	
-	$.ajax({
-		url: '/afiliacion_seguro/obtener_plan_monto/'+id,
-		dataType: "json",
-		success: function(result){
-			var option = "<option value='' selected='selected'>Seleccionar</option>";
-			$('#id_plan_').html("");
-			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.nombre+"</option>";
-			});
-			$('#id_plan_').html(option);
-			
-			$('#id_plan_').attr("disabled",false);
-
-			$('.loader').hide();
-			
-
-		}
-		
-	});
-	
-}
 
 function obtenerAgremiado(){
 		
