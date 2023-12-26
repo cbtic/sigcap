@@ -116,7 +116,7 @@ class AfiliacionSeguroController extends Controller
 			$desc_cliente=$datosafiliado[0]->desc_cliente;
 			$situacion=$datosafiliado[0]->denominacion;
 			$id_seguro=$datosafiliado[0]->id_seguro;
-			//$id_plan = $datosafiliado[0]->id_plan;
+			$id_plan = $datosafiliado[0]->id_plan;
 		} 
 		else{
 			$afiliado = new Seguro_afiliado;
