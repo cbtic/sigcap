@@ -244,12 +244,32 @@
 							<th>Sesi&oacute;n Programada</th>
                             <th>Estado Sesi&oacute;n</th>
 							<th>Estado Aprobaci&oacute;n</th>
+							<th>Dictamen</th>
 							<th>Editar</th>
                         </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
+					
+					<table id="tblDictamen" class="table table-hover table-sm">
+                        <thead>
+                        <tr style="font-size:13px">
+							<th>C&oacute;digo</th>
+							<th>Tipo de Solicitud</th>
+							<th>Revis&oacute;n</th>
+							<th>N&deg; Liquidaci&oacute;n</th>
+							<th>Nombre</th>
+							<th>Direcci&oacute;n</th>
+							<th>Dictamen</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+					
+					
+					
                 </div><!--table-responsive-->
                 </form>
 

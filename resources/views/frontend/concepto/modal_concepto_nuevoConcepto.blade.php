@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Sistema SIGCAP</title>
 
 <style>
@@ -331,6 +332,62 @@ function fn_save_empresa(){
     });
 }
 
+function valida(){
+	var msg = "0";
+
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var id_regional = $('#id_regional').val();
+	var id_tipo_concepto = $('#id_tipo_concepto').val();
+	var denominacion = $('#denominacion').val();
+	var importe = $('#importe').val();
+	var id_moneda = $('#id_moneda').val();
+	var periodo = $('#periodo').val();
+	var partida_presupuestal = $('#partida_presupuestal').val();
+	var id_tipo_afectacion = $('#tipo_afectacion').val();
+	var centro_costo = $('#centro_costo').val();
+
+	if (id_regional==""){
+		msg= "Falta seleccionar la Regional";
+	}else if (id_tipo_concepto==""){
+		msg= "Falta seleccionar el Tipo de Concepto";
+	}else if (denominacion==""){
+		msg= "Falta ingresar la Denominaci&oacute;n";
+	}else if (importe==""){
+		msg= "Falta ingresar el Importe";
+	}else if (id_moneda==""){
+		msg= "Falta seleccionar la Moneda";
+	}else if (periodo==""){
+		msg= "Falta ingresar el Periodo";
+	}else if (partida_presupuestal==""){
+		msg= "Falta ingresar la Partida Presupuestal";
+	}else if (id_tipo_afectacion==""){
+		msg= "Falta seleccionar el Tipo de Afectaci&oacute;n";
+	}else if (centro_costo==""){
+		msg= "Falta ingresar el Centro de Costos";
+	}
+	
+	
+	/*elseif (direccion==""){
+		msg= "Falta ingresar la direcci&oacuten";
+
+	}elseif (email==""){
+		msg= "Falta ingresar el Email";
+
+	}elseif (telefono==""){
+		msg= "Falta ingresar el tel&eacute;fono";
+
+	}*/
+
+	if (msg=="0"){
+		fn_save_concepto()		
+	}
+	else {
+		Swal.fire(msg);
+	}
+
+}
+
 function fn_save_concepto(){
     
 	var _token = $('#_token').val();
@@ -346,14 +403,14 @@ function fn_save_concepto(){
 	var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
 	var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2').val();
 	var partida_presupuestal = $('#partida_presupuestal').val();
-	var tipo_afectacion = $('#tipo_afectacion').val();
+	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
 	var centro_costo = $('#centro_costo').val();
 	
 	
     $.ajax({
 			url: "/concepto/send_concepto_nuevoConcepto",
             type: "POST",
-            data : {_token:_token,id:id,codigo:codigo,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,centro_costo:centro_costo},
+            data : {_token:_token,id:id,codigo:codigo,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,centro_costo:centro_costo},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -542,7 +599,7 @@ container: '#myModal modal-body'
 											<option value="">--Selecionar--</option>
 												<?php
 												foreach ($region as $row) {?>
-													<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+													<option value="<?php echo $row->id?>" <?php if($row->id=='5')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 												<?php 
 												}
 												?>
@@ -622,10 +679,10 @@ container: '#myModal modal-body'
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Tipo Afectaci&oacute;n</label>
-										<select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onChange="">
+										<select name="id_tipo_afectacion" id="id_tipo_afectacion" class="form-control form-control-sm" onChange="">
 											<option value="">--Selecionar--</option>
 											<?php
-												foreach ($tipo_afectacion as $row) {?>
+												foreach ($id_tipo_afectacion as $row) {?>
 												<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 												<?php
 											}
@@ -645,7 +702,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_concepto()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIdTipoProyectoToProyectos extends Migration
+class AddIdSolicitudToComisionSesionDictamenes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddIdTipoProyectoToProyectos extends Migration
      */
     public function up()
     {
-        Schema::table('proyectos', function (Blueprint $table) {
-            $table->bigInteger('id_tipo_proyecto')->nullable();
+        Schema::table('comision_sesion_dictamenes', function (Blueprint $table) {
+            $table->bigInteger('id_solicitud')->nullable();
+            $table->foreign('id_solicitud')->references('id')->on('solicitudes');
+
+            
         });
     }
 
@@ -25,7 +28,7 @@ class AddIdTipoProyectoToProyectos extends Migration
      */
     public function down()
     {
-        Schema::table('proyectos', function (Blueprint $table) {
+        Schema::table('comision_sesion_dictamenes', function (Blueprint $table) {
             //
         });
     }

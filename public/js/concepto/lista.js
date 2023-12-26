@@ -51,7 +51,7 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#tipo_afectacion').keypress(function(e){
+	$('#id_tipo_afectacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
@@ -501,7 +501,7 @@ function datatablenew(){
 			var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
 			var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2').val();
             var partida_presupuestal = $('#partida_presupuestalBus').val();
-			var tipo_afectacion = $('#tipo_afectacion').val();
+			var id_tipo_afectacion = $('#id_tipo_afectacion').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -510,7 +510,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,denominacion:denominacion,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,estado:estado,
+						id:id,denominacion:denominacion,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {

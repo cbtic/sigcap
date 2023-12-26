@@ -28,7 +28,7 @@ inner join tabla_maestras t7 on t2.id_situacion = t7.codigo::int And t7.tipo ='1
 inner join regiones t8 on t2.id_regional = t8.id
 left join valorizaciones t9 on t1.id=t9.pk_registro and t9.id_modulo='1'
 left join comprobantes t10 on t9.id_comprobante=t10.id
-left join tabla_maestras t11 on t1.id_concurso_puesto = t11.codigo::int And t11.tipo ='94'
+left join tabla_maestras t11 on t1.puesto_postula::int = t11.codigo::int And t11.tipo ='94'
 where t1.id=".$id;
 		//echo $cad;
 		$data = DB::select($cad);

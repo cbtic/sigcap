@@ -266,6 +266,8 @@ Route::post('concurso/listar_concurso_agremiado', [ConcursoController::class, 'l
 
 Route::get('concurso/obtener_concurso_inscripcion/{id}', [ConcursoController::class, 'obtener_concurso_inscripcion'])->name('concurso.obtener_concurso_inscripcion');
 
+Route::get('concurso/obtener_concurso_vigente_pendiente/{id}', [ConcursoController::class, 'obtener_concurso_vigente_pendiente'])->name('concurso.obtener_concurso_vigente_pendiente');
+
 Route::get('concurso/modal_concurso_requisito/{id}', [ConcursoController::class, 'modal_concurso_requisito'])->name('concurso.modal_concurso_requisito');
 Route::post('concurso/send_concurso_documento', [ConcursoController::class, 'send_concurso_documento'])->name('concurso.send_concurso_documento');
 
@@ -374,6 +376,8 @@ Route::post('sesion/lista_computo_sesion_ajax', [SesionController::class, 'lista
 Route::post('sesion/lista_computo_cerrado_ajax', [SesionController::class, 'lista_computo_cerrado_ajax'])->name('sesion.lista_computo_cerrado_ajax');
 
 Route::post('sesion/send_computo_sesion', [SesionController::class, 'send_computo_sesion'])->name('sesion.send_computo_sesion');
+
+Route::get('sesion/obtener_dictamen/{id}', [SesionController::class, 'obtener_dictamen'])->name('sesion.obtener_dictamen');
 
 Route::get('persona/editar_persona/{id}', [PersonaController::class, 'editar_persona'])->name('persona.editar_persona');
 Route::post('persona/send_persona_nuevoPersona', [PersonaController::class, 'send_persona_nuevoPersona'])->name('persona.send_persona_nuevoPersona');
