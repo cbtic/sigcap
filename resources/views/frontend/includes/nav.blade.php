@@ -113,13 +113,16 @@
 								@endcan
 								@can('Derecho Revision')
 								<a href="/derecho_revision/consulta_derecho_revision" class="dropdown-item">Derecho Revisi&oacute;n</a>
-								
+								@endcan
+								@can('Registro Revisor Urbano')
 								<a href="/revisorUrbano/consulta_revisorUrbano" class="dropdown-item">Registro Revisor Urbano</a>
-
+								@endcan
+								@can('Calendario de Computo de Sesiones')
 								<a href="/sesion/consulta_calendarioComputo" class="dropdown-item">Calendario de C&oacute;mputo de Sesiones</a>
-								
+								@endcan
+								@can('Computo de Sesiones')
 								<a href="/sesion/consulta_computoSesion" class="dropdown-item">C&oacute;mputo de Sesiones</a>
-
+								@endcan
 						   </div>
 					</li>
 					@endif
@@ -143,17 +146,23 @@
 					</li>
 					@endif
 
+					@if(Gate::check('Fondo Comun Planilla') || Gate::check('Adelantos y Descuentos Delegado') || Gate::check('Planilla Delegados'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Contabilidad</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 						   	@can('Fondo Comun Planilla')
 						   	<a href="/fondoComun/consulta_fondo_comun" class="dropdown-item">Fondo Com&uacute;n Planilla</a>
-							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>	
+							@endcan
+							@can('Adelantos y Descuentos Delegado')
+							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>
+							@endcan
+							@can('Planilla Delegados')
 						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
 							@endcan
 						   </div>
 					</li>
+					@endif
 
 
 					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales'))

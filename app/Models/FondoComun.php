@@ -12,7 +12,7 @@ class FondoComun extends Model
 
     public function listar_fondo_comun_ajax($p){
 
-        return $this->readFuntionPostgres('sp_listar_fondo_comun_paginado',$p);
+        return $this->readFuntionPostgres('sp_listar_delegado_fondo_comun_paginado',$p);
     }
 
     public function readFuntionPostgres($function, $parameters = null){
