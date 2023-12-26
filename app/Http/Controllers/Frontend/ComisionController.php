@@ -274,12 +274,12 @@ class ComisionController extends Controller
         return view('frontend.comision.lista_municipalidad',compact('municipalidad','periodoComision'));
     }
 
-	function obtener_municipalidadesIntegradas($periodo,$tipo_agrupacion){
+	function obtener_municipalidadesIntegradas($periodo,$tipo_agrupacion,$tipo_comision){ 
 
 		if ($tipo_agrupacion == "0")$tipo_agrupacion ="";
 
         $municipalidadIntegrada_model = new MunicipalidadIntegrada;
-		$municipalidad_integradas = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll($periodo,$tipo_agrupacion);
+		$municipalidad_integradas = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll($periodo,$tipo_agrupacion,$tipo_comision);
         return view('frontend.comision.lista_municipalidadIntegrada',compact('municipalidad_integradas'));
     }
 
