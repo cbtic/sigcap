@@ -375,7 +375,7 @@ class SesionController extends Controller
 		//if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
 		
 		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
-		
+
 		return view('frontend.sesion.modal_asignar_delegado_sesion',compact('id','concurso_inscripcion'));
 
     }

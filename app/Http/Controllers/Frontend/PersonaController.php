@@ -498,7 +498,7 @@ class PersonaController extends Controller
 
 	public function send_persona_nuevoPersona(Request $request){
 
-		$request->validate([
+		/*$request->validate([
 			'tipo_documento'=>'required',
 			'numero_documento'=>'required | numeric | digits:8',
 			'ruc'=>'numeric | digits:11',
@@ -513,7 +513,7 @@ class PersonaController extends Controller
 			'correo'=>'required | email',
 			'direccion'=>'required',
 		]
-		);
+		);*/
 
 		$id_user = Auth::user()->id;
 		$sw = true;
@@ -562,11 +562,32 @@ class PersonaController extends Controller
 				$sw = false;
 				$msg = "El DNI ingresado ya existe !!!";
 			}
+		}else {
+			$persona = Persona::find($request->id);
+			$empresa->ruc = $request->ruc;
+			$persona->id_tipo_documento = $request->tipo_documento;
+			$persona->numero_documento = $request->numero_documento;
+			$persona->apellido_paterno = $request->apellido_paterno;
+			$persona->apellido_materno = $request->apellido_materno;
+			$persona->nombres = $request->nombres;
+			$persona->fecha_nacimiento = $request->fecha_nacimiento;
+			$persona->grupo_sanguineo = $request->grupo_sanguineo;
+			$persona->id_ubigeo_nacimiento =150101;
+			$persona->lugar_nacimiento = $request->lugar_nacimiento;
+			$persona->id_nacionalidad = $request->nacionalidad;
+			$persona->numero_ruc = $request->ruc;
+			$persona->id_sexo = $request->sexo;
+			$persona->numero_celular = $request->numero_celular;
+			$persona->correo = $request->correo;
+			$persona->foto = $request->img_foto;
+			$persona->direccion = $request->direccion;
+			$persona->id_usuario_inserta = $id_user;
+			$empresa->save();
 		}
 			//$persona = Persona::find($request->id);
 
 			$array["sw"] = $sw;
-			$array["msg"] = $msg;
+			//$array["msg"] = $msg;
 			echo json_encode($array);
 		
     }

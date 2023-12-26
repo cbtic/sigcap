@@ -409,11 +409,6 @@ function fn_save_empresa(){
 	var email = $('#email').val();
 	var telefono = $('#telefono').val();
 	var representante = $('#representante').val();
-	//var estado = $('#estado').val();
-	
-	//alert(id_agremiado);
-	//return false;
-
 	
     $.ajax({
 			url: "/empresa/send_empresa_nuevoEmpresa",
@@ -424,31 +419,17 @@ function fn_save_empresa(){
     
 				//alert("El RUC ingresado ya existe !!!");
 				if(result.sw==false){
-					Swal.fire({
-					icon: "error",
-					title: "Error",
-					text: "El RUC ingresado ya existe !!!",
-					})
+					Swal.fire("El RUC ingresado ya existe !!!");
+					
 					$('#openOverlayOpc').modal('hide');
-            //window.location.reload();
-
-            //footer: '<a href="#">Why do I have this issue?</a>'
-          /*
-					$('#openOverlayOpc').modal('hide');
-				}else{
+					//window.location.reload();
+           
+            	}else{
 					$('#openOverlayOpc').modal('hide');
 					window.location.reload();
-				}*/
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}*/
-				
-            }}
+				}
+			
+		}
 			
     });
 }

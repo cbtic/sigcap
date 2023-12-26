@@ -514,26 +514,9 @@ $.mask.definitions['p'] = "[Mm]";
 		var correo = $('#correo').val();
 		var direccion = $('#direccion').val();
 		var img_foto = $('#img_foto').val();
-		//var estado = $('#estado').val();
-
-		//alert(id_agremiado);
-		//return false;
-
-		/*if(tipo_documento == "")msg += "Debe ingresar el tipo de documento <br>";
-		if(numero_documento==""){msg+="Debe ingresar el numero de documento <br>";}
-		if(nombre==""){msg+="Debe ingresar un nombre <br>";}
-		if(apellido_paterno==""){msg+="Debe ingresar un apellido paterno <br>";}
-		if(apellido_materno == ""){msg += "Debe ingresar un apellido materno <br>";}
-		if(fecha_nacimiento==""){msg+="Debe ingresar una fecha de nacimiento <br>";}
-		if(lugar_nacimiento==""){msg+="Debe ingresar un lugar de nacimiento <br>";}
-		if(nacionalidad==""){msg+="Debe ingresar una nacionalidad<br>";}
-		if(sexo == ""){msg += "Debe ingresar el sexo <br>";}
-		if(numero_celular==""){msg+="Debe ingresar un numero de celular <br>";}
-		if(correo==""){msg+="Debe ingresar un correo <br>";}
-		if(direccion==""){msg+="Debe ingresar unaa direccion <br>";}*/
-
-		if(msg!=""){
-			bootbox.alert(msg);
+/*
+		if(result.sw==false){
+			bootbox.alert("El DNI ingresado ya existe !!!");
 			return false;
 		}
 		else{
@@ -569,9 +552,38 @@ $.mask.definitions['p'] = "[Mm]";
 				}
             }
 		});
-		}
-
-		
+		}*/
+		$.ajax({
+			url: "/persona/send_persona_nuevoPersona",
+			type: "POST",
+			data: {
+				_token: _token,
+				id: id,
+				tipo_documento: tipo_documento,
+				numero_documento: numero_documento,
+				nombre: nombre,
+				apellido_paterno: apellido_paterno,
+				apellido_materno: apellido_materno,
+				fecha_nacimiento: fecha_nacimiento,
+				grupo_sanguineo: grupo_sanguineo,
+				lugar_nacimiento: lugar_nacimiento,
+				nacionalidad: nacionalidad,
+				sexo: sexo,
+				numero_celular: numero_celular,
+				correo: correo,
+				direccion: direccion,
+				img_foto: img_foto
+			},
+			dataType: 'json',
+			success: function(result) {
+				if(result.sw==false){
+					Swal.fire("El DNI ingresado ya existe !!!");
+					$('#openOverlayOpc').modal('hide');
+				}else{
+					$('#openOverlayOpc').modal('hide');
+					window.location.reload();
+				}
+            }});
 	}
 
 	function fn_liberar(id) {

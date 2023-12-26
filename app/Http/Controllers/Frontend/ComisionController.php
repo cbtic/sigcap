@@ -13,6 +13,7 @@ use App\Models\PeriodoComisione;
 use App\Models\ComisionDelegado;
 use App\Models\Regione;
 use App\Models\ConcursoInscripcione;
+use App\Models\Agremiado;
 use Auth;
 
 class ComisionController extends Controller
@@ -89,15 +90,17 @@ class ComisionController extends Controller
 		$regione_model = new Regione;
 		$comision_model = new Comisione;
 		$comisionDelegado_model = new ComisionDelegado;
-		
+		$agremiado_model = new Agremiado;
+
 		//$comision = $comision_model->getComisionAll("","","1");
 		$comision = $comision_model->getComisionSinDelegadoAll("","","1");
 		if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
 
 		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
 		$region = $regione_model->getRegionAll();
+		$profesion_sesion = $agremiado_model->getAgremiadoAll();
 		
-		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region'));
+		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region','profesion_sesion'));
 
     }
 	

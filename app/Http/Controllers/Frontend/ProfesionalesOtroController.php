@@ -111,13 +111,13 @@ class ProfesionalesOtroController extends Controller
 
     public function send_profesionalesOtro_nuevoProfesionalesOtro(Request $request){
 		
-		$request->validate([
+		/*$request->validate([
 			'tipo_documento'=>'required',
 			'numero_documento'=>'required | numeric | digits:8',
 			'profesion'=>'required',
 			'colegiatura'=>'required',
 		]
-		);
+		);*/
 
 		$id_user = Auth::user()->id;
 
