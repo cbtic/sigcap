@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DeleteIdLiquidacionToSolicitudes extends Migration
+class AddIdSolicitudToComisionSesionDictamenes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class DeleteIdLiquidacionToSolicitudes extends Migration
      */
     public function up()
     {
-        Schema::table('solicitudes', function (Blueprint $table) {
-            $table->dropColumn('id_liquidacion');
+        Schema::table('comision_sesion_dictamenes', function (Blueprint $table) {
+            $table->bigInteger('id_solicitud')->nullable();
+            $table->foreign('id_solicitud')->references('id')->on('solicitudes');
+
+            
         });
     }
 
@@ -25,7 +28,7 @@ class DeleteIdLiquidacionToSolicitudes extends Migration
      */
     public function down()
     {
-        Schema::table('solicitudes', function (Blueprint $table) {
+        Schema::table('comision_sesion_dictamenes', function (Blueprint $table) {
             //
         });
     }

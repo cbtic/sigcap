@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DeleteNombreProyectoToSolicitudes extends Migration
+class DeleteIdComputoSesionToComisionSesionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DeleteNombreProyectoToSolicitudes extends Migration
      */
     public function up()
     {
-        Schema::table('solicitudes', function (Blueprint $table) {
-            $table->dropColumn('nombre_proyecto');
+        Schema::table('comision_sesiones', function (Blueprint $table) {
+            $table->dropColumn('id_computo_sesion');
         });
     }
 
@@ -25,7 +25,7 @@ class DeleteNombreProyectoToSolicitudes extends Migration
      */
     public function down()
     {
-        Schema::table('solicitudes', function (Blueprint $table) {
+        Schema::table('comision_sesiones', function (Blueprint $table) {
             //
         });
     }

@@ -90,12 +90,14 @@ class ConcursoController extends Controller
 		
 		$id_persona = Auth::user()->id_persona;
 		//echo $id_user;
-		$concurso = $concurso_model->getConcursoVigente();
+		//$concurso = $concurso_model->getConcursoVigente();
 		$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
+		$concurso = $concurso_model->getConcursoVigentePendienteByAgremiado($agremiado->id);
+		$documento_pendiente = $concurso_model->getInscripcionDocumentoPendienteByAgremiado($agremiado->id);
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente'));
+        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente','documento_pendiente'));
     }
 	
 	
@@ -227,6 +229,15 @@ class ConcursoController extends Controller
 		$puesto = $concurso_model->getPuestoByIdConcurso($id_concurso);
 		 
 		echo json_encode($puesto);
+	
+	}
+	
+	public function obtener_concurso_vigente_pendiente($id_agremiado){
+	
+		$concurso_model = new Concurso;
+		$concurso = $concurso_model->getConcursoVigentePendienteByAgremiado($id_agremiado);
+		 
+		echo json_encode($concurso);
 	
 	}
 	
@@ -640,11 +651,22 @@ class ConcursoController extends Controller
     }
 	
 	public function upload_documento(Request $request){
-
-    	$filepath = public_path('img/frontend/tmp_documento/');
-		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
-		echo $_FILES['file']['name'];
+		
+		$filename = date("YmdHis") . substr((string)microtime(), 1, 6);
+		$type="";
+		$filepath = public_path('img/frontend/tmp_documento/');
+		
+		$type=$this->extension($_FILES["file"]["name"]);
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath . $filename.".".$type);
+		
+    	
+		//move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		//echo $_FILES['file']['name'];
+		
+		echo $filename.".".$type;
 	}
+	
+	function extension($filename){$file = explode(".",$filename); return strtolower(end($file));}
 	
 	public function eliminar_concurso($id,$estado)
     {

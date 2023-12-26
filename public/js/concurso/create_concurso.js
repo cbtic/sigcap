@@ -1742,12 +1742,21 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
+					var sub_tipo_concurso = "";
+					if(row.sub_tipo_concurso!= null)sub_tipo_concurso = row.sub_tipo_concurso;
+					return sub_tipo_concurso;
+                },
+                "bSortable": false,
+                "aTargets": [3],
+                },
+				{
+                "mRender": function (data, type, row) {
 					var puesto = "";
 					if(row.puesto!= null)puesto = row.puesto;
 					return puesto;
                 },
                 "bSortable": false,
-                "aTargets": [3],
+                "aTargets": [4],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1756,7 +1765,7 @@ function datatablenew(){
 					return fecha_inscripcion;
                 },
                 "bSortable": false,
-                "aTargets": [4],
+                "aTargets": [5],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1765,7 +1774,7 @@ function datatablenew(){
 					return pago;
                 },
                 "bSortable": false,
-                "aTargets": [5]
+                "aTargets": [6]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1774,7 +1783,7 @@ function datatablenew(){
 					return numero_cap;
                 },
                 "bSortable": false,
-                "aTargets": [6]
+                "aTargets": [7]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1783,7 +1792,7 @@ function datatablenew(){
 					return numero_documento;
                 },
                 "bSortable": false,
-                "aTargets": [7]
+                "aTargets": [8]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1792,7 +1801,7 @@ function datatablenew(){
 					return apellido_paterno;
                 },
                 "bSortable": false,
-                "aTargets": [8]
+                "aTargets": [9]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1801,7 +1810,7 @@ function datatablenew(){
 					return situacion;
                 },
                 "bSortable": false,
-                "aTargets": [9]
+                "aTargets": [10]
                 },
 				
 				{
@@ -1811,7 +1820,7 @@ function datatablenew(){
 					return puntaje;
                 },
                 "bSortable": false,
-                "aTargets": [10]
+                "aTargets": [11]
                 },
 				
 				{
@@ -1821,7 +1830,7 @@ function datatablenew(){
 					return estado;
                 },
                 "bSortable": false,
-                "aTargets": [11]
+                "aTargets": [12]
                 },
 				{
 					"mRender": function (data, type, row) {
@@ -1837,7 +1846,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [12],
+					"aTargets": [13],
 				},
 				
 				
