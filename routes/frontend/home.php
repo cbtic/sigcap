@@ -457,3 +457,5 @@ Route::get('adelanto/eliminar_adelanto/{id}/{estado}', [AdelantoController::clas
 
 Route::get('comision/eliminar_muniIntegrada/{id}/{estado}', [ComisionController::class, 'eliminar_muniIntegrada'])->name('comision.eliminar_muniIntegrada');
 Route::get('comision/eliminarComision/{id}/{estado}', [ComisionController::class, 'eliminarComision'])->name('comision.eliminarComision');
+
+Route::get('afiliacion_seguro/eliminar_afiliacion_seguro/{id}/{estado}', [AfiliacionSeguroController::class, 'eliminar_afiliacion_seguro'])->name('afiliacion_seguro.eliminar_afiliacion_seguro');

@@ -289,14 +289,14 @@ $.mask.definitions['p'] = "[Mm]";
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<div class="form-group">
 												<label class="control-label">Fecha</label>
-												<input id="fecha_" name="fecha_" class="form-control form-control-sm" value="<?php echo $afiliado->fecha ?>" type="date">
+												<input id="fecha_" name="fecha_" class="form-control form-control-sm" value="<?php if($id==0)echo date('Y-m-d'); else echo $afiliado->fecha ?>" type="date">
 											</div>
 										</div>
 
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Seguro</label>
-
-											<select name="id_seguro" id="id_seguro" class="form-control form-control-sm" onChange="obtenerPlan()">
+												
+											<select name="id_seguro" id="id_seguro" class="form-control form-control-sm" onchange="obtenerPlan()">
 												<option value="">--Selecionar--</option>
 												<?php
 												foreach ($seguro as $row) { ?>

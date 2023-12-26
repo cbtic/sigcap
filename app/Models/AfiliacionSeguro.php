@@ -8,6 +8,7 @@ use DB;
 
 class AfiliacionSeguro extends Model
 {
+    protected $table = 'seguro_afiliados';
    
     public function listar_afiliacion_seguro($p){
 
