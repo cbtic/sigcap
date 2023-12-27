@@ -86,4 +86,17 @@ class FondoComunController extends Controller
 		echo json_encode($result);
 	
 	}
+	
+	public function calcula_fondo_comun(Request $request){
+	
+		$fondo_comun_model = new FondoComun;
+
+		$data = $fondo_comun_model->listar_fondo_comun_ajax();
+
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
+	}
+	
 }
