@@ -473,7 +473,7 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-12">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
 								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
@@ -487,7 +487,37 @@ container: '#myModal modal-body'
 								</select>
 							</div>
 						</div>
-						
+					
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Periodo</label>
+								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComisionPeridoTipoComision()">
+									<!--<option value="">--Seleccionar--</option>-->
+									<?php
+									foreach ($periodo as $row) {?>
+									<option value="<?php echo $row->id?>" <?php //if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+					
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Tipo Comisi&oacute;n</label>
+								<select name="id_tipo_comision" id="id_tipo_comision" class="form-control form-control-sm" onChange="obtenerComisionPeridoTipoComision()">
+									<option value="">--Seleccionar--</option>
+									<?php
+									foreach ($tipo_comision as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php //if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php 
+									}
+									?>
+								</select>
+							</div>
+						</div>
+					
 					</div>
 					
 					<div class="row" style="padding-left:10px">
@@ -498,16 +528,17 @@ container: '#myModal modal-body'
 								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar--</option>
 									<?php
-									foreach ($comision as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->comision." ".$row->denominacion?></option>
+									//foreach ($comision as $row) {?>
+									<!--<option value="<?php //echo $row->id?>"><?php //echo $row->comision." ".$row->denominacion?></option>-->
 									<?php 
-									}
+									//}
 									?>
 								</select>
 							</div>
 						</div>
 						
 					</div>
+					
 					
 					<div class="row" style="padding-left:10px">
 						

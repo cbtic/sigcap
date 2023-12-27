@@ -148,7 +148,7 @@
                                             <div style="float:left;padding-top:7px">Periodo</div>
                                                 <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
                                                 <select name="periodo" id="periodo" class="form-control" onChange="obtenerPeriodo()" >
-                                                    <option value="">--Selecionar--</option>
+                                                    <!--<option value="">--Selecionar--</option>-->
                                                         <?php
                                                         foreach ($periodoComision as $row) {?>
                                                             <option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
@@ -163,7 +163,7 @@
                                         <div class="form-group">
                                             <div style="float:left;padding-top:7px">Tipo Comisi&oacute;n</div>
                                                 <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
-                                                <select name="tipo_comision" id="tipo_comision" class="form-control" onchange="obtenerTipoComision()">
+                                                <select name="tipo_comision" id="tipo_comision" class="form-control" onchange="obtenerTipoComision();obtenerPeriodo();">
                                                     <option value="">--Selecionar--</option>
                                                         <?php
                                                         foreach ($tipo_comision as $row) {?>

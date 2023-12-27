@@ -791,3 +791,24 @@ function obtenerComision(){
 	
 }
 
+function obtenerComisionPeridoTipoComision(){
+	
+	var id_periodo = $('#id_periodo').val();
+	var id_tipo_comision = $('#id_tipo_comision').val();
+	
+	$.ajax({
+		url: '/comision/obtener_comision_periodo_tipo_comision/'+id_periodo+'/'+id_tipo_comision,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_comision').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+			});
+			$('#id_comision').html(option);
+		}
+		
+	});
+	
+}
