@@ -91,6 +91,7 @@ class ComisionController extends Controller
 		$comision_model = new Comisione;
 		$comisionDelegado_model = new ComisionDelegado;
 		$agremiado_model = new Agremiado;
+		$tablaMaestra_model = new TablaMaestra;
 
 		//$comision = $comision_model->getComisionAll("","","1");
 		$comision = $comision_model->getComisionSinDelegadoAll("","","1");
@@ -99,6 +100,7 @@ class ComisionController extends Controller
 		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
 		$region = $regione_model->getRegionAll();
 		$profesion_sesion = $agremiado_model->getAgremiadoAll();
+
 		
 		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region','profesion_sesion'));
 

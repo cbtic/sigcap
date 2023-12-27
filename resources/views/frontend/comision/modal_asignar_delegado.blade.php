@@ -473,7 +473,7 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-4">
+						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
 								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
@@ -481,35 +481,6 @@ container: '#myModal modal-body'
 									<?php
 									foreach ($region as $row) {?>
 									<option value="<?php echo $row->id?>" <?php if($row->id==5)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Zona</label>
-								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($region as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==5)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php 
-									}
-									?>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Agremiado</label>
-								<select name="id_profesion_otro" id="id_profesion_otro" class="form-control form-control-sm" onChange="">
-									<option value="">--Seleccionar--</option>
-									<?php
-									foreach ($profesion_sesion as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></option>
 									<?php 
 									}
 									?>
