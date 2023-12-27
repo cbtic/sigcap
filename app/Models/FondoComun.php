@@ -15,6 +15,11 @@ class FondoComun extends Model
         return $this->readFuntionPostgres('sp_listar_delegado_fondo_comun_paginado',$p);
     }
 
+    public function calcula_fondo_comun(){
+
+        return $this->readFuntionPostgres('sp_calcula_del_fondo_comun');
+    }
+
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';
