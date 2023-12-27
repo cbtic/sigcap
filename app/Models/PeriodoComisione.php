@@ -25,6 +25,17 @@ class PeriodoComisione extends Model
         return $data;
 		
 	}
+	
+	public function getPeriodoVigenteAll(){
+		
+		$cad = "select pc.id,pc.descripcion 
+		from periodo_comisiones pc where pc.estado='1'
+		and now() between (to_char(pc.fecha_inicio,'dd-mm-yyyy')||' 00:00')::timestamp  and (to_char(pc.fecha_fin,'dd-mm-yyyy')||' 23:59')::timestamp";
+
+		$data = DB::select($cad);
+        return $data;
+		
+	}
 
     public function readFuntionPostgres($function, $parameters = null){
 

@@ -148,7 +148,7 @@
                                             <div style="float:left;padding-top:7px">Periodo</div>
                                                 <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
                                                 <select name="periodo" id="periodo" class="form-control" onChange="obtenerPeriodo()" >
-                                                    <option value="">--Selecionar--</option>
+                                                    <!--<option value="">--Selecionar--</option>-->
                                                         <?php
                                                         foreach ($periodoComision as $row) {?>
                                                             <option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
