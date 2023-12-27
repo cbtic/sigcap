@@ -651,11 +651,22 @@ class ConcursoController extends Controller
     }
 	
 	public function upload_documento(Request $request){
-
-    	$filepath = public_path('img/frontend/tmp_documento/');
-		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
-		echo $_FILES['file']['name'];
+		
+		$filename = date("YmdHis") . substr((string)microtime(), 1, 6);
+		$type="";
+		$filepath = public_path('img/frontend/tmp_documento/');
+		
+		$type=$this->extension($_FILES["file"]["name"]);
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath . $filename.".".$type);
+		
+    	
+		//move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		//echo $_FILES['file']['name'];
+		
+		echo $filename.".".$type;
 	}
+	
+	function extension($filename){$file = explode(".",$filename); return strtolower(end($file));}
 	
 	public function eliminar_concurso($id,$estado)
     {

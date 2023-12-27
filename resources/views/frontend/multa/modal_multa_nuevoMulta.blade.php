@@ -617,14 +617,14 @@ container: '#myModal modal-body'
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Moneda</label>
-								<input id="moneda" name="moneda" class="form-control form-control-sm" readonly="readonly"  value="" type="text" >
+								<input id="moneda" name="moneda" class="form-control form-control-sm" readonly="readonly" value="<?php if($moneda_1)echo $moneda_1->denominacion?>" type="text" >
 							</div>
 						</div>
 						
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Importe</label>
-								<input id="monto" name="monto" class="form-control form-control-sm" readonly="readonly"  value="" type="text" >																				
+								<input id="monto" name="monto" class="form-control form-control-sm" readonly="readonly" value="<?php if($multa_1)echo $multa_1->monto?>" type="text" >																				
 							</div>
 						</div>
 					</div>

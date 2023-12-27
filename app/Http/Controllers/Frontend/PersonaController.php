@@ -509,7 +509,7 @@ class PersonaController extends Controller
 			'lugar_nacimiento'=>'required',
 			'nacionalidad'=>'required',
 			'sexo'=>'required',
-			'numero_celular'=>'required | numeric | digits:9',
+			//'numero_celular'=>'required | numeric | digits:9',
 			'correo'=>'required | email',
 			'direccion'=>'required',
 		]

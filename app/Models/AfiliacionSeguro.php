@@ -8,7 +8,8 @@ use DB;
 
 class AfiliacionSeguro extends Model
 {
-   
+    protected $table = 'seguro_afiliados';
+    
     public function listar_afiliacion_seguro($p){
 
         return $this->readFuntionPostgres('sp_listar_afiliado_seguro_paginado',$p);

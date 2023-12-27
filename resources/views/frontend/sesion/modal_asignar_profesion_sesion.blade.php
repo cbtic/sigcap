@@ -453,7 +453,7 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Otra Profesi&oacute;n</label>
+								<label class="control-label form-control-sm">Agremiado</label>
 								<select name="id_profesion_otro" id="id_profesion_otro" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar--</option>
 									<?php

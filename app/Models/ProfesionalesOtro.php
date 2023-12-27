@@ -21,9 +21,9 @@ class ProfesionalesOtro extends Model
 		
 		$cad = "select po.id,p2.numero_documento,p2.apellido_paterno,p2.apellido_materno,p2.nombres,
 		p.nombre profesion 
-from profesion_otros po 
-inner join profesiones p on po.id_profesion=p.id 
-inner join personas p2 on po.id_persona=p2.id";
+        from profesion_otros po 
+        inner join profesiones p on po.id_profesion=p.id 
+        inner join personas p2 on po.id_persona=p2.id";
 
 		
 		$data = DB::select($cad);

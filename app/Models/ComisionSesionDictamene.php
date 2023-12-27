@@ -13,7 +13,7 @@ class ComisionSesionDictamene extends Model
 	function getComisionSesionDictameneByIdComisionSesion($id){
 
         //$cad = "select * from comision_sesion_dictamenes csd where id_comision_sesion=".$id." and estado='1'";
-		
+		/*
 		$cad = "select p.codigo,tm.denominacion tipo_proyecto,s2.numero_revision,l.credipago,p.nombre,p.direccion,csd.id_dictamen
 from comision_sesion_dictamenes csd 
 inner join comision_sesiones cs on csd.id_comision_sesion=cs.id 
@@ -23,6 +23,15 @@ inner join proyectos p on p.id=s2.id_proyecto
 left join tabla_maestras tm on s2.id_tipo_solicitud=tm.codigo::int and tm.tipo='24'
 inner join liquidaciones l on l.id_solicitud =s2.id  
 where id_comision_sesion=".$id." and csd.estado='1'";
+		*/
+		$cad = "select  cs.id,p.codigo ,tm.denominacion as tipo_sol ,s2.numero_revision ,l.credipago ,p.nombre ,p.direccion ,tm2.denominacion as dictamen 
+from comision_sesion_dictamenes csd inner join comision_sesiones cs on csd.id_comision_sesion =cs.id 									
+inner join solicitudes s2 on s2.id =csd.id_solicitud  
+inner join proyectos p on p.id=s2.id_proyecto  
+inner join liquidaciones l on l.id_solicitud =s2.id 
+inner join tabla_maestras tm on s2.id_tipo_tramite  =tm.codigo::int and tm.tipo='25'
+inner join tabla_maestras tm2 on csd.id_dictamen  =tm2.codigo::int and tm2.tipo='114'
+where cs.id = ".$id;
 		
 		//echo $cad;
 		$data = DB::select($cad);

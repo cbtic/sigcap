@@ -1,95 +1,80 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_programacion_sesion_paginado(
-p_id_regional character varying, 
-p_id_periodo_comisiones character varying, 
-p_id_comision character varying,
-p_fecha_programado_desde character varying,
-p_fecha_programado_hasta character varying,
-p_id_tipo_sesion character varying, 
-p_id_tipo_agrupacion character varying, 
-p_id_estado_sesion character varying,
-p_id_estado_aprobacion character varying,
-p_pagina character varying, 
-p_limit character varying, 
-p_ref refcursor
-)
+CREATE OR REPLACE FUNCTION public.sp_listar_delegado_fondo_comun_paginado(
+p_anio character varying, 
+p_mes character varying, 
+p_municipalidad character varying, 
+p_comision character varying, 
+p_credipado character varying, 
+p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
 
 Declare
 --v_id numeric;
---v_numinf character varying;
 v_scad varchar;
 v_campos varchar;
 v_tabla varchar;
 v_where varchar;
 v_count varchar;
 v_col_count varchar;
---v_perfil varchar;
-
-begin
+Begin
+/*
+	select t3.denominacion,t1.importe_bruto, t1.importe_igv, t1.importe_comision_cap, t1.importe_fondo_asistencia, t1.saldo,
+	EXTRACT(YEAR FROM t4.fecha) anio,
+	EXTRACT(MONTH FROM t4.fecha) mes
+	select t2.*	
+	from delegado_fondo_comuns t1
+	inner join delegado_fondo_comun_detalles t2 on t2.id_delegado_fondo_comun = t1.id 
+	inner join municipalidades t3 on t3.id = t2.id_municipalidad 
+	inner join periodo_delegado_detalles t4 on t4.id_periodo_delegado = t1.id_periodo_delegado and t4.id = t1.id_periodo_delegado_detalle 
+	where EXTRACT(YEAR FROM t4.fecha) = '2023'
+	*/
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' t1.id,to_char(t1.fecha_programado,''dd-mm-yyyy'')fecha_programado,to_char(t1.fecha_ejecucion,''dd-mm-yyyy'')fecha_ejecucion,
-t1.hora_inicio,t1.hora_fin,t2.denominacion tipo_sesion,t3.denominacion estado_sesion,t7.denominacion estado_aprobacion,
-t4.comision||'' ''||t4.denominacion comision,t5.descripcion periodo,t6.denominacion region ';
+	v_campos=' t3.denominacion,t1.importe_bruto, t1.importe_igv, t1.importe_comision_cap, t1.importe_fondo_asistencia, t1.saldo';
 
-	v_tabla=' from comision_sesiones t1 
-inner join tabla_maestras t2 on t1.id_tipo_sesion::int = t2.codigo::int And t2.tipo =''71''
-inner join tabla_maestras t3 on t1.id_estado_sesion::int = t3.codigo::int And t3.tipo =''56''
-left join tabla_maestras t7 on t1.id_estado_aprobacion::int = t7.codigo::int And t7.tipo =''109'' 
-inner join comisiones t4 on t1.id_comision=t4.id
-inner join periodo_comisiones t5 on t1.id_periodo_comisione=t5.id
-inner join regiones t6 on t1.id_regional=t6.id ';
+	v_tabla=' from delegado_fondo_comuns t1
+	inner join delegado_fondo_comun_detalles t2 on t2.id_delegado_fondo_comun = t1.id 
+	inner join municipalidades t3 on t3.id = t2.id_municipalidad 
+	inner join periodo_delegado_detalles t4 on t4.id_periodo_delegado = t1.id_periodo_delegado and t4.id = t1.id_periodo_delegado_detalle ';
 	
 	v_where = ' Where 1=1  ';
-	
-	/*
-	If p_denominacion<>'' Then
-	 v_where:=v_where||'And s.nombre ilike ''%'||p_denominacion||'%'' ';
-	End If;
-	*/
 
-	If p_id_regional<>'' Then
-	 v_where:=v_where||'And t1.id_regional = '''||p_id_regional||''' ';
+	If p_anio<>'' Then
+	 v_where:=v_where||'And EXTRACT(YEAR FROM t4.fecha) ilike ''%'||p_anio||'%'' ';
 	End If;
 
-	If p_id_periodo_comisiones<>'' Then
-	 v_where:=v_where||'And t1.id_periodo_comisione = '''||p_id_periodo_comisiones||''' ';
+	If p_mes<>'' Then
+	 v_where:=v_where||'And EXTRACT(MONTH FROM t4.fecha) ilike ''%'||p_mes||'%'' ';
 	End If;
 
-	If p_id_comision<>'' Then
-	 v_where:=v_where||'And t1.id_comision = '''||p_id_comision||''' ';
-	End If;
-	
-	If p_id_tipo_sesion<>'' Then
-	 v_where:=v_where||'And t1.id_tipo_sesion::int = '''||p_id_tipo_sesion||''' ';
-	End If;
-	
-	If p_id_estado_sesion<>'' Then
-	 v_where:=v_where||'And t1.id_estado_sesion::int = '''||p_id_estado_sesion||''' ';
+	If p_municipalidad<>'' Then
+	 v_where:=v_where||'And t2.id_municipalidad ilike ''%'||p_municipalidad||'%'' ';
 	End If;
 
-	If p_id_estado_aprobacion<>'' Then
-	 v_where:=v_where||'And t1.id_estado_aprobacion::int = '''||p_id_estado_aprobacion||''' ';
-	End If;
-
-	If p_fecha_programado_desde<>'' Then
-	 v_where:=v_where||'And t1.fecha_programado >= '''||p_fecha_programado_desde||' :00:00'' ';
-	End If;
-	If p_fecha_programado_hasta<>'' Then
-	 v_where:=v_where||'And t1.fecha_programado <= '''||p_fecha_programado_hasta||' :23:59'' ';
+	If p_comision<>'' Then
+	 v_where:=v_where||'And t2.id_municipalidad ilike ''%'||p_comision||'%'' ';
 	End If;
 
 
+	If p_credipado<>'' Then
+	 v_where:=v_where||'And t2.credipago ilike ''%'||p_credipado||'%'' ';
+	End If;
+
+
+/*
+	If p_estado<>'' Then
+	 v_where:=v_where||'And c.estado = '''||p_estado||''' ';
+	End If;
+*/
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By t1.fecha_programado asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By t3.denominacion  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By t1.fecha_programado asc ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By t3.denominacion ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;
@@ -99,4 +84,3 @@ End
 
 $function$
 ;
-
