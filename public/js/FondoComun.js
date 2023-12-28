@@ -435,6 +435,7 @@ function datatablenew() {
 		"language": { "url": "/js/Spanish.json" },
 		"autoWidth": false,
 		"bLengthChange": true,
+		"pageLength": 60000,
 		"destroy": true,
 		"lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
 		"aoColumns": [
