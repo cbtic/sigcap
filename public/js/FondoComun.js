@@ -645,15 +645,70 @@ function fn_eliminar_persona(id,estado){
     });
 }
 
-function fn_calcular(id,estado){
-	
+function fn_calcular(){
+	//var anio = $('#anio').val();
+	//var mes = $('#mes').val();
+	var p = {};
+	p.anio =  $('#anio').val();
+	p.mes = $('#mes').val();
+
+	//alert(mes);
     $.ajax({
             url: "/fondoComun/calcula_fondo_comun",
             type: "GET",
+			data: p,
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
 				datatablenew();
             }
     });
+}
+
+function validarComprobanteSunat() {
+	var ruc = $('#txtNroRUCComp').val();
+	var p = {};
+	p.txtNroRUCComp = $("#txtNroRUCComp").val();
+	p.cboTipoComprobante = $("#cboTipoComprobante").val();
+	p.txtSerie = $("#txtSerie").val();
+	p.txtNroComprobante = $("#txtNroComprobante").val();
+	p.txtFechaComprobante = $("#txtFechaComprobante").val();
+	p.txtImporteSunat = $("#txtImporteSunat").val();
+
+
+	$.ajax({
+		url: "/validar_comprobante_sunat",
+		type: "GET",
+		data: p, //$("#frmSolicitud").serialize(),
+		success: function (result) {
+			//alert(result);
+			var jsondata = JSON.parse(result);
+			$('#txtValidaSunat').val(jsondata.msg);
+			//alert(jsondata.estadoCp);
+			$("#flagValidaSunat").val(jsondata.estadoCp);
+			//$('.loader').hide();
+			
+			var newRow="";
+
+			if(jsondata.estadoCp==1){
+				newRow+='<div class="alert_ alert-success_">';
+				newRow+='<i class="fa fa-check" aria-hidden="true"></i> ';
+				newRow+='Comprobante validado correctamente por SUNAT !!!';
+				newRow+='</div>';
+				$("#divMensajeSunat").show();
+
+			}else{
+				newRow+='<div class="alert_ alert-warning_">';
+				newRow+='<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>' ;
+				newRow+='Comprobante no validado  por SUNAT !!!';
+				newRow+='</div>';
+				$("#divMensajeSunat").show();
+			}
+
+			$("#divMensajeSunat").html(newRow);
+
+		}
+	});
+
+
 }
 
