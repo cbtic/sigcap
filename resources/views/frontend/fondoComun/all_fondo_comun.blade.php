@@ -209,6 +209,7 @@
 
 									</div>
 								</div>
+								<!--
 								<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 									<div class="table-responsive">
 										<table id="tblAfiliado1" class="table table-hover table-sm">
@@ -227,6 +228,7 @@
 										</table>
 									</div>
 								</div>
+												-->
 
 							</div>
 
