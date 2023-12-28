@@ -88,10 +88,12 @@ class FondoComunController extends Controller
 	}
 	
 	public function calcula_fondo_comun(Request $request){
-	
-		$fondo_comun_model = new FondoComun;
+		//exit("hola");
+		$anio =$request->anio;
+		$mes =$request->mes;
 
-		$data = $fondo_comun_model->listar_fondo_comun_ajax();
+		$fondo_comun_model = new FondoComun;
+		$data = $fondo_comun_model->calcula_fondo_comun($anio, $mes);
 
 		$result["aaData"] = $data;
 
