@@ -89,17 +89,31 @@ class ComisionController extends Controller
 		$regione_model = new Regione;
 		$comision_model = new Comisione;
 		$comisionDelegado_model = new ComisionDelegado;
+		$periodoComisione_model = new PeriodoComisione;
+		$tablaMaestra_model = new TablaMaestra;
 		
 		//$comision = $comision_model->getComisionAll("","","1");
-		$comision = $comision_model->getComisionSinDelegadoAll("","","1");
+		
+		//$comision = $comision_model->getComisionSinDelegadoAll("","","1");
 		if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
 
 		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
 		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region'));
+		$periodo = $periodoComisione_model->getPeriodoVigenteAll();
+		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
+		
+		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado',/*'comision',*/'concurso_inscripcion','region','periodo','tipo_comision'));
 
     }
+	
+	public function obtener_comision_periodo_tipo_comision($id_periodo,$id_tipo_comision){
+			
+		$comision_model = new Comisione;
+		$comision = $comision_model->getComisionByPeriodoAndTipComision($id_periodo,$id_tipo_comision);
+		echo json_encode($comision);
+		
+	}
 	
 	public function modal_asignar_delegado_comision($id){
 		
@@ -110,12 +124,25 @@ class ComisionController extends Controller
 		$comisionDelegado_model = new ComisionDelegado;
 		
 		$comision = $comision_model->getComisionAll("","","1");
-		if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
+		
+		if($id>0){
+			$comision_=Comisione::find($id);
+			//$comisionDelegado = ComisionDelegado::find($id);
+			$periodo = PeriodoComisione::find($comision_->id_periodo_comisiones);
+			$tipo_comision = TablaMaestra::find($comision_->id_tipo_comision);
+			$comisionDelegado = ComisionDelegado::where("id_comision",$id)->where("estado","1")->get();
+			//$comisionDelegado = null;
+		}else{ 
+			$comisionDelegado = new ComisionDelegado;
+			$periodo = NULL;
+			$tipo_comision = NULL;
+			//$comisionDelegado = NULL;
+		}
 
 		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
 		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.comision.modal_asignar_delegado_comision',compact('id','comisionDelegado','comision','concurso_inscripcion','region'));
+		return view('frontend.comision.modal_asignar_delegado_comision',compact('id','comisionDelegado','comision','concurso_inscripcion','region','periodo','tipo_comision'/*,'comisionDelegado'*/));
 
     }
 	
@@ -274,12 +301,12 @@ class ComisionController extends Controller
         return view('frontend.comision.lista_municipalidad',compact('municipalidad','periodoComision'));
     }
 
-	function obtener_municipalidadesIntegradas($periodo,$tipo_agrupacion){
+	function obtener_municipalidadesIntegradas($periodo,$tipo_agrupacion,$tipo_comision){ 
 
 		if ($tipo_agrupacion == "0")$tipo_agrupacion ="";
 
         $municipalidadIntegrada_model = new MunicipalidadIntegrada;
-		$municipalidad_integradas = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll($periodo,$tipo_agrupacion);
+		$municipalidad_integradas = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll($periodo,$tipo_agrupacion,$tipo_comision);
         return view('frontend.comision.lista_municipalidadIntegrada',compact('municipalidad_integradas'));
     }
 
