@@ -12,7 +12,22 @@ class FondoComun extends Model
 
     public function listar_fondo_comun_ajax($p){
 
-        return $this->readFuntionPostgres('sp_listar_fondo_comun_paginado',$p);
+        return $this->readFuntionPostgres('sp_listar_delegado_fondo_comun_paginado',$p);
+    }
+
+    public function calcula_fondo_comun1($p){
+
+        return $this->readFuntionPostgres('sp_calcula_del_fondo_comun',$p);
+    }
+
+
+
+    public function calcula_fondo_comun($anio, $mes) {
+
+        $cad = "Select sp_calcula_del_fondo_comun(?,?)";
+     
+		$data = DB::select($cad, array($anio, $mes));
+        return $data[0]->sp_calcula_del_fondo_comun;
     }
 
     public function readFuntionPostgres($function, $parameters = null){

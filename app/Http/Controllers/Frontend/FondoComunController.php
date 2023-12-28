@@ -8,6 +8,7 @@ use App\Models\FondoComun;
 use App\Models\PeriodoComisione;
 use App\Models\ComisionDelegado;
 use App\Models\Comisione;
+use App\Models\TablaMaestra;
 use Auth;
 
 class FondoComunController extends Controller
@@ -31,12 +32,22 @@ class FondoComunController extends Controller
         //$municipalidad = $municipalidad_model -> getMunicipalidadAll();
 
 		$anio = range(date('Y'), date('Y') - 20); 
+		/*
 		$mes = [
             '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
             '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
             '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
             '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
         ];
+		*/
+
+		$tablaMaestra_model = new TablaMaestra;
+
+		$mes = $tablaMaestra_model->getMaestroByTipo(116);
+
+		$mes_actual = date("m");
+
+
 		$comisionDelegado_model = new ComisionDelegado;
 		
 		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
@@ -47,16 +58,20 @@ class FondoComunController extends Controller
 		
 		$periodo = $periodoComisione_model->getPeriodoAll();
 
-        return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','comision','concurso_inscripcion'));
+        return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion'));
     }
 
     public function listar_fondo_comun_ajax(Request $request){
 	
 		$fondo_comun_model = new FondoComun;
-		$p[]=$request->nombre;
-		$p[]=$request->estado;
+		$p[]=$request->anio;
+		$p[]=$request->mes;
+		$p[]=$request->idMunicipalidad;
+		$p[]=$request->idComision;
+		$p[]=$request->credipago;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
+
 		$data = $fondo_comun_model->listar_fondo_comun_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
@@ -71,4 +86,19 @@ class FondoComunController extends Controller
 		echo json_encode($result);
 	
 	}
+	
+	public function calcula_fondo_comun(Request $request){
+		//exit("hola");
+		$anio =$request->anio;
+		$mes =$request->mes;
+
+		$fondo_comun_model = new FondoComun;
+		$data = $fondo_comun_model->calcula_fondo_comun($anio, $mes);
+
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
+	}
+	
 }
