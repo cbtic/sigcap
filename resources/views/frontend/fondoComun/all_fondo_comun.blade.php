@@ -155,7 +155,7 @@
 									<div class="row" style="padding:20px 20px 0px 20px;">
 
 
-										<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+										<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 											<select name="anio" id="anio" class="form-control form-control-sm">
 												@foreach ($anio as $anio)
 												<option value="{{ $anio }}">{{ $anio }}</option>
@@ -163,7 +163,7 @@
 											</select>
 										</div>
 
-										<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+										<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 											
 
 											<select name="mes" id="mes" class="form-control form-control-sm">
@@ -180,15 +180,20 @@
 											<select name="id_municipalidad" id="id_municipalidad" class="form-control form-control-sm">
 												<option value="">--Seleccionar Municipalidad--</option>
 												<?php
-												/*foreach ($municipalidad as $row) {*/ ?>
-												<!--<option value="<?php /*echo $row->id*/ ?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><?php /*echo $row->denominacion*/ ?></option>-->
+												foreach ($municipalidad as $row) { ?>
+												<option value="<?php echo $row->id ?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><?php echo $row->denominacion ?></option>
 												<?php
-												/*}*/
+												}
 												?>
 											</select>
 										</div>
+										<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+											<input class="form-control form-control-sm" id="credipago" name="credipago" placeholder="Credipago">
+										</div>
 									</div>
+									
 									<div class="row" style="padding:20px 20px 0px 20px;">
+									<!--
 										<div class="col-lg-6">
 											<div class="form-group">
 												<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
@@ -202,14 +207,13 @@
 												</select>
 											</div>
 										</div>
+												-->
 
-										<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-											<input class="form-control form-control-sm" id="credipago" name="credipago" placeholder="Credipago">
-										</div>
 
 									</div>
+
 								</div>
-								<!--
+								
 								<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 									<div class="table-responsive">
 										<table id="tblAfiliado1" class="table table-hover table-sm">
@@ -228,7 +232,7 @@
 										</table>
 									</div>
 								</div>
-												-->
+												
 
 							</div>
 

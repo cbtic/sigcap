@@ -9,6 +9,7 @@ use App\Models\PeriodoComisione;
 use App\Models\ComisionDelegado;
 use App\Models\Comisione;
 use App\Models\TablaMaestra;
+use App\Models\Municipalidade;
 use Auth;
 
 class FondoComunController extends Controller
@@ -27,9 +28,9 @@ class FondoComunController extends Controller
 
         $periodoComisione_model = new PeriodoComisione;
 
-        //$municipalidad_model = new Municipalidad;
+        $municipalidad_model = new Municipalidade;
 
-        //$municipalidad = $municipalidad_model -> getMunicipalidadAll();
+        $municipalidad = $municipalidad_model -> getMunicipalidadAll();
 
 		$anio = range(date('Y'), date('Y') - 20); 
 		/*
@@ -58,7 +59,7 @@ class FondoComunController extends Controller
 		
 		$periodo = $periodoComisione_model->getPeriodoAll();
 
-        return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion'));
+        return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion','municipalidad'));
     }
 
     public function listar_fondo_comun_ajax(Request $request){
