@@ -499,6 +499,7 @@ function datatablenew() {
 						return importe_bruto;
 					},
 					"bSortable": false,
+					"className": "text-right",
 					"aTargets": [1]
 				},
 				{
@@ -508,6 +509,7 @@ function datatablenew() {
 						return importe_igv;
 					},
 					"bSortable": false,
+					"className": "text-right",
 					"aTargets": [2]
 				},
 				{
@@ -517,6 +519,7 @@ function datatablenew() {
 						return importe_comision_cap;
 					},
 					"bSortable": false,
+					"className": "text-right",
 					"aTargets": [3]
 				},
 				{
@@ -526,6 +529,7 @@ function datatablenew() {
 						return importe_fondo_asistencia;
 					},
 					"bSortable": false,
+					"className": "text-right",
 					"aTargets": [4]
 				},
 				{
@@ -535,6 +539,7 @@ function datatablenew() {
 						return saldo;
 					},
 					"bSortable": false,
+					"className": "text-right",
 					"aTargets": [5]
 				},
 			]
