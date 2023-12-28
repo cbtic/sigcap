@@ -462,3 +462,6 @@ Route::get('comision/eliminar_muniIntegrada/{id}/{estado}', [ComisionController:
 Route::get('comision/eliminarComision/{id}/{estado}', [ComisionController::class, 'eliminarComision'])->name('comision.eliminarComision');
 
 Route::get('afiliacion_seguro/eliminar_afiliacion/{id}/{estado}', [AfiliacionSeguroController::class, 'eliminar_afiliacion'])->name('afiliacion_seguro.eliminar_afiliacion');
+
+Route::get('municipalidad/obtener_provincia/{idDepartamento}', [MunicipalidadController::class, 'obtener_provincia'])->name('municipalidad.obtener_provincia');
+Route::get('municipalidad/obtener_distrito/{idDepartamento}/{idProvincia}', [MunicipalidadController::class, 'obtener_distrito'])->name('municipalidad.obtener_distrito');
