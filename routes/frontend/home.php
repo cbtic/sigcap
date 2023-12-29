@@ -39,6 +39,8 @@ use App\Http\Controllers\Frontend\FondoComunController;
 
 use App\Http\Controllers\Frontend\AdelantoController;
 
+use App\Http\Controllers\Frontend\PlanillaDelegadoController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -462,3 +464,11 @@ Route::get('comision/eliminar_muniIntegrada/{id}/{estado}', [ComisionController:
 Route::get('comision/eliminarComision/{id}/{estado}', [ComisionController::class, 'eliminarComision'])->name('comision.eliminarComision');
 
 Route::get('afiliacion_seguro/eliminar_afiliacion/{id}/{estado}', [AfiliacionSeguroController::class, 'eliminar_afiliacion'])->name('afiliacion_seguro.eliminar_afiliacion');
+
+Route::get('planillaDelegado/consulta_planilla_delegado', [PlanillaDelegadoController::class, 'consulta_planilla_delegado'])->name('planillaDelegado.consulta_planilla_delegado');
+Route::post('planillaDelegado/obtener_planilla_delegado', [PlanillaDelegadoController::class, 'obtener_planilla_delegado'])->name('planillaDelegado.obtener_planilla_delegado');
+
+
+
+
+
