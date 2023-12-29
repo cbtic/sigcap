@@ -456,11 +456,13 @@ class PersonaController extends Controller
 		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
 		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
         
-
+		$ubigeo_model = new Ubigeo;
+		$departamento = $ubigeo_model->getDepartamento();
+		
 		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.persona.modal_persona_nuevoPersona',compact('id','persona','sexo','tipo_documento','grupo_sanguineo','nacionalidad'));
+		return view('frontend.persona.modal_persona_nuevoPersona',compact('id','persona','sexo','tipo_documento','grupo_sanguineo','nacionalidad','departamento'));
 	
 	}
 
@@ -541,11 +543,11 @@ class PersonaController extends Controller
 				$persona->numero_documento = $request->numero_documento;
 				$persona->apellido_paterno = $request->apellido_paterno;
 				$persona->apellido_materno = $request->apellido_materno;
-				$persona->nombres = $request->nombres;
+				$persona->nombres = $request->nombre;
 				$persona->fecha_nacimiento = $request->fecha_nacimiento;
 				//$persona->id_tipo_persona = 1;
 				$persona->grupo_sanguineo = $request->grupo_sanguineo;
-				$persona->id_ubigeo_nacimiento =150101;
+				$persona->id_ubigeo_nacimiento = $request->id_ubigeo_nacimiento;
 				$persona->lugar_nacimiento = $request->lugar_nacimiento;
 				//$persona->lugar_nacimiento = $request->img_foto;
 				$persona->id_nacionalidad = $request->nacionalidad;
@@ -564,15 +566,15 @@ class PersonaController extends Controller
 			}
 		}else {
 			$persona = Persona::find($request->id);
-			$empresa->ruc = $request->ruc;
+			$persona->numero_ruc = $request->ruc;
 			$persona->id_tipo_documento = $request->tipo_documento;
 			$persona->numero_documento = $request->numero_documento;
 			$persona->apellido_paterno = $request->apellido_paterno;
 			$persona->apellido_materno = $request->apellido_materno;
-			$persona->nombres = $request->nombres;
+			$persona->nombres = $request->nombre;
 			$persona->fecha_nacimiento = $request->fecha_nacimiento;
 			$persona->grupo_sanguineo = $request->grupo_sanguineo;
-			$persona->id_ubigeo_nacimiento =150101;
+			$persona->id_ubigeo_nacimiento = $request->id_ubigeo_nacimiento;
 			$persona->lugar_nacimiento = $request->lugar_nacimiento;
 			$persona->id_nacionalidad = $request->nacionalidad;
 			$persona->numero_ruc = $request->ruc;
@@ -582,7 +584,7 @@ class PersonaController extends Controller
 			$persona->foto = $request->img_foto;
 			$persona->direccion = $request->direccion;
 			$persona->id_usuario_inserta = $id_user;
-			$empresa->save();
+			$persona->save();
 		}
 			//$persona = Persona::find($request->id);
 
