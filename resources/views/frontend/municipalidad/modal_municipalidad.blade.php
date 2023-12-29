@@ -149,9 +149,86 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	 
-
+	var id_ubigeo = "<?php echo $municipalidad->id_ubigeo?>";
+	var idProvincia = id_ubigeo.substring(2,4);
+	var idDistrito = id_ubigeo.substring(4,6);
+	
+	//alert(id_ubigeo+"|"+idProvincia+"|"+idDistrito);
+	
+	obtenerProvinciaEdit(idProvincia);	 
+	obtenerDistritoEdit(idProvincia,idDistrito);
+	
 });
+
+function obtenerProvinciaEdit(idProvincia){
+	
+	var id = $('#id_departamento_domiciliario').val();
+	if(id=="")return false;
+	$('#id_provincia_domiciliario').attr("disabled",true);
+	$('#id_distrito_domiciliario').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_provincia/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_provincia_domiciliario').html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(idProvincia == oo.id_provincia)selected = "selected='selected'";
+				option += "<option value='"+oo.id_provincia+"' "+selected+" >"+oo.desc_ubigeo+"</option>";
+			});
+			$('#id_provincia_domiciliario').html(option);
+			$('#id_provincia_domiciliario').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerDistritoEdit(idProvincia,idDistrito){
+	
+	var id_departamento = $('#id_departamento_domiciliario').val();
+	var id = idProvincia;
+	if(id=="")return false;
+	$('#id_distrito_domiciliario').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_distrito/'+id_departamento+'/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value=''>Seleccionar</option>";
+			$('#id_distrito_domiciliario').html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(id_departamento+idProvincia+idDistrito == oo.id_ubigeo)selected = "selected='selected'";
+				option += "<option value='"+oo.id_ubigeo+"' "+selected+" >"+oo.desc_ubigeo+"</option>";
+			});
+			$('#id_distrito_domiciliario').html(option);
+			$('#id_distrito_domiciliario').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
 
 function validacion(){
     
@@ -320,7 +397,7 @@ function fn_save(){
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label">Tipo de Municipalidad</label>
-								<select name="tipo_municipalidad_" id="tipo_municipalidad_" class="form-control form-control-sm" onchange="">
+								<select name="tipo_municipalidad_" id="tipo_municipalidad_" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_municipalidad as $row) {?>
@@ -343,7 +420,7 @@ function fn_save(){
 								<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 								
 								<input type="hidden" name="id_ubigeo_municipalidad" id="id_ubigeo_municipalidad" value="<?php echo $municipalidad->id_ubigeo?>">
-								<select name="id_departamento_domiciliario" id="id_departamento_domiciliario" class="form-control form-control-sm" onchange="obtenerProvinciaDomiciliario()">
+								<select name="id_departamento_domiciliario" id="id_departamento_domiciliario" class="form-control form-control-sm" onChange="obtenerProvinciaDomiciliario()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($departamento as $row) {?>
@@ -357,7 +434,7 @@ function fn_save(){
 								Provincia
 								</div>
 								<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-								<select name="id_provincia_domiciliario" id="id_provincia_domiciliario" class="form-control form-control-sm" onchange="obtenerDistritoDomiciliario()">
+								<select name="id_provincia_domiciliario" id="id_provincia_domiciliario" class="form-control form-control-sm" onChange="obtenerDistritoDomiciliario()">
 									<option value="">--Selecionar--</option>
 								</select>
 								</div>
@@ -365,7 +442,7 @@ function fn_save(){
 								Distrito
 								</div>
 								<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-								<select name="id_distrito_domiciliario" id="id_distrito_domiciliario" class="form-control form-control-sm" onchange="">
+								<select name="id_distrito_domiciliario" id="id_distrito_domiciliario" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 								</select>
 								</div>
