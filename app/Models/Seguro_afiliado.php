@@ -42,9 +42,9 @@ class Seguro_afiliado extends Model
     public function datos_afiliacion_seguro($id){
 
         $cad = "select * ,s.id id_seguro 
-        from seguro_afiliados sa inner join agremiados a on sa.id_agremiado =a.id 
-        inner join seguros_planes sp on sa.id_plan =sp.id 
-        inner join seguros s on sp.id_seguro  =s.id inner join tabla_maestras tm on a.id_situacion  =cast( tm.codigo as integer)  
+                from seguro_afiliados sa inner join agremiados a on sa.id_agremiado =a.id 
+                inner join seguros_planes sp on sa.id_plan =sp.id 
+                inner join seguros s on sp.id_seguro  =s.id inner join tabla_maestras tm on a.id_situacion  =cast( tm.codigo as integer)  
                 where sa.id=".$id. " and tm.tipo='14';  ";
     
 		$data = DB::select($cad);
