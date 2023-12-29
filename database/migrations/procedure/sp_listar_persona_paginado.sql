@@ -21,10 +21,10 @@ begin
 	v_campos=' p.id, tm.denominacion tipo_documento, p.numero_documento, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, p.fecha_nacimiento, tm2.denominacion grupo_sanguineo, p.lugar_nacimiento, tm3.denominacion nacionalidad, tm4.denominacion sexo, p.numero_celular, p.correo, p.direccion, p.numero_ruc , p.estado ';
 
 	v_tabla='from personas p 
-	inner join tabla_maestras tm on p.id_tipo_documento ::int = tm.codigo ::int and tm.tipo =''16''
-	left join tabla_maestras tm2 on p.grupo_sanguineo ::int = tm2.codigo ::int and tm2.tipo =''90''
-	inner join tabla_maestras tm3 on p.id_nacionalidad ::int = tm3.codigo ::int and tm3.tipo =''5''
-	inner join tabla_maestras tm4 on p.id_sexo ::int = tm4.codigo ::int and tm4.tipo =''2''';
+	left join tabla_maestras tm on p.id_tipo_documento ::int = tm.codigo ::int and tm.tipo =''16''
+	left join tabla_maestras tm2 on p.grupo_sanguineo = tm2.codigo and tm2.tipo =''90''
+	left join tabla_maestras tm3 on p.id_nacionalidad ::int = tm3.codigo ::int and tm3.tipo =''5''
+	left join tabla_maestras tm4 on p.id_sexo ::int = tm4.codigo ::int and tm4.tipo =''2''';
 	
 	v_where = ' Where 1=1  ';
 	

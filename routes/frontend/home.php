@@ -465,6 +465,8 @@ Route::get('comision/eliminarComision/{id}/{estado}', [ComisionController::class
 
 Route::get('afiliacion_seguro/eliminar_afiliacion/{id}/{estado}', [AfiliacionSeguroController::class, 'eliminar_afiliacion'])->name('afiliacion_seguro.eliminar_afiliacion');
 
+Route::get('municipalidad/obtener_provincia/{idDepartamento}', [MunicipalidadController::class, 'obtener_provincia'])->name('municipalidad.obtener_provincia');
+Route::get('municipalidad/obtener_distrito/{idDepartamento}/{idProvincia}', [MunicipalidadController::class, 'obtener_distrito'])->name('municipalidad.obtener_distrito');
 Route::get('planillaDelegado/consulta_planilla_delegado', [PlanillaDelegadoController::class, 'consulta_planilla_delegado'])->name('planillaDelegado.consulta_planilla_delegado');
 Route::post('planillaDelegado/obtener_planilla_delegado', [PlanillaDelegadoController::class, 'obtener_planilla_delegado'])->name('planillaDelegado.obtener_planilla_delegado');
 

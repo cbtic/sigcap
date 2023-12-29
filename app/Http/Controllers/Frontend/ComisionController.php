@@ -13,6 +13,7 @@ use App\Models\PeriodoComisione;
 use App\Models\ComisionDelegado;
 use App\Models\Regione;
 use App\Models\ConcursoInscripcione;
+use App\Models\Agremiado;
 use Auth;
 
 class ComisionController extends Controller

@@ -196,6 +196,7 @@ $(document).ready(function() {
 	$("#id_comision").select2({ width: '100%' });
 	$("#id_concurso_inscripcion").select2({ width: '100%' });
 	$("#id_concurso_inscripcion2").select2({ width: '100%' });
+	$("#id_profesion_otro").select2({ width: '100%' });
 });
 </script>
 

@@ -164,7 +164,6 @@
 					</li>
 					@endif
 
-
 					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
@@ -200,8 +199,7 @@
 								@can('Otros Profesionales')
                                 <a href="/profesionalesOtro/consulta_profesionalesOtro" class="dropdown-item">Otros Profesionales</a>
 								@endcan
-								<a href="/parametro/consulta_parametro" class="dropdown-item">Par&aacute;metros</a>
-								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
+								
 						   </div>	
 					</li>
 					@endif
@@ -214,7 +212,7 @@
 						   		@can('Pronto Pago')
 								<a href="/prontoPago/consulta_prontoPago" class="dropdown-item">Pronto Pago</a>
 								@endcan
-
+								<a href="/parametro/consulta_parametro" class="dropdown-item">Par&aacute;metros</a>
 						   </div>
 					</li>
 					@endif
