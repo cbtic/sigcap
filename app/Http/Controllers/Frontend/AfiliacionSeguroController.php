@@ -127,8 +127,6 @@ class AfiliacionSeguroController extends Controller
 			$fecha=Carbon::now()->format('Y-m-d');
 		} 
 		
-			
-
 		$seguro_model = new seguro;
 		$seguro = $seguro_model->getSeguroAll();
         
