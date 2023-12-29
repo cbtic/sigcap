@@ -93,10 +93,18 @@ class ComisionController extends Controller
 		$periodoComisione_model = new PeriodoComisione;
 		$tablaMaestra_model = new TablaMaestra;
 		
-		//$comision = $comision_model->getComisionAll("","","1");
+		$comision = $comision_model->getComisionAll("","","1");
 		
-		//$comision = $comision_model->getComisionSinDelegadoAll("","","1");
-		if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
+		if($id>0){
+			$comision_=Comisione::find($id);
+			$periodo_ = PeriodoComisione::find($comision_->id_periodo_comisiones);
+			$tipo_comision_ = TablaMaestra::where("codigo",$comision_->id_tipo_comision)->where("tipo",102)->first();
+			$comisionDelegado = ComisionDelegado::where("id_comision",$id)->where("estado","1")->get();
+		}else{ 
+			$comisionDelegado = new ComisionDelegado;
+			$periodo_ = NULL;
+			$tipo_comision_ = NULL;
+		}
 
 		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
 		$region = $regione_model->getRegionAll();
@@ -104,7 +112,7 @@ class ComisionController extends Controller
 		$periodo = $periodoComisione_model->getPeriodoVigenteAll();
 		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
 		
-		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado',/*'comision',*/'concurso_inscripcion','region','periodo','tipo_comision'));
+		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region','periodo','periodo_','tipo_comision','tipo_comision_'));
 
     }
 	
@@ -151,35 +159,83 @@ class ComisionController extends Controller
 		$id_user = Auth::user()->id;
 		
 		if($request->id == 0){
+			
 			$comisionDelegado = new ComisionDelegado;
 			$comisionDelegado2 = new ComisionDelegado;
+			
+			$coordinador = 0;
+			if($request->coordinador == 1)$coordinador = 1;
+			$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+			$comisionDelegado->id_regional = $request->id_regional;
+			$comisionDelegado->id_comision = $request->id_comision;
+			$comisionDelegado->coordinador = $coordinador;
+			$comisionDelegado->id_agremiado = $concursoInscripcion->id_agremiado;
+			$comisionDelegado->id_puesto = $concursoInscripcion->puesto_postula;
+			$comisionDelegado->id_usuario_inserta = $id_user;
+			$comisionDelegado->save();
+			
+			$coordinador = 0;
+			if($request->coordinador == 2)$coordinador = 1;
+			$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
+			$comisionDelegado2->id_regional = $request->id_regional;
+			$comisionDelegado2->id_comision = $request->id_comision;
+			$comisionDelegado2->coordinador = $coordinador;
+			$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
+			$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
+			$comisionDelegado2->estado = 1;
+			$comisionDelegado2->id_usuario_inserta = $id_user;
+			$comisionDelegado2->save();
+			
 		}else{
-			$comisionDelegado = ComisionDelegado::find($request->id);
+			//$comisionDelegado = ComisionDelegado::find($request->id_comision_delegado_1);
+			
+			if($request->id_comision_delegado_1==0){
+				$comisionDelegado = new ComisionDelegado;
+				$coordinador = 0;
+				if($request->coordinador == 2)$coordinador = 1;
+				$concursoInscripcion1 = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+				$comisionDelegado->id_regional = $request->id_regional;
+				$comisionDelegado->id_comision = $request->id_comision;
+				$comisionDelegado->coordinador = $coordinador;
+				$comisionDelegado->id_agremiado = $concursoInscripcion1->id_agremiado;
+				$comisionDelegado->id_puesto = $concursoInscripcion1->puesto_postula;
+				$comisionDelegado->estado = 1;
+				$comisionDelegado->id_usuario_inserta = $id_user;
+				$comisionDelegado->save();
+			}else{
+				$coordinador = 0;
+				if($request->coordinador == 2)$coordinador = 1;
+				$concursoInscripcion1 = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+				$comisionDelegado1 = ComisionDelegado::find($request->id_comision_delegado_1);
+				$comisionDelegado1->id_agremiado = $concursoInscripcion1->id_agremiado;
+				$comisionDelegado1->save();
+			}
+			
+			if($request->id_comision_delegado_2==0){
+				$comisionDelegado2 = new ComisionDelegado;
+				$coordinador = 0;
+				if($request->coordinador == 2)$coordinador = 1;
+				$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
+				$comisionDelegado2->id_regional = $request->id_regional;
+				$comisionDelegado2->id_comision = $request->id_comision;
+				$comisionDelegado2->coordinador = $coordinador;
+				$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
+				$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
+				$comisionDelegado2->estado = 1;
+				$comisionDelegado2->id_usuario_inserta = $id_user;
+				$comisionDelegado2->save();
+			}else{
+				$coordinador = 0;
+				if($request->coordinador == 2)$coordinador = 1;
+				$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
+				$comisionDelegado2 = ComisionDelegado::find($request->id_comision_delegado_2);
+				$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
+				$comisionDelegado2->save();
+			}
+			
 		}
 		
-		$coordinador = 0;
-		if($request->coordinador == 1)$coordinador = 1;
-		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
-		$comisionDelegado->id_regional = $request->id_regional;
-		$comisionDelegado->id_comision = $request->id_comision;
-		$comisionDelegado->coordinador = $coordinador;
-		$comisionDelegado->id_agremiado = $concursoInscripcion->id_agremiado;
-		$comisionDelegado->id_puesto = $concursoInscripcion->puesto_postula;
-		//$comisionDelegado->estado = 1;
-		$comisionDelegado->id_usuario_inserta = $id_user;
-		$comisionDelegado->save();
 		
-		$coordinador = 0;
-		if($request->coordinador == 2)$coordinador = 1;
-		$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
-		$comisionDelegado2->id_regional = $request->id_regional;
-		$comisionDelegado2->id_comision = $request->id_comision;
-		$comisionDelegado2->coordinador = $coordinador;
-		$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
-		$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
-		$comisionDelegado2->estado = 1;
-		$comisionDelegado2->id_usuario_inserta = $id_user;
-		$comisionDelegado2->save();
 			
     }
 	
