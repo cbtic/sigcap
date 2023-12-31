@@ -69,7 +69,9 @@
 								@can('Afiliciacion a Seguro')
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
 								@endcan
+								<!--
 								<a href="/derecho_revision/consulta_solicitud_derecho_revision" class="dropdown-item">Solicitud de Derecho Revisi&oacute;n</a>
+								-->
 								
                                 
 						   </div>

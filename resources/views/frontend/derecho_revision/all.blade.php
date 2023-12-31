@@ -260,14 +260,63 @@
 					</div>
 				</div>
 				
-                <div class="card-body">				
+				<div class="row" style="padding:20px 20px 0px 20px;">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="nombre_proyecto_bus" name="nombre_proyecto_bus" placeholder="Nombre Proyecto">
+					</div>
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+						<select name="id_tipo_proyecto_bus" id="id_tipo_proyecto_bus" class="form-control form-control-sm" >
+							<option value="">--Tipo Solicitud--</option>
+							<?php
+							foreach ($tipo_proyecto as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="id_municipalidad_bus" id="id_municipalidad_bus" class="form-control form-control-sm" >
+							<option value="">--Municipalidad--</option>
+							<?php
+							foreach ($municipalidad as $row) {?>
+							<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="fecha_registro_bus" name="fecha_registro_bus" placeholder="Fecha Registro">
+					</div>
+					
+					<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+						<select name="id_estado_proyecto_bus" id="id_estado_proyecto_bus" class="form-control form-control-sm">
+							<option value="">--Estado Proyecto--</option>
+							<?php
+							foreach ($estado_proyecto as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
+						<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+					</div>
+				</div>
+												
+				
+                <div class="card-body" style="padding-top:0px">	
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
                             <th>Nombre Proyecto</th>
-                            <th>Tipo Proyecto</th>
+                            <th>Tipo Solicitud</th>
                             <th>N&uacute;mero Revisi&oacute;n</th>
                             <th>Municipalidad</th>
                             <!--<th>N&uacute;mero CAP</th>-->
@@ -275,7 +324,8 @@
                             <!--<th>N&uacute;mero Doc</th>-->
                             <th>Propietario</th>
                             <th>Fecha Registro</th>
-                            <th>Estado</th>
+                            <th>Estado Proyecto</th>
+							<th>Estado</th>
 							<th>Acciones</th>
                         </tr>
                         </thead>
