@@ -14,13 +14,21 @@ declare
 	_anio integer;
 	_ruc character varying;
 
+	_id_periodo_delegado integer;
+	_id_periodo_delegado_detalle integer;
+
 begin
 
 --	Select count(EXTRACT(MONTH FROM payment_date)) as total, EXTRACT(MONTH FROM payment_date), EXTRACT(YEAR FROM payment_date) as año FROM payment 
 
+	--select LPAD('11', 2, '0')
 
 --	_mes:= (select EXTRACT(MONTH FROM fecha) mes from periodo_delegado_detalles where id = pIdDelPeriodoDetalle);
 --	_anio:=(select EXTRACT(YEAR FROM fecha) anio from periodo_delegado_detalles where id = pIdDelPeriodoDetalle);
+	
+	
+	_id_periodo_delegado:=(select id_periodo_delegado from periodo_delegado_detalles where denominacion = p_anio::text||LPAD(p_mes::text, 2, '0'));
+	_id_periodo_delegado_detalle:=(select id from periodo_delegado_detalles where denominacion = p_anio::text||LPAD(p_mes::text, 2, '0'));
 
 	--_total := to_number(total,'9999999999.99');
 
@@ -48,13 +56,13 @@ group by t2.id, t2.denominacion
 ,t3.fecha
 ,t3.credipago
 having  
-EXTRACT(YEAR FROM t3.fecha) = 2023 and
-EXTRACT(MONTH FROM t3.fecha) = 12 and 
+EXTRACT(YEAR FROM t3.fecha) = p_anio and
+EXTRACT(MONTH FROM t3.fecha) = p_mes and 
 t3.credipago is not null;
 
---select * from temp_fondo_comun
+--select * from delegado_fondo_comuns
 
-delete from delegado_fondo_comuns;
+delete from delegado_fondo_comuns where id_periodo_delegado_detalle = _id_periodo_delegado_detalle ;
 
 INSERT INTO delegado_fondo_comuns
 (id_municipalidad,
@@ -74,8 +82,8 @@ estado,
 id_usuario_inserta)
 select
 id_municipalidad::int,
-2,
-12,
+_id_periodo_delegado,
+_id_periodo_delegado_detalle,
 sum(igv)igv,
 sum(comision)comision,
 sum(asistencia)asistencia,

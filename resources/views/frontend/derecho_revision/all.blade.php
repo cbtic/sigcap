@@ -268,7 +268,7 @@
 						<select name="id_tipo_proyecto_bus" id="id_tipo_proyecto_bus" class="form-control form-control-sm" >
 							<option value="">--Tipo Solicitud--</option>
 							<?php
-							foreach ($tipo_proyecto as $row) {?>
+							foreach ($tipo_solicitud as $row) {?>
 							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
 							<?php 
 							}

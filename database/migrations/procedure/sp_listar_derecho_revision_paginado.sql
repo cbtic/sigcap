@@ -39,7 +39,7 @@ begin
 	v_tabla=' from solicitudes s
 	left join municipalidades m on s.id_municipalidad = m.id
 	left join proyectos p2 on s.id_proyecto = p2.id
-	left join tabla_maestras tm on s.id_tipo_solicitud=tm.codigo::int and tm.tipo=''113'' 
+	left join tabla_maestras tm on s.id_tipo_solicitud=tm.codigo::int and tm.tipo=''25'' 
 	left join tabla_maestras tmr on s.id_resultado=tmr.codigo::int and tmr.tipo=''118'' ';
 	
 	v_where = ' Where 1=1  ';

@@ -40,10 +40,11 @@ class DerechoRevisionController extends Controller
         $departamento = $ubigeo_model->getDepartamento();
         $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
         
-        $tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(113);
+        $tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
+		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(25);
 		$estado_proyecto = $tablaMaestra_model->getMaestroByTipo(118);
 		
-        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','departamento','tipo_proyecto','estado_proyecto'));
+        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','departamento','tipo_proyecto','estado_proyecto', 'tipo_solicitud'));
     }
 
 	public function modal_credipago($id){
