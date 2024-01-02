@@ -386,7 +386,7 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
             var cap = $('#cap_').val();
-			var nombre = $('#denominacion').val();
+			var agremiado = $('#denominacion').val();
 			var estado = $('#estado').val();
 			
 			var _token = $('#_token').val();
@@ -396,7 +396,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-                        nombre:nombre,cap:cap,estado:estado,
+						agremiado:agremiado,cap:cap,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -434,9 +434,9 @@ function datatablenew(){
 				
                 {
                 "mRender": function (data, type, row) {
-                	var desc_cliente = "";
-					if(row.desc_cliente!= null)desc_cliente = row.desc_cliente;
-					return desc_cliente;
+                	var agremiado = "";
+					if(row.agremiado!= null)agremiado = row.agremiado;
+					return agremiado;
                 },
                 "bSortable": true,
                 "aTargets": [2]
