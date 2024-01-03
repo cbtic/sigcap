@@ -14,7 +14,7 @@ class Certificado extends Model
 
     public function listar_certificado($p){
 
-        return $this->readFuntionPostgres('sp_listar_certificado_paginado',$p);
+        return $this->readFuntionPostgres('sp_listar_certificado2_paginado',$p);
 
     }
 
@@ -37,9 +37,13 @@ class Certificado extends Model
 
     public function datos_agremiado_certificado($id){
 
-        $cad = "select c.id , a.numero_cap ,a.desc_cliente,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez 
-                from certificados c inner join agremiados a on c.id_agremiado =a.id inner join tabla_maestras tm on c.id_tipo =tm.codigo::int and tm.tipo ='100' inner join tabla_maestras tms on a.id_situacion= tms.codigo::int and  tms.tipo ='14' inner join personas p on p.id =a.id_persona 
-                where c.id=". $id .";  ";
+        $cad = "select c.id , a.numero_cap ,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado ,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez 
+            from certificados c 
+            inner join agremiados a on c.id_agremiado =a.id 
+            inner join tabla_maestras tm on c.id_tipo =tm.codigo::int and tm.tipo ='100' 
+            inner join tabla_maestras tms on a.id_situacion= tms.codigo::int and  tms.tipo ='14' 
+            inner join personas p on p.id =a.id_persona 
+            where c.id=". $id .";  ";
     
 		$data = DB::select($cad);
         return $data;
