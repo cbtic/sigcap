@@ -126,27 +126,28 @@
 	<div class="card">
 
 		<div class="card-body">
+			<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
 
-			<div class="row">
-				<div class="col-sm-5">
-					<h4 class="card-title mb-0 text-primary">
-						Fondo Com&uacute;n <!--<small class="text-muted">Usuarios activos</small>-->
-					</h4>
-				</div><!--col-->
-			</div>
+				<div class="row">
+					<div class="col-sm-5">
+						<h4 class="card-title mb-0 text-primary">
+							Fondo Com&uacute;n <!--<small class="text-muted">Usuarios activos</small>-->
+						</h4>
+					</div><!--col-->
+				</div>
 
-			<div class="row justify-content-center">
+				<div class="row justify-content-center">
 
-				<div class="col col-sm-12 align-self-center">
+					<div class="col col-sm-12 align-self-center">
 
-					<div class="card">
-						<div class="card-header">
-							<strong>
-								Fondo Com&uacute;n
-							</strong>
-						</div><!--card-header-->
+						<div class="card">
+							<div class="card-header">
+								<strong>
+									Fondo Com&uacute;n
+								</strong>
+							</div><!--card-header-->
 
-						<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
+
 							<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
 							<div class="row" style="padding:20px 20px 0px 20px;">
@@ -164,7 +165,7 @@
 										</div>
 
 										<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-											
+
 
 											<select name="mes" id="mes" class="form-control form-control-sm">
 												<?php
@@ -181,7 +182,7 @@
 												<option value="">--Seleccionar Municipalidad--</option>
 												<?php
 												foreach ($municipalidad as $row) { ?>
-												<option value="<?php echo $row->id ?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><?php echo $row->denominacion ?></option>
+													<option value="<?php echo $row->id ?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><?php echo $row->denominacion ?></option>
 												<?php
 												}
 												?>
@@ -191,9 +192,9 @@
 											<input class="form-control form-control-sm" id="credipago" name="credipago" placeholder="Credipago">
 										</div>
 									</div>
-									
+
 									<div class="row" style="padding:20px 20px 0px 20px;">
-									<!--
+										<!--
 										<div class="col-lg-6">
 											<div class="form-group">
 												<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
@@ -213,7 +214,7 @@
 									</div>
 
 								</div>
-								
+
 								<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 									<div class="table-responsive">
 										<table id="tblAfiliado1" class="table table-hover table-sm">
@@ -232,7 +233,7 @@
 										</table>
 									</div>
 								</div>
-												
+
 
 							</div>
 
@@ -242,58 +243,107 @@
 
 							<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
 								<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-								<input class="btn btn-success pull-rigth" value="Calcular Fondo Común" type="button" id="btnCalcular"  onclick="fn_calcular()" style="margin-left:15px" />
+								<input class="btn btn-success pull-rigth" value="Calcular Fondo Común" type="button" id="btnCalcular" onclick="fn_calcular()" style="margin-left:15px" />
 							</div>
+						</div>
+
+						<div class="card-body">
+							<div id="divPlanilla" class="table-responsive">
+								<table id="tblPlanilla" class="table table-hover table-sm">
+									<thead>
+										<tr style="font-size:13px">
+											<th>Municipalidad</th>
+											<th>Importe Bruto</th>
+											<th>IGV 18%</th>
+											<th>Comisi&oacute;n CAP RL 30%</th>
+											<th>Fondo Asistencia 2%</th>
+											<th>Saldo a favor de Delegados</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div><!--table-responsive-->
+
+						</div>
 					</div>
 
-					<div class="card-body">
+					@endsection
 
-						<div class="table-responsive">
-							<table id="tblAfiliado" class="table table-hover table-sm">
-								<thead>
-									<tr style="font-size:13px">
-										<th>Municipalidad</th>
-										<th>Importe Bruto</th>
-										<th>IGV 18%</th>
-										<th>Comisi&oacute;n CAP RL 30%</th>
-										<th>Fondo Asistencia 2%</th>
-										<th>Saldo a favor de Delegados</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-						</div><!--table-responsive-->
-						</form>
+					<div id="openOverlayOpc" class="modal fade" role="dialog">
+						<div class="modal-dialog">
 
+							<div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">
 
+								<div class="modal-body" style="padding: 0px;margin: 0px">
 
-					</div><!--card-body-->
-				</div><!--card-->
-				<!--</div>--><!--col-->
-				<!--</div>--><!--row-->
+									<div id="diveditpregOpc"></div>
 
-				@endsection
-
-				<div id="openOverlayOpc" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-
-						<div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">
-
-							<div class="modal-body" style="padding: 0px;margin: 0px">
-
-								<div id="diveditpregOpc"></div>
+								</div>
 
 							</div>
 
 						</div>
 
 					</div>
-
 				</div>
+			</form>
+		</div>
+	</div>
 
-				@push('after-scripts')
-
+		@push('after-scripts')
+		<!--
 				<script src="{{ asset('js/FondoComun.js') }}"></script>
+												-->
 
-				@endpush
+		<script>
+			function cargarPlanillaDelegado() {
+
+				$("#divPlanilla").html("");
+				$.ajax({
+					//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
+					url: "/planillaDelegado/obtener_planilla_delegado",
+					data: $("#frmPlanilla").serialize(),
+					type: "POST",
+					success: function(result) {
+						$("#divPlanilla").html(result);
+					}
+				});
+
+			}
+
+			function generarPlanilla() {
+
+				$.ajax({
+					url: "/planilla/send_planilla_delegado",
+					type: "POST",
+					data: $("#frmPlanilla").serialize(),
+					success: function(result) {
+
+						if (result == false) {
+							bootbox.alert("Planilla ya esta registrado");
+							return false;
+						}
+
+						cargarPlanillaDelegado();
+					}
+				});
+
+			}
+
+			/*
+			var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();
+			var idProvincia = id_ubigeo_nacimiento.substring(2,4);
+			var idDistrito = id_ubigeo_nacimiento.substring(4,6);
+			obtenerProvinciaEdit(idProvincia);
+			obtenerDistritoEdit(idProvincia,idDistrito);
+			
+			var id_ubigeo_domicilio = $("#id_ubigeo_domicilio").val();
+			var idProvinciaDomiciliario = id_ubigeo_domicilio.substring(2,4);
+			var idDistritoDomiciliario = id_ubigeo_domicilio.substring(4,6);
+			obtenerProvinciaDomiciliarioEdit(idProvinciaDomiciliario);
+			obtenerDistritoDomiciliarioEdit(idProvinciaDomiciliario,idDistritoDomiciliario);
+			*/
+		</script>
+
+		@endpush
