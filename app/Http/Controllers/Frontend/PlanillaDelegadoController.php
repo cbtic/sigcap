@@ -47,5 +47,21 @@ class PlanillaDelegadoController extends Controller
 
     }
 	
+	public function send_planilla_delegado(Request $request){
+		
+		$msg = "";
+		$planillaDelegadoExiste = PlanillaDelegado::where("periodo",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
+		
+		if($planillaDelegadoExiste){
+			$msg = false;
+		}else{
+			$planillaDelegado_model = new PlanillaDelegado;
+			$planillaDelegado_model->generar_planilla_delegado($request->anio,$request->mes);
+		}
+		
+		return $msg;
+		
+	}
+	
 	    
 }

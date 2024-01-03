@@ -24,5 +24,12 @@ where pd.id=".$id;
 		$data = DB::select($cad);
         return $data;
     }
+	
+	public function generar_planilla_delegado($anio,$mes) {
+		
+        $cad = "Select sp_planilla_delegado(?,?)";
+        $data = DB::select($cad, array($anio,$mes));
+        return $data[0]->sp_planilla_delegado;
+    }
 	    
 }
