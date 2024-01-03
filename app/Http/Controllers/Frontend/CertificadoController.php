@@ -61,6 +61,8 @@ class CertificadoController extends Controller
             $cap_numero=$datos_agremiado[0]->numero_cap;
 			$desc_cliente=$datos_agremiado[0]->agremiado;
 			$situacion=$datos_agremiado[0]->tipo_certificado;
+			$situacion=$datos_agremiado[0]->tipo_certificado;
+			$situacion=$datos_agremiado[0]->tipo_certificado;
 			
 		} 
 		else{
