@@ -11,7 +11,7 @@ $(document).ready(function () {
 		modalPersona(0);
 	});
 		
-	datatablenew();
+	cargarFondoComun();
 	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
@@ -550,7 +550,7 @@ function datatablenew() {
 }
 
 function fn_ListarBusqueda() {
-    datatablenew();
+    cargarFondoComun();
 };
 
 function modalPersona(id){
@@ -651,6 +651,21 @@ function fn_eliminar_persona(id,estado){
     });
 }
 
+function cargarFondoComun() {
+
+	$("#divPlanilla").html("");
+	$.ajax({
+		//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
+		url: "/fondoComun/obtener_fondo_comun",
+		data: $("#frmAfiliacion").serialize(),
+		type: "POST",
+		success: function(result) {
+			$("#divPlanilla").html(result);
+		}
+	});
+
+}
+
 function fn_calcular(){
 	//var anio = $('#anio').val();
 	//var mes = $('#mes').val();
@@ -665,7 +680,7 @@ function fn_calcular(){
 			data: p,
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
-				datatablenew();
+				cargarFondoComun();
             }
     });
 }

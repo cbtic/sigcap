@@ -9,6 +9,28 @@
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
 <style>
+
+	table, tr td {
+		/*border: 1px solid red*/
+	}
+	tbody {
+		display: block;
+		height: 520px;
+		overflow: auto;
+	}
+	thead, tbody tr, tfoot tr {
+		display: table;
+		width: 100%;
+		table-layout: fixed;/* even columns width , fix width of table too*/
+	}
+	thead {
+		width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+	}
+	table {
+		width: 500px;
+	}
+
+
 	#tblAfiliado tbody tr {
 		font-size: 13px
 	}
@@ -152,99 +174,74 @@
 
 							<div class="row" style="padding:20px 20px 0px 20px;">
 
-								<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-									<div class="row" style="padding:20px 20px 0px 20px;">
 
-
-										<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-											<select name="anio" id="anio" class="form-control form-control-sm">
-												@foreach ($anio as $anio)
-												<option value="{{ $anio }}">{{ $anio }}</option>
-												@endforeach
-											</select>
-										</div>
-
-										<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-
-
-											<select name="mes" id="mes" class="form-control form-control-sm">
-												<?php
-												foreach ($mes as $row) { ?>
-													<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $mes_actual) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-												<?php
-												}
-												?>
-											</select>
-										</div>
-
-										<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
-											<select name="id_municipalidad" id="id_municipalidad" class="form-control form-control-sm">
-												<option value="">--Seleccionar Municipalidad--</option>
-												<?php
-												foreach ($municipalidad as $row) { ?>
-													<option value="<?php echo $row->id ?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><?php echo $row->denominacion ?></option>
-												<?php
-												}
-												?>
-											</select>
-										</div>
-										<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-											<input class="form-control form-control-sm" id="credipago" name="credipago" placeholder="Credipago">
-										</div>
-									</div>
-
-									<div class="row" style="padding:20px 20px 0px 20px;">
-										<!--
-										<div class="col-lg-6">
-											<div class="form-group">
-												<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
-													<option value="">--Seleccionar Comisi&oacute;n--</option>
-													<?php
-													foreach ($comision as $row) { ?>
-														<option value="<?php echo $row->id ?>"><?php echo $row->comision . " " . $row->denominacion ?></option>
-													<?php
-													}
-													?>
-												</select>
-											</div>
-										</div>
-												-->
-
-
-									</div>
-
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<select name="anio" id="anio" class="form-control form-control-sm">
+										@foreach ($anio as $anio)
+										<option value="{{ $anio }}">{{ $anio }}</option>
+										@endforeach
+									</select>
 								</div>
 
-								<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-									<div class="table-responsive">
-										<table id="tblAfiliado1" class="table table-hover table-sm">
-											<thead>
-												<tr style="font-size:13px">
-													<th>N° de C&oacute;mputo</th>
-													<th>Periodo</th>
-													<th>Año</th>
-													<th>Mes</th>
-													<th>Correlativo</th>
-													<th>Fecha C&oacute;mputo</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+
+
+									<select name="mes" id="mes" class="form-control form-control-sm">
+										<?php
+										foreach ($mes as $row) { ?>
+											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $mes_actual) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+										<?php
+										}
+										?>
+									</select>
 								</div>
 
+								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+									<select name="id_municipalidad" id="id_municipalidad" class="form-control form-control-sm">
+										<option value="">--Seleccionar Municipalidad--</option>
+										<?php
+										foreach ($municipalidad as $row) { ?>
+											<option value="<?php echo $row->id ?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><?php echo $row->denominacion ?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+								<!--
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<input class="form-control form-control-sm" id="credipago" name="credipago" placeholder="Credipago">
+								</div>
+									-->
+
+								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
+									<input class="btn btn-warning pull-rigth" value="Buscar" type="button" onclick="cargarFondoComun()" id="btnBuscar" />
+									<input class="btn btn-success pull-rigth" value="Calcular Fondo Común" type="button" id="btnCalcular" onclick="fn_calcular()" style="margin-left:15px" />
+								</div>
 
 							</div>
 
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="row" style="padding:20px 20px 0px 20px;">
+								<!--
+								<div class="col-lg-6">
+									<div class="form-group">
+										<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
+											<option value="">--Seleccionar Comisi&oacute;n--</option>
+											<?php
+											foreach ($comision as $row) { ?>
+												<option value="<?php echo $row->id ?>"><?php echo $row->comision . " " . $row->denominacion ?></option>
+											<?php
+											}
+											?>
+										</select>
+									</div>
+								</div>
+										-->
+
 
 							</div>
 
-							<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
-								<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-								<input class="btn btn-success pull-rigth" value="Calcular Fondo Común" type="button" id="btnCalcular" onclick="fn_calcular()" style="margin-left:15px" />
-							</div>
+								
+							
 						</div>
 
 						<div class="card-body">
@@ -291,59 +288,48 @@
 		</div>
 	</div>
 
-		@push('after-scripts')
-		<!--
+	@push('after-scripts')
+	
 				<script src="{{ asset('js/FondoComun.js') }}"></script>
-												-->
+												
+<!--
+	<script>
+		function cargarFondoComun() {
 
-		<script>
-			function cargarPlanillaDelegado() {
+			$("#divPlanilla").html("");
+			$.ajax({
+				//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
+				url: "/fondoComun/obtener_fondo_comun",
+				data: $("#frmAfiliacion").serialize(),
+				type: "POST",
+				success: function(result) {
+					$("#divPlanilla").html(result);
+				}
+			});
 
-				$("#divPlanilla").html("");
-				$.ajax({
-					//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
-					url: "/planillaDelegado/obtener_planilla_delegado",
-					data: $("#frmPlanilla").serialize(),
-					type: "POST",
-					success: function(result) {
-						$("#divPlanilla").html(result);
-					}
-				});
+		}
 
-			}
+		function fn_calcular() {
+			//var anio = $('#anio').val();
+			//var mes = $('#mes').val();
+			var p = {};
+			p.anio = $('#anio').val();
+			p.mes = $('#mes').val();
 
-			function generarPlanilla() {
+			//alert(mes);
+			$.ajax({
+				url: "/fondoComun/calcula_fondo_comun",
+				type: "GET",
+				data: p,
+				success: function(result) {
+					//if(result="success")obtenerPlanDetalle(id_plan);
+					cargarFondoComun();
+				}
+			});
+		}
 
-				$.ajax({
-					url: "/planilla/send_planilla_delegado",
-					type: "POST",
-					data: $("#frmPlanilla").serialize(),
-					success: function(result) {
 
-						if (result == false) {
-							bootbox.alert("Planilla ya esta registrado");
-							return false;
-						}
+	</script>
+	-->
 
-						cargarPlanillaDelegado();
-					}
-				});
-
-			}
-
-			/*
-			var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();
-			var idProvincia = id_ubigeo_nacimiento.substring(2,4);
-			var idDistrito = id_ubigeo_nacimiento.substring(4,6);
-			obtenerProvinciaEdit(idProvincia);
-			obtenerDistritoEdit(idProvincia,idDistrito);
-			
-			var id_ubigeo_domicilio = $("#id_ubigeo_domicilio").val();
-			var idProvinciaDomiciliario = id_ubigeo_domicilio.substring(2,4);
-			var idDistritoDomiciliario = id_ubigeo_domicilio.substring(4,6);
-			obtenerProvinciaDomiciliarioEdit(idProvinciaDomiciliario);
-			obtenerDistritoDomiciliarioEdit(idProvinciaDomiciliario,idDistritoDomiciliario);
-			*/
-		</script>
-
-		@endpush
+	@endpush
