@@ -88,22 +88,24 @@ begin
 	,adelanto
 	,case when sesion_meses_anteriores>0 then (p_importe_fondo_comun/sesion_meses_anteriores) else 0 end reintegro
 	,0 coordinador
-	,0 movilidad_sesion
-	,0 total_movilidad
+	,movilidad_sesion
+	,(movilidad_sesion*sesion_mes_actual) total_movilidad
 	,0 reintegro_asesor
 	,0 descuento
 	from (
 	select cd.id id_comision_delegado,
 	sum(case when to_char(cs.fecha_programado,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	sum(case when to_char(cs.fecha_programado,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
-	coalesce((select sum(total_adelanto) from adelantos a where id_agremiado=cd.id_agremiado and fecha between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)adelanto
+	coalesce((select sum(total_adelanto) from adelantos a where id_agremiado=cd.id_agremiado and fecha between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)adelanto,
+	(select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and estado='1')movilidad_sesion
 	from comision_sesiones cs 
 	inner join comision_sesion_delegados csd on cs.id=csd.id_comision_sesion
 	inner join comision_delegados cd on csd.id_delegado=cd.id
 	inner join computo_sesiones cs2 on cs.id_computo_sesion=cs2.id
+	inner join comisiones c on cd.id_comision=c.id
 	where id_computo_sesion=p_id_computo_sesion
 	and id_aprobar_pago=2
-	group by cd.id
+	group by cd.id,c.id_municipalidad_integrada
 	)R
 	)S;
 	
