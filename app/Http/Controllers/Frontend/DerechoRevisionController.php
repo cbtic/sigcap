@@ -11,6 +11,7 @@ use App\Models\Persona;
 use App\Models\Liquidacione;
 use App\Models\Municipalidade;
 use App\Models\Ubigeo;
+use App\Models\TablaMaestra;
 use Carbon\Carbon;
 use Auth;
 
@@ -29,7 +30,7 @@ class DerechoRevisionController extends Controller
 
     function consulta_derecho_revision(){
 
-        //$tablaMaestra_model = new TablaMaestra;
+        $tablaMaestra_model = new TablaMaestra;
 		$derecho_revision = new DerechoRevision;
         $agremiado = new Agremiado;
         $persona = new Persona;
@@ -39,8 +40,11 @@ class DerechoRevisionController extends Controller
         $departamento = $ubigeo_model->getDepartamento();
         $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
         
-        
-        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','departamento'));
+        $tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
+		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(25);
+		$estado_proyecto = $tablaMaestra_model->getMaestroByTipo(118);
+		
+        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','departamento','tipo_proyecto','estado_proyecto', 'tipo_solicitud'));
     }
 
 	public function modal_credipago($id){
@@ -89,17 +93,17 @@ class DerechoRevisionController extends Controller
     public function listar_derecho_revision_ajax(Request $request){
 	
 		$derecho_revision_model = new DerechoRevision;
-		$p[]="";//$request->nombre;
+		$p[]=$request->nombre_proyecto;
+        $p[]=$request->id_tipo_proyecto;
+        $p[]="";
+        $p[]="";
+        $p[]=$request->id_municipalidad;
         $p[]="";
         $p[]="";
         $p[]="";
         $p[]="";
-        $p[]="";
-        $p[]="";
-        $p[]="";
-        $p[]="";
-        $p[]="";
-		$p[]=$request->estado;
+        $p[]=$request->fecha_registro;
+		$p[]=$request->id_estado_proyecto;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_ajax($p);

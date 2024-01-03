@@ -44,7 +44,7 @@ Begin
 	End If;
 
 	If p_municipalidad<>'' Then
-	 v_where:=v_where||'And t2.id_municipalidad ilike ''%'||p_municipalidad||'%'' ';
+	 v_where:=v_where||'And t1.id_municipalidad::varchar ilike ''%'||p_municipalidad||'%'' ';
 	End If;
 
 	If p_comision<>'' Then
@@ -53,7 +53,7 @@ Begin
 
 
 	If p_credipado<>'' Then
-	 v_where:=v_where||'And t2.credipago ilike ''%'||p_credipado||'%'' ';
+	 --v_where:=v_where||'And t2.credipago ilike ''%'||p_credipado||'%'' ';
 	End If;
 
 

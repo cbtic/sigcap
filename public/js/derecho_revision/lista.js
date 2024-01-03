@@ -1,6 +1,13 @@
 
 $(document).ready(function () {
 	
+	$('#fecha_registro_bus').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
@@ -23,7 +30,9 @@ $(document).ready(function () {
 		//modalProfesion(0);
 		guardar_credipago()
 	});
-		
+	
+	$("#id_municipalidad_bus").select2();
+	
 	datatablenew();
 	
 });
@@ -140,15 +149,20 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var nombre_proyecto = $('#nombre_proyecto').val();
-			var estado = $('#estado').val();
+			var nombre_proyecto = $('#nombre_proyecto_bus').val();
+			var id_tipo_proyecto = $('#id_tipo_proyecto_bus').val();
+			var id_municipalidad = $('#id_municipalidad_bus').val();
+			var fecha_registro = $('#fecha_registro_bus').val();
+			var id_estado_proyecto = $('#id_estado_proyecto_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						nombre_proyecto:nombre_proyecto,estado:estado,
+						nombre_proyecto:nombre_proyecto,id_tipo_proyecto:id_tipo_proyecto,
+						id_municipalidad:id_municipalidad,fecha_registro:fecha_registro,
+						id_estado_proyecto:id_estado_proyecto,
 						_token:_token
                        },
                 "success": function (result) {
@@ -169,6 +183,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "aTargets": [0],
+				"sWidth": "500px",
 				"className": "dt-center",
                 },
 				{
@@ -269,6 +284,16 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
+					var estado_proyecto = "";
+					if(row.estado_proyecto!= null)estado_proyecto = row.estado_proyecto;
+					return estado_proyecto;
+				},
+				"bSortable": false,
+				"aTargets": [7],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
 					var estado = "";
 					if(row.estado == 1){
 						estado = "Activo";
@@ -279,7 +304,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [7]
+				"aTargets": [8]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -305,7 +330,7 @@ function datatablenew(){
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [8],
+					"aTargets": [9],
 				},
             ]
     });

@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(
 p_id_periodo_comisiones character varying, 
 p_id_comision character varying,
@@ -48,7 +49,7 @@ inner join agremiados a on cd.id_agremiado=a.id
 inner join personas p on a.id_persona=p.id 
 inner join tabla_maestras tmts on t1.id_tipo_sesion::int = tmts.codigo::int And tmts.tipo =''71''
 left join tabla_maestras tmp  on cd.id_puesto::int = tmp.codigo::int And tmp.tipo =''94''
-where t0.id_aprobar_pago=2';
+where t0.id_aprobar_pago=2 ';
 	
 	If p_id_periodo_comisiones<>'' Then
 	 v_tabla:=v_tabla||'And t1.id_periodo_comisione = '''||p_id_periodo_comisiones||''' ';

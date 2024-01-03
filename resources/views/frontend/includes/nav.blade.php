@@ -69,7 +69,9 @@
 								@can('Afiliciacion a Seguro')
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
 								@endcan
+								<!--
 								<a href="/derecho_revision/consulta_solicitud_derecho_revision" class="dropdown-item">Solicitud de Derecho Revisi&oacute;n</a>
+								-->
 								
                                 
 						   </div>
@@ -117,9 +119,11 @@
 								@can('Registro Revisor Urbano')
 								<a href="/revisorUrbano/consulta_revisorUrbano" class="dropdown-item">Registro Revisor Urbano</a>
 								@endcan
+								<!--
 								@can('Calendario de Computo de Sesiones')
 								<a href="/sesion/consulta_calendarioComputo" class="dropdown-item">Calendario de C&oacute;mputo de Sesiones</a>
 								@endcan
+								-->
 								@can('Computo de Sesiones')
 								<a href="/sesion/consulta_computoSesion" class="dropdown-item">C&oacute;mputo de Sesiones</a>
 								@endcan

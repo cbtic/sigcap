@@ -70,11 +70,29 @@ $(document).ready(function () {
 
 function guardar_computo(){
     
+	var msg = "";
+	var id_periodo_bus = $("#id_periodo_bus").val();
+	var anio = $("#anio").val();
+	var mes = $("#mes").val();
+	
+	if(anio=="")msg += "Debe seleccionar un año";
+	if(mes=="")msg += "Debe seleccionar un mes";
+	if(id_periodo_bus=="")msg += "Debe seleccionar un periodo";
+	
+	if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
+	
     $.ajax({
 			url: "/sesion/send_computo_sesion",
             type: "POST",
             data : $("#frmAfiliacion").serialize(),
             success: function (result) {
+					if(result==false){
+						bootbox.alert("Computo sesion ya esta registrado"); 
+						return false;
+					}
 					datatablenew();
 					datatablenewComputoCerrado();
             }
