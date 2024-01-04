@@ -105,17 +105,17 @@
 			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $sesiones?></th>
 			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $sub_total?></th>
 			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $adelanto?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $reintegro?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $coordinador?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $total_bruto_sesiones?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $movilidad_sesion?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $total_movilidad?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $reintegro_asesor?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $total_bruto?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $ir_cuarta?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $total_honorario?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $descuento?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $saldo?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($reintegro,2)?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($coordinador,2)?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($total_bruto_sesiones,2)?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($movilidad_sesion,2)?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($total_movilidad,2)?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($reintegro_asesor,2)?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($total_bruto,2)?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($ir_cuarta,2)?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($total_honorario,2)?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($descuento,2)?></th>
+			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($saldo,2)?></th>
 			<th></th>
 		</tr>
 	</tfoot>
