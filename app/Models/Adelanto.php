@@ -30,4 +30,14 @@ class Adelanto extends Model
         return $data;
 
     }
+
+    function getAdelantoId($id){ 
+
+        $cad = "select a.id_agremiado, a.total_adelanto, a.fecha from adelantos a 
+        where a.id=".$id;
+
+        $data = DB::select($cad);
+        return $data;
+
+    }
 }

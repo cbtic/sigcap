@@ -177,7 +177,7 @@ class AdelantoController extends Controller
 		for ($i = 1; $i <= $request->numero_cuota; $i++) {
 			
 			$adelanto_detalle = new Adelanto_detalle;
-			$adelanto_detalle->id_adelanto=$adelanto->id;
+			$adelanto_detalle->id_adelento=$adelanto->id;
 			$adelanto_detalle->id_periodo_delegado='1';
 			$adelanto_detalle->numero_cuota=$i;
 			$adelanto_detalle->adelanto_pagar=$pago_mes;
