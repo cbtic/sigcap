@@ -186,7 +186,7 @@
                                     </div>
 
                                     <div class="card-body">
-                                        <input type='hidden' name='txt_IdEmpresa' id="txt_IdEmpresa" value='{{Auth::user()->IdEmpresa}}'>
+                                        <input type='hidden' name='txt_IdEmpresa' id="txt_IdEmpresa" value='{{Auth::user()->IdEmpresa}}'>https://dev-qry-cia.saludpol.gob.pe:8017/solicitud_reembolso/0#
 
                                         <div class="row">
                                             <div class="col">

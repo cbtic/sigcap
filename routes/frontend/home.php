@@ -64,14 +64,21 @@ Route::post('persona/listar_persona_ajax', [PersonaController::class, 'listar_pe
 Route::get('persona/modal_persona/{id}', [PersonaController::class, 'modal_persona'])->name('persona.modal_persona');
 Route::post('persona/send_persona', [PersonaController::class, 'send_persona'])->name('persona.send_persona');
 Route::post('persona/send_persona_new', [PersonaController::class, 'send_persona_new'])->name('persona.send_persona_new');
-
 Route::get('persona/eliminar_persona/{id}/{estado}', [PersonaController::class, 'eliminar_persona'])->name('persona.eliminar_persona');
 Route::get('persona/obtener_persona/{tipo_documento}/{numero_documento}', [PersonaController::class, 'obtener_persona'])->name('persona.obtener_persona')->where('tipo_documento', '(.*)');
 Route::get('persona/buscar_persona/{tipo_documento}/{numero_documento}', [PersonaController::class, 'buscar_persona'])->name('persona.buscar_persona');
 Route::get('persona/create', [personaController::class, 'create'])->name('persona.create');
 Route::get('persona/list_persona/{term}', [personaController::class, 'list_persona'])->name('persona.list_persona');
-
 Route::get('persona/modal_persona_new', [PersonaController::class, 'modal_persona_new'])->name('persona.modal_persona_new');
+Route::get('persona/consulta_persona', [PersonaController::class, 'consulta_persona'])->name('persona.consulta_persona');
+Route::post('persona/listar_persona2_ajax', [PersonaController::class, 'listar_persona2_ajax'])->name('persona.listar_persona2_ajax');
+Route::get('persona/modal_persona_nuevoPersona/{id}', [PersonaController::class, 'modal_persona_nuevoPersona'])->name('persona.modal_persona_nuevoPersona');
+Route::get('persona/editar_persona/{id}', [PersonaController::class, 'editar_persona'])->name('persona.editar_persona');
+Route::post('persona/send_persona_nuevoPersona', [PersonaController::class, 'send_persona_nuevoPersona'])->name('persona.send_persona_nuevoPersona');
+Route::post('persona/upload', [PersonaController::class, 'upload'])->name('persona.upload');
+Route::get('persona/buscar_persona2/{numero_documento}', [PersonaController::class, 'buscar_persona2'])->name('persona.buscar_persona2');
+Route::get('persona/buscar_numero_documento/{numero_documento}', [PersonaController::class, 'buscar_numero_documento'])->name('persona.buscar_numero_documento');
+Route::get('persona/modal_personaNuevo', [PersonaController::class, 'modal_personaNuevo'])->name('persona.modal_personaNuevo');
 
 
 Route::get('agremiado', [AgremiadoController::class, 'index'])->name('agremiado');
@@ -109,33 +116,24 @@ Route::get('agremiado/eliminar_situacion/{id}', [AgremiadoController::class, 'el
 Route::get('agremiado/obtener_agremiado/{tipo_documento}/{numero_documento}', [AgremiadoController::class, 'obtener_agremiado'])->name('agremiado.obtener_agremiado');
 
 Route::get('empresa/consulta_empresa', [EmpresaController::class, 'consulta_empresa'])->name('empresa.consulta_empresa');
-
 Route::post('empresa/listar_empresa_ajax', [EmpresaController::class, 'listar_empresa_ajax'])->name('empresa.listar_empresa_ajax');
-
 Route::get('empresa/editar_empresa/{id}', [EmpresaController::class, 'editar_empresa'])->name('empresa.editar_empresa');
 Route::get('empresa/modal_empresa_nuevoEmpresa/{id}', [EmpresaController::class, 'modal_empresa_nuevoEmpresa'])->name('empresa.modal_empresa_nuevoEmpresa');
-
 Route::get('empresa/modal_empresa_nuevoEmpresa/{id}', [EmpresaController::class, 'modal_empresa_nuevoEmpresa'])->name('empresa.modal_empresa_nuevoEmpresa');
+Route::post('empresa/send_empresa_nuevoEmpresa', [EmpresaController::class, 'send_empresa_nuevoEmpresa'])->name('empresa.send_empresa_nuevoEmpresa');
+Route::get('empresa/eliminar_empresa/{id}/{estado}', [EmpresaController::class, 'eliminar_empresa'])->name('empresa.eliminar_empresa');
+
 Route::get('municipalidad/consulta_municipalidad', [MunicipalidadController::class, 'consulta_municipalidad'])->name('municipalidad.consulta_municipalidad');
 Route::post('municipalidad/listar_municipalidad', [MunicipalidadController::class, 'listar_municipalidad'])->name('municipalidad.listar_municipalidad');
 Route::get('municipalidad/modal_municipalidad/{id}', [MunicipalidadController::class, 'modal_municipalidad'])->name('municipalidad.modal_municipalidad');
 Route::post('municipalidad/send_municipalidad', [MunicipalidadController::class, 'send_municipalidad'])->name('municipalidad.send_municipalidad');
 Route::get('municipalidad/eliminar_municipalidad/{id}/{estado}', [MunicipalidadController::class, 'eliminar_municipalidad'])->name('municipalidad.eliminar_municipalidad');
 
-Route::post('empresa/send_empresa_nuevoEmpresa', [EmpresaController::class, 'send_empresa_nuevoEmpresa'])->name('empresa.send_empresa_nuevoEmpresa');
-
-Route::get('empresa/eliminar_empresa/{id}/{estado}', [EmpresaController::class, 'eliminar_empresa'])->name('empresa.eliminar_empresa');
-
 Route::get('concepto/consulta_concepto', [ConceptoController::class, 'consulta_concepto'])->name('concepto.consulta_concepto');
-
 Route::post('concepto/listar_concepto_ajax', [ConceptoController::class, 'listar_concepto_ajax'])->name('concepto.listar_concepto_ajax');
-
 Route::get('concepto/editar_concepto/{id}', [ConceptoController::class, 'editar_concepto'])->name('concepto.editar_concepto');
-
 Route::get('concepto/modal_concepto_nuevoConcepto/{id}', [ConceptoController::class, 'modal_concepto_nuevoConcepto'])->name('concepto.modal_concepto_nuevoConcepto');
-
 Route::post('concepto/send_concepto_nuevoConcepto', [ConceptoController::class, 'send_concepto_nuevoConcepto'])->name('concepto.send_concepto_nuevoConcepto');
-
 Route::get('concepto/eliminar_concepto/{id}/{estado}', [ConceptoController::class, 'eliminar_concepto'])->name('concepto.eliminar_concepto');
 
 Route::get('TipoConcepto/consulta_tipoConcepto', [TipoConceptoController::class, 'consulta_tipoConcepto'])->name('TipoConcepto.consulta_tipoConcepto');
@@ -359,10 +357,6 @@ Route::post('comision/send_comisiones_integradas', [ComisionController::class, '
 Route::post('comision/listar_comision_integrada_ajax', [ComisionController::class, 'listar_comision_integrada_ajax'])->name('comision.listar_comision_integrada_ajax');
 Route::get('comision/consulta_comision_integrada', [ComisionController::class, 'consulta_comision_integrada'])->name('comision.consulta_comision_integrada');
 
-Route::get('persona/consulta_persona', [PersonaController::class, 'consulta_persona'])->name('persona.consulta_persona');
-Route::post('persona/listar_persona2_ajax', [PersonaController::class, 'listar_persona2_ajax'])->name('persona.listar_persona2_ajax');
-Route::get('persona/modal_persona_nuevoPersona/{id}', [PersonaController::class, 'modal_persona_nuevoPersona'])->name('persona.modal_persona_nuevoPersona');
-
 Route::get('sesion/lista_programacion_sesion', [SesionController::class, 'lista_programacion_sesion'])->name('sesion.lista_programacion_sesion');
 Route::post('sesion/lista_programacion_sesion_ajax', [SesionController::class, 'lista_programacion_sesion_ajax'])->name('sesion.lista_programacion_sesion_ajax');
 Route::get('sesion/modal_sesion/{id}', [SesionController::class, 'modal_sesion'])->name('sesion.modal_sesion');
@@ -381,9 +375,7 @@ Route::post('sesion/send_computo_sesion', [SesionController::class, 'send_comput
 
 Route::get('sesion/obtener_dictamen/{id}', [SesionController::class, 'obtener_dictamen'])->name('sesion.obtener_dictamen');
 
-Route::get('persona/editar_persona/{id}', [PersonaController::class, 'editar_persona'])->name('persona.editar_persona');
-Route::post('persona/send_persona_nuevoPersona', [PersonaController::class, 'send_persona_nuevoPersona'])->name('persona.send_persona_nuevoPersona');
-//Route::get('persona/eliminar_persona/{id}/{estado}', [PersonaController::class, 'eliminar_persona'])->name('persona.eliminar_persona');
+
 Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
 Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
 Route::get('profesion/editar_profesion/{id}', [ProfesionController::class, 'editar_profesion'])->name('profesion.editar_profesion');
@@ -398,7 +390,7 @@ Route::get('profesionalesOtro/modal_profesionalesOtro_nuevoProfesionalesOtro/{id
 Route::post('profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro', [ProfesionalesOtroController::class, 'send_profesionalesOtro_nuevoProfesionalesOtro'])->name('profesionalesOtro.send_profesionalesOtro_nuevoProfesionalesOtro');
 Route::get('profesionalesOtro/eliminar_profesionalesOtro/{id}/{estado}', [ProfesionalesOtroController::class, 'eliminar_profesionalesOtro'])->name('profesionalesOtro.eliminar_profesionalesOtro');
 
-Route::post('persona/upload', [PersonaController::class, 'upload'])->name('persona.upload');
+
 
 Route::get('sesion/lista_programacion_sesion', [SesionController::class, 'lista_programacion_sesion'])->name('sesion.lista_programacion_sesion');
 Route::post('sesion/lista_programacion_sesion_ajax', [SesionController::class, 'lista_programacion_sesion_ajax'])->name('sesion.lista_programacion_sesion_ajax');
@@ -408,10 +400,6 @@ Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'o
 Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
 Route::get('comision/obtener_comision_periodo_tipo_comision/{id_periodo}/{id_tipo_comision}', [ComisionController::class, 'obtener_comision_periodo_tipo_comision'])->name('comision.obtener_comision_periodo_tipo_comision');
 
-Route::get('persona/buscar_persona2/{numero_documento}', [PersonaController::class, 'buscar_persona2'])->name('persona.buscar_persona2');
-Route::get('persona/buscar_numero_documento/{numero_documento}', [PersonaController::class, 'buscar_numero_documento'])->name('persona.buscar_numero_documento');
-
-Route::get('persona/modal_personaNuevo', [PersonaController::class, 'modal_personaNuevo'])->name('persona.modal_personaNuevo');
 Route::get('comision/modalDiaSemana/{id}', [ComisionController::class, 'modalDiaSemana'])->name('comision.modalDiaSemana');
 Route::post('comision/send_dia_semana', [ComisionController::class, 'send_dia_semana'])->name('comision.send_dia_semana');
 
@@ -451,6 +439,7 @@ Route::get('fondoComun/consulta_fondo_comun', [FondoComunController::class, 'con
 Route::post('fondoComun/listar_fondo_comun_ajax', [FondoComunController::class, 'listar_fondo_comun_ajax'])->name('fondoComun.listar_fondo_comun_ajax');
 
 Route::get('fondoComun/calcula_fondo_comun', [FondoComunController::class, 'calcula_fondo_comun'])->name('fondoComun.calcula_fondo_comun');
+Route::post('fondoComun/obtener_fondo_comun', [FondoComunController::class, 'obtener_fondo_comun'])->name('fondoComun.obtener_fondo_comun');
 
 Route::get('adelanto/consulta_adelanto', [AdelantoController::class, 'consulta_adelanto'])->name('adelanto.consulta_adelanto');
 Route::post('adelanto/listar_adelanto_ajax', [AdelantoController::class, 'listar_adelanto_ajax'])->name('adelanto.listar_adelanto_ajax');
