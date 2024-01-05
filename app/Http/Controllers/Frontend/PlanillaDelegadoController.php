@@ -42,8 +42,9 @@ class PlanillaDelegadoController extends Controller
 		
 		if(isset($planillaDelegado->id)){
         	$planilla = $planillaDelegado_model->getPlanillaDelegadoDetalleByIdPlanilla($planillaDelegado->id);
+			$fondo_comun = $planillaDelegado_model->getSaldoDelegadoFondoComun($request->anio,$request->mes);
 		}
-        return view('frontend.planilla.lista_planilla_delegado',compact('planilla'));
+        return view('frontend.planilla.lista_planilla_delegado',compact('planilla','fondo_comun'));
 
     }
 	

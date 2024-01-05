@@ -30,5 +30,18 @@ where pd.id=".$id;
         $data = DB::select($cad, array($anio,$mes));
         return $data[0]->sp_planilla_delegado;
     }
+	
+	function getSaldoDelegadoFondoComun($anio,$mes){
+
+        $cad = "select sum(d.saldo)::decimal saldo
+	from delegado_fondo_comuns d
+	inner join periodo_delegado_detalles p on p.id = d.id_periodo_delegado_detalle and p.id_periodo_delegado = d.id_periodo_delegado   
+	where extract(year from p.fecha)::varchar = '".$anio."'
+	and extract(month from  p.fecha)::varchar = '".$mes."'::int::varchar; ";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+	
 	    
 }

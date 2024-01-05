@@ -128,3 +128,80 @@
 </table>
 
 
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				Saldo a favor de los Delegados Pro Fondo Comun
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				<?php echo $fondo_comun->saldo?>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				Menos Pagos a Destiempo de Meses pasados
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				7,397.90 
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				Menos movilidad a Delegados
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				4,160.00
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				Menos Pago Fijo a Coordinadores
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				18,810.00 
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				Monto Neto = Fondo Comun
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				619,640.83 
+				</div>
+			</div>
+		
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				Fondo Comun
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				650,008.73
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				Total acumulado de Sesiones del Mes
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				7,397.90 
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				Sesion de asesores a cargo del CAP RL
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				4,160.00
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				SALDO FINAL DE SESIONES
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				18,810.00 
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				Importe por Sesion
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				619,640.83 
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+
+
