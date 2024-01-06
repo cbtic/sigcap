@@ -348,7 +348,8 @@ class SesionController extends Controller
 		
 		$comisionSesionDelegado->id_comision_sesion = $request->id_comision_sesion;
 		$comisionSesionDelegado->id_delegado = NULL;
-		$comisionSesionDelegado->id_profesion_otro = $request->id_profesion_otro;
+		//$comisionSesionDelegado->id_profesion_otro = $request->id_profesion_otro;
+		$comisionSesionDelegado->id_agremiado = $request->id_profesion_otro;
 		$comisionSesionDelegado->id_aprobar_pago = NULL;
 		$comisionSesionDelegado->observaciones = NULL;
 		$comisionSesionDelegado->estado = 1;

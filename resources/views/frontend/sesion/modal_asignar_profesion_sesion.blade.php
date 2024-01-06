@@ -273,6 +273,7 @@ function fn_save(){
             data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_profesion_otro:id_profesion_otro},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
+				$('#openOverlayOpc2').modal('hide');
 				datatablenew();
 				//obtenerInversionista(0);
 				//obtenerDetalleInversionista(0);

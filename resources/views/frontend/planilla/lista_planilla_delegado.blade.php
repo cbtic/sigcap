@@ -49,6 +49,7 @@
 		}
 		
 		$sesiones=0;
+		$sesiones_asesor=0;
 		$sub_total=0;
 		$adelanto=0;
 		$reintegro=0;
@@ -64,7 +65,8 @@
 		$saldo=0;
 		
 		if($planilla){
-			foreach($planilla as $row){?>
+			foreach($planilla as $row){
+			?>
 		<tr style="font-size:13px">
 			<td class="text-left" style="vertical-align:middle"><?php echo $row->delegado?></td>
 			<td class="text-left" style="vertical-align:middle"><?php echo $row->municipalidad?></td>
@@ -101,6 +103,11 @@
 				$total_honorario+=$row->total_honorario;
 				$descuento+=$row->descuento;
 				$saldo+=$row->saldo;
+				
+				if($row->reintegro_asesor>0){
+					$sesiones_asesor++;
+				}
+				
 			}
 		}
 		?>
@@ -130,7 +137,14 @@
 
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			<?php
 			
+			$sesiones_asesor = 0.5 * $sesiones_asesor;
+			$fondo_comun_neto = ($fondo_comun->saldo) - $reintegro - $total_movilidad - $coordinador;
+			$total_sesiones = $sesiones - $sesiones_asesor;
+			$importe_por_sesion = $fondo_comun_neto / $total_sesiones;
+			
+			?>
 			<div class="row">
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				Saldo a favor de los Delegados Pro Fondo Comun
@@ -142,25 +156,25 @@
 				Menos Pagos a Destiempo de Meses pasados
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				7,397.90 
+				<?php echo number_format($reintegro,2)?>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				Menos movilidad a Delegados
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				4,160.00
+				<?php echo number_format($total_movilidad,2)?>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				Menos Pago Fijo a Coordinadores
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				18,810.00 
+				<?php echo number_format($coordinador,2)?>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				Monto Neto = Fondo Comun
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				619,640.83 
+				<?php echo number_format($fondo_comun_neto,2)?>
 				</div>
 			</div>
 		
@@ -172,31 +186,31 @@
 				Fondo Comun
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				650,008.73
+				<?php echo number_format($fondo_comun_neto,2)?>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				Total acumulado de Sesiones del Mes
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				7,397.90 
+				<?php echo $sesiones?>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				Sesion de asesores a cargo del CAP RL
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				4,160.00
+				<?php echo $sesiones_asesor?>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				SALDO FINAL DE SESIONES
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				18,810.00 
+				<?php echo $total_sesiones?>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				Importe por Sesion
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				619,640.83 
+				<?php echo $importe_por_sesion?>
 				</div>
 			</div>
 			
