@@ -698,7 +698,12 @@ function obtenerComisionEdit(id_periodo,id_comision){
 										<?php foreach ($delegados as $row) {?>
 										<tr style='font-size:13px'>
 											<input type='hidden' name='id_delegado[]' value='<?php echo $row->id_delegado?>'>
-											<td class='text-left'><?php echo $row->puesto; echo $row->profesion ?></td>
+											<td class='text-left'>
+											<?php
+											$puesto = $row->puesto;
+											if($puesto=="")$puesto="ASESOR / ESPECIALISTA";
+											echo $puesto; 
+											?></td>
 											<td class='text-left'><?php echo $row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></td>
 											<td class='text-left'><?php echo $row->numero_cap?></td>
 											<td class='text-left'><?php echo $row->situacion?></td>

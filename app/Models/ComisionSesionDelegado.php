@@ -42,17 +42,15 @@ inner join tabla_maestras t7 on t2.id_situacion = t7.codigo::int And t7.tipo ='1
 inner join regiones t8 on t2.id_regional = t8.id
 left join tabla_maestras t11 on t1.puesto_postula::int = t11.codigo::int And t11.tipo ='94' ";
 		*/
-		$cad = "select t0.id,t1.id_agremiado,to_char(t1.created_at,'dd-mm-yyyy')fecha_inscripcion,
+		$cad = "select t0.id,coalesce(t1.id_agremiado,t0.id_agremiado)id_agremiado,to_char(t1.created_at,'dd-mm-yyyy')fecha_inscripcion,
 t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,t4.denominacion puesto,
-t5.denominacion situacion,p.nombre profesion,t0.coordinador,t0.id_delegado,t0.id_aprobar_pago     
+t5.denominacion situacion,t0.coordinador,t0.id_delegado,t0.id_aprobar_pago     
 from comision_sesion_delegados t0 
 left join comision_delegados t1 on t0.id_delegado=t1.id
-left join agremiados t2 on t1.id_agremiado=t2.id
-left join profesion_otros po on t0.id_profesion_otro=po.id  
-inner join personas t3 on coalesce(t2.id_persona,po.id_persona)=t3.id
+left join agremiados t2 on coalesce(t1.id_agremiado,t0.id_agremiado)=t2.id
+inner join personas t3 on t2.id_persona=t3.id
 left join tabla_maestras t4 on t1.id_puesto::int = t4.codigo::int And t4.tipo ='94'
-left join tabla_maestras t5 on t2.id_situacion = t5.codigo::int And t5.tipo ='14' 
-left join profesiones p on po.id_profesion=p.id
+left join tabla_maestras t5 on t2.id_situacion = t5.codigo::int And t5.tipo ='14'
 where t0.id_comision_sesion=".$id_comision_sesion;
 
 		
