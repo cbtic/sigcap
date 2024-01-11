@@ -23,7 +23,7 @@ Begin
 	v_tabla='from conceptos c
 			left join regiones r on c.id_regional = r.id
 			left join tipo_conceptos tc on c.id_tipo_concepto = tc.id 
-			left join tabla_maestras tm on c.id_tipo_afectacion ::int=tm.codigo::int and tm.tipo=''53''
+			left join tabla_maestras tm on c.id_tipo_afectacion ::int=tm.codigo::int and tm.tipo=''105''
 			left join tabla_maestras tm2 on c.id_moneda::int=tm2.codigo::int and tm2.tipo=''1''';
 	
 	v_where = ' Where 1=1  ';
