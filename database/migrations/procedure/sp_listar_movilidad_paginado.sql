@@ -34,10 +34,14 @@ Begin
 	
 	
 	
-	If p_denominacion<>'' Then
-	 v_where:=v_where||'And cm.denominacion ilike ''%'||p_denominacion||'%'' ';
+	If p_comision<>'' Then
+	 v_where:=v_where||'And cm.id_municipalidad_integrada ilike ''%'||p_comision||'%'' ';
 	End If;
-	*/
+*/
+	If p_comision<>'' Then
+	 v_where:=v_where||'And cm.id_municipalidad_integrada = '''||p_comision||''' ';
+	End If;
+
 	If p_estado<>'' Then
 	 v_where:=v_where||'And cm.estado = '''||p_estado||''' ';
 	End If;
