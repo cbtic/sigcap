@@ -9,7 +9,7 @@ use App\Models\seguro_afiliado_parentesco;
 use Illuminate\Http\Request;
 use App\Models\Seguro_afiliado;
 use App\Models\Regione;
-use App\Models\seguro;
+use App\Models\Seguro;
 use App\Models\SegurosPlane;
 use App\Models\Ubigeo;
 use App\Models\TablaMaestra;
@@ -127,7 +127,7 @@ class AfiliacionSeguroController extends Controller
 			$fecha=Carbon::now()->format('Y-m-d');
 		} 
 		
-		$seguro_model = new seguro;
+		$seguro_model = new Seguro;
 		$seguro = $seguro_model->getSeguroAll();
         
 	
