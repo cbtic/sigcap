@@ -12,7 +12,9 @@ $(document).ready(function () {
 	/*$('#btnNuevoComision').click(function () {
 		modal_dia_semana(0);
 	});*/
-
+	
+	$("#id_comision_bus").select2();
+	
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
