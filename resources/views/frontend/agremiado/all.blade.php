@@ -190,7 +190,7 @@
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
                         <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 							
-						<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+						<a class="btn btn-success" href="/agremiado" style="margin-left:15px">Nuevo</a>
 	
 					</div>
 				</div>
