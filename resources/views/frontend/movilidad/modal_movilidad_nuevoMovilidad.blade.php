@@ -226,7 +226,7 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	 
+	$("#comision").select2({ width: '100%' });
 
 });
 
