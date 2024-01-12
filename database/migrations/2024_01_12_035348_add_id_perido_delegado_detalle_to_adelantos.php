@@ -14,8 +14,8 @@ class AddIdPeridoDelegadoDetalleToAdelantos extends Migration
     public function up()
     {
         Schema::table('adelantos', function (Blueprint $table) {
-            $table->integer('id_perido_delegado_detalle')->nullable()->unsigned()->index();            
-            $table->foreign('id_perido_delegado_detalle')->references('id')->on('periodo_delegado_detalles');
+            $table->integer('id_periodo_delegado_detalle')->nullable()->unsigned()->index();            
+            $table->foreign('id_periodo_delegado_detalle')->references('id')->on('periodo_delegado_detalles');
         });
     }
 
