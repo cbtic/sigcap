@@ -407,6 +407,7 @@ Route::get('revisorUrbano/consulta_revisorUrbano', [RevisorUrbanoController::cla
 Route::post('revisorUrbano/listar_revisorUrbano_ajax', [RevisorUrbanoController::class, 'listar_revisorUrbano_ajax'])->name('revisorUrbano.listar_revisorUrbano_ajax');
 Route::get('revisorUrbano/editar_revisorUrbano/{id}', [RevisorUrbanoController::class, 'editar_revisorUrbano'])->name('revisorUrbano.editar_revisorUrbano');
 Route::get('revisorUrbano/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [RevisorUrbanoController::class, 'modal_revisorUrbano_nuevoRevisorUrbano'])->name('revisorUrbano.modal_revisorUrbano_nuevoRevisorUrbano');
+Route::post('revisorUrbano/send_revisor_urbano', [RevisorUrbanoController::class, 'send_revisor_urbano'])->name('revisorUrbano.send_revisor_urbano');
 
 Route::get('derecho_revision/consulta_derecho_revision', [DerechoRevisionController::class, 'consulta_derecho_revision'])->name('derecho_revision.consulta_derecho_revision');
 Route::get('derecho_revision/consulta_solicitud_derecho_revision', [DerechoRevisionController::class, 'consulta_solicitud_derecho_revision'])->name('derecho_revision.consulta_solicitud_derecho_revision');
