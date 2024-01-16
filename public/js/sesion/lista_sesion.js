@@ -530,6 +530,7 @@ function datatablenew(){
 			var id_estado_aprobacion = $('#id_estado_aprobacion_bus').val();
 			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
 			var fecha_fin_bus = $('#fecha_fin_bus').val();
+			var cantidad_delegado = $('#cantidad_delegado').val();
 			var _token = $('#_token').val();
 			
             oSettings.jqXHR = $.ajax({
@@ -541,7 +542,7 @@ function datatablenew(){
 						id_regional:id_regional,id_periodo:id_periodo,id_comision:id_comision,
 						id_tipo_sesion:id_tipo_sesion,id_estado_sesion:id_estado_sesion,
 						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
-						id_estado_aprobacion:id_estado_aprobacion,
+						id_estado_aprobacion:id_estado_aprobacion,cantidad_delegado:cantidad_delegado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -669,12 +670,23 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
+                	var cantidad_delegado = "";
+					if(row.cantidad_delegado!= null)cantidad_delegado = row.cantidad_delegado;
+					return cantidad_delegado;
+                },
+                "bSortable": true,
+				"className": "text-center",
+                "aTargets": [8]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
                 	var newRow = "";
 					newRow="<button style='font-size:12px' type='button' class='btn btn-sm btn-info' data-toggle='modal' onclick=cargarDictamen('"+row.id+"') ><i class='fa fa-edit'></i> Ver Dictamen</button>"
 					return newRow;
                 },
                 "bSortable": true,
-                "aTargets": [8]
+                "aTargets": [9]
                 },
 				
 				{
@@ -684,7 +696,7 @@ function datatablenew(){
 					return newRow;
                 },
                 "bSortable": true,
-                "aTargets": [9]
+                "aTargets": [10]
                 },
 
             ]

@@ -66,39 +66,58 @@ class MunicipalidadController extends Controller
 
     public function modal_municipalidad($id){
 		$id_user = Auth::user()->id;
-		$municipalidad = new Municipalidade;
-		if($id>0) $municipalidad = Municipalidade::find($id);else $municipalidad = new Municipalidade;
+		//$municipalidad = new Municipalidade;
+		$ubigeo_model = new Ubigeo;
+		if($id>0) 
+		{
+			$municipalidad = Municipalidade::find($id);
+		}else 
+		{
+			$municipalidad = new Municipalidade;
+		}
 
         $tablaMaestra_model = new TablaMaestra;
 		$tipo_municipalidad = $tablaMaestra_model->getMaestroByTipo(43);
-       
-        $tipo_comision = $tablaMaestra_model->getMaestroByTipo(24);
 
 
 		$ubigeo_model = new Ubigeo;
-		$departamento = $ubigeo_model->getDepartamento("PER");
+		$departamento = $ubigeo_model->getDepartamento();
 
-		$provincia = "";
-		$distrito = "";
+		/*$provincia = "";
+		$distrito = "";*/
 
 		//print_r ($departamento);
 		//exit();
-
+/*
 		if($municipalidad->id_ubigeo!=""){
 			$idDepartamento = substr($municipalidad->ubigeo, 0, 2);
 			$idProvincia = substr($municipalidad->ubigeo, 0, 4);
 
 			$provincia = $ubigeo_model->getProvincia($idDepartamento);
 			$distrito = $ubigeo_model->getDistrito($idDepartamento,$idProvincia);
-		}
-
-		
+		}*/
 
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.municipalidad.modal_municipalidad',compact('id','municipalidad','departamento','provincia','distrito','tipo_municipalidad','tipo_comision'));
+		return view('frontend.municipalidad.modal_municipalidad',compact('id','municipalidad','departamento','tipo_municipalidad'));
 
     }
+
+	public function obtener_provincia($idDepartamento){
+		
+		$ubigeo_model = new Ubigeo;
+		$provincia = $ubigeo_model->getProvincia($idDepartamento);
+		
+		echo json_encode($provincia);
+	}
+	
+	public function obtener_distrito($id_departamento,$idProvincia){
+		
+		$ubigeo_model = new Ubigeo;
+		$distrito = $ubigeo_model->getDistrito($id_departamento,$idProvincia);
+		//print_r($distrito);exit();
+		echo json_encode($distrito);
+	}
 
     public function send_municipalidad(Request $request){
 		$id_user = Auth::user()->id;
@@ -112,10 +131,11 @@ class MunicipalidadController extends Controller
 		}
 		
 		$municipalidad->denominacion = $request->denominacion;
-	
+
 		//$municipalidad->estado = $request->estado_;
         $municipalidad->id_tipo_municipalidad = $request->tipo_municipalidad;
 		$municipalidad->id_regional = 5;
+		$municipalidad->id_ubigeo = $request->id_distrito_domiciliario;
 		$municipalidad->id_usuario_inserta = $id_user;
         
         

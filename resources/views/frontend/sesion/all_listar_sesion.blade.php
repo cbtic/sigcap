@@ -222,7 +222,16 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                    	<select name="cantidad_delegado" id="cantidad_delegado" class="form-control form-control-sm">
+							<option value="">--Cantidad Delegado--</option>
+							<option value="0">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+						</select>
+					</div>
+					
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
@@ -244,6 +253,7 @@
 							<th>Sesi&oacute;n Programada</th>
                             <th>Estado Sesi&oacute;n</th>
 							<th>Estado Aprobaci&oacute;n</th>
+							<th>Num Delegado</th>
 							<th>Dictamen</th>
 							<th>Editar</th>
                         </tr>

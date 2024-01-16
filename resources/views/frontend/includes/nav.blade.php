@@ -69,7 +69,9 @@
 								@can('Afiliciacion a Seguro')
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
 								@endcan
+								<!--
 								<a href="/derecho_revision/consulta_solicitud_derecho_revision" class="dropdown-item">Solicitud de Derecho Revisi&oacute;n</a>
+								-->
 								
                                 
 						   </div>
@@ -117,9 +119,11 @@
 								@can('Registro Revisor Urbano')
 								<a href="/revisorUrbano/consulta_revisorUrbano" class="dropdown-item">Registro Revisor Urbano</a>
 								@endcan
+								<!--
 								@can('Calendario de Computo de Sesiones')
 								<a href="/sesion/consulta_calendarioComputo" class="dropdown-item">Calendario de C&oacute;mputo de Sesiones</a>
 								@endcan
+								-->
 								@can('Computo de Sesiones')
 								<a href="/sesion/consulta_computoSesion" class="dropdown-item">C&oacute;mputo de Sesiones</a>
 								@endcan
@@ -164,7 +168,6 @@
 					</li>
 					@endif
 
-
 					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
@@ -194,14 +197,13 @@
 								@can('Persona')
                                 <a href="/persona/consulta_persona" class="dropdown-item">Persona</a>
 								@endcan
-								@can('Profesion')
+								<!--@can('Profesion')
 								<a href="/profesion/consulta_profesion" class="dropdown-item">Profesi&oacute;n</a>
 								@endcan
 								@can('Otros Profesionales')
                                 <a href="/profesionalesOtro/consulta_profesionalesOtro" class="dropdown-item">Otros Profesionales</a>
-								@endcan
-								<a href="/parametro/consulta_parametro" class="dropdown-item">Par&aacute;metros</a>
-								<!--<a href="/concurso" class="dropdown-item">Concurso</a>-->
+								@endcan-->
+								
 						   </div>	
 					</li>
 					@endif
@@ -214,7 +216,7 @@
 						   		@can('Pronto Pago')
 								<a href="/prontoPago/consulta_prontoPago" class="dropdown-item">Pronto Pago</a>
 								@endcan
-
+								<a href="/parametro/consulta_parametro" class="dropdown-item">Par&aacute;metros</a>
 						   </div>
 					</li>
 					@endif

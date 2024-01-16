@@ -566,6 +566,25 @@ label.form-control-sm{
 	
 	}
 	
+	function generarPlanilla(){
+		
+		$.ajax({
+				url: "/planilla/send_planilla_delegado",
+				type: "POST",
+				data : $("#frmPlanilla").serialize(),
+				success: function (result) {
+						
+						if(result==false){
+							bootbox.alert("Planilla ya esta registrado"); 
+							return false;
+						}
+						
+						cargarPlanillaDelegado();
+				}
+		});
+		
+	}
+	
 	/*
 	var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();
 	var idProvincia = id_ubigeo_nacimiento.substring(2,4);

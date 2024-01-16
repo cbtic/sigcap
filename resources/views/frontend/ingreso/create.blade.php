@@ -186,7 +186,7 @@
                                     </div>
 
                                     <div class="card-body">
-                                        <input type='hidden' name='txt_IdEmpresa' id="txt_IdEmpresa" value='{{Auth::user()->IdEmpresa}}'>
+                                        <input type='hidden' name='txt_IdEmpresa' id="txt_IdEmpresa" value='{{Auth::user()->IdEmpresa}}'>https://dev-qry-cia.saludpol.gob.pe:8017/solicitud_reembolso/0#
 
                                         <div class="row">
                                             <div class="col">
@@ -348,8 +348,8 @@
                                                 <div class="form-group form-group-sm">
                                                     <select name="cboPeriodo_b" id="cboPeriodo_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
                                                         <option value="2022">2022</option>
-                                                        <option value="2023" selected>2023</option>
-                                                        <option value="2024">2024</option>
+                                                        <option value="2023">2023</option>
+                                                        <option value="2024" selected>2024</option>
                                                     </select>
                                                 </div>
                                             </div>

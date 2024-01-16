@@ -529,12 +529,12 @@ container: '#myModal modal-body'
 						
 						<div class="col-lg-8">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Delegado Titular 1<?php echo $comisionDelegado[0]->id?></label>
+								<label class="control-label form-control-sm">Delegado Titular 1<?php //echo $comisionDelegado[0]->id_agremiado?></label>
 								<select name="id_concurso_inscripcion" id="id_concurso_inscripcion" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($concurso_inscripcion as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id_agremiado==$comisionDelegado[0]->id_agremiado)echo "selected='selected'"?> ><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
+									<option value="<?php echo $row->id?>" <?php if(isset($comisionDelegado[0]->id_agremiado) && $row->id_agremiado==$comisionDelegado[0]->id_agremiado)echo "selected='selected'"?>><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
 									<?php 
 									}
 									?>

@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_adelanto_paginado(p_numero_cap character varying, p_agremiado character varying, p_total_adelanto character varying, p_numero_cuotas character varying, p_fecha character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_detalle_adelanto_paginado(p_adelanto_pagar character varying, p_fecha_pago character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,25 +18,13 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' a.id, ag.numero_cap, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, a.total_adelanto, a.nro_total_cuotas, a.fecha, a.estado';
+	v_campos=' ad.id, ad.adelanto_pagar, ad.fecha_pago, ad.estado';
 
-	v_tabla=' from adelantos a 
-	inner join agremiados ag on a.id_agremiado = ag.id
-	inner join personas p on ag.id_persona = p.id';
+	v_tabla=' from adelanto_detalles ad ';
 		
 	
 	v_where = ' Where 1=1  ';
-	
-
-	If p_numero_cap<>'' Then
-	 v_where:=v_where||'And ag.numero_cap = '''||p_numero_cap||''' ';
-	End If;
-
-	If p_agremiado<>'' Then
-	 v_where:=v_where||'And p.nombres||'' ''||p.apellido_paterno||'' ''||p.apellido_materno ilike ''%'||p_agremiado||'%'' ';
-	End If;
-
-/*
+	/*
 	If p_numero_documento<>'' Then
 	 v_where:=v_where||'And t3.numero_documento = '''||p_numero_documento||''' ';
 	End If;
@@ -62,7 +50,7 @@ begin
 	End If;
 */
 	If p_estado<>'' Then
-	 v_where:=v_where||'And a.estado = '''||p_estado||''' ';
+	 v_where:=v_where||'And ad.estado = '''||p_estado||''' ';
 	End If;
 	
 
@@ -70,9 +58,9 @@ begin
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By a.id desc  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By ad.id desc  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By a.id desc ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By ad.id desc ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;

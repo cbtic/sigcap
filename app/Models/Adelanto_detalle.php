@@ -35,7 +35,7 @@ class Adelanto_detalle extends Model
 
         $cad = "select ad.id, ad.numero_cuota, ad.adelanto_pagar, ad.fecha_pago, ad.estado
         from adelanto_detalles ad
-        inner join adelantos a on ad.id_adelanto = a.id
+        inner join adelantos a on ad.id_adelento = a.id
         where a.id=".$id;
 
         $data = DB::select($cad);

@@ -101,5 +101,17 @@ class FondoComunController extends Controller
 		echo json_encode($result);
 	
 	}
+	public function obtener_fondo_comun(Request $request){
+		
+		$anio = $request->anio;
+		$mes = $request->mes;
+		$municipalidad = $request->idMunicipalidad;
+
+		$fondo_comun_model = new FondoComun;
+		$fondoComun = $fondo_comun_model->ListarFondoComun($anio, $mes, $municipalidad);
+
+        return view('frontend.fondoComun.lista_fondo_comun',compact('fondoComun'));
+
+    }
 	
 }

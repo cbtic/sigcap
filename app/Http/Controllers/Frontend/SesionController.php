@@ -68,6 +68,7 @@ class SesionController extends Controller
 		$p[]="";
 		$p[]=$request->id_estado_sesion;
 		$p[]=$request->id_estado_aprobacion;
+		$p[]=$request->cantidad_delegado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comisionSesion_model->lista_programacion_sesion_ajax($p);
@@ -296,31 +297,42 @@ class SesionController extends Controller
 	public function send_computo_sesion(Request $request){
 		
 		$id_user = Auth::user()->id;
+		$msg = "";
 		
-		$computoSesion = new ComputoSesione;
-		$computoSesion->anio = $request->anio;
-		$computoSesion->mes = $request->mes;
-		$computoSesion->fecha = Carbon::now()->format('Y-m-d');
-		$computoSesion->estado = 1;
-		$computoSesion->id_usuario_inserta = $id_user;
-		$computoSesion->save();
-		$id_computo_sesion = $computoSesion->id;
+		$computoSesioneExiste = ComputoSesione::where("anio",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
 		
-		$computoSesion_model = new ComputoSesione;
-		$comisionSesion=$computoSesion_model->getComisionSesionByAnioMes($request->anio,$request->mes);
+		if($computoSesioneExiste){
+			$msg = false;
+		}else{
 		
-		foreach($comisionSesion as $row){
-			$ComisionSesion = ComisionSesione::find($row->id_comision_sesion);
-			$ComisionSesion->id_computo_sesion = $id_computo_sesion;
-			$ComisionSesion->save();
+			$computoSesion = new ComputoSesione;
+			$computoSesion->anio = $request->anio;
+			$computoSesion->mes = $request->mes;
+			$computoSesion->fecha = Carbon::now()->format('Y-m-d');
+			$computoSesion->estado = 1;
+			$computoSesion->id_usuario_inserta = $id_user;
+			$computoSesion->save();
+			$id_computo_sesion = $computoSesion->id;
+			
+			$computoSesion_model = new ComputoSesione;
+			$comisionSesion=$computoSesion_model->getComisionSesionByAnioMes($request->anio,$request->mes,$request->id_periodo_bus);
+			
+			foreach($comisionSesion as $row){
+				$ComisionSesion = ComisionSesione::find($row->id_comision_sesion);
+				$ComisionSesion->id_computo_sesion = $id_computo_sesion;
+				$ComisionSesion->save();
+			}
+			
+			$computo_mes = $computoSesion_model->getMesComputoById($id_computo_sesion,$request->anio,$request->mes);
+			
+			$computoSesionUpd = ComputoSesione::find($id_computo_sesion);
+			$computoSesionUpd->computo_mes_actual = $computo_mes->computo_mes_actual;
+			$computoSesionUpd->computo_meses_anteriores = $computo_mes->computo_meses_anteriores;
+			$computoSesionUpd->save();
+			$msg = true;
 		}
 		
-		$computo_mes = $computoSesion_model->getMesComputoById($id_computo_sesion,$request->anio,$request->mes);
-		
-		$computoSesionUpd = ComputoSesione::find($id_computo_sesion);
-		$computoSesionUpd->computo_mes_actual = $computo_mes->computo_mes_actual;
-		$computoSesionUpd->computo_meses_anteriores = $computo_mes->computo_meses_anteriores;
-		$computoSesionUpd->save();
+		return $msg;
 		
 	}
 	
@@ -336,7 +348,8 @@ class SesionController extends Controller
 		
 		$comisionSesionDelegado->id_comision_sesion = $request->id_comision_sesion;
 		$comisionSesionDelegado->id_delegado = NULL;
-		$comisionSesionDelegado->id_profesion_otro = $request->id_profesion_otro;
+		//$comisionSesionDelegado->id_profesion_otro = $request->id_profesion_otro;
+		$comisionSesionDelegado->id_agremiado = $request->id_profesion_otro;
 		$comisionSesionDelegado->id_aprobar_pago = NULL;
 		$comisionSesionDelegado->observaciones = NULL;
 		$comisionSesionDelegado->estado = 1;
@@ -375,7 +388,7 @@ class SesionController extends Controller
 		//if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
 		
 		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
-		
+
 		return view('frontend.sesion.modal_asignar_delegado_sesion',compact('id','concurso_inscripcion'));
 
     }

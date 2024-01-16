@@ -36,6 +36,10 @@ $(document).ready(function () {
 		}
 	});
 
+	$("#municipalidad_integrada").select2({ width: '100%' });
+
+	
+
 	$('#estado').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -476,7 +480,7 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			//var id = $('#id').val();
-			var comision = $('#comision').val();
+			var comision = $('#municipalidad_integrada').val();
 			var periodo = $('#periodo').val();
 			var regional = $('#regional').val();
 			var monto = $('#monto').val();

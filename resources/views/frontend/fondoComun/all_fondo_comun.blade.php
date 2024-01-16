@@ -9,6 +9,28 @@
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
 <style>
+
+	table, tr td {
+		/*border: 1px solid red*/
+	}
+	tbody {
+		display: block;
+		height: 520px;
+		overflow: auto;
+	}
+	thead, tbody tr, tfoot tr {
+		display: table;
+		width: 100%;
+		table-layout: fixed;/* even columns width , fix width of table too*/
+	}
+	thead {
+		width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+	}
+	table {
+		width: 500px;
+	}
+
+
 	#tblAfiliado tbody tr {
 		font-size: 13px
 	}
@@ -126,174 +148,188 @@
 	<div class="card">
 
 		<div class="card-body">
+			<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
 
-			<div class="row">
-				<div class="col-sm-5">
-					<h4 class="card-title mb-0 text-primary">
-						Fondo Com&uacute;n <!--<small class="text-muted">Usuarios activos</small>-->
-					</h4>
-				</div><!--col-->
-			</div>
+				<div class="row">
+					<div class="col-sm-5">
+						<h4 class="card-title mb-0 text-primary">
+							Fondo Com&uacute;n <!--<small class="text-muted">Usuarios activos</small>-->
+						</h4>
+					</div><!--col-->
+				</div>
 
-			<div class="row justify-content-center">
+				<div class="row justify-content-center">
 
-				<div class="col col-sm-12 align-self-center">
+					<div class="col col-sm-12 align-self-center">
 
-					<div class="card">
-						<div class="card-header">
-							<strong>
-								Fondo Com&uacute;n
-							</strong>
-						</div><!--card-header-->
+						<div class="card">
+							<div class="card-header">
+								<strong>
+									Fondo Com&uacute;n
+								</strong>
+							</div><!--card-header-->
 
-						<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
+
 							<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
 							<div class="row" style="padding:20px 20px 0px 20px;">
 
-								<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-									<div class="row" style="padding:20px 20px 0px 20px;">
 
-
-										<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-											<select name="anio" id="anio" class="form-control form-control-sm">
-												@foreach ($anio as $anio)
-												<option value="{{ $anio }}">{{ $anio }}</option>
-												@endforeach
-											</select>
-										</div>
-
-										<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-											
-
-											<select name="mes" id="mes" class="form-control form-control-sm">
-												<?php
-												foreach ($mes as $row) { ?>
-													<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $mes_actual) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-												<?php
-												}
-												?>
-											</select>
-										</div>
-
-										<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
-											<select name="id_municipalidad" id="id_municipalidad" class="form-control form-control-sm">
-												<option value="">--Seleccionar Municipalidad--</option>
-												<?php
-												foreach ($municipalidad as $row) { ?>
-												<option value="<?php echo $row->id ?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><?php echo $row->denominacion ?></option>
-												<?php
-												}
-												?>
-											</select>
-										</div>
-										<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-											<input class="form-control form-control-sm" id="credipago" name="credipago" placeholder="Credipago">
-										</div>
-									</div>
-									
-									<div class="row" style="padding:20px 20px 0px 20px;">
-									<!--
-										<div class="col-lg-6">
-											<div class="form-group">
-												<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
-													<option value="">--Seleccionar Comisi&oacute;n--</option>
-													<?php
-													foreach ($comision as $row) { ?>
-														<option value="<?php echo $row->id ?>"><?php echo $row->comision . " " . $row->denominacion ?></option>
-													<?php
-													}
-													?>
-												</select>
-											</div>
-										</div>
-												-->
-
-
-									</div>
-
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<select name="anio" id="anio" class="form-control form-control-sm">
+										@foreach ($anio as $anio)
+										<option value="{{ $anio }}">{{ $anio }}</option>
+										@endforeach
+									</select>
 								</div>
+
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+
+
+									<select name="mes" id="mes" class="form-control form-control-sm">
+										<?php
+										foreach ($mes as $row) { ?>
+											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $mes_actual) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+
+								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+									<select name="id_municipalidad" id="id_municipalidad" class="form-control form-control-sm">
+										<option value="">--Seleccionar Municipalidad--</option>
+										<?php
+										foreach ($municipalidad as $row) { ?>
+											<option value="<?php echo $row->id ?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><?php echo $row->denominacion ?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+								<!--
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<input class="form-control form-control-sm" id="credipago" name="credipago" placeholder="Credipago">
+								</div>
+									-->
+
+								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
+									<input class="btn btn-warning pull-rigth" value="Buscar" type="button" onclick="cargarFondoComun()" id="btnBuscar" />
+									<input class="btn btn-success pull-rigth" value="Calcular Fondo Común" type="button" id="btnCalcular" onclick="fn_calcular()" style="margin-left:15px" />
+								</div>
+
+							</div>
+
+							<div class="row" style="padding:20px 20px 0px 20px;">
+								<!--
+								<div class="col-lg-6">
+									<div class="form-group">
+										<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
+											<option value="">--Seleccionar Comisi&oacute;n--</option>
+											<?php
+											foreach ($comision as $row) { ?>
+												<option value="<?php echo $row->id ?>"><?php echo $row->comision . " " . $row->denominacion ?></option>
+											<?php
+											}
+											?>
+										</select>
+									</div>
+								</div>
+										-->
+
+
+							</div>
+
 								
-								<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-									<div class="table-responsive">
-										<table id="tblAfiliado1" class="table table-hover table-sm">
-											<thead>
-												<tr style="font-size:13px">
-													<th>N° de C&oacute;mputo</th>
-													<th>Periodo</th>
-													<th>Año</th>
-													<th>Mes</th>
-													<th>Correlativo</th>
-													<th>Fecha C&oacute;mputo</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</div>
-												
+							
+						</div>
 
-							</div>
+						<div class="card-body">
+							<div id="divPlanilla" class="table-responsive">
+								<table id="tblPlanilla" class="table table-hover table-sm">
+									<thead>
+										<tr style="font-size:13px">
+											<th>Municipalidad</th>
+											<th>Importe Bruto</th>
+											<th>IGV 18%</th>
+											<th>Comisi&oacute;n CAP RL 30%</th>
+											<th>Fondo Asistencia 2%</th>
+											<th>Saldo a favor de Delegados</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div><!--table-responsive-->
 
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-							</div>
-
-							<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
-								<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-								<input class="btn btn-success pull-rigth" value="Calcular Fondo Común" type="button" id="btnCalcular"  onclick="fn_calcular()" style="margin-left:15px" />
-							</div>
+						</div>
 					</div>
 
-					<div class="card-body">
+					@endsection
 
-						<div class="table-responsive">
-							<table id="tblAfiliado" class="table table-hover table-sm">
-								<thead>
-									<tr style="font-size:13px">
-										<th>Municipalidad</th>
-										<th>Importe Bruto</th>
-										<th>IGV 18%</th>
-										<th>Comisi&oacute;n CAP RL 30%</th>
-										<th>Fondo Asistencia 2%</th>
-										<th>Saldo a favor de Delegados</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-						</div><!--table-responsive-->
-						</form>
+					<div id="openOverlayOpc" class="modal fade" role="dialog">
+						<div class="modal-dialog">
 
+							<div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">
 
+								<div class="modal-body" style="padding: 0px;margin: 0px">
 
-					</div><!--card-body-->
-				</div><!--card-->
-				<!--</div>--><!--col-->
-				<!--</div>--><!--row-->
+									<div id="diveditpregOpc"></div>
 
-				@endsection
-
-				<div id="openOverlayOpc" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-
-						<div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">
-
-							<div class="modal-body" style="padding: 0px;margin: 0px">
-
-								<div id="diveditpregOpc"></div>
+								</div>
 
 							</div>
 
 						</div>
 
 					</div>
-
 				</div>
+			</form>
+		</div>
+	</div>
 
-				@push('after-scripts')
-
+	@push('after-scripts')
+	
 				<script src="{{ asset('js/FondoComun.js') }}"></script>
+												
+<!--
+	<script>
+		function cargarFondoComun() {
 
-				@endpush
+			$("#divPlanilla").html("");
+			$.ajax({
+				//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
+				url: "/fondoComun/obtener_fondo_comun",
+				data: $("#frmAfiliacion").serialize(),
+				type: "POST",
+				success: function(result) {
+					$("#divPlanilla").html(result);
+				}
+			});
+
+		}
+
+		function fn_calcular() {
+			//var anio = $('#anio').val();
+			//var mes = $('#mes').val();
+			var p = {};
+			p.anio = $('#anio').val();
+			p.mes = $('#mes').val();
+
+			//alert(mes);
+			$.ajax({
+				url: "/fondoComun/calcula_fondo_comun",
+				type: "GET",
+				data: p,
+				success: function(result) {
+					//if(result="success")obtenerPlanDetalle(id_plan);
+					cargarFondoComun();
+				}
+			});
+		}
+
+
+	</script>
+	-->
+
+	@endpush

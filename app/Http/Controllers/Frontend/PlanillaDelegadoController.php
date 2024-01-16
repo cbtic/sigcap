@@ -42,10 +42,27 @@ class PlanillaDelegadoController extends Controller
 		
 		if(isset($planillaDelegado->id)){
         	$planilla = $planillaDelegado_model->getPlanillaDelegadoDetalleByIdPlanilla($planillaDelegado->id);
+			$fondo_comun = $planillaDelegado_model->getSaldoDelegadoFondoComun($request->anio,$request->mes);
 		}
-        return view('frontend.planilla.lista_planilla_delegado',compact('planilla'));
+        return view('frontend.planilla.lista_planilla_delegado',compact('planilla','fondo_comun'));
 
     }
+	
+	public function send_planilla_delegado(Request $request){
+		
+		$msg = "";
+		$planillaDelegadoExiste = PlanillaDelegado::where("periodo",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
+		
+		if($planillaDelegadoExiste){
+			$msg = false;
+		}else{
+			$planillaDelegado_model = new PlanillaDelegado;
+			$planillaDelegado_model->generar_planilla_delegado($request->anio,$request->mes);
+		}
+		
+		return $msg;
+		
+	}
 	
 	    
 }
