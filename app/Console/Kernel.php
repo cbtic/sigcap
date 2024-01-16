@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\envioFacturaSunatAutomaticoCron::class,
     ];
 
     /**
@@ -28,6 +28,22 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('activitylog:clean')->daily();
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('07:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('08:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('09:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('10:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('11:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('12:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('13:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('14:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('15:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('17:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('19:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('21:00');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('23:00');
+		$schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('23:50');
+        $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('23:59');
+
     }
 
     /**
