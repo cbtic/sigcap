@@ -20,9 +20,19 @@ class CreatePartidaPresupuestalesTable extends Migration
             $table->string('periodo',8)->nullable();
             $table->string('codigo',8)->nullable();
             $table->string('denominacion',150)->nullable();                        
-            $table->double('total_debe',15,8)->nullable();
-            $table->double('total_haber',15,8)->nullable();
-            $table->string('orden',8)->nullable();
+            $table->double('total_01',15,8)->nullable();
+            $table->double('total_02',15,8)->nullable();
+            $table->double('total_03',15,8)->nullable();
+            $table->double('total_04',15,8)->nullable();
+            $table->double('total_05',15,8)->nullable();
+            $table->double('total_06',15,8)->nullable();
+            $table->double('total_07',15,8)->nullable();
+            $table->double('total_08',15,8)->nullable();
+            $table->double('total_09',15,8)->nullable();
+            $table->double('total_10',15,8)->nullable();
+            $table->double('total_11',15,8)->nullable();
+            $table->double('total_12',15,8)->nullable();
+            
             $table->string('estado',1)->nullable()->default('1');
 
             $table->bigInteger('id_usuario_inserta')->unsigned()->index();
