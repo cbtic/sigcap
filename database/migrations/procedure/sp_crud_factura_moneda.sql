@@ -1,4 +1,6 @@
-CREATE OR REPLACE FUNCTION public.sp_crud_factura_moneda(serie character varying, numero integer, tipo character varying, ubicacion integer, persona integer, total character varying, descripcion character varying, cod_contable character varying, id_v integer,  id_caja integer, descuento numeric, accion character varying, p_id_usuario integer, p_id_moneda integer)
+-- DROP FUNCTION public.sp_crud_factura_moneda(varchar, int4, varchar, int4, int4, varchar, varchar, varchar, int4, int4, numeric, varchar, int4, int4);
+
+CREATE OR REPLACE FUNCTION public.sp_crud_factura_moneda(serie character varying, numero integer, tipo character varying, ubicacion integer, persona integer, total character varying, descripcion character varying, cod_contable character varying, id_v integer, id_caja integer, descuento numeric, accion character varying, p_id_usuario integer, p_id_moneda integer)
  RETURNS character varying
  LANGUAGE plpgsql
 AS $function$
