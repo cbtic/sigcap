@@ -12,6 +12,8 @@ use App\Models\Valorizacione;
 use App\Models\Persona;
 use App\Models\Guia;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 use Auth;
 
@@ -167,9 +169,9 @@ class ComprobanteController extends Controller
 
 
             $facturad = ComprobanteDetalle::where([
-                'facd_serie' => $facturas->fac_serie,
-                'facd_numero' => $facturas->fac_numero,
-                'facd_tipo' => $facturas->fac_tipo
+                'serie' => $facturas->fac_serie,
+                'numero' => $facturas->fac_numero,
+                'tipo' => $facturas->fac_tipo
             ])->get();
 
             return view('frontend.factura.create',compact('trans', 'titulo','TipoF', 'facturas','facturad'));
@@ -285,7 +287,7 @@ class ComprobanteController extends Controller
             $fac_id = $request->fac_id;
             //$facturas_model = new Factura;
             //$factura = $facturas_model->getFactura();
-            $facturas = Factura::where('id', $fac_id)->first();
+            $facturas = Comprobante::where('id', $fac_id)->first();
             //$facturas = Factura::where('fac_destinatario', 'like','$fac_id')->orderBy('fac_numero','asc')->paginate(5);
             //print_r($facturas);
             $TipoF =  $facturas->fac_tipo;
@@ -299,10 +301,10 @@ class ComprobanteController extends Controller
             if ($TipoF == 'TK') {$titulo = 'Edita Ticket';}
 
 
-            $facturad = FacturaDetalle::where([
-                'facd_serie' => $facturas->fac_serie,
-                'facd_numero' => $facturas->fac_numero,
-                'facd_tipo' => $facturas->fac_tipo
+            $facturad = ComprobanteDetalle::where([
+                'serie' => $facturas->fac_serie,
+                'numero' => $facturas->fac_numero,
+                'tipo' => $facturas->fac_tipo
             ])->get();
 /*
             $ind = 0;
@@ -395,11 +397,13 @@ class ComprobanteController extends Controller
 				
 				/*************************************/
 				
+                //print_r($serieF); exit();
+
 				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     0, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
 				$factura = Comprobante::where('id', $id_factura)->get()[0];
-
+            
 				$fac_serie = $factura->serie;
 				$fac_numero = $factura->numero;
 
@@ -443,7 +447,9 @@ class ComprobanteController extends Controller
 					$descuento = $value['descuento'];
 					if ($value['descuento']=='') $descuento = 0;
 					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['item'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
-																				 //(  serie,      numero,   tipo,      ubicacion,               persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
+					
+                    
+                    //(  serie,      numero,   tipo,      ubicacion,               persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
 					
                     /*
 					if(isset($ingreso->servicio) && $ingreso->servicio=="Venta de Productos Hidrobiologicos"){
@@ -804,5 +810,291 @@ class ComprobanteController extends Controller
 
     }
 
+    public function envio_factura_sunat_automatico($fecha){
+
+        $factura_model = new Comprobante;
+        //$fecha = str_replace("-","/",$fecha);
+        $facturas = $factura_model->get_envio_pendiente_factura_sunat($fecha);
+
+        $log = ['Fecha Factura' => $fecha,
+        'description' => 'Fecha de envio de las facturas automaticas'];
+
+        //first parameter passed to Monolog\Logger sets the logging channel name
+        $facturaLog = new Logger('factura_sunat');
+        $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::INFO);
+        $facturaLog->info('FacturaLog', $log);
+
+		foreach($facturas as $row){
+			//echo $row->id."<br>";
+			$this->firmar($row->id);
+
+            $log = ['Id Factura firmada' => $row->id,
+            'description' => 'Id de la factura automatica'];
+
+            $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::INFO);
+            $facturaLog->info('FacturaLog', $log);
+		}
+    }
 	
+    public function firmar($id_factura){
+
+        //echo $this->getTipoDocumento("BV");exit();
+
+		$factura = Comprobante::where('id', $id_factura)->get()[0];
+		$factura_detalles = ComprobanteDetalle::where([
+            'serie' => $factura->serie,
+            'numero' => $factura->numero,
+            'tipo' => $factura->tipo
+        ])->get();
+		//print_r($factura);
+		//print_r($factura);
+		$cabecera = array("valor1","valor2");
+		$detalle = array("valor1","valor2");
+		foreach($factura_detalles as $index => $row ) {
+			$items1 = array(
+							"ordenItem"=> $row->item, //"2",
+							"adicionales"=> [],
+							"cantidadItem"=> $row->cantidad, //"1",
+							"descuentoItem"=> $row->descuento,
+							"importeIGVItem"=> str_replace(",","",number_format($row->igv_total,2)),//"7.63",
+							"montoTotalItem"=> str_replace(",","",number_format($row->importe,2)), //"50.00",
+							"valorVentaItem"=> str_replace(",","",number_format($row->pu,2)), //"42.37",
+							"descripcionItem"=> $row->descripcion,//"TRANSBORDO",
+							"unidadMedidaItem"=> $row->unidad,
+							"codigoProductoItem"=> ($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
+							"valorUnitarioSinIgv"=> str_replace(",","",number_format($row->pu_con_igv,2)), //"42.3728813559",
+							"precioUnitarioConIgv"=> str_replace(",","",number_format($row->importe,2)), //"50.0000000000",
+							"unidadMedidaComercial"=> "SERV",
+							"codigoAfectacionIGVItem"=> "10",
+							"porcentajeDescuentoItem"=> "0.00",
+							"codTipoPrecioVtaUnitarioItem"=> "01"
+							);
+			$items[$index]=$items1;
+        }
+
+		$data["items"] = $items;
+		$data["anulado"] = false;
+		$data["declare"] = "0"; // 0->dechlare 1>declare instante
+		$data["version"] = "2.1";
+		$data["adjuntos"] = [];
+		$data["anticipos"] = [];
+		$data["esFicticio"] = false;
+		$data["keepNumber"] = "false";
+		$data["tipoCorreo"] = "1";
+        $data["formaPago"] = "CONTADO";
+		$data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";
+		$data["adicionales"] = [];
+		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
+		$data["serieNumero"] = $factura->fac_serie."-".$factura->numero; // "F001-000002";
+		$data["fechaEmision"] = date("Y-m-d",strtotime($factura->fecha)); //"2021-03-18";
+		$data["importeTotal"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
+		$data["notification"] = "1";
+		$data["sumatoriaIGV"] = str_replace(",","",number_format($factura->impuesto,2)); //"22.88";
+		$data["sumatoriaISC"] = "0.00";
+		$data["ubigeoEmisor"] = "150139";
+		$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
+		$data["tipoDocumento"] = $this->getTipoDocumento($factura->tipo);
+		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
+		$data["distritoEmisor"] = "LIMA";
+		$data["esContingencia"] = false;
+		$data["telefonoEmisor"] = "511 4710739";
+		$data["totalAnticipos"] = "0.00";
+		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
+		$data["provinciaEmisor"] = "LIMA";
+		$data["totalDescuentos"] = "0.00";
+		$data["totalOPGravadas"] = str_replace(",","",number_format($factura->subtotal,2)); //"127.12";
+		$data["codigoPaisEmisor"] = "PE";
+		$data["totalOPGratuitas"] = "0.00";
+		$data["docAfectadoFisico"] = false;
+		$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
+		$data["razonSocialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
+		$data["totalOPExoneradas"] = "0.00";
+		$data["totalOPNoGravadas"] = "0.00";
+		$data["codigoPaisReceptor"] = "PE";
+		$data["departamentoEmisor"] = "JESUS MARIA";
+		$data["descuentosGlobales"] = "0.00";
+		$data["codigoTipoOperacion"] = "0101";
+		$data["razonSocialReceptor"] = $factura->destinatario;//"Freddy Rimac Coral";
+		$data["nombreComercialEmisor"] = "CAP";
+		$data["tipoDocIdentidadEmisor"] = "6";
+		$data["sumatoriaImpuestoBolsas"] = "0.00";
+		$data["numeroDocIdentidadEmisor"] = "20172977911";
+		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";
+		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
+        $data["direccionReceptor"] = $factura->direccion;
+
+        //print_r($data);
+
+
+		$databuild_string = json_encode($data);
+        //print_r($databuild_string);
+        //exit();
+
+		//$chbuild = curl_init("https://easyfact.tk/see/rest/01");
+        $chbuild = curl_init(config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo));
+
+		$username = config('values.ws_fac_user');
+		$password = config('values.ws_fac_clave');
+
+        curl_setopt($chbuild, CURLOPT_HEADER, true);
+        curl_setopt($chbuild, CURLOPT_HTTPHEADER, array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+			'Authorization: Basic '. base64_encode("$username:$password")
+			)
+        );
+        curl_setopt($chbuild, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($chbuild, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($chbuild, CURLOPT_POSTFIELDS, $databuild_string);
+        $results = curl_exec($chbuild);
+
+        $facturaLog = new Logger('factura_sunat');
+
+        $log = ['Resultados' => $results,
+        'description' => 'Resultados devueltos'];
+        //first parameter passed to Monolog\Logger sets the logging channel name
+        $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::INFO);
+        $facturaLog->info('FacturaLog', $log);
+
+		if (curl_errno($chbuild)) {
+			$error_msg = curl_error($chbuild);
+			echo $error_msg;
+
+            $log = ['Error' => $error_msg,
+            'description' => 'Errores'];
+            //first parameter passed to Monolog\Logger sets the logging channel name
+            $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::WARNING);
+            $facturaLog->info('FacturaLog', $log);
+		}
+		print_r($results);
+        curl_close($chbuild);
+
+
+		//$results = substr($results,strpos($results,'{'),strlen($results));
+        $results = substr($results,strpos($results,'{'),strlen($results));
+        $respbuild = json_decode($results, true);
+		//echo "<br>";
+		//print_r($respbuild);
+
+        $body = $respbuild["body"];
+
+        if(count($body)>0){
+            //print_r($body);
+            //echo "******<br>";
+            $single = $body["single"];
+            //print_r($single);
+            //echo "********<br>";
+            $id = $single["id"];
+            $_number = $single["_number"];
+            $result = $single["result"];
+            $hash = $single[ "hash"];
+            //$signature = $single["signature"];
+
+            if($result == "FIRMADO"){
+
+                $fecha = $factura->fecha;
+                //echo $fecha;
+
+                //$fecha = "2021-03-24";
+                //$porciones = explode("/", $fecha);
+                $dia = substr($fecha, 8, 2); //$porciones[2];
+                $mes = substr($fecha, 5, 2); //$porciones[1];
+                $anio = substr($fecha, 0, 4);
+                //$anio = $fecha; //$porciones[0];
+
+
+
+
+                $fac_ruta_comprobante = config('values.ws_fac_host')."/see/server/consult/pdf?nde=20160453908&td=" .$this->getTipoDocumento($factura->tipo) ."&se=" .$factura->serie. "&nu=" .$factura->numero. "&fe=".date("Y-m-d",strtotime($factura->fecha))."&am=" .$factura->total;
+
+                if (
+					//test.easyfact.tk
+                    $this->download_pdf(config('values.ws_fac_dominio'), $fac_ruta_comprobante, $this->getTipoDocumento($factura->tipo)."_".$factura->serie."_".$factura->numero."_".$anio.$mes.$dia.".pdf") =="OK"
+                    ) {
+                    // Guardar nombre del pdf en la base de datos.
+                    $factura = Comprobante::find($id_factura);
+                    $factura->estado_sunat = "FIRMADO";
+                    // Nueva ruta del PDF descargado
+                    //$factura->fac_ruta_comprobante = "storage/factura_".$data["serieNumero"].".pdf";
+                    $factura->ruta_comprobante = "storage/".$this->getTipoDocumento($factura->tipo)."_".$factura->serie."_".$factura->numero."_".$anio.$mes.$dia.".pdf";
+                    $factura->save();
+
+                }
+            }
+        }
+
+        //$respbuild->result;
+
+    }
+    
+    public function getTipoDocumento($fac_tipo){
+        $codigo_fac_tipo = "";
+        switch ($fac_tipo) {
+            case "FT":
+                $codigo_fac_tipo = "01";
+            break;
+            case "BV":
+                $codigo_fac_tipo = "03";
+            break;
+            case "NC":
+                $codigo_fac_tipo = "07";
+            break;
+            case "ND":
+                $codigo_fac_tipo = "08";
+            break;
+            default:
+            $codigo_fac_tipo = "";
+        }
+
+        return $codigo_fac_tipo;
+
+    }
+
+    public function getTipoDocPersona($td, $dni){
+
+        $tipoDoc = "";
+
+        if ($td == 'FT'){
+            $tipoDoc = "6";
+        }
+        else{
+            if ($dni=='-'){
+                $tipoDoc = "0";
+            }
+            else{
+                $persona= Persona::where('numero_documento', $dni)->get()[0];
+                $tipoDocB = $persona->tipo_documento;
+                switch ($tipoDocB) {
+                    case "DNI":
+                        $tipoDoc = "1";
+                    break;
+                    case "CARNET_EXTRANJERIA":
+                        $tipoDoc = "4";
+                    break;
+
+                    case "PASAPORTE":
+                        $tipoDoc = "7";
+                    break;
+
+                    case "CEDULA":
+                        $tipoDoc = "A";
+                    break;
+
+                    case "PTP/PTEP":
+                        $tipoDoc = "B";
+                    break;
+
+                    // incluir un codigo para el nuevo tipo CPP/CSR
+                    case "CPP/CSR":
+                        $tipoDoc = "F";
+                    break;
+
+                    default:
+                    $tipoDoc = "0";
+
+                }
+            }
+        }
+        return $tipoDoc;
+    }
 }

@@ -74,7 +74,18 @@ class Comprobante extends Model
         if(isset($data[0]))return $data[0];
     }
 	
-    
+    function get_envio_pendiente_factura_sunat($fecha){
+		
+        $cad = "select id, anulado 
+                from comprobantes
+                where to_char(fecha,'yyyy-mm-dd')='".$fecha."'
+                and coalesce(estado_sunat,'')=''
+                and tipo<>'TK' 
+                order by id";
+		
+		$data = DB::select($cad);
+        return $data;
+    }
     
 
 	
