@@ -20,12 +20,39 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalProfesion(0);
+		//modalProfesion(0);
+		generar_codigo_ru();
 	});
 		
 	datatablenew();
 	
 });
+
+function generar_codigo_ru(){
+    
+	//var id_concurso_inscripcion = $("#id_concurso_inscripcion").val();
+	var _token = $("#_token").val();
+	var numero_cap = $("#numero_cap").val();
+    $.ajax({
+			url: "/revisorUrbano/send_revisor_urbano",
+            type: "POST",
+			dataType: "json",
+            data : $("#frmRevisorUrbano").serialize()+"&_token="+_token+"&numero_cap="+numero_cap,
+            success: function (result) {
+					var mensaje = result.mensaje;
+					
+					if(mensaje!=""){
+						bootbox.alert(mensaje);
+        				return false;
+					}
+					$("#codigo_itf").val("");
+					$("#numero_cap").val("");
+                    datatablenew();
+					//cargarRequisitos(id_concurso_inscripcion);
+					//editarConcursoInscripcion(id_concurso_inscripcion);
+            }
+    });
+}
 
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({

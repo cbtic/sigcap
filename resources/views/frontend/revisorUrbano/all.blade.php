@@ -242,6 +242,9 @@
                             </div>
                         </div>
                     </div>
+					
+					</form>
+					
                 </div>
             </div>
         </div>
@@ -260,8 +263,7 @@
                         </strong>
                     </div>
 				
-                    <form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
-                    <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                    <form class="form-horizontal" method="post" action="" id="frmRevisorUrbano" autocomplete="off">
                     <!--<input type="hidden" name="id" id="id" value="0">-->
                     
                     <div class="row" style="padding:20px 20px 0px 20px;">
@@ -286,7 +288,8 @@
                             </div>
                         </div>
                     </div>
-				
+					</form>
+					
                 <div class="card-body">				
 
                     <div class="table-responsive">
@@ -310,7 +313,7 @@
                         </tbody>
                     </table>
                 </div><!--table-responsive-->
-                </form>
+                
                 </div><!--card-body-->
             </div>
 

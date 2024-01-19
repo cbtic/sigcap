@@ -79,5 +79,40 @@ class RevisorUrbanoController extends Controller
 		return view('frontend.revisorUrbano.modal_revisorUrbano_nuevoRevisorUrbano',compact('id','revisorUrbano'));
 	
 	}
+	
+	public function send_revisor_urbano(Request $request){
+		
+		$id_user = Auth::user()->id;
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+		$revisor_existe = RevisorUrbano::where("codigo_itf",$request->codigo_itf)->where("estado","1")->get();
+		$mensaje = "";
+		
+		if($agremiado){
+		
+			if(count($revisor_existe)==0){
+				
+				$revisorUrbano_model = new RevisorUrbano;
+				$codigo_ru = $revisorUrbano_model->getCodigoRU();
+				
+				$revisorUrbano = new RevisorUrbano;
+				$revisorUrbano->id_agremiado = $agremiado->id;
+				$revisorUrbano->codigo_itf = $request->codigo_itf;
+				$revisorUrbano->codigo_ru = $codigo_ru;
+				$revisorUrbano->estado = 1;
+				$revisorUrbano->id_usuario_inserta = $id_user;
+				$revisorUrbano->save();
+				
+			}else{
+				$mensaje = "El Codigo ITF ya se encuentra registrado";
+			}
+		}else{
+			$mensaje = "El Numero de CAP no existe";
+		}
+		
+		$result["mensaje"] = $mensaje;
+		echo json_encode($result);
+		
+	}
+	
 
 }

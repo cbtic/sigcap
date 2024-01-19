@@ -343,9 +343,9 @@ function valida(){
 	var importe = $('#importe').val();
 	var id_moneda = $('#id_moneda').val();
 	var periodo = $('#periodo').val();
-	var partida_presupuestal = $('#partida_presupuestal').val();
-	var id_tipo_afectacion = $('#tipo_afectacion').val();
-	var centro_costo = $('#centro_costo').val();
+	var partida_presupuestal = $('#id_partida_presupuestal').val();
+	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
+	var centro_costo = $('#id_centro_costo').val();
 
 	if (id_regional==""){
 		msg= "Falta seleccionar la Regional";
@@ -402,9 +402,9 @@ function fn_save_concepto(){
 	var cuenta_contable_debe = $('#cuenta_contable_debe').val();
 	var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
 	var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2').val();
-	var partida_presupuestal = $('#partida_presupuestal').val();
+	var partida_presupuestal = $('#id_partida_presupuestal').val();
 	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
-	var centro_costo = $('#centro_costo').val();
+	var centro_costo = $('#id_centro_costo').val();
 	
 	
     $.ajax({
@@ -600,7 +600,7 @@ container: '#myModal modal-body'
 												<?php
 												foreach ($region as $row) {?>
 													<option value="<?php echo $row->id?>" <?php if($row->id=='5')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-												<?php 
+												<?php
 												}
 												?>
 										</select>
@@ -673,7 +673,15 @@ container: '#myModal modal-body'
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Partida Presupuestal</label>
-										<input id="partida_presupuestal" name="partida_presupuestal" class="form-control form-control-sm"  value="<?php echo $concepto->partida_presupuestal?>" type="text" >
+										<select name="id_partida_presupuestal" id="id_partida_presupuestal" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($partidaPresupuestal as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->partida_presupuestal)echo "selected='selected'"?>><?php echo $row->codigo?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
 								<div class="col-lg-5">
@@ -693,7 +701,15 @@ container: '#myModal modal-body'
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Centro de Costos</label>
-										<input id="centro_costo" name="centro_costo" class="form-control form-control-sm"  value="<?php echo $concepto->centro_costo?>" type="text" >
+										<select name="id_centro_costo" id="id_centro_costo" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($centroCosto as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->centro_costo)echo "selected='selected'"?>><?php echo $row->codigo?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
 						
