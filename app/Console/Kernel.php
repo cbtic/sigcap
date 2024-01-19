@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Console;
 
@@ -17,6 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\envioFacturaSunatAutomaticoCron::class,
+		Commands\envioCentroCostoAutomaticoCron::class,
+		Commands\envioPartidaPresupuestalAutomaticoCron::class
     ];
 
     /**
@@ -43,6 +45,16 @@ class Kernel extends ConsoleKernel
         $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('23:00');
 		$schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('23:50');
         $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('23:59');
+		
+		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('08:00');
+		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('12:00');
+		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('16:00');
+		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('22:32');
+		
+		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('08:00');
+		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('12:00');
+		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('16:00');
+		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('22:32');
 
     }
 

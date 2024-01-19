@@ -41,6 +41,9 @@ use App\Http\Controllers\Frontend\AdelantoController;
 
 use App\Http\Controllers\Frontend\PlanillaDelegadoController;
 
+use App\Http\Controllers\Frontend\CentroCostoController;
+use App\Http\Controllers\Frontend\PartidaPresupuestalController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -460,6 +463,9 @@ Route::get('municipalidad/obtener_distrito/{idDepartamento}/{idProvincia}', [Mun
 Route::get('planillaDelegado/consulta_planilla_delegado', [PlanillaDelegadoController::class, 'consulta_planilla_delegado'])->name('planillaDelegado.consulta_planilla_delegado');
 Route::post('planillaDelegado/obtener_planilla_delegado', [PlanillaDelegadoController::class, 'obtener_planilla_delegado'])->name('planillaDelegado.obtener_planilla_delegado');
 Route::post('planilla/send_planilla_delegado', [PlanillaDelegadoController::class, 'send_planilla_delegado'])->name('sesion.send_planilla_delegado');
+
+Route::get('centro_costo/importar_centro_costo', [CentroCostoController::class, 'importar_centro_costo'])->name('centro_costo.importar_centro_costo');
+Route::get('partida_presupuestal/importar_partida_presupuestal', [PartidaPresupuestalController::class, 'importar_partida_presupuestal'])->name('partida_presupuestal.importar_partida_presupuestal');
 
 
 
