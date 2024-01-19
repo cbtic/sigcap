@@ -46,15 +46,15 @@ class Kernel extends ConsoleKernel
 		$schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('23:50');
         $schedule->command('envioFacturaSunatAutomatico:cron')->dailyAt('23:59');
 		
-		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('00:58');
+		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('08:00');
 		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('12:00');
-		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('17:00');
-		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('23:58');
+		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('16:00');
+		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('22:32');
 		
-		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('00:58');
+		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('08:00');
 		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('12:00');
-		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('17:00');
-		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('23:58');
+		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('16:00');
+		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('22:32');
 
     }
 

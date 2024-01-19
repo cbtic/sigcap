@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\Frontend;
 
@@ -28,21 +28,21 @@ class CentroCostoController extends Controller
 		$dataWebApi = json_decode($resultWebApi);
 		
 		foreach($dataWebApi as $row){
+		
+			$centroCostoExiste = CentroCosto::where("codigo",$row->CODIGO)->where("estado",1)->get();
 			
-			$total_debe=0;
-			$total_haber=0;
-			$centroCosto = new CentroCosto;
-			if($row->TDEBE!="")$total_debe=$row->TDEBE;
-			if($row->THABER!="")$total_haber=$row->THABER;
-			$centroCosto->id_regional=5;
-			$centroCosto->periodo=date("Y");
-			$centroCosto->codigo = $row->CODIGO;
-			$centroCosto->denominacion = $row->NOM;
-			$centroCosto->total_debe = $total_debe;
-			$centroCosto->total_haber = $total_haber;
-			$centroCosto->estado = 1;
-			$centroCosto->id_usuario_inserta = 1;
-			$centroCosto->save();
+			if(count($centroCostoExiste)==0){
+				$centroCosto = new CentroCosto;
+				$centroCosto->id_regional=5;
+				$centroCosto->periodo=date("Y");
+				$centroCosto->codigo = $row->CODIGO;
+				$centroCosto->denominacion = $row->NOM;
+				$centroCosto->total_debe = ($row->TDEBE!="")?$row->TDEBE:0;
+				$centroCosto->total_haber = ($row->THABER!="")?$row->THABER:0;
+				$centroCosto->estado = 1;
+				$centroCosto->id_usuario_inserta = 1;
+				$centroCosto->save();
+			}
 			
 		}
 		
