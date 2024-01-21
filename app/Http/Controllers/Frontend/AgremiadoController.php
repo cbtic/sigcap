@@ -581,8 +581,32 @@ class AgremiadoController extends Controller
 
     }
 	
-	public function importar_agremiado(){ 
+	public function importar_agremiado_cuota(){
 		
+		$agremiado_model = new Agremiado;
+		$p[]=date("Y");
+		$data = $agremiado_model->crud_automatico_agremiado_cuota($p);
+		
+	}
+	
+	public function importar_agremiado_cuota_fecha(){
+		
+		$agremiado_model = new Agremiado;
+		$p[]=date("Y");
+		$data = $agremiado_model->crud_automatico_agremiado_cuota_fecha($p);
+		
+	}
+	
+	public function importar_agremiado_cuota_vitalicio(){
+		
+		$agremiado_model = new Agremiado;
+		$data = $agremiado_model->crud_automatico_agremiado_cuota_vitalicio();
+		
+	} 
+	
+	public function importar_agremiado($fecha){ 
+		
+		$fecha = "17-08-2023";
 		/*************WEB SERVICE - LEER TOKEN*****************/
 		
 		$data_string = '{"email":"pbravogutarra@gmail.com","password":"ua5DhY3oFDZ7aKg"}';
@@ -610,7 +634,8 @@ class AgremiadoController extends Controller
 		
 		/*************WEB SERVICE - LEER AGREMIADO*****************/
 		
-		$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=13&fecha=17-08-2023');		
+		//$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=13&fecha=17-08-2023');
+		$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=13&fecha='.$fecha);
 		curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch2, CURLOPT_HTTPHEADER, array('x-token: '.$token));
 		curl_setopt($ch2, CURLOPT_SSL_VERIFYHOST, false);

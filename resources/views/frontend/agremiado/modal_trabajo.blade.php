@@ -260,6 +260,7 @@ function guardarCita(id_medico,fecha_cita){
 
 function fn_save_trabajo(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_agremiado = $('#id_agremiado').val();
@@ -276,6 +277,25 @@ function fn_save_trabajo(){
 	var telefono = $('#telefono').val();
 	var celular = $('#celular').val();
 	var email = $('#email').val();
+	
+	if(id_cliente_cargo == "0" || id_cliente_cargo == "")msg+="Debe seleccionar el Cargo <br>";
+	if(rubro_negocio == "")msg += "Debe ingresar el rubro <br>";
+	if(id_departamento_trabajo == "0" || id_departamento_trabajo == "")msg+="Debe seleccionar un Departamento <br>";
+	if(id_provincia_trabajo == "0" || id_provincia_trabajo == "")msg+="Debe seleccionar una Provincia <br>";
+	if(id_distrito_trabajo == "0" || id_distrito_trabajo == "")msg+="Debe seleccionar un Distrito <br>";
+	if(numero_documento == "")msg += "Debe ingresar el RUC <br>";
+	if(razon_social == "")msg += "Debe ingresar el Centro de Trabajo <br>";
+	if(direccion == "")msg += "Debe ingresar una Direcci&oacute;n <br>";
+	if(codigo_postal == "")msg += "Debe ingresar un codigo postal <br>";
+	if(referencia == "")msg += "Debe ingresar una referencia <br>";
+	if(telefono == "")msg += "Debe ingresar un tel&eacute;fono <br>";
+	if(celular == "")msg += "Debe ingresar un celular <br>";
+	if(email == "")msg += "Debe ingresar un email <br>";
+	
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
 	
     $.ajax({
 			url: "/agremiado/send_agremiado_trabajo",

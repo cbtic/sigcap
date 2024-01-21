@@ -104,6 +104,13 @@ $(document).ready(function () {
 		changeYear: true,
     });
 	
+	$('#fecha_nacimiento').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
 	$(".upload").on('click', function() {
         var formData = new FormData();
         var files = $('#image')[0].files[0];
