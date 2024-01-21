@@ -232,11 +232,25 @@ class AgremiadoController extends Controller
 	}
 	
 	public function upload_agremiado(Request $request){
-
+		
+		/*
     	$filepath = public_path('img/frontend/tmp_agremiado/');
 		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
 		echo $_FILES['file']['name'];
+		*/
+		
+		$filename = date("YmdHis") . substr((string)microtime(), 1, 6);
+		$type="";
+		$filepath = public_path('img/frontend/tmp_agremiado/');
+		
+		$type=$this->extension($_FILES["file"]["name"]);
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath . $filename.".".$type);
+		
+		echo $filename.".".$type;
+		
 	}
+	
+	function extension($filename){$file = explode(".",$filename); return strtolower(end($file));}
 	
 	public function consulta_agremiado(){
 		
