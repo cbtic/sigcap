@@ -399,6 +399,8 @@ class ComprobanteController extends Controller
 				
                 //print_r($serieF); exit();
 
+                if($ubicacion_id=="")$ubicacion_id=$id_persona;
+
 				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     0, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
