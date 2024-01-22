@@ -113,7 +113,7 @@ class AfiliacionSeguroController extends Controller
 			$datosafiliado=$afiliado_model->datos_afiliacion_seguro($id);
 
 			$cap_numero=$datosafiliado[0]->numero_cap;
-			$desc_cliente=$datosafiliado[0]->desc_cliente;
+			$desc_cliente=$datosafiliado[0]->apellido_paterno . " " . $datosafiliado[0]->apellido_materno. ", " . $datosafiliado[0]->nombres;
 			$situacion=$datosafiliado[0]->denominacion;
 			$id_seguro=$datosafiliado[0]->id_seguro;
 			$id_plan = $datosafiliado[0]->id_plan;

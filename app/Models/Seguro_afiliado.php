@@ -44,7 +44,7 @@ class Seguro_afiliado extends Model
         $cad = "select * ,s.id id_seguro 
                 from seguro_afiliados sa inner join agremiados a on sa.id_agremiado =a.id 
                 inner join seguros_planes sp on sa.id_plan =sp.id 
-                inner join seguros s on sp.id_seguro  =s.id inner join tabla_maestras tm on a.id_situacion  =cast( tm.codigo as integer)  
+                inner join seguros s on sp.id_seguro  =s.id inner join tabla_maestras tm on a.id_situacion  =cast( tm.codigo as integer) inner join personas p on p.id=a.id_persona 
                 where sa.id=".$id. " and tm.tipo='14';  ";
     
 		$data = DB::select($cad);
