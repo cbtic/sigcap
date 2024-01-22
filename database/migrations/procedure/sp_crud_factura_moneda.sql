@@ -1,5 +1,3 @@
--- DROP FUNCTION public.sp_crud_factura_moneda(varchar, int4, varchar, int4, int4, varchar, varchar, varchar, int4, int4, numeric, varchar, int4, int4);
-
 CREATE OR REPLACE FUNCTION public.sp_crud_factura_moneda(serie character varying, numero integer, tipo character varying, ubicacion integer, persona integer, total character varying, descripcion character varying, cod_contable character varying, id_v integer, id_caja integer, descuento numeric, accion character varying, p_id_usuario integer, p_id_moneda integer)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -91,7 +89,7 @@ begin
 					pu, pu_con_igv, igv_total, descuento, importe,afect_igv, cod_contable, valor_gratu, unidad,id_usuario_inserta,id_comprobante)
 					Values (_serie,numero,tipo,ubicacion,1,descripcion,_total/1.18,(_total/1.18),(_total/1.18)*0.18,descuento,_total,10,cod_contable,0,'ZZ',p_id_usuario, id_caja);
 				
-				update valorizaciones Set id_comprobante  = id_caja
+				update valorizaciones Set id_comprobante  = id_caja, pagado = '1'
 					where id = id_v;
 								
 				idp:=numero;
@@ -112,6 +110,7 @@ begin
 */
 
 /*
+Select sp_crud_factura_moneda('B001',0, 'BV',3070,  924,'17.50','119','',0,0,0,'f',1,1);
 
 Select sp_crud_factura('T001',0, 'TK', 3070,924,'17.50','119','',0,0,0,0,0,'f',2);
 Select sp_crud_factura('T001',6281, 'TK', 1,0,'17.50','LBSP SERVICIO','7040205',8824,1,1,5,50,'d',2);
