@@ -1405,7 +1405,7 @@ label.form-control-sm{
 																<th><?php echo $row->direccion?></th>
 																<th><?php echo $row->referencia?></th>
 																<!--<th><?php //echo $row->codigo_postal?></th>-->
-																<th><?php echo ($row->telefono="0")?$row->telefono:"-"?></th>
+																<th><?php echo ($row->telefono!="0" || $row->telefono!="")?$row->telefono:"-"?></th>
 																<th><?php echo $row->celular?></th>
 																<th><?php echo $row->email?></th>
 																<th>
