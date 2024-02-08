@@ -15,12 +15,11 @@ class CreatePlanContablesTable extends Migration
     {
         Schema::create('plan_contables', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_concepto')->unsigned()->index();
-            $table->bigInteger('id_plantilla detalle')->unsigned()->index();
+            $table->string('cuenta',25)->nullable();
+            $table->string('denominacion',150)->nullable();
+            $table->Integer('id_tipo')->nullable()->unsigned()->index();
             $table->string('estado',1)->nullable()->default('1');
 
-            $table->foreign('id_concepto')->references('id')->on('conceptos');
- 
             $table->bigInteger('id_usuario_inserta')->unsigned()->index();
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index();
             $table->timestamps();
