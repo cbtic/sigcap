@@ -9,7 +9,7 @@ use App\Models\seguro_afiliado_parentesco;
 use Illuminate\Http\Request;
 use App\Models\Seguro_afiliado;
 use App\Models\Regione;
-use App\Models\seguro;
+use App\Models\Seguro;
 use App\Models\SegurosPlane;
 use App\Models\Ubigeo;
 use App\Models\TablaMaestra;
@@ -113,7 +113,7 @@ class AfiliacionSeguroController extends Controller
 			$datosafiliado=$afiliado_model->datos_afiliacion_seguro($id);
 
 			$cap_numero=$datosafiliado[0]->numero_cap;
-			$desc_cliente=$datosafiliado[0]->desc_cliente;
+			$desc_cliente=$datosafiliado[0]->apellido_paterno . " " . $datosafiliado[0]->apellido_materno. ", " . $datosafiliado[0]->nombres;
 			$situacion=$datosafiliado[0]->denominacion;
 			$id_seguro=$datosafiliado[0]->id_seguro;
 			$id_plan = $datosafiliado[0]->id_plan;
@@ -127,7 +127,7 @@ class AfiliacionSeguroController extends Controller
 			$fecha=Carbon::now()->format('Y-m-d');
 		} 
 		
-		$seguro_model = new seguro;
+		$seguro_model = new Seguro;
 		$seguro = $seguro_model->getSeguroAll();
         
 	

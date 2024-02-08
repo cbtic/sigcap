@@ -13,6 +13,18 @@ class Agremiado extends Model
 	public function listar_agremiado_ajax($p){
 		return $this->readFunctionPostgres('sp_listar_agremiado_paginado',$p);
     }
+	
+	public function crud_automatico_agremiado_cuota($p){
+		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota',$p);
+    }
+	
+	public function crud_automatico_agremiado_cuota_fecha($p){
+		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_fecha',$p);
+    }
+	
+	public function crud_automatico_agremiado_cuota_vitalicio($p){
+		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_vitalicio',$p);
+    }
 
 	function getAgremiadoAll(){
 		$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, desc_cliente nombre_completo,t1.id_tipo_documento 								

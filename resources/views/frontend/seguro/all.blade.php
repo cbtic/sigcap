@@ -217,6 +217,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/seguro.js') }}"></script>
+<script src="{{ asset('js/Seguro.js') }}"></script>
 
 @endpush

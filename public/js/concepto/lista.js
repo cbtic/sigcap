@@ -57,7 +57,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#partida_presupuestalBus').keypress(function(e){
+	$('#id_partida_presupuestal').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
@@ -500,7 +500,7 @@ function datatablenew(){
 			var cuenta_contable_debe = $('#cuenta_contable_debe').val();
 			var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
 			var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2').val();
-            var partida_presupuestal = $('#partida_presupuestalBus').val();
+            var partida_presupuestal = $('#id_partida_presupuestal').val();
 			var id_tipo_afectacion = $('#id_tipo_afectacion').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();

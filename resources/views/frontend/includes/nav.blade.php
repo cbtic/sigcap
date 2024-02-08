@@ -197,12 +197,12 @@
 								@can('Persona')
                                 <a href="/persona/consulta_persona" class="dropdown-item">Persona</a>
 								@endcan
-								@can('Profesion')
+								<!--@can('Profesion')
 								<a href="/profesion/consulta_profesion" class="dropdown-item">Profesi&oacute;n</a>
 								@endcan
 								@can('Otros Profesionales')
                                 <a href="/profesionalesOtro/consulta_profesionalesOtro" class="dropdown-item">Otros Profesionales</a>
-								@endcan
+								@endcan-->
 								
 						   </div>	
 					</li>

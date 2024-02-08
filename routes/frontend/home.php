@@ -41,6 +41,9 @@ use App\Http\Controllers\Frontend\AdelantoController;
 
 use App\Http\Controllers\Frontend\PlanillaDelegadoController;
 
+use App\Http\Controllers\Frontend\CentroCostoController;
+use App\Http\Controllers\Frontend\PartidaPresupuestalController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -114,6 +117,9 @@ Route::get('agremiado/eliminar_trabajo/{id}', [AgremiadoController::class, 'elim
 Route::get('agremiado/eliminar_traslado/{id}', [AgremiadoController::class, 'eliminar_traslado'])->name('agremiado.eliminar_traslado');
 Route::get('agremiado/eliminar_situacion/{id}', [AgremiadoController::class, 'eliminar_situacion'])->name('agremiado.eliminar_situacion');
 Route::get('agremiado/obtener_agremiado/{tipo_documento}/{numero_documento}', [AgremiadoController::class, 'obtener_agremiado'])->name('agremiado.obtener_agremiado');
+
+Route::post('agremiado/upload_agremiado', [AgremiadoController::class, 'upload_agremiado'])->name('agremiado.upload_agremiado');
+
 
 Route::get('empresa/consulta_empresa', [EmpresaController::class, 'consulta_empresa'])->name('empresa.consulta_empresa');
 Route::post('empresa/listar_empresa_ajax', [EmpresaController::class, 'listar_empresa_ajax'])->name('empresa.listar_empresa_ajax');
@@ -407,6 +413,7 @@ Route::get('revisorUrbano/consulta_revisorUrbano', [RevisorUrbanoController::cla
 Route::post('revisorUrbano/listar_revisorUrbano_ajax', [RevisorUrbanoController::class, 'listar_revisorUrbano_ajax'])->name('revisorUrbano.listar_revisorUrbano_ajax');
 Route::get('revisorUrbano/editar_revisorUrbano/{id}', [RevisorUrbanoController::class, 'editar_revisorUrbano'])->name('revisorUrbano.editar_revisorUrbano');
 Route::get('revisorUrbano/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [RevisorUrbanoController::class, 'modal_revisorUrbano_nuevoRevisorUrbano'])->name('revisorUrbano.modal_revisorUrbano_nuevoRevisorUrbano');
+Route::post('revisorUrbano/send_revisor_urbano', [RevisorUrbanoController::class, 'send_revisor_urbano'])->name('revisorUrbano.send_revisor_urbano');
 
 Route::get('derecho_revision/consulta_derecho_revision', [DerechoRevisionController::class, 'consulta_derecho_revision'])->name('derecho_revision.consulta_derecho_revision');
 Route::get('derecho_revision/consulta_solicitud_derecho_revision', [DerechoRevisionController::class, 'consulta_solicitud_derecho_revision'])->name('derecho_revision.consulta_solicitud_derecho_revision');
@@ -459,6 +466,9 @@ Route::get('municipalidad/obtener_distrito/{idDepartamento}/{idProvincia}', [Mun
 Route::get('planillaDelegado/consulta_planilla_delegado', [PlanillaDelegadoController::class, 'consulta_planilla_delegado'])->name('planillaDelegado.consulta_planilla_delegado');
 Route::post('planillaDelegado/obtener_planilla_delegado', [PlanillaDelegadoController::class, 'obtener_planilla_delegado'])->name('planillaDelegado.obtener_planilla_delegado');
 Route::post('planilla/send_planilla_delegado', [PlanillaDelegadoController::class, 'send_planilla_delegado'])->name('sesion.send_planilla_delegado');
+
+Route::get('centro_costo/importar_centro_costo', [CentroCostoController::class, 'importar_centro_costo'])->name('centro_costo.importar_centro_costo');
+Route::get('partida_presupuestal/importar_partida_presupuestal', [PartidaPresupuestalController::class, 'importar_partida_presupuestal'])->name('partida_presupuestal.importar_partida_presupuestal');
 
 
 

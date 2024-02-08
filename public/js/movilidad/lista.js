@@ -36,6 +36,10 @@ $(document).ready(function () {
 		}
 	});
 
+	$("#municipalidad_integrada").select2({ width: '100%' });
+
+	
+
 	$('#estado').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();

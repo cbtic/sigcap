@@ -8,6 +8,8 @@ use App\Models\Concepto;
 use App\Models\TipoConcepto;
 use App\Models\Regione;
 use App\Models\TablaMaestra;
+use App\Models\PartidaPresupuestale;
+use App\Models\CentroCosto;
 use Auth;
 
 class ConceptoController extends Controller
@@ -81,7 +83,9 @@ class ConceptoController extends Controller
     }
 
     public function modal_concepto_nuevoConcepto($id){
-		
+
+		$partidaPresupuestal_model = new PartidaPresupuestale;
+		$centroCosto_model = new CentroCosto;
 		$concepto = new Concepto;
 		$regione_model = new Regione;
 		$tipoConcepto_model = new TipoConcepto;
@@ -95,28 +99,29 @@ class ConceptoController extends Controller
 			$concepto = new Concepto;
 		}
 		
-		
+		$partidaPresupuestal = $partidaPresupuestal_model->getPartidaPresupuestalAll();
+		$centroCosto = $centroCosto_model->getCentroCostoAll();
 		$tipoConcepto = $tipoConcepto_model->getTipoConceptoAll();
 		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','tipoConcepto','concepto','region','id_tipo_afectacion','moneda'));
+		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','tipoConcepto','concepto','region','id_tipo_afectacion','moneda','partidaPresupuestal','centroCosto'));
 	
 	}
 
     public function send_concepto_nuevoConcepto(Request $request){
 
-		$request->validate([
+		/*$request->validate([
 			'id_regional'=>'required',
 			'id_tipo_concepto'=>'required',
 			'denominacion'=>'required',
 			'importe'=>'required | numeric',
 			'id_moneda'=>'required',
 			'periodo'=>'required',
-			'partida_presupuestal'=>'required',
+			'id_partida_presupuestal'=>'required',
 			'id_tipo_afectacion'=>'required',
-			'centro_costo'=>'required',
+			'id_centro_costo'=>'required',
 		]
-		);
+		);*/
 		
 		$id_user = Auth::user()->id;
 		$Concepto_model = new Concepto;

@@ -39,8 +39,8 @@
 
         var total_fac = $("#total_fac").val();
 
-       // alert(total_fac);
-        
+        // alert(total_fac);
+
         OcultarTarjeta();
 
         $('#addFiltro').on('click', function() {
@@ -63,7 +63,7 @@
                 MostrarTarjeta();
 
                 $('#numcuota_').val("1");
-                var $total=$('#total_fac').val();
+                var $total = $('#total_fac').val();
                 //alert($('#totalP').val());
                 $('#totalcredito_').val($total)
                 $('#plazo_ ').val("30");
@@ -109,29 +109,30 @@
     var cuentaproductos = 0;
 
     function pad(str, max) {
-		str = str.toString();
-		return str.length < max ? pad("0" + str, max) : str;
-	}
+        str = str.toString();
+        return str.length < max ? pad("0" + str, max) : str;
+    }
 
     function sumarDias(fecha, dias) {
-		fecha.setDate(fecha.getDate() + dias);
-		return fecha;
-	}
-    function FormatFecha(fecha) {
-		//let date = new Date()
-		let date = new Date(fecha)
-		let day = date.getDate()
-		let month = date.getMonth() + 1
-		let year = date.getFullYear()
+        fecha.setDate(fecha.getDate() + dias);
+        return fecha;
+    }
 
-		let fechaFormat
-		if (month < 10) {
-			fechaFormat = `${year}-0${month}-${day}`
-		} else {
-			fechaFormat = `${year}-${month}-${day}`
-		}
-		return fechaFormat;
-	}
+    function FormatFecha(fecha) {
+        //let date = new Date()
+        let date = new Date(fecha)
+        let day = date.getDate()
+        let month = date.getMonth() + 1
+        let year = date.getFullYear()
+
+        let fechaFormat
+        if (month < 10) {
+            fechaFormat = `${year}-0${month}-${day}`
+        } else {
+            fechaFormat = `${year}-${month}-${day}`
+        }
+        return fechaFormat;
+    }
 
 
     function generarCuotas() {
@@ -139,17 +140,17 @@
         var n = 0;
         var nroCuotas = $('#numcuota_').val();
         var total = $('#totalcredito_').val();
-        var plazo =$('#plazo_').val();
+        var plazo = $('#plazo_').val();
         var d = new Date();
         //fecha_cuota = FormatFecha(sumarDias(d, plazo))
 
         for (let i = 0; i < nroCuotas; i++) {
-            n++; 
-            fecha_cuota = FormatFecha( sumarDias(d, 30));
-           
+            n++;
+            fecha_cuota = FormatFecha(sumarDias(d, 30));
+
             total_frac = parseFloat((total) / (nroCuotas)).toFixed(1);
-           
-            $('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td>   <td width="10%"> <input type="text"  name="importe_" id="importe_" value="'+ total_frac+'" class="form-control form-control-sm"></td>  </td>   <td width="10%"> <input type="date"  name="fechacuota_" id="fechacuota_" value="'+fecha_cuota+'" class="form-control form-control-sm"></td>  </tr> ');
+
+            $('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td>   <td width="10%"> <input type="text"  name="importe_" id="importe_" value="' + total_frac + '" class="form-control form-control-sm"></td>  </td>   <td width="10%"> <input type="date"  name="fechacuota_" id="fechacuota_" value="' + fecha_cuota + '" class="form-control form-control-sm"></td>  </tr> ');
             $('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][Monto]" value=""> </td>');
         }
 
@@ -774,8 +775,8 @@
                                                                                                             if ($trans == 'FE') {
                                                                                                                 echo number_format($comprobante->total, 2);
                                                                                                             } ?></th>
-                                                        
-                                                        <input type="hidden" name="total_fac" id="total_fac" value="<?php echo number_format($total, 2); ?>">                                                                                                            
+
+                                                        <input type="hidden" name="total_fac" id="total_fac" value="<?php echo number_format($total, 2); ?>">
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -788,7 +789,7 @@
 
 
 
-                                
+
                             </div>
                         </div>
 
@@ -984,7 +985,7 @@
                             </div>
                         </div>
 
-                        <div class="card"  id="card_cuotas">
+                        <div class="card" id="card_cuotas">
                             <div class="card-header">
                                 <div id="" class="row">
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
@@ -1014,7 +1015,7 @@
                                         <div class="form-group">
                                             <label class="form-control-sm">Plazo en dias</label>
                                             <input type="text" name="plazo_" id="plazo_" value="" placeholder="" class="form-control form-control-sm">
-                                            
+
                                         </div>
                                     </div>
 
@@ -1022,11 +1023,11 @@
                                         <div class="form-group">
                                             <label class="form-control-sm"></label>
                                             <button type="button" id="btnFraciona" name="btnFraciona" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarCuotas()">
-                                                    <i class="fas fa-plus-circle"></i> Cuotas
+                                                <i class="fas fa-plus-circle"></i> Cuotas
                                             </button>
                                         </div>
                                     </div>
-                                    
+
 
                                     <?php $seleccionar_todos = "style='display:block'"; ?>
                                     <div class="table-responsive">
@@ -1035,7 +1036,7 @@
                                                 <tr style="font-size:13px">
                                                     <th>Id</th>
                                                     <th>Importe</th>
-                                                    <th>Fecha</th>                                                    
+                                                    <th>Fecha</th>
                                                 </tr>
 
                                             </thead>

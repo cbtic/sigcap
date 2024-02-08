@@ -74,14 +74,19 @@ class AdelantoController extends Controller
 		
 		if($id>0){
 			$adelanto = Adelanto::find($id);
-			$persona = Persona::find($id);
-			$agremiado = Agremiado::find($id);
+			$id_agremiado = $adelanto->id_agremiado;
+			$agremiado = Agremiado::find($id_agremiado);
+			$id_persona = $agremiado->id_persona;
+			$persona = Persona::find($id_persona);
+			
 		}else{
 			$adelanto = new Adelanto;
 			$persona = new Persona;
 			$agremiado = new Agremiado;
 		}
-		
+		//echo($id); 
+		//print_r($persona); exit();
+
 		$tipo_documento = $tablaMaestra_model->getMaestroC(16,85);
 		
 		return view('frontend.adelanto.modal_adelanto_nuevoAdelanto',compact('id','agremiado','persona','adelanto','tipo_documento'));

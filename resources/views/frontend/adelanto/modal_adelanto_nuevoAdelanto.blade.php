@@ -391,10 +391,11 @@ function modal_personaNuevo(){
                         -->
                       <?php
                       $url_foto = "/img/profile-icon.png";
-                      if ($persona->foto != "") $url_foto = "/img/agremiado/" . $persona->foto;
+                      //if ($persona->foto != "") $url_foto = "/img/agremiado/" . $persona->foto;
+                      if (isset($persona->foto) && $persona->foto != "")$url_foto = "/img/agremiado/" . $persona->foto;
 
                       $foto = "";
-                      if ($persona->foto != "") $foto = $persona->foto;
+                      if (isset($persona->foto) && $persona->foto != "")$foto = $persona->foto;
                       ?>
                       <img src="<?php echo $url_foto ?>" id="img_ruta" width="130px" height="165px" alt="" style="text-align:center;margin-top:8px" />
                       <input type="hidden" id="img_foto" name="img_foto" value="<?php echo $foto ?>" />
