@@ -170,6 +170,15 @@ $(document).ready(function() {
 
 });
 
+var id_tipo_concurso = "<?php echo $concurso->id_tipo_concurso?>";
+var id_sub_tipo_concurso = "<?php echo $concurso->id_sub_tipo_concurso?>";
+//alert(id_tipo_concurso);
+
+if(id_tipo_concurso>0){
+	obtenerSubTipoConcursoEdit(id_tipo_concurso,id_sub_tipo_concurso);
+}
+
+
 function validacion(){
     
     var msg = "";
@@ -223,6 +232,29 @@ function obtenerSubTipoConcurso(){
 			$("#id_sub_tipo_concurso").html("");
 			$(result).each(function (ii, oo) {
 				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_sub_tipo_concurso").html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerSubTipoConcursoEdit(id_tipo_concurso,id_sub_tipo_concurso){
+	
+	//var id_tipo_concurso = $('#id_tipo_concurso').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/93/'+id_tipo_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_sub_tipo_concurso").html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(id_sub_tipo_concurso == oo.codigo)selected = "selected='selected'";
+				option += "<option value='"+oo.codigo+"' "+selected+" >"+oo.denominacion+"</option>";
 			});
 			$("#id_sub_tipo_concurso").html(option);
 		}
