@@ -43,6 +43,7 @@ use App\Http\Controllers\Frontend\PlanillaDelegadoController;
 
 use App\Http\Controllers\Frontend\CentroCostoController;
 use App\Http\Controllers\Frontend\PartidaPresupuestalController;
+use App\Http\Controllers\Frontend\PlanContableController;
 
 /*
  * Frontend Controllers
@@ -469,8 +470,9 @@ Route::post('planilla/send_planilla_delegado', [PlanillaDelegadoController::clas
 
 Route::get('centro_costo/importar_centro_costo', [CentroCostoController::class, 'importar_centro_costo'])->name('centro_costo.importar_centro_costo');
 Route::get('partida_presupuestal/importar_partida_presupuestal', [PartidaPresupuestalController::class, 'importar_partida_presupuestal'])->name('partida_presupuestal.importar_partida_presupuestal');
+Route::get('plan_contable/importar_plan_contable', [PlanContableController::class, 'importar_plan_contable'])->name('plan_contable.importar_plan_contable');
 
-
+Route::get('centro_costo/test', [CentroCostoController::class, 'test'])->name('centro_costo.test');
 
 
 
