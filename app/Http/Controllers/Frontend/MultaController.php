@@ -192,7 +192,7 @@ class MultaController extends Controller
 		$valorizacion = new Valorizacione;
 		$valorizacion->id_modulo = 3;
 		$valorizacion->pk_registro = $id_multa;
-		$valorizacion->id_concepto = 23;
+		$valorizacion->id_concepto = 26461;
 		$valorizacion->id_agremido = $agremiado->id;
 		$valorizacion->id_persona = $agremiado->id_persona;
 		$valorizacion->monto = $multa->monto;
