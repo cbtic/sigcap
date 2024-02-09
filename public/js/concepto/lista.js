@@ -14,6 +14,11 @@ $(document).ready(function () {
 		}
 	});
 
+	$("#partida_presupuestal").select2();
+	$("#id_tipo_afectacion").select2();
+	$("#id_centro_costo").select2();
+	$("#id_tipo_concepto").select2();
+
 	/*	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
@@ -526,9 +531,9 @@ function datatablenew(){
             [	
 				{
 				"mRender": function (data, type, row) {
-					var codigo = "";
-					if(row.codigo!= null)codigo = row.codigo;
-					return codigo;
+					var id = "";
+					if(row.id!= null)id = row.id;
+					return id;
 					},
 				"bSortable": false,
 				"aTargets": [0],
@@ -619,9 +624,9 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var id_partida_presupuestal = "";
-					if(row.id_partida_presupuestal!= null)id_partida_presupuestal = row.id_partida_presupuestal;
-					return id_partida_presupuestal;
+					var partida_presupuestal = "";
+					if(row.partida_presupuestal!= null)partida_presupuestal = row.partida_presupuestal;
+					return partida_presupuestal;
 				},
 				"bSortable": false,
 				"aTargets": [10]
