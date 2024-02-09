@@ -267,7 +267,6 @@ function habilitar(obj){
 		$('input[name=coordinador]').prop("checked",false);
 		$(obj).prop("checked",true);
 	}
-
 }
 
 function fn_save(){
