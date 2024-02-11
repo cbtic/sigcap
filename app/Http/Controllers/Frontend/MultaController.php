@@ -13,6 +13,9 @@ use App\Models\Agremiado;
 use App\Models\TablaMaestra;
 use Carbon\Carbon;
 use Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
+use stdClass;
 
 class MultaController extends Controller
 {
@@ -203,6 +206,62 @@ class MultaController extends Controller
 		$valorizacion->id_usuario_inserta = $id_user;
 		$valorizacion->save();
     }
+	
+	public function upload_multa(Request $request){
+		
+		$filename = date("YmdHis") . substr((string)microtime(), 1, 6);
+		$type="";
+		$filepath = public_path('img/multa/');
+		
+		$type=$this->extension($_FILES["file"]["name"]);
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath . $filename.".".$type);
+		
+    	
+		//move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		//echo $_FILES['file']['name'];
+		
+		$archivo = $filename.".".$type;
+		
+		$this->importar_multa($archivo);
+		
+	}
+	
+	function extension($filename){$file = explode(".",$filename); return strtolower(end($file));}
+	
+	public function importar_multa($archivo){
+		
+		$id_user = Auth::user()->id;
+		//$multas = Excel::toArray(new stdClass(), "img/multa/multa.xlsx");
+		$multas = Excel::toArray(new stdClass(), "img/multa/".$archivo);
+		
+		foreach($multas as $key=>$row){
+			
+			foreach($row as $key2=>$row2){
+				if($key2>0){
+					$cap = $row2[0];
+					$periodo = $row2[1];
+					$id_multa = $row2[2];
+					
+					$agremiadoMulta = new AgremiadoMulta;
+					$agremiado = Agremiado::where("numero_cap",$cap)->where("estado","1")->first();		
+					$agremiadoMulta->id_agremiado = $agremiado->id;
+					$agremiadoMulta->id_multa = $id_multa;
+					$agremiadoMulta->fecha = Carbon::now()->format('Y-m-d');
+					$agremiadoMulta->id_estado_pago = 1;
+					$agremiadoMulta->id_concepto = 29;
+					$agremiadoMulta->periodo = $periodo;
+					$agremiadoMulta->estado = 1;
+					$agremiadoMulta->id_usuario_inserta = $id_user;
+					$agremiadoMulta->save();
+					//$id_multa = $agremiadoMulta->id;
+					//$multa = Multa::find($request->id_multa);
+					
+				}
+		
+			}
+		
+		}
+	}
 
 	public function eliminar_multa($id,$estado)
     {
