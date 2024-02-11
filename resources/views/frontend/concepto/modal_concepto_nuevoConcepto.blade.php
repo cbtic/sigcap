@@ -656,22 +656,49 @@ container: '#myModal modal-body'
 										<input id="periodo" name="periodo" class="form-control form-control-sm"  value="<?php echo $concepto->periodo?>" type="text" >
 									</div>
 								</div>
+								
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Cuenta Contable Debe</label>
-										<input id="cuenta_contable_debe" name="cuenta_contable_debe" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_debe?>" type="text" >
+										<select name="cuenta_contable_debe" id="cuenta_contable_debe" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto_cuenta_debe as $row) {?>
+											<option value="<?php echo $row->cuenta_contable_debe?>" <?php if($row->cuenta_contable_debe==$concepto->cuenta_contable_debe)echo "selected='selected'"?>><?php echo $row->cuenta_contable_debe?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
+								
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Cuenta Contable al Haber1</label>
-										<input id="cuenta_contable_al_haber1" name="cuenta_contable_al_haber1" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_al_haber1?>" type="text" >
+										<select name="cuenta_contable_al_haber1" id="cuenta_contable_al_haber1" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto_cuenta_haber1 as $row) {?>
+											<option value="<?php echo $row->cuenta_contable_al_haber1?>" <?php if($row->cuenta_contable_al_haber1==$concepto->cuenta_contable_al_haber1)echo "selected='selected'"?>><?php echo $row->cuenta_contable_al_haber1?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
+								
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Cuenta Contable al Haber2</label>
-										<input id="cuenta_contable_al_haber2" name="cuenta_contable_al_haber2" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_al_haber2?>" type="text" >
+										<select name="cuenta_contable_al_haber2" id="cuenta_contable_al_haber2" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto_cuenta_haber2 as $row) {?>
+											<option value="<?php echo $row->cuenta_contable_al_haber2?>" <?php if($row->cuenta_contable_al_haber2==$concepto->cuenta_contable_al_haber2)echo "selected='selected'"?>><?php echo $row->cuenta_contable_al_haber2?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
 								<div class="col-lg-5">

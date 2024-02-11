@@ -18,6 +18,7 @@ use App\Models\AgremiadoSituacione;
 use App\Models\TablaMaestra;
 use App\Models\Regione;
 use App\Models\Ubigeo;
+use App\Models\AgremiadoRole;
 use Auth;
 
 class AgremiadoController extends Controller
@@ -52,6 +53,7 @@ class AgremiadoController extends Controller
 		$agremiadoTrabajo_model = new AgremiadoTrabajo;
 		$agremiadoTraslado_model = new AgremiadoTraslado;
 		$agremiadoSituacione_model = new AgremiadoSituacione;
+		$agremiadoRol_model = new AgremiadoRole;
 		
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
@@ -74,8 +76,9 @@ class AgremiadoController extends Controller
 		$agremiado_trabajo = $agremiadoTrabajo_model->getAgremiadoTrabajo($id);
 		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
 		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);
+		$agremiado_rol = $agremiadoRol_model->getAgremiadoRol($id);
 		
-		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion'));
+		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion','agremiado_rol'));
     }
 	
 	public function editar_agremiado($id){
@@ -101,6 +104,7 @@ class AgremiadoController extends Controller
 		$agremiadoTrabajo_model = new AgremiadoTrabajo;
 		$agremiadoTraslado_model = new AgremiadoTraslado;
 		$agremiadoSituacione_model = new AgremiadoSituacione;
+		$agremiadoRol_model = new AgremiadoRole;
 		
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
@@ -123,8 +127,9 @@ class AgremiadoController extends Controller
 		$agremiado_trabajo = $agremiadoTrabajo_model->getAgremiadoTrabajo($id);
 		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
 		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);
+		$agremiado_rol = $agremiadoRol_model->getAgremiadoRol($id);
 		
-		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion'));
+		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion','agremiado_rol'));
 		
     }
 	
