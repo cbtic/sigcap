@@ -60,9 +60,9 @@ foreach($valorizacion as $key=>$row):
 	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha_proceso))?></td>
     <td class="text-left"><?php echo $row->descripcion?></td>
 	<?php if ($row->vencio=="1"){ ?>
-		<td class="text-left" style="color:red" ><?php echo date("d/m/Y", strtotime($row->fecha))?></td>	
+		<td class="text-left" style="color:red" ><?php echo date("d/m/Y", strtotime($row->fecha_proceso))?></td>	
 	<?php }else{?>
-		<td class="text-left" ><?php echo date("d/m/Y", strtotime($row->fecha))?></td>
+		<td class="text-left" ><?php echo date("d/m/Y", strtotime($row->fecha_proceso))?></td>
 	<?php }?>
 
 	<td class="text-left"><?php echo $row->abreviatura?></td>
