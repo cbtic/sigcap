@@ -39,12 +39,17 @@ class Kernel extends ConsoleKernel
 		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('08:00');
 		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('12:00');
 		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('16:00');
-		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('22:32');
+		$schedule->command('envioCentroCostoAutomatico:cron')->dailyAt('23:02');
 		
 		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('08:00');
 		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('12:00');
 		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('16:00');
-		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('22:32');
+		$schedule->command('envioPartidaPresupuestalAutomatico:cron')->dailyAt('23:02');
+		
+		$schedule->command('envioPlanContableAutomatico:cron')->dailyAt('08:00');
+		$schedule->command('envioPlanContableAutomatico:cron')->dailyAt('12:00');
+		$schedule->command('envioPlanContableAutomatico:cron')->dailyAt('16:00');
+		$schedule->command('envioPlanContableAutomatico:cron')->dailyAt('23:02');
 		
 		/************NUEVOS***************/
 		

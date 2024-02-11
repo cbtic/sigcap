@@ -201,7 +201,7 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>C&oacute;digo</th>
+                            <th>Id</th>
                             <th>Regional</th>
                             <th>Tipo Concepto</th>
                             <th>Concepto</th>

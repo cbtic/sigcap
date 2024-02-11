@@ -179,7 +179,7 @@ class MultaController extends Controller
 		$agremiadoMulta->id_multa = $request->id_multa;
 		$agremiadoMulta->fecha = Carbon::now()->format('Y-m-d');
 		$agremiadoMulta->id_estado_pago = 1;
-		$agremiadoMulta->id_concepto = 29;
+		$agremiadoMulta->id_concepto = 26461;
 		$agremiadoMulta->periodo = $request->periodo;
 		$agremiadoMulta->estado = 1;
 		$agremiadoMulta->id_usuario_inserta = $id_user;
@@ -192,7 +192,7 @@ class MultaController extends Controller
 		$valorizacion = new Valorizacione;
 		$valorizacion->id_modulo = 3;
 		$valorizacion->pk_registro = $id_multa;
-		$valorizacion->id_concepto = 23;
+		$valorizacion->id_concepto = 26461;
 		$valorizacion->id_agremido = $agremiado->id;
 		$valorizacion->id_persona = $agremiado->id_persona;
 		$valorizacion->monto = $multa->monto;

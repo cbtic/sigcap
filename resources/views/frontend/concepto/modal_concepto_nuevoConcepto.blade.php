@@ -193,6 +193,10 @@ $.mask.definitions['p'] = "[Mm]";
 $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	$('#hora_solicitud').mask('00:00');
+	$("#partida_presupuestal").select2({ width: '100%' });
+	$("#id_tipo_afectacion").select2({ width: '100%' });
+	$("#id_centro_costo").select2({ width: '100%' });
+	$("#id_tipo_concepto").select2({ width: '100%' });
 	//$("#id_empresa").select2({ width: '100%' });
 });
 </script>
@@ -343,7 +347,7 @@ function valida(){
 	var importe = $('#importe').val();
 	var id_moneda = $('#id_moneda').val();
 	var periodo = $('#periodo').val();
-	var partida_presupuestal = $('#id_partida_presupuestal').val();
+	var partida_presupuestal = $('#partida_presupuestal').val();
 	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
 	var centro_costo = $('#id_centro_costo').val();
 
@@ -392,7 +396,7 @@ function fn_save_concepto(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var codigo = $('#codigo').val();
+	//var codigo = $('#codigo').val();
 	var id_regional = $('#id_regional').val();
 	var id_tipo_concepto = $('#id_tipo_concepto').val();
 	var denominacion = $('#denominacion').val();
@@ -402,7 +406,7 @@ function fn_save_concepto(){
 	var cuenta_contable_debe = $('#cuenta_contable_debe').val();
 	var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
 	var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2').val();
-	var partida_presupuestal = $('#id_partida_presupuestal').val();
+	var partida_presupuestal = $('#partida_presupuestal').val();
 	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
 	var centro_costo = $('#id_centro_costo').val();
 	
@@ -410,7 +414,7 @@ function fn_save_concepto(){
     $.ajax({
 			url: "/concepto/send_concepto_nuevoConcepto",
             type: "POST",
-            data : {_token:_token,id:id,codigo:codigo,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,centro_costo:centro_costo},
+            data : {_token:_token,id:id,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,centro_costo:centro_costo},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -586,12 +590,12 @@ container: '#myModal modal-body'
 							<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 							<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 							<div class="row" style="padding-left:10px">
-								<div class="col-lg-3">
+								<!--<div class="col-lg-3">
 									<div class="form-group">
 										<label class="control-label form-control-sm">C&oacute;digo</label>
-										<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" readonly="readonly" >						
+										<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?/*php echo $concepto->codigo*/?>" type="text" readonly="readonly" >						
 									</div>
-								</div>
+								</div>-->
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Regional</label>
@@ -673,7 +677,7 @@ container: '#myModal modal-body'
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Partida Presupuestal</label>
-										<select name="id_partida_presupuestal" id="id_partida_presupuestal" class="form-control form-control-sm" onChange="">
+										<select name="partida_presupuestal" id="partida_presupuestal" class="form-control form-control-sm" onChange="">
 										<option value="">--Selecionar--</option>
 											<?php
 												foreach ($partidaPresupuestal as $row) {?>

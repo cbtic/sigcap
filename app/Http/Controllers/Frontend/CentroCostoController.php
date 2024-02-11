@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CentroCosto;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 class CentroCostoController extends Controller
-{
+{	
     public function importar_centro_costo(){ 
 	
 		$ch = curl_init('http://webservice.limacap.org:8080/webservices.php?op=centrocostos');		
@@ -47,4 +50,14 @@ class CentroCostoController extends Controller
 		}
 		
 	}
+	
+	public function test(){ 
+			
+		$log = ['metodo' => "dfdfccdcd", 'description' => "ddcdcc"];
+		$logCentroCosto = new Logger('centro_costo_log');
+		$logCentroCosto->pushHandler(new StreamHandler(storage_path('logs/centro_costo_log.log')), Logger::INFO);
+		$logCentroCosto->info('centro_costo_log', $log);		
+		
+	}	
+	
 }
