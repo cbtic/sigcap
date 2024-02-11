@@ -87,6 +87,7 @@ class ConceptoController extends Controller
 		$partidaPresupuestal_model = new PartidaPresupuestale;
 		$centroCosto_model = new CentroCosto;
 		$concepto = new Concepto;
+		$concepto_model = new Concepto;
 		$regione_model = new Regione;
 		$tipoConcepto_model = new TipoConcepto;
 		$tablaMaestra_model = new TablaMaestra;
@@ -103,8 +104,11 @@ class ConceptoController extends Controller
 		$centroCosto = $centroCosto_model->getCentroCostoAll();
 		$tipoConcepto = $tipoConcepto_model->getTipoConceptoAll();
 		$region = $regione_model->getRegionAll();
+		$concepto_cuenta_debe = $concepto_model->getConceptoCuentaContableDebe();
+		$concepto_cuenta_haber1 = $concepto_model->getConceptoCuentaContableHaber1();
+		$concepto_cuenta_haber2 = $concepto_model->getConceptoCuentaContableHaber2();
 		
-		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','tipoConcepto','concepto','region','id_tipo_afectacion','moneda','partidaPresupuestal','centroCosto'));
+		return view('frontend.concepto.modal_concepto_nuevoConcepto',compact('id','tipoConcepto','concepto','region','id_tipo_afectacion','moneda','partidaPresupuestal','centroCosto','concepto_cuenta_debe','concepto_cuenta_haber1','concepto_cuenta_haber2'));
 	
 	}
 

@@ -73,4 +73,28 @@ class Concepto extends Model
 		$data = DB::select($cad);
         return $data[0]->codigo;
     }
+
+    function getConceptoCuentaContableDebe(){
+
+        $cad = "select distinct cuenta_contable_debe from conceptos c where cuenta_contable_debe ilike '12%'";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getConceptoCuentaContableHaber1(){
+
+        $cad = "select distinct cuenta_contable_al_haber1 from conceptos c where cuenta_contable_al_haber1 ilike '40%'";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getConceptoCuentaContableHaber2(){
+
+        $cad = "select distinct cuenta_contable_al_haber2 from conceptos c where cuenta_contable_al_haber2 ilike '70%' or cuenta_contable_al_haber2 ilike '75%' ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 }

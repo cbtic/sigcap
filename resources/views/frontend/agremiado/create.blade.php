@@ -691,6 +691,15 @@ label.form-control-sm{
 								role="tab"
 								aria-controls="situacion"
 								aria-selected="false">Viaje Extranjero</a>
+
+							<a
+								class="nav-link"
+								id="roles-tab"
+								data-toggle="pill"
+								href="#roles"
+								role="tab"
+								aria-controls="traslado"
+								aria-selected="false">Roles</a>
 							
 						</div>
 					</nav>
@@ -1439,6 +1448,8 @@ label.form-control-sm{
 							</div>
 							
 						</div>
+
+						
 						
 						<div class="tab-pane fade pt-3" id="traslado" role="tabpanel" aria-labelledby="traslado-tab">
 							
@@ -1495,6 +1506,90 @@ label.form-control-sm{
 					<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalTraslado(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
 					<a href="javascript:void(0)" onclick="eliminarTraslado(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 					</div>
+																</th>
+															</tr>						
+															<?php }?>
+														</tbody>							
+														</table>
+														
+														</div>
+													
+												</div>
+														
+												</div>
+												
+											</div>
+											
+											
+												
+										</div>
+										
+										
+									</div>
+		
+								</div>
+						
+							</div>
+							
+						</div>
+
+						<div class="tab-pane fade pt-3" id="roles" role="tabpanel" aria-labelledby="roles-tab">
+							
+							<div class="row" style="padding-top:0px">
+
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									
+									<div class="card">
+										<div class="card-header">
+											<div id="" class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<strong>
+														Roles
+													</strong>
+													
+												</div>
+											</div>
+										</div>
+
+										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+											
+											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoRol" style="width:120px;margin-right:15px"/>
+											
+											<div style="clear:both"></div>
+											
+											<div class="row">
+											
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																								
+													<div class="card-body">
+									
+														<div class="table-responsive">
+														<table id="tblSolicitud" class="table table-hover table-sm">
+														<thead>
+															<tr style="font-size:13px">
+																<th>Id</th>
+																<th>Rol</th>
+																<th>Rol Espec&iacute;fico</th>
+																<th>Fecha Inicio</th>
+																<th>Fecha Fin</th>
+																<th>Observaci&oacute;n</th>
+																<th>Opciones</th>
+															</tr>
+														</thead>
+														<tbody style="font-size:13px">
+															<?php foreach($agremiado_rol as $row){?>
+															<tr>
+																<th><?php echo $row->id?></th>
+																<th><?php echo $row->rol?></th>
+																<th><?php echo $row->rol_especifico?></th>
+																<th><?php echo $row->fecha_inicio?></th>
+																<th><?php echo $row->fecha_fin?></th>
+																<th><?php echo $row->observacion?></th>
+																<th>
+															<!--<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+															<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalRol(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
+															<a href="javascript:void(0)" onclick="eliminarRol(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
+															</div>-->
 																</th>
 															</tr>						
 															<?php }?>
