@@ -39,7 +39,7 @@ class IngresoController extends Controller
         $caja_usuario = $caja_ingreso_model->getCajaIngresoByusuario($id_user,'91');
         $tipo_documento = $caja_model->getMaestroByTipo(16);
 
-        
+         
         //$caja_usuario = $caja_model;
         //print_r($caja_usuario);exit();
         return view('frontend.ingreso.create',compact('persona','caja','caja_usuario','tipo_documento'));
@@ -85,11 +85,29 @@ class IngresoController extends Controller
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
         $valorizaciones_model = new Valorizacione;
         $resultado = $valorizaciones_model->getValorizacionConcepto($tipo_documento,$id_persona);
+    
+        $valorizaciones_model = new Valorizacione;
+        $periodo = $valorizaciones_model->getPeridoValorizacion($tipo_documento,$id_persona);
+
         //print_r($valorizacion);exit();
 		return $resultado;
 
     }
     
+    public function listar_valorizacion_periodo(Request $request){
+        $id_persona = $request->id_persona;
+        $tipo_documento = $request->tipo_documento;
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+        
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getPeridoValorizacion($tipo_documento,$id_persona);
+
+        //print_r($valorizacion);exit();
+		return $resultado;
+
+    }
+
+
     public function obtener_pago($tipo_documento,$id_persona){
 
         $valorizaciones_model = new Valorizacione;

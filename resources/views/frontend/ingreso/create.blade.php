@@ -345,6 +345,7 @@
 
 
                                         <div class="row">
+                                            <!--
                                             <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     <select name="cboPeriodo_b" id="cboPeriodo_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
@@ -354,6 +355,14 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                                    -->
+                                            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                                                <div class="form-group form-group-sm">
+                                                    <select id="cboPeriodo_b" name="cboPeriodo_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     <select name="cboTipoCuota_b" id="cboTipoCuota_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
@@ -450,6 +459,8 @@
                                                     <input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnTicket" disabled="disabled" onclick="enviarTipo(3)" style="display:none" />
 
                                                     <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="modal_fraccionamiento()" />
+
+                                                    
 
 
                                                     <!--<input class="btn btn-primary pull-right" value="BOLETA" name="crea" type="button" form="prestacionescrea" id="btnGuardar" onclick="guardarValorizacion()" />-->

@@ -156,6 +156,27 @@ function cargarcboTipoConcepto(){
 	});
 }
 
+function cargarcboPeriodo(){    	
+
+	$.ajax({
+		url: "/ingreso/listar_valorizacion_periodo",
+		type: "POST",
+		data : $("#frmValorizacion").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>Periodo</option>";
+			$('#cboPeriodo_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.periodo+"'>"+oo.periodo+"</option>";
+			});
+			$('#cboPeriodo_b').html(option);
+			$('#cboPeriodo_b').select2();
+			
+			//$('.loader').hide();			
+		}
+		
+	});
+}
+
 
 
 function calcular_total(obj){
@@ -522,6 +543,7 @@ function obtenerBeneficiario(){
 				cargarValorizacion();
 				cargarPagos();
 				cargarcboTipoConcepto();
+				cargarcboPeriodo();
 				//cargarDudoso();
 			}
 			else {
