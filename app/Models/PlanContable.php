@@ -31,4 +31,28 @@ class PlanContable extends Model
         return $data;
 
     }
+
+    function getPlanContableCuentaContableDebe(){
+
+        $cad = "select distinct cuenta from plan_contables pc where cuenta ilike '12%'";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getPlanContableCuentaContableHaber1(){
+
+        $cad = "select distinct cuenta from plan_contables pc where cuenta ilike '40%'";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getPlanContableCuentaContableHaber2(){
+
+        $cad = "select distinct cuenta from plan_contables pc where cuenta ilike '70%' or cuenta ilike '75%' ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 }

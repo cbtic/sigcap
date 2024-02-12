@@ -197,6 +197,9 @@ $(document).ready(function() {
 	$("#id_tipo_afectacion").select2({ width: '100%' });
 	$("#id_centro_costo").select2({ width: '100%' });
 	$("#id_tipo_concepto").select2({ width: '100%' });
+	$("#cuenta_contable_debe").select2({ width: '100%' });
+	$("#cuenta_contable_al_haber1").select2({ width: '100%' });
+	$("#cuenta_contable_al_haber2").select2({ width: '100%' });
 	//$("#id_empresa").select2({ width: '100%' });
 });
 </script>
@@ -590,12 +593,12 @@ container: '#myModal modal-body'
 							<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 							<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 							<div class="row" style="padding-left:10px">
-								<!--<div class="col-lg-3">
+								<div class="col-lg-3">
 									<div class="form-group">
 										<label class="control-label form-control-sm">C&oacute;digo</label>
-										<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?/*php echo $concepto->codigo*/?>" type="text" readonly="readonly" >						
+										<input id="codigo" name="codigo" class="form-control form-control-sm"  value="<?php echo $concepto->codigo?>" type="text" readonly="readonly" >						
 									</div>
-								</div>-->
+								</div>
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Regional</label>
@@ -664,7 +667,7 @@ container: '#myModal modal-body'
 										<option value="">--Selecionar--</option>
 											<?php
 												foreach ($concepto_cuenta_debe as $row) {?>
-											<option value="<?php echo $row->cuenta_contable_debe?>" <?php if($row->cuenta_contable_debe==$concepto->cuenta_contable_debe)echo "selected='selected'"?>><?php echo $row->cuenta_contable_debe?></option>
+											<option value="<?php echo $row->cuenta?>" <?php if($row->cuenta==$plan_contable->cuenta)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
 											<?php
 											}
 											?>
@@ -679,7 +682,7 @@ container: '#myModal modal-body'
 										<option value="">--Selecionar--</option>
 											<?php
 												foreach ($concepto_cuenta_haber1 as $row) {?>
-											<option value="<?php echo $row->cuenta_contable_al_haber1?>" <?php if($row->cuenta_contable_al_haber1==$concepto->cuenta_contable_al_haber1)echo "selected='selected'"?>><?php echo $row->cuenta_contable_al_haber1?></option>
+											<option value="<?php echo $row->cuenta?>" <?php if($row->cuenta==$plan_contable->cuenta)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
 											<?php
 											}
 											?>
@@ -694,7 +697,7 @@ container: '#myModal modal-body'
 										<option value="">--Selecionar--</option>
 											<?php
 												foreach ($concepto_cuenta_haber2 as $row) {?>
-											<option value="<?php echo $row->cuenta_contable_al_haber2?>" <?php if($row->cuenta_contable_al_haber2==$concepto->cuenta_contable_al_haber2)echo "selected='selected'"?>><?php echo $row->cuenta_contable_al_haber2?></option>
+											<option value="<?php echo $row->cuenta?>" <?php if($row->cuenta==$plan_contable->cuenta)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
 											<?php
 											}
 											?>

@@ -500,7 +500,7 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id = $('#id').val();
+			var codigo = $('#codigo').val();
 			var denominacion = $('#denominacionBus').val();
 			var cuenta_contable_debe = $('#cuenta_contable_debe').val();
 			var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
@@ -515,7 +515,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,denominacion:denominacion,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,id_partida_presupuestal:id_partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,estado:estado,
+						codigo:codigo,denominacion:denominacion,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,id_partida_presupuestal:id_partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -531,9 +531,9 @@ function datatablenew(){
             [	
 				{
 				"mRender": function (data, type, row) {
-					var id = "";
-					if(row.id!= null)id = row.id;
-					return id;
+					var codigo = "";
+					if(row.codigo!= null)codigo = row.codigo;
+					return codigo;
 					},
 				"bSortable": false,
 				"aTargets": [0],
