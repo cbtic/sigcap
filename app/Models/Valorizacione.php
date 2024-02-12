@@ -15,38 +15,38 @@ class Valorizacione extends Model
             $cad = "
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
-                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto
+                (case when v.fecha_proceso < now() then '1' else '0' end) vencio, v.id_concepto
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
                 --inner join agremiado_cuotas a  on a.id = v.pk_registro
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
                 where v.id_empresa = ".$id_persona."            
-                and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
-                and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
+                and DATE_PART('YEAR', v.fecha_proceso)::varchar ilike '%".$periodo."'
+                and (case when v.fecha_proceso < now() then '1' else '0' end) ilike '%".$cuota."'
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-            order by v.fecha desc
+            order by v.fecha_proceso desc
 			";
         }else{
             $cad = "
             --select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
-                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto
+                (case when v.fecha_proceso < now() then '1' else '0' end) vencio, v.id_concepto
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
                 --inner join agremiado_cuotas a  on a.id = v.pk_registro
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
                 where v.id_persona = ".$id_persona."            
-                and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
-                and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
+                and DATE_PART('YEAR', v.fecha_proceso)::varchar ilike '%".$periodo."'
+                and (case when v.fecha_proceso < now() then '1' else '0' end) ilike '%".$cuota."'
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-            order by v.fecha desc
+            order by v.fecha_proceso desc
 			";
         }
 
