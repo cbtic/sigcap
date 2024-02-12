@@ -162,6 +162,8 @@ Route::post('tipoConcepto/send_tipoConcepto_nuevoTipoConcepto', [TipoConceptoCon
 Route::get('tipoConcepto/eliminar_tipoConcepto/{id}/{estado}', [TipoConceptoController::class, 'eliminar_tipoConcepto'])->name('tipoConcepto.eliminar_tipoConcepto');
 
 Route::get('multa/consulta_multa', [MultaController::class, 'consulta_multa'])->name('multa.consulta_multa');
+Route::get('multa/importar_multa/{archivo}', [MultaController::class, 'importar_multa'])->name('multa.importar_multa');
+Route::post('multa/upload_multa', [MultaController::class, 'upload_multa'])->name('multa.upload_multa');
 
 Route::post('multa/listar_datosAgremiado_ajax', [MultaController::class, 'listar_datosAgremiado_ajax'])->name('multa.listar_datosAgremiado_ajax');
 
@@ -475,5 +477,11 @@ Route::get('plan_contable/importar_plan_contable', [PlanContableController::clas
 
 Route::get('centro_costo/test', [CentroCostoController::class, 'test'])->name('centro_costo.test');
 
+Route::get('plan_contable/consulta_plan_contable', [PlanContableController::class, 'consulta_plan_contable'])->name('plan_contable.consulta_plan_contable');
+Route::post('plan_contable/listar_plan_contable_ajax', [PlanContableController::class, 'listar_plan_contable_ajax'])->name('plan_contable.listar_plan_contable_ajax');
+//Route::get('plan_contable/editar_profesion/{id}', [PlanContableController::class, 'editar_profesion'])->name('profesion.editar_profesion');
+Route::get('plan_contable/modal_plan_contable_nuevoPlanContable/{id}', [PlanContableController::class, 'modal_plan_contable_nuevoPlanContable'])->name('plan_contable.modal_plan_contable_nuevoPlanContable');
+Route::post('plan_contable/send_plan_contable_nuevoPlanContable', [PlanContableController::class, 'send_plan_contable_nuevoPlanContable'])->name('plan_contable.send_plan_contable_nuevoPlanContable');
+Route::get('plan_contable/eliminar_plan_contable/{id}/{estado}', [PlanContableController::class, 'eliminar_plan_contable'])->name('plan_contable.eliminar_plan_contable');
 
 
