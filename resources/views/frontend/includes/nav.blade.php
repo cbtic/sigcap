@@ -197,6 +197,9 @@
 								@can('Persona')
                                 <a href="/persona/consulta_persona" class="dropdown-item">Persona</a>
 								@endcan
+								@can('Plan Contable')
+                                <a href="/plan_contable/consulta_plan_contable" class="dropdown-item">Plan Contable</a>
+								@endcan
 								<!--@can('Profesion')
 								<a href="/profesion/consulta_profesion" class="dropdown-item">Profesi&oacute;n</a>
 								@endcan
