@@ -474,5 +474,11 @@ Route::get('plan_contable/importar_plan_contable', [PlanContableController::clas
 
 Route::get('centro_costo/test', [CentroCostoController::class, 'test'])->name('centro_costo.test');
 
+Route::get('plan_contable/consulta_plan_contable', [PlanContableController::class, 'consulta_plan_contable'])->name('plan_contable.consulta_plan_contable');
+Route::post('plan_contable/listar_plan_contable_ajax', [PlanContableController::class, 'listar_plan_contable_ajax'])->name('plan_contable.listar_plan_contable_ajax');
+//Route::get('plan_contable/editar_profesion/{id}', [PlanContableController::class, 'editar_profesion'])->name('profesion.editar_profesion');
+Route::get('plan_contable/modal_plan_contable_nuevoPlanContable/{id}', [PlanContableController::class, 'modal_plan_contable_nuevoPlanContable'])->name('plan_contable.modal_plan_contable_nuevoPlanContable');
+Route::post('plan_contable/send_plan_contable_nuevoPlanContable', [PlanContableController::class, 'send_plan_contable_nuevoPlanContable'])->name('plan_contable.send_plan_contable_nuevoPlanContable');
+Route::get('plan_contable/eliminar_plan_contable/{id}/{estado}', [PlanContableController::class, 'eliminar_plan_contable'])->name('plan_contable.eliminar_plan_contable');
 
 
