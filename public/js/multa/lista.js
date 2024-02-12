@@ -2,6 +2,35 @@
 //jQuery.noConflict(true);
 
 $(document).ready(function () {
+	$(".upload").on('click', function() {
+        var formData = new FormData();
+        var files = $('#image')[0].files[0];
+        formData.append('file',files);
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/multa/upload_multa",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+				datatablenew();
+				/*
+                if (response != 0) {
+					
+					var extension = "";
+					extension = response.substring(response.lastIndexOf('.') + 1);
+					$("#fileExcel").val(response);
+                } else {
+                    alert('Formato de imagen incorrecto.');
+                }
+				*/
+            }
+        });
+		return false;
+    });
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
