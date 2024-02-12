@@ -162,6 +162,8 @@ Route::post('tipoConcepto/send_tipoConcepto_nuevoTipoConcepto', [TipoConceptoCon
 Route::get('tipoConcepto/eliminar_tipoConcepto/{id}/{estado}', [TipoConceptoController::class, 'eliminar_tipoConcepto'])->name('tipoConcepto.eliminar_tipoConcepto');
 
 Route::get('multa/consulta_multa', [MultaController::class, 'consulta_multa'])->name('multa.consulta_multa');
+Route::get('multa/importar_multa/{archivo}', [MultaController::class, 'importar_multa'])->name('multa.importar_multa');
+Route::post('multa/upload_multa', [MultaController::class, 'upload_multa'])->name('multa.upload_multa');
 
 Route::post('multa/listar_datosAgremiado_ajax', [MultaController::class, 'listar_datosAgremiado_ajax'])->name('multa.listar_datosAgremiado_ajax');
 
@@ -195,6 +197,7 @@ Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingres
 Route::get('ingreso/obtener_valorizacion/{tipo_documento}/{id_persona}', [IngresoController::class, 'obtener_valorizacion'])->name('ingreso.obtener_valorizacion')->where('tipo_documento', '(.*)');
 Route::post('ingreso/listar_valorizacion', [IngresoController::class, 'listar_valorizacion'])->name('ingreso.listar_valorizacion');
 Route::post('ingreso/listar_valorizacion_concepto', [IngresoController::class, 'listar_valorizacion_concepto'])->name('ingreso.listar_valorizacion_concepto');
+Route::post('ingreso/listar_valorizacion_periodo', [IngresoController::class, 'listar_valorizacion_periodo'])->name('ingreso.listar_valorizacion_periodo');
 
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
 Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');

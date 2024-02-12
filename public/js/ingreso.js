@@ -156,6 +156,27 @@ function cargarcboTipoConcepto(){
 	});
 }
 
+function cargarcboPeriodo(){    	
+
+	$.ajax({
+		url: "/ingreso/listar_valorizacion_periodo",
+		type: "POST",
+		data : $("#frmValorizacion").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>Periodo</option>";
+			$('#cboPeriodo_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.periodo+"'>"+oo.periodo+"</option>";
+			});
+			$('#cboPeriodo_b').html(option);
+			$('#cboPeriodo_b').select2();
+			
+			//$('.loader').hide();			
+		}
+		
+	});
+}
+
 
 
 function calcular_total(obj){
@@ -212,9 +233,11 @@ function calcular_total(obj){
 	if(cantidad == 0)$('#idConcepto').val("");
 	var id_concepto = $('#idConcepto').val();
 	//$('#id_concepto_sel').val(id_concepto);
-	//alert(id_concepto);
+	//alert("id_concepto->"+id_concepto);
+	
 	var id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
 	//alert(id_concepto_actual);
+	//alert("id_concepto_actual->"+id_concepto_actual)
 	//$('#id_concepto_sel').val(id_concepto);
 	//$('#idConcepto').val(id_concepto_actual);
 	
@@ -303,7 +326,7 @@ function calcular_total(obj){
 
 	});
 	
-	$('#idConcepto').val(id_concepto);
+	//$('#idConcepto').val(id_concepto);
 	//total -= descuento;
 	$('#total').val(total.toFixed(2));
 
@@ -522,6 +545,7 @@ function obtenerBeneficiario(){
 				cargarValorizacion();
 				cargarPagos();
 				cargarcboTipoConcepto();
+				cargarcboPeriodo();
 				//cargarDudoso();
 			}
 			else {
@@ -622,6 +646,12 @@ function cargarValorizacion(){
 	//var numero_documento = $("#numero_documento").val();
 	var tipo_documento = $("#tipo_documento").val();
 	var id_persona = 0;
+
+	var idconcepto = $("#cboTipoConcepto_b").val();
+
+	$("#idConcepto").val(idconcepto);
+
+	
 
 	//if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
 	//else id_persona = $('#id_persona').val();
