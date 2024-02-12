@@ -489,3 +489,9 @@ Route::post('partida_presupuestal/listar_partida_presupuestal_ajax', [PartidaPre
 
 Route::get('centro_costo/consulta_centro_costo', [CentroCostoController::class, 'consulta_centro_costo'])->name('centro_costo.consulta_centro_costo');
 Route::post('centro_costo/listar_centro_costo_ajax', [CentroCostoController::class, 'listar_centro_costo_ajax'])->name('centro_costo.listar_centro_costo_ajax');
+
+Route::get('multa/consulta_multa_mantenimiento', [MultaController::class, 'consulta_multa_mantenimiento'])->name('multa.consulta_multa_mantenimiento');
+Route::post('multa/listar_multa_ajax', [MultaController::class, 'listar_multa_ajax'])->name('multa.listar_multa_ajax');
+Route::get('multa/modal_multa_nuevoMultaMantenimiento/{id}', [MultaController::class, 'modal_multa_nuevoMultaMantenimiento'])->name('multa.modal_multa_nuevoMultaMantenimiento');
+Route::post('multa/send_multa_nuevoMultaMantenimiento', [MultaController::class, 'send_multa_nuevoMultaMantenimiento'])->name('multa.send_multa_nuevoMultaMantenimiento');
+Route::get('multa/eliminar_multa_mantenimiento/{id}/{estado}', [MultaController::class, 'eliminar_multa_mantenimiento'])->name('multa.eliminar_multa_mantenimiento');
