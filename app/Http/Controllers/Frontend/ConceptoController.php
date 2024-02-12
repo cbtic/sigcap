@@ -136,12 +136,12 @@ class ConceptoController extends Controller
 		if($request->id == 0){
 			$concepto = new Concepto;
 			$codigo = $concepto_model->getCodigoConcepto();
+			$concepto->codigo = $codigo;
 		}else{
 			$concepto = Concepto::find($request->id);
 			$codigo = $request->codigo;
 		}
 		
-		$concepto->codigo = $codigo;
 		$concepto->id_regional = $request->id_regional;
 		$concepto->id_tipo_concepto = $request->id_tipo_concepto;
 		$concepto->denominacion = $request->denominacion;

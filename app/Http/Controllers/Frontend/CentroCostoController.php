@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CentroCosto;
+use Auth;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -59,5 +60,33 @@ class CentroCostoController extends Controller
 		$logCentroCosto->info('centro_costo_log', $log);		
 		
 	}	
+
+	function consulta_centro_costo(){
+
+        return view('frontend.centro_costo.all');
+    }
+
+    public function listar_centro_costo_ajax(Request $request){
+	
+		$centro_costo_model = new CentroCosto;
+		$p[]=$request->denominacion;
+		$p[]=$request->codigo;
+		$p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $centro_costo_model->listar_centro_costo_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
+	}
 	
 }

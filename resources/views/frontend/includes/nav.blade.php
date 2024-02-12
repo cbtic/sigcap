@@ -200,6 +200,12 @@
 								@can('Plan Contable')
                                 <a href="/plan_contable/consulta_plan_contable" class="dropdown-item">Plan Contable</a>
 								@endcan
+								@can('Partida Presupuestal')
+                                <a href="/partida_presupuestal/consulta_partida_presupuestal" class="dropdown-item">Partida Presupuestal</a>
+								@endcan
+								@can('Centro Costo')
+                                <a href="/centro_costo/consulta_centro_costo" class="dropdown-item">Centro de Costos</a>
+								@endcan
 								<!--@can('Profesion')
 								<a href="/profesion/consulta_profesion" class="dropdown-item">Profesi&oacute;n</a>
 								@endcan

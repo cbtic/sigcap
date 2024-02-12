@@ -667,7 +667,7 @@ container: '#myModal modal-body'
 										<option value="">--Selecionar--</option>
 											<?php
 												foreach ($concepto_cuenta_debe as $row) {?>
-											<option value="<?php echo $row->cuenta?>" <?php if($row->cuenta==$plan_contable->cuenta)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->cuenta_contable_debe)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
 											<?php
 											}
 											?>
@@ -682,7 +682,7 @@ container: '#myModal modal-body'
 										<option value="">--Selecionar--</option>
 											<?php
 												foreach ($concepto_cuenta_haber1 as $row) {?>
-											<option value="<?php echo $row->cuenta?>" <?php if($row->cuenta==$plan_contable->cuenta)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->cuenta_contable_al_haber1)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
 											<?php
 											}
 											?>
@@ -697,7 +697,7 @@ container: '#myModal modal-body'
 										<option value="">--Selecionar--</option>
 											<?php
 												foreach ($concepto_cuenta_haber2 as $row) {?>
-											<option value="<?php echo $row->cuenta?>" <?php if($row->cuenta==$plan_contable->cuenta)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->cuenta_contable_al_haber2)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
 											<?php
 											}
 											?>

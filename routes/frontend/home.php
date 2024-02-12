@@ -484,4 +484,8 @@ Route::get('plan_contable/modal_plan_contable_nuevoPlanContable/{id}', [PlanCont
 Route::post('plan_contable/send_plan_contable_nuevoPlanContable', [PlanContableController::class, 'send_plan_contable_nuevoPlanContable'])->name('plan_contable.send_plan_contable_nuevoPlanContable');
 Route::get('plan_contable/eliminar_plan_contable/{id}/{estado}', [PlanContableController::class, 'eliminar_plan_contable'])->name('plan_contable.eliminar_plan_contable');
 
+Route::get('partida_presupuestal/consulta_partida_presupuestal', [PartidaPresupuestalController::class, 'consulta_partida_presupuestal'])->name('partida_presupuestal.consulta_partida_presupuestal');
+Route::post('partida_presupuestal/listar_partida_presupuestal_ajax', [PartidaPresupuestalController::class, 'listar_partida_presupuestal_ajax'])->name('partida_presupuestal.listar_partida_presupuestal_ajax');
 
+Route::get('centro_costo/consulta_centro_costo', [CentroCostoController::class, 'consulta_centro_costo'])->name('centro_costo.consulta_centro_costo');
+Route::post('centro_costo/listar_centro_costo_ajax', [CentroCostoController::class, 'listar_centro_costo_ajax'])->name('centro_costo.listar_centro_costo_ajax');

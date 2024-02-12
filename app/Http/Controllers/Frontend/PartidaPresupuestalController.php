@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PartidaPresupuestale;
+use Auth;
 
 class PartidaPresupuestalController extends Controller
 {
@@ -55,5 +56,43 @@ class PartidaPresupuestalController extends Controller
 			
 		}
 		
+	}
+
+	public function __construct(){
+
+		$this->middleware(function ($request, $next) {
+			if(!Auth::check()) {
+                return redirect('login');
+            }
+			return $next($request);
+    	});
+	}
+
+	function consulta_partida_presupuestal(){
+
+        return view('frontend.partida_presupuestal.all');
+    }
+
+    public function listar_partida_presupuestal_ajax(Request $request){
+	
+		$partida_presupuestal_model = new PartidaPresupuestale;
+		$p[]=$request->denominacion;
+		$p[]=$request->codigo;
+		$p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $partida_presupuestal_model->listar_partida_presupuestal_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
 	}
 }
