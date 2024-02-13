@@ -206,6 +206,9 @@
 								@can('Centro Costo')
                                 <a href="/centro_costo/consulta_centro_costo" class="dropdown-item">Centro de Costos</a>
 								@endcan
+								@can('Multa')
+                                <a href="/multa/consulta_multa_mantenimiento" class="dropdown-item">Multa</a>
+								@endcan
 								<!--@can('Profesion')
 								<a href="/profesion/consulta_profesion" class="dropdown-item">Profesi&oacute;n</a>
 								@endcan

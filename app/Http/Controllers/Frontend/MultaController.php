@@ -25,6 +25,16 @@ class MultaController extends Controller
 
     }
 
+	function consulta_multa_mantenimiento(){
+        
+		$tablaMaestra_model = new TablaMaestra;
+		$multa = new Multa;
+        $moneda = $tablaMaestra_model->getMaestroByTipo(1);
+
+        return view('frontend.multa.all_mantenimiento',compact('moneda','multa'));
+
+    }
+
     public function __construct(){
 
 		$this->middleware(function ($request, $next) {
@@ -95,6 +105,30 @@ class MultaController extends Controller
 	
 	}
 
+	public function listar_multa_ajax(Request $request){
+	
+		$multa_model = new Multa;
+		$p[]=$request->denominacion;
+		$p[]=$request->monto;
+		$p[]=$request->moneda;
+		$p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $multa_model->listar_multa_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
+	}
+
     public function editar_multa($id){
         
 		$multa = Multa::find($id);
@@ -145,6 +179,32 @@ class MultaController extends Controller
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
 		return view('frontend.multa.modal_multa_nuevoMulta',compact('id','id_agremiado','agremiado','numero_cap','agremiadoMulta','multa'/*,'moneda'*/,'multa_1','moneda_1','moneda_1'));
+	
+	}
+
+	public function modal_multa_nuevoMultaMantenimiento($id){
+		
+		//$id->moneda;
+		$multa = new Multa;
+		$tablaMaestra_model = new TablaMaestra;
+
+        $moneda = $tablaMaestra_model->getMaestroByTipo(1);
+		
+		if($id>0){
+			$multa = Multa::find($id);
+		}else{
+			$multa = new Multa;
+		}
+		
+        //$multa = $multa_concepto_model->getMulta_conceptoAll();
+		//$moneda = $moneda_model->getMonedaAll();
+		
+		//$multa = Multa::where("estado","1")->get();
+		
+		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
+		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
+		
+		return view('frontend.multa.modal_multa_nuevoMultaMantenimiento',compact('id','moneda','multa'));
 	
 	}
 
@@ -207,6 +267,24 @@ class MultaController extends Controller
 		$valorizacion->save();
     }
 	
+	public function send_multa_nuevoMultaMantenimiento(Request $request){
+		
+		$id_user = Auth::user()->id;
+
+		if($request->id == 0){
+			$multa = new Multa;
+		}else{
+			$multa = Multa::find($request->id);
+		}
+		
+		$multa->denominacion = $request->denominacion;
+		$multa->monto = $request->monto;
+		$multa->id_moneda = $request->moneda;
+		$multa->id_usuario_inserta = $id_user;
+		$multa->save();
+		
+    }
+
 	public function upload_multa(Request $request){
 		
 		$filename = date("YmdHis") . substr((string)microtime(), 1, 6);
@@ -272,5 +350,14 @@ class MultaController extends Controller
 		$agremiadoMulta->save();
 
 		echo $agremiadoMulta->id;
+    }
+
+	public function eliminar_multa_mantenimiento($id,$estado)
+    {
+		$multa = Multa::find($id);
+		$multa->estado = $estado;
+		$multa->save();
+
+		echo $multa->id;
     }
 }
