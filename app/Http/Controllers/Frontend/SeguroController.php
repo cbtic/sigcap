@@ -59,7 +59,7 @@ class SeguroController extends Controller
 	
 		$plan_model = new Seguro();
 		$p[]=$request->id_seguro;
-		$p[]=1;          
+		$p[]=1;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $plan_model->listar_plan($p);
@@ -138,6 +138,9 @@ class SeguroController extends Controller
 	public function modal_plan($id){
 		
 		$id_user = Auth::user()->id;
+		$tablaMaestra_model = new TablaMaestra;
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$seguro_plan = new SegurosPlane;
 		/*
 		$seguro = new Seguro;
 		$regione_model = new Regione;
@@ -160,7 +163,7 @@ class SeguroController extends Controller
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.seguro.modal_plan',compact('id','plan_seguro'/*'plan_seguro',*/));
+		return view('frontend.seguro.modal_plan',compact('id','plan_seguro','sexo'));
 
     }
 
@@ -198,6 +201,9 @@ class SeguroController extends Controller
 		$segurosPlan->fecha_inicio = $request->fecha_inicio;
 		$segurosPlan->fecha_fin = $request->fecha_fin;
 		$segurosPlan->monto = $request->monto;
+		$segurosPlan->edad_minima = $request->edad_minima;
+		$segurosPlan->edad_maxima = $request->edad_maxima;
+		$segurosPlan->sexo = $request->sexo;
 		$segurosPlan->estado = 1;
 		$segurosPlan->id_usuario_inserta = $id_user;
 		$segurosPlan->save();

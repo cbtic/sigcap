@@ -227,9 +227,6 @@ function datatablenewPlan(){
                 "bSortable": true,
                 "aTargets": [1]
                 },
-				
-
-				
 				{
                 "mRender": function (data, type, row) {
                 	var fecha_inicio = "";
@@ -239,7 +236,6 @@ function datatablenewPlan(){
                 "bSortable": true,
                 "aTargets": [2]
                 },
-				
 				{
                 "mRender": function (data, type, row) {
                 	var fecha_fin = "";
@@ -249,7 +245,6 @@ function datatablenewPlan(){
                 "bSortable": true,
                 "aTargets": [3]
                 },
-				
 				{
                 "mRender": function (data, type, row) {
                 	var monto = "";
@@ -259,7 +254,33 @@ function datatablenewPlan(){
                 "bSortable": true,
                 "aTargets": [4]
                 },
-				
+				{
+                "mRender": function (data, type, row) {
+                	var edad_minima = "";
+					if(row.edad_minima!= null)edad_minima = row.edad_minima;
+					return edad_minima;
+                },
+                "bSortable": true,
+                "aTargets": [5]
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var edad_maxima = "";
+					if(row.edad_maxima!= null)edad_maxima = row.edad_maxima;
+					return edad_maxima;
+                },
+                "bSortable": true,
+                "aTargets": [6]
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var sexo = "";
+					if(row.sexo!= null)sexo = row.sexo;
+					return sexo;
+                },
+                "bSortable": true,
+                "aTargets": [7]
+                },
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -272,9 +293,8 @@ function datatablenewPlan(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [5]
+					"aTargets": [8]
 				},
-				
 				{
 					"mRender": function (data, type, row) {
 						
@@ -287,7 +307,7 @@ function datatablenewPlan(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [6],
+					"aTargets": [9],
 				},
 
             ]
@@ -311,6 +331,9 @@ function editarPlan(id){
 			$('#fecha_inicio').val(result.fecha_inicio);
 			$('#fecha_fin').val(result.fecha_fin);
 			$('#monto').val(result.monto);
+			$('#edad_minima').val(result.edad_minima);
+			$('#edad_maxima').val(result.edad_maxima);
+			$('#sexo').val(result.sexo);
 		}
 		
 	});
@@ -363,6 +386,9 @@ function limpiar(){
 	$('#fecha_inicio').val("");	
 	$('#fecha_fin').val("");
 	$('#monto').val("");
+	$('#edad_minima').val("");
+	$('#edad_maxima').val("");
+	$('#sexo').val("");
 }
 
 function fn_save_plan(){
@@ -375,10 +401,13 @@ function fn_save_plan(){
 	var fecha_inicio =$('#fecha_inicio').val();	
 	var fecha_fin =$('#fecha_fin').val();	
 	var monto =$('#monto').val();	
+	var edad_minima =$('#edad_minima').val();
+	var edad_maxima =$('#edad_maxima').val();
+	var sexo =$('#sexo').val();
     $.ajax({
 			url: "/seguro/send_plan",
             type: "POST",
-            data : {_token:_token,id:id,id_seguro:id_seguro,nombre:nombre,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,monto:monto},
+            data : {_token:_token,id:id,id_seguro:id_seguro,nombre:nombre,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,monto:monto,edad_minima:edad_minima,edad_maxima:edad_maxima,sexo:sexo},
 			success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
 				datatablenewPlan();
@@ -463,6 +492,39 @@ function fn_save_plan(){
 							<input id="descripcion_" name="descripcion_" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="textarea"  >
 						</div>
 					</div>
+
+					<div class="row">
+						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label">Edad M&iacute;nima</label>
+						</div>
+						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+							<input id="edad_minima" name="edad_minima" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="textarea"  >
+						</div>
+					
+						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label">Edad M&aacute;xima</label>
+						</div>
+						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+							<input id="edad_maxima" name="edad_maxima" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="textarea"  >
+						</div>
+						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+							<label class="control-label form-control-sm">Sexo</label>
+						</div>
+						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+							<select name="sexo" id="sexo" class="form-control form-control-sm" onChange="">
+								<option value="">--Selecionar--</option>
+								<?php
+								foreach ($sexo as $row) { ?>
+									<option value="<?php echo $row->codigo ?>"> <?php echo $row->denominacion ?></option>
+									
+								<?php
+								}
+								?>
+							</select>
+							</div>
+							</div>
+						</div>
+					</div>
 				
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
@@ -486,7 +548,10 @@ function fn_save_plan(){
                             <th>Plan</th>
 							<th>Fecha Inicio</th>
 							<th>Fecha Fin</th>
-							<th>Monto</th>                                                        
+							<th>Monto</th>
+							<th>Edad M&iacute;nima</th>
+							<th>Edad M&aacute;xima</th>
+							<th>Sexo</th>
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>
