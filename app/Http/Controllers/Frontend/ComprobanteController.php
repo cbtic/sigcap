@@ -848,8 +848,8 @@ class ComprobanteController extends Controller
             'numero' => $factura->numero,
             'tipo' => $factura->tipo
         ])->get();
-		//print_r($factura);
-		//print_r($factura);
+		//print_r($factura); exit();
+        //print_r($factura_detalles); exit();		
 		$cabecera = array("valor1","valor2");
 		$detalle = array("valor1","valor2");
 		foreach($factura_detalles as $index => $row ) {
@@ -887,7 +887,7 @@ class ComprobanteController extends Controller
 		$data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
-		$data["serieNumero"] = $factura->fac_serie."-".$factura->numero; // "F001-000002";
+		$data["serieNumero"] = $factura->serie."-".$factura->numero; // "F001-000002";
 		$data["fechaEmision"] = date("Y-m-d",strtotime($factura->fecha)); //"2021-03-18";
 		$data["importeTotal"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
 		$data["notification"] = "1";
@@ -920,20 +920,20 @@ class ComprobanteController extends Controller
 		$data["nombreComercialEmisor"] = "CAP";
 		$data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
-		$data["numeroDocIdentidadEmisor"] = "20172977911";
+		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20172977911";
 		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
         $data["direccionReceptor"] = $factura->direccion;
 
-        //print_r($data);
+        //print_r($data); exit();
 
 
 		$databuild_string = json_encode($data);
-        //print_r($databuild_string);
-        //exit();
+        //print_r($databuild_string);exit();
 
 		//$chbuild = curl_init("https://easyfact.tk/see/rest/01");
         $chbuild = curl_init(config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo));
+        //echo config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo);exit();
 
 		$username = config('values.ws_fac_user');
 		$password = config('values.ws_fac_clave');
@@ -949,7 +949,8 @@ class ComprobanteController extends Controller
 		curl_setopt($chbuild, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_setopt($chbuild, CURLOPT_POSTFIELDS, $databuild_string);
         $results = curl_exec($chbuild);
-
+        //print_r($results);
+        //exit();
         $facturaLog = new Logger('factura_sunat');
 
         $log = ['Resultados' => $results,
@@ -968,18 +969,18 @@ class ComprobanteController extends Controller
             $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::WARNING);
             $facturaLog->info('FacturaLog', $log);
 		}
-		print_r($results);
+		//print_r($results); exit();
         curl_close($chbuild);
 
-
+        
 		//$results = substr($results,strpos($results,'{'),strlen($results));
         $results = substr($results,strpos($results,'{'),strlen($results));
         $respbuild = json_decode($results, true);
 		//echo "<br>";
-		//print_r($respbuild);
-
+		//print_r($respbuild); exit();
+            
         $body = $respbuild["body"];
-
+            
         if(count($body)>0){
             //print_r($body);
             //echo "******<br>";
