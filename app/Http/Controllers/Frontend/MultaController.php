@@ -244,7 +244,7 @@ class MultaController extends Controller
 		$agremiadoMulta->id_estado_pago = 1;
 		$agremiadoMulta->id_concepto = 26461;
 		$agremiadoMulta->periodo = $request->periodo;
-		$agremiadoMulta->estado = 1;
+		//$agremiadoMulta->estado = 1;
 		$agremiadoMulta->id_usuario_inserta = $id_user;
 		$agremiadoMulta->save();
 		

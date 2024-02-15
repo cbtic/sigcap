@@ -60,7 +60,7 @@ class Concepto extends Model
 
     function getCodigoConcepto(){
 
-        $cad = "select lpad((max(codigo::int)+1)::varchar,5,'0') codigo from conceptos c ";
+        $cad = "select lpad((max(codigo::int)+1)::varchar,10,'0') codigo from conceptos c ";
     
 		$data = DB::select($cad);
         return $data[0]->codigo;
