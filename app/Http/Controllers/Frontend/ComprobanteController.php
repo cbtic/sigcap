@@ -920,7 +920,7 @@ class ComprobanteController extends Controller
 		$data["nombreComercialEmisor"] = "CAP";
 		$data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
-		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20172977911";
+		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";
 		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
         $data["direccionReceptor"] = $factura->direccion;
@@ -1009,6 +1009,7 @@ class ComprobanteController extends Controller
 
 
                 $fac_ruta_comprobante = config('values.ws_fac_host')."/see/server/consult/pdf?nde=20160453908&td=" .$this->getTipoDocumento($factura->tipo) ."&se=" .$factura->serie. "&nu=" .$factura->numero. "&fe=".date("Y-m-d",strtotime($factura->fecha))."&am=" .$factura->total;
+                //$fac_ruta_comprobante = config('values.ws_fac_host')."/see/server/consult/pdf?nde=20601973759&td=" .$this->getTipoDocumento($factura->tipo) ."&se=" .$factura->serie. "&nu=" .$factura->numero. "&fe=".date("Y-m-d",strtotime($factura->fecha))."&am=" .$factura->total;
 
                 if (
 					//test.easyfact.tk
@@ -1029,6 +1030,28 @@ class ComprobanteController extends Controller
         //$respbuild->result;
 
     }
+
+    public function download_pdf($host_name, $input_url, $output_filename) {
+
+        // Create a stream
+        $opts = [
+            "http" => [
+                "method" => "GET",
+                "header" => "Host: $host_name\r\n"
+                    . "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0\r\n"
+                    . "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n"
+                    . "Accept-Language: en-US,en;q=0.5\r\n"
+                    . "Accept-Encoding: gzip, deflate, br\r\n"
+            ],
+        ];
+
+        $context = stream_context_create($opts);
+        $data = file_get_contents($input_url, false, $context);
+
+        \Storage::disk('public')->put($output_filename, $data);
+
+        return 'OK';
+     }
     
     public function getTipoDocumento($fac_tipo){
         $codigo_fac_tipo = "";
