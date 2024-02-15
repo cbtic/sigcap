@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel
         Commands\envioFacturaSunatAutomaticoCron::class,
 		Commands\envioCentroCostoAutomaticoCron::class,
 		Commands\envioPartidaPresupuestalAutomaticoCron::class,
+        Commands\envioPlanContableAutomaticoCron::class,
 		Commands\envioAgremiadoAutomaticoCron::class,
 		Commands\envioAgremiadoCuotaAutomaticoCron::class,
 		Commands\envioAgremiadoCuotaFechaAutomaticoCron::class,
