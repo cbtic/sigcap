@@ -21,7 +21,7 @@ begin
 	v_campos=' sp.id, sp.nombre, sp.descripcion, sp.estado, sp.fecha_inicio, sp.fecha_fin, sp.monto, sp.edad_minima, sp.edad_maxima, tm.denominacion sexo';
 
 	v_tabla=' from seguros_planes sp 
-	inner join tabla_maestras tm on sp.sexo::int=tm.codigo::int and tm.tipo=''2''';
+	left join tabla_maestras tm on sp.sexo::int=tm.codigo::int and tm.tipo=''2''';
 	
 	
 	v_where = ' Where 1=1  ';
