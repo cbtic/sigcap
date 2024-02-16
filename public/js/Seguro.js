@@ -449,6 +449,16 @@ function datatablenew(){
                 "bSortable": true,
                 "aTargets": [3]
                 },
+
+				{
+					"mRender": function (data, type, row) {
+						var concepto = "";
+						if(row.concepto!= null)concepto = row.concepto;
+						return concepto;
+					},
+					"bSortable": true,
+					"aTargets": [4]
+					},
 				
 				{
 					"mRender": function (data, type, row) {
@@ -462,7 +472,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [4]
+					"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -491,7 +501,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [6],
 				},
 
             ]

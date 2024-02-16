@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_multa_paginado(p_denominacion character varying, p_monto character varying, p_moneda character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_multa_paginado(p_denominacion character varying, p_monto character varying, p_moneda character varying, p_concepto character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -15,13 +15,14 @@ v_col_count varchar;
 --v_perfil varchar;
 
 begin
-	
+
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos='m.id, m.denominacion, m.monto ,tm.denominacion moneda, m.estado ';
+	v_campos=' m.id, m.denominacion, m.monto ,tm.denominacion moneda, c.denominacion concepto, m.estado ';
 
 	v_tabla='from multas m
-	inner join tabla_maestras tm on m.id_moneda::int=tm.codigo::int and tm.tipo=''1''';
+	inner join tabla_maestras tm on m.id_moneda::int=tm.codigo::int and tm.tipo=''1''
+	inner join conceptos c on  c.codigo= m.id_concepto';
 	
 	v_where = ' Where 1=1  ';
 	

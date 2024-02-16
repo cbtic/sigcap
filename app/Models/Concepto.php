@@ -58,6 +58,17 @@ class Concepto extends Model
         return $data;
     }
 
+    function getConceptoAllDenominacion(){
+
+        $cad = "select *
+        from conceptos
+        where estado='1'
+        order by denominacion ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
     function getCodigoConcepto(){
 
         $cad = "select lpad((max(codigo::int)+1)::varchar,10,'0') codigo from conceptos c ";

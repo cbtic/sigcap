@@ -16,7 +16,7 @@ class AddColumnsSeguros extends Migration
         Schema::table('seguros', function (Blueprint $table) {
             $table->string('id_concepto',10)->nullable()->index(); 
             
-            $table->foreign('id_concepto')->references('codigo')->on('conceptos');
+            
         });
     }
 

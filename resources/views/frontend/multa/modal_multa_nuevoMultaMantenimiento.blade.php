@@ -202,6 +202,8 @@ $(document).ready(function() {
 		//validaRuc(this.value);
 	});
 
+	$("#concepto").select2({ width: '100%' });
+
 });
 </script>
 
@@ -356,7 +358,7 @@ function fn_save_multa_mantenimiento(){
 	var denominacion = $('#denominacion').val();
 	var monto = $('#monto').val();
 	var moneda = $('#moneda').val();
-	//var moneda = $('#moneda').val();
+	var concepto = $('#concepto').val();
 	//var importe = $('#importe').val();
 	//var estado = $('#estado').val();
 	//alert(id_agremiado);
@@ -365,7 +367,7 @@ function fn_save_multa_mantenimiento(){
     $.ajax({
 			url: "/multa/send_multa_nuevoMultaMantenimiento",
             type: "POST",
-            data : {_token:_token,id:id,denominacion:denominacion,monto:monto,moneda:moneda},
+            data : {_token:_token,id:id,denominacion:denominacion,monto:monto,moneda:moneda,concepto:concepto},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -614,7 +616,7 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 
-						<div class="col-lg-8">
+						<div class="col-lg-10">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Concepto</label>
 										<select name="concepto" id="concepto" class="form-control form-control-sm" onChange="">

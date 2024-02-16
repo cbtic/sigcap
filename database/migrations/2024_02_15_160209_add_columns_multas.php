@@ -14,9 +14,9 @@ class AddColumnsMultas extends Migration
     public function up()
     {
         Schema::table('multas', function (Blueprint $table) {
-            $table->varchar('id_concepto',10)->nullable()->index(); 
+            $table->string('id_concepto',10)->nullable()->index(); 
             
-            $table->foreign('id_concepto')->references('codigo')->on('conceptos');
+           
         });
     }
 
