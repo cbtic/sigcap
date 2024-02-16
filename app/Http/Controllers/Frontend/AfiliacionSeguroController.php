@@ -117,6 +117,9 @@ class AfiliacionSeguroController extends Controller
 			$situacion=$datosafiliado[0]->denominacion;
 			$id_seguro=$datosafiliado[0]->id_seguro;
 			$id_plan = $datosafiliado[0]->id_plan;
+
+			
+			
 		} 
 		else{
 			$afiliado = new Seguro_afiliado;
@@ -129,15 +132,13 @@ class AfiliacionSeguroController extends Controller
 		
 		$seguro_model = new Seguro;
 		$seguro = $seguro_model->getSeguroAll();
-		$plan_model = new SegurosPlane;
-        $plan=$plan_model->getPlanBySeguro($id_seguro);
 
 	
 		//print_r ($id_plan);
 		//exit();
 		//print_r ($numero_cap);exit();
 	
-		return view('frontend.afiliacion_seguro.modal_afiliado',compact('id','afiliado','seguro','cap_numero','id_plan','desc_cliente','situacion','id_seguro','plan'));
+		return view('frontend.afiliacion_seguro.modal_afiliado',compact('id','afiliado','seguro','cap_numero','desc_cliente','situacion','id_seguro'));
 
     }
 
