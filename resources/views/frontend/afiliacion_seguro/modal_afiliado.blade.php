@@ -313,7 +313,7 @@ $.mask.definitions['p'] = "[Mm]";
 												?>
 											</select>
 										</div>
-										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+							<!---			<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Plan</label>
 
 											<select name="id_plan_" id="id_plan_" class="form-control form-control-sm" onChange="ObtenerMonto()">
@@ -321,7 +321,7 @@ $.mask.definitions['p'] = "[Mm]";
 											</select>
 										</div>
 									</div>
-
+											-->
 									<div class="row">
 
 										<div class="col-lg-12">

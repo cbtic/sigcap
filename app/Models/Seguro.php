@@ -32,6 +32,18 @@ class Seguro extends Model
         return $data;
     }
 
+
+    function getPlanId($p){
+
+        $cad = "select *
+                from seguro_planes
+                where estado='1' and id_seguro=". $p . 
+                " order by nombre ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';
