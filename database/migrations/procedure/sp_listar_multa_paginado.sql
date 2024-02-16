@@ -22,7 +22,7 @@ begin
 
 	v_tabla='from multas m
 	inner join tabla_maestras tm on m.id_moneda::int=tm.codigo::int and tm.tipo=''1''
-	inner join conceptos c on  c.codigo= m.id_concepto';
+	left join conceptos c on  c.codigo= m.id_concepto';
 	
 	v_where = ' Where 1=1  ';
 	

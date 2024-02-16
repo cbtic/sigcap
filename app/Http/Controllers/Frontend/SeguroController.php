@@ -143,6 +143,7 @@ class SeguroController extends Controller
 		$id_user = Auth::user()->id;
 		$tablaMaestra_model = new TablaMaestra;
 		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$parentesco = $tablaMaestra_model->getMaestroByTipo(23);
 		$seguro_plan = new SegurosPlane;
 		/*
 		$seguro = new Seguro;
@@ -166,7 +167,7 @@ class SeguroController extends Controller
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.seguro.modal_plan',compact('id','plan_seguro','sexo'));
+		return view('frontend.seguro.modal_plan',compact('id','plan_seguro','sexo','parentesco'));
 
     }
 
@@ -208,6 +209,7 @@ class SeguroController extends Controller
 		$segurosPlan->edad_minima = $request->edad_minima;
 		$segurosPlan->edad_maxima = $request->edad_maxima;
 		$segurosPlan->sexo = $request->sexo;
+		$segurosPlan->id_parentesco = $request->parentesco;
 		$segurosPlan->estado = 1;
 		$segurosPlan->id_usuario_inserta = $id_user;
 		$segurosPlan->save();

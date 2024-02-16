@@ -18,10 +18,11 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' sp.id, sp.nombre, sp.descripcion, sp.estado, sp.fecha_inicio, sp.fecha_fin, sp.monto, sp.edad_minima, sp.edad_maxima, tm.denominacion sexo';
+	v_campos=' sp.id, sp.nombre, sp.descripcion, sp.fecha_inicio, sp.fecha_fin, sp.monto, sp.edad_minima, sp.edad_maxima, tm.denominacion sexo, tm2.denominacion parentesco, sp.estado';
 
 	v_tabla=' from seguros_planes sp 
-	left join tabla_maestras tm on sp.sexo::int=tm.codigo::int and tm.tipo=''2''';
+	left join tabla_maestras tm on sp.sexo::int=tm.codigo::int and tm.tipo =''2''
+	left join tabla_maestras tm2 on sp.id_parentesco::int=tm2.codigo::int and tm2.tipo =''23''';
 	
 	
 	v_where = ' Where 1=1  ';

@@ -290,7 +290,7 @@ function fn_save(){
 										<option value="">--Selecionar--</option>
 											<?php
 												foreach ($concepto as $row) {?>
-											<option value="<?php echo $row->codigo?>" <?php if($row->id==$seguro->id_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$seguro->id_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 											<?php 
 											}
 											?>
