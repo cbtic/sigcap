@@ -121,6 +121,7 @@ $.mask.definitions['p'] = "[Mm]";
 });
 */
 $(document).ready(function() {
+	$("#concepto").select2({ width: '100%' });
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
@@ -173,6 +174,8 @@ function valida(){
 	var id_regional = $('#id_regional').val();
 	var nombre = $('#denominacion_').val();
 	var descripcion =$('#descripcion_').val();	
+	var concepto =$('#concepto').val();	
+	
 
 	if (nombre==""){
 	   mensaje= "Falta ingresar la denominacion del Seguro";
@@ -195,11 +198,12 @@ function fn_save(){
 	var id_regional = $('#id_regional').val();
 	var nombre = $('#denominacion_').val();
 	var descripcion =$('#descripcion_').val();	
+	var concepto =$('#concepto').val();	
 
     $.ajax({
 			url: "/seguro/send_seguro",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,nombre:nombre,descripcion:descripcion},
+            data : {_token:_token,id:id,id_regional:id_regional,nombre:nombre,descripcion:descripcion,concepto:concepto},
 			//dataType: 'json',
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
@@ -279,6 +283,20 @@ function fn_save(){
 								<input id="descripcion_" name="descripcion_" class="form-control form-control-sm"  value="<?php echo $seguro->descripcion?>" type="textarea"  >
 							</div>
 						</div>
+						<div class="col-lg-10">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Concepto</label>
+										<select name="concepto" id="concepto" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto as $row) {?>
+											<option value="<?php echo $row->codigo?>" <?php if($row->id==$seguro->id_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<?php 
+											}
+											?>
+										</select>
+									</div>
+								</div>
 					
 				
 					</div>

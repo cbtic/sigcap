@@ -224,6 +224,7 @@
                         <th>Denominaci&oacute;n</th>
                         <th>Monto</th>
                         <th>Moneda</th>
+                        <th>Concepto</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>

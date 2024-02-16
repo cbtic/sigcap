@@ -559,6 +559,15 @@ function datatablenew(){
 				"aTargets": [2]
 				},
 				{
+					"mRender": function (data, type, row) {
+						var concepto = "";
+						if(row.concepto!= null)concepto = row.concepto;
+						return concepto;
+					},
+					"bSortable": false,
+					"aTargets": [3]
+				},
+				{
 				"mRender": function (data, type, row) {
 					var estado = "";
 					if(row.estado == 1){
@@ -570,7 +579,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [3]
+				"aTargets": [4]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -595,7 +604,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [4],
+					"aTargets": [5],
 				},
 
             ]
@@ -716,6 +725,15 @@ function datatablenew2(){
 				},
 				{
 					"mRender": function (data, type, row) {
+						var concepto = "";
+						if(row.concepto!= null)concepto = row.concepto;
+						return concepto;
+					},
+					"bSortable": false,
+					"aTargets": [5]
+				},
+				{
+					"mRender": function (data, type, row) {
 						var estado = "";
 						if(row.estado == 1){
 							estado = "Pendiente";
@@ -726,7 +744,7 @@ function datatablenew2(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [5]
+					"aTargets": [6]
 				},
             ]
     });

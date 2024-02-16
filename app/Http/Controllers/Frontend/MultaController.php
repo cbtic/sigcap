@@ -16,6 +16,7 @@ use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
 use stdClass;
+use App\Models\Concepto;
 
 class MultaController extends Controller
 {
@@ -111,6 +112,7 @@ class MultaController extends Controller
 		$p[]=$request->denominacion;
 		$p[]=$request->monto;
 		$p[]=$request->moneda;
+		$p[]="";
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -186,9 +188,11 @@ class MultaController extends Controller
 		
 		//$id->moneda;
 		$multa = new Multa;
+		$concepto_model = new Concepto;
 		$tablaMaestra_model = new TablaMaestra;
 
         $moneda = $tablaMaestra_model->getMaestroByTipo(1);
+		$concepto = $concepto_model->getConceptoAllDenominacion();
 		
 		if($id>0){
 			$multa = Multa::find($id);
@@ -204,7 +208,7 @@ class MultaController extends Controller
 		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.multa.modal_multa_nuevoMultaMantenimiento',compact('id','moneda','multa'));
+		return view('frontend.multa.modal_multa_nuevoMultaMantenimiento',compact('id','moneda','multa','concepto'));
 	
 	}
 
@@ -244,7 +248,7 @@ class MultaController extends Controller
 		$agremiadoMulta->id_estado_pago = 1;
 		$agremiadoMulta->id_concepto = 26461;
 		$agremiadoMulta->periodo = $request->periodo;
-		$agremiadoMulta->estado = 1;
+		//$agremiadoMulta->estado = 1;
 		$agremiadoMulta->id_usuario_inserta = $id_user;
 		$agremiadoMulta->save();
 		
@@ -280,6 +284,7 @@ class MultaController extends Controller
 		$multa->denominacion = $request->denominacion;
 		$multa->monto = $request->monto;
 		$multa->id_moneda = $request->moneda;
+		$multa->id_concepto = $request->concepto;
 		$multa->id_usuario_inserta = $id_user;
 		$multa->save();
 		

@@ -10,6 +10,7 @@ use App\Models\Ubigeo;
 use App\Models\TablaMaestra;
 use App\Models\Regione;
 use App\Models\Seguro_afiliado_parentesco;
+use App\Models\Concepto;
 
 use Auth;
 
@@ -121,6 +122,8 @@ class SeguroController extends Controller
     public function modal_seguro($id){
 		
 		$id_user = Auth::user()->id;
+		$concepto_model = new Concepto;
+		$concepto = $concepto_model->getConceptoAllDenominacion();
 		$seguro = new Seguro;
 		if($id>0) $seguro = Seguro::find($id);else $seguro = new Seguro;
 
@@ -131,7 +134,7 @@ class SeguroController extends Controller
 		$id_regional="5";
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.seguro.modal_seguro',compact('id','seguro',/*'plan_seguro',*/'region','id_regional'));
+		return view('frontend.seguro.modal_seguro',compact('id','seguro',/*'plan_seguro',*/'region','id_regional','concepto'));
 
     }
 	
@@ -179,6 +182,7 @@ class SeguroController extends Controller
 		$seguro->id_regional = $request->id_regional;
 		$seguro->nombre = $request->nombre;
 		$seguro->descripcion = $request->descripcion;
+		$seguro->id_concepto = $request->concepto;
 		$seguro->estado = 1;
 		$seguro->id_usuario_inserta = $id_user;
 		$seguro->save();
