@@ -296,7 +296,7 @@ function modalProntoPago(id){
 
 function eliminarProntoPago(id,estado){
 	var act_estado = "";
-	if(estado==1){
+	if(estado==1 || estado==2 ){
 		act_estado = "Eliminar";
 		estado_=0;
 	}

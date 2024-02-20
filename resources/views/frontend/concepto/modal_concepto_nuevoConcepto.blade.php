@@ -353,6 +353,7 @@ function valida(){
 	var partida_presupuestal = $('#partida_presupuestal').val();
 	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
 	var centro_costo = $('#id_centro_costo').val();
+	var genera_pago = $('#genera_pago').val();
 
 	if (id_regional==""){
 		msg= "Falta seleccionar la Regional";
@@ -372,6 +373,8 @@ function valida(){
 		msg= "Falta seleccionar el Tipo de Afectaci&oacute;n";
 	}else if (centro_costo==""){
 		msg= "Falta ingresar el Centro de Costos";
+	}else if (genera_pago==""){
+		msg= "Falta ingresar Genera Pago";
 	}
 	
 	
@@ -412,12 +415,13 @@ function fn_save_concepto(){
 	var partida_presupuestal = $('#partida_presupuestal').val();
 	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
 	var centro_costo = $('#id_centro_costo').val();
+	var genera_pago = $('#genera_pago').val();
 	
 	
     $.ajax({
 			url: "/concepto/send_concepto_nuevoConcepto",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,centro_costo:centro_costo},
+            data : {_token:_token,id:id,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,centro_costo:centro_costo,genera_pago:genera_pago},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -745,6 +749,15 @@ container: '#myModal modal-body'
 											?>
 										</select>
 									</div>
+								</div>
+
+								<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+									<label class="control-label form-control-sm">Genera Pago</label>
+									<select name="genera_pago" id="genera_pago" class="form-control form-control-sm">
+										<option value="" <?php if(''==$concepto->genera_pago)echo "selected='selected'"?>>--Selecciona Genera Pago--</option>
+										<option value="1" <?php if('1'==$concepto->genera_pago)echo "selected='selected'"?>>Si</option>
+										<option value="0" <?php if('0'==$concepto->genera_pago)echo "selected='selected'"?>>No</option>
+									</select>
 								</div>
 						
 					</div>

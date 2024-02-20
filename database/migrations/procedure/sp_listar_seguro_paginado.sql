@@ -22,7 +22,7 @@ begin
 
 	v_tabla=' from seguros s
 	inner join regiones r on s.id_regional = r.id
-	left join conceptos c on  c.codigo= s.id_concepto';
+	left join conceptos c on s.id_concepto = c.codigo';
 	
 	
 	v_where = ' Where 1=1  ';
