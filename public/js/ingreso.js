@@ -651,8 +651,6 @@ function cargarValorizacion(){
 
 	$("#idConcepto").val(idconcepto);
 
-	
-
 	//if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
 	//else id_persona = $('#id_persona').val();
 
@@ -749,6 +747,8 @@ function validar(tipo) {
     var id_persona = $('#id_persona').val();
 	var empresa_id = $('#empresa_id').val();
 	var mov = $('.mov:checked').length;
+
+	
 
 	var id_ubicacion_p = $('#id_ubicacion_p').val();
 
@@ -895,10 +895,17 @@ function modal_otro_pago(){
 	var perido = "2023";
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
+
+	var tipo_documento = $('#tipo_documento').val();
+
+	if(tipo_documento == "79") {
+		idPersona = $('#empresa_id').val();
+		idAgremiado = 0;
+	}		
 	
 	
 	$.ajax({
-			url: "/ingreso/modal_otro_pago/"+perido+"/"+idPersona+"/"+idAgremiado,
+			url: "/ingreso/modal_otro_pago/"+perido+"/"+idPersona+"/"+idAgremiado+"/"+tipo_documento,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);

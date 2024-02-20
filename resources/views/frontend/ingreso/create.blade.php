@@ -425,16 +425,31 @@
 										</tr>
                                         -->
 
+
                                                     <tr>
-                                                        <th colspan="5" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
+                                                    
+                                                        <td style="padding-bottom:0px;margin-bottom:0px">
+                                                            <select name="cboFilas" id="cboFilas" class="form-control form-control-sm" onchange="cargarValorizacion()">                                                  
+                                                                <option value="12">20</option>
+                                                                <option value="60">60</option>
+                                                                <option value="100">100</option>
+                                                                <option value="500">500</option>                                                                
+                                                            </select>
+                                                        </td>
+
+                                                        <th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
                                                         <td style="padding-bottom:0px;margin-bottom:0px">
                                                             <input type="text" readonly name="total" id="total" value="0" class="form-control form-control-sm text-right">
                                                             <input type="hidden" readonly name="idConcepto" id="idConcepto" value="" class="form-control form-control-sm">
                                                         </td>
+
+
+
                                                     </tr>
                                                 </tfoot>
                                             </table>
                                         </div><!--table-responsive-->
+
 
                                         <div class="row">
                                             <div class="col">
@@ -466,6 +481,8 @@
                                                     <!--<input class="btn btn-primary pull-right" value="BOLETA" name="crea" type="button" form="prestacionescrea" id="btnGuardar" onclick="guardarValorizacion()" />-->
                                                 </div><!--form-group-->
                                             </div><!--col-->
+
+
                                         </div><!--row-->
                                     </div><!--card-body-->
                                 </div><!--card-->

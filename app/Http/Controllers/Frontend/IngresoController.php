@@ -69,10 +69,11 @@ class IngresoController extends Controller
         $periodo = $request->cboPeriodo_b;
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = $request->cboTipoConcepto_b;
-         //print_r($concepto);exit();
+        $filas = $request->cboFilas;
+        // print_r($filas);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto);
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
        
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
@@ -167,7 +168,7 @@ class IngresoController extends Controller
         
     }
 
-    public function modal_otro_pago($periodo, $id_persona, $id_agremiado ){
+    public function modal_otro_pago($periodo, $id_persona, $id_agremiado, $tipo_documento){
 
         
         $conceptos_model = new Concepto;        
@@ -175,7 +176,7 @@ class IngresoController extends Controller
 
     
 		
-		return view('frontend.ingreso.modal_otro_pago',compact('conceptos','periodo','id_persona','id_agremiado' ));
+		return view('frontend.ingreso.modal_otro_pago',compact('conceptos','periodo','id_persona','id_agremiado','tipo_documento' ));
 	}
 
     public function modal_fraccionar($idConcepto, $id_persona, $id_agremiado, $total_fraccionar ){
@@ -228,8 +229,13 @@ class IngresoController extends Controller
         $msg = "";
         $id_user = Auth::user()->id;
         $id_persona = $request->id_persona;
+        $tipo_documento = $request->tipo_documento;
         $id_agremiado = $request->id_agremiado;
-        
+
+       // print_r($id_persona); exit();
+
+        //if($tipo_documento=="79")$id_persona = $request->empresa_id;
+            
         $concepto_detalle = $request->concepto_detalle;
         $ind = 0;
         foreach($request->concepto_detalles as $key=>$det){
@@ -246,8 +252,13 @@ class IngresoController extends Controller
             $valorizacion->id_modulo = 5;
             $valorizacion->pk_registro = 0;
             $valorizacion->id_concepto = $value['id'];
-            $valorizacion->id_agremido = $id_agremiado;
-            $valorizacion->id_persona = $id_persona;
+            if($tipo_documento=="79"){
+                $valorizacion->id_empresa = $id_persona;    
+            }else{
+                $valorizacion->id_agremido = $id_agremiado;
+                $valorizacion->id_persona = $id_persona;
+                    
+            }
             $valorizacion->monto = $value['importe'];
             $valorizacion->id_moneda = $value['id_moneda'];
             $valorizacion->fecha = Carbon::now()->format('Y-m-d');
@@ -337,10 +348,11 @@ class IngresoController extends Controller
         $periodo = $request->cboPeriodo_b;
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = $request->cboTipoConcepto_b;
+        $filas = $request->cboFilas;
          //print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto);
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
        
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));

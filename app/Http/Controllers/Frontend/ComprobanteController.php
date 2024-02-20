@@ -89,7 +89,7 @@ class ComprobanteController extends Controller
             $stotal = $total/1.18;
             $igv   = $stotal * 0.18;
 
-
+            //exit($igv);
 
             $factura_detalle = $request->comprobante_detalle;
 
@@ -103,7 +103,7 @@ class ComprobanteController extends Controller
             $persona = $request->id_persona;
             $tipoDocP = $request->tipo_documento;
 			$empresa_id = $request->empresa_id;
-            //echo $$tipoDocP;exit();
+           // echo $$tipoDocP;exit();
 
 			// DNI = 78
 

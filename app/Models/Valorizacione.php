@@ -10,7 +10,7 @@ use DB;
 
 class Valorizacione extends Model
 {
-    function getValorizacion($tipo_documento,$id_persona,$periodo,$cuota,$concepto){        
+    function getValorizacion($tipo_documento,$id_persona,$periodo,$cuota,$concepto, $filas){        
         if($tipo_documento=="79"){  //RUC
             $cad = "
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
@@ -28,6 +28,7 @@ class Valorizacione extends Model
                 and v.estado = '1'            
                 and v.pagado = '0'
             order by v.fecha desc
+            limit ".$filas." 
 			";
         }else{
             $cad = "
@@ -47,6 +48,7 @@ class Valorizacione extends Model
                 and v.estado = '1'            
                 and v.pagado = '0'
             order by v.fecha desc
+            limit ".$filas."
 			";
         }
 
