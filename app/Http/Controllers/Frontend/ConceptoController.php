@@ -154,6 +154,7 @@ class ConceptoController extends Controller
 		$concepto->partida_presupuestal = $request->partida_presupuestal;
 		$concepto->id_tipo_afectacion = $request->id_tipo_afectacion;
 		$concepto->centro_costo = $request->centro_costo;
+		$concepto->genera_pago = $request->genera_pago;
 		//$concepto->estado = 1;
 		$concepto->id_usuario_inserta = $id_user;
 		$concepto->save();

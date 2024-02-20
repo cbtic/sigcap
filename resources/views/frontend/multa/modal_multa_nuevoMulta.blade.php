@@ -599,7 +599,7 @@ container: '#myModal modal-body'
 						</div>
 						-->
 						
-						<div class="col-lg-6">
+						<div class="col-lg-10">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Multa</label>
 								<select name="id_multa" id="id_multa" onChange="obtener_multa()" class="form-control form-control-sm">
