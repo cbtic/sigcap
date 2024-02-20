@@ -255,6 +255,8 @@ Route::post('afiliacion_seguro/send_parentesco_fila', [AfiliacionSeguroControlle
 //Route::get('afiliacion_seguro/obtener_parentesco/{id}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco');
 Route::get('afiliacion_seguro/obtener_parentesco/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
 
+Route::post('afiliacion_seguro/send_seguro_afiliado_parentesco', [AfiliacionSeguroController::class, 'send_seguro_afiliado_parentesco'])->name('afiliacion_seguro.send_seguro_afiliado_parentesco');
+
 Route::get('concurso', [ConcursoController::class, 'index'])->name('concurso');
 Route::post('concurso/listar_concurso', [ConcursoController::class, 'listar_concurso'])->name('concurso.listar_concurso');
 Route::get('concurso/modal_concurso/{id}', [ConcursoController::class, 'modal_concurso'])->name('concurso.modal_concurso');

@@ -37,5 +37,13 @@ class seguro_afiliado_parentesco extends Model
 
     }
     
+	public function seguro_agremiado_cuota($id_afiliacion) {
+		
+        $cad = "Select sp_crud_seguro_agremiado_cuota(?)";
+        $data = DB::select($cad, array($id_afiliacion));
+        return $data[0]->sp_crud_seguro_agremiado_cuota;
+    }
+	
+	
 	
 }
