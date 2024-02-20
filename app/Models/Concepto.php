@@ -21,8 +21,9 @@ class Concepto extends Model
         select id, id_regional, codigo, denominacion, estado, id_tipo_concepto, importe, id_moneda, moneda, periodo, cuenta_contable, cuenta_contable_debe, 
         cuenta_contable_al_haber1, cuenta_contable_al_haber2, partida_presupuestal, id_tipo_afectacion, centro_costo, genera_pago
         from conceptos
-        where periodo = '".$periodo."'
-        and estado = '1'
+        where 
+        --periodo = '".$periodo."'and 
+        estado = '1'
         and genera_pago = '1'
         order by denominacion
         ";
