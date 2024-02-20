@@ -221,6 +221,7 @@
                 <table id="tblAfiliado" class="table table-hover table-sm">
                     <thead>
                     <tr style="font-size:13px">
+                        <th>Id</th>
                         <th>Denominaci&oacute;n</th>
                         <th>Monto</th>
                         <th>Moneda</th>

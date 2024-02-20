@@ -520,13 +520,24 @@ function datatablenew(){
         "aoColumnDefs":
             [	
 				{
+					"mRender": function (data, type, row) {
+						var id = "";
+						if(row.id!= null)id = row.id;
+						return id;
+					},
+					"bSortable": false,
+					"aTargets": [0],
+					"className": "dt-center",
+					//"className": 'control'
+					},
+				{
                 "mRender": function (data, type, row) {
                 	var denominacion = "";
 					if(row.denominacion!= null)denominacion = row.denominacion;
 					return denominacion;
                 },
                 "bSortable": false,
-                "aTargets": [0],
+                "aTargets": [1],
 				"className": "dt-center",
 				//"className": 'control'
                 },
@@ -546,7 +557,7 @@ function datatablenew(){
 					return monto;
                 },
                 "bSortable": false,
-                "aTargets": [1],
+                "aTargets": [2],
 				"className": "dt-center",
                 },
 				{
@@ -556,7 +567,7 @@ function datatablenew(){
 					return moneda;
 				},
 				"bSortable": false,
-				"aTargets": [2]
+				"aTargets": [3]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -565,7 +576,7 @@ function datatablenew(){
 						return concepto;
 					},
 					"bSortable": false,
-					"aTargets": [3]
+					"aTargets": [4]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -579,7 +590,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [4]
+				"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -604,7 +615,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [6],
 				},
 
             ]

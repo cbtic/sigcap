@@ -52,7 +52,7 @@ class Concepto extends Model
 
         $cad = "select *
                 from conceptos
-                where estado='1'and codigo = '00006'
+                where estado='1'and codigo = '00002'
                 order by denominacion ";
     
 		$data = DB::select($cad);
@@ -72,7 +72,7 @@ class Concepto extends Model
 
     function getCodigoConcepto(){
 
-        $cad = "select lpad((max(codigo::int)+1)::varchar,10,'0') codigo from conceptos c ";
+        $cad = "select lpad((max(codigo::int)+1)::varchar,5,'0') codigo from conceptos c  where codigo <> ''";
     
 		$data = DB::select($cad);
         return $data[0]->codigo;
@@ -80,7 +80,7 @@ class Concepto extends Model
 
     function getCodigoConceptoEdit(){
 
-        $cad = "select lpad((max(codigo::int))::varchar,5,'0') codigo from conceptos c ";
+        $cad = "select lpad((max(codigo::int))::varchar,5,'0') codigo from conceptos c  where codigo <> ''";
     
 		$data = DB::select($cad);
         return $data[0]->codigo;

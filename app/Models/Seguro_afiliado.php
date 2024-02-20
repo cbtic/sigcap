@@ -27,12 +27,12 @@ class Seguro_afiliado extends Model
 
      public function listar_parentesco_agremiado($id_agremiado){
 
-        $cad = "select ap.id,0  id_afiliacion,id_agremiado,ap.id id_familia, extract(year from Age(ap.fecha_nacimiento)) edad,tms.denominacion  sexo,ap.estado, tm.denominacion  parentesco,ap.apellido_nombre nombre 
+        $cad = "select ap.id,0  id_afiliacion,id_agremiado,ap.id id_familia, extract(year from Age(ap.fecha_nacimiento)) edad,tms.denominacion  		sexo,ap.estado, tm.denominacion  parentesco,ap.apellido_nombre nombre,sp.id id_plan,nombre plan,monto,tms.codigo id_sexo  
         from  agremiado_parentecos ap inner join tabla_maestras tm on cast(tm.codigo as integer)=ap.id_parentesco and tm.tipo ='12' 
-                                        inner join tabla_maestras tms on cast(tms.codigo as integer) =ap.id_sexo  and tms.tipo ='2'
-
-           Where  id_agremiado = " .$id_agremiado. "
-            Order By id_familia;  ";
+        inner join tabla_maestras tms on cast(tms.codigo as integer)=ap.id_sexo  and tms.tipo ='2'
+		inner join seguros_planes sp on sp.id=(select id from seguros_planes where id_seguro=1 and extract(year from Age(ap.fecha_nacimiento)) between edad_minima and edad_maxima) 
+        Where  id_agremiado = " .$id_agremiado. "
+        Order By id_familia;  ";
     
 		$data = DB::select($cad);
         return $data;

@@ -449,10 +449,27 @@ function Guardar() {
 	if(msg!=""){
 		bootbox.alert(msg);
 	} else {
-		document.frmSeguroParentesco.submit();
+		//document.frmSeguroParentesco.submit();
+		guardar_seguro_afiliado_parentesco();
 	}
 	return false;
 }
+
+function guardar_seguro_afiliado_parentesco() {
+
+    $.ajax({
+        url: "/afiliacion_seguro/send_seguro_afiliado_parentesco",
+        type: "POST",
+        data: $("#frmSeguroParentesco").serialize(),
+        success: function(result) {
+			//Limpiar();
+            $('#openOverlayOpc').modal('hide');
+			datatablenew();
+			//location.reload();
+        }
+    });
+}
+
 
 function fn_save_fila(id,idfamilia){
  
@@ -591,8 +608,9 @@ function fn_save_fila(id,idfamilia){
                             <th>Parentesco</th>
 							<th>Apellidos y nombres</th>
 							<th>sexo</th>
-							<th>Edad</th>                                                        
-							
+							<th>Edad</th>
+							<th>Plan</th>
+							<th>Monto</th>
                             
                         </tr>
                         </thead>
