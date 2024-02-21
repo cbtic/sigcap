@@ -32,7 +32,21 @@
     .tooltip.right>.tooltip-arrow {
         border-right: 2px solid #5cb85c !important;
     }
-
+	.loader {
+		width: 100%;
+		height: 100%;
+		/*height: 1500px;*/
+		overflow: hidden;
+		top: 0px;
+		left: 0px;
+		z-index: 10000;
+		text-align: center;
+		position: absolute;
+		background-color: #000;
+		opacity: 0.6;
+		filter: alpha(opacity=40);
+		display: none;
+	}
 
     .selected {
         background-color: brown;
@@ -212,7 +226,7 @@
                                                     <input type="hidden" readonly name="numero_documento_" id="numero_documento_" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_tipo_documento_" id="id_tipo_documento_" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_concepto" id="id_concepto" value="" class="form-control form-control-sm">
-
+                                                    <input type="hidden" readonly name="DescuentoPP" id="DescuentoPP" value="" class="form-control form-control-sm">
 
                                                 </div>
                                             </div>

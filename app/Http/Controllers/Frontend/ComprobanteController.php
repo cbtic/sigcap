@@ -34,6 +34,7 @@ class ComprobanteController extends Controller
 
         $trans = $request->Trans;
         $id_caja=$request->id_caja;
+        $descuentopp=$request->DescuentoPP;
 
         //print_r($id_caja); exit();
 
@@ -93,11 +94,39 @@ class ComprobanteController extends Controller
 
             $factura_detalle = $request->comprobante_detalle;
 
+            //$factura_detalle->id_modulo = 3;
+
             $ind = 0;
             foreach($request->comprobante_detalles as $key=>$det){
                 $facturad[$ind] = $factura_detalle[$key];
                 $ind++;
             }
+
+            if ($descuentopp=="S"){
+                $items1 = array(
+                    "chek" => 1, 
+                    "id" => 0, 
+                    "fecha" => "20/02/2024", 
+                    "denominacion" => "DESCUENTO CUOTA GREMIAL PRONTOPAGO",
+                    "monto" => -120,
+                    "pu" => -120, 
+                    "igv" => 0, 
+                    "pv" => 0, 
+                    "total" => -120, 
+                    "moneda" => "SOLES", 
+                    "id_moneda" => 1, 
+                    "abreviatura" => "SOLES", 
+                    "cantidad" => 1, 
+                    "descuento" => "S",
+                    "cod_contable" =>"", 
+                    "descripcion" => 'DESCUENTO CUOTA GREMIAL PRONTOPAGO', 
+                    "vencio" => 0, 
+                    "id_concepto" => 26413,
+                    "item" => 0, 
+                    );
+                    $facturad[$ind]=$items1;
+            }
+
 
             $ubicacion = $request->id_ubicacion;
             $persona = $request->id_persona;
