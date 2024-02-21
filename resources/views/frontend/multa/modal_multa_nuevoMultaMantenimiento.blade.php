@@ -623,7 +623,7 @@ container: '#myModal modal-body'
 										<option value="">--Selecionar--</option>
 											<?php
 												foreach ($concepto as $row) {?>
-											<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$multa->id_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$multa->id_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 											<?php 
 											}
 											?>
