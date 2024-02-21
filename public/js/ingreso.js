@@ -642,7 +642,7 @@ function cargarValorizacion1(){
 }
 function cargarValorizacion(){
     
-    
+    //alert("hi");
 	//var numero_documento = $("#numero_documento").val();
 	var tipo_documento = $("#tipo_documento").val();
 	var id_persona = 0;
@@ -654,13 +654,23 @@ function cargarValorizacion(){
 	//if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
 	//else id_persona = $('#id_persona').val();
 
+
     $("#tblValorizacion tbody").html("");
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+//	$('#guardar').hide();
+
 	$.ajax({
 		url: "/ingreso/listar_valorizacion",
 		type: "POST",
 		data : $("#frmValorizacion").serialize(),
 		success: function (result) {  
 			$("#tblValorizacion tbody").html(result);
+			$('.loader').hide();
 		}
 });
 
@@ -731,8 +741,28 @@ function enviarTipo(tipo){
 	if(tipo == 7)$('#NDBV').val("NDBV"); //'Nueva Nota Dévito Boleta de Venta'
 
 
+	$('#DescuentoPP').val("N");
 
-	validar(tipo);
+	Swal.fire({
+		title: "Tiene un descuento desea Aplicarlo?",
+		showDenyButton: true,
+		showCancelButton: true,
+		confirmButtonText: "Aplicar",
+		denyButtonText: "No Aplicar"
+	  }).then((result) => {
+		/* Read more about isConfirmed, isDenied below */
+		if (result.isConfirmed) {
+		  //Swal.fire("Saved!", "", "success");
+		  $('#DescuentoPP').val("S");
+		  validar(tipo);
+		} else if (result.isDenied) {
+		  //Swal.fire("Changes are not saved", "", "info");
+		  $('#DescuentoPP').val("N");
+		  validar(tipo);
+		}
+	  });
+
+	
 }
 
 function validar(tipo) {
@@ -770,10 +800,14 @@ function validar(tipo) {
 		bootbox.alert(msg);
 		//return false;
 	} else{
+
+
 		if(tipo == 1 || tipo==2 || tipo==3) {
-		//submitFrm();
-		document.frmValorizacion.submit();
-		//document.frmPagos.submit();
+
+
+			//submitFrm();
+			document.frmValorizacion.submit();
+			//document.frmPagos.submit();
 		}
 
 		if(tipo = 5){

@@ -348,8 +348,9 @@ class IngresoController extends Controller
         $periodo = $request->cboPeriodo_b;
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = $request->cboTipoConcepto_b;
-        $filas = $request->cboFilas;
-         //print_r($concepto);exit();
+        //$filas = $request->cboFilas;
+        $filas = "20";
+        // print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
         $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
