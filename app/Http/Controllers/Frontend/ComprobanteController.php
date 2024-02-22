@@ -90,9 +90,14 @@ class ComprobanteController extends Controller
             }
             //echo "adelanto=>".$adelanto."<br>";
 
-
-            $stotal = $total/1.18;
-            $igv   = $stotal * 0.18;
+            if ($descuentopp=="S"){
+                $stotal = $total;
+                $igv   = 0;
+            }
+            else{
+                $stotal = $total/1.18;
+                $igv   = $stotal * 0.18;
+            }
 
             //exit($igv);
 
@@ -921,7 +926,7 @@ class ComprobanteController extends Controller
 							);
 			$items[$index]=$items1;
         }
-
+ 
 		$data["items"] = $items;
 		$data["anulado"] = false;
 		$data["declare"] = "0"; // 0->dechlare 1>declare instante

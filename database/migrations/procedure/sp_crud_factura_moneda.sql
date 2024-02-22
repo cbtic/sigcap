@@ -180,7 +180,7 @@ delete  from comprobantes;
 TRUNCATE TABLE comprobante_detalles RESTART IDENTITY;
 
 */
-
+ 
 end;
 $function$
 ;

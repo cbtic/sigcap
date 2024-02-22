@@ -328,7 +328,7 @@ function calcular_total(obj){
 		}
 		*/
 
-		if(val_descuento=="S"){
+		if(val_descuento=="sS"){
 			valor_venta_bruto = val_total/1.18;
 			descuento = (importe_pp*numero_cuotas_pp);
 			valor_venta = valor_venta_bruto - descuento;
@@ -690,7 +690,7 @@ function cargarValorizacion(){
 	//if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
 	//else id_persona = $('#id_persona').val();
 
-
+ 
     $("#tblValorizacion tbody").html("");
 
 	var msgLoader = "";

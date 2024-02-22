@@ -54,7 +54,7 @@ class IngresoController extends Controller
     }
 
     public function obtener_valorizacion($tipo_documento,$id_persona){
-
+ 
         $valorizaciones_model = new Valorizacione;
         $sw = true;
         //$valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);

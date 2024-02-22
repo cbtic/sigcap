@@ -66,7 +66,7 @@ function guardarnc(){
 	
 
 }
-
+ 
 
 function fn_save(){
 

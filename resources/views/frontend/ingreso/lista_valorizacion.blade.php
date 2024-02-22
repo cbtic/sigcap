@@ -12,12 +12,20 @@ $tot_reg = count($valorizacion);
 //print_r ("cuenta registros ->".$count);
 
 foreach($valorizacion as $key=>$row):
-	
+	$id_tipo_afectacion = $row->id_tipo_afectacion;
 
 	$n++;
 	$monto = $row->monto;
-	$stotal = str_replace(",","",number_format($monto/1.18,1));
-	$igv_   = str_replace(",","",number_format($stotal * 0.18,1));
+
+	if($id_tipo_afectacion=='30'){
+		$stotal = 0;
+		$igv_   = 0;
+	
+	}else{
+		$stotal = str_replace(",","",number_format($monto/1.18,1));
+		$igv_   = str_replace(",","",number_format($stotal * 0.18,1));	
+	}
+
 	$disabled = "";
 	if($tot_reg!=$n) {
 
