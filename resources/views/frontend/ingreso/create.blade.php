@@ -79,6 +79,8 @@
     </ol>
     -->
 
+<div class="loader"></div>
+
 <div class="justify-content-center">
     <!--<div class="container-fluid">-->
 
@@ -228,6 +230,13 @@
                                                     <input type="hidden" readonly name="id_concepto" id="id_concepto" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="DescuentoPP" id="DescuentoPP" value="" class="form-control form-control-sm">
 
+                                                    <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo $pronto_pago->periodo ?>" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="numero_cuotas_pp" id="numero_cuotas_pp" value="<?php echo $pronto_pago->numero_cuotas ?>" class="form-control form-control-sm">
+
+                                                    <input type="hidden" readonly name="id_concepto_pp" id="id_concepto_pp" value="<?php echo $concepto->id ?>" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="importe_pp" id="importe_pp" value="<?php echo $concepto->importe ?>" class="form-control form-control-sm">
+                                                    
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -440,8 +449,7 @@
                                         -->
 
 
-                                                    <tr>
-                                                    
+                                                    <tr>                                                    
                                                         <td style="padding-bottom:0px;margin-bottom:0px">
                                                             <select name="cboFilas" id="cboFilas" class="form-control form-control-sm" onchange="cargarValorizacion()">                                                  
                                                                 <option value="12">20</option>
@@ -451,15 +459,23 @@
                                                             </select>
                                                         </td>
 
-                                                        <th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
+                                                        <th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Descuento</th>
                                                         <td style="padding-bottom:0px;margin-bottom:0px">
-                                                            <input type="text" readonly name="total" id="total" value="0" class="form-control form-control-sm text-right">
-                                                            <input type="hidden" readonly name="idConcepto" id="idConcepto" value="" class="form-control form-control-sm">
+                                                            <input type="text" readonly name="totalDescuento" id="totalDescuento" value="0" class="form-control form-control-sm text-right">                                                            
                                                         </td>
 
-
-
                                                     </tr>
+
+                                                    <tr>
+                                                    
+                                                    <td style="padding-bottom:0px;margin-bottom:0px">
+
+                                                    <th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
+                                                    <td style="padding-bottom:0px;margin-bottom:0px">
+                                                        <input type="text" readonly name="total" id="total" value="0" class="form-control form-control-sm text-right">
+                                                        <input type="hidden" readonly name="idConcepto" id="idConcepto" value="" class="form-control form-control-sm">
+                                                    </td>
+                                                </tr>
                                                 </tfoot>
                                             </table>
                                         </div><!--table-responsive-->
@@ -488,6 +504,8 @@
                                                     <input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnTicket" disabled="disabled" onclick="enviarTipo(3)" style="display:none" />
 
                                                     <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="modal_fraccionamiento()" />
+
+                                                    <input class="btn btn-warning pull-right" value="APLICAR PRONTO PAGO" type="button" id="btnDescuento"  onclick="AplicarDescuento()" />
 
                                                     
 
