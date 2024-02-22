@@ -38,9 +38,10 @@ class ComprobanteController extends Controller
 
         $totalDescuento=$request->totalDescuento;
 
+        $id_tipo_afectacion_pp=$request->id_tipo_afectacion_pp;
         
-
-        //print_r($id_caja); exit();
+        
+        //print_r($id_tipo_afectacion_pp); exit();
 
 		if($id_caja==""){
 			$valorizaciones_model = new Valorizacione;
@@ -90,7 +91,7 @@ class ComprobanteController extends Controller
             }
             //echo "adelanto=>".$adelanto."<br>";
 
-            if ($descuentopp=="S"){
+            if ($id_tipo_afectacion_pp=="30"){
                 $stotal = $total;
                 $igv   = 0;
             }
@@ -186,7 +187,7 @@ class ComprobanteController extends Controller
             }
           
 
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp'));
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -378,6 +379,9 @@ class ComprobanteController extends Controller
         $facturas_model = new Comprobante;
 		$guia_model = new Guia;
 
+        $id_tipo_afectacion_pp = $request->id_tipo_afectacion_pp;
+         
+
 		//$facturaExiste = $facturas_model->getValidaFactura($request->TipoF,$request->ubicacion,$request->persona,$request->totalF);
 		//if(count($facturaExiste)==0){
 
@@ -452,7 +456,7 @@ class ComprobanteController extends Controller
                 $descuento =  $request->totalDescuento; 
                 if ($request->totalDescuento=='') $descuento = 0;
 
-				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     0, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
+				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
 				$factura = Comprobante::where('id', $id_factura)->get()[0];
