@@ -316,6 +316,9 @@
                     <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}} " id="frmFacturacion" name="frmFacturacion" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
+
+                        <input type="hidden" name="totalDescuento" id="totalDescuento" value="<?php echo $totalDescuento; ?>">
+
                         <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
                                                                         echo $TipoF;
                                                                     } ?>">
@@ -576,7 +579,7 @@
                                                         <th class="text-right" width="5%">#</th>
                                                         <th class="text-center" width="10%">Cant.</th>
                                                         <th width="40%">Descripción</th>
-                                                        <th width="40%">%Dscto.</th>
+                                                        <th width="40%">Dscto.</th>
                                                         <th class="text-right" width="15%">PU</th>
                                                         <th class="text-right" width="15%">IGV</th>
                                                         <th class="text-right" width="15%">P.Venta</th>

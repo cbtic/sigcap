@@ -79,10 +79,11 @@ foreach($valorizacion as $key=>$row):
 	
 endforeach;
 ?>
-
 <tr>
 	<th colspan="5" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda Total</th>
 	<td style="padding-bottom:0px;margin-bottom:0px">
 		<input type="text" readonly name="deudaTotal" id="deudaTotal" value="<?php echo $total?>" class="form-control form-control-sm text-right"/>
 	</td>
 </tr>
+
+

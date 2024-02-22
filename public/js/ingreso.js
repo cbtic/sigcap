@@ -307,11 +307,16 @@ function calcular_total(obj){
 	
 	$(".mov:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
-		var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
+		//var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
 		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
 
-		//alert(id_concepto);
+		var val_descuento =$('#DescuentoPP').val("");
+
+		var numero_cuotas_pp =$('#numero_cuotas_pp').val("");
+		var importe_pp =$('#importe_pp').val("");
+				
 		
+/*
 		if(val_descuento!=""){
 			valor_venta_bruto = val_total/1.18;
 			descuento = (val_total*val_descuento/100)/1.18;
@@ -321,13 +326,28 @@ function calcular_total(obj){
 		}else{
 			total += Number(val_total);
 		}
-		//alert(val_total);
+		*/
+
+		if(val_descuento=="S"){
+			valor_venta_bruto = val_total/1.18;
+			descuento = (importe_pp*numero_cuotas_pp);
+			valor_venta = valor_venta_bruto - descuento;
+			igv = valor_venta*0.18;
+			total += igv + valor_venta_bruto - descuento;
+			
+		}else{
+			total += Number(val_total);
+		}
+
+
+		//alert(total);
 		
 
 	});
 	
 	//$('#idConcepto').val(id_concepto);
 	//total -= descuento;
+	
 	$('#total').val(total.toFixed(2));
 
 	if(cantidad > 1){
@@ -445,6 +465,8 @@ function obtenerBeneficiario(){
 	var tipo_documento = $("#tipo_documento").val();
 	var numero_documento = $("#numero_documento").val();
 	var msg = "";
+
+	$('#DescuentoPP').val("N");
 	
 	//alert(tipo_documento);
 	
@@ -467,6 +489,12 @@ function obtenerBeneficiario(){
 	$("#btnFracciona").prop('disabled', true);
 	$("#btnBoleta").prop('disabled', true);
 	$("#btnFactura").prop('disabled', true);
+
+	$("#btnDescuento").prop('disabled', true);
+	$("#btnFracciona").prop('disabled', true);
+	
+
+	
 
 	
 	
@@ -494,6 +522,10 @@ function obtenerBeneficiario(){
 
 
 					$('#btnOtroConcepto').attr("disabled", false);
+					$('#btnDescuento').attr("disabled", false);
+					$('#btnFracciona').attr("disabled", false);
+
+					
 
 					
 
@@ -514,6 +546,8 @@ function obtenerBeneficiario(){
 					$('#id_tipo_documento').val(tipo_documento);
 					
 					$('#btnOtroConcepto').attr("disabled", false);
+					$('#btnDescuento').attr("disabled", false);
+					$('#btnFracciona').attr("disabled", false);
 					 
 
 				} else {
@@ -530,6 +564,8 @@ function obtenerBeneficiario(){
 					$('#numero_documento_').val(tipo_documento);
 					$('#id_tipo_documento_').val(tipo_documento);
 					$('#btnOtroConcepto').attr("disabled", false);
+					$('#btnDescuento').attr("disabled", false);
+					$('#btnFracciona').attr("disabled", false);
 					
 					
 
@@ -740,7 +776,7 @@ function enviarTipo(tipo){
 	if(tipo == 6)$('#NDFT').val("NDFT"); //'Nueva Nota Dévito Factura'
 	if(tipo == 7)$('#NDBV').val("NDBV"); //'Nueva Nota Dévito Boleta de Venta'
 
-
+/*
 	$('#DescuentoPP').val("N");
 
 	Swal.fire({
@@ -750,18 +786,20 @@ function enviarTipo(tipo){
 		confirmButtonText: "Aplicar",
 		denyButtonText: "No Aplicar"
 	  }).then((result) => {
-		/* Read more about isConfirmed, isDenied below */
+
 		if (result.isConfirmed) {
-		  //Swal.fire("Saved!", "", "success");
+
 		  $('#DescuentoPP').val("S");
 		  validar(tipo);
 		} else if (result.isDenied) {
-		  //Swal.fire("Changes are not saved", "", "info");
+
 		  $('#DescuentoPP').val("N");
 		  validar(tipo);
 		}
 	  });
+*/
 
+validar(tipo);
 	
 }
 
@@ -1126,6 +1164,147 @@ function nd(){
 	document.forms["frmPagos_nd"].submit();
 	return false;
 };
+
+
+function AplicarDescuento(){
+	
+	var msg = "";
+	var periodo_pp = $('#periodo_pp').val();
+	var id_concepto_pp = $('#id_concepto_pp').val();
+	var importe_pp = $('#importe_pp').val();
+	var numero_cuotas_pp =$('#numero_cuotas_pp').val();
+
+	var cboPeriodo_b = $('#cboPeriodo_b').val();
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+
+	var total = 0;
+	var descuento = 0;
+	var valor_venta_bruto = 0;
+	var valor_venta = 0;
+	var igv = 0;
+
+	//alert(cboPeriodo_b);
+
+	if (periodo_pp!=cboPeriodo_b)msg+="No aplica en el PERIODO seleccionado... <br>";
+	
+	if (id_concepto_pp!=cboTipoConcepto_b)msg+="No aplica en el CONCEPTO seleccionado... <br>";
+	
+
+	if(msg!=""){
+        
+		bootbox.alert(msg); 
+		
+		$('#DescuentoPP').val("N");
+    
+
+		return false;
+
+    }
+    else{
+		$('#DescuentoPP').val("S"); 
+		$("#btnDescuento").prop('disabled', true);
+
+		
+		$(".mov").each(function (){
+			//$(this).parent().parent().parent().find(".mov").prop("checked", true);
+			$('.mov').prop('checked', true);
+			//calcular_total();
+
+			var val_total = $(this).parent().parent().parent().find('.val_total').html();
+			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
+			$(this).parent().parent().parent().find('.chek').val("1");
+
+			total += Number(val_total);
+
+			//var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
+			//id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
+	
+			//var val_descuento =$('#DescuentoPP').val("");
+	
+
+					
+		/*
+			if(val_descuento=="S"){
+				valor_venta_bruto = val_total/1.18;
+				descuento = (importe_pp*numero_cuotas_pp);
+				valor_venta = valor_venta_bruto - descuento;
+				igv = valor_venta*0.18;
+				total += igv + valor_venta_bruto - descuento;
+				
+			}else{
+				total += Number(val_total);
+			}
+	
+	*/
+			
+	
+
+		});
+
+//		return false;
+		
+
+		//alert(numero_cuotas_pp);
+		//alert(importe_pp);
+
+		descuento = (Number(importe_pp)*Number(numero_cuotas_pp));
+
+		total=total-descuento;
+
+
+		//alert(total);
+
+		$('#total').val(total.toFixed(2));
+		$('#totalDescuento').val(descuento.toFixed(2));
+
+		
+
+		if(cantidad > 1){
+			$('#MonAd').attr("readonly",true);
+			$('#MonAd').val("0");
+		}else{
+			$('#MonAd').attr("readonly",false);
+			$('#MonAd').val(total.toFixed(2));
+		}	
+
+
+		var cantidad = $(".mov:checked").length;
+		var ruc_p = $('#ruc_p').val();
+		var tipo_documento = $('#tipo_documento').val();
+
+		$("#btnBoleta").prop('disabled', true);
+		$("#btnFactura").prop('disabled', true);		
+		$("#btnFracciona").prop('disabled', true);
+		$('#btnOtroConcepto').attr("disabled", true);
+	
+		if(cantidad != 0){
+
+			if(tipo_documento == "79"){//RUC
+				
+				$("#btnBoleta").prop('disabled', true);
+				$("#btnFactura").prop('disabled', false);
+			}else
+			{
+				$("#btnBoleta").prop('disabled', false);
+				
+				if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
+			}
+		}
+
+		
+		//alert(total);
+	}
+	
+	
+
+
+	
+	//alert(id_concepto_pp);
+	//alert(importe_pp);
+	//return false;
+	
+};
+
 
 
 

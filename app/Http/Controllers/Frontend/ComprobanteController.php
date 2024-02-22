@@ -36,6 +36,10 @@ class ComprobanteController extends Controller
         $id_caja=$request->id_caja;
         $descuentopp=$request->DescuentoPP;
 
+        $totalDescuento=$request->totalDescuento;
+
+        
+
         //print_r($id_caja); exit();
 
 		if($id_caja==""){
@@ -96,11 +100,15 @@ class ComprobanteController extends Controller
 
             //$factura_detalle->id_modulo = 3;
 
+           // print_r($request->comprobante_detalles);exit();
+           
             $ind = 0;
             foreach($request->comprobante_detalles as $key=>$det){
                 $facturad[$ind] = $factura_detalle[$key];
                 $ind++;
             }
+            //print_r($facturad);exit();
+
 
             if ($descuentopp=="S"){
                 $items1 = array(
@@ -108,24 +116,26 @@ class ComprobanteController extends Controller
                     "id" => 0, 
                     "fecha" => "20/02/2024", 
                     "denominacion" => "DESCUENTO CUOTA GREMIAL PRONTOPAGO",
-                    "monto" => -120,
-                    "pu" => -120, 
+                    "monto" => $request->totalDescuento*-1,
+                    "pu" => $request->totalDescuento*-1, 
                     "igv" => 0, 
                     "pv" => 0, 
-                    "total" => -120, 
+                    "total" => $request->totalDescuento*-1, 
                     "moneda" => "SOLES", 
                     "id_moneda" => 1, 
                     "abreviatura" => "SOLES", 
                     "cantidad" => 1, 
-                    "descuento" => "S",
+                    "descuento" => $request->totalDescuento,
                     "cod_contable" =>"", 
                     "descripcion" => 'DESCUENTO CUOTA GREMIAL PRONTOPAGO', 
                     "vencio" => 0, 
-                    "id_concepto" => 26413,
+                    "id_concepto" => $request->id_concepto_pp,
                     "item" => 0, 
                     );
                     $facturad[$ind]=$items1;
             }
+
+             //print_r($facturad);exit();
 
 
             $ubicacion = $request->id_ubicacion;
@@ -169,7 +179,9 @@ class ComprobanteController extends Controller
                 }
                 
             }
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago'));
+          
+
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento'));
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -368,7 +380,7 @@ class ComprobanteController extends Controller
 
 			$tarifa = $request->facturad;
 
-		   //print_r($tarifa);
+		  // print_r($tarifa); exit();
 
 			//echo "serieF=>".$request->serieF."<br>";
 			//echo "TipoF=>".$request->TipoF."<br>";
@@ -430,7 +442,12 @@ class ComprobanteController extends Controller
 
                 if($ubicacion_id=="")$ubicacion_id=$id_persona;
 
-				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     0, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  $id_moneda);
+                
+
+                $descuento =  $request->totalDescuento; 
+                if ($request->totalDescuento=='') $descuento = 0;
+
+				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     0, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
 				$factura = Comprobante::where('id', $id_factura)->get()[0];
@@ -567,7 +584,9 @@ class ComprobanteController extends Controller
                
 				
 				$id_moneda=1;
-			
+
+                $descuento = $value['descuento'];
+		
 				$id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  1);
                // print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
               
@@ -913,7 +932,7 @@ class ComprobanteController extends Controller
 		$data["keepNumber"] = "false";
 		$data["tipoCorreo"] = "1";
         $data["formaPago"] = "CONTADO";
-		$data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";
+		$data["tipoMoneda"] = ($factura->id_moneda=="2")?"PEN":"USD"; //"PEN";
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
 		$data["serieNumero"] = $factura->serie."-".$factura->numero; // "F001-000002";

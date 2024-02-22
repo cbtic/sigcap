@@ -12,6 +12,8 @@ use App\Models\AgremidoCuota;
 use App\Models\CajaIngreso;
 use App\Models\Valorizacione;
 use App\Models\Concepto;
+use App\Models\ProntoPago;
+
 use Illuminate\Support\Carbon;
 
 use Auth;
@@ -35,14 +37,19 @@ class IngresoController extends Controller
         $persona = new Persona;
         $caja_model = new TablaMaestra;
         $caja_ingreso_model = new CajaIngreso();
+        //$pronto_pago_model = new ProntoPago;
+
         $caja = $caja_model->getCaja('91');
         $caja_usuario = $caja_ingreso_model->getCajaIngresoByusuario($id_user,'91');
         $tipo_documento = $caja_model->getMaestroByTipo(16);
+        $pronto_pago = ProntoPago::where("periodo",'2024')->where("estado","1")->first();
+                
+        $concepto = Concepto::find(26411); //CUOTA GREMIAL
 
-         
         //$caja_usuario = $caja_model;
-        //print_r($caja_usuario);exit();
-        return view('frontend.ingreso.create',compact('persona','caja','caja_usuario','tipo_documento'));
+        //print_r($concepto);exit();
+
+        return view('frontend.ingreso.create',compact('persona','caja','caja_usuario','tipo_documento','pronto_pago', 'concepto'));
 
     }
 
