@@ -318,6 +318,7 @@
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
 
                         <input type="hidden" name="totalDescuento" id="totalDescuento" value="<?php echo $totalDescuento; ?>">
+                        <input type="hidden" name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $id_tipo_afectacion_pp; ?>">
 
                         <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
                                                                         echo $TipoF;
