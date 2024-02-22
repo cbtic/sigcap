@@ -28,7 +28,7 @@
     .tooltip.left>.tooltip-arrow {
         border-left: 2px solid #5cb85c !important;
     }
-
+ 
     .tooltip.right>.tooltip-arrow {
         border-right: 2px solid #5cb85c !important;
     }
@@ -235,7 +235,7 @@
 
                                                     <input type="hidden" readonly name="id_concepto_pp" id="id_concepto_pp" value="<?php echo $concepto->id ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="importe_pp" id="importe_pp" value="<?php echo $concepto->importe ?>" class="form-control form-control-sm">
-                                                    
+                                                    <input type="hidden" readonly name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $concepto->id_tipo_afectacion ?>" class="form-control form-control-sm">
                                                     
                                                 </div>
                                             </div>
