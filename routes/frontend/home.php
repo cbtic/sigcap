@@ -253,7 +253,7 @@ Route::get('afiliacion_seguro/obtener_agremiado/{id}', [AfiliacionSeguroControll
 Route::post('afiliacion_seguro/send_parentesco_fila', [AfiliacionSeguroController::class, 'send_parentesco_fila'])->name('afiliacion_seguro.send_parentesco_fila');
 //Route::get('afiliacion_seguro/obtener_parentesco/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
 //Route::get('afiliacion_seguro/obtener_parentesco/{id}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco');
-Route::get('afiliacion_seguro/obtener_parentesco/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
+Route::get('afiliacion_seguro/obtener_parentesco/{id_afiliacion}/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
 
 Route::post('afiliacion_seguro/send_seguro_afiliado_parentesco', [AfiliacionSeguroController::class, 'send_seguro_afiliado_parentesco'])->name('afiliacion_seguro.send_seguro_afiliado_parentesco');
 

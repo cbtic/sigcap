@@ -1,12 +1,13 @@
 <?php 
 
 foreach($parentesco_lista as $key=>$row):
-	
+	//echo $row->id_seguro_afiliado_parentesco;
 ?>
 <tr style="font-size:13px">
 	<td class="text-center">
         <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">		
-			<input type="checkbox" class="mov" name="parentescos[<?php echo $key?>][id]" value="<?php echo $row->id?> " />
+			
+			<input type="checkbox" <?php if($row->id_seguro_afiliado_parentesco>0)echo "disabled='disabled'"?> class="mov" name="parentescos[<?php echo $key?>][id]" value="<?php echo $row->id?> " />
 			<input type="hidden" name="parentesco[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
 			<input type="hidden" name="parentesco[<?php echo $key?>][id_afiliacion]" value="<?php echo $row->id_afiliacion?>" />
 			<input type="hidden" name="parentesco[<?php echo $key?>][id_agremiado]" value="<?php echo $row->id_agremiado?>" />
