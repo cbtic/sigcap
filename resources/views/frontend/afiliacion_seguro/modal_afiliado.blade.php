@@ -178,7 +178,7 @@ $.mask.definitions['p'] = "[Mm]";
 		var id = $('#id').val();
 		var id_regional = 5;
 		
-		var id_plan = $('#id_plan_').val();
+		var id_plan = $('#id_seguro').val();
 		var id_agremiado = $('#idagremiado_').val();
 		var fecha = $('#fecha_').val();
 		var observaciones = $('#observacion_').val();
@@ -313,6 +313,7 @@ $.mask.definitions['p'] = "[Mm]";
 												?>
 											</select>
 										</div>
+										
 							<!---			<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Plan</label>
 

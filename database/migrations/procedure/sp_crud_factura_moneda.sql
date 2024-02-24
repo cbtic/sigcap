@@ -1,3 +1,5 @@
+-- DROP FUNCTION public.sp_crud_factura_moneda(varchar, int4, varchar, int4, int4, varchar, varchar, varchar, int4, int4, numeric, varchar, int4, int4);
+
 CREATE OR REPLACE FUNCTION public.sp_crud_factura_moneda(serie character varying, numero integer, tipo character varying, ubicacion integer, persona integer, total character varying, descripcion character varying, cod_contable character varying, id_v integer, id_caja integer, descuento numeric, accion character varying, p_id_usuario integer, p_id_moneda integer)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -25,8 +27,21 @@ declare
 	_moneda character varying;
 	_serie character varying;
 
+	_pu numeric;
+	_pu_con_igv numeric;
+	_igv_total numeric;
+
+	_subtotal numeric;
+
+
+
+	_id_tipo_afectacion integer;
+
+
 begin
 	_serie:=serie;
+
+	_id_tipo_afectacion:=0;
 
 	--select CAST(total AS numeric) into _total;
 	_total := to_number(total,'9999999999.99');
@@ -63,6 +78,16 @@ begin
 				end if;
 
 				select upper(f_convnl(trunc(_total))) || ' CON '|| Case When _decimal_letras = '' Then '0' Else _decimal_letras End ||'/100 '||_moneda into _total_letras;
+			
+				if _descuento=0 then
+					_pu := _total/1.18;
+					_subtotal := _total/1.18;
+					_igv_total := (_total/1.18)*0.18;
+				else
+					_pu := 0;
+					_subtotal := CAST(total AS numeric);
+					_igv_total := 0;
+				end if;
 
 				Insert Into comprobantes (serie, numero, fecha, destinatario, direccion, cod_tributario, serie_guia,nro_guia, total_grav, total_inaf, total_exo, impuesto,
 						total, letras, moneda, impuesto_factor, tipo_cambio, estado_pago, anulado, fecha_pago, fecha_recepcion, fecha_vencimiento,
@@ -72,9 +97,12 @@ begin
 						subtotal, codigo_bbss_detrac, cuenta_detrac, notas, cond_pago, id_caja, id_usuario_inserta)
 						
 					Values (serie,(select coalesce(max(fi.numero),'0')+1 from comprobantes fi where fi.serie = _serie),now(),_razon_social,_direccion,_ruc,'', '',
-						CAST(total AS numeric),0.00,0.00,((CAST(total AS numeric)/1.18)*0.18),CAST(total AS numeric),_total_letras,_moneda,18,0.000,'P','N',now(),now(),
-						now(),now(),'',p_id_moneda, tipo, 1, '', 'S',6,'',0,'','','',0.00, 0.00, 0.00, 0.00, 0.00, 0, CAST(total AS numeric), '', '', '', '', '', '', _correo, '01',
-						CAST(total AS numeric), 'SINCRONO', 0, CAST(total AS numeric)/1.18, '', '', '', '', id_caja, p_id_usuario);
+						CAST(total AS numeric),0.00,0.00,
+						_igv_total, --((CAST(total AS numeric)/1.18)*0.18),
+						CAST(total AS numeric),_total_letras,_moneda,18,0.000,'P','N',now(),now(),
+						now(),now(),'',p_id_moneda, tipo, 1, '', 'S',6,'',0,'','','',0.00, _descuento, _descuento, 0.00, 0.00, 0, CAST(total AS numeric), '', '', '', '', '', '', _correo, '01',CAST(total AS numeric), 'SINCRONO', 0, 
+						_subtotal, --CAST(total AS numeric)/1.18, 
+						'', '', '', '', id_caja, p_id_usuario);
 
 				idp := (SELECT currval('comprobantes_id_seq'));
 
@@ -83,11 +111,33 @@ begin
 			End if;
 		When 'd' then
 
-			if numero > 0 Then
-
+			if numero > 0 then
+					
+				if _descuento=0  then
+					_pu := _total/1.18;
+					_pu_con_igv := _total/1.18;
+					_igv_total := (_total/1.18)*0.18;
+				else
+					_pu := 0;
+					_pu_con_igv := 0;
+					_igv_total := 0;
+				end if;
+			
+				select id_tipo_afectacion into  _id_tipo_afectacion
+				from conceptos 						
+				Where id = persona;
+			
+				if _id_tipo_afectacion = 30  then
+					_pu := 0;
+					_pu_con_igv := 0;
+					_igv_total := 0;
+				end if;
+			
+			
 				Insert Into comprobante_detalles (serie, numero, tipo, item, cantidad, descripcion,
-					pu, pu_con_igv, igv_total, descuento, importe,afect_igv, cod_contable, valor_gratu, unidad,id_usuario_inserta,id_comprobante)
-					Values (_serie,numero,tipo,ubicacion,1,descripcion,_total/1.18,(_total/1.18),(_total/1.18)*0.18,descuento,_total,10,cod_contable,0,'ZZ',p_id_usuario, id_caja);
+					pu,  pu_con_igv,  igv_total, descuento, importe,afect_igv, cod_contable, valor_gratu, unidad,id_usuario_inserta,id_comprobante, id_concepto)
+					Values (_serie,numero,tipo,ubicacion,1,descripcion,
+					_pu, _pu_con_igv,_igv_total, _descuento, _total   ,10,cod_contable,0,'ZZ',p_id_usuario, id_caja, persona);
 				
 				update valorizaciones Set id_comprobante  = id_caja, pagado = '1'
 					where id = id_v;

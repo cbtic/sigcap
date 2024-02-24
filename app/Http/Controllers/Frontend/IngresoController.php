@@ -12,6 +12,8 @@ use App\Models\AgremidoCuota;
 use App\Models\CajaIngreso;
 use App\Models\Valorizacione;
 use App\Models\Concepto;
+use App\Models\ProntoPago;
+
 use Illuminate\Support\Carbon;
 
 use Auth;
@@ -35,19 +37,24 @@ class IngresoController extends Controller
         $persona = new Persona;
         $caja_model = new TablaMaestra;
         $caja_ingreso_model = new CajaIngreso();
+        //$pronto_pago_model = new ProntoPago;
+
         $caja = $caja_model->getCaja('91');
         $caja_usuario = $caja_ingreso_model->getCajaIngresoByusuario($id_user,'91');
         $tipo_documento = $caja_model->getMaestroByTipo(16);
+        $pronto_pago = ProntoPago::where("periodo",'2024')->where("estado","1")->first();
+                
+        $concepto = Concepto::find(26411); //CUOTA GREMIAL
 
-         
         //$caja_usuario = $caja_model;
-        //print_r($caja_usuario);exit();
-        return view('frontend.ingreso.create',compact('persona','caja','caja_usuario','tipo_documento'));
+        //print_r($concepto);exit();
+
+        return view('frontend.ingreso.create',compact('persona','caja','caja_usuario','tipo_documento','pronto_pago', 'concepto'));
 
     }
 
     public function obtener_valorizacion($tipo_documento,$id_persona){
-
+ 
         $valorizaciones_model = new Valorizacione;
         $sw = true;
         //$valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);
@@ -69,10 +76,11 @@ class IngresoController extends Controller
         $periodo = $request->cboPeriodo_b;
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = $request->cboTipoConcepto_b;
-         //print_r($concepto);exit();
+        $filas = $request->cboFilas;
+        // print_r($filas);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto);
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
        
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
@@ -167,7 +175,7 @@ class IngresoController extends Controller
         
     }
 
-    public function modal_otro_pago($periodo, $id_persona, $id_agremiado ){
+    public function modal_otro_pago($periodo, $id_persona, $id_agremiado, $tipo_documento){
 
         
         $conceptos_model = new Concepto;        
@@ -175,7 +183,7 @@ class IngresoController extends Controller
 
     
 		
-		return view('frontend.ingreso.modal_otro_pago',compact('conceptos','periodo','id_persona','id_agremiado' ));
+		return view('frontend.ingreso.modal_otro_pago',compact('conceptos','periodo','id_persona','id_agremiado','tipo_documento' ));
 	}
 
     public function modal_fraccionar($idConcepto, $id_persona, $id_agremiado, $total_fraccionar ){
@@ -228,8 +236,13 @@ class IngresoController extends Controller
         $msg = "";
         $id_user = Auth::user()->id;
         $id_persona = $request->id_persona;
+        $tipo_documento = $request->tipo_documento;
         $id_agremiado = $request->id_agremiado;
-        
+
+       // print_r($id_persona); exit();
+
+        //if($tipo_documento=="79")$id_persona = $request->empresa_id;
+            
         $concepto_detalle = $request->concepto_detalle;
         $ind = 0;
         foreach($request->concepto_detalles as $key=>$det){
@@ -246,8 +259,13 @@ class IngresoController extends Controller
             $valorizacion->id_modulo = 5;
             $valorizacion->pk_registro = 0;
             $valorizacion->id_concepto = $value['id'];
-            $valorizacion->id_agremido = $id_agremiado;
-            $valorizacion->id_persona = $id_persona;
+            if($tipo_documento=="79"){
+                $valorizacion->id_empresa = $id_persona;    
+            }else{
+                $valorizacion->id_agremido = $id_agremiado;
+                $valorizacion->id_persona = $id_persona;
+                    
+            }
             $valorizacion->monto = $value['importe'];
             $valorizacion->id_moneda = $value['id_moneda'];
             $valorizacion->fecha = Carbon::now()->format('Y-m-d');
@@ -337,10 +355,12 @@ class IngresoController extends Controller
         $periodo = $request->cboPeriodo_b;
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = $request->cboTipoConcepto_b;
-         //print_r($concepto);exit();
+        //$filas = $request->cboFilas;
+        $filas = "20";
+        // print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto);
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
        
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));

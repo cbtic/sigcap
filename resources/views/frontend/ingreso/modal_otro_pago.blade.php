@@ -407,6 +407,7 @@ legend.scheduler-border {
 												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona?>">
 												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado?>">
 												<input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo?>">
+												<input type="hidden" name="tipo_documento" id="tipo_documento" value="<?php echo $tipo_documento?>">
 
 												<div class="row" style="padding-left:10px">
 <!--

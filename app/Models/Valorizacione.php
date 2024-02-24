@@ -10,12 +10,12 @@ use DB;
 
 class Valorizacione extends Model
 {
-    function getValorizacion($tipo_documento,$id_persona,$periodo,$cuota,$concepto){        
+    function getValorizacion($tipo_documento,$id_persona,$periodo,$cuota,$concepto, $filas){        
         if($tipo_documento=="79"){  //RUC
             $cad = "
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
-                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto
+                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -28,13 +28,14 @@ class Valorizacione extends Model
                 and v.estado = '1'            
                 and v.pagado = '0'
             order by v.fecha desc
+            limit ".$filas." 
 			";
         }else{
             $cad = "
             --select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
-                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto
+                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -47,11 +48,12 @@ class Valorizacione extends Model
                 and v.estado = '1'            
                 and v.pagado = '0'
             order by v.fecha desc
+            limit ".$filas."
 			";
         }
 
 
-       // echo $cad;
+      //  echo $cad;
 
 		$data = DB::select($cad);
         return $data;

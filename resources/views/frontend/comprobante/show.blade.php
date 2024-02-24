@@ -311,7 +311,7 @@ br {
                                     </div>
                                 </div>
                                 <br>
-
+ 
                                 <div id="" class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="card">
@@ -322,7 +322,7 @@ br {
                                                             <tr>
                                                                 <th class="text-center" width="8%">Cant.</th>
                                                                 <th width="37%">Descripción</th>
-                                                                <th class="text-right" width="10%">%Dcto.</th>
+                                                                <th class="text-right" width="10%">Dcto.</th>
                                                                 <th class="text-right" width="15%">PU</th>
                                                                 <!--<th class="text-right" width="15%">IGV</th> -->
                                                                 <th class="text-right" width="15%">Monto</th>
