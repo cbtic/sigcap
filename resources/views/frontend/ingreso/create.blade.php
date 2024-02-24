@@ -505,7 +505,7 @@
 
                                                     <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="modal_fraccionamiento()" />
 
-                                                    <input class="btn btn-warning pull-right" value="APLICAR PRONTO PAGO" type="button" id="btnDescuento"  onclick="AplicarDescuento()" />
+                                                    <input class="btn btn-warning pull-right" value="APLICAR PRONTO PAGO" type="button" id="btnDescuento" disabled="disabled"  onclick="AplicarDescuento()" />
 
                                                     
 

@@ -492,9 +492,12 @@ function obtenerBeneficiario(){
 
 	$("#btnDescuento").prop('disabled', true);
 	$("#btnFracciona").prop('disabled', true);
-	
+
+	$('#cboTipoConcepto_b').val("");
+	$('#cboTipoCuota_b').val("");
 
 	
+		
 
 	
 	
@@ -700,12 +703,36 @@ function cargarValorizacion(){
     $('.loader').show();
 //	$('#guardar').hide();
 
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+	var cboTipoCuota_b = $('#cboTipoCuota_b').val();
+	var cboPeriodo_b = $('#cboPeriodo_b').val();
+
+	$("#btnFracciona").prop('disabled', true);
+	$("#btnDescuento").prop('disabled', true);
+
+
 	$.ajax({
 		url: "/ingreso/listar_valorizacion",
 		type: "POST",
 		data : $("#frmValorizacion").serialize(),
 		success: function (result) {  
 			$("#tblValorizacion tbody").html(result);
+
+			if (cboTipoConcepto_b==26411 && cboPeriodo_b!="") {
+
+				$("#btnDescuento").prop('disabled', false);
+
+			}
+
+			if (cboTipoConcepto_b==26411 && cboTipoCuota_b==1) {
+
+				$("#btnFracciona").prop('disabled', false);
+
+			}
+
+
+
+
 			$('.loader').hide();
 		}
 });
@@ -1088,9 +1115,28 @@ function modal_fraccionamiento(){
 	//alert(TotalFraccionar);
 	var idConcepto = $('#idConcepto').val();
 	//alert(idConcepto);
+	var msg="";
+
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+	var cboTipoCuota_b = $('#cboTipoCuota_b').val();
+
+
+	if (cboTipoConcepto_b!=26411)msg+="Seleccione concepto CUOTA GREMIAL <br>";
+
+	if (cboTipoCuota_b!=1)msg+="Seleccione CUOTAS VENCIDAS.. <br>";
 	
-	
-	$.ajax({
+
+	if(msg!=""){
+        
+		bootbox.alert(msg); 
+		
+		$('#DescuentoPP').val("N");
+    
+
+		return false;
+
+    }else{
+		$.ajax({
 			url: "/ingreso/modal_fraccionamiento",
 			type: "POST",
 			data : $("#frmValorizacion").serialize(),
@@ -1100,6 +1146,11 @@ function modal_fraccionamiento(){
 					
 			}
 	});
+
+	}
+	
+	
+
 }
 
 function modal_persona_new(){
@@ -1185,9 +1236,9 @@ function AplicarDescuento(){
 
 	//alert(cboPeriodo_b);
 
-	if (periodo_pp!=cboPeriodo_b)msg+="No aplica en el PERIODO seleccionado... <br>";
+	if (periodo_pp!=cboPeriodo_b)msg+="Seleccione el PERIODO... <br>";
 	
-	if (id_concepto_pp!=cboTipoConcepto_b)msg+="No aplica en el CONCEPTO seleccionado... <br>";
+	if (id_concepto_pp!=cboTipoConcepto_b)msg+="Seleccione el concepto CUOTA GREMIAL.. <br>";
 	
 
 	if(msg!=""){
@@ -1275,6 +1326,7 @@ function AplicarDescuento(){
 		$("#btnBoleta").prop('disabled', true);
 		$("#btnFactura").prop('disabled', true);		
 		$("#btnFracciona").prop('disabled', true);
+		$("#btnDescuento").prop('disabled', true);
 		$('#btnOtroConcepto').attr("disabled", true);
 	
 		if(cantidad != 0){
@@ -1290,18 +1342,9 @@ function AplicarDescuento(){
 				if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
 			}
 		}
-
-		
+	
 		//alert(total);
 	}
-	
-	
-
-
-	
-	//alert(id_concepto_pp);
-	//alert(importe_pp);
-	//return false;
 	
 };
 
