@@ -191,10 +191,11 @@ function datatablenewPlan(){
 	
 	
 	var id_agremiado =  $('#idagremiado_').val();
+	var id_afiliacion =  $('#id_afiliacion').val();
 	
     $("#tblParentesco tbody").html("");
 	$.ajax({
-			url: "/afiliacion_seguro/obtener_parentesco/"+id_agremiado,
+			url: "/afiliacion_seguro/obtener_parentesco/"+id_afiliacion+"/"+id_agremiado,
 			type: "GET",
 			success: function (result) {  
 					$("#tblParentesco tbody").html(result);
