@@ -354,10 +354,18 @@ class MultaController extends Controller
 	public function eliminar_multa($id,$estado)
     {
 		$agremiadoMulta = AgremiadoMulta::find($id);
+		$valorizaciones = Valorizacione::where("pk_registro",$id)->where("id_modulo", "3")->where("estado","1")->first();
+
 		//$multa = Multa::find($id);
 		//print_r($agremiadoMulta->id).exit();
+
+		$id_valorizaciones = $valorizaciones->id;
+		$valorizacion = Valorizacione::find($id_valorizaciones);
+		$valorizacion->estado = $estado;
+		//print_r($id_valorizaciones).exit();
 		$agremiadoMulta->estado = $estado;
 		$agremiadoMulta->save();
+		$valorizacion->save();
 
 		echo $agremiadoMulta->id;
     }

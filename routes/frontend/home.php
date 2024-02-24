@@ -498,3 +498,5 @@ Route::post('multa/listar_multa_ajax', [MultaController::class, 'listar_multa_aj
 Route::get('multa/modal_multa_nuevoMultaMantenimiento/{id}', [MultaController::class, 'modal_multa_nuevoMultaMantenimiento'])->name('multa.modal_multa_nuevoMultaMantenimiento');
 Route::post('multa/send_multa_nuevoMultaMantenimiento', [MultaController::class, 'send_multa_nuevoMultaMantenimiento'])->name('multa.send_multa_nuevoMultaMantenimiento');
 Route::get('multa/eliminar_multa_mantenimiento/{id}/{estado}', [MultaController::class, 'eliminar_multa_mantenimiento'])->name('multa.eliminar_multa_mantenimiento');
+
+Route::get('prontoPago/actualizarEstadoProntoPago', [ProntoPagoController::class, 'actualizarEstadoProntoPago'])->name('prontoPago.actualizarEstadoProntoPago');
