@@ -127,7 +127,7 @@ $(document).ready(function() {
                              al Estatuto del Colegio de Arquitectos del Perú, encontrándose en condición 
                              de MIEMBRO HABILITADO y por lo tanto  <?php echo $faculta;?>  para el ejercicio de la 
                              profesión.</p>
-            <p>Se extiende el presente a solicitud del interesado y para los finesde 
+            <p>Se extiende el presente a solicitud del interesado y para los fines de 
                             la solicitud.</p>
                             <p></p>
             <p>Certificado para : Acreditar Habilitaci&oacute;n Profesional</p>

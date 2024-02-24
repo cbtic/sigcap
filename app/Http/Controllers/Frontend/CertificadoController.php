@@ -186,7 +186,7 @@ class CertificadoController extends Controller
 		// Formatear la fecha en un formato largo
 
 	
-		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized('%A %d de %B %Y'); //->format('l, j F Y ');
+		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
 		$pdf = Pdf::loadView('frontend.certificado.certificado_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras'));
@@ -208,8 +208,18 @@ class CertificadoController extends Controller
 		$decenas = array('', 'Diez', 'Veinte', 'Treinta', 'Cuarenta', 'Cincuenta', 'Sesenta', 'Setenta', 'Ochenta', 'Noventa'); 
 		 
 		if ($numero < 10) { 
-			return $unidades[$numero]; 
-		} elseif ($numero < 20) { 
+			return $unidades[$numero];
+		} elseif ($numero == 11) { 
+				return "Once";
+		} elseif ($numero == 12) { 
+				return "Doce";
+		} elseif ($numero == 13) { 
+				return "Trece";
+		} elseif ($numero == 14) { 
+				return "Catorce";
+		} elseif ($numero == 15) { 
+				return "Quince"; 
+		} elseif ($numero > 15 and $numero < 20) { 
 			return 'dieci' . $unidades[$numero - 10]; 
 		} elseif ($numero < 100) { 
 			$decena = floor($numero / 10); 
