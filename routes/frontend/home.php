@@ -202,7 +202,7 @@ Route::post('ingreso/listar_valorizacion_periodo', [IngresoController::class, 'l
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
 Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');
 
-Route::get('ingreso/modal_otro_pago/{periodo}/{idpersona}/{idagremiado}', [IngresoController::class, 'modal_otro_pago'])->name('ingreso.modal_otro_pago');
+Route::get('ingreso/modal_otro_pago/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_otro_pago'])->name('ingreso.modal_otro_pago');
 Route::get('ingreso/modal_fraccionar/{idConcepto}/{idpersona}/{idagremiado}/{TotalFraccionar}', [IngresoController::class, 'modal_fraccionar'])->name('ingreso.modal_fraccionar');
 Route::post('ingreso/modal_fraccionamiento', [IngresoController::class, 'modal_fraccionamiento'])->name('ingreso.modal_fraccionamiento');
 
@@ -254,6 +254,8 @@ Route::post('afiliacion_seguro/send_parentesco_fila', [AfiliacionSeguroControlle
 //Route::get('afiliacion_seguro/obtener_parentesco/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
 //Route::get('afiliacion_seguro/obtener_parentesco/{id}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco');
 Route::get('afiliacion_seguro/obtener_parentesco/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
+
+Route::post('afiliacion_seguro/send_seguro_afiliado_parentesco', [AfiliacionSeguroController::class, 'send_seguro_afiliado_parentesco'])->name('afiliacion_seguro.send_seguro_afiliado_parentesco');
 
 Route::get('concurso', [ConcursoController::class, 'index'])->name('concurso');
 Route::post('concurso/listar_concurso', [ConcursoController::class, 'listar_concurso'])->name('concurso.listar_concurso');
@@ -496,3 +498,5 @@ Route::post('multa/listar_multa_ajax', [MultaController::class, 'listar_multa_aj
 Route::get('multa/modal_multa_nuevoMultaMantenimiento/{id}', [MultaController::class, 'modal_multa_nuevoMultaMantenimiento'])->name('multa.modal_multa_nuevoMultaMantenimiento');
 Route::post('multa/send_multa_nuevoMultaMantenimiento', [MultaController::class, 'send_multa_nuevoMultaMantenimiento'])->name('multa.send_multa_nuevoMultaMantenimiento');
 Route::get('multa/eliminar_multa_mantenimiento/{id}/{estado}', [MultaController::class, 'eliminar_multa_mantenimiento'])->name('multa.eliminar_multa_mantenimiento');
+
+Route::get('prontoPago/actualizarEstadoProntoPago', [ProntoPagoController::class, 'actualizarEstadoProntoPago'])->name('prontoPago.actualizarEstadoProntoPago');

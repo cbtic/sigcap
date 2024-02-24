@@ -570,7 +570,7 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 						
-						<div class="col-lg-3">
+						<div class="col-lg-10">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Denominaci&oacute;n</label>
 								<input id="denominacion" name="denominacion" on class="form-control form-control-sm"  value="<?php echo $multa->denominacion?>" type="text" >
@@ -623,8 +623,8 @@ container: '#myModal modal-body'
 										<option value="">--Selecionar--</option>
 											<?php
 												foreach ($concepto as $row) {?>
-											<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$multa->id_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-											<?php 
+											<option value="<?php echo $row->id?>" <?php if($row->id==$multa->id_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<?php
 											}
 											?>
 										</select>

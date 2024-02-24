@@ -141,4 +141,12 @@ class ProntoPagoController extends Controller
 
 		echo $prontoPago->id;
     }
+
+	public function actualizarEstadoProntoPago()
+	{
+		$prontoPago_model = new ProntoPago;
+
+		$prontoPago_model->actualizarActivoProntoPago();
+		$prontoPago_model->actualizarInactivoProntoPago();
+	}
 }

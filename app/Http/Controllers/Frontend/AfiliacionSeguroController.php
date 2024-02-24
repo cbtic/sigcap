@@ -8,11 +8,12 @@ use App\Models\Agremiado;
 use App\Models\seguro_afiliado_parentesco;
 use Illuminate\Http\Request;
 use App\Models\Seguro_afiliado;
+use App\Models\SegurosPlane;
 use App\Models\Regione;
 use App\Models\Seguro;
-use App\Models\SegurosPlane;
 use App\Models\Ubigeo;
 use App\Models\TablaMaestra;
+use App\Models\Valorizacione;
 use Carbon\Carbon;
 use Auth;
 
@@ -149,7 +150,7 @@ class AfiliacionSeguroController extends Controller
         $seguro_parentesco=seguro_afiliado_parentesco::where('id_afiliacion', $id)->where('estado', '1')->get()->all();
 		
 		$datos_model= new seguro_afiliado_parentesco();
-		$datos_seguro_agremiado=$datos_model-> getDatosSeguro($id);
+		$datos_seguro_agremiado=$datos_model->getDatosSeguro($id);
 
 
 		return view('frontend.afiliacion_seguro.modal_parentesco',compact('id','seguro_parentesco','datos_seguro_agremiado'));
@@ -249,6 +250,64 @@ class AfiliacionSeguroController extends Controller
         return view('frontend.afiliacion_seguro.lista_parentesco',compact('parentesco_lista'));
 
     }
+	
+	public function send_seguro_afiliado_parentesco(Request $request){
+		
+		$id_user = Auth::user()->id;
+		$parentescos = $request->parentescos;
+		$parentesco = $request->parentesco;
+		
+		$seguro_afiliado = Seguro_afiliado::find($request->id_afiliacion);
+		$id_plan = $seguro_afiliado->id_plan;
+		$segurosPlan = SegurosPlane::find($id_plan);
+		$id_seguro = $segurosPlan->id_seguro;
+		$seguro = Seguro::find($id_seguro);
+		$id_concepto = $seguro->id_concepto;
+		
+		foreach($parentescos as $key=>$row){
+			$seguro_afiliado_parentesco = new seguro_afiliado_parentesco;
+			$seguro_afiliado_parentesco->id_afiliacion = $request->id_afiliacion;
+			$seguro_afiliado_parentesco->id_agremiado = $parentesco[$key]["id_agremiado"];
+			$seguro_afiliado_parentesco->id_familia = $parentesco[$key]["id_familia"];
+			$seguro_afiliado_parentesco->edad = $parentesco[$key]["edad"];
+			$seguro_afiliado_parentesco->sexo = $parentesco[$key]["sexo"];
+			$seguro_afiliado_parentesco->id_plan = $parentesco[$key]["id_plan"];
+			$seguro_afiliado_parentesco->id_usuario_inserta = $id_user;
+			$seguro_afiliado_parentesco->save();
+			$id_seguro_afiliado_parentesco = $seguro_afiliado_parentesco->id;
+			
+			/************************/
+			
+			/*
+			$segurosPlanF = SegurosPlane::find($parentesco[$key]["id_plan"]);
+			
+			$valorizacion = new Valorizacione;
+			$valorizacion->id_modulo = 4;
+			$valorizacion->pk_registro = $id_seguro_afiliado_parentesco;
+			$valorizacion->id_concepto = $id_concepto;
+			$valorizacion->id_agremido = $parentesco[$key]["id_agremiado"];
+			$valorizacion->monto = $segurosPlanF->monto;
+			$valorizacion->id_moneda = 1;
+			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+			$valorizacion->estado = 1;
+			$valorizacion->id_usuario_inserta = $id_user;
+			$valorizacion->save();
+			*/
+			/***********************/
+			
+			/************************/			
+			
+		}
+		
+		$seguro_afiliado_parentesco_model = new seguro_afiliado_parentesco;
+		
+		$seguro_afiliado_parentesco_model->seguro_agremiado_cuota($request->id_afiliacion);
+		
+	
+	}
+	
+	
 }
 
 

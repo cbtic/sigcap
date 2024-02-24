@@ -241,12 +241,15 @@ class MultaController extends Controller
 		}
 		
 		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
-		
+		$multa = Multa::where("id",$request->id_multa)->where("estado","1")->first();
+		$concepto = Concepto::where("id",$multa->id_concepto)->where("estado","1")->first();
+
 		$agremiadoMulta->id_agremiado = $agremiado->id;
 		$agremiadoMulta->id_multa = $request->id_multa;
+		//$id_concepto= Multa::find($request->id_multa);
 		$agremiadoMulta->fecha = Carbon::now()->format('Y-m-d');
 		$agremiadoMulta->id_estado_pago = 1;
-		$agremiadoMulta->id_concepto = 26461;
+		$agremiadoMulta->id_concepto = $multa->id_concepto;
 		$agremiadoMulta->periodo = $request->periodo;
 		//$agremiadoMulta->estado = 1;
 		$agremiadoMulta->id_usuario_inserta = $id_user;
@@ -259,14 +262,16 @@ class MultaController extends Controller
 		$valorizacion = new Valorizacione;
 		$valorizacion->id_modulo = 3;
 		$valorizacion->pk_registro = $id_multa;
-		$valorizacion->id_concepto = 26461;
+		$valorizacion->id_concepto = $multa->id_concepto;
 		$valorizacion->id_agremido = $agremiado->id;
 		$valorizacion->id_persona = $agremiado->id_persona;
 		$valorizacion->monto = $multa->monto;
 		$valorizacion->id_moneda = $multa->id_moneda;
 		$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 		$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+		$valorizacion->descripcion = $concepto->denominacion ." - " . $request->periodo ." - ". $multa->denominacion;
 		//$valorizacion->estado = 1;
+		//print_r($valorizacion->descripcion).exit();
 		$valorizacion->id_usuario_inserta = $id_user;
 		$valorizacion->save();
     }
@@ -349,10 +354,18 @@ class MultaController extends Controller
 	public function eliminar_multa($id,$estado)
     {
 		$agremiadoMulta = AgremiadoMulta::find($id);
+		$valorizaciones = Valorizacione::where("pk_registro",$id)->where("id_modulo", "3")->where("estado","1")->first();
+
 		//$multa = Multa::find($id);
 		//print_r($agremiadoMulta->id).exit();
+
+		$id_valorizaciones = $valorizaciones->id;
+		$valorizacion = Valorizacione::find($id_valorizaciones);
+		$valorizacion->estado = $estado;
+		//print_r($id_valorizaciones).exit();
 		$agremiadoMulta->estado = $estado;
 		$agremiadoMulta->save();
+		$valorizacion->save();
 
 		echo $agremiadoMulta->id;
     }

@@ -21,8 +21,9 @@ class Concepto extends Model
         select id, id_regional, codigo, denominacion, estado, id_tipo_concepto, importe, id_moneda, moneda, periodo, cuenta_contable, cuenta_contable_debe, 
         cuenta_contable_al_haber1, cuenta_contable_al_haber2, partida_presupuestal, id_tipo_afectacion, centro_costo, genera_pago
         from conceptos
-        where periodo = '".$periodo."'
-        and estado = '1'
+        where 
+        --periodo = '".$periodo."'and 
+        estado = '1'
         and genera_pago = '1'
         order by denominacion
         ";
@@ -51,7 +52,7 @@ class Concepto extends Model
 
         $cad = "select *
                 from conceptos
-                where estado='1'and codigo = '00006'
+                where estado='1'and codigo = '00002'
                 order by denominacion ";
     
 		$data = DB::select($cad);
@@ -71,7 +72,7 @@ class Concepto extends Model
 
     function getCodigoConcepto(){
 
-        $cad = "select lpad((max(codigo::int)+1)::varchar,10,'0') codigo from conceptos c ";
+        $cad = "select lpad((max(codigo::int)+1)::varchar,5,'0') codigo from conceptos c  where codigo <> ''";
     
 		$data = DB::select($cad);
         return $data[0]->codigo;
@@ -79,7 +80,7 @@ class Concepto extends Model
 
     function getCodigoConceptoEdit(){
 
-        $cad = "select lpad((max(codigo::int))::varchar,5,'0') codigo from conceptos c ";
+        $cad = "select lpad((max(codigo::int))::varchar,5,'0') codigo from conceptos c  where codigo <> ''";
     
 		$data = DB::select($cad);
         return $data[0]->codigo;

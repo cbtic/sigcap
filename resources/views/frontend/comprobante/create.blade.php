@@ -316,6 +316,10 @@
                     <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}} " id="frmFacturacion" name="frmFacturacion" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
+
+                        <input type="hidden" name="totalDescuento" id="totalDescuento" value="<?php echo $totalDescuento; ?>">
+                        <input type="hidden" name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $id_tipo_afectacion_pp; ?>">
+
                         <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
                                                                         echo $TipoF;
                                                                     } ?>">
@@ -576,7 +580,7 @@
                                                         <th class="text-right" width="5%">#</th>
                                                         <th class="text-center" width="10%">Cant.</th>
                                                         <th width="40%">Descripción</th>
-                                                        <th width="40%">%Dscto.</th>
+                                                        <th width="40%">Dscto.</th>
                                                         <th class="text-right" width="15%">PU</th>
                                                         <th class="text-right" width="15%">IGV</th>
                                                         <th class="text-right" width="15%">P.Venta</th>
@@ -594,7 +598,7 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac['fecha'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac['denominacion'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac['descripcion'] ?>" />
-                                                            s
+                                                            
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo $fac['moneda'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo $fac['id_moneda'] ?>" />
@@ -602,7 +606,7 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][cod_contable]" value="<?php echo $fac['cod_contable'] ?>" />
 
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][id_concepto]" value="<?php echo $fac['id_concepto'] ?>" />
-
+ 
                                                             <tr>
                                                                 <td class="text-right"><?php $n = $n + 1;
                                                                                         echo $n; ?></td>
