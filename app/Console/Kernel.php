@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
 		Commands\envioAgremiadoAutomaticoCron::class,
 		Commands\envioAgremiadoCuotaAutomaticoCron::class,
 		Commands\envioAgremiadoCuotaFechaAutomaticoCron::class,
-		Commands\envioAgremiadoCuotaVitalicioAutomaticoCron::class
+		Commands\envioAgremiadoCuotaVitalicioAutomaticoCron::class,
+        Commands\prontoPagoAutomaticoCron::class
     ];
 
     protected function schedule(Schedule $schedule)
@@ -51,6 +52,8 @@ class Kernel extends ConsoleKernel
 		$schedule->command('envioPlanContableAutomatico:cron')->dailyAt('12:00');
 		$schedule->command('envioPlanContableAutomatico:cron')->dailyAt('16:00');
 		$schedule->command('envioPlanContableAutomatico:cron')->dailyAt('23:02');
+
+        $schedule->command('prontoPagoAutomatico:cron')->dailyAt('00:05');
 		
 		/************NUEVOS***************/
 		
