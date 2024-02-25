@@ -20,6 +20,7 @@ use App\Models\Regione;
 use App\Models\Ubigeo;
 use App\Models\AgremiadoRole;
 use App\Models\ConcursoInscripcione;
+use App\Models\Locale;
 use Auth;
 
 class AgremiadoController extends Controller
@@ -218,6 +219,7 @@ class AgremiadoController extends Controller
 		$agremiado->numero_regional = $request->numero_regional;
 		$agremiado->libro = $request->libro;
 		$agremiado->id_regional = $request->id_regional;
+		$agremiado->id_local = $request->id_local;
 		$agremiado->id_ubigeo_domicilio = $request->id_distrito_domiciliario;
 		$agremiado->folio_nacional = $request->folio_nacional;
 		$agremiado->fecha_colegiado = $request->fecha_colegiado;
@@ -1505,6 +1507,13 @@ class AgremiadoController extends Controller
         echo json_encode($array);
 
     }
+
+	public function obtener_local($id_regional){
+		
+		$local_model = new Locale;
+		$local = $local_model->getLocal($id_regional);
+		echo json_encode($local);
+	}
 			
 }
 

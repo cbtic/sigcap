@@ -500,3 +500,6 @@ Route::post('multa/send_multa_nuevoMultaMantenimiento', [MultaController::class,
 Route::get('multa/eliminar_multa_mantenimiento/{id}/{estado}', [MultaController::class, 'eliminar_multa_mantenimiento'])->name('multa.eliminar_multa_mantenimiento');
 
 Route::get('prontoPago/actualizarEstadoProntoPago', [ProntoPagoController::class, 'actualizarEstadoProntoPago'])->name('prontoPago.actualizarEstadoProntoPago');
+
+Route::get('agremiado/obtener_local/{id_regional}', [AgremiadoController::class, 'obtener_local'])->name('agremiado.obtener_local');
+

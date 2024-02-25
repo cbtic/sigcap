@@ -17,6 +17,8 @@ $(document).ready(function () {
 	obtenerProvinciaDomiciliarioEdit(idProvinciaDomiciliario);
 	obtenerDistritoDomiciliarioEdit(idProvinciaDomiciliario,idDistritoDomiciliario);
 	
+	obtenerLocalEdit(id_regional,id_local);
+
 	$('#btnNuevoLit').on('click', function () {
 		modalLitigante(0);
 	});
@@ -105,6 +107,13 @@ $(document).ready(function () {
     });
 	
 	$('#fecha_nacimiento').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+
+	$('#fecha_fallecido').datepicker({
         autoclose: true,
 		format: 'dd/mm/yyyy',
 		changeMonth: true,
@@ -3631,4 +3640,69 @@ function fn_eliminar_seg(id){
 
 
 
+
+function obtenerLocal(){
+	
+	var id = $('#id_regional').val();
+	if(id=="")return false;
+	$('#id_local').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_local/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_local').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			$('#id_local').html(option);
+			
+			$('#id_local').attr("disabled",false);
+			
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerLocalEdit(id_regional,id_local){
+	
+	$('#id_local').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_local/'+id_regional,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#id_local').html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(id_local == oo.id)selected = "selected='selected'";
+				option += "<option value='"+oo.id+"' "+selected+" >"+oo.denominacion+"</option>";
+			});
+			$('#id_local').html(option);
+			$('#id_local').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
 

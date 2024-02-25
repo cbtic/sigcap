@@ -409,7 +409,7 @@ label.form-control-sm{
 															Regional
 															</div>
 															<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-															<select name="id_regional" id="id_regional" class="form-control form-control-sm" onchange="">
+															<select name="id_regional" id="id_regional" class="form-control form-control-sm" onchange="obtenerLocal()">
 																<option value="">--Selecionar--</option>
 																<?php
 																foreach ($region as $row) {?>
@@ -482,23 +482,17 @@ label.form-control-sm{
 															Fecha Actualiza
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_actualiza" id="fecha_actualiza" value="<?php echo $agremiado->fecha_actualiza?>" class="form-control form-control-sm" >
+															<input type="text" name="fecha_actualiza" id="fecha_actualiza" value="<?php echo $agremiado->fecha_actualiza?>" class="form-control form-control-sm" readonly='readonly'>
 															</div>
 														</div>
 														
 														<div class="row">
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															Zona
+															Zonal
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<select name="estado_exp" id="estado_exp" class="form-control form-control-sm" onchange="">
+															<select name="id_local" id="id_local" class="form-control form-control-sm">
 																<option value="">--Selecionar--</option>
-																<?php
-																foreach ($tipo_zona as $row) {?>
-																<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
-																<?php 
-																}
-																?>
 															</select>
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -1976,6 +1970,9 @@ label.form-control-sm{
 	
 	<script src="{{ asset('js/agremiado/create.js') }}"></script>
 	<script>
+
+		var id_regional = "<?php echo $agremiado->id_regional?>";
+		var id_local = "<?php echo $agremiado->id_local?>";
 	/*
 	var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();
 	var idProvincia = id_ubigeo_nacimiento.substring(2,4);
