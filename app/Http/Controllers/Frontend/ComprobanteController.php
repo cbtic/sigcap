@@ -1200,33 +1200,47 @@ class ComprobanteController extends Controller
 							"ordenItem"=> $row->item, //"2",
 							"adicionales"=> [],
 							"cantidadItem"=> $row->cantidad, //"1",
-							"descuentoItem"=> $row->descuento,
+							//"descuentoItem"=> $row->descuento,
 							"importeIGVItem"=> str_replace(",","",number_format($row->igv_total,2)),//"7.63",
 							"montoTotalItem"=> str_replace(",","",number_format($row->importe,2)), //"50.00",
 							"valorVentaItem"=> str_replace(",","",number_format($row->pu,2)), //"42.37",
 							"descripcionItem"=> $row->descripcion,//"TRANSBORDO",
 							"unidadMedidaItem"=> $row->unidad,
-							"codigoProductoItem"=> ($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
+							//"codigoProductoItem"=> ($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
 							"valorUnitarioSinIgv"=> str_replace(",","",number_format($row->pu_con_igv,2)), //"42.3728813559",
 							"precioUnitarioConIgv"=> str_replace(",","",number_format($row->importe,2)), //"50.0000000000",
 							"unidadMedidaComercial"=> "SERV",
 							"codigoAfectacionIGVItem"=> "10",
-							"porcentajeDescuentoItem"=> "0.00",
+							//"porcentajeDescuentoItem"=> "0.00",
 							"codTipoPrecioVtaUnitarioItem"=> "01"
 							);
 			$items[$index]=$items1;
         }
+
+        $items2 = array(
+            "serie"=>$factura->serie,
+            "numero"=> $factura->numero,
+            "idEmpresa"=> 1034,
+            "idUsuario"=> 2564,
+            "noValidar"=> false,
+            "idPuntoventa"=> 1700,
+            "idListaPrecio"=> 0,
+            "enviarAdjuntoDescomprimido"=> false
+        );
+        $items2[$index]=$items2;
  
 		$data["items"] = $items;
+        $data["server"] = $items2;
+
 		$data["anulado"] = false;
 		$data["declare"] = "0"; // 0->dechlare 1>declare instante
 		$data["version"] = "2.1";
 		$data["adjuntos"] = [];
-		$data["anticipos"] = [];
+		//$data["anticipos"] = [];
 		$data["esFicticio"] = false;
 		$data["keepNumber"] = "false";
 		$data["tipoCorreo"] = "1";
-        $data["formaPago"] = "CONTADO";
+       // $data["formaPago"] = "CONTADO";
 		$data["tipoMoneda"] = ($factura->id_moneda=="2")?"PEN":"USD"; //"PEN";
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
@@ -1237,36 +1251,49 @@ class ComprobanteController extends Controller
 		$data["sumatoriaIGV"] = str_replace(",","",number_format($factura->impuesto,2)); //"22.88";
 		$data["sumatoriaISC"] = "0.00";
 		$data["ubigeoEmisor"] = "150139";
-		$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
+        $data["creditoCuotas"] = [];
+		//$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
 		$data["tipoDocumento"] = $this->getTipoDocumento($factura->tipo);
 		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
 		$data["distritoEmisor"] = "LIMA";
 		$data["esContingencia"] = false;
-		$data["telefonoEmisor"] = "511 4710739";
+        $data["motivoSustento"] = "DESCUENTO GLOBAL";
+		//$data["telefonoEmisor"] = "511 4710739";
 		$data["totalAnticipos"] = "0.00";
 		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["provinciaEmisor"] = "LIMA";
+        $data["tipoNotaCredito"] = "04";
 		$data["totalDescuentos"] = "0.00";
 		$data["totalOPGravadas"] = str_replace(",","",number_format($factura->subtotal,2)); //"127.12";
 		$data["codigoPaisEmisor"] = "PE";
 		$data["totalOPGratuitas"] = "0.00";
+        $data["direccionReceptor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["docAfectadoFisico"] = false;
-		$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
+		//$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
 		$data["razonSocialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
 		$data["totalOPExoneradas"] = "0.00";
 		$data["totalOPNoGravadas"] = "0.00";
 		$data["codigoPaisReceptor"] = "PE";
 		$data["departamentoEmisor"] = "JESUS MARIA";
-		$data["descuentosGlobales"] = "0.00";
-		$data["codigoTipoOperacion"] = "0101";
+		//$data["descuentosGlobales"] = "0.00";
+		//$data["codigoTipoOperacion"] = "0101";
 		$data["razonSocialReceptor"] = $factura->destinatario;//"Freddy Rimac Coral";
-		$data["nombreComercialEmisor"] = "CAP";
-		$data["tipoDocIdentidadEmisor"] = "6";
+        $data["serieNumeroAfectado"] = $factura->serie."-".$factura->numero;
+        $data["serieNumeroModifica"] = $factura->serie."-".$factura->numero;
+
+        $data["sumatoriaOtrosCargos"] = "0";
+
+		//$data["nombreComercialEmisor"] = "CAP";		       
+        $data["nombreComercialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
+        $data["tipoDocumentoModifica"] = "01";
+        $data["fechaDocumentoAfectado"] = "2023-11-13";
+        $data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
-		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";
-		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";
+		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";        
+		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";        
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
-        $data["direccionReceptor"] = $factura->direccion;
+
+        //$data["direccionReceptor"] = $factura->direccion;
 
         //print_r($data); exit();
 

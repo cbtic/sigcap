@@ -116,8 +116,7 @@ class IngresoController extends Controller
     }
 
 
-    public function obtener_pago($tipo_documento,$id_persona){
-
+    public function obtener_pago($tipo_documento,$id_persona){       
         $valorizaciones_model = new Valorizacione;
         $sw = true;
         $pago = $valorizaciones_model->getPago($tipo_documento,$id_persona);

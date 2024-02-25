@@ -89,7 +89,15 @@ class Valorizacione extends Model
 
     function getPago($tipo_documento,$persona_id){
 
-        if($tipo_documento=="RUC"){
+        if($tipo_documento=="79"){
+            $cad = "select distinct c.id id_comprobante,c.tipo, c.fecha, c.serie, c.numero, c.total, u.name usuario_registro,
+            (select string_agg(DISTINCT coalesce(d.descripcion), ',')  from comprobante_detalles d  where d.id_comprobante = c.id) descripcion
+            from comprobantes c
+            inner join comprobante_detalles d on d.id_comprobante = c.id
+            inner join valorizaciones v on v.id_comprobante = c.id            
+            left join users u  on u.id  = c.id_usuario_inserta 
+            where v.id_empresa = ".$persona_id."
+            order by c.fecha desc";
 
         }else{
             $cad = "select distinct c.id id_comprobante,c.tipo, c.fecha, c.serie, c.numero, c.total, u.name usuario_registro,

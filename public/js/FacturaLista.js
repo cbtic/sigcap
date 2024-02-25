@@ -242,6 +242,7 @@ function datatablenew(){
                 "bSortable": false,
                 "aTargets": [5]
                 },
+/*
 				{
                 "mRender": function (data, type, row) {
                     var plan_denominacion = "";
@@ -251,6 +252,7 @@ function datatablenew(){
                 "bSortable": false,
                 "aTargets": [6]
                 },
+                */
 				{
                 "mRender": function (data, type, row) {
                     var subtotal = "";
@@ -259,7 +261,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "className": "text-right",
-                "aTargets": [7]
+                "aTargets": [6]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -269,7 +271,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "className": "text-right",
-                "aTargets": [8]
+                "aTargets": [7]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -279,7 +281,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "className": "text-right",
-                "aTargets": [9]
+                "aTargets": [8]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -288,7 +290,7 @@ function datatablenew(){
 					return estado_pago;
                 },
                 "bSortable": false,
-                "aTargets": [10]
+                "aTargets": [9]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -297,7 +299,7 @@ function datatablenew(){
 					return anulado;
                 },
                 "bSortable": false,
-                "aTargets": [11]
+                "aTargets": [10]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -306,7 +308,7 @@ function datatablenew(){
 					return caja;
                 },
                 "bSortable": false,
-                "aTargets": [12]
+                "aTargets": [11]
                 },
 				{
                     "mRender": function (data, type, row) {
@@ -315,7 +317,7 @@ function datatablenew(){
                         return usuario;
                     },
                     "bSortable": false,
-                    "aTargets": [13]
+                    "aTargets": [12]
                 },
                 /*
 				{
@@ -361,7 +363,7 @@ function datatablenew(){
                        
                     },
                     "bSortable": false,
-                    "aTargets": [14]
+                    "aTargets": [13]
                 },              
 				{
                     "mRender": function (data, type, row) {
@@ -370,7 +372,7 @@ function datatablenew(){
                         return html;
                     },
                     "bSortable": false,
-                    "aTargets": [15],
+                    "aTargets": [14],
                 },
                 
 /*
