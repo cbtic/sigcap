@@ -377,8 +377,11 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id = $('#id').val();
-            var cap = $('#cap_').val();
+
+			//var id = $('#id').val();
+			var id = "";
+            var cap = $('#frmSeguroParentesco #cap_').val();
+
 			var nombre = $('#nombre').val();
             var seguro= $('#seguro_').val();
 			var estado = $('#estado').val();
