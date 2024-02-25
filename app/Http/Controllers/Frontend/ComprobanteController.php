@@ -89,7 +89,45 @@ class ComprobanteController extends Controller
             }else{
                 $MonAd = 0;
             }
-            //echo "adelanto=>".$adelanto."<br>";
+            
+           // echo "id_tipo_afectacion_pp=>".$id_tipo_afectacion_pp."<br>";
+/*
+            if ($id_tipo_afectacion_pp=="30"){
+                $stotal = $total;
+                $igv   = 0;
+            }
+            else{
+                $stotal = $total/1.18;
+                $igv   = $stotal * 0.18;
+            }
+*/
+            //exit($igv);
+
+            $factura_detalle = $request->comprobante_detalle;
+
+            //$factura_detalle->id_modulo = 3;
+
+         //   print_r($request->comprobante_detalles);
+           
+            $ind = 0;
+            $id_concepto_det=0;
+            $id_concepto_pp = $request->id_concepto_pp;
+
+            foreach($request->comprobante_detalles as $key=>$det){
+                $facturad[$ind] = $factura_detalle[$key];
+                //print_r($factura_detalle['id_concepto']);
+                $id_concepto_det = $facturad[$ind]['id_concepto'];
+                //$id_concepto = $det->id_concepto;
+                
+                $ind++;
+            }
+
+        
+            //print_r($id_concepto_det);
+            //print_r($id_concepto_pp);exit();
+
+            if ($id_concepto_det != $id_concepto_pp)$id_tipo_afectacion_pp="0";
+           // print_r($id_tipo_afectacion_pp);exit();
 
             if ($id_tipo_afectacion_pp=="30"){
                 $stotal = $total;
@@ -99,21 +137,6 @@ class ComprobanteController extends Controller
                 $stotal = $total/1.18;
                 $igv   = $stotal * 0.18;
             }
-
-            //exit($igv);
-
-            $factura_detalle = $request->comprobante_detalle;
-
-            //$factura_detalle->id_modulo = 3;
-
-           // print_r($request->comprobante_detalles);exit();
-           
-            $ind = 0;
-            foreach($request->comprobante_detalles as $key=>$det){
-                $facturad[$ind] = $factura_detalle[$key];
-                $ind++;
-            }
-            //print_r($facturad);exit();
 
 
             if ($descuentopp=="S"){
