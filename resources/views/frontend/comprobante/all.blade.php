@@ -260,8 +260,7 @@
                             <th>Tipo</th>
                             <th>Fecha</th>
                             <th>Ruc</th>
-                            <th>Razón Social</th>
-							<th>Afiliaci&oacute;n</th>
+                            <th>Razón Social</th>							
                             <th class="text-right">SubTotal</th>
                             <th class="text-right">IGV</th>
                             <th class="text-right">Total</th>

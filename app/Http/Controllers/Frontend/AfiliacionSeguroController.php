@@ -147,13 +147,13 @@ class AfiliacionSeguroController extends Controller
 		
 		$id_user = Auth::user()->id;
 	
-        $seguro_parentesco=seguro_afiliado_parentesco::where('id_afiliacion', $id)->where('estado', '1')->get()->all();
+        //$seguro_parentesco=seguro_afiliado_parentesco::where('id_afiliacion', $id)->where('estado', '1')->get()->all();
 		
 		$datos_model= new seguro_afiliado_parentesco();
 		$datos_seguro_agremiado=$datos_model->getDatosSeguro($id);
 
 
-		return view('frontend.afiliacion_seguro.modal_parentesco',compact('id','seguro_parentesco','datos_seguro_agremiado'));
+		return view('frontend.afiliacion_seguro.modal_parentesco',compact('id',/*'seguro_parentesco',*/'datos_seguro_agremiado'));
 
     }
 
@@ -241,12 +241,12 @@ class AfiliacionSeguroController extends Controller
 		echo json_encode($plan);
 	}
 
-	public function obtener_parentesco($id_agremiado){
+	public function obtener_parentesco($id_afiliacion,$id_agremiado){
 
         $parentesco_model = new Seguro_afiliado;
         $sw = true;
-        $parentesco_lista = $parentesco_model->listar_parentesco_agremiado($id_agremiado);
-        //print_r($parentesco);exit();
+        $parentesco_lista = $parentesco_model->listar_parentesco_agremiado($id_afiliacion,$id_agremiado);
+        //print_r($parentesco_lista);exit();
         return view('frontend.afiliacion_seguro.lista_parentesco',compact('parentesco_lista'));
 
     }

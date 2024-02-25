@@ -1,3 +1,5 @@
+-- DROP FUNCTION public.sp_listar_comprobante_paginado(varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, refcursor);
+
 CREATE OR REPLACE FUNCTION public.sp_listar_comprobante_paginado(p_fecha_ini character varying, p_fecha_fin character varying, p_tipo character varying, p_serie character varying, p_numero character varying, p_razon_social character varying, p_estado_pago character varying, p_anulado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -34,10 +36,13 @@ Begin
 
 
 	v_campos=' f.id, f.serie, f.numero, f.tipo, f.fecha, f.cod_tributario, f.destinatario, 
-        f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, f.estado_sunat sunat, f.ruta_comprobante pdf ';
+        f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, f.estado_sunat sunat, f.ruta_comprobante pdf, u.name usuario, tm.denominacion caja ';
         
-	v_tabla='FROM public.comprobantes f
-		  Inner Join users u On u.id = f.id_usuario_inserta ';
+	v_tabla='FROM comprobantes f 
+				left join users u on u.id = f.id_usuario_inserta 
+				left join tabla_maestras tm on tm.tipo = ''91'' and tm.codigo::int = f.id_caja
+
+';
 
 	v_where = ' Where 1 = 1 ';
 

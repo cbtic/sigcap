@@ -204,11 +204,10 @@ function fn_save(){
 			url: "/seguro/send_seguro",
             type: "POST",
             data : {_token:_token,id:id,id_regional:id_regional,nombre:nombre,descripcion:descripcion,concepto:concepto},
-			//dataType: 'json',
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
-				datatablenew();
+				window.location.reload();
+				//datatablenew();
 								
             }
     });
@@ -244,7 +243,7 @@ function fn_save(){
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
 					
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
 					
@@ -415,7 +414,7 @@ function fn_save(){
 					
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
-							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 								
 							</div>

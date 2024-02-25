@@ -52,6 +52,8 @@ begin
 	
 	loop
 		
+		if (select count(*) from agremiado_cuotas where id_agremiado=entradas_mes.id_agremiado and id_familia=entradas_mes.id_familia and id_seguro_plan=entradas_mes.id_plan) = 0 then 
+		
 		v_fecha_desde=entradas_mes.fecha_inicio;
 		v_fecha_hasta=entradas_mes.fecha_fin;
 		
@@ -61,8 +63,8 @@ begin
 			
 			v_mes_agremiado := to_char(entradas.fecha_dias,'mm')::int;
 			v_mes_agremiado_ := to_char(entradas.fecha_dias,'mm')::varchar;
-			
-			v_anio:='2024';	
+			v_anio := to_char(entradas.fecha_dias,'yyyy')::int;
+			--v_anio:='2024';	
 		
 			select last_day_month 
 			into v_last_day_month 
@@ -78,6 +80,8 @@ begin
 			
 		end loop;
 		
+		end if;
+	
 	end loop;
 	
 	return idp;
@@ -88,4 +92,5 @@ begin
 end;
 $function$
 ;
+
 

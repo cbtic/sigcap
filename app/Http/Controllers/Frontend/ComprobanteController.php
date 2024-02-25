@@ -1180,4 +1180,224 @@ class ComprobanteController extends Controller
         }
         return $tipoDoc;
     }
+
+    public function firmarNC($id_factura){
+
+        //echo $this->getTipoDocumento("BV");exit();
+
+		$factura = Comprobante::where('id', $id_factura)->get()[0];
+		$factura_detalles = ComprobanteDetalle::where([
+            'serie' => $factura->serie,
+            'numero' => $factura->numero,
+            'tipo' => $factura->tipo
+        ])->get();
+		//print_r($factura); exit();
+        //print_r($factura_detalles); exit();		
+		$cabecera = array("valor1","valor2");
+		$detalle = array("valor1","valor2");
+		foreach($factura_detalles as $index => $row ) {
+			$items1 = array(
+							"ordenItem"=> $row->item, //"2",
+							"adicionales"=> [],
+							"cantidadItem"=> $row->cantidad, //"1",
+							//"descuentoItem"=> $row->descuento,
+							"importeIGVItem"=> str_replace(",","",number_format($row->igv_total,2)),//"7.63",
+							"montoTotalItem"=> str_replace(",","",number_format($row->importe,2)), //"50.00",
+							"valorVentaItem"=> str_replace(",","",number_format($row->pu,2)), //"42.37",
+							"descripcionItem"=> $row->descripcion,//"TRANSBORDO",
+							"unidadMedidaItem"=> $row->unidad,
+							//"codigoProductoItem"=> ($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
+							"valorUnitarioSinIgv"=> str_replace(",","",number_format($row->pu_con_igv,2)), //"42.3728813559",
+							"precioUnitarioConIgv"=> str_replace(",","",number_format($row->importe,2)), //"50.0000000000",
+							"unidadMedidaComercial"=> "SERV",
+							"codigoAfectacionIGVItem"=> "10",
+							//"porcentajeDescuentoItem"=> "0.00",
+							"codTipoPrecioVtaUnitarioItem"=> "01"
+							);
+			$items[$index]=$items1;
+        }
+
+        $items2 = array(
+            "serie"=>$factura->serie,
+            "numero"=> $factura->numero,
+            "idEmpresa"=> 1034,
+            "idUsuario"=> 2564,
+            "noValidar"=> false,
+            "idPuntoventa"=> 1700,
+            "idListaPrecio"=> 0,
+            "enviarAdjuntoDescomprimido"=> false
+        );
+        $items2[$index]=$items2;
+ 
+		$data["items"] = $items;
+        $data["server"] = $items2;
+
+		$data["anulado"] = false;
+		$data["declare"] = "0"; // 0->dechlare 1>declare instante
+		$data["version"] = "2.1";
+		$data["adjuntos"] = [];
+		//$data["anticipos"] = [];
+		$data["esFicticio"] = false;
+		$data["keepNumber"] = "false";
+		$data["tipoCorreo"] = "1";
+       // $data["formaPago"] = "CONTADO";
+		$data["tipoMoneda"] = ($factura->id_moneda=="2")?"PEN":"USD"; //"PEN";
+		$data["adicionales"] = [];
+		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
+		$data["serieNumero"] = $factura->serie."-".$factura->numero; // "F001-000002";
+		$data["fechaEmision"] = date("Y-m-d",strtotime($factura->fecha)); //"2021-03-18";
+		$data["importeTotal"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
+		$data["notification"] = "1";
+		$data["sumatoriaIGV"] = str_replace(",","",number_format($factura->impuesto,2)); //"22.88";
+		$data["sumatoriaISC"] = "0.00";
+		$data["ubigeoEmisor"] = "150139";
+        $data["creditoCuotas"] = [];
+		//$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
+		$data["tipoDocumento"] = $this->getTipoDocumento($factura->tipo);
+		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
+		$data["distritoEmisor"] = "LIMA";
+		$data["esContingencia"] = false;
+        $data["motivoSustento"] = "DESCUENTO GLOBAL";
+		//$data["telefonoEmisor"] = "511 4710739";
+		$data["totalAnticipos"] = "0.00";
+		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
+		$data["provinciaEmisor"] = "LIMA";
+        $data["tipoNotaCredito"] = "04";
+		$data["totalDescuentos"] = "0.00";
+		$data["totalOPGravadas"] = str_replace(",","",number_format($factura->subtotal,2)); //"127.12";
+		$data["codigoPaisEmisor"] = "PE";
+		$data["totalOPGratuitas"] = "0.00";
+        $data["direccionReceptor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
+		$data["docAfectadoFisico"] = false;
+		//$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
+		$data["razonSocialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
+		$data["totalOPExoneradas"] = "0.00";
+		$data["totalOPNoGravadas"] = "0.00";
+		$data["codigoPaisReceptor"] = "PE";
+		$data["departamentoEmisor"] = "JESUS MARIA";
+		//$data["descuentosGlobales"] = "0.00";
+		//$data["codigoTipoOperacion"] = "0101";
+		$data["razonSocialReceptor"] = $factura->destinatario;//"Freddy Rimac Coral";
+        $data["serieNumeroAfectado"] = $factura->serie."-".$factura->numero;
+        $data["serieNumeroModifica"] = $factura->serie."-".$factura->numero;
+
+        $data["sumatoriaOtrosCargos"] = "0";
+
+		//$data["nombreComercialEmisor"] = "CAP";		       
+        $data["nombreComercialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
+        $data["tipoDocumentoModifica"] = "01";
+        $data["fechaDocumentoAfectado"] = "2023-11-13";
+        $data["tipoDocIdentidadEmisor"] = "6";
+		$data["sumatoriaImpuestoBolsas"] = "0.00";
+		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";        
+		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";        
+		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
+
+        //$data["direccionReceptor"] = $factura->direccion;
+
+        //print_r($data); exit();
+
+
+		$databuild_string = json_encode($data);
+        //print_r($databuild_string);exit();
+
+		//$chbuild = curl_init("https://easyfact.tk/see/rest/01");
+        $chbuild = curl_init(config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo));
+        //echo config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo);exit();
+
+		$username = config('values.ws_fac_user');
+		$password = config('values.ws_fac_clave');
+
+        curl_setopt($chbuild, CURLOPT_HEADER, true);
+        curl_setopt($chbuild, CURLOPT_HTTPHEADER, array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+			'Authorization: Basic '. base64_encode("$username:$password")
+			)
+        );
+        curl_setopt($chbuild, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($chbuild, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($chbuild, CURLOPT_POSTFIELDS, $databuild_string);
+        $results = curl_exec($chbuild);
+        //print_r($results);
+        //exit();
+        $facturaLog = new Logger('factura_sunat');
+
+        $log = ['Resultados' => $results,
+        'description' => 'Resultados devueltos'];
+        //first parameter passed to Monolog\Logger sets the logging channel name
+        $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::INFO);
+        $facturaLog->info('FacturaLog', $log);
+
+		if (curl_errno($chbuild)) {
+			$error_msg = curl_error($chbuild);
+			echo $error_msg;
+
+            $log = ['Error' => $error_msg,
+            'description' => 'Errores'];
+            //first parameter passed to Monolog\Logger sets the logging channel name
+            $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::WARNING);
+            $facturaLog->info('FacturaLog', $log);
+		}
+		//print_r($results); exit();
+        curl_close($chbuild);
+
+        
+		//$results = substr($results,strpos($results,'{'),strlen($results));
+        $results = substr($results,strpos($results,'{'),strlen($results));
+        $respbuild = json_decode($results, true);
+		//echo "<br>";
+		//print_r($respbuild); exit();
+            
+        $body = $respbuild["body"];
+            
+        if(count($body)>0){
+            //print_r($body);
+            //echo "******<br>";
+            $single = $body["single"];
+            //print_r($single);
+            //echo "********<br>";
+            $id = $single["id"];
+            $_number = $single["_number"];
+            $result = $single["result"];
+            $hash = $single[ "hash"];
+            //$signature = $single["signature"];
+
+            if($result == "FIRMADO"){
+
+                $fecha = $factura->fecha;
+                //echo $fecha;
+
+                //$fecha = "2021-03-24";
+                //$porciones = explode("/", $fecha);
+                $dia = substr($fecha, 8, 2); //$porciones[2];
+                $mes = substr($fecha, 5, 2); //$porciones[1];
+                $anio = substr($fecha, 0, 4);
+                //$anio = $fecha; //$porciones[0];
+
+
+
+
+                $fac_ruta_comprobante = config('values.ws_fac_host')."/see/server/consult/pdf?nde=20160453908&td=" .$this->getTipoDocumento($factura->tipo) ."&se=" .$factura->serie. "&nu=" .$factura->numero. "&fe=".date("Y-m-d",strtotime($factura->fecha))."&am=" .$factura->total;
+                //$fac_ruta_comprobante = config('values.ws_fac_host')."/see/server/consult/pdf?nde=20601973759&td=" .$this->getTipoDocumento($factura->tipo) ."&se=" .$factura->serie. "&nu=" .$factura->numero. "&fe=".date("Y-m-d",strtotime($factura->fecha))."&am=" .$factura->total;
+
+                if (
+					//test.easyfact.tk
+                    $this->download_pdf(config('values.ws_fac_dominio'), $fac_ruta_comprobante, $this->getTipoDocumento($factura->tipo)."_".$factura->serie."_".$factura->numero."_".$anio.$mes.$dia.".pdf") =="OK"
+                    ) {
+                    // Guardar nombre del pdf en la base de datos.
+                    $factura = Comprobante::find($id_factura);
+                    $factura->estado_sunat = "FIRMADO";
+                    // Nueva ruta del PDF descargado
+                    //$factura->fac_ruta_comprobante = "storage/factura_".$data["serieNumero"].".pdf";
+                    $factura->ruta_comprobante = "storage/".$this->getTipoDocumento($factura->tipo)."_".$factura->serie."_".$factura->numero."_".$anio.$mes.$dia.".pdf";
+                    $factura->save();
+
+                }
+            }
+        }
+
+        //$respbuild->result;
+
+    }
 }

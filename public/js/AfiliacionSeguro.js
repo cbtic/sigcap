@@ -377,6 +377,7 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
+			var id = $('#id').val();
             var cap = $('#cap_').val();
 			var nombre = $('#nombre').val();
             var seguro= $('#seguro_').val();
@@ -389,7 +390,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-                    nombre:nombre,estado:estado,cap:cap,seguro:seguro,
+                    	id:id,nombre:nombre,estado:estado,cap:cap,seguro:seguro,
 						_token:_token
                        },
                 "success": function (result) {

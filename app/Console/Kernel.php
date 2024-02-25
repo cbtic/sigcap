@@ -52,15 +52,15 @@ class Kernel extends ConsoleKernel
 		$schedule->command('envioPlanContableAutomatico:cron')->dailyAt('12:00');
 		$schedule->command('envioPlanContableAutomatico:cron')->dailyAt('16:00');
 		$schedule->command('envioPlanContableAutomatico:cron')->dailyAt('23:02');
-
-        $schedule->command('prontoPagoAutomatico:cron')->dailyAt('00:05');
 		
 		/************NUEVOS***************/
 		
-		//$schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('22:32');
-		//$schedule->command('envioAgremiadoCuotaAutomatico:cron')->dailyAt('22:32');
-		//$schedule->command('envioAgremiadoCuotaFechaAutomatico:cron')->dailyAt('22:32');
-		//$schedule->command('envioAgremiadoCuotaVitalicioAutomatico:cron')->dailyAt('22:32');
+        $schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('12:01');
+        //$schedule->command('envioAgremiadoCuotaAutomatico:cron')->dailyAt('22:32');
+        $schedule->command('envioAgremiadoCuotaFechaAutomatico:cron')->dailyAt('23:50');
+        $schedule->command('envioAgremiadoCuotaVitalicioAutomatico:cron')->dailyAt('01:00');
+
+        $schedule->command('prontoPagoAutomatico:cron')->dailyAt('00:05');
 
     }
 
