@@ -341,8 +341,25 @@ class MultaController extends Controller
 					$agremiadoMulta->estado = 1;
 					$agremiadoMulta->id_usuario_inserta = $id_user;
 					$agremiadoMulta->save();
-					//$id_multa = $agremiadoMulta->id;
-					//$multa = Multa::find($request->id_multa);
+					$id_multa_agremiado = $agremiadoMulta->id;
+
+					$multa = Multa::find($id_multa);
+					$concepto = Concepto::where("id",$multa->id_concepto)->where("estado","1")->first();
+					
+					$valorizacion = new Valorizacione;
+					$valorizacion->id_modulo = 3;
+					$valorizacion->pk_registro = $id_multa_agremiado;
+					$valorizacion->id_concepto = $multa->id_concepto;
+					$valorizacion->id_agremido = $agremiado->id;
+					$valorizacion->id_persona = $agremiado->id_persona;
+					$valorizacion->monto = $multa->monto;
+					$valorizacion->id_moneda = $multa->id_moneda;
+					$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+					$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+					$valorizacion->descripcion = $concepto->denominacion ." - " . $periodo ." - ". $multa->denominacion;
+					$valorizacion->id_usuario_inserta = $id_user;
+					$valorizacion->save();
+					
 					
 				}
 		

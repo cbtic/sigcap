@@ -19,6 +19,7 @@ use App\Models\TablaMaestra;
 use App\Models\Regione;
 use App\Models\Ubigeo;
 use App\Models\AgremiadoRole;
+use App\Models\ConcursoInscripcione;
 use Auth;
 
 class AgremiadoController extends Controller
@@ -127,8 +128,22 @@ class AgremiadoController extends Controller
 		$agremiado_trabajo = $agremiadoTrabajo_model->getAgremiadoTrabajo($id);
 		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
 		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);
-		$agremiado_rol = $agremiadoRol_model->getAgremiadoRol($id);
 		
+		//$agremiado_rol = $agremiadoRol_model->getAgremiadoRol($id);
+		
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$p[]="";
+		$p[]="";
+		$p[]=$id;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="1";
+		$p[]="100";
+		$agremiado_rol = $concursoInscripcione_model->listar_concurso_agremiado($p);
+		//print_r($agremiado_rol);
 		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion','agremiado_rol'));
 		
     }
