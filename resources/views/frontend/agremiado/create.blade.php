@@ -1552,9 +1552,9 @@ label.form-control-sm{
 										</div>
 
 										<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-											
+											<!--
 											<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoRol" style="width:120px;margin-right:15px"/>
-											
+											-->
 											<div style="clear:both"></div>
 											
 											<div class="row">
@@ -1573,24 +1573,24 @@ label.form-control-sm{
 																<th>Fecha Inicio</th>
 																<th>Fecha Fin</th>
 																<th>Observaci&oacute;n</th>
-																<th>Opciones</th>
+																<!--<th>Opciones</th>-->
 															</tr>
 														</thead>
 														<tbody style="font-size:13px">
 															<?php foreach($agremiado_rol as $row){?>
 															<tr>
 																<th><?php echo $row->id?></th>
-																<th><?php echo $row->rol?></th>
-																<th><?php echo $row->rol_especifico?></th>
-																<th><?php echo $row->fecha_inicio?></th>
-																<th><?php echo $row->fecha_fin?></th>
-																<th><?php echo $row->observacion?></th>
-																<th>
+																<th><?php echo $row->tipo_concurso//rol?></th>
+																<th><?php echo $row->puesto//rol_especifico?></th>
+																<th><?php echo $row->fecha_acreditacion_inicio//fecha_inicio?></th>
+																<th><?php echo $row->fecha_acreditacion_fin//fecha_fin?></th>
+																<th><?php //echo $row->observacion?></th>
+																<!--<th>-->
 															<!--<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
 															<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalRol(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
 															<a href="javascript:void(0)" onclick="eliminarRol(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 															</div>-->
-																</th>
+																<!--</th>-->
 															</tr>						
 															<?php }?>
 														</tbody>							
