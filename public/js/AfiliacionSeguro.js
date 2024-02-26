@@ -396,6 +396,7 @@ function datatablenew(){
                     	id:id,nombre:nombre,estado:estado,cap:cap,seguro:seguro,
 						_token:_token
                        },
+
                 "success": function (result) {
                     fnCallback(result);
                 },
@@ -409,9 +410,10 @@ function datatablenew(){
             [	
 				{
                 "mRender": function (data, type, row) {
-                	var id = "";
+                	 var id = "";
 					if(row.id!= null)id = row.id;
 					return id;
+
                 },
                 "bSortable": false,
                 "aTargets": [0],
