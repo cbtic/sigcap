@@ -21,6 +21,7 @@ use App\Models\Ubigeo;
 use App\Models\AgremiadoRole;
 use App\Models\ConcursoInscripcione;
 use App\Models\Locale;
+use Carbon\Carbon;
 use Auth;
 
 class AgremiadoController extends Controller
@@ -224,10 +225,7 @@ class AgremiadoController extends Controller
 			$agremiado = new Agremiado;
 			$agremiado->id_persona = $persona->id;
 			$agremiado->id_usuario_inserta = 1;
-			
 			$agremiado->fecha_colegiado = $request->fecha_colegiado;
-			$agremiado->fecha_actualiza = $request->fecha_actualiza;
-			
 			//$agremiado->id_situacion = "73";
 		}
 		//exit($request->id_distrito_domiciliario);
@@ -242,6 +240,7 @@ class AgremiadoController extends Controller
 		//$agremiado->fecha_colegiado = $request->fecha_colegiado;
 		$agremiado->folio = $request->folio;
 		//$agremiado->fecha_actualiza = $request->fecha_actualiza;
+		$agremiado->fecha_actualiza = Carbon::now()->format('Y-m-d');
 		$agremiado->id_estado_civil = $request->id_estado_civil;
 		$agremiado->direccion = $request->direccion;
 		$agremiado->codigo_postal = $request->codigo_postal;

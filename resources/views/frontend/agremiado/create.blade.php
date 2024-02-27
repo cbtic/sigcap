@@ -482,7 +482,7 @@ label.form-control-sm{
 															Fecha Actualiza
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_actualiza" id="fecha_actualiza" value="<?php echo ($agremiado->fecha_actualiza!="")?$agremiado->fecha_actualiza:date("d/m/Y")?>" class="form-control form-control-sm" readonly='readonly' <?php if($id!=0)echo "disabled='disabled'"?>>
+															<input type="text" name="fecha_actualiza" id="fecha_actualiza" value="<?php echo $agremiado->fecha_actualiza?>" class="form-control form-control-sm" <?php echo "disabled='disabled'"?>>
 															</div>
 														</div>
 														
