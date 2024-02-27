@@ -1049,7 +1049,7 @@ class ComprobanteController extends Controller
             $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::WARNING);
             $facturaLog->info('FacturaLog', $log);
 		}
-		//print_r($results); exit();
+		print_r($results); 
         curl_close($chbuild);
 
         

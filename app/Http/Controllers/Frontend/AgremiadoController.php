@@ -21,6 +21,7 @@ use App\Models\Ubigeo;
 use App\Models\AgremiadoRole;
 use App\Models\ConcursoInscripcione;
 use App\Models\Locale;
+use Carbon\Carbon;
 use Auth;
 
 class AgremiadoController extends Controller
@@ -78,7 +79,20 @@ class AgremiadoController extends Controller
 		$agremiado_trabajo = $agremiadoTrabajo_model->getAgremiadoTrabajo($id);
 		$agremiado_traslado = $agremiadoTraslado_model->getAgremiadoTraslado($id);
 		$agremiado_situacion = $agremiadoSituacione_model->getAgremiadoSituacion($id);
-		$agremiado_rol = $agremiadoRol_model->getAgremiadoRol($id);
+		//$agremiado_rol = $agremiadoRol_model->getAgremiadoRol($id);
+		
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$p[]="";
+		$p[]="";
+		$p[]=$id;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="1";
+		$p[]="100";
+		$agremiado_rol = $concursoInscripcione_model->listar_concurso_agremiado($p);
 		
 		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion','agremiado_rol'));
     }
@@ -211,6 +225,7 @@ class AgremiadoController extends Controller
 			$agremiado = new Agremiado;
 			$agremiado->id_persona = $persona->id;
 			$agremiado->id_usuario_inserta = 1;
+			$agremiado->fecha_colegiado = $request->fecha_colegiado;
 			//$agremiado->id_situacion = "73";
 		}
 		//exit($request->id_distrito_domiciliario);
@@ -222,9 +237,10 @@ class AgremiadoController extends Controller
 		$agremiado->id_local = $request->id_local;
 		$agremiado->id_ubigeo_domicilio = $request->id_distrito_domiciliario;
 		$agremiado->folio_nacional = $request->folio_nacional;
-		$agremiado->fecha_colegiado = $request->fecha_colegiado;
+		//$agremiado->fecha_colegiado = $request->fecha_colegiado;
 		$agremiado->folio = $request->folio;
-		$agremiado->fecha_actualiza = $request->fecha_actualiza;
+		//$agremiado->fecha_actualiza = $request->fecha_actualiza;
+		$agremiado->fecha_actualiza = Carbon::now()->format('Y-m-d');
 		$agremiado->id_estado_civil = $request->id_estado_civil;
 		$agremiado->direccion = $request->direccion;
 		$agremiado->codigo_postal = $request->codigo_postal;

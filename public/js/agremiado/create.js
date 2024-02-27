@@ -17,7 +17,7 @@ $(document).ready(function () {
 	obtenerProvinciaDomiciliarioEdit(idProvinciaDomiciliario);
 	obtenerDistritoDomiciliarioEdit(idProvinciaDomiciliario,idDistritoDomiciliario);
 	
-	obtenerLocalEdit(id_regional,id_local);
+	if(id_agremiado>0)obtenerLocalEdit(id_regional,id_local);
 
 	$('#btnNuevoLit').on('click', function () {
 		modalLitigante(0);
