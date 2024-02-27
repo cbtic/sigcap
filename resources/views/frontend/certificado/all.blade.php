@@ -153,7 +153,7 @@
 						<input class="form-control form-control-sm" id="cap_lista" name="cap_lista" placeholder="CAP">
 					</div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominacion">
+						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Apellidos y Nombres">
 					</div>
 					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
