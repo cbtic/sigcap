@@ -60,6 +60,7 @@ class CertificadoController extends Controller
 
             $cap_numero=$datos_agremiado[0]->numero_cap;
 			$desc_cliente=$datos_agremiado[0]->agremiado;
+			$email1=$datos_agremiado[0]->email1;
 			//$situacion=$datos_agremiado[0]->tipo_certificado;
 			//$situacion=$datos_agremiado[0]->tipo_certificado;
 			$situacion=$datos_agremiado[0]->situacion;
@@ -72,6 +73,7 @@ class CertificadoController extends Controller
 			$desc_cliente="";
 			$situacion="";
 			$id_seguro="";
+			$email1="";
 		} 
         
         $tablaMaestra_model = new TablaMaestra;
@@ -83,7 +85,7 @@ class CertificadoController extends Controller
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_certificado','cap_numero','desc_cliente','situacion'));
+		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_certificado','cap_numero','desc_cliente','situacion','email1'));
 
     }
 

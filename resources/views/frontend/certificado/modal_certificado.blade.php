@@ -322,7 +322,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Correo electr&oacute;nico</label>
-									<input id="email_" name="email_" class="form-control form-control-sm" value="<?php echo $id ?>" type="text">
+									<input id="email_" readonly="readonly" name="email_" class="form-control form-control-sm" value="<?php echo $email1 ?>" type="text">
 								</div>
 							</div>
 
@@ -408,7 +408,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-12">
 								<div class="form-group">
 									<label class="control-label">Observaciones</label>
-									<input id="observacion_" name="observacion_" class="form-control form-control-sm" value="<?php $certificado->observaciones ?>" type="textarea">
+									<input id="observacion_" name="observacion_" class="form-control form-control-sm" value="<?php echo $certificado->observaciones ?>" type="textarea">
 								</div>
 							</div>
 						</div>

@@ -37,7 +37,7 @@ class Certificado extends Model
 
     public function datos_agremiado_certificado($id){
 
-        $cad = "select c.id , a.numero_cap ,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado ,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez,t3.denominacion situacion  
+        $cad = "select c.id , a.numero_cap ,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado ,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez,t3.denominacion situacion,a.email1   
             from certificados c 
             inner join agremiados a on c.id_agremiado =a.id 
             inner join tabla_maestras tm on c.id_tipo =tm.codigo::int and tm.tipo ='100' 
