@@ -33,8 +33,6 @@ declare
 
 	_subtotal numeric;
 
-
-
 	_id_tipo_afectacion integer;
 
 
@@ -79,11 +77,22 @@ begin
 
 				select upper(f_convnl(trunc(_total))) || ' CON '|| Case When _decimal_letras = '' Then '0' Else _decimal_letras End ||'/100 '||_moneda into _total_letras;
 			
+
+			
 				if _descuento=0 then
 					_pu := _total/1.18;
 					_subtotal := _total/1.18;
 					_igv_total := (_total/1.18)*0.18;
 				else
+					_pu := 0;
+					_subtotal := CAST(total AS numeric);
+					_igv_total := 0;
+				end if;
+			
+			
+				_id_tipo_afectacion:= numero;
+			
+				if _id_tipo_afectacion = 30  then
 					_pu := 0;
 					_subtotal := CAST(total AS numeric);
 					_igv_total := 0;
@@ -131,13 +140,15 @@ begin
 					_pu := 0;
 					_pu_con_igv := 0;
 					_igv_total := 0;
+				else
+					_id_tipo_afectacion := 10;
 				end if;
 			
 			
 				Insert Into comprobante_detalles (serie, numero, tipo, item, cantidad, descripcion,
 					pu,  pu_con_igv,  igv_total, descuento, importe,afect_igv, cod_contable, valor_gratu, unidad,id_usuario_inserta,id_comprobante, id_concepto)
 					Values (_serie,numero,tipo,ubicacion,1,descripcion,
-					_pu, _pu_con_igv,_igv_total, _descuento, _total   ,10,cod_contable,0,'ZZ',p_id_usuario, id_caja, persona);
+					_pu, _pu_con_igv,_igv_total, _descuento, _total   ,_id_tipo_afectacion,cod_contable,0,'ZZ',p_id_usuario, id_caja, persona);
 				
 				update valorizaciones Set id_comprobante  = id_caja, pagado = '1'
 					where id = id_v;
