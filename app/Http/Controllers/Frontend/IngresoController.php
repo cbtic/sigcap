@@ -110,7 +110,7 @@ class IngresoController extends Controller
         $valorizaciones_model = new Valorizacione;
         $resultado = $valorizaciones_model->getPeridoValorizacion($tipo_documento,$id_persona);
 
-        //print_r($valorizacion);exit();
+        //print_r($resultado);exit();
 		return $resultado;
 
     }
