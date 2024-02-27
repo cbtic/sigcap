@@ -680,6 +680,7 @@ function cargarValorizacion1(){
 
 }
 function cargarValorizacion(){
+	//cargarcboPeriodo();
     
     //alert("hi");
 	//var numero_documento = $("#numero_documento").val();
@@ -710,6 +711,8 @@ function cargarValorizacion(){
 	$("#btnFracciona").prop('disabled', true);
 	$("#btnDescuento").prop('disabled', true);
 
+	//$('#tblValorizacion').dataTable().fnDestroy();
+    //$("#tblValorizacion tbody").html("");
 
 	$.ajax({
 		url: "/ingreso/listar_valorizacion",
@@ -717,6 +720,19 @@ function cargarValorizacion(){
 		data : $("#frmValorizacion").serialize(),
 		success: function (result) {  
 			$("#tblValorizacion tbody").html(result);
+/*
+			$('[data-toggle="tooltip"]').tooltip();
+					
+			$('#tblValorizacion').DataTable({
+				//"sPaginationType": "full_numbers",
+				//"paging":false,
+				"searching": false,
+				"info": false,
+				"bSort" : false,
+				"dom": '<"top">rt<"bottom"flpi><"clear">',
+				"language": {"url": "/js/Spanish.json"},
+			});
+			*/
 
 			if (cboTipoConcepto_b==26411 && cboPeriodo_b!="") {
 
@@ -1002,7 +1018,7 @@ function modal_otro_pago(){
 		idAgremiado = 0;
 	}		
 	
-	
+
 	$.ajax({
 			url: "/ingreso/modal_otro_pago/"+perido+"/"+idPersona+"/"+idAgremiado+"/"+tipo_documento,
 			type: "GET",
