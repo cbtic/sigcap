@@ -112,7 +112,7 @@ $(document).ready(function() {
 <body class="hold-transition skin-blue sidebar-mini">
 
     <div>
-    <img width="200px" height="80px" style="top:-30px" src="{{ public_path('/img/logo_encabezado.jpg') }} ">  
+    <img width="200px" height="80px" style="top:-30px" src="{{ public_path('img/logo_encabezado.jpg') }} ">  
     <h2 style="text-align:center">CERTIFICADO DE HABILITACION PROFESIONAL</h2>
     <p style="text-align:center">  N° : <?php echo $datos[0]->codigo;?> </p>
         <p  style="text-align:center">Sin Fines de Construccion</p>
