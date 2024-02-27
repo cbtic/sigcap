@@ -296,7 +296,7 @@ $.mask.definitions['p'] = "[Mm]";
 							</div>
 							<div class="col-lg-2" style="padding-top:12px;padding-left:0px;padding-right:0px">
 								<br>
-								<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onclick="obtenerAgremiado('<?php echo $id ?>')">
+								<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onClick="obtenerAgremiado('<?php echo $id ?>')">
 									Buscar
 								</button>
 							</div>
@@ -329,7 +329,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Fecha Registro</label>
-									<input id="fecha_r_" name="fecha_r_" class="form-control form-control-sm" value="<?php echo $certificado->fecha_solicitud ?>" type="date">
+									<input id="fecha_r_" name="fecha_r_" class="form-control form-control-sm" value="<?php if($certificado->fecha_solicitud!="")echo date("Y-m-d",strtotime($certificado->fecha_solicitud))?>" type="date">
 								</div>
 							</div>
 
@@ -369,7 +369,7 @@ $.mask.definitions['p'] = "[Mm]";
 
 										<div class="col-lg-2" style="padding-top:0px;padding-left:0px;padding-right:0px">
 
-											<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onclick="valida_pago()">
+											<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onClick="valida_pago()">
 												Validar pago
 											</button>
 										</div>
@@ -387,7 +387,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Fecha Emision</label>
-									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php echo $certificado->fecha_emision ?>" type="date">
+									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php if($certificado->fecha_emision!="")echo date("Y-m-d",strtotime($certificado->fecha_emision)) ?>" type="date">
 								</div>
 							</div>
 							<div class="col-lg-4">
