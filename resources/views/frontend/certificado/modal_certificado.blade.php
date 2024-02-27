@@ -387,7 +387,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Fecha Emision</label>
-									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php echo $certificado->fecha_emision ?>" type="date">
+									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php if($certificado->fecha_emision!="")echo date("Y-m-d",strtotime($certificado->fecha_emision)) ?>" type="date">
 								</div>
 							</div>
 							<div class="col-lg-4">
