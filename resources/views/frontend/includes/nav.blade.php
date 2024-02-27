@@ -168,7 +168,7 @@
 					</li>
 					@endif
 
-					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales) || Gate::check('Plan contable') || Gate::check('Partida Presupuestal) || Gate::check('Centro de costos') || Gate::check('Multas Mantenimiento'))
+					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales') || Gate::check('Plan contable') || Gate::check('Partida Presupuestal') || Gate::check('Centro de costos') || Gate::check('Multas Mantenimiento'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
