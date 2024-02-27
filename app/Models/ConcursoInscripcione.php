@@ -15,7 +15,9 @@ class ConcursoInscripcione extends Model
         $cad = "select t1.id,t5.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
 t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,
 t7.denominacion situacion,t8.denominacion region,t10.tipo,t10.serie,t10.numero,t4.id_concurso,
-to_char(t5.fecha_acreditacion_inicio,'dd-mm-yyyy')fecha_acreditacion_inicio,to_char(t5.fecha_acreditacion_fin,'dd-mm-yyyy')fecha_acreditacion_fin,t11.denominacion puesto,t1.puntaje,t1.resultado   
+to_char(t5.fecha_acreditacion_inicio,'dd-mm-yyyy')fecha_acreditacion_inicio,to_char(t5.fecha_acreditacion_fin,'dd-mm-yyyy')fecha_acreditacion_fin,t11.denominacion puesto,t1.puntaje,t1.resultado,
+to_char(t5.fecha_delegatura_inicio,'dd-mm-yyyy')fecha_delegatura_inicio,
+to_char(t5.fecha_delegatura_fin,'dd-mm-yyyy')fecha_delegatura_fin   
 from concurso_inscripciones t1 
 inner join agremiados t2 on t1.id_agremiado=t2.id
 inner join personas t3 on t2.id_persona=t3.id
