@@ -1906,8 +1906,8 @@ function editarConcursoInscripcion(id){
 			var numero_comprobante = result.tipo+result.serie+"-"+result.numero;
 			$('#numero_comprobante').val(numero_comprobante);
 			
-			$('#fecha_delegatura_inicio').val(result.fecha_delegatura_inicio);
-			$('#fecha_delegatura_fin').val(result.fecha_delegatura_fin);
+			$('#fecha_delegatura_inicio').val(result.fecha_acreditacion_inicio);
+			$('#fecha_delegatura_fin').val(result.fecha_acreditacion_fin);
 			$('#numero_cap').val(result.numero_cap);
 			$('#nombres').val(result.apellido_paterno+" "+result.apellido_materno+" "+result.nombres);
 			$('#numero_documento').val(result.numero_documento);
