@@ -18,7 +18,7 @@ foreach($valorizacion as $key=>$row):
 	$monto = $row->monto;
 
 	if($id_tipo_afectacion=='30'){
-		$stotal = $monto;
+		$stotal =str_replace(",","",number_format($monto));
 		$igv_   = 0;
 	
 	}else{
@@ -55,7 +55,7 @@ foreach($valorizacion as $key=>$row):
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][abreviatura]" value="<?php echo $row->abreviatura?>" />
 
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][cantidad]" value="1" /> 
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][descuento]" value="" />   
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][descuento]" value="0" />   
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][cod_contable]" value="" /> 
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][descripcion]" value="<?php echo $row->descripcion?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][vencio]" value="<?php echo $row->vencio?>" /> 
@@ -75,22 +75,36 @@ foreach($valorizacion as $key=>$row):
 
 	<td class="text-left"><?php echo $row->abreviatura?></td>
 	<td class="text-right val_total_">	
-		<span class="val_descuento" style="float:left"></span>	
-		<span class="val_total"><?php echo $row->monto?></span>
+		<span class="val_descuento" style="float:left"></span>			
+		<span class="val_total"><?php echo number_format($monto,2)?></span>
+
+		<span hidden class="val_sub_total"><?php echo number_format($stotal,2)?></span>
+
+		<span hidden class="val_igv"><?php echo number_format($igv_,2)?></span>
+
+		<span hidden class="id_concepto_modal_sel"><?php echo $row->id_concepto?></span>
 		
-		<input type="hidden" class="id_concepto_modal_sel" value="<?php echo $row->id_concepto?>" />
 	</td>
+	
+
 
 </tr>
 <?php 
 	$total += $row->monto;
+	//$total += $total;
+	//$stotal += $stotal;
+	//$igv_ += $igv_;
+
 	
 endforeach;
 ?>
 <tr>
 	<th colspan="5" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda Total</th>
 	<td style="padding-bottom:0px;margin-bottom:0px">
-		<input type="text" readonly name="deudaTotal" id="deudaTotal" value="<?php echo $total?>" class="form-control form-control-sm text-right"/>
+		<input type="text" readonly name="deudaTotal" id="deudaTotal" value="<?php echo number_format($total,2)?>" class="form-control form-control-sm text-right"/>
+
+		
+
 	</td>
 </tr>
 

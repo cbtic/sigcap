@@ -473,7 +473,10 @@
                                                     <th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
                                                     <td style="padding-bottom:0px;margin-bottom:0px">
                                                         <input type="text" readonly name="total" id="total" value="0" class="form-control form-control-sm text-right">
+                                                        <input type="hidden" readonly name="stotal" id="stotal" value="" class="form-control form-control-sm">
+                                                        <input type="hidden" readonly name="igv" id="igv" value="" class="form-control form-control-sm">
                                                         <input type="hidden" readonly name="idConcepto" id="idConcepto" value="" class="form-control form-control-sm">
+
                                                     </td>
                                                 </tr>
                                                 </tfoot>
