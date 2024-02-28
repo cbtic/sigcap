@@ -113,23 +113,36 @@ class ComprobanteController extends Controller
             $id_concepto_det=0;
             $id_concepto_pp = $request->id_concepto_pp;
 
-            foreach($request->comprobante_detalles as $key=>$det){
-                $facturad[$ind] = $factura_detalle[$key];
-                //print_r($factura_detalle['id_concepto']);
-                $id_concepto_det = $facturad[$ind]['id_concepto'];
-                //$id_concepto = $det->id_concepto;
-                
-                $ind++;
+            $stotal = 0;
+            $igv = 0;
+
+            if ($descuentopp!="S"){
+
+                foreach($request->comprobante_detalles as $key=>$det){
+                    $facturad[$ind] = $factura_detalle[$key];
+                    //print_r($factura_detalle['id_concepto']);
+                    $id_concepto_det = $facturad[$ind]['id_concepto'];
+                    
+                    $stotal= $stotal + $facturad[$ind]['total'];
+                    $igv= $igv + $facturad[$ind]['igv'];
+
+                    $ind++;
+                }
             }
 
         
             //print_r($id_concepto_det);
             //print_r($id_concepto_pp);exit();
 
-            if ($id_concepto_det != $id_concepto_pp)$id_tipo_afectacion_pp="0";
-           // print_r($id_tipo_afectacion_pp);exit();
+            //if ($id_concepto_det != $id_concepto_pp)$id_tipo_afectacion_pp="0";
 
-            if ($id_tipo_afectacion_pp=="30"){
+            if ($descuentopp!="S"){
+                $stotal = $total;
+                $igv   = 0;
+            }
+           
+/*
+            if ($id_tipo_afectacion_pp==$id_concepto_det){
                 $stotal = $total;
                 $igv   = 0;
             }
@@ -137,32 +150,34 @@ class ComprobanteController extends Controller
                 $stotal = $total/1.18;
                 $igv   = $stotal * 0.18;
             }
+*/
 
+print( date('d/m/Y H:i:s')); exit();
 
             if ($descuentopp=="S"){
                 $items1 = array(
                     "chek" => 1, 
                     "id" => 0, 
-                    "fecha" => "20/02/2024", 
-                    "denominacion" => "DESCUENTO CUOTA GREMIAL PRONTOPAGO",
-                    "monto" => $request->totalDescuento*-1,
-                    "pu" => $request->totalDescuento*-1, 
+                    "fecha" => getdate(), 
+                    "denominacion" => "PAGO CUOTA GREMIAL 2024 Y DESCUENTO CUOTA GREMIAL PRONTOPAGO",
+                    "monto" => $stotal,
+                    "pu" =>$stotal, 
                     "igv" => 0, 
                     "pv" => 0, 
-                    "total" => $request->totalDescuento*-1, 
+                    "total" => $total, 
                     "moneda" => "SOLES", 
                     "id_moneda" => 1, 
                     "abreviatura" => "SOLES", 
                     "cantidad" => 1, 
                     "descuento" => $request->totalDescuento,
                     "cod_contable" =>"", 
-                    "descripcion" => 'DESCUENTO CUOTA GREMIAL PRONTOPAGO', 
+                    "descripcion" => 'PAGO CUOTA GREMIAL 2024 Y DESCUENTO CUOTA GREMIAL PRONTOPAGO', 
                     "vencio" => 0, 
                     "id_concepto" => $request->id_concepto_pp,
                     "item" => 0, 
                     );
-                    $facturad[$ind]=$items1;
-            }
+                    $facturad[1]=$items1;
+                }
 
              //print_r($facturad);exit();
 
