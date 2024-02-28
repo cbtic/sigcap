@@ -8,7 +8,7 @@ use DB;
 
 class ComisionDelegado extends Model
 {
-    function getConcursoInscripcionAll(){
+    function getConcursoInscripcionAll($id_periodo,$id_sub_tipo_concurso){
 
         $cad = "select 
 t1.id,t1.id_agremiado,t1.puesto_postula,t5.periodo,t6.denominacion tipo_concurso,
@@ -20,13 +20,23 @@ inner join agremiados t2 on t1.id_agremiado=t2.id
 inner join personas t3 on t2.id_persona=t3.id
 inner join concurso_puestos t4 on t1.id_concurso_puesto=t4.id 
 inner join concursos t5 on t4.id_concurso=t5.id
-inner join tabla_maestras t6 on t5.id_tipo_concurso=t6.codigo::int and t6.tipo='93'
+inner join tabla_maestras t6 on t5.id_sub_tipo_concurso=t6.codigo::int and t6.tipo='93'
 inner join tabla_maestras t7 on t2.id_situacion = t7.codigo::int And t7.tipo ='14' 
 inner join regiones t8 on t2.id_regional = t8.id
 left join tabla_maestras t11 on t1.puesto_postula::int = t11.codigo::int And t11.tipo ='94' 
 where t1.estado='1' and t2.estado='1' and t3.estado='1' 
 and t5.estado='1' and t6.estado='1' and t7.estado='1'
+and resultado='Ingreso'
 ";
+		if($id_periodo>0){
+			$cad .= " and t5.id_periodo=".$id_periodo;
+		}
+		
+		if($id_sub_tipo_concurso>0){
+			$cad .= " and t5.id_sub_tipo_concurso=".$id_sub_tipo_concurso;
+		}
+
+		//echo $cad;
 
 		$data = DB::select($cad);
         return $data;
