@@ -193,9 +193,9 @@ function cargarMunicipalidadesIntegradas(){
     
 	//$('#tblMunicipalidadIntegrada').dataTable().fnDestroy(); //la destruimos
 	//$("#tblMunicipalidadIntegrada tbody").html("");
-	var periodo = $("#periodo").val();
+	var periodo = $("#frmAfiliacion #periodo").val();
 	var tipo_agrupacion = $("#tipo_agrupacion").val();
-	var tipo_comision = $("#tipo_comision").val();
+	var tipo_comision = $("#frmAfiliacion #tipo_comision").val();
 	if(tipo_comision=="")tipo_comision="0";
 	
 	$.ajax({
@@ -226,14 +226,15 @@ function cargarMunicipalidadesIntegradas(){
 
 function cargarComisiones(){
 	
+	var periodo = $("#frmAfiliacion #periodo").val();
 	var cad_id = $("#cad_id").val();
 	if(cad_id=="")cad_id="0";
 
 	var estado = $("#estado").val();
-	var tipo_comision = $("#tipo_comision").val();
+	var tipo_comision = $("#frmAfiliacion #tipo_comision").val();
 	
 	$.ajax({
-			url: "/comision/obtener_comision/"+tipo_comision+"/"+cad_id+"/"+estado,
+			url: "/comision/obtener_comision/"+periodo+"/"+tipo_comision+"/"+cad_id+"/"+estado,
 			type: "GET",
 			success: function (result) {  
 			

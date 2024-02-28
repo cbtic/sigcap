@@ -93,7 +93,7 @@ class ComisionController extends Controller
 		$periodoComisione_model = new PeriodoComisione;
 		$tablaMaestra_model = new TablaMaestra;
 		
-		$comision = $comision_model->getComisionAll("","","1");
+		$comision = $comision_model->getComisionAll("","","","1");
 		
 		if($id>0){
 			$comision_=Comisione::find($id);
@@ -132,13 +132,14 @@ class ComisionController extends Controller
 		$comision_model = new Comisione;
 		$comisionDelegado_model = new ComisionDelegado;
 		
-		$comision = $comision_model->getComisionAll("","","1");
+		$comision = $comision_model->getComisionAll("","","","1");
 		
 		if($id>0){
 			$comision_=Comisione::find($id);
 			//$comisionDelegado = ComisionDelegado::find($id);
 			$periodo = PeriodoComisione::find($comision_->id_periodo_comisiones);
-			$tipo_comision = TablaMaestra::find($comision_->id_tipo_comision);
+			//$tipo_comision = TablaMaestra::find($comision_->id_tipo_comision);
+			$tipo_comision = TablaMaestra::where("codigo",$comision_->id_tipo_comision)->where("tipo",102)->first();
 			$comisionDelegado = ComisionDelegado::where("id_comision",$id)->where("estado","1")->get();
 			//$comisionDelegado = null;
 		}else{ 
@@ -148,7 +149,7 @@ class ComisionController extends Controller
 			//$comisionDelegado = NULL;
 		}
 
-		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
+		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll($comision_->id_periodo_comisiones,$comision_->id_tipo_comision);
 		$region = $regione_model->getRegionAll();
 		
 		return view('frontend.comision.modal_asignar_delegado_comision',compact('id','comisionDelegado','comision','concurso_inscripcion','region','periodo','tipo_comision'/*,'comisionDelegado'*/));
@@ -367,13 +368,13 @@ class ComisionController extends Controller
         return view('frontend.comision.lista_municipalidadIntegrada',compact('municipalidad_integradas'));
     }
 
-	function obtener_comision($tipo_comision,$cad_id,$estado){
+	function obtener_comision($periodo,$tipo_comision,$cad_id,$estado){
 
 		if ($estado == "-9")$estado ="";
 		if ($cad_id == "0")$cad_id ="";
 
         $comision_model = new Comisione;
-		$comision = $comision_model->getComisionAll($tipo_comision,$cad_id,$estado);
+		$comision = $comision_model->getComisionAll($periodo,$tipo_comision,$cad_id,$estado);
         return view('frontend.comision.lista_comision',compact('comision'));
     }
 	

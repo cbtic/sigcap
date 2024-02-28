@@ -445,7 +445,7 @@ function Guardar() {
 
 	var msg = "";
 	var mov = $('.mov:checked').length;
-	if(mov=="0")msg+="Debe seleccionar al menos un familiar <br>";
+	//if(mov=="0")msg+="Debe seleccionar al menos un familiar <br>";
 
 	if(msg!=""){
 		bootbox.alert(msg);
