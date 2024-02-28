@@ -18,7 +18,7 @@ foreach($valorizacion as $key=>$row):
 	$monto = $row->monto;
 
 	if($id_tipo_afectacion=='30'){
-		$stotal = 0;
+		$stotal = $monto;
 		$igv_   = 0;
 	
 	}else{
