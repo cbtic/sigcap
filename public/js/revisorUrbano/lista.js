@@ -54,12 +54,15 @@ function generar_codigo_ru(){
 					}
 					$("#codigo_itf").val("");
 					$("#numero_cap").val("");
+					
                     datatablenew();
+					limpiar()
 					//cargarRequisitos(id_concurso_inscripcion);
 					//editarConcursoInscripcion(id_concurso_inscripcion);
             }
     });
 }
+
 
 function obtenerAgremiado(){
 		
@@ -106,6 +109,21 @@ function obtenerAgremiado(){
 		
 	});
 	
+}
+
+function limpiar()
+{
+	$('#frmAfiliacion #id').val("0");
+	$('#frmAfiliacion #id_tipo_documento').val("");
+	$('#frmAfiliacion #numero_documento').val("");
+	$('#frmAfiliacion #apellido_paterno').val("");
+	$('#frmAfiliacion #apellido_materno').val("");
+	$('#frmAfiliacion #nombres').val("");
+	$('#frmAfiliacion #numero_regional').val("");
+	$('#frmAfiliacion #id_regional').val("");
+	$('#frmAfiliacion #fecha_colegiado').val("");
+	$('#frmAfiliacion #id_ubicacion').val("");
+	$('#frmAfiliacion #id_situacion').val("");
 }
 
 function datatablenew(){

@@ -9,6 +9,10 @@ use App\Models\TablaMaestra;
 use App\Models\Agremiado;
 use App\Models\Persona;
 use App\Models\Regione;
+use App\Models\Valorizacione;
+use App\Models\Concepto;
+use Carbon\Carbon;
+
 use Auth;
 
 class RevisorUrbanoController extends Controller
@@ -101,6 +105,24 @@ class RevisorUrbanoController extends Controller
 				$revisorUrbano->estado = 1;
 				$revisorUrbano->id_usuario_inserta = $id_user;
 				$revisorUrbano->save();
+
+				$concepto = Concepto::where("id",26523)->where("estado","1")->first();
+
+				$valorizacion = new Valorizacione;
+				$valorizacion->id_modulo = 8;
+				$valorizacion->pk_registro = $revisorUrbano->id;
+				$valorizacion->id_concepto = 26523;
+				$valorizacion->id_agremido = $agremiado->id;
+				$valorizacion->id_persona = $agremiado->id_persona;
+				$valorizacion->monto = $concepto->importe;
+				$valorizacion->id_moneda = $concepto->id_moneda;
+				$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+				$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+				$valorizacion->descripcion = $concepto->denominacion;
+				//$valorizacion->estado = 1;
+				//print_r($valorizacion->descripcion).exit();
+				$valorizacion->id_usuario_inserta = $id_user;
+				$valorizacion->save();
 				
 			}else{
 				$mensaje = "El Codigo ITF ya se encuentra registrado";
