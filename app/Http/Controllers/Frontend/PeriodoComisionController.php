@@ -92,12 +92,12 @@ class PeriodoComisionController extends Controller
 
     public function send_periodoComision_nuevoPeriodoComision(Request $request){
 		
-		$request->validate([
+		/*$request->validate([
 			'fecha_inicio'=>'required',
 			'fecha_fin'=>'required',
 		]
-		);
-
+		);*/
+		//print("asdasd");exit();
 		$id_user = Auth::user()->id;
 
 		if($request->id == 0){
@@ -107,7 +107,7 @@ class PeriodoComisionController extends Controller
 			$periodoComision = PeriodoComisione::find($request->id);
 			//$codigo = $request->codigo;
 		}
-
+		
 		$fecha_ini = Carbon::parse($request->fecha_inicio);
 		$periodo_mes_ini = $fecha_ini->month;
 		$periodo_año_ini = $fecha_ini->year;
@@ -117,13 +117,24 @@ class PeriodoComisionController extends Controller
 		$periodoComision->descripcion = $periodo_mes_ini.'/'.$periodo_año_ini.' - '.$periodo_mes_fin.'/'.$periodo_año_fin;
         $periodoComision->fecha_inicio = $request->fecha_inicio;
         $periodoComision->fecha_fin = $request->fecha_fin;
+		
 		$fecha_actual = Carbon::now()->format('Y-m-d');
 		
-		if(($fecha_actual >= $request->fecha_inicio) && ($fecha_actual <= $request->fecha_fin)) {
+		/*if(($fecha_actual >= $request->fecha_inicio) && ($fecha_actual <= $request->fecha_fin)) {
 			$periodoComision->estado = 1;		
 		}else{
 			$periodoComision->estado = 0;	
+		}*/
+
+		if(($fecha_actual >= $request->fecha_inicio) && ($fecha_actual <= $request->fecha_fin)) {
+			$periodoComision->estado = 0;		
+		}else{
+			$periodoComision->estado = 1;	
 		}
+
+		//print_r($periodoComision->estado);
+		//print_r($request->fecha_inicio);
+		//print_r($request->fecha_fin);
 		//$periodoComision->id_usuario = 1;
 		//$periodoComision->estado = 1;
 		$periodoComision->id_usuario_inserta = $id_user;
@@ -138,5 +149,13 @@ class PeriodoComisionController extends Controller
 
 		echo $periodoComision->id;
 
+    }
+
+	public function actualizarEstadoPeriodoComision()
+    {
+		$periodoComision_model = new PeriodoComisione;
+
+		$periodoComision_model->actualizarActivoPeriodoComision();
+		$periodoComision_model->actualizarInactivoPeriodoComision();
     }
 }
