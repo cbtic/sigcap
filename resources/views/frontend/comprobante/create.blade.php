@@ -579,12 +579,12 @@
                                                     <tr>
                                                         <th class="text-right" width="5%">#</th>
                                                         <th class="text-center" width="10%">Cant.</th>
-                                                        <th width="40%">Descripción</th>                                                        
-                                                        <th class="text-right" width="15%">PU</th>
-                                                        <th width="40%">Dscto.</th>
-                                                        <th class="text-right" width="15%">P.Venta</th>
-                                                        <th class="text-right" width="15%">IGV</th>
-                                                        <th class="text-right" width="15%">Total</th>
+                                                        <th width="35%">Descripción</th>                                                        
+                                                        <th class="text-right" width="10%">PU</th>
+                                                        <th class="text-right" width="10%">Dscto.</th>
+                                                        <th class="text-right" width="10%">P.Venta</th>
+                                                        <th class="text-right" width="10%">IGV</th>
+                                                        <th class="text-right" width="10%">Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -635,7 +635,7 @@
                                                                                         if ($trans == 'FE') {
                                                                                             echo number_format($fac['importe'], 2);
                                                                                         } ?></td>
-                                                                <td class="text-left"><?php if ($trans == 'FA') {
+                                                                <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             echo $fac['descuento'];
                                                                                         }
                                                                                         if ($trans == 'FE') {

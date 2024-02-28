@@ -463,6 +463,8 @@ class ComprobanteController extends Controller
 			$tipoF = $request->TipoF;
 			$ubicacion_id = $request->ubicacion;
 			$id_persona = $request->persona;
+
+
 			$id_caja = $request->id_caja;
 			$adelanto   = $request->adelanto;
 
@@ -495,9 +497,12 @@ class ComprobanteController extends Controller
 				//$valoriza = Valorizacione::where('val_aten_estab', '=', $vestab)->where('val_codigo', '=', $vcodigo)->first();                
                 $valoriza = Valorizacione::find($id_val);
 
-				$id_moneda=1;
-				if(isset($valoriza->id_moneda) && $valoriza->id_moneda == 1)$id_moneda=2;
-				if(isset($valoriza->id_moneda) && $valoriza->id_moneda == 2)$id_moneda=1;
+				//$id_moneda=1;
+				//if(isset($valoriza->id_moneda) && $valoriza->id_moneda == 1)$id_moneda=1;
+				//if(isset($valoriza->id_moneda) && $valoriza->id_moneda == 2)$id_moneda=2;
+
+                $id_moneda=$valoriza->id_moneda;
+
 				
 				//echo $valoriza->val_codigo."-----";
 				//$ingreso = IngresoVehiculo::where('aten_establecimiento', '=', $valoriza->val_estab)->where('aten_numero', '=', $valoriza->val_aten_codigo)->first();
@@ -507,8 +512,6 @@ class ComprobanteController extends Controller
                 //print_r($serieF); exit();
 
                 if($ubicacion_id=="")$ubicacion_id=$id_persona;
-
-                
 
                 $descuento =  $request->totalDescuento; 
                 if ($request->totalDescuento=='') $descuento = 0;
@@ -976,15 +979,16 @@ class ComprobanteController extends Controller
 							"descuentoItem"=> $row->descuento,
 							"importeIGVItem"=> str_replace(",","",number_format($row->igv_total,2)),//"7.63",
 							"montoTotalItem"=> str_replace(",","",number_format($row->importe,2)), //"50.00",
-							"valorVentaItem"=> str_replace(",","",number_format($row->pu,2)), //"42.37",
+							"valorVentaItem"=> str_replace(",","",number_format($row->importe,2)), //"42.37",
 							"descripcionItem"=> $row->descripcion,//"TRANSBORDO",
 							"unidadMedidaItem"=> $row->unidad,
 							"codigoProductoItem"=> ($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
-							"valorUnitarioSinIgv"=> str_replace(",","",number_format($row->pu_con_igv,2)), //"42.3728813559",
-							"precioUnitarioConIgv"=> str_replace(",","",number_format($row->importe,2)), //"50.0000000000",
+                            "codigoDescuentoItem"=> "00",
+							"valorUnitarioSinIgv"=> str_replace(",","",number_format($row->pu,2)), //"42.3728813559",
+							"precioUnitarioConIgv"=> str_replace(",","",number_format($row->pu_con_igv,2)), //"50.0000000000",
 							"unidadMedidaComercial"=> "SERV",
-							"codigoAfectacionIGVItem"=> "10",
-							"porcentajeDescuentoItem"=> "0.00",
+							"codigoAfectacionIGVItem"=> $row->afect_igv,
+							"porcentajeDescuentoItem"=> str_replace(",","",number_format(($row->descuento*100)/$row->pu,2)),
 							"codTipoPrecioVtaUnitarioItem"=> "01"
 							);
 			$items[$index]=$items1;
@@ -1000,7 +1004,7 @@ class ComprobanteController extends Controller
 		$data["keepNumber"] = "false";
 		$data["tipoCorreo"] = "1";
         $data["formaPago"] = "CONTADO";
-		$data["tipoMoneda"] = ($factura->id_moneda=="2")?"PEN":"USD"; //"PEN";
+		$data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
 		$data["serieNumero"] = $factura->serie."-".$factura->numero; // "F001-000002";
@@ -1019,15 +1023,15 @@ class ComprobanteController extends Controller
 		$data["totalAnticipos"] = "0.00";
 		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["provinciaEmisor"] = "LIMA";
-		$data["totalDescuentos"] = "0.00";
-		$data["totalOPGravadas"] = str_replace(",","",number_format($factura->subtotal,2)); //"127.12";
+		$data["totalDescuentos"] = str_replace(",","",number_format($factura->total_descuentos,2));
+		$data["totalOPGravadas"] = "0.00"; //"127.12";
 		$data["codigoPaisEmisor"] = "PE";
 		$data["totalOPGratuitas"] = "0.00";
 		$data["docAfectadoFisico"] = false;
 		$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
 		$data["razonSocialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
 		$data["totalOPExoneradas"] = "0.00";
-		$data["totalOPNoGravadas"] = "0.00";
+		$data["totalOPNoGravadas"] = str_replace(",","",number_format($factura->subtotal,2));
 		$data["codigoPaisReceptor"] = "PE";
 		$data["departamentoEmisor"] = "JESUS MARIA";
 		$data["descuentosGlobales"] = "0.00";
@@ -1041,7 +1045,7 @@ class ComprobanteController extends Controller
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
         $data["direccionReceptor"] = $factura->direccion;
 
-        //print_r($data); exit();
+       // print_r(json_encode($data)); exit();
 
 
 		$databuild_string = json_encode($data);
