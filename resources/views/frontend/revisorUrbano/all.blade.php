@@ -132,7 +132,7 @@
                                     Tipo Documento
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="">
+                                    <select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="" disabled='disabled'>
                                         <option value="">--Selecionar--</option>
                                         <?php
                                         foreach ($tipo_documento as $row) {?>
@@ -188,7 +188,7 @@
                                     Regional
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <select name="id_regional" id="id_regional" class="form-control form-control-sm" onchange="">
+                                    <select name="id_regional" id="id_regional" class="form-control form-control-sm" onchange="" disabled='disabled'>
                                         <option value="">--Selecionar--</option>
                                         <?php
                                         foreach ($region as $row) {?>
@@ -213,7 +213,7 @@
                                     Ubicacion
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <select name="id_ubicacion" id="id_ubicacion" class="form-control form-control-sm" onchange="">
+                                    <select name="id_ubicacion" id="id_ubicacion" class="form-control form-control-sm" onchange="" disabled='disabled'>
                                         <option value="">--Selecionar--</option>
                                         <?php
                                         foreach ($ubicacion_cliente as $row) {?>
@@ -228,7 +228,7 @@
                                     Situacion
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <select name="id_situacion" id="id_situacion" class="form-control form-control-sm" onchange="">
+                                    <select name="id_situacion" id="id_situacion" class="form-control form-control-sm" onchange="" disabled='disabled'>
                                         <option value="">--Selecionar--</option>
                                         <?php
                                         foreach ($situacion_cliente as $row) {?>
