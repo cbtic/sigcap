@@ -63,10 +63,16 @@ begin
 					select substr(CAST(mod(_total,trunc(_total)) AS varchar),3) into _decimal_letras;
 				End if;
 
-				if tipo = 'FT' Then
+				if tipo = 'FT' and  persona = 0  Then
 					select t2.ruc, t2.razon_social, (case when t2.direccion = 'Direccion' then '' else t2.direccion end) direccion, t2.email into  _ruc,_razon_social, _direccion, _correo
 						from empresas t2						
 						Where t2.id=ubicacion;
+				end if;
+			
+				if tipo = 'FT' and  persona > 0  Then
+					select numero_ruc, apellido_paterno || ' '|| apellido_materno || ' '|| nombres, '' direccion, '' email into  _ruc, _razon_social, _direccion, _correo
+						from personas
+						Where id=persona;
 				end if;
 
 				if tipo = 'BV' or tipo = 'TK' Then
@@ -95,6 +101,9 @@ begin
 				if _id_tipo_afectacion = 30  then			
 					_subtotal := CAST(total AS numeric);
 					_igv_total := 0;
+				else					
+					_subtotal := _total/1.18;
+					_igv_total := (_total/1.18)*0.18;				
 				end if;
 
 				Insert Into comprobantes (serie, numero, fecha, destinatario, direccion, cod_tributario, serie_guia,nro_guia, total_grav, total_inaf, total_exo, impuesto,
