@@ -503,3 +503,4 @@ Route::get('prontoPago/actualizarEstadoProntoPago', [ProntoPagoController::class
 
 Route::get('agremiado/obtener_local/{id_regional}', [AgremiadoController::class, 'obtener_local'])->name('agremiado.obtener_local');
 
+Route::get('agremiado/obtener_datos_agremiado/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado'])->name('agremiado.obtener_datos_agremiado');
