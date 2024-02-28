@@ -23,6 +23,13 @@ $(document).ready(function () {
 		//modalProfesion(0);
 		generar_codigo_ru();
 	});
+
+	$('#numero_documento').blur(function() {
+		var id = $('#id').val();
+		if (id == 0) {
+			obtener_agremiado(this.value);
+		}
+	});
 		
 	datatablenew();
 	
@@ -52,6 +59,53 @@ function generar_codigo_ru(){
 					//editarConcursoInscripcion(id_concurso_inscripcion);
             }
     });
+}
+
+function obtenerAgremiado(){
+		
+	var numero_cap = $("#numero_cap").val();
+	var msg = "";
+	
+	if(numero_cap == "")msg += "Debe ingresar el numero de documento <br>";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_datos_agremiado/' + numero_cap,
+		dataType: "json",
+		success: function(result){
+			
+			var agremiado = result.agremiado;
+			//var tipo_documento = parseInt(agremiado.tipo_documento);
+			//var nombre = persona.apellido_paterno+" "+persona.apellido_materno+", "+persona.nombres;
+			$('#id_tipo_documento').val(agremiado.tipo_documento);
+			$('#numero_documento').val(agremiado.numero_documento);
+			$('#apellido_paterno').val(agremiado.apellido_paterno);
+			$('#apellido_materno').val(agremiado.apellido_materno);
+			$('#nombres').val(agremiado.nombres);
+			$('#numero_regional').val(agremiado.numero_regional);
+			$('#id_regional').val(agremiado.regional);
+			$('#fecha_colegiado').val(agremiado.fecha_colegiado);
+			$('#id_ubicacion').val(agremiado.ubicacion);
+			$('#id_situacion').val(agremiado.situacion);
+			//$('#telefono').val(persona.telefono);
+			//$('#email').val(persona.email);
+			
+			$('.loader').hide();
+
+		}
+		
+	});
+	
 }
 
 function datatablenew(){

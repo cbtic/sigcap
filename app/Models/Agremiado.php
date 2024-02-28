@@ -73,6 +73,23 @@ class Agremiado extends Model
 		
         return $data[0];
     }
+
+	function getAgremiadoDatos($numero_cap){
+
+
+			$cad = "select p.id_tipo_documento tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, a.numero_regional, a.id_regional regional, a.fecha_colegiado, a.id_local ubicacion, a.id_situacion situacion from agremiados a 
+					inner join personas p on a.id_persona = p.id 
+					inner join tabla_maestras tm on p.id_tipo_documento ::int=tm.codigo::int and tm.tipo='110'
+					inner join regiones r on a.id_regional = r.id
+					left join locales l on a.id_local = l.id
+					inner join tabla_maestras tm2 on a.id_situacion ::int=tm2.codigo::int and tm2.tipo='14'
+					Where  a.numero_cap ='".$numero_cap."'";
+			
+		//echo $cad;
+		$data = DB::select($cad);
+		
+        return $data[0];
+    }
 	
 	function getAgremiadoByIdPersona($id_persona){
 

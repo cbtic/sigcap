@@ -15,6 +15,7 @@ use App\Models\Comprobante;
 use App\Models\TablaMaestra;
 use App\Models\Concepto;
 use App\Models\Valorizacione;
+use App\Models\PeriodoComisione;
 use Carbon\Carbon;
 use Auth;
 
@@ -195,12 +196,15 @@ class ConcursoController extends Controller
 		$id_user = Auth::user()->id;
 		$concurso = new Concurso;
 		$tablaMaestra_model = new TablaMaestra;
+		$periodo_model = new PeriodoComisione;
+
+		$periodo = $periodo_model->getPeriodoAll();
 		
 		if($id>0) $concurso = Concurso::find($id);else $concurso = new Concurso;
 
 		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
 
-		return view('frontend.concurso.modal_concurso',compact('id','concurso','tipo_concurso'));
+		return view('frontend.concurso.modal_concurso',compact('id','concurso','tipo_concurso','periodo'));
 
     }
 	
@@ -325,7 +329,7 @@ class ConcursoController extends Controller
 		
 		$concurso->id_tipo_concurso = $request->id_tipo_concurso;
 		$concurso->id_sub_tipo_concurso = $request->id_sub_tipo_concurso;
-		$concurso->periodo = $request->periodo;
+		$concurso->id_periodo = $request->periodo;
 		$concurso->fecha = $request->fecha;
 		$concurso->fecha_inscripcion_inicio = $request->fecha_inscripcion_inicio;
 		$concurso->fecha_inscripcion_fin = $request->fecha_inscripcion_fin;

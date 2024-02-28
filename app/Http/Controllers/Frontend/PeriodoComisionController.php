@@ -118,10 +118,11 @@ class PeriodoComisionController extends Controller
         $periodoComision->fecha_inicio = $request->fecha_inicio;
         $periodoComision->fecha_fin = $request->fecha_fin;
 		$fecha_actual = Carbon::now()->format('Y-m-d');
+		
 		if(($fecha_actual >= $request->fecha_inicio) && ($fecha_actual <= $request->fecha_fin)) {
 			$periodoComision->estado = 1;		
 		}else{
-			$periodoComision->estado = 2;	
+			$periodoComision->estado = 0;	
 		}
 		//$periodoComision->id_usuario = 1;
 		//$periodoComision->estado = 1;
