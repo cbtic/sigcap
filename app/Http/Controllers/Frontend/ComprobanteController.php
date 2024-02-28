@@ -81,6 +81,16 @@ class ComprobanteController extends Controller
             //$MonAd = $request->MonAd;
             $MonAd = 0;
             $total   = $request->total;
+            $stotal   = $request->stotal;            
+            $igv   = $request->igv;
+
+           // print_r($igv);exit();
+
+
+            $deudaTotal   = $request->deudaTotal; 
+
+            
+
             $adelanto   = 'N';
 
             if ($MonAd != '0' && $total <> $MonAd){
@@ -113,18 +123,21 @@ class ComprobanteController extends Controller
             $id_concepto_det=0;
             $id_concepto_pp = $request->id_concepto_pp;
 
-            $stotal = 0;
-            $igv = 0;
+
+
 
             if ($descuentopp!="S"){
+
+                //$stotal = 0;
+                //$igv = 0;
 
                 foreach($request->comprobante_detalles as $key=>$det){
                     $facturad[$ind] = $factura_detalle[$key];
                     //print_r($factura_detalle['id_concepto']);
                     $id_concepto_det = $facturad[$ind]['id_concepto'];
                     
-                    $stotal= $stotal + $facturad[$ind]['total'];
-                    $igv= $igv + $facturad[$ind]['igv'];
+                    //$stotal= $stotal + $facturad[$ind]['total'];
+                    //$igv= $igv + $facturad[$ind]['igv'];
 
                     $ind++;
                 }
@@ -136,10 +149,13 @@ class ComprobanteController extends Controller
 
             //if ($id_concepto_det != $id_concepto_pp)$id_tipo_afectacion_pp="0";
 
+            /*
             if ($descuentopp!="S"){
                 $stotal = $total;
                 $igv   = 0;
             }
+*/
+
            
 /*
             if ($id_tipo_afectacion_pp==$id_concepto_det){
@@ -152,18 +168,18 @@ class ComprobanteController extends Controller
             }
 */
 
-print( date('d/m/Y H:i:s')); exit();
+
 
             if ($descuentopp=="S"){
                 $items1 = array(
                     "chek" => 1, 
                     "id" => 0, 
-                    "fecha" => getdate(), 
+                    "fecha" => date('d/m/Y'), 
                     "denominacion" => "PAGO CUOTA GREMIAL 2024 Y DESCUENTO CUOTA GREMIAL PRONTOPAGO",
                     "monto" => $stotal,
-                    "pu" =>$stotal, 
-                    "igv" => 0, 
-                    "pv" => 0, 
+                    "pu" =>$deudaTotal, 
+                    "igv" => $igv, 
+                    "pv" =>  $total, 
                     "total" => $total, 
                     "moneda" => "SOLES", 
                     "id_moneda" => 1, 
@@ -427,7 +443,7 @@ print( date('d/m/Y H:i:s')); exit();
 
 			$tarifa = $request->facturad;
 
-		  // print_r($tarifa); exit();
+		   //print_r($tarifa); exit();
 
 			//echo "serieF=>".$request->serieF."<br>";
 			//echo "TipoF=>".$request->TipoF."<br>";
@@ -460,6 +476,8 @@ print( date('d/m/Y H:i:s')); exit();
 			//1	DOLARES
 			//2	SOLES
 
+            $id_concepto = 0;
+
 			if ($trans == 'FA' || $trans == 'FN'){
 
 				$ws_model = new TablaMaestra;
@@ -470,6 +488,7 @@ print( date('d/m/Y H:i:s')); exit();
 					//$vestab = $value['vestab'];
 					//$vcodigo = $value['vcodigo'];
                     $id_val = $value['id'];
+                    $id_concepto = $value['id_concepto'];
 
 				}
 				
@@ -493,6 +512,8 @@ print( date('d/m/Y H:i:s')); exit();
 
                 $descuento =  $request->totalDescuento; 
                 if ($request->totalDescuento=='') $descuento = 0;
+
+                if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
 
 				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)

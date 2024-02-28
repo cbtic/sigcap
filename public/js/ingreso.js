@@ -226,6 +226,10 @@ function calcular_total(obj){
 	var valor_venta_bruto = 0;
 	var valor_venta = 0;
 	var igv = 0;
+	var stotal = 0;
+	var descuento =0;
+	
+	
 	//var cantidad = $("#tblValorizacion input[type='checkbox']:checked").length;
 	var cantidad = $(".mov:checked").length;
 	//alert(cantidad);
@@ -307,6 +311,9 @@ function calcular_total(obj){
 	
 	$(".mov:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+
 		//var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
 		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
 
@@ -328,7 +335,8 @@ function calcular_total(obj){
 		}
 		*/
 
-		if(val_descuento=="sS"){
+	/*
+		if(val_descuento=="S"){
 			valor_venta_bruto = val_total/1.18;
 			descuento = (importe_pp*numero_cuotas_pp);
 			valor_venta = valor_venta_bruto - descuento;
@@ -338,17 +346,29 @@ function calcular_total(obj){
 		}else{
 			total += Number(val_total);
 		}
+*/
+		total += Number(val_total);
+		stotal += Number(val_sub_total);
+		igv += Number(val_igv);
 
 
-		//alert(total);
+
+		//alert(igv);
 		
 
 	});
+	descuento = 0;
 	
+
 	//$('#idConcepto').val(id_concepto);
 	//total -= descuento;
 	
 	$('#total').val(total.toFixed(2));
+	$('#stotal').val(stotal.toFixed(2));
+	$('#igv').val(igv.toFixed(2));
+	$('#totalDescuento').val(descuento.toFixed(2));
+
+	
 
 	if(cantidad > 1){
 		$('#MonAd').attr("readonly",true);
@@ -495,6 +515,14 @@ function obtenerBeneficiario(){
 
 	$('#cboTipoConcepto_b').val("");
 	$('#cboTipoCuota_b').val("");
+
+	$('#totalDescuento').val("0");
+	$('#total').val("0");
+	$('#deudaTotal').val("0");
+
+	
+
+
 
 	
 		
@@ -1245,10 +1273,13 @@ function AplicarDescuento(){
 	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
 
 	var total = 0;
+	var stotal = 0;
+	var igv = 0;
+
 	var descuento = 0;
 	var valor_venta_bruto = 0;
 	var valor_venta = 0;
-	var igv = 0;
+	//var igv = 0;
 
 	//alert(cboPeriodo_b);
 
@@ -1278,10 +1309,19 @@ function AplicarDescuento(){
 			//calcular_total();
 
 			var val_total = $(this).parent().parent().parent().find('.val_total').html();
+			var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+			var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+
 			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
 			$(this).parent().parent().parent().find('.chek').val("1");
 
+			//alert(val_sub_total);
+
 			total += Number(val_total);
+			stotal += Number(val_sub_total);
+			igv += Number(val_igv);
+
+			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',true);
 
 			//var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
 			//id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
@@ -1322,8 +1362,10 @@ function AplicarDescuento(){
 		//alert(total);
 
 		$('#total').val(total.toFixed(2));
-		$('#totalDescuento').val(descuento.toFixed(2));
+		$('#stotal').val(stotal.toFixed(2));
+		$('#igv').val(igv.toFixed(2));
 
+		$('#totalDescuento').val(descuento.toFixed(2));
 		
 
 		if(cantidad > 1){

@@ -579,11 +579,11 @@
                                                     <tr>
                                                         <th class="text-right" width="5%">#</th>
                                                         <th class="text-center" width="10%">Cant.</th>
-                                                        <th width="40%">Descripción</th>
-                                                        <th width="40%">Dscto.</th>
+                                                        <th width="40%">Descripción</th>                                                        
                                                         <th class="text-right" width="15%">PU</th>
-                                                        <th class="text-right" width="15%">IGV</th>
+                                                        <th width="40%">Dscto.</th>
                                                         <th class="text-right" width="15%">P.Venta</th>
+                                                        <th class="text-right" width="15%">IGV</th>
                                                         <th class="text-right" width="15%">Total</th>
                                                     </tr>
                                                 </thead>
@@ -625,14 +625,6 @@
                                                                         echo $fac['descripcion'];
                                                                     } ?>
                                                                 </td>
-
-                                                                <td class="text-left"><?php if ($trans == 'FA') {
-                                                                                            echo $fac['descuento'];
-                                                                                        }
-                                                                                        if ($trans == 'FE') {
-                                                                                            echo $fac['descuento'];
-                                                                                        } ?></td>
-
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
@@ -643,16 +635,12 @@
                                                                                         if ($trans == 'FE') {
                                                                                             echo number_format($fac['importe'], 2);
                                                                                         } ?></td>
-                                                                <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                            if ($adelanto == 'S') {
-                                                                                                echo ($MonAd * 0.18);
-                                                                                            } else {
-                                                                                                echo $fac['igv'];
-                                                                                            }
+                                                                <td class="text-left"><?php if ($trans == 'FA') {
+                                                                                            echo $fac['descuento'];
                                                                                         }
                                                                                         if ($trans == 'FE') {
-                                                                                            echo number_format($fac['igv_total'], 2);
-                                                                                        } ?></td>
+                                                                                            echo $fac['descuento'];
+                                                                                        } ?></td>                                                                                        
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
@@ -663,6 +651,16 @@
                                                                                         if ($trans == 'FE') {
                                                                                             echo number_format($fac['pu'], 2);
                                                                                         } ?></td>
+                                                                <td class="text-right"><?php if ($trans == 'FA') {
+                                                                                            if ($adelanto == 'S') {
+                                                                                                echo ($MonAd * 0.18);
+                                                                                            } else {
+                                                                                                echo $fac['igv'];
+                                                                                            }
+                                                                                        }
+                                                                                        if ($trans == 'FE') {
+                                                                                            echo number_format($fac['igv_total'], 2);
+                                                                                        } ?></td>                                                                                        
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo $MonAd;
