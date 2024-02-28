@@ -114,7 +114,7 @@
 				
                     <form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
                     <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-                    <!--<input type="hidden" name="id" id="id" value="0">-->
+                    <input type="hidden" name="id" id="id" value="0">
                     
                     <div class="row" style="padding:20px 20px 0px 20px;">
 				
@@ -301,10 +301,10 @@
                             <th>Situaci&oacute;n</th>
                             <th>C&oacute;digo ITF</th>
                             <th>C&oacute;digo RU</th>
-                            <th>Fecha</th>
+                            <!--<th>Fecha</th>
                             <th>Serie</th>
                             <th>N&uacute;mero</th>
-                            <th>Sit. Documento Venta</th>
+                            <th>Sit. Documento Venta</th>-->
                             <th>Estado</th>
 							<th>Acciones</th>
                         </tr>
