@@ -118,7 +118,7 @@ class PeriodoComisionController extends Controller
         $periodoComision->fecha_inicio = $request->fecha_inicio;
         $periodoComision->fecha_fin = $request->fecha_fin;
 		$fecha_actual = Carbon::now()->format('Y-m-d');
-		
+
 		if(($fecha_actual >= $request->fecha_inicio) && ($fecha_actual <= $request->fecha_fin)) {
 			$periodoComision->estado = 1;		
 		}else{
@@ -138,5 +138,13 @@ class PeriodoComisionController extends Controller
 
 		echo $periodoComision->id;
 
+    }
+
+	public function actualizarEstadoPeriodoComision()
+    {
+		$periodoComision_model = new PeriodoComisione;
+
+		$periodoComision_model->actualizarActivoPeriodoComision();
+		$periodoComision_model->actualizarInactivoPeriodoComision();
     }
 }
