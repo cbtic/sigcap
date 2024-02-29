@@ -489,23 +489,25 @@ class ComprobanteController extends Controller
 				$ws_model = new TablaMaestra;
 				
 				/*************************************/
-				
+				$id_moneda=1;
+
 				foreach ($tarifa as $key => $value) {
 					//$vestab = $value['vestab'];
 					//$vcodigo = $value['vcodigo'];
                     $id_val = $value['id'];
                     $id_concepto = $value['id_concepto'];
 
+                    $id_moneda = $value['id_moneda'];
+
 				}
 				
 				//$valoriza = Valorizacione::where('val_aten_estab', '=', $vestab)->where('val_codigo', '=', $vcodigo)->first();                
-                $valoriza = Valorizacione::find($id_val);
-
+              
+                //$valoriza = Valorizacione::find($id_val);
 				//$id_moneda=1;
 				//if(isset($valoriza->id_moneda) && $valoriza->id_moneda == 1)$id_moneda=1;
 				//if(isset($valoriza->id_moneda) && $valoriza->id_moneda == 2)$id_moneda=2;
-
-                $id_moneda=$valoriza->id_moneda;
+                //$id_moneda=$valoriza->id_moneda;
 
 				
 				//echo $valoriza->val_codigo."-----";
