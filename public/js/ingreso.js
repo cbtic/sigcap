@@ -497,6 +497,8 @@ function obtenerBeneficiario(){
 	
 	$('#empresa_id').val("");
 	$('#id_persona').val("");
+	$('#id_ubicacion').val("");
+	
 	$('#divTarjeta').hide();
 	$('#numero_tarjeta').html("");
 	$('#codigo_afiliado').val("");
