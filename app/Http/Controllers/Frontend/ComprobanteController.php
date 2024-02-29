@@ -464,6 +464,10 @@ class ComprobanteController extends Controller
 			$ubicacion_id = $request->ubicacion;
 			$id_persona = $request->persona;
 
+            if ($id_persona=='') $id_persona = 0;
+
+            //print_r($id_persona); exit();
+
 
 			$id_caja = $request->id_caja;
 			$adelanto   = $request->adelanto;
