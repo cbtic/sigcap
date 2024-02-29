@@ -53,8 +53,9 @@ class ComisionController extends Controller
 		
 		$periodo = $periodoComisione_model->getPeriodoAll();
 		$tipoAgrupacion = $tablaMaestra_model->getMaestroByTipo(99);
+		$tipoComision = $tablaMaestra_model->getMaestroByTipo(93);
 		
-        return view('frontend.comision.all_listar_comision',compact('periodo','tipoAgrupacion'));
+        return view('frontend.comision.all_listar_comision',compact('periodo','tipoAgrupacion','tipoComision'));
     }
 	
 	public function lista_comision_ajax(Request $request){

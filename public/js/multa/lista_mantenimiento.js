@@ -498,7 +498,7 @@ function datatablenew(){
 			var monto = $('#monto').val();
 			var moneda = $('#moneda').val();
 			var estado = $('#estado').val();
-			
+
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -555,7 +555,7 @@ function datatablenew(){
                 "mRender": function (data, type, row) {
                 	var monto = "";
 					if(row.monto!= null)monto = row.monto;
-					return monto;
+					return parseFloat(monto).toFixed(2);
                 },
                 "bSortable": false,
                 "aTargets": [2],

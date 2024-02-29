@@ -616,7 +616,7 @@ function datatablenew(){
 					"mRender": function (data, type, row) {
 						var monto = "";
 						if(row.monto!= null)monto = row.monto;
-						return monto;
+						return parseFloat(monto).toFixed(2);;
 					},
 					"bSortable": false,
 					"aTargets": [8]

@@ -160,6 +160,18 @@
 							?>
 						</select>
 					</div>
+
+                    <div class="col-lg-2">
+						<select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onChange="">
+							<option value="0">--Tipo Comisi&oacute;n--</option>
+							<?php
+							foreach ($tipoComision as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+								<?php 
+							}
+							?>
+						</select>
+					</div>
 					
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<select name="id_comision_bus" id="id_comision_bus" class="form-control form-control-sm">
