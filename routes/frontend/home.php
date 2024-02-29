@@ -225,6 +225,8 @@ Route::post('comprobante/nc_edita', [ComprobanteController::class, 'nc_edita'])-
 Route::post('comprobante/nd_edita', [ComprobanteController::class, 'nd_edita'])->name('comprobante.nd_edita');
 
 Route::get('comprobante/firmar/{id}', [ComprobanteController::class, 'firmar'])->name('comprobante.firmar');
+Route::get('comprobante/firmarNC/{id}', [ComprobanteController::class, 'firmarNC'])->name('comprobante.firmarNC');
+Route::get('comprobante/firmarND/{id}', [ComprobanteController::class, 'firmarND'])->name('comprobante.firmarND');
 Route::get('comprobante/envio_comprobante_sunat_automatico/{fecha}', [ComprobanteController::class, 'envio_comprobante_sunat_automatico'])->name('comprobante.envio_comprobante_sunat_automatico');
 
 
