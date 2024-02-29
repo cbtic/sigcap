@@ -43,9 +43,9 @@ class SesionController extends Controller
 		$estado_sesion = $tablaMaestra_model->getMaestroByTipo(56);
 		$estado_aprobacion = $tablaMaestra_model->getMaestroByTipo(109);
 		$periodo = $periodoComisione_model->getPeriodoAll();
+		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
 		
-		
-        return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion'));
+        return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion','tipo_comision'));
     }
 	
 	public function obtener_dictamen($id_comision_sesion){
@@ -61,6 +61,7 @@ class SesionController extends Controller
 		$comisionSesion_model = new ComisionSesione(); 
 		$p[]=$request->id_regional;
 		$p[]=$request->id_periodo;
+		$p[]=$request->tipo_comision;
 		$p[]=$request->id_comision;
 		$p[]=$request->fecha_inicio_bus;
 		$p[]=$request->fecha_fin_bus;
@@ -176,10 +177,10 @@ class SesionController extends Controller
 
     }
 	
-	public function obtener_comision($id_periodo){
+	public function obtener_comision($id_periodo,$tipo_comision){
 			
 		$comision_model = new Comisione;
-		$comision = $comision_model->getComisionByPeriodo($id_periodo);
+		$comision = $comision_model->getComisionByPeriodo($id_periodo,$tipo_comision);
 		echo json_encode($comision);
 		
 	}

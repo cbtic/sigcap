@@ -110,7 +110,7 @@ class Comisione extends Model
         return $data;
     }
 	
-	function getComisionByPeriodo($id_periodo){
+	function getComisionByPeriodo($id_periodo,$tipo_comision){
 
         $cad = " select c.*,tm.denominacion tipo_agrupacion, cm.monto,pc.descripcion periodo 
 		from comisiones c
@@ -119,6 +119,10 @@ class Comisione extends Model
         left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
 		inner join periodo_comisiones pc on c.id_periodo_comisiones=pc.id
         where c.id_periodo_comisiones=".$id_periodo;
+		
+		if($tipo_comision!="" && $tipo_comision!="0"){
+			$cad .= "and c.id_tipo_comision='".$tipo_comision."'";
+		}
 
 		$data = DB::select($cad);
         return $data;

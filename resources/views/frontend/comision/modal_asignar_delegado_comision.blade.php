@@ -568,7 +568,7 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Coordinador</label>
 								<br>
-								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" onChange="habilitar(this)" />
+								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" <?php if(isset($comisionDelegado[0]->coordinador) && $comisionDelegado[0]->coordinador==1)echo "checked='checked'"?> onChange="habilitar(this)" />
 							</div>
 						</div>
 						
@@ -595,7 +595,7 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Coordinador</label>
 								<br>
-								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" onChange="habilitar(this)" />
+								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" <?php if(isset($comisionDelegado[0]->coordinador) && $comisionDelegado[0]->coordinador==2)echo "checked='checked'"?> onChange="habilitar(this)" />
 							</div>
 						</div>
 						
