@@ -317,6 +317,10 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
 
+
+
+
+
                         <input type="hidden" name="totalDescuento" id="totalDescuento" value="<?php echo $totalDescuento; ?>">
                         <input type="hidden" name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $id_tipo_afectacion_pp; ?>">
 
@@ -579,7 +583,7 @@
                                                     <tr>
                                                         <th class="text-right" width="5%">#</th>
                                                         <th class="text-center" width="10%">Cant.</th>
-                                                        <th width="35%">Descripción</th>                                                        
+                                                        <th width="35%">Descripción</th>
                                                         <th class="text-right" width="10%">PU</th>
                                                         <th class="text-right" width="10%">Dscto.</th>
                                                         <th class="text-right" width="10%">P.Venta</th>
@@ -598,7 +602,7 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac['fecha'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac['denominacion'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac['descripcion'] ?>" />
-                                                            
+
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo $fac['moneda'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo $fac['id_moneda'] ?>" />
@@ -606,7 +610,7 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][cod_contable]" value="<?php echo $fac['cod_contable'] ?>" />
 
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][id_concepto]" value="<?php echo $fac['id_concepto'] ?>" />
- 
+
                                                             <tr>
                                                                 <td class="text-right"><?php $n = $n + 1;
                                                                                         echo $n; ?></td>
@@ -640,7 +644,7 @@
                                                                                         }
                                                                                         if ($trans == 'FE') {
                                                                                             echo $fac['descuento'];
-                                                                                        } ?></td>                                                                                        
+                                                                                        } ?></td>
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
@@ -660,7 +664,7 @@
                                                                                         }
                                                                                         if ($trans == 'FE') {
                                                                                             echo number_format($fac['igv_total'], 2);
-                                                                                        } ?></td>                                                                                        
+                                                                                        } ?></td>
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo $MonAd;
@@ -688,6 +692,24 @@
                                                             </tr>
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
                                                         <?php } ?>
+                                                    <?php } ?>
+
+                                                    <?php
+                                                    $n = 0;
+                                                    foreach ($valorizad as $key => $val) {
+                                                    ?>
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][id]" value="<?php echo $val['id'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][fecha]" value="<?php echo $val['fecha'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][denominacion]" value="<?php echo $val['denominacion'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][descripcion]" value="<?php echo $val['descripcion'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][monto]" value="<?php echo $val['monto'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][moneda]" value="<?php echo $val['moneda'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][id_moneda]" value="<?php echo $val['id_moneda'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][descuento]" value="<?php echo $val['descuento'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][cod_contable]" value="<?php echo $val['cod_contable'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][id_concepto]" value="<?php echo $val['id_concepto'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
+
                                                     <?php } ?>
 
                                                     <input type="hidden" name="smodulo_guia" id="smodulo_guia" value="<?php echo $smodulo ?>" />

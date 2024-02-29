@@ -120,7 +120,7 @@ class ComprobanteController extends Controller
          //   print_r($request->comprobante_detalles);
            
             $ind = 0;
-            $id_concepto_det=0;
+            //$id_concepto_det=0;
             $id_concepto_pp = $request->id_concepto_pp;
 
 
@@ -133,8 +133,9 @@ class ComprobanteController extends Controller
 
                 foreach($request->comprobante_detalles as $key=>$det){
                     $facturad[$ind] = $factura_detalle[$key];
+                    $valorizad[$ind] = $factura_detalle[$key];
                     //print_r($factura_detalle['id_concepto']);
-                    $id_concepto_det = $facturad[$ind]['id_concepto'];
+                    //$id_concepto_det = $facturad[$ind]['id_concepto'];
                     
                     //$stotal= $stotal + $facturad[$ind]['total'];
                     //$igv= $igv + $facturad[$ind]['igv'];
@@ -175,7 +176,7 @@ class ComprobanteController extends Controller
                     "chek" => 1, 
                     "id" => 0, 
                     "fecha" => date('d/m/Y'), 
-                    "denominacion" => "PAGO CUOTA GREMIAL 2024 Y DESCUENTO CUOTA GREMIAL PRONTOPAGO",
+                    "denominacion" => "PAGO CUOTA GREMIAL - DESCUENTO CUOTA GREMIAL PRONTOPAGO",
                     "monto" => $stotal,
                     "pu" =>$deudaTotal, 
                     "igv" => $igv, 
@@ -187,13 +188,19 @@ class ComprobanteController extends Controller
                     "cantidad" => 1, 
                     "descuento" => $request->totalDescuento,
                     "cod_contable" =>"", 
-                    "descripcion" => 'PAGO CUOTA GREMIAL 2024 Y DESCUENTO CUOTA GREMIAL PRONTOPAGO', 
+                    "descripcion" => 'PAGO CUOTA GREMIAL - DESCUENTO CUOTA GREMIAL PRONTOPAGO', 
                     "vencio" => 0, 
                     "id_concepto" => $request->id_concepto_pp,
                     "item" => 0, 
                     );
                     $facturad[1]=$items1;
-                }
+
+                    $ind = 0;
+                    foreach($request->comprobante_detalles as $key=>$det){                    
+                        $valorizad[$ind] = $factura_detalle[$key];    
+                        $ind++;
+                    }
+            }
 
              //print_r($facturad);exit();
 
@@ -241,7 +248,7 @@ class ComprobanteController extends Controller
             }
           
 
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad'));
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -442,6 +449,7 @@ class ComprobanteController extends Controller
 			/**********RUC***********/
 
 			$tarifa = $request->facturad;
+            $valorizad = $request->valorizad;
 
 		   //print_r($tarifa); exit();
 
