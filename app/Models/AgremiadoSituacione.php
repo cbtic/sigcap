@@ -12,7 +12,7 @@ class AgremiadoSituacione extends Model
 	
 	function getAgremiadoSituacion($id_agremiado){
 
-        $cad = "select as2.id,ruta_documento,fecha_inicio,fecha_fin,tm.denominacion pais  
+        $cad = "select as2.id,ruta_documento,to_char(fecha_inicio,'dd-mm-yyyy')fecha_inicio,to_char(fecha_fin,'dd-mm-yyyy')fecha_fin,tm.denominacion pais  
 from agremiado_situaciones as2 
 inner join tabla_maestras tm on as2.id_pais_destino=tm.codigo::int and tm.tipo='88'
 where as2.id_agremiado=".$id_agremiado."

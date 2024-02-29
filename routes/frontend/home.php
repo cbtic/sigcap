@@ -300,6 +300,8 @@ Route::get('concurso/listar_maestro_by_tipo_subtipo/{tipo}/{sub_codigo}', [Concu
 Route::get('concurso/eliminar_concurso/{id}/{estado}', [ConcursoController::class, 'eliminar_concurso'])->name('concurso.eliminar_concurso');
 Route::get('concurso/listar_puesto_concurso/{id_concurso}', [ConcursoController::class, 'listar_puesto_concurso'])->name('concurso.listar_puesto_concurso');
 
+Route::get('concurso/exportar_listar_concurso_agremiado/{id_concurso}/{numero_documento}/{id_agremiado}/{agremiado}/{numero_cap}/{id_regional}/{id_situacion}/{id_estado}/{campo}/{orden}', [ConcursoController::class, 'exportar_listar_concurso_agremiado'])->name('concurso.exportar_listar_concurso_agremiado');
+
 Route::get('comision/consulta_comision', [ComisionController::class, 'consulta_comision'])->name('comision.consulta_comision');
 Route::post('comision/listar_comision_ajax', [ComisionController::class, 'listar_comision_ajax'])->name('comision.listar_comision_ajax');
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');

@@ -511,7 +511,7 @@ label.form-control-sm{
 															<option value="">--Concurso--</option>
 															<?php
 															foreach ($concurso as $row) {?>
-															<option value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
+															<option <?php if($row->id==$concurso_ultimo->id)echo "selected='selected'"?> value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 															<?php 
 															}
 															?>
@@ -526,7 +526,7 @@ label.form-control-sm{
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
 													</div>
-													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
 														<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm" >
 															<option value="">--Situaci&oacute;n--</option>
 															<?php
@@ -538,11 +538,27 @@ label.form-control-sm{
 														</select>
 													</div>
 													
-													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 														<select name="id_estado_bus" id="id_estado_bus" class="form-control form-control-sm">
 															<option value="">--Estado--</option>
 															<option value="Ingreso">Ingreso</option>
 															<option value="No Ingreso">No Ingreso</option>
+														</select>
+													</div>
+													
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+														<select name="campo" id="campo" class="form-control form-control-sm">
+															<option value="t1.id">--Campo--</option>
+															<option value="t2.numero_cap::int">CAP</option>
+															<option value="t3.apellido_paterno||'' ''||t3.apellido_materno||'' ''||t3.nombres">Nombre</option>
+															<option value="t1.puntaje">Puntaje</option>
+														</select>
+													</div>
+													
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+														<select name="orden" id="orden" class="form-control form-control-sm">
+															<option value="desc">Descendente</option>
+															<option value="asc">Ascendente</option>
 														</select>
 													</div>
 													
