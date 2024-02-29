@@ -234,8 +234,9 @@ function calcular_total(obj){
 	var cantidad = $(".mov:checked").length;
 	//alert(cantidad);
 	//$("#tblValorizacion input[type='checkbox']:checked").each(function (){
-	if(cantidad == 0)$('#idConcepto').val("");
-	var id_concepto = $('#idConcepto').val();
+	if(cantidad == 0)$('#id_concepto_sel').val("");
+	
+	var id_concepto = $('#id_concepto_sel').val();
 	//$('#id_concepto_sel').val(id_concepto);
 	//alert("id_concepto->"+id_concepto);
 	
@@ -498,7 +499,7 @@ function obtenerBeneficiario(){
 	$('#empresa_id').val("");
 	$('#id_persona').val("");
 	$('#id_ubicacion').val("");
-	
+
 	$('#divTarjeta').hide();
 	$('#numero_tarjeta').html("");
 	$('#codigo_afiliado').val("");
@@ -720,6 +721,10 @@ function cargarValorizacion(){
 	var idconcepto = $("#cboTipoConcepto_b").val();
 
 	$("#idConcepto").val(idconcepto);
+
+	$("#id_concepto_sel").val("");
+
+	
 
 	//if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
 	//else id_persona = $('#id_persona').val();

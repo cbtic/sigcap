@@ -42,7 +42,7 @@ class IngresoController extends Controller
         $caja = $caja_model->getCaja('91');
         $caja_usuario = $caja_ingreso_model->getCajaIngresoByusuario($id_user,'91');
         $tipo_documento = $caja_model->getMaestroByTipo(16);
-        $pronto_pago = ProntoPago::where("periodo",'2024')->where("estado","1")->first();
+        $pronto_pago = ProntoPago::where("estado","1")->first();
                 
         $concepto = Concepto::find(26411); //CUOTA GREMIAL
 
