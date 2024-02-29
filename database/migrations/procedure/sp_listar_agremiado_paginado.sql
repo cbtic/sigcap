@@ -1,13 +1,4 @@
-
-CREATE OR REPLACE FUNCTION public.sp_listar_agremiado_paginado(
-p_region character varying, 
-p_numero_cap character varying,
-p_numero_documento character varying,
-p_agremiado character varying, 
-p_fecha_inicio character varying, 
-p_fecha_fin character varying,
-p_id_situacion character varying,
-p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_agremiado_paginado(p_region character varying, p_numero_cap character varying, p_numero_documento character varying, p_agremiado character varying, p_fecha_inicio character varying, p_fecha_fin character varying, p_id_situacion character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -30,7 +21,7 @@ Begin
 	v_campos=' a.id,to_char(a.fecha_colegiado,''dd-mm-yyyy'')fecha_colegiado,tm.denominacion tipo_documento,
 p.numero_documento,a.numero_cap,r.denominacion region,
 p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, 
-p.fecha_nacimiento,tms.denominacion situacion ';
+to_char(p.fecha_nacimiento,''dd-mm-yyyy'')fecha_nacimiento,tms.denominacion situacion ';
 
 	v_tabla='from agremiados a 
 inner join personas p on a.id_persona=p.id
@@ -83,4 +74,3 @@ End
 
 $function$
 ;
-
