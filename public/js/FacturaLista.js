@@ -350,7 +350,7 @@ function datatablenew(){
                              
                             today = yyyy+'-'+mm+'-'+dd;
 
-                            if ((row.tipo=="FT" || row.tipo=="BV")&&(row.fecha).slice(0, -9)==today){
+                            if ((row.tipo=="FT" || row.tipo=="BV"|| row.tipo=="NC"|| row.tipo=="ND")&&(row.fecha).slice(0, -9)==today){
                                 var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
                                 html += '<a href="/comprobante/firmar/'+row.id+'" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-paper-plane"></i></a>';
                                 return html;
