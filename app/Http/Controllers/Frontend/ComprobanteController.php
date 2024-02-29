@@ -1376,7 +1376,9 @@ class ComprobanteController extends Controller
 
 
 		$databuild_string = json_encode($data);
-        //print_r($databuild_string);exit();
+       
+
+        print_r($databuild_string);exit();
 
 		//$chbuild = curl_init("https://easyfact.tk/see/rest/01");
         $chbuild = curl_init(config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo));
@@ -1416,7 +1418,7 @@ class ComprobanteController extends Controller
             $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::WARNING);
             $facturaLog->info('FacturaLog', $log);
 		}
-		//print_r($results); exit();
+		print_r($results); 
         curl_close($chbuild);
 
         
