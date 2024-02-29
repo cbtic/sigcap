@@ -25,7 +25,7 @@ function guardarFactura(){
 
 	
 
-	alert(valorizad); exit();
+	//alert(valorizad); exit();
 
     if(smodulo_guia=="32"){
 		var guia_llegada_direccion = $('#guia_llegada_direccion').val();
