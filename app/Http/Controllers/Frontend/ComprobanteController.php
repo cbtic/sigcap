@@ -449,7 +449,7 @@ class ComprobanteController extends Controller
 			/**********RUC***********/
 
 			$tarifa = $request->facturad;
-            $valorizad = $request->valorizad;
+            //$valorizad = $request->valorizad;
 
 		   //print_r($tarifa); exit();
 
