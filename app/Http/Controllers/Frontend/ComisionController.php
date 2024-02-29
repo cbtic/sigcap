@@ -141,18 +141,22 @@ class ComisionController extends Controller
 			//$tipo_comision = TablaMaestra::find($comision_->id_tipo_comision);
 			$tipo_comision = TablaMaestra::where("codigo",$comision_->id_tipo_comision)->where("tipo",102)->first();
 			$comisionDelegado = ComisionDelegado::where("id_comision",$id)->where("estado","1")->get();
+			
+			$municipalidadIntegrada = MunicipalidadIntegrada::find($comision_->id_municipalidad_integrada);
+			$id_tipo_agrupacion = $municipalidadIntegrada->id_tipo_agrupacion;
 			//$comisionDelegado = null;
 		}else{ 
 			$comisionDelegado = new ComisionDelegado;
 			$periodo = NULL;
 			$tipo_comision = NULL;
+			$id_tipo_agrupacion = NULL;
 			//$comisionDelegado = NULL;
 		}
 
 		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll($comision_->id_periodo_comisiones,$comision_->id_tipo_comision);
 		$region = $regione_model->getRegionAll();
 		
-		return view('frontend.comision.modal_asignar_delegado_comision',compact('id','comisionDelegado','comision','concurso_inscripcion','region','periodo','tipo_comision'/*,'comisionDelegado'*/));
+		return view('frontend.comision.modal_asignar_delegado_comision',compact('id','comisionDelegado','comision','concurso_inscripcion','region','periodo','tipo_comision','id_tipo_agrupacion'/*,'comisionDelegado'*/));
 
     }
 	

@@ -98,6 +98,28 @@ function aperturar(accion){
 
 
 function DescargarArchivos(){
+		
+	var id_concurso = $('#id_concurso_bus').val();
+	var numero_cap = $('#numero_cap_bus').val();
+	var numero_documento = $('#numero_documento_bus').val();
+	var agremiado = $('#agremiado_bus').val();
+	var id_situacion = $('#id_situacion_bus').val();
+	var id_estado = $('#id_estado_bus').val();
+	var campo = $('#campo').val();
+	var orden = $('#orden').val();
+	var id_agremiado = 0;
+	var id_regional = 0;
+	
+	if (id_concurso == "")id_concurso = 0;
+	if (numero_cap == "")numero_cap = 0;
+	if (numero_documento == "")numero_documento = 0;
+	if (agremiado == "")agremiado = 0;
+	if (id_situacion == "")id_situacion = 0;
+	if (id_estado == "")id_estado = 0;
+	if (campo == "")campo = 0;
+	if (orden == "")orden = 0;
+	
+	location.href = '/concurso/exportar_listar_concurso_agremiado/' + id_concurso + '/' + numero_documento + '/' + id_agremiado + '/' + agremiado + '/' + numero_cap + '/' + id_regional + '/' + id_situacion + '/' + id_estado + '/' + campo + '/' + orden;
 	
 }
 
@@ -1682,6 +1704,8 @@ function datatablenew(){
 			var agremiado = $('#agremiado_bus').val();
 			var id_situacion = $('#id_situacion_bus').val();
 			var id_estado = $('#id_estado_bus').val();
+			var campo = $('#campo').val();
+			var orden = $('#orden').val();
 			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -1692,6 +1716,7 @@ function datatablenew(){
 						id_concurso:id_concurso,numero_cap:numero_cap,
 						numero_documento:numero_documento,agremiado:agremiado,
 						id_situacion:id_situacion,id_estado:id_estado,
+						campo:campo,orden:orden,
 						_token:_token
                        },
                 "success": function (result) {

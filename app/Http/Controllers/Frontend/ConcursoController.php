@@ -18,6 +18,8 @@ use App\Models\Valorizacione;
 use App\Models\PeriodoComisione;
 use Carbon\Carbon;
 use Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
 
 class ConcursoController extends Controller
 {
@@ -114,11 +116,12 @@ class ConcursoController extends Controller
 		
 		//$id_persona = Auth::user()->id_persona;
 		$concurso = $concurso_model->getConcurso();
+		$concurso_ultimo = Concurso::where("estado",1)->orderBy("id","desc")->first();
 		//$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
 		//$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.concurso.create_resultado',compact('concurso',/*'agremiado',*//*'region',*/'situacion_cliente'));
+        return view('frontend.concurso.create_resultado',compact('concurso',/*'agremiado',*//*'region',*/'situacion_cliente','concurso_ultimo'));
     }
 	
 	public function editar_inscripcion($id){
@@ -172,6 +175,8 @@ class ConcursoController extends Controller
 		$p[]=$request->id_regional;
 		$p[]=$request->id_situacion;
 		$p[]=$request->id_estado;
+		$p[]=$request->campo;
+		$p[]=$request->orden;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $concursoInscripcione_model->listar_concurso_agremiado($p);
@@ -689,5 +694,67 @@ class ConcursoController extends Controller
 		echo $_FILES['file']['name'];
 	}
 	
+	public function exportar_listar_concurso_agremiado($id_concurso,$numero_documento,$id_agremiado,$agremiado,$numero_cap,$id_regional,$id_situacion,$id_estado,$campo,$orden) {
+		
+		if($id_concurso==0)$id_concurso = "";
+		if($numero_documento==0)$numero_documento = "";
+		if($id_agremiado==0)$id_agremiado = "";
+		if($agremiado==0)$agremiado = "";
+		if($numero_cap==0)$numero_cap = "";
+		if($id_regional==0)$id_regional = "";
+		if($id_situacion==0)$id_situacion = "";
+		if($id_estado==0)$id_estado = "";
+		if($campo=="0")$campo = "";
+		if($orden=="0")$orden = "";
+		
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$p[]=$id_concurso;
+		$p[]=$numero_documento;
+		$p[]=$id_agremiado;
+		$p[]=$agremiado;
+		$p[]=$numero_cap;
+		$p[]=$id_regional;
+		$p[]=$id_situacion;
+		$p[]=$id_estado;
+		$p[]=$campo;
+		$p[]=$orden;
+		$p[]=1;
+		$p[]=10000;
+		$data = $concursoInscripcione_model->listar_concurso_agremiado($p);
+		
+		$variable = [];
+		$n = 1;
+		array_push($variable, array("SISTEMA CAP"));
+		array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		array_push($variable, array("N","Id","Periodo","Tipo Concurso", "SubTipo Concurso", "Puesto", "Fecha Inscripcion", "Codigo Pago", "N CAP	", "N DNI", "Nombre","Situacion","Puntaje","Estado"));
+		
+		foreach ($data as $r) {
+			$pago = "";
+			if($r->numero!="")$pago = $r->tipo." ".$r->serie." ".$r->numero;
+			$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+			array_push($variable, array($n++,$r->id,$r->periodo, $r->tipo_concurso, $r->sub_tipo_concurso,$r->puesto,$r->fecha_inscripcion, $pago, $r->numero_cap, $r->numero_documento,$nombres,$r->situacion,$r->puntaje, $r->resultado));
+		}
+		
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'resultado_concurso.xlsx');
+		
+    }
 	
+		
+}
+
+class InvoicesExport implements FromArray
+	{
+    	protected $invoices;
+
+    	public function __construct(array $invoices)
+    	{
+        	$this->invoices = $invoices;
+    	}
+
+    	public function array(): array
+    	{
+        	return $this->invoices;
+    	}
 }

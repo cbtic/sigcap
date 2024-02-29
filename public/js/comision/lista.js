@@ -33,7 +33,9 @@ $(document).ready(function () {
 	});
 
 	$('#btnNuevoComision').click(function () {
-		modalDiaSemana(0);
+		var tipo_comision = $("#tipo_comision").val();
+		if(tipo_comision==2)fn_guardarMunicipalidadIntegrada();
+		else modalDiaSemana(0);
 		//fn_guardarMunicipalidadIntegrada();
 	});
 		
