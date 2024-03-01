@@ -2,6 +2,7 @@
 $(document).ready(function () {
 	
 	$("#id_regional_bus").select2({ width: '100%' });
+	$("#id_comision_bus").select2({ width: '100%' });
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
@@ -271,7 +272,7 @@ function obtenerComision(){
 	
 }
 
-function obtenerComisionBus(){
+function obtenerComisionBusOld(){
 	
 	var id_periodo = $('#id_periodo_bus').val();
 	$.ajax({
@@ -280,6 +281,29 @@ function obtenerComisionBus(){
 		success: function(result){
 			var option = "";
 			$('#id_comision_bus').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+			});
+			$('#id_comision_bus').html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerComisionBus(){
+	
+	var id_periodo = $('#id_periodo_bus').val();
+	var tipo_comision_bus = $('#tipo_comision_bus').val();
+	
+	$.ajax({
+		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision_bus,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_comision_bus').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
 				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
 			});
@@ -524,6 +548,7 @@ function datatablenew(){
 			
 			var id_regional = $('#id_regional_bus').val();
             var id_periodo = $('#id_periodo_bus').val();
+			var tipo_comision = $('#tipo_comision_bus').val();
 			var id_comision = $('#id_comision_bus').val();
 			var id_tipo_sesion = $('#id_tipo_sesion_bus').val();
 			var id_estado_sesion = $('#id_estado_sesion_bus').val();
@@ -539,7 +564,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id_regional:id_regional,id_periodo:id_periodo,id_comision:id_comision,
+						id_regional:id_regional,id_periodo:id_periodo,tipo_comision:tipo_comision,id_comision:id_comision,
 						id_tipo_sesion:id_tipo_sesion,id_estado_sesion:id_estado_sesion,
 						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
 						id_estado_aprobacion:id_estado_aprobacion,cantidad_delegado:cantidad_delegado,
@@ -564,7 +589,7 @@ function datatablenew(){
 		},
         "aoColumnDefs":
             [	
-			 
+			 	/*
 			 	{
                 "mRender": function (data, type, row) {
                 	var region = "";
@@ -575,12 +600,23 @@ function datatablenew(){
                 "aTargets": [0],
 				"className": "dt-center",
 				},
-				
+				*/
 				{
                 "mRender": function (data, type, row) {
                 	var periodo = "";
 					if(row.periodo!= null)periodo = row.periodo;
 					return periodo;
+                },
+                "bSortable": false,
+                "aTargets": [0],
+				"className": "dt-center",
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var tipo_comision = "";
+					if(row.tipo_comision!= null)tipo_comision = row.tipo_comision;
+					return tipo_comision;
                 },
                 "bSortable": false,
                 "aTargets": [1],

@@ -482,7 +482,7 @@ label.form-control-sm{
 															Fecha Actualiza
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_actualiza" id="fecha_actualiza" value="<?php echo $agremiado->fecha_actualiza?>" class="form-control form-control-sm" <?php echo "disabled='disabled'"?>>
+															<input type="text" name="fecha_actualiza" id="fecha_actualiza" value="<?php echo ($agremiado->fecha_actualiza!="")?date("d-m-Y",strtotime($agremiado->fecha_actualiza)):""?>" class="form-control form-control-sm" <?php echo "disabled='disabled'"?>>
 															</div>
 														</div>
 														
@@ -726,7 +726,7 @@ label.form-control-sm{
 												Fecha Nac.
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo $persona->fecha_nacimiento?>" class="form-control form-control-sm" >
+												<input type="text" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo ($persona->fecha_nacimiento!="")?date("d-m-Y",strtotime($persona->fecha_nacimiento)):""?>" class="form-control form-control-sm" >
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												Edad
@@ -1105,7 +1105,7 @@ label.form-control-sm{
 												Fecha Fallec.
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<input type="text" name="fecha_fallecido" id="fecha_fallecido" value="<?php echo $agremiado->fecha_fallecido?>" class="form-control form-control-sm" >
+												<input type="text" name="fecha_fallecido" id="fecha_fallecido" value="<?php echo ($agremiado->fecha_fallecido!="")?date("d-m-Y",strtotime($agremiado->fecha_fallecido)):""?>" class="form-control form-control-sm" >
 												</div>
 											</div>
 											

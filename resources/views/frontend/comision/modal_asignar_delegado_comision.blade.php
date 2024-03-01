@@ -269,6 +269,29 @@ function habilitar(obj){
 	}
 }
 
+function fn_save_confirmar(){
+	
+	var tipo_comision = $("#frmAfiliacion #tipo_comision").val();
+	var id_tipo_agrupacion = "<?php echo $id_tipo_agrupacion?>";
+	//alert(tipo_comision);
+	if(tipo_comision==1){
+	
+		bootbox.confirm({ 
+			size: "small",
+			message: "&iquest;Deseas grabar el registro sin coordinador?", 
+			callback: function(result){
+				if (result==true) {
+					fn_save();
+				}
+			}
+		});
+		
+	}else{
+		fn_save();
+	}
+
+}
+
 function fn_save(){
     
 	var _token = $('#_token').val();
@@ -545,7 +568,7 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Coordinador</label>
 								<br>
-								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" onChange="habilitar(this)" />
+								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="1" <?php if(isset($comisionDelegado[0]->coordinador) && $comisionDelegado[0]->coordinador==1)echo "checked='checked'"?> onChange="habilitar(this)" />
 							</div>
 						</div>
 						
@@ -572,7 +595,7 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Coordinador</label>
 								<br>
-								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" onChange="habilitar(this)" />
+								<input type="checkbox" style="margin-left:30px;width:18px;height:18px;margin-top:6px" name="coordinador" value="2" <?php if(isset($comisionDelegado[0]->coordinador) && $comisionDelegado[0]->coordinador==2)echo "checked='checked'"?> onChange="habilitar(this)" />
 							</div>
 						</div>
 						
@@ -582,7 +605,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_confirmar()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

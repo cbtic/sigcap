@@ -228,6 +228,8 @@
                                                     <input type="hidden" readonly name="numero_documento_" id="numero_documento_" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_tipo_documento_" id="id_tipo_documento_" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_concepto" id="id_concepto" value="" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="id_concepto_sel" id="id_concepto_sel" value="" class="form-control form-control-sm">
+                                                    
                                                     <input type="hidden" readonly name="DescuentoPP" id="DescuentoPP" value="" class="form-control form-control-sm">
 
                                                     <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo $pronto_pago->periodo ?>" class="form-control form-control-sm">
@@ -473,7 +475,10 @@
                                                     <th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
                                                     <td style="padding-bottom:0px;margin-bottom:0px">
                                                         <input type="text" readonly name="total" id="total" value="0" class="form-control form-control-sm text-right">
+                                                        <input type="hidden" readonly name="stotal" id="stotal" value="" class="form-control form-control-sm">
+                                                        <input type="hidden" readonly name="igv" id="igv" value="" class="form-control form-control-sm">
                                                         <input type="hidden" readonly name="idConcepto" id="idConcepto" value="" class="form-control form-control-sm">
+
                                                     </td>
                                                 </tr>
                                                 </tfoot>

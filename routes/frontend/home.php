@@ -229,6 +229,8 @@ Route::post('comprobante/nc_edita', [ComprobanteController::class, 'nc_edita'])-
 Route::post('comprobante/nd_edita', [ComprobanteController::class, 'nd_edita'])->name('comprobante.nd_edita');
 
 Route::get('comprobante/firmar/{id}', [ComprobanteController::class, 'firmar'])->name('comprobante.firmar');
+Route::get('comprobante/firmarNC/{id}', [ComprobanteController::class, 'firmarNC'])->name('comprobante.firmarNC');
+Route::get('comprobante/firmarND/{id}', [ComprobanteController::class, 'firmarND'])->name('comprobante.firmarND');
 Route::get('comprobante/envio_comprobante_sunat_automatico/{fecha}', [ComprobanteController::class, 'envio_comprobante_sunat_automatico'])->name('comprobante.envio_comprobante_sunat_automatico');
 
 
@@ -304,6 +306,8 @@ Route::get('concurso/listar_maestro_by_tipo_subtipo/{tipo}/{sub_codigo}', [Concu
 Route::get('concurso/eliminar_concurso/{id}/{estado}', [ConcursoController::class, 'eliminar_concurso'])->name('concurso.eliminar_concurso');
 Route::get('concurso/listar_puesto_concurso/{id_concurso}', [ConcursoController::class, 'listar_puesto_concurso'])->name('concurso.listar_puesto_concurso');
 
+Route::get('concurso/exportar_listar_concurso_agremiado/{id_concurso}/{numero_documento}/{id_agremiado}/{agremiado}/{numero_cap}/{id_regional}/{id_situacion}/{id_estado}/{campo}/{orden}', [ConcursoController::class, 'exportar_listar_concurso_agremiado'])->name('concurso.exportar_listar_concurso_agremiado');
+
 Route::get('comision/consulta_comision', [ComisionController::class, 'consulta_comision'])->name('comision.consulta_comision');
 Route::post('comision/listar_comision_ajax', [ComisionController::class, 'listar_comision_ajax'])->name('comision.listar_comision_ajax');
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');
@@ -369,7 +373,7 @@ Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'c
 Route::get('movilidad/eliminar_movilidad/{id}/{estado}', [MovilidadController::class, 'eliminar_movilidad'])->name('movilidad.eliminar_movilidad');
 
 Route::post('comision/send_municipalidad_integrada', [ComisionController::class, 'send_municipalidad_integrada'])->name('comision.send_municipalidad_integrada');
-Route::get('comision/obtener_comision/{tipo_comision}/{cad_id}/{estado}', [ComisionController::class, 'obtener_comision'])->name('comision.obtener_comision');
+Route::get('comision/obtener_comision/{periodo}/{tipo_comision}/{cad_id}/{estado}', [ComisionController::class, 'obtener_comision'])->name('comision.obtener_comision');
 Route::post('comision/send_comisiones_integradas', [ComisionController::class, 'send_comisiones_integradas'])->name('comision.send_comisiones_integradas');
 Route::post('comision/listar_comision_integrada_ajax', [ComisionController::class, 'listar_comision_integrada_ajax'])->name('comision.listar_comision_integrada_ajax');
 Route::get('comision/consulta_comision_integrada', [ComisionController::class, 'consulta_comision_integrada'])->name('comision.consulta_comision_integrada');
@@ -379,7 +383,7 @@ Route::post('sesion/lista_programacion_sesion_ajax', [SesionController::class, '
 Route::get('sesion/modal_sesion/{id}', [SesionController::class, 'modal_sesion'])->name('sesion.modal_sesion');
 Route::post('sesion/send_sesion', [SesionController::class, 'send_sesion'])->name('sesion.send_sesion');
 Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
-Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
+Route::get('sesion/obtener_comision/{id_periodo}/{tipo_comision}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
 Route::get('sesion/modal_asignar_delegado_sesion/{id}', [SesionController::class, 'modal_asignar_delegado_sesion'])->name('sesion.modal_asignar_delegado_sesion');
 Route::get('sesion/modal_asignar_profesion_sesion/{id}', [SesionController::class, 'modal_asignar_profesion_sesion'])->name('sesion.modal_asignar_profesion_sesion');
 Route::post('sesion/send_profesion_otro', [SesionController::class, 'send_profesion_otro'])->name('sesion.send_profesion_otro');

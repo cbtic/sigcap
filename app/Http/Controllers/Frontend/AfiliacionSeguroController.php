@@ -264,6 +264,7 @@ class AfiliacionSeguroController extends Controller
 		$seguro = Seguro::find($id_seguro);
 		$id_concepto = $seguro->id_concepto;
 		
+		if(isset($parentescos)){
 		foreach($parentescos as $key=>$row){
 			$seguro_afiliado_parentesco = new seguro_afiliado_parentesco;
 			$seguro_afiliado_parentesco->id_afiliacion = $request->id_afiliacion;
@@ -298,6 +299,8 @@ class AfiliacionSeguroController extends Controller
 			
 			/************************/			
 			
+		}
+		
 		}
 		
 		$seguro_afiliado_parentesco_model = new seguro_afiliado_parentesco;

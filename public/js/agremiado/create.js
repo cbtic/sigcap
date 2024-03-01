@@ -94,28 +94,28 @@ $(document).ready(function () {
 	
 	$('#fecha_colegiado').datepicker({
         autoclose: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 	
 	$('#fecha_actualiza').datepicker({
         autoclose: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 	
 	$('#fecha_nacimiento').datepicker({
         autoclose: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 
 	$('#fecha_fallecido').datepicker({
         autoclose: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });

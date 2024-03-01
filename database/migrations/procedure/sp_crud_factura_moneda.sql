@@ -33,8 +33,6 @@ declare
 
 	_subtotal numeric;
 
-
-
 	_id_tipo_afectacion integer;
 
 
@@ -51,7 +49,7 @@ begin
 
 		When 'f' then
 			
-			if p_id_moneda = 2 then
+			if p_id_moneda = 1 then
 				_moneda:='SOLES';
 			else
 				_moneda:='DOLARES';
@@ -65,10 +63,16 @@ begin
 					select substr(CAST(mod(_total,trunc(_total)) AS varchar),3) into _decimal_letras;
 				End if;
 
-				if tipo = 'FT' Then
+				if tipo = 'FT' and  persona = 0  Then
 					select t2.ruc, t2.razon_social, (case when t2.direccion = 'Direccion' then '' else t2.direccion end) direccion, t2.email into  _ruc,_razon_social, _direccion, _correo
 						from empresas t2						
 						Where t2.id=ubicacion;
+				end if;
+			
+				if tipo = 'FT' and  persona > 0  Then
+					select numero_ruc, apellido_paterno || ' '|| apellido_materno || ' '|| nombres, '' direccion, '' email into  _ruc, _razon_social, _direccion, _correo
+						from personas
+						Where id=persona;
 				end if;
 
 				if tipo = 'BV' or tipo = 'TK' Then
@@ -79,6 +83,8 @@ begin
 
 				select upper(f_convnl(trunc(_total))) || ' CON '|| Case When _decimal_letras = '' Then '0' Else _decimal_letras End ||'/100 '||_moneda into _total_letras;
 			
+
+/*			
 				if _descuento=0 then
 					_pu := _total/1.18;
 					_subtotal := _total/1.18;
@@ -87,6 +93,17 @@ begin
 					_pu := 0;
 					_subtotal := CAST(total AS numeric);
 					_igv_total := 0;
+				end if;
+	*/		
+			
+				_id_tipo_afectacion:= numero;
+			
+				if _id_tipo_afectacion = 30  then			
+					_subtotal := CAST(total AS numeric);
+					_igv_total := 0;
+				else					
+					_subtotal := _total/1.18;
+					_igv_total := (_total/1.18)*0.18;				
 				end if;
 
 				Insert Into comprobantes (serie, numero, fecha, destinatario, direccion, cod_tributario, serie_guia,nro_guia, total_grav, total_inaf, total_exo, impuesto,
@@ -100,7 +117,7 @@ begin
 						CAST(total AS numeric),0.00,0.00,
 						_igv_total, --((CAST(total AS numeric)/1.18)*0.18),
 						CAST(total AS numeric),_total_letras,_moneda,18,0.000,'P','N',now(),now(),
-						now(),now(),'',p_id_moneda, tipo, 1, '', 'S',6,'',0,'','','',0.00, _descuento, _descuento, 0.00, 0.00, 0, CAST(total AS numeric), '', '', '', '', '', '', _correo, '01',CAST(total AS numeric), 'SINCRONO', 0, 
+						now(),now(),'',p_id_moneda, tipo, 1, '', 'S',6,'',0,'','','',0.00, _descuento, 0.00, 0.00, 0.00, 0, CAST(total AS numeric), '', '', '', '', '', '', _correo, '01',CAST(total AS numeric), 'SINCRONO', 0, 
 						_subtotal, --CAST(total AS numeric)/1.18, 
 						'', '', '', '', id_caja, p_id_usuario);
 
@@ -112,7 +129,7 @@ begin
 		When 'd' then
 
 			if numero > 0 then
-					
+				/*	
 				if _descuento=0  then
 					_pu := _total/1.18;
 					_pu_con_igv := _total/1.18;
@@ -122,22 +139,29 @@ begin
 					_pu_con_igv := 0;
 					_igv_total := 0;
 				end if;
-			
+			*/
 				select id_tipo_afectacion into  _id_tipo_afectacion
 				from conceptos 						
 				Where id = persona;
 			
 				if _id_tipo_afectacion = 30  then
-					_pu := 0;
-					_pu_con_igv := 0;
+					_pu := _total;
 					_igv_total := 0;
+					_pu_con_igv := _pu + _igv_total;
+					
+				else
+					_pu := _total/1.18;
+					_igv_total := (_total/1.18)*0.18;
+					_pu_con_igv := _total/1.18;
+					
+					_id_tipo_afectacion := 10;
 				end if;
 			
 			
 				Insert Into comprobante_detalles (serie, numero, tipo, item, cantidad, descripcion,
 					pu,  pu_con_igv,  igv_total, descuento, importe,afect_igv, cod_contable, valor_gratu, unidad,id_usuario_inserta,id_comprobante, id_concepto)
 					Values (_serie,numero,tipo,ubicacion,1,descripcion,
-					_pu, _pu_con_igv,_igv_total, _descuento, _total   ,10,cod_contable,0,'ZZ',p_id_usuario, id_caja, persona);
+					_pu, _pu_con_igv,_igv_total, _descuento, (_total - _descuento)  ,_id_tipo_afectacion,cod_contable,0,'ZZ',p_id_usuario, id_caja, persona);
 				
 				update valorizaciones Set id_comprobante  = id_caja, pagado = '1'
 					where id = id_v;

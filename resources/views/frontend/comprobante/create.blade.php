@@ -137,6 +137,9 @@
 
     function generarCuotas() {
 
+        var cantidad = $("#tblConceptos tr").length;
+		if (cantidad > 1) $("#tblConceptos tr").remove();
+        
         var n = 0;
         var nroCuotas = $('#numcuota_').val();
         var total = $('#totalcredito_').val();
@@ -316,6 +319,10 @@
                     <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}} " id="frmFacturacion" name="frmFacturacion" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
+
+
+
+
 
                         <input type="hidden" name="totalDescuento" id="totalDescuento" value="<?php echo $totalDescuento; ?>">
                         <input type="hidden" name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $id_tipo_afectacion_pp; ?>">
@@ -579,12 +586,12 @@
                                                     <tr>
                                                         <th class="text-right" width="5%">#</th>
                                                         <th class="text-center" width="10%">Cant.</th>
-                                                        <th width="40%">Descripción</th>
-                                                        <th width="40%">Dscto.</th>
-                                                        <th class="text-right" width="15%">PU</th>
-                                                        <th class="text-right" width="15%">IGV</th>
-                                                        <th class="text-right" width="15%">P.Venta</th>
-                                                        <th class="text-right" width="15%">Total</th>
+                                                        <th width="35%">Descripción</th>
+                                                        <th class="text-right" width="10%">PU</th>
+                                                        <th class="text-right" width="10%">Dscto.</th>
+                                                        <th class="text-right" width="10%">P.Venta</th>
+                                                        <th class="text-right" width="10%">IGV</th>
+                                                        <th class="text-right" width="10%">Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -598,7 +605,7 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac['fecha'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac['denominacion'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac['descripcion'] ?>" />
-                                                            
+
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo $fac['moneda'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo $fac['id_moneda'] ?>" />
@@ -606,7 +613,7 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][cod_contable]" value="<?php echo $fac['cod_contable'] ?>" />
 
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][id_concepto]" value="<?php echo $fac['id_concepto'] ?>" />
- 
+
                                                             <tr>
                                                                 <td class="text-right"><?php $n = $n + 1;
                                                                                         echo $n; ?></td>
@@ -625,14 +632,6 @@
                                                                         echo $fac['descripcion'];
                                                                     } ?>
                                                                 </td>
-
-                                                                <td class="text-left"><?php if ($trans == 'FA') {
-                                                                                            echo $fac['descuento'];
-                                                                                        }
-                                                                                        if ($trans == 'FE') {
-                                                                                            echo $fac['descuento'];
-                                                                                        } ?></td>
-
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
@@ -644,14 +643,10 @@
                                                                                             echo number_format($fac['importe'], 2);
                                                                                         } ?></td>
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                            if ($adelanto == 'S') {
-                                                                                                echo ($MonAd * 0.18);
-                                                                                            } else {
-                                                                                                echo $fac['igv'];
-                                                                                            }
+                                                                                            echo $fac['descuento'];
                                                                                         }
                                                                                         if ($trans == 'FE') {
-                                                                                            echo number_format($fac['igv_total'], 2);
+                                                                                            echo $fac['descuento'];
                                                                                         } ?></td>
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
@@ -662,6 +657,16 @@
                                                                                         }
                                                                                         if ($trans == 'FE') {
                                                                                             echo number_format($fac['pu'], 2);
+                                                                                        } ?></td>
+                                                                <td class="text-right"><?php if ($trans == 'FA') {
+                                                                                            if ($adelanto == 'S') {
+                                                                                                echo ($MonAd * 0.18);
+                                                                                            } else {
+                                                                                                echo $fac['igv'];
+                                                                                            }
+                                                                                        }
+                                                                                        if ($trans == 'FE') {
+                                                                                            echo number_format($fac['igv_total'], 2);
                                                                                         } ?></td>
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
@@ -690,6 +695,24 @@
                                                             </tr>
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
                                                         <?php } ?>
+                                                    <?php } ?>
+
+                                                    <?php
+                                                    $n = 0;
+                                                    foreach ($valorizad as $key => $val) {
+                                                    ?>
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][id]" value="<?php echo $val['id'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][fecha]" value="<?php echo $val['fecha'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][denominacion]" value="<?php echo $val['denominacion'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][descripcion]" value="<?php echo $val['descripcion'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][monto]" value="<?php echo $val['monto'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][moneda]" value="<?php echo $val['moneda'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][id_moneda]" value="<?php echo $val['id_moneda'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][descuento]" value="<?php echo $val['descuento'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][cod_contable]" value="<?php echo $val['cod_contable'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][id_concepto]" value="<?php echo $val['id_concepto'] ?>" />
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
+
                                                     <?php } ?>
 
                                                     <input type="hidden" name="smodulo_guia" id="smodulo_guia" value="<?php echo $smodulo ?>" />

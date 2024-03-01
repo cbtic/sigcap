@@ -161,9 +161,9 @@
 						</select>
 					</div>
 					-->
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
-							<option value="">--Periodo--</option>
+							<option value="0">--Periodo--</option>
 							<?php
 							foreach ($periodo as $row) {?>
 							<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
@@ -173,9 +173,21 @@
 						</select>
 					</div>
 					
+					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+						<select name="tipo_comision_bus" id="tipo_comision_bus" class="form-control form-control-sm" onchange="obtenerComisionBus()">
+							<option value="0">--Tipo Comisi&oacute;n--</option>
+								<?php
+								foreach ($tipo_comision as $row) {?>
+									<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+								<?php
+								}
+								?>
+						</select>
+					</div>
+					
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_comision_bus" id="id_comision_bus" class="form-control form-control-sm">
-							<option value="">--Comisi&oacute;n--</option>
+							<option value="0">--Comisi&oacute;n--</option>
 						</select>
 					</div>
 					
@@ -243,8 +255,8 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>Regi&oacute;n</th>
 							<th>Periodo</th>
+							<th>Tipo Comisi&oacute;n</th>
 							<th>Comisi&oacute;n</th>
 							<th>Fecha Programada</th>
 							<th>Fecha Ejecuci&oacute;n</th>
