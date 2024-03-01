@@ -166,7 +166,7 @@
 							<option value="0">--Periodo--</option>
 							<?php
 							foreach ($periodo as $row) {?>
-							<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+							<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
 							<?php 
 							}
 							?>

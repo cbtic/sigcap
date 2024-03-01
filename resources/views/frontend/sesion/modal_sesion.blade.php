@@ -551,7 +551,10 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($periodo as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<option value="<?php echo $row->id?>" 
+										<?php if($id>0 && $row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>
+										<?php if($id==0 && $row->id==$periodo_ultimo->id)echo "selected='selected'"?>
+									><?php echo $row->descripcion?></option>
 									<?php 
 									}
 									?>

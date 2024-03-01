@@ -44,8 +44,9 @@ class SesionController extends Controller
 		$estado_aprobacion = $tablaMaestra_model->getMaestroByTipo(109);
 		$periodo = $periodoComisione_model->getPeriodoAll();
 		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion','tipo_comision'));
+        return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion','tipo_comision','periodo_ultimo'));
     }
 	
 	public function obtener_dictamen($id_comision_sesion){
@@ -174,7 +175,9 @@ class SesionController extends Controller
 			$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision(0/*$request->id_comision*/);
 		}
 		
-		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','delegados','region','tipo_programacion','estado_sesion','periodo','comision','dia_semana','estado_sesion_aprobado','tipo_comision'));
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		
+		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','delegados','region','tipo_programacion','estado_sesion','periodo','comision','dia_semana','estado_sesion_aprobado','tipo_comision','periodo_ultimo'));
 
     }
 	
