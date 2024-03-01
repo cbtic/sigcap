@@ -5,14 +5,35 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
-	$('#nombre').keypress(function(e){
+	$('#frmCodigoRU #numero_cap').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
 		}
 	});
 
-	$('#estado').keypress(function(e){
+	$('#frmCodigoRU #agremiado').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#frmCodigoRU #codigo_itf').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#frmCodigoRU #codigo_ru').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#frmCodigoRU #estado').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
@@ -154,15 +175,18 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var numero_cap = $('#numero_cap').val();
-			var situacion = $('#situacion').val();
-			var _token = $('#_token').val();
+			var numero_cap = $('#frmCodigoRU #numero_cap').val();
+			var agremiado = $('#frmCodigoRU #agremiado').val();
+			var codigo_itf = $('#frmCodigoRU #codigo_itf').val();
+			var codigo_ru = $('#frmCodigoRU #codigo_ru').val();
+			var situacion = $('#frmCodigoRU #situacion').val();
+			var _token = $('#frmCodigoRU #_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						numero_cap:numero_cap,situacion:situacion,
+						numero_cap:numero_cap,agremiado:agremiado,codigo_itf:codigo_itf,codigo_ru:codigo_ru,situacion:situacion,
 						_token:_token
                        },
                 "success": function (result) {
@@ -176,13 +200,23 @@ function datatablenew(){
         "aoColumnDefs":
             [	
 				{
+				"mRender": function (data, type, row) {
+					var numero_cap = "";
+					if(row.numero_cap!= null)numero_cap = row.numero_cap;
+					return numero_cap;
+				},
+				"bSortable": false,
+				"aTargets": [0],
+				"className": "dt-center",
+				},
+				{
                 "mRender": function (data, type, row) {
                 	var agremiado = "";
 					if(row.agremiado!= null)agremiado = row.agremiado;
 					return agremiado;
                 },
                 "bSortable": false,
-                "aTargets": [0],
+                "aTargets": [1],
 				"className": "dt-center",
                 },
 				{
@@ -192,7 +226,7 @@ function datatablenew(){
 					return fecha_colegiado;
 				},
 				"bSortable": false,
-				"aTargets": [1],
+				"aTargets": [2],
 				"className": "dt-center",
 				},
 				{
@@ -202,7 +236,7 @@ function datatablenew(){
 					return situacion;
 				},
 				"bSortable": false,
-				"aTargets": [2],
+				"aTargets": [3],
 				"className": "dt-center",
 				},
 				{
@@ -212,7 +246,7 @@ function datatablenew(){
 					return codigo_itf;
 				},
 				"bSortable": false,
-				"aTargets": [3],
+				"aTargets": [4],
 				"className": "dt-center",
 				},
 				{
@@ -222,8 +256,40 @@ function datatablenew(){
 					return codigo_ru;
 				},
 				"bSortable": false,
-				"aTargets": [4],
+				"aTargets": [5],
 				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+				
+				return "";
+				},
+				"bSortable": false,
+				"aTargets": [6]
+				},
+				{
+				"mRender": function (data, type, row) {
+				
+				return "";
+				},
+				"bSortable": false,
+				"aTargets": [7]
+				},
+				{
+				"mRender": function (data, type, row) {
+				
+				return "";
+				},
+				"bSortable": false,
+				"aTargets": [8]
+				},
+				{
+				"mRender": function (data, type, row) {
+				
+				return "";
+				},
+				"bSortable": false,
+				"aTargets": [9]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -237,7 +303,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [5]
+				"aTargets": [10]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -260,7 +326,7 @@ function datatablenew(){
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [6],
+					"aTargets": [11],
 				},
             ]
     });

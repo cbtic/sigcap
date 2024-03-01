@@ -45,6 +45,10 @@ use App\Http\Controllers\Frontend\CentroCostoController;
 use App\Http\Controllers\Frontend\PartidaPresupuestalController;
 use App\Http\Controllers\Frontend\PlanContableController;
 
+use App\Http\Controllers\Frontend\CoordinadorZonalController;
+
+
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -506,3 +510,8 @@ Route::get('agremiado/obtener_local/{id_regional}', [AgremiadoController::class,
 Route::get('agremiado/obtener_datos_agremiado/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado'])->name('agremiado.obtener_datos_agremiado');
 
 Route::get('periodoComision/actualizarEstadoPeriodoComision', [PeriodoComisionController::class, 'actualizarEstadoPeriodoComision'])->name('periodoComision.actualizarEstadoPeriodoComision');
+
+Route::get('coordinador_zonal/consulta_coordinadorZonal', [CoordinadorZonalController::class, 'consulta_coordinadorZonal'])->name('coordinador_zonal.consulta_coordinadorZonal');
+Route::post('coordinador_zonal/listar_coordinadorZonal_ajax', [CoordinadorZonalController::class, 'listar_coordinadorZonal_ajax'])->name('coordinador_zonal.listar_coordinadorZonal_ajax');
+Route::get('coordinador_zonal/modal_coordinadorZonal_nuevoCoordinadorZonal/{id}', [CoordinadorZonalController::class, 'modal_coordinadorZonal_nuevoCoordinadorZonal'])->name('coordinador_zonal.modal_coordinadorZonal_nuevoCoordinadorZonal');
+
