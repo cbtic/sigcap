@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableCoordinadorZonales extends Migration
+class CreateCoordinadorZonales extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTableCoordinadorZonales extends Migration
      */
     public function up()
     {
-        Schema::create('table_coordinador_zonales', function (Blueprint $table) {
+        Schema::create('coordinador_zonales', function (Blueprint $table) {
             $table->id();
             
             $table->Integer('id_regional')->unsigned()->index();
@@ -39,6 +39,6 @@ class CreateTableCoordinadorZonales extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_coordinador_zonales');
+        Schema::dropIfExists('coordinador_zonales');
     }
 }
