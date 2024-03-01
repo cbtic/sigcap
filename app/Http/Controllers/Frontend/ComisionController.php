@@ -491,7 +491,7 @@ class ComisionController extends Controller
 				$comision->comision = $comision_desc;
 				$comision->id_municipalidad_integrada = $municipalidadesIntegrada->id;
 				$comision->id_usuario_inserta = $id_user;
-				$comision->id_dia_semana = $request->dia_semana;
+				$comision->id_dia_semana = ($request->dia_semana>0)?$request->dia_semana:398;
 				$comision->estado = "1";
 				$comision->save();
 			//$id_municipalidad_integrada = $municipalidadIntegrada->id;
@@ -521,7 +521,7 @@ class ComisionController extends Controller
 				$comision->comision = $comision_desc;
 				$comision->id_municipalidad_integrada = $municipalidadesIntegrada->id;
 				$comision->id_usuario_inserta = $id_user;
-				$comision->id_dia_semana = $request->dia_semana;
+				$comision->id_dia_semana = ($request->dia_semana>0)?$request->dia_semana:398;
 				//$comision->estado = "1";
 				$comision->save();
 			}
