@@ -272,7 +272,7 @@
 							<th class="text-left">Factura</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="font-size:13px">
 
                         </tbody>
                     </table>

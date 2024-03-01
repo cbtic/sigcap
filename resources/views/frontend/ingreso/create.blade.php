@@ -52,6 +52,18 @@
         background-color: brown;
         color: #FFF;
     }
+/*
+    #btnBoleta{
+        padding: 3px!important;
+        font-size: 10px;
+
+    }
+*/
+    #tblPago .form-horizontal{
+        margin-bottom: 0px!important;
+        padding-bottom: 0px!important;
+    }
+    
 </style>
 @stack('before-scripts')
 @stack('after-scripts')

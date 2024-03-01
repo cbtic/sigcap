@@ -207,6 +207,21 @@ class IngresoController extends Controller
         //print_r($request->comprobante_detalle); exit();
         $comprobante_detalle = $request->comprobante_detalle;
         $ind = 0;
+
+       
+        $tipo_documento = $request->tipo_documento;
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+
+        $periodo = "";
+        $tipo_couta = "1";
+        $concepto = $request->cboTipoConcepto_b;
+        $filas = "10000";
+
+        $valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $valorizacion = $valorizaciones_model->getValorizacion_total($tipo_documento,$id_persona);
+  
+
         foreach($request->comprobante_detalles as $key=>$det){
             
             $comprobanted[$ind] = $comprobante_detalle[$key];
@@ -218,7 +233,7 @@ class IngresoController extends Controller
         
         //$comprobanted = json_encode($comprobanted_);
     
-		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado','comprobanted' ));
+		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado','comprobanted', 'valorizacion' ));
 	}
     
 
