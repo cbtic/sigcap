@@ -59,6 +59,36 @@ class Valorizacione extends Model
         return $data;
     }
 
+    function getValorizacion_total($tipo_documento,$id_persona){        
+        if($tipo_documento=="79"){  //RUC
+            $cad = "
+            select  sum(monto) as monto
+            from valorizaciones                       
+            where id_empresa = ".$id_persona."                              
+                and (case when fecha < now() then '1' else '0' end) ilike '1'
+                and id_concepto = 26411
+                and estado = '1'            
+                and pagado = '0'
+			";
+        }else{
+            $cad = "
+            select  sum(monto) as monto
+            from valorizaciones                       
+            where id_persona = ".$id_persona."                              
+                and (case when fecha < now() then '1' else '0' end) ilike '1'
+                and id_concepto = 26411
+                and estado = '1'            
+                and pagado = '0'
+			";
+        }
+
+
+      //  echo $cad;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+
     function getValorizacionConcepto($tipo_documento,$id_persona){        
         if($tipo_documento=="79"){  //RUC
             $cad = "

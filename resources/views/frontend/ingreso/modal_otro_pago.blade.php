@@ -402,15 +402,15 @@ legend.scheduler-border {
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 
 												<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-											
 
-												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona?>">
-												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado?>">
-												<input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo?>">
-												<input type="hidden" name="tipo_documento" id="tipo_documento" value="<?php echo $tipo_documento?>">
+
+												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona ?>">
+												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado ?>">
+												<input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo ?>">
+												<input type="hidden" name="tipo_documento" id="tipo_documento" value="<?php echo $tipo_documento ?>">
 
 												<div class="row" style="padding-left:10px">
-<!--
+													<!--
 													<div class="col-lg-12">
 														<div class="form-group">
 															<label class="control-label form-control-sm">N° Doc. / Nombre</label>
@@ -419,9 +419,23 @@ legend.scheduler-border {
 													</div>
 -->
 													<div class="card-body">
+														<div class="row">
+															
+															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+																<div class="form-group">									
+																	<input type="text" name="txtPorcentaje" id="txtPorcentaje" value="" placeholder="Digite Denominación..." class="form-control form-control-sm">
+																</div>
+															</div>
 
-														<?php $seleccionar_todos = "style='display:block'"; ?>
-														<div class="table-responsive">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="padding-top:0px;padding-left:0px;padding-right:0px">
+																
+																<button type="button" id="btnBuscar" name="btnBuscar" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarConceptoNuevo(cuentaproductos)">
+																	<i class="fa fa-search-plus"></i> Buscar
+																</button>
+															</div>
+														</div>
+
+														<div class="table-responsive overflow-auto" style="max-height: 500px">
 															<table id="tblConceptos" class="table table-hover table-sm">
 																<thead>
 																	<tr style="font-size:13px">

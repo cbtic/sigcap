@@ -672,7 +672,9 @@ class ComprobanteController extends Controller
 
                 $descuento = $value['descuento'];
 		
-				$id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  1);
+			  $id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  1);
+              //  $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
+
                // print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
               
 				$factura = Comprobante::where('id', $id_factura)->get()[0];
@@ -1217,6 +1219,9 @@ class ComprobanteController extends Controller
         if ($td == 'FT'){
             $tipoDoc = "6";
         }
+        if ($td == 'NC'){
+            $tipoDoc = "7";
+        }
         else{
             if ($dni=='-'){
                 $tipoDoc = "0";
@@ -1258,7 +1263,7 @@ class ComprobanteController extends Controller
         return $tipoDoc;
     }
 
-    public function firmarNC($id_factura){
+    public function firmar_nc($id_factura){
 
         //echo $this->getTipoDocumento("BV");exit();
 
@@ -1272,28 +1277,28 @@ class ComprobanteController extends Controller
         //print_r($factura_detalles); exit();		
 		$cabecera = array("valor1","valor2");
 		$detalle = array("valor1","valor2");
-		foreach($factura_detalles as $index => $row ) {
-			$items1 = array(
-							"ordenItem"=> $row->item, //"2",
-							"adicionales"=> [],
-							"cantidadItem"=> $row->cantidad, //"1",
-							//"descuentoItem"=> $row->descuento,
-							"importeIGVItem"=> str_replace(",","",number_format($row->igv_total,2)),//"7.63",
-							"montoTotalItem"=> str_replace(",","",number_format($row->importe,2)), //"50.00",
-							"valorVentaItem"=> str_replace(",","",number_format($row->pu,2)), //"42.37",
-							"descripcionItem"=> $row->descripcion,//"TRANSBORDO",
-							"unidadMedidaItem"=> $row->unidad,
-							//"codigoProductoItem"=> ($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
-							"valorUnitarioSinIgv"=> str_replace(",","",number_format($row->pu_con_igv,2)), //"42.3728813559",
-							"precioUnitarioConIgv"=> str_replace(",","",number_format($row->importe,2)), //"50.0000000000",
-							"unidadMedidaComercial"=> "SERV",
-							"codigoAfectacionIGVItem"=> "10",
-							//"porcentajeDescuentoItem"=> "0.00",
-							"codTipoPrecioVtaUnitarioItem"=> "01"
-							);
-			$items[$index]=$items1;
+        foreach ($factura_detalles as $index => $row) {
+            $items1 = array(
+                    "ordenItem" => $row->item, //"2",
+                    "adicionales" => [],
+                    "cantidadItem" => $row->cantidad, //"1",
+                    //"descuentoItem"=> $row->descuento,
+                    "importeIGVItem" => str_replace(",", "", number_format($row->igv_total, 2)), //"7.63",
+                    "montoTotalItem" => str_replace(",", "", number_format($row->importe, 2)), //"50.00",
+                    "valorVentaItem" => str_replace(",", "", number_format($row->pu, 2)), //"42.37",
+                    "descripcionItem" => $row->descripcion, //"TRANSBORDO",
+                    "unidadMedidaItem" => $row->unidad,
+                    //"codigoProductoItem"=> ($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
+                    "valorUnitarioSinIgv" => str_replace(",", "", number_format($row->pu_con_igv, 2)), //"42.3728813559",
+                    "precioUnitarioConIgv" => str_replace(",", "", number_format($row->importe, 2)), //"50.0000000000",
+                    "unidadMedidaComercial" => "SERV",
+                    "codigoAfectacionIGVItem" => "10",
+                    //"porcentajeDescuentoItem"=> "0.00",
+                    "codTipoPrecioVtaUnitarioItem" => "01"
+                );
+            $items[$index] = $items1;
         }
-
+/*
         $items2 = array(
             "serie"=>$factura->serie,
             "numero"=> $factura->numero,
@@ -1305,10 +1310,11 @@ class ComprobanteController extends Controller
             "enviarAdjuntoDescomprimido"=> false
         );
         $items2[$index]=$items2;
- 
+ */
 		$data["items"] = $items;
-        $data["server"] = $items2;
+       // $data["server"] = $items2;
 
+       
 		$data["anulado"] = false;
 		$data["declare"] = "0"; // 0->dechlare 1>declare instante
 		$data["version"] = "2.1";
@@ -1329,6 +1335,8 @@ class ComprobanteController extends Controller
 		$data["sumatoriaISC"] = "0.00";
 		$data["ubigeoEmisor"] = "150139";
         $data["creditoCuotas"] = [];
+
+        
 		//$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
 		$data["tipoDocumento"] = $this->getTipoDocumento($factura->tipo);
 		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
@@ -1346,6 +1354,8 @@ class ComprobanteController extends Controller
 		$data["totalOPGratuitas"] = "0.00";
         $data["direccionReceptor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["docAfectadoFisico"] = false;
+
+
 		//$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
 		$data["razonSocialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
 		$data["totalOPExoneradas"] = "0.00";
@@ -1367,17 +1377,15 @@ class ComprobanteController extends Controller
         $data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
 		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";        
-		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";        
+		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";                
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
 
         //$data["direccionReceptor"] = $factura->direccion;
 
-        //print_r($data); exit();
-
+       // print_r($data); exit();
 
 		$databuild_string = json_encode($data);
        
-
         print_r($databuild_string);exit();
 
 		//$chbuild = curl_init("https://easyfact.tk/see/rest/01");

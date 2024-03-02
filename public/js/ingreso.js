@@ -1144,7 +1144,10 @@ function modal_fraccionar(){
 			url: "/ingreso/modal_fraccionar"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
 			type: "GET",
 			//data : $("#frmOtroPago").serialize(),
-			success: function (result) {  
+			success: function (result) {
+				
+					//alert(result)
+				
 					$("#diveditpregOpc").html(result);
 					//$('#openOverlayOpc').modal('show');
 					
@@ -1163,10 +1166,12 @@ function modal_fraccionamiento(){
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
 	var TotalFraccionar = $('#total').val();
-	//alert(TotalFraccionar);
 	var idConcepto = $('#idConcepto').val();
-	//alert(idConcepto);
+	
 	var msg="";
+	var total = 0;
+	var stotal = 0;
+	var igv = 0;
 
 	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
 	var cboTipoCuota_b = $('#cboTipoCuota_b').val();
@@ -1187,16 +1192,51 @@ function modal_fraccionamiento(){
 		return false;
 
     }else{
+		$(".mov").each(function (){
+			//$(this).parent().parent().parent().find(".mov").prop("checked", true);
+			$('.mov').prop('checked', true);
+			//calcular_total();
+
+			var val_total = $(this).parent().parent().parent().find('.val_total').html();
+			var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+			var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+
+			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
+			$(this).parent().parent().parent().find('.chek').val("1");
+
+			//alert(val_sub_total);
+
+			total += Number(val_total);
+			stotal += Number(val_sub_total);
+			igv += Number(val_igv);
+
+			//$(this).parent().parent().parent().prev().find(".mov").prop('disabled',true);
+
+	
+
+		});
+
+
+		$('#total').val(total.toFixed(2));
+		$('#stotal').val(stotal.toFixed(2));
+		$('#igv').val(igv.toFixed(2));
+
+
 		$.ajax({
 			url: "/ingreso/modal_fraccionamiento",
 			type: "POST",
 			data : $("#frmValorizacion").serialize(),
-			success: function (result) {  
+			success: function (result) { 
+				
+				//alert(result);
+
 					$("#diveditpregOpc").html(result);
 					//$('#openOverlayOpc').modal('show');
 					
 			}
-	});
+		});
+
+		
 
 	}
 	
