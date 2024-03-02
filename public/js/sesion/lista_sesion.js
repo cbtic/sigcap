@@ -255,8 +255,10 @@ function obtenerTitular(){
 function obtenerComision(){
 	
 	var id_periodo = $('#id_periodo').val();
+	var tipo_comision = $('#tipo_comision').val();
+	
 	$.ajax({
-		url: '/sesion/obtener_comision/'+id_periodo,
+		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision,
 		dataType: "json",
 		success: function(result){
 			var option = "";
@@ -269,6 +271,11 @@ function obtenerComision(){
 		}
 		
 	});
+	
+	$("#divFechaProgramado").hide();
+	if(tipo_comision==2){
+		$("#divFechaProgramado").show();
+	}
 	
 }
 

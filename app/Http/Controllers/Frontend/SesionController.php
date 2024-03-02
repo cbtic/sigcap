@@ -44,8 +44,9 @@ class SesionController extends Controller
 		$estado_aprobacion = $tablaMaestra_model->getMaestroByTipo(109);
 		$periodo = $periodoComisione_model->getPeriodoAll();
 		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion','tipo_comision'));
+        return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion','tipo_comision','periodo_ultimo'));
     }
 	
 	public function obtener_dictamen($id_comision_sesion){
@@ -159,6 +160,7 @@ class SesionController extends Controller
 		$estado_sesion = $tablaMaestra_model->getMaestroByTipo(56);
 		$estado_sesion_aprobado = $tablaMaestra_model->getMaestroByTipo(109);
 		$periodo = $periodoComisione_model->getPeriodoAll();
+		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
 		
 		if($id>0){
 			$comisionSesion = ComisionSesione::find($id);
@@ -173,7 +175,9 @@ class SesionController extends Controller
 			$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision(0/*$request->id_comision*/);
 		}
 		
-		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','delegados','region','tipo_programacion','estado_sesion','periodo','comision','dia_semana','estado_sesion_aprobado'));
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		
+		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','delegados','region','tipo_programacion','estado_sesion','periodo','comision','dia_semana','estado_sesion_aprobado','tipo_comision','periodo_ultimo'));
 
     }
 	
@@ -217,32 +221,25 @@ class SesionController extends Controller
 			
 			$dia_semana = $request->dia_semana;
 			
-			$dias = array('LUNES','MARTES','MI�RCOLES','JUEVES','VIERNES','S�BADO','DOMINGO');
+			//$dias = array('LUNES','MARTES','MI�RCOLES','JUEVES','VIERNES','S�BADO','DOMINGO');
+			$dias = array('LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO');
 			
-			for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
-				$fechaInicioTemp = date("d-m-Y", $i);
-				//echo $fechaInicioTemp;
-				$dia = $dias[(date('N', strtotime($fechaInicioTemp))) - 1];
-				//echo $dia_semana."|".$dia;
-				if($dia_semana == $dia){
-					//echo $fechaInicioTemp;
-					$comisionSesion = new ComisionSesione;
-					$comisionSesion->id_regional = $request->id_regional;
-					$comisionSesion->id_periodo_comisione = $request->id_periodo;
-					$comisionSesion->id_tipo_sesion = $request->id_tipo_sesion;
-					$comisionSesion->fecha_programado = $fechaInicioTemp;
-					//$comisionSesion->fecha_ejecucion = $request->fecha_ejecucion;
-					//$comisionSesion->hora_inicio = $request->hora_inicio;
-					//$comisionSesion->hora_fin = $request->hora_fin;
-					//$comisionSesion->id_aprobado = $request->id_aprobado;
-					$comisionSesion->observaciones = $request->observaciones;
-					$comisionSesion->id_comision = $request->id_comision;
-					$comisionSesion->id_estado_sesion = 288;
-					$comisionSesion->estado = 1;
-					$comisionSesion->id_usuario_inserta = $id_user;
-					$comisionSesion->save();
-					$id_comision_sesion = $comisionSesion->id;
-					
+			if($request->id_dia_semana=="398"){
+				
+				$comisionSesion = new ComisionSesione;
+				$comisionSesion->id_regional = $request->id_regional;
+				$comisionSesion->id_periodo_comisione = $request->id_periodo;
+				$comisionSesion->id_tipo_sesion = $request->id_tipo_sesion;
+				$comisionSesion->fecha_programado = $request->fecha_programado;
+				$comisionSesion->observaciones = $request->observaciones;
+				$comisionSesion->id_comision = $request->id_comision;
+				$comisionSesion->id_estado_sesion = 288;
+				$comisionSesion->estado = 1;
+				$comisionSesion->id_usuario_inserta = $id_user;
+				$comisionSesion->save();
+				$id_comision_sesion = $comisionSesion->id;
+				//echo "es".count($id_delegado);exit();
+				if(isset($request->id_delegado)){
 					foreach($id_delegado as $row){
 						
 						$coordinador = 0;
@@ -258,8 +255,53 @@ class SesionController extends Controller
 						$comisionSesionDelegado->id_usuario_inserta = $id_user;
 						$comisionSesionDelegado->save();
 					}
-					
 				}
+				
+			}else{
+			
+				for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
+					$fechaInicioTemp = date("d-m-Y", $i);
+					//echo $fechaInicioTemp;
+					$dia = $dias[(date('N', strtotime($fechaInicioTemp))) - 1];
+					//echo $dia_semana."|".$dia;
+					if($dia_semana == $dia){
+						//echo $fechaInicioTemp;
+						$comisionSesion = new ComisionSesione;
+						$comisionSesion->id_regional = $request->id_regional;
+						$comisionSesion->id_periodo_comisione = $request->id_periodo;
+						$comisionSesion->id_tipo_sesion = $request->id_tipo_sesion;
+						$comisionSesion->fecha_programado = $fechaInicioTemp;
+						//$comisionSesion->fecha_ejecucion = $request->fecha_ejecucion;
+						//$comisionSesion->hora_inicio = $request->hora_inicio;
+						//$comisionSesion->hora_fin = $request->hora_fin;
+						//$comisionSesion->id_aprobado = $request->id_aprobado;
+						$comisionSesion->observaciones = $request->observaciones;
+						$comisionSesion->id_comision = $request->id_comision;
+						$comisionSesion->id_estado_sesion = 288;
+						$comisionSesion->estado = 1;
+						$comisionSesion->id_usuario_inserta = $id_user;
+						$comisionSesion->save();
+						$id_comision_sesion = $comisionSesion->id;
+						
+						foreach($id_delegado as $row){
+							
+							$coordinador = 0;
+							if($request->coordinador == $row)$coordinador = 1;
+							$comisionSesionDelegado = new ComisionSesionDelegado();
+							$comisionSesionDelegado->id_comision_sesion = $id_comision_sesion;
+							$comisionSesionDelegado->id_delegado = $row;
+							$comisionSesionDelegado->coordinador = $coordinador;
+							$comisionSesionDelegado->id_profesion_otro = NULL;
+							$comisionSesionDelegado->id_aprobar_pago = NULL;
+							$comisionSesionDelegado->observaciones = NULL;
+							$comisionSesionDelegado->estado = 1;
+							$comisionSesionDelegado->id_usuario_inserta = $id_user;
+							$comisionSesionDelegado->save();
+						}
+						
+					}
+				}
+			
 			}
 		
 		}else{

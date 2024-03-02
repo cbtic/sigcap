@@ -157,8 +157,18 @@ input:checked + .slider:before {
 <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
 
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<!--
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+-->
+
+<!--
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.css" />
+-->
+
+
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>-->
 
 <!--
@@ -177,7 +187,10 @@ input:checked + .slider:before {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.4/css/bootstrap-datetimepicker.css" integrity="sha512-HWqapTcU+yOMgBe4kFnMcJGbvFPbgk39bm0ExFn0ks6/n97BBHzhDuzVkvMVVHTJSK5mtrXGX4oVwoQsNcsYvg==" crossorigin="anonymous" />
 -->
 
+<!--
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+-->
+
 <script type="text/javascript">
 /*
 jQuery(function($){
@@ -198,34 +211,36 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
+//var mainNavigationOffset = $('.js-nav-container > ul').offset();
+//var left = 0;
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
+
      $('#fecha_programado').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
-		//container: '#openOverlayOpc modal-body'
 		container: '#openOverlayOpc modal-body'
      });
 	 
 	 $('#fecha_ejecucion').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
-		//container: '#openOverlayOpc modal-body'
 		container: '#openOverlayOpc modal-body'
      });
-	 
-	 /*
-	 $('#hora_inicio').timepicker({
-		showInputs: false,
-		container: '#openOverlayOpc modal-body'
-	});
-	*/
 	 
 });
 
 $(document).ready(function() {
 	 
-	 
+	$('#fecha_programado').datepicker({
+	   format: "dd-mm-yyyy",
+	   autoclose: true,
+	});
+	
+	$('#fecha_ejecucion').datepicker({
+	   format: "dd-mm-yyyy",
+	   autoclose: true,
+	});
 
 });
 
@@ -438,6 +453,7 @@ container: '#myModal modal-body'
 
 var id = "<?php echo $id?>";
 var id_periodo = "<?php echo $comision->id_periodo_comisiones?>";
+var tipo_comision = "<?php echo $comision->id_tipo_comision?>";
 var id_comision = "<?php echo $comisionSesion->id_comision?>";
 //alert(id);
 
@@ -446,20 +462,22 @@ $("#id_tipo_sesion").attr("disabled",false);
 $("#id_periodo").attr("disabled",false);
 $("#id_regional").attr("disabled",false);
 $("#observaciones").attr("disabled",false);
+$("#tipo_comision").attr("disabled",false);
 
 if(id>0){
-	obtenerComisionEdit(id_periodo,id_comision);
+	obtenerComisionEdit(id_periodo,tipo_comision,id_comision);
 	$("#id_comision").attr("disabled",true);
 	$("#id_tipo_sesion").attr("disabled",true);
 	$("#id_periodo").attr("disabled",true);
 	$("#id_regional").attr("disabled",true);
 	$("#observaciones").attr("disabled",true);
+	$("#tipo_comision").attr("disabled",true);
 }
 
-function obtenerComisionEdit(id_periodo,id_comision){
+function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 	
 	$.ajax({
-		url: '/sesion/obtener_comision/'+id_periodo,
+		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision,
 		dataType: "json",
 		success: function(result){
 			var option = "";
@@ -533,10 +551,28 @@ function obtenerComisionEdit(id_periodo,id_comision){
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($periodo as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<option value="<?php echo $row->id?>" 
+										<?php if($id>0 && $row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>
+										<?php if($id==0 && $row->id==$periodo_ultimo->id)echo "selected='selected'"?>
+									><?php echo $row->descripcion?></option>
 									<?php 
 									}
 									?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Tipo Comisi&oacute;n</label>
+								<select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onchange="obtenerComision()">
+									<option value="0">--Tipo Comisi&oacute;n--</option>
+										<?php
+										foreach ($tipo_comision as $row) {?>
+											<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comision->id_tipo_comision)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+										}
+										?>
 								</select>
 							</div>
 						</div>
@@ -555,11 +591,15 @@ function obtenerComisionEdit(id_periodo,id_comision){
 						</div>
 						
 						<div class="col-lg-4">
+						
 							<div class="form-group">
+							
 								<label class="control-label form-control-sm">Dia Semana</label>
 								<input type="text" id="dia_semana" name="dia_semana" class="form-control form-control-sm" value="<?php if($dia_semana!=null){echo $dia_semana[0]->denominacion;}?>" readonly="readonly">
 								<input type="hidden" id="id_dia_semana" name="id_dia_semana" class="form-control form-control-sm" value="<?php if($dia_semana!=null){echo $dia_semana[0]->codigo;}?>">
 							</div>
+							
+							
 						</div>
 														
 						<div class="col-lg-4">
@@ -576,6 +616,16 @@ function obtenerComisionEdit(id_periodo,id_comision){
 								</select>
 							</div>
 						</div>
+						
+						
+						<?php if($id==0){?>
+						<div id="divFechaProgramado" class="col-lg-4" style="display:none">
+							<div class="form-group">
+								<label class="control-label form-control-sm">F. Programaci&oacute;n</label>
+								<input id="fecha_programado" name="fecha_programado" class="form-control form-control-sm"  value="" type="text"/>
+							</div>
+						</div>
+						<?php }?>
 						
 						<?php if($id>0){?>
 						<div class="col-lg-4">
@@ -679,7 +729,9 @@ function obtenerComisionEdit(id_periodo,id_comision){
 							<div class="form-group">
 								<!--<label class="control-label form-control-sm">Delegado</label>-->
 								
+								<?php if($id>0){?>
 								<button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onClick="modalAsignarProfesionSesion(0)" ><i class='fa fa-edit'></i> Agregar</button>
+								<?php } ?>
 								
 								<div class="table-responsive">
 									<table id="tblDelegado" class="table table-hover table-sm">
