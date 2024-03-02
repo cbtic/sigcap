@@ -52,6 +52,18 @@
         background-color: brown;
         color: #FFF;
     }
+/*
+    #btnBoleta{
+        padding: 3px!important;
+        font-size: 10px;
+
+    }
+*/
+    #tblPago .form-horizontal{
+        margin-bottom: 0px!important;
+        padding-bottom: 0px!important;
+    }
+    
 </style>
 @stack('before-scripts')
 @stack('after-scripts')
@@ -232,8 +244,8 @@
                                                     
                                                     <input type="hidden" readonly name="DescuentoPP" id="DescuentoPP" value="" class="form-control form-control-sm">
 
-                                                    <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo $pronto_pago->periodo ?>" class="form-control form-control-sm">
-                                                    <input type="hidden" readonly name="numero_cuotas_pp" id="numero_cuotas_pp" value="<?php echo $pronto_pago->numero_cuotas ?>" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo !empty($pronto_pago->periodo) ? $pronto_pago->periodo:'0'  ?>" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="numero_cuotas_pp" id="numero_cuotas_pp" value="<?php echo !empty($pronto_pago->numero_cuotas) ? $pronto_pago->numero_cuotas:'0'  ?>" class="form-control form-control-sm">
 
                                                     <input type="hidden" readonly name="id_concepto_pp" id="id_concepto_pp" value="<?php echo $concepto->id ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="importe_pp" id="importe_pp" value="<?php echo $concepto->importe ?>" class="form-control form-control-sm">

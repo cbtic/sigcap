@@ -101,17 +101,21 @@ class ComisionController extends Controller
 			$periodo_ = PeriodoComisione::find($comision_->id_periodo_comisiones);
 			$tipo_comision_ = TablaMaestra::where("codigo",$comision_->id_tipo_comision)->where("tipo",102)->first();
 			$comisionDelegado = ComisionDelegado::where("id_comision",$id)->where("estado","1")->get();
+			$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll($comision_->id_periodo_comisiones,$comision_->id_tipo_comision);
 		}else{ 
 			$comisionDelegado = new ComisionDelegado;
 			$periodo_ = NULL;
 			$tipo_comision_ = NULL;
+			$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll(0,0);
 		}
-
-		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll();
+		
+		
 		$region = $regione_model->getRegionAll();
 		
 		$periodo = $periodoComisione_model->getPeriodoVigenteAll();
+		
 		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
+		//$tipo_comision = TablaMaestra::where("codigo",$comision_->id_tipo_comision)->where("tipo",102)->first();
 		
 		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region','periodo','periodo_','tipo_comision','tipo_comision_'));
 
@@ -122,6 +126,14 @@ class ComisionController extends Controller
 		$comision_model = new Comisione;
 		$comision = $comision_model->getComisionByPeriodoAndTipComision($id_periodo,$id_tipo_comision);
 		echo json_encode($comision);
+		
+	}
+	
+	public function obtener_concurso_inscripcion_periodo_tipo_comision($id_periodo,$id_tipo_comision){
+			
+		$comisionDelegado_model = new ComisionDelegado;
+		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll($id_periodo,$id_tipo_comision);
+		echo json_encode($concurso_inscripcion);
 		
 	}
 	
@@ -180,17 +192,21 @@ class ComisionController extends Controller
 			$comisionDelegado->id_usuario_inserta = $id_user;
 			$comisionDelegado->save();
 			
-			$coordinador = 0;
-			if($request->coordinador == 2)$coordinador = 1;
-			$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
-			$comisionDelegado2->id_regional = $request->id_regional;
-			$comisionDelegado2->id_comision = $request->id_comision;
-			$comisionDelegado2->coordinador = $coordinador;
-			$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
-			$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
-			$comisionDelegado2->estado = 1;
-			$comisionDelegado2->id_usuario_inserta = $id_user;
-			$comisionDelegado2->save();
+			if(isset($request->id_concurso_inscripcion2) && $request->id_concurso_inscripcion2>0){
+			
+				$coordinador = 0;
+				if($request->coordinador == 2)$coordinador = 1;
+				$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
+				$comisionDelegado2->id_regional = $request->id_regional;
+				$comisionDelegado2->id_comision = $request->id_comision;
+				$comisionDelegado2->coordinador = $coordinador;
+				$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
+				$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
+				$comisionDelegado2->estado = 1;
+				$comisionDelegado2->id_usuario_inserta = $id_user;
+				$comisionDelegado2->save();
+				
+			}
 			
 		}else{
 			//$comisionDelegado = ComisionDelegado::find($request->id_comision_delegado_1);
@@ -218,18 +234,23 @@ class ComisionController extends Controller
 			}
 			
 			if($request->id_comision_delegado_2==0){
-				$comisionDelegado2 = new ComisionDelegado;
-				$coordinador = 0;
-				if($request->coordinador == 2)$coordinador = 1;
-				$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
-				$comisionDelegado2->id_regional = $request->id_regional;
-				$comisionDelegado2->id_comision = $request->id_comision;
-				$comisionDelegado2->coordinador = $coordinador;
-				$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
-				$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
-				$comisionDelegado2->estado = 1;
-				$comisionDelegado2->id_usuario_inserta = $id_user;
-				$comisionDelegado2->save();
+				
+				if(isset($request->id_concurso_inscripcion2)){
+				
+					$comisionDelegado2 = new ComisionDelegado;
+					$coordinador = 0;
+					if($request->coordinador == 2)$coordinador = 1;
+					$concursoInscripcion2 = ConcursoInscripcione::find($request->id_concurso_inscripcion2);
+					$comisionDelegado2->id_regional = $request->id_regional;
+					$comisionDelegado2->id_comision = $request->id_comision;
+					$comisionDelegado2->coordinador = $coordinador;
+					$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
+					$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
+					$comisionDelegado2->estado = 1;
+					$comisionDelegado2->id_usuario_inserta = $id_user;
+					$comisionDelegado2->save();
+					
+				}
 			}else{
 				$coordinador = 0;
 				if($request->coordinador == 2)$coordinador = 1;

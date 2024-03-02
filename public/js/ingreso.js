@@ -260,10 +260,10 @@ function calcular_total(obj){
 	$("#btnBoleta").prop('disabled', true);
     $("#btnFactura").prop('disabled', true);
 	//$("#btnTicket").prop('disabled', true).hide();
-	$("#btnFracciona").prop('disabled', true);
+	//$("#btnFracciona").prop('disabled', true);
 
 	if(cantidad != 0){
-		$("#btnFracciona").prop('disabled', false);
+		//$("#btnFracciona").prop('disabled', false);
 		//$("#btnBoleta").prop('disabled', false);
 		//$("#btnFactura").prop('disabled', false);
 
@@ -743,6 +743,13 @@ function cargarValorizacion(){
 	var cboTipoCuota_b = $('#cboTipoCuota_b').val();
 	var cboPeriodo_b = $('#cboPeriodo_b').val();
 
+	var periodo_pp = $('#periodo_pp').val();
+	var id_concepto_pp = $('#id_concepto_pp').val();
+
+	
+
+	
+
 	$("#btnFracciona").prop('disabled', true);
 	$("#btnDescuento").prop('disabled', true);
 
@@ -769,7 +776,7 @@ function cargarValorizacion(){
 			});
 			*/
 
-			if (cboTipoConcepto_b==26411 && cboPeriodo_b!="") {
+			if (cboTipoConcepto_b==id_concepto_pp && cboPeriodo_b==periodo_pp) {
 
 				$("#btnDescuento").prop('disabled', false);
 
@@ -1144,7 +1151,10 @@ function modal_fraccionar(){
 			url: "/ingreso/modal_fraccionar"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
 			type: "GET",
 			//data : $("#frmOtroPago").serialize(),
-			success: function (result) {  
+			success: function (result) {
+				
+					//alert(result)
+				
 					$("#diveditpregOpc").html(result);
 					//$('#openOverlayOpc').modal('show');
 					
@@ -1163,10 +1173,12 @@ function modal_fraccionamiento(){
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
 	var TotalFraccionar = $('#total').val();
-	//alert(TotalFraccionar);
 	var idConcepto = $('#idConcepto').val();
-	//alert(idConcepto);
+	
 	var msg="";
+	var total = 0;
+	var stotal = 0;
+	var igv = 0;
 
 	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
 	var cboTipoCuota_b = $('#cboTipoCuota_b').val();
@@ -1187,16 +1199,51 @@ function modal_fraccionamiento(){
 		return false;
 
     }else{
+		$(".mov").each(function (){
+			//$(this).parent().parent().parent().find(".mov").prop("checked", true);
+			$('.mov').prop('checked', true);
+			//calcular_total();
+
+			var val_total = $(this).parent().parent().parent().find('.val_total').html();
+			var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+			var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+
+			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
+			$(this).parent().parent().parent().find('.chek').val("1");
+
+			//alert(val_sub_total);
+
+			total += Number(val_total);
+			stotal += Number(val_sub_total);
+			igv += Number(val_igv);
+
+			//$(this).parent().parent().parent().prev().find(".mov").prop('disabled',true);
+
+	
+
+		});
+
+
+		$('#total').val(total.toFixed(2));
+		$('#stotal').val(stotal.toFixed(2));
+		$('#igv').val(igv.toFixed(2));
+
+
 		$.ajax({
 			url: "/ingreso/modal_fraccionamiento",
 			type: "POST",
 			data : $("#frmValorizacion").serialize(),
-			success: function (result) {  
+			success: function (result) { 
+				
+				//alert(result);
+
 					$("#diveditpregOpc").html(result);
 					//$('#openOverlayOpc').modal('show');
 					
 			}
-	});
+		});
+
+		
 
 	}
 	
@@ -1290,9 +1337,9 @@ function AplicarDescuento(){
 
 	//alert(cboPeriodo_b);
 
-	if (periodo_pp!=cboPeriodo_b)msg+="Seleccione el PERIODO... <br>";
+	if (periodo_pp!=cboPeriodo_b)msg+="El Periodo seleccionado no corresponde al ProntoPago... <br>";
 	
-	if (id_concepto_pp!=cboTipoConcepto_b)msg+="Seleccione el concepto CUOTA GREMIAL.. <br>";
+	if (id_concepto_pp!=cboTipoConcepto_b)msg+="La Concepto Seleccionado no corresponde al ProntoPago.. <br>";
 	
 
 	if(msg!=""){

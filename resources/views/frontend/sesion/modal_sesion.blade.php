@@ -565,7 +565,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tipo Comisi&oacute;n</label>
-								<select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onchange="obtenerComision()">
+								<select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onChange="obtenerComision()">
 									<option value="0">--Tipo Comisi&oacute;n--</option>
 										<?php
 										foreach ($tipo_comision as $row) {?>
@@ -605,7 +605,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tipo Programaci&oacute;n</label>
-								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="">
+								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="habilitarProgramacion()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_programacion as $row) {?>

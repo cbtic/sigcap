@@ -11,6 +11,10 @@ $(document).ready(function () {
 	$('#btnNuevo').click(function () {
 		modalSesion(0);
 	});
+	
+	$('#btnEjecutar').click(function () {
+		guardar_sesion_bloque();
+	});
 
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
@@ -67,6 +71,23 @@ $(document).ready(function () {
 		});
 	});
 });
+
+function guardar_sesion_bloque(){
+    
+	var _token = $('#_token').val();
+	var id_periodo = $('#id_periodo_bus').val();
+	
+    $.ajax({
+			url: "/sesion/send_sesion_bloque",
+            type: "POST",
+            data : {_token:_token,id_periodo:id_periodo},
+            success: function (result) {
+				$('#openOverlayOpc').modal('hide');
+				datatablenew();
+				
+            }
+    });
+}
 
 function habiliarTitular(){
 	/*
@@ -274,6 +295,17 @@ function obtenerComision(){
 	
 	$("#divFechaProgramado").hide();
 	if(tipo_comision==2){
+		$("#divFechaProgramado").show();
+	}
+	
+}
+
+function habilitarProgramacion(){
+	
+	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	
+	$("#divFechaProgramado").hide();
+	if(id_tipo_sesion==402){
 		$("#divFechaProgramado").show();
 	}
 	
