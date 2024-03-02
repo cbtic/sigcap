@@ -260,10 +260,10 @@ function calcular_total(obj){
 	$("#btnBoleta").prop('disabled', true);
     $("#btnFactura").prop('disabled', true);
 	//$("#btnTicket").prop('disabled', true).hide();
-	$("#btnFracciona").prop('disabled', true);
+	//$("#btnFracciona").prop('disabled', true);
 
 	if(cantidad != 0){
-		$("#btnFracciona").prop('disabled', false);
+		//$("#btnFracciona").prop('disabled', false);
 		//$("#btnBoleta").prop('disabled', false);
 		//$("#btnFactura").prop('disabled', false);
 
@@ -743,6 +743,13 @@ function cargarValorizacion(){
 	var cboTipoCuota_b = $('#cboTipoCuota_b').val();
 	var cboPeriodo_b = $('#cboPeriodo_b').val();
 
+	var periodo_pp = $('#periodo_pp').val();
+	var id_concepto_pp = $('#id_concepto_pp').val();
+
+	
+
+	
+
 	$("#btnFracciona").prop('disabled', true);
 	$("#btnDescuento").prop('disabled', true);
 
@@ -769,7 +776,7 @@ function cargarValorizacion(){
 			});
 			*/
 
-			if (cboTipoConcepto_b==26411 && cboPeriodo_b!="") {
+			if (cboTipoConcepto_b==id_concepto_pp && cboPeriodo_b==periodo_pp) {
 
 				$("#btnDescuento").prop('disabled', false);
 
@@ -1330,9 +1337,9 @@ function AplicarDescuento(){
 
 	//alert(cboPeriodo_b);
 
-	if (periodo_pp!=cboPeriodo_b)msg+="Seleccione el PERIODO... <br>";
+	if (periodo_pp!=cboPeriodo_b)msg+="El Periodo seleccionado no corresponde al ProntoPago... <br>";
 	
-	if (id_concepto_pp!=cboTipoConcepto_b)msg+="Seleccione el concepto CUOTA GREMIAL.. <br>";
+	if (id_concepto_pp!=cboTipoConcepto_b)msg+="La Concepto Seleccionado no corresponde al ProntoPago.. <br>";
 	
 
 	if(msg!=""){

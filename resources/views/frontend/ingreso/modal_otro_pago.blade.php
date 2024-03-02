@@ -51,6 +51,17 @@
 		border: 1px solid #c4c0c9;
 	}
 
+	#myInput1 {
+		background-image: url('/css/searchicon.png');
+		background-position: 10px 10px;
+		background-repeat: no-repeat;
+		width: 100%;
+		font-size: 16px;
+		padding: 12px 20px 12px 40px;
+		border: 1px solid #ddd;
+		margin-bottom: 12px;
+	}
+
 	#tablemodal thead {
 		background-color: #e2e3e5;
 		position: fixed !important;
@@ -364,6 +375,27 @@ legend.scheduler-border {
 	}
 </script>
 
+<script>
+	function myFunction() {
+		var input, filter, table, tr, td, i, txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("tblConceptos");
+		tr = table.getElementsByTagName("tr");
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				txtValue = td.textContent || td.innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>
+
 
 <body class="hold-transition skin-blue sidebar-mini">
 
@@ -420,19 +452,20 @@ legend.scheduler-border {
 -->
 													<div class="card-body">
 														<div class="row">
-															
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-																<div class="form-group">									
-																	<input type="text" name="txtPorcentaje" id="txtPorcentaje" value="" placeholder="Digite Denominación..." class="form-control form-control-sm">
-																</div>
-															</div>
 
+															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+																<div class="form-group">
+																	<input type="text" name="myInput" id="myInput" onkeyup="myFunction()" placeholder="Buscar..." class="form-control form-control-sm">
+																</div>
+															</div>.
+<!--
 															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="padding-top:0px;padding-left:0px;padding-right:0px">
-																
+
 																<button type="button" id="btnBuscar" name="btnBuscar" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarConceptoNuevo(cuentaproductos)">
 																	<i class="fa fa-search-plus"></i> Buscar
 																</button>
 															</div>
+-->
 														</div>
 
 														<div class="table-responsive overflow-auto" style="max-height: 500px">

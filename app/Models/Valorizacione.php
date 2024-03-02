@@ -275,4 +275,31 @@ class Valorizacione extends Model
         return $data;
     }
 
+    function ActualizaValorizacion_pp($tipo_documento,$id_fraccionamiento,$id_persona){        
+        if($tipo_documento=="79"){  //RUC
+            $cad = "
+            update valorizaciones set codigo_fraccionamiento = ".$id_fraccionamiento.", estado = 0                      
+            where id_empresa = ".$id_persona."                              
+                and (case when fecha < now() then '1' else '0' end) ilike '1'
+                and id_concepto = 26411
+                and estado = '1'            
+                and pagado = '0'
+			";
+        }else{
+            $cad = "
+            update valorizaciones set codigo_fraccionamiento = ".$id_fraccionamiento.", estado = 0                      
+            where id_persona = ".$id_persona."                              
+                and (case when fecha < now() then '1' else '0' end) ilike '1'
+                and id_concepto = 26411
+                and estado = '1'            
+                and pagado = '0'
+			";
+        }
+        
+      //  echo $cad;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }

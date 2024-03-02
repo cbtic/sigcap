@@ -13,7 +13,7 @@ use App\Models\CajaIngreso;
 use App\Models\Valorizacione;
 use App\Models\Concepto;
 use App\Models\ProntoPago;
-
+use App\Models\Fraccionamiento;
 use Illuminate\Support\Carbon;
 
 use Auth;
@@ -321,17 +321,35 @@ class IngresoController extends Controller
 
         //print_r($request->fraccionamiento);
 
+        
 
         foreach($request->valorizacion as $key=>$tmp){
-            $id_pk = $tmp['id'];
+            //$id_pk = $tmp['id'];
             $id_concepto = $tmp['id_concepto'];
         }
 
-
+/*
         foreach($request->valorizacion as $key=>$tmp){
             $id_pk = $tmp['id'];
         }
+*/
 
+
+        $fraccionamiento = new Fraccionamiento; 
+        $fraccionamiento->cuotas = $request->cboCuotas;
+        $fraccionamiento->monto = $request->txtTotalFrac;
+        $fraccionamiento->porcentaje = $request->txtPorcentaje;
+        $fraccionamiento->fecha_inicio = $request->txtFechaIni;
+        $fraccionamiento->id_usuario_inserta = $id_user;
+
+        $fraccionamiento->save();
+        $id_fraccionamiento = $fraccionamiento->id;
+
+        $id_persona = $request->id_persona;
+        $tipo_documento = $request->id_tipo_documento_;
+        $valorizaciones_model = new Valorizacione;        
+        $valorizacion = $valorizaciones_model->ActualizaValorizacion_pp($tipo_documento, $id_fraccionamiento, $id_persona);
+/*
         foreach($request->valorizacion as $key=>$val){
 
             $id = $val['id'];
@@ -340,15 +358,14 @@ class IngresoController extends Controller
             $valorizacion-> pk_fraccionamiento = $id_pk;
             $valorizacion-> estado = 0;
 			$valorizacion->save();          
-        }
-        
-
+        }        
+*/
 
         foreach($request->fraccionamiento as $key=>$frac){
             $valorizacion = new Valorizacione;
             $valorizacion->id_modulo = 6;
             $valorizacion->pk_registro = 0;
-            $valorizacion->id_concepto = $id_concepto;
+            $valorizacion->id_concepto = 26412;
             $valorizacion->id_agremido = $id_agremiado;
             $valorizacion->id_persona = $id_persona;
             $valorizacion->monto = $frac['total_frac'];
@@ -357,7 +374,7 @@ class IngresoController extends Controller
             $valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');            
             $valorizacion->id_usuario_inserta = $id_user;
             $valorizacion->descripcion = $frac['denominacion'];
-            $valorizacion->codigo_fraccionamiento =  $id_pk;
+            $valorizacion->codigo_fraccionamiento =  $id_fraccionamiento;
 
             $valorizacion->save();
 
@@ -368,7 +385,7 @@ class IngresoController extends Controller
         $tipo_documento = $request->id_tipo_documento_;
         $periodo = $request->cboPeriodo_b;
         $tipo_couta = $request->cboTipoCuota_b;
-        $concepto = $request->cboTipoConcepto_b;
+        $concepto = 26412;
         //$filas = $request->cboFilas;
         $filas = "20";
         // print_r($concepto);exit();
