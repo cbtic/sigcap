@@ -203,6 +203,107 @@ class SesionController extends Controller
 		echo json_encode($data);
 	}
 	
+	public function send_sesion_bloque(Request $request){
+		
+		$tablaMaestra_model = new TablaMaestra;
+		
+		$id_user = Auth::user()->id;
+		$periodoComision = PeriodoComisione::find($request->id_periodo);
+		$fecha_inicio = $periodoComision->fecha_inicio;
+		$fecha_fin = $periodoComision->fecha_fin;
+		$fechaInicio=strtotime($fecha_inicio);
+		$fechaFin=strtotime($fecha_fin);
+		
+		$dias = array('LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO');
+		
+		
+		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
+		
+		//print_r($tipo_comision);exit();
+		
+		foreach($tipo_comision as $rowTipoComision){
+			
+			$id_tipo_comision = $rowTipoComision->codigo;
+			
+			if($id_tipo_comision!=2){
+				
+				$comision_model = new Comisione;
+				$comisiones = $comision_model->getComisionByPeriodo($request->id_periodo,$id_tipo_comision);
+				
+				foreach($comisiones as $rowComision){
+					
+					$id_comision = $rowComision->id;
+					//echo $id_comision."<br>";
+					/*************************/
+					
+					$comision = Comisione::find($id_comision);
+					$dia_semanas = $tablaMaestra_model->getMaestroC("70", $comision->id_dia_semana);
+					//print_r($dia_semanas);
+					$dia_semana = $dia_semanas[0]->denominacion;
+					
+					$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
+					$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision($id_comision);
+					
+					//print_r($delegado);
+					
+					for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
+						$fechaInicioTemp = date("d-m-Y", $i);
+						$dia = $dias[(date('N', strtotime($fechaInicioTemp))) - 1];
+						
+						echo $dia_semana."<br>";
+						
+						if($dia_semana == $dia){
+							
+							$comisionSesioneExiste = ComisionSesione::where("id_regional",5)->where("id_periodo_comisione",$request->id_periodo)->where("id_tipo_sesion",401)->where("id_comision",$id_comision)->where("fecha_programado",$fechaInicioTemp)->first();
+							
+							if(!$comisionSesioneExiste){
+							
+								$comisionSesion = new ComisionSesione;
+								$comisionSesion->id_regional = 5;//$request->id_regional;
+								$comisionSesion->id_periodo_comisione = $request->id_periodo;
+								$comisionSesion->id_tipo_sesion = 401;//$request->id_tipo_sesion;
+								$comisionSesion->fecha_programado = $fechaInicioTemp;
+								$comisionSesion->observaciones = "";//$request->observaciones;
+								$comisionSesion->id_comision = $id_comision;
+								$comisionSesion->id_estado_sesion = 288;
+								$comisionSesion->estado = 1;
+								$comisionSesion->id_usuario_inserta = $id_user;
+								$comisionSesion->save();
+								$id_comision_sesion = $comisionSesion->id;
+								
+								foreach($delegados as $row){
+									
+									$coordinador = 0;
+									if($request->coordinador == $row)$coordinador = 1;
+									$comisionSesionDelegado = new ComisionSesionDelegado();
+									$comisionSesionDelegado->id_comision_sesion = $id_comision_sesion;
+									$comisionSesionDelegado->id_delegado = $row->id;
+									$comisionSesionDelegado->coordinador = $coordinador;
+									$comisionSesionDelegado->id_profesion_otro = NULL;
+									$comisionSesionDelegado->id_aprobar_pago = NULL;
+									$comisionSesionDelegado->observaciones = NULL;
+									$comisionSesionDelegado->estado = 1;
+									$comisionSesionDelegado->id_usuario_inserta = $id_user;
+									$comisionSesionDelegado->save();
+								}
+							
+							}
+							
+						}
+					}
+					
+					/*************************/
+					
+				}
+				
+			}
+			
+		
+		}
+		
+		
+	}
+	
 	public function send_sesion(Request $request){
 		
 		//print_r($request->id_aprobar_pago);
@@ -224,7 +325,7 @@ class SesionController extends Controller
 			//$dias = array('LUNES','MARTES','MI�RCOLES','JUEVES','VIERNES','S�BADO','DOMINGO');
 			$dias = array('LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO');
 			
-			if($request->id_dia_semana=="398"){
+			if($request->id_dia_semana=="398" || $request->id_tipo_sesion=="402"){
 				
 				$comisionSesion = new ComisionSesione;
 				$comisionSesion->id_regional = $request->id_regional;
@@ -510,7 +611,7 @@ class SesionController extends Controller
 
 		$comision_model = new Comisione;
 		
-		$comision = $comision_model->getComisionAll("","","1");
+		$comision = $comision_model->getComisionAll("","","","1");
 		
 		$periodo = $periodoComisione_model->getPeriodoAll();
 

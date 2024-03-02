@@ -243,9 +243,10 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px;padding-left:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success pull-rigth" value="Nueva Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:15px" />
+						<input class="btn btn-success pull-rigth" value="N. Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:5px" />
+						<input class="btn btn-danger pull-rigth" value="Ejecutar" type="button" id="btnEjecutar" style="margin-left:5px" />
 					</div>
 				</div>
 				
