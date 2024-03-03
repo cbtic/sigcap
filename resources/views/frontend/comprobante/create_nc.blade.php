@@ -241,29 +241,19 @@
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
                         <input type="hidden" name="tipoF" value="<?php  echo $tipoF;  ?>">
                         <input type="hidden" name="vestab" value="1">
-                        <input type="hidden" name="totalF" value=" <?php if ($trans == 'FA') {
-                                                                                                                    echo number_format($total, 2);
-                                                                                                                }
-                                                                                                                if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                                    echo number_format($comprobante->total, 2);
-                                                                                                                } ?>">
-                        <input type="hidden" name="ubicacion" value="<?php if ($trans == 'FA') {
-                                                                            echo $ubicacion;
-                                                                        } ?>">
-                        <input type="hidden" name="persona" value="<?php if ($trans == 'FA') {
-                                                                        echo $persona;
-                                                                    } ?>">
+                        <input type="hidden" name="totalF" value=" <?php if ($trans == 'FA') {echo number_format($total, 2);}
+                            if ($trans == 'FE' || $trans == 'FN') {echo number_format($comprobante->total, 2);} ?>">
+                        <input type="hidden" name="ubicacion" value="<?php if ($trans == 'FA') {echo $ubicacion;} ?>">
+                        <input type="hidden" name="persona" value="<?php if ($trans == 'FA') {echo $persona;} ?>">
                         <input type="hidden" name="id_caja" value="<?php  echo $id_caja; ?>">
+                        <input type="hidden" name="MonAd" value="<?php if ($trans == 'FA') {echo $MonAd;} ?>">
+                        <input type="hidden" name="adelanto" value="<?php if ($trans == 'FA') {echo $adelanto;} ?>">
 
-                        <input type="hidden" name="MonAd" value="<?php if ($trans == 'FA') {
-                                                                        echo $MonAd;
-                                                                    } ?>">
-                        <input type="hidden" name="adelanto" value="<?php if ($trans == 'FA') {
-                                                                        echo $adelanto;
-                                                                    } ?>">
-                        <input type="hidden" name="id_factura" value="<?php if ($trans == 'FE') {
-                                                                            echo $facturas->id;
-                                                                        } ?>">
+                        <input type="hidden" name="id_factura" value="<?php if ($trans == 'FE') {echo $facturas->id;} ?>">
+
+                        <input type="hidden" name="id_comprobante" value="<?php {echo $comprobante->id;} ?>">
+                        
+                        
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div id="" class="row">

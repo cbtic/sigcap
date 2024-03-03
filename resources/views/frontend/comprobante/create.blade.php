@@ -320,12 +320,12 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
 
-
-
-
-
                         <input type="hidden" name="totalDescuento" id="totalDescuento" value="<?php echo $totalDescuento; ?>">
                         <input type="hidden" name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $id_tipo_afectacion_pp; ?>">
+                        <input type="hidden" name="descuentopp" id="descuentopp" value="<?php echo $descuentopp; ?>">
+
+                        <input type="hidden" name="id_pronto_pago" id="id_pronto_pago" value="<?php echo $id_pronto_pago; ?>">
+
 
                         <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
                                                                         echo $TipoF;
