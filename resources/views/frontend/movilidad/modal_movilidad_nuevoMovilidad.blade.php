@@ -243,6 +243,28 @@ function validacion(){
     }
 }
 
+function obtenerComisionBus(){
+	
+	var periodo = $('#periodo').val();
+	var tipo_comision = $('#tipo_comision').val();
+	
+	$.ajax({
+		url: '/movilidad/obtener_comision/'+periodo+'/'+tipo_comision,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#comision').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+			});
+			$('#comision').html(option);
+		}
+		
+	});
+	
+}
+
 function validaRuc(ruc){
 	var settings = {
 		"url": "https://apiperu.dev/api/ruc/"+ruc,
@@ -600,27 +622,11 @@ container: '#myModal modal-body'
 					
 					<div class="row" style="padding-left:10px">
 					
-						<div class="col-lg-11">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Municipalidad Integrada</label>
-								<select name="comision" id="comision" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-										<?php
-										foreach ($municipalidadIntegrada as $row) {?>
-											<option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_municipalidad_integrada)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-										<?php 
-										}
-										?>
-								</select>
-							</div>
-						</div>
-						
-
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
-								<select name="periodo" id="periodo" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
+								<select name="periodo" id="periodo" class="form-control form-control-sm" onchange="obtenerComisionBus()">
+									<option value="0">--Selecionar--</option>
 										<?php
 										foreach ($periodoComision as $row) {?>
 											<option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
@@ -630,6 +636,38 @@ container: '#myModal modal-body'
 								</select>
 							</div>
 						</div>
+
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Tipo Comisi&oacute;n</label>
+								<select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onChange="obtenerComisionBus()">
+									<option value="0">--Selecionar--</option>
+										<?php
+										foreach ($tipoComision as $row) {?>
+											<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comision_movilidades->id_tipo_comision)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php 
+										}
+										?>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-lg-11">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Municipalidad Integrada</label>
+								<select name="comision" id="comision" class="form-control form-control-sm" onChange="">
+									<option value="0">--Selecionar--</option>
+									<!--<option value="">--Selecionar--</option>
+										<?php
+										/*foreach ($municipalidadIntegrada as $row) {*/?>
+											<option value="<?php /*echo $row->id*/?>" <?php /*if($row->id==$comision_movilidades->id_municipalidad_integrada)echo "selected='selected'"*/?>><?php /*echo $row->denominacion*/?></option>
+										<?php 
+										/*}*/
+										?>-->
+								</select>
+							</div>
+						</div>
+						
 						<!--
 						<div class="col-lg-6">
 							<div class="form-group">

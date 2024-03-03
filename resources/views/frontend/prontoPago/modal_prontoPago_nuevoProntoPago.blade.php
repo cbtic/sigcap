@@ -315,7 +315,7 @@ function fn_save_prontoPago(){
 						<div class="col-lg-5">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha Fin</label>
-								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php if($prontoPago->fecha_fin!="")echo date('d-m-Y',strtotime($prontoPago->fecha_inicio))?>" type="text"  >
+								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php if($prontoPago->fecha_fin!="")echo date('d-m-Y',strtotime($prontoPago->fecha_fin))?>" type="text"  >
 							</div>
 						</div>
 						<div class="row" style="padding-left:10px">

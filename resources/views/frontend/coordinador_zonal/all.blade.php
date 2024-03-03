@@ -142,7 +142,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Conceptos
+                        Registro de Coordinador Zonal
                     </strong>
                 </div><!--card-header-->
 				
@@ -150,70 +150,110 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-				
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacionBus" name="denominacionBus" placeholder="Nombre de Concepto">
-					</div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="cuenta_contable_debe" name="cuenta_contable_debe" placeholder="Cuenta Contable Debe">
-					</div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="cuenta_contable_al_haber1" name="cuenta_contable_al_haber1" placeholder="Cuenta Contable al Haber 1">
-					</div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="cuenta_contable_al_haber2" name="cuenta_contable_al_haber2" placeholder="Cuenta Contable al Haber 2">
-					</div>
-                    <div class="col-lg-1-5 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="partida_presupuestalBus" name="partida_presupuestalBus" placeholder="Partida Presupuestal">
-					</div>
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <select name="id_tipo_afectacion" id="id_tipo_afectacion" class="form-control form-control-sm" onchange="">
-                                <option value="">--Selecionar Tipo Afectaci&oacute;n--</option>
-                                <?php
-                                foreach ($id_tipo_afectacion as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
+								
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    Regional
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <select name="regional" id="regional" class="form-control form-control-sm" onChange="">
+                                        <option value="">--Selecionar--</option>
+                                            <?php
+                                            foreach ($region as $row) {?>
+                                                <option value="<?php echo $row->id?>" <?php if($row->id=='5')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                            <?php
+                                            }
+                                            ?>
+                                    </select>
+                                </div>
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    Periodo
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                <select name="periodo" id="periodo" class="form-control form-control-sm" onChange="">
+                                    <option value="">--Selecionar--</option>
+                                    <?php
+									foreach ($periodo as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$coordinador_zonal->id_periodo)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<?php 
+                                        }
+                                        ?>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    N&deg; CAP
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" onChange="obtenerAgremiado()" >
+                                </div>
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    DNI
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" name="dni" id="dni" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" readonly='readonly' onChange="" >
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    Ap. Paterno
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" name="apellido_paterno" id="apellido_paterno" value="<?php echo $persona->apellido_paterno?>" class="form-control form-control-sm" readonly='readonly' onChange="" >
+                                </div>
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    Ap. Materno
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" name="apellido_materno" id="apellido_materno" value="<?php echo $persona->apellido_paterno?>" class="form-control form-control-sm" readonly='readonly' onChange="" >
+                                </div>
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    Nombres
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" name="nombre" id="nombre" value="<?php echo $persona->nombres?>" class="form-control form-control-sm"  readonly='readonly' onChange="" >
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    Zonal
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" name="zonal" id="zonal" value="<?php //echo $persona->nombres?>" class="form-control form-control-sm" onChange="" >
+                                </div>
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    Estado
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" name="estado_coordinador" id="estado_coordinador" value="<?php //echo $persona->nombres?>" class="form-control form-control-sm" onChange="" >
+                                </div>
+                            </div>
                         </div>
-					</div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado" id="estado" class="form-control form-control-sm">
-							<option value="">Todos</option>
-							<option value="1" selected="selected">Activo</option>
-							<option value="0">Eliminado</option>
-						</select>
-					</div>
+                    </div>
+
+                    
+                    
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						<!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 						
-                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
-                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+                        <a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                        <input class="btn btn-success" value="Guardar" type="button" id="btnNuevo" style="margin-left:15px"/>
 
 					</div>
-				</div>
-				
-                <div class="card-body">
+                </div>
+            
+            <div class="card-body">
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Codigo</th>
-                            <th>Regional</th>
-                            <th>Tipo Concepto</th>
-                            <th>Concepto</th>
-                            <th>Importe</th>
-                            <th>Moneda</th>
-                            <th>Periodo</th>
-                            <th>Cuenta Contable Debe</th>
-                            <th>Cuenta Contable al Haber1</th>
-                            <th>Cuenta Contable al Haber2</th>
-                            <th>Partida Presupuestal</th>
-                            <th>Tipo Afectaci&oacute;n</th>
-                            <th>Centro de Costos</th>
+                            <th>N°</th>
+                            <th>N° CAP</th>
+                            <th>Agremiado</th>
+                            <th>Zonal</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -252,6 +292,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/concepto/lista.js') }}"></script>
+<script src="{{ asset('js/coordinador_zonal/lista.js') }}"></script>
 
 @endpush

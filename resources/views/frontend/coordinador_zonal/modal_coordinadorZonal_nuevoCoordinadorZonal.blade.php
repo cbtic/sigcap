@@ -12,7 +12,7 @@
 
   .modal-dialog {
     width: 100%;
-    max-width: 40% !important
+    max-width: 50% !important
   }
 
   #tablemodal {
@@ -212,6 +212,8 @@
 
 $("#profesion").select2();
 
+
+
 function obtener_profesional(){
 	
   var numero_cap = $('#numero_cap').val();
@@ -263,6 +265,62 @@ function obtener_profesional(){
 	$("#monto").val(monto);*/
 	
 }
+
+function AddFila(){
+	
+	//var newRow = "";
+  var cantidad = $('#numero_sesion').val();
+  var ind = $('#tblSesion tbody tr').length;
+
+  for (var i = 0; i < cantidad; i++) { 
+
+    var newRow = $('<tr>');
+    var n = i+1;
+    //var año = $('#periodo').val();
+    var año = new Date().getFullYear();
+    var mes_ = $('#mes').val();
+    var cap = $('#numero_cap').val();
+    var fecha = '<input id="fecha" name="fecha" class="form-control form-control-sm datepicker2"  value="" type="text">'
+    var distrito = '<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
+    var estado_sesion = '<select name="estado_sesion" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
+    var aprobar_pago = '<select name="aprobar_pago" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
+    var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
+
+    newRow.append('<td>'+n+'</td>');
+    newRow.append('<td>'+cap+'</td>');
+    newRow.append('<td>'+ fecha+'</td>');
+    newRow.append('<td>'+ distrito+'</td>');
+    newRow.append('<td>'+ estado_sesion+'</td>');
+    newRow.append('<td>'+ aprobar_pago+'</td>');
+    newRow.append('<td>'+ eliminar+'</td>');
+    //newRow.append('<td>Cell 2 Data</td>');
+
+
+    $('#tblSesion tbody').append(newRow);
+  }
+ 
+  $('.datepicker2').datepicker({
+  format: "dd-mm-yyyy",
+  autoclose: true,
+  container: '#openOverlayOpc modal-body'
+  //defaultDate: '01/07/2024'
+
+	});
+
+ 
+}
+
+function EliminarFila(button) {
+    $(button).closest('tr').remove();
+  }
+
+/*function CrearFilas(numeroFilas) {
+
+  
+   
+    AddFila();
+  
+}*/
 
 function modal_personaNuevo(){
 	$(".modal-dialog").css("width","85%");
@@ -334,126 +392,126 @@ function modal_personaNuevo(){
     <div class="justify-content-center">
       <div class="card">
         <div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-          Registro Adelantos
+          Registro de Sesiones - Coordinador Zonal
         </div>
         <div class="card-body">
           <div class="row">
             <!--aaaa-->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:5px">
 
               <form method="post" action="#" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
-                <input type="hidden" name="id_persona" id="id_persona">
-                
+                <!--<input type="hidden" name="id_persona" id="id_persona">-->
+                <div style="padding-left:15px">
                 <div class="row">
-                  <div class="col-lg-7">
-                    <div class="col-lg-7">
+                    <div class="col-lg-4">
                       <div class="form-group">
-                        <label class="control-label form-control-sm">Tipo Documento</label>
-                        <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onChange="">
+                        <label class="control-label form-control-sm">N&uacute;mero CAP</label>
+                        <input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="" readonly='readonly'>
+                          
+                      </div>
+                    </div>
+
+                  <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="control-label form-control-sm">Periodo</label>
+                        <select name="periodo" id="periodo" class="form-control form-control-sm" onChange="" disabled='disabled'>
                           <option value="">--Selecionar--</option>
+                            <?php
+                              foreach ($periodo as $row) {?>
+                              <option value="<?php echo $row->id?>" <?php if($row->id==$coordinadorZonal->id_periodo)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                              <?php
+                                }
+                                ?>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+              </div>
+
+                <div style="padding-left:15px">
+                  <div class="row">
+                    
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="control-label form-control-sm">Sesiones Mes</label>
+                        <select name="mes" id="mes" class="form-control form-control-sm" onchange="">
+                          <option value="">--Selecionar Mes--</option>
                           <?php
-                          foreach ($tipo_documento as $row) { ?>
-                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '85') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                          foreach ($mes as $row) {?>
+                          <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$coordinadorZonal->id_mes)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                           <?php
                           }
                           ?>
                         </select>
                       </div>
                     </div>
-
-                    <!--
-                    <div class="col-lg-7">
-                      <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-                        <label class="control-label form-control-sm">N&uacute;mero Documento</label>
-                        <input id="numero_documento" name="numero_documento" class="form-control form-control-sm" value="<?php /*echo $persona->numero_documento */?>" type="text">
-                      </div>
-                    </div>
-                        -->
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">N&uacute;mero CAP</label>
-                        <input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="obtener_profesional()">
-                          
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <div class="col-lg-5">
-                    <div class="form-group" style="text-align:center">
-                      <!--<span class="btn btn-sm btn-warning btn-file">
-												Examinar <input id="image" name="image" type="file" />
-											</span>
-
-											<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:10px">
-
-											<input type="button" class="btn btn-sm btn-danger delete" value="Eliminar" style="margin-left:10px">
-                        -->
-                      <?php
-                      $url_foto = "/img/profile-icon.png";
-                      if ($persona->foto != "") $url_foto = "/img/agremiado/" . $persona->foto;
-
-                      $foto = "";
-                      if ($persona->foto != "") $foto = $persona->foto;
-                      ?>
-                      <img src="<?php echo $url_foto ?>" id="img_ruta" width="130px" height="165px" alt="" style="text-align:center;margin-top:8px" />
-                      <input type="hidden" id="img_foto" name="img_foto" value="<?php echo $foto ?>" />
-
-                    </div>
-                  </div>
-                </div>
-
-                <div style="padding-left:15px">
-                  <div class="row">
                     <div class="col-lg-4">
                       <div class="form-group">
-                        <label class="control-label form-control-sm">Nombres</label>
-                        <input id="nombres" name="nombres" class="form-control form-control-sm" value="<?php echo $persona->nombres ?>" type="text" readonly="readonly">
+                        <label class="control-label form-control-sm">N° sesi&oacute;n</label>
+                          <select name="numero_sesion" id="numero_sesion" class="form-control form-control-sm">
+                            <option value="" selected="selected">--Seleccionar N°--</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
                       </div>
                     </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Apellido Paterno</label>
-                        <input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm" value="<?php echo $persona->apellido_paterno ?>" type="text" readonly="readonly">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Apellido Materno</label>
-                        <input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm" value="<?php echo $persona->apellido_materno ?>" type="text" readonly="readonly">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Tipo Pr&eacute;stamo</label>
-                        <input id="tipo_prestamo" name="tipo_prestamo" class="form-control form-control-sm" value="<?php echo $prestamo->id_tipo_prestamo ?>" type="text">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Monto</label>
-                        <input id="monto" name="monto" class="form-control form-control-sm" value="<?php echo $prestamo->total_prestamo ?>" type="text">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">N&uacute;mero Cuotas</label>
-                        <input id="numero_cuota" name="numero_cuota" class="form-control form-control-sm" value="<?php echo $prestamo->nro_total_cuotas ?>" type="text">
-                      </div>
-                    </div>
-                  </div>
-                  <div style="margin-top:15px" class="form-group">
+                  
+                  <div style="margin-top:37px" class="form-group">
                     <div class="col-sm-12 controls">
                       <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-                        <a href="javascript:void(0)" onClick="fn_save_prestamo()" class="btn btn-sm btn-success">Guardar</a>
+                        <a href="javascript:void(0)" onClick="AddFila()" class="btn btn-sm btn-success">Agregar</a>
+                        <!--<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <div style="display:none">
+                    <select class="form-control" id="distrito" tabindex="16" style="width: 500px">
+                      <option value="">Seleccionar Distrito</option>
+                      <?php //foreach($especie as $row):?>
+                      <option value="<?php //echo $row->id?>"><?php //echo $row->denominacion?></option>
+                      <?php //endforeach;?>
+                    </select>  
+                  </div>
+                  <!--
+                  <button type="button" id="addRow" style="margin-left:10px;float:right" class="btn btn-success btn-xs">
+                  <i class="fa fa-plus"></i> Agregar</button>
+                  -->
+                  <div class="table-responsive">
+                  <table id="tblSesion" class="table table-hover table-sm">
+                      <thead>
+                        <tr>
+                          <!--<th width="35%">N°</th>-->
+                          <th>N°</th>
+                          <!--<th>Medida</th>-->
+                          <th>CAP</th>
+                          <th>Fecha</th>
+                          <th>Distrito</th>
+                          <!--<th id="thImporte" style="display:none">Importe</th>-->
+                          <th>Estado</th>
+                          <th>Aprobar Pago</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                      </tbody>
+                    </table>
+                    <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+                        <a href="javascript:void(0)" onClick="GuardarSesion()" class="btn btn-sm btn-success">Grabar</a>
                       </div>
                     </div>
                   </div>
                 </div>
-            </div>
-          </div>
+          </section>
         </div>
-        </section>
-      </div>
+        </div>
+    </div>
+    
+          

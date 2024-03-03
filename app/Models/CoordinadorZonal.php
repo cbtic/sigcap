@@ -10,8 +10,10 @@ class CoordinadorZonal extends Model
 {
     use HasFactory;
 
-    public function listar_coordinador_zonal_ajax($p){
+    protected $table = 'coordinador_zonales';
 
+    public function listar_coordinadorZonal_ajax($p){
+ 
         return $this->readFuntionPostgres('sp_listar_coordinador_zonal_paginado',$p);
 
     }
@@ -30,4 +32,5 @@ class CoordinadorZonal extends Model
         $data = DB::select($cad);
         return $data;
     }
+
 }

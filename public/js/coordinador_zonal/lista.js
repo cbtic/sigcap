@@ -33,7 +33,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalAdelanto(0);
+		GuardarCoordinadorZonal(0);
 	});
 		
 	datatablenew();
@@ -218,6 +218,60 @@ function validaTipoDocumento(){
 		$('#divRepresentanteEmpresa').hide();
 	}
 }
+
+function obtenerAgremiado(){
+		
+	var numero_cap = $("#numero_cap").val();
+	var msg = "";
+	
+	if(numero_cap == "")msg += "Debe ingresar el numero de documento <br>";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_datos_agremiado/' + numero_cap,
+		dataType: "json",
+		success: function(result){
+			
+			var agremiado = result.agremiado;
+			//var tipo_documento = parseInt(agremiado.tipo_documento);
+			//var nombre = persona.apellido_paterno+" "+persona.apellido_materno+", "+persona.nombres;
+			$('#dni').val(agremiado.numero_documento);
+			$('#apellido_paterno').val(agremiado.apellido_paterno);
+			$('#apellido_materno').val(agremiado.apellido_materno);
+			$('#nombre').val(agremiado.nombres);
+			//$('#telefono').val(persona.telefono);
+			//$('#email').val(persona.email);
+			
+			$('.loader').hide();
+
+		}
+		
+	});
+	
+}
+
+/*function AddFila(){
+	
+	var newRow = "";
+	var ind = $('#tblSesion tbody tr').length;
+	var newRow = $('<tr>');
+
+	newRow.append('<td>Cell 1 Data</td>');
+    newRow.append('<td>Cell 2 Data</td>');
+
+	$('#tblSesion tbody').append(newRow);
+}*/
+
 
 function obtenerEmpresa(){
 		
@@ -437,7 +491,7 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/adelanto/listar_adelanto_ajax",
+        "sAjaxSource": "/coordinador_zonal/listar_coordinadorZonal_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -490,16 +544,25 @@ function datatablenew(){
         "aoColumnDefs":
             [	
 				{
+				"mRender": function (data, type, row) {
+					var id = "";
+					if(row.id!= null)id = row.id;
+					return id;
+				},
+				"bSortable": false,
+				"aTargets": [0],
+				"className": "dt-center",
+				},
+				{
                 "mRender": function (data, type, row) {
                 	var numero_cap = "";
 					if(row.numero_cap!= null)numero_cap = row.numero_cap;
 					return numero_cap;
                 },
                 "bSortable": false,
-                "aTargets": [0],
+                "aTargets": [1],
 				"className": "dt-center",
                 },
-				
                 {
                 "mRender": function (data, type, row) {
                 	var agremiado = "";
@@ -507,75 +570,55 @@ function datatablenew(){
 					return agremiado;
                 },
                 "bSortable": false,
-                "aTargets": [1],
+                "aTargets": [2],
 				"className": "dt-center",
                 },
 				{
 				"mRender": function (data, type, row) {
-					var total_adelanto = "";
-					if(row.total_adelanto!= null)total_adelanto = row.total_adelanto;
-					return total_adelanto;
-				},
-				"bSortable": false,
-				"aTargets": [2]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var nro_total_cuotas = "";
-					if(row.nro_total_cuotas!= null)nro_total_cuotas = row.nro_total_cuotas;
-					return nro_total_cuotas;
+					
+					return "";
 				},
 				"bSortable": false,
 				"aTargets": [3]
 				},
 				{
 				"mRender": function (data, type, row) {
-					var fecha = "";
-					if(row.fecha!= null)fecha = row.fecha;
-					return fecha;
+					var estado = "";
+					if(row.estado == 1){
+						estado = "Activo";
+					}
+					if(row.estado == 0){
+						estado = "Inactivo";
+					}
+					return estado;
 				},
 				"bSortable": false,
 				"aTargets": [4]
 				},
-				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Activo";
-						}
-						if(row.estado == 0){
-							estado = "Inactivo";
-						}
-						return estado;
-					},
-					"bSortable": false,
-					"aTargets": [5]
+			{
+				"mRender": function (data, type, row) {
+					var estado = "";
+					var clase = "";
+					if(row.estado == 1){
+						estado = "Eliminar";
+						clase = "btn-danger";
+					}
+					if(row.estado == 0){
+						estado = "Activar";
+						clase = "btn-success";
+					}
+					
+					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalCoordinadorZonal('+1+')" ><i class="fa fa-edit"></i> Registrarse</button>';
+					//html += '<a href="javascript:void(0)" onclick=eliminarAdelanto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					
+					html += '<a href="javascript:void(0)" onclick=modalCoordinadorZonal('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Registrar sesi&oacute;n</a>';
+					
+					html += '</div>';
+					return html;
 				},
-				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						var clase = "";
-						if(row.estado == 1){
-							estado = "Eliminar";
-							clase = "btn-danger";
-						}
-						if(row.estado == 0){
-							estado = "Activar";
-							clase = "btn-success";
-						}
-						
-						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalAdelanto('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalDetalle('+row.id+')" ><i class="fa fa-edit"></i> Detalle</button>';
-						html += '<a href="javascript:void(0)" onclick=eliminarAdelanto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
-						
-						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
-						
-						html += '</div>';
-						return html;
-					},
-					"bSortable": false,
-					"aTargets": [6],
+				"bSortable": false,
+				"aTargets": [5],
 				},
 
             ]
@@ -587,14 +630,14 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalAdelanto(id){
+function modalCoordinadorZonal(id){
 	
 	//alert(id);
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/adelanto/modal_adelanto_nuevoAdelanto/"+id,
+			url: "/coordinador_zonal/modal_coordinadorZonal_nuevoCoordinadorZonal/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
@@ -602,6 +645,47 @@ function modalAdelanto(id){
 			}
 	});
 
+}
+
+function GuardarCoordinadorZonal(){
+    
+	var _token = $('#_token').val();
+	//var id = $('#id').val();
+	var numero_cap = $('#numero_cap').val();
+	var periodo = $('#periodo').val();
+	var regional = $('#regional').val();
+	var dni = $('#dni').val();
+	var apellido_paterno = $('#apellido_paterno').val();
+	var apellido_materno = $('#apellido_materno').val();
+	var nombre = $('#nombre').val();
+	var zonal = $('#zonal').val();
+	var estado_coordinador = $('#estado_coordinador').val();
+	//var moneda = $('#moneda').val();
+	//var importe = $('#importe').val();
+	//var estado = $('#estado').val();
+	//alert(id_agremiado);
+	//return false;
+	
+    $.ajax({
+			url: "/coordinador_zonal/send_coordinador_zonal_nuevoCoordinadorZonal",
+            type: "POST",
+            data : {_token:_token,numero_cap:numero_cap,periodo:periodo,regional:regional,dni:dni,apellido_paterno:apellido_paterno,apellido_materno:apellido_materno,nombre:nombre,zonal:zonal,estado_coordinador:estado_coordinador},
+            success: function (result) {
+				
+				$('#openOverlayOpc').modal('hide');
+				window.location.reload();
+				datatablenew();
+				
+				/*
+				$('#openOverlayOpc').modal('hide');
+				if(result==1){
+					bootbox.alert("La persona o empresa ya se encuentra registrado");
+				}else{
+					window.location.reload();
+				}
+				*/
+            }
+    });
 }
 
 function modalDetalle(id){
