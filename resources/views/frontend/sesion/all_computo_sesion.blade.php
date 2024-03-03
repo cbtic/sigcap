@@ -233,6 +233,7 @@
 							<th>Fecha C&oacute;mputo</th>
 							<th>Computo Mes Actual</th>
 							<th>Computo Meses Anteriores</th>
+							<th>Reporte</th>
                         </tr>
                         </thead>
                         <tbody>

@@ -17,6 +17,7 @@ use App\Models\ComputoSesione;
 use App\Models\ComisionSesionDictamene;
 use Carbon\Carbon;
 use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SesionController extends Controller
 {
@@ -624,5 +625,33 @@ class SesionController extends Controller
 		
         return view('frontend.sesion.all_listar_computo_sesion');
     }
+	
+	public function computo_sesion_pdf($id){
+		
+		$computoSesion = ComputoSesione::find($id);
+		
+		$comisionSesion_model = new ComisionSesione(); 
+		$p[]="";//2;//$request->id_periodo;
+		$p[]="";
+		$p[]=$computoSesion->anio;//$request->anio;
+		$p[]=$computoSesion->mes;//$request->mes;
+		$p[]=1;
+		$p[]=10000;
+		$comisionSesion = $comisionSesion_model->lista_computo_sesion_ajax($p);
+		
+		$pdf = Pdf::loadView('pdf.computo_sesion',compact('comisionSesion','computoSesion'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
 
+		return $pdf->stream('computo_sesion.pdf');
+	
+	}
+	
+	
+	
 }
