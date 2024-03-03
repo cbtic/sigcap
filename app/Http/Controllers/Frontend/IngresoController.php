@@ -387,7 +387,7 @@ class IngresoController extends Controller
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = 26412;
         //$filas = $request->cboFilas;
-        $filas = "20";
+        $filas = "100";
         // print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;

@@ -35,6 +35,7 @@ class ComprobanteController extends Controller
         $trans = $request->Trans;
         $id_caja=$request->id_caja;
         $descuentopp=$request->DescuentoPP;
+        $id_pronto_pago=$request->id_pronto_pago;
 
         $totalDescuento=$request->totalDescuento;
 
@@ -133,7 +134,7 @@ class ComprobanteController extends Controller
 
                 foreach($request->comprobante_detalles as $key=>$det){
                     $facturad[$ind] = $factura_detalle[$key];
-                    $valorizad[$ind] = $factura_detalle[$key];
+                   
                     //print_r($factura_detalle['id_concepto']);
                     //$id_concepto_det = $facturad[$ind]['id_concepto'];
                     
@@ -144,8 +145,15 @@ class ComprobanteController extends Controller
                 }
             }
 
+            $ind = 0;
+            foreach($request->comprobante_detalles as $key=>$det){
+                $valorizad[$ind] = $factura_detalle[$key];
+                $ind++;
+            }
+
         
-            //print_r($id_concepto_det);
+           // print_r($valorizad);
+
             //print_r($id_concepto_pp);exit();
 
             //if ($id_concepto_det != $id_concepto_pp)$id_tipo_afectacion_pp="0";
@@ -191,7 +199,7 @@ class ComprobanteController extends Controller
                     "descripcion" => 'PAGO CUOTA GREMIAL - DESCUENTO CUOTA GREMIAL PRONTOPAGO', 
                     "vencio" => 0, 
                     "id_concepto" => $request->id_concepto_pp,
-                    "item" => 0, 
+                    "item" => 1, 
                     );
                     $facturad[1]=$items1;
 
@@ -248,7 +256,7 @@ class ComprobanteController extends Controller
             }
           
 
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago'));
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -449,9 +457,10 @@ class ComprobanteController extends Controller
 			/**********RUC***********/
 
 			$tarifa = $request->facturad;
-            //$valorizad = $request->valorizad;
+           
+           
 
-		   //print_r($tarifa); exit();
+		   //print_r($valorizad); exit();
 
 			//echo "serieF=>".$request->serieF."<br>";
 			//echo "TipoF=>".$request->TipoF."<br>";
@@ -592,6 +601,29 @@ class ComprobanteController extends Controller
                     */
 				
 				}
+
+                
+
+                $descuentopp = $request->descuentopp;
+                $id_pronto_pago = $request->id_pronto_pago;
+
+                if ($descuentopp =="S"){
+                    $valorizad = $request->valorizad;
+                    foreach ($valorizad as $key => $value) {
+                        $id_val = $value['id'];
+                        $valoriza_upd = Valorizacione::find($id_val);
+                        $valoriza_upd->id_comprobante = $id_factura;
+                        $valoriza_upd->id_pronto_pago = $id_pronto_pago;                        
+                        $valoriza_upd->pagado = "1";
+
+                        $valoriza_upd->save();
+    
+                    }
+
+                }
+
+
+
 
 				$estado_ws = $ws_model->getMaestroByTipo('96');
 				$flagWs = isset($estado_ws[0]->codigo)?$estado_ws[0]->codigo:1;
@@ -826,6 +858,7 @@ class ComprobanteController extends Controller
         $id_caja = $request->id_caja_;
         $id = $request->id_comprobante;
         $id_nc = $request->id_comprobante_nc;
+        print_r($id); exit();
         $tipoF="NC";
 
         if ($id=="" ){

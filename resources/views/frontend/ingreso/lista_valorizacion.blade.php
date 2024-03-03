@@ -35,7 +35,7 @@ foreach($valorizacion as $key=>$row):
 	
 		
 ?>
-<tr style="font-size:13px">
+<tr style="font-size:13px">	
 	<td class="text-center">
         <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">		
 			<input type="checkbox" key="<?php echo $key?>" class="mov" name="comprobante_detalles[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)"  <?php echo $disabled?> />
@@ -64,7 +64,7 @@ foreach($valorizacion as $key=>$row):
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][item]" value="<?php echo $n?>" /> 
         </div>
     </td>
-	
+	<td class="text-left"><?php echo $n?></td>	
 	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha_proceso))?></td>
     <td class="text-left"><?php echo $row->descripcion?></td>
 	<?php if ($row->vencio=="1"){ ?>
