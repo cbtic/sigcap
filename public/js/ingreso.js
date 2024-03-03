@@ -9,8 +9,13 @@ $(document).ready(function () {
 	});
 
 	
+});
+
+
+$(document).ready(function () {
 	
 	$('#example-select-all').on('click', function(){
+		alert("ok");
 		if($(this).is(':checked')){
 			$('.mov').prop('checked', true);
 		}else{
@@ -554,6 +559,8 @@ function obtenerBeneficiario(){
 					$('#id_tipo_documento_').val(tipo_documento);
 					$('#id_tipo_documento').val(tipo_documento);
 
+					$('#email').val(result.agremiado.email);
+
 
 					$('#btnOtroConcepto').attr("disabled", false);
 					$('#btnDescuento').attr("disabled", false);
@@ -575,6 +582,10 @@ function obtenerBeneficiario(){
 					$('#ruc_p').val(result.agremiado.numero_ruc);
 					$('#id_ubicacion_p').val("0");
 
+					$('#email').val(result.agremiado.email);
+
+					
+
 					$('#numero_documento_').val(result.agremiado.numero_documento);
 					$('#id_tipo_documento_').val(tipo_documento);
 					$('#id_tipo_documento').val(tipo_documento);
@@ -594,6 +605,7 @@ function obtenerBeneficiario(){
 					$('#id_agremiado').val(result.agremiado.id);
 					$('#ruc_p').val(result.agremiado.numero_ruc);
 					$('#id_ubicacion_p').val("0");
+					$('#email').val(result.agremiado.email);
 
 					$('#numero_documento_').val(tipo_documento);
 					$('#id_tipo_documento_').val(tipo_documento);
@@ -1375,7 +1387,7 @@ function AplicarDescuento(){
 			stotal += Number(val_sub_total);
 			igv += Number(val_igv);
 
-			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',true);
+			//$(this).parent().parent().parent().prev().find(".mov").prop('disabled',true);
 
 			//var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
 			//id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();

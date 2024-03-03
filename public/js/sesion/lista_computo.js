@@ -849,6 +849,16 @@ function datatablenewComputoCerrado(){
                 "aTargets": [5]
                 },
 				
+				{
+                "mRender": function (data, type, row) {
+                	var newHtml = "";
+					newHtml += '<a href="/sesion/computo_sesion_pdf/'+row.id+'" target="_blank" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:0px">Descargar</a>';
+					return newHtml;
+                },
+                "bSortable": true,
+                "aTargets": [6]
+                },
+				
             ]
 
 

@@ -63,6 +63,10 @@
         margin-bottom: 0px!important;
         padding-bottom: 0px!important;
     }
+
+    .auto_height { /* CSS */
+  width: 100%;
+}
     
 </style>
 @stack('before-scripts')
@@ -157,7 +161,7 @@
                                     ?>
                                         <input type="text" name="caja" id="caja" readonly="" value="<?php echo $caja_usuario->caja ?>" placeholder="" class="form-control form-control-sm">
                                         <input type="hidden" name="id_caja" id="id_caja" value="<?php echo $caja_usuario->id_caja ?>" />
-                                        <input type="hidden" name="id_caja_ingreso" id="id_caja_ingreso" value="<?php echo $caja_usuario->id ?>" />
+                                        <input type="hidden" name="id_caja_ingreso" id="id_caja_ingreso" value="<?php echo $caja_usuario->id ?>" />                                        
                                     <?php else : ?>
                                         <select name="id_caja" id="id_caja" class="form-control form-control-sm">
                                             <option value="0">Seleccionar</option>
@@ -244,6 +248,7 @@
                                                     
                                                     <input type="hidden" readonly name="DescuentoPP" id="DescuentoPP" value="" class="form-control form-control-sm">
 
+                                                    <input type="hidden" readonly name="id_pronto_pago" id="id_pronto_pago" value="<?php echo !empty($pronto_pago->id) ? $pronto_pago->id:'0'  ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo !empty($pronto_pago->periodo) ? $pronto_pago->periodo:'0'  ?>" class="form-control form-control-sm">
                                                     
 
@@ -284,7 +289,11 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Nombres y Apellidos</label>
-                                                    <input type="text" readonly name="nombre_" id="nombre_" value="{{old('clinom')}}" class="form-control form-control-sm" />
+                                                    <!--
+                                                    <input type="text" readonly name="nombre_1" id="nombre_1" value="{{old('clinom')}}" class="form-control form-control-sm" />
+                                                    -->
+
+                                                    <textarea rows="2" readonly name="nombre_" id="nombre_" class="auto_height" style="background-color: #ced5d9;" onInput="auto_height(this)"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -349,6 +358,14 @@
                                             </div>
                                         </div>
 
+                                        <div class="row" id="divRucP">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Correo Electrónico</label>
+                                                    <input type="text" readonly name="email" id="email" value="{{old('clinom')}}" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                        </div>
                                         
                                         <div class="row">
                                             <div class="col">
@@ -419,11 +436,7 @@
 
                                         </div>
 
-                                        <?php $seleccionar_todos = "style='display:none'"; ?>
-                                        @hasanyrole('administrator')
                                         <?php $seleccionar_todos = "style='display:block'"; ?>
-                                        @else
-                                        @endhasanyrole
 
                                         <div class="table-responsive">
                                             <table id="tblValorizacion" class="table table-hover table-sm">
@@ -431,8 +444,9 @@
                                                     <tr style="font-size:13px">
                                                         <!--<th class="text-right" width="5%">-->
                                                         <th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
-                                                            <input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?> readonly />
-                                                        </th>
+                                                            <input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?> >
+                                                        </th>                                                        
+                                                        <th>Nro</th>
                                                         <th>F. Proceso</th>
                                                         <th>Concepto</th>
                                                         <th>F. Vencimiento</th>
@@ -466,9 +480,9 @@
                                                     <tr>                                                    
                                                         <td style="padding-bottom:0px;margin-bottom:0px">
                                                             <select name="cboFilas" id="cboFilas" class="form-control form-control-sm" onchange="cargarValorizacion()">                                                  
-                                                                <option value="12">20</option>
+                                                                <option value="20">20</option>
                                                                 <option value="60">60</option>
-                                                                <option value="100">100</option>
+                                                                <option value="100" selected='selected'>100</option>
                                                                 <option value="500">500</option>                                                                
                                                             </select>
                                                         </td>
@@ -555,7 +569,7 @@
                                                 <thead>
                                                     <tr style="font-size:13px">
                                                         <th>Fecha</th>
-                                                        <!--<th>Tipo</th>-->
+                                                        
                                                         <th>Serie</th>
                                                         <th>Numero</th>
                                                         <th>Concepto</th>
@@ -575,7 +589,7 @@
 
 
                             <th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
-                                                            <input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?> readonly />
+                                                            <input type="checkbox" name="select_all" value="1" id="example-select-all1" <?php echo $seleccionar_todos ?> readonly />
                                                         </th>
 
 
@@ -621,6 +635,11 @@
 <script type="text/javascript">
     var id_caja_usuario = "<?php echo ($caja_usuario) ? $caja_usuario->id_caja : 0 ?>";
     //alert(id_caja_usuario);
+
+    function auto_height(elem) {  /* javascript */
+    elem.style.height = '1px';
+    elem.style.height = '${elem.scrollHeight}px';
+}
 </script>
 
 @endpush

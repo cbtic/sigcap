@@ -8,6 +8,8 @@ use App\Models\ComisionMovilidade;
 use App\Models\Regione;
 use App\Models\MunicipalidadIntegrada;
 use App\Models\PeriodoComisione;
+use App\Models\TablaMaestra;
+use App\Models\Comisione;
 use Auth;
 
 class MovilidadController extends Controller
@@ -85,6 +87,8 @@ class MovilidadController extends Controller
 		$regione_model = new Regione;
         $municipalidadIntegrada_model = new MunicipalidadIntegrada;
         $periodoComision_model = new PeriodoComisione;
+		$tablaMaestra_model = new TablaMaestra;
+		
         
         
 		//$movilidad_model = new Movilidade;
@@ -102,10 +106,19 @@ class MovilidadController extends Controller
 		//$tipoConcepto = $tipoConcepto_model->getTipoConceptoAll();
 		$region = $regione_model->getRegionAll();
         $municipalidadIntegrada = $municipalidadIntegrada_model->getMuniIntegradaAll();
-        $periodoComision = $periodoComision_model->getPeriodoComisionAll();
-		
-		return view('frontend.movilidad.modal_movilidad_nuevoMovilidad',compact('id','comision_movilidades','region','municipalidadIntegrada','periodoComision'));
+        $periodoComision = $periodoComision_model->getPeriodoAll();
+		$tipoComision = $tablaMaestra_model->getMaestroByTipo(102);
+
+		return view('frontend.movilidad.modal_movilidad_nuevoMovilidad',compact('id','comision_movilidades','region','municipalidadIntegrada','periodoComision','tipoComision'));
 	
+	}
+
+	public function obtener_comision($periodo,$tipo_comision){
+			
+		$comision_model = new Comisione;
+		$comision = $comision_model->getComisionByPeriodo($periodo,$tipo_comision);
+		echo json_encode($comision);
+		
 	}
 
     public function send_movilidad_nuevoMovilidad(Request $request){

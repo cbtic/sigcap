@@ -45,6 +45,10 @@ use App\Http\Controllers\Frontend\CentroCostoController;
 use App\Http\Controllers\Frontend\PartidaPresupuestalController;
 use App\Http\Controllers\Frontend\PlanContableController;
 
+use App\Http\Controllers\Frontend\CoordinadorZonalController;
+
+
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -393,6 +397,7 @@ Route::post('sesion/send_computo_sesion', [SesionController::class, 'send_comput
 
 Route::get('sesion/obtener_dictamen/{id}', [SesionController::class, 'obtener_dictamen'])->name('sesion.obtener_dictamen');
 
+Route::get('sesion/computo_sesion_pdf/{id}', [SesionController::class, 'computo_sesion_pdf'])->name('sesion.computo_sesion_pdf');
 
 Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
 Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
@@ -409,7 +414,7 @@ Route::post('profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro', [
 Route::get('profesionalesOtro/eliminar_profesionalesOtro/{id}/{estado}', [ProfesionalesOtroController::class, 'eliminar_profesionalesOtro'])->name('profesionalesOtro.eliminar_profesionalesOtro');
 
 
-
+/*
 Route::get('sesion/lista_programacion_sesion', [SesionController::class, 'lista_programacion_sesion'])->name('sesion.lista_programacion_sesion');
 Route::post('sesion/lista_programacion_sesion_ajax', [SesionController::class, 'lista_programacion_sesion_ajax'])->name('sesion.lista_programacion_sesion_ajax');
 Route::get('sesion/modal_sesion/{id}', [SesionController::class, 'modal_sesion'])->name('sesion.modal_sesion');
@@ -417,9 +422,7 @@ Route::post('sesion/send_sesion', [SesionController::class, 'send_sesion'])->nam
 Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
 Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
 Route::get('comision/obtener_comision_periodo_tipo_comision/{id_periodo}/{id_tipo_comision}', [ComisionController::class, 'obtener_comision_periodo_tipo_comision'])->name('comision.obtener_comision_periodo_tipo_comision');
-
-Route::get('comision/obtener_concurso_inscripcion_periodo_tipo_comision/{id_periodo}/{id_tipo_comision}', [ComisionController::class, 'obtener_concurso_inscripcion_periodo_tipo_comision'])->name('comision.obtener_concurso_inscripcion_periodo_tipo_comision');
-
+*/
 Route::get('comision/modalDiaSemana/{id}', [ComisionController::class, 'modalDiaSemana'])->name('comision.modalDiaSemana');
 Route::post('comision/send_dia_semana', [ComisionController::class, 'send_dia_semana'])->name('comision.send_dia_semana');
 
@@ -513,3 +516,10 @@ Route::get('agremiado/obtener_local/{id_regional}', [AgremiadoController::class,
 Route::get('agremiado/obtener_datos_agremiado/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado'])->name('agremiado.obtener_datos_agremiado');
 
 Route::get('periodoComision/actualizarEstadoPeriodoComision', [PeriodoComisionController::class, 'actualizarEstadoPeriodoComision'])->name('periodoComision.actualizarEstadoPeriodoComision');
+
+Route::get('coordinador_zonal/consulta_coordinadorZonal', [CoordinadorZonalController::class, 'consulta_coordinadorZonal'])->name('coordinador_zonal.consulta_coordinadorZonal');
+Route::post('coordinador_zonal/listar_coordinadorZonal_ajax', [CoordinadorZonalController::class, 'listar_coordinadorZonal_ajax'])->name('coordinador_zonal.listar_coordinadorZonal_ajax');
+Route::get('coordinador_zonal/modal_coordinadorZonal_nuevoCoordinadorZonal/{id}', [CoordinadorZonalController::class, 'modal_coordinadorZonal_nuevoCoordinadorZonal'])->name('coordinador_zonal.modal_coordinadorZonal_nuevoCoordinadorZonal');
+Route::post('coordinador_zonal/send_coordinador_zonal_nuevoCoordinadorZonal', [CoordinadorZonalController::class, 'send_coordinador_zonal_nuevoCoordinadorZonal'])->name('coordinador_zonal.send_coordinador_zonal_nuevoCoordinadorZonal');
+
+Route::get('movilidad/obtener_comision/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision'])->name('movilidad.obtener_comision');

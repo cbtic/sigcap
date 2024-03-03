@@ -574,7 +574,8 @@ legend.scheduler-border {
 																	<label class="form-control-sm">Nro Cuotas</label>
 																	<!--<select name="cboCuotas" id="cboCuotas" class="form-control form-control-sm" onchange="cargarValorizacion()">-->
 																	<select name="cboCuotas" id="cboCuotas" class="form-control form-control-sm">
-																		<option value="6" selected>06 meses</option>
+																		<option value="3" selected>03 meses</option>
+																		<option value="6">06 meses</option>
 																		<option value="9">09 meses</option>
 																		<option value="12">12 meses</option>
 																		<option value="24">24 meses</option>
