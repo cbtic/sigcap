@@ -137,9 +137,8 @@
 
     function generarCuotas() {
 
-        var cantidad = $("#tblConceptos tr").length;
-		if (cantidad > 1) $("#tblConceptos tr").remove();
-        
+        $('#tblConceptos tbody').html("");
+
         var n = 0;
         var nroCuotas = $('#numcuota_').val();
         var total = $('#totalcredito_').val();
@@ -147,16 +146,39 @@
         var d = new Date();
         //fecha_cuota = FormatFecha(sumarDias(d, plazo))
 
-        for (let i = 0; i < nroCuotas; i++) {
-            n++;
-            fecha_cuota = FormatFecha(sumarDias(d, 30));
+        var newRow = "";
+		for (let i = 0; i < nroCuotas; i++) {
+            
+			fecha_cuota = FormatFecha(sumarDias(d, 30));
 
             total_frac = parseFloat((total) / (nroCuotas)).toFixed(1);
 
-            $('#tblConceptos tr:last').after('<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td>   <td width="10%"> <input type="text"  name="importe_" id="importe_" value="' + total_frac + '" class="form-control form-control-sm"></td>  </td>   <td width="10%"> <input type="date"  name="fechacuota_" id="fechacuota_" value="' + fecha_cuota + '" class="form-control form-control-sm"></td>  </tr> ');
-            $('#tblConceptos tr:last').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][Monto]" value=""> </td>');
-        }
+            newRow = "";
+			if(i == 0){
+                n=1
+				newRow+='<tr>';
+				newRow+='<td width="5%">' + n + '</td>  ';
+				newRow+='<td> <input  name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '" > </td>';
+                newRow+='<td> <input  name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker "> </td>';
+				
+				
+				newRow+='</tr>';
+			}else{
+				n++;
+				newRow+='<tr>';
+				newRow+='<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> ';
+				newRow+='<td> <input  name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '"> </td>';
+                newRow+='<td> <input  name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker  "> </td>';
+				
+				
+				newRow+='</tr>';
+			}
+		
+			//alert(newRow);
+			$('#tblConceptos tbody').append(newRow);
+		}
 
+      
     }
 </script>
 
