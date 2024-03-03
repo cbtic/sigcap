@@ -90,7 +90,7 @@
 					</li>
 					@endif
 
-                    @if(Gate::check('Concurso') || Gate::check('Resultado de Concurso') || Gate::check('Consulta de Resultado de Concurso') || Gate::check('Comisiones') || Gate::check('Consulta de Comisiones') || Gate::check('Programacion de Sesiones') || Gate::check('Derecho de Revision') || Gate::check('Registro Revisor Urbano') || Gate::check('Computo de Sesiones'))
+                    @if(Gate::check('Concurso') || Gate::check('Resultado de Concurso') || Gate::check('Consulta de Resultado de Concurso') || Gate::check('Coordinador Zonal') || Gate::check('Comisiones') || Gate::check('Consulta de Comisiones') || Gate::check('Programacion de Sesiones') || Gate::check('Derecho de Revision') || Gate::check('Registro Revisor Urbano') || Gate::check('Computo de Sesiones'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Asuntos Tecnicos</a>
@@ -103,6 +103,9 @@
 								@endcan
 								@can('Consulta de Resultado de Concurso')
 								<a href="/concurso/consulta_resultado" class="dropdown-item">Consulta de Resultado de Concurso</a>
+								@endcan
+								@can('Coordinador Zonal')
+								<a href="/coordinador_zonal/consulta_coordinadorZonal" class="dropdown-item">Coordinador Zonal</a>
 								@endcan
 								@can('Comisiones')
 								<a href="/comision/consulta_comision" class="dropdown-item">Comisiones</a>

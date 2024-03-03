@@ -137,6 +137,9 @@
 
     function generarCuotas() {
 
+        var cantidad = $("#tblConceptos tr").length;
+		if (cantidad > 1) $("#tblConceptos tr").remove();
+        
         var n = 0;
         var nroCuotas = $('#numcuota_').val();
         var total = $('#totalcredito_').val();

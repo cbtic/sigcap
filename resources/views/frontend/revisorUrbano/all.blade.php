@@ -289,6 +289,75 @@
                         </div>
                     </div>
 					</form>
+                </div>
+
+            <div class="card-body">
+
+                <div class="row justify-content-center">
+        
+                    <div class="col col-sm-12 align-self-center">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>
+                                    Lista de C&oacute;digo RU
+                                </strong>
+                            </div><!--card-header-->
+
+                    <form class="form-horizontal" method="post" action="" id="frmCodigoRU" autocomplete="off">
+                    <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                    
+                    <div class="row" style="padding:20px 20px 0px 20px;">
+
+                        <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
+							<input class="form-control form-control-sm" id="numero_cap" name="numero_cap" placeholder="N° de CAP">
+						</div>
+
+                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+							<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Agremiado">
+						</div>
+
+                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+							<input class="form-control form-control-sm" id="codigo_itf" name="codigo_itf" placeholder="C&oacute;digo ITF">
+						</div>
+
+                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+							<input class="form-control form-control-sm" id="codigo_ru" name="codigo_ru" placeholder="C&oacute;digo RU">
+						</div>
+
+                        <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
+							<select name="situacion_pago" id="situacion_pago" class="form-control form-control-sm">
+                                <option value="0" selected="selected">--Selecionar Situaci&oacute;n Venta--</option>
+                                <option value="1">PENDIENTE</option>
+								<option value="1">PAGADO</option>
+                                <option value="2">EXONERADO</option>
+                                <option value="3">ANULADO</option>
+                                
+								<!--<option value="">Todos</option>
+								<option value="1" selected="selected">Pendientes</option>
+                                <option value="0">Eliminado</option>
+								<option value="2">Pagados</option>-->
+							</select>
+						
+                        </div>
+
+                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+							<select name="estado" id="estado" class="form-control form-control-sm">
+                                <option value="">Todos</option>
+								<option value="1" selected="selected">Activo</option>
+                                <option value="0">Inactivo</option>
+								<!--<option value="">Todos</option>
+								<option value="1" selected="selected">Pendientes</option>
+                                <option value="0">Eliminado</option>
+								<option value="2">Pagados</option>-->
+							</select>
+						
+                        </div>
+						<div class="col-lg-2 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
+							<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						</div>
+
+                    </div>
 					
                 <div class="card-body">				
 
@@ -296,15 +365,16 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
+                            <th>CAP</th>
                             <th>Nombre</th>
                             <th>Fecha Colegiado</th>
                             <th>Situaci&oacute;n</th>
                             <th>C&oacute;digo ITF</th>
                             <th>C&oacute;digo RU</th>
-                            <!--<th>Fecha</th>
+                            <th>Fecha</th>
                             <th>Serie</th>
                             <th>N&uacute;mero</th>
-                            <th>Sit. Documento Venta</th>-->
+                            <th>Sit. Documento Venta</th>
                             <th>Estado</th>
 							<th>Acciones</th>
                         </tr>

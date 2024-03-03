@@ -37,18 +37,20 @@ class RevisorUrbanoController extends Controller
         $tipo_documento = $tablaMaestra_model->getMaestroByTipo(110);
         $ubicacion_cliente = $tablaMaestra_model->getMaestroByTipo(63);
         $situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		$situacion_venta = $tablaMaestra_model->getMaestroByTipo(92);
 
-        return view('frontend.revisorUrbano.all',compact('agremiado','persona','tipo_documento','region','ubicacion_cliente','situacion_cliente'));
+        return view('frontend.revisorUrbano.all',compact('agremiado','persona','tipo_documento','region','ubicacion_cliente','situacion_cliente','situacion_venta'));
     }
 
     public function listar_revisorUrbano_ajax(Request $request){
 	
 		$revisorUrbano_model = new RevisorUrbano;
-		$p[]="";//$request->ruc;
+		$p[]=$request->numero_cap;
+		$p[]=$request->agremiado;//$request->ruc;
 		$p[]="";
 		$p[]="";
-		$p[]="";
-        $p[]="";
+		$p[]=$request->codigo_itf;
+        $p[]=$request->codigo_ru;
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
