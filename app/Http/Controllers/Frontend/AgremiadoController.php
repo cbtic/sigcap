@@ -1542,6 +1542,23 @@ class AgremiadoController extends Controller
 		$local = $local_model->getLocal($id_regional);
 		echo json_encode($local);
 	}
+
+	public function modal_suspension($id){
+		
+		$tablaMaestra_model = new TablaMaestra;
+		
+		if($id>0){
+			$suspension = Suspension::find($id);
+		}else{
+			$suspension = new Suspension;
+		}
+		
+		$universidad = $tablaMaestra_model->getMaestroByTipo(85);
+		$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
+		
+		return view('frontend.agremiado.modal_suspension',compact('id','suspension'));
+	
+	}
 			
 }
 

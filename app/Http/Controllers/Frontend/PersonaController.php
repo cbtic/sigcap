@@ -728,4 +728,31 @@ class PersonaController extends Controller
 
 		return view('frontend.persona.modal_personaNuevo',compact('sexo','tipo_documento', 'id_tipo_documento', 'numero_documento'));
 	}
+
+	public function obtenerPersona($numero_documento){
+
+        $persona_model = new Persona;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+
+        //$persona = $persona_model->getPersonaDni($numero_documento);
+		$persona = Persona::where('numero_documento',$numero_documento)->where('estado','1')->first();
+
+        /*$array["sw"] = $sw;
+        $array["persona"] = $persona;
+        echo json_encode($array);*/
+
+		if($persona){
+
+			$array["persona"] = $persona;
+			echo json_encode($array);
+		}else{
+			$sw = false;
+			//$msg = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
+			//$array["error"] = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
+			$array["sw"] = $sw;
+			//$array["msg"] = $msg;
+		}
+
+    }
 }
