@@ -10,8 +10,51 @@ $(document).ready(function () {
 		changeYear: true,
 	});
 
+	$(function() {
+		$('#producto01').keyup(function() {
+			this.value = this.value.toLocaleUpperCase();
+		});
+	});
+
+	calculoDetraccion();
+	
+
 });
 
+function calculoDetraccion(){
+
+	var total_fac = $('#total_fac').val();
+	//alert(total_fac);
+	
+	var total_detraccion =total_fac*12/100;
+	var nc_detraccion = "00098082204";
+	var tipo_detraccion = "004";
+	var afecta_a = "022";
+	var medio_pago = "004";
+
+	
+
+	if (total_fac>700){
+
+		$('#porcentaje_detraccion').val("12%");
+		
+		$('#monto_detraccion').val(total_detraccion);
+		$('#nc_detraccion').val(nc_detraccion);
+		$('#tipo_detraccion').val(tipo_detraccion);
+		$('#afecta_a').val(afecta_a);
+		$('#medio_pago').val(medio_pago);
+		
+
+	}else{
+		$('#porcentaje_detraccion').val("");
+		$('#monto_detraccion').val("");
+		$('#nc_detraccion').val("");
+		$('#tipo_detraccion').val("");
+		$('#afecta_a').val("");
+		$('#medio_pago').val("");
+
+	}
+}
 
 function guardarFactura(){
 
@@ -465,5 +508,92 @@ function obtenerTitular(){
 		});
 	
 	}
+
+	$('#producto01').autocomplete({
+		appendTo: "#producto01_list",
+		source: function (request, response) {
+			$.ajax({
+				url: '/forma_pago/' + $('#producto01').val(),
+				dataType: "json",
+				success: function (data) {
+					 alert(JSON.stringify(data));
+					var resp = $.map(data, function (obj) {
+						console.log(obj);
+						//return obj.denominacion;
+						var hash = { key: obj.codigo, value: obj.denominacion };
+						return hash;
+					});
+					alert(JSON.stringify(resp));
+					//console.log(JSON.stringify(resp));
+					response(resp);
+				},
+				error: function () {
+					alert("cc");
+				}
+			});
+		},
+		select: function (event, ui) {
+			alert(ui.item.key);
+			flag_select = true;
+			$('#producto01').attr("readonly", true);
+		},
+		minLength: 2,
+		delay: 100
+	}).blur(function () {
+		if (typeof flag_select == "undefined") {
+			$('#producto01').val("");
+		}
+	});
+	
+	$(function() {
+		$('#producto01').click(function() {
+		  $('#producto01').select();
+		});		
+	  });
+	var cuentaproductos=1;
+
+	function cargaProductoNuevo() { 
+		cuentaproductos = cuentaproductos + 1;
+		$('#tblProductos tr:last').after('<tr id="fila'+pad(cuentaproductos, 2)+'"><td class="text-right">#</td><td><input type="text" name="producto[]" id="producto'+pad(cuentaproductos, 2)+'" onkeyup="var query = $(this).val();$.ajax({url:\'../especie/search\',type:\'GET\',data:{\'denominacion\':query,\'listadoproducto\':\''+pad(cuentaproductos, 2)+'\'},success:function (data) {$(\'#producto'+pad(cuentaproductos, 2)+'_list\').html(data);}})" class="form-control form-control-sm"><div id="producto'+pad(cuentaproductos, 2)+'_list"></div></td><td><input type="text" name="porcentajeproducto[]" id="porcentajeproducto'+pad(cuentaproductos, 2)+'" class="form-control form-control-sm" onchange="calculaPorcentaje('+cuentaproductos+')" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td><td><input readonly="readonly" style="border:0px" type="text" name="peso_aprox[]" value="0" id=peso_aprox_'+pad(cuentaproductos, 2)+' /><input type="hidden" name="origen[]" value="" id=origen'+pad(cuentaproductos, 2)+' /><input type="hidden" name="idproducto[]" value="" id=idproducto'+pad(cuentaproductos, 2)+' /></td></tr>');
+
+	}
+
+
+	function eliminaFila(fila) {
+		if (fila>1) {
+			cuentaproductos = cuentaproductos - 1;
+			$('#fila'+pad(fila, 2)).remove();
+		}else{
+			$('#producto01').val("");
+			$('#producto01').attr("readonly",false);
+		}
+	}
+
+	function calculaPorcentaje(fila) {
+		if ($("#input_peso_ingreso").val == "") {
+			contador = 0;
+			$("input[name^='porcentajeproducto']").each(function(i, obj) {
+				contador += parseInt(obj.value);
+			});
+			if (contador > 100) {
+				//alert("La suma no debe exceder del 100%");
+				bootbox.alert("La suma no debe exceder del 100%"); 
+			}
+		} else {
+			contador = 0;
+			$("input[name^='porcentajeproducto']").each(function(i, obj) {
+				contador += parseInt(obj.value);
+			});
+			if (contador > 100) {
+				//alert("La suma no debe exceder del 100%");
+				bootbox.alert("La suma no debe exceder del 100%"); 
+			}
+			//console.log($('#porcentajeproducto'+pad(fila, 2)).val());
+			valor_procentaje = $('#porcentajeproducto'+pad(fila, 2)).val()/100*($("#input_peso_a_cobrar").val());
+			$('#peso_aprox_'+pad(fila, 2)).val(Math.round(valor_procentaje));
+			
+		}
+	}
+
 }
 
