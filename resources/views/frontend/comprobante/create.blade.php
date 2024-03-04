@@ -147,13 +147,20 @@
         //fecha_cuota = FormatFecha(sumarDias(d, plazo))
 
         var newRow = "";
+<<<<<<< HEAD
 		for (let i = 0; i < nroCuotas; i++) {
             
 			fecha_cuota = FormatFecha(sumarDias(d, 30));
+=======
+        for (let i = 0; i < nroCuotas; i++) {
+
+            fecha_cuota = FormatFecha(sumarDias(d, 30));
+>>>>>>> b953a72f7c82c6915cc9eb1aebc3ccdd682a3023
 
             total_frac = parseFloat((total) / (nroCuotas)).toFixed(1);
 
             newRow = "";
+<<<<<<< HEAD
 			if(i == 0){
                 n=1
 				newRow+='<tr>';
@@ -179,6 +186,32 @@
 		}
 
       
+=======
+            if (i == 0) {
+                n = 1
+                newRow += '<tr>';
+                newRow += '<td width="5%">' + n + '</td>  ';
+                newRow += '<td> <input  name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '" > </td>';
+                newRow += '<td> <input  name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker "> </td>';
+
+
+                newRow += '</tr>';
+            } else {
+                n++;
+                newRow += '<tr>';
+                newRow += '<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> ';
+                newRow += '<td> <input  name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '"> </td>';
+                newRow += '<td> <input  name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker  "> </td>';
+
+
+                newRow += '</tr>';
+            }
+
+            //alert(newRow);
+            $('#tblConceptos tbody').append(newRow);
+        }
+
+>>>>>>> b953a72f7c82c6915cc9eb1aebc3ccdd682a3023
     }
 </script>
 
@@ -341,39 +374,30 @@
                     <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}} " id="frmFacturacion" name="frmFacturacion" autocomplete="off">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
-
                         <input type="hidden" name="totalDescuento" id="totalDescuento" value="<?php echo $totalDescuento; ?>">
                         <input type="hidden" name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $id_tipo_afectacion_pp; ?>">
                         <input type="hidden" name="descuentopp" id="descuentopp" value="<?php echo $descuentopp; ?>">
-
                         <input type="hidden" name="id_pronto_pago" id="id_pronto_pago" value="<?php echo $id_pronto_pago; ?>">
 
-
-                        <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
-                                                                        echo $TipoF;
-                                                                    } ?>">
+                        <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {echo $TipoF;} ?>">
                         <input type="hidden" name="vestab" value="1">
-                        <input type="hidden" name="totalF" value="<?php if ($trans == 'FA') {
-                                                                        echo $total;
-                                                                    } ?>">
-                        <input type="hidden" name="ubicacion" value="<?php if ($trans == 'FA') {
-                                                                            echo $ubicacion;
-                                                                        } ?>">
-                        <input type="hidden" name="persona" value="<?php if ($trans == 'FA') {
-                                                                        echo $persona;
-                                                                    } ?>">
-                        <input type="hidden" name="id_caja" value="<?php if ($trans == 'FA') {
-                                                                        echo $id_caja;
-                                                                    } ?>">
-                        <input type="hidden" name="MonAd" value="<?php if ($trans == 'FA') {
-                                                                        echo $MonAd;
-                                                                    } ?>">
-                        <input type="hidden" name="adelanto" value="<?php if ($trans == 'FA') {
-                                                                        echo $adelanto;
-                                                                    } ?>">
-                        <input type="hidden" name="id_factura" value="<?php if ($trans == 'FE') {
-                                                                            echo $facturas->id;
-                                                                        } ?>">
+                        <input type="hidden" name="totalF" value="<?php if ($trans == 'FA') {echo $total;} ?>">
+                        <input type="hidden" name="ubicacion" value="<?php if ($trans == 'FA') {echo $ubicacion;} ?>">
+                        <input type="hidden" name="persona" value="<?php if ($trans == 'FA') {echo $persona;} ?>">
+                        <input type="hidden" name="id_caja" value="<?php if ($trans == 'FA') {echo $id_caja;} ?>">
+                        <input type="hidden" name="MonAd" value="<?php if ($trans == 'FA') {echo $MonAd;} ?>">
+                        <input type="hidden" name="adelanto" value="<?php if ($trans == 'FA') {echo $adelanto;} ?>">
+                        <input type="hidden" name="id_factura" value="<?php if ($trans == 'FE') {echo $facturas->id;} ?>">
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <?php
+                                $disabled = "disabled='disabled'";
+                                ?>
+                            </div>
+                        </div>
+
+
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div id="" class="row">
@@ -893,6 +917,65 @@
                                     <!--card-body-->
                                 </div>
                                 <!--card-->
+
+                                <br>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>
+                                            <!--@lang('labels.frontend.asistencia.box_asistencia')-->
+                                            Medios de Pago
+                                        </strong>
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <div class="table-responsive overflow-auto" style="max-height: 500px;">
+
+                                            <table id="tblProductos" class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-right" width="5%">#</th>
+                                                        <th width="45%">Medio</th>
+                                                        <th width="15%">Monto</th>
+                                                        <th width="35%">Nro Operacion</th>
+                                                    </tr>
+                                                    <tr id="fila01">
+                                                        <td class="text-right">#</td>
+                                                        <td><input type="text" name="producto[]" id="producto01" class="form-control form-control-sm">
+                                                            <div class="input-group" style="position: absolute;" id="producto01_list"></div>
+                                                        </td>
+                                                        <td><input type="text" name="porcentajeproducto[]" id="porcentajeproducto01" class="form-control form-control-sm" value="100" onchange="calculaPorcentaje(1)" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td>
+                                                        <td><input type="text" readonly="readonly" style="border:0px" id="peso_aprox_01" name="peso_aprox[]" value="0 kg" /></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--table-responsive-->
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group mb-0 clearfix">
+                                                    <button id="btnAgregarProducto" type="button" class="btn btn-primary" <?php echo $disabled ?> onclick="cargaProductoNuevo(cuentaproductos)">
+                                                        Añadir Medio
+                                                    </button>
+                                                    <button id="btnEliminarProducto" type="button" class="btn btn-danger" <?php echo $disabled ?> onclick="eliminaFila(cuentaproductos)">
+                                                        Eliminar Medio
+                                                    </button>
+                                                    <input type="hidden" name="contador" id="contador">
+                                                </div>
+                                                <!--form-group-->
+                                            </div>
+                                            <!--col-->
+                                        </div>
+                                        <!--row-->
+
+                                    </div>
+                                    <!--card-body-->
+                                </div>
 
 
                                 <?php if ($smodulo == 32) { ?>
