@@ -67,6 +67,8 @@ class ConcursoController extends Controller
 		$p[]=$request->id_regional;
 		$p[]=$request->id_situacion;
 		$p[]=$request->id_estado;
+		$p[]="t1.id";
+		$p[]="desc";
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $concursoInscripcione_model->listar_concurso_agremiado($p);
