@@ -40,6 +40,10 @@ class ComprobanteController extends Controller
         $totalDescuento=$request->totalDescuento;
 
         $id_tipo_afectacion_pp=$request->id_tipo_afectacion_pp;
+
+        $email=$request->email;
+
+
         
         
         //print_r($id_tipo_afectacion_pp); exit();
@@ -1005,6 +1009,14 @@ class ComprobanteController extends Controller
             $facturaLog->info('FacturaLog', $log);
 		}
     }
+
+    public function forma_pago($term)
+    {
+        print_r("Forma de Pago"); exit();
+        $tabla_model = new TablaMaestra;
+		$forma_pago = $tabla_model->getMaestroByTipoAndDenomina('19',$term);
+         return response()->json($forma_pago);
+    }
 	
     public function firmar($id_factura){
 
@@ -1520,4 +1532,6 @@ class ComprobanteController extends Controller
         //$respbuild->result;
 
     }
+
+
 }
