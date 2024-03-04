@@ -10,6 +10,10 @@ $(document).ready(function () {
 	$('#btnNuevo').click(function () {
 		modalEmpresa(0);
 	});
+
+	$('#btnSuspension').click(function () {
+		modal_suspension(0);
+	});
 		
 	datatablenew();
 	/*	
@@ -584,6 +588,22 @@ function modalEmpresa(id){
 
 	$.ajax({
 			url: "/empresa/modal_empresa/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modal_suspension(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/agremiado/modal_suspension/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);

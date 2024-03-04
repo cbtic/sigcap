@@ -38,6 +38,10 @@ $(document).ready(function () {
 	$('#btnNuevoEstudio').on('click', function () {
 		modalEstudio(0);
 	});
+
+	$('#btnSuspension').click(function () {
+		modal_suspension(0);
+	});
 	
 	$('#btnNuevoIdioma').on('click', function () {
 		modalIdioma(0);
@@ -3296,6 +3300,23 @@ function modalEstudio(id){
 			url: "/agremiado/modal_agremiado_estudio/"+id,
 			type: "GET",
 			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modal_suspension(id){
+	
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/agremiado/modal_suspension/"+id,
+			type: "GET",
+			success: function (result) {  
 					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
 			}

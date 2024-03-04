@@ -137,6 +137,30 @@ function habiliarTitular(){
 	*/
 }
 
+function guardarSesion(){
+
+    $.ajax({
+			url: "/coordinador_zonal/send_coordinador_sesion",
+            type: "POST",
+            //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
+            data : $("#frmCoordinador").serialize(),
+            success: function (result) {				
+
+				//alert(result);
+								
+				$('#openOverlayOpc').modal('hide');
+
+				cargarValorizacion();
+
+				//var jsondata = JSON.parse(result);
+
+				//alert(jsondata[0].idcomprobante);
+				//$('#idsolicitud').val(jsondata[0].idcomprobante);
+					
+            }
+    });
+}
+
 function guardarAfiliacion(){
     
     var msg = "";

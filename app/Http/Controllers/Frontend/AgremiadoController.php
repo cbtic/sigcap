@@ -21,6 +21,7 @@ use App\Models\Ubigeo;
 use App\Models\AgremiadoRole;
 use App\Models\ConcursoInscripcione;
 use App\Models\Locale;
+use App\Models\Suspensione;
 use Carbon\Carbon;
 use Auth;
 
@@ -121,6 +122,7 @@ class AgremiadoController extends Controller
 		$agremiadoTraslado_model = new AgremiadoTraslado;
 		$agremiadoSituacione_model = new AgremiadoSituacione;
 		$agremiadoRol_model = new AgremiadoRole;
+		$suspension_model = new Suspensione;
 		
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
@@ -1546,19 +1548,52 @@ class AgremiadoController extends Controller
 	public function modal_suspension($id){
 		
 		$tablaMaestra_model = new TablaMaestra;
+		$agremiado_model = new Agremiado;
 		
 		if($id>0){
-			$suspension = Suspension::find($id);
+			$suspension = Suspensione::find($id);
 		}else{
-			$suspension = new Suspension;
+			$agremiado = $agremiado_model->getAgremiadoAll();
+			$suspension = new Suspensione;
+
 		}
 		
 		$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.agremiado.modal_suspension',compact('id','suspension'));
+		return view('frontend.agremiado.modal_suspension',compact('id','suspension','agremiado'));
 	
 	}
+
+	public function send_agremiado_suspension(Request $request){
+		
+		$id_user = Auth::user()->id;
+
+		if($request->id == 0){
+			$suspension = new Suspensione;
+		}else{
+			$suspension = Suspensione::find($request->id);
+		}
+		
+		$suspension->id_agremiado = $request->id_agremiado;
+		$suspension->fecha_inicio = $request->fecha_inicio;
+		$suspension->fecha_fin = $request->fecha_inicio;
+		$suspension->documento = $request->ruta_documento;
+		//$suspension->estado = 1;
+		$suspension->id_usuario_inserta = $id_user;
+		$suspension->save();
+			
+    }
+	
+	public function obtener_suspension($id_agremiado){
+
+        $suspension_model = new Suspensione;
+        $sw = true;
+        $suspension_lista = $suspension_model->listar_suspension_agremiado($id_agremiado);
+        //print_r($parentesco_lista);exit();
+        return view('frontend.agremiado.lista_suspension',compact('suspension_lista'));
+
+    }
 			
 }
 

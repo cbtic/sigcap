@@ -528,3 +528,9 @@ Route::get('movilidad/obtener_comision/{periodo}/{tipo_comision}', [MovilidadCon
 Route::get('ingreso/modal_beneficiario/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_beneficiario'])->name('ingreso.modal_beneficiario');
 
 Route::get('persona/obtenerPersona/{numero_documento}', [PersonaController::class, 'obtenerPersona'])->name('persona.obtenerPersona');
+Route::get('agremiado/modal_suspension/{id}', [AgremiadoController::class, 'modal_suspension'])->name('agremiado.modal_suspension');
+
+Route::post('coordinador_zonal/send_coordinador_sesion', [CoordinadorZonalController::class, 'send_coordinador_sesion'])->name('coordinador_zonal.send_coordinador_sesion');
+Route::post('agremiado/send_agremiado_suspension', [AgremiadoController::class, 'send_agremiado_suspension'])->name('agremiado.send_agremiado_suspension');
+Route::get('agremiado/obtener_suspension/{id_agremiado}', [AgremiadoController::class, 'obtener_suspension'])->name('agremiado.obtener_suspension');
+

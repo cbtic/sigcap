@@ -216,79 +216,40 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	 
+	datatableSuspension()
 
 });
 
-function validacion(){
-    
-    var msg = "";
-    var cobservaciones=$("#frmComentar #cobservaciones").val();
-    
-    if(cobservaciones==""){msg+="Debe ingresar una Observacion <br>";}
-    
-    if(msg!=""){
-        bootbox.alert(msg); 
-        return false;
-    }
-}
-
-function guardarCita__(){
-	alert("fdssf");
-}
-
-function guardarCita(id_medico,fecha_cita){
-    
-    var msg = "";
-    var id_ipress = $('#id_ipress').val();
-    var id_consultorio = $('#id_consultorio').val();
-    var fecha_atencion = $('#fecha_atencion').val();
-    var dni_beneficiario = $("#dni_beneficiario").val();
-	//alert(id_ipress);
-	if(dni_beneficiario == "")msg += "Debe ingresar el numero de documento <br>";
-    if(id_ipress==""){msg+="Debe ingresar una Ipress<br>";}
-    if(id_consultorio==""){msg+="Debe ingresar un Consultorio<br>";}
-    if(fecha_atencion==""){msg+="Debe ingresar una fecha de atencion<br>";}
-   
-    if(msg!=""){
-        bootbox.alert(msg); 
-        return false;
-    }
-    else{
-        fn_save_cita(id_medico,fecha_cita);
-    }
-}
-
-function fn_save_situacion(){
+function fn_save_suspension(){
     
 	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_agremiado = $('#id_agremiado').val();
-	var id_pais_destino = $('#id_pais_destino').val();
 	var fecha_inicio = $('#fecha_inicio').val();
 	var fecha_fin = $('#fecha_fin').val();
 	var ruta_documento = $('#ruta_documento').val();
 	
-	if(id_pais_destino == "0" || id_pais_destino == "")msg+="Debe seleccionar un Pa&iacute;s Destion<br>";
 	if(fecha_inicio == "")msg += "Debe ingresar una fecha de inicio <br>";
 	if(fecha_fin == "")msg += "Debe ingresar una fecha de fin <br>";
 	if(ruta_documento == "")msg += "Debe ingresar una ruta de documento <br>";
 	
     if(msg!=""){
-        bootbox.alert(msg); 
+        bootbox.alert(msg);
         return false;
     }
 	
     $.ajax({
-			url: "/agremiado/send_agremiado_situacion",
+			url: "/agremiado/send_agremiado_suspension",
             type: "POST",
-            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_pais_destino:id_pais_destino,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,ruta_documento:ruta_documento},
+            data : {_token:_token,id:id,id_agremiado:id_agremiado,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,ruta_documento:ruta_documento},
             success: function (result) {
 				
 				//$('#openOverlayOpc').modal('hide');
 				//modalSituacion(id_agremiado);
+				datatableSuspension();
 				window.location.reload();
+				$('#openOverlayOpc').modal('hide');
 				
 				/*
 				$('#openOverlayOpc').modal('hide');
@@ -302,147 +263,28 @@ function fn_save_situacion(){
     });
 }
 
-function fn_liberar(id){
-    
-	//var id_estacionamiento = $('#id_estacionamiento').val();
-	var _token = $('#_token').val();
+function datatableSuspension(){
 	
-    $.ajax({
-			url: "/estacionamiento/liberar_asignacion_estacionamiento_vehiculo",
-            type: "POST",
-            data : {_token:_token,id:id},
-            success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				cargarAsignarEstacionamiento();
-            }
-    });
-}
-
-
-function validarLiquidacion() {
 	
-	var msg = "";
-	var sw = true;
+	var id_agremiado =  $('#id_agremiado').val();
 	
-	var saldo_liquidado = $('#saldo_liquidado').val();
-	var estado = $('#estado').val();
-	
-	if(saldo_liquidado == "")msg += "Debe ingresar un saldo liquidado <br>";
-	if(estado == "")msg += "Debe ingresar una observacion <br>";
-	
-	if(msg!=""){
-		bootbox.alert(msg);
-		//return false;
-	} else {
-		//submitFrm();
-		document.frmLiquidacion.submit();
-	}
-	return false;
-}
-
-
-function obtenerVehiculo(id,obj){
-	
-	//$("#tblPlan tbody text-white").attr('class','bg-primary text-white');
-	if(obj!=undefined){
-		$("#tblSinReservaEstacionamiento tbody tr").each(function (ii, oo) {
-			var clase = $(this).attr("clase");
-			$(this).attr('class',clase);
-		});
-		
-		$(obj).attr('class','bg-success text-white');
-	}
-	//$('#tblPlanDetalle tbody').html("");
-	$('#id_empresa').val(id);
-	var id_estacionamiento = $('#id_estacionamiento').val();
+    $("#tblSuspension tbody").html("");
 	$.ajax({
-		url: '/estacionamiento/obtener_vehiculo/'+id+'/'+id_estacionamiento,
-		dataType: "json",
-		success: function(result){
-			
-			var newRow = "";
-			$('#tblPlanDetalle').dataTable().fnDestroy(); //la destruimos
-			$('#tblPlanDetalle tbody').html("");
-			$(result).each(function (ii, oo) {
-				newRow += "<tr class='normal'><td>"+oo.placa+"</td>";
-				newRow += '<td class="text-left" style="padding:0px!important;margin:0px!important">';
-				newRow += '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-				newRow += '<a href="javascript:void(0)" onClick=fn_save("'+oo.id_vehiculo+'") class="btn btn-sm btn-normal">';
-				newRow += '<i class="fa fa-2x fa-check" style="color:green"></i></a></a></div></td></tr>';
-			});
-			$('#tblPlanDetalle tbody').html(newRow);
-			
-			$('#tblPlanDetalle').DataTable({
-				//"sPaginationType": "full_numbers",
-				"paging":false,
-				"dom": '<"top">rt<"bottom"flpi><"clear">',
-				"language": {"url": "/js/Spanish.json"},
-			});
-			
-			$("#system-search2").keyup(function() {
-				var dataTable = $('#tblPlanDetalle').dataTable();
-			   dataTable.fnFilter(this.value);
-			});
-			
-		}
-		
+			url: "/agremiado/obtener_suspension/"+id_agremiado,
+			type: "GET",
+			success: function (result) {  
+					$("#tblSuspension tbody").html(result);
+			}
 	});
-	
 }
 
-function cargar_tipo_proveedor(){
-	
-	var tipo_proveedor = 0;
-	if($('#tipo_proveedor_').is(":checked"))tipo_proveedor = 1;
-	
-	$("#divPersona").hide();
-	$("#divEmpresa").hide();
-	
-	$("#empresa_").val("");
-	$("#persona_").val("");
-	
-	$("#id_empresa").val("");
-	$("#id_persona").val("");
-	
-	if(tipo_proveedor==0)$("#divPersona").show();
-	if(tipo_proveedor==1)$("#divEmpresa").show();
-	
-}
-
-/*
-$('#fecha_solicitud').datepicker({
-	autoclose: true,
-	dateFormat: 'dd-mm-yy',
-	changeMonth: true,
-	changeYear: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-/*
-$('#fecha_solicitud').datepicker({
-	format: "dd/mm/yyyy",
-	startDate: "01-01-2015",
-	endDate: "01-01-2020",
-	todayBtn: "linked",
-	autoclose: true,
-	todayHighlight: true,
-	container: '#openOverlayOpc modal-body'
-});
-*/
-
-/*				
-format: "dd/mm/yyyy",
-startDate: "01-01-2015",
-endDate: "01-01-2020",
-todayBtn: "linked",
-autoclose: true,
-todayHighlight: true,
-container: '#myModal modal-body'
-*/	
 </script>
 
-
 <body class="hold-transition skin-blue sidebar-mini">
+
+	<div class="panel-heading close-heading">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
 
     <div>
 		<!--
@@ -456,7 +298,7 @@ container: '#myModal modal-body'
 
 		<div class="card">
 			
-			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
+			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
 				Registro Suspensi&oacute;n
 			</div>
 			
@@ -466,95 +308,91 @@ container: '#myModal modal-body'
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 					
-					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+					<!--<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">-->
+					<meta name="csrf-token" content="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
-					
-					<div class="row" style="padding-left:10px">
+									
+									
+								<div class="row" style="padding-left:10px">
+									
+								<!--<div class="col-lg-6">
+									<div class="form-group">
+										<label class="control-label form-control-sm">N&uacute;mero CAP</label>
+										<input type="text" name="numero_cap" id="numero_cap"
+										value="<?php /*echo $agremiado->numero_cap*/?>" placeholder="" class="form-control form-control-sm col-lg-12" >
+									</div>
+								</div>-->
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label class="control-label form-control-sm">Fecha Inicio</label>
+											<input type="text" name="fecha_inicio" id="fecha_inicio"
+											value="<?php if($suspension->fecha_inicio!="")echo date("d-m-Y", strtotime($suspension->fecha_inicio))?>" placeholder="" class="form-control form-control-sm col-lg-12" >
+										</div>
+									</div>
 						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha Inicio</label>
-								<input type="text" name="fecha_inicio" id="fecha_inicio"
-								value="<?php if($agremiadoSituacion->fecha_inicio!="")echo date("d-m-Y", strtotime($agremiadoSituacion->fecha_inicio))?>" placeholder="" class="form-control form-control-sm col-lg-12" >
-							</div>
-						</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label class="control-label form-control-sm">Fecha Fin</label>
+											<input type="text" name="fecha_fin" id="fecha_fin"
+											value="<?php if($suspension->fecha_fin!="")echo date("d-m-Y", strtotime($suspension->fecha_fin))?>" placeholder="" class="form-control form-control-sm col-lg-12" >
+										</div>
+									</div>
 						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha Fin</label>
-								<input type="text" name="fecha_fin" id="fecha_fin"
-								value="<?php if($agremiadoSituacion->fecha_fin!="")echo date("d-m-Y", strtotime($agremiadoSituacion->fecha_fin))?>" placeholder="" class="form-control form-control-sm col-lg-12" >
-							</div>
-						</div>
-						
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Ruta Documento</label>
-								<input type="text" name="ruta_documento" id="ruta_documento"
-								value="<?php echo $agremiadoSituacion->ruta_documento?>" placeholder="" class="form-control form-control-sm col-lg-12" >
-							</div>
-						</div>
-						
-					</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label class="control-label form-control-sm">Ruta Documento</label>
+											<input type="text" name="ruta_documento" id="ruta_documento"
+											value="<?php echo $suspension->documento?>" placeholder="" class="form-control form-control-sm col-lg-12" >
+										</div>
+									</div>
+									
+								</div>
 					
-					
-					
-					<div style="margin-top:15px" class="form-group">
-						<div class="col-sm-12 controls">
-							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_situacion()" class="btn btn-sm btn-success">Guardar</a>
-							</div>
-												
-						</div>
-					</div> 
-					
-              </div>
-			  
-              
-          </div>
-          <!-- /.box -->
-          
+								<div style="margin-top:15px" class="form-group">
+									<div class="col-sm-12 controls">
+										<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+											<a href="javascript:void(0)" onClick="fn_save_suspension()" class="btn btn-sm btn-success">Guardar</a>
+										</div>
+															
+									</div>
+								</div> 
+							</form>
+							<div class="card-body">	
 
-        </div>
+								<div class="table-responsive">
+								<table id="tblSuspension" class="table table-hover table-sm">
+									<thead>
+									<tr style="font-size:13px">
+										<th>N&uacute;mero CAP</th>
+										<!--<th>Nombre Comercial</th>-->
+										<th>Fecha Inicio</th>
+										<th>Fecha Fin</th>
+										<th>Documento</th>
+									</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								</div>
+						</div>
+          			</div>
+				</div>
+          <!-- /.box -->
+        	</div>
+		</div>
         <!--/.col (left) -->
-            
-     
-          </div>
-          <!-- /.row -->
-        </section>
-        <!-- /.content -->
     </div>
+        <!-- /.content -->
+</div>
     <!-- /.content-wrapper -->
-    
 <script type="text/javascript">
 $(document).ready(function () {
 	
-	
-	$('#tblReservaEstacionamiento').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
 	$("#system-search").keyup(function() {
 		var dataTable = $('#tblReservaEstacionamiento').dataTable();
 		dataTable.fnFilter(this.value);
 	}); 
-	
-	$('#tblReservaEstacionamientoPreferente').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-searchp").keyup(function() {
-		var dataTable = $('#tblReservaEstacionamientoPreferente').dataTable();
-		dataTable.fnFilter(this.value);
-	});
-	
-	$('#tblSinReservaEstacionamiento').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-search2").keyup(function() {
-		var dataTable = $('#tblSinReservaEstacionamiento').dataTable();
-		dataTable.fnFilter(this.value);
-	}); 
-	
 	
 });
 

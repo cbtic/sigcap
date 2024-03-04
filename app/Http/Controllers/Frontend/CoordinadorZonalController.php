@@ -11,6 +11,7 @@ use App\Models\Agremiado;
 use App\Models\Persona;
 use App\Models\TablaMaestra;
 use App\Models\Municipalidade;
+use App\Models\ComisionSesione;
 use Auth;
 
 class CoordinadorZonalController extends Controller
@@ -120,5 +121,31 @@ class CoordinadorZonalController extends Controller
 		echo json_encode($result);
 		
 	}
+
+    function send_coordinador_sesion(Request $request)
+    {
+        $id_user = Auth::user()->id;
+        $agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+        $coordinador_zonal = CoordinadorZonal::where("id_agremiado",$agremiado->id)->where("estado","1")->first();
+		
+        foreach($request->sesion as $key=>$ses){
+            
+            $comision_sesione = new ComisionSesione;
+            $comision_sesione->id_regional = $coordinador_zonal->id_regional;
+            $comision_sesione->id_periodo_comisione = $request->periodo;
+            $comision_sesione->id_tipo_sesion = 401;
+            $comision_sesione->fecha_programado = $ses['fecha'];
+            $comision_sesione->fecha_ejecucion = $ses['fecha'];
+            $comision_sesione->id_aprobado = $ses['estado_sesion'];
+            //$comision_sesione->observaciones = 1;
+            $comision_sesione->id_comision = 1;
+            $comision_sesione->id_estado_sesion = 290;     
+            $comision_sesione->id_estado_aprobacion = 2;      
+            $comision_sesione->id_usuario_inserta = $id_user;
+
+            $comision_sesione->save();
+
+        }
+    }
     
 }
