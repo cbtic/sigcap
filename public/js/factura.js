@@ -16,8 +16,45 @@ $(document).ready(function () {
 		});
 	});
 
+	calculoDetraccion();
+	
+
 });
 
+function calculoDetraccion(){
+
+	var total_fac = $('#total_fac').val();
+	//alert(total_fac);
+	
+	var total_detraccion =total_fac*12/100;
+	var nc_detraccion = "00098082204";
+	var tipo_detraccion = "004";
+	var afecta_a = "022";
+	var medio_pago = "004";
+
+	
+
+	if (total_fac>700){
+
+		$('#porcentaje_detraccion').val("12%");
+		
+		$('#monto_detraccion').val(total_detraccion);
+		$('#nc_detraccion').val(nc_detraccion);
+		$('#tipo_detraccion').val(tipo_detraccion);
+		$('#afecta_a').val(afecta_a);
+		$('#medio_pago').val(medio_pago);
+		
+
+	}else{
+		$('#porcentaje_detraccion').val("");
+		$('#monto_detraccion').val("");
+		$('#nc_detraccion').val("");
+		$('#tipo_detraccion').val("");
+		$('#afecta_a').val("");
+		$('#medio_pago').val("");
+
+	}
+}
 
 function guardarFactura(){
 
@@ -476,27 +513,27 @@ function obtenerTitular(){
 		appendTo: "#producto01_list",
 		source: function (request, response) {
 			$.ajax({
-				url: '/comprobante/forma_pago/' + $('#producto01').val(),
+				url: '/forma_pago/' + $('#producto01').val(),
 				dataType: "json",
 				success: function (data) {
-					// alert(JSON.stringify(data));
+					 alert(JSON.stringify(data));
 					var resp = $.map(data, function (obj) {
 						console.log(obj);
 						//return obj.denominacion;
 						var hash = { key: obj.codigo, value: obj.denominacion };
 						return hash;
 					});
-					//alert(JSON.stringify(resp));
+					alert(JSON.stringify(resp));
 					//console.log(JSON.stringify(resp));
 					response(resp);
 				},
 				error: function () {
-					//alert("cc");
+					alert("cc");
 				}
 			});
 		},
 		select: function (event, ui) {
-			//alert(ui.item.key);
+			alert(ui.item.key);
 			flag_select = true;
 			$('#producto01').attr("readonly", true);
 		},
