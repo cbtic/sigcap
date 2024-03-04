@@ -15,6 +15,7 @@ use App\Models\Concepto;
 use App\Models\ProntoPago;
 use App\Models\Fraccionamiento;
 use Illuminate\Support\Carbon;
+use App\Models\Empresa;
 
 use Auth;
 
@@ -403,6 +404,18 @@ class IngresoController extends Controller
 		$valorizaciones_model = new Valorizacione;
 		$valorizacion = $valorizaciones_model->getValorizacionFactura($id);
 		return view('frontend.ingreso.modal_valorizacion_factura',compact('valorizacion'));
+	
+	}
+
+    public function modal_beneficiario($periodo, $id_persona, $id_agremiado, $tipo_documento){
+		
+        $persona = new Persona();
+        $empresa_model = new Empresa();
+        $empresa = $empresa_model->getEmpresaId($id_persona);
+       
+		//$beneficiario = new Beneficiario;
+		//$valorizacion = $valorizaciones_model->getValorizacionFactura($id);
+		return view('frontend.ingreso.modal_beneficiario',compact('persona','empresa','id_persona','id_agremiado','tipo_documento'));
 	
 	}
 

@@ -800,7 +800,7 @@ function fn_ListarBusqueda() {
 
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
     //fn_util_bloquearPantalla("Buscando");
-    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, 001);//500
+    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, '001');//500
 }
 
 function fn_CargaSuGrilla(pValor, piIdMovimientoCompra) {

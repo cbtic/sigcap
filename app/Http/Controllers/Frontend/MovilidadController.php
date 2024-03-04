@@ -29,13 +29,16 @@ class MovilidadController extends Controller
 		$municipalidadIntegrada_model = new MunicipalidadIntegrada;
 		$comision_movilidades = new ComisionMovilidade;
 		$periodoComision_model = new PeriodoComisione;
+		$tablaMaestra_model = new TablaMaestra;
         //$tablaMaestra_model = new TablaMaestra;
 		//$movilidad = new Movilidade;
         //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
 		$municipalidadIntegrada = $municipalidadIntegrada_model->getMuniIntegradaAll();
 		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
+		$tipoComision = $tablaMaestra_model->getMaestroByTipo(102);
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 
-        return view('frontend.movilidad.all',compact('municipalidadIntegrada','comision_movilidades','periodoComision'));
+        return view('frontend.movilidad.all',compact('municipalidadIntegrada','comision_movilidades','periodoComision','tipoComision','periodo_ultimo'));
     }
 
     public function listar_movilidad_ajax(Request $request){
@@ -45,6 +48,7 @@ class MovilidadController extends Controller
 		$p[]=$request->periodo;
         $p[]="";
         $p[]="";
+		$p[]=$request->tipo_comision;
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -108,15 +112,16 @@ class MovilidadController extends Controller
         $municipalidadIntegrada = $municipalidadIntegrada_model->getMuniIntegradaAll();
         $periodoComision = $periodoComision_model->getPeriodoAll();
 		$tipoComision = $tablaMaestra_model->getMaestroByTipo(102);
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 
-		return view('frontend.movilidad.modal_movilidad_nuevoMovilidad',compact('id','comision_movilidades','region','municipalidadIntegrada','periodoComision','tipoComision'));
+		return view('frontend.movilidad.modal_movilidad_nuevoMovilidad',compact('id','comision_movilidades','region','municipalidadIntegrada','periodoComision','tipoComision','periodo_ultimo'));
 	
 	}
 
 	public function obtener_comision($periodo,$tipo_comision){
 			
-		$comision_model = new Comisione;
-		$comision = $comision_model->getComisionByPeriodo($periodo,$tipo_comision);
+		$muniIntegrada_model = new MunicipalidadIntegrada;
+		$comision = $muniIntegrada_model->getMuniIntegradaByPeriodoAndTipComision($periodo,$tipo_comision);
 		echo json_encode($comision);
 		
 	}
@@ -146,6 +151,7 @@ class MovilidadController extends Controller
 		$comision_movilidades->id_periodo_comisiones = $request->periodo;
 		$comision_movilidades->id_regional = $request->regional;
 		$comision_movilidades->monto = $request->monto;
+		$comision_movilidades->id_tipo_comision = $request->tipo_comision;
 		//$comision_movilidades->estado = 1;
 		$comision_movilidades->id_usuario_inserta = $id_user;
 		$comision_movilidades->save();

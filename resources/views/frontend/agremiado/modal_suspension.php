@@ -1,5 +1,4 @@
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<title>Sistema SIGCAP</title>
+<title>Sistema de Agremiado</title>
 
 <style>
 /*
@@ -192,24 +191,15 @@ $.mask.definitions['p'] = "[Mm]";
 */
 $(document).ready(function() {
 	//$('#hora_solicitud').focus();
-	//$('#hora_solicitud').mask('00:00');
+	$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
-
-	$('#ruc').blur(function () {
-		var id = $('#id').val();
-			if(id==0) {
-				validaRuc(this.value);
-			}
-		//validaRuc(this.value);
-	});
-
 });
 </script>
 
 <script type="text/javascript">
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_egresado').datepicker({
+	$('#fecha_inicio').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
 		container: '#openOverlayOpc modal-body'
@@ -217,7 +207,7 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 });
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
-	$('#fecha_graduado').datepicker({
+	$('#fecha_fin').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
 		container: '#openOverlayOpc modal-body'
@@ -226,7 +216,7 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	$("#comision").select2({ width: '100%' });
+	 
 
 });
 
@@ -241,72 +231,6 @@ function validacion(){
         bootbox.alert(msg); 
         return false;
     }
-}
-
-function obtenerComisionBus(){
-	
-	var periodo = $('#periodo').val();
-	var tipo_comision = $('#tipo_comision').val();
-	
-	$.ajax({
-		url: '/movilidad/obtener_comision/'+periodo+'/'+tipo_comision,
-		dataType: "json",
-		success: function(result){
-			var option = "";
-			$('#comision').html("");
-			option += "<option value='0'>--Seleccionar--</option>";
-			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+" "+oo.denominacion+"</option>";
-			});
-			$('#comision').html(option);
-		}
-		
-	});
-	
-}
-
-function validaRuc(ruc){
-	var settings = {
-		"url": "https://apiperu.dev/api/ruc/"+ruc,
-		"method": "GET",
-		"timeout": 0,
-		"headers": {
-		  "Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
-		},
-	  };
-	  
-	  $.ajax(settings).done(function (response) {
-		console.log(response);
-		
-		if (response.success == true){
-
-			var data= response.data;
-
-			$('#razon_social').val('')
-			$('#direccion').val('')
-			$('#nombre_comercial').val('')
-			
-			$('#razon_social').val(data.nombre_o_razon_social).attr('readonly', true);
-			$('#nombre_comercial').val(data.nombre_o_razon_social).attr('readonly', true);
-			//$('#direccion').attr('readonly', true);
-
-			if (data.direccion_completa != ""){
-				$('#direccion').val(data.direccion_completa).attr('readonly', true);
-			}
-			else{
-				$('#direccion').attr('readonly', false);
-			}
-			
-			//alert(data.direccion_completa);
-
-		}
-		else{
-			bootbox.alert("RUC Invalido,... revise el RUC digitado ¡");
-			return false;
-		}
-
-		
-	  });
 }
 
 function guardarCita__(){
@@ -335,96 +259,36 @@ function guardarCita(id_medico,fecha_cita){
     }
 }
 
-function fn_save_estudio(){
+function fn_save_situacion(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_agremiado = $('#id_agremiado').val();
-	var id_universidad = $('#id_universidad').val();
-	var id_especialidad = $('#id_especialidad').val();
-	var tesis = $('#tesis').val();
-	var fecha_egresado = $('#fecha_egresado').val();
-	var fecha_graduado = $('#fecha_graduado').val();
-	var libro = $('#libro').val();
-	var folio = $('#folio').val();
+	var id_pais_destino = $('#id_pais_destino').val();
+	var fecha_inicio = $('#fecha_inicio').val();
+	var fecha_fin = $('#fecha_fin').val();
+	var ruta_documento = $('#ruta_documento').val();
 	
-	//alert(id_agremiado);
-	//return false;
+	if(id_pais_destino == "0" || id_pais_destino == "")msg+="Debe seleccionar un Pa&iacute;s Destion<br>";
+	if(fecha_inicio == "")msg += "Debe ingresar una fecha de inicio <br>";
+	if(fecha_fin == "")msg += "Debe ingresar una fecha de fin <br>";
+	if(ruta_documento == "")msg += "Debe ingresar una ruta de documento <br>";
 	
-    $.ajax({
-			url: "/agremiado/send_agremiado_estudio",
-            type: "POST",
-            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_universidad:id_universidad,id_especialidad:id_especialidad,tesis:tesis,fecha_egresado:fecha_egresado,fecha_graduado:fecha_graduado,libro:libro,folio:folio},
-            success: function (result) {
-				
-				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
-            }
-    });
-}
-
-function valida(){
-	var msg = "0";
-
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var comision = $('#comision').val();
-	var periodo = $('#periodo').val();
-	var regional = $('#regional').val();
-	var monto = $('#monto').val();
-
-	if (comision==""){
-		msg= "Falta seleccionar una Comisi&oacute;n";
-	}else if (periodo==""){
-		msg= "Falta seleccionar un Periodo";
-	}else if (regional==""){
-		msg= "Falta seleccionar una Regional";
-	}else if (monto==""){
-		msg= "Falta ingresar un Importe";
-	}
-
-	if (msg=="0"){
-		fn_save_movilidad()		
-	}
-	else {
-		Swal.fire(msg);
-	}
-
-}
-
-
-function fn_save_movilidad(){
-    
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var comision = $('#comision').val();
-	var periodo = $('#periodo').val();
-	var regional = $('#regional').val();
-	var monto = $('#monto').val();
-	var tipo_comision = $('#tipo_comision').val();
-	//var importe = $('#importe').val();
-	//var estado = $('#estado').val();
-	//alert(id_agremiado);
-	//return false;
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
 	
     $.ajax({
-			url: "/movilidad/send_movilidad_nuevoMovilidad",
+			url: "/agremiado/send_agremiado_situacion",
             type: "POST",
-            data : {_token:_token,id:id,comision:comision,periodo:periodo,regional:regional,monto:monto,tipo_comision:tipo_comision},
+            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_pais_destino:id_pais_destino,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,ruta_documento:ruta_documento},
             success: function (result) {
 				
-				$('#openOverlayOpc').modal('hide');
+				//$('#openOverlayOpc').modal('hide');
+				//modalSituacion(id_agremiado);
 				window.location.reload();
-				datatablenew();
 				
 				/*
 				$('#openOverlayOpc').modal('hide');
@@ -545,16 +409,6 @@ function cargar_tipo_proveedor(){
 	
 }
 
-function obtener_multa(){
-	
-	var moneda = $("#id_multa option:selected").attr("moneda");
-	var monto = $("#id_multa option:selected").attr("monto");
-	
-	$("#moneda").val(moneda);
-	$("#monto").val(monto);
-	
-}
-
 /*
 $('#fecha_solicitud').datepicker({
 	autoclose: true,
@@ -590,10 +444,6 @@ container: '#myModal modal-body'
 
 <body class="hold-transition skin-blue sidebar-mini">
 
-	<div class="panel-heading close-heading">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    </div>
-
     <div>
 		<!--
         <section class="content-header">
@@ -606,8 +456,8 @@ container: '#myModal modal-body'
 
 		<div class="card">
 			
-			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro Movilidad
+			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
+				Registro Suspensi&oacute;n
 			</div>
 			
             <div class="card-body">
@@ -621,113 +471,39 @@ container: '#myModal modal-body'
 					
 					
 					<div class="row" style="padding-left:10px">
-					
-						<div class="col-lg-3">
+						
+						<div class="col-lg-6">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Periodo</label>
-								<select name="periodo" id="periodo" class="form-control form-control-sm" onchange="obtenerComisionBus()">
-									<?php if($id=="0") {?>
-									<option value="0">--Selecionar--</option>
-										<?php
-										foreach ($periodoComision as $row) {?>
-											<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
-										<?php 
-										}
-										?>
-									<?php } else { ?>
-										<option value="0">--Selecionar--</option>
-										<?php
-										foreach ($periodoComision as $row) {?>
-											<option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
-										<?php 
-										}
-										?>
-									<?php }?>
-
-								</select>
-							</div>
-						</div>
-
-						<div class="col-lg-3">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Tipo Comisi&oacute;n</label>
-								<select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onChange="obtenerComisionBus()">
-									<option value="0">--Selecionar--</option>
-										<?php
-										foreach ($tipoComision as $row) {?>
-											<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comision_movilidades->id_tipo_comision)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-										<?php 
-										}
-										?>
-								</select>
-							</div>
-						</div>
-
-						<div class="col-lg-11">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Municipalidad Integrada</label>
-								<select name="comision" id="comision" class="form-control form-control-sm" onChange="">
-									<?php if($id=="0") {?>
-									<option value="0">--Selecionar--</option>
-									<?php } else { ?>
-									<option value="0">--Selecionar--</option>
-										<?php
-										foreach ($municipalidadIntegrada as $row) {?>
-											<option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_municipalidad_integrada)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-										<?php 
-										}
-										?>
-									<?php }?>
-										
-								</select>
+								<label class="control-label form-control-sm">Fecha Inicio</label>
+								<input type="text" name="fecha_inicio" id="fecha_inicio"
+								value="<?php if($agremiadoSituacion->fecha_inicio!="")echo date("d-m-Y", strtotime($agremiadoSituacion->fecha_inicio))?>" placeholder="" class="form-control form-control-sm col-lg-12" >
 							</div>
 						</div>
 						
-						<!--
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Concepto</label>
-								<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									//foreach ($multa_concepto as $row) {?>
-									<option value="<?php //echo $row->id?>" <?php //if($row->id==$agremiadoMulta->id_multa)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
-									<?php 
-									//}
-									?>
-								</select>
+								<label class="control-label form-control-sm">Fecha Fin</label>
+								<input type="text" name="fecha_fin" id="fecha_fin"
+								value="<?php if($agremiadoSituacion->fecha_fin!="")echo date("d-m-Y", strtotime($agremiadoSituacion->fecha_fin))?>" placeholder="" class="form-control form-control-sm col-lg-12" >
 							</div>
 						</div>
-						-->
-						<div class="col-lg-5">
+						
+						<div class="col-lg-6">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Regional</label>
-								<select name="regional" id="regional" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-										<?php
-										foreach ($region as $row) {?>
-											<option value="<?php echo $row->id?>" <?php if($row->id=='5')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-										<?php 
-										}
-										?>
-								</select>
+								<label class="control-label form-control-sm">Ruta Documento</label>
+								<input type="text" name="ruta_documento" id="ruta_documento"
+								value="<?php echo $agremiadoSituacion->ruta_documento?>" placeholder="" class="form-control form-control-sm col-lg-12" >
 							</div>
 						</div>
-
-						<div class="col-lg-3">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Importe</label>
-								<input id="monto" name="monto" on class="form-control form-control-sm"  value="<?php echo $comision_movilidades->monto?>" type="text" >
-							
-							</div>
-						</div>		
-						</div>	
+						
+					</div>
+					
 					
 					
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_situacion()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

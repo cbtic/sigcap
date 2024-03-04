@@ -8,6 +8,10 @@ $(document).ready(function () {
 		}
 	});
 
+	/*$('#btnBeneficiario').click(function () {
+		modal_beneficiario(0);
+	});*/
+
 	
 });
 
@@ -462,7 +466,7 @@ function validaTipoDocumento(){
 		$('#divDireccionEmpresa').show();
 		$('#divRepresentanteEmpresa').show();
 		$('#divEmpresaRazonSocial').show();
-		
+		$('#divBeneficiarioRuc').show();		
 
 		//$("#btnBoleta").prop('disabled', false);
 		//$("#btnFactura").prop('disabled', true);
@@ -476,7 +480,8 @@ function validaTipoDocumento(){
 		$('#divDireccionEmpresa').hide();
 		$('#divRepresentanteEmpresa').hide();
 		$('#divEmpresaRazonSocial').hide();
-		
+		$('#divBeneficiarioRuc').hide();
+
 
 		//$("#btnBoleta").prop('disabled', true);
 		//$("#btnFactura").prop('disabled', false);
@@ -513,6 +518,7 @@ function obtenerBeneficiario(){
 	$('#foto').attr('src','/img/profile-icon.png');
 
 	$('#btnOtroConcepto').attr("disabled",true);
+	$('#btnBeneficiario').attr("disabled",true);
 
 	$("#btnFracciona").prop('disabled', true);
 	$("#btnBoleta").prop('disabled', true);
@@ -526,15 +532,7 @@ function obtenerBeneficiario(){
 
 	$('#totalDescuento').val("0");
 	$('#total').val("0");
-	$('#deudaTotal').val("0");
-
-	
-
-
-
-	
-		
-
+	$('#deudaTotal').val("0");	
 	
 	
 	$.ajax({
@@ -563,6 +561,7 @@ function obtenerBeneficiario(){
 
 
 					$('#btnOtroConcepto').attr("disabled", false);
+					$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
 
@@ -591,6 +590,7 @@ function obtenerBeneficiario(){
 					$('#id_tipo_documento').val(tipo_documento);
 					
 					$('#btnOtroConcepto').attr("disabled", false);
+					$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
 					 
@@ -610,6 +610,7 @@ function obtenerBeneficiario(){
 					$('#numero_documento_').val(tipo_documento);
 					$('#id_tipo_documento_').val(tipo_documento);
 					$('#btnOtroConcepto').attr("disabled", false);
+					$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
 					
@@ -1078,6 +1079,38 @@ function modal_otro_pago(){
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
+	//cargarConceptos();
+
+}
+
+function modal_beneficiario(){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+	$('#openOverlayOpc').modal('show');
+
+	var id = $('#frmValorizacion #id').val();
+	var perido = "2023";
+	var idPersona = $('#id_persona').val();
+	var idAgremiado = $('#id_agremiado').val();
+
+	var tipo_documento = $('#tipo_documento').val();
+
+	if(tipo_documento == "79") {
+		idPersona = $('#empresa_id').val();
+		idAgremiado = 0;
+	}
+
+	$.ajax({
+			url: "/ingreso/modal_beneficiario/"+perido+"/"+idPersona+"/"+idAgremiado+"/"+tipo_documento,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
 					//$('#openOverlayOpc').modal('show');
 					
 			}

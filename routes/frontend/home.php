@@ -523,3 +523,7 @@ Route::get('coordinador_zonal/modal_coordinadorZonal_nuevoCoordinadorZonal/{id}'
 Route::post('coordinador_zonal/send_coordinador_zonal_nuevoCoordinadorZonal', [CoordinadorZonalController::class, 'send_coordinador_zonal_nuevoCoordinadorZonal'])->name('coordinador_zonal.send_coordinador_zonal_nuevoCoordinadorZonal');
 
 Route::get('movilidad/obtener_comision/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision'])->name('movilidad.obtener_comision');
+
+Route::get('ingreso/modal_beneficiario/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_beneficiario'])->name('ingreso.modal_beneficiario');
+
+Route::get('persona/obtenerPersona/{numero_documento}', [PersonaController::class, 'obtenerPersona'])->name('persona.obtenerPersona');
