@@ -147,46 +147,13 @@
         //fecha_cuota = FormatFecha(sumarDias(d, plazo))
 
         var newRow = "";
-<<<<<<< HEAD
-		for (let i = 0; i < nroCuotas; i++) {
-            
-			fecha_cuota = FormatFecha(sumarDias(d, 30));
-=======
         for (let i = 0; i < nroCuotas; i++) {
 
             fecha_cuota = FormatFecha(sumarDias(d, 30));
->>>>>>> b953a72f7c82c6915cc9eb1aebc3ccdd682a3023
 
             total_frac = parseFloat((total) / (nroCuotas)).toFixed(1);
 
             newRow = "";
-<<<<<<< HEAD
-			if(i == 0){
-                n=1
-				newRow+='<tr>';
-				newRow+='<td width="5%">' + n + '</td>  ';
-				newRow+='<td> <input  name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '" > </td>';
-                newRow+='<td> <input  name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker "> </td>';
-				
-				
-				newRow+='</tr>';
-			}else{
-				n++;
-				newRow+='<tr>';
-				newRow+='<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> ';
-				newRow+='<td> <input  name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '"> </td>';
-                newRow+='<td> <input  name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker  "> </td>';
-				
-				
-				newRow+='</tr>';
-			}
-		
-			//alert(newRow);
-			$('#tblConceptos tbody').append(newRow);
-		}
-
-      
-=======
             if (i == 0) {
                 n = 1
                 newRow += '<tr>';
@@ -211,7 +178,6 @@
             $('#tblConceptos tbody').append(newRow);
         }
 
->>>>>>> b953a72f7c82c6915cc9eb1aebc3ccdd682a3023
     }
 </script>
 
