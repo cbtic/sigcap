@@ -3,12 +3,58 @@
 
 $(document).ready(function () {
 
+	$('#producto01').autocomplete({
+		appendTo: "#producto01_list",
+		source: function (request, response) {
+			$.ajax({
+				url: '/comprobante/forma_pago/' + $('#producto01').val(),
+				dataType: "json",
+				success: function (data) {
+					//alert("fddf");					
+					 //alert(JSON.stringify(data));
+					var resp = $.map(data, function (obj) {
+						console.log(obj);
+						//return obj.denominacion;
+						var hash = { key: obj.codigo, value: obj.denominacion };
+						return hash;
+					});
+					//alert(JSON.stringify(resp));
+					response(resp);
+					
+				},
+				error: function () {
+					//alert("cc");
+				}
+			});
+		},
+		select: function (event, ui) {
+			alert(ui.item.key);
+			flag_select = true;
+			$('#producto01').attr("readonly", true);
+		},
+		minLength: 2,
+		delay: 100
+	}).blur(function () {
+		if (typeof flag_select == "undefined") {
+			$('#producto01').val("");
+		}
+	});
+
+
 	$('#fechaF').datepicker({
 		autoclose: true,
 		dateFormat: 'dd/mm/yy',
 		changeMonth: true,
 		changeYear: true,
 	});
+
+	$('#f_venci_01').datepicker({
+		autoclose: true,
+		dateFormat: 'dd/mm/yy',
+		changeMonth: true,
+		changeYear: true,
+	});
+
 
 	$(function() {
 		$('#producto01').keyup(function() {
@@ -17,12 +63,11 @@ $(document).ready(function () {
 	});
 
 	calculoDetraccion();
-	
 
+	calculaPorcentaje(1);
 });
 
 function calculoDetraccion(){
-
 	var total_fac = $('#total_fac').val();
 	//alert(total_fac);
 	
@@ -31,10 +76,12 @@ function calculoDetraccion(){
 	var tipo_detraccion = "004";
 	var afecta_a = "022";
 	var medio_pago = "004";
-
-	
+	//var d = new Date();
 
 	if (total_fac>700){
+
+		//var f_venci = FormatFecha(d);
+		$('#f_venci_01').val(f_venci);
 
 		$('#porcentaje_detraccion').val("12%");
 		
@@ -43,6 +90,8 @@ function calculoDetraccion(){
 		$('#tipo_detraccion').val(tipo_detraccion);
 		$('#afecta_a').val(afecta_a);
 		$('#medio_pago').val(medio_pago);
+
+		
 		
 
 	}else{
@@ -361,6 +410,7 @@ function obtenerTitular(){
             $('#duenoCargaModal').modal('hide');
         }
 	});
+}
 
 	function datatablenew(){
                       
@@ -509,50 +559,17 @@ function obtenerTitular(){
 	
 	}
 
-	$('#producto01').autocomplete({
-		appendTo: "#producto01_list",
-		source: function (request, response) {
-			$.ajax({
-				url: '/forma_pago/' + $('#producto01').val(),
-				dataType: "json",
-				success: function (data) {
-					 alert(JSON.stringify(data));
-					var resp = $.map(data, function (obj) {
-						console.log(obj);
-						//return obj.denominacion;
-						var hash = { key: obj.codigo, value: obj.denominacion };
-						return hash;
-					});
-					alert(JSON.stringify(resp));
-					//console.log(JSON.stringify(resp));
-					response(resp);
-				},
-				error: function () {
-					alert("cc");
-				}
-			});
-		},
-		select: function (event, ui) {
-			alert(ui.item.key);
-			flag_select = true;
-			$('#producto01').attr("readonly", true);
-		},
-		minLength: 2,
-		delay: 100
-	}).blur(function () {
-		if (typeof flag_select == "undefined") {
-			$('#producto01').val("");
-		}
-	});
+	
 	
 	$(function() {
 		$('#producto01').click(function() {
 		  $('#producto01').select();
 		});		
 	  });
+
 	var cuentaproductos=1;
 
-	function cargaProductoNuevo() { 
+	function cargaProductoNuevo() {
 		cuentaproductos = cuentaproductos + 1;
 		$('#tblProductos tr:last').after('<tr id="fila'+pad(cuentaproductos, 2)+'"><td class="text-right">#</td><td><input type="text" name="producto[]" id="producto'+pad(cuentaproductos, 2)+'" onkeyup="var query = $(this).val();$.ajax({url:\'../especie/search\',type:\'GET\',data:{\'denominacion\':query,\'listadoproducto\':\''+pad(cuentaproductos, 2)+'\'},success:function (data) {$(\'#producto'+pad(cuentaproductos, 2)+'_list\').html(data);}})" class="form-control form-control-sm"><div id="producto'+pad(cuentaproductos, 2)+'_list"></div></td><td><input type="text" name="porcentajeproducto[]" id="porcentajeproducto'+pad(cuentaproductos, 2)+'" class="form-control form-control-sm" onchange="calculaPorcentaje('+cuentaproductos+')" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td><td><input readonly="readonly" style="border:0px" type="text" name="peso_aprox[]" value="0" id=peso_aprox_'+pad(cuentaproductos, 2)+' /><input type="hidden" name="origen[]" value="" id=origen'+pad(cuentaproductos, 2)+' /><input type="hidden" name="idproducto[]" value="" id=idproducto'+pad(cuentaproductos, 2)+' /></td></tr>');
 
@@ -570,30 +587,46 @@ function obtenerTitular(){
 	}
 
 	function calculaPorcentaje(fila) {
-		if ($("#input_peso_ingreso").val == "") {
+		
+		var total_fac=  $("#total_fac").val();
+
+		var valorItem = $('#porcentajeproducto_'+pad(fila, 2)).val()
+
+		var contador = 0;
+		$("input[name^='porcentajeproducto']").each(function(i, obj) {
+			contador++;
+		});
+
+		if(contador == 1) $('#porcentajeproducto_'+pad(fila, 2)).val(Math.round(total_fac));
+
+
+		alert(contador);
+		
+		//alert(total_fac);
+
+		if (total_fac == "") {
 			contador = 0;
 			$("input[name^='porcentajeproducto']").each(function(i, obj) {
 				contador += parseInt(obj.value);
 			});
-			if (contador > 100) {
-				//alert("La suma no debe exceder del 100%");
-				bootbox.alert("La suma no debe exceder del 100%"); 
+			if (contador > total_fac) {
+				bootbox.alert("La suma no debe exceder al total del comprobante"); 
 			}
 		} else {
 			contador = 0;
 			$("input[name^='porcentajeproducto']").each(function(i, obj) {
 				contador += parseInt(obj.value);
 			});
-			if (contador > 100) {
+			if (contador > total_fac) {
 				//alert("La suma no debe exceder del 100%");
-				bootbox.alert("La suma no debe exceder del 100%"); 
+				bootbox.alert("La suma no debe exceder al total del comprobante"); 
 			}
 			//console.log($('#porcentajeproducto'+pad(fila, 2)).val());
-			valor_procentaje = $('#porcentajeproducto'+pad(fila, 2)).val()/100*($("#input_peso_a_cobrar").val());
-			$('#peso_aprox_'+pad(fila, 2)).val(Math.round(valor_procentaje));
+			valor_procentaje =contador;
+			$('#porcentajeproducto_'+pad(fila, 2)).val(Math.round(valor_procentaje));
 			
 		}
 	}
 
-}
+
 

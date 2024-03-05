@@ -1024,7 +1024,7 @@ class ComprobanteController extends Controller
 
     public function forma_pago($term)
     {
-        print_r("Forma de Pago"); exit();
+       // print_r("Forma de Pago"); exit();
         $tabla_model = new TablaMaestra;
 		$forma_pago = $tabla_model->getMaestroByTipoAndDenomina('19',$term);
          return response()->json($forma_pago);
