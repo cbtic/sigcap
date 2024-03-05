@@ -39,7 +39,7 @@ left join tabla_maestras t11 on t1.puesto_postula::int = t11.codigo::int And t11
 	
 	
 	v_where = ' Where 1=1  
-And t1.estado=''1''';
+And t1.estado=''1'' ';
 	
 	If p_numero_documento<>'' Then
 	 v_where:=v_where||'And t3.numero_documento = '''||p_numero_documento||''' ';
@@ -72,8 +72,15 @@ And t1.estado=''1''';
 	If p_id_estado<>'' Then
 	 v_where:=v_where||'And t1.resultado = '''||p_id_estado||''' ';
 	End If;
-	
+	/*
+	If p_campo='' Then
+		p_campo='t1.id';
+	End If;
 
+	If p_orden='' Then
+		p_orden='desc';
+	End If;
+	*/
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 

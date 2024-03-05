@@ -152,6 +152,28 @@ function habiliarTitular(){
 	*/
 }
 
+function obtenerComisionBus(){
+	
+	var periodo = $('#frmAfiliacion #periodo').val();
+	var tipo_comision = $('#frmAfiliacion #tipo_comision').val();
+	
+	$.ajax({
+		url: '/movilidad/obtener_comision/'+periodo+'/'+tipo_comision,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#frmAfiliacion #municipalidad_integrada').html("");
+			option += "<option value='0'>--Selecionar Municipalidad Integrada--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+" "+oo.denominacion+"</option>";
+			});
+			$('#frmAfiliacion #municipalidad_integrada').html(option);
+		}
+		
+	});
+	
+}
+
 function guardarAfiliacion(){
     
     var msg = "";

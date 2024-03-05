@@ -280,10 +280,11 @@ function AddFila(){
     var año = new Date().getFullYear();
     var mes_ = $('#mes').val();
     var cap = $('#numero_cap').val();
-    var fecha = '<input id="fecha" name="fecha" class="form-control form-control-sm datepicker2"  value="" type="text">'
-    var distrito = '<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
-    var estado_sesion = '<select name="estado_sesion" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
-    var aprobar_pago = '<select name="aprobar_pago" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
+    
+    var fecha = '<input id="fecha" name="sesion['+n+'][fecha]" class="form-control form-control-sm datepicker2"  value="" type="text">'
+    var distrito = '<select name="sesion['+n+'][municipalidad]" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
+    var estado_sesion = '<select name="sesion['+n+'][estado_sesion]" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
+    var aprobar_pago = '<select name="sesion['+n+'][aprobar_pago]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
     var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
 
     newRow.append('<td>'+n+'</td>');
@@ -399,7 +400,7 @@ function modal_personaNuevo(){
             <!--aaaa-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:5px">
 
-              <form method="post" action="#" enctype="multipart/form-data">
+              <form method="post" action="#" id="frmCoordinador" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
                 <!--<input type="hidden" name="id_persona" id="id_persona">-->
@@ -504,7 +505,7 @@ function modal_personaNuevo(){
                       </tbody>
                     </table>
                     <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-                        <a href="javascript:void(0)" onClick="GuardarSesion()" class="btn btn-sm btn-success">Grabar</a>
+                        <a href="javascript:void(0)" onClick="guardarSesion()" class="btn btn-sm btn-success">Grabar</a>
                       </div>
                     </div>
                   </div>

@@ -157,5 +157,15 @@ class Persona extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getPersonaDni($numero_documento){
+
+        $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres
+		from personas p
+		Where p.numero_documento='".$numero_documento."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
  
 }

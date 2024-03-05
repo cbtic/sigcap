@@ -256,7 +256,7 @@ function obtenerComisionBus(){
 			$('#comision').html("");
 			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"'>"+" "+oo.denominacion+"</option>";
 			});
 			$('#comision').html(option);
 		}
@@ -410,7 +410,7 @@ function fn_save_movilidad(){
 	var periodo = $('#periodo').val();
 	var regional = $('#regional').val();
 	var monto = $('#monto').val();
-	//var moneda = $('#moneda').val();
+	var tipo_comision = $('#tipo_comision').val();
 	//var importe = $('#importe').val();
 	//var estado = $('#estado').val();
 	//alert(id_agremiado);
@@ -419,7 +419,7 @@ function fn_save_movilidad(){
     $.ajax({
 			url: "/movilidad/send_movilidad_nuevoMovilidad",
             type: "POST",
-            data : {_token:_token,id:id,comision:comision,periodo:periodo,regional:regional,monto:monto},
+            data : {_token:_token,id:id,comision:comision,periodo:periodo,regional:regional,monto:monto,tipo_comision:tipo_comision},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -626,13 +626,24 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
 								<select name="periodo" id="periodo" class="form-control form-control-sm" onchange="obtenerComisionBus()">
+									<?php if($id=="0") {?>
 									<option value="0">--Selecionar--</option>
+										<?php
+										foreach ($periodoComision as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									<?php } else { ?>
+										<option value="0">--Selecionar--</option>
 										<?php
 										foreach ($periodoComision as $row) {?>
 											<option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
 										<?php 
 										}
 										?>
+									<?php }?>
+
 								</select>
 							</div>
 						</div>
@@ -656,14 +667,18 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Municipalidad Integrada</label>
 								<select name="comision" id="comision" class="form-control form-control-sm" onChange="">
+									<?php if($id=="0") {?>
 									<option value="0">--Selecionar--</option>
-									<!--<option value="">--Selecionar--</option>
+									<?php } else { ?>
+									<option value="0">--Selecionar--</option>
 										<?php
-										/*foreach ($municipalidadIntegrada as $row) {*/?>
-											<option value="<?php /*echo $row->id*/?>" <?php /*if($row->id==$comision_movilidades->id_municipalidad_integrada)echo "selected='selected'"*/?>><?php /*echo $row->denominacion*/?></option>
+										foreach ($municipalidadIntegrada as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_municipalidad_integrada)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 										<?php 
-										/*}*/
-										?>-->
+										}
+										?>
+									<?php }?>
+										
 								</select>
 							</div>
 						</div>
