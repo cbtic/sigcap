@@ -487,8 +487,8 @@
                                                         <td style="padding-bottom:0px;margin-bottom:0px">
                                                             <select name="cboFilas" id="cboFilas" class="form-control form-control-sm" onchange="cargarValorizacion()">                                                  
                                                                 <option value="20">20</option>
-                                                                <option value="60">60</option>
-                                                                <option value="100" selected='selected'>100</option>
+                                                                <option value="60" selected='selected'>60</option>
+                                                                <option value="100">100</option>
                                                                 <option value="500">500</option>                                                                
                                                             </select>
                                                         </td>
@@ -591,13 +591,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-                            <th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
-                                                            <input type="checkbox" name="select_all" value="1" id="example-select-all1" <?php echo $seleccionar_todos ?> readonly />
-                                                        </th>
-
 
                         </div>
 
