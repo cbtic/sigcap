@@ -597,7 +597,10 @@ function obtenerTitular(){
 			contador++;
 		});
 
-		if(contador == 1) $('#porcentajeproducto_'+pad(fila, 2)).val(Math.round(total_fac));
+		if(contador == 1) {
+			$('#porcentajeproducto_'+pad(fila, 2)).val(Math.round(total_fac));
+		}
+		
 
 
 		alert(contador);
