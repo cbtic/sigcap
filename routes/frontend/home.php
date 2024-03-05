@@ -235,6 +235,7 @@ Route::get('comprobante/envio_comprobante_sunat_automatico/{fecha}', [Comprobant
 
 Route::get('comprobante/forma_pago/{term}', [ComprobanteController::class, 'forma_pago'])->name('comprobante.forma_pago');
 
+//Route::get('pesaje/producto/{term}', [PesajeController::class, 'producto'])->name('pesaje.producto');
 
 Route::get('seguro/consulta_seguro', [SeguroController::class, 'consulta_seguro'])->name('seguro.consulta_seguro');
 Route::post('seguro/listar_seguro', [SeguroController::class, 'listar_seguro'])->name('seguro.listar_seguro');
