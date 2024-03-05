@@ -53,9 +53,10 @@ class ComisionController extends Controller
 		
 		$periodo = $periodoComisione_model->getPeriodoAll();
 		$tipoAgrupacion = $tablaMaestra_model->getMaestroByTipo(99);
-		$tipoComision = $tablaMaestra_model->getMaestroByTipo(93);
+		$tipoComision = $tablaMaestra_model->getMaestroByTipo(102);
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.comision.all_listar_comision',compact('periodo','tipoAgrupacion','tipoComision'));
+        return view('frontend.comision.all_listar_comision',compact('periodo','tipoAgrupacion','tipoComision','periodo_ultimo'));
     }
 	
 	public function lista_comision_ajax(Request $request){

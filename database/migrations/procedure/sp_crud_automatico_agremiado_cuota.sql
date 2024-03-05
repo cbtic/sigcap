@@ -46,7 +46,8 @@ begin
 		select id id_agremiado,id_persona 
 		from agremiados a
 		where to_char(fecha_colegiado,'yyyy')::int < p_anio::int
-		and id_categoria!='90'
+		and id_categoria!='90' 
+		and id_ubicacion not in (335,336) 
 		
 		loop
 			

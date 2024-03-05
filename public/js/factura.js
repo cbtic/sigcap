@@ -69,7 +69,7 @@ $(document).ready(function () {
 
 function calculoDetraccion(){
 	var total_fac = $('#total_fac').val();
-	//alert(total_fac);
+	alert(Math.round(total_fac));
 	
 	var total_detraccion =total_fac*12/100;
 	var nc_detraccion = "00098082204";
@@ -78,7 +78,7 @@ function calculoDetraccion(){
 	var medio_pago = "004";
 	//var d = new Date();
 
-	if (total_fac>700){
+	if (800 > 700){
 
 		//var f_venci = FormatFecha(d);
 		$('#f_venci_01').val(f_venci);
@@ -571,7 +571,8 @@ function obtenerTitular(){
 
 	function cargaProductoNuevo() {
 		cuentaproductos = cuentaproductos + 1;
-		$('#tblProductos tr:last').after('<tr id="fila'+pad(cuentaproductos, 2)+'"><td class="text-right">#</td><td><input type="text" name="producto[]" id="producto'+pad(cuentaproductos, 2)+'" onkeyup="var query = $(this).val();$.ajax({url:\'../especie/search\',type:\'GET\',data:{\'denominacion\':query,\'listadoproducto\':\''+pad(cuentaproductos, 2)+'\'},success:function (data) {$(\'#producto'+pad(cuentaproductos, 2)+'_list\').html(data);}})" class="form-control form-control-sm"><div id="producto'+pad(cuentaproductos, 2)+'_list"></div></td><td><input type="text" name="porcentajeproducto[]" id="porcentajeproducto'+pad(cuentaproductos, 2)+'" class="form-control form-control-sm" onchange="calculaPorcentaje('+cuentaproductos+')" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td><td><input readonly="readonly" style="border:0px" type="text" name="peso_aprox[]" value="0" id=peso_aprox_'+pad(cuentaproductos, 2)+' /><input type="hidden" name="origen[]" value="" id=origen'+pad(cuentaproductos, 2)+' /><input type="hidden" name="idproducto[]" value="" id=idproducto'+pad(cuentaproductos, 2)+' /></td></tr>');
+		$('#tblProductos tr:last').after(
+			'<tr id="fila'+pad(cuentaproductos, 2)+'"><td class="text-right">#</td> <td><input type="text" name="producto[]" id="producto'+pad(cuentaproductos, 2)+'" onkeyup="var query = $(this).val();$.ajax({url:\'../especie/search\',type:\'GET\',data:{\'denominacion\':query,\'listadoproducto\':\''+pad(cuentaproductos, 2)+'\'},success:function (data) {$(\'#producto'+pad(cuentaproductos, 2)+'_list\').html(data);}})" class="form-control form-control-sm"><div id="producto'+pad(cuentaproductos, 2)+'_list"></div></td><td><input type="text" name="porcentajeproducto[]" id="porcentajeproducto'+pad(cuentaproductos, 2)+'" class="form-control form-control-sm" onchange="calculaPorcentaje('+cuentaproductos+')" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td><td><input readonly="readonly" style="border:0px" type="text" name="peso_aprox[]" value="0" id=peso_aprox_'+pad(cuentaproductos, 2)+' /><input type="hidden" name="origen[]" value="" id=origen'+pad(cuentaproductos, 2)+' /><input type="hidden" name="idproducto[]" value="" id=idproducto'+pad(cuentaproductos, 2)+' /></td></tr>');
 
 	}
 
@@ -590,18 +591,30 @@ function obtenerTitular(){
 		
 		var total_fac=  $("#total_fac").val();
 
-		var valorItem = $('#porcentajeproducto_'+pad(fila, 2)).val()
+		var valorItem = $('#porcentajeproducto'+pad(fila, 2)).val()
 
 		var contador = 0;
-		$("input[name^='porcentajeproducto']").each(function(i, obj) {
+		$("input[name^='porcentajeproducto']").each(function(i, obj) {			
 			contador++;
 		});
 
 		if(contador == 1) {
 			$('#porcentajeproducto_'+pad(fila, 2)).val(Math.round(total_fac));
+			$('#producto01').val('EFECTIVO');
 		}
-		
+		else{
 
+			$("input[name^='porcentajeproducto']").each(function(i, obj) {			
+				contador++;
+				valorItem+=  $('#porcentajeproducto'+pad(fila, 2)).val();
+			});
+			
+			//alert(parseInt(obj.value));
+
+		}
+
+		
+/*
 
 		alert(contador);
 		
@@ -629,6 +642,7 @@ function obtenerTitular(){
 			$('#porcentajeproducto_'+pad(fila, 2)).val(Math.round(valor_procentaje));
 			
 		}
+		*/
 	}
 
 
