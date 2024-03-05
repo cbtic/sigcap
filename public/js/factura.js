@@ -78,7 +78,7 @@ function calculoDetraccion(){
 	var medio_pago = "004";
 	//var d = new Date();
 
-	if (Math.round(total_fac)>700){
+	if (800 > 700){
 
 		//var f_venci = FormatFecha(d);
 		$('#f_venci_01').val(f_venci);
