@@ -69,7 +69,7 @@ $(document).ready(function () {
 
 function calculoDetraccion(){
 	var total_fac = $('#total_fac').val();
-	alert(total_fac);
+	alert(Math.round(total_fac));
 	
 	var total_detraccion =total_fac*12/100;
 	var nc_detraccion = "00098082204";
@@ -78,7 +78,7 @@ function calculoDetraccion(){
 	var medio_pago = "004";
 	//var d = new Date();
 
-	if (total_fac>700){
+	if (Math.round(total_fac)>700){
 
 		//var f_venci = FormatFecha(d);
 		$('#f_venci_01').val(f_venci);
