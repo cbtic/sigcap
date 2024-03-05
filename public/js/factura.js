@@ -69,7 +69,7 @@ $(document).ready(function () {
 
 function calculoDetraccion(){
 	var total_fac = $('#total_fac').val();
-	//alert(total_fac);
+	alert(total_fac);
 	
 	var total_detraccion =total_fac*12/100;
 	var nc_detraccion = "00098082204";
