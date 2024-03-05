@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE FUNCTION public.sp_listar_coordinador_zonal_paginado(p_numero_cap character varying, p_agremiado character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -18,11 +19,15 @@ begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' cz.id, a.numero_cap, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, cz.estado ';
+	v_campos=' cz.id, a.numero_cap, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, 
+	zo.denominacion zonal,ec.denominacion estado_coordinador ';
 
 	v_tabla='from coordinador_zonales cz 
 	inner join agremiados a on cz.id_agremiado = a.id 
-	inner join personas p on a.id_persona = p.id ';
+	inner join personas p on a.id_persona = p.id 
+	inner join tabla_maestras zo on cz.id_zonal::int = zo.codigo::int And zo.tipo =''117'' 
+	inner join tabla_maestras ec on cz.estado_coordinador::int = ec.codigo::int And ec.tipo =''119'' 
+	';
 	
 	v_where = ' Where 1=1  ';
 	
@@ -66,3 +71,4 @@ End
 
 $function$
 ;
+

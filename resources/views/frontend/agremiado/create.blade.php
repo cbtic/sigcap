@@ -1084,14 +1084,17 @@ label.form-control-sm{
 												</select>
 												</div>
 												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-												Situacion
+												Situaci&oacute;n
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<select name="id_situacion" id="id_situacion" class="form-control form-control-sm" onchange="">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($situacion_cliente as $row) {?>
-													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado->id_situacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+													<option value="<?php echo $row->codigo?>" 
+													<?php if($id!=0 && $row->codigo==$agremiado->id_situacion)echo "selected='selected'"?>
+													<?php if($id==0 && $row->codigo==74)echo "selected='selected'"?>
+													><?php echo $row->denominacion?></option>
 													<?php 
 													}
 													?>

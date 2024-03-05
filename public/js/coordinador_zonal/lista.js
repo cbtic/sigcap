@@ -599,22 +599,18 @@ function datatablenew(){
                 },
 				{
 				"mRender": function (data, type, row) {
-					
-					return "";
+					var zonal = "";
+					if(row.zonal!= null)zonal = row.zonal;
+					return zonal;
 				},
 				"bSortable": false,
 				"aTargets": [3]
 				},
 				{
 				"mRender": function (data, type, row) {
-					var estado = "";
-					if(row.estado == 1){
-						estado = "Activo";
-					}
-					if(row.estado == 0){
-						estado = "Inactivo";
-					}
-					return estado;
+					var estado_coordinador = "";
+					if(row.estado_coordinador!= null)estado_coordinador = row.estado_coordinador;
+					return estado_coordinador;
 				},
 				"bSortable": false,
 				"aTargets": [4]

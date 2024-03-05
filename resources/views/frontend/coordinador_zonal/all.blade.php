@@ -175,7 +175,7 @@
                                     <option value="">--Selecionar--</option>
                                     <?php
 									foreach ($periodo as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$coordinador_zonal->id_periodo)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
 									<?php 
                                         }
                                         ?>
@@ -221,13 +221,29 @@
                                     Zonal
                                 </div>
                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <input type="text" name="zonal" id="zonal" value="<?php //echo $persona->nombres?>" class="form-control form-control-sm" onChange="" >
+									<select name="zonal" id="zonal" class="form-control form-control-sm">
+									  <option value="">--Selecionar--</option>
+										<?php
+										  foreach ($zonal as $row) {?>
+										  <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+										  <?php
+											}
+											?>
+									</select>
                                 </div>
                                 <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                     Estado
                                 </div>
                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <input type="text" name="estado_coordinador" id="estado_coordinador" value="<?php //echo $persona->nombres?>" class="form-control form-control-sm" onChange="" >
+                                    <select name="estado_coordinador" id="estado_coordinador" class="form-control form-control-sm">
+									  <option value="">--Selecionar--</option>
+										<?php
+										  foreach ($estado as $row) {?>
+										  <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+										  <?php
+											}
+											?>
+									</select>
                                 </div>
                             </div>
                         </div>

@@ -660,7 +660,7 @@ class AgremiadoController extends Controller
 	
 	public function importar_agremiado($fecha){ 
 		
-		$fecha = "17-08-2023";
+		$fecha = "12-02-2024";
 		/*************WEB SERVICE - LEER TOKEN*****************/
 		
 		$data_string = '{"email":"pbravogutarra@gmail.com","password":"ua5DhY3oFDZ7aKg"}';
@@ -689,7 +689,7 @@ class AgremiadoController extends Controller
 		/*************WEB SERVICE - LEER AGREMIADO*****************/
 		
 		//$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=13&fecha=17-08-2023');
-		$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=13&fecha='.$fecha);
+		$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=11&fecha='.$fecha);
 		curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch2, CURLOPT_HTTPHEADER, array('x-token: '.$token));
 		curl_setopt($ch2, CURLOPT_SSL_VERIFYHOST, false);
@@ -773,8 +773,8 @@ class AgremiadoController extends Controller
 			$agremiado->clave = 0;
 			$agremiado->id_ubicacion = 334;
 			
-			//$agremiado->id_situacion = "74";
-			$agremiado->id_situacion = "73";
+			$agremiado->id_situacion = "74";
+			//$agremiado->id_situacion = "73";
 			$agremiado->id_usuario_inserta = 1;
 			$agremiado->save();
 			$id_agremiado = $agremiado->id;	
@@ -869,6 +869,23 @@ class AgremiadoController extends Controller
 				
 			}
 			
+			$data_string3 = '{"idSolicitud":'.$solicitud->idsolicitud.'}';
+			$ch3 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/');		
+			curl_setopt($ch3, CURLOPT_CUSTOMREQUEST, "PUT");
+			curl_setopt($ch3, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch3, CURLOPT_POSTFIELDS, $data_string3);
+			curl_setopt($ch3, CURLOPT_HTTPHEADER, array('x-token: '.$token, 'Content-Type: application/json'));
+			curl_setopt($ch3, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($ch3, CURLOPT_SSL_VERIFYPEER, false);
+			
+			$resultWebApi3 = curl_exec($ch3);
+			
+			if($errno = curl_errno($ch3)) {
+				$error_message = curl_strerror($errno);
+				echo "cURL error ({$errno}):\n {$error_message}";
+			}
+			
+			$dataWebApi3 = json_decode($resultWebApi3);
 			
 		}
 		

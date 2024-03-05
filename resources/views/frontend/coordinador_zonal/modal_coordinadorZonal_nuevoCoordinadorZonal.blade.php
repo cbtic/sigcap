@@ -267,7 +267,7 @@ function obtener_profesional(){
 }
 
 function guardarSesion(){
- 
+ 	/*
   var dataToSend={
   sesion: {
         n: n,
@@ -279,29 +279,18 @@ function guardarSesion(){
         // Otros datos que desees enviar
     }
   };
-
+	*/
   //alert($('#tblConceptos'));
 
 $.ajax({
-  url: "/coordinador_zonal/send_coordinador_sesion",
+  		url: "/coordinador_zonal/send_coordinador_sesion",
         type: "POST",
-        //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
-        //data : $("#frmCoordinador").serialize(),
-        data: dataToSend,
-        dataType: 'json', 
+        data : $("#frmCoordinador").serialize(),
+        //data: dataToSend,
+        //dataType: 'json', 
         success: function (result) {				
-
-    //alert(result);
-            
-    $('#openOverlayOpc').modal('hide');
-
-    //cargarValorizacion();
-
-    //var jsondata = JSON.parse(result);
-
-    //alert(jsondata[0].idcomprobante);
-    //$('#idsolicitud').val(jsondata[0].idcomprobante);
-      
+    		$('#openOverlayOpc').modal('hide');
+			
         }
 });
 }
@@ -321,10 +310,10 @@ function AddFila(){
     var año = new Date().getFullYear();
     var mes_ = $('#mes').val();
     var cap = $('#numero_cap').val();
-    var fecha = '<input id="fecha" name="fecha" class="form-control form-control-sm datepicker2"  value="" type="text">'
-    var distrito = '<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
-    var estado_sesion = '<select name="estado_sesion" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
-    var aprobar_pago = '<select name="aprobar_pago" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
+    var fecha = '<input id="fecha" name="fecha[]" class="form-control form-control-sm datepicker2"  value="" type="text">'
+    var distrito = '<select name="municipalidad[]" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
+    var estado_sesion = '<select name="estado_sesion[]" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
+    var aprobar_pago = '<select name="aprobar_pago[]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
     var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
 
       newRow+='<tr>';
@@ -500,11 +489,14 @@ function modal_personaNuevo(){
           Registro de Sesiones - Coordinador Zonal
         </div>
         <div class="card-body">
-          <div class="row">
+          
+		  <form method="post" action="#" id="frmCoordinador" name="frmCoordinador">
+		  
+		  <div class="row">
             <!--aaaa-->
+			
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:5px">
 
-              <form method="post" action="#" id="frmCoordinador" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
                 <!--<input type="hidden" name="id_persona" id="id_persona">-->
@@ -541,7 +533,7 @@ function modal_personaNuevo(){
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="control-label form-control-sm">Sesiones Mes</label>
-                        <select name="mes" id="mes" class="form-control form-control-sm" onchange="">
+                        <select name="mes" id="mes" class="form-control form-control-sm" onChange="">
                           <option value="">--Selecionar Mes--</option>
                           <?php
                           foreach ($mes as $row) {?>
@@ -615,6 +607,9 @@ function modal_personaNuevo(){
                     </div>
                   </div>
                 </div>
+				
+				</form>
+				
           </section>
         </div>
         </div>
