@@ -978,7 +978,7 @@ input:checked + .slider:before {
                                                         <td><input type="text" name="producto[]" id="producto01" class="form-control form-control-sm">
                                                             <div class="input-group" style="position: absolute;" id="producto01_list"></div>
                                                         </td>
-                                                        <td><input type="text"  id="porcentajeproducto_01" name="porcentajeproducto[]" class="form-control form-control-sm" onchange="calculaPorcentaje(1)" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td>
+                                                        <td><input type="text"  id="porcentajeproducto01" name="porcentajeproducto[]" class="form-control form-control-sm" onchange="calculaPorcentaje(1)" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td>
                                                         <td><input type="text"  id="peso_aprox_01" name="peso_aprox[]" class="form-control form-control-sm" /></td>
                                                         <td><input type="text"  id="descrip_01" name="descrip[]" class="form-control form-control-sm" /></td>
                                                         <td><input type="text"  id="f_venci_01" name="f_venci[]" class="form-control form-control-sm" value="<?php echo date("d/m/Y") ?>" /></td>
