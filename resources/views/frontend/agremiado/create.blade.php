@@ -1025,7 +1025,7 @@ label.form-control-sm{
 												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 												Act. Gremial
 												</div>
-												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												<div class="col-lg-1-5 col-md-12 col-sm-12 col-xs-12">
 												<select name="id_actividad_gremial" id="id_actividad_gremial" class="form-control form-control-sm" onchange="">
 													<option value="">--Selecionar--</option>
 													<?php
@@ -1036,14 +1036,8 @@ label.form-control-sm{
 													?>
 												</select>
 												</div>
-													<input class="btn btn-success" value="Suspension" type="button" id="btnSuspension" style="margin-left:15px"/>
-													<!--<input class="btn btn-sm btn-success float-rigth" value="Suspension" name="btnSuspension" type="button" id="btnSuspension" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:0px" />-->
-													<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalSuspension()" ><i class="fa fa-edit"></i> Suspension</button>
-													<input class="btn btn-success" value="Suspension" type="button" id="btnSuspension" style="margin-left:15px"/>-->
-													<!--<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-													<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalSuspension('0')" ><i class="fa fa-edit"></i> Suspension</button>
-													<a href="javascript:void(0)" onclick="eliminarEstudio(<?php /*echo $row->id*/?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-													</div>-->
+													<input class="btn btn-success" value="Suspension" type="button" id="btnSuspension" style="margin-left:0px"/>
+													
 												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 												Ubicacion
 												</div>
