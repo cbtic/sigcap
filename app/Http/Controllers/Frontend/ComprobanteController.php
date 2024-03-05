@@ -873,8 +873,10 @@ class ComprobanteController extends Controller
 
         $id_caja = $request->id_caja_;
         $id = $request->id_comprobante;
-        $id_nc = $request->id_comprobante_nc;
+        //$id_nc = $request->id_comprobante_nc;
+        
         print_r($id); exit();
+        
         $tipoF="NC";
 
         if ($id=="" ){
@@ -909,7 +911,7 @@ class ComprobanteController extends Controller
         }
         else {
             $comprobante_model=new Comprobante;
-            $comprobante=$comprobante_model->getComprobanteById($id_nc);
+            $comprobante=$comprobante_model->getComprobanteById($id);
 
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
@@ -937,6 +939,9 @@ class ComprobanteController extends Controller
 
         $id_caja = $request->id_caja_;
         $id = $request->id_comprobante;
+         //print_r($id);
+
+
         $id_nc = $request->id_comprobante_nc;
 
         if ($id=="" ){
