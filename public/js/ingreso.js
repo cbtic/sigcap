@@ -1352,21 +1352,14 @@ function guardar_fracciona_deuda(){
     });
 }
 
-function nc(){
-	/*
-	var id = $(obj).parent().parent().parent().find('.id_comprobante').val();
-
-	$('#id_comprobante_').val(id);
-
-	document.frmPagos.submit();
-	*/
-	
+function nc(id){
+	$('#id_comprobante_nc').val(id);
 	document.forms["frmPagos"].submit();
 	return false;
 };
 
-function nd(){
-	
+function nd(id){
+	$('#id_comprobante_nd').val(id);	
 	document.forms["frmPagos_nd"].submit();
 	return false;
 };
