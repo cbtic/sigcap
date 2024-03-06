@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
+use stdClass;
 
 class ConcursoController extends Controller
 {
@@ -640,7 +641,7 @@ class ConcursoController extends Controller
 			$inscripcionDocumento = new InscripcionDocumento;
 			
 			if($request->img_foto!=""){
-				echo $nombre_periodo;
+				//echo $nombre_periodo;
 				$path = "img/documento/".$nombre_periodo;
 				if (!is_dir($path)) {
 					mkdir($path);
@@ -771,8 +772,8 @@ class ConcursoController extends Controller
 		
 		$variable = [];
 		$n = 1;
-		array_push($variable, array("SISTEMA CAP"));
-		array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
 		array_push($variable, array("N","Id","Periodo","Tipo Concurso", "SubTipo Concurso", "Puesto", "Fecha Inscripcion", "Codigo Pago", "N CAP	", "N DNI", "Nombre","Situacion","Puntaje","Estado"));
 		
 		foreach ($data as $r) {
@@ -788,7 +789,54 @@ class ConcursoController extends Controller
 		
     }
 	
+	public function upload_concurso(Request $request){
 		
+		$filename = date("YmdHis") . substr((string)microtime(), 1, 6);
+		$type="";
+		
+		$path = "img/concurso";
+		if (!is_dir($path)) {
+			mkdir($path);
+		}
+		
+		$filepath = public_path('img/concurso/');
+		
+		$type=$this->extension($_FILES["file"]["name"]);
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath . $filename.".".$type);
+		
+		$archivo = $filename.".".$type;
+		
+		$this->importar_concurso($archivo);
+		
+	}
+	
+	public function importar_concurso($archivo){
+		
+		$id_user = Auth::user()->id;
+		
+		$concurso = Excel::toArray(new stdClass(), "img/concurso/".$archivo);
+		
+		foreach($concurso as $key=>$row){
+			
+			foreach($row as $key2=>$row2){
+				if($key2>0){
+					$id = $row2[1];
+					$puntaje = $row2[12];
+					$resultado = $row2[13];
+					$concursoInscripcion = ConcursoInscripcione::find($id);
+					$concursoInscripcion->puntaje = $puntaje;
+					$concursoInscripcion->resultado = $resultado;
+					$concursoInscripcion->save();
+					
+				}
+		
+			}
+		
+		}
+	}
+	
+	
+	
 }
 
 class InvoicesExport implements FromArray

@@ -1028,7 +1028,7 @@ label.form-control-sm{
 												Act. Gremial
 												</div>
 												<div class="col-lg-1-5 col-md-12 col-sm-12 col-xs-12">
-												<select name="id_actividad_gremial" id="id_actividad_gremial" class="form-control form-control-sm" onchange="">
+												<select name="id_actividad_gremial" id="id_actividad_gremial" class="form-control form-control-sm" onchange="validarSituacion()">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($actividad_gremial as $row) {?>
@@ -1089,6 +1089,7 @@ label.form-control-sm{
 												Situaci&oacute;n
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="hidden" name="id_situacion_tmp" id="id_situacion_tmp" value="<?php echo $agremiado->id_situacion?>" >
 												<select name="id_situacion" id="id_situacion" class="form-control form-control-sm" onchange="">
 													<option value="">--Selecionar--</option>
 													<?php

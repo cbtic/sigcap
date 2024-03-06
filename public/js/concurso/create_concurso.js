@@ -3,6 +3,25 @@ $(document).ready(function () {
 	
 	datatablenew();
 	
+	$(".upload").on('click', function() {
+        var formData = new FormData();
+        var files = $('#image')[0].files[0];
+        formData.append('file',files);
+        $.ajax({
+			headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/concurso/upload_concurso",
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+				datatablenew();
+            }
+        });
+		return false;
+    });
 	
 	$('#btnNuevoTrabajo').on('click', function () {
 		modalTrab(0);

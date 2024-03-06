@@ -273,7 +273,7 @@ function fn_save_traslado(){
 	
 	if(id_region == "0" || id_region == "")msg+="Debe seleccionar una Regi&oacute;n <br>";
 	if(fecha_inicio == "")msg += "Debe ingresar una fecha de inicio <br>";
-	if(fecha_fin == "")msg += "Debe ingresar una fecha de fin <br>";
+	//if(fecha_fin == "")msg += "Debe ingresar una fecha de fin <br>";
 	if(numero_regional == "")msg += "Debe ingresar un numero regional <br>";
 	if(observacion == "")msg += "Debe ingresar una observaci&oacute;n <br>";
 	

@@ -3762,3 +3762,16 @@ function habilitarCategoriaTemporal(){
 	
 }
 
+function validarSituacion(){
+
+	var id_actividad_gremial = $("#id_actividad_gremial").val();
+	var id_situacion_tmp = $("#id_situacion_tmp").val();
+	
+	$("#id_situacion").val(id_situacion_tmp);
+	if(id_actividad_gremial==225){
+		$("#id_situacion").val(74);
+	}
+	
+
+}
+
