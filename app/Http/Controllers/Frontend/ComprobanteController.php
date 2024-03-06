@@ -75,7 +75,8 @@ class ComprobanteController extends Controller
         $serie_model = new TablaMaestra;
 
 		$tabla_model = new TablaMaestra;
-		$forma_pago = $tabla_model->getMaestroByTipo('19');
+		//$forma_pago = $tabla_model->getMaestroByTipo('19');
+        $forma_pago = $tabla_model->getMaestroByTipo('108');
         $tipooperacion = $tabla_model->getMaestroByTipo('103');
         $formapago = $tabla_model->getMaestroByTipo('104');
 
@@ -562,9 +563,16 @@ class ComprobanteController extends Controller
                     $factura_upd->porc_detrac = $request->porcentaje_detraccion;
                     $factura_upd->monto_detrac = $request->monto_detraccion;
                     $factura_upd->cuenta_detrac = $request->nc_detraccion;
+
+                    $factura_upd->tipo_detrac = $request->tipo_detraccion;
+                    $factura_upd->afecta_detrac = $request->afecta_a;
+                    $factura_upd->medio_pago_detrac = $request->medio_pago;                
                     //$factura_upd->detraccion = $request->tipo_cambio;
                     //$factura_upd->id_detra_cod_bos = $request->tipo_cambio;
-                    //$factura_upd->id_detra_medio = $request->tipo_cambio;
+                    
+
+                    
+                    
                 }
                 
 				$factura_upd->save();
@@ -924,14 +932,14 @@ class ComprobanteController extends Controller
         $serie_model = new TablaMaestra;
 
 		$tabla_model = new TablaMaestra;
-		$forma_pago = $tabla_model->getMaestroByTipo('19');
+		$forma_pago = $tabla_model->getMaestroByTipo('108');
         $tipooperacion = $tabla_model->getMaestroByTipo('51');
         $formapago = $tabla_model->getMaestroByTipo('104');
 
         $serie = $serie_model->getMaestro('95');
         //print_r($tipoF); exit();
 
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','tipoF','id_caja'));
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','tipoF','id_caja','forma_pago'));
         
     }
 
