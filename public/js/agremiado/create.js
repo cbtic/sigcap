@@ -190,6 +190,15 @@ function guardar_agremiado(){
     //alert("cvvfv");
     var msg = "";
     
+	var id_regional = $("#id_regional").val();
+	if(id_regional=="")msg += "Debe seleccionar una region<br>";
+	//if(tipo_comision=="")msg += "Debe seleccionar un tipo de comision<br>";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
 	fn_save();
 }
 
