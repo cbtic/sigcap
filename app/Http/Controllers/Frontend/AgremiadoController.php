@@ -27,7 +27,7 @@ use Auth;
 
 class AgremiadoController extends Controller
 {
-	public function __construct(){
+	public function __construct(){ 
 
 		$this->middleware(function ($request, $next) {
 			if(!Auth::check()) {
