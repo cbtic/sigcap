@@ -124,6 +124,20 @@ $(document).ready(function () {
 		changeYear: true,
     });
 	
+	$('#fecha_inicio_temp').datepicker({
+        autoclose: true,
+		format: 'dd-mm-yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
+	$('#fecha_fin_temp').datepicker({
+        autoclose: true,
+		format: 'dd-mm-yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
 	$(".upload").on('click', function() {
         var formData = new FormData();
         var files = $('#image')[0].files[0];
@@ -3733,6 +3747,18 @@ function obtenerLocalEdit(id_regional,id_local){
 		}
 		
 	});
+	
+}
+
+function habilitarCategoriaTemporal(){
+
+	var id_categoria = $('#id_categoria').val();
+	
+	$("#divCategoriaTemporal").hide();
+	
+	if(id_categoria==91){
+		$("#divCategoriaTemporal").show();
+	}
 	
 }
 
