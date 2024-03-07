@@ -69,11 +69,7 @@
 								@can('Afiliciacion a Seguro')
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
 								@endcan
-								<!--
-								<a href="/derecho_revision/consulta_solicitud_derecho_revision" class="dropdown-item">Solicitud de Derecho Revisi&oacute;n</a>
-								-->
 								
-                                
 						   </div>
 					</li>
 					@endif
@@ -90,7 +86,7 @@
 					</li>
 					@endif
 
-                    @if(Gate::check('Concurso') || Gate::check('Resultado de Concurso') || Gate::check('Consulta de Resultado de Concurso') || Gate::check('Coordinador Zonal') || Gate::check('Comisiones') || Gate::check('Consulta de Comisiones') || Gate::check('Programacion de Sesiones') || Gate::check('Derecho de Revision') || Gate::check('Registro Revisor Urbano') || Gate::check('Computo de Sesiones'))
+                    @if(Gate::check('Concurso') || Gate::check('Resultado de Concurso') || Gate::check('Consulta de Resultado de Concurso') || Gate::check('Coordinador Zonal') || Gate::check('Comisiones') || Gate::check('Consulta de Comisiones') || Gate::check('Programacion de Sesiones') || Gate::check('Derecho de Revision') || Gate::check('Registro Revisor Urbano') || Gate::check('Computo de Sesiones') || Gate::check('Derecho de Revision'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Asuntos Tecnicos</a>
@@ -129,6 +125,9 @@
 								-->
 								@can('Computo de Sesiones')
 								<a href="/sesion/consulta_computoSesion" class="dropdown-item">C&oacute;mputo de Sesiones</a>
+								@endcan
+								@can('Derecho de Revision')
+								<a href="/derecho_revision/consulta_solicitud_derecho_revision" class="dropdown-item">Solicitud de Derecho Revisi&oacute;n</a>
 								@endcan
 						   </div>
 					</li>

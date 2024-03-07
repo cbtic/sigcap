@@ -55,5 +55,20 @@ order by desc_ubigeo ";
         return $data;
     }
 	
+    function getDistritoLima(){
+
+        $cad = "select id_ubigeo,id_distrito,desc_ubigeo 
+        from ubigeos u 
+        where id_departamento!='00'
+        and id_provincia!='00'
+        and id_distrito!='00'
+        and id_departamento='15'
+        and id_provincia in('01', '06')
+        and estado='1'
+        order by desc_ubigeo";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 	
 }
