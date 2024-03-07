@@ -307,6 +307,7 @@ Route::get('concurso/listar_maestro_by_tipo_subtipo/{tipo}/{sub_codigo}', [Concu
 
 Route::get('concurso/eliminar_concurso/{id}/{estado}', [ConcursoController::class, 'eliminar_concurso'])->name('concurso.eliminar_concurso');
 Route::get('concurso/listar_puesto_concurso/{id_concurso}', [ConcursoController::class, 'listar_puesto_concurso'])->name('concurso.listar_puesto_concurso');
+Route::post('concurso/upload_concurso', [ConcursoController::class, 'upload_concurso'])->name('concurso.upload_concurso');
 
 Route::get('concurso/exportar_listar_concurso_agremiado/{id_concurso}/{numero_documento}/{id_agremiado}/{agremiado}/{numero_cap}/{id_regional}/{id_situacion}/{id_estado}/{campo}/{orden}', [ConcursoController::class, 'exportar_listar_concurso_agremiado'])->name('concurso.exportar_listar_concurso_agremiado');
 
