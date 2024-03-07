@@ -16,10 +16,12 @@ use App\Models\TablaMaestra;
 use App\Models\Concepto;
 use App\Models\Valorizacione;
 use App\Models\PeriodoComisione;
+use App\Models\AgremiadoRole;
 use Carbon\Carbon;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
+use stdClass;
 
 class ConcursoController extends Controller
 {
@@ -479,13 +481,39 @@ class ConcursoController extends Controller
 	public function send_inscripcion_resultado(Request $request){
 		
 		$id_user = Auth::user()->id;
-		$concursoInscripcione = ConcursoInscripcione::find($request->id_concurso_inscripcion);
-		$concursoInscripcione->puntaje = $request->puntaje;
-		$concursoInscripcione->resultado = $request->id_estado;
-		$concursoInscripcione->puesto = $concursoInscripcione->id_concurso_puesto;
-		$concursoInscripcione->save();
-		echo $concursoInscripcione->id;
 		
+		$concursoPuesto = ConcursoPuesto::find($request->asignar_puesto);
+		
+		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+		$concursoInscripcion->puntaje = $request->puntaje;
+		$concursoInscripcion->resultado = $request->id_estado;
+		//$concursoInscripcione->puesto = $concursoInscripcione->id_concurso_puesto;
+		$concursoInscripcion->puesto = $concursoPuesto->id_tipo_plaza;
+		$concursoInscripcion->save();
+		echo $concursoInscripcion->id;
+		
+		$concursoPuesto_ = ConcursoPuesto::find($concursoInscripcion->id_concurso_puesto);
+		$concurso = Concurso::find($concursoPuesto_->id_concurso);
+		$fecha_acreditacion_inicio = $concurso->fecha_acreditacion_inicio;
+		$fecha_acreditacion_fin = $concurso->fecha_acreditacion_fin;
+		$id_tipo_concurso = $concurso->id_tipo_concurso;
+		
+		$agremiadoRoleExiste = AgremiadoRole::where("id_agremiado",$concursoInscripcion->id_agremiado)->where("rol",$id_tipo_concurso)->first();
+		
+		if($agremiadoRoleExiste){
+			$agremiadoRoleExiste->rol_especifico = $concursoPuesto->id_tipo_plaza;
+			$agremiadoRoleExiste->save();
+		}else{
+			$agremiadoRol = new AgremiadoRole;
+			$agremiadoRol->id_agremiado = $concursoInscripcion->id_agremiado;
+			$agremiadoRol->rol = $id_tipo_concurso;
+			$agremiadoRol->rol_especifico = $concursoPuesto->id_tipo_plaza;
+			$agremiadoRol->fecha_inicio = $fecha_acreditacion_inicio;
+			$agremiadoRol->fecha_fin = $fecha_acreditacion_fin;
+			$agremiadoRol->estado = 1;
+			$agremiadoRol->id_usuario_inserta = $id_user;
+			$agremiadoRol->save();
+		}
     }
 	
 	public function send_duplicar_concurso(Request $request){
@@ -618,18 +646,59 @@ class ConcursoController extends Controller
 	
 		$id_user = Auth::user()->id;
 		
-		if($request->id == 0){
+		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+			
+		$agremiado = Agremiado::find($concursoInscripcion->id_agremiado);
+		$numero_cap = $agremiado->numero_cap;
 		
+		$concursoPuesto = ConcursoPuesto::find($concursoInscripcion->id_concurso_puesto);
+		$concurso = Concurso::find($concursoPuesto->id_concurso);
+		
+		$periodoComision = PeriodoComisione::find($concurso->id_periodo);
+		$nombre_periodo = str_replace("/","-",$periodoComision->descripcion);
+		
+		$tipoConcurso = TablaMaestra::where("codigo",$concurso->id_tipo_concurso)->where("tipo",101)->first();
+		$nombre_tipo_concurso = $tipoConcurso->denominacion;
+		
+		$subTipoConcurso = TablaMaestra::where("codigo",$concurso->id_sub_tipo_concurso)->where("tipo",93)->first();
+		$nombre_sub_tipo_concurso = $subTipoConcurso->denominacion;
+		
+		if($request->id == 0){
+			
 			$inscripcionDocumento = new InscripcionDocumento;
 			
 			if($request->img_foto!=""){
+				//echo $nombre_periodo;
+				$path = "img/documento/".$nombre_periodo;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+				
+				$path = "img/documento/".$nombre_periodo."/".$nombre_tipo_concurso;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+				
+				$path = "img/documento/".$nombre_periodo."/".$nombre_tipo_concurso."/".$nombre_sub_tipo_concurso;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+				
+				$path = "img/documento/".$nombre_periodo."/".$nombre_tipo_concurso."/".$nombre_sub_tipo_concurso."/".$numero_cap;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+				
+			
 				$filepath_tmp = public_path('img/frontend/tmp_documento/');
-				$filepath_nuevo = public_path('img/documento/');
+				$filepath_nuevo = public_path('img/documento/'.$nombre_periodo.'/'.$nombre_tipo_concurso.'/'.$nombre_sub_tipo_concurso.'/'.$numero_cap.'/');
+				
 				if (file_exists($filepath_tmp.$request->img_foto)) {
 					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
 				}
 				
-				$inscripcionDocumento->ruta_archivo = $request->img_foto;
+				//$inscripcionDocumento->ruta_archivo = $request->img_foto;
+				$inscripcionDocumento->ruta_archivo = 'img/documento/'.$nombre_periodo.'/'.$nombre_tipo_concurso.'/'.$nombre_sub_tipo_concurso.'/'.$numero_cap.'/'.$request->img_foto;
 			}
 			
 		}else{
@@ -638,12 +707,16 @@ class ConcursoController extends Controller
 				
 			if($request->img_foto!="" && $inscripcionDocumento->ruta_archivo!=$request->img_foto){
 				$filepath_tmp = public_path('img/frontend/tmp_documento/');
-				$filepath_nuevo = public_path('img/documento/');
+				//$filepath_nuevo = public_path('img/documento/');
+				$filepath_nuevo = public_path('img/documento/'.$nombre_periodo.'/'.$nombre_tipo_concurso.'/'.$nombre_sub_tipo_concurso.'/'.$numero_cap.'/');
+				
 				if (file_exists($filepath_tmp.$request->img_foto)) {
 					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
 				}
 				
-				$inscripcionDocumento->ruta_archivo = $request->img_foto;
+				//$inscripcionDocumento->ruta_archivo = $request->img_foto;
+				$inscripcionDocumento->ruta_archivo = 'img/documento/'.$nombre_periodo.'/'.$nombre_tipo_concurso.'/'.$nombre_sub_tipo_concurso.'/'.$numero_cap.'/'.$request->img_foto;
+				
 			}
 			
 		}
@@ -726,8 +799,8 @@ class ConcursoController extends Controller
 		
 		$variable = [];
 		$n = 1;
-		array_push($variable, array("SISTEMA CAP"));
-		array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
 		array_push($variable, array("N","Id","Periodo","Tipo Concurso", "SubTipo Concurso", "Puesto", "Fecha Inscripcion", "Codigo Pago", "N CAP	", "N DNI", "Nombre","Situacion","Puntaje","Estado"));
 		
 		foreach ($data as $r) {
@@ -743,7 +816,54 @@ class ConcursoController extends Controller
 		
     }
 	
+	public function upload_concurso(Request $request){
 		
+		$filename = date("YmdHis") . substr((string)microtime(), 1, 6);
+		$type="";
+		
+		$path = "img/concurso";
+		if (!is_dir($path)) {
+			mkdir($path);
+		}
+		
+		$filepath = public_path('img/concurso/');
+		
+		$type=$this->extension($_FILES["file"]["name"]);
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath . $filename.".".$type);
+		
+		$archivo = $filename.".".$type;
+		
+		$this->importar_concurso($archivo);
+		
+	}
+	
+	public function importar_concurso($archivo){
+		
+		$id_user = Auth::user()->id;
+		
+		$concurso = Excel::toArray(new stdClass(), "img/concurso/".$archivo);
+		
+		foreach($concurso as $key=>$row){
+			
+			foreach($row as $key2=>$row2){
+				if($key2>0){
+					$id = $row2[1];
+					$puntaje = $row2[12];
+					$resultado = $row2[13];
+					$concursoInscripcion = ConcursoInscripcione::find($id);
+					$concursoInscripcion->puntaje = $puntaje;
+					$concursoInscripcion->resultado = $resultado;
+					$concursoInscripcion->save();
+					
+				}
+		
+			}
+		
+		}
+	}
+	
+	
+	
 }
 
 class InvoicesExport implements FromArray

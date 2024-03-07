@@ -1,6 +1,37 @@
-const { truncate } = require("lodash");
+//const { truncate } = require("lodash");
 
 $(document).ready(function () {
+
+	$('#example-select-all').on('click', function(){
+		//alert("ok");
+		var msg="";
+		var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+
+		if (cboTipoConcepto_b=="")msg+="Seleccione un concepto para continuar.. <br>";
+
+		if(msg!=""){
+        
+			bootbox.alert(msg); 
+			
+			$('#DescuentoPP').val("N");
+		
+	
+			return false;
+	
+		}
+		else{
+
+			if($(this).is(':checked')){
+				$('.mov').prop('checked', true);
+			}else{
+				$('.mov').prop('checked', false);
+			}
+			
+			//calcular_total();
+			select_all();
+		}
+
+	});
 
 	$('#numero_documento').keypress(function (e) {
 		if (e.keyCode == 13) {
@@ -11,32 +42,10 @@ $(document).ready(function () {
 	/*$('#btnBeneficiario').click(function () {
 		modal_beneficiario(0);
 	});*/
-
 	
 });
 
 
-$(document).ready(function () {
-	
-	$('#example-select-all').on('click', function(){
-		alert("ok");
-		if($(this).is(':checked')){
-			$('.mov').prop('checked', true);
-		}else{
-			$('.mov').prop('checked', false);
-		}
-		
-		calcular_total();
-		/*
-		var total = 0;
-		$(".mov:checked").each(function (){
-			var val_total = $(this).parent().parent().parent().find('.val_total').html();
-			total += Number(val_total); 
-		});
-		$('#total').val(total);
-		*/
-	});
-});
 
 
 function validarMonAd(){
@@ -499,6 +508,8 @@ function obtenerBeneficiario(){
 
 	$('#DescuentoPP').val("N");
 	
+	$('#example-select-all').prop( "checked", false );
+	
 	//alert(tipo_documento);
 	
 	if (msg != "") {
@@ -737,6 +748,8 @@ function cargarValorizacion(){
 
 	$("#id_concepto_sel").val("");
 
+	$('#example-select-all').prop( "checked", false );
+
 	
 
 	//if(tipo_documento=="RUC")id_persona = $('#empresa_id').val();
@@ -760,9 +773,6 @@ function cargarValorizacion(){
 	var id_concepto_pp = $('#id_concepto_pp').val();
 
 	
-
-	
-
 	$("#btnFracciona").prop('disabled', true);
 	$("#btnDescuento").prop('disabled', true);
 
@@ -800,6 +810,8 @@ function cargarValorizacion(){
 				$("#btnFracciona").prop('disabled', false);
 
 			}
+
+			total_deuda();
 
 
 
@@ -1340,21 +1352,14 @@ function guardar_fracciona_deuda(){
     });
 }
 
-function nc(){
-	/*
-	var id = $(obj).parent().parent().parent().find('.id_comprobante').val();
-
-	$('#id_comprobante_').val(id);
-
-	document.frmPagos.submit();
-	*/
-	
+function nc(id){
+	$('#id_comprobante_nc').val(id);
 	document.forms["frmPagos"].submit();
 	return false;
 };
 
-function nd(){
-	
+function nd(id){
+	$('#id_comprobante_nd').val(id);	
 	document.forms["frmPagos_nd"].submit();
 	return false;
 };
@@ -1505,7 +1510,126 @@ function AplicarDescuento(){
 	
 };
 
+function select_all(){
+	
+	var msg = "";
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
 
+	var total = 0;
+	var stotal = 0;
+	var igv = 0;
+
+	var descuento = 0;
+	var valor_venta_bruto = 0;
+	var valor_venta = 0;
+	var cantidad = $(".mov:checked").length;
+
+	if(id_caja_usuario=="0"){
+		bootbox.alert("Debe seleccionar una Caja disponible");
+		$(obj).prop("checked",false);
+		return false;
+	}
+
+
+
+	$(".mov").each(function (){
+		//$(this).parent().parent().parent().find(".mov").prop("checked", true);
+		$('.mov').prop('checked', true);
+		//calcular_total();
+
+		total = $(this).parent().parent().parent().find('.val_total').html();
+		stotal = $(this).parent().parent().parent().find('.val_sub_total').html();
+		igv = $(this).parent().parent().parent().find('.val_igv').html();
+
+		$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
+		$(this).parent().parent().parent().find('.chek').val("1");
+
+		total += Number(val_total);
+		stotal += Number(val_sub_total);
+		igv += Number(val_igv);
+
+	});
+
+	descuento = 0;
+
+	total = total - descuento;
+
+	$('#total').val(total.toFixed(2));
+	$('#stotal').val(stotal.toFixed(2));
+	$('#igv').val(igv.toFixed(2));
+
+	$('#totalDescuento').val(descuento.toFixed(2));
+
+
+	if (cantidad > 1) {
+		$('#MonAd').attr("readonly", true);
+		$('#MonAd').val("0");
+	} else {
+		$('#MonAd').attr("readonly", false);
+		$('#MonAd').val(total.toFixed(2));
+	}
+
+
+	//var cantidad = $(".mov:checked").length;
+	var ruc_p = $('#ruc_p').val();
+	var tipo_documento = $('#tipo_documento').val();
+
+	$("#btnBoleta").prop('disabled', true);
+	$("#btnFactura").prop('disabled', true);
+	$("#btnFracciona").prop('disabled', true);
+	$("#btnDescuento").prop('disabled', true);
+	$('#btnOtroConcepto').attr("disabled", true);
+
+	if (cantidad != 0) {
+
+		if (tipo_documento == "79") {//RUC
+
+			$("#btnBoleta").prop('disabled', true);
+			$("#btnFactura").prop('disabled', false);
+		} else {
+			$("#btnBoleta").prop('disabled', false);
+
+			if (ruc_p != "") $("#btnFactura").prop('disabled', false);
+		}
+	}
+
+};
+
+function total_deuda(){
+
+	//
+	
+	var msg = "";
+	var cboTipoConcepto_b = $('#cboTipoConcepto_b').val();
+
+	var total = 0;
+	var stotal = 0;
+	var igv = 0;
+
+	var descuento = 0;
+	var valor_venta_bruto = 0;
+	var valor_venta = 0;
+	var cantidad = $(".mov").length;
+
+	$(".mov").each(function (){
+		
+		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+
+		total += Number(val_total);
+		stotal += Number(val_sub_total);
+		igv += Number(val_igv);
+
+		
+
+	});
+
+	$('#deudaTotales').val(total.toFixed(2));
+
+	
+
+};
 
 
 

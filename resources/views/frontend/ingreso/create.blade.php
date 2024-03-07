@@ -28,46 +28,48 @@
     .tooltip.left>.tooltip-arrow {
         border-left: 2px solid #5cb85c !important;
     }
- 
+
     .tooltip.right>.tooltip-arrow {
         border-right: 2px solid #5cb85c !important;
     }
-	.loader {
-		width: 100%;
-		height: 100%;
-		/*height: 1500px;*/
-		overflow: hidden;
-		top: 0px;
-		left: 0px;
-		z-index: 10000;
-		text-align: center;
-		position: absolute;
-		background-color: #000;
-		opacity: 0.6;
-		filter: alpha(opacity=40);
-		display: none;
-	}
+
+    .loader {
+        width: 100%;
+        height: 100%;
+        /*height: 1500px;*/
+        overflow: hidden;
+        top: 0px;
+        left: 0px;
+        z-index: 10000;
+        text-align: center;
+        position: absolute;
+        background-color: #000;
+        opacity: 0.6;
+        filter: alpha(opacity=40);
+        display: none;
+    }
 
     .selected {
         background-color: brown;
         color: #FFF;
     }
-/*
+
+    /*
     #btnBoleta{
         padding: 3px!important;
         font-size: 10px;
 
     }
 */
-    #tblPago .form-horizontal{
-        margin-bottom: 0px!important;
-        padding-bottom: 0px!important;
+    #tblPago .form-horizontal {
+        margin-bottom: 0px !important;
+        padding-bottom: 0px !important;
     }
 
-    .auto_height { /* CSS */
-  width: 100%;
-}
-    
+    .auto_height {
+        /* CSS */
+        width: 100%;
+    }
 </style>
 @stack('before-scripts')
 @stack('after-scripts')
@@ -161,7 +163,7 @@
                                     ?>
                                         <input type="text" name="caja" id="caja" readonly="" value="<?php echo $caja_usuario->caja ?>" placeholder="" class="form-control form-control-sm">
                                         <input type="hidden" name="id_caja" id="id_caja" value="<?php echo $caja_usuario->id_caja ?>" />
-                                        <input type="hidden" name="id_caja_ingreso" id="id_caja_ingreso" value="<?php echo $caja_usuario->id ?>" />                                        
+                                        <input type="hidden" name="id_caja_ingreso" id="id_caja_ingreso" value="<?php echo $caja_usuario->id ?>" />
                                     <?php else : ?>
                                         <select name="id_caja" id="id_caja" class="form-control form-control-sm">
                                             <option value="0">Seleccionar</option>
@@ -219,7 +221,7 @@
 
                                     <div class="card-body">
                                         <input type='hidden' name='txt_IdEmpresa' id="txt_IdEmpresa" value='{{Auth::user()->IdEmpresa}}'>
-                                        
+
 
                                         <div class="row">
                                             <div class="col">
@@ -245,17 +247,28 @@
                                                     <input type="hidden" readonly name="id_tipo_documento_" id="id_tipo_documento_" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_concepto" id="id_concepto" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_concepto_sel" id="id_concepto_sel" value="" class="form-control form-control-sm">
-                                                    
+
                                                     <input type="hidden" readonly name="DescuentoPP" id="DescuentoPP" value="" class="form-control form-control-sm">
 
-                                                    <input type="hidden" readonly name="id_pronto_pago" id="id_pronto_pago" value="<?php echo !empty($pronto_pago->id) ? $pronto_pago->id:'0'  ?>" class="form-control form-control-sm">
-                                                    <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo !empty($pronto_pago->periodo) ? $pronto_pago->periodo:'0'  ?>" class="form-control form-control-sm">
-                                                    <input type="hidden" readonly name="numero_cuotas_pp" id="numero_cuotas_pp" value="<?php echo !empty($pronto_pago->numero_cuotas) ? $pronto_pago->numero_cuotas:'0'  ?>" class="form-control form-control-sm">
+<<<<<<< HEAD
+                                                    <input type="hidden" readonly name="id_pronto_pago" id="id_pronto_pago" value="<?php echo !empty($pronto_pago->id) ? $pronto_pago->id : '0'  ?>" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo !empty($pronto_pago->periodo) ? $pronto_pago->periodo : '0'  ?>" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="numero_cuotas_pp" id="numero_cuotas_pp" value="<?php echo !empty($pronto_pago->numero_cuotas) ? $pronto_pago->numero_cuotas : '0'  ?>" class="form-control form-control-sm">
 
                                                     <input type="hidden" readonly name="id_concepto_pp" id="id_concepto_pp" value="<?php echo $concepto->id ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="importe_pp" id="importe_pp" value="<?php echo $concepto->importe ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $concepto->id_tipo_afectacion ?>" class="form-control form-control-sm">
+
+=======
+                                                    <input type="hidden" readonly name="id_pronto_pago" id="id_pronto_pago" value="<?php echo !empty($pronto_pago->id) ? $pronto_pago->id:'0'  ?>" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo !empty($pronto_pago->periodo) ? $pronto_pago->periodo:'0'  ?>" class="form-control form-control-sm">
                                                     
+
+                                                   
+                                                   
+                                                   
+                                                    
+>>>>>>> 6ea6a82a440590ee85233ace1130f7e5d13546ec
                                                 </div>
                                             </div>
                                         </div>
@@ -305,7 +318,7 @@
                                         <div class="row" id="divCodigoAfliado">
                                             <div class="col">
                                                 <div class="form-group">
-                                                <label class="form-control-sm">Situación</label>
+                                                    <label class="form-control-sm">Situación</label>
                                                     <input type="text" readonly name="situacion_" id="situacion_" value="{{old('clinom')}}" class="form-control form-control-sm" />
                                                 </div>
                                             </div>
@@ -366,7 +379,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row">
                                             <div class="col">
                                                 <button class="btn btn-success btn-sm" type="button" name="btnOtroConcepto" id="btnOtroConcepto" onClick="modal_otro_pago()" tabindex="0" disabled><i class="glyphicon glyphicon-search"></i> Pago Otros Conceptos </button>
@@ -444,14 +457,15 @@
 
                                         <?php $seleccionar_todos = "style='display:block'"; ?>
 
-                                        <div class="table-responsive">
+
+                                        <div class="table-responsive overflow-auto" style="max-height: 500px">
                                             <table id="tblValorizacion" class="table table-hover table-sm">
                                                 <thead>
                                                     <tr style="font-size:13px">
                                                         <!--<th class="text-right" width="5%">-->
                                                         <th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
-                                                            <input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?> >
-                                                        </th>                                                        
+                                                            <input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?>>
+                                                        </th>
                                                         <th>Nro</th>
                                                         <th>F. Proceso</th>
                                                         <th>Concepto</th>
@@ -463,58 +477,67 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
-                                                    <!--<tr>
-                                            <td colspan="11" class="text-center">
-                                                <span class="badge badge-default">{{ __('log-viewer::general.empty-logs') }}</span>
-                                            </td>
-                                        </tr>
-                                        -->
                                                 </tbody>
                                                 <tfoot>
-                                                    <!--
-										<tr>
-											<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Pago a Cuenta</th>
-											<td style="padding-bottom:0px;margin-bottom:0px">
-
-												<input type="text" readonly name="MonAd" id="MonAd" value="0" class="form-control form-control-sm text-right" onkeyup="validarMonAd()"/>
-											</td>
-										</tr>
-                                        -->
 
 
-                                                    <tr>                                                    
+                                                </tfoot>
+                                            </table>
+                                        </div><!--table-responsive-->
+
+                                        <div class="table-responsive overflow-auto" style="max-height: 500px">
+
+                                            <table id="tbl" class="table table-hover table-sm">
+
+                                                <tfoot>
+                                                    <tr>
                                                         <td style="padding-bottom:0px;margin-bottom:0px">
-                                                            <select name="cboFilas" id="cboFilas" class="form-control form-control-sm" onchange="cargarValorizacion()">                                                  
+                                                            <select name="cboFilas" id="cboFilas" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                                                                <option value="" selected='selected'>Todos</option>
                                                                 <option value="20">20</option>
-                                                                <option value="60" selected='selected'>60</option>
+                                                                <option value="60">60</option>
                                                                 <option value="100">100</option>
-                                                                <option value="500">500</option>                                                                
-                                                            </select>
-                                                        </td>
 
+                                                            </select>
+
+                                                        <th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda Total</th>
+                                                        <td style="padding-bottom:0px;margin-bottom:0px">
+                                                            <input type="text" readonly name="deudaTotales" id="deudaTotales" value="0" class="form-control form-control-sm text-right">
+                                                        </td>
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td style="padding-bottom:0px;margin-bottom:0px">
                                                         <th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Descuento</th>
                                                         <td style="padding-bottom:0px;margin-bottom:0px">
-                                                            <input type="text" readonly name="totalDescuento" id="totalDescuento" value="0" class="form-control form-control-sm text-right">                                                            
+                                                            <input type="text" readonly name="totalDescuento" id="totalDescuento" value="0" class="form-control form-control-sm text-right">
                                                         </td>
-
+                                                        </td>
                                                     </tr>
 
                                                     <tr>
-                                                    
-                                                    <td style="padding-bottom:0px;margin-bottom:0px">
+                                                        <td style="padding-bottom:0px;margin-bottom:0px">
 
-                                                    <th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
-                                                    <td style="padding-bottom:0px;margin-bottom:0px">
-                                                        <input type="text" readonly name="total" id="total" value="0" class="form-control form-control-sm text-right">
-                                                        <input type="hidden" readonly name="stotal" id="stotal" value="" class="form-control form-control-sm">
-                                                        <input type="hidden" readonly name="igv" id="igv" value="" class="form-control form-control-sm">
-                                                        <input type="hidden" readonly name="idConcepto" id="idConcepto" value="" class="form-control form-control-sm">
+                                                        <th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total a Pagar</th>
+                                                        <td style="padding-bottom:0px;margin-bottom:0px">
+                                                            <input type="text" readonly name="total" id="total" value="0" class="form-control form-control-sm text-right">
+                                                            <input type="hidden" readonly name="stotal" id="stotal" value="" class="form-control form-control-sm">
+                                                            <input type="hidden" readonly name="igv" id="igv" value="" class="form-control form-control-sm">
+                                                            <input type="hidden" readonly name="idConcepto" id="idConcepto" value="" class="form-control form-control-sm">
 
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        </td>
+                                                    </tr>
+
+
+
+
                                                 </tfoot>
                                             </table>
+
+
                                         </div><!--table-responsive-->
 
 
@@ -537,14 +560,14 @@
                                                     <input type="hidden" name="Trans" id="Trans" value="FA" />
                                                     <input class="btn btn-success pull-rigth" value="FACTURA" type="button" id="btnFactura" disabled="disabled" onclick="enviarTipo(1)" />
                                                     <input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnBoleta" disabled="disabled" onclick="enviarTipo(2)" />
-                                                    
+
                                                     <input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnTicket" disabled="disabled" onclick="enviarTipo(3)" style="display:none" />
 
                                                     <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="modal_fraccionamiento()" />
 
-                                                    <input class="btn btn-warning pull-right" value="APLICAR PRONTO PAGO" type="button" id="btnDescuento" disabled="disabled"  onclick="AplicarDescuento()" />
+                                                    <input class="btn btn-warning pull-right" value="APLICAR PRONTO PAGO" type="button" id="btnDescuento" disabled="disabled" onclick="AplicarDescuento()" />
 
-                                                    
+
 
 
                                                     <!--<input class="btn btn-primary pull-right" value="BOLETA" name="crea" type="button" form="prestacionescrea" id="btnGuardar" onclick="guardarValorizacion()" />-->
@@ -568,14 +591,13 @@
                                         </strong>
                                     </div>
 
-
                                     <div class="card-body">
-                                        <div class="table-responsive">
+                                        <div class="table-responsive overflow-auto" style="max-height: 500px">
                                             <table id="tblPago" class="table table-hover table-sm">
                                                 <thead>
                                                     <tr style="font-size:13px">
                                                         <th>Fecha</th>
-                                                        
+
                                                         <th>Serie</th>
                                                         <th>Numero</th>
                                                         <th>Concepto</th>
@@ -589,6 +611,7 @@
                                             </table>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
 
@@ -620,12 +643,13 @@
     </div>
 </div>
 @endsection
-			
-			
-			<!--
+
+
+<!--
             <form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmPagos" name="frmPagos" autocomplete="off">
                 <input type="hidden" name="id_comprobante_" id="id_comprobante_" value="" />
-                <input type="hidden" name="id_caja_" id="id_caja_" value="<?php //echo $caja_usuario->id_caja ?>" />
+                <input type="hidden" name="id_caja_" id="id_caja_" value="<?php //echo $caja_usuario->id_caja 
+                                                                            ?>" />
             </form>
 			-->
 
@@ -635,10 +659,11 @@
     var id_caja_usuario = "<?php echo ($caja_usuario) ? $caja_usuario->id_caja : 0 ?>";
     //alert(id_caja_usuario);
 
-    function auto_height(elem) {  /* javascript */
-    elem.style.height = '1px';
-    elem.style.height = '${elem.scrollHeight}px';
-}
+    function auto_height(elem) {
+        /* javascript */
+        elem.style.height = '1px';
+        elem.style.height = '${elem.scrollHeight}px';
+    }
 </script>
 
 @endpush

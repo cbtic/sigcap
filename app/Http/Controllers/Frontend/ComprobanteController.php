@@ -75,7 +75,8 @@ class ComprobanteController extends Controller
         $serie_model = new TablaMaestra;
 
 		$tabla_model = new TablaMaestra;
-		$forma_pago = $tabla_model->getMaestroByTipo('19');
+		//$forma_pago = $tabla_model->getMaestroByTipo('19');
+        $forma_pago = $tabla_model->getMaestroByTipo('108');
         $tipooperacion = $tabla_model->getMaestroByTipo('103');
         $formapago = $tabla_model->getMaestroByTipo('104');
 
@@ -562,9 +563,16 @@ class ComprobanteController extends Controller
                     $factura_upd->porc_detrac = $request->porcentaje_detraccion;
                     $factura_upd->monto_detrac = $request->monto_detraccion;
                     $factura_upd->cuenta_detrac = $request->nc_detraccion;
+
+                    $factura_upd->tipo_detrac = $request->tipo_detraccion;
+                    $factura_upd->afecta_detrac = $request->afecta_a;
+                    $factura_upd->medio_pago_detrac = $request->medio_pago;                
                     //$factura_upd->detraccion = $request->tipo_cambio;
                     //$factura_upd->id_detra_cod_bos = $request->tipo_cambio;
-                    //$factura_upd->id_detra_medio = $request->tipo_cambio;
+                    
+
+                    
+                    
                 }
                 
 				$factura_upd->save();
@@ -872,9 +880,10 @@ class ComprobanteController extends Controller
     public function nc_edita(Request $request){
 
         $id_caja = $request->id_caja_;
-        $id = $request->id_comprobante;
-        $id_nc = $request->id_comprobante_nc;
-        print_r($id); exit();
+        $id = $request->id_comprobante_nc;
+        //$id_nc = $request->id_comprobante_nc;        
+        //print_r($id); exit();
+        
         $tipoF="NC";
 
         if ($id=="" ){
@@ -898,6 +907,8 @@ class ComprobanteController extends Controller
             $comprobante_model=new Comprobante;
             $comprobante=$comprobante_model->getComprobanteById($id);
 
+             //print_r($comprobante); exit();
+
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
@@ -909,7 +920,7 @@ class ComprobanteController extends Controller
         }
         else {
             $comprobante_model=new Comprobante;
-            $comprobante=$comprobante_model->getComprobanteById($id_nc);
+            $comprobante=$comprobante_model->getComprobanteById($id);
 
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
@@ -922,14 +933,16 @@ class ComprobanteController extends Controller
         $serie_model = new TablaMaestra;
 
 		$tabla_model = new TablaMaestra;
-		$forma_pago = $tabla_model->getMaestroByTipo('19');
+		$forma_pago = $tabla_model->getMaestroByTipo('108');
         $tipooperacion = $tabla_model->getMaestroByTipo('51');
         $formapago = $tabla_model->getMaestroByTipo('104');
 
         $serie = $serie_model->getMaestro('95');
         //print_r($tipoF); exit();
 
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','tipoF','id_caja'));
+        //print_r($comprobante); exit();
+
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','tipoF','id_caja','forma_pago'));
         
     }
 
@@ -937,6 +950,9 @@ class ComprobanteController extends Controller
 
         $id_caja = $request->id_caja_;
         $id = $request->id_comprobante;
+         //print_r($id);
+
+
         $id_nc = $request->id_comprobante_nc;
 
         if ($id=="" ){
@@ -1076,7 +1092,7 @@ class ComprobanteController extends Controller
 		$data["esFicticio"] = false;
 		$data["keepNumber"] = "false";
 		$data["tipoCorreo"] = "1";
-        $data["formaPago"] = "CONTADO";
+        $data["formaPago"] = "CONTADO";        
 		$data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
@@ -1099,7 +1115,7 @@ class ComprobanteController extends Controller
 		$data["totalDescuentos"] = str_replace(",","",number_format($factura->total_descuentos,2));
 		$data["totalOPGravadas"] = "0.00"; //"127.12";
 		$data["codigoPaisEmisor"] = "PE";
-		$data["totalOPGratuitas"] = "0.00";
+		$data["totalOPGratuitas"] = "0.00";        
 		$data["docAfectadoFisico"] = false;
 		$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
 		$data["razonSocialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
@@ -1113,8 +1129,8 @@ class ComprobanteController extends Controller
 		$data["nombreComercialEmisor"] = "CAP";
 		$data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
-		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";
-		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";
+		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";     
+		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";        
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
         $data["direccionReceptor"] = $factura->direccion;
 
@@ -1273,50 +1289,51 @@ class ComprobanteController extends Controller
 
         $tipoDoc = "";
 
-        if ($td == 'FT'){
+        //
+
+        if ($td == 'FT') {
             $tipoDoc = "6";
-        }
-        if ($td == 'NC'){
-            $tipoDoc = "7";
-        }
-        else{
-            if ($dni=='-'){
-                $tipoDoc = "0";
-            }
-            else{
-                $persona= Persona::where('numero_documento', $dni)->get()[0];
-                $tipoDocB = $persona->tipo_documento;
-                switch ($tipoDocB) {
-                    case "DNI":
-                        $tipoDoc = "1";
-                    break;
-                    case "CARNET_EXTRANJERIA":
-                        $tipoDoc = "4";
-                    break;
-
-                    case "PASAPORTE":
-                        $tipoDoc = "7";
-                    break;
-
-                    case "CEDULA":
-                        $tipoDoc = "A";
-                    break;
-
-                    case "PTP/PTEP":
-                        $tipoDoc = "B";
-                    break;
-
-                    // incluir un codigo para el nuevo tipo CPP/CSR
-                    case "CPP/CSR":
-                        $tipoDoc = "F";
-                    break;
-
-                    default:
+        } else {
+            if ($td == 'NC') {
+                $tipoDoc = "7";
+            } else {
+                if ($dni == '-') {
                     $tipoDoc = "0";
+                } else {
+                    $persona = Persona::where('numero_documento', $dni)->get()[0];
+                    $tipoDocB = $persona->tipo_documento;
+                    switch ($tipoDocB) {
+                        case "DNI":
+                            $tipoDoc = "1";
+                            break;
+                        case "CARNET_EXTRANJERIA":
+                            $tipoDoc = "4";
+                            break;
 
+                        case "PASAPORTE":
+                            $tipoDoc = "7";
+                            break;
+
+                        case "CEDULA":
+                            $tipoDoc = "A";
+                            break;
+
+                        case "PTP/PTEP":
+                            $tipoDoc = "B";
+                            break;
+
+                            // incluir un codigo para el nuevo tipo CPP/CSR
+                        case "CPP/CSR":
+                            $tipoDoc = "F";
+                            break;
+
+                        default:
+                            $tipoDoc = "0";
+                    }
                 }
             }
         }
+        //print_r($tipoDoc);exit();
         return $tipoDoc;
     }
 

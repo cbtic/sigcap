@@ -99,13 +99,13 @@ foreach($valorizacion as $key=>$row):
 endforeach;
 ?>
 <tr>
+	<input type="hidden" name="deudaTotal" id="deudaTotal" value="<?php echo number_format($total,2)?>" />
+<!--
 	<th colspan="5" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda Total</th>
 	<td style="padding-bottom:0px;margin-bottom:0px">
-		<input type="text" readonly name="deudaTotal" id="deudaTotal" value="<?php echo number_format($total,2)?>" class="form-control form-control-sm text-right"/>
-
-		
-
+		<input type="text" readonly name="deudaTotal" id="deudaTotal" value="<//?php echo number_format($total,2)?>" class="form-control form-control-sm text-right"/>
 	</td>
+-->
 </tr>
 
 

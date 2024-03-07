@@ -265,6 +265,17 @@ class AgremiadoController extends Controller
 		$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
 		$agremiado->desc_situacion_otro = $request->desc_situacion_otro;
 		$agremiado->fecha_fallecido = $request->fecha_fallecido;
+		
+		if($request->id_categoria==91){
+			$agremiado->fecha_inicio_temp = $request->fecha_inicio_temp;
+			$agremiado->fecha_fin_temp = $request->fecha_fin_temp;
+			$agremiado->observacion_temp = $request->observacion_temp;
+		}else{
+			$agremiado->fecha_inicio_temp = NULL;
+			$agremiado->fecha_fin_temp = NULL;
+			$agremiado->observacion_temp = NULL;
+		}
+		
 		//$agremiado->estado = 1;
 		$agremiado->save();
 		

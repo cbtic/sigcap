@@ -382,15 +382,12 @@ label.form-control-sm{
 											
 												<div style="clear:both"></div>
 												
-												<div class="row">
-												
-													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 													
 														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															Tipo concurso
 															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<select name="id_concurso" id="id_concurso" class="form-control form-control-sm" onchange="obtener_datos_concurso()">
 																<option value="">--Selecionar--</option>
 																<?php
@@ -404,193 +401,97 @@ label.form-control-sm{
 																?>
 															</select>
 															</div>
-														</div>
 														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															Puesto
 															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<select name="id_concurso_puesto" id="id_concurso_puesto" class="form-control form-control-sm">
 																<option value="">--Selecionar--</option>
 															</select>
 															</div>
-														</div>
-														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															F. Acreditaci&oacute;n. Inicio
 															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="fecha_acreditacion_inicio" id="fecha_acreditacion_inicio" value="" class="form-control form-control-sm" readonly="readonly">
 															</div>
+															
 														</div>
 														
 														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															
+														
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															F. Acreditaci&oacute;n. Fin
 															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="fecha_acreditacion_fin" id="fecha_acreditacion_fin" value="" class="form-control form-control-sm" readonly="readonly">
 															</div>
-														</div>
-														
-														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															N&deg; CAP
 															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
-														</div>
 														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															Nombre
 															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="nombres" id="nombres" value="<?php echo $agremiado->apellido_paterno." ".$agremiado->apellido_materno." ".$agremiado->nombres?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
+															
 														</div>
+														
+														
 														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															DNI
 															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="numero_documento" id="numero_documento" value="<?php echo $agremiado->numero_documento?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
-														</div>
-														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															Regional
 															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="region" id="region" value="<?php echo $agremiado->region?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
-														</div>
 														
-														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															Situaci&oacute;n
 															</div>
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="situacion" id="situacion" value="<?php echo $agremiado->situacion?>" class="form-control form-control-sm" readonly="readonly">
 															</div>
 														</div>
-													
-													</div>
-													
-													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+														
 														
 														<div class="row">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px">
 															Codigo de Pago
 															</div>
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 															<input type="text" name="numero_comprobante" id="numero_comprobante" value="<?php //echo $agremiado->numero_cap?>" class="form-control form-control-sm" disabled="disabled">
 															</div>
 															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-															<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;" />
+															<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:0px;" />
 															</div>
 														</div>
 														
-														<div class="row" style="padding:15px 0px 10px 0px">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
-																<strong>Requisitos</strong>
-															</div>
-														</div>
-														
-														<div class="row">	
-															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												
-																	<div class="table-responsive">
-																	<table id="tblRequisito" class="table table-hover table-sm">
-																	<thead>
-																		<tr style="font-size:13px">
-																			<!--<th>N&deg;</th>-->
-																			<th>Tipo de Doc</th>
-																			<th>Requisito</th>
-																			<th>Archivo</th>
-																		</tr>
-																	</thead>
-																	<tbody style="font-size:13px">
-																	</tbody>							
-																	</table>
-																	
-																</div>
-															
-															</div>
-														</div>
-														<!--
-														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
-														-->
-														<?php if(count($documento_pendiente)>0){?>
-														<div id="divAlertaDocumento" class="alert alert-warning" role="alert" style="font-size:20px">
-															<?php 
-															foreach($documento_pendiente as $row){
-															?>
-													  		El concurso <?php echo $row->periodo." ".$row->tipo_concurso;if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?> esta pendiente de adjuntar documentos, hacer click en el boton registrar documento para adjuntar documentos
-															<?php 
-															echo "<br>";
-															}?>
-														</div>
-														<?php }?>
-														
-													</div>
-													
-													
-													<div id="divDocumentos" style="display:none" class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-														
-														<div class="row" style="padding:15px 0px 10px 0px">
-															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
-																<strong>Registrar Documentos</strong>
-															</div>
-															<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
-																<input class="btn btn-warning pull-rigth" value="Nuevo" type="button" id="btnNuevo" style="margin-left:0px" />
-																
-																<input class="btn btn-success pull-rigth" value="Traer Req. Guardados" type="button" id="btnDuplicar" style="margin-left:8px" />
-																
-															</div>
-														</div>
-														
-														<div class="row">	
-															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												
-																	<div class="table-responsive">
-																	<table id="tblSolicitud" class="table table-hover table-sm">
-																	<thead>
-																		<tr style="font-size:13px">
-																			<!--<th>N&deg;</th>-->
-																			<th>Tipo de Doc</th>
-																			<th>Nombre del documento</th>
-																			<th>Fecha</th>
-																			<th class="text-left">Archivo</th>
-																			<th class="text-left">Opc</th>
-																		</tr>
-																	</thead>
-																	<tbody style="font-size:13px">
-																	</tbody>							
-																	</table>
-																	
-																</div>
-															
-															</div>
-														</div>
-														<!--
-														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
-														-->
 														
 													</div>
 													
 													
 													
-												</div>
-												
-												
-												
-												</div>
+													
+													
+													
+													
 												
 											
 														
@@ -722,8 +623,123 @@ label.form-control-sm{
 												</table>
 												</div><!--table-responsive-->	
 
-                                            </div>
+												<div class="row">
+												
+												
+												
+												
+												
+												<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+														
+														<div class="row" style="padding:15px 0px 10px 0px">
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
+																<strong>Requisitos</strong>
+															</div>
+														</div>
+														
+														<div class="row">	
+															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												
+																	<div class="table-responsive">
+																	<table id="tblRequisito" class="table table-hover table-sm">
+																	<thead>
+																		<tr style="font-size:13px">
+																			<!--<th>N&deg;</th>-->
+																			<th>Tipo de Doc</th>
+																			<th>Requisito</th>
+																			<th>Archivo</th>
+																		</tr>
+																	</thead>
+																	<tbody style="font-size:13px">
+																	</tbody>							
+																	</table>
+																	
+																</div>
+															
+															</div>
+														</div>
+														<!--
+														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
+														-->
+														<?php if(count($documento_pendiente)>0){?>
+														<div id="divAlertaDocumento" class="alert alert-warning" role="alert" style="font-size:20px">
+															<?php 
+															foreach($documento_pendiente as $row){
+															?>
+													  		El concurso <?php echo $row->periodo." ".$row->tipo_concurso;if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?> esta pendiente de adjuntar documentos, hacer click en el boton registrar documento para adjuntar documentos
+															<?php 
+															echo "<br>";
+															}?>
+														</div>
+														<?php }?>
+														
+													</div>
+													
+													
+													<div id="divDocumentos" style="display:none" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+														
+														<div class="row" style="padding:15px 0px 10px 0px">
+															<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
+																<strong>Registrar Documentos</strong>
+															</div>
+															<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+																<input class="btn btn-warning pull-rigth" value="Nuevo" type="button" id="btnNuevo" style="margin-left:0px" />
+																
+																<input class="btn btn-success pull-rigth" value="Traer Req. Guardados" type="button" id="btnDuplicar" style="margin-left:8px" />
+																
+															</div>
+														</div>
+														
+														<div class="row">	
+															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												
+																	<div class="table-responsive">
+																	<table id="tblSolicitud" class="table table-hover table-sm">
+																	<thead>
+																		<tr style="font-size:13px">
+																			<!--<th>N&deg;</th>-->
+																			<th>Tipo de Doc</th>
+																			<th>Nombre del documento</th>
+																			<th>Fecha</th>
+																			<th class="text-left">Archivo</th>
+																			<th class="text-left">Opc</th>
+																		</tr>
+																	</thead>
+																	<tbody style="font-size:13px">
+																	</tbody>							
+																	</table>
+																	
+																</div>
+															
+															</div>
+														</div>
+														<!--
+														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
+														-->
+														
+													</div>
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												</div>
 											
+                                            
+											
+											
+											</div>
 											
 											
                                             <!--card-body-->
@@ -731,28 +747,18 @@ label.form-control-sm{
                                         <!--card-->
 										
 									
-									
-										
                                     </div>
-									
-									
 									
 									
                                 </div>
 
 
-	
-
-
                             </div>
-							
-							
 							
 							
                         </div>
 
-					
-					
+						
 
         </div>
         <!--col-->

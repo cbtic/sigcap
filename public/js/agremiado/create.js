@@ -124,6 +124,20 @@ $(document).ready(function () {
 		changeYear: true,
     });
 	
+	$('#fecha_inicio_temp').datepicker({
+        autoclose: true,
+		format: 'dd-mm-yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
+	$('#fecha_fin_temp').datepicker({
+        autoclose: true,
+		format: 'dd-mm-yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
 	$(".upload").on('click', function() {
         var formData = new FormData();
         var files = $('#image')[0].files[0];
@@ -190,6 +204,15 @@ function guardar_agremiado(){
     //alert("cvvfv");
     var msg = "";
     
+	var id_regional = $("#id_regional").val();
+	if(id_regional=="")msg += "Debe seleccionar una region<br>";
+	//if(tipo_comision=="")msg += "Debe seleccionar un tipo de comision<br>";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
 	fn_save();
 }
 
@@ -3725,5 +3748,30 @@ function obtenerLocalEdit(id_regional,id_local){
 		
 	});
 	
+}
+
+function habilitarCategoriaTemporal(){
+
+	var id_categoria = $('#id_categoria').val();
+	
+	$("#divCategoriaTemporal").hide();
+	
+	if(id_categoria==91){
+		$("#divCategoriaTemporal").show();
+	}
+	
+}
+
+function validarSituacion(){
+
+	var id_actividad_gremial = $("#id_actividad_gremial").val();
+	var id_situacion_tmp = $("#id_situacion_tmp").val();
+	
+	$("#id_situacion").val(id_situacion_tmp);
+	if(id_actividad_gremial==225){
+		$("#id_situacion").val(74);
+	}
+	
+
 }
 
