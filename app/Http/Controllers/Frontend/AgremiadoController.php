@@ -1566,6 +1566,18 @@ class AgremiadoController extends Controller
 
     }
 
+	public function obtener_datos_agremiado_revisor_urbano($numero_cap){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $agremiado = $agremiado_model->getAgremiadoDatosRevisorUrbano($numero_cap);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
 	public function obtener_local($id_regional){
 		
 		$local_model = new Locale;

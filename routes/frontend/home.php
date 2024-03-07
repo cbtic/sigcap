@@ -46,8 +46,7 @@ use App\Http\Controllers\Frontend\PartidaPresupuestalController;
 use App\Http\Controllers\Frontend\PlanContableController;
 
 use App\Http\Controllers\Frontend\CoordinadorZonalController;
-
-
+use App\Http\Controllers\Frontend\ProyectistaController;
 
 /*
  * Frontend Controllers
@@ -539,3 +538,7 @@ Route::post('coordinador_zonal/send_coordinador_sesion', [CoordinadorZonalContro
 Route::post('agremiado/send_agremiado_suspension', [AgremiadoController::class, 'send_agremiado_suspension'])->name('agremiado.send_agremiado_suspension');
 Route::get('agremiado/obtener_suspension/{id_agremiado}', [AgremiadoController::class, 'obtener_suspension'])->name('agremiado.obtener_suspension');
 
+Route::get('derecho_revision/modal_solicitud_nuevoSolicitud/{id}', [DerechoRevisionController::class, 'modal_solicitud_nuevoSolicitud'])->name('derecho_revision.modal_solicitud_nuevoSolicitud');
+Route::get('proyectista/obtener_datos_proyectista/{numero_cap}', [ProyectistaController::class, 'obtener_datos_proyectista'])->name('proyectista.obtener_datos_proyectista');
+
+Route::get('agremiado/obtener_datos_agremiado_revisor_urbano/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_revisor_urbano'])->name('agremiado.obtener_datos_agremiado_revisor_urbano');

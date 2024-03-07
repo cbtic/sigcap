@@ -77,20 +77,29 @@ class Agremiado extends Model
 	function getAgremiadoDatos($numero_cap){
 
 
-			$cad = "select p.id_tipo_documento tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, a.numero_regional, a.id_regional regional, a.fecha_colegiado, a.id_ubicacion ubicacion, a.id_situacion situacion from agremiados a 
-					inner join personas p on a.id_persona = p.id 
-					inner join tabla_maestras tm on p.id_tipo_documento ::int=tm.codigo::int and tm.tipo='110'
-					inner join regiones r on a.id_regional = r.id
-					--left join locales l on a.id_local = l.id
-					inner join tabla_maestras tm2 on a.id_situacion ::int=tm2.codigo::int and tm2.tipo='14'
-					left join tabla_maestras tm3 on a.id_situacion ::int=tm2.codigo::int and tm2.tipo='63'
-					Where  a.numero_cap ='".$numero_cap."'";
+			$cad = "select a.numero_cap, pe.apellido_paterno || pe.apellido_materno || pe.nombres agremiado, tm.denominacion situacion, pe.direccion, a.numero_regional, tm2.denominacion actividad_gremial from agremiados a
+					inner join personas pe on a.id_persona = pe.id
+					inner join tabla_maestras tm on a.id_situacion ::int=tm.codigo::int and tm.tipo='14'
+					inner join tabla_maestras tm2 on a.id_actividad_gremial ::int=tm2.codigo::int and tm2.tipo='46'
+					where a.numero_cap = '".$numero_cap."'";
 			
 		//echo $cad;
 		$data = DB::select($cad);
 		
         return $data[0];
     }
+
+	function getAgremiadoDatosRevisorUrbano($numero_cap){
+
+		$cad = "select a.numero_cap, pe.id_tipo_documento tipo_documento, pe.numero_documento, pe.apellido_paterno, pe.apellido_materno, pe.nombres , a.numero_regional, a.id_regional regional, a.fecha_colegiado,a.id_ubicacion ubicacion, a.id_situacion situacion from agremiados a
+		inner join personas pe on a.id_persona = pe.id
+		where a.numero_cap = '".$numero_cap."'";
+		
+	//echo $cad;
+	$data = DB::select($cad);
+	
+	return $data[0];
+}
 	
 	function getAgremiadoByIdPersona($id_persona){
 
