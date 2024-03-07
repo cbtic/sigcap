@@ -107,24 +107,59 @@ function obtenerAgremiado(){
 		url: '/agremiado/obtener_datos_agremiado_revisor_urbano/' + numero_cap,
 		dataType: "json",
 		success: function(result){
-			
+			//$('#frmRevisorUrbano #codigo_itf')=="";
 			var agremiado = result.agremiado;
-			//var tipo_documento = parseInt(agremiado.tipo_documento);
-			//var nombre = persona.apellido_paterno+" "+persona.apellido_materno+", "+persona.nombres;
-			$('#id_tipo_documento').val(agremiado.tipo_documento);
-			$('#numero_documento').val(agremiado.numero_documento);
-			$('#apellido_paterno').val(agremiado.apellido_paterno);
-			$('#apellido_materno').val(agremiado.apellido_materno);
-			$('#nombres').val(agremiado.nombres);
-			$('#numero_regional').val(agremiado.numero_regional);
-			$('#id_regional').val(agremiado.regional);
-			$('#fecha_colegiado').val(agremiado.fecha_colegiado);
-			$('#id_ubicacion').val(agremiado.ubicacion);
-			$('#id_situacion').val(agremiado.situacion);
-			//$('#telefono').val(persona.telefono);
-			//$('#email').val(persona.email);
+			var sw1 = result.sw;
 			
-			$('.loader').hide();
+			if(agremiado!="0")
+			{
+
+				if(agremiado.situacion==73)
+				{
+					//var tipo_documento = parseInt(agremiado.tipo_documento);
+					//var nombre = persona.apellido_paterno+" "+persona.apellido_materno+", "+persona.nombres;
+					$('#id_tipo_documento').val(agremiado.tipo_documento);
+					$('#numero_documento').val(agremiado.numero_documento);
+					$('#apellido_paterno').val(agremiado.apellido_paterno);
+					$('#apellido_materno').val(agremiado.apellido_materno);
+					$('#nombres').val(agremiado.nombres);
+					$('#numero_regional').val(agremiado.numero_regional);
+					$('#id_regional').val(agremiado.regional);
+					$('#fecha_colegiado').val(agremiado.fecha_colegiado);
+					$('#id_ubicacion').val(agremiado.ubicacion);
+					$('#id_situacion').val(agremiado.situacion);
+					$('#frmRevisorUrbano #codigo_itf').val("");
+					//$('#telefono').val(persona.telefono);
+					//$('#email').val(persona.email);
+					
+					$('.loader').hide();
+				}else
+				{
+					msg += "El Agremiado no esta HABILITADO <br>";
+					$('.loader').hide();
+					$('#id_tipo_documento').val(agremiado.tipo_documento);
+					$('#numero_documento').val(agremiado.numero_documento);
+					$('#apellido_paterno').val(agremiado.apellido_paterno);
+					$('#apellido_materno').val(agremiado.apellido_materno);
+					$('#nombres').val(agremiado.nombres);
+					$('#numero_regional').val(agremiado.numero_regional);
+					$('#id_regional').val(agremiado.regional);
+					$('#fecha_colegiado').val(agremiado.fecha_colegiado);
+					$('#id_ubicacion').val(agremiado.ubicacion);
+					$('#id_situacion').val(agremiado.situacion);
+					$('#frmRevisorUrbano #codigo_itf').val("");
+				}
+			}else{
+				msg += "El Agremiado no existe <br>";
+				$('.loader').hide();
+				
+			}
+
+			if (msg != "") {
+				bootbox.alert(msg);
+				$('#frmRevisorUrbano #codigo_itf').val("");
+				return false;
+			}
 
 		}
 		
