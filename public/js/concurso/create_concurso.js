@@ -1957,12 +1957,13 @@ function editarConcursoInscripcion(id){
 			$('#numero_documento').val(result.numero_documento);
 			$('#region').val(result.region);
 			$('#situacion').val(result.situacion);
-			$('#puesto').val(result.puesto);
+			$('#puesto').val(result.nombre_puesto);
 			$('#tipo_concurso').val(result.periodo+" - "+result.tipo_concurso);
 			$('#id_concurso').val(result.id_concurso);
 			$('#puntaje').val(result.puntaje);
 			$('#id_estado').val(result.resultado);
-			cargarRequisitos(result.id);	
+			cargarRequisitos(result.id);
+			obtenerPuesto(result.id_concurso,result.puesto);
 			
 		}
 		
@@ -3537,5 +3538,24 @@ function fn_eliminar_seg(id){
 }
 
 
-
+function obtenerPuesto(id_concurso,id){
+	
+	$.ajax({
+		url: '/concurso/listar_puesto_concurso/'+id_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#asignar_puesto").html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(oo.id_tipo_plaza == id)selected = "selected='selected'";
+				option += "<option value='"+oo.id+"' "+selected+" >"+oo.puesto+"</option>";
+			});
+			$("#asignar_puesto").html(option);
+		}
+		
+	});
+	
+}
 

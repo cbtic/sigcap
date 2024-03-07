@@ -464,16 +464,21 @@ label.form-control-sm{
 															<option value="">--Selecionar--</option>
 															<option value="Ingreso">Ingreso</option>
 															<option value="No Ingreso">No Ingreso</option>
-															<?php
-															//foreach ($concurso as $row) {?>
-															<!--<option value="<?php //echo $row->id?>"><?php //echo $row->periodo." - ".$row->tipo_concurso?></option>-->
-															<?php 
-															//}
-															?>
 														</select>
 													</div>
 													
-													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Asignar Plaza
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<select name="asignar_puesto" id="asignar_puesto" class="form-control form-control-sm">
+															<option value="">--Selecionar--</option>
+														</select>
+													</div>
+													
+													<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12"></div>
+													
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12" style="padding-top:15px">
 													
 														<div class="row">
 															
@@ -485,9 +490,9 @@ label.form-control-sm{
 														
 													</div>
 													
-													<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
+													<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="padding-top:15px">
 													
-													<div class="row" style="margin-left:5px">
+													<div class="row" style="margin-left:0px">
 
 														<input class="btn btn-sm btn-secondary float-rigth" value="Descargar Plantilla" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
 														

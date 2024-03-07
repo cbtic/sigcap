@@ -16,6 +16,7 @@ use App\Models\TablaMaestra;
 use App\Models\Concepto;
 use App\Models\Valorizacione;
 use App\Models\PeriodoComisione;
+use App\Models\AgremiadoRole;
 use Carbon\Carbon;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -480,13 +481,39 @@ class ConcursoController extends Controller
 	public function send_inscripcion_resultado(Request $request){
 		
 		$id_user = Auth::user()->id;
-		$concursoInscripcione = ConcursoInscripcione::find($request->id_concurso_inscripcion);
-		$concursoInscripcione->puntaje = $request->puntaje;
-		$concursoInscripcione->resultado = $request->id_estado;
-		$concursoInscripcione->puesto = $concursoInscripcione->id_concurso_puesto;
-		$concursoInscripcione->save();
-		echo $concursoInscripcione->id;
 		
+		$concursoPuesto = ConcursoPuesto::find($request->asignar_puesto);
+		
+		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+		$concursoInscripcion->puntaje = $request->puntaje;
+		$concursoInscripcion->resultado = $request->id_estado;
+		//$concursoInscripcione->puesto = $concursoInscripcione->id_concurso_puesto;
+		$concursoInscripcion->puesto = $concursoPuesto->id_tipo_plaza;
+		$concursoInscripcion->save();
+		echo $concursoInscripcion->id;
+		
+		$concursoPuesto_ = ConcursoPuesto::find($concursoInscripcion->id_concurso_puesto);
+		$concurso = Concurso::find($concursoPuesto_->id_concurso);
+		$fecha_acreditacion_inicio = $concurso->fecha_acreditacion_inicio;
+		$fecha_acreditacion_fin = $concurso->fecha_acreditacion_fin;
+		$id_tipo_concurso = $concurso->id_tipo_concurso;
+		
+		$agremiadoRoleExiste = AgremiadoRole::where("id_agremiado",$concursoInscripcion->id_agremiado)->where("rol",$id_tipo_concurso)->first();
+		
+		if($agremiadoRoleExiste){
+			$agremiadoRoleExiste->rol_especifico = $concursoPuesto->id_tipo_plaza;
+			$agremiadoRoleExiste->save();
+		}else{
+			$agremiadoRol = new AgremiadoRole;
+			$agremiadoRol->id_agremiado = $concursoInscripcion->id_agremiado;
+			$agremiadoRol->rol = $id_tipo_concurso;
+			$agremiadoRol->rol_especifico = $concursoPuesto->id_tipo_plaza;
+			$agremiadoRol->fecha_inicio = $fecha_acreditacion_inicio;
+			$agremiadoRol->fecha_fin = $fecha_acreditacion_fin;
+			$agremiadoRol->estado = 1;
+			$agremiadoRol->id_usuario_inserta = $id_user;
+			$agremiadoRol->save();
+		}
     }
 	
 	public function send_duplicar_concurso(Request $request){
