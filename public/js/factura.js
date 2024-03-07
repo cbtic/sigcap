@@ -62,20 +62,26 @@ $(document).ready(function () {
 		});
 	});
 
+	
+
 	calculoDetraccion();
 
 	calculaPorcentaje(1);
+
+	
 });
 
 function calculoDetraccion(){
-	var total_fac = $('#total_fac').val();
+	
+	var total_fac = $('#total_fac_').val();
 	var total_detraccion =total_fac*12/100;
-	var nc_detraccion = "00098082204";
+	var nc_detraccion = "111-111-111-11";
 	var tipo_detraccion = "004";
 	var afecta_a = "022";
 	var medio_pago = "001";
 	//var d = new Date();
 
+	//alert(Math.round(total_fac));
 	//alert(Math.round(total_fac));
 
 	if (Math.round(total_fac) > 700){
@@ -584,7 +590,7 @@ function obtenerTitular(){
 
 	function calculaPorcentaje(fila) {
 		
-		var total_fac=  $("#total_fac").val();
+		var total_fac=  $("#total_fac_").val();
 
 		//alert (total_fac);
 
@@ -596,7 +602,7 @@ function obtenerTitular(){
 		});
 
 		if(contador == 1) {
-			$('#porcentajeproducto'+pad(fila, 2)).val(Math.round(total_fac));
+			$('#porcentajeproducto'+pad(fila, 2)).val(total_fac);
 			$('#producto01').val('EFECTIVO');
 		}
 		else{

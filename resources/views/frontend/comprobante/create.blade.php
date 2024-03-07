@@ -914,6 +914,9 @@
                                                                                                             } ?></th>
 
                                                         <input type="hidden" name="total_fac" id="total_fac" value="<?php echo number_format($total, 2); ?>">
+
+                                                        <input type="hidden" name="total_fac_" id="total_fac_" value="<?php echo $total; ?>">
+
                                                     </tr>
                                                 </tbody>
                                             </table>
