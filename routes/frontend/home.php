@@ -540,3 +540,5 @@ Route::get('agremiado/obtener_suspension/{id_agremiado}', [AgremiadoController::
 
 Route::get('derecho_revision/modal_solicitud_nuevoSolicitud/{id}', [DerechoRevisionController::class, 'modal_solicitud_nuevoSolicitud'])->name('derecho_revision.modal_solicitud_nuevoSolicitud');
 Route::get('proyectista/obtener_datos_proyectista/{numero_cap}', [ProyectistaController::class, 'obtener_datos_proyectista'])->name('proyectista.obtener_datos_proyectista');
+
+Route::get('agremiado/obtener_datos_agremiado_revisor_urbano/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_revisor_urbano'])->name('agremiado.obtener_datos_agremiado_revisor_urbano');

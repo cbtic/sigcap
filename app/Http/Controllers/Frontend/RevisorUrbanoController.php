@@ -94,38 +94,45 @@ class RevisorUrbanoController extends Controller
 		$mensaje = "";
 		
 		if($agremiado){
+
 		
 			if(count($revisor_existe)==0){
-				
-				$revisorUrbano_model = new RevisorUrbano;
-				$codigo_ru = $revisorUrbano_model->getCodigoRU();
-				
-				$revisorUrbano = new RevisorUrbano;
-				$revisorUrbano->id_agremiado = $agremiado->id;
-				$revisorUrbano->codigo_itf = $request->codigo_itf;
-				$revisorUrbano->codigo_ru = $codigo_ru;
-				$revisorUrbano->estado = 1;
-				$revisorUrbano->id_usuario_inserta = $id_user;
-				$revisorUrbano->save();
 
-				$concepto = Concepto::where("id",26523)->where("estado","1")->first();
-
-				$valorizacion = new Valorizacione;
-				$valorizacion->id_modulo = 8;
-				$valorizacion->pk_registro = $revisorUrbano->id;
-				$valorizacion->id_concepto = 26523;
-				$valorizacion->id_agremido = $agremiado->id;
-				$valorizacion->id_persona = $agremiado->id_persona;
-				$valorizacion->monto = $concepto->importe;
-				$valorizacion->id_moneda = $concepto->id_moneda;
-				$valorizacion->fecha = Carbon::now()->format('Y-m-d');
-				$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-				$valorizacion->descripcion = $concepto->denominacion." - ".$request->codigo_itf;
-				//$valorizacion->estado = 1;
-				//print_r($valorizacion->descripcion).exit();
-				$valorizacion->id_usuario_inserta = $id_user;
-				$valorizacion->save();
+				$agremiado_habilitado = Agremiado::where("numero_cap",$request->numero_cap)->where("id_situacion","73")->where("estado","1")->first();
 				
+				if($agremiado_habilitado){
+					$revisorUrbano_model = new RevisorUrbano;
+					$codigo_ru = $revisorUrbano_model->getCodigoRU();
+					
+					$revisorUrbano = new RevisorUrbano;
+					$revisorUrbano->id_agremiado = $agremiado->id;
+					$revisorUrbano->codigo_itf = $request->codigo_itf;
+					$revisorUrbano->codigo_ru = $codigo_ru;
+					$revisorUrbano->estado = 1;
+					$revisorUrbano->id_usuario_inserta = $id_user;
+					$revisorUrbano->save();
+
+					$concepto = Concepto::where("id",26523)->where("estado","1")->first();
+
+					$valorizacion = new Valorizacione;
+					$valorizacion->id_modulo = 8;
+					$valorizacion->pk_registro = $revisorUrbano->id;
+					$valorizacion->id_concepto = 26523;
+					$valorizacion->id_agremido = $agremiado->id;
+					$valorizacion->id_persona = $agremiado->id_persona;
+					$valorizacion->monto = $concepto->importe;
+					$valorizacion->id_moneda = $concepto->id_moneda;
+					$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+					$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+					$valorizacion->descripcion = $concepto->denominacion." - ".$request->codigo_itf;
+					//$valorizacion->estado = 1;
+					//print_r($valorizacion->descripcion).exit();
+					$valorizacion->id_usuario_inserta = $id_user;
+					$valorizacion->save();
+				}else {
+					$mensaje = "El Agremiado no esta HABILITADO";
+				}
+
 			}else{
 				$mensaje = "El Codigo ITF ya se encuentra registrado";
 			}

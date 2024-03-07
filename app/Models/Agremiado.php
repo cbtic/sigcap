@@ -88,6 +88,18 @@ class Agremiado extends Model
 		
         return $data[0];
     }
+
+	function getAgremiadoDatosRevisorUrbano($numero_cap){
+
+		$cad = "select a.numero_cap, pe.id_tipo_documento tipo_documento, pe.numero_documento, pe.apellido_paterno, pe.apellido_materno, pe.nombres , a.numero_regional, a.id_regional regional, a.fecha_colegiado,a.id_ubicacion ubicacion, a.id_situacion situacion from agremiados a
+		inner join personas pe on a.id_persona = pe.id
+		where a.numero_cap = '".$numero_cap."'";
+		
+	//echo $cad;
+	$data = DB::select($cad);
+	
+	return $data[0];
+}
 	
 	function getAgremiadoByIdPersona($id_persona){
 

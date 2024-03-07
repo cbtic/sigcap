@@ -104,7 +104,7 @@ function obtenerAgremiado(){
     $('.loader').show();
 	
 	$.ajax({
-		url: '/agremiado/obtener_datos_agremiado/' + numero_cap,
+		url: '/agremiado/obtener_datos_agremiado_revisor_urbano/' + numero_cap,
 		dataType: "json",
 		success: function(result){
 			
