@@ -137,12 +137,8 @@
 
     function generarCuotas() {
 
-<<<<<<< HEAD
         var cantidad = $("#tblConceptos tr").length;
         if (cantidad > 1) $("#tblConceptos tr").remove();
-=======
-        $('#tblConceptos tbody').html("");
->>>>>>> 6ea6a82a440590ee85233ace1130f7e5d13546ec
 
         var n = 0;
         var nroCuotas = $('#numcuota_').val();
