@@ -464,33 +464,48 @@ label.form-control-sm{
 															<option value="">--Selecionar--</option>
 															<option value="Ingreso">Ingreso</option>
 															<option value="No Ingreso">No Ingreso</option>
-															<?php
-															//foreach ($concurso as $row) {?>
-															<!--<option value="<?php //echo $row->id?>"><?php //echo $row->periodo." - ".$row->tipo_concurso?></option>-->
-															<?php 
-															//}
-															?>
 														</select>
 													</div>
 													
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Asignar Plaza
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<select name="asignar_puesto" id="asignar_puesto" class="form-control form-control-sm">
+															<option value="">--Selecionar--</option>
+														</select>
+													</div>
+													
+													<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12"></div>
+													
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12" style="padding-top:15px">
 													
 														<div class="row">
 															
 															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-																<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;margin-left:10px;" />
+																<input class="btn btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;" />
 															</div>
 
 														</div>
 														
 													</div>
-													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 													
-													<div class="row">
+													<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="padding-top:15px">
+													
+													<div class="row" style="margin-left:0px">
 
-														<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-															<input class="btn btn-sm btn-warning float-rigth" value="DESCARGAR" name="descargar" type="button" id="btnDescargar" style="padding-left:25px;padding-right:25px;margin-left:10px;" />
-														</div>
+														<input class="btn btn-sm btn-secondary float-rigth" value="Descargar Plantilla" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
+														
+														<span class="btn btn-warning btn-file" style="float:left">
+															Examinar <input id="image" name="image" type="file" />
+														</span>
+														
+														<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
+														
+														<input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
+														
+														<input type="hidden" id="img_foto" name="img_foto" value="" />
+														
 													</div>
 													
 												</div>

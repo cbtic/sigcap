@@ -50,7 +50,7 @@ Where c.id_concurso = ".$id;
 	
 	function getPuestoByIdConcurso($id){
 
-        $cad = "select cp.id,tm.denominacion puesto
+        $cad = "select cp.id,tm.denominacion puesto,cp.id_tipo_plaza 
 from concurso_puestos cp 
 inner join tabla_maestras tm on cp.id_tipo_plaza::int=tm.codigo::int and tm.tipo='94'
 where cp.estado='1'

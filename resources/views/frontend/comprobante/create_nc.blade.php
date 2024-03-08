@@ -377,17 +377,23 @@
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                     <div class="form-group">
                                                         <label class="form-control-sm">Serie</label>
+                                                        <input type="text" name="serie_n" readonly id="serie_n" value="<?php echo $comprobante->serie ?>" placeholder="" class="form-control form-control-sm">
+
+
+<!--
                                                         <select readonly name="serie_n" id="serie_n" class="form-control form-control-sm">
-                                                            <?php if ($trans == 'FA' || $trans == 'FN') { ?>
-                                                                <?php foreach ($serie as $row) : ?>
-                                                                    <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
-                                                                    <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie ?></option>
-                                                                <?php endforeach; ?>
-                                                            <?php } ?>
-                                                            <?php if ($trans == 'FE') { ?>
-                                                                <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie_ncnd ?></option>
-                                                            <?php } ?>
+                                                            <?//php if ($trans == 'FA' || $trans == 'FN') { ?>
+                                                                <?//php foreach ($serie as $row) : ?>
+                                                                    <option value="<//?php echo $row->denominacion ?>"><?//php echo $row->denominacion ?></option>
+                                                                    <option value="<**?php echo $comprobante->serie ?>"><?//php echo $comprobante->serie ?></option>
+                                                                <?//php endforeach; ?>
+                                                            <?//php } ?>
+                                                            <?//php if ($trans == 'FE') { ?>
+                                                                <option value="<?//php echo $comprobante->serie ?>"><?//php echo $comprobante->serie_ncnd ?></option>
+                                                            <?//php } ?>
                                                         </select>
+
+                                                            -->
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">

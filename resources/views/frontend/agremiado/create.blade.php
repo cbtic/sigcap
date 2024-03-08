@@ -467,7 +467,9 @@ label.form-control-sm{
 															Fecha Colegiado
 															</div>
 															<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo $agremiado->fecha_colegiado?>" class="form-control form-control-sm" <?php if($id!=0)echo "disabled='disabled'"?> >
+															<input type="text" name="fecha_colegiado" id="fecha_colegiado" value="<?php echo ($agremiado->fecha_colegiado!="")?date("d-m-Y",strtotime($agremiado->fecha_colegiado)):""?>" class="form-control form-control-sm" <?php if($id!=0)echo "disabled='disabled'"?> >
+															
+															
 															</div>
 														</div>
 														
@@ -1026,7 +1028,7 @@ label.form-control-sm{
 												Act. Gremial
 												</div>
 												<div class="col-lg-1-5 col-md-12 col-sm-12 col-xs-12">
-												<select name="id_actividad_gremial" id="id_actividad_gremial" class="form-control form-control-sm" onchange="">
+												<select name="id_actividad_gremial" id="id_actividad_gremial" class="form-control form-control-sm" onchange="validarSituacion()">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($actividad_gremial as $row) {?>
@@ -1073,7 +1075,7 @@ label.form-control-sm{
 												Categoria
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-												<select name="id_categoria" id="id_categoria" class="form-control form-control-sm" onchange="">
+												<select name="id_categoria" id="id_categoria" class="form-control form-control-sm" onchange="habilitarCategoriaTemporal()">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($categoria_cliente as $row) {?>
@@ -1087,6 +1089,7 @@ label.form-control-sm{
 												Situaci&oacute;n
 												</div>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="hidden" name="id_situacion_tmp" id="id_situacion_tmp" value="<?php echo $agremiado->id_situacion?>" >
 												<select name="id_situacion" id="id_situacion" class="form-control form-control-sm" onchange="">
 													<option value="">--Selecionar--</option>
 													<?php
@@ -1114,7 +1117,28 @@ label.form-control-sm{
 												</div>
 											</div>
 											
-												
+											<div id="divCategoriaTemporal" class="row" style="padding-top:5px;<?php echo (isset($agremiado->id_categoria) && $agremiado->id_categoria==91)?"":"display:none"?>">
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												F. Inicio Temp.
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="fecha_inicio_temp" id="fecha_inicio_temp" value="<?php echo ($agremiado->fecha_inicio_temp!="")?date("d-m-Y",strtotime($agremiado->fecha_inicio_temp)):""?>" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												F. Fin Temp.
+												</div>
+												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="fecha_fin_temp" id="fecha_fin_temp" value="<?php echo ($agremiado->fecha_fin_temp!="")?date("d-m-Y",strtotime($agremiado->fecha_fin_temp)):""?>" class="form-control form-control-sm" >
+												</div>
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+												Obser. Temp.
+												</div>
+												<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+												<textarea type="text" name="observacion_temp" id="observacion_temp" rows="1" placeholder="" class="form-control form-control-sm"><?php echo $agremiado->observacion_temp?></textarea>
+												</div>
+											</div>
+											
+													
 										</div>
 										
 										

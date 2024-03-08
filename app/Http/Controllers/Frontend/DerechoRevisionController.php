@@ -12,6 +12,8 @@ use App\Models\Liquidacione;
 use App\Models\Municipalidade;
 use App\Models\Ubigeo;
 use App\Models\TablaMaestra;
+use App\Models\Proyectista;
+use App\Models\Proyecto;
 use Carbon\Carbon;
 use Auth;
 
@@ -83,11 +85,15 @@ class DerechoRevisionController extends Controller
         $liquidacion = new Liquidacione;
         $municipalidad_modal = new Municipalidade;
         $ubigeo_model = new Ubigeo;
-        $departamento = $ubigeo_model->getDepartamento();
+		$tablaMaestra_model = new TablaMaestra;
+		
+        $estado_solicitud = $tablaMaestra_model->getMaestroByTipo(118);
+        $distrito = $ubigeo_model->getDistritoLima();
         $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
+		
         
         
-        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','departamento'));
+        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud'));
     }
 
     public function listar_derecho_revision_ajax(Request $request){
@@ -224,6 +230,25 @@ class DerechoRevisionController extends Controller
 		
 		$id_liquidacion = $liquidacion->id;
 		echo $id_liquidacion;
+		
+    }
+
+	public function modal_solicitud_nuevoSolicitud($id){
+		
+		$proyectista = new Proyectista();
+		$derechoRevision = new DerechoRevision;
+		$agremiado = new Agremiado;
+		$persona = new Persona;
+		$proyecto = new Proyecto;
+		$tablaMaestra_model = new TablaMaestra;
+		
+        $sitio = $tablaMaestra_model->getMaestroByTipo(33);
+        $zona = $tablaMaestra_model->getMaestroByTipo(34);
+		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
+		//$proyectista = $derechoRevision_model->getProyectistaByIdSolicitud($id);
+		//$proyectista = $proyectista_model->getProyectistaCap();
+		
+        return view('frontend.derecho_revision.modal_solicitud_nuevoSolicitud',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo'));
 		
     }
 	

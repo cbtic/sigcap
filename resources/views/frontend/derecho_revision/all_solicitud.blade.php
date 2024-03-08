@@ -96,7 +96,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Detalle de Solicitud de Derecho de Revisi&oacute;n<!--<small class="text-muted">Usuarios activos</small>-->
+                        Derecho de Solicitud de Derecho de Revisi&oacute;n - Habilitaci&oacute;n Urbana<!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -108,7 +108,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Solicitud de Derecho de Revisi&oacute;n
+                        Lista de Solicitud de Derecho de Revisi&oacute;n - Habilitaci&oacute;n Urbana
                     </strong>
                 </div>
 				
@@ -123,11 +123,11 @@
                         Estado Solicitud
                         </div>
                         <div class="row" style="padding:0px 10px 0px 10px;">					
-                        <select name="estado_solicitud" id="estado_solicitud" class="form-control form-control-sm" onChange="">
+                        <select name="numero_liquidacion" id="numero_liquidacion" class="form-control form-control-sm" onChange="">
                             <option value="">--Selecionar--</option>
                                 <?php
-                                foreach ($municipalidad as $row) {?>
-                                    <option value="<?php echo $row->id?>" <?php if($row->id==$derecho_revision->id_municipalidad)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                foreach ($estado_solicitud as $row) {?>
+                                    <option value="<?php echo $row->codigo?>"<?php if($row->codigo==$derecho_revision->id_resultado)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php 
                                 }
                                 ?>
@@ -140,15 +140,7 @@
                         Liquidaci&oacute;n
                         </div>
                         <div class="row" style="padding:0px 10px 0px 10px;">					
-                        <select name="estado_solicitud" id="estado_solicitud" class="form-control form-control-sm" onChange="">
-                            <option value="">--Selecionar--</option>
-                                <?php
-                                foreach ($municipalidad as $row) {?>
-                                    <option value="<?php echo $row->id?>" <?php if($row->id==$derecho_revision->id_municipalidad)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                <?php 
-                                }
-                                ?>
-                        </select>
+                        <input type="text" name="numero_liquidacion" id="numero_liquidacion" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                         </div>
                     </div>    
 
@@ -170,60 +162,12 @@
                     </div>
 
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                        N&uacute;mero Revisi&oacute;n
-                        </div>
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                            <input type="text" name="numero_revision" id="numero_revision" value="<?php echo $derecho_revision->numero_revision?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 
                         <div class="row" style="padding:0px 10px 0px 10px;">
                         Nombre Proyecto
                         </div>
                         <div class="row" style="padding:0px 10px 0px 10px;">
                             <input type="text" name="nombre_proyecto" id="nombre_proyecto" value="<?php echo $derecho_revision->nombre_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                        </div>
-                    </div>
-                
-
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                        Direcci&oacute;n
-                        </div>
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                            <input type="text" name="direccion" id="direccion" value="<?php echo $derecho_revision->direccion?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                        Departamento
-                        </div>
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                        <input type="hidden" name="id_ubigeo_domicilio" id="id_ubigeo_domicilio" value="<?php echo $agremiado->id_ubigeo_domicilio?>">
-                        <select name="id_departamento_domiciliario" id="id_departamento_domiciliario" class="form-control form-control-sm" onchange="obtenerProvinciaDomiciliario()">
-                            <option value="">--Selecionar--</option>
-                            <?php
-                            foreach ($departamento as $row) {?>
-                            <option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($agremiado->id_ubigeo_domicilio,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
-                            <?php 
-                            }
-                            ?>
-                        </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                        Provincia
-                        </div>
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                        <select name="id_provincia_domiciliario" id="id_provincia_domiciliario" class="form-control form-control-sm" onchange="obtenerDistritoDomiciliario()">
-                            <option value="">--Selecionar--</option>
-                        </select>
                         </div>
                     </div>
 
@@ -233,7 +177,13 @@
                         </div>
                         <div class="row" style="padding:0px 10px 0px 10px;">
                         <select name="id_distrito_domiciliario" id="id_distrito_domiciliario" class="form-control form-control-sm" onchange="">
-                            <option value="">--Selecionar--</option>
+                        <option value="">--Selecionar--</option>
+                            <?php
+                            foreach ($distrito as $row) {?>
+                            <option value="<?php echo $row->id_distrito?>" <?php if($row->id_distrito==$agremiado->id_ubigeo_domicilio)echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
+                            <?php 
+                            }
+                            ?>
                         </select>
                         </div>
                     </div>
@@ -291,47 +241,9 @@
                             <input type="text" name="tipo_proyecto" id="tipo_proyecto" value="<?php echo $derecho_revision->tipo_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                         </div>
                     </div>
-
-                    <!--
-                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-                    Credipago
-                    </div>
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="credipago" id="credipago" value="<?php /*echo $liquidacion->credipago*/?>" class="form-control form-control-sm" <?php /*"readonly='readonly'"*/?> >
-                    </div>-->
-                    
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                        &Aacute;rea Total
-                        </div>
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                            <input type="text" name="area_techada" id="area_techada" value="<?php echo $derecho_revision->area_total?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                        </div>
-                    </div>
-
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                        Valor de Obra
-                        </div>
-                        <div class="row" style="padding:0px 10px 0px 10px;">
-                            <input type="text" name="valor_obra" id="valor_obra" value="<?php echo $derecho_revision->valor_obra?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                        </div>
-                    </div>
-                    
-
-                    
-                    <!--
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado" id="estado" class="form-control form-control-sm">
-							<option value="">Todos</option>
-							<option value="1" selected="selected">Activo</option>
-							<option value="0">Eliminado</option>
-						</select>
-					</div>
-                    -->
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />-->
-						<input class="btn btn-success" value="Generar Credipago" type="button" id="btnNuevo" style="margin-left:15px"/>
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding:15px">
+						<input class="btn btn-warning" value="BUSCAR" type="button" id="btnBuscar_solicitud" />
+						<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo_solicitud" style="margin-left:15px"/>
 
 					</div>
 				</div>

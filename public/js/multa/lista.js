@@ -623,14 +623,9 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var estado = "";
-					if(row.estado == 1){
-						estado = "Activo";
-					}
-					if(row.estado == 0){
-						estado = "Inactivo";
-					}
-					return estado;
+					var estado_multa = "";
+					if(row.estado_multa!= null)estado_multa = row.estado_multa;
+					return estado_multa;
 				},
 				"bSortable": false,
 				"aTargets": [9]
