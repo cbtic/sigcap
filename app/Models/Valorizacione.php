@@ -305,4 +305,25 @@ class Valorizacione extends Model
         return $data;
     }
 
+    function getBuscaDeudaAgremido($id_persona){
+        $cad = "    
+            select  count(*) total from (
+                select  count(*)  total          
+                from valorizaciones v
+                group by v.fecha,v.id_persona,v.estado,v.pagado,v.id_concepto
+                having v.id_persona =  ".$id_persona."
+                and v.estado = '1'            
+                and v.pagado = '0'
+                and v.fecha < now() 
+                and v.id_concepto = 26411
+            ) AS total;
+
+			";
+    
+		$data = DB::select($cad);
+        if($data)return $data[0];
+    }
+    
+
+
 }

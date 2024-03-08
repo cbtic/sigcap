@@ -12,6 +12,8 @@ use App\Models\Valorizacione;
 use App\Models\Persona;
 use App\Models\Guia;
 
+use App\Models\Agremiado;
+
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -43,10 +45,6 @@ class ComprobanteController extends Controller
 
         $email=$request->email;
 
-        
-
-
-        
         
         //print_r($id_tipo_afectacion_pp); exit();
 
@@ -261,6 +259,7 @@ class ComprobanteController extends Controller
                 }
                 
             }
+
           
 
             return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago'));
@@ -456,6 +455,7 @@ class ComprobanteController extends Controller
 		$guia_model = new Guia;
 
         $id_tipo_afectacion_pp = $request->id_tipo_afectacion_pp;
+
          
 
 		//$facturaExiste = $facturas_model->getValidaFactura($request->TipoF,$request->ubicacion,$request->persona,$request->totalF);
@@ -569,10 +569,6 @@ class ComprobanteController extends Controller
                     $factura_upd->medio_pago_detrac = $request->medio_pago;                
                     //$factura_upd->detraccion = $request->tipo_cambio;
                     //$factura_upd->id_detra_cod_bos = $request->tipo_cambio;
-                    
-
-                    
-                    
                 }
                 
 				$factura_upd->save();
@@ -643,27 +639,39 @@ class ComprobanteController extends Controller
                         $valoriza_upd->save();
     
                     }
-
                 }
 
 
+            if ($id_concepto == 26411) {
+
+                $id_persona = $request->persona;
+                $valorizaciones_model = new Valorizacione;
+                $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+                $total_ = $totalDeuda->total;
+
+                if ($total_ == "0") {
+                    $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                    $agremiado->id_situacion = "73";
+                    $agremiado->save();
+                }
+            }
 
 
-				$estado_ws = $ws_model->getMaestroByTipo('96');
-				$flagWs = isset($estado_ws[0]->codigo)?$estado_ws[0]->codigo:1;
+            $estado_ws = $ws_model->getMaestroByTipo('96');
+            $flagWs = isset($estado_ws[0]->codigo) ? $estado_ws[0]->codigo : 1;
 
-				if ($flagWs==2 && $id_factura>0 && ($tipoF=="FT" || $tipoF=="BV")){
-					$this->firmar($id_factura);
-				}
+            if ($flagWs == 2 && $id_factura > 0 && ($tipoF == "FT" || $tipoF == "BV")) {
+                $this->firmar($id_factura);
+            }
 
-				//echo $id_factura;
+            //echo $id_factura;
 
 
-			}
-			if ($trans == 'FE') {
-				//echo $request->id_factura;
-				$id_factura = $request->id_factura;
-			}
+        }
+        if ($trans == 'FE') {
+            //echo $request->id_factura;
+            $id_factura = $request->id_factura;
+        }
 
 		//}else{
 			//$sw = false;
@@ -704,6 +712,8 @@ class ComprobanteController extends Controller
 			$cod_tributario = $request->numero_documento;
 			$id_caja = $request->id_caja;
 			$adelanto   = $request->adelanto;
+
+            $id_comprobante = $request->id_comprobante;
 
 			$trans = $request->trans;
             
@@ -1129,7 +1139,7 @@ class ComprobanteController extends Controller
 		$data["nombreComercialEmisor"] = "CAP";
 		$data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
-		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";     
+		$data["numeroDocIdentidadEmisor"] = "20172977911";//"20160453908";     
 		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";        
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
         $data["direccionReceptor"] = $factura->direccion;
@@ -1150,13 +1160,7 @@ class ComprobanteController extends Controller
     
         }
         
-        /*
-        "": "98.00",--
-        "": "OPERACIÓN SUJETA A DETRACCIÓN",--
-        "": "12",--
-       "": "123-123-111111-1254",--
-        "": "722.00"--
-*/
+
 
       //  print_r(json_encode($data)); exit();
 
@@ -1474,7 +1478,7 @@ class ComprobanteController extends Controller
         $data["fechaDocumentoAfectado"] = "2023-11-13";
         $data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
-		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";        
+		$data["numeroDocIdentidadEmisor"] = "20172977911";//"20160453908";        
 		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";                
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
 
