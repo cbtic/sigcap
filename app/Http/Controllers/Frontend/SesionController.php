@@ -385,20 +385,22 @@ class SesionController extends Controller
 						$comisionSesion->save();
 						$id_comision_sesion = $comisionSesion->id;
 						
-						foreach($id_delegado as $row){
-							
-							$coordinador = 0;
-							if($request->coordinador == $row)$coordinador = 1;
-							$comisionSesionDelegado = new ComisionSesionDelegado();
-							$comisionSesionDelegado->id_comision_sesion = $id_comision_sesion;
-							$comisionSesionDelegado->id_delegado = $row;
-							$comisionSesionDelegado->coordinador = $coordinador;
-							$comisionSesionDelegado->id_profesion_otro = NULL;
-							$comisionSesionDelegado->id_aprobar_pago = NULL;
-							$comisionSesionDelegado->observaciones = NULL;
-							$comisionSesionDelegado->estado = 1;
-							$comisionSesionDelegado->id_usuario_inserta = $id_user;
-							$comisionSesionDelegado->save();
+						if(isset($request->id_delegado)){
+							foreach($id_delegado as $row){
+								
+								$coordinador = 0;
+								if($request->coordinador == $row)$coordinador = 1;
+								$comisionSesionDelegado = new ComisionSesionDelegado();
+								$comisionSesionDelegado->id_comision_sesion = $id_comision_sesion;
+								$comisionSesionDelegado->id_delegado = $row;
+								$comisionSesionDelegado->coordinador = $coordinador;
+								$comisionSesionDelegado->id_profesion_otro = NULL;
+								$comisionSesionDelegado->id_aprobar_pago = NULL;
+								$comisionSesionDelegado->observaciones = NULL;
+								$comisionSesionDelegado->estado = 1;
+								$comisionSesionDelegado->id_usuario_inserta = $id_user;
+								$comisionSesionDelegado->save();
+							}
 						}
 						
 					}
@@ -419,22 +421,23 @@ class SesionController extends Controller
 			$id_comision_sesion = $request->id;
 			$id_aprobar_pago = $request->id_aprobar_pago;
 			
-			foreach($id_delegado as $key=>$row){
-				$comisionSesionDelegado = ComisionSesionDelegado::where("id_comision_sesion",$id_comision_sesion)->where("id_delegado",$row)->first();
-				
-				$coordinador = 0;
-				if($request->coordinador == $row)$coordinador = 1;
-				
-				$id_aprobar_pago_ = 1;
-				if(isset($id_aprobar_pago[$row]) && $id_aprobar_pago[$row]==$row)$id_aprobar_pago_ = 2;
-				
-				$comisionSesionDelegado->coordinador = $coordinador;
-				$comisionSesionDelegado->id_aprobar_pago = $id_aprobar_pago_;
-				if($id_aprobar_pago_==2)$comisionSesionDelegado->fecha_aprobar_pago = Carbon::now()->format('Y-m-d');
-				$comisionSesionDelegado->save();
-				
+			if(isset($request->id_delegado)){
+				foreach($id_delegado as $key=>$row){
+					$comisionSesionDelegado = ComisionSesionDelegado::where("id_comision_sesion",$id_comision_sesion)->where("id_delegado",$row)->first();
+					
+					$coordinador = 0;
+					if($request->coordinador == $row)$coordinador = 1;
+					
+					$id_aprobar_pago_ = 1;
+					if(isset($id_aprobar_pago[$row]) && $id_aprobar_pago[$row]==$row)$id_aprobar_pago_ = 2;
+					
+					$comisionSesionDelegado->coordinador = $coordinador;
+					$comisionSesionDelegado->id_aprobar_pago = $id_aprobar_pago_;
+					if($id_aprobar_pago_==2)$comisionSesionDelegado->fecha_aprobar_pago = Carbon::now()->format('Y-m-d');
+					$comisionSesionDelegado->save();
+					
+				}
 			}
-			
 		}
 			
     }

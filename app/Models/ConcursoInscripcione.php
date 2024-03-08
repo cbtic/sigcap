@@ -64,6 +64,22 @@ limit 1";
         return $data[0];
     }
 	
+	function getConcursoDelegadoValidaByIdAgremiado($id_periodo,$id_agremiado,$id_tipo_concurso){
+
+        $cad = "select t1.id   
+from concurso_inscripciones t1 
+inner join concurso_puestos t4 on t1.id_concurso_puesto=t4.id 
+inner join concursos t5 on t4.id_concurso=t5.id
+where t5.id_periodo=".$id_periodo." 
+and t5.id_tipo_concurso=".$id_tipo_concurso." 
+and t1.id_agremiado=".$id_agremiado."
+and t1.estado='1'
+limit 1";
+		//echo $cad;
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
+	
 	function getConcursoInscripcionRequisitoById($id){
 
         $cad = "select t1.id,t1.denominacion,t2.denominacion tipo_documento 
