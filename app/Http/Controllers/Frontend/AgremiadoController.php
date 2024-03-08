@@ -201,9 +201,6 @@ class AgremiadoController extends Controller
 				
 				$persona->foto = $request->img_foto;
 			}
-			
-			
-			
 		}
 		
 		$persona->id_tipo_documento = $request->id_tipo_documento;
@@ -212,6 +209,18 @@ class AgremiadoController extends Controller
 		$persona->apellido_materno = $request->apellido_materno;
 		$persona->nombres = $request->nombres;
 		$persona->numero_ruc = $request->numero_ruc;
+
+		print_r($request->numero_ruc); exit();
+
+		if( $request->numero_ruc!=""){
+			$persona->desc_cliente_sunat = $request->apellido_paterno." ".$request->apellido_materno." ".$request->nombres;
+			$persona->direccion_sunat = $request->direccion;
+		}
+
+		$persona->correo = $request->email1;
+		$persona->numero_celular = $request->celular1;
+		$persona->direccion = $request->direccion;
+
 		$persona->fecha_nacimiento = $request->fecha_nacimiento;
 		$persona->id_sexo = $request->id_sexo;
 		$persona->lugar_nacimiento = $request->lugar_nacimiento;
