@@ -1134,7 +1134,7 @@ class ComprobanteController extends Controller
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
         $data["direccionReceptor"] = $factura->direccion;
 
-        print_r(json_encode($data)); exit();
+        //print_r(json_encode($data)); exit();
 
 
 		$databuild_string = json_encode($data);
