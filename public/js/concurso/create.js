@@ -106,23 +106,13 @@ function fn_save(){
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
-					/*
-					var id_agremiado = $("#id_agremiado").val();
-					obtenerConcursoVigentePendiente(id_agremiado);
-					datatablenew();
-					$("#id_concurso_puesto").val(0);
-                    */
-					location.reload();
-					//location.href="/concurso/editar_inscripcion/"+result;
+					if(result==false){
+						bootbox.alert("Ya postulo a un subtipo de concurso en este concurso, solo se permite uno");
+						return false;	
+					}
 					
-					//window.location.reload();
-					//Limpiar();
-					/*$('#openOverlayOpc').modal('hide');
-					$('#calendar').fullCalendar("refetchEvents");
-					modalDelegar(fecha_atencion_original);*/
-					//modalTurnos();
-					//modalHistorial();
-					//location.href="ver_cita/"+id_user+"/"+result;
+					location.reload();
+					
             }
     });
 }

@@ -459,7 +459,7 @@ container: '#myModal modal-body'
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($profesion_sesion as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->numero_documento." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></option>
+									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></option>
 									<?php 
 									}
 									?>
