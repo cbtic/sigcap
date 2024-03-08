@@ -210,7 +210,7 @@ class AgremiadoController extends Controller
 		$persona->nombres = $request->nombres;
 		$persona->numero_ruc = $request->numero_ruc;
 
-		print_r($request->numero_ruc); exit();
+		//print_r($request->numero_ruc); exit();
 
 		if( $request->numero_ruc!=""){
 			$persona->desc_cliente_sunat = $request->apellido_paterno." ".$request->apellido_materno." ".$request->nombres;
