@@ -1020,7 +1020,32 @@
                                                         <td><input type="text" id="descrip_01" name="descrip[]" class="form-control form-control-sm" /></td>
                                                         <td><input type="text" id="f_venci_01" name="f_venci[]" class="form-control form-control-sm" value="<?php echo date("d/m/Y") ?>" /></td>
 
+<!--
+                                                        <tr id="fila'+pad(cuentaproductos, 2)+'">
+                                                            <td class="text-right">#</td> 
+                                                            <td><input type="text" name="producto[]" id="producto'+pad(cuentaproductos, 2)+'" onkeyup="
+                                                            var query = $(this).val();
+                                                            $.ajax({
+                                                                url:\'../especie/search\',
+                                                                type:\'GET\',
+                                                                data:{\'denominacion\':query,\'listadoproducto\':\''+pad(cuentaproductos, 2)+'\'},
+                                                                success:function (data) {$(\'#producto'+pad(cuentaproductos, 2)+'_list\').html(data);}})" class="form-control form-control-sm">
+                                                                <div id="producto'+pad(cuentaproductos, 2)+'_list">
+
+                                                                </div>
+                                                            </td>
+                                                        <td><input type="text" name="porcentajeproducto[]" id="porcentajeproducto'+pad(cuentaproductos, 2)+'" class="form-control form-control-sm" onchange="calculaPorcentaje('+cuentaproductos+')" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td>
+                                                        <td><input readonly="readonly" style="border:0px" type="text" name="peso_aprox[]" value="0" id=peso_aprox_'+pad(cuentaproductos, 2)+' />
+                                                        
+                                                        <input type="hidden" name="origen[]" value="" id=origen'+pad(cuentaproductos, 2)+' />
+                                                        <input type="hidden" name="idproducto[]" value="" id=idproducto'+pad(cuentaproductos, 2)+' />
+
+                                                        </td>
                                                     </tr>
+                                                    -->
+
+                                                    </tr>
+                                                         
                                                 </thead>
                                                 <tbody>
 
@@ -1032,10 +1057,10 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group mb-0 clearfix">
-                                                    <button id="btnAgregarProducto" type="button" class="btn btn-primary" <?php echo $disabled ?> onclick="cargaProductoNuevo(cuentaproductos)">
+                                                    <button id="btnAgregarProducto" type="button" class="btn btn-primary" <?php //echo $disabled ?> onclick="cargaProductoNuevo(cuentaproductos)">
                                                         Añadir Medio
                                                     </button>
-                                                    <button id="btnEliminarProducto" type="button" class="btn btn-danger" <?php echo $disabled ?> onclick="eliminaFila(cuentaproductos)">
+                                                    <button id="btnEliminarProducto" type="button" class="btn btn-danger" <?php //echo $disabled ?> onclick="eliminaFila(cuentaproductos)">
                                                         Eliminar Medio
                                                     </button>
                                                     <input type="hidden" name="contador" id="contador">

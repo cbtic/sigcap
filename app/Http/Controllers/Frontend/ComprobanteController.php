@@ -1134,7 +1134,31 @@ class ComprobanteController extends Controller
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
         $data["direccionReceptor"] = $factura->direccion;
 
-        //print_r(json_encode($data)); exit();
+        if ($factura->porc_detrac!="0")
+        {
+            
+            $data["dtmontoDetraccion"] = $factura->monto_detrac;
+           // $data["descripcionLeyenda"] = "OPERACIÓN SUJETA A DETRACCIÓN";
+            $data["dtporcentajeDetraccion"] = $factura->porc_detrac;
+            $data["dtnumeroCuentaBancoNacion"] = $factura->cuenta_detrac;
+            $data["dtmontoTotalIncluidoDetraccion"] = $factura->total;
+
+            $data["dtmedioPagoDetraccion"] = $factura->medio_pago_detrac;
+            $data["dtcodigoBienServicio"] = $factura->afecta_detrac;
+
+            
+    
+        }
+        
+        /*
+        "": "98.00",--
+        "": "OPERACIÓN SUJETA A DETRACCIÓN",--
+        "": "12",--
+       "": "123-123-111111-1254",--
+        "": "722.00"--
+*/
+
+      //  print_r(json_encode($data)); exit();
 
 
 		$databuild_string = json_encode($data);
