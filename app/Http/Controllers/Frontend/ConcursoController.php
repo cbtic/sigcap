@@ -520,7 +520,14 @@ class ConcursoController extends Controller
 		
 		$id_user = Auth::user()->id;
 		$concursoInscripcione_model = new ConcursoInscripcione();
-		$concursoInscripcione = $concursoInscripcione_model->getConcursoUltimoByIdAgremiado($request->id_concurso_inscripcion,$request->id_agremiado);
+		
+		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+		$concursoPuesto = ConcursoPuesto::find($concursoInscripcion->id_concurso_puesto);
+		$concurso = Concurso::find($concursoPuesto->id_concurso);
+		//echo "id_tipo_concurso:".$concurso->id_tipo_concurso;
+		//echo "id_sub_tipo_concurso:".$concurso->id_sub_tipo_concurso;
+		//exit();
+		$concursoInscripcione = $concursoInscripcione_model->getConcursoUltimoNuevoByIdAgremiado($request->id_concurso_inscripcion,$request->id_agremiado,$concurso->id_tipo_concurso,$concurso->id_sub_tipo_concurso);
 		$id_concurso_inscripcion = $concursoInscripcione->id;
 		
 		$inscripcionDocumento = InscripcionDocumento::where("id_concurso_inscripcion",$id_concurso_inscripcion)->where("estado",1)->get();
