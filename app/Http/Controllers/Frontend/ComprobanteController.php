@@ -738,7 +738,7 @@ class ComprobanteController extends Controller
 
                 $descuento = $value['descuento'];
 		
-			  $id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  1);
+			  $id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',     $id_user,  1);
               //  $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 
                // print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
