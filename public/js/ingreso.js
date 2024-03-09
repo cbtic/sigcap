@@ -1580,7 +1580,7 @@ function select_all(){
 	$("#btnDescuento").prop('disabled', true);
 	$('#btnOtroConcepto').attr("disabled", true);
 
-	if (cantidad != 0) {
+	//if (cantidad != 0) {
 
 		if (tipo_documento == "79") {//RUC
 
@@ -1591,7 +1591,7 @@ function select_all(){
 
 			if (ruc_p != "") $("#btnFactura").prop('disabled', false);
 		}
-	}
+	//}
 
 };
 
