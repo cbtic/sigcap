@@ -29,7 +29,7 @@ foreach($valorizacion as $key=>$row):
 	$disabled = "";
 	if($tot_reg!=$n) {
 
-		$disabled = "disabled";
+		//$disabled = "disabled";
 	}
 	
 	

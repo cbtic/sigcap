@@ -78,6 +78,8 @@ class ComprobanteController extends Controller
         $tipooperacion = $tabla_model->getMaestroByTipo('103');
         $formapago = $tabla_model->getMaestroByTipo('104');
 
+        $medio_pago = $tabla_model->getMaestroByTipo('19');
+
 
         if ($trans == 'FA'){
 
@@ -262,7 +264,7 @@ class ComprobanteController extends Controller
 
           
 
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago'));
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -1155,9 +1157,6 @@ class ComprobanteController extends Controller
 
             $data["dtmedioPagoDetraccion"] = $factura->medio_pago_detrac;
             $data["dtcodigoBienServicio"] = $factura->afecta_detrac;
-
-            
-    
         }
         
 
