@@ -263,13 +263,15 @@ class DerechoRevisionController extends Controller
 		$proyecto = new Proyecto;
 		$tablaMaestra_model = new TablaMaestra;
 		$ubigeo_model = new Ubigeo;
+		$municipalidad_model = new Municipalidade;
 
 		$departamento = $ubigeo_model->getDepartamento();
         $sitio = $tablaMaestra_model->getMaestroByTipo(33);
         $zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
+		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
 		
-        return view('frontend.derecho_revision.all_nuevoDerecho',compact('derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento'));
+        return view('frontend.derecho_revision.all_nuevoDerecho',compact('derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad'));
     }
 
 	public function send_nuevo_registro_solicitud(Request $request){
@@ -289,16 +291,17 @@ class DerechoRevisionController extends Controller
 		}
 		
 		$derecho_revision->id_regional = 5;
-		$derecho_revision->fecha_registro = Carbon::now()->format('Y-m-d');;
+		$derecho_revision->fecha_registro = Carbon::now()->format('Y-m-d');
 		$derecho_revision->numero_revision = $request->n_revision;
 		$derecho_revision->direccion = $request->direccion_proyecto;
+		$derecho_revision->id_municipalidad = $request->municipalidad;
 		$derecho_revision->id_ubigeo = $id_ubi->id;
 		$derecho_revision->id_proyectista = $agremiado->id;
-		$derecho_revision->id_proyecto = $proyecto->id;
+		
 		$derecho_revision->id_usuario_inserta = $id_user;
-		$derecho_revision->save();
+		
 
-		$proyecto->id_ubigeo = $request->departamento.$request->provincia.$request->distrito;
+		$proyecto->id_ubigeo = $id_ubi->id;
 		$proyecto->nombre = $request->nombre_proyecto;
 		$proyecto->parcela = $request->parcela;
 		$proyecto->super_manzana = $request->superManzana;
@@ -307,6 +310,8 @@ class DerechoRevisionController extends Controller
 		$proyecto->fila = $request->fila;
 		$proyecto->id_usuario_inserta = $id_user;
 		$proyecto->save();
+		$derecho_revision->id_proyecto = $proyecto->id;
+		$derecho_revision->save();
     }
 
 	public function modal_nuevo_proyectista($id){

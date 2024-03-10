@@ -238,12 +238,23 @@
 
 						<div class="col-lg-2">
 								<label class="control-label form-control-sm">Municipalidad</label>
-								<input id="municipalidad" name="municipalidad" on class="form-control form-control-sm"  value="<?php echo $agremiado->id_actividad_gremial?>" type="text">
+								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange=""> 
+									<option value="">--Selecionar--</option>
+									<?php
+										foreach ($municipalidad as $row) {
+									?>
+									<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?>
+								</select>
 						</div>
 
 						<div class="col-lg-1">
                             <label class="control-label form-control-sm">N° de Revisi&oacute;n</label>
-                            <input id="n_revision" name="n_revision" on class="form-control form-control-sm"  value="<?php echo $derechoRevision->numero_revision?>" type="text">
+                            <select name="n_revision" id="n_revision" class="form-control form-control-sm">
+                                <option value="" selected="selected">--Seleccionar--</option>
+								<option value="1">1</option>
+                                <option value="3">3</option>
+								<option value="5">5</option>
+							</select>
 						</div>
 
 						<div class="col-lg-2">

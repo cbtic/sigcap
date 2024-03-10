@@ -259,11 +259,10 @@
                             <th>Tipo Proyecto</th>
                             <th>N&uacute;mero Revisi&oacute;n</th>
                             <th>Municipalidad</th>
-                            <th>N&uacute;mero CAP</th>
                             <th>Proyectista</th>
-                            <th>N&uacute;mero Doc</th>
                             <th>Propietario</th>
                             <th>Fecha Registro</th>
+                            <th>Estado Proyecto</th>
                             <th>Estado</th>
 							<th>Acciones</th>
                         </tr>
