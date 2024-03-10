@@ -55,6 +55,12 @@ $(document).ready(function () {
 		//modalProfesion(0);
 		modal_solicitud_derecho(0)
 	});
+
+	$('#btnSolicitudDerechoRevision').click(function () {
+		guardar_solicitud_derecho_revision()
+		//Limpiar();
+		//window.location.reload();
+	});
 	
 	$("#id_municipalidad_bus").select2();
 	
@@ -759,6 +765,50 @@ function modalComprobante(id){
 			success: function (result) {
 				$("#diveditpregOpc").html(result);
 				$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function guardar_solicitud_derecho_revision(){
+    
+	var msg = "";
+	var _token = $('#_token').val();
+	var id = "0";
+	var numero_cap = $('#numero_cap').val();
+	var n_revision = $('#n_revision').val();
+	var direccion_proyecto = $('#direccion_proyecto').val();
+	var departamento = $('#departamento').val();
+	var provincia = $('#provincia').val();
+	var distrito = $('#distrito').val();
+	var nombre_proyecto = $('#nombre_proyecto').val();
+	var parcela = $('#parcela').val();
+	var superManzana = $('#superManzana').val();
+	var lote = $('#lote').val();
+	var fila = $('#fila').val();
+	
+	$.ajax({
+			url: "/derecho_revision/send_nuevo_registro_solicitud",
+			type: "POST",
+			data : {_token:_token,id:id,numero_cap:numero_cap,n_revision:n_revision,direccion_proyecto:direccion_proyecto,
+				departamento:departamento,provincia:provincia,distrito:distrito,nombre_proyecto:nombre_proyecto,
+				parcela:parcela,superManzana:superManzana,lote:lote,fila:fila},
+			success: function (result) {
+				
+				//$('#openOverlayOpc').modal('hide');
+				//modalSituacion(id_agremiado);
+				//datatableSuspension();
+				window.location.reload();
+				//$('#openOverlayOpc').modal('hide');
+				
+				/*
+				$('#openOverlayOpc').modal('hide');
+				if(result==1){
+					bootbox.alert("La persona o empresa ya se encuentra registrado");
+				}else{
+					window.location.reload();
+				}
+				*/
 			}
 	});
 }

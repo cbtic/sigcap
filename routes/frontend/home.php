@@ -555,3 +555,5 @@ Route::get('derecho_revision/modal_nuevo_comprobante/{id}', [DerechoRevisionCont
 Route::post('derecho_revision/send_nueno_comprobante', [DerechoRevisionController::class, 'send_nueno_comprobante'])->name('derecho_revision.send_nueno_comprobante');
 Route::get('agremiado/obtener_datos_agremiado_coordinador_zonal/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_coordinador_zonal'])->name('agremiado.obtener_datos_agremiado_coordinador_zonal');
 Route::post('ingreso/send_beneficiario', [IngresoController::class, 'send_beneficiario'])->name('ingreso.send_beneficiario');
+Route::post('derecho_revision/send_nuevo_registro_solicitud', [DerechoRevisionController::class, 'send_nuevo_registro_solicitud'])->name('derecho_revision.send_nuevo_registro_solicitud');
+

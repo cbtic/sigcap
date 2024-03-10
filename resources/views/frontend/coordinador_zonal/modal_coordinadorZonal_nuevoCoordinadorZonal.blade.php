@@ -12,7 +12,7 @@
 
   .modal-dialog {
     width: 100%;
-    max-width: 60% !important
+    max-width: 70% !important
   }
 
   #tablemodal {
@@ -314,9 +314,9 @@ function AddFila(){
     var distrito = '<select name="municipalidad[]" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
     var estado_sesion = '<select name="estado_sesion[]" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
     var aprobar_pago = '<select name="aprobar_pago[]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
-    var informe = '<select name="informe[]" id="informe" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
+    //var informe = '<select name="informe[]" id="informe" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
     var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
-
+    var informe =  '<span class="btn btn-warning btn-file">Examinar <input id="image" name="image[]" type="file" /></span><input type="button" class="btn btn-sm btn-primary upload" value="Subir" name="subir[]" style="margin-left:10px">'
       newRow+='<tr>';
       newRow+='<td>'+n+'</td>';
       newRow+='<td>'+cap+'</td>';
@@ -595,6 +595,7 @@ function modal_personaNuevo(){
                           <th>Estado</th>
                           <th>Aprobar Pago</th>
                           <th>Informe</th>
+                          <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>

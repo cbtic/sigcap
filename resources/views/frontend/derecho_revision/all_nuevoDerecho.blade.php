@@ -349,7 +349,8 @@
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_solicitud_derecho_revision()" class="btn btn-sm btn-success">Registrar</a>
+								<!--<a href="javascript:void(0)" onClick="btnSolicitudDerechoRevision()" class="btn btn-sm btn-success">Registrar</a>-->
+								<input class="btn btn-sm btn-success float-rigth" value="REGISTRAR" name="guardar" type="button" id="btnSolicitudDerechoRevision" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
 							</div>
 							
 						</div>

@@ -237,7 +237,7 @@ class DerechoRevisionController extends Controller
 
 	public function modal_solicitud_nuevoSolicitud($id){
 		
-		$proyectista = new Proyectista();
+		$proyectista = new Proyectista;
 		$derechoRevision = new DerechoRevision;
 		$agremiado = new Agremiado;
 		$persona = new Persona;
@@ -256,7 +256,7 @@ class DerechoRevisionController extends Controller
 
 	function consulta_derecho_revision_nuevo(){
 
-        $proyectista = new Proyectista();
+        $proyectista = new Proyectista;
 		$derechoRevision = new DerechoRevision;
 		$agremiado = new Agremiado;
 		$persona = new Persona;
@@ -270,6 +270,43 @@ class DerechoRevisionController extends Controller
 		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
 		
         return view('frontend.derecho_revision.all_nuevoDerecho',compact('derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento'));
+    }
+
+	public function send_nuevo_registro_solicitud(Request $request){
+
+		$id_user = Auth::user()->id;
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+		$ubigeo = $request->distrito;
+		$id_ubi = Ubigeo::where("id_ubigeo",$ubigeo)->where("estado","1")->first();
+		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+
+		if($request->id == 0){
+			$derecho_revision = new DerechoRevision;
+			$proyecto = new Proyecto;
+		}else{
+			$derecho_revision = DerechoRevision::find($request->id);
+			$proyecto = Proyecto::find($request->id);
+		}
+		
+		$derecho_revision->id_regional = 5;
+		$derecho_revision->fecha_registro = Carbon::now()->format('Y-m-d');;
+		$derecho_revision->numero_revision = $request->n_revision;
+		$derecho_revision->direccion = $request->direccion_proyecto;
+		$derecho_revision->id_ubigeo = $id_ubi->id;
+		$derecho_revision->id_proyectista = $agremiado->id;
+		$derecho_revision->id_proyecto = $proyecto->id;
+		$derecho_revision->id_usuario_inserta = $id_user;
+		$derecho_revision->save();
+
+		$proyecto->id_ubigeo = $request->departamento.$request->provincia.$request->distrito;
+		$proyecto->nombre = $request->nombre_proyecto;
+		$proyecto->parcela = $request->parcela;
+		$proyecto->super_manzana = $request->superManzana;
+		$proyecto->direccion = $request->direccion_proyecto;
+		$proyecto->lote = $request->lote;
+		$proyecto->fila = $request->fila;
+		$proyecto->id_usuario_inserta = $id_user;
+		$proyecto->save();
     }
 
 	public function modal_nuevo_proyectista($id){
@@ -390,7 +427,7 @@ class DerechoRevisionController extends Controller
 		
 		$type=$this->extension($_FILES["file"]["name"]);
 		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath . $filename.".".$type);
-				
+		
 		$archivo = $filename.".".$type;
 		
 		$this->importar_solicitud($archivo);
