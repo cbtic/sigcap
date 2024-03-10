@@ -16,6 +16,7 @@ use App\Models\ProntoPago;
 use App\Models\Fraccionamiento;
 use Illuminate\Support\Carbon;
 use App\Models\Empresa;
+use App\Models\Beneficiario;
 
 use Auth;
 
@@ -421,5 +422,24 @@ class IngresoController extends Controller
 		return view('frontend.ingreso.modal_beneficiario',compact('persona','empresa','id_persona','id_agremiado','tipo_documento'));
 	
 	}
+
+    public function send_beneficiario(Request $request){
+		
+		$id_user = Auth::user()->id;
+
+		if($request->id == 0){
+			$beneficiario = new Beneficiario;
+		}else{
+			$beneficiario = Beneficiario::find($request->id);
+		}
+		$persona = Persona::where("numero_documento",$request->dni)->where("estado","1")->first();
+        $empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
+
+		$beneficiario->id_persona = $persona->id;
+		$beneficiario->id_empresa = $empresa->id;
+		$beneficiario->id_usuario_inserta = $id_user;
+		$beneficiario->save();
+		
+    }
 
 }

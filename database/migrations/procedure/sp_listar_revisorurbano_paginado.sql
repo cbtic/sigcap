@@ -18,16 +18,16 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 
-	v_campos='ru.id, a.numero_cap, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, a.fecha_colegiado, tm.denominacion situacion, ru.codigo_itf, ru.codigo_ru, c.fecha, c.serie, c.numero, c.estado_pago situacion_venta, ru.estado';
+	v_campos=' ru.id, a.numero_cap, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, a.fecha_colegiado, tm.denominacion situacion, ru.codigo_itf, ru.codigo_ru, c.fecha, c.serie, c.numero, c.estado_pago situacion_venta, ru.estado ';
 
 	v_tabla=' from revisor_urbanos ru 
 	inner join agremiados a on ru.id_agremiado= a.id
 	inner join personas p on a.id_persona = p.id
-	inner join valorizaciones v on v.pk_registro = ru.id 
+	left join valorizaciones v on v.pk_registro = ru.id 
 	left join comprobantes c on v.id_comprobante = c.id
-	inner join tabla_maestras tm on a.id_situacion::int =tm.codigo:: int and tm.tipo = ''14''';
+	inner join tabla_maestras tm on a.id_situacion::int =tm.codigo:: int and tm.tipo = ''14'' ';
 	
-	v_where = ' Where 1=1 and  id_modulo =''8'' and pk_registro = ru.id';
+	v_where = ' Where 1=1  ';
 	/*
 	If p_ruc<>'' Then
 	 v_where:=v_where||'And t1.ruc ilike ''%'||p_ruc||'%'' ';

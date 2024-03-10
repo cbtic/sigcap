@@ -63,4 +63,14 @@ class Empresa extends Model
 
     }
 
+    function getEmpresaPropietario($ruc_propietario){
+
+        $cad = "select e.id, e.razon_social, e.direccion, e.telefono, e.email 
+        from empresas e
+        Where e.ruc='".$ruc_propietario."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+
 }

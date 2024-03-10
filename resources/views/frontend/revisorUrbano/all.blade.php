@@ -327,8 +327,8 @@
 
                         <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
 							<select name="situacion_pago" id="situacion_pago" class="form-control form-control-sm">
-                                <option value="0" selected="selected">--Selecionar Situaci&oacute;n Venta--</option>
-                                <option value="1">PENDIENTE</option>
+                                <option value="" selected="selected">--Selecionar Situaci&oacute;n Venta--</option>
+                                <option value="0">PENDIENTE</option>
 								<option value="1">PAGADO</option>
                                 <option value="2">EXONERADO</option>
                                 <option value="3">ANULADO</option>

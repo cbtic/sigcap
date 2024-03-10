@@ -1575,16 +1575,34 @@ class AgremiadoController extends Controller
 
     }
 
+	public function obtener_datos_agremiado_coordinador_zonal($numero_cap){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $agremiado = $agremiado_model->getAgremiadoDatosCoordinadorZonal($numero_cap);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
 	public function obtener_datos_agremiado_revisor_urbano($numero_cap){
 
         $agremiado_model = new Agremiado;
         //$valorizaciones_model = new Valorizacione;
         $sw = true;
-        $agremiado = $agremiado_model->getAgremiadoDatosRevisorUrbano($numero_cap);
-        $array["sw"] = $sw;
-        $array["agremiado"] = $agremiado;
-        echo json_encode($array);
-
+		$agremiado2 = Agremiado::where("numero_cap",$numero_cap)->where("estado","1")->first();
+		if($agremiado2)
+		{
+			$agremiado = $agremiado_model->getAgremiadoDatosRevisorUrbano($numero_cap);
+			$array["sw"] = $sw;
+			$array["agremiado"] = $agremiado;
+			echo json_encode($array);
+		}else {
+			$array["agremiado"] = "0";
+			echo json_encode($array);}
+        
     }
 
 	public function obtener_local($id_regional){

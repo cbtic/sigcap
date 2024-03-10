@@ -107,24 +107,59 @@ function obtenerAgremiado(){
 		url: '/agremiado/obtener_datos_agremiado_revisor_urbano/' + numero_cap,
 		dataType: "json",
 		success: function(result){
-			
+			//$('#frmRevisorUrbano #codigo_itf')=="";
 			var agremiado = result.agremiado;
-			//var tipo_documento = parseInt(agremiado.tipo_documento);
-			//var nombre = persona.apellido_paterno+" "+persona.apellido_materno+", "+persona.nombres;
-			$('#id_tipo_documento').val(agremiado.tipo_documento);
-			$('#numero_documento').val(agremiado.numero_documento);
-			$('#apellido_paterno').val(agremiado.apellido_paterno);
-			$('#apellido_materno').val(agremiado.apellido_materno);
-			$('#nombres').val(agremiado.nombres);
-			$('#numero_regional').val(agremiado.numero_regional);
-			$('#id_regional').val(agremiado.regional);
-			$('#fecha_colegiado').val(agremiado.fecha_colegiado);
-			$('#id_ubicacion').val(agremiado.ubicacion);
-			$('#id_situacion').val(agremiado.situacion);
-			//$('#telefono').val(persona.telefono);
-			//$('#email').val(persona.email);
+			var sw1 = result.sw;
 			
-			$('.loader').hide();
+			if(agremiado!="0")
+			{
+
+				if(agremiado.situacion==73)
+				{
+					//var tipo_documento = parseInt(agremiado.tipo_documento);
+					//var nombre = persona.apellido_paterno+" "+persona.apellido_materno+", "+persona.nombres;
+					$('#id_tipo_documento').val(agremiado.tipo_documento);
+					$('#numero_documento').val(agremiado.numero_documento);
+					$('#apellido_paterno').val(agremiado.apellido_paterno);
+					$('#apellido_materno').val(agremiado.apellido_materno);
+					$('#nombres').val(agremiado.nombres);
+					$('#numero_regional').val(agremiado.numero_regional);
+					$('#id_regional').val(agremiado.regional);
+					$('#fecha_colegiado').val(agremiado.fecha_colegiado);
+					$('#id_ubicacion').val(agremiado.ubicacion);
+					$('#id_situacion').val(agremiado.situacion);
+					$('#frmRevisorUrbano #codigo_itf').val("");
+					//$('#telefono').val(persona.telefono);
+					//$('#email').val(persona.email);
+					
+					$('.loader').hide();
+				}else
+				{
+					msg += "El Agremiado no esta HABILITADO <br>";
+					$('.loader').hide();
+					$('#id_tipo_documento').val(agremiado.tipo_documento);
+					$('#numero_documento').val(agremiado.numero_documento);
+					$('#apellido_paterno').val(agremiado.apellido_paterno);
+					$('#apellido_materno').val(agremiado.apellido_materno);
+					$('#nombres').val(agremiado.nombres);
+					$('#numero_regional').val(agremiado.numero_regional);
+					$('#id_regional').val(agremiado.regional);
+					$('#fecha_colegiado').val(agremiado.fecha_colegiado);
+					$('#id_ubicacion').val(agremiado.ubicacion);
+					$('#id_situacion').val(agremiado.situacion);
+					$('#frmRevisorUrbano #codigo_itf').val("");
+				}
+			}else{
+				msg += "El Agremiado no existe <br>";
+				$('.loader').hide();
+				
+			}
+
+			if (msg != "") {
+				bootbox.alert(msg);
+				$('#frmRevisorUrbano #codigo_itf').val("");
+				return false;
+			}
 
 		}
 		
@@ -179,14 +214,29 @@ function datatablenew(){
 			var agremiado = $('#frmCodigoRU #agremiado').val();
 			var codigo_itf = $('#frmCodigoRU #codigo_itf').val();
 			var codigo_ru = $('#frmCodigoRU #codigo_ru').val();
-			var situacion = $('#frmCodigoRU #situacion').val();
+			var situacion_pago = $('#frmCodigoRU #situacion_pago').val();
+			if(situacion_pago=="")
+			{ 
+				situacion_pago = situacion_pago
+			}else if(situacion_pago=="0"){
+				situacion_pago = "PE";
+			}
+			else if(situacion_pago=="1"){
+				situacion_pago = "P";
+			}
+			else if(situacion_pago=="2"){
+				situacion_pago = "E";
+			}
+			else if(situacion_pago=="3"){
+				situacion_pago = "A";
+			}
 			var _token = $('#frmCodigoRU #_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						numero_cap:numero_cap,agremiado:agremiado,codigo_itf:codigo_itf,codigo_ru:codigo_ru,situacion:situacion,
+						numero_cap:numero_cap,agremiado:agremiado,codigo_itf:codigo_itf,codigo_ru:codigo_ru,situacion_pago:situacion_pago,
 						_token:_token
                        },
                 "success": function (result) {
@@ -292,7 +342,18 @@ function datatablenew(){
 				{
 				"mRender": function (data, type, row) {
 					var situacion_venta = "";
-					if(row.situacion_venta!= null)situacion_venta = row.situacion_venta;
+					if(row.situacion_venta!= null){
+						if(row.situacion_venta="P"){
+							situacion_venta = "PAGADO"
+						} else if (row.situacion_venta="E"){
+							situacion_venta = "EXONERADO"
+						}
+						else if (row.situacion_venta="A"){
+							situacion_venta = "ANULADO"
+						}
+					}else{
+						situacion_venta = "PENDIENTE"
+					}
 					return situacion_venta;
 				},
 				"bSortable": false,

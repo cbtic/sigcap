@@ -163,4 +163,22 @@ class EmpresaController extends Controller
 
 		echo $empresa->id;
     }
+
+	public function obtener_datos_empresa($ruc_propietario){
+
+		$empresa_model = new Empresa;
+		$sw = true;
+
+		$empresa2 = Empresa::where('ruc',$ruc_propietario)->where('estado','1')->first();
+
+		if($empresa2)
+		{
+			$empresa = $empresa_model->getEmpresaPropietario($ruc_propietario);
+			$array["sw"] = $sw;
+			$array["empresa"] = $empresa;
+			echo json_encode($array);
+		}else {
+			$array["empresa"] = "0";
+			echo json_encode($array);}
+	}
 }

@@ -146,7 +146,8 @@
                     </strong>
                 </div><!--card-header-->
 				
-				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
+				<!--<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">-->
+                <form method="post" action="#" id="frmAfiliacion" name="frmAfiliacion">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
@@ -187,7 +188,7 @@
                                     N&deg; CAP
                                 </div>
                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                    <input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" onChange="obtenerAgremiado()" >
+                                    <input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" onChange="obtenerAgremiadoCoordinador()" >
                                 </div>
                                 <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                     DNI

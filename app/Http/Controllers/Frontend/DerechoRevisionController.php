@@ -13,7 +13,9 @@ use App\Models\Municipalidade;
 use App\Models\Ubigeo;
 use App\Models\TablaMaestra;
 use App\Models\Proyectista;
+use App\Models\Propietario;
 use App\Models\Proyecto;
+use App\Models\Empresa;
 use Carbon\Carbon;
 use Auth;
 
@@ -235,7 +237,7 @@ class DerechoRevisionController extends Controller
 
 	public function modal_solicitud_nuevoSolicitud($id){
 		
-		$proyectista = new Proyectista();
+		$proyectista = new Proyectista;
 		$derechoRevision = new DerechoRevision;
 		$agremiado = new Agremiado;
 		$persona = new Persona;
@@ -251,5 +253,223 @@ class DerechoRevisionController extends Controller
         return view('frontend.derecho_revision.modal_solicitud_nuevoSolicitud',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo'));
 		
     }
-	
+
+	function consulta_derecho_revision_nuevo(){
+
+        $proyectista = new Proyectista;
+		$derechoRevision = new DerechoRevision;
+		$agremiado = new Agremiado;
+		$persona = new Persona;
+		$proyecto = new Proyecto;
+		$tablaMaestra_model = new TablaMaestra;
+		$ubigeo_model = new Ubigeo;
+
+		$departamento = $ubigeo_model->getDepartamento();
+        $sitio = $tablaMaestra_model->getMaestroByTipo(33);
+        $zona = $tablaMaestra_model->getMaestroByTipo(34);
+		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
+		
+        return view('frontend.derecho_revision.all_nuevoDerecho',compact('derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento'));
+    }
+
+	public function send_nuevo_registro_solicitud(Request $request){
+
+		$id_user = Auth::user()->id;
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+		$ubigeo = $request->distrito;
+		$id_ubi = Ubigeo::where("id_ubigeo",$ubigeo)->where("estado","1")->first();
+		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+
+		if($request->id == 0){
+			$derecho_revision = new DerechoRevision;
+			$proyecto = new Proyecto;
+		}else{
+			$derecho_revision = DerechoRevision::find($request->id);
+			$proyecto = Proyecto::find($request->id);
+		}
+		
+		$derecho_revision->id_regional = 5;
+		$derecho_revision->fecha_registro = Carbon::now()->format('Y-m-d');;
+		$derecho_revision->numero_revision = $request->n_revision;
+		$derecho_revision->direccion = $request->direccion_proyecto;
+		$derecho_revision->id_ubigeo = $id_ubi->id;
+		$derecho_revision->id_proyectista = $agremiado->id;
+		$derecho_revision->id_proyecto = $proyecto->id;
+		$derecho_revision->id_usuario_inserta = $id_user;
+		$derecho_revision->save();
+
+		$proyecto->id_ubigeo = $request->departamento.$request->provincia.$request->distrito;
+		$proyecto->nombre = $request->nombre_proyecto;
+		$proyecto->parcela = $request->parcela;
+		$proyecto->super_manzana = $request->superManzana;
+		$proyecto->direccion = $request->direccion_proyecto;
+		$proyecto->lote = $request->lote;
+		$proyecto->fila = $request->fila;
+		$proyecto->id_usuario_inserta = $id_user;
+		$proyecto->save();
+    }
+
+	public function modal_nuevo_proyectista($id){
+		 
+		$proyectista = new Proyectista();
+		$derechoRevision = new DerechoRevision;
+		$agremiado = new Agremiado;
+		$persona = new Persona;
+		
+        return view('frontend.derecho_revision.modal_nuevo_proyectista',compact('id','proyectista','agremiado','persona'));
+		
+    }
+
+	public function send_nueno_proyectista(Request $request){
+
+		$id_user = Auth::user()->id;
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+
+		if($request->id == 0){
+			$proyectista = new Proyectista;
+		}else{
+			$proyectista = Proyectista::find($request->id);
+		}
+		
+		$proyectista->id_agremiado = $agremiado->id;
+		$proyectista->celular = $request->celular;
+		$proyectista->email = $request->email;
+		//$proyectista->firma = $request->nombre;
+		//$profesion->estado = 1;
+		$proyectista->id_usuario_inserta = $id_user;
+		$proyectista->save();
+    }
+
+	public function modal_nuevo_propietario($id){
+		 
+		$proyectista = new Proyectista();
+		$derechoRevision = new DerechoRevision;
+		$agremiado = new Agremiado;
+		$tablaMaestra_model = new TablaMaestra;
+		$persona = new Persona;
+		$empresa = new Empresa;
+
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		
+        return view('frontend.derecho_revision.modal_nuevo_propietario',compact('id','tipo_documento','empresa','proyectista','agremiado','persona'));
+		
+    }
+
+	public function send_nueno_propietario(Request $request){
+
+		$id_user = Auth::user()->id;
+		$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
+		$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();
+
+		if($request->id == 0){
+			$propietario = new Propietario;
+		}else{
+			$propietario = Propietario::find($request->id);
+		}
+
+		if($persona){
+
+			$propietario->id_persona = $persona->id;
+			$propietario->celular = $request->celular_dni;
+			$propietario->email = $request->email_dni;
+			//$proyectista->firma = $request->nombre;
+			//$profesion->estado = 1;
+			$propietario->id_usuario_inserta = $id_user;
+			$propietario->save();
+		}else if($empresa){
+
+			$propietario->id_empresa = $empresa->id;
+			$propietario->celular = $request->telefono_ruc;
+			$propietario->email = $request->email_ruc;
+			//$proyectista->firma = $request->nombre;
+			//$profesion->estado = 1;
+			$propietario->id_usuario_inserta = $id_user;
+			$propietario->save();
+		}
+    }
+
+	public function modal_nuevo_infoProyecto($id){
+		 
+		$proyectista = new Proyectista();
+		$derechoRevision = new DerechoRevision;
+		$agremiado = new Agremiado;
+		$persona = new Persona;
+		
+        return view('frontend.derecho_revision.modal_nuevo_infoProyecto',compact('id','proyectista','agremiado','persona'));
+		
+    }
+
+	public function send_nueno_infoProyecto(Request $request){
+
+		$id_user = Auth::user()->id;
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+
+		if($request->id == 0){
+			$proyectista = new Proyectista;
+		}else{
+			$proyectista = Proyectista::find($request->id);
+		}
+		
+		$proyectista->id_agremiado = $agremiado->id;
+		$proyectista->celular = $request->celular;
+		$proyectista->email = $request->email;
+		//$proyectista->firma = $request->nombre;
+		//$profesion->estado = 1;
+		$proyectista->id_usuario_inserta = $id_user;
+		$proyectista->save();
+    }
+
+	public function upload_solicitud(Request $request){
+		
+		$filename = date("YmdHis") . substr((string)microtime(), 1, 6);
+		$type="";
+		$filepath = public_path('img/derecho_revision/');
+		
+		$type=$this->extension($_FILES["file"]["name"]);
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath . $filename.".".$type);
+		
+		$archivo = $filename.".".$type;
+		
+		$this->importar_solicitud($archivo);
+		
+	}
+
+	public function importar_solicitud($archivo){
+
+	}
+
+	public function modal_nuevo_comprobante($id){
+		 
+		$proyectista = new Proyectista();
+		$derechoRevision = new DerechoRevision;
+		$agremiado = new Agremiado;
+		$persona = new Persona;
+		$tablaMaestra_model = new TablaMaestra;
+		$empresa = new Empresa;
+
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		
+        return view('frontend.derecho_revision.modal_nuevo_comprobante',compact('id','proyectista','agremiado','persona','derechoRevision','empresa','tipo_documento'));
+		
+    }
+
+	public function send_nueno_comprobante(Request $request){
+
+		$id_user = Auth::user()->id;
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+
+		if($request->id == 0){
+			$proyectista = new Proyectista;
+		}else{
+			$proyectista = Proyectista::find($request->id);
+		}
+		
+		$proyectista->id_agremiado = $agremiado->id;
+		$proyectista->celular = $request->celular;
+		$proyectista->email = $request->email;
+		//$proyectista->firma = $request->nombre;
+		//$profesion->estado = 1;
+		$proyectista->id_usuario_inserta = $id_user;
+		$proyectista->save();
+    }
 }
