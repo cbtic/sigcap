@@ -512,12 +512,21 @@ function datatablenew(){
                 },
 				{
 				"mRender": function (data, type, row) {
+					var tiene_recibo = "";
+					if(row.tiene_recibo!= null)tiene_recibo = row.tiene_recibo;
+					return tiene_recibo;
+				},
+				"bSortable": false,
+				"aTargets": [2]
+				},
+				{
+				"mRender": function (data, type, row) {
 					var total_adelanto = "";
 					if(row.total_adelanto!= null)total_adelanto = row.total_adelanto;
 					return total_adelanto;
 				},
 				"bSortable": false,
-				"aTargets": [2]
+				"aTargets": [3]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -526,7 +535,7 @@ function datatablenew(){
 					return nro_total_cuotas;
 				},
 				"bSortable": false,
-				"aTargets": [3]
+				"aTargets": [4]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -535,7 +544,7 @@ function datatablenew(){
 					return fecha;
 				},
 				"bSortable": false,
-				"aTargets": [4]
+				"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -549,7 +558,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [5]
+					"aTargets": [6]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -575,7 +584,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [6],
+					"aTargets": [7],
 				},
 
             ]

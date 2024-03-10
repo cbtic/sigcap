@@ -296,7 +296,8 @@ function modal_personaNuevo(){
     var apellido_materno = $('#apellido_materno').val();
     var monto = $('#monto').val();
     var numero_cuota = $('#numero_cuota').val();
-
+	var id_tiene_recibo = $('#id_tiene_recibo').val();
+	
     $.ajax({
       url: "/adelanto/send_adelanto_nuevoAdelanto",
       type: "POST",
@@ -310,7 +311,8 @@ function modal_personaNuevo(){
         apellido_paterno:apellido_paterno,
         apellido_materno:apellido_materno,
         monto:monto,
-        numero_cuota:numero_cuota
+        numero_cuota:numero_cuota,
+		id_tiene_recibo:id_tiene_recibo
       },
       success: function(result) {
 
@@ -345,8 +347,10 @@ function modal_personaNuevo(){
                 <!--<input type="hidden" name="id_persona" id="id_persona">-->
                 
                 <div class="row">
-                  <div class="col-lg-7">
-                    <div class="col-lg-7">
+                  
+				  <div class="col-lg-7">
+				  	
+					
                       <div class="form-group">
                         <label class="control-label form-control-sm">Tipo Documento</label>
                         <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onChange="">
@@ -359,27 +363,37 @@ function modal_personaNuevo(){
                           ?>
                         </select>
                       </div>
-                    </div>
+                    
+                    <div class="row">
+						<div class="col-lg-6">
+						  <div class="form-group">
+							<label class="control-label form-control-sm">N&uacute;mero CAP</label>
+							<input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="obtener_profesional()">
+							  
+						  </div>
+						</div>
+						
+						<div class="col-lg-6">
+						  <div class="form-group">
+							<label class="control-label form-control-sm">Tiene Recibo</label>
+							<select name="id_tiene_recibo" id="id_tiene_recibo" class="form-control form-control-sm">
+								<option value="">--Selecionar--</option>
+								<?php
+								foreach ($tiene_recibo as $row) {?>
+								<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$adelanto->id_tiene_recibo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+								<?php 
+								}
+								?>
+							</select>
+							  
+						  </div>
+						</div>
 
-                    <!--
-                    <div class="col-lg-7">
-                      <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-                        <label class="control-label form-control-sm">N&uacute;mero Documento</label>
-                        <input id="numero_documento" name="numero_documento" class="form-control form-control-sm" value="<?php /*echo $persona->numero_documento */?>" type="text">
-                      </div>
-                    </div>
-                        -->
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">N&uacute;mero CAP</label>
-                        <input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="obtener_profesional()">
-                          
-                      </div>
-                    </div>
+                  </div> 
+				  
+				  </div>
 
-                  </div>
-
-                  <div class="col-lg-5">
+                  
                     <div class="form-group" style="text-align:center">
                       <!--<span class="btn btn-sm btn-warning btn-file">
 												Examinar <input id="image" name="image" type="file" />
@@ -401,10 +415,10 @@ function modal_personaNuevo(){
                       <input type="hidden" id="img_foto" name="img_foto" value="<?php echo $foto ?>" />
 
                     </div>
-                  </div>
-                </div>
+                  
+                </div> 
 
-                <div style="padding-left:15px">
+                <div>
                   <div class="row">
                     <div class="col-lg-4">
                       <div class="form-group">

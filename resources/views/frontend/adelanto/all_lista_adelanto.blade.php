@@ -180,7 +180,8 @@
                         <tr style="font-size:13px">
                             <th>N° CAP</th>
                             <th>Nombre</th>
-                            <th>Monto</th>
+                            <th>Tiene Recibo</th>
+							<th>Monto</th>
                             <th>N° Cuotas</th>
                             <th>Fecha</th>
                             <th>Estado</th>
