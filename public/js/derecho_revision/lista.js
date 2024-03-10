@@ -31,6 +31,26 @@ $(document).ready(function () {
 		guardar_credipago()
 	});
 
+	$('#btnNuevoProyectista').click(function () {
+		//modalProfesion(0);
+		modalProyectista(0)
+	});
+
+	$('#btnNuevoPropietario').click(function () {
+		//modalProfesion(0);
+		modalPropietario(0)
+	});
+
+	$('#btnNuevoinfoProyecto').click(function () {
+		//modalProfesion(0);
+		modalInfoProyecto(0)
+	});
+
+	$('#btnNuevoComprobante').click(function () {
+		//modalProfesion(0);
+		modalComprobante(0)
+	});
+
 	$('#btnNuevo_solicitud').click(function () {
 		//modalProfesion(0);
 		modal_solicitud_derecho(0)
@@ -39,6 +59,18 @@ $(document).ready(function () {
 	$("#id_municipalidad_bus").select2();
 	
 	datatablenew();
+	$('#numero_cap_').hide();
+	$('#agremiado_').hide();
+	$('#situacion_').hide();
+	$('#direccion_agremiado_').hide();
+	$('#n_regional_').hide();
+	$('#act_gremial_').hide();
+	$('#dni_').hide();
+	$('#persona_').hide();
+	$('#fecha_nacimiento_').hide();
+	$('#direccion_persona_').hide();
+	$('#celular_').hide();
+	$('#email_').hide();
 	
 });
 
@@ -54,6 +86,201 @@ function guardar_credipago(){
     });
 }
 
+function obtenerSolicitante(){
+	
+	var tipo_solicitante = $("#tipo_solicitante").val();
+
+	$('#frmSolicitudDerechoRevision #numero_cap_').hide();
+	$('#frmSolicitudDerechoRevision #agremiado_').hide();
+	$('#frmSolicitudDerechoRevision #situacion_').hide();
+	$('#frmSolicitudDerechoRevision #direccion_agremiado_').hide();
+	$('#frmSolicitudDerechoRevision #n_regional_').hide();
+	$('#frmSolicitudDerechoRevision #act_gremial_').hide();
+	$('#frmSolicitudDerechoRevision #dni_').hide();
+	$('#frmSolicitudDerechoRevision #persona_').hide();
+	$('#frmSolicitudDerechoRevision #fecha_nacimiento_').hide();
+	$('#frmSolicitudDerechoRevision #direccion_persona_').hide();
+	$('#frmSolicitudDerechoRevision #celular_').hide();
+	$('#frmSolicitudDerechoRevision #email_').hide();
+	
+	if (tipo_solicitante == "")//SELECCIONAR
+	{
+		
+		$('#frmSolicitudDerechoRevision #numero_cap_').hide();
+		$('#frmSolicitudDerechoRevision #agremiado_').hide();
+		$('#frmSolicitudDerechoRevision #situacion_').hide();
+		$('#frmSolicitudDerechoRevision #direccion_agremiado_').hide();
+		$('#frmSolicitudDerechoRevision #n_regional_').hide();
+		$('#frmSolicitudDerechoRevision #act_gremial_').hide();
+		$('#frmSolicitudDerechoRevision #dni_').hide();
+		$('#persona_').hide();
+		$('#frmSolicitudDerechoRevision #fecha_nacimiento_').hide();
+		$('#frmSolicitudDerechoRevision #direccion_persona_').hide();
+		$('#frmSolicitudDerechoRevision #celular_').hide();
+		$('#frmSolicitudDerechoRevision #email_').hide();
+
+	} else if (tipo_solicitante == "1")//PROYECTISTA
+	{
+		
+		$('#frmSolicitudDerechoRevision #numero_cap_').show();
+		$('#frmSolicitudDerechoRevision #agremiado_').show();
+		$('#frmSolicitudDerechoRevision #situacion_').show();
+		$('#frmSolicitudDerechoRevision #direccion_agremiado_').show();
+		$('#frmSolicitudDerechoRevision #n_regional_').show();
+		$('#frmSolicitudDerechoRevision #act_gremial_').show();
+		$('#frmSolicitudDerechoRevision #dni_').hide();
+		$('#frmSolicitudDerechoRevision #persona_').hide();
+		$('#frmSolicitudDerechoRevision #fecha_nacimiento_').hide();
+		$('#frmSolicitudDerechoRevision #direccion_persona_').hide();
+		$('#frmSolicitudDerechoRevision #celular_').hide();
+		$('#frmSolicitudDerechoRevision #email_').hide();
+
+	} else if (tipo_solicitante == "2") //Responsable de Tramite
+	{
+		$('#frmSolicitudDerechoRevision #numero_cap_').hide();
+		$('#frmSolicitudDerechoRevision #agremiado_').hide();
+		$('#frmSolicitudDerechoRevision #situacion_').hide();
+		$('#frmSolicitudDerechoRevision #direccion_agremiado_').hide();
+		$('#frmSolicitudDerechoRevision #n_regional_').hide();
+		$('#frmSolicitudDerechoRevision #act_gremial_').hide();
+		$('#frmSolicitudDerechoRevision #dni_').show();
+		$('#frmSolicitudDerechoRevision #persona_').show();
+		$('#frmSolicitudDerechoRevision #fecha_nacimiento_').show();
+		$('#frmSolicitudDerechoRevision #direccion_persona_').show();
+		$('#frmSolicitudDerechoRevision #celular_').show();
+		$('#frmSolicitudDerechoRevision #email_').show();
+
+	} else {
+		$('#frmSolicitudDerechoRevision #numero_cap_').hide();
+		$('#frmSolicitudDerechoRevision #agremiado_').hide();
+		$('#frmSolicitudDerechoRevision #situacion_').hide();
+		$('#frmSolicitudDerechoRevision #direccion_agremiado_').hide();
+		$('#frmSolicitudDerechoRevision #n_regional_').hide();
+		$('#frmSolicitudDerechoRevision #act_gremial_').hide();
+		$('#frmSolicitudDerechoRevision #dni_').show();
+		$('#frmSolicitudDerechoRevision #persona_').show();
+		$('#frmSolicitudDerechoRevision #fecha_nacimiento_').show();
+		$('#frmSolicitudDerechoRevision #direccion_persona_').show();
+		$('#frmSolicitudDerechoRevision #celular_').show();
+		$('#frmSolicitudDerechoRevision #email_').show();
+
+	}
+
+}
+
+function obtenerProyectista(){
+		
+	var numero_cap = $("#numero_cap").val();
+	var msg = "";
+	
+	if(numero_cap == "")msg += "Debe ingresar el numero de documento <br>";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_datos_agremiado/' + numero_cap,
+		dataType: "json",
+		success: function(result){
+			
+			var agremiado = result.agremiado;
+			//var tipo_documento = parseInt(agremiado.tipo_documento);
+			//var nombre = persona.apellido_paterno+" "+persona.apellido_materno+", "+persona.nombres;
+			$('#frmSolicitudDerechoRevision #agremiado').val(agremiado.agremiado);
+			$('#frmSolicitudDerechoRevision #situacion').val(agremiado.situacion);
+			$('#frmSolicitudDerechoRevision #direccion_agremiado').val(agremiado.direccion);
+			$('#frmSolicitudDerechoRevision #n_regional').val(agremiado.numero_regional);
+			$('#frmSolicitudDerechoRevision #act_gremial').val(agremiado.actividad_gremial);
+			
+			//$('#telefono').val(persona.telefono);
+			//$('#email').val(persona.email);
+			
+			$('.loader').hide();
+
+		}
+		
+	});
+	
+}
+
+function obtenerProvincia(){
+	
+	var id = $('#departamento').val();
+	if(id=="")return false;
+	$('#provincia').attr("disabled",true);
+	$('#distrito').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_provincia/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#provincia').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_provincia+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#provincia').html(option);
+			
+			var option2 = "<option value=''>Seleccionar</option>";
+			$('#distrito').html(option2);
+			
+			$('#provincia').attr("disabled",false);
+			$('#distrito').attr("disabled",false);
+			
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerDistrito(){
+		
+	var departamento = $('#departamento').val();
+	var id = $('#provincia').val();
+	if(id=="")return false;
+	$('#distrito').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_distrito/'+departamento+'/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value=''>Seleccionar</option>";
+			$('#distrito').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_ubigeo+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#distrito').html(option);
+			
+			$('#distrito').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
 
 function obtenerProvinciaDomiciliario(){
 	
@@ -472,4 +699,66 @@ function modalVerPropietario(id){
 			}
 	});
 
+}
+
+
+function modalProyectista(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_nuevo_proyectista/"+id,
+			type: "GET",
+			success: function (result) {  
+				$("#diveditpregOpc").html(result);
+				$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modalPropietario(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_nuevo_propietario/"+id,
+			type: "GET",
+			success: function (result) {
+				$("#diveditpregOpc").html(result);
+				$('#openOverlayOpc').modal('show');
+			}
+	});
+}
+
+function modalInfoProyecto(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_nuevo_infoProyecto/"+id,
+			type: "GET",
+			success: function (result) {
+				$("#diveditpregOpc").html(result);
+				$('#openOverlayOpc').modal('show');
+			}
+	});
+}
+
+function modalComprobante(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_nuevo_comprobante/"+id,
+			type: "GET",
+			success: function (result) {
+				$("#diveditpregOpc").html(result);
+				$('#openOverlayOpc').modal('show');
+			}
+	});
 }

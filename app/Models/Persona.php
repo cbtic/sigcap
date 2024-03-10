@@ -167,5 +167,15 @@ class Persona extends Model
 		$data = DB::select($cad);
         return $data[0];
     }
+
+    function getPersonaDniPropietario($numero_documento){
+
+        $cad = "select p.id, p.desc_cliente_sunat nombres, p.direccion, p.numero_celular, p.correo 
+        from personas p
+		Where p.numero_documento='".$numero_documento."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
  
 }

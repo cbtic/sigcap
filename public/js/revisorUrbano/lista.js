@@ -214,14 +214,29 @@ function datatablenew(){
 			var agremiado = $('#frmCodigoRU #agremiado').val();
 			var codigo_itf = $('#frmCodigoRU #codigo_itf').val();
 			var codigo_ru = $('#frmCodigoRU #codigo_ru').val();
-			var situacion = $('#frmCodigoRU #situacion').val();
+			var situacion_pago = $('#frmCodigoRU #situacion_pago').val();
+			if(situacion_pago=="")
+			{ 
+				situacion_pago = situacion_pago
+			}else if(situacion_pago=="0"){
+				situacion_pago = "PE";
+			}
+			else if(situacion_pago=="1"){
+				situacion_pago = "P";
+			}
+			else if(situacion_pago=="2"){
+				situacion_pago = "E";
+			}
+			else if(situacion_pago=="3"){
+				situacion_pago = "A";
+			}
 			var _token = $('#frmCodigoRU #_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						numero_cap:numero_cap,agremiado:agremiado,codigo_itf:codigo_itf,codigo_ru:codigo_ru,situacion:situacion,
+						numero_cap:numero_cap,agremiado:agremiado,codigo_itf:codigo_itf,codigo_ru:codigo_ru,situacion_pago:situacion_pago,
 						_token:_token
                        },
                 "success": function (result) {
@@ -327,7 +342,18 @@ function datatablenew(){
 				{
 				"mRender": function (data, type, row) {
 					var situacion_venta = "";
-					if(row.situacion_venta!= null)situacion_venta = row.situacion_venta;
+					if(row.situacion_venta!= null){
+						if(row.situacion_venta="P"){
+							situacion_venta = "PAGADO"
+						} else if (row.situacion_venta="E"){
+							situacion_venta = "EXONERADO"
+						}
+						else if (row.situacion_venta="A"){
+							situacion_venta = "ANULADO"
+						}
+					}else{
+						situacion_venta = "PENDIENTE"
+					}
 					return situacion_venta;
 				},
 				"bSortable": false,

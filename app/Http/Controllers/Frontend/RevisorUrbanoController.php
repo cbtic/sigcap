@@ -48,7 +48,7 @@ class RevisorUrbanoController extends Controller
 		$p[]=$request->numero_cap;
 		$p[]=$request->agremiado;//$request->ruc;
 		$p[]="";
-		$p[]="";
+		$p[]=$request->situacion_pago;;
 		$p[]=$request->codigo_itf;
         $p[]=$request->codigo_ru;
 		$p[]=$request->estado;

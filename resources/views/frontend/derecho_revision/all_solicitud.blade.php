@@ -243,7 +243,8 @@
                     </div>
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding:15px">
 						<input class="btn btn-warning" value="BUSCAR" type="button" id="btnBuscar_solicitud" />
-						<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo_solicitud" style="margin-left:15px"/>
+                        <a class="btn btn-success" href="/derecho_revision/consulta_derecho_revision_nuevo" style="margin-left:15px">Nuevo</a>
+						<!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo_solicitud" style="margin-left:15px"/>-->
 
 					</div>
 				</div>

@@ -214,7 +214,7 @@ $("#profesion").select2({ width: '100%' });
 
 function obtener_profesional(){
 	
-  var dni = $('#numero_documento').val();
+  var numero_documento = $('#dni').val();
   //console.log(numero_documento);
   $.ajax({
       url: '/persona/obtenerPersona/'+numero_documento,
@@ -233,7 +233,7 @@ function obtener_profesional(){
             confirmButtonText: 'Si, Crear!'
           }).then((result) => {
             if (result.value) {
-            modal_personaNuevo();
+            modal_persona_new(numero_documento);
             //document.location="eliminar.php?codigo="+id;
             
             }
@@ -243,12 +243,10 @@ function obtener_profesional(){
 					bootbox.alert(result.msg);
 					$('#openOverlayOpc').modal('hide');*/
 				}else{
-					$("#id_persona").val(result.persona.id);
-          $("#ruc").val(result.persona.numero_ruc);
-          $("#nombres").val(result.persona.nombres);
-          $("#apellido_paterno").val(result.persona.apellido_paterno);
-          $("#apellido_materno").val(result.persona.apellido_materno);
-          $("#fecha_nacimiento").val(result.persona.fecha_nacimiento);
+
+					$('#apellido_paterno').val(result.persona.apellido_paterno);
+          $('#apellido_materno').val(result.persona.apellido_materno);
+          $('#nombres').val(result.persona.nombres);
 				}
 		}
     });
@@ -263,6 +261,36 @@ function obtener_profesional(){
 	$("#monto").val(monto);*/
 	
 }
+
+function save_beneficiario(){
+    
+    var msg = "";
+    var _token = $('#_token').val();
+    var id = $('#id').val();
+    var dni = $('#dni').val();
+    var ruc = $('#ruc').val();
+    
+    if(dni == "")msg += "Debe ingresar un DNI <br>";
+    
+      if(msg!=""){
+          bootbox.alert(msg);
+          return false;
+      }
+    
+      $.ajax({
+        url: "/ingreso/send_beneficiario",
+              type: "POST",
+              data : {_token:_token,id:id,dni:dni,ruc:ruc},
+              success: function (result) {
+          
+          
+          window.location.reload();
+          $('#openOverlayOpc').modal('hide');
+          
+         
+              }
+      });
+  }
 
 function obtenerPersona(){
 		
@@ -385,7 +413,7 @@ function modal_personaNuevo(){
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="control-label form-control-sm">N&uacute;mero Documento</label>
-                        <input name="dni" id="dni" type="text" class="form-control form-control-sm" value="<?php echo $persona->numero_documento?>" onchange="obtenerPersona()" >
+                        <input name="dni" id="dni" type="text" class="form-control form-control-sm" value="<?php echo $persona->numero_documento?>" onchange="obtener_profesional()" >
                           
                       </div>
                     </div>
@@ -422,7 +450,7 @@ function modal_personaNuevo(){
                   <div style="margin-top:15px" class="form-group">
                     <div class="col-sm-12 controls">
                       <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-                        <a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
+                        <a href="javascript:void(0)" onClick="save_beneficiario()" class="btn btn-sm btn-success">Guardar</a>
                       </div>
                     </div>
                   </div>

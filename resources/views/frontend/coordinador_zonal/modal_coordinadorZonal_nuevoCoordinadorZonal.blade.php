@@ -12,7 +12,7 @@
 
   .modal-dialog {
     width: 100%;
-    max-width: 50% !important
+    max-width: 60% !important
   }
 
   #tablemodal {
@@ -314,6 +314,7 @@ function AddFila(){
     var distrito = '<select name="municipalidad[]" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
     var estado_sesion = '<select name="estado_sesion[]" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
     var aprobar_pago = '<select name="aprobar_pago[]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
+    var informe = '<select name="informe[]" id="informe" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
     var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
 
       newRow+='<tr>';
@@ -323,6 +324,7 @@ function AddFila(){
       newRow+='<td>'+ distrito+'</td>';
       newRow+='<td>'+ estado_sesion+'</td>';
       newRow+='<td>'+ aprobar_pago+'</td>';
+      newRow+='<td>'+ informe+'</td>';
       newRow+='<td>'+ eliminar+'</td>';
       newRow+='</tr>';
     //newRow.append('<td>Cell 2 Data</td>');
@@ -502,7 +504,7 @@ function modal_personaNuevo(){
                 <!--<input type="hidden" name="id_persona" id="id_persona">-->
                 <div style="padding-left:15px">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                       <div class="form-group">
                         <label class="control-label form-control-sm">N&uacute;mero CAP</label>
                         <input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="" readonly='readonly'>
@@ -510,7 +512,7 @@ function modal_personaNuevo(){
                       </div>
                     </div>
 
-                  <div class="col-lg-4">
+                  <div class="col-lg-2">
                       <div class="form-group">
                         <label class="control-label form-control-sm">Periodo</label>
                         <select name="periodo" id="periodo" class="form-control form-control-sm" onChange="" disabled='disabled'>
@@ -524,13 +526,9 @@ function modal_personaNuevo(){
                         </select>
                       </div>
                     </div>
-                </div>
-              </div>
-
-                <div style="padding-left:15px">
-                  <div class="row">
+                
                     
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                       <div class="form-group">
                         <label class="control-label form-control-sm">Sesiones Mes</label>
                         <select name="mes" id="mes" class="form-control form-control-sm" onChange="">
@@ -544,7 +542,7 @@ function modal_personaNuevo(){
                         </select>
                       </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                       <div class="form-group">
                         <label class="control-label form-control-sm">N° sesi&oacute;n</label>
                           <select name="numero_sesion" id="numero_sesion" class="form-control form-control-sm">
@@ -596,6 +594,7 @@ function modal_personaNuevo(){
                           <!--<th id="thImporte" style="display:none">Importe</th>-->
                           <th>Estado</th>
                           <th>Aprobar Pago</th>
+                          <th>Informe</th>
                         </tr>
                         </thead>
                         <tbody>

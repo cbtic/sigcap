@@ -752,7 +752,27 @@ class PersonaController extends Controller
 			//$array["error"] = "El DNI no está registrado como persona, vaya a mantenimiento de personas y registre primero a la persona.";
 			$array["sw"] = $sw;
 			//$array["msg"] = $msg;
+			echo json_encode($array);
 		}
 
     }
+
+	public function obtener_datos_persona($dni_propietario){
+
+		$persona_model = new Persona;
+		$sw = true;
+
+		$persona2 = Persona::where('numero_documento',$dni_propietario)->where('estado','1')->first();
+
+		if($persona2)
+		{
+			$persona = $persona_model->getPersonaDniPropietario($dni_propietario);
+			$array["sw"] = $sw;
+			$array["persona"] = $persona;
+			echo json_encode($array);
+		}else {
+			$array["persona"] = "0";
+			echo json_encode($array);}
+
+	}
 }

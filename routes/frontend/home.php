@@ -542,3 +542,16 @@ Route::get('derecho_revision/modal_solicitud_nuevoSolicitud/{id}', [DerechoRevis
 Route::get('proyectista/obtener_datos_proyectista/{numero_cap}', [ProyectistaController::class, 'obtener_datos_proyectista'])->name('proyectista.obtener_datos_proyectista');
 
 Route::get('agremiado/obtener_datos_agremiado_revisor_urbano/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_revisor_urbano'])->name('agremiado.obtener_datos_agremiado_revisor_urbano');
+Route::get('derecho_revision/consulta_derecho_revision_nuevo', [DerechoRevisionController::class, 'consulta_derecho_revision_nuevo'])->name('derecho_revision.consulta_derecho_revision_nuevo');
+Route::get('derecho_revision/modal_nuevo_proyectista/{id}', [DerechoRevisionController::class, 'modal_nuevo_proyectista'])->name('derecho_revision.modal_nuevo_proyectista');
+Route::post('derecho_revision/send_nueno_proyectista', [DerechoRevisionController::class, 'send_nueno_proyectista'])->name('derecho_revision.send_nueno_proyectista');
+Route::get('derecho_revision/modal_nuevo_propietario/{id}', [DerechoRevisionController::class, 'modal_nuevo_propietario'])->name('derecho_revision.modal_nuevo_propietario');
+Route::post('derecho_revision/send_nueno_propietario', [DerechoRevisionController::class, 'send_nueno_propietario'])->name('derecho_revision.send_nueno_propietario');
+Route::get('persona/obtener_datos_persona/{dni_propietario}', [PersonaController::class, 'obtener_datos_persona'])->name('persona.obtener_datos_persona');
+Route::get('empresa/obtener_datos_empresa/{ruc_propietario}', [EmpresaController::class, 'obtener_datos_empresa'])->name('empresa.obtener_datos_empresa');
+Route::get('derecho_revision/modal_nuevo_infoProyecto/{id}', [DerechoRevisionController::class, 'modal_nuevo_infoProyecto'])->name('derecho_revision.modal_nuevo_infoProyecto');
+Route::post('derecho_revision/send_nueno_infoProyecto', [DerechoRevisionController::class, 'send_nueno_infoProyecto'])->name('derecho_revision.send_nueno_infoProyecto');
+Route::get('derecho_revision/modal_nuevo_comprobante/{id}', [DerechoRevisionController::class, 'modal_nuevo_comprobante'])->name('derecho_revision.modal_nuevo_comprobante');
+Route::post('derecho_revision/send_nueno_comprobante', [DerechoRevisionController::class, 'send_nueno_comprobante'])->name('derecho_revision.send_nueno_comprobante');
+Route::get('agremiado/obtener_datos_agremiado_coordinador_zonal/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_coordinador_zonal'])->name('agremiado.obtener_datos_agremiado_coordinador_zonal');
+Route::post('ingreso/send_beneficiario', [IngresoController::class, 'send_beneficiario'])->name('ingreso.send_beneficiario');
