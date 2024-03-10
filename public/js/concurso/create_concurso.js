@@ -1842,7 +1842,7 @@ function datatablenew(){
                 "mRender": function (data, type, row) {
                 	var puntaje = "";
 					if(row.puntaje!= null)puntaje = row.puntaje;
-					return puntaje;
+					return formato_miles(puntaje);
                 },
                 "bSortable": false,
                 "aTargets": [11]

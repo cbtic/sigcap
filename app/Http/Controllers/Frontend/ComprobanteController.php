@@ -557,16 +557,16 @@ class ComprobanteController extends Controller
 
 				$factura_upd = Comprobante::find($id_factura);
 				if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
-
-                /*
-                $factura_upd->porc_detrac = $request->tipo_cambio;
-                $factura_upd->monto_detrac = $request->tipo_cambio;
-                $factura_upd->cuenta_detrac = $request->tipo_cambio;
-                $factura_upd->detraccion = $request->tipo_cambio;
-                $factura_upd->id_detra_cod_bos = $request->tipo_cambio;
-                $factura_upd->id_detra_medio = $request->tipo_cambio;
-*/
-
+                
+                if($total>700) {
+                    $factura_upd->porc_detrac = $request->porcentaje_detraccion;
+                    $factura_upd->monto_detrac = $request->monto_detraccion;
+                    $factura_upd->cuenta_detrac = $request->nc_detraccion;
+                    //$factura_upd->detraccion = $request->tipo_cambio;
+                    //$factura_upd->id_detra_cod_bos = $request->tipo_cambio;
+                    //$factura_upd->id_detra_medio = $request->tipo_cambio;
+                }
+                
 				$factura_upd->save();
 
 
@@ -873,8 +873,10 @@ class ComprobanteController extends Controller
 
         $id_caja = $request->id_caja_;
         $id = $request->id_comprobante;
-        $id_nc = $request->id_comprobante_nc;
+        //$id_nc = $request->id_comprobante_nc;
+        
         print_r($id); exit();
+        
         $tipoF="NC";
 
         if ($id=="" ){
@@ -909,7 +911,7 @@ class ComprobanteController extends Controller
         }
         else {
             $comprobante_model=new Comprobante;
-            $comprobante=$comprobante_model->getComprobanteById($id_nc);
+            $comprobante=$comprobante_model->getComprobanteById($id);
 
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
@@ -937,6 +939,9 @@ class ComprobanteController extends Controller
 
         $id_caja = $request->id_caja_;
         $id = $request->id_comprobante;
+         //print_r($id);
+
+
         $id_nc = $request->id_comprobante_nc;
 
         if ($id=="" ){
@@ -1024,7 +1029,7 @@ class ComprobanteController extends Controller
 
     public function forma_pago($term)
     {
-        print_r("Forma de Pago"); exit();
+       // print_r("Forma de Pago"); exit();
         $tabla_model = new TablaMaestra;
 		$forma_pago = $tabla_model->getMaestroByTipoAndDenomina('19',$term);
          return response()->json($forma_pago);

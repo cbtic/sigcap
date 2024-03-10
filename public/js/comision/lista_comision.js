@@ -776,8 +776,9 @@ function fn_eliminar(id,estado){
 function obtenerComision(){
 	
 	var id_periodo = $('#id_periodo_bus').val();
+	var tipo_comision  = $('#frmAfiliacion #tipo_comision').val();
 	$.ajax({
-		url: '/sesion/obtener_comision/'+id_periodo,
+		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision,
 		dataType: "json",
 		success: function(result){
 			var option = "";

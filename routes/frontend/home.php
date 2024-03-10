@@ -235,6 +235,7 @@ Route::get('comprobante/envio_comprobante_sunat_automatico/{fecha}', [Comprobant
 
 Route::get('comprobante/forma_pago/{term}', [ComprobanteController::class, 'forma_pago'])->name('comprobante.forma_pago');
 
+//Route::get('pesaje/producto/{term}', [PesajeController::class, 'producto'])->name('pesaje.producto');
 
 Route::get('seguro/consulta_seguro', [SeguroController::class, 'consulta_seguro'])->name('seguro.consulta_seguro');
 Route::post('seguro/listar_seguro', [SeguroController::class, 'listar_seguro'])->name('seguro.listar_seguro');
@@ -422,8 +423,11 @@ Route::get('sesion/modal_sesion/{id}', [SesionController::class, 'modal_sesion']
 Route::post('sesion/send_sesion', [SesionController::class, 'send_sesion'])->name('sesion.send_sesion');
 Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
 Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
-Route::get('comision/obtener_comision_periodo_tipo_comision/{id_periodo}/{id_tipo_comision}', [ComisionController::class, 'obtener_comision_periodo_tipo_comision'])->name('comision.obtener_comision_periodo_tipo_comision');
 */
+Route::get('comision/obtener_comision_periodo_tipo_comision/{id_periodo}/{id_tipo_comision}', [ComisionController::class, 'obtener_comision_periodo_tipo_comision'])->name('comision.obtener_comision_periodo_tipo_comision');
+
+
+
 Route::get('comision/modalDiaSemana/{id}', [ComisionController::class, 'modalDiaSemana'])->name('comision.modalDiaSemana');
 Route::post('comision/send_dia_semana', [ComisionController::class, 'send_dia_semana'])->name('comision.send_dia_semana');
 

@@ -37,14 +37,16 @@ begin
 	select id id_agremiado,id_persona,fecha_colegiado from agremiados a 
 	where to_char(fecha_colegiado,'yyyy')=p_anio
 	and created_at > (now()::date-1)
-	and id_categoria!='90'
+	and id_categoria!='90' 
+	and id_ubicacion not in (335,336) 
 	
 	loop
 		
 		v_dia := to_char(entradas_mes.fecha_colegiado,'dd')::int;
 		v_mes := to_char(entradas_mes.fecha_colegiado,'mm')::int;
 	
-		if v_dia > 25 then
+		--if v_dia > 25 then
+		if v_dia > 25 and v_mes!=12 then
 			v_mes:=v_mes+1;
 		end if;
 	

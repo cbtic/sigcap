@@ -266,17 +266,101 @@ function obtener_profesional(){
 	
 }
 
+function guardarSesion(){
+ 	/*
+  var dataToSend={
+  sesion: {
+        n: n,
+        cap: cap,
+        fecha: $('#fecha').val(), // Obtener el valor del input fecha
+        municipalidad: $('#municipalidad').val(), // Obtener el valor del select municipalidad
+        estado_sesion: $('#estado_sesion').val(), // Obtener el valor del select estado_sesion
+        aprobar_pago: $('#aprobar_pago').val() // Obtener el valor del select aprobar_pago
+        // Otros datos que desees enviar
+    }
+  };
+	*/
+  //alert($('#tblConceptos'));
+
+$.ajax({
+  		url: "/coordinador_zonal/send_coordinador_sesion",
+        type: "POST",
+        data : $("#frmCoordinador").serialize(),
+        //data: dataToSend,
+        //dataType: 'json', 
+        success: function (result) {				
+    		$('#openOverlayOpc').modal('hide');
+			
+        }
+});
+}
+
+
 function AddFila(){
 	
 	//var newRow = "";
   var cantidad = $('#numero_sesion').val();
-  var ind = $('#tblSesion tbody tr').length;
+  $('#tblConceptos tbody').html("");
+  var newRow = "";
+  for (var i = 0; i < cantidad; i++) { 
+    newRow = "";
+    
+    var n = i+1;
+    //var año = $('#periodo').val();
+    var año = new Date().getFullYear();
+    var mes_ = $('#mes').val();
+    var cap = $('#numero_cap').val();
+    var fecha = '<input id="fecha" name="fecha[]" class="form-control form-control-sm datepicker2"  value="" type="text">'
+    var distrito = '<select name="municipalidad[]" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
+    var estado_sesion = '<select name="estado_sesion[]" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
+    var aprobar_pago = '<select name="aprobar_pago[]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
+    var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
+
+      newRow+='<tr>';
+      newRow+='<td>'+n+'</td>';
+      newRow+='<td>'+cap+'</td>';
+      newRow+='<td>'+ fecha+'</td>';
+      newRow+='<td>'+ distrito+'</td>';
+      newRow+='<td>'+ estado_sesion+'</td>';
+      newRow+='<td>'+ aprobar_pago+'</td>';
+      newRow+='<td>'+ eliminar+'</td>';
+      newRow+='</tr>';
+    //newRow.append('<td>Cell 2 Data</td>');
+
+
+    $('#tblSesion tbody').append(newRow);
+    
+  }
+ 
+  $('.datepicker2').datepicker({
+  format: "dd-mm-yyyy",
+  autoclose: true,
+  container: '#openOverlayOpc modal-body'
+  //defaultDate: '01/07/2024'
+
+	});
+
+  
+
+ 
+}
+
+
+function AddFila1(){
+	
+	//var newRow = "";
+  var cantidad = $('#numero_sesion').val();
+  $('#tblConceptos tbody').html("");
+  //var cantidad = $("#tblSesion tr").length;
+
+  var newRow = "";
 
   for (var i = 0; i < cantidad; i++) { 
 
-    var newRow = $('<tr>');
+    //var newRow = $('<tr>');
     var n = i+1;
     //var año = $('#periodo').val();
+    
     var año = new Date().getFullYear();
     var mes_ = $('#mes').val();
     var cap = $('#numero_cap').val();
@@ -286,16 +370,25 @@ function AddFila(){
     var estado_sesion = '<select name="sesion['+n+'][estado_sesion]" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
     var aprobar_pago = '<select name="sesion['+n+'][aprobar_pago]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
     var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
-
-    newRow.append('<td>'+n+'</td>');
-    newRow.append('<td>'+cap+'</td>');
-    newRow.append('<td>'+ fecha+'</td>');
-    newRow.append('<td>'+ distrito+'</td>');
-    newRow.append('<td>'+ estado_sesion+'</td>');
-    newRow.append('<td>'+ aprobar_pago+'</td>');
-    newRow.append('<td>'+ eliminar+'</td>');
+    
+    //newRow+='<tr>';
+    newRow+='<td>'+n+'</td>';
+    newRow+='<td>'+cap+'</td>';
+    newRow+='<td>'+ fecha+'</td>';
+    newRow+='<td>'+ distrito+'</td>';
+    newRow+='<td>'+ estado_sesion+'</td>';
+    newRow+='<td>'+ aprobar_pago+'</td>';
+    newRow+='<td>'+ eliminar+'</td>';
     //newRow.append('<td>Cell 2 Data</td>');
-
+/*
+    newRow+='<tr>';
+    newRow+='<td> <input input id="fecha" type="hidden" name="sesion[' + n + '][fecha]" value="''"> </td>';
+    newRow+='<td> <select name="sesion['+n+'][municipalidad]" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select> <td> '
+    newRow+='<td> <select name="sesion['+n+'][estado_sesion]" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select> <td>  '
+    newRow+='<td> <select name="sesion['+n+'][aprobar_pago]" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select> <td> '
+    newRow+='<td> <button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button> <td> ';
+    
+    newRow+='</tr>';*/
 
     $('#tblSesion tbody').append(newRow);
   }
@@ -396,11 +489,14 @@ function modal_personaNuevo(){
           Registro de Sesiones - Coordinador Zonal
         </div>
         <div class="card-body">
-          <div class="row">
+          
+		  <form method="post" action="#" id="frmCoordinador" name="frmCoordinador">
+		  
+		  <div class="row">
             <!--aaaa-->
+			
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:5px">
 
-              <form method="post" action="#" id="frmCoordinador" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" id="id" value="<?php echo $id ?>">
                 <!--<input type="hidden" name="id_persona" id="id_persona">-->
@@ -437,7 +533,7 @@ function modal_personaNuevo(){
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="control-label form-control-sm">Sesiones Mes</label>
-                        <select name="mes" id="mes" class="form-control form-control-sm" onchange="">
+                        <select name="mes" id="mes" class="form-control form-control-sm" onChange="">
                           <option value="">--Selecionar Mes--</option>
                           <?php
                           foreach ($mes as $row) {?>
@@ -457,6 +553,7 @@ function modal_personaNuevo(){
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
+                            <option value="5">5</option>
                         </select>
                       </div>
                     </div>
@@ -510,6 +607,9 @@ function modal_personaNuevo(){
                     </div>
                   </div>
                 </div>
+				
+				</form>
+				
           </section>
         </div>
         </div>

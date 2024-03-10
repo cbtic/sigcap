@@ -618,18 +618,59 @@ class ConcursoController extends Controller
 	
 		$id_user = Auth::user()->id;
 		
-		if($request->id == 0){
+		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+			
+		$agremiado = Agremiado::find($concursoInscripcion->id_agremiado);
+		$numero_cap = $agremiado->numero_cap;
 		
+		$concursoPuesto = ConcursoPuesto::find($concursoInscripcion->id_concurso_puesto);
+		$concurso = Concurso::find($concursoPuesto->id_concurso);
+		
+		$periodoComision = PeriodoComisione::find($concurso->id_periodo);
+		$nombre_periodo = str_replace("/","-",$periodoComision->descripcion);
+		
+		$tipoConcurso = TablaMaestra::where("codigo",$concurso->id_tipo_concurso)->where("tipo",101)->first();
+		$nombre_tipo_concurso = $tipoConcurso->denominacion;
+		
+		$subTipoConcurso = TablaMaestra::where("codigo",$concurso->id_sub_tipo_concurso)->where("tipo",93)->first();
+		$nombre_sub_tipo_concurso = $subTipoConcurso->denominacion;
+		
+		if($request->id == 0){
+			
 			$inscripcionDocumento = new InscripcionDocumento;
 			
 			if($request->img_foto!=""){
+				echo $nombre_periodo;
+				$path = "img/documento/".$nombre_periodo;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+				
+				$path = "img/documento/".$nombre_periodo."/".$nombre_tipo_concurso;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+				
+				$path = "img/documento/".$nombre_periodo."/".$nombre_tipo_concurso."/".$nombre_sub_tipo_concurso;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+				
+				$path = "img/documento/".$nombre_periodo."/".$nombre_tipo_concurso."/".$nombre_sub_tipo_concurso."/".$numero_cap;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+				
+			
 				$filepath_tmp = public_path('img/frontend/tmp_documento/');
-				$filepath_nuevo = public_path('img/documento/');
+				$filepath_nuevo = public_path('img/documento/'.$nombre_periodo.'/'.$nombre_tipo_concurso.'/'.$nombre_sub_tipo_concurso.'/'.$numero_cap.'/');
+				
 				if (file_exists($filepath_tmp.$request->img_foto)) {
 					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
 				}
 				
-				$inscripcionDocumento->ruta_archivo = $request->img_foto;
+				//$inscripcionDocumento->ruta_archivo = $request->img_foto;
+				$inscripcionDocumento->ruta_archivo = 'img/documento/'.$nombre_periodo.'/'.$nombre_tipo_concurso.'/'.$nombre_sub_tipo_concurso.'/'.$numero_cap.'/'.$request->img_foto;
 			}
 			
 		}else{
@@ -638,12 +679,16 @@ class ConcursoController extends Controller
 				
 			if($request->img_foto!="" && $inscripcionDocumento->ruta_archivo!=$request->img_foto){
 				$filepath_tmp = public_path('img/frontend/tmp_documento/');
-				$filepath_nuevo = public_path('img/documento/');
+				//$filepath_nuevo = public_path('img/documento/');
+				$filepath_nuevo = public_path('img/documento/'.$nombre_periodo.'/'.$nombre_tipo_concurso.'/'.$nombre_sub_tipo_concurso.'/'.$numero_cap.'/');
+				
 				if (file_exists($filepath_tmp.$request->img_foto)) {
 					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
 				}
 				
-				$inscripcionDocumento->ruta_archivo = $request->img_foto;
+				//$inscripcionDocumento->ruta_archivo = $request->img_foto;
+				$inscripcionDocumento->ruta_archivo = 'img/documento/'.$nombre_periodo.'/'.$nombre_tipo_concurso.'/'.$nombre_sub_tipo_concurso.'/'.$numero_cap.'/'.$request->img_foto;
+				
 			}
 			
 		}
