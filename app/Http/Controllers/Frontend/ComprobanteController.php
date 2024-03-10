@@ -12,6 +12,8 @@ use App\Models\Valorizacione;
 use App\Models\Persona;
 use App\Models\Guia;
 
+use App\Models\Agremiado;
+
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -44,10 +46,6 @@ class ComprobanteController extends Controller
         $email=$request->email;
 
         
-
-
-        
-        
         //print_r($id_tipo_afectacion_pp); exit();
 
 		if($id_caja==""){
@@ -79,6 +77,8 @@ class ComprobanteController extends Controller
         $forma_pago = $tabla_model->getMaestroByTipo('108');
         $tipooperacion = $tabla_model->getMaestroByTipo('103');
         $formapago = $tabla_model->getMaestroByTipo('104');
+
+        $medio_pago = $tabla_model->getMaestroByTipo('19');
 
 
         if ($trans == 'FA'){
@@ -261,9 +261,10 @@ class ComprobanteController extends Controller
                 }
                 
             }
+
           
 
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago'));
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -456,6 +457,7 @@ class ComprobanteController extends Controller
 		$guia_model = new Guia;
 
         $id_tipo_afectacion_pp = $request->id_tipo_afectacion_pp;
+
          
 
 		//$facturaExiste = $facturas_model->getValidaFactura($request->TipoF,$request->ubicacion,$request->persona,$request->totalF);
@@ -569,10 +571,6 @@ class ComprobanteController extends Controller
                     $factura_upd->medio_pago_detrac = $request->medio_pago;                
                     //$factura_upd->detraccion = $request->tipo_cambio;
                     //$factura_upd->id_detra_cod_bos = $request->tipo_cambio;
-                    
-
-                    
-                    
                 }
                 
 				$factura_upd->save();
@@ -643,27 +641,39 @@ class ComprobanteController extends Controller
                         $valoriza_upd->save();
     
                     }
-
                 }
 
 
+            if ($id_concepto == 26411) {
+
+                $id_persona = $request->persona;
+                $valorizaciones_model = new Valorizacione;
+                $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+                $total_ = $totalDeuda->total;
+
+                if ($total_ == "0") {
+                    $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                    $agremiado->id_situacion = "73";
+                    $agremiado->save();
+                }
+            }
 
 
-				$estado_ws = $ws_model->getMaestroByTipo('96');
-				$flagWs = isset($estado_ws[0]->codigo)?$estado_ws[0]->codigo:1;
+            $estado_ws = $ws_model->getMaestroByTipo('96');
+            $flagWs = isset($estado_ws[0]->codigo) ? $estado_ws[0]->codigo : 1;
 
-				if ($flagWs==2 && $id_factura>0 && ($tipoF=="FT" || $tipoF=="BV")){
-					$this->firmar($id_factura);
-				}
+            if ($flagWs == 2 && $id_factura > 0 && ($tipoF == "FT" || $tipoF == "BV")) {
+                $this->firmar($id_factura);
+            }
 
-				//echo $id_factura;
+            //echo $id_factura;
 
 
-			}
-			if ($trans == 'FE') {
-				//echo $request->id_factura;
-				$id_factura = $request->id_factura;
-			}
+        }
+        if ($trans == 'FE') {
+            //echo $request->id_factura;
+            $id_factura = $request->id_factura;
+        }
 
 		//}else{
 			//$sw = false;
@@ -705,6 +715,8 @@ class ComprobanteController extends Controller
 			$id_caja = $request->id_caja;
 			$adelanto   = $request->adelanto;
 
+            $id_comprobante = $request->id_comprobante;
+
 			$trans = $request->trans;
             
 			//1	DOLARES
@@ -728,7 +740,7 @@ class ComprobanteController extends Controller
 
                 $descuento = $value['descuento'];
 		
-			  $id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    0, $id_caja,          0,    'f',     $id_user,  1);
+			  $id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',     $id_user,  1);
               //  $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 
                // print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
@@ -1129,12 +1141,27 @@ class ComprobanteController extends Controller
 		$data["nombreComercialEmisor"] = "CAP";
 		$data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
-		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";     
+		$data["numeroDocIdentidadEmisor"] = "20172977911";//"20160453908";     
 		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";        
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
         $data["direccionReceptor"] = $factura->direccion;
 
-       // print_r(json_encode($data)); exit();
+        if ($factura->porc_detrac!="0")
+        {
+            
+            $data["dtmontoDetraccion"] = $factura->monto_detrac;
+           // $data["descripcionLeyenda"] = "OPERACIÓN SUJETA A DETRACCIÓN";
+            $data["dtporcentajeDetraccion"] = $factura->porc_detrac;
+            $data["dtnumeroCuentaBancoNacion"] = $factura->cuenta_detrac;
+            $data["dtmontoTotalIncluidoDetraccion"] = $factura->total;
+
+            $data["dtmedioPagoDetraccion"] = $factura->medio_pago_detrac;
+            $data["dtcodigoBienServicio"] = $factura->afecta_detrac;
+        }
+        
+
+
+      //  print_r(json_encode($data)); exit();
 
 
 		$databuild_string = json_encode($data);
@@ -1450,7 +1477,7 @@ class ComprobanteController extends Controller
         $data["fechaDocumentoAfectado"] = "2023-11-13";
         $data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
-		$data["numeroDocIdentidadEmisor"] = "20160453908";//"20160453908";        
+		$data["numeroDocIdentidadEmisor"] = "20172977911";//"20160453908";        
 		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";                
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
 

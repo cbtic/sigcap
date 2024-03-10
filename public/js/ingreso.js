@@ -1530,9 +1530,11 @@ function select_all(){
 		return false;
 	}
 
-
+	
 
 	$(".mov").each(function (){
+
+		//alert("hi");
 		//$(this).parent().parent().parent().find(".mov").prop("checked", true);
 		$('.mov').prop('checked', true);
 		//calcular_total();
@@ -1547,6 +1549,8 @@ function select_all(){
 		total += Number(val_total);
 		stotal += Number(val_sub_total);
 		igv += Number(val_igv);
+
+		
 
 	});
 
@@ -1580,7 +1584,7 @@ function select_all(){
 	$("#btnDescuento").prop('disabled', true);
 	$('#btnOtroConcepto').attr("disabled", true);
 
-	if (cantidad != 0) {
+	//if (cantidad != 0) {
 
 		if (tipo_documento == "79") {//RUC
 
@@ -1591,7 +1595,7 @@ function select_all(){
 
 			if (ruc_p != "") $("#btnFactura").prop('disabled', false);
 		}
-	}
+	//}
 
 };
 

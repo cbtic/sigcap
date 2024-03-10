@@ -207,6 +207,22 @@ $(document).ready(function() {
 	//$('#hora_solicitud').mask('00:00');
 	$("#id_regional").select2({ width: '100%' });
 	$("#id_concurso_inscripcion").select2({ width: '100%' });
+	
+	var id = "<?php echo $id?>";
+	if(id==0){
+		var id_periodo = $("#id_periodo_bus").val();
+		var tipo_comision = $("#tipo_comision_bus").val();
+		$("#id_periodo").val(id_periodo);
+		$("#tipo_comision").val(tipo_comision);
+	}else{
+		var fecha_ejecucion = $("#fecha_ejecucion").val();
+		var fecha_programado = $("#fecha_programado").val();
+		
+		if(fecha_ejecucion==""){
+			$("#fecha_ejecucion").val(fecha_programado);
+		}
+	}
+	
 });
 </script>
 

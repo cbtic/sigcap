@@ -1,3 +1,5 @@
+-- DROP FUNCTION public.sp_crud_comprobante(varchar, int4, varchar, varchar, varchar, varchar, varchar, int4, int4, numeric, varchar, int4, int4);
+
 CREATE OR REPLACE FUNCTION public.sp_crud_comprobante(serie character varying, numero integer, tipo character varying, cod_tributario character varying, total character varying, descripcion character varying, cod_contable character varying, id_v integer, id_caja integer, descuento numeric, accion character varying, p_id_usuario integer, p_id_moneda integer)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -36,7 +38,7 @@ begin
 
 		When 'f' then
 			
-			if p_id_moneda = 2 then
+			if p_id_moneda = 1 then
 				_moneda:='SOLES';
 			else
 				_moneda:='DOLARES';
@@ -50,7 +52,7 @@ begin
 					select substr(CAST(mod(_total,trunc(_total)) AS varchar),3) into _decimal_letras;
 				End if;
 
-				if tipo = 'FT' Then
+				if tipo = 'NC' Then
 					select t2.ruc, t2.razon_social, (case when t2.direccion = 'Direccion' then '' else t2.direccion end) direccion, t2.email into  _ruc,_razon_social, _direccion, _correo
 						from empresas t2						
 						Where t2.ruc =cod_tributario;
@@ -69,12 +71,12 @@ begin
 						fecha_programado, observacion, id_moneda, tipo, id_forma_pago, afecta, cerrado, id_tipo_documento,serie_ncnd ,id_numero_ncnd ,tipo_ncnd,
 						solictante,orden_compra,  total_anticipo, total_descuentos, desc_globales,monto_perce, monto_detrac, porc_detrac, totalconperce, tipo_guia,
 						serie_refer, nro_refer, tipo_refer, codtipo_ncnd, motivo_ncnd, correo_des, tipo_operacion, base_perce, tipo_emision, ope_gratuitas,
-						subtotal, codigo_bbss_detrac, cuenta_detrac, notas, cond_pago, id_caja, id_usuario_inserta)
+						subtotal, codigo_bbss_detrac, cuenta_detrac, notas, cond_pago, id_caja, id_usuario_inserta, id_comprobante_ncnd)
 						
 					Values (serie,(select coalesce(max(fi.numero),'0')+1 from comprobantes fi where fi.serie = _serie),now(),_razon_social,_direccion,_ruc,'', '',
 						CAST(total AS numeric),0.00,0.00,((CAST(total AS numeric)/1.18)*0.18),CAST(total AS numeric),_total_letras,_moneda,18,0.000,'P','N',now(),now(),
 						now(),now(),'',p_id_moneda, tipo, 1, '', 'S',6,'',0,'','','',0.00, 0.00, 0.00, 0.00, 0.00, 0, CAST(total AS numeric), '', '', '', '', '', '', _correo, '01',
-						CAST(total AS numeric), 'SINCRONO', 0, CAST(total AS numeric)/1.18, '', '', '', '', id_caja, p_id_usuario);
+						CAST(total AS numeric), 'SINCRONO', 0, CAST(total AS numeric)/1.18, '', '', '', '', id_caja, p_id_usuario, id_v);
 
 				idp := (SELECT currval('comprobantes_id_seq'));
 			

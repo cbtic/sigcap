@@ -277,6 +277,7 @@ function obtenerComision(){
 	
 	var id_periodo = $('#id_periodo').val();
 	var tipo_comision = $('#tipo_comision').val();
+	var id_tipo_sesion = $('#id_tipo_sesion').val();
 	
 	$.ajax({
 		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision,
@@ -294,7 +295,12 @@ function obtenerComision(){
 	});
 	
 	$("#divFechaProgramado").hide();
+	
 	if(tipo_comision==2){
+		$("#divFechaProgramado").show();
+	}
+	
+	if(tipo_comision!=2 && id_tipo_sesion==402){
 		$("#divFechaProgramado").show();
 	}
 	
@@ -303,9 +309,15 @@ function obtenerComision(){
 function habilitarProgramacion(){
 	
 	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var tipo_comision = $("#tipo_comision").val();
 	
 	$("#divFechaProgramado").hide();
-	if(id_tipo_sesion==402){
+	
+	if(tipo_comision==2){
+		$("#divFechaProgramado").show();
+	}
+	
+	if(tipo_comision!=2 && id_tipo_sesion==402){
 		$("#divFechaProgramado").show();
 	}
 	
