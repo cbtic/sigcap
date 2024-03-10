@@ -502,11 +502,12 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			//var id = $('#id').val();
-			var comision = $('#municipalidad_integrada').val();
-			var periodo = $('#periodo').val();
-			var regional = $('#regional').val();
-			var monto = $('#monto').val();
-			var estado = $('#estado').val();
+			var comision = $('#frmAfiliacion #municipalidad_integrada').val();
+			var periodo = $('#frmAfiliacion #periodo').val();
+			var regional = $('#frmAfiliacion #regional').val();
+			var monto = $('#frmAfiliacion #monto').val();
+			var estado = $('#frmAfiliacion #estado').val();
+			var tipo_comision = $('#frmAfiliacion #tipo_comision').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -515,6 +516,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						comision:comision,periodo:periodo,regional:regional,monto:monto,estado:estado,
+						tipo_comision:tipo_comision,
 						_token:_token
                        },
                 "success": function (result) {
