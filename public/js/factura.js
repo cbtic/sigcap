@@ -671,25 +671,10 @@ function obtenerTitular(){
 		var ind = $('#tblProducto tbody tr').length;
 		var tabindex = 11;
 		var nuevalperiodo = "";
-		/*
-		if(ind > 0){
-			$('.idEspecie').each(function(){
-				var ind_tmp = $(this).attr("ind");
-				if(ind_tmp => ind){
-					ind=Number(ind_tmp)+1;
-					tabindex+=3;
-				}
-			});
-		
-			fila_medicamentos=$('#tblProducto tbody').children('tr');
-			rowIndex=$('#hidden_rowIndex').val();
-			var idval = ind - 1;
-		}
-		*/
 	
 		var item_producto 	= "";
 		$('#idEspecieTemp option').each(function(){
-		item_producto += "<option value="+$(this).val()+" ru='"+$(this).attr("ru")+"'>"+$(this).html()+"</option>"	
+			item_producto += "<option value="+$(this).val()+" ru='"+$(this).attr("ru")+"'>"+$(this).html()+"</option>"	
 		});
 	
 		newRow +='<tr>';
