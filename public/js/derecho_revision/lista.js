@@ -30,6 +30,11 @@ $(document).ready(function () {
 		//modalProfesion(0);
 		guardar_credipago()
 	});
+
+	$('#btnNuevo_solicitud').click(function () {
+		//modalProfesion(0);
+		modal_solicitud_derecho(0)
+	});
 	
 	$("#id_municipalidad_bus").select2();
 	
@@ -340,13 +345,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalProfesion(id){
+function modal_solicitud_derecho(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/profesion/modal_profesion_nuevoProfesion/"+id,
+			url: "/derecho_revision/modal_solicitud_nuevoSolicitud/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);

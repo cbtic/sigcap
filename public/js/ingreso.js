@@ -1352,21 +1352,14 @@ function guardar_fracciona_deuda(){
     });
 }
 
-function nc(){
-	/*
-	var id = $(obj).parent().parent().parent().find('.id_comprobante').val();
-
-	$('#id_comprobante_').val(id);
-
-	document.frmPagos.submit();
-	*/
-	
+function nc(id){
+	$('#id_comprobante_nc').val(id);
 	document.forms["frmPagos"].submit();
 	return false;
 };
 
-function nd(){
-	
+function nd(id){
+	$('#id_comprobante_nd').val(id);	
 	document.forms["frmPagos_nd"].submit();
 	return false;
 };
@@ -1537,25 +1530,27 @@ function select_all(){
 		return false;
 	}
 
+	
 
+	$(".mov").each(function (){
 
-	$(".mov:checked").each(function () {
-		
-		//$('.mov').prop('checked', true);
-		
+		//alert("hi");
+		//$(this).parent().parent().parent().find(".mov").prop("checked", true);
+		$('.mov').prop('checked', true);
+		//calcular_total();
 
-		var val_total = $(this).parent().parent().parent().find('.val_total').html();
-		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
-		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		total = $(this).parent().parent().parent().find('.val_total').html();
+		stotal = $(this).parent().parent().parent().find('.val_sub_total').html();
+		igv = $(this).parent().parent().parent().find('.val_igv').html();
 
-		//$(this).parent().parent().parent().prev().find(".mov").prop('disabled', false);
-		//$(this).parent().parent().parent().find('.chek').val("1");
-
-		//alert(val_sub_total);
+		$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
+		$(this).parent().parent().parent().find('.chek').val("1");
 
 		total += Number(val_total);
 		stotal += Number(val_sub_total);
 		igv += Number(val_igv);
+
+		
 
 	});
 
@@ -1589,7 +1584,7 @@ function select_all(){
 	$("#btnDescuento").prop('disabled', true);
 	$('#btnOtroConcepto').attr("disabled", true);
 
-	if (cantidad != 0) {
+	//if (cantidad != 0) {
 
 		if (tipo_documento == "79") {//RUC
 
@@ -1600,7 +1595,7 @@ function select_all(){
 
 			if (ruc_p != "") $("#btnFactura").prop('disabled', false);
 		}
-	}
+	//}
 
 };
 

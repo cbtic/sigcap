@@ -251,6 +251,19 @@ legend.scheduler-border {
 <script type="text/javascript">
 	$(document).ready(function() {
 
+	//$('#tblConceptos tbody').html("");			
+	$('#tblConceptos').DataTable({
+		//"sPaginationType": "full_numbers",
+		"paging":false,
+		"dom": '<"top">rt<"bottom"flpi><"clear">',
+		"language": {"url": "/js/Spanish.json"},
+	});
+
+	$("#system-search").keyup(function() {
+			var dataTable = $('#tblConceptos').dataTable();
+			dataTable.fnFilter(this.value);
+		});
+
 	});
 
 	function cargar_calificacion() {
@@ -382,12 +395,20 @@ legend.scheduler-border {
 		filter = input.value.toUpperCase();
 		table = document.getElementById("tblConceptos");
 		tr = table.getElementsByTagName("tr");
+
+		
+
 		for (i = 0; i < tr.length; i++) {
 			td = tr[i].getElementsByTagName("td")[0];
+			
 			if (td) {
 				txtValue = td.textContent || td.innerText;
+
+		
 				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+
 					tr[i].style.display = "";
+					//alert(tr);
 				} else {
 					tr[i].style.display = "none";
 				}
@@ -455,23 +476,16 @@ legend.scheduler-border {
 
 															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
 																<div class="form-group">
-																	<input type="text" name="myInput" id="myInput" onkeyup="myFunction()" placeholder="Buscar..." class="form-control form-control-sm">
+																	<input class="form-control" id="system-search" name="q" placeholder="Buscar ...">
 																</div>
-															</div>.
-<!--
-															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="padding-top:0px;padding-left:0px;padding-right:0px">
-
-																<button type="button" id="btnBuscar" name="btnBuscar" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarConceptoNuevo(cuentaproductos)">
-																	<i class="fa fa-search-plus"></i> Buscar
-																</button>
 															</div>
--->
+
 														</div>
 
 														<div class="table-responsive overflow-auto" style="max-height: 500px">
 															<table id="tblConceptos" class="table table-hover table-sm">
 																<thead>
-																	<tr style="font-size:13px">
+																	<tr style="font-size:13px ">
 																		<th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
 																		</th>
 																		<th>Código</th>
@@ -529,13 +543,14 @@ legend.scheduler-border {
 																	//$total += $row->importe;	
 																	endforeach;
 																	?>
-
+																	<!--
 																	<tr>
 																		<th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px"> Total</th>
 																		<td style="padding-bottom:0px;margin-bottom:0px">
 																			<input type="text" readonly name="total_concepto_" id="total_concepto_" value="" class="form-control form-control-sm text-right" />
 																		</td>
 																	</tr>
+																-->
 																</tbody>
 															</table>
 														</div>

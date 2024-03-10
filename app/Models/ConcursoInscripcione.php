@@ -15,7 +15,7 @@ class ConcursoInscripcione extends Model
         $cad = "select t1.id,t5.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
 t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,
 t7.denominacion situacion,t8.denominacion region,t10.tipo,t10.serie,t10.numero,t4.id_concurso,
-to_char(t5.fecha_acreditacion_inicio,'dd-mm-yyyy')fecha_acreditacion_inicio,to_char(t5.fecha_acreditacion_fin,'dd-mm-yyyy')fecha_acreditacion_fin,t11.denominacion puesto,t1.puntaje,t1.resultado   
+to_char(t5.fecha_acreditacion_inicio,'dd-mm-yyyy')fecha_acreditacion_inicio,to_char(t5.fecha_acreditacion_fin,'dd-mm-yyyy')fecha_acreditacion_fin,t11.denominacion nombre_puesto,puesto,t1.puntaje,t1.resultado   
 from concurso_inscripciones t1 
 inner join agremiados t2 on t1.id_agremiado=t2.id
 inner join personas t3 on t2.id_persona=t3.id
@@ -45,6 +45,39 @@ limit 1";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data[0];
+    }
+	
+	function getConcursoUltimoNuevoByIdAgremiado($id_concurso_inscripcion,$id_agremiado,$id_tipo_concurso,$id_sub_tipo_concurso){
+
+        $cad = "select t1.id   
+from concurso_inscripciones t1 
+inner join concurso_puestos t4 on t1.id_concurso_puesto=t4.id 
+inner join concursos t5 on t4.id_concurso=t5.id
+where t5.id_tipo_concurso=".$id_tipo_concurso."
+and t5.id_sub_tipo_concurso=".$id_sub_tipo_concurso."
+and t1.id_agremiado=".$id_agremiado."
+and t1.estado='1'
+and t1.id<".$id_concurso_inscripcion."
+limit 1";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+	
+	function getConcursoDelegadoValidaByIdAgremiado($id_periodo,$id_agremiado,$id_tipo_concurso){
+
+        $cad = "select t1.id   
+from concurso_inscripciones t1 
+inner join concurso_puestos t4 on t1.id_concurso_puesto=t4.id 
+inner join concursos t5 on t4.id_concurso=t5.id
+where t5.id_periodo=".$id_periodo." 
+and t5.id_tipo_concurso=".$id_tipo_concurso." 
+and t1.id_agremiado=".$id_agremiado."
+and t1.estado='1'
+limit 1";
+		//echo $cad;
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
     }
 	
 	function getConcursoInscripcionRequisitoById($id){

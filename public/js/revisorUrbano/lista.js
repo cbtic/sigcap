@@ -104,7 +104,7 @@ function obtenerAgremiado(){
     $('.loader').show();
 	
 	$.ajax({
-		url: '/agremiado/obtener_datos_agremiado/' + numero_cap,
+		url: '/agremiado/obtener_datos_agremiado_revisor_urbano/' + numero_cap,
 		dataType: "json",
 		success: function(result){
 			
@@ -261,35 +261,43 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-				
-				return "";
+					var fecha = "";
+					if(row.fecha!= null)fecha = row.fecha;
+					return fecha;
 				},
 				"bSortable": false,
-				"aTargets": [6]
+				"aTargets": [6],
+				"className": "dt-center",
 				},
 				{
 				"mRender": function (data, type, row) {
-				
-				return "";
+					var serie = "";
+					if(row.serie!= null)serie = row.serie;
+					return serie;
 				},
 				"bSortable": false,
-				"aTargets": [7]
+				"aTargets": [7],
+				"className": "dt-center",
 				},
 				{
 				"mRender": function (data, type, row) {
-				
-				return "";
+					var numero = "";
+					if(row.numero!= null)numero = row.numero;
+					return numero;
 				},
 				"bSortable": false,
-				"aTargets": [8]
+				"aTargets": [8],
+				"className": "dt-center",
 				},
 				{
 				"mRender": function (data, type, row) {
-				
-				return "";
+					var situacion_venta = "";
+					if(row.situacion_venta!= null)situacion_venta = row.situacion_venta;
+					return situacion_venta;
 				},
 				"bSortable": false,
-				"aTargets": [9]
+				"aTargets": [9],
+				"className": "dt-center",
 				},
 				{
 				"mRender": function (data, type, row) {

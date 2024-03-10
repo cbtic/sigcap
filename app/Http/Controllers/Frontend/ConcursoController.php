@@ -16,10 +16,12 @@ use App\Models\TablaMaestra;
 use App\Models\Concepto;
 use App\Models\Valorizacione;
 use App\Models\PeriodoComisione;
+use App\Models\AgremiadoRole;
 use Carbon\Carbon;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
+use stdClass;
 
 class ConcursoController extends Controller
 {
@@ -408,91 +410,142 @@ class ConcursoController extends Controller
 		
     }
 	
-	public function send_inscripcion(Request $request){
+	public function send_inscripcion(Request $request){ 
 		
+		$msg = "";
 		$id_user = Auth::user()->id;
 		$comprobante_model = new Comprobante();
 		$agremiado_model = new Agremiado();
+		$concursoInscripcione_model = new ConcursoInscripcione();
 		
-		$agremiado = Agremiado::find($request->id_agremiado);
+		$concursoPuesto = ConcursoPuesto::find($request->id_concurso_puesto);
+		$concurso = Concurso::find($concursoPuesto->id_concurso);
 		
-		if($request->id == 0){
-			$concursoInscripcione = new ConcursoInscripcione;
+		$concursoInscripcioneExiste=NULL;
+		if($concurso->id_tipo_concurso==3)$concursoInscripcioneExiste = $concursoInscripcione_model->getConcursoDelegadoValidaByIdAgremiado($concurso->id_periodo,$request->id_agremiado,$concurso->id_tipo_concurso);
+		
+		if(isset($concursoInscripcioneExiste->id)){
+			$msg = false;
 		}else{
-			$concursoInscripcione = ConcursoInscripcione::find($request->id);
+		
+			$agremiado = Agremiado::find($request->id_agremiado);
+			
+			if($request->id == 0){
+				$concursoInscripcione = new ConcursoInscripcione;
+			}else{
+				$concursoInscripcione = ConcursoInscripcione::find($request->id);
+			}
+			
+			//$comprobante = $comprobante_model->getComprobanteByTipoSerieNumero($request->numero_comprobante);
+			
+			//if($comprobante){
+				
+				$anio = Carbon::now()->format('Y');
+				$concursoInscripcione->id_agremiado = $request->id_agremiado;
+				
+				//solo para edificaciones
+				/*
+				$id_tipo_plaza = $agremiado_model->getTipoPlaza($request->id_agremiado);
+				$concursoPuesto = ConcursoPuesto::where("id_concurso",$request->id_concurso)->where("id_tipo_plaza",$id_tipo_plaza)->where("estado","1")->first();
+				$id_concurso_puesto = $concursoPuesto->id;
+				*/
+				
+				$id_concurso_puesto = $request->id_concurso_puesto;
+				$concursoPuesto = ConcursoPuesto::find($id_concurso_puesto);
+				$id_tipo_plaza = $concursoPuesto->id_tipo_plaza;
+				
+				$concepto = Concepto::where("codigo","00015")->where("periodo",$anio)->where("estado","1")->first();
+				$concurso = Concurso::find($request->id_concurso);
+				
+				$concursoInscripcione->id_concurso_puesto = $id_concurso_puesto;
+				$concursoInscripcione->puesto_postula = $id_tipo_plaza;
+				$concursoInscripcione->puntaje = NULL;
+				$concursoInscripcione->resultado = NULL;
+				$concursoInscripcione->puesto = NULL;
+				$concursoInscripcione->id_concepto = $concepto->id;
+				$concursoInscripcione->estado = 1;
+				$concursoInscripcione->id_usuario_inserta = $id_user;
+				$concursoInscripcione->save();
+				
+				$id_concursoInscripcion = $concursoInscripcione->id;
+				/*
+				$valorizacion = new Valorizacione;
+				$valorizacion->id_modulo = 1;
+				$valorizacion->pk_registro = $id_concursoInscripcion;
+				$valorizacion->id_concepto = $concepto->id;
+				$valorizacion->id_agremido = $request->id_agremiado;
+				$valorizacion->id_persona = $agremiado->id_persona;
+				$valorizacion->id_comprobante = $comprobante->id;
+				$valorizacion->monto = $concepto->importe;
+				$valorizacion->id_moneda = $concepto->id_moneda;
+				$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+				$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+				$valorizacion->estado = 1;
+				$valorizacion->id_usuario_inserta = $id_user;
+				$valorizacion->save();
+				*/
+				//echo $id_concursoInscripcion;
+				
+			//}
+			
+			$msg = true;
+			
 		}
-		
-		//$comprobante = $comprobante_model->getComprobanteByTipoSerieNumero($request->numero_comprobante);
-		
-		//if($comprobante){
-			
-			$anio = Carbon::now()->format('Y');
-			$concursoInscripcione->id_agremiado = $request->id_agremiado;
-			
-			//solo para edificaciones
-			/*
-			$id_tipo_plaza = $agremiado_model->getTipoPlaza($request->id_agremiado);
-			$concursoPuesto = ConcursoPuesto::where("id_concurso",$request->id_concurso)->where("id_tipo_plaza",$id_tipo_plaza)->where("estado","1")->first();
-			$id_concurso_puesto = $concursoPuesto->id;
-			*/
-			
-			$id_concurso_puesto = $request->id_concurso_puesto;
-			$concursoPuesto = ConcursoPuesto::find($id_concurso_puesto);
-			$id_tipo_plaza = $concursoPuesto->id_tipo_plaza;
-			
-			$concepto = Concepto::where("codigo","00015")->where("periodo",$anio)->where("estado","1")->first();
-			$concurso = Concurso::find($request->id_concurso);
-			
-			$concursoInscripcione->id_concurso_puesto = $id_concurso_puesto;
-			$concursoInscripcione->puesto_postula = $id_tipo_plaza;
-			$concursoInscripcione->puntaje = NULL;
-			$concursoInscripcione->resultado = NULL;
-			$concursoInscripcione->puesto = NULL;
-			$concursoInscripcione->id_concepto = $concepto->id;
-			$concursoInscripcione->estado = 1;
-			$concursoInscripcione->id_usuario_inserta = $id_user;
-			$concursoInscripcione->save();
-			
-			$id_concursoInscripcion = $concursoInscripcione->id;
-			/*
-			$valorizacion = new Valorizacione;
-			$valorizacion->id_modulo = 1;
-			$valorizacion->pk_registro = $id_concursoInscripcion;
-			$valorizacion->id_concepto = $concepto->id;
-			$valorizacion->id_agremido = $request->id_agremiado;
-			$valorizacion->id_persona = $agremiado->id_persona;
-			$valorizacion->id_comprobante = $comprobante->id;
-			$valorizacion->monto = $concepto->importe;
-			$valorizacion->id_moneda = $concepto->id_moneda;
-			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
-			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-			$valorizacion->estado = 1;
-			$valorizacion->id_usuario_inserta = $id_user;
-			$valorizacion->save();
-			*/
-			echo $id_concursoInscripcion;
-			
-		//}
+		//echo $msg;
+		return $msg;
 		
     }
 	
 	public function send_inscripcion_resultado(Request $request){
 		
 		$id_user = Auth::user()->id;
-		$concursoInscripcione = ConcursoInscripcione::find($request->id_concurso_inscripcion);
-		$concursoInscripcione->puntaje = $request->puntaje;
-		$concursoInscripcione->resultado = $request->id_estado;
-		$concursoInscripcione->puesto = $concursoInscripcione->id_concurso_puesto;
-		$concursoInscripcione->save();
-		echo $concursoInscripcione->id;
 		
+		$concursoPuesto = ConcursoPuesto::find($request->asignar_puesto);
+		
+		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+		$concursoInscripcion->puntaje = $request->puntaje;
+		$concursoInscripcion->resultado = $request->id_estado;
+		//$concursoInscripcione->puesto = $concursoInscripcione->id_concurso_puesto;
+		$concursoInscripcion->puesto = $concursoPuesto->id_tipo_plaza;
+		$concursoInscripcion->save();
+		echo $concursoInscripcion->id;
+		
+		$concursoPuesto_ = ConcursoPuesto::find($concursoInscripcion->id_concurso_puesto);
+		$concurso = Concurso::find($concursoPuesto_->id_concurso);
+		$fecha_acreditacion_inicio = $concurso->fecha_acreditacion_inicio;
+		$fecha_acreditacion_fin = $concurso->fecha_acreditacion_fin;
+		$id_tipo_concurso = $concurso->id_tipo_concurso;
+		
+		$agremiadoRoleExiste = AgremiadoRole::where("id_agremiado",$concursoInscripcion->id_agremiado)->where("rol",$id_tipo_concurso)->first();
+		
+		if($agremiadoRoleExiste){
+			$agremiadoRoleExiste->rol_especifico = $concursoPuesto->id_tipo_plaza;
+			$agremiadoRoleExiste->save();
+		}else{
+			$agremiadoRol = new AgremiadoRole;
+			$agremiadoRol->id_agremiado = $concursoInscripcion->id_agremiado;
+			$agremiadoRol->rol = $id_tipo_concurso;
+			$agremiadoRol->rol_especifico = $concursoPuesto->id_tipo_plaza;
+			$agremiadoRol->fecha_inicio = $fecha_acreditacion_inicio;
+			$agremiadoRol->fecha_fin = $fecha_acreditacion_fin;
+			$agremiadoRol->estado = 1;
+			$agremiadoRol->id_usuario_inserta = $id_user;
+			$agremiadoRol->save();
+		}
     }
 	
 	public function send_duplicar_concurso(Request $request){
 		
 		$id_user = Auth::user()->id;
 		$concursoInscripcione_model = new ConcursoInscripcione();
-		$concursoInscripcione = $concursoInscripcione_model->getConcursoUltimoByIdAgremiado($request->id_concurso_inscripcion,$request->id_agremiado);
+		
+		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
+		$concursoPuesto = ConcursoPuesto::find($concursoInscripcion->id_concurso_puesto);
+		$concurso = Concurso::find($concursoPuesto->id_concurso);
+		//echo "id_tipo_concurso:".$concurso->id_tipo_concurso;
+		//echo "id_sub_tipo_concurso:".$concurso->id_sub_tipo_concurso;
+		//exit();
+		$concursoInscripcione = $concursoInscripcione_model->getConcursoUltimoNuevoByIdAgremiado($request->id_concurso_inscripcion,$request->id_agremiado,$concurso->id_tipo_concurso,$concurso->id_sub_tipo_concurso);
 		$id_concurso_inscripcion = $concursoInscripcione->id;
 		
 		$inscripcionDocumento = InscripcionDocumento::where("id_concurso_inscripcion",$id_concurso_inscripcion)->where("estado",1)->get();
@@ -640,7 +693,7 @@ class ConcursoController extends Controller
 			$inscripcionDocumento = new InscripcionDocumento;
 			
 			if($request->img_foto!=""){
-				echo $nombre_periodo;
+				//echo $nombre_periodo;
 				$path = "img/documento/".$nombre_periodo;
 				if (!is_dir($path)) {
 					mkdir($path);
@@ -771,8 +824,8 @@ class ConcursoController extends Controller
 		
 		$variable = [];
 		$n = 1;
-		array_push($variable, array("SISTEMA CAP"));
-		array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
 		array_push($variable, array("N","Id","Periodo","Tipo Concurso", "SubTipo Concurso", "Puesto", "Fecha Inscripcion", "Codigo Pago", "N CAP	", "N DNI", "Nombre","Situacion","Puntaje","Estado"));
 		
 		foreach ($data as $r) {
@@ -788,7 +841,54 @@ class ConcursoController extends Controller
 		
     }
 	
+	public function upload_concurso(Request $request){
 		
+		$filename = date("YmdHis") . substr((string)microtime(), 1, 6);
+		$type="";
+		
+		$path = "img/concurso";
+		if (!is_dir($path)) {
+			mkdir($path);
+		}
+		
+		$filepath = public_path('img/concurso/');
+		
+		$type=$this->extension($_FILES["file"]["name"]);
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath . $filename.".".$type);
+		
+		$archivo = $filename.".".$type;
+		
+		$this->importar_concurso($archivo);
+		
+	}
+	
+	public function importar_concurso($archivo){
+		
+		$id_user = Auth::user()->id;
+		
+		$concurso = Excel::toArray(new stdClass(), "img/concurso/".$archivo);
+		
+		foreach($concurso as $key=>$row){
+			
+			foreach($row as $key2=>$row2){
+				if($key2>0){
+					$id = $row2[1];
+					$puntaje = $row2[12];
+					$resultado = $row2[13];
+					$concursoInscripcion = ConcursoInscripcione::find($id);
+					$concursoInscripcion->puntaje = $puntaje;
+					$concursoInscripcion->resultado = $resultado;
+					$concursoInscripcion->save();
+					
+				}
+		
+			}
+		
+		}
+	}
+	
+	
+	
 }
 
 class InvoicesExport implements FromArray

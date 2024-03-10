@@ -15,7 +15,7 @@
 <tbody>
 <?php 
 $total = 0;
-foreach($pago as $row):?>
+foreach($pago as $row){?>
 <tr style="font-size:13px" class="test" data-toggle="tooltip" data-placement="top" title="<?php echo $row->usuario_registro?>">
 	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha))?></td>
 	<!--<td class="text-left">
@@ -59,26 +59,25 @@ foreach($pago as $row):?>
 	<td class="text-left">
 	
 		<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmPagos" name="frmPagos" autocomplete="off">		
-		<input type='hidden' name='id_comprobante' id="id_comprobante" value='<?php echo $row->id_comprobante?>'>		
+		<input type='hidden' name='id_comprobante_nc' id="id_comprobante_nc" value='<?php echo $row->id_comprobante?>'>		
 		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">		
-		<input class="btn btn-info pull-rigth" value="NC" type="button" id="btnBoleta" onclick="nc()">
+		<input class="btn btn-info pull-rigth" value="NC" type="button" id="btnBoleta" onclick="nc(<?php echo $row->id_comprobante?>)">
 		
 		</form>
 		
 	</td>
 	<td class="text-left">
 	<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nd_edita')}}" id="frmPagos_nd" name="frmPagos_nd" autocomplete="off">		
-		<input type='hidden' name='id_comprobante' id="id_comprobante" value='<?php echo $row->id_comprobante?>'>		
+		<input type='hidden' name='id_comprobante_nd' id="id_comprobante_nd" value='<?php echo $row->id_comprobante?>'>		
 		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">		
-		<input class="btn btn-info pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd()">
+		<input class="btn btn-info pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>)">
 		
 		</form>
 	</td>
 </tr>
-<?php 
-	
+<?php 	
 	$total += $row->total;
-endforeach;
+	};
 ?>
 </tbody>
 <tfoot>

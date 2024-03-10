@@ -251,6 +251,7 @@
                                                     <input type="hidden" readonly name="DescuentoPP" id="DescuentoPP" value="" class="form-control form-control-sm">
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                     <input type="hidden" readonly name="id_pronto_pago" id="id_pronto_pago" value="<?php echo !empty($pronto_pago->id) ? $pronto_pago->id:'0'  ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo !empty($pronto_pago->periodo) ? $pronto_pago->periodo:'0'  ?>" class="form-control form-control-sm">
                                                     
@@ -260,6 +261,8 @@
                                                    
                                                     
 =======
+=======
+>>>>>>> 682e31e8aa411e584d8508bc64e591d51dd9a88c
                                                     <input type="hidden" readonly name="id_pronto_pago" id="id_pronto_pago" value="<?php echo !empty($pronto_pago->id) ? $pronto_pago->id : '0'  ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo !empty($pronto_pago->periodo) ? $pronto_pago->periodo : '0'  ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="numero_cuotas_pp" id="numero_cuotas_pp" value="<?php echo !empty($pronto_pago->numero_cuotas) ? $pronto_pago->numero_cuotas : '0'  ?>" class="form-control form-control-sm">
@@ -268,7 +271,10 @@
                                                     <input type="hidden" readonly name="importe_pp" id="importe_pp" value="<?php echo $concepto->importe ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $concepto->id_tipo_afectacion ?>" class="form-control form-control-sm">
 
+<<<<<<< HEAD
 >>>>>>> 1a020ea6b5e9a5e8de31e705dbb13cd033f6e036
+=======
+>>>>>>> 682e31e8aa411e584d8508bc64e591d51dd9a88c
                                                 </div>
                                             </div>
                                         </div>
@@ -611,7 +617,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
 

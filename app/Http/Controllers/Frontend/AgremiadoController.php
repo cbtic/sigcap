@@ -201,9 +201,6 @@ class AgremiadoController extends Controller
 				
 				$persona->foto = $request->img_foto;
 			}
-			
-			
-			
 		}
 		
 		$persona->id_tipo_documento = $request->id_tipo_documento;
@@ -212,6 +209,18 @@ class AgremiadoController extends Controller
 		$persona->apellido_materno = $request->apellido_materno;
 		$persona->nombres = $request->nombres;
 		$persona->numero_ruc = $request->numero_ruc;
+
+		//print_r($request->numero_ruc); exit();
+
+		if( $request->numero_ruc!=""){
+			$persona->desc_cliente_sunat = $request->apellido_paterno." ".$request->apellido_materno." ".$request->nombres;
+			$persona->direccion_sunat = $request->direccion;
+		}
+
+		$persona->correo = $request->email1;
+		$persona->numero_celular = $request->celular1;
+		$persona->direccion = $request->direccion;
+
 		$persona->fecha_nacimiento = $request->fecha_nacimiento;
 		$persona->id_sexo = $request->id_sexo;
 		$persona->lugar_nacimiento = $request->lugar_nacimiento;
@@ -265,6 +274,17 @@ class AgremiadoController extends Controller
 		$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
 		$agremiado->desc_situacion_otro = $request->desc_situacion_otro;
 		$agremiado->fecha_fallecido = $request->fecha_fallecido;
+		
+		if($request->id_categoria==91){
+			$agremiado->fecha_inicio_temp = $request->fecha_inicio_temp;
+			$agremiado->fecha_fin_temp = $request->fecha_fin_temp;
+			$agremiado->observacion_temp = $request->observacion_temp;
+		}else{
+			$agremiado->fecha_inicio_temp = NULL;
+			$agremiado->fecha_fin_temp = NULL;
+			$agremiado->observacion_temp = NULL;
+		}
+		
 		//$agremiado->estado = 1;
 		$agremiado->save();
 		
@@ -1549,6 +1569,18 @@ class AgremiadoController extends Controller
         //$valorizaciones_model = new Valorizacione;
         $sw = true;
         $agremiado = $agremiado_model->getAgremiadoDatos($numero_cap);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
+	public function obtener_datos_agremiado_revisor_urbano($numero_cap){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $agremiado = $agremiado_model->getAgremiadoDatosRevisorUrbano($numero_cap);
         $array["sw"] = $sw;
         $array["agremiado"] = $agremiado;
         echo json_encode($array);

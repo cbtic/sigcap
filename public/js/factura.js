@@ -62,46 +62,47 @@ $(document).ready(function () {
 		});
 	});
 
+	
+
 	calculoDetraccion();
 
 	calculaPorcentaje(1);
+
+	
 });
 
 function calculoDetraccion(){
-	var total_fac = $('#total_fac').val();
-	alert(Math.round(total_fac));
 	
+	var total_fac = $('#total_fac_').val();
 	var total_detraccion =total_fac*12/100;
-	var nc_detraccion = "00098082204";
+	var nc_detraccion = "111-111-111-11";
 	var tipo_detraccion = "004";
 	var afecta_a = "022";
-	var medio_pago = "004";
+	var medio_pago = "001";
 	//var d = new Date();
 
-	if (800 > 700){
+	//alert(Math.round(total_fac));
+	//alert(Math.round(total_fac));
+
+	if (Math.round(total_fac) > 700){
+	//	alert(Math.round(total_fac));
 
 		//var f_venci = FormatFecha(d);
-		$('#f_venci_01').val(f_venci);
+		//$('#f_venci_01').val(f_venci);
 
-		$('#porcentaje_detraccion').val("12%");
-		
-		$('#monto_detraccion').val(total_detraccion);
+		$('#porcentaje_detraccion').val("12%");		
+		$('#monto_detraccion').val(total_detraccion.toFixed(2));
 		$('#nc_detraccion').val(nc_detraccion);
 		$('#tipo_detraccion').val(tipo_detraccion);
 		$('#afecta_a').val(afecta_a);
 		$('#medio_pago').val(medio_pago);
-
-		
-		
-
 	}else{
 		$('#porcentaje_detraccion').val("");
 		$('#monto_detraccion').val("");
 		$('#nc_detraccion').val("");
 		$('#tipo_detraccion').val("");
 		$('#afecta_a').val("");
-		$('#medio_pago').val("");
-
+		//$('#medio_pago').value("");
 	}
 }
 
@@ -589,7 +590,9 @@ function obtenerTitular(){
 
 	function calculaPorcentaje(fila) {
 		
-		var total_fac=  $("#total_fac").val();
+		var total_fac=  $("#total_fac_").val();
+
+		//alert (total_fac);
 
 		var valorItem = $('#porcentajeproducto'+pad(fila, 2)).val()
 
@@ -599,7 +602,7 @@ function obtenerTitular(){
 		});
 
 		if(contador == 1) {
-			$('#porcentajeproducto_'+pad(fila, 2)).val(Math.round(total_fac));
+			$('#porcentajeproducto'+pad(fila, 2)).val(total_fac);
 			$('#producto01').val('EFECTIVO');
 		}
 		else{

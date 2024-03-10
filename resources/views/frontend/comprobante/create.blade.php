@@ -137,7 +137,8 @@
 
     function generarCuotas() {
 
-        $('#tblConceptos tbody').html("");
+        var cantidad = $("#tblConceptos tr").length;
+        if (cantidad > 1) $("#tblConceptos tr").remove();
 
         var n = 0;
         var nroCuotas = $('#numcuota_').val();
@@ -299,68 +300,86 @@
         color: #FFFFFF;
     }
 
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
 
-ul.ui-autocomplete {
-    z-index: 1100;
-}
-
-
-/* End - Overriding styles for this page */
-/*********************************************************/
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 42px;
-  height: 24px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+    ul.ui-autocomplete {
+        z-index: 1100;
+    }
 
 
+    /* End - Overriding styles for this page */
+    /*********************************************************/
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 42px;
+        height: 24px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
 
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
+    input:checked+.slider {
+        background-color: #2196F3;
+    }
 
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
 
-.slider.round:before {
-  border-radius: 50%;
-}
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
 
-.no {padding-right:3px;padding-left:0px;display:block;width:20px;float:left;font-size:11px;text-align:right;padding-top:5px}
-.si {padding-right:0px;padding-left:3px;display:block;width:20px;float:left;font-size:11px;text-align:left;padding-top:5px}
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
 
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    .no {
+        padding-right: 3px;
+        padding-left: 0px;
+        display: block;
+        width: 20px;
+        float: left;
+        font-size: 11px;
+        text-align: right;
+        padding-top: 5px
+    }
+
+    .si {
+        padding-right: 0px;
+        padding-left: 3px;
+        display: block;
+        width: 20px;
+        float: left;
+        font-size: 11px;
+        text-align: left;
+        padding-top: 5px
+    }
 </style>
 
 
@@ -408,15 +427,31 @@ input:checked + .slider:before {
                         <input type="hidden" name="descuentopp" id="descuentopp" value="<?php echo $descuentopp; ?>">
                         <input type="hidden" name="id_pronto_pago" id="id_pronto_pago" value="<?php echo $id_pronto_pago; ?>">
 
-                        <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {echo $TipoF;} ?>">
+                        <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
+                                                                        echo $TipoF;
+                                                                    } ?>">
                         <input type="hidden" name="vestab" value="1">
-                        <input type="hidden" name="totalF" value="<?php if ($trans == 'FA') {echo $total;} ?>">
-                        <input type="hidden" name="ubicacion" value="<?php if ($trans == 'FA') {echo $ubicacion;} ?>">
-                        <input type="hidden" name="persona" value="<?php if ($trans == 'FA') {echo $persona;} ?>">
-                        <input type="hidden" name="id_caja" value="<?php if ($trans == 'FA') {echo $id_caja;} ?>">
-                        <input type="hidden" name="MonAd" value="<?php if ($trans == 'FA') {echo $MonAd;} ?>">
-                        <input type="hidden" name="adelanto" value="<?php if ($trans == 'FA') {echo $adelanto;} ?>">
-                        <input type="hidden" name="id_factura" value="<?php if ($trans == 'FE') {echo $facturas->id;} ?>">
+                        <input type="hidden" name="totalF" value="<?php if ($trans == 'FA') {
+                                                                        echo $total;
+                                                                    } ?>">
+                        <input type="hidden" name="ubicacion" value="<?php if ($trans == 'FA') {
+                                                                            echo $ubicacion;
+                                                                        } ?>">
+                        <input type="hidden" name="persona" value="<?php if ($trans == 'FA') {
+                                                                        echo $persona;
+                                                                    } ?>">
+                        <input type="hidden" name="id_caja" value="<?php if ($trans == 'FA') {
+                                                                        echo $id_caja;
+                                                                    } ?>">
+                        <input type="hidden" name="MonAd" value="<?php if ($trans == 'FA') {
+                                                                        echo $MonAd;
+                                                                    } ?>">
+                        <input type="hidden" name="adelanto" value="<?php if ($trans == 'FA') {
+                                                                        echo $adelanto;
+                                                                    } ?>">
+                        <input type="hidden" name="id_factura" value="<?php if ($trans == 'FE') {
+                                                                            echo $facturas->id;
+                                                                        } ?>">
 
                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                             <div class="form-group">
@@ -879,6 +914,9 @@ input:checked + .slider:before {
                                                                                                             } ?></th>
 
                                                         <input type="hidden" name="total_fac" id="total_fac" value="<?php echo number_format($total, 2); ?>">
+
+                                                        <input type="hidden" name="total_fac_" id="total_fac_" value="<?php echo $total; ?>">
+
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -952,6 +990,46 @@ input:checked + .slider:before {
                                 <div class="card">
                                     <div class="card-header">
                                         <strong>
+                                            
+                                            Medios de Pago
+                                        </strong>
+                                    </div>
+<!--
+                                    <div class="card-body">
+                                        <div class="table-responsive overflow-auto" style="max-height: 500px;">
+
+                                            <div style="display:none">
+                                                <select class="form-control" id="idEspecieTemp" tabindex="16" style="width: 500px">
+                                                    <option value="">Seleccionar Medio de Pago</option>
+                                                    <//?php //foreach ($medio_pago as $row) : ?>
+                                                        <option value="<//?php echo $row->codigo ?>"><//?php echo $row->denominacion ?></option>
+                                                    <//?php //endforeach; ?>
+                                                </select>
+                                            </div>
+
+                                            <button type="button" id="addRow" style="margin-left:10px" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Agregar producto(s)</button>
+
+                                            <table id="tblProducto" class="table table-hover table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="40%">Medio</th>
+                                                        <th width="10%">Monto</th>
+                                                        <th width="15%">Nro Operacion</th>
+                                                        <th width="25%">Descripción</th>
+                                                        <th width="10%">F.Vencimiento</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                --->
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>
                                             <!--@lang('labels.frontend.asistencia.box_asistencia')-->
                                             Medios de Pago
                                         </strong>
@@ -977,12 +1055,37 @@ input:checked + .slider:before {
                                                         <td><input type="text" name="producto[]" id="producto01" class="form-control form-control-sm">
                                                             <div class="input-group" style="position: absolute;" id="producto01_list"></div>
                                                         </td>
-                                                        <td><input type="text"  id="porcentajeproducto01" name="porcentajeproducto[]" class="form-control form-control-sm" onchange="calculaPorcentaje(1)" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td>
-                                                        <td><input type="text"  id="peso_aprox_01" name="peso_aprox[]" class="form-control form-control-sm" /></td>
-                                                        <td><input type="text"  id="descrip_01" name="descrip[]" class="form-control form-control-sm" /></td>
-                                                        <td><input type="text"  id="f_venci_01" name="f_venci[]" class="form-control form-control-sm" value="<?php echo date("d/m/Y") ?>" /></td>
+                                                        <td><input type="text" id="porcentajeproducto01" name="porcentajeproducto[]" class="form-control form-control-sm" onchange="calculaPorcentaje(1)" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td>
+                                                        <td><input type="text" id="peso_aprox_01" name="peso_aprox[]" class="form-control form-control-sm" /></td>
+                                                        <td><input type="text" id="descrip_01" name="descrip[]" class="form-control form-control-sm" /></td>
+                                                        <td><input type="text" id="f_venci_01" name="f_venci[]" class="form-control form-control-sm" value="<?php echo date("d/m/Y") ?>" /></td>
+
+<!--
+                                                        <tr id="fila'+pad(cuentaproductos, 2)+'">
+                                                            <td class="text-right">#</td> 
+                                                            <td><input type="text" name="producto[]" id="producto'+pad(cuentaproductos, 2)+'" onkeyup="
+                                                            var query = $(this).val();
+                                                            $.ajax({
+                                                                url:\'../especie/search\',
+                                                                type:\'GET\',
+                                                                data:{\'denominacion\':query,\'listadoproducto\':\''+pad(cuentaproductos, 2)+'\'},
+                                                                success:function (data) {$(\'#producto'+pad(cuentaproductos, 2)+'_list\').html(data);}})" class="form-control form-control-sm">
+                                                                <div id="producto'+pad(cuentaproductos, 2)+'_list">
+
+                                                                </div>
+                                                            </td>
+                                                        <td><input type="text" name="porcentajeproducto[]" id="porcentajeproducto'+pad(cuentaproductos, 2)+'" class="form-control form-control-sm" onchange="calculaPorcentaje('+cuentaproductos+')" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td>
+                                                        <td><input readonly="readonly" style="border:0px" type="text" name="peso_aprox[]" value="0" id=peso_aprox_'+pad(cuentaproductos, 2)+' />
+                                                        
+                                                        <input type="hidden" name="origen[]" value="" id=origen'+pad(cuentaproductos, 2)+' />
+                                                        <input type="hidden" name="idproducto[]" value="" id=idproducto'+pad(cuentaproductos, 2)+' />
+
+                                                        </td>
+                                                    </tr>
+                                                    -->
 
                                                     </tr>
+                                                         
                                                 </thead>
                                                 <tbody>
 
@@ -994,10 +1097,10 @@ input:checked + .slider:before {
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group mb-0 clearfix">
-                                                    <button id="btnAgregarProducto" type="button" class="btn btn-primary" <?php echo $disabled ?> onclick="cargaProductoNuevo(cuentaproductos)">
+                                                    <button id="btnAgregarProducto" type="button" class="btn btn-primary" <?php //echo $disabled ?> onclick="cargaProductoNuevo(cuentaproductos)">
                                                         Añadir Medio
                                                     </button>
-                                                    <button id="btnEliminarProducto" type="button" class="btn btn-danger" <?php echo $disabled ?> onclick="eliminaFila(cuentaproductos)">
+                                                    <button id="btnEliminarProducto" type="button" class="btn btn-danger" <?php //echo $disabled ?> onclick="eliminaFila(cuentaproductos)">
                                                         Eliminar Medio
                                                     </button>
                                                     <input type="hidden" name="contador" id="contador">
@@ -1133,14 +1236,16 @@ input:checked + .slider:before {
                                             <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Medio de Pago:</label>
-                                                    <select name="medio_pago" id="medio_pago" class="form-control form-control-sm" onchange="validaTipoDocumento()">
-                                                        <option value="">
-                                                            <?php echo "" ?></option>
-                                                        <option value="004">
-                                                            <?php echo "Efectivo" ?></option>
-                                                        <option value="017">
-                                                            <?php echo "Deposito en cuenta" ?></option>
+
+                                                    <select name="medio_pago" id="medio_pago" class="form-control form-control-sm" onChange="">
+                                                        <?php
+                                                        foreach ($forma_pago as $row) { ?>
+                                                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
                                                     </select>
+
                                                 </div>
                                             </div>
 

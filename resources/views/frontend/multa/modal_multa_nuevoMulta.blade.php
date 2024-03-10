@@ -356,8 +356,8 @@ function fn_save_multa(){
 	var numero_cap = $('#numero_cap').val();
 	var periodo = $('#periodo').val();
 	var id_multa = $('#id_multa').val();
-	//var moneda = $('#moneda').val();
-	//var importe = $('#importe').val();
+	var id_estado_multa = $('#id_estado_multa').val();
+	var observacion_multa = $('#observacion_multa').val();
 	//var estado = $('#estado').val();
 	//alert(id_agremiado);
 	//return false;
@@ -365,7 +365,7 @@ function fn_save_multa(){
     $.ajax({
 			url: "/multa/send_multa_nuevoMulta",
             type: "POST",
-            data : {_token:_token,id:id,numero_cap:numero_cap,periodo:periodo,id_multa:id_multa},
+            data : {_token:_token,id:id,numero_cap:numero_cap,periodo:periodo,id_multa:id_multa,id_estado_multa:id_estado_multa,observacion_multa:observacion_multa},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -627,6 +627,29 @@ container: '#myModal modal-body'
 								<input id="monto" name="monto" class="form-control form-control-sm" readonly="readonly" value="<?php if($multa_1)echo $multa_1->monto?>" type="text" >																				
 							</div>
 						</div>
+						
+						<div class="col-lg-5">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Estado</label>
+								<select name="id_estado_multa" id="id_estado_multa" class="form-control form-control-sm">
+									<!--<option value="">--Selecionar--</option>-->
+									<?php
+									foreach ($estado_multa as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiadoMulta->id_estado_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-lg-10">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Observaci&oacute;n</label>
+								<textarea type="text" name="observacion_multa" id="observacion_multa" rows="2" placeholder="" class="form-control form-control-sm"><?php echo $agremiadoMulta->observacion_multa?></textarea>
+							</div>
+						</div>
+						
 					</div>
 					
 					
