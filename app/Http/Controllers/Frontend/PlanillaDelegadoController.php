@@ -39,6 +39,7 @@ class PlanillaDelegadoController extends Controller
         $planillaDelegado_model = new PlanillaDelegado;
 		
 		$planilla = NULL;
+		$fondo_comun = NULL;
 		
 		if(isset($planillaDelegado->id)){
         	$planilla = $planillaDelegado_model->getPlanillaDelegadoDetalleByIdPlanilla($planillaDelegado->id);

@@ -28,23 +28,16 @@ begin
 	
 	
 	v_where = ' Where 1=1  ';
-	/*
-	If p_ruc<>'' Then
-	 v_where:=v_where||'And t1.ruc ilike ''%'||p_ruc||'%'' ';
-	End If;
-	
-	
-	
-	If p_comision<>'' Then
-	 v_where:=v_where||'And cm.id_municipalidad_integrada ilike ''%'||p_comision||'%'' ';
-	End If;
-*/
 
-	If p_tipo_comision<>'' Then
+	If p_periodo<>'' and p_periodo<>'0' Then
+	 v_where:=v_where||'And cm.id_periodo_comisiones = '''||p_periodo||''' ';
+	End If;
+
+	If p_tipo_comision<>'' and p_tipo_comision<>'0' Then
 	 v_where:=v_where||'And cm.id_tipo_comision = '''||p_tipo_comision||''' ';
 	End If;
 
-	If p_comision<>'' Then
+	If p_comision<>'' and p_comision<>'0' Then
 	 v_where:=v_where||'And cm.id_municipalidad_integrada = '''||p_comision||''' ';
 	End If;
 
