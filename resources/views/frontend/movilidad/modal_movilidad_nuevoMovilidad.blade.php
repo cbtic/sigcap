@@ -249,7 +249,7 @@ function obtenerComisionBus(){
 	var tipo_comision = $('#tipo_comision').val();
 	
 	$.ajax({
-		url: '/movilidad/obtener_comision/'+periodo+'/'+tipo_comision,
+		url: '/movilidad/obtener_comision_movilidad/'+periodo+'/'+tipo_comision,
 		dataType: "json",
 		success: function(result){
 			var option = "";

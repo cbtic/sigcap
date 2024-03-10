@@ -59,6 +59,18 @@ class MunicipalidadIntegrada extends Model
         return $data;
     }
 
+    function getMuniIntegradaByPeriodoAndTipComisionMovilidad($id_periodo,$id_tipo_comision){
+
+        $cad = "select mi.*
+        from municipalidad_integradas mi
+        where mi.estado='1'
+        and mi.id_periodo_comision='".$id_periodo."'
+        and mi.id_tipo_comision='".$id_tipo_comision."'";
+
+		$data = DB::select($cad);
+        return $data;
+    }
+
     function getMuniIntegradaByPeriodoAndTipComision($id_periodo,$id_tipo_comision){
 
         $cad = "select mi.*

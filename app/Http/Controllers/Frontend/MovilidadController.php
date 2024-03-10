@@ -93,12 +93,6 @@ class MovilidadController extends Controller
         $periodoComision_model = new PeriodoComisione;
 		$tablaMaestra_model = new TablaMaestra;
 		
-        
-        
-		//$movilidad_model = new Movilidade;
-		//$tablaMaestra_model = new TablaMaestra;
-		//$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
-		//$moneda = $tablaMaestra_model->getMaestroByTipo(1);
 
 		if($id>0){
 			$comision_movilidades = ComisionMovilidade::find($id);
@@ -122,6 +116,14 @@ class MovilidadController extends Controller
 			
 		$muniIntegrada_model = new MunicipalidadIntegrada;
 		$comision = $muniIntegrada_model->getMuniIntegradaByPeriodoAndTipComision($periodo,$tipo_comision);
+		echo json_encode($comision);
+		
+	}
+
+	public function obtener_comision_movilidad($periodo,$tipo_comision){
+			
+		$muniIntegrada_model = new MunicipalidadIntegrada;
+		$comision = $muniIntegrada_model->getMuniIntegradaByPeriodoAndTipComisionMovilidad($periodo,$tipo_comision);
 		echo json_encode($comision);
 		
 	}
