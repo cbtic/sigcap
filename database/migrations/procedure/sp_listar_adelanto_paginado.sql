@@ -18,11 +18,14 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' a.id, ag.numero_cap, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, a.total_adelanto, a.nro_total_cuotas, a.fecha, a.estado';
+	v_campos=' a.id, ag.numero_cap, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, a.total_adelanto, a.nro_total_cuotas, 
+	a.fecha, a.estado,tm.denominacion tiene_recibo';
 
 	v_tabla=' from adelantos a 
 	inner join agremiados ag on a.id_agremiado = ag.id
-	inner join personas p on ag.id_persona = p.id';
+	inner join personas p on ag.id_persona = p.id 
+	left join tabla_maestras tm on a.id_tiene_recibo::int=tm.codigo::int and tm.tipo=''121''
+	';
 		
 	
 	v_where = ' Where 1=1  ';

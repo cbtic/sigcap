@@ -88,8 +88,9 @@ class AdelantoController extends Controller
 		//print_r($persona); exit();
 
 		$tipo_documento = $tablaMaestra_model->getMaestroC(16,85);
+		$tiene_recibo = $tablaMaestra_model->getMaestroByTipo(121);
 		
-		return view('frontend.adelanto.modal_adelanto_nuevoAdelanto',compact('id','agremiado','persona','adelanto','tipo_documento'));
+		return view('frontend.adelanto.modal_adelanto_nuevoAdelanto',compact('id','agremiado','persona','adelanto','tipo_documento','tiene_recibo'));
 	
 	}
 
@@ -171,6 +172,7 @@ class AdelantoController extends Controller
         $adelanto->fecha = Carbon::now()->format('Y-m-d');
         $adelanto->nro_total_cuotas = $request->numero_cuota;
         $adelanto->total_adelanto = $request->monto;
+		$adelanto->id_tiene_recibo = $request->id_tiene_recibo;
 		//$profesion->estado = 1;
 		$adelanto->id_usuario_inserta = $id_user;
 		$adelanto->save();
