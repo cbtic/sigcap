@@ -168,7 +168,7 @@ class AdelantoController extends Controller
         $agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 
 		$adelanto->id_agremiado = $agremiado->id;
-        $adelanto->id_periodo_delegado = '1';
+        //$adelanto->id_periodo_delegado = '1';
         $adelanto->fecha = Carbon::now()->format('Y-m-d');
         $adelanto->nro_total_cuotas = $request->numero_cuota;
         $adelanto->total_adelanto = $request->monto;
@@ -185,7 +185,7 @@ class AdelantoController extends Controller
 			
 			$adelanto_detalle = new Adelanto_detalle;
 			$adelanto_detalle->id_adelento=$adelanto->id;
-			$adelanto_detalle->id_periodo_delegado='1';
+			//$adelanto_detalle->id_periodo_delegado='1';
 			$adelanto_detalle->numero_cuota=$i;
 			$adelanto_detalle->adelanto_pagar=$pago_mes;
 
