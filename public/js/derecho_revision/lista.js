@@ -781,6 +781,7 @@ function guardar_solicitud_derecho_revision(){
 	var departamento = $('#departamento').val();
 	var provincia = $('#provincia').val();
 	var distrito = $('#distrito').val();
+	var municipalidad = $('#municipalidad').val();
 	var nombre_proyecto = $('#nombre_proyecto').val();
 	var parcela = $('#parcela').val();
 	var superManzana = $('#superManzana').val();
@@ -791,7 +792,7 @@ function guardar_solicitud_derecho_revision(){
 			url: "/derecho_revision/send_nuevo_registro_solicitud",
 			type: "POST",
 			data : {_token:_token,id:id,numero_cap:numero_cap,n_revision:n_revision,direccion_proyecto:direccion_proyecto,
-				departamento:departamento,provincia:provincia,distrito:distrito,nombre_proyecto:nombre_proyecto,
+				departamento:departamento,provincia:provincia,distrito:distrito,municipalidad:municipalidad,nombre_proyecto:nombre_proyecto,
 				parcela:parcela,superManzana:superManzana,lote:lote,fila:fila},
 			success: function (result) {
 				
