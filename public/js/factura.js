@@ -55,13 +55,29 @@ $(document).ready(function () {
 		changeYear: true,
 	});
 
-
+/*
 	$(function() {
 		$('#producto01').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
+*/
 
+	$('#tblProducto tbody').on('click', 'button.deleteFila', function () {
+		var obj = $(this);
+		obj.parent().parent().remove();
+		
+		var val_total = 0;
+		var total = 0;
+		$(".importe_especie").each(function (){
+			val_total = $(this).val();
+			if(val_total>0)total += Number(val_total);
+		});
+		
+		$("#precio_peso").val(total);
+		simulaPesarCarreta();
+		
+	});
 	
 
 	calculoDetraccion();
@@ -648,5 +664,179 @@ function obtenerTitular(){
 		*/
 	}
 
+	AddFila();
+	function AddFila(){
+		
+		var newRow = "";
+		var ind = $('#tblProducto tbody tr').length;
+		var tabindex = 11;
+		var nuevalperiodo = "";
+		/*
+		if(ind > 0){
+			$('.idEspecie').each(function(){
+				var ind_tmp = $(this).attr("ind");
+				if(ind_tmp => ind){
+					ind=Number(ind_tmp)+1;
+					tabindex+=3;
+				}
+			});
+		
+			fila_medicamentos=$('#tblProducto tbody').children('tr');
+			rowIndex=$('#hidden_rowIndex').val();
+			var idval = ind - 1;
+		}
+		*/
+	
+		var item_producto 	= "";
+		$('#idEspecieTemp option').each(function(){
+		item_producto += "<option value="+$(this).val()+" ru='"+$(this).attr("ru")+"'>"+$(this).html()+"</option>"	
+		});
+	
+		newRow +='<tr>';
+		newRow +='<td><select class="form-control form-control-sm idEspecie" id="idEspecie'+ind+'" ind="'+ind+'" tabindex="'+tabindex+'" name="id_especie[]" >'+item_producto+'</select></td>';
+		newRow +='<td><select class="form-control form-control-sm idUnidad" id="idUnidad'+ind+'" ind="'+ind+'" tabindex="'+tabindex+'" name="id_unidad[]" ></select>';
+		
+		newRow +='<td><input onKeyPress="return soloNumerosMenosCero(event)" type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar la cantidad prescrita y presionar Enter para ingresar la cantidad entregada" name="precio_especie[]" required="" readonly="readonly" id="precio_especie'+ind+'" class="limpia_text nro_solicitado precio_especie input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		
+		newRow +='<td><input onKeyPress="return soloNumerosMenosCero(event)" type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar la cantidad prescrita y presionar Enter para ingresar la cantidad entregada" name="cantidad_especie[]" required="" id="cantidad_especie'+ind+'" class="limpia_text nro_solicitado cantidad_especie input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		
+		newRow +='<td><input onKeyPress="return soloNumerosMenosCero(event)" type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar la cantidad prescrita y presionar Enter para ingresar la cantidad entregada" name="importe_especie[]" required="" readonly="readonly" id="importe_especie'+ind+'" class="limpia_text nro_solicitado importe_especie input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		
+		newRow +='<td><button type="button" class="btn btn-danger deleteFila btn-xs" style="margin-left:4px"><i class="fa fa-times"></i> Eliminar</button></td>';
+		newRow +='</tr>';
+		$('#tblProducto tbody').append(newRow);
+		//$("#idEspecie"+ind).select2({max_selected_options: 4}).focus();
+		$("#idEspecie"+ind).select2({max_selected_options: 4});
+		
+		/*
+		$("#precio_especie"+ind).keypress(function(e){
+			if(e.which == 13) {
+				AddFila();
+			}
+		});
+		*/
+	
+		$("#idEspecie"+ind).on("change", function (e) {
+			var flagx = 0;
+			cmb = $(this);
+			id_especie = $("#idEspecie"+ind).val();
+			//id_user={{Auth::user()->id}};
+		
+			$('.idEspecie').each(function(){
+				var ind_tmp = $(this).val();
+				if($(this).val() == id_especie)flagx++;
+			});
+		
+			if(flagx > 1){
+				bootbox.alert("El producto ya ha sido ingresado");
+				$("#idEspecie"+ind).val("").trigger("change");
+				return false;
+			}
+		
+			option = {
+				url: '/pesaje/obtener_producto_medida/' + id_especie,
+				type: 'GET',
+				dataType: 'json',
+				data: {}
+			};
+			$.ajax(option).done(function (data) {
+				
+				var option = "<option value='0'>Seleccionar</option>";
+				$("#idUnidad"+ind).html("");
+				$(data).each(function (ii, oo) {
+					option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+				});
+				$("#idUnidad"+ind).html(option);
+				$("#idUnidad"+ind).val(id).select2();
+				
+				/*
+				var cantidad = data.cantidad;
+				var cantidadEstablecimiento = data.cantidadEstablecimiento;
+				var cantidadAlmacen = data.cantidadAlmacen;
+				$(cmb).closest("tr").find(".limpia_text").val("");                
+				$(cmb).closest("tr").find("#nro_stocks").val(cantidad);
+				$(cmb).closest("tr").find("#nro_stocks_establecimiento").val(cantidadEstablecimiento);
+				$(cmb).closest("tr").find("#nro_stocks_almacen").val(cantidadAlmacen);
+				$(cmb).closest("tr").find("#nro_med_solictados").val("");  
+				$(cmb).closest("tr").find("#nro_med_entregados").val("");
+				$(cmb).closest("tr").find("#lotes_lote").val("");
+				$(cmb).closest("tr").find("#lotes_cantidad").val("");
+				$(cmb).closest("tr").find("#lotes_registro_sanitario").val("");
+				$(cmb).closest("tr").find("#lotes_fecha_vencimiento").val("");
+				*/
+			});
+		
+			
+		});
+		
+		$("#idUnidad"+ind).on("change", function (e) {
+			var flagx = 0;
+			cmb = $(this);
+			id_especie = $("#idEspecie"+ind).val();
+			id_unidad = $("#idUnidad"+ind).val();
+			//id_user={{Auth::user()->id}};
+			/*
+			$('.idEspecie').each(function(){
+				var ind_tmp = $(this).val();
+				if($(this).val() == id_producto)flagx++;
+			});
+		
+			if(flagx > 1){
+				bootbox.alert("El producto farmaceutico ya ha sido ingresado");
+				$("#idEspecie"+ind).val("").trigger("change");
+				return false;
+			}
+			*/
+			option = {
+				url: '/pesaje/obtener_precio_producto_medida/' + id_especie + '/' + id_unidad,
+				type: 'GET',
+				dataType: 'json',
+				data: {}
+			};
+			$.ajax(option).done(function (data) {
+				$("#precio_especie"+ind).val(data[0].precio);
+				
+				/******************/
+				cantidad_especie = $("#cantidad_especie"+ind).val();
+				precio_especie = $("#precio_especie"+ind).val();
+				var importe_especie = cantidad_especie*precio_especie;
+				$("#importe_especie"+ind).val(importe_especie);
+				
+				var val_total = 0;
+				var total = 0;
+				$(".importe_especie").each(function (){
+					val_total = $(this).val();
+					if(val_total>0)total += Number(val_total);
+				});
+				
+				$("#precio_peso").val(total);
+				simulaPesarCarreta();
+				/******************/
+			});
+		
+			
+		});
+		
+		$("#cantidad_especie"+ind).on("keyup", function (e) {
+			cantidad_especie = $("#cantidad_especie"+ind).val();
+			precio_especie = $("#precio_especie"+ind).val();
+			var importe_especie = cantidad_especie*precio_especie;
+			$("#importe_especie"+ind).val(importe_especie);
+			
+			var val_total = 0;
+			var total = 0;
+			$(".importe_especie").each(function (){
+				val_total = $(this).val();
+				if(val_total>0)total += Number(val_total);
+			});
+			
+			$("#precio_peso").val(total);
+			simulaPesarCarreta();
+			
+		});
+		
+	}
+	
+	
 
 

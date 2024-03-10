@@ -205,7 +205,8 @@ class IngresoController extends Controller
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
         $total_fraccionar = $request->total;
-        //print_r($request->comprobante_detalle); exit();
+        
+
         $comprobante_detalle = $request->comprobante_detalle;
         $ind = 0;
 
@@ -220,7 +221,7 @@ class IngresoController extends Controller
 
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion_total($tipo_documento,$id_persona);
+        $valorizacion = $valorizaciones_model->getValorizacion_total($tipo_documento,$id_persona,$id_concepto);
   
 
         foreach($request->comprobante_detalles as $key=>$det){
@@ -233,6 +234,8 @@ class IngresoController extends Controller
         $concepto = Concepto::find($id_concepto);
         
         //$comprobanted = json_encode($comprobanted_);
+
+        //print_r($total_fraccionar); exit();
     
 		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado','comprobanted', 'valorizacion' ));
 	}

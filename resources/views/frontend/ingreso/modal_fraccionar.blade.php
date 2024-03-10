@@ -579,6 +579,7 @@ legend.scheduler-border {
 																		<option value="9">09 meses</option>
 																		<option value="12">12 meses</option>
 																		<option value="24">24 meses</option>
+																		<option value="36">36 meses</option>
 																	</select>
 																</div>
 															</div>

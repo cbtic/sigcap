@@ -805,7 +805,7 @@ function cargarValorizacion(){
 
 			}
 
-			if (cboTipoConcepto_b==26411 && cboTipoCuota_b==1) {
+			if ((cboTipoConcepto_b==26411 && cboTipoCuota_b==1)||(cboTipoConcepto_b==26412 && cboTipoCuota_b==1)) {
 
 				$("#btnFracciona").prop('disabled', false);
 
@@ -1241,9 +1241,9 @@ function modal_fraccionamiento(){
 	var cboTipoCuota_b = $('#cboTipoCuota_b').val();
 
 
-	if (cboTipoConcepto_b!=26411)msg+="Seleccione concepto CUOTA GREMIAL <br>";
+	//if (cboTipoConcepto_b!=26411)msg+="Seleccione concepto CUOTA GREMIAL <br>";
 
-	if (cboTipoCuota_b!=1)msg+="Seleccione CUOTAS VENCIDAS.. <br>";
+	//if (cboTipoCuota_b!=1)msg+="Seleccione CUOTAS VENCIDAS.. <br>";
 	
 
 	if(msg!=""){
@@ -1256,12 +1256,18 @@ function modal_fraccionamiento(){
 		return false;
 
     }else{
+
+
 		$(".mov").each(function (){
 			//$(this).parent().parent().parent().find(".mov").prop("checked", true);
 			$('.mov').prop('checked', true);
 			//calcular_total();
+	
 
 			var val_total = $(this).parent().parent().parent().find('.val_total').html();
+
+			
+
 			var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
 			var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
 
@@ -1276,15 +1282,18 @@ function modal_fraccionamiento(){
 
 			//$(this).parent().parent().parent().prev().find(".mov").prop('disabled',true);
 
-	
+		//	alert(total);
 
 		});
 
+		//alert(total);
 
 		$('#total').val(total.toFixed(2));
 		$('#stotal').val(stotal.toFixed(2));
 		$('#igv').val(igv.toFixed(2));
 
+	
+		//alert($('#total').val());
 
 		$.ajax({
 			url: "/ingreso/modal_fraccionamiento",
@@ -1522,49 +1531,62 @@ function select_all(){
 	var descuento = 0;
 	var valor_venta_bruto = 0;
 	var valor_venta = 0;
-	var cantidad = $(".mov:checked").length;
-
+	var cantidad = 0;
+	//var cantidad = $(".mov:checked").length;
+/*
 	if(id_caja_usuario=="0"){
 		bootbox.alert("Debe seleccionar una Caja disponible");
 		$(obj).prop("checked",false);
 		return false;
 	}
-
+*/
 	
 
-	$(".mov").each(function (){
+	$(".mov:checked").each(function (){
 
-		//alert("hi");
-		//$(this).parent().parent().parent().find(".mov").prop("checked", true);
-		$('.mov').prop('checked', true);
-		//calcular_total();
+		//$('.mov').prop('checked', true);
+		
 
-		total = $(this).parent().parent().parent().find('.val_total').html();
-		stotal = $(this).parent().parent().parent().find('.val_sub_total').html();
-		igv = $(this).parent().parent().parent().find('.val_igv').html();
+		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		var val_stotal = $(this).parent().parent().parent().find('.val_sub_total').html();
+		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
 
 		$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
 		$(this).parent().parent().parent().find('.chek').val("1");
 
+		
 		total += Number(val_total);
-		stotal += Number(val_sub_total);
+		stotal += Number(val_stotal);
 		igv += Number(val_igv);
 
-		
+		cantidad++;
 
 	});
 
-	descuento = 0;
+	if(total==0){
+		
+		$(".mov").each(function (){
+			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',true);
+			$(this).parent().parent().parent().find('.chek').val("0");
 
-	total = total - descuento;
+		});
+
+	}
+
+
+	//alert(total);
+
+	//descuento = 0;
+
+	//total = total - descuento;
 
 	$('#total').val(total.toFixed(2));
 	$('#stotal').val(stotal.toFixed(2));
 	$('#igv').val(igv.toFixed(2));
 
-	$('#totalDescuento').val(descuento.toFixed(2));
+	//$('#totalDescuento').val(descuento.toFixed(2));
 
-
+/*
 	if (cantidad > 1) {
 		$('#MonAd').attr("readonly", true);
 		$('#MonAd').val("0");
@@ -1573,18 +1595,14 @@ function select_all(){
 		$('#MonAd').val(total.toFixed(2));
 	}
 
-
+*/
 	//var cantidad = $(".mov:checked").length;
 	var ruc_p = $('#ruc_p').val();
 	var tipo_documento = $('#tipo_documento').val();
 
-	$("#btnBoleta").prop('disabled', true);
-	$("#btnFactura").prop('disabled', true);
-	$("#btnFracciona").prop('disabled', true);
-	$("#btnDescuento").prop('disabled', true);
-	$('#btnOtroConcepto').attr("disabled", true);
 
-	//if (cantidad != 0) {
+
+	if (cantidad > 0) {
 
 		if (tipo_documento == "79") {//RUC
 
@@ -1595,7 +1613,15 @@ function select_all(){
 
 			if (ruc_p != "") $("#btnFactura").prop('disabled', false);
 		}
-	//}
+	}
+	else{
+		$("#btnBoleta").prop('disabled', true);
+		$("#btnFactura").prop('disabled', true);
+		$("#btnFracciona").prop('disabled', true);
+		$("#btnDescuento").prop('disabled', true);
+		$('#btnOtroConcepto').attr("disabled", true);
+	}
+
 
 };
 
