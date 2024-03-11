@@ -324,6 +324,8 @@ class Valorizacione extends Model
         if($data)return $data[0];
     }
     
-
+	public function listar_liquidacion_caja_ajax($p){
+		return $this->readFunctionPostgres('sp_listar_liquidacion_caja_paginado',$p);
+    }
 
 }

@@ -1057,6 +1057,8 @@
 
 
                             </div>
+
+                            
                             <!--card-->
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                 <div class="card">
@@ -1070,29 +1072,28 @@
                                         </div>
                                     </div>
                                     <div id="fsFiltro" class="card-body">
+
                                         <div id="" class="row">
-                                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Descuento Global</label>
                                                     <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
 
-                                        </div>
-                                        <div id="" class="row">
-                                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Monto de Percepción</label>
                                                     <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm"></label>
                                                     <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Monto Total</label>
                                                     <input type="text" name="monto_total" id="monto_total" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
@@ -1149,9 +1150,10 @@
                                                     <label class="form-control-sm">Medio de Pago:</label>
 
                                                     <select name="medio_pago" id="medio_pago" class="form-control form-control-sm" onChange="">
+                                                        <option value=""> <?php echo "" ?></option>
                                                         <?php
                                                         foreach ($forma_pago as $row) { ?>
-                                                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                            <option value="<?php echo $row->codigo ?>" ><?php echo $row->denominacion ?></option>
                                                         <?php
                                                         }
                                                         ?>
@@ -1166,72 +1168,75 @@
                                 </div>
                                 <!--card-->
                             </div>
-                        </div>
 
-                        <div class="card" id="card_cuotas">
-                            <div class="card-header">
-                                <div id="" class="row">
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                        <strong>
-                                            Cuotas
-                                        </strong>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="card" id="card_cuotas">
+                                    <div class="card-header">
+                                        <div id="" class="row">
+                                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                                <strong>
+                                                    Cuotas
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="fsFiltro" class="card-body">
+                                        <div id="" class="row">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Nume. Cuotas</label>
+                                                    <input type="text" name="numcuota_" id="numcuota_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Monto total del credito</label>
+                                                    <input type="text" name="totalcredito_" id="totalcredito_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Plazo en dias</label>
+                                                    <input type="text" name="plazo_" id="plazo_" value="" placeholder="" class="form-control form-control-sm">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm"></label>
+                                                    <button type="button" id="btnFraciona" name="btnFraciona" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarCuotas()">
+                                                        <i class="fas fa-plus-circle"></i> Cuotas
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <?php $seleccionar_todos = "style='display:block'"; ?>
+                                            <div class="table-responsive">
+                                                <table id="tblConceptos" class="table table-hover table-sm">
+                                                    <thead>
+                                                        <tr style="font-size:13px">
+                                                            <th>Id</th>
+                                                            <th>Importe</th>
+                                                            <th>Fecha</th>
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody style="font-size:13px">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="fsFiltro" class="card-body">
-                                <div id="" class="row">
-                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="form-control-sm">Nume. Cuotas</label>
-                                            <input type="text" name="numcuota_" id="numcuota_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                        </div>
-                                    </div>
 
-                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="form-control-sm">Monto total del credito</label>
-                                            <input type="text" name="totalcredito_" id="totalcredito_" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="form-control-sm">Plazo en dias</label>
-                                            <input type="text" name="plazo_" id="plazo_" value="" placeholder="" class="form-control form-control-sm">
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="form-control-sm"></label>
-                                            <button type="button" id="btnFraciona" name="btnFraciona" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#vehiculoModal" onclick="generarCuotas()">
-                                                <i class="fas fa-plus-circle"></i> Cuotas
-                                            </button>
-                                        </div>
-                                    </div>
-
-
-                                    <?php $seleccionar_todos = "style='display:block'"; ?>
-                                    <div class="table-responsive">
-                                        <table id="tblConceptos" class="table table-hover table-sm">
-                                            <thead>
-                                                <tr style="font-size:13px">
-                                                    <th>Id</th>
-                                                    <th>Importe</th>
-                                                    <th>Fecha</th>
-                                                </tr>
-
-                                            </thead>
-                                            <tbody style="font-size:13px">
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--card-body-->
                         </div>
+
+
 
 
                 </div>

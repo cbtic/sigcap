@@ -204,20 +204,24 @@ Route::get('ingreso/obtener_valorizacion/{tipo_documento}/{id_persona}', [Ingres
 Route::post('ingreso/listar_valorizacion', [IngresoController::class, 'listar_valorizacion'])->name('ingreso.listar_valorizacion');
 Route::post('ingreso/listar_valorizacion_concepto', [IngresoController::class, 'listar_valorizacion_concepto'])->name('ingreso.listar_valorizacion_concepto');
 Route::post('ingreso/listar_valorizacion_periodo', [IngresoController::class, 'listar_valorizacion_periodo'])->name('ingreso.listar_valorizacion_periodo');
-
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
 Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');
-
 Route::get('ingreso/modal_otro_pago/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_otro_pago'])->name('ingreso.modal_otro_pago');
 Route::get('ingreso/modal_fraccionar/{idConcepto}/{idpersona}/{idagremiado}/{TotalFraccionar}', [IngresoController::class, 'modal_fraccionar'])->name('ingreso.modal_fraccionar');
 Route::post('ingreso/modal_fraccionamiento', [IngresoController::class, 'modal_fraccionamiento'])->name('ingreso.modal_fraccionamiento');
-
 Route::get('ingreso/obtener_conceptos/{periodo}', [IngresoController::class, 'obtener_conceptos'])->name('ingreso.obtener_conceptos')->where('periodo', '(.*)');
 Route::post('ingreso/send_concepto', [IngresoController::class, 'send_concepto'])->name('ingreso.send_concepto');
 Route::post('ingreso/send_fracciona_deuda', [IngresoController::class, 'send_fracciona_deuda'])->name('ingreso.send_fracciona_deuda');
-
-
 Route::get('ingreso/modal_valorizacion_factura/{id}', [IngresoController::class, 'modal_valorizacion_factura'])->name('ingreso.modal_valorizacion_factura');
+
+Route::get('ingreso/liquidacion_caja', [IngresoController::class, 'liquidacion_caja'])->name('ingreso.liquidacion_caja');
+Route::get('ingreso/modal_liquidacion/{id}', [IngresoController::class, 'modal_liquidacion'])->name('ingreso.modal_liquidacion');
+Route::get('ingreso/modal_detalle_factura/{id}', [IngresoController::class, 'modal_detalle_factura'])->name('ingreso.modal_detalle_factura');
+Route::post('ingreso/updateCajaLiquidacion', [IngresoController::class, 'updateCajaLiquidacion'])->name('ingreso.updateCajaLiquidacion');
+Route::post('ingreso/listar_estado_cuenta_ajax', [IngresoController::class, 'listar_estado_cuenta_ajax'])->name('ingreso.listar_estado_cuenta_ajax');
+Route::post('ingreso/listar_liquidacion_caja_ajax', [IngresoController::class, 'listar_liquidacion_caja_ajax'])->name('ingreso.listar_liquidacion_caja_ajax');
+Route::get('ingreso/exportar_liquidacion_caja/{fecha_inicio_desde}/{fecha_inicio_hasta}/{fecha_ini}/{fecha_fin}/{id_caja}/{estado}', [IngresoController::class, 'exportar_liquidacion_caja'])->name('ingreso.exportar_liquidacion_caja');
+Route::get('ingreso/exportar_estado_cuenta/{tipo}/{afiliado}/{numero_documento}/{periodo}/{fecha_inicio}/{fecha_fin}/{pago}/{order}/{sort}', [IngresoController::class, 'exportar_estado_cuenta'])->name('ingreso.exportar_estado_cuenta');
 
 
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');

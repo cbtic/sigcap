@@ -151,6 +151,10 @@
                                 <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas </a>
 								@endcan
 
+								@can('Liquidacion de Caja')
+                                <a href="/ingreso/liquidacion_caja" class="dropdown-item">Liquidacion de Caja</a>								
+								@endcan
+
 						   </div>
 					</li>
 					@endif
