@@ -154,7 +154,7 @@ class SesionController extends Controller
 		$periodoComisione_model = new PeriodoComisione;
 		
 		
-		//$comision = $comision_model->getComisionAll("","1");
+		//$comision = $comision_model->getComisionAll("","","","1");
 		$region = $regione_model->getRegionAll();
 		
 		$tipo_programacion = $tablaMaestra_model->getMaestroByTipo(71);
@@ -573,7 +573,7 @@ class SesionController extends Controller
 
 		$comision_model = new Comisione;
 		
-		$comision = $comision_model->getComisionAll("","","1");
+		$comision = $comision_model->getComisionAll("","","","1");
 		
 		$periodo = $periodoComisione_model->getPeriodoAll();
 

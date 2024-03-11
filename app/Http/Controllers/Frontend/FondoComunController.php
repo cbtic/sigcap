@@ -55,7 +55,7 @@ class FondoComunController extends Controller
 
 		$comision_model = new Comisione;
 		
-		$comision = $comision_model->getComisionAll("","","1");
+		$comision = $comision_model->getComisionAll("","","","1");
 		
 		$periodo = $periodoComisione_model->getPeriodoAll();
 
