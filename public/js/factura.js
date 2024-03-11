@@ -138,9 +138,21 @@ function guardarFactura(){
 
 	var valorizad = $('#valorizad').val();
 
-	
 
-	//alert(valorizad); exit();
+	var ind = $('#tblMedioPago tbody tr').length;
+	
+	if(ind==0)msg+="Debe adicionar el Medio de Pago <br>";
+	
+	var totalMedioPago = $('#totalMedioPago').val();
+	var total_fac_ = $('#total_fac_').val();
+	
+	if(totalMedioPago!=total_fac_){
+		msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+	}
+
+
+	//alert(msg); exit();
+
 
     if(smodulo_guia=="32"){
 		var guia_llegada_direccion = $('#guia_llegada_direccion').val();
@@ -667,6 +679,7 @@ function obtenerTitular(){
 				if(ind==0){
 					monto = $("#total_fac_").val();
 					$("#monto"+ind).val(monto);
+					$("#totalMedioPago").val(monto);
 				}
 
 				$("#fecha"+ind).val(fecha_);
@@ -685,12 +698,13 @@ function obtenerTitular(){
 			$(".monto").each(function (){
 				val_total = $(this).val();
 				
-				//if(total>0)
-				total += Number(val_total);
+				if(val_total!="")total += Number(val_total);
 			});
 
-			//alert(total);
+			alert(total);
 
+			
+			$("#totalMedioPago").val(total);
 			
 			
 			//$("#precio_peso").val(total);

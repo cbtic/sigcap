@@ -426,6 +426,7 @@
                         <input type="hidden" name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $id_tipo_afectacion_pp; ?>">
                         <input type="hidden" name="descuentopp" id="descuentopp" value="<?php echo $descuentopp; ?>">
                         <input type="hidden" name="id_pronto_pago" id="id_pronto_pago" value="<?php echo $id_pronto_pago; ?>">
+                        <input type="hidden" name="totalMedioPago" id="totalMedioPago" value="">
 
                         <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
                                                                         echo $TipoF;
