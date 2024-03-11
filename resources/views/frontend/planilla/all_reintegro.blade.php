@@ -180,6 +180,7 @@
                             <th>Periodo</th>
 							<th>Cap</th>
                             <th>Agremiado</th>
+							<th>Comisi&oacute;n</th>
 							<th>Mes</th>
 							<th>Importe</th>
 							<th>Estado</th>

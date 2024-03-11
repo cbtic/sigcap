@@ -20,14 +20,16 @@ Begin
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
 	v_campos='  dr.id,r.denominacion regional,pc.descripcion periodo,id_mes,importe,p.apellido_paterno||p.apellido_materno||p.nombres agremiado,
-			a.numero_cap,dr.estado ';
+			a.numero_cap,dr.estado,c.denominacion comision ';
 
 	v_tabla=' from delegado_reintegros dr
 inner join periodo_comisiones pc on dr.id_periodo=pc.id 
 inner join comision_delegados cd on dr.id_delegado=cd.id 
 inner join agremiados a on cd.id_agremiado=a.id
 inner join personas p on a.id_persona=p.id 
-inner join regiones r on dr.id_regional = r.id';
+inner join regiones r on dr.id_regional = r.id
+inner join comisiones c on dr.id_comision = c.id
+';
 	
 	
 	v_where = ' Where 1=1  ';

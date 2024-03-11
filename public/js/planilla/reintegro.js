@@ -461,13 +461,23 @@ function datatablenew(){
                 },
 				
 				{
+                "mRender": function (data, type, row) {
+                	var comision = "";
+					if(row.comision!= null)comision = row.comision;
+					return comision;
+                },
+                "bSortable": true,
+                "aTargets": [5]
+                },
+				
+				{
 				"mRender": function (data, type, row) {
 					var id_mes = "";
 					if(row.id_mes!= null)id_mes = row.id_mes;
 					return id_mes;
 				},
 				"bSortable": true,
-				"aTargets": [5]
+				"aTargets": [6]
 				},
 				
 				{
@@ -477,7 +487,7 @@ function datatablenew(){
 					return importe;
 				},
 				"bSortable": true,
-				"aTargets": [6]
+				"aTargets": [7]
 				},
 			
 				{
@@ -492,7 +502,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [7]
+					"aTargets": [8]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -521,7 +531,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [8],
+					"aTargets": [9],
 				},
 
             ]
@@ -623,6 +633,52 @@ function obtenerDelegadoPerido(){
 	
 }
 
+function obtenerDelegadoPerido_(id_periodo){
+	
+	//var id_periodo = $('#id_periodo').val();
+	
+	$.ajax({
+		url: '/planilla/obtener_delegado_periodo/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_agremiado').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_agremiado+"'>"+oo.numero_cap+" - "+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</option>";
+			});
+			$('#id_agremiado').html(option);
+		}
+		
+	});
+	
+}
+
+
+function obtenerDelegadoPeridoEdit(id_periodo,id_agremiado){
+	
+	//var id_periodo = $('#id_periodo').val();
+	
+	$.ajax({
+		url: '/planilla/obtener_delegado_periodo/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_agremiado').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				var selected = "";
+				if(oo.id_agremiado==id_agremiado)selected = "selected='selected'";
+				option += "<option value='"+oo.id_agremiado+"' "+selected+" >"+oo.numero_cap+" - "+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</option>";
+			});
+			$('#id_agremiado').html(option);
+		}
+		
+	});
+	
+}
+
+
 function obtenerComisionDelegadoPerido(){
 	
 	var id_periodo = $('#id_periodo').val();
@@ -636,7 +692,31 @@ function obtenerComisionDelegadoPerido(){
 			$('#id_comision').html("");
 			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option id_delegado='"+oo.id_delegado+"' value='"+oo.id+"'>"+oo.comision+"</option>";
+				option += "<option id_delegado='"+oo.id_delegado+"' value='"+oo.id_comision+"'>"+oo.comision+"</option>";
+			});
+			$('#id_comision').html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerComisionDelegadoPeridoEdit(id_periodo,id_agremiado,id_comision){
+	
+	//var id_periodo = $('#id_periodo').val();
+	//var id_agremiado = $('#id_agremiado').val();
+	
+	$.ajax({
+		url: '/planilla/obtener_comision_delegado_periodo/'+id_periodo+'/'+id_agremiado,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_comision').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				var selected = "";
+				if(oo.id_comision==id_comision)selected = "selected='selected'";
+				option += "<option id_delegado='"+oo.id_delegado+"' value='"+oo.id_comision+"' "+selected+" >"+oo.comision+"</option>";
 			});
 			$('#id_comision').html(option);
 		}

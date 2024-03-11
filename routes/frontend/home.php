@@ -48,6 +48,9 @@ use App\Http\Controllers\Frontend\PlanContableController;
 use App\Http\Controllers\Frontend\CoordinadorZonalController;
 use App\Http\Controllers\Frontend\ProyectistaController;
 
+use App\Http\Controllers\Frontend\AsignacionCuentaController;
+
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -494,6 +497,7 @@ Route::post('planilla/listar_reintegro_ajax', [PlanillaDelegadoController::class
 Route::get('planilla/modal_reintegro/{id}', [PlanillaDelegadoController::class, 'modal_reintegro'])->name('planilla.modal_reintegro');
 Route::get('planilla/obtener_delegado_periodo/{id_periodo}', [PlanillaDelegadoController::class, 'obtener_delegado_periodo'])->name('planilla.obtener_delegado_periodo');
 Route::get('planilla/obtener_comision_delegado_periodo/{id_periodo}/{id_agremiado}', [PlanillaDelegadoController::class, 'obtener_comision_delegado_periodo'])->name('planilla.obtener_comision_delegado_periodo');
+Route::post('planilla/send_reintegro', [PlanillaDelegadoController::class, 'send_reintegro'])->name('planilla.send_reintegro');
 
 Route::get('centro_costo/importar_centro_costo', [CentroCostoController::class, 'importar_centro_costo'])->name('centro_costo.importar_centro_costo');
 Route::get('partida_presupuestal/importar_partida_presupuestal', [PartidaPresupuestalController::class, 'importar_partida_presupuestal'])->name('partida_presupuestal.importar_partida_presupuestal');
@@ -534,6 +538,7 @@ Route::get('coordinador_zonal/modal_coordinadorZonal_nuevoCoordinadorZonal/{id}'
 Route::post('coordinador_zonal/send_coordinador_zonal_nuevoCoordinadorZonal', [CoordinadorZonalController::class, 'send_coordinador_zonal_nuevoCoordinadorZonal'])->name('coordinador_zonal.send_coordinador_zonal_nuevoCoordinadorZonal');
 
 Route::get('movilidad/obtener_comision/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision'])->name('movilidad.obtener_comision');
+Route::get('movilidad/obtener_comision_movilidad/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision_movilidad'])->name('movilidad.obtener_comision_movilidad');
 
 Route::get('ingreso/modal_beneficiario/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_beneficiario'])->name('ingreso.modal_beneficiario');
 
@@ -563,3 +568,9 @@ Route::get('agremiado/obtener_datos_agremiado_coordinador_zonal/{numero_cap}', [
 Route::post('ingreso/send_beneficiario', [IngresoController::class, 'send_beneficiario'])->name('ingreso.send_beneficiario');
 Route::post('derecho_revision/send_nuevo_registro_solicitud', [DerechoRevisionController::class, 'send_nuevo_registro_solicitud'])->name('derecho_revision.send_nuevo_registro_solicitud');
 
+
+Route::get('asignacion', [AsignacionCuentaController::class, 'index'])->name('asignacion');
+Route::post('asignacions', [AsignacionCuentaController::class, 'store'])->name('asignacions');
+Route::post('asignacion/listar_asignacion_ajax', [AsignacionCuentaController::class, 'listar_asignacion_ajax'])->name('asignacion.listar_asignacion_ajax');
+Route::get('asignacion/modal_asignacion/{id}', [AsignacionCuentaController::class, 'modal_asignacion'])->name('asignacion.modal_asignacion');
+Route::post('asignacion/send_asignacion', [AsignacionCuentaController::class, 'send_asignacion'])->name('asignacion.send_asignacion');

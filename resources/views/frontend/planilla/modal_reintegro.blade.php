@@ -146,6 +146,24 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 	 
 });
 
+
+var id = "<?php echo $id?>";
+
+if(id==0){
+	var id_periodo = $("#id_periodo").val();
+	obtenerDelegadoPerido_(id_periodo);
+}
+
+if(id>0){
+	var id_periodo = "<?php echo $delegadoReintegro->id_periodo?>";
+	var id_agremiado = "<?php echo (isset($comisionDelegado->id_agremiado))?$comisionDelegado->id_agremiado:0?>";
+	var id_comision = "<?php echo $delegadoReintegro->id_comision?>";
+	obtenerDelegadoPeridoEdit(id_periodo,id_agremiado);
+	obtenerComisionDelegadoPeridoEdit(id_periodo,id_agremiado,id_comision);
+}
+
+//obtenerDelegadoPeridoEdit
+
 $(document).ready(function() {
 	 
 	 
@@ -197,7 +215,7 @@ function fn_save(){
 	var id = $('#id').val();
 	var id_regional = $('#id_regional').val();
 	var id_periodo = $('#id_periodo').val();
-	var mes = $('#mes').val();
+	var id_mes = $('#mes').val();
 	var id_comision = $('#id_comision').val();
 	var id_delegado = $('#id_comision option:selected').attr("id_delegado");
 	var importe = $('#importe').val();	
@@ -206,7 +224,7 @@ function fn_save(){
     $.ajax({
 			url: "/planilla/send_reintegro",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,id_periodo:id_periodo,mes:mes,id_comision:id_comision,id_delegado:id_delegado,importe:importe,observacion:observacion},
+            data : {_token:_token,id:id,id_regional:id_regional,id_periodo:id_periodo,id_mes:id_mes,id_comision:id_comision,id_delegado:id_delegado,importe:importe,observacion:observacion},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				window.location.reload();

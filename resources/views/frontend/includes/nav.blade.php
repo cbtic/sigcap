@@ -167,6 +167,10 @@
 							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>
 							@endcan
 						   	<a href="/planillaDelegado/consulta_reintegro" class="dropdown-item">Delegado Reintegro</a>
+							@can('Asignacion de Cuentas')
+							<a href="/asignacion/asignacion_cuenta" class="dropdown-item">Asignacion de Cuentas</a>
+							@endcan
+
 							@can('Planilla Delegados')
 						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
 							@endcan

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\PlanillaDelegado;
 use App\Models\DelegadoReintegro;
 use App\Models\PeriodoComisione;
+use App\Models\ComisionDelegado;
 use App\Models\Regione;
 use App\Models\ComisionSesionDelegado;
 use Auth;
@@ -90,9 +91,16 @@ class PlanillaDelegadoController extends Controller
 		
 		//$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision(0);
 		
-		if($id>0) $delegadoReintegro = DelegadoReintegro::find($id);else $delegadoReintegro = new DelegadoReintegro;
+		$comisionDelegado = NULL;
 		
-		return view('frontend.planilla.modal_reintegro',compact('id','delegadoReintegro','region','id_regional','periodo','mes'/*,'delegados'*/));
+		if($id>0){
+			$delegadoReintegro = DelegadoReintegro::find($id);
+			$comisionDelegado = ComisionDelegado::find($delegadoReintegro->id_delegado);
+		}else{
+			$delegadoReintegro = new DelegadoReintegro;
+		}
+		
+		return view('frontend.planilla.modal_reintegro',compact('id','delegadoReintegro','region','id_regional','periodo','mes','comisionDelegado'/*,'delegados'*/));
 
     }
 	
