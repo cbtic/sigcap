@@ -50,7 +50,7 @@ class Comisione extends Model
 
     }
 
-    function getComisionAll($periodo,$tipo_comision,$cad_id,$estado){
+    public function getComisionAll($periodo,$tipo_comision,$cad_id,$estado){
 
         $cad = "select c.*,tm.denominacion tipo_agrupacion, cm.monto,pc.descripcion periodo
 		from comisiones c
