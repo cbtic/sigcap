@@ -557,3 +557,7 @@ Route::post('derecho_revision/send_nueno_comprobante', [DerechoRevisionControlle
 Route::get('agremiado/obtener_datos_agremiado_coordinador_zonal/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_coordinador_zonal'])->name('agremiado.obtener_datos_agremiado_coordinador_zonal');
 Route::post('ingreso/send_beneficiario', [IngresoController::class, 'send_beneficiario'])->name('ingreso.send_beneficiario');
 Route::post('derecho_revision/send_nuevo_registro_solicitud', [DerechoRevisionController::class, 'send_nuevo_registro_solicitud'])->name('derecho_revision.send_nuevo_registro_solicitud');
+
+Route::get('certificado/certificado_tipo1_pdf/{id}', [CertificadoController::class, 'certificado_tipo1_pdf'])->name('certificado.certificado_tipo1_pdf');
+Route::get('certificado/certificado_tipo2_pdf/{id}', [CertificadoController::class, 'certificado_tipo2_pdf'])->name('certificado.certificado_tipo2_pdf');
+Route::get('certificado/certificado_tipo3_pdf/{id}', [CertificadoController::class, 'certificado_tipo3_pdf'])->name('certificado.certificado_tipo3_pdf');

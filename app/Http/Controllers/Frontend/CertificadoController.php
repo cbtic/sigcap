@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Certificado;
 use App\Models\TablaMaestra;
+use App\Models\Proyecto;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Auth;
@@ -52,6 +53,7 @@ class CertificadoController extends Controller
 		$id_user = Auth::user()->id;
 		$certificado = new Certificado();
         $certificado_model = new Certificado();
+		$proyecto = new Proyecto();
         
         if($id>0)  {
             $certificado = Certificado::find($id);
@@ -85,7 +87,7 @@ class CertificadoController extends Controller
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_certificado','cap_numero','desc_cliente','situacion','email1'));
+		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto'));
 
     }
 
@@ -192,6 +194,156 @@ class CertificadoController extends Controller
 		
 		
 		$pdf = Pdf::loadView('frontend.certificado.certificado_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras'));
+		
+		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream();
+    	//return $pdf->download('invoice.pdf');
+		//return view('frontend.certificado.certificado_pdf');
+
+	}
+
+	public function certificado_tipo1_pdf($id){
+		
+		$datos_model=new certificado;
+		$solicitud_model = new DerechoRevision;
+		$tablaMaestra_model=new TablaMaestra;
+
+		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(41);
+
+		$datos=$datos_model->datos_agremiado_certificado($id);
+		$nombre=$datos[0]->numero_cap;
+		$fecha_emision=$datos[0]->fecha_emision;
+		$trato=$datos[0]->id_sexo;
+
+		$numero = $datos[0]->dias_validez;
+		$numeroEnLetras = $this->numeroALetras($numero); 
+		
+
+		if ($trato==3) {
+			$tratodesc="EL ARQUITECTO ";
+			$faculta="facultado";
+			$habilita="HABILITADO";
+		}
+		else{
+			$tratodesc="LA ARQUITECTA ";
+			$faculta="facultada";
+			$habilita="HABILITADA";
+		}
+
+		Carbon::setLocale('es');
+
+
+		// Crear una instancia de Carbon a partir de la fecha
+		$carbonDate = new Carbon($fecha_emision);
+
+		// Formatear la fecha en un formato largo
+
+	
+		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
+		
+		
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyecto'));
+		
+		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream();
+    	//return $pdf->download('invoice.pdf');
+		//return view('frontend.certificado.certificado_pdf');
+
+	}
+
+	public function certificado_tipo2_pdf($id){
+		
+		$datos_model=new certificado;
+
+		$datos=$datos_model->datos_agremiado_certificado($id);
+		$nombre=$datos[0]->numero_cap;
+		$fecha_emision=$datos[0]->fecha_emision;
+		$trato=$datos[0]->id_sexo;
+
+		$numero = $datos[0]->dias_validez;
+		$numeroEnLetras = $this->numeroALetras($numero); 
+		
+
+		if ($trato==3) {
+			$tratodesc="EL ARQUITECTO ";
+			$faculta="facultado";
+		}
+		else{
+			$tratodesc="LA ARQUITECTA ";
+			$faculta="facultada";
+		}
+
+		Carbon::setLocale('es');
+
+
+		// Crear una instancia de Carbon a partir de la fecha
+		$carbonDate = new Carbon($fecha_emision);
+
+		// Formatear la fecha en un formato largo
+
+	
+		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
+		
+		
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo2_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras'));
+		
+		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream();
+    	//return $pdf->download('invoice.pdf');
+		//return view('frontend.certificado.certificado_pdf');
+
+	}
+
+	public function certificado_tipo3_pdf($id){
+		
+		$datos_model=new certificado;
+
+		$datos=$datos_model->datos_agremiado_certificado($id);
+		$nombre=$datos[0]->numero_cap;
+		$fecha_emision=$datos[0]->fecha_emision;
+		$trato=$datos[0]->id_sexo;
+
+		$numero = $datos[0]->dias_validez;
+		$numeroEnLetras = $this->numeroALetras($numero); 
+		
+
+		if ($trato==3) {
+			$tratodesc="EL ARQUITECTO ";
+			$faculta="facultado";
+		}
+		else{
+			$tratodesc="LA ARQUITECTA ";
+			$faculta="facultada";
+		}
+
+		Carbon::setLocale('es');
+
+
+		// Crear una instancia de Carbon a partir de la fecha
+		$carbonDate = new Carbon($fecha_emision);
+
+		// Formatear la fecha en un formato largo
+
+	
+		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
+		
+		
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros

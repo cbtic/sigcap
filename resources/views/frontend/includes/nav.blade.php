@@ -145,7 +145,7 @@
 								<a href="/ingreso/create" class="dropdown-item">Estado de Cuenta</a>
 								@endcan
 								@can('Certificado Tipo 4')
-                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificado Tipo 4</a>
+                                <a href="/certificado/consultar_certificado" class="dropdown-item">Certificados</a>
 								@endcan
 								@can('Consulta de Facturas')
                                 <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas </a>

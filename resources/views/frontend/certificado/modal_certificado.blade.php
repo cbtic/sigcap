@@ -152,7 +152,7 @@ $.mask.definitions['p'] = "[Mm]";
 
 	$(document).ready(function() {
 
-
+		$('#nombre_proyecto_').hide();
 
 	});
 
@@ -170,6 +170,29 @@ $.mask.definitions['p'] = "[Mm]";
 			return false;
 		}
 	}
+
+	function obtenerTipoCertificado(){
+	
+	var id_tipo = $("#id_tipo").val();
+
+	$('#nombre_proyecto_').hide();
+	
+	if (id_tipo == "")//SELECCIONAR
+	{
+		$('#nombre_proyecto_').hide();
+	}else if (id_tipo == "1")//CERTIFICADO TIPO 1
+	{
+		$('#nombre_proyecto_').show();
+	}else if (id_tipo == "2") //CERTIFICADO TIPO 2
+	{
+		$('#nombre_proyecto_').show();
+	}else if (id_tipo == "3") //CERTIFICADO TIPO 3
+	{
+		$('#nombre_proyecto_').show();
+	}else {
+		$('#nombre_proyecto_').hide(); //CERTIFICADO TIPO 4
+	}
+}
 
 
 	function fn_save() {
@@ -229,7 +252,7 @@ $.mask.definitions['p'] = "[Mm]";
 				$('#idagremiado_').val(result.id);
 				$('#nombre_').val(result.nombre_completo);
 				$('#situacion_').val(result.situacion);
-				$('#email_').val(result.email1);
+				$('#email_').val(result.email);
 			}
 		});
 	}
@@ -336,11 +359,26 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Tipo de Certificado</label>
-									<select name="id_tipo" id="id_tipo" class="form-control form-control-sm" onChange="obtenerPlan()">
+									<select name="id_tipo" id="id_tipo" class="form-control form-control-sm" onChange="obtenerTipoCertificado()">
 										<option value="">--Selecionar--</option>
 										<?php
 										foreach ($tipo_certificado as $row) { ?>
 											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $certificado->id_tipo) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-lg-4">
+								<div class="form-group" id="nombre_proyecto_">
+									<label class="control-label">Nombre del Proyecto</label>
+									<select name="nombre_proyecto" id="nombre_proyecto" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($proyecto as $row) { ?>
+											<!--<option value="<?php //echo $row->id ?>" <?php //if ($row->id == $proyecto->nombre) echo "selected='selected'" ?>><?php //echo $row->nombre ?></option>-->
 										<?php
 										}
 										?>
