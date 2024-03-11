@@ -2,7 +2,7 @@
 //jQuery.noConflict(true);
 
 $(document).ready(function () {
-
+/*
 	$('#producto01').autocomplete({
 		appendTo: "#producto01_list",
 		source: function (request, response) {
@@ -40,6 +40,7 @@ $(document).ready(function () {
 		}
 	});
 
+	*/
 
 	$('#fechaF').datepicker({
 		autoclose: true,
@@ -63,7 +64,11 @@ $(document).ready(function () {
 	});
 */
 
-	$('#tblProducto tbody').on('click', 'button.deleteFila', function () {
+	$('#addRow').on('click', function () {
+		AddFila();
+	});
+
+	$('#tblMedioPago tbody').on('click', 'button.deleteFila', function () {
 		var obj = $(this);
 		obj.parent().parent().remove();
 		
@@ -75,9 +80,10 @@ $(document).ready(function () {
 		});
 		
 		$("#precio_peso").val(total);
-		simulaPesarCarreta();
+		//simulaPesarCarreta();
 		
 	});
+
 	
 
 	calculoDetraccion();
@@ -576,42 +582,10 @@ function obtenerTitular(){
 	
 	}
 
-	
-	
-	$(function() {
-		$('#producto01').click(function() {
-		  $('#producto01').select();
-		});		
-	  });
 
-	var cuentaproductos=1;
-
-	function cargaProductoNuevo() {
-		cuentaproductos = cuentaproductos + 1;
-		$('#tblProductos tr:last').after(
-			'<tr id="fila'+pad(cuentaproductos, 2)+'"><td class="text-right">#</td> <td><input type="text" name="producto[]" id="producto'+pad(cuentaproductos, 2)+'" onkeyup="var query = $(this).val();$.ajax({url:\'../especie/search\',type:\'GET\',data:{\'denominacion\':query,\'listadoproducto\':\''+pad(cuentaproductos, 2)+'\'},success:function (data) {$(\'#producto'+pad(cuentaproductos, 2)+'_list\').html(data);}})" class="form-control form-control-sm"><div id="producto'+pad(cuentaproductos, 2)+'_list"></div></td><td><input type="text" name="porcentajeproducto[]" id="porcentajeproducto'+pad(cuentaproductos, 2)+'" class="form-control form-control-sm" onchange="calculaPorcentaje('+cuentaproductos+')" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"></td><td><input readonly="readonly" style="border:0px" type="text" name="peso_aprox[]" value="0" id=peso_aprox_'+pad(cuentaproductos, 2)+' /><input type="hidden" name="origen[]" value="" id=origen'+pad(cuentaproductos, 2)+' /><input type="hidden" name="idproducto[]" value="" id=idproducto'+pad(cuentaproductos, 2)+' /></td></tr>');
-
-	}
-
-
-	function eliminaFila(fila) {
-		if (fila>1) {
-			cuentaproductos = cuentaproductos - 1;
-			$('#fila'+pad(fila, 2)).remove();
-		}else{
-			$('#producto01').val("");
-			$('#producto01').attr("readonly",false);
-		}
-	}
-
-	function calculaPorcentaje(fila) {
-		
-		var total_fac=  $("#total_fac_").val();
-
-		//alert (total_fac);
-
+	function calculaPorcentaje(fila) {		
+		var total_fac=  $("#total_fac_").val();		
 		var valorItem = $('#porcentajeproducto'+pad(fila, 2)).val()
-
 		var contador = 0;
 		$("input[name^='porcentajeproducto']").each(function(i, obj) {			
 			contador++;
@@ -632,193 +606,98 @@ function obtenerTitular(){
 
 		}
 
-		
-/*
 
-		alert(contador);
-		
-		//alert(total_fac);
-
-		if (total_fac == "") {
-			contador = 0;
-			$("input[name^='porcentajeproducto']").each(function(i, obj) {
-				contador += parseInt(obj.value);
-			});
-			if (contador > total_fac) {
-				bootbox.alert("La suma no debe exceder al total del comprobante"); 
-			}
-		} else {
-			contador = 0;
-			$("input[name^='porcentajeproducto']").each(function(i, obj) {
-				contador += parseInt(obj.value);
-			});
-			if (contador > total_fac) {
-				//alert("La suma no debe exceder del 100%");
-				bootbox.alert("La suma no debe exceder al total del comprobante"); 
-			}
-			//console.log($('#porcentajeproducto'+pad(fila, 2)).val());
-			valor_procentaje =contador;
-			$('#porcentajeproducto_'+pad(fila, 2)).val(Math.round(valor_procentaje));
-			
-		}
-		*/
 	}
 
 	AddFila();
 	function AddFila(){
 		
 		var newRow = "";
-		var ind = $('#tblProducto tbody tr').length;
+		var ind = $('#tblMedioPago tbody tr').length;
 		var tabindex = 11;
-		var nuevalperiodo = "";
+		//var nuevalperiodo = "";
+
+		//var f = new Date();
+		var f = new Date();
+		var fecha_ = f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear();
+
 	
 		var item_producto 	= "";
-		$('#idEspecieTemp option').each(function(){
+		$('#idMedioPagoTemp option').each(function(){
 			item_producto += "<option value="+$(this).val()+" ru='"+$(this).attr("ru")+"'>"+$(this).html()+"</option>"	
 		});
 	
 		newRow +='<tr>';
-		newRow +='<td><select class="form-control form-control-sm idEspecie" id="idEspecie'+ind+'" ind="'+ind+'" tabindex="'+tabindex+'" name="id_especie[]" >'+item_producto+'</select></td>';
-		newRow +='<td><select class="form-control form-control-sm idUnidad" id="idUnidad'+ind+'" ind="'+ind+'" tabindex="'+tabindex+'" name="id_unidad[]" ></select>';
+		newRow +='<td><select class="form-control form-control-sm idMedio" id="idMedio'+ind+'" ind="'+ind+'" tabindex="'+tabindex+'" name="idMedio[]" >'+item_producto+'</select></td>';
 		
-		newRow +='<td><input onKeyPress="return soloNumerosMenosCero(event)" type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar la cantidad prescrita y presionar Enter para ingresar la cantidad entregada" name="precio_especie[]" required="" readonly="readonly" id="precio_especie'+ind+'" class="limpia_text nro_solicitado precio_especie input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		newRow +='<td><input onKeyPress="return soloNumerosMenosCero(event)" type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar el monto y presionar Enter para ingresar el nro operación" name="monto[]" required="" id="monto'+ind+'" class="limpia_text  monto input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
 		
-		newRow +='<td><input onKeyPress="return soloNumerosMenosCero(event)" type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar la cantidad prescrita y presionar Enter para ingresar la cantidad entregada" name="cantidad_especie[]" required="" id="cantidad_especie'+ind+'" class="limpia_text nro_solicitado cantidad_especie input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="nroOperacion[]" required="" id="nroOperacion'+ind+'" class="limpia_text nroOperacion input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
 		
-		newRow +='<td><input onKeyPress="return soloNumerosMenosCero(event)" type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar la cantidad prescrita y presionar Enter para ingresar la cantidad entregada" name="importe_especie[]" required="" readonly="readonly" id="importe_especie'+ind+'" class="limpia_text nro_solicitado importe_especie input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="descripcion[]" required="" id="descripcion'+ind+'" class="limpia_text  descripcion input-sm form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+
+		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="fecha[]" required="" id="fecha'+ind+'" class="form-control form-control-sm datepicker fecha input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
 		
 		newRow +='<td><button type="button" class="btn btn-danger deleteFila btn-xs" style="margin-left:4px"><i class="fa fa-times"></i> Eliminar</button></td>';
+
 		newRow +='</tr>';
-		$('#tblProducto tbody').append(newRow);
-		//$("#idEspecie"+ind).select2({max_selected_options: 4}).focus();
-		$("#idEspecie"+ind).select2({max_selected_options: 4});
+		$('#tblMedioPago tbody').append(newRow);
+
+		$("#idMedio"+ind).select2({max_selected_options: 4});
 		
-		/*
-		$("#precio_especie"+ind).keypress(function(e){
-			if(e.which == 13) {
-				AddFila();
-			}
-		});
-		*/
 	
-		$("#idEspecie"+ind).on("change", function (e) {
+		$("#idMedio"+ind).on("change", function (e) {
 			var flagx = 0;
 			cmb = $(this);
-			id_especie = $("#idEspecie"+ind).val();
+			idMedio = $("#idMedio"+ind).val();
 			//id_user={{Auth::user()->id}};
 		
-			$('.idEspecie').each(function(){
+			$('.idMedio').each(function(){
 				var ind_tmp = $(this).val();
-				if($(this).val() == id_especie)flagx++;
+				if($(this).val() == idMedio)flagx++;
 			});
 		
 			if(flagx > 1){
-				bootbox.alert("El producto ya ha sido ingresado");
-				$("#idEspecie"+ind).val("").trigger("change");
-				return false;
+				bootbox.alert("El Medio de Pago ya ha sido ingresado");
+				$("#idMedio"+ind).val("").trigger("change");
+				return false;			
 			}
-		
-			option = {
-				url: '/pesaje/obtener_producto_medida/' + id_especie,
-				type: 'GET',
-				dataType: 'json',
-				data: {}
-			};
-			$.ajax(option).done(function (data) {
+			else{
 				
-				var option = "<option value='0'>Seleccionar</option>";
-				$("#idUnidad"+ind).html("");
-				$(data).each(function (ii, oo) {
-					option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
-				});
-				$("#idUnidad"+ind).html(option);
-				$("#idUnidad"+ind).val(id).select2();
+				if(ind==0){
+					monto = $("#total_fac_").val();
+					$("#monto"+ind).val(monto);
+				}
+
+				$("#fecha"+ind).val(fecha_);
 				
-				/*
-				var cantidad = data.cantidad;
-				var cantidadEstablecimiento = data.cantidadEstablecimiento;
-				var cantidadAlmacen = data.cantidadAlmacen;
-				$(cmb).closest("tr").find(".limpia_text").val("");                
-				$(cmb).closest("tr").find("#nro_stocks").val(cantidad);
-				$(cmb).closest("tr").find("#nro_stocks_establecimiento").val(cantidadEstablecimiento);
-				$(cmb).closest("tr").find("#nro_stocks_almacen").val(cantidadAlmacen);
-				$(cmb).closest("tr").find("#nro_med_solictados").val("");  
-				$(cmb).closest("tr").find("#nro_med_entregados").val("");
-				$(cmb).closest("tr").find("#lotes_lote").val("");
-				$(cmb).closest("tr").find("#lotes_cantidad").val("");
-				$(cmb).closest("tr").find("#lotes_registro_sanitario").val("");
-				$(cmb).closest("tr").find("#lotes_fecha_vencimiento").val("");
-				*/
-			});
-		
-			
+			}
+					
 		});
 		
-		$("#idUnidad"+ind).on("change", function (e) {
-			var flagx = 0;
-			cmb = $(this);
-			id_especie = $("#idEspecie"+ind).val();
-			id_unidad = $("#idUnidad"+ind).val();
-			//id_user={{Auth::user()->id}};
-			/*
-			$('.idEspecie').each(function(){
-				var ind_tmp = $(this).val();
-				if($(this).val() == id_producto)flagx++;
-			});
 		
-			if(flagx > 1){
-				bootbox.alert("El producto farmaceutico ya ha sido ingresado");
-				$("#idEspecie"+ind).val("").trigger("change");
-				return false;
-			}
-			*/
-			option = {
-				url: '/pesaje/obtener_precio_producto_medida/' + id_especie + '/' + id_unidad,
-				type: 'GET',
-				dataType: 'json',
-				data: {}
-			};
-			$.ajax(option).done(function (data) {
-				$("#precio_especie"+ind).val(data[0].precio);
-				
-				/******************/
-				cantidad_especie = $("#cantidad_especie"+ind).val();
-				precio_especie = $("#precio_especie"+ind).val();
-				var importe_especie = cantidad_especie*precio_especie;
-				$("#importe_especie"+ind).val(importe_especie);
-				
-				var val_total = 0;
-				var total = 0;
-				$(".importe_especie").each(function (){
-					val_total = $(this).val();
-					if(val_total>0)total += Number(val_total);
-				});
-				
-				$("#precio_peso").val(total);
-				simulaPesarCarreta();
-				/******************/
-			});
-		
-			
-		});
-		
-		$("#cantidad_especie"+ind).on("keyup", function (e) {
-			cantidad_especie = $("#cantidad_especie"+ind).val();
-			precio_especie = $("#precio_especie"+ind).val();
-			var importe_especie = cantidad_especie*precio_especie;
-			$("#importe_especie"+ind).val(importe_especie);
-			
-			var val_total = 0;
+		$("#monto"+ind).on("keyup", function (e) {
+			monto = $("#monto"+ind).val();
+
 			var total = 0;
-			$(".importe_especie").each(function (){
+			var val_total = 0;
+			
+			$(".monto").each(function (){
 				val_total = $(this).val();
-				if(val_total>0)total += Number(val_total);
+				
+				//if(total>0)
+				total += Number(val_total);
 			});
+
+			//alert(total);
+
 			
-			$("#precio_peso").val(total);
-			simulaPesarCarreta();
 			
+			//$("#precio_peso").val(total);
+					
 		});
+
+		
 		
 	}
 	
