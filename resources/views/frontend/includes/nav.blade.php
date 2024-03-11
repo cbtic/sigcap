@@ -168,7 +168,7 @@
 							@endcan
 						   	<a href="/planillaDelegado/consulta_reintegro" class="dropdown-item">Delegado Reintegro</a>
 							@can('Asignacion de Cuentas')
-							<a href="/asignacion/asignacion_cuenta" class="dropdown-item">Asignacion de Cuentas</a>
+							<a href="/asignacion" class="dropdown-item">Asignacion de Cuentas</a>
 							@endcan
 
 							@can('Planilla Delegados')

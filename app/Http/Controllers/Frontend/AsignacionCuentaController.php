@@ -56,4 +56,16 @@ class AsignacionCuentaController extends Controller
 		echo json_encode($result);
 		//print_r ($result);
 	}
+
+    function consulta_asignacion(){
+
+		//$tablaMaestra_model = new TablaMaestra;
+		//$persona = new Persona;
+        //$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		//$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		//$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
+		//$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
+        return view('frontend.persona.all_lista_asignacion',compact(''));
+
+    }
 }
