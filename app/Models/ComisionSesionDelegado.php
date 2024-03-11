@@ -25,6 +25,33 @@ where id_comision=".$id_comision;
         return $data;
     }
 	
+	function getComisionDelegadosByIdPeriodo($id_periodo){
+
+        $cad = "select distinct t1.id_agremiado,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap   
+from comision_delegados t1
+inner join comisiones t0 on t1.id_comision = t0.id 
+inner join agremiados t2 on t1.id_agremiado=t2.id
+inner join personas t3 on t2.id_persona=t3.id 
+where t0.id_periodo_comisiones=".$id_periodo;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	function getComisionDelegadosByIdPeriodoAgremiado($id_periodo,$id_agremiado){
+
+        $cad = "select t1.id id_delegado,t1.id_comision,t0.denominacion comision  
+from comision_delegados t1
+inner join comisiones t0 on t1.id_comision = t0.id 
+inner join agremiados t2 on t1.id_agremiado=t2.id
+inner join personas t3 on t2.id_persona=t3.id 
+where t0.id_periodo_comisiones=".$id_periodo."
+and t1.id_agremiado=".$id_agremiado;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
 	function getComisionSesionDelegadosByIdComisionSesion($id_comision_sesion){ 
 		/*
         $cad = " select 

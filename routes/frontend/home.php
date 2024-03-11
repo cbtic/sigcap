@@ -486,8 +486,14 @@ Route::get('afiliacion_seguro/eliminar_afiliacion/{id}/{estado}', [AfiliacionSeg
 Route::get('municipalidad/obtener_provincia/{idDepartamento}', [MunicipalidadController::class, 'obtener_provincia'])->name('municipalidad.obtener_provincia');
 Route::get('municipalidad/obtener_distrito/{idDepartamento}/{idProvincia}', [MunicipalidadController::class, 'obtener_distrito'])->name('municipalidad.obtener_distrito');
 Route::get('planillaDelegado/consulta_planilla_delegado', [PlanillaDelegadoController::class, 'consulta_planilla_delegado'])->name('planillaDelegado.consulta_planilla_delegado');
+Route::get('planillaDelegado/consulta_reintegro', [PlanillaDelegadoController::class, 'consulta_reintegro'])->name('planillaDelegado.consulta_reintegro');
 Route::post('planillaDelegado/obtener_planilla_delegado', [PlanillaDelegadoController::class, 'obtener_planilla_delegado'])->name('planillaDelegado.obtener_planilla_delegado');
 Route::post('planilla/send_planilla_delegado', [PlanillaDelegadoController::class, 'send_planilla_delegado'])->name('sesion.send_planilla_delegado');
+
+Route::post('planilla/listar_reintegro_ajax', [PlanillaDelegadoController::class, 'listar_reintegro_ajax'])->name('planilla.listar_reintegro_ajax');
+Route::get('planilla/modal_reintegro/{id}', [PlanillaDelegadoController::class, 'modal_reintegro'])->name('planilla.modal_reintegro');
+Route::get('planilla/obtener_delegado_periodo/{id_periodo}', [PlanillaDelegadoController::class, 'obtener_delegado_periodo'])->name('planilla.obtener_delegado_periodo');
+Route::get('planilla/obtener_comision_delegado_periodo/{id_periodo}/{id_agremiado}', [PlanillaDelegadoController::class, 'obtener_comision_delegado_periodo'])->name('planilla.obtener_comision_delegado_periodo');
 
 Route::get('centro_costo/importar_centro_costo', [CentroCostoController::class, 'importar_centro_costo'])->name('centro_costo.importar_centro_costo');
 Route::get('partida_presupuestal/importar_partida_presupuestal', [PartidaPresupuestalController::class, 'importar_partida_presupuestal'])->name('partida_presupuestal.importar_partida_presupuestal');

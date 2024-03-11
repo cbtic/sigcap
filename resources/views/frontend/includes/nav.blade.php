@@ -166,6 +166,7 @@
 							@can('Adelantos y Descuentos Delegados')
 							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>
 							@endcan
+						   	<a href="/planillaDelegado/consulta_reintegro" class="dropdown-item">Delegado Reintegro</a>
 							@can('Planilla Delegados')
 						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
 							@endcan
