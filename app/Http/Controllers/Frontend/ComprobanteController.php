@@ -13,6 +13,7 @@ use App\Models\Persona;
 use App\Models\Guia;
 
 use App\Models\Agremiado;
+use App\Models\ComprobantePago;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -657,6 +658,36 @@ class ComprobanteController extends Controller
                     $agremiado->save();
                 }
             }
+
+            if(isset($request->idMedio)):
+                foreach ($request->idMedio as $key => $value):
+                    if($request->idMedio[$key]!=""){
+                        $idMedio = $request->idMedio[$key];
+
+                        $id_comprobante = $id_factura;
+                        $monto = (isset($request->monto[$key]) && $request->monto[$key] > 0)?$request->monto[$key]:"0";
+                        $nro_operacion = (isset($request->nroOperacion[$key]))?$request->nroOperacion[$key]:"";
+                        $descripcion = (isset($request->descripcion[$key]))?$request->descripcion[$key]:"";                        
+                        $fecha_vencimiento = $request->fecha[$key];
+
+                        $item=1;
+                        $fecha = date('d/m/Y');
+                    
+                        $comprobantePago = new ComprobantePago;                        
+                        $comprobantePago->id_medio = $idMedio;
+                        $comprobantePago->fecha = $fecha;
+                        $comprobantePago->item = $item;
+                        $comprobantePago->nro_operacion = $nro_operacion;
+                        $comprobantePago->id_comprobante = $id_comprobante;
+                        $comprobantePago->descripcion = $descripcion;
+                        $comprobantePago->monto = $monto;
+                        $comprobantePago->fecha_vencimiento = date("Y-m-d",strtotime($fecha_vencimiento));
+                        $comprobantePago->id_usuario_inserta = $id_user;
+                    
+                        $comprobantePago->save();
+                    }
+                endforeach;
+            endif;
 
 
             $estado_ws = $ws_model->getMaestroByTipo('96');

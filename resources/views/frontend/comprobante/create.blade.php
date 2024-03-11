@@ -998,7 +998,7 @@
                                         <div class="table-responsive overflow-auto" style="max-height: 500px;">
 
                                             <div style="display:none">
-                                                <select class="form-control" id="idEspecieTemp" tabindex="16" style="width: 500px">
+                                                <select class="form-control" id="idMedioPagoTemp" tabindex="16" style="width: 500px"> 
                                                     <option value="">Seleccionar Medio de Pago</option>
                                                     <?php foreach ($medio_pago as $row) : ?>
                                                         <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
@@ -1006,9 +1006,9 @@
                                                 </select>
                                             </div>
 
-                                            <button type="button" id="addRow" style="margin-left:10px" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Agregar producto(s)</button>
+                                            <button type="button" id="addRow" style="margin-left:10px" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Agregar Pago(s)</button>
 
-                                            <table id="tblProducto" class="table table-hover table-sm">
+                                            <table id="tblMedioPago" class="table table-hover table-sm">
                                                 <thead>
                                                     <tr>
                                                         <th width="40%">Medio</th>
