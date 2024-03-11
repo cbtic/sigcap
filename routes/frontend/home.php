@@ -48,6 +48,9 @@ use App\Http\Controllers\Frontend\PlanContableController;
 use App\Http\Controllers\Frontend\CoordinadorZonalController;
 use App\Http\Controllers\Frontend\ProyectistaController;
 
+use App\Http\Controllers\Frontend\AsignacionCuentaController;
+
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -557,3 +560,13 @@ Route::post('derecho_revision/send_nueno_comprobante', [DerechoRevisionControlle
 Route::get('agremiado/obtener_datos_agremiado_coordinador_zonal/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_coordinador_zonal'])->name('agremiado.obtener_datos_agremiado_coordinador_zonal');
 Route::post('ingreso/send_beneficiario', [IngresoController::class, 'send_beneficiario'])->name('ingreso.send_beneficiario');
 Route::post('derecho_revision/send_nuevo_registro_solicitud', [DerechoRevisionController::class, 'send_nuevo_registro_solicitud'])->name('derecho_revision.send_nuevo_registro_solicitud');
+<<<<<<< HEAD
+=======
+
+
+Route::get('asignacion', [AsignacionCuentaController::class, 'index'])->name('asignacion');
+Route::post('asignacions', [AsignacionCuentaController::class, 'store'])->name('asignacions');
+Route::post('asignacion/listar_asignacion_ajax', [AsignacionCuentaController::class, 'listar_asignacion_ajax'])->name('asignacion.listar_asignacion_ajax');
+Route::get('asignacion/modal_asignacion/{id}', [AsignacionCuentaController::class, 'modal_asignacion'])->name('asignacion.modal_asignacion');
+Route::post('asignacion/send_asignacion', [AsignacionCuentaController::class, 'send_asignacion'])->name('asignacion.send_asignacion');
+>>>>>>> 550280720284b22bce51f83997a326764553f8ac
