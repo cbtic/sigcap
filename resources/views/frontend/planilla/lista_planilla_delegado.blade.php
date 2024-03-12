@@ -150,7 +150,7 @@
 				Saldo a favor de los Delegados Pro Fondo Comun
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<?php echo $fondo_comun->saldo?>
+				<?php echo number_format($fondo_comun->saldo,2)?>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				Menos Pagos a Destiempo de Meses pasados
@@ -210,7 +210,7 @@
 				Importe por Sesion
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<?php echo $importe_por_sesion?>
+				<?php echo number_format($importe_por_sesion,2)?>
 				</div>
 			</div>
 			
