@@ -151,6 +151,10 @@
                                 <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas </a>
 								@endcan
 
+								@can('Liquidacion de Caja')
+                                <a href="/ingreso/liquidacion_caja" class="dropdown-item">Liquidacion de Caja</a>								
+								@endcan
+
 						   </div>
 					</li>
 					@endif
@@ -166,6 +170,11 @@
 							@can('Adelantos y Descuentos Delegados')
 							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>
 							@endcan
+						   	<a href="/planillaDelegado/consulta_reintegro" class="dropdown-item">Delegado Reintegro</a>
+							@can('Asignacion de Cuentas')
+							<a href="/asignacion" class="dropdown-item">Asignacion de Cuentas</a>
+							@endcan
+
 							@can('Planilla Delegados')
 						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
 							@endcan

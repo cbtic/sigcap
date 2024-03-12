@@ -672,19 +672,23 @@ class ComprobanteController extends Controller
 
                         $item=1;
                         $fecha = date('d/m/Y');
-                    
-                        $comprobantePago = new ComprobantePago;                        
-                        $comprobantePago->id_medio = $idMedio;
-                        $comprobantePago->fecha = $fecha;
-                        $comprobantePago->item = $item;
-                        $comprobantePago->nro_operacion = $nro_operacion;
-                        $comprobantePago->id_comprobante = $id_comprobante;
-                        $comprobantePago->descripcion = $descripcion;
-                        $comprobantePago->monto = $monto;
-                        $comprobantePago->fecha_vencimiento = date("Y-m-d",strtotime($fecha_vencimiento));
-                        $comprobantePago->id_usuario_inserta = $id_user;
-                    
-                        $comprobantePago->save();
+
+                        if($monto!="0"){
+
+                            $comprobantePago = new ComprobantePago;                        
+                            $comprobantePago->id_medio = $idMedio;
+                            $comprobantePago->fecha = $fecha;
+                            $comprobantePago->item = $item;
+                            $comprobantePago->nro_operacion = $nro_operacion;
+                            $comprobantePago->id_comprobante = $id_comprobante;
+                            $comprobantePago->descripcion = $descripcion;
+                            $comprobantePago->monto = $monto;
+                            $comprobantePago->fecha_vencimiento = date("Y-m-d",strtotime($fecha_vencimiento));
+                            $comprobantePago->id_usuario_inserta = $id_user;
+                        
+                            $comprobantePago->save();    
+
+                        }                    
                     }
                 endforeach;
             endif;

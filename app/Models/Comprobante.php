@@ -12,6 +12,15 @@ class Comprobante extends Model
 		return $this->readFuntionPostgres('sp_listar_comprobante_paginado',$p);
     }
 
+    function fecha_hora_actual(){
+		
+		$cad = "select now() as fecha_actual";
+
+		$data = DB::select($cad);
+        return $data[0]->fecha_actual;
+		
+	}
+
 	public function registrar_factura_moneda($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda) {
                                           //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
              //print_r($serie .",". $numero.",".$tipo.",".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$id_v.",". $id_caja.",".$descuento.",".$accion.",".$id_user.",".$id_moneda);exit();
@@ -88,6 +97,34 @@ class Comprobante extends Model
         return $data;
     }
     
+    function getFacturaByCaja($id_caja,$fecha_inicio,$fecha_fin){
+
+        $cad = "select f.id, f.fac_serie, f.fac_numero, f.fac_tipo, f.fac_fecha, f.fac_cod_tributario, f.fac_destinatario, f.fac_subtotal, f.fac_impuesto, f.fac_total, f.fac_estado_pago, f.fac_anulado, m.denominacion caja,
+(select string_agg(DISTINCT t2_.plan_denominacion, ',') from afiliaciones t1_ inner join plan_atenciones t2_ on t1_.plan_id=t2_.id left join personas t3_ on t3_.id=t1_.persona_id
+where t3_.numero_documento=f.fac_cod_tributario And t1_.estado='1' And t2_.plan_estado='A')plan_denominacion, 
+replace(replace(u.email, '@felmo.pe', ''), '@felmo.com', '') usuario
+,val.val_pac_nombre,per.tipo_documento,per.numero_documento,emp.ruc,emp.nombre_comercial,val.val_aten_estab,val.val_aten_codigo,alb.placa
+FROM facturas f
+Inner Join tabla_maestras m On m.id = f.fac_caja_id
+Inner Join users u On u.id = f.id_usuario 
+left join(
+select vsm_fac_tipo,vsm_fac_serie,vsm_fac_numero,max(vsm_vestab)vsm_vestab,max(vsm_vnumero)vsm_vnumero
+from val_atencion_smodulos
+group by vsm_fac_tipo,vsm_fac_serie,vsm_fac_numero
+) vas on vas.vsm_fac_tipo=f.fac_tipo and vas.vsm_fac_serie=f.fac_serie And vas.vsm_fac_numero=f.fac_numero
+left join valorizaciones val on val.val_estab = vas.vsm_vestab And val.val_codigo = vas.vsm_vnumero
+left join personas per on val.val_persona=per.id
+left join ubicacion_trabajos ut on val.val_ubicacion=ut.id
+left join empresas emp on emp.id=ut.ubicacion_empresa_id
+left join alquiler_balanzas alb on val.val_estab = alb.aten_establecimiento And val.val_aten_codigo = alb.aten_numero
+where f.fac_caja_id=".$id_caja." 
+And f.fac_fecha >= '".$fecha_inicio."' 
+And f.fac_fecha <= '".$fecha_fin."'
+Order By f.fac_fecha Desc";
+
+		$data = DB::select($cad);
+        return $data;
+    }
 
 	
 }

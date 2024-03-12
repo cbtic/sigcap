@@ -17,6 +17,7 @@ use App\Models\Fraccionamiento;
 use Illuminate\Support\Carbon;
 use App\Models\Empresa;
 use App\Models\Beneficiario;
+use App\Models\Comprobante;
 
 use Auth;
 
@@ -441,5 +442,121 @@ class IngresoController extends Controller
 		$beneficiario->save();
 		
     }
+
+
+    public function liquidacion_caja(){	
+		$caja_model = new TablaMaestra;
+        $caja = $caja_model->getMaestroByTipo("91");
+
+        return view('frontend.ingreso.all_liquidacion_caja',compact('caja'));
+    }
+	
+	public function modal_liquidacion($id){        
+		$valorizaciones_model = new Valorizacione;
+
+		return view('frontend.ingreso.modal_liquidacion',compact('id'));
+	}
+
+
+    public function modal_detalle_factura($id){
+		
+		$cajaIngreso = CajaIngreso::find($id);
+		$factura_model = new Comprobante;
+		$fecha_fin=$cajaIngreso->fecha_fin;
+		if($cajaIngreso->fecha_fin=="")$fecha_fin=$factura_model->fecha_hora_actual();
+		$factura = $factura_model->getFacturaByCaja($cajaIngreso->id_caja,$cajaIngreso->fecha_inicio,$fecha_fin);
+		return view('frontend.ingreso.modal_detalle_factura',compact('factura'));
+	
+	}
+	
+
+	public function updateCajaLiquidacion(Request $request)
+    {
+        $valorizaciones_model = new Valorizacione;
+		$id_user = Auth::user()->id;
+        $datos[] = "ul";
+        $datos[] = $id_user;
+        $datos[] = $request->id_caja_ingreso;
+		$datos[] = $request->id_caja;
+        $datos[] = "";
+        $datos[] = "";
+        $datos[] = ($request->saldo_liquidado=='')?0:$request->saldo_liquidado;
+        $datos[] = $request->estado;
+        //print_r($datos);
+        $id_caja_ingreso = $valorizaciones_model->registrar_caja_ingreso($datos);
+        
+		//echo $id_caja_ingreso;
+        return redirect('/ingreso/liquidacion_caja');
+		
+    }	
+	
+	public function listar_liquidacion_caja_ajax(Request $request){
+		
+		$valorizaciones_model = new Valorizacione;
+		$p[]=$request->fecha_inicio_desde;
+		$p[]=$request->fecha_inicio_hasta;
+		$p[]=$request->fecha_ini;
+		$p[]=$request->fecha_fin;
+		$p[]=$request->id_caja;
+		$p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $valorizaciones_model->listar_liquidacion_caja_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+		
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+		
+		echo json_encode($result);
+		
+	}
+	
+	public function exportar_liquidacion_caja($fecha_inicio_desde,$fecha_inicio_hasta,$fecha_ini, $fecha_fin,$id_caja,$estado) {
+		
+		$valorizaciones_model = new Valorizacione;
+		if($fecha_inicio_desde!=0)$fecha_inicio_desde = str_replace("-","/",$fecha_inicio_desde); else $fecha_inicio_desde = "";
+		if($fecha_inicio_hasta!=0)$fecha_inicio_hasta = str_replace("-","/",$fecha_inicio_hasta); else $fecha_inicio_hasta = "";
+		if($fecha_ini!=0)$fecha_ini = str_replace("-","/",$fecha_ini); else $fecha_ini = "";
+		if($fecha_fin!=0)$fecha_fin = str_replace("-","/",$fecha_fin); else $fecha_fin = "";
+		$p[]=$fecha_inicio_desde;
+		$p[]=$fecha_inicio_hasta;
+		$p[]=$fecha_ini;
+		$p[]=$fecha_fin;
+		$p[]=$id_caja;
+		$p[]=$estado;
+		$p[]=1;
+		$p[]=10000;
+		$data = $valorizaciones_model->listar_liquidacion_caja_ajax($p);
+		
+		$variable = [];
+		$n = 1;
+		array_push($variable, array("N","Usuario Caja", "Nombre Caja", "Tipo", "Estado", "Saldo Inicial", "Total Recaudado","Saldo Total","Fecha Inicio","Fecha Cierre","Usuario Contabilidad","Saldo Liquidado","Observacion"));
+		foreach ($data as $r) {
+			$estado = "";
+			$disabled = "";
+			if($r->estado == 0){
+				$estado = "CERRADO";
+				$disabled = "";
+			}
+			if($r->estado == 1){
+				$estado = "ABIERTO";
+				$disabled = "disabled='disabled'";
+			}
+			if($r->saldo_liquidado > 0){
+				$estado = "LIQUIDADO";
+				$disabled = "disabled='disabled'";
+			}
+			array_push($variable, array($n++,$r->usuario, $r->caja, $r->tipo,$estado, number_format($r->saldo_inicial,2), number_format($r->total_recaudado,2),number_format($r->saldo_total,2),$r->fecha_inicio, $r->fecha_fin, $r->usuario_contabilidad,($r->saldo_liquidado!="")?number_format($r->saldo_liquidado,2):0,$r->observacion));
+		}
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'liquidacion_caja.xlsx');
+    }
+
 
 }
