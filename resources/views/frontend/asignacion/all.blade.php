@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Personas</li>
+            <li class="breadcrumb-item active">Asignacion de Cuentas</li>
         </li>
     </ol>
 @endsection
@@ -150,11 +150,17 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="Denominacion">
+						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominación">
 					</div>
 
-              
-                    
+                    <input type="hidden" name="cuenta" id="cuenta" value="">
+                    <input type="hidden" name="tipo_cuenta" id="tipo_cuenta" value="">
+                    <input type="hidden" name="centro_costo" id="centro_costo" value="">
+                    <input type="hidden" name="partida_presupuestal" id="partida_presupuestal" value="">
+                    <input type="hidden" name="codigo_financiamiento" id="codigo_financiamiento" value="">
+                    <input type="hidden" name="medio_pago" id="medio_pago" value="">
+                    <input type="hidden" name="origen" id="origen" value="">
+                                 
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
@@ -224,6 +230,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/persona/lista2.js') }}"></script>
+<script src="{{ asset('js/AsignacionCuenta.js') }}"></script>
 
 @endpush

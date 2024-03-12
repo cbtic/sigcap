@@ -32,17 +32,24 @@ class AsignacionCuentaController extends Controller
         return view('frontend.persona.create');
     }
 
-    public function listar_persona_ajax(Request $request){
+    public function listar_asignacion_ajax(Request $request){
 		
-		$persona_model = new Persona;
-		$p[]=$request->numero_documento;
-		$p[]=$request->persona;
-		$p[]=$request->unidad;
-		$p[]=$request->empresa;
+		$asignacion_model = new AsignacionCuenta;
+		
+		$p[]=$request->cuenta;
+		$p[]=$request->denominacion;
+		$p[]=$request->tipo_cuenta;
+		$p[]=$request->centro_costo;
+		$p[]=$request->partida_presupuestal;
+		$p[]=$request->codigo_financiamiento;
+		$p[]=$request->medio_pago;
+		$p[]=$request->origen;
+
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
-		$data = $persona_model->listar_persona_ajax($p);
+		$data = $asignacion_model->listar_asignacion_ajax($p);
+
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 		
 		$result["PageStart"] = $request->NumeroPagina;
