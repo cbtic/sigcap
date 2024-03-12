@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\AsignacionCuenta;
 use App\Models\TablaMaestra;
 
+use App\Models\PlanContable;
+use App\Models\CentroCosto;
+use App\Models\PartidaPresupuestale;
+
+
 //use App\Models\CondicionLaborale;
 
 use Auth;
@@ -75,4 +80,42 @@ class AsignacionCuentaController extends Controller
         return view('frontend.persona.all_lista_asignacion',compact(''));
 
     }
+
+	public function modal_asignacion($id){
+		$id_user = Auth::user()->id;
+		
+		
+		if($id>0){
+			$asignacion = AsignacionCuenta::find($id);
+		}else{
+			$asignacion = new AsignacionCuenta;
+		}
+		
+		$tablaMaestra_model = new TablaMaestra;
+		
+		
+
+		//print_r($plan_contable_);exit();
+
+        $sw = true;
+		$plan_contable = PlanContable::where('estado','1')->orderBy('id', 'desc')->get()->all();
+        
+		//$array["plan_contable_"] = $plan_contable_;
+       // echo json_encode($array);
+		//$plan_contable = $array;
+
+		//print_r($array);exit();
+
+		$tipo_cuenta = $tablaMaestra_model->getMaestroByTipo(119);
+
+		//print_r($tipo_cuenta);exit();
+
+		$centro_costo = CentroCosto::where('estado','1')->orderBy('id', 'desc')->get()->all();
+		$partida_presupuestal = PartidaPresupuestale::where('estado','1')->orderBy('id', 'desc')->get()->all();
+		$medio_pago = $tablaMaestra_model->getMaestroByTipo(108);
+		
+	
+		return view('frontend.asignacion.modal_asignacion',compact('id','asignacion','plan_contable', 'tipo_cuenta', 'centro_costo', 'partida_presupuestal', 'medio_pago'));
+	}
+
 }

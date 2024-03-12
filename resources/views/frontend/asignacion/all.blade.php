@@ -186,6 +186,7 @@
                      
                             <th>Cuenta</th>
                             <th>Denominaci&oacute;n</th>                            
+                            <th>Tipo</th>
                             <th>Centro Costo</th>                            
 							<th>Partida Pres.</th>
                             <th>Cod. Financiero</th>
