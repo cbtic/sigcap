@@ -393,7 +393,7 @@ label.form-control-sm{
                                                 <div id="" class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <strong>
-                                                            Resultado de concurso
+                                                            Planilla de Delegados
                                                         </strong>
 														
                                                     </div>
