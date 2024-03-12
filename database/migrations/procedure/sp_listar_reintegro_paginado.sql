@@ -19,7 +19,7 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos='  dr.id,r.denominacion regional,pc.descripcion periodo,id_mes,importe,p.apellido_paterno||p.apellido_materno||p.nombres agremiado,
+	v_campos='  dr.id,r.denominacion regional,pc.descripcion periodo,id_mes,importe,p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado,
 			a.numero_cap,dr.estado,c.denominacion comision ';
 
 	v_tabla=' from delegado_reintegros dr

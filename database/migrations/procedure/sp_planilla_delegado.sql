@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_planilla_delegado(p_anio character varying, p_mes character varying)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -60,14 +59,16 @@ begin
 	select id_comision,id_agremiado,sesion_mes_actual
 	,(case when coordinador='1' then v_adicional_coordinador else 0 end) coordinador
 	,(case when asesor='1' then sesion_mes_actual else 0 end) asesor_sesion_mes_actual
-	,(case when sesion_meses_anteriores>0 then (p_importe_por_sesion_anterior*sesion_meses_anteriores) else 0 end)+(case when coordinador='1' then v_adicional_coordinador else 0 end) reintegro
+	--,(case when sesion_meses_anteriores>0 then (p_importe_por_sesion_anterior*sesion_meses_anteriores) else 0 end)+(case when coordinador='1' then v_adicional_coordinador else 0 end) reintegro
+	,reintegro
 	,(movilidad_sesion*sesion_mes_actual) total_movilidad
 	from (
 	select coalesce(cd.id_agremiado,csd.id_agremiado)id_agremiado,(case when csd.id_agremiado>0 then 1 else 0 end)asesor,cs.id_comision,csd.coordinador,
 	--sum(case when to_char(cs.fecha_programado,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	--sum(case when to_char(cs.fecha_programado,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
-	sum(case when to_char(csd.fecha_aprobar_pago,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
-	sum(case when to_char(csd.fecha_aprobar_pago,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
+	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
+	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
+	coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,
 	coalesce((select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and estado='1'),0)movilidad_sesion
 	from comision_sesiones cs 
 	inner join comision_sesion_delegados csd on cs.id=csd.id_comision_sesion
@@ -76,7 +77,7 @@ begin
 	inner join comisiones c on c.id=cs.id_comision 
 	where id_computo_sesion=p_id_computo_sesion
 	and (id_aprobar_pago=2 /*or coalesce(csd.id_agremiado,0)!=0*/) 
-	group by csd.id_agremiado,cd.id_agremiado,cs.id_comision,c.id_municipalidad_integrada,csd.coordinador
+	group by csd.id_agremiado,cd.id_agremiado,cs.id_comision,c.id_municipalidad_integrada,csd.coordinador,csd.id_delegado,cs.id_periodo_comisione
 	)R
 	)S;
 	
@@ -109,7 +110,8 @@ begin
 	--,(case when sesion_mes_actual>0 then (p_importe_por_sesion*sesion_mes_actual) else 0 end) sub_total
 	,(case when asesor='1' then 0.5 * (case when sesion_mes_actual>0 then (p_importe_por_sesion*sesion_mes_actual) else 0 end) else (case when sesion_mes_actual>0 then (p_importe_por_sesion*sesion_mes_actual) else 0 end) end) sub_total
 	,adelanto
-	,(case when sesion_meses_anteriores>0 then (p_importe_por_sesion_anterior*sesion_meses_anteriores) else 0 end)+(case when coordinador='1' then v_adicional_coordinador else 0 end) reintegro
+	--,(case when sesion_meses_anteriores>0 then (p_importe_por_sesion_anterior*sesion_meses_anteriores) else 0 end)+(case when coordinador='1' then v_adicional_coordinador else 0 end) reintegro
+	,reintegro
 	,(case when coordinador='1' then v_adicional_coordinador else 0 end) coordinador  
 	,movilidad_sesion
 	,(movilidad_sesion*sesion_mes_actual) total_movilidad
@@ -120,9 +122,10 @@ begin
 	select coalesce(cd.id_agremiado,csd.id_agremiado)id_agremiado,(case when csd.id_agremiado>0 then 1 else 0 end)asesor,cs.id_comision,csd.coordinador,
 	--sum(case when to_char(cs.fecha_programado,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	--sum(case when to_char(cs.fecha_programado,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
-	sum(case when to_char(csd.fecha_aprobar_pago,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
-	sum(case when to_char(csd.fecha_aprobar_pago,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
+	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
+	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
 	coalesce((select sum(total_adelanto) from adelantos a where id_agremiado=cd.id_agremiado and fecha between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)adelanto,
+	coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,
 	coalesce((select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and estado='1'),0)movilidad_sesion,
 	coalesce((select sum(adelanto_pagar) from adelanto_detalles ad inner join adelantos a on ad.id_adelento=a.id where a.id_agremiado=cd.id_agremiado and fecha_pago between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)descuento
 	from comision_sesiones cs 
@@ -132,7 +135,7 @@ begin
 	inner join comisiones c on c.id=cs.id_comision
 	where id_computo_sesion=p_id_computo_sesion
 	and (id_aprobar_pago=2 /*or coalesce(csd.id_agremiado,0)!=0*/)
-	group by csd.id_agremiado,cd.id_agremiado,cs.id_comision,c.id_municipalidad_integrada,csd.coordinador
+	group by csd.id_agremiado,cd.id_agremiado,cs.id_comision,c.id_municipalidad_integrada,csd.coordinador,csd.id_delegado,cs.id_periodo_comisione
 	)R
 	)S;
 	
