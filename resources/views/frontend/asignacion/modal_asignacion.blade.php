@@ -17,7 +17,7 @@
 
 	.modal-dialog {
 		width: 100%;
-		max-width: 92% !important
+		max-width: 40% !important
 	}
 
 	#tablemodal {
@@ -174,81 +174,23 @@ $.mask.definitions['p'] = "[Mm]";
 
 
 
-
 	function fn_save() {
 		var msg = "";
 		var _token = $('#_token').val();
-		var id = $('#id_per_det').val();
-		var id_persona = $('#id').val();
 
+		var id = $('#id').val();
 
-		var direccion = $('#direccion_').val();
-		var ubigeo = $('#ubigeodireccionprincipal').val();
-		//alert(ubigeo); exit();
-		var telefono = $('#telefono_').val();
-		var email = $('#email_').val();
-		var fecha_ingreso = $('#fecha_ingreso_').val();
-		var id_condicion_laboral = $('#id_condicion_laboral_').val();
-		var id_tipo_planilla = $('#id_tipo_planilla_').val();
-		var id_profesion = $('#id_profesion_').val();
-		var id_banco_sueldo = $('#id_banco_sueldo_').val();
-		var num_cuenta_sueldo = $('#num_cuenta_sueldo_').val();
-		var cci_sueldo = $('#cci_sueldo_').val();
-		var id_regimen_pensionario = $('#id_regimen_pensionario_').val();
-		var id_afp = $('#id_afp_').val();
-		var fecha_afiliacion_afp = $('#fecha_afiliacion_afp_').val();
-		var id_tipo_comision_afp = $('#id_tipo_comision_afp_').val();
-		var cuspp = $('#cuspp_').val();
-		var fecha_cese = $('#fecha_cese_').val();
-		var fecha_termino_contrato = $('#fecha_termino_contrato_').val();
-		var num_contrato = $('#num_contrato_').val();
-		var id_cargo = $('#id_cargo_').val();
-		var id_nivel = $('#id_nivel_').val();
-		var id_banco_cts = $('#id_banco_cts_').val();
-		var num_cuenta_cts = $('#num_cuenta_cts_').val();
-		var id_moneda_cts = $('#id_moneda_cts_').val();
-		var estado = $('#estado_').val();
-		var id_ubicacion = $('#id_ubicacion_').val();
+		var cuenta = $('#cuenta').val();
 
-		var tipo_documento = $('#tipo_documento_').val();
-		var numero_documento = $('#numero_documento_').val();
-		var fecha_nacimiento = $('#fecha_nacimiento_').val();
-		var sexo = $('#sexo_').val();
+		//alert(cuenta);exit();
 
-		var id_area_trabajo = $('#id_area_trabajo_').val();
-		var id_unidad_trabajo = $('#id_unidad_trabajo_').val();
-
-		if (tipo_documento == "0") msg += "Debe ingresar el Tipo de Documento <br>";
-		if (numero_documento == "") {
-			msg += "Debe ingresar el Número de Documento <br>";
-		}
-		if (fecha_nacimiento == "") {
-			msg += "Debe ingresar Fecha de Nacimiento <br>";
-		}
-		if (sexo == "0") {
-			msg += "Debe ingresar el Genero del personal <br>";
-		}
-		if (id_ubicacion == "0") {
-			msg += "Debe ingresar la Empresa Asociada al Personal <br>";
-		}
-		if (id_regimen_pensionario == "0") {
-			msg += "Debe ingresar el Régimen Pensionario<br>";
-		}
-		if (id_condicion_laboral == "0") {
-			msg += "Debe ingresar la Condición Laboral <br>";
-		}
-		if (id_area_trabajo == "") {
-			msg += "Debe ingresar el Area de Trabajo <br>";
-		}
-		if (id_unidad_trabajo == "") {
-			msg += "Debe ingresar la Unidad de Trabajo <br>";
-		}
-
-		var edad = calcularEdad(fecha_nacimiento);
-		if (edad < 18) {
-			msg += "El personal es Menor de Edad: " + edad + "<br>";
-		}
-
+		var denominacion = $('#denominacion').val();
+		var tipo_cuenta = $('#tipo_cuenta').val();
+		var centro_costo = $('#centro_costo').val();
+		var partida_presupuestal = $('#partida_presupuestal').val();
+		var codigo_financiero = $('#codigo_financiero').val();
+		var medio_pago = $('#medio_pago').val();
+		var origen = $('#origen').val();
 
 
 		if (estado == "0") {
@@ -260,42 +202,19 @@ $.mask.definitions['p'] = "[Mm]";
 			return false;
 		} else {
 			$.ajax({
-				url: "/persona/send_personad",
+				url: "/asignacion/send_asignacion",
 				type: "POST",
 				data: {
 					_token: _token,
 					id: id,
-					id_persona: id_persona,
-					direccion: direccion,
-					ubigeo: ubigeo,
-					telefono: telefono,
-					email: email,
-					fecha_ingreso: fecha_ingreso,
-					id_condicion_laboral: id_condicion_laboral,
-					id_tipo_planilla: id_tipo_planilla,
-					id_profesion: id_profesion,
-					id_banco_sueldo: id_banco_sueldo,
-					num_cuenta_sueldo: num_cuenta_sueldo,
-					cci_sueldo: cci_sueldo,
-					id_regimen_pensionario: id_regimen_pensionario,
-					id_afp: id_afp,
-					fecha_afiliacion_afp: fecha_afiliacion_afp,
-					id_tipo_comision_afp: id_tipo_comision_afp,
-					cuspp: cuspp,
-					fecha_cese: fecha_cese,
-					fecha_termino_contrato: fecha_termino_contrato,
-					num_contrato: num_contrato,
-					id_cargo: id_cargo,
-					id_nivel: id_nivel,
-					id_banco_cts: id_banco_cts,
-					num_cuenta_cts: num_cuenta_cts,
-					id_moneda_cts: id_moneda_cts,
-					estado: estado,
-					id_ubicacion: id_ubicacion,
-					fecha_nacimiento: fecha_nacimiento,
-					sexo: sexo,
-					id_area_trabajo: id_area_trabajo,
-					id_unidad_trabajo: id_unidad_trabajo
+					cuenta: cuenta,
+					denominacion: denominacion,
+					tipo_cuenta: tipo_cuenta,
+					centro_costo: centro_costo,
+					partida_presupuestal: partida_presupuestal,
+					codigo_financiero: codigo_financiero,
+					medio_pago: medio_pago,
+					origen: origen
 				},
 				success: function(result) {
 					$('#openOverlayOpc').modal('hide');
@@ -305,24 +224,7 @@ $.mask.definitions['p'] = "[Mm]";
 		}
 	}
 
-	function fn_liberar(id) {
 
-		//var id_estacionamiento = $('#id_estacionamiento').val();
-		var _token = $('#_token').val();
-
-		$.ajax({
-			url: "/estacionamiento/liberar_asignacion_estacionamiento_vehiculo",
-			type: "POST",
-			data: {
-				_token: _token,
-				id: id
-			},
-			success: function(result) {
-				$('#openOverlayOpc').modal('hide');
-				cargarAsignarEstacionamiento();
-			}
-		});
-	}
 </script>
 
 
@@ -352,14 +254,13 @@ $.mask.definitions['p'] = "[Mm]";
 
 						<div class="row">
 
-							<div class="col-lg-2">
+							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-
 									<label class="control-label">Cuenta</label>
 									<select name="cuenta" id="cuenta" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($plan_contable as $row) { ?>
-											<option value="<?php echo $row->id ?>" <?php if ($row->id == $asignacion->id_plan_contable) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+											<option value="<?php echo $row->id ?>" <?php if ($row->id == $asignacion->id_plan_contable) echo "selected='selected'" ?>><?php echo $row->cuenta."-".$row->denominacion ?></option>
 										<?php } ?>
 										@error('cuenta') <span ...>Dato requerido</span> @enderror
 									</select>
@@ -367,16 +268,17 @@ $.mask.definitions['p'] = "[Mm]";
 								</div>
 							</div>
 
-							<div class="col-lg-2">
-								<div class="form-group form-group-sm">
+							<div class="col-lg-6">
+								<div class="form-group form-group-sm" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 									<label class="form-control-sm">Denominación</label>
 									<input type="text" name="denominacion" id="denominacion" value="<?php echo $asignacion->denominacion ?>" class="form-control form-control-sm">
 								</div>
 							</div>
+						</div>
 
-							<div class="col-lg-2">
+						<div class="row">
+							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-
 									<label class="control-label">Tipo</label>
 									<select name="tipo_cuenta" id="tipo_cuenta" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
@@ -389,29 +291,30 @@ $.mask.definitions['p'] = "[Mm]";
 								</div>
 							</div>
 
-							<div class="col-lg-2">
+							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-
 									<label class="control-label">Centro Costos</label>
 									<select name="centro_costo" id="centro_costo" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($centro_costo as $row) { ?>
-											<option value="<?php echo $row->id ?>" <?php if ($row->id == $asignacion->id_centro_costo) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+											<option value="<?php echo $row->id ?>" <?php if ($row->id == $asignacion->id_centro_costo) echo "selected='selected'" ?>><?php echo $row->codigo."-".$row->denominacion ?></option>
 										<?php } ?>
 										@error('centro_costo') <span ...>Dato requerido</span> @enderror
 									</select>
 
 								</div>
 							</div>
+						</div>
 
-							<div class="col-lg-2">
+						<div class="row">
+							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 
 									<label class="control-label">Partida Presupuestal</label>
 									<select name="partida_presupuestal" id="partida_presupuestal" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($partida_presupuestal as $row) { ?>
-											<option value="<?php echo $row->id ?>" <?php if ($row->id == $asignacion->id_partida_presupuestal) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+											<option value="<?php echo $row->id ?>" <?php if ($row->id == $asignacion->id_partida_presupuestal) echo "selected='selected'" ?>><?php echo $row->codigo."-".$row->denominacion ?></option>
 										<?php } ?>
 										@error('partida_presupuestal') <span ...>Dato requerido</span> @enderror
 									</select>
@@ -419,29 +322,52 @@ $.mask.definitions['p'] = "[Mm]";
 								</div>
 							</div>
 
-							<div class="col-lg-2">
+							<div class="col-lg-6">
 								<div class="form-group form-group-sm">
-									<label class="form-control-sm">Origen</label>
-									<input type="text" name="origen" id="origen" value="<?php echo $asignacion->id_origen ?>" class="form-control form-control-sm">
+									<label class="form-control-sm">Código Financiero</label>
+									<input type="text" name="codigo_financiero" id="codigo_financiero" value="<?php echo $asignacion->id_codigo_financiero ?>" class="form-control form-control-sm">
 								</div>
 							</div>
 
 						</div>
 
 						<div class="row">
+							<div class="col-lg-6">
+								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
+
+									<label class="control-label">Medio Pago</label>
+									<select name="medio_pago" id="medio_pago" class="form-control form-control-sm">
+										<option value="0">Seleccionar</option>
+										<?php foreach ($medio_pago as $row) { ?>
+											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $asignacion->id_medio_pago) echo "selected='selected'" ?>><?php echo $row->codigo."-".$row->denominacion ?></option>
+										<?php } ?>
+										@error('medio_pago') <span ...>Dato requerido</span> @enderror
+									</select>
+
+								</div>
+							</div>
+
+							<div class="col-lg-6">
+								<div class="form-group form-group-sm">
+									<label class="form-control-sm">Origen</label>
+									<input type="text" name="origen" id="origen" value="<?php echo $asignacion->id_origen ?>" class="form-control form-control-sm">
+								</div>
+							</div>
 
 
+<!--
 							<div class="col-lg-2">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 									<label class="control-label">Estado</label>
 									<select name="estado" id="estado" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
-										<option value="A" <?php if ($asignacion->estado == "A") echo "selected='selected'" ?>><?php echo "ACTIVO" ?></option>
-										<option value="C" <?php if ($asignacion->estado == "C") echo "selected='selected'" ?>><?php echo "CESADO" ?></option>
+										<option value="A" <//?php if ($asignacion->estado == "A") echo "selected='selected'" ?>><//?php echo "ACTIVO" ?></option>
+										<option value="C" <//?php if ($asignacion->estado == "C") echo "selected='selected'" ?>><//?php echo "CESADO" ?></option>
 									</select>
 									@error('estado') <span ...>Dato requerido</span> @enderror
 								</div>
 							</div>
+										-->
 						</div>
 
 						<div style="margin-top:10px;float:right" class="form-group">

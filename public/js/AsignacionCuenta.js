@@ -144,27 +144,19 @@ function datatablenew(){
             var sEcho           = aoData[0].value;
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
-			
-			var numero_documento = $('#numero_documento').val();
-            var persona = $('#persona').val();
-			var estado = $('#estado').val();
-			var flag_foto = $('#flag_foto').val();
-			var flag_vacuna = $('#flag_vacuna').val();
-			var flag_carnet = $('#flag_carnet').val();
-			var flag_negativo = 0;
-			if($("#flag_negativo").is(':checked'))flag_negativo = 1;
+		
+			var cuenta = $('#cuenta_b').val();
+			var denominacion = $('#denominacion_b').val();
+			var tipo_cuenta = $('#tipo_cuenta_b').val();
+			var centro_costo = $('#centro_costo_b').val();
+			var partida_presupuestal = $('#partida_presupuestal_b').val();
+			var codigo_financiero = $('#codigo_financiero_b').val();
+			var medio_pago = $('#medio_pago_b').val();
+			var origen = $('#origen_b').val();
+			var estado = $('#estado_b').val();
 
-
-			var cuenta = $('#cuenta').val();
-			var denominacion = $('#denominacion').val();
-			var tipo_cuenta = $('#tipo_cuenta').val();
-			var centro_costo = $('#centro_costo').val();
-			var partida_presupuestal = $('#partida_presupuestal').val();
-			var codigo_financiamiento = $('#codigo_financiamiento').val();
-			var medio_pago = $('#medio_pago').val();
-			var origen = $('#origen').val();
 			var _token = $('#_token').val();
-			
+
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 //"contentType": "application/json; charset=utf-8",
@@ -172,7 +164,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						cuenta:cuenta,denominacion:denominacion,tipo_cuenta:tipo_cuenta,centro_costo:centro_costo,
-						partida_presupuestal:partida_presupuestal,codigo_financiamiento:codigo_financiamiento,medio_pago:medio_pago,origen:origen,
+						partida_presupuestal:partida_presupuestal,codigo_financiero:codigo_financiero,medio_pago:medio_pago,origen:origen,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -235,9 +227,9 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                	var codigo_financiamiento = "";
-					if(row.codigo_financiamiento!= null)codigo_financiamiento = row.codigo_financiamiento;
-					return codigo_financiamiento;
+                	var codigo_financiero = "";
+					if(row.codigo_financiero!= null)codigo_financiero = row.codigo_financiero;
+					return codigo_financiero;
                 },
                 "bSortable": false,
                 "aTargets": [5]
@@ -285,7 +277,7 @@ function datatablenew(){
 					
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalAsignacion('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-					html += '<a href="javascript:void(0)" onclick=eliminarPersona('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '<a href="javascript:void(0)" onclick=eliminarAsignacion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					html += '</div>';
 					return html;
                 },
@@ -324,7 +316,7 @@ function modalAsignacion(id){
 
 
 
-function eliminarPersona(id,estado){
+function eliminarAsignacion(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -336,20 +328,20 @@ function eliminarPersona(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Persona?", 
+        message: "&iquest;Deseas "+act_estado+" la Asignación?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_persona(id,estado_);
+                fn_eliminar_asignacion(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_persona(id,estado){
+function fn_eliminar_asignacion(id,estado){
 	
     $.ajax({
-            url: "/persona/eliminar_persona/"+id+"/"+estado,
+            url: "/asignacion/eliminar_asignacion/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

@@ -150,19 +150,19 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominación">
+						<input class="form-control form-control-sm" id="denominacion_b" name="denominacion_b" placeholder="Denominación">
 					</div>
 
-                    <input type="hidden" name="cuenta" id="cuenta" value="">
-                    <input type="hidden" name="tipo_cuenta" id="tipo_cuenta" value="">
-                    <input type="hidden" name="centro_costo" id="centro_costo" value="">
-                    <input type="hidden" name="partida_presupuestal" id="partida_presupuestal" value="">
-                    <input type="hidden" name="codigo_financiamiento" id="codigo_financiamiento" value="">
-                    <input type="hidden" name="medio_pago" id="medio_pago" value="">
-                    <input type="hidden" name="origen" id="origen" value="">
+                    <input type="hidden" name="cuenta_b" id="cuenta_b" value="">
+                    <input type="hidden" name="tipo_cuenta_b" id="tipo_cuenta_b" value="">
+                    <input type="hidden" name="centro_costo_b" id="centro_costo_b" value="">
+                    <input type="hidden" name="partida_presupuestal_b" id="partida_presupuestal_b" value="">
+                    <input type="hidden" name="codigo_financiamiento_b" id="codigo_financiamiento_b" value="">
+                    <input type="hidden" name="medio_pago_b" id="medio_pago_b" value="">
+                    <input type="hidden" name="origen_b" id="origen_b" value="">
                                  
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado" id="estado" class="form-control form-control-sm">
+						<select name="estado_b" id="estado_b" class="form-control form-control-sm">
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
 							<option value="0">Eliminado</option>
