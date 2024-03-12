@@ -71,4 +71,37 @@ order by desc_ubigeo ";
         return $data;
     }
 	
+    function obtenerDepartamento($id_departamento){
+
+        $cad = "select u.desc_ubigeo 
+        from ubigeos u 
+        where id_departamento = '".$id_departamento."' and id_provincia ='00' and id_distrito ='00'
+        ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function obtenerProvincia($id_provincia){
+
+        $cad = "select u.desc_ubigeo 
+        from ubigeos u 
+        where id_departamento = '".$id_provincia."' and id_provincia ='00' and id_distrito ='00'
+        ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function obtenerDistrito($id_distrito){
+
+        $cad = "select u.desc_ubigeo 
+        from ubigeos u 
+        where id_departamento = '".$id_distrito."' and id_provincia ='00' and id_distrito ='00'
+        ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }

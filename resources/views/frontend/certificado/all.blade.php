@@ -149,7 +149,7 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="cap_lista" name="cap_lista" placeholder="CAP">
 					</div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">

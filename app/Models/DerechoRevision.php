@@ -114,5 +114,17 @@ where p.id_solicitud=".$id;
         $data = DB::select($cad);
         return $data;
     }
+
+    public function getSolicitudNumeroCap($numero_cap){
+
+        $cad = "select c.id, pr.id_tipo_profesional tipo_proyectista from certificados c 
+        inner join solicitudes s on c.id_proyecto = s.id 
+        inner join proyectistas pr on s.id_proyectista = pr.id 
+        inner join agremiados a on pr.id_agremiado = a.id 
+        where a.numero_cap = '".$numero_cap."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
     
 }
