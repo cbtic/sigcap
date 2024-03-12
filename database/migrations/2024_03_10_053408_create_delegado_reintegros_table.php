@@ -26,7 +26,7 @@ class CreateDelegadoReintegrosTable extends Migration
             $table->string('estado',1)->nullable()->default('1');
 
             $table->bigInteger('id_usuario_inserta')->unsigned()->index();
-			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index(); 
+			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index();
 
             $table->foreign('id_regional')->references('id')->on('regiones');
 

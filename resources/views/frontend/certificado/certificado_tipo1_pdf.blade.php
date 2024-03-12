@@ -113,31 +113,53 @@ $(document).ready(function() {
 
     <div>
     <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">  
-    <h2 style="text-align:center">CERTIFICADO DE HABILITACION PROFESIONAL</h2>
-    <p style="text-align:center">  N° : <?php echo $datos[0]->codigo;?> </p>
-        <p  style="text-align:center">PARA EL TRAMITE DE APROBACION DE</p>
-        <p  style="text-align:center">ANTEPROYECTO Y/O PROYECTO ARQUITECTONICO</p>
+    <h3 style="text-align:center">CERTIFICADO DE HABILITACION PROFESIONAL</h3>
+    <!--<p style="text-align:center">  N° : <?php //echo $datos[0]->codigo;?> </p>-->
+        <p  style="text-align:center; font_size: 11">PARA EL TRAMITE DE APROBACION DE
+        ANTEPROYECTO Y/O PROYECTO ARQUITECTONICO</p>
         <hr>
         <div class="contenido">
             <!--<p id="primero">La Regional Lima del Colegio de Arquitectos del Perú, certifica que:</p>-->
-            <p style="margin-left: 0cm;"><?php echo $tratodesc;?> <?php "   "?>: <?php echo $datos[0]->desc_cliente;?> </p>
+            <p style="margin-left: 0cm; font_size: 11"><?php echo $tratodesc;?> <?php "   "?>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <?php echo $datos[0]->desc_cliente;?> </p>
             <div style="text-align: center;">
-                <span style="float: left;">COLEGIATURA N° CAP         : <?php echo $datos[0]->numero_cap;?></span>
-                <span style="float: right;">INSCRIPCIÓN: <?php echo $datos[0]->numero_regional;?></span>
+                <span style="float: left; font_size: 11">COLEGIATURA N° CAP&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <?php echo $datos[0]->numero_cap;?></span>
+                <span style="float: right; font_size: 11">INSCRIPCIÓN&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <?php echo $datos[0]->numero_regional;?></span>
             </div>
             
-           <p style="margin-top: 50px;">SE ENCUENTRA <?php echo $habilita;?> PARA EL EJERCICIO PROFESIONAL EN CALIDAD DE PROYECTISTA</p>
-            <p >I. INFORMACI&Oacute;N GENERAL DEL PROYECTO</p>
-            <p style="text-align: justify;" > 1. PROYECTISTA(S) ASOCIADOS: <?php echo $tipo_proyectista;?> </p>
-            <p>Se extiende el presente a solicitud del interesado y para los fines de 
-                            la solicitud.</p>
-                            <p></p>
-            <p>Certificado para : Acreditar Habilitaci&oacute;n Profesional</p>
+           <p style="margin-top: 50px; font_size: 11">SE ENCUENTRA <?php echo $habilita;?> PARA EL EJERCICIO PROFESIONAL EN CALIDAD DE PROYECTISTA</p>
+            <p style="font_size: 11">I. INFORMACI&Oacute;N GENERAL DEL PROYECTO</p>
+            <p style="text-align: justify; font_size: 11" > 1. PROYECTISTA(S) ASOCIADOS: <?php echo $nombre_proyectista //$tipo_proyectistas[0]->tipo_proyectista;?> </p>
+            <p style="text-align: justify; font_size: 11" > 2. NOMBRE DEL PROPIETARIO: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
+            <p style="text-align: justify; font_size: 11" > 3. DENOMINACION DEL PROYECTO: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
+            <p style="text-align: justify; font_size: 11" > 4. UBICACION: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
             
-            <p>Validez por <?php echo $datos[0]->dias_validez;?>  (<?php echo $numeroEnLetras;?> ) d&iacute;as.</p>
+            <p></p>
+            <p style="text-align: justify; font_size: 11" >Departamento: <?php //echo $tipo_proyectista->tipo_proyectista;?> Provincia: <?php //echo $tipo_proyectista->tipo_proyectista;?> Distrito:</p>
+            <p style="text-align: justify; font_size: 11" >Direecion: <?php echo $direccion_proyecto;?> </p>
+            <p style="text-align: justify; font_size: 11" >Lugar: <?php echo $lugar_proyecto;?> </p>
+            <p></p>
+            <p style="font_size: 11">II. DATOS TECNICOS DEL ANTEPROYECTO</p>
+            <p style="text-align: justify; font_size: 11" >Valor Unitario M2: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
+            <p style="text-align: justify; font_size: 11" >Tipo Obra: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
+            <p style="text-align: justify; font_size: 11" >Uso Edificacion: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
+            <p style="text-align: justify; font_size: 11" >Area Techada: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
+            <p></p>
+            
+            <p style="text-align: center; font_size: 11" >Sotano(s): <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  
+            <p style="text-align: center; font_size: 11" >Semi sotano(s): <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  
+            <p style="text-align: center; font_size: 11" >Primer Piso o nivel: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  
+            <p style="text-align: center; font_size: 11" >Otros Pisos o nivel: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  
+            <hr style="width:50%">
+            <p style="text-align: center; font_size: 11" >Total Area Techada: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  
+
+
+
+           <!--  <p>Certificado para : Acreditar Habilitaci&oacute;n Profesional</p>
+            
+            <p>Validez por <?php //echo $datos[0]->dias_validez;?>  (<?php //echo $numeroEnLetras;?> ) d&iacute;as.</p>
             <p></p>
             <p></p>
-            <p  style="text-align:right">Lima, <?php echo $formattedDate;?></p>
+            <p  style="text-align:right">Lima, <?php //echo $formattedDate;?></p> -->
         </div>
     </div>
     <!-- /.content-wrapper -->

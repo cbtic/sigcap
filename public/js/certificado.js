@@ -599,7 +599,6 @@ function Certificado_pdf(id){
 
 var href = '/certificado/certificado_pdf/'+id;
 	window.open(href, '_blank');
-	
 
 }
 

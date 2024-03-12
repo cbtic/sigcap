@@ -51,6 +51,27 @@ class Certificado extends Model
 
     }
 
+    public function datos_agremiado_certificado1($id){
+
+        $cad = "select c.id , a.numero_cap ,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado ,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez,t3.denominacion situacion,a.email1, t4.denominacion tipo_proyectista, u.id_departamento, u.id_provincia, u.id_distrito, pro.direccion direccion, pro.lugar lugar
+        from certificados c 
+        inner join agremiados a on c.id_agremiado =a.id 
+        inner join tabla_maestras tm on c.id_tipo =tm.codigo::int and tm.tipo ='100' 
+        inner join tabla_maestras tms on a.id_situacion= tms.codigo::int and  tms.tipo ='14' 
+        inner join personas p on p.id =a.id_persona
+        inner join solicitudes s on c.id_proyecto =s.id
+        inner join proyectistas pr on s.id_proyectista = pr.id
+        inner join proyectos pro on s.id_proyecto = pro.id 
+        inner join ubigeos u on pro.id_ubigeo = u.id
+        left join tabla_maestras t3 on a.id_situacion = t3.codigo::int And t3.tipo ='14' 
+        left join tabla_maestras t4 on pr.id_tipo_profesional = t4.codigo::int And t4.tipo ='41' 
+        where c.id='". $id ."'";
+    
+		$data = DB::select($cad);
+        return $data;
+
+    }
+
     function valida_pago($idagremiado,$serie,$numero,$concepto){
 
             $cad = "
