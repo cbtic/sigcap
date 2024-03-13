@@ -557,24 +557,26 @@ label.form-control-sm{
 														<select name="id_concurso_bus" id="id_concurso_bus" class="form-control form-control-sm" >
 															<option value="">--Concurso--</option>
 															<?php
-															foreach ($concurso as $row) {?>
-															<option value="<?php echo $row->id?>"><?php echo $row->periodo." ".$row->tipo_concurso?></option>
+															foreach ($concursoTotal as $row) {?>
+															<option <?php //if($row->id==$concurso_ultimo->id)echo "selected='selected'"?> value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 															<?php 
 															}
 															?>
 														</select>
 													</div>
+													<!--
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm" >
 															<option value="">--Regional--</option>
 															<?php
-															foreach ($region as $row) {?>
-															<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+															//foreach ($region as $row) {?>
+															<option value="<?php //echo $row->id?>"><?php //echo $row->denominacion?></option>
 															<?php 
-															}
+															//}
 															?>
 														</select>
 													</div>
+													-->
 													<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="Numero Cap">
 													</div>
@@ -602,7 +604,7 @@ label.form-control-sm{
 													</div>
 												</div>
 
-												<div class="table-responsive">
+												<div class="table-responsive" style="padding-top:10px">
 												<table id="tblConcurso" class="table table-hover table-sm">
 													<thead>
 													<tr style="font-size:13px">

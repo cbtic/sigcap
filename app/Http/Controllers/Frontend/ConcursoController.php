@@ -100,11 +100,12 @@ class ConcursoController extends Controller
 		//$concurso = $concurso_model->getConcursoVigente();
 		$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
 		$concurso = $concurso_model->getConcursoVigentePendienteByAgremiado($agremiado->id);
+		$concursoTotal = $concurso_model->getConcurso();
 		$documento_pendiente = $concurso_model->getInscripcionDocumentoPendienteByAgremiado($agremiado->id);
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente','documento_pendiente'));
+        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente','documento_pendiente','concursoTotal'));
     }
 	
 	

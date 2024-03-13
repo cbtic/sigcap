@@ -36,6 +36,8 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 	
+	$("#id_concurso_bus").select2();
+	
 	/*
 	$('#fecha_desde').datepicker({
         autoclose: true,
