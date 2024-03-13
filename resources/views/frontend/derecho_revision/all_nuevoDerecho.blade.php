@@ -355,6 +355,11 @@
                             <input id="fila" name="fila" on class="form-control form-control-sm"  value="<?php echo $agremiado->id_actividad_gremial?>" type="text">
 						</div>
 
+						<div class="col-lg-1">
+                            <label class="control-label form-control-sm">Zonificaci&oacute;n</label>
+                            <input id="zonificacion" name="zonificacion" on class="form-control form-control-sm"  value="<?php //echo $agremiado->id_actividad_gremial?>" type="text">
+						</div>
+
 					</div>
 					
 					<div style="margin-top:15px" class="form-group">
