@@ -26,7 +26,7 @@ begin
 
 	v_tabla=' from asignacion_cuentas ac 
 		left join plan_contables pc on pc.id = ac.id_plan_contable 
-		left join tabla_maestras tc on tc.tipo = ''119'' and tc.codigo::int = ac.id_tipo_cuenta::int 
+		left join tabla_maestras tc on tc.tipo = ''122'' and tc.codigo::int = ac.id_tipo_cuenta::int 
 		left join centro_costos cc on cc.id = ac.id_centro_costo 
 		left join partida_presupuestales pp on pp.id = ac.id_partida_presupuestal 
 		left join tabla_maestras mp on mp.tipo = ''108'' and mp.codigo::int = ac.id_medio_pago::int ';
