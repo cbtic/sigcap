@@ -94,7 +94,7 @@ class AsignacionCuentaController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
         $sw = true;
 		$plan_contable = PlanContable::where('estado','1')->orderBy('id', 'desc')->get()->all();        
-		$tipo_cuenta = $tablaMaestra_model->getMaestroByTipo(119);
+		$tipo_cuenta = $tablaMaestra_model->getMaestroByTipo(122);
 		$centro_costo = CentroCosto::where('estado','1')->orderBy('id', 'desc')->get()->all();
 		$partida_presupuestal = PartidaPresupuestale::where('estado','1')->orderBy('id', 'desc')->get()->all();
 		$medio_pago = $tablaMaestra_model->getMaestroByTipo(108);
