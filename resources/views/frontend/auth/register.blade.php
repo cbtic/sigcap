@@ -23,9 +23,12 @@
 									<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" type="text">
                             			<option value="">--Seleccionar--</option>
 										<?php
-										foreach ($tipo_documento as $row) {?>
+										foreach ($tipo_documento as $row) {
+										if($row->codigo==78){
+										?>
 										<option value="<?php echo $row->codigo?>" <?php if($row->codigo==78)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 										<?php 
+										}
 										}
 										?>										        
                                     </select>

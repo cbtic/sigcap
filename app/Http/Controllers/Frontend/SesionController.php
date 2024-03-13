@@ -251,7 +251,7 @@ class SesionController extends Controller
 						$fechaInicioTemp = date("d-m-Y", $i);
 						$dia = $dias[(date('N', strtotime($fechaInicioTemp))) - 1];
 						
-						echo $dia_semana."<br>";
+						//echo $dia_semana."<br>";
 						
 						if($dia_semana == $dia){
 							
@@ -652,6 +652,34 @@ class SesionController extends Controller
     	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
 
 		return $pdf->stream('computo_sesion.pdf');
+	
+	}
+	
+	public function calendario_sesion_pdf($id){
+		
+		$computoSesion = ComputoSesione::find($id);
+		
+		$comisionSesion_model = new ComisionSesione(); 
+		$p[]="";//2;//$request->id_periodo;
+		$p[]="";
+		$p[]=$computoSesion->anio;//$request->anio;
+		$p[]=$computoSesion->mes;//$request->mes;
+		$p[]=1;
+		$p[]=10000;
+		$comisionSesion = $comisionSesion_model->lista_computo_sesion_ajax($p);
+		
+		$dias = array('L','M','M','J','V','S','D');
+		
+		$pdf = Pdf::loadView('pdf.calendario_sesion',compact('comisionSesion','computoSesion','dias'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream('calendario_sesion.pdf');
 	
 	}
 	
