@@ -12,6 +12,18 @@ class AsignacionCuenta extends Model
 		return $this->readFunctionPostgres('sp_listar_asignacion_cuenta_paginado',$p);
     }
 
+    function getConcursoRequisitoByIdConcurso($id){
+
+        $cad = "select c.id,c.denominacion requisito,tm.denominacion tipo_documento,c.requisito_archivo 
+from concurso_requisitos c 
+inner join tabla_maestras tm on c.id_tipo_documento::int=tm.codigo::int and tm.tipo='97'
+Where c.id_concurso = ".$id;
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+    
+
     public function readFunctionPostgres($function, $parameters = null){
 	
         $_parameters = '';

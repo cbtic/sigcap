@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\AsignacionCuenta;
 use App\Models\TablaMaestra;
 
+use App\Models\PlanContable;
+use App\Models\CentroCosto;
+use App\Models\PartidaPresupuestale;
+
+
 //use App\Models\CondicionLaborale;
 
 use Auth;
@@ -41,7 +46,7 @@ class AsignacionCuentaController extends Controller
 		$p[]=$request->tipo_cuenta;
 		$p[]=$request->centro_costo;
 		$p[]=$request->partida_presupuestal;
-		$p[]=$request->codigo_financiamiento;
+		$p[]=$request->codigo_financiero;
 		$p[]=$request->medio_pago;
 		$p[]=$request->origen;
 
@@ -75,4 +80,81 @@ class AsignacionCuentaController extends Controller
         return view('frontend.persona.all_lista_asignacion',compact(''));
 
     }
+
+	public function modal_asignacion($id){
+		$id_user = Auth::user()->id;
+		
+		
+		if($id>0){
+			$asignacion = AsignacionCuenta::find($id);
+		}else{
+			$asignacion = new AsignacionCuenta;
+		}
+		
+		$tablaMaestra_model = new TablaMaestra;
+        $sw = true;
+		$plan_contable = PlanContable::where('estado','1')->orderBy('id', 'desc')->get()->all();        
+		$tipo_cuenta = $tablaMaestra_model->getMaestroByTipo(119);
+		$centro_costo = CentroCosto::where('estado','1')->orderBy('id', 'desc')->get()->all();
+		$partida_presupuestal = PartidaPresupuestale::where('estado','1')->orderBy('id', 'desc')->get()->all();
+		$medio_pago = $tablaMaestra_model->getMaestroByTipo(108);
+
+		//print_r($array);exit();
+		return view('frontend.asignacion.modal_asignacion',compact('id','asignacion','plan_contable', 'tipo_cuenta', 'centro_costo', 'partida_presupuestal', 'medio_pago'));
+	}
+
+	public function send_asignacion(Request $request){
+
+		$id_user = Auth::user()->id;
+
+		$cuenta = $request->cuenta;
+		$denominacion = $request->denominacion ;
+		$tipo_cuenta = $request->tipo_cuenta ;
+		$centro_costo = $request->centro_costo;
+		$partida_presupuestal = $request->partida_presupuestal ;
+		$codigo_financiero =  $request->codigo_financiero;
+		$medio_pago = $request->medio_pago ;
+		$origen = $request->origen;
+		
+		if($request->id == 0){									
+			$asignar = new AsignacionCuenta;
+	
+			$asignar->id_plan_contable = $cuenta;
+			$asignar->denominacion = $denominacion;
+			$asignar->id_tipo_cuenta = $tipo_cuenta;
+			$asignar->id_centro_costo = $centro_costo;
+			$asignar->id_partida_presupuestal = $partida_presupuestal;
+			$asignar->id_codigo_financiero = $codigo_financiero;
+			$asignar->id_medio_pago = $medio_pago;
+			$asignar->id_origen = $origen;
+
+			$asignar->id_usuario_inserta = $id_user;
+
+			$asignar->save();
+		}else{
+			$asignar = AsignacionCuenta::find($request->id);
+
+			$asignar->id_plan_contable = $cuenta;
+			$asignar->denominacion = $denominacion;
+			$asignar->id_tipo_cuenta = $tipo_cuenta;
+			$asignar->id_centro_costo = $centro_costo;
+			$asignar->id_partida_presupuestal = $partida_presupuestal;
+			$asignar->id_codigo_financiero = $codigo_financiero;
+			$asignar->id_medio_pago = $medio_pago;
+			$asignar->id_origen = $origen;
+
+			$asignar->save();
+		}
+    }
+
+	public function eliminar_asignacion($id,$estado)
+    {
+		$asignar = AsignacionCuenta::find($id);
+		$asignar->estado = $estado;
+		$asignar->save();
+
+		echo $asignar->id;
+
+    }
+
 }

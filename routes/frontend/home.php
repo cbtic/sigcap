@@ -581,6 +581,7 @@ Route::post('asignacions', [AsignacionCuentaController::class, 'store'])->name('
 Route::post('asignacion/listar_asignacion_ajax', [AsignacionCuentaController::class, 'listar_asignacion_ajax'])->name('asignacion.listar_asignacion_ajax');
 Route::get('asignacion/modal_asignacion/{id}', [AsignacionCuentaController::class, 'modal_asignacion'])->name('asignacion.modal_asignacion');
 Route::post('asignacion/send_asignacion', [AsignacionCuentaController::class, 'send_asignacion'])->name('asignacion.send_asignacion');
+Route::get('asignacion/eliminar_asignacion/{id}/{estado}', [AsignacionCuentaController::class, 'eliminar_asignacion'])->name('persona.eliminar_asignacion');
 
 Route::get('asignacion/consulta_asignacion', [AsignacionCuentaController::class, 'consulta_asignacion'])->name('asignacion.consulta_asignacion');
 
