@@ -130,7 +130,7 @@ $(document).ready(function() {
             <p>Se extiende el presente a solicitud del interesado y para los fines de 
                             la solicitud.</p>
                             <p></p>
-            <p>Certificado para : Acreditar Habilitaci&oacute;n Profesional</p>
+            <p>Certificado para : <?php echo $datos[0]->tipo_tramite;?></p>
             
             <p>Validez por <?php echo $datos[0]->dias_validez;?>  (<?php echo $numeroEnLetras;?> ) d&iacute;as.</p>
             <p></p>

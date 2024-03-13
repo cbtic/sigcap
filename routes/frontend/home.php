@@ -49,7 +49,7 @@ use App\Http\Controllers\Frontend\CoordinadorZonalController;
 use App\Http\Controllers\Frontend\ProyectistaController;
 
 use App\Http\Controllers\Frontend\AsignacionCuentaController;
-
+use App\Http\Controllers\Frontend\ProyectoController;
 
 /*
  * Frontend Controllers
@@ -575,7 +575,7 @@ Route::post('derecho_revision/send_nuevo_registro_solicitud', [DerechoRevisionCo
 Route::get('certificado/certificado_tipo1_pdf/{id}', [CertificadoController::class, 'certificado_tipo1_pdf'])->name('certificado.certificado_tipo1_pdf');
 Route::get('certificado/certificado_tipo2_pdf/{id}', [CertificadoController::class, 'certificado_tipo2_pdf'])->name('certificado.certificado_tipo2_pdf');
 Route::get('certificado/certificado_tipo3_pdf/{id}', [CertificadoController::class, 'certificado_tipo3_pdf'])->name('certificado.certificado_tipo3_pdf');
-
+Route::get('certificado/constancia_pdf/{id}', [CertificadoController::class, 'constancia_pdf'])->name('certificado.constancia_pdf');
 Route::get('asignacion', [AsignacionCuentaController::class, 'index'])->name('asignacion');
 Route::post('asignacions', [AsignacionCuentaController::class, 'store'])->name('asignacions');
 Route::post('asignacion/listar_asignacion_ajax', [AsignacionCuentaController::class, 'listar_asignacion_ajax'])->name('asignacion.listar_asignacion_ajax');
@@ -584,3 +584,5 @@ Route::post('asignacion/send_asignacion', [AsignacionCuentaController::class, 's
 Route::get('asignacion/eliminar_asignacion/{id}/{estado}', [AsignacionCuentaController::class, 'eliminar_asignacion'])->name('persona.eliminar_asignacion');
 
 Route::get('asignacion/consulta_asignacion', [AsignacionCuentaController::class, 'consulta_asignacion'])->name('asignacion.consulta_asignacion');
+
+Route::get('proyecto/obtener_proyecto/{numero_cap}', [ProyectoController::class, 'obtener_proyecto'])->name('proyecto.obtener_proyecto');
