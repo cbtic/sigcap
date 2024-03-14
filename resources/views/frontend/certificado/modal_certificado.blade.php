@@ -418,7 +418,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Fecha Registro</label>
-									<input id="fecha_r_" name="fecha_r_" class="form-control form-control-sm" value="<?php if($certificado->fecha_solicitud!="")echo date("Y-m-d",strtotime($certificado->fecha_solicitud))?>" type="date">
+									<input id="fecha_r_" name="fecha_r_" class="form-control form-control-sm" value="<?php if($certificado->fecha_solicitud!=""){echo date("Y-m-d",strtotime($certificado->fecha_solicitud));}else echo date('Y-m-d');?>" type="date">
 								</div>
 							</div>
 
@@ -485,7 +485,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-2">
 								<div class="form-group">
 									<label class="control-label">Fecha Emision</label>
-									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php if($certificado->fecha_emision!="")echo date("Y-m-d",strtotime($certificado->fecha_emision)) ?>" type="date">
+									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php if($certificado->fecha_emision!=""){echo date("Y-m-d",strtotime($certificado->fecha_emision));}else echo date('Y-m-d'); ?>" type="date">
 								</div>
 							</div>
 							

@@ -12,6 +12,10 @@
 	#tblAfiliado tbody tr{
 		font-size:13px
 	}
+
+    #tblCoordinadorSesion tbody tr{
+		font-size:13px
+	}
     .table-sortable tbody tr {
         cursor: move;
     }
@@ -250,8 +254,6 @@
                         </div>
                     </div>
 
-                    
-                    
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 						
@@ -260,30 +262,148 @@
 
 					</div>
                 </div>
-            
-            <div class="card-body">
 
-                    <div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
-                        <thead>
-                        <tr style="font-size:13px">
-                            <th>N°</th>
-                            <th>N° CAP</th>
-                            <th>Agremiado</th>
-                            <th>Zonal</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div><!--table-responsive-->
-                </form>
+                <div class="card">
+                    <div class="card-header">
+                        <strong>
+                            Lista de Coordinador Zonal
+                        </strong>
+                    </div>
+                    <div class="row" style="padding:20px 20px 0px 20px;">
+                            
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <select name="periodo_" id="periodo_" class="form-control form-control-sm" onchange="">
+                                <option value="0">--Selecionar--</option>
+                                    <?php
+                                    foreach ($periodo as $row) {?>
+                                        <option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                    <?php 
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <input class="form-control form-control-sm" id="numero_cap_" name="numero_cap_" placeholder="N&uacute;mero CAP">
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <input class="form-control form-control-sm" id="agremiado_" name="agremiado_" placeholder="Nombres">
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <select name="estado_" id="estado_" class="form-control form-control-sm">
+                                <option value="">Todos</option>
+                                <option value="1" selected="selected">Activo</option>
+                                <option value="2">Cesado</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						
+                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                        <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
+
+					</div>
+                </div>
+                                    
+                <div class="card-body">
+
+                        <div class="table-responsive">
+                        <table id="tblAfiliado" class="table table-hover table-sm">
+                            <thead>
+                            <tr style="font-size:13px">
+                                <th>N°</th>
+                                <th>N° CAP</th>
+                                <th>Agremiado</th>
+                                <th>Zonal</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div><!--table-responsive-->
+                    </form>
 
 
 
                 </div><!--card-body-->
+                <div class="card">
+                    <div class="card-header">
+                        <strong>
+                            Lista de Programaci&oacute;n de sesiones
+                        </strong>
+                    </div>
+                    <div class="row" style="padding:20px 20px 0px 20px;">
+                            
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <select name="periodo_2" id="periodo_2" class="form-control form-control-sm" onchange="">
+                                <option value="0">--Selecionar--</option>
+                                    <?php
+                                    foreach ($periodo as $row) {?>
+                                        <option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                    <?php 
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <input class="form-control form-control-sm" id="numero_cap_2" name="numero_cap_2" placeholder="N&uacute;mero CAP">
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <input class="form-control form-control-sm" id="agremiado_2" name="agremiado_2" placeholder="Nombres">
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <select name="estado_2" id="estado_2" class="form-control form-control-sm">
+                                <option value="">Todos</option>
+                                <option value="1" selected="selected">Activo</option>
+                                <option value="2">Cesado</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						
+                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                        <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
+
+					</div>
+                </div>
+                                    
+                <div class="card-body">
+
+                        <div class="table-responsive">
+                        <table id="tblCoordinadorSesion" class="table table-hover table-sm">
+                            <thead>
+                            <tr style="font-size:13px">
+                                <th>Periodo</th>
+                                <th>Tipo Comisi&oacute;n</th>
+                                <th>Comisi&oacute;n</th>
+                                <th>Fecha Programada</th>
+                                <th>Fecha Ejecuci&oacute;n</th>
+                                <th>Sesi&oacute;n Programada</th>
+                                <th>Estado Sesi&oacute;n</th>
+                                <th>Estado Aprobaci&oacute;n</th>
+                                <th>Informe</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div><!--table-responsive-->
+                    </form>
+                </div>
             </div><!--card-->
         <!--</div>--><!--col-->
     <!--</div>--><!--row-->

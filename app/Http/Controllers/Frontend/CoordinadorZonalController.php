@@ -52,12 +52,38 @@ class CoordinadorZonalController extends Controller
     public function listar_coordinadorZonal_ajax(Request $request){
 	
 		$coordinadorZonal_model = new CoordinadorZonal;
-		$p[]="";//$request->nombre;
-		$p[]="";
+		$p[]=$request->periodo;
+		$p[]=$request->numero_cap;//$request->nombre;
+		$p[]=$request->agremiado;
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $coordinadorZonal_model->listar_coordinadorZonal_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	}
+
+	public function listar_coordinadorZonalSesion_ajax(Request $request){
+	
+		$coordinadorZonal_model = new CoordinadorZonal;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+        $p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $coordinadorZonal_model->listar_coordinadorZonalSesion_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
