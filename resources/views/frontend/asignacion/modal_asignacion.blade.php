@@ -191,11 +191,12 @@ $.mask.definitions['p'] = "[Mm]";
 		var codigo_financiero = $('#codigo_financiero').val();
 		var medio_pago = $('#medio_pago').val();
 		var origen = $('#origen').val();
-
+/*
 
 		if (estado == "0") {
 			msg += "Debe ingresar el Estado Laboral <br>";
 		}
+		*/
 
 		if (msg != "") {
 			bootbox.alert(msg);

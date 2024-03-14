@@ -512,7 +512,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="form-group">
 								<div class="col-lg-12">
 									<label class="control-label">Codigo</label>
-									<input id="codigo_" name="codigo_" class="form-control form-control-sm" value="<?php echo $certificado->codigo ?>" type="text">
+									<input id="codigo_" name="codigo_" class="form-control form-control-sm" value="<?php echo $certificado->codigo ?>" type="text" readonly="readonly">
 								</div>
 							</div>
 						</div>

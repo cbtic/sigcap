@@ -243,6 +243,17 @@ function fn_save_documento(){
 				datatablenew();
 				cargarRequisitos(id_concurso_inscripcion);
 				$("#divAlertaDocumento").hide();
+				
+				bootbox.confirm({ 
+					size: "small",
+					message: "&iquest;Se registro correctamente, deseas registrar otro documento?, caso contrario ya culmino su postulaci&oacute;n", 
+					callback: function(result){
+						if (result==true) {
+							modalRequisito(0);
+						}
+					}
+				});
+				
             }
     });
 }

@@ -12,9 +12,10 @@ class Concurso extends Model
 	
 	function getConcurso(){
 
-        $cad = "select c.id,c.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
+        $cad = "select c.id,pc.descripcion periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
 to_char(c.fecha,'dd-mm-yyyy')fecha,to_char(c.fecha_inscripcion_inicio,'dd-mm-yyyy')fecha_inscripcion_inicio,to_char(c.fecha_inscripcion_fin,'dd-mm-yyyy')fecha_inscripcion_fin,to_char(c.fecha_acreditacion_inicio,'dd-mm-yyyy')fecha_acreditacion_inicio,to_char(c.fecha_acreditacion_fin,'dd-mm-yyyy')fecha_acreditacion_fin 
 from concursos c
+inner join periodo_comisiones pc on c.id_periodo=pc.id 
 inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
 left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
 where c.estado='1'";
@@ -40,9 +41,10 @@ and now() between (to_char(c.fecha_inscripcion_inicio,'dd-mm-yyyy')||' 00:00')::
 	function getConcursoRequisitoByIdConcurso($id){
 
         $cad = "select c.id,c.denominacion requisito,tm.denominacion tipo_documento,c.requisito_archivo 
-        from concurso_requisitos c 
-        inner join tabla_maestras tm on c.id_tipo_documento::int=tm.codigo::int and tm.tipo='97'
-        Where c.id_concurso = '".$id."' order by 1 asc";
+from concurso_requisitos c 
+inner join tabla_maestras tm on c.id_tipo_documento::int=tm.codigo::int and tm.tipo='97'
+Where c.id_concurso = ".$id." 
+order by c.denominacion asc";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
@@ -62,9 +64,10 @@ And cp.id_concurso = ".$id;
 	
 	function getConcursoVigentePendienteByAgremiado($id_agremiado){
 
-        $cad = "select c.id,c.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
+        $cad = "select c.id,pc.descripcion periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
 to_char(c.fecha,'dd-mm-yyyy')fecha,to_char(c.fecha_inscripcion_inicio,'dd-mm-yyyy')fecha_inscripcion_inicio,to_char(c.fecha_inscripcion_fin,'dd-mm-yyyy')fecha_inscripcion_fin,to_char(c.fecha_acreditacion_inicio,'dd-mm-yyyy')fecha_acreditacion_inicio,to_char(c.fecha_acreditacion_fin,'dd-mm-yyyy')fecha_acreditacion_fin 
 from concursos c
+inner join periodo_comisiones pc on c.id_periodo=pc.id 
 inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
 left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
 where c.estado='1'
@@ -82,10 +85,11 @@ where id_agremiado=".$id_agremiado." and ci.estado='1'
 		
 	function getInscripcionDocumentoPendienteByAgremiado($id_agremiado){
 
-        $cad = "select cp.id_concurso,c.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso  
+        $cad = "select cp.id_concurso,pc.descripcion periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso  
 from concurso_inscripciones ci 
 inner join concurso_puestos cp on ci.id_concurso_puesto=cp.id
 inner join concursos c on cp.id_concurso=c.id
+inner join periodo_comisiones pc on c.id_periodo=pc.id 
 inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
 left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
 where id_agremiado=".$id_agremiado." and ci.estado='1'

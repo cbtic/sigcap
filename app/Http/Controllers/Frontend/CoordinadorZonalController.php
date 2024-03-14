@@ -98,7 +98,25 @@ class CoordinadorZonalController extends Controller
 
 		echo json_encode($result);
 	}
-
+	
+	public function upload_informe(Request $request){
+		
+		$path = "img/informe";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+		
+		$path = "img/informe/tmp";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+		
+    	$filepath = public_path('img/informe/tmp/');
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		echo $_FILES['file']['name'];
+		
+	}
+	
     public function modal_coordinadorZonal_nuevoCoordinadorZonal($id){
 		
 		$coordinadorZonal = new CoordinadorZonal;
@@ -202,9 +220,17 @@ class CoordinadorZonalController extends Controller
 		$estado_sesion = $request->estado_sesion;
 		$aprobar_pago = $request->aprobar_pago;
 		$id_comision = $coordinador_zonal->id_comision;
-        
+        $img_foto = $request->img_foto;
+		
         foreach($request->fecha as $key=>$row){
             
+			$filepath_tmp = public_path('img/informe/tmp/');
+			$filepath_nuevo = public_path('img/informe/');
+			
+			if (file_exists($filepath_tmp.$img_foto[$key])) {
+				copy($filepath_tmp.$img_foto[$key], $filepath_nuevo.$img_foto[$key]);
+			}
+			
 			/**********ComisionSesione**************/
             $comision_sesione = new ComisionSesione;
             $comision_sesione->id_regional = $coordinador_zonal->id_regional;
@@ -212,6 +238,7 @@ class CoordinadorZonalController extends Controller
             $comision_sesione->id_tipo_sesion = 401;
             $comision_sesione->fecha_programado = $row;
             $comision_sesione->fecha_ejecucion = $row;
+			$comision_sesione->ruta_informe = "img/informe/".$img_foto[$key];
             //$comision_sesione->id_aprobado = 2;
             //$comision_sesione->observaciones = 1;
             $comision_sesione->id_comision = $id_comision;
