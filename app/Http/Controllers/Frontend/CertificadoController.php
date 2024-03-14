@@ -134,8 +134,12 @@ class CertificadoController extends Controller
 	public function send_certificado(Request $request){
 		$id_user = Auth::user()->id;
 		
+		$certificado_model = new Certificado;
+		
 		if($request->id == 0){
 			$certificado = new Certificado;
+			$codigo = $certificado_model->getCodigoCertificado($request->tipo);
+			$certificado->codigo = $codigo;
 		}else{
 			$certificado = Certificado::find($request->id);
 		}
@@ -146,7 +150,7 @@ class CertificadoController extends Controller
 
 		$certificado->dias_validez = $request->validez;
 		$certificado->especie_valorada = $request->ev;
-		$certificado->codigo =$request->codigo; 
+		//$certificado->codigo = getCodigoCertificado($request->tipo);//$request->codigo; 
 		$certificado->observaciones =$request->observaciones;
 		$certificado->estado =1;
 		$certificado->id_tipo =$request->tipo;

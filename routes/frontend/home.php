@@ -543,6 +543,8 @@ Route::post('coordinador_zonal/listar_coordinadorZonal_ajax', [CoordinadorZonalC
 Route::get('coordinador_zonal/modal_coordinadorZonal_nuevoCoordinadorZonal/{id}', [CoordinadorZonalController::class, 'modal_coordinadorZonal_nuevoCoordinadorZonal'])->name('coordinador_zonal.modal_coordinadorZonal_nuevoCoordinadorZonal');
 Route::post('coordinador_zonal/send_coordinador_zonal_nuevoCoordinadorZonal', [CoordinadorZonalController::class, 'send_coordinador_zonal_nuevoCoordinadorZonal'])->name('coordinador_zonal.send_coordinador_zonal_nuevoCoordinadorZonal');
 
+Route::post('coordinador_zonal/upload_informe', [CoordinadorZonalController::class, 'upload_informe'])->name('coordinador_zonal.upload_informe');
+
 Route::get('movilidad/obtener_comision/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision'])->name('movilidad.obtener_comision');
 Route::get('movilidad/obtener_comision_movilidad/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision_movilidad'])->name('movilidad.obtener_comision_movilidad');
 
