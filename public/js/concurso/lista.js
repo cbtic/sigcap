@@ -402,7 +402,7 @@ function datatablenew(){
 			
 			var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
             var id_sub_tipo_concurso = $('#id_sub_tipo_concurso_bus').val();
-			var periodo = $('#periodo_bus').val();
+			var periodo = $('#id_periodo_bus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
 			
@@ -440,9 +440,9 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var tipo_concurso = "";
-					if(row.tipo_concurso!= null)tipo_concurso = row.tipo_concurso;
-					return tipo_concurso;
+                	var periodo = "";
+					if(row.periodo!= null)periodo = row.periodo;
+					return periodo;
                 },
                 "bSortable": true,
                 "aTargets": [1]
@@ -450,19 +450,19 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var sub_tipo_concurso = "";
-					if(row.sub_tipo_concurso!= null)sub_tipo_concurso = row.sub_tipo_concurso;
-					return sub_tipo_concurso;
+                	var tipo_concurso = "";
+					if(row.tipo_concurso!= null)tipo_concurso = row.tipo_concurso;
+					return tipo_concurso;
                 },
                 "bSortable": true,
                 "aTargets": [2]
                 },
 				
-                {
+				{
                 "mRender": function (data, type, row) {
-                	var periodo = "";
-					if(row.periodo!= null)periodo = row.periodo;
-					return periodo;
+                	var sub_tipo_concurso = "";
+					if(row.sub_tipo_concurso!= null)sub_tipo_concurso = row.sub_tipo_concurso;
+					return sub_tipo_concurso;
                 },
                 "bSortable": true,
                 "aTargets": [3]

@@ -381,6 +381,7 @@ function limpiar(){
 	$('#id_tipo_documento').val("");
 	$('#denominacion').val("");
 	$('#img_foto').val("");
+	$("#img_ruta").attr("src", "/img/sin_imagen.jpg");
 }
 
 function fn_save_requisito(){

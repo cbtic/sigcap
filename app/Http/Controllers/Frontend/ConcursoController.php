@@ -38,10 +38,13 @@ class ConcursoController extends Controller
     function index(){
 		
 		$tablaMaestra_model = new TablaMaestra;
+		$periodoComisione_model = new PeriodoComisione;
 		
 		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.concurso.all',compact('tipo_concurso'));
+        return view('frontend.concurso.all',compact('tipo_concurso','periodo','periodo_ultimo'));
     }
 	
 	public function consulta_resultado(){
