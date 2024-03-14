@@ -12,7 +12,7 @@
 
   .modal-dialog {
     width: 100%;
-    max-width: 40% !important
+    max-width: 50% !important
   }
 
   #tablemodal {
@@ -212,12 +212,12 @@
 
 $("#profesion").select2({ width: '100%' });
 
-function obtener_profesional(){
+function obtener_profesional_(){
 	
-  var numero_documento = $('#dni').val();
+  var numero_documento_ = $('#dni').val();
   //console.log(numero_documento);
   $.ajax({
-      url: '/persona/obtenerPersona/'+numero_documento,
+      url: '/persona/obtenerPersona/'+numero_documento_,
       dataType: "json",
       success: function(result){
 
@@ -232,8 +232,10 @@ function obtener_profesional(){
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si, Crear!'
           }).then((result) => {
+            //alert(result);exit();
             if (result.value) {
-            modal_persona_new(numero_documento);
+              var numero_documento_ = $('#dni').val();
+              modal_personaNuevo(numero_documento_);
             //document.location="eliminar.php?codigo="+id;
             
             }
@@ -284,8 +286,8 @@ function save_beneficiario(){
               success: function (result) {
           
           
-          window.location.reload();
-          $('#openOverlayOpc').modal('hide');
+          //window.location.reload();
+          //$('#openOverlayOpc').modal('hide');
           
          
               }
@@ -331,6 +333,7 @@ function obtenerPersona(){
             confirmButtonText: 'Si, Crear!'
           }).then((result) => {
             if (result.value) {
+            //modal_persona_new();
             modal_personaNuevo();
             //document.location="eliminar.php?codigo="+id;
             
@@ -357,6 +360,9 @@ function obtenerPersona(){
   }
 
 function modal_personaNuevo(){
+
+  var numero_documento_ = $('#dni').val();
+
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
@@ -402,7 +408,7 @@ function modal_personaNuevo(){
                 
                 
                   <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                       <div class="form-group">
                         <label class="control-label form-control-sm">RUC</label>
                         <input name="ruc" id="ruc" type="text" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" onblur="" readonly='readonly'>
@@ -410,10 +416,10 @@ function modal_personaNuevo(){
                       </div>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                       <div class="form-group">
                         <label class="control-label form-control-sm">N&uacute;mero Documento</label>
-                        <input name="dni" id="dni" type="text" class="form-control form-control-sm" value="<?php echo $persona->numero_documento?>" onchange="obtener_profesional()" >
+                        <input name="dni" id="dni" type="text" class="form-control form-control-sm" value="<?php echo $persona->numero_documento?>" onchange="obtener_profesional_()" >
                           
                       </div>
                     </div>
@@ -454,7 +460,39 @@ function modal_personaNuevo(){
                       </div>
                     </div>
                   </div>
+
+                  <div class="card-body">
+
+                    <div class="table-responsive">
+                    <table id="tblBeneficiario" class="table table-hover table-sm">
+                        <thead>
+                        <tr style="font-size:13px">
+                            <th>N&uacute;mero Documento</th>
+                            <th>Nombres</th>
+                            <th>Direcci&oacute;n</th>
+                            <th>Celular</th>
+                            <th>Correo</th>
+                            
+                            <!--<th>Acciones</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($empresa_beneficiario as $row) {?>
+                        <tr style='font-size:13px'>
+                          <!--<input type='hidden' name='id_beneficiario[]' value='<?php //echo $row->id?>'>-->
+                          <td class='text-left'><?php echo $row->numero_documento?></td>
+                          <td class='text-left'><?php echo $row->nombres?></td>
+                          <td class='text-left'><?php echo $row->direccion?></td>
+                          <td class='text-left'><?php echo $row->numero_celular?></td>
+                          <td class='text-left'><?php echo $row->correo?></td>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                    </div>
+                    </div>
+
                 </div>
+                </form>
             </div>
           </div>
         </div>
