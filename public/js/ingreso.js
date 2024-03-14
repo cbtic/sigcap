@@ -213,6 +213,9 @@ function calcular_total(obj){
 		//alert(key+"|"+key2);
 		$(obj).parent().parent().parent().find('.chek').val("1");
 
+		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",false);
+		
+
 
 	}else{
 		var key = $(obj).attr("key");
@@ -230,6 +233,9 @@ function calcular_total(obj){
 		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',true);
 
 		$(obj).parent().parent().parent().find('.chek').val("");
+
+		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",true);
+		
 		
 		
 		//alert(key2);
@@ -341,31 +347,7 @@ function calcular_total(obj){
 		var numero_cuotas_pp =$('#numero_cuotas_pp').val("");
 		var importe_pp =$('#importe_pp').val("");
 				
-		
-/*
-		if(val_descuento!=""){
-			valor_venta_bruto = val_total/1.18;
-			descuento = (val_total*val_descuento/100)/1.18;
-			valor_venta = valor_venta_bruto - descuento;
-			igv = valor_venta*0.18;
-			total += igv + valor_venta_bruto - descuento;	
-		}else{
-			total += Number(val_total);
-		}
-		*/
-
-	/*
-		if(val_descuento=="S"){
-			valor_venta_bruto = val_total/1.18;
-			descuento = (importe_pp*numero_cuotas_pp);
-			valor_venta = valor_venta_bruto - descuento;
-			igv = valor_venta*0.18;
-			total += igv + valor_venta_bruto - descuento;
-			
-		}else{
-			total += Number(val_total);
-		}
-*/
+	
 		total += Number(val_total);
 		stotal += Number(val_sub_total);
 		igv += Number(val_igv);
@@ -397,6 +379,109 @@ function calcular_total(obj){
 		$('#MonAd').val(total.toFixed(2));
 	}	
 }
+
+function calcular_total_otros(obj){
+	
+	var total = 0;
+	var descuento = 0;
+	var valor_venta_bruto = 0;
+	var valor_venta = 0;
+	var igv = 0;
+	var stotal = 0;
+	var descuento =0;
+	
+	var cantidad = $(".mov:checked").length;
+	if(cantidad == 0)$('#id_concepto_sel').val("");
+	
+	var id_concepto = $('#id_concepto_sel').val();
+	var id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
+	
+	if(id_concepto!="" && id_concepto!=id_concepto_actual){
+		bootbox.alert("La seleccion no pertence a los tipos de documento seleccionados");
+		$(obj).prop("checked",false);		
+		return false;
+	}
+	
+	var ruc_p = $('#ruc_p').val();
+
+	$("#btnBoleta").prop('disabled', true);
+    $("#btnFactura").prop('disabled', true);
+	
+	if(cantidad != 0){
+	
+		var tipo_documento = $('#tipo_documento').val();
+
+		if(tipo_documento == "79"){//RUC
+			
+			$("#btnBoleta").prop('disabled', true);
+			$("#btnFactura").prop('disabled', false);
+		}else
+		{
+			$("#btnBoleta").prop('disabled', false);
+			
+			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
+		}
+	}
+
+	$(".mov:checked").each(function (){
+
+		var val_precio = $(this).parent().parent().parent().find('.val_precio').html();
+		var val_cantidad = $(this).parent().parent().parent().find('#cantidad').val();
+
+
+		//alert(val_precio+"|"+val_cantidad);
+		var val_total = val_precio * val_cantidad;
+		$(this).parent().parent().parent().find('.val_total').html(val_total);
+		//var val_total = $(this).parent().parent().parent().find('.val_total').html();
+
+		//var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		//var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		var val_sub_total = (val_total/1.18);
+		var val_igv = (val_total* 0.18);
+		$(this).parent().parent().parent().find('.val_sub_total').html(val_sub_total);
+		$(this).parent().parent().parent().find('.val_igv').html(val_igv);
+
+		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
+		var val_descuento =$('#DescuentoPP').val("");
+		var numero_cuotas_pp =$('#numero_cuotas_pp').val("");
+		var importe_pp =$('#importe_pp').val("");
+				
+		total += Number(val_total);
+		stotal += Number(val_sub_total);
+		igv += Number(val_igv);
+
+		$(this).parent().parent().parent().find('#comprobante_detalle_cantidad').val(val_cantidad)
+		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(igv)
+		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(val_total)
+		//$("#comprobante_detalle_cantidad").val(5000);
+
+		//$('input[name=comprobante_detalle[0][cantidad]]').val(5000);
+
+		//comprobante_detalle[0][total]
+		//comprobante_detalle[0][igv]
+
+	});
+
+	descuento = 0;
+	//alert(total);
+	$('#total').val(total.toFixed(2));
+	$('#stotal').val(stotal.toFixed(2));
+	$('#igv').val(igv.toFixed(2));
+	$('#totalDescuento').val(descuento.toFixed(2));
+
+	if(cantidad > 1){
+		$('#MonAd').attr("readonly",true);
+		$('#MonAd').val("0");
+	}else{
+		$('#MonAd').attr("readonly",false);
+		$('#MonAd').val(total.toFixed(2));
+	}	
+
+	
+
+	total_deuda();
+}
+
 
 function calcular_total_(obj){
 		
