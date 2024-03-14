@@ -67,21 +67,33 @@ foreach($valorizacion as $key=>$row):
 	<td class="text-left"><?php echo $n?></td>	
 	<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha_proceso))?></td>
     <td class="text-left"><?php echo $row->descripcion?></td>
+
 	<?php if ($row->vencio=="1"){ ?>
 		<td class="text-left" style="color:red" ><?php echo date("d/m/Y", strtotime($row->fecha))?></td>	
 	<?php }else{?>
 		<td class="text-left" ><?php echo date("d/m/Y", strtotime($row->fecha))?></td>
 	<?php }?>
 
-	<td class="text-left"><?php echo $row->abreviatura?></td>
+	<td class="text-right"><?php echo number_format($row->valor_unitario,2)?></td>
+	
+	<?php if ($row->otro_concepto=="1"){ ?>
+		<td>
+		<input type="text" value="<?php echo $row->cantidad?>"  data-toggle="tooltip" data-placement="top" title="Ingresar la cantidad" 
+		name="cantidad[]"  id="cantidad<?php echo $n?>" 
+		class="cantidad input-sm  form-control form-control-sm text-center" style="margin-left:4px; width:80px" />	
+		</td>
+	<?php }else{?>
+		<td class="text-center" ><?php echo $row->cantidad?></td>
+	<?php }?>
+
+
 	<td class="text-right val_total_">	
-		<span class="val_descuento" style="float:left"></span>			
+		<span class="val_descuento" style="float:left"></span>	
+
 		<span class="val_total"><?php echo number_format($monto,2)?></span>
-
+		
 		<span hidden class="val_sub_total"><?php echo number_format($stotal,2)?></span>
-
 		<span hidden class="val_igv"><?php echo number_format($igv_,2)?></span>
-
 		<span hidden class="id_concepto_modal_sel"><?php echo $row->id_concepto?></span>
 		
 	</td>

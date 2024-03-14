@@ -452,15 +452,16 @@
                                                 <thead>
                                                     <tr style="font-size:13px">
                                                         <!--<th class="text-right" width="5%">-->
-                                                        <th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
+                                                        <th width="5%" style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
                                                             <input type="checkbox" name="select_all" value="1" id="example-select-all" <?php echo $seleccionar_todos ?>>
                                                         </th>
-                                                        <th>Nro</th>
-                                                        <th>F. Proceso</th>
-                                                        <th>Concepto</th>
-                                                        <th>F. Vencimiento</th>
-                                                        <th>Moneda</th>
-                                                        <th class="text-right">Monto</th>
+                                                        <th width="5%">Nro</th>
+                                                        <th width="10%">Fecha</th>
+                                                        <th width="40%">Concepto</th>
+                                                        <th width="10%">Fecha Vencimiento</th>                                                        
+                                                        <th width="10%" class="text-center">P.Unit.</th>                                                        
+                                                        <th width="10%" class="text-center">Cantidad</th>
+                                                        <th width="10%"class="text-center">Total</th>
                                                         <!--<th>Estado</th>-->
                                                         <!--<th>Opc</th>-->
                                                     </tr>
