@@ -56,6 +56,8 @@ class CertificadoController extends Controller
 		$id_user = Auth::user()->id;
 		$certificado = new Certificado();
         $certificado_model = new Certificado();
+		$certificado_model2 = new Certificado();
+		$tablaMaestra_model = new TablaMaestra;
 		$proyecto = new Proyecto();
 
 		$proyecto_model = new Proyecto();
@@ -69,10 +71,17 @@ class CertificadoController extends Controller
             $cap_numero=$datos_agremiado[0]->numero_cap;
 			$desc_cliente=$datos_agremiado[0]->agremiado;
 			$email1=$datos_agremiado[0]->email1;
-			//$situacion=$datos_agremiado[0]->tipo_certificado;
-			//$situacion=$datos_agremiado[0]->tipo_certificado;
 			$situacion=$datos_agremiado[0]->situacion;
+
+
+			//$situacion=$datos_agremiado[0]->tipo_certificado;
+			//$situacion=$datos_agremiado[0]->tipo_certificado;
 			
+			$tipo_certificado = $tablaMaestra_model->getMaestroByTipo(100);
+			$tipo_tramite = $tablaMaestra_model->getMaestroByTipo(44);
+			
+			$nombre_proyecto=$certificado_model2->datos_agremiado_certificado1($id);
+			$nombre_proy=$nombre_proyecto[0]->id_solicitud;
 		} 
 		else{
 			$certificado = new Certificado;
@@ -82,19 +91,17 @@ class CertificadoController extends Controller
 			$situacion="";
 			$id_seguro="";
 			$email1="";
+			$tipo_certificado = $tablaMaestra_model->getMaestroByTipo(100);
+			$tipo_tramite = $tablaMaestra_model->getMaestroByTipo(44);
+			$nombre_proy="";
+			
 		} 
         
-        $tablaMaestra_model = new TablaMaestra;
-	
-		
-		$tipo_certificado = $tablaMaestra_model->getMaestroByTipo(100);
-		$tipo_tramite = $tablaMaestra_model->getMaestroByTipo(44);
-
 		//$regione_model = new Regione;
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite'));
+		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy'));
 
     }
 
@@ -147,7 +154,9 @@ class CertificadoController extends Controller
 		$certificado->fecha_solicitud = $request->fecha_sol;
 		$certificado->fecha_emision = $request->fecha_emi;
 		$certificado->id_agremiado = $request->idagremiado;
-
+		$certificado->id_tipo_tramite = $request->tipo_tramite;
+		$certificado->id_solicitud = $request->nombre_proyecto;
+		
 		$certificado->dias_validez = $request->validez;
 		$certificado->especie_valorada = $request->ev;
 		//$certificado->codigo = getCodigoCertificado($request->tipo);//$request->codigo; 
@@ -157,7 +166,6 @@ class CertificadoController extends Controller
 		$certificado->id_usuario_inserta = $id_user;
 	
 		$certificado->save();
-		
 		        
     }
 	public function eliminar_certificado($id){
