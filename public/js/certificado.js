@@ -482,7 +482,7 @@ function datatablenew(){
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 						
 						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalCertificado('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="Certificado_pdf('+row.id+')" ><i class="fa fa-edit"></i> Ver Certificado</button>';    
+						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="valida_certificado('+row.id+')" ><i class="fa fa-edit"></i> Ver Certificado</button>';    
 						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
@@ -589,17 +589,71 @@ function modalCertificado_i(id){
 
 }
 
-function Certificado_pdf(id){
+function valida_certificado(id){
 	
-//alert (NumeroALetras(50));
+	/*var href = '/certificado/certificado_pdf/'+id;
+				window.open(href, '_blank');*/
+	$.ajax({
+		url: "/certificado/certificado_tipo/"+id,
+		type: "GET",
+		success: function (result) {
+			//var tipo_certificado="";
+			//tipo_certificado.val(result.tipo_certificado);
+			//alert(result);exit();
+			
+			
+			/*if (Array.isArray(result) && result.length > 0) {
+                var tipo_certificado2 = result[0].tipo_certificado;*/
 
+			//var tipo_certificado =2;
+			//var tipo_certificado = parseInt(tipo_certificado2);
+			//alert(result);exit();
+			var tipo_certificado = result[21];
+			//console.log('dato1',result[21]);exit();
+			//alert(tipo_certificado);exit();
 
-//	$(".modal-dialog").css("width","85%");
-//	$('#openOverlayOpc .modal-body').css('height', 'auto');
+			//var tipo_certificado=tipo_certificado2.toString();
 
-var href = '/certificado/certificado_pdf/'+id;
+			if(tipo_certificado=="1"){
+				certificado_tipo1_pdf(id);
+			}else if(tipo_certificado=="2"){
+				certificado_tipo2_pdf(id);
+			}else if(tipo_certificado=="3"){
+				certificado_tipo3_pdf(id);
+			}else if(tipo_certificado=="4"){
+				certificado_pdf(id);
+			}else if(tipo_certificado=="5"){
+				constancia_pdf(id);
+			}
+		//}
+		}
+	});
+
+}
+
+function certificado_tipo1_pdf(id){
+	var href = '/certificado/certificado_tipo1_pdf/'+id;
 	window.open(href, '_blank');
+}
 
+function certificado_tipo2_pdf(id){
+	var href = '/certificado/certificado_tipo2_pdf/'+id;
+	window.open(href, '_blank');
+}
+
+function certificado_tipo3_pdf(id){
+	var href = '/certificado/certificado_tipo3_pdf/'+id;
+	window.open(href, '_blank');
+}
+
+function certificado_pdf(id){
+	var href = '/certificado/certificado_pdf/'+id;
+	window.open(href, '_blank');
+}
+
+function constancia_pdf(id){
+	var href = '/certificado/constancia_pdf/'+id;
+	window.open(href, '_blank');
 }
 
 

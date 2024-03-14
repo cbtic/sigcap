@@ -40,9 +40,9 @@ and now() between (to_char(c.fecha_inscripcion_inicio,'dd-mm-yyyy')||' 00:00')::
 	function getConcursoRequisitoByIdConcurso($id){
 
         $cad = "select c.id,c.denominacion requisito,tm.denominacion tipo_documento,c.requisito_archivo 
-from concurso_requisitos c 
-inner join tabla_maestras tm on c.id_tipo_documento::int=tm.codigo::int and tm.tipo='97'
-Where c.id_concurso = ".$id;
+        from concurso_requisitos c 
+        inner join tabla_maestras tm on c.id_tipo_documento::int=tm.codigo::int and tm.tipo='97'
+        Where c.id_concurso = '".$id."' order by 1 asc";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;

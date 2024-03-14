@@ -1,5 +1,4 @@
-
-CREATE OR REPLACE FUNCTION public.sp_listar_coordinador_zonal_paginado(p_numero_cap character varying, p_agremiado character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_coordinador_zonal_paginado(p_periodo character varying, p_numero_cap character varying, p_agremiado character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -25,8 +24,8 @@ begin
 	v_tabla='from coordinador_zonales cz 
 	inner join agremiados a on cz.id_agremiado = a.id 
 	inner join personas p on a.id_persona = p.id 
-	inner join tabla_maestras zo on cz.id_zonal::int = zo.codigo::int And zo.tipo =''117'' 
-	inner join tabla_maestras ec on cz.estado_coordinador::int = ec.codigo::int And ec.tipo =''119'' 
+	left join tabla_maestras zo on cz.id_zonal::int = zo.codigo::int And zo.tipo =''117'' 
+	left join tabla_maestras ec on cz.estado_coordinador::int = ec.codigo::int And ec.tipo =''119'' 
 	';
 	
 	v_where = ' Where 1=1  ';
@@ -50,6 +49,17 @@ begin
 	If p_moneda<>'' Then
 	 v_where:=v_where||'And m.id_moneda = '''||p_moneda||''' ';
 	End If;*/
+	If p_numero_cap<>'' Then
+	 v_where:=v_where||'And a.numero_cap = '''||p_numero_cap||''' ';
+	End If;
+
+	If p_agremiado<>'' Then
+	 v_where:=v_where||'And p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres ilike ''%'||p_agremiado||'%'' ';
+	End If;
+
+	if p_periodo<>'' Then
+	 v_where:=v_where||'And cz.id_periodo = '''||p_periodo||''' ';
+	End If;
 
 	If p_estado<>'' Then
 	 v_where:=v_where||'And cz.estado = '''||p_estado||''' ';
@@ -71,4 +81,3 @@ End
 
 $function$
 ;
-

@@ -127,10 +127,12 @@ class PeriodoComisionController extends Controller
 		}*/
 
 		if(($fecha_actual >= $request->fecha_inicio) && ($fecha_actual <= $request->fecha_fin)) {
-			$periodoComision->estado = 0;		
+			$periodoComision->estado = 1;
 		}else{
-			$periodoComision->estado = 1;	
+			$periodoComision->estado = 0;
 		}
+
+		//print_r($fecha_actual);exit();
 
 		//print_r($periodoComision->estado);
 		//print_r($request->fecha_inicio);
