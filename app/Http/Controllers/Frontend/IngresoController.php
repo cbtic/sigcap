@@ -417,7 +417,7 @@ class IngresoController extends Controller
         $persona = new Persona();
         $empresa_model = new Empresa();
         $beneficiario_model = new Beneficiario();
-        $empresa = $empresa_model->getEmpresaId(1);
+        $empresa = $empresa_model->getEmpresaId($id_persona);
         $empresa_beneficiario = $beneficiario_model->getBeneficiarioId($empresa->id);
        
 		//$beneficiario = new Beneficiario;
