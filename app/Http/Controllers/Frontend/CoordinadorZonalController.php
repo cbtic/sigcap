@@ -42,10 +42,11 @@ class CoordinadorZonalController extends Controller
 		$region = $region_model->getRegionAll();
         $periodo = $periodo_model->getPeriodoVigenteAll();
 		$zonal = $tablaMaestra_model->getMaestroByTipo(117);
+		$estado_aprobacion = $tablaMaestra_model->getMaestroByTipo(109);
 		$estado = $tablaMaestra_model->getMaestroByTipo(119);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo'));
+        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion'));
 
     }
 
@@ -75,11 +76,12 @@ class CoordinadorZonalController extends Controller
 	public function listar_coordinadorZonalSesion_ajax(Request $request){
 	
 		$coordinadorZonal_model = new CoordinadorZonal;
+		$p[]=$request->periodo;
+		$p[]=$request->agremiado;
 		$p[]="";
 		$p[]="";
 		$p[]="";
-		$p[]="";
-		$p[]="";
+		$p[]=$request->estado_aprobado;
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;

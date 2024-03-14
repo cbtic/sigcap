@@ -7,6 +7,10 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
+	$('#btnBuscar_').click(function () {
+		fn_ListarBusqueda_();
+	});
+
 	$('#agremiado').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -738,6 +742,9 @@ function datatablenew2(){
             var iCantMostrar 	= aoData[4].value;
 			
 			var id = $('#id').val();
+			var periodo = $('#periodo_2').val();
+			var agremiado = $('#agremiado_2').val();
+			var estado_aprobado = $('#id_estado_aprobacion_bus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -746,7 +753,7 @@ function datatablenew2(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,estado:estado,
+						id:id,periodo:periodo,agremiado:agremiado,estado_aprobado:estado_aprobado,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -819,12 +826,21 @@ function datatablenew2(){
 				},
 				{
 					"mRender": function (data, type, row) {
+						var tipo_programacion = "";
+						if(row.tipo_programacion!= null)tipo_programacion = row.tipo_programacion;
+						return tipo_programacion;
+					},
+					"bSortable": false,
+					"aTargets": [6]
+				},
+				{
+					"mRender": function (data, type, row) {
 						var estado_sesion = "";
 						if(row.estado_sesion!= null)estado_sesion = row.estado_sesion;
 						return estado_sesion;
 					},
 					"bSortable": false,
-					"aTargets": [6]
+					"aTargets": [7]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -833,9 +849,18 @@ function datatablenew2(){
 						return estado_aprobacion;
 					},
 					"bSortable": false,
-					"aTargets": [7]
+					"aTargets": [8]
 				},
 				{
+					"mRender": function (data, type, row) {
+						var informe = "";
+						if(row.informe!= null)informe = row.informe;
+						return informe;
+					},
+					"bSortable": false,
+					"aTargets": [9]
+				},
+				/*{
 					"mRender": function (data, type, row) {
 						var estado = "";
 						if(row.estado == 1){
@@ -847,7 +872,7 @@ function datatablenew2(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [8]
+					"aTargets": [9]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -872,8 +897,8 @@ function datatablenew2(){
 					return html;
 				},
 				"bSortable": false,
-				"aTargets": [9],
-				},
+				"aTargets": [10],
+				},*/
             ]
     });
 
@@ -881,6 +906,10 @@ function datatablenew2(){
 
 function fn_ListarBusqueda() {
     datatablenew();
+};
+
+function fn_ListarBusqueda_() {
+    datatablenew2();
 };
 
 function modalCoordinadorZonal(id){

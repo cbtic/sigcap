@@ -355,23 +355,31 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                            <input class="form-control form-control-sm" id="numero_cap_2" name="numero_cap_2" placeholder="N&uacute;mero CAP">
-                        </div>
-
-                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
                             <input class="form-control form-control-sm" id="agremiado_2" name="agremiado_2" placeholder="Nombres">
                         </div>
                         
-                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
+                            <select name="id_estado_aprobacion_bus" id="id_estado_aprobacion_bus" class="form-control form-control-sm">
+                                <option value="">--Estado Aprobaci&oacute;n--</option>
+                                <?php
+                                foreach ($estado_aprobacion as $row) {?>
+                                <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                                <?php 
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        
+                        <!--<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                             <select name="estado_2" id="estado_2" class="form-control form-control-sm">
                                 <option value="">Todos</option>
                                 <option value="1" selected="selected">Activo</option>
                                 <option value="2">Cesado</option>
                             </select>
-                        </div>
+                        </div>-->
                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar_" />
 						
                         <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
                         <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
@@ -387,6 +395,7 @@
                             <tr style="font-size:13px">
                                 <th>Periodo</th>
                                 <th>Tipo Comisi&oacute;n</th>
+                                <th>Coordinador</th>
                                 <th>Comisi&oacute;n</th>
                                 <th>Fecha Programada</th>
                                 <th>Fecha Ejecuci&oacute;n</th>
@@ -394,7 +403,7 @@
                                 <th>Estado Sesi&oacute;n</th>
                                 <th>Estado Aprobaci&oacute;n</th>
                                 <th>Informe</th>
-                                <th>Acciones</th>
+                                <!--<th>Acciones</th>-->
                             </tr>
                             </thead>
                             <tbody>
