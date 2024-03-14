@@ -42,7 +42,7 @@ c.estado,tms.denominacion sub_tipo_concurso ';
 	End If;
 	
 	If p_periodo<>'' Then
-	 v_where:=v_where||'And c.periodo ilike ''%'||p_periodo||'%'' ';
+	 v_where:=v_where||'And c.id_periodo = '''||p_periodo||''' ';
 	End If;
 
 	If p_estado<>'' Then

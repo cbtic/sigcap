@@ -3,8 +3,8 @@
 foreach($inscripcionDocumento as $row):?>
 <tr style="font-size:13px">
 	<!--<td class="text-left" style="vertical-align:middle"><?php //echo $row->id?></td>-->
-	<td class="text-left" style="vertical-align:middle"><?php echo $row->tipo_documento?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
+	<td class="text-left" style="vertical-align:middle"><?php echo $row->tipo_documento?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->fecha_documento?></td>
 	<td class="text-left">
 		<!--<img src="/img/documento/<?php echo $row->ruta_archivo?>" id="img_ruta" width="50px" height="50px" alt="" style="margin-top:10px" />-->

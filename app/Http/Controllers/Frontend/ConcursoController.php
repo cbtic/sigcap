@@ -38,10 +38,13 @@ class ConcursoController extends Controller
     function index(){
 		
 		$tablaMaestra_model = new TablaMaestra;
+		$periodoComisione_model = new PeriodoComisione;
 		
 		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.concurso.all',compact('tipo_concurso'));
+        return view('frontend.concurso.all',compact('tipo_concurso','periodo','periodo_ultimo'));
     }
 	
 	public function consulta_resultado(){
@@ -100,11 +103,12 @@ class ConcursoController extends Controller
 		//$concurso = $concurso_model->getConcursoVigente();
 		$agremiado = $agremiado_model->getAgremiadoByIdPersona($id_persona);
 		$concurso = $concurso_model->getConcursoVigentePendienteByAgremiado($agremiado->id);
+		$concursoTotal = $concurso_model->getConcurso();
 		$documento_pendiente = $concurso_model->getInscripcionDocumentoPendienteByAgremiado($agremiado->id);
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente','documento_pendiente'));
+        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente','documento_pendiente','concursoTotal'));
     }
 	
 	

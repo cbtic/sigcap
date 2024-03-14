@@ -557,24 +557,26 @@ label.form-control-sm{
 														<select name="id_concurso_bus" id="id_concurso_bus" class="form-control form-control-sm" >
 															<option value="">--Concurso--</option>
 															<?php
-															foreach ($concurso as $row) {?>
-															<option value="<?php echo $row->id?>"><?php echo $row->periodo." ".$row->tipo_concurso?></option>
+															foreach ($concursoTotal as $row) {?>
+															<option <?php //if($row->id==$concurso_ultimo->id)echo "selected='selected'"?> value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 															<?php 
 															}
 															?>
 														</select>
 													</div>
+													<!--
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm" >
 															<option value="">--Regional--</option>
 															<?php
-															foreach ($region as $row) {?>
-															<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+															//foreach ($region as $row) {?>
+															<option value="<?php //echo $row->id?>"><?php //echo $row->denominacion?></option>
 															<?php 
-															}
+															//}
 															?>
 														</select>
 													</div>
+													-->
 													<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="Numero Cap">
 													</div>
@@ -602,7 +604,7 @@ label.form-control-sm{
 													</div>
 												</div>
 
-												<div class="table-responsive">
+												<div class="table-responsive" style="padding-top:10px">
 												<table id="tblConcurso" class="table table-hover table-sm">
 													<thead>
 													<tr style="font-size:13px">
@@ -645,8 +647,8 @@ label.form-control-sm{
 																	<thead>
 																		<tr style="font-size:13px">
 																			<!--<th>N&deg;</th>-->
-																			<th>Tipo de Doc</th>
 																			<th>Requisito</th>
+																			<th>Tipo de Doc</th>
 																			<th>Archivo</th>
 																		</tr>
 																	</thead>
@@ -661,18 +663,41 @@ label.form-control-sm{
 														<!--
 														<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar_" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" /> 
 														-->
-														<?php if(count($documento_pendiente)>0){?>
-														<div id="divAlertaDocumento" class="alert alert-warning" role="alert" style="font-size:20px">
-															<?php 
-															foreach($documento_pendiente as $row){
-															?>
-													  		El concurso <?php echo $row->periodo." ".$row->tipo_concurso;if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?> esta pendiente de adjuntar documentos, hacer click en el boton registrar documento para adjuntar documentos
-															<?php 
-															echo "<br>";
-															}?>
-														</div>
-														<?php }?>
 														
+														<?php //if(count($documento_pendiente)>0){?>
+														<!--
+														<div id="divAlertaDocumento" class="alert alert-warning" role="alert" style="font-size:20px">
+															
+													  		El concurso <?php //echo $row->periodo." ".$row->tipo_concurso;//if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?> esta pendiente de presentar documentos, haga click en el boton azul Registrar Doc para adjuntar
+															
+															
+															
+															<?php 
+															//echo "<br>";
+															//}
+															?>
+														</div>
+														-->
+														<script type="text/javascript">
+														var nombre_concurso = "";
+														</script>
+														<?php 
+														if(count($documento_pendiente)>0){
+														foreach($documento_pendiente as $row){
+														?>
+														<script type="text/javascript">
+														var c_periodo="<?php echo $row->periodo?>";
+														var c_tipo_concurso="<?php echo $row->tipo_concurso?>";
+														var c_sub_tipo_concurso="<?php echo $row->sub_tipo_concurso?>";
+														nombre_concurso += c_periodo+' '+c_tipo_concurso;
+														if(c_sub_tipo_concurso!="")nombre_concurso += " - "+c_sub_tipo_concurso;
+														nombre_concurso +=", ";
+														
+														</script>
+														<?php 
+														}
+														}
+														?>	
 													</div>
 													
 													
@@ -698,8 +723,8 @@ label.form-control-sm{
 																	<thead>
 																		<tr style="font-size:13px">
 																			<!--<th>N&deg;</th>-->
-																			<th>Tipo de Doc</th>
 																			<th>Nombre del documento</th>
+																			<th>Tipo de Doc</th>
 																			<th>Fecha</th>
 																			<th class="text-left">Archivo</th>
 																			<th class="text-left">Opc</th>
@@ -793,6 +818,11 @@ label.form-control-sm{
 	
 	<script src="{{ asset('js/concurso/create.js') }}"></script>
 	<script>
+	
+	var c_cantidad_concurso ="<?php echo count($documento_pendiente)?>";
+	//var c_periodo="<?php //echo $row->periodo?>";
+	//var c_tipo_concurso="<?php //echo $row->tipo_concurso?>";
+	//var c_sub_tipo_concurso="<?php //echo $row->sub_tipo_concurso?>";
 	/*
 	var id_ubigeo_nacimiento = $("#id_ubigeo_nacimiento").val();
 	var idProvincia = id_ubigeo_nacimiento.substring(2,4);

@@ -3,6 +3,14 @@ $(document).ready(function () {
 	
 	datatablenew();
 	
+	if(c_cantidad_concurso>0){
+		//var nombre_concurso = "";
+		//nombre_concurso += c_periodo+' '+c_tipo_concurso;
+		//if(c_sub_tipo_concurso!="")nombre_concurso += " - "+c_sub_tipo_concurso;
+		
+		bootbox.alert("El concurso "+nombre_concurso+" esta pendiente de presentar documentos, haga click en el boton azul Registrar Doc para adjuntar");
+		//return false;
+	}
 	
 	$('#btnNuevoTrabajo').on('click', function () {
 		modalTrab(0);
@@ -35,6 +43,8 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
+	
+	$("#id_concurso_bus").select2();
 	
 	/*
 	$('#fecha_desde').datepicker({
@@ -107,7 +117,7 @@ function fn_save(){
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
 					if(result==false){
-						bootbox.alert("Ya postulo a un subtipo de concurso en este concurso, solo se permite uno");
+						bootbox.alert("En este periodo ya cuenta con una postulación a delegado, no puede postular a otro");
 						return false;	
 					}
 					
