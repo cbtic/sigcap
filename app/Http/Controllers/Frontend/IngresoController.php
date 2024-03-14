@@ -96,10 +96,10 @@ class IngresoController extends Controller
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
         $valorizaciones_model = new Valorizacione;
         $resultado = $valorizaciones_model->getValorizacionConcepto($tipo_documento,$id_persona);
-    
+    /*
         $valorizaciones_model = new Valorizacione;
         $periodo = $valorizaciones_model->getPeridoValorizacion($tipo_documento,$id_persona);
-
+*/
         //print_r($valorizacion);exit();
 		return $resultado;
 

@@ -255,7 +255,7 @@ class Valorizacione extends Model
             $cad = "
             select distinct  DATE_PART('YEAR', v.fecha)::varchar periodo
             from valorizaciones v
-            group by v.fecha,v.id_agremido,v.estado,v.pagado
+            group by v.fecha,v.id_empresa,v.estado,v.pagado
             having v.id_empresa = ".$id_persona."
             and v.estado = '1'            
             and v.pagado = '0'
