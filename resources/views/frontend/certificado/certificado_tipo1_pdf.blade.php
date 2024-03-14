@@ -113,36 +113,36 @@ $(document).ready(function() {
 
     <div>
     <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">  
-    <h3 style="text-align:center">CERTIFICADO DE HABILITACION PROFESIONAL</h3>
+    <h3 style="text-align:center">CERTIFICADO DE HABILITACI&Oacute;N PROFESIONAL</h3>
     <!--<p style="text-align:center">  N° : <?php //echo $datos[0]->codigo;?> </p>-->
-        <p  style="text-align:center; font_size: 11">PARA EL TRAMITE DE APROBACION DE
-        ANTEPROYECTO Y/O PROYECTO ARQUITECTONICO</p>
+        <p  style="text-align:center; font_size: 11">PARA EL TR&Aacute;MITE DE APROBACI&Oacute;N DE
+        ANTEPROYECTO Y/O PROYECTO ARQUITECT&Oacute;NICO</p>
         <hr>
         <div class="contenido">
             <!--<p id="primero">La Regional Lima del Colegio de Arquitectos del Perú, certifica que:</p>-->
             <p style="margin-left: 0cm; font_size: 11"><?php echo $tratodesc;?> <?php "   "?>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <?php echo $datos[0]->desc_cliente;?> </p>
             <div style="text-align: center;">
                 <span style="float: left; font_size: 11">COLEGIATURA N° CAP&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <?php echo $datos[0]->numero_cap;?></span>
-                <span style="float: right; font_size: 11">INSCRIPCIÓN&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <?php echo $datos[0]->numero_regional;?></span>
+                <span style="float: right; font_size: 11">INSCRIPCI&Oacute;N&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <?php echo $datos[0]->numero_regional;?></span>
             </div>
             
            <p style="margin-top: 50px; font_size: 11">SE ENCUENTRA <?php echo $habilita;?> PARA EL EJERCICIO PROFESIONAL EN CALIDAD DE PROYECTISTA</p>
             <p style="font_size: 11">I. INFORMACI&Oacute;N GENERAL DEL PROYECTO</p>
             <p style="text-align: justify; font_size: 11" > 1. PROYECTISTA(S) ASOCIADOS: <?php echo $nombre_proyectista //$tipo_proyectistas[0]->tipo_proyectista;?> </p>
-            <p style="text-align: justify; font_size: 11" > 2. NOMBRE DEL PROPIETARIO: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
-            <p style="text-align: justify; font_size: 11" > 3. DENOMINACION DEL PROYECTO: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
-            <p style="text-align: justify; font_size: 11" > 4. UBICACION: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
+            <p style="text-align: justify; font_size: 11" > 2. NOMBRE DEL PROPIETARIO: <?php echo $nombre_propietario;?> </p>
+            <p style="text-align: justify; font_size: 11" > 3. DENOMINACI&Oacute;N DEL PROYECTO: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
+            <p style="text-align: justify; font_size: 11" > 4. UBICACI&Oacute;N:</p>
             
             <p></p>
-            <p style="text-align: justify; font_size: 11" >Departamento: <?php //echo $tipo_proyectista->tipo_proyectista;?> Provincia: <?php //echo $tipo_proyectista->tipo_proyectista;?> Distrito:</p>
-            <p style="text-align: justify; font_size: 11" >Direecion: <?php echo $direccion_proyecto;?> </p>
+            <p style="text-align: justify; font_size: 11" >Departamento: <?php //echo $departamento;?> Provincia: <?php //echo $tipo_proyectista->tipo_proyectista;?> Distrito:</p>
+            <p style="text-align: justify; font_size: 11" >Direcci&oacute;n: <?php echo $direccion_proyecto;?> </p>
             <p style="text-align: justify; font_size: 11" >Lugar: <?php echo $lugar_proyecto;?> </p>
             <p></p>
-            <p style="font_size: 11">II. DATOS TECNICOS DEL ANTEPROYECTO</p>
-            <p style="text-align: justify; font_size: 11" >Valor Unitario M2: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
-            <p style="text-align: justify; font_size: 11" >Tipo Obra: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
-            <p style="text-align: justify; font_size: 11" >Uso Edificacion: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
-            <p style="text-align: justify; font_size: 11" >Area Techada: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
+            <p style="font_size: 11">II. DATOS T&Eacute;CNICOS DEL ANTEPROYECTO</p>
+            <p style="text-align: justify; font_size: 11" >Valor Unitario M2: <?php echo $valor_unit;?> </p>
+            <p style="text-align: justify; font_size: 11" >Tipo Obra: <?php echo $tipo_obra;?> </p>
+            <p style="text-align: justify; font_size: 11" >Uso Edificaci&oacute;n: <?php echo $sub_tipo_uso_;?> </p>
+            <p style="text-align: justify; font_size: 11" >&Aacute;rea Techada: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
             <p></p>
             
             <p style="text-align: center; font_size: 11" >Sotano(s): <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  

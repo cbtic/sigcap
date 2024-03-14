@@ -296,6 +296,7 @@ $.ajax({
 }
 
 
+
 function AddFila(){
 	
 	//var newRow = "";
@@ -316,7 +317,7 @@ function AddFila(){
     var aprobar_pago = '<select name="aprobar_pago[]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
     //var informe = '<select name="informe[]" id="informe" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
     var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
-    var informe =  '<span class="btn btn-warning btn-file">Examinar <input id="image" name="image[]" type="file" /></span><input type="button" class="btn btn-sm btn-primary upload" value="Subir" name="subir[]" style="margin-left:10px">'
+    var informe =  '<span class="btn btn-warning btn-file">Examinar <input id="image_'+i+'" name="image[]" type="file" /></span><input type="button" class="btn btn-sm btn-primary" value="Subir" id="upload_'+i+'" onclick="upload_img('+i+')" name="subir" style="margin-left:10px"><img src="/img/logo-sin-fondo2.png" id="img_ruta_'+i+'" width="80px" height="50px" alt="" style="margin-left:10px"><input type="hidden" id="img_foto_'+i+'" name="img_foto[]" value="" />'
       newRow+='<tr>';
       newRow+='<td>'+n+'</td>';
       newRow+='<td>'+cap+'</td>';
@@ -331,6 +332,14 @@ function AddFila(){
 
 
     $('#tblSesion tbody').append(newRow);
+	
+	
+	/**************/
+	
+	//$("#upload_"+i).on('click', function() {
+	
+	
+	/***************/
     
   }
  
@@ -347,6 +356,54 @@ function AddFila(){
  
 }
 
+	function upload_img(i){
+		//console.log(m);
+		//alert("okkk"+m);
+		console.log($('#image_'+i));
+		var formData = new FormData();
+		var files = $('#image_'+i)[0].files[0];
+		formData.append('file',files);
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			url: "/coordinador_zonal/upload_informe",
+			type: 'post',
+			data: formData,
+			contentType: false,
+			processData: false,
+			success: function(response) {
+				
+				//var ind_img = $("#ind_img").val();
+				
+				if (response != 0) {
+					$("#img_ruta_"+i).attr("src", "/img/informe/tmp/"+response).show();
+					//$(".delete_ruta").show();
+					$("#img_foto_"+i).val(response);
+
+					ind_img++;
+					/*
+					var newRow = "";
+					newRow += '<div class="img_ruta">';
+					newRow += '<img src="" id="img_ruta_'+ind_img+'" width="130px" height="165px" alt="" style="text-align:center;margin-top:8px;display:none;margin-left:10px" />';
+					newRow += '<span class="delete_ruta" style="display:none" onclick="DeleteImagen(this)"></span>';
+					newRow += '<input type="hidden" id="img_foto_'+ind_img+'" name="img_foto[]" value="" />';
+					newRow += '</div>';
+
+					$("#divImagenes").append(newRow);
+					$("#ind_img").val(ind_img);
+					*/
+				} else {
+					alert('Formato de imagen incorrecto.');
+				}
+				
+			}
+		});
+		
+		
+	//});
+	}
+	
 
 function AddFila1(){
 	
@@ -492,7 +549,7 @@ function modal_personaNuevo(){
         </div>
         <div class="card-body">
           
-		  <form method="post" action="#" id="frmCoordinador" name="frmCoordinador">
+		  <form method="post" action="#" id="frmCoordinador" name="frmCoordinador" enctype="multipart/form-data">
 		  
 		  <div class="row">
             <!--aaaa-->
@@ -594,7 +651,7 @@ function modal_personaNuevo(){
                           <!--<th id="thImporte" style="display:none">Importe</th>-->
                           <th>Estado</th>
                           <th>Aprobar Pago</th>
-                          <th>Informe</th>
+                          <th width="250px">Informe</th>
                           <th>Acciones</th>
                         </tr>
                         </thead>

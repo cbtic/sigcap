@@ -155,6 +155,8 @@ $.mask.definitions['p'] = "[Mm]";
 
 		$('#nombre_proyecto_').hide();
 		$('#tipo_tramite_').hide();
+		
+		//obtenerNombreProyecto();
 
 	});
 
@@ -188,17 +190,44 @@ $.mask.definitions['p'] = "[Mm]";
 	{
 		$('#nombre_proyecto_').show();
 		$('#tipo_tramite_').hide();
+		//$('#nombre_proyecto_').show();
+		$('#tipo_tramite').val('0');
+
 	}else if (id_tipo == "2") //CERTIFICADO TIPO 2
 	{
 		$('#nombre_proyecto_').show();
 		$('#tipo_tramite_').hide();
+		//$('#nombre_proyecto_').show();
+		$('#tipo_tramite').val('0');
 	}else if (id_tipo == "3") //CERTIFICADO TIPO 3
 	{
 		$('#nombre_proyecto_').show();
 		$('#tipo_tramite_').hide();
-	}else {
-		$('#nombre_proyecto_').hide(); //CERTIFICADO TIPO 4
+		//$('#nombre_proyecto_').show();
+		$('#tipo_tramite').val('0');
+	}else if (id_tipo == "4") { //CERTIFICADO TIPO 4
+		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').show();
+		$('#vigencia_group').show();
+		$('#nombre_proyecto').val('0');
+		//$('#tipo_tramite_').val('');
+	}else if (id_tipo == "5") { //CONSTANCIA
+		$('#nombre_proyecto_').hide(); 
+		$('#tipo_tramite_').hide();
+		$('#vigencia_group').hide();
+		$('#nombre_proyecto').val('0');
+		$('#tipo_tramite').val('');
+	}else if (id_tipo == "6"){ //RECORD DE PROYECTOS
+		$('#nombre_proyecto_').hide(); 
+		$('#tipo_tramite_').hide();
+		$('#nombre_proyecto').val('0');
+		$('#tipo_tramite').val('0');
+		$('#vigencia_group').hide();
+	}else{ //seleccionar
+		$('#nombre_proyecto_').hide(); 
+		$('#tipo_tramite_').hide();
+		$('#nombre_proyecto').val('0');
+		$('#tipo_tramite').val('0');
 	}
 }
 
@@ -217,6 +246,8 @@ $.mask.definitions['p'] = "[Mm]";
 		var observaciones = $('#observacion_').val();
 		var estado = 1;
 		var tipo = $('#id_tipo').val();
+		var nombre_proyecto = $('#nombre_proyecto').val();
+		var tipo_tramite = $('#tipo_tramite').val();
 
 		$.ajax({
 			url: "/certificado/send_certificado",
@@ -245,6 +276,32 @@ $.mask.definitions['p'] = "[Mm]";
 			}
 		});
 	}
+	
+	function obtenerNombreProyecto() {
+
+	var ncap = $('#cap_').val();
+
+	$.ajax({
+		url: '/proyecto/obtener_proyecto/' + ncap,
+		dataType: "json",
+		success: function(result) {
+
+			//print_r(result).exit();
+			//alert(result);
+			console.log(result);
+
+			var option = "<option value='0'>--Seleccionar--</option>";
+			$("#nombre_proyecto").html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(id == oo.id)selected = "selected='selected'";
+				option += "<option value='"+oo.id+"' "+selected+" >"+oo.nombre+"</option>";
+			});
+			$("#nombre_proyecto").html(option);
+		}
+	});
+	}
 
 	function obtenerAgremiado() {
 
@@ -261,6 +318,7 @@ $.mask.definitions['p'] = "[Mm]";
 				$('#nombre_').val(result.nombre_completo);
 				$('#situacion_').val(result.situacion);
 				$('#email_').val(result.email);
+				obtenerNombreProyecto();
 			}
 		});
 	}
@@ -360,7 +418,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Fecha Registro</label>
-									<input id="fecha_r_" name="fecha_r_" class="form-control form-control-sm" value="<?php if($certificado->fecha_solicitud!="")echo date("Y-m-d",strtotime($certificado->fecha_solicitud))?>" type="date">
+									<input id="fecha_r_" name="fecha_r_" class="form-control form-control-sm" value="<?php if($certificado->fecha_solicitud!=""){echo date("Y-m-d",strtotime($certificado->fecha_solicitud));}else echo date('Y-m-d');?>" type="date">
 								</div>
 							</div>
 
@@ -383,13 +441,7 @@ $.mask.definitions['p'] = "[Mm]";
 								<div class="form-group" id="nombre_proyecto_">
 									<label class="control-label">Nombre del Proyecto</label>
 									<select name="nombre_proyecto" id="nombre_proyecto" class="form-control form-control-sm" onChange="">
-										<option value="">--Selecionar--</option>
-										<?php
-										foreach ($proyecto as $row) { ?>
-											<!--<option value="<?php //echo $row->id ?>" <?php //if ($row->id == $proyecto->nombre) echo "selected='selected'" ?>><?php //echo $row->nombre ?></option>-->
-										<?php
-										}
-										?>
+										<!--<option value="">--Selecionar--</option>-->
 									</select>
 								</div>
 							</div>
@@ -433,7 +485,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-2">
 								<div class="form-group">
 									<label class="control-label">Fecha Emision</label>
-									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php if($certificado->fecha_emision!="")echo date("Y-m-d",strtotime($certificado->fecha_emision)) ?>" type="date">
+									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php if($certificado->fecha_emision!=""){echo date("Y-m-d",strtotime($certificado->fecha_emision));}else echo date('Y-m-d'); ?>" type="date">
 								</div>
 							</div>
 							
@@ -441,7 +493,7 @@ $.mask.definitions['p'] = "[Mm]";
 								<div class="col-lg-12">
 									<label class="control-label">Tipo de Tramite</label>
 									<select name="tipo_tramite" id="tipo_tramite" class="form-control form-control-sm" onChange="obtenerTipoCertificado()">
-										<option value="">--Selecionar--</option>
+										<option value="0">--Selecionar--</option>
 										<?php
 										foreach ($tipo_tramite as $row) { ?>
 											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $certificado->id_tipo_tramite) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
@@ -451,16 +503,16 @@ $.mask.definitions['p'] = "[Mm]";
 									</select>
 								</div>
 							</div>
-							<div class="col-lg-2">
-								<div class="form-group">
+							<div class="form-group" id="vigencia_group">
+								<div class="col-lg-12">
 									<label class="control-label">Dias Vigencia</label>
 									<input id="vigencia_" name="vigencia_" class="form-control form-control-sm" value="<?php echo $certificado->dias_validez ?>" type="text">
 								</div>
 							</div>
-							<div class="col-lg-4">
-								<div class="form-group">
+							<div class="form-group">
+								<div class="col-lg-12">
 									<label class="control-label">Codigo</label>
-									<input id="codigo_" name="codigo_" class="form-control form-control-sm" value="<?php echo $certificado->codigo ?>" type="text">
+									<input id="codigo_" name="codigo_" class="form-control form-control-sm" value="<?php echo $certificado->codigo ?>" type="text" readonly="readonly">
 								</div>
 							</div>
 						</div>

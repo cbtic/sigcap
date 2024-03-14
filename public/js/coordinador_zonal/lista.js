@@ -3,6 +3,53 @@
 
 $(document).ready(function () {
 	
+	//alert("cc");
+	$(".upload").on('click', function() {
+		//alert("okkk");
+		/*
+		var formData = new FormData();
+		var files = $('#image')[0].files[0];
+		formData.append('file',files);
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			url: "/ingreso_vehiculo_tronco/upload_imagen_ingreso",
+			type: 'post',
+			data: formData,
+			contentType: false,
+			processData: false,
+			success: function(response) {
+				
+				var ind_img = $("#ind_img").val();
+				
+				if (response != 0) {
+					$("#img_ruta_"+ind_img).attr("src", "/img/ingreso/tmp/"+response).show();
+					$(".delete_ruta").show();
+					$("#img_foto_"+ind_img).val(response);
+
+					ind_img++;
+
+					var newRow = "";
+					newRow += '<div class="img_ruta">';
+					newRow += '<img src="" id="img_ruta_'+ind_img+'" width="130px" height="165px" alt="" style="text-align:center;margin-top:8px;display:none;margin-left:10px" />';
+					newRow += '<span class="delete_ruta" style="display:none" onclick="DeleteImagen(this)"></span>';
+					newRow += '<input type="hidden" id="img_foto_'+ind_img+'" name="img_foto[]" value="" />';
+					newRow += '</div>';
+
+					$("#divImagenes").append(newRow);
+					$("#ind_img").val(ind_img);
+
+				} else {
+					alert('Formato de imagen incorrecto.');
+				}
+				
+			}
+		});
+		return false;
+		*/
+	});
+
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
@@ -13,7 +60,25 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#sexo').keypress(function(e){
+	$('#periodo_').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#numero_cap_').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#agremiado_').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#estado_').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
@@ -37,6 +102,7 @@ $(document).ready(function () {
 	});
 		
 	datatablenew();
+	datatablenew2();
 	/*	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
@@ -584,9 +650,10 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			var id = $('#id').val();
-			var numero_cap = $('#numero_cap').val();
-            var agremiado = $('#agremiado').val();
-			var estado = $('#estado').val();
+			var periodo = $('#periodo_').val();
+			var numero_cap = $('#numero_cap_').val();
+            var agremiado = $('#agremiado_').val();
+			var estado = $('#estado_').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -594,7 +661,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,numero_cap:numero_cap,agremiado:agremiado,estado:estado,
+						id:id,periodo:periodo,numero_cap:numero_cap,agremiado:agremiado,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -682,6 +749,178 @@ function datatablenew(){
 				"aTargets": [5],
 				},
 
+            ]
+    });
+
+}
+
+function datatablenew2(){
+    var oTable1 = $('#tblCoordinadorSesion').dataTable({
+        "bServerSide": true,
+        "sAjaxSource": "/coordinador_zonal/listar_coordinadorZonalSesion_ajax",
+        "bProcessing": true,
+        "sPaginationType": "full_numbers",
+        //"paging":false,
+        "bFilter": false,
+        "bSort": false,
+        "info": true,
+		//"responsive": true,
+        "language": {"url": "/js/Spanish.json"},
+        "autoWidth": false,
+        "bLengthChange": true,
+        "destroy": true,
+        "lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
+        "aoColumns": [
+                        {},
+        ],
+		"dom": '<"top">rt<"bottom"flpi><"clear">',
+        "fnDrawCallback": function(json) {
+            $('[data-toggle="tooltip"]').tooltip();
+        },
+
+        "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
+
+            var sEcho           = aoData[0].value;
+            var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
+            var iCantMostrar 	= aoData[4].value;
+			
+			var id = $('#id').val();
+			var estado = $('#estado').val();
+			var _token = $('#_token').val();
+            oSettings.jqXHR = $.ajax({
+				"dataType": 'json',
+                //"contentType": "application/json; charset=utf-8",
+                "type": "POST",
+                "url": sSource,
+                "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
+						id:id,estado:estado,
+						_token:_token
+                       },
+                "success": function (result) {
+                    fnCallback(result);
+                },
+                "error": function (msg, textStatus, errorThrown) {
+                    //location.href="login";
+                }
+            });
+        },
+
+        "aoColumnDefs":
+            [	
+				{
+                "mRender": function (data, type, row) {
+                	var periodo = "";
+					if(row.periodo!= null)periodo = row.periodo;
+					return periodo;
+                },
+                "bSortable": false,
+                "aTargets": [0],
+				"className": "dt-center",
+				//"className": 'control'
+                },
+                {
+                "mRender": function (data, type, row) {
+                	var tipo_comision = "";
+					if(row.tipo_comision!= null)tipo_comision = row.tipo_comision;
+					return tipo_comision;
+                },
+                "bSortable": false,
+                "aTargets": [1],
+				"className": "dt-center",
+                },
+				{
+				"mRender": function (data, type, row) {
+					var agremiado = "";
+					if(row.agremiado!= null)agremiado = row.agremiado;
+					return agremiado;
+				},
+				"bSortable": false,
+				"aTargets": [2]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var comision = "";
+						if(row.comision!= null)comision = row.comision;
+						return comision;
+					},
+					"bSortable": false,
+					"aTargets": [3]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var fecha_programado = "";
+						if(row.fecha_programado!= null)fecha_programado = row.fecha_programado;
+						return fecha_programado;
+					},
+					"bSortable": false,
+					"aTargets": [4]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var fecha_ejecucion = "";
+						if(row.fecha_ejecucion!= null)fecha_ejecucion = row.fecha_ejecucion;
+						return fecha_ejecucion;
+					},
+					"bSortable": false,
+					"aTargets": [5]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var estado_sesion = "";
+						if(row.estado_sesion!= null)estado_sesion = row.estado_sesion;
+						return estado_sesion;
+					},
+					"bSortable": false,
+					"aTargets": [6]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var estado_aprobacion = "";
+						if(row.estado_aprobacion!= null)estado_aprobacion = row.estado_aprobacion;
+						return estado_aprobacion;
+					},
+					"bSortable": false,
+					"aTargets": [7]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var estado = "";
+						if(row.estado == 1){
+							estado = "Activo";
+						}
+						if(row.estado == 0){
+							estado = "Inactivo";
+						}
+						return estado;
+					},
+					"bSortable": false,
+					"aTargets": [8]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var estado = "";
+					var clase = "";
+					if(row.estado == 1){
+						estado = "Eliminar";
+						clase = "btn-danger";
+					}
+					if(row.estado == 0){
+						estado = "Activar";
+						clase = "btn-success";
+					}
+					
+					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalMovilidad('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					html += '<a href="javascript:void(0)" onclick=eliminarMovilidad('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					
+					//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
+					
+					html += '</div>';
+					return html;
+				},
+				"bSortable": false,
+				"aTargets": [9],
+				},
             ]
     });
 

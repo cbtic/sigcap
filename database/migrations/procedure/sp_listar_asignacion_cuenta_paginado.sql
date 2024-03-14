@@ -21,7 +21,7 @@ begin
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
 	v_campos=' ac.id, pc.cuenta cuenta, ac.denominacion, tc.denominacion tipo_cuenta, 
-		cc.codigo centro_costo, pp.codigo partida_presupuestal, ac.id_codigo_financiamiento codigo_financiamiento, 
+		cc.codigo centro_costo, pp.codigo partida_presupuestal, ac.id_codigo_financiero codigo_financiero, 
 		mp.codigo medio_pago, ac.id_origen origen, ac.estado ';
 
 	v_tabla=' from asignacion_cuentas ac 
@@ -54,7 +54,7 @@ begin
 	End If;
 
 	If p_cod_financiero<>'' Then
-	 v_where:=v_where||'And ac.id_codigo_financiamiento ilike '''||p_cod_financiero||'%'' ';
+	 v_where:=v_where||'And ac.id_codigo_financiero ilike '''||p_cod_financiero||'%'' ';
 	End If;
 
 	If p_medio_pago<>'' Then

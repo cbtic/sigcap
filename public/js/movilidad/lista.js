@@ -626,9 +626,9 @@ function datatablenew(){
 }
 
 function datatablenew2(){
-    var oTable1 = $('#tblAfiliado').dataTable({
+    var oTable1 = $('#tblCoordinadorSesion').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/multa/listar_historialMulta_ajax",
+        "sAjaxSource": "/coordinador_zonal/listar_historialMulta_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
