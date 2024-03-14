@@ -114,9 +114,9 @@ $(document).ready(function() {
     <div>
     <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">  
     <h3 style="text-align:center">CERTIFICADO DE HABILITACI&Oacute;N PROFESIONAL</h3>
-    <!--<p style="text-align:center">  N° : <?php //echo $datos[0]->codigo;?> </p>-->
         <p  style="text-align:center; font_size: 11">PARA EL TR&Aacute;MITE DE APROBACI&Oacute;N DE
         ANTEPROYECTO Y/O PROYECTO ARQUITECT&Oacute;NICO</p>
+        <p style="text-align:center">  N° : <?php echo $datos[0]->codigo;?> </p>
         <hr>
         <div class="contenido">
             <!--<p id="primero">La Regional Lima del Colegio de Arquitectos del Perú, certifica que:</p>-->

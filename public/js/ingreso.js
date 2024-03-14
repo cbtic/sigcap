@@ -1184,7 +1184,7 @@ function modal_otro_pago(){
 
 }
 
-function modal_beneficiario(){
+function modal_beneficiario_(){
 
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
@@ -1203,7 +1203,7 @@ function modal_beneficiario(){
 	}
 
 	$.ajax({
-			url: "/ingreso/modal_beneficiario/"+perido+"/"+idPersona+"/"+idAgremiado+"/"+tipo_documento,
+			url: "/ingreso/modal_beneficiario_/"+perido+"/"+idPersona+"/"+idAgremiado+"/"+tipo_documento,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
