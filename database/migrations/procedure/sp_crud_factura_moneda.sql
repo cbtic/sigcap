@@ -31,6 +31,8 @@ declare
 	_pu_con_igv numeric;
 	_igv_total numeric;
 
+	_cantidad numeric;
+
 	_subtotal numeric;
 
 	_id_tipo_afectacion integer;
@@ -43,6 +45,10 @@ begin
 
 	--select CAST(total AS numeric) into _total;
 	_total := to_number(total,'9999999999.99');
+	
+	
+	
+
 	select CAST(descuento AS numeric) into _descuento;
 
 	Case accion
@@ -97,6 +103,7 @@ begin
 	*/		
 			
 				_id_tipo_afectacion:= numero;
+				
 			
 				if _id_tipo_afectacion = 30  then			
 					_subtotal := CAST(total AS numeric);
@@ -144,15 +151,17 @@ begin
 				from conceptos 						
 				Where id = persona;
 			
+				_cantidad = ubicacion;
+			
 				if _id_tipo_afectacion = 30  then
-					_pu := _total;
+					_pu := _total*_cantidad;
 					_igv_total := 0;
 					_pu_con_igv := _pu + _igv_total;
 					
 				else
-					_pu := _total/1.18;
-					_igv_total := (_total/1.18)*0.18;
-					_pu_con_igv := _total/1.18;
+					_pu := (_total * _cantidad)/1.18;
+					_igv_total := _pu*0.18;
+					_pu_con_igv := _pu+_igv_total;
 					
 					_id_tipo_afectacion := 10;
 				end if;
@@ -160,7 +169,7 @@ begin
 			
 				Insert Into comprobante_detalles (serie, numero, tipo, item, cantidad, descripcion,
 					pu,  pu_con_igv,  igv_total, descuento, importe,afect_igv, cod_contable, valor_gratu, unidad,id_usuario_inserta,id_comprobante, id_concepto)
-					Values (_serie,numero,tipo,ubicacion,1,descripcion,
+					Values (_serie,numero,tipo,1,_cantidad,descripcion,
 					_pu, _pu_con_igv,_igv_total, _descuento, (_total - _descuento)  ,_id_tipo_afectacion,cod_contable,0,'ZZ',p_id_usuario, id_caja, persona);
 				
 				update valorizaciones Set id_comprobante  = id_caja, pagado = '1'

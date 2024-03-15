@@ -725,6 +725,11 @@
 
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][id_concepto]" value="<?php echo $fac['id_concepto'] ?>" />
 
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac['igv'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][cantidad]" value="<?php echo $fac['cantidad'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][total]" value="<?php echo $fac['total'] ?>" />
+
+
                                                             <tr>
                                                                 <td class="text-right"><?php $n = $n + 1;
                                                                                         echo $n; ?></td>

@@ -18,7 +18,8 @@ class Valorizacione extends Model
             $cad = "
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
-                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion
+                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
+                coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto                
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -38,7 +39,8 @@ class Valorizacione extends Model
             --select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
-                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion
+                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
+                coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -255,7 +257,7 @@ class Valorizacione extends Model
             $cad = "
             select distinct  DATE_PART('YEAR', v.fecha)::varchar periodo
             from valorizaciones v
-            group by v.fecha,v.id_agremido,v.estado,v.pagado
+            group by v.fecha,v.id_empresa,v.estado,v.pagado
             having v.id_empresa = ".$id_persona."
             and v.estado = '1'            
             and v.pagado = '0'

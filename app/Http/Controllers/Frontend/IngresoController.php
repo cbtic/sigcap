@@ -96,10 +96,10 @@ class IngresoController extends Controller
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
         $valorizaciones_model = new Valorizacione;
         $resultado = $valorizaciones_model->getValorizacionConcepto($tipo_documento,$id_persona);
-    
+    /*
         $valorizaciones_model = new Valorizacione;
         $periodo = $valorizaciones_model->getPeridoValorizacion($tipo_documento,$id_persona);
-
+*/
         //print_r($valorizacion);exit();
 		return $resultado;
 
@@ -293,6 +293,11 @@ class IngresoController extends Controller
             $valorizacion->id_usuario_inserta = $id_user;
             $valorizacion->descripcion = $value['denominacion'];
 
+            $valorizacion->valor_unitario = $value['importe'];
+            $valorizacion->cantidad = "1";
+            $valorizacion->otro_concepto = "1";
+
+
             $valorizacion->save();
 
             $msg = "ok";
@@ -412,15 +417,17 @@ class IngresoController extends Controller
 	
 	}
 
-    public function modal_beneficiario($periodo, $id_persona, $id_agremiado, $tipo_documento){
+    public function modal_beneficiario_($periodo, $id_persona, $id_agremiado, $tipo_documento){
 		
         $persona = new Persona();
         $empresa_model = new Empresa();
+        $beneficiario_model = new Beneficiario();
         $empresa = $empresa_model->getEmpresaId($id_persona);
+        $empresa_beneficiario = $beneficiario_model->getBeneficiarioId($empresa->id);
        
 		//$beneficiario = new Beneficiario;
 		//$valorizacion = $valorizaciones_model->getValorizacionFactura($id);
-		return view('frontend.ingreso.modal_beneficiario',compact('persona','empresa','id_persona','id_agremiado','tipo_documento'));
+		return view('frontend.ingreso.modal_beneficiario_',compact('persona','empresa','id_persona','id_agremiado','tipo_documento','empresa_beneficiario'));
 	
 	}
 
@@ -557,6 +564,5 @@ class IngresoController extends Controller
 		$export = new InvoicesExport([$variable]);
 		return Excel::download($export, 'liquidacion_caja.xlsx');
     }
-
 
 }
