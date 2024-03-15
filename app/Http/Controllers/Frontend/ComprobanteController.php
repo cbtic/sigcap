@@ -611,7 +611,7 @@ class ComprobanteController extends Controller
 					}
 					$descuento = $value['descuento'];
 					if ($value['descuento']=='') $descuento = 0;
-					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['item'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
+					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
 					
                     
                     //(  serie,      numero,   tipo,      ubicacion,               persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
@@ -641,8 +641,24 @@ class ComprobanteController extends Controller
 
                         $valoriza_upd->save();
     
-                    }
+                    }                
                 }
+
+
+                //$valorizad = $request->valorizad;
+                //foreach ($valorizad as $key => $value) {
+                foreach ($tarifa as $key => $value) {
+
+                    $id_val = $value['id'];
+                    $valoriza_upd1 = Valorizacione::find($id_val);
+
+                    $valoriza_upd1->valor_unitario = $value['monto'];
+                    $valoriza_upd1->cantidad = $value['cantidad'];                      
+                
+                    $valoriza_upd1->save();
+                
+                }  
+
 
 
             if ($id_concepto == 26411) {

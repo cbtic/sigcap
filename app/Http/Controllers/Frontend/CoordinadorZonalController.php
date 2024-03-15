@@ -42,18 +42,20 @@ class CoordinadorZonalController extends Controller
 		$region = $region_model->getRegionAll();
         $periodo = $periodo_model->getPeriodoVigenteAll();
 		$zonal = $tablaMaestra_model->getMaestroByTipo(117);
+		$estado_aprobacion = $tablaMaestra_model->getMaestroByTipo(109);
 		$estado = $tablaMaestra_model->getMaestroByTipo(119);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo'));
+        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion'));
 
     }
 
     public function listar_coordinadorZonal_ajax(Request $request){
 	
 		$coordinadorZonal_model = new CoordinadorZonal;
-		$p[]="";//$request->nombre;
-		$p[]="";
+		$p[]=$request->periodo;
+		$p[]=$request->numero_cap;//$request->nombre;
+		$p[]=$request->agremiado;
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -71,6 +73,50 @@ class CoordinadorZonalController extends Controller
 		echo json_encode($result);
 	}
 
+	public function listar_coordinadorZonalSesion_ajax(Request $request){
+	
+		$coordinadorZonal_model = new CoordinadorZonal;
+		$p[]=$request->periodo;
+		$p[]=$request->agremiado;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]=$request->estado_aprobado;
+        $p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $coordinadorZonal_model->listar_coordinadorZonalSesion_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	}
+	
+	public function upload_informe(Request $request){
+		
+		$path = "img/informe";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+		
+		$path = "img/informe/tmp";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+		
+    	$filepath = public_path('img/informe/tmp/');
+		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath.$_FILES["file"]["name"]);
+		echo $_FILES['file']['name'];
+		
+	}
+	
     public function modal_coordinadorZonal_nuevoCoordinadorZonal($id){
 		
 		$coordinadorZonal = new CoordinadorZonal;
@@ -174,9 +220,17 @@ class CoordinadorZonalController extends Controller
 		$estado_sesion = $request->estado_sesion;
 		$aprobar_pago = $request->aprobar_pago;
 		$id_comision = $coordinador_zonal->id_comision;
-        
+        $img_foto = $request->img_foto;
+		
         foreach($request->fecha as $key=>$row){
             
+			$filepath_tmp = public_path('img/informe/tmp/');
+			$filepath_nuevo = public_path('img/informe/');
+			
+			if (file_exists($filepath_tmp.$img_foto[$key])) {
+				copy($filepath_tmp.$img_foto[$key], $filepath_nuevo.$img_foto[$key]);
+			}
+			
 			/**********ComisionSesione**************/
             $comision_sesione = new ComisionSesione;
             $comision_sesione->id_regional = $coordinador_zonal->id_regional;
@@ -184,6 +238,7 @@ class CoordinadorZonalController extends Controller
             $comision_sesione->id_tipo_sesion = 401;
             $comision_sesione->fecha_programado = $row;
             $comision_sesione->fecha_ejecucion = $row;
+			$comision_sesione->ruta_informe = "img/informe/".$img_foto[$key];
             //$comision_sesione->id_aprobado = 2;
             //$comision_sesione->observaciones = 1;
             $comision_sesione->id_comision = $id_comision;

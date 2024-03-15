@@ -153,10 +153,13 @@ $.mask.definitions['p'] = "[Mm]";
 
 	$(document).ready(function() {
 
-		$('#nombre_proyecto_').hide();
-		$('#tipo_tramite_').hide();
+		/*if($('#id_tipo').val() =="0"){
+			$('#nombre_proyecto_').hide();
+			$('#tipo_tramite_').hide();
+		}*/
 		
-		//obtenerNombreProyecto();
+		
+		obtenerTipoCertificado();
 
 	});
 
@@ -182,7 +185,7 @@ $.mask.definitions['p'] = "[Mm]";
 	$('#nombre_proyecto_').hide();
 	$('#tipo_tramite_').hide();
 	
-	if (id_tipo == "")//SELECCIONAR
+	if (id_tipo == "0")//SELECCIONAR
 	{
 		$('#nombre_proyecto_').hide();
 		$('#tipo_tramite_').hide();
@@ -247,6 +250,7 @@ $.mask.definitions['p'] = "[Mm]";
 		var estado = 1;
 		var tipo = $('#id_tipo').val();
 		var nombre_proyecto = $('#nombre_proyecto').val();
+		var id_proyecto = $('#id_proyecto').val();
 		var tipo_tramite = $('#tipo_tramite').val();
 
 		$.ajax({
@@ -265,6 +269,9 @@ $.mask.definitions['p'] = "[Mm]";
 				validez: validez,
 				fecha_sol: fecha_sol,
 				tipo: tipo,
+				tipo_tramite:tipo_tramite,
+				id_proyecto:id_proyecto,
+				nombre_proyecto:nombre_proyecto,
 				idagremiado: idagremiado
 			},
 			//dataType: 'json',
@@ -289,9 +296,9 @@ $.mask.definitions['p'] = "[Mm]";
 			//print_r(result).exit();
 			//alert(result);
 			console.log(result);
-
 			var option = "<option value='0'>--Seleccionar--</option>";
 			$("#nombre_proyecto").html("");
+			$("#id_proyecto").html("");
 			var selected = "";
 			$(result).each(function (ii, oo) {
 				selected = "";
@@ -299,6 +306,7 @@ $.mask.definitions['p'] = "[Mm]";
 				option += "<option value='"+oo.id+"' "+selected+" >"+oo.nombre+"</option>";
 			});
 			$("#nombre_proyecto").html(option);
+			$("#id_proyecto").html(option);
 		}
 	});
 	}
@@ -418,15 +426,15 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Fecha Registro</label>
-									<input id="fecha_r_" name="fecha_r_" class="form-control form-control-sm" value="<?php if($certificado->fecha_solicitud!="")echo date("Y-m-d",strtotime($certificado->fecha_solicitud))?>" type="date">
+									<input id="fecha_r_" name="fecha_r_" class="form-control form-control-sm" value="<?php if($certificado->fecha_solicitud!=""){echo date("Y-m-d",strtotime($certificado->fecha_solicitud));}else echo date('Y-m-d');?>" type="date" <?php echo $certificado->fecha_solicitud =! '' ? 'disabled' : ''; ?>>
 								</div>
 							</div>
 
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Tipo de Certificado</label>
-									<select name="id_tipo" id="id_tipo" class="form-control form-control-sm" onChange="obtenerTipoCertificado()">
-										<option value="">--Selecionar--</option>
+									<select name="id_tipo" id="id_tipo" class="form-control form-control-sm" onChange="obtenerTipoCertificado()" <?php echo ($certificado->id_tipo != '') ? 'disabled' : ''; ?>>
+										<option value="0">--Selecionar--</option>
 										<?php
 										foreach ($tipo_certificado as $row) { ?>
 											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $certificado->id_tipo) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
@@ -441,6 +449,7 @@ $.mask.definitions['p'] = "[Mm]";
 								<div class="form-group" id="nombre_proyecto_">
 									<label class="control-label">Nombre del Proyecto</label>
 									<select name="nombre_proyecto" id="nombre_proyecto" class="form-control form-control-sm" onChange="">
+									<select name="id_proyecto" id="id_proyecto" class="form-control form-control-sm" style="display: none;" onChange="">
 										<!--<option value="">--Selecionar--</option>-->
 									</select>
 								</div>
@@ -485,7 +494,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-2">
 								<div class="form-group">
 									<label class="control-label">Fecha Emision</label>
-									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php if($certificado->fecha_emision!="")echo date("Y-m-d",strtotime($certificado->fecha_emision)) ?>" type="date">
+									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php if($certificado->fecha_emision!=""){echo date("Y-m-d",strtotime($certificado->fecha_emision));}else echo date('Y-m-d'); ?>" type="date">
 								</div>
 							</div>
 							
@@ -512,7 +521,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="form-group">
 								<div class="col-lg-12">
 									<label class="control-label">Codigo</label>
-									<input id="codigo_" name="codigo_" class="form-control form-control-sm" value="<?php echo $certificado->codigo ?>" type="text">
+									<input id="codigo_" name="codigo_" class="form-control form-control-sm" value="<?php echo $certificado->codigo ?>" type="text" readonly="readonly">
 								</div>
 							</div>
 						</div>

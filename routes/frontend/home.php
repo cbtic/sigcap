@@ -370,7 +370,7 @@ Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'c
 
 Route::get('comprobante/consultar', [ComprobanteController::class, 'consultar'])->name('comprobante.consultar');
 Route::post('comprobante/listar_comprobante', [ComprobanteController::class, 'listar_comprobante'])->name('comprobante.listar_comprobante');
-Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
+//Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
 Route::get('movilidad/consulta_movilidad', [MovilidadController::class, 'consulta_movilidad'])->name('movilidad.consulta_movilidad');
 Route::post('movilidad/listar_movilidad_ajax', [MovilidadController::class, 'listar_movilidad_ajax'])->name('movilidad.listar_movilidad_ajax');
 Route::get('movilidad/editar_movilidad/{id}', [MovilidadController::class, 'editar_movilidad'])->name('movilidad.editar_movilidad');
@@ -378,7 +378,7 @@ Route::get('movilidad/modal_movilidad_nuevoMovilidad/{id}', [MovilidadController
 Route::post('movilidad/send_movilidad_nuevoMovilidad', [MovilidadController::class, 'send_movilidad_nuevoMovilidad'])->name('movilidad.send_movilidad_nuevoMovilidad');
 Route::get('comprobante/consultar', [ComprobanteController::class, 'consultar'])->name('comprobante.consultar');
 Route::post('comprobante/listar_comprobante', [ComprobanteController::class, 'listar_comprobante'])->name('comprobante.listar_comprobante');
-Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
+//Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
 Route::get('movilidad/eliminar_movilidad/{id}/{estado}', [MovilidadController::class, 'eliminar_movilidad'])->name('movilidad.eliminar_movilidad');
 
 Route::post('comision/send_municipalidad_integrada', [ComisionController::class, 'send_municipalidad_integrada'])->name('comision.send_municipalidad_integrada');
@@ -543,10 +543,12 @@ Route::post('coordinador_zonal/listar_coordinadorZonal_ajax', [CoordinadorZonalC
 Route::get('coordinador_zonal/modal_coordinadorZonal_nuevoCoordinadorZonal/{id}', [CoordinadorZonalController::class, 'modal_coordinadorZonal_nuevoCoordinadorZonal'])->name('coordinador_zonal.modal_coordinadorZonal_nuevoCoordinadorZonal');
 Route::post('coordinador_zonal/send_coordinador_zonal_nuevoCoordinadorZonal', [CoordinadorZonalController::class, 'send_coordinador_zonal_nuevoCoordinadorZonal'])->name('coordinador_zonal.send_coordinador_zonal_nuevoCoordinadorZonal');
 
+Route::post('coordinador_zonal/upload_informe', [CoordinadorZonalController::class, 'upload_informe'])->name('coordinador_zonal.upload_informe');
+
 Route::get('movilidad/obtener_comision/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision'])->name('movilidad.obtener_comision');
 Route::get('movilidad/obtener_comision_movilidad/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision_movilidad'])->name('movilidad.obtener_comision_movilidad');
 
-Route::get('ingreso/modal_beneficiario/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_beneficiario'])->name('ingreso.modal_beneficiario');
+Route::get('ingreso/modal_beneficiario_/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_beneficiario_'])->name('ingreso.modal_beneficiario_');
 
 Route::get('persona/obtenerPersona/{numero_documento}', [PersonaController::class, 'obtenerPersona'])->name('persona.obtenerPersona');
 Route::get('agremiado/modal_suspension/{id}', [AgremiadoController::class, 'modal_suspension'])->name('agremiado.modal_suspension');
@@ -588,3 +590,5 @@ Route::get('asignacion/eliminar_asignacion/{id}/{estado}', [AsignacionCuentaCont
 Route::get('asignacion/consulta_asignacion', [AsignacionCuentaController::class, 'consulta_asignacion'])->name('asignacion.consulta_asignacion');
 
 Route::get('proyecto/obtener_proyecto/{numero_cap}', [ProyectoController::class, 'obtener_proyecto'])->name('proyecto.obtener_proyecto');
+Route::get('certificado/certificado_tipo/{id}', [CertificadoController::class, 'certificado_tipo'])->name('certificado.certificado_tipo');
+Route::post('coordinador_zonal/listar_coordinadorZonalSesion_ajax', [CoordinadorZonalController::class, 'listar_coordinadorZonalSesion_ajax'])->name('coordinador_zonal.listar_coordinadorZonalSesion_ajax');

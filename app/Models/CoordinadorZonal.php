@@ -15,6 +15,12 @@ class CoordinadorZonal extends Model
     public function listar_coordinadorZonal_ajax($p){
  
         return $this->readFuntionPostgres('sp_listar_coordinador_zonal_paginado',$p);
+        
+    }
+
+    public function listar_coordinadorZonalSesion_ajax($p){
+ 
+        return $this->readFuntionPostgres('sp_listar_coordinador_zonal_sesion_paginado',$p);
 
     }
 
