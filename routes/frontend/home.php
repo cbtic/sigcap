@@ -592,3 +592,4 @@ Route::get('asignacion/consulta_asignacion', [AsignacionCuentaController::class,
 Route::get('proyecto/obtener_proyecto/{numero_cap}', [ProyectoController::class, 'obtener_proyecto'])->name('proyecto.obtener_proyecto');
 Route::get('certificado/certificado_tipo/{id}', [CertificadoController::class, 'certificado_tipo'])->name('certificado.certificado_tipo');
 Route::post('coordinador_zonal/listar_coordinadorZonalSesion_ajax', [CoordinadorZonalController::class, 'listar_coordinadorZonalSesion_ajax'])->name('coordinador_zonal.listar_coordinadorZonalSesion_ajax');
+Route::get('derecho_revision/editar_derecho_revision_nuevo/{id}', [DerechoRevisionController::class, 'editar_derecho_revision_nuevo'])->name('derecho_revision.editar_derecho_revision_nuevo');

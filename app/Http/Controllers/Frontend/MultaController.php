@@ -262,6 +262,8 @@ class MultaController extends Controller
 		$agremiadoMulta->id_usuario_inserta = $id_user;
 		$agremiadoMulta->save();
 
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+
 		$agremiado->id_situacion = 74;
 
 		$agremiado->save();

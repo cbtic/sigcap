@@ -453,23 +453,20 @@
 																</tr>
 															</thead>
 															<tbody style="font-size:13px">
-																<?php /*foreach($proyectista as $row){*/?>
-																<!--<tr>
-																	<th><?php //echo $row->universidad?></th>
-																	<th><?php //echo $row->especialidad?></th>
-																	<th><?php //echo $row->tesis?></th>
-																	<th><?php //echo $row->fecha_egresado?></th>
-																	<th><?php //echo $row->fecha_graduado?></th>
-																	<th><?php //echo $row->libro?></th>
-																	<th><?php //echo $row->folio?></th>
+																<?php foreach($proyectista_solicitud as $row){?>
+																<tr>
+																	<th><?php echo $row->numero_cap?></th>
+																	<th><?php echo $row->agremiado?></th>
+																	<th><?php echo $row->celular1?></th>
+																	<th><?php echo $row->email1?></th>
 																	<th>
 																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
+																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
+																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 																	</div>
 																	</th>
-																</tr>	-->													
-																<?php/* }*/?>
+																</tr>											
+																<?php }?>
 															</tbody>							
 															</table>
 															</div>
