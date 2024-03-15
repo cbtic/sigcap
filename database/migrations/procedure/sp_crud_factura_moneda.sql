@@ -7,10 +7,23 @@ AS $function$
 declare
 	_numero integer;
 	idp integer;
+
 	_ruc character varying;
 	_razon_social character varying;
 	_direccion character varying;
 	_correo character varying;
+
+	_ruc2 character varying;
+	_razon_social2 character varying;
+	_direccion2 character varying;
+	_correo2 character varying;
+
+	_ruc_t character varying;
+	_razon_social_t character varying;
+	_direccion_t character varying;
+	_correo_t character varying;
+
+
 	_total numeric;
 	_total_letras character varying;
 	_decimal_letras character varying;
@@ -31,29 +44,31 @@ declare
 	_pu_con_igv numeric;
 	_igv_total numeric;
 
-	_cantidad numeric;
-
 	_subtotal numeric;
 
 	_id_tipo_afectacion integer;
 
+	persona2 integer;
+
+	ubicacion2 integer;
 
 begin
+		
 	_serie:=serie;
 
 	_id_tipo_afectacion:=0;
 
 	--select CAST(total AS numeric) into _total;
 	_total := to_number(total,'9999999999.99');
-	
-	
-	
-
 	select CAST(descuento AS numeric) into _descuento;
 
 	Case accion
 
 		When 'f' then
+		
+			ubicacion2:=descripcion::integer;
+			persona2:=cod_contable::integer;
+		
 			
 			if p_id_moneda = 1 then
 				_moneda:='SOLES';
@@ -81,11 +96,51 @@ begin
 						Where id=persona;
 				end if;
 
-				if tipo = 'BV' or tipo = 'TK' Then
+				if tipo = 'BV' and  persona > 0  Then
 					select numero_documento, apellido_paterno || ' '|| apellido_materno || ' '|| nombres, '' direccion, '' email into  _ruc, _razon_social, _direccion, _correo
 						from personas
 						Where id=persona;
 				end if;
+			
+				if tipo = 'FT' and  ubicacion2 > 0  Then
+					select t2.ruc, t2.razon_social, (case when t2.direccion = 'Direccion' then '' else t2.direccion end) direccion, t2.email into  _ruc2,_razon_social2, _direccion2, _correo2
+						from empresas t2						
+						Where t2.id=ubicacion2;
+				end if;
+			
+				if tipo = 'BV' and  persona2 > 0  Then
+					select numero_documento, apellido_paterno || ' '|| apellido_materno || ' '|| nombres, '' direccion, '' email into  _ruc2, _razon_social2, _direccion2, _correo2
+						from personas
+						Where id=persona2;
+				end if;
+			
+				if ubicacion2 > 0 or  persona2 > 0 then 
+					_ruc_t := _ruc;
+					_razon_social_t := _razon_social;
+					_direccion_t := _direccion;
+					_correo_t := _correo;
+
+					_ruc := _ruc2;
+					_razon_social := _razon_social2;
+					_direccion := _direccion2;
+					_correo := _correo2;
+
+					_ruc2 := _ruc_t;
+					_razon_social2 := _razon_social_t;
+					_direccion2 := _direccion_t;
+					_correo2 := _correo_t;			
+				
+				else
+					_ruc2 := '';
+					_razon_social2 := '';
+					_direccion2 := '';
+					_correo2 := '';
+				
+				end if;
+			
+			
+			
+			
 
 				select upper(f_convnl(trunc(_total))) || ' CON '|| Case When _decimal_letras = '' Then '0' Else _decimal_letras End ||'/100 '||_moneda into _total_letras;
 			
@@ -103,7 +158,6 @@ begin
 	*/		
 			
 				_id_tipo_afectacion:= numero;
-				
 			
 				if _id_tipo_afectacion = 30  then			
 					_subtotal := CAST(total AS numeric);
@@ -118,7 +172,7 @@ begin
 						fecha_programado, observacion, id_moneda, tipo, id_forma_pago, afecta, cerrado, id_tipo_documento,serie_ncnd ,id_numero_ncnd ,tipo_ncnd,
 						solictante,orden_compra,  total_anticipo, total_descuentos, desc_globales,monto_perce, monto_detrac, porc_detrac, totalconperce, tipo_guia,
 						serie_refer, nro_refer, tipo_refer, codtipo_ncnd, motivo_ncnd, correo_des, tipo_operacion, base_perce, tipo_emision, ope_gratuitas,
-						subtotal, codigo_bbss_detrac, cuenta_detrac, notas, cond_pago, id_caja, id_usuario_inserta)
+						subtotal, codigo_bbss_detrac, cuenta_detrac, notas, cond_pago, id_caja, id_usuario_inserta, cod_tributario_2, destinatario_2, direccion_2, correo_des_2)
 						
 					Values (serie,(select coalesce(max(fi.numero),'0')+1 from comprobantes fi where fi.serie = _serie),now(),_razon_social,_direccion,_ruc,'', '',
 						CAST(total AS numeric),0.00,0.00,
@@ -126,7 +180,7 @@ begin
 						CAST(total AS numeric),_total_letras,_moneda,18,0.000,'P','N',now(),now(),
 						now(),now(),'',p_id_moneda, tipo, 1, '', 'S',6,'',0,'','','',0.00, _descuento, 0.00, 0.00, 0.00, 0, CAST(total AS numeric), '', '', '', '', '', '', _correo, '01',CAST(total AS numeric), 'SINCRONO', 0, 
 						_subtotal, --CAST(total AS numeric)/1.18, 
-						'', '', '', '', id_caja, p_id_usuario);
+						'', '', '', '', id_caja, p_id_usuario, _ruc2, _razon_social2, _direccion2, _correo2);
 
 				idp := (SELECT currval('comprobantes_id_seq'));
 
@@ -151,17 +205,15 @@ begin
 				from conceptos 						
 				Where id = persona;
 			
-				_cantidad = ubicacion;
-			
 				if _id_tipo_afectacion = 30  then
-					_pu := _total*_cantidad;
+					_pu := _total;
 					_igv_total := 0;
 					_pu_con_igv := _pu + _igv_total;
 					
 				else
-					_pu := (_total * _cantidad)/1.18;
-					_igv_total := _pu*0.18;
-					_pu_con_igv := _pu+_igv_total;
+					_pu := _total/1.18;
+					_igv_total := (_total/1.18)*0.18;
+					_pu_con_igv := _total/1.18;
 					
 					_id_tipo_afectacion := 10;
 				end if;
@@ -169,7 +221,7 @@ begin
 			
 				Insert Into comprobante_detalles (serie, numero, tipo, item, cantidad, descripcion,
 					pu,  pu_con_igv,  igv_total, descuento, importe,afect_igv, cod_contable, valor_gratu, unidad,id_usuario_inserta,id_comprobante, id_concepto)
-					Values (_serie,numero,tipo,1,_cantidad,descripcion,
+					Values (_serie,numero,tipo,ubicacion,1,descripcion,
 					_pu, _pu_con_igv,_igv_total, _descuento, (_total - _descuento)  ,_id_tipo_afectacion,cod_contable,0,'ZZ',p_id_usuario, id_caja, persona);
 				
 				update valorizaciones Set id_comprobante  = id_caja, pagado = '1'
