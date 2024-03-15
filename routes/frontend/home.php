@@ -125,6 +125,8 @@ Route::get('agremiado/eliminar_traslado/{id}', [AgremiadoController::class, 'eli
 Route::get('agremiado/eliminar_situacion/{id}', [AgremiadoController::class, 'eliminar_situacion'])->name('agremiado.eliminar_situacion');
 Route::get('agremiado/obtener_agremiado/{tipo_documento}/{numero_documento}', [AgremiadoController::class, 'obtener_agremiado'])->name('agremiado.obtener_agremiado');
 
+Route::get('agremiado/obtener_representante/{tipo_documento}/{numero_documento}', [AgremiadoController::class, 'obtener_representante'])->name('agremiado.obtener_representante');
+
 Route::post('agremiado/upload_agremiado', [AgremiadoController::class, 'upload_agremiado'])->name('agremiado.upload_agremiado');
 
 
