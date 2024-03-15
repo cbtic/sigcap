@@ -155,14 +155,15 @@ class CertificadoController extends Controller
 		$certificado->fecha_emision = $request->fecha_emi;
 		$certificado->id_agremiado = $request->idagremiado;
 		$certificado->id_tipo_tramite = $request->tipo_tramite;
-		$certificado->id_solicitud = $request->nombre_proyecto;
-		
 		$certificado->dias_validez = $request->validez;
 		$certificado->especie_valorada = $request->ev;
 		//$certificado->codigo = getCodigoCertificado($request->tipo);//$request->codigo; 
 		$certificado->observaciones =$request->observaciones;
 		$certificado->estado =1;
 		$certificado->id_tipo =$request->tipo;
+		if($request->id_tipo==1 || $request->id_tipo==2){
+			$certificado->id_solicitud = $request->nombre_proyecto;
+		}
 		$certificado->id_usuario_inserta = $id_user;
 	
 		$certificado->save();

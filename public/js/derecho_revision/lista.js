@@ -786,20 +786,27 @@ function guardar_solicitud_derecho_revision(){
 	var parcela = $('#parcela').val();
 	var superManzana = $('#superManzana').val();
 	var lote = $('#lote').val();
+	var sitio = $('#sitio').val();
+	var zona = $('#zona').val();
+	var tipo = $('#tipo').val();
+	var sublote = $('#sublote').val();
 	var fila = $('#fila').val();
+	var zonificacion = $('#zonificacion').val();
 	
 	$.ajax({
 			url: "/derecho_revision/send_nuevo_registro_solicitud",
 			type: "POST",
 			data : {_token:_token,id:id,numero_cap:numero_cap,n_revision:n_revision,direccion_proyecto:direccion_proyecto,
 				departamento:departamento,provincia:provincia,distrito:distrito,municipalidad:municipalidad,nombre_proyecto:nombre_proyecto,
-				parcela:parcela,superManzana:superManzana,lote:lote,fila:fila},
+				parcela:parcela,superManzana:superManzana,lote:lote,fila:fila,sitio:sitio,zona:zona,tipo:tipo,sublote:sublote,zonificacion:zonificacion},
 			success: function (result) {
 				
 				//$('#openOverlayOpc').modal('hide');
 				//modalSituacion(id_agremiado);
 				//datatableSuspension();
-				window.location.reload();
+
+				//window.location.reload();
+				
 				//$('#openOverlayOpc').modal('hide');
 				
 				/*
