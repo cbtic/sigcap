@@ -890,7 +890,7 @@ function cargarValorizacion(){
 
 			}
 
-			if ((cboTipoConcepto_b==26411 && cboTipoCuota_b==1)||(cboTipoConcepto_b==26412 && cboTipoCuota_b==1)) {
+			if ((cboTipoConcepto_b==26411 && cboTipoCuota_b==1)||(cboTipoConcepto_b==26412)) {
 
 				$("#btnFracciona").prop('disabled', false);
 

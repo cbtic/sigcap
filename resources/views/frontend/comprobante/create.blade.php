@@ -428,7 +428,10 @@
                         <input type="hidden" name="id_pronto_pago" id="id_pronto_pago" value="<?php echo $id_pronto_pago; ?>">
                         <input type="hidden" name="totalMedioPago" id="totalMedioPago" value="">
 
-                        <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
+                        <input type="hidden" name="persona2" id="persona2" value="">
+                        <input type="hidden" name="ubicacion2" id="ubicacion2" value="">
+
+                        <input type="hidden" name="TipoF" id="TipoF" value="<?php if ($trans == 'FA') {
                                                                         echo $TipoF;
                                                                     } ?>">
                         <input type="hidden" name="vestab" value="1">
@@ -545,6 +548,7 @@
                                                     </div>
 
                                                 </div>
+
                                                 <div id="" class="row">
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                         <label class="form-control-sm">RUC/DNI</label>
@@ -556,12 +560,12 @@
                                                                                                                                                     echo $comprobante->cod_tributario;
                                                                                                                                                 } ?>" placeholder="" class="form-control form-control-sm">
                                                         </div>
-                                                        <button type="button" data-toggle="modal" data-target="#duenoCargaModal" id="" class="btn btn-link btn-xsm">Buscar Empresa</button>
+                                                        
                                                     </div>
                                                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Razón Social/Nombre</label>
-                                                            <input type="text" name="numero_documento" readonly id="numero_documento" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="razon_social" readonly id="razon_social" value="<?php if ($trans == 'FA') {
                                                                                                                                                     echo $empresa->razon_social;
                                                                                                                                                 }
                                                                                                                                                 if ($trans == 'FE') {
@@ -572,7 +576,7 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Dirección</label>
-                                                            <input type="text" name="direccion" readonly id="numero_documento" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="direccion" readonly id="direccion" value="<?php if ($trans == 'FA') {
                                                                                                                                             echo $empresa->direccion;
                                                                                                                                         }
                                                                                                                                         if ($trans == 'FE') {
@@ -583,15 +587,53 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Email</label>
-                                                            <input type="text" name="direccion" readonly id="numero_documento" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="email" readonly id="email" value="<?php if ($trans == 'FA') {
                                                                                                                                             echo $empresa->email;
                                                                                                                                         }
                                                                                                                                         if ($trans == 'FE') {
-                                                                                                                                            echo $comprobante->correo_des;
+                                                                                                                                            echo $comprobante->email;
                                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div id="" class="row">
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="form-control-sm">RUC/DNI</label>
+                                                        <div class="input-group">
+                                                            <!--
+                                                            <input type="text" name="numero_documento2"  id="numero_documento2" value="" placeholder="" class="form-control form-control-sm">
+                                                                                                                                    -->
+
+                                                            <input class="form-control input-sm text-uppercase" type="text" name="numero_documento2" id="numero_documento2" autocomplete="OFF" maxlength="12" required="" tabindex="0">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerRepresentante()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
+                                                            </span>
+                                                        </div>                                                        
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Razón Social/Nombre</label>
+                                                            <input type="text" name="razon_social2" readonly id="razon_social2" value="" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Dirección</label>
+                                                            <input type="text" name="direccion2" readonly id="direccion2" value="" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Email</label>
+                                                            <input type="text" name="email2" readonly id="email2" value="" placeholder="" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
                                                 <div id="" class="row" style="display:none">
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">

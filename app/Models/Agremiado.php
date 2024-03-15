@@ -74,6 +74,27 @@ class Agremiado extends Model
         return $data[0];
     }
 
+	function getRepresentante($tipo_documento,$numero_documento){
+
+        if($tipo_documento=="79"){  //RUC
+            $cad = "select id, ruc numero_documento, razon_social representante, direccion, email 
+                    from empresas                     
+                    Where ruc='".$numero_documento."'";
+
+        }elseif($tipo_documento=="78"){ //NRO_CAP
+			
+			$cad = "select id, numero_documento, apellido_paterno ||' '|| apellido_materno ||' '|| nombres representante, direccion, correo email  			
+			from personas  
+			where id_tipo_documento='".$tipo_documento."' 
+			and numero_documento = '".$numero_documento."' and estado='1' ";
+		}
+		//echo $cad;
+		$data = DB::select($cad);
+		
+        return $data[0];
+    }
+
+
 	function getAgremiadoDatos($numero_cap){
 
 
