@@ -125,6 +125,8 @@ Route::get('agremiado/eliminar_traslado/{id}', [AgremiadoController::class, 'eli
 Route::get('agremiado/eliminar_situacion/{id}', [AgremiadoController::class, 'eliminar_situacion'])->name('agremiado.eliminar_situacion');
 Route::get('agremiado/obtener_agremiado/{tipo_documento}/{numero_documento}', [AgremiadoController::class, 'obtener_agremiado'])->name('agremiado.obtener_agremiado');
 
+Route::get('agremiado/obtener_representante/{tipo_documento}/{numero_documento}', [AgremiadoController::class, 'obtener_representante'])->name('agremiado.obtener_representante');
+
 Route::post('agremiado/upload_agremiado', [AgremiadoController::class, 'upload_agremiado'])->name('agremiado.upload_agremiado');
 
 
@@ -594,3 +596,4 @@ Route::get('asignacion/consulta_asignacion', [AsignacionCuentaController::class,
 Route::get('proyecto/obtener_proyecto/{numero_cap}', [ProyectoController::class, 'obtener_proyecto'])->name('proyecto.obtener_proyecto');
 Route::get('certificado/certificado_tipo/{id}', [CertificadoController::class, 'certificado_tipo'])->name('certificado.certificado_tipo');
 Route::post('coordinador_zonal/listar_coordinadorZonalSesion_ajax', [CoordinadorZonalController::class, 'listar_coordinadorZonalSesion_ajax'])->name('coordinador_zonal.listar_coordinadorZonalSesion_ajax');
+Route::get('derecho_revision/editar_derecho_revision_nuevo/{id}', [DerechoRevisionController::class, 'editar_derecho_revision_nuevo'])->name('derecho_revision.editar_derecho_revision_nuevo');

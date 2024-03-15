@@ -263,6 +263,8 @@ class ComprobanteController extends Controller
                 
             }
 
+            //echo $TipoF; exit();
+
           
 
             return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago'));
@@ -488,10 +490,16 @@ class ComprobanteController extends Controller
 			$total = $request->totalF;
 			$serieF = $request->serieF;
 			$tipoF = $request->TipoF;
+
 			$ubicacion_id = $request->ubicacion;
+            $ubicacion_id2 = $request->ubicacion2;
 			$id_persona = $request->persona;
+            $id_persona2 = $request->persona2;
 
             if ($id_persona=='') $id_persona = 0;
+            if ($id_persona2=='') $id_persona2 = '0';
+
+            if ($ubicacion_id2=='') $ubicacion_id2 = '0';
 
             //print_r($id_persona); exit();
 
@@ -551,7 +559,7 @@ class ComprobanteController extends Controller
 
                 if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
 
-				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
+				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
 				$factura = Comprobante::where('id', $id_factura)->get()[0];

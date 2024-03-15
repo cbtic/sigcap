@@ -155,14 +155,15 @@ class CertificadoController extends Controller
 		$certificado->fecha_emision = $request->fecha_emi;
 		$certificado->id_agremiado = $request->idagremiado;
 		$certificado->id_tipo_tramite = $request->tipo_tramite;
-		$certificado->id_solicitud = $request->nombre_proyecto;
-		
 		$certificado->dias_validez = $request->validez;
 		$certificado->especie_valorada = $request->ev;
 		//$certificado->codigo = getCodigoCertificado($request->tipo);//$request->codigo; 
 		$certificado->observaciones =$request->observaciones;
 		$certificado->estado =1;
 		$certificado->id_tipo =$request->tipo;
+		if($request->id_tipo==1 || $request->id_tipo==2){
+			$certificado->id_solicitud = $request->nombre_proyecto;
+		}
 		$certificado->id_usuario_inserta = $id_user;
 	
 		$certificado->save();
@@ -445,7 +446,7 @@ class CertificadoController extends Controller
 		$numero = $datos[0]->dias_validez;
 		$tramite = $datos[0]->tipo_tramite;
 		
-		$numeroEnLetras = $this->numeroALetras($numero); 
+		//$numeroEnLetras = $this->numeroALetras($numero); 
 		
 
 		if ($trato==3) {
@@ -478,7 +479,7 @@ class CertificadoController extends Controller
 		
 		$formattedDate_colegiado = $carbonDate_colegiado->timezone('America/Lima')->formatLocalized(' %d de %B %Y');
 		
-		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita'));
+		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros

@@ -84,6 +84,12 @@ $(document).ready(function () {
 		
 	});
 
+	$('#numero_documento2').keypress(function (e) {
+		if (e.keyCode == 13) {
+			obtenerRepresentante();
+		}
+	});
+
 	
 
 	calculoDetraccion();
@@ -145,8 +151,14 @@ function guardarFactura(){
 	
 	var totalMedioPago = $('#totalMedioPago').val();
 	var total_fac_ = $('#total_fac_').val();
+
+	var id_formapago_ = $('#id_formapago_').val();
+
+	//alert(id_formapago_);
+
 	
-	if(totalMedioPago!=total_fac_){
+	
+	if(totalMedioPago!=total_fac_ && id_formapago_==1){
 		msg+="El total de medio de pago no coincide al total del comprobante..<br>";
 	}
 
@@ -710,11 +722,52 @@ function obtenerTitular(){
 			//$("#precio_peso").val(total);
 					
 		});
-
-		
 		
 	}
-	
+
+	function obtenerRepresentante(){
+
+		var tipo_documento = "";
+		var tipo_comprobante = $("#TipoF").val();
+
+		//alert(tipo_comprobante);
+		
+		if(tipo_comprobante=="FT") tipo_documento = '79';
+		if(tipo_comprobante=="BV") tipo_documento = '78';
+
+		var numero_documento = $("#numero_documento2").val();
+
+		$.ajax({
+			url: '/agremiado/obtener_representante/' + tipo_documento + '/' + numero_documento,
+			dataType: "json",
+			success: function (result) {
+
+				if (result) {
+					$('#razon_social2').val(result.agremiado.representante);
+					$('#direccion2').val(result.agremiado.direccion);
+					$('#email2').val(result.agremiado.email);
+					
+					if(tipo_comprobante=="FT") $('#ubicacion2').val(result.agremiado.id);
+					if(tipo_comprobante=="BV") $('#persona2').val(result.agremiado.id);
+
+					
+
+				}
+				else {						
+					Swal.fire("registro no encontrado!");
+				}
+
+			},
+			"error": function (msg, textStatus, errorThrown) {
+
+				Swal.fire("Numero de documento no fue registrado!");
+
+			}
+			
+			
+		});
+		
+	}
 	
 
 

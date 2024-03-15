@@ -255,8 +255,9 @@ class DerechoRevisionController extends Controller
     }
 
 	function consulta_derecho_revision_nuevo(){
-
+		$id = 0;
         $proyectista = new Proyectista;
+		$proyectista_model = new Proyectista;
 		$derechoRevision = new DerechoRevision;
 		$agremiado = new Agremiado;
 		$persona = new Persona;
@@ -270,8 +271,32 @@ class DerechoRevisionController extends Controller
         $zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
 		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
+		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud($id);
 		
-        return view('frontend.derecho_revision.all_nuevoDerecho',compact('derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad'));
+        return view('frontend.derecho_revision.all_nuevoDerecho',compact('derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud'));
+    }
+
+	function editar_derecho_revision_nuevo($id){
+
+		$proyectista = Proyectista::find($id);
+		
+		$proyectista_model = new Proyectista;
+		$derechoRevision = new DerechoRevision;
+		$agremiado = new Agremiado;
+		$persona = new Persona;
+		$proyecto = new Proyecto;
+		$tablaMaestra_model = new TablaMaestra;
+		$ubigeo_model = new Ubigeo;
+		$municipalidad_model = new Municipalidade;
+
+		$departamento = $ubigeo_model->getDepartamento();
+        $sitio = $tablaMaestra_model->getMaestroByTipo(33);
+        $zona = $tablaMaestra_model->getMaestroByTipo(34);
+		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
+		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
+		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud($id);
+		
+        return view('frontend.derecho_revision.all_nuevoDerecho',compact('derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud'));
     }
 
 	public function send_nuevo_registro_solicitud(Request $request){
@@ -285,9 +310,11 @@ class DerechoRevisionController extends Controller
 		if($request->id == 0){
 			$derecho_revision = new DerechoRevision;
 			$proyecto = new Proyecto;
+			$proyectista = new Proyectista;
 		}else{
 			$derecho_revision = DerechoRevision::find($request->id);
 			$proyecto = Proyecto::find($request->id);
+			$proyectista = Proyectista::find($request->id);
 		}
 		
 		$derecho_revision->id_regional = 5;
@@ -296,6 +323,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->direccion = $request->direccion_proyecto;
 		$derecho_revision->id_municipalidad = $request->municipalidad;
 		$derecho_revision->id_ubigeo = $id_ubi->id;
+		$derecho_revision->id_tipo_solicitud = 124;
 		$derecho_revision->id_proyectista = $agremiado->id;
 		
 		$derecho_revision->id_usuario_inserta = $id_user;
@@ -308,10 +336,30 @@ class DerechoRevisionController extends Controller
 		$proyecto->direccion = $request->direccion_proyecto;
 		$proyecto->lote = $request->lote;
 		$proyecto->fila = $request->fila;
+		$proyecto->id_tipo_sitio = $request->sitio;
+		$proyecto->id_tipo_direccion = $request->tipo;
+		$proyecto->id_tipo_proyecto = 124;
+		$proyecto->zonificacion = $request->zonificacion;
+		$proyecto->sub_lote = $request->sublote;
 		$proyecto->id_usuario_inserta = $id_user;
 		$proyecto->save();
+		
+
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+
+		$proyectista->id_agremiado = $agremiado->id;
+		$proyectista->celular = $request->celular;
+		$proyectista->email = $request->email;
+		
+		//$proyectista->firma = $request->nombre;
+		//$profesion->estado = 1;
+		$proyectista->id_usuario_inserta = $id_user;
+		$proyectista->save();
 		$derecho_revision->id_proyecto = $proyecto->id;
+		$derecho_revision->id_proyecto = $proyectista->id;
 		$derecho_revision->save();
+		$proyectista->id_solicitud = $derecho_revision->id;
+		$proyectista->save();
     }
 
 	public function modal_nuevo_proyectista($id){
