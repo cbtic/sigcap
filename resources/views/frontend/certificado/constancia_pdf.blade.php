@@ -123,7 +123,7 @@ $(document).ready(function() {
                              N° <?php echo $datos[0]->numero_regional;?>.</p>
 
             <p style="text-align: justify; font_size: 14">Actualmente <?php echo $tratodesc_minuscula;?> <b><?php echo $datos[0]->desc_cliente;?> </b> 
-            ha pagado sus cuotas institucionales hasta <?php echo $datos[0]->mes;?>.</p> del Z; por lo tanto, se encuentra en condici&oacute;n
+            ha pagado sus cuotas institucionales hasta <?php //echo $datos[0]->mes;?>.</p> del Z; por lo tanto, se encuentra en condici&oacute;n
             de <?php echo $habilita;?> para ejercer la profesi&oacute;n.</p>
             <p></p>
             
