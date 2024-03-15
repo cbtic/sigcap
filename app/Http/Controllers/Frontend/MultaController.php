@@ -237,15 +237,17 @@ class MultaController extends Controller
 
 		if($request->id == 0){
 			$agremiadoMulta = new AgremiadoMulta;
+			$agremiado = new Agremiado;
+			
 		}else{
 			$agremiadoMulta = AgremiadoMulta::find($request->id);
 		}
 		
-		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+		$agremiado_ = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		$multa = Multa::where("id",$request->id_multa)->where("estado","1")->first();
 		$concepto = Concepto::where("id",$multa->id_concepto)->where("estado","1")->first();
 
-		$agremiadoMulta->id_agremiado = $agremiado->id;
+		$agremiadoMulta->id_agremiado = $agremiado_->id;
 		$agremiadoMulta->id_multa = $request->id_multa;
 		//$id_concepto= Multa::find($request->id_multa);
 		$agremiadoMulta->fecha = Carbon::now()->format('Y-m-d');
@@ -259,6 +261,10 @@ class MultaController extends Controller
 		//$agremiadoMulta->estado = 1;
 		$agremiadoMulta->id_usuario_inserta = $id_user;
 		$agremiadoMulta->save();
+
+		$agremiado->id_situacion = 74;
+
+		$agremiado->save();
 		
 		$id_multa = $agremiadoMulta->id;
 		
@@ -270,8 +276,8 @@ class MultaController extends Controller
 			$valorizacion->id_modulo = 3;
 			$valorizacion->pk_registro = $id_multa;
 			$valorizacion->id_concepto = $multa->id_concepto;
-			$valorizacion->id_agremido = $agremiado->id;
-			$valorizacion->id_persona = $agremiado->id_persona;
+			$valorizacion->id_agremido = $agremiado_->id;
+			$valorizacion->id_persona = $agremiado_->id_persona;
 			$valorizacion->monto = $multa->monto;
 			$valorizacion->id_moneda = $multa->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
