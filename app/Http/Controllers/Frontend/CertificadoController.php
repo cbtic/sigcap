@@ -446,7 +446,7 @@ class CertificadoController extends Controller
 		$numero = $datos[0]->dias_validez;
 		$tramite = $datos[0]->tipo_tramite;
 		
-		$numeroEnLetras = $this->numeroALetras($numero); 
+		//$numeroEnLetras = $this->numeroALetras($numero); 
 		
 
 		if ($trato==3) {
@@ -479,7 +479,7 @@ class CertificadoController extends Controller
 		
 		$formattedDate_colegiado = $carbonDate_colegiado->timezone('America/Lima')->formatLocalized(' %d de %B %Y');
 		
-		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita'));
+		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
