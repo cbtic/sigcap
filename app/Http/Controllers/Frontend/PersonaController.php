@@ -718,8 +718,9 @@ class PersonaController extends Controller
 
 	public function modal_personaNuevo(Request $request){
 		
-		$id_tipo_documento = $request->tipo_documento;
-		$numero_documento = $request->numero_documento;
+		//$id_tipo_documento = $request->tipo_documento;
+		$id_tipo_documento = 78;
+		$numero_documento = $request->dni;
 		
 
 		$tablaMaestra_model = new TablaMaestra;		

@@ -222,7 +222,7 @@ Route::post('ingreso/listar_estado_cuenta_ajax', [IngresoController::class, 'lis
 Route::post('ingreso/listar_liquidacion_caja_ajax', [IngresoController::class, 'listar_liquidacion_caja_ajax'])->name('ingreso.listar_liquidacion_caja_ajax');
 Route::get('ingreso/exportar_liquidacion_caja/{fecha_inicio_desde}/{fecha_inicio_hasta}/{fecha_ini}/{fecha_fin}/{id_caja}/{estado}', [IngresoController::class, 'exportar_liquidacion_caja'])->name('ingreso.exportar_liquidacion_caja');
 Route::get('ingreso/exportar_estado_cuenta/{tipo}/{afiliado}/{numero_documento}/{periodo}/{fecha_inicio}/{fecha_fin}/{pago}/{order}/{sort}', [IngresoController::class, 'exportar_estado_cuenta'])->name('ingreso.exportar_estado_cuenta');
-
+Route::post('ingreso/listar_empresa_beneficiario_ajax', [IngresoController::class, 'listar_empresa_beneficiario_ajax'])->name('ingreso.listar_empresa_beneficiario_ajax');
 
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');

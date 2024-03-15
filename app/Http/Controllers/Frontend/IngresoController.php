@@ -430,6 +430,29 @@ class IngresoController extends Controller
 		return view('frontend.ingreso.modal_beneficiario_',compact('persona','empresa','id_persona','id_agremiado','tipo_documento','empresa_beneficiario'));
 	
 	}
+	
+	public function listar_empresa_beneficiario_ajax(Request $request){
+	
+		$beneficiario_model = new Beneficiario();
+		$p[]=$request->id_concurso;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $beneficiario_model->listar_empresa_beneficiario($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
 
     public function send_beneficiario(Request $request){
 		

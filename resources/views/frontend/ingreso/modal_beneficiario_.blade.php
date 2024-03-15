@@ -212,6 +212,120 @@
 
 $("#profesion").select2({ width: '100%' });
 
+datatablenewEmpresaBeneficiario();
+
+function datatablenewEmpresaBeneficiario(){
+    var oTable1 = $('#tblBeneficiario').dataTable({
+        "bServerSide": true,
+        "sAjaxSource": "/ingreso/listar_empresa_beneficiario_ajax",
+        "bProcessing": true,
+        "sPaginationType": "full_numbers",
+        //"paging":false,
+        "bFilter": false,
+        "bSort": false,
+        "info": true,
+		//"responsive": true,
+        "language": {"url": "/js/Spanish.json"},
+        "autoWidth": false,
+        "bLengthChange": true,
+        "destroy": true,
+        "lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
+        "aoColumns": [
+                        {},
+        ],
+		"dom": '<"top">rt<"bottom"flpi><"clear">',
+        "fnDrawCallback": function(json) {
+            $('[data-toggle="tooltip"]').tooltip();
+        },
+
+        "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
+
+            var sEcho           = aoData[0].value;
+            var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
+            var iCantMostrar 	= aoData[4].value;
+			
+			var id_empresa = $('#id_empresa').val();
+			var _token = $('#_token').val();
+            oSettings.jqXHR = $.ajax({
+				"dataType": 'json',
+                //"contentType": "application/json; charset=utf-8",
+                "type": "POST",
+                "url": sSource,
+                "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
+						id_empresa:id_empresa,
+						_token:_token
+                       },
+                "success": function (result) {
+                    fnCallback(result);
+                },
+                "error": function (msg, textStatus, errorThrown) {
+                    //location.href="login";
+                }
+            });
+        },
+
+        "aoColumnDefs":
+            [	
+				{
+                "mRender": function (data, type, row) {
+                	var numero_documento = "";
+					if(row.numero_documento!= null)numero_documento = row.numero_documento;
+					return numero_documento;
+                },
+                "bSortable": false,
+                "aTargets": [0],
+				"className": "dt-center",
+				//"className": 'control'
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var nombres = "";
+					if(row.nombres!= null)nombres = row.nombres;
+					return nombres;
+                },
+                "bSortable": true,
+                "aTargets": [1]
+                },
+				
+                {
+                "mRender": function (data, type, row) {
+                	var direccion = "";
+					if(row.direccion!= null)direccion = row.direccion;
+					return direccion;
+                },
+                "bSortable": true,
+                "aTargets": [2]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var numero_celular = "";
+					if(row.numero_celular!= null)numero_celular = row.numero_celular;
+					return numero_celular;
+                },
+                "bSortable": true,
+                "aTargets": [3]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var correo = "";
+					if(row.correo!= null)correo = row.correo;
+					return correo;
+                },
+                "bSortable": true,
+                "aTargets": [4]
+                },
+
+            ]
+
+
+    });
+
+}
+
+
 function obtener_profesional_(){
 	
   var numero_documento_ = $('#dni').val();
@@ -285,11 +399,8 @@ function save_beneficiario(){
               data : {_token:_token,id:id,dni:dni,ruc:ruc},
               success: function (result) {
           
-          
-          //window.location.reload();
-          //$('#openOverlayOpc').modal('hide');
-          
-         
+          		datatablenewEmpresaBeneficiario();
+				
               }
       });
   }
@@ -370,7 +481,7 @@ function modal_personaNuevo(){
 	$.ajax({
 			url: "/persona/modal_personaNuevo",
 			type: "get",
-			data : $("#frmValorizacion").serialize(),
+			data : $("#frmEmpresaBeneficiario").serialize(),
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
 					//$('#openOverlayOpc').modal('show');
@@ -401,17 +512,17 @@ function modal_personaNuevo(){
             <!--aaaa-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 
-              <form method="post" action="#" enctype="multipart/form-data">
+              <form method="post" id="frmEmpresaBeneficiario" action="#" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-                <!--<input type="hidden" name="id" id="id" value="<?php /*echo $id */?>">
-                <input type="hidden" name="id_persona" id="id_persona">-->
+                <input type="hidden" name="id_empresa" id="id_empresa" value="<?php echo $empresa->id ?>">
+                <!--<input type="hidden" name="id_persona" id="id_persona">-->
                 
                 
                   <div class="row">
                     <div class="col-lg-5">
                       <div class="form-group">
                         <label class="control-label form-control-sm">RUC</label>
-                        <input name="ruc" id="ruc" type="text" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" onblur="" readonly='readonly'>
+                        <input name="ruc" id="ruc" type="text" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" onBlur="" readonly='readonly'>
                           
                       </div>
                     </div>
@@ -419,7 +530,7 @@ function modal_personaNuevo(){
                     <div class="col-lg-5">
                       <div class="form-group">
                         <label class="control-label form-control-sm">N&uacute;mero Documento</label>
-                        <input name="dni" id="dni" type="text" class="form-control form-control-sm" value="<?php echo $persona->numero_documento?>" onchange="obtener_profesional_()" >
+                        <input name="dni" id="dni" type="text" class="form-control form-control-sm" value="<?php echo $persona->numero_documento?>" onChange="obtener_profesional_()" >
                           
                       </div>
                     </div>
@@ -477,15 +588,18 @@ function modal_personaNuevo(){
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($empresa_beneficiario as $row) {?>
+						
+                        <?php //foreach ($empresa_beneficiario as $row) {?>
+						<!--
                         <tr style='font-size:13px'>
-                          <!--<input type='hidden' name='id_beneficiario[]' value='<?php //echo $row->id?>'>-->
-                          <td class='text-left'><?php echo $row->numero_documento?></td>
-                          <td class='text-left'><?php echo $row->nombres?></td>
-                          <td class='text-left'><?php echo $row->direccion?></td>
-                          <td class='text-left'><?php echo $row->numero_celular?></td>
-                          <td class='text-left'><?php echo $row->correo?></td>
-                        <?php } ?>
+                          <td class='text-left'><?php //echo $row->numero_documento?></td>
+                          <td class='text-left'><?php //echo $row->nombres?></td>
+                          <td class='text-left'><?php //echo $row->direccion?></td>
+                          <td class='text-left'><?php //echo $row->numero_celular?></td>
+                          <td class='text-left'><?php //echo $row->correo?></td>
+						-->
+                        <?php //} ?>
+						
                         </tbody>
                     </table>
                     </div>
