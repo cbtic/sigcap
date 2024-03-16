@@ -254,9 +254,9 @@
                                                     <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo !empty($pronto_pago->periodo) ? $pronto_pago->periodo : '0'  ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="numero_cuotas_pp" id="numero_cuotas_pp" value="<?php echo !empty($pronto_pago->numero_cuotas) ? $pronto_pago->numero_cuotas : '0'  ?>" class="form-control form-control-sm">
 
-                                                    <input type="hidden" readonly name="id_concepto_pp" id="id_concepto_pp" value="<?php echo $concepto->id ?>" class="form-control form-control-sm">
-                                                    <input type="hidden" readonly name="importe_pp" id="importe_pp" value="<?php echo $concepto->importe ?>" class="form-control form-control-sm">
-                                                    <input type="hidden" readonly name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo $concepto->id_tipo_afectacion ?>" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="id_concepto_pp" id="id_concepto_pp" value="<?php echo !empty($concepto->id) ? $concepto->id : '0'   ?>" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="importe_pp" id="importe_pp" value="<?php echo !empty($concepto->importe) ? $concepto->importe : '0' ?>" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo !empty($concepto->id_tipo_afectacion) ? $concepto->id_tipo_afectacion : '0' ?>" class="form-control form-control-sm">
 
                                                 </div>
                                             </div>
