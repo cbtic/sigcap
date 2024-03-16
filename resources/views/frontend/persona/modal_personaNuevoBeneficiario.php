@@ -240,16 +240,6 @@
 				fecha_nacimiento:fecha_nacimiento,
 				sexo:sexo,
 				ruc:ruc
-				/*
-				codigo: codigo,
-				ocupacion: ocupacion,
-				telefono: telefono,
-				email: email,
-				ruc: ruc,
-				flag_negativo: flag_negativo,
-				observacion: observacion,
-				img_foto: img_foto
-				*/
 			},
 			//dataType: 'json',
 			success: function(result) {

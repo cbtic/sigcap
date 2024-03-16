@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Beneficiario;
+use App\Models\Empresa;
+use App\Models\Persona;
+use App\Models\Concepto;
+use App\Models\TablaMaestra;
+use App\Models\Valorizacione;
+use Carbon\Carbon;
 use Auth;
 
 class BeneficiarioController extends Controller
@@ -29,15 +35,11 @@ class BeneficiarioController extends Controller
     public function listar_beneficiario_ajax(Request $request){
 	
 		$beneficiario_model = new Beneficiario;
-		$p[]="";
-		$p[]=$request->numero_cap;
-		$p[]=$request->numero_documento;
+		$p[]=$request->ruc;
+        $p[]=$request->dni;
 		$p[]=$request->agremiado;
+		$p[]=$request->razon_social;
         $p[]="";
-		$p[]="";
-		$p[]="";
-		$p[]="";
-		$p[]="";
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -56,17 +58,37 @@ class BeneficiarioController extends Controller
 	
 	}
 
-    public function modal_beneficiario_($periodo, $id_persona, $id_agremiado, $tipo_documento){
+    public function modal_beneficiario_($id){
 		
         $persona = new Persona();
-        $empresa_model = new Empresa();
-        $beneficiario_model = new Beneficiario();
-        $empresa = $empresa_model->getEmpresaId($id_persona);
-        $empresa_beneficiario = $beneficiario_model->getBeneficiarioId($empresa->id);
+        $empresa = new Empresa();
+        $beneficiario = new Beneficiario();
+        $concepto_model = new Concepto();
+        $tablaMaestra_model = new TablaMaestra;
+
+        if($id>0){
+			$beneficiario = Beneficiario::find($id);
+            $id_persona = $beneficiario->id_persona;
+            $persona = Persona::find($id_persona);
+            $id_empresa = $beneficiario->id_empresa;
+            $empresa = Empresa::find($id_empresa);
+            
+		}else{
+			$persona = new Persona();
+            $empresa = new Empresa();
+            $beneficiario = new Beneficiario();
+		}
+
+        $concepto = $concepto_model->getConceptoAllDenominacion();
+        $estado_concepto = $tablaMaestra_model->getMaestroByTipo(120);
+        
+        
+        //$empresa = $empresa_model->getEmpresaId();
+        //$empresa_beneficiario = $beneficiario_model->getBeneficiarioId();
        
 		//$beneficiario = new Beneficiario;
 		//$valorizacion = $valorizaciones_model->getValorizacionFactura($id);
-		return view('frontend.beneficiario.modal_beneficiario_',compact('persona','empresa','id_persona','id_agremiado','tipo_documento','empresa_beneficiario'));
+		return view('frontend.beneficiario.modal_beneficiario_',compact('persona','empresa'/*,'id_persona','id_agremiado','tipo_documento'*/,'beneficiario','concepto','estado_concepto'));
 	
 	}
 
@@ -84,9 +106,66 @@ class BeneficiarioController extends Controller
 
 		$beneficiario->id_persona = $persona->id;
 		$beneficiario->id_empresa = $empresa->id;
+        $beneficiario->id_concepto = $request->concepto;
+        $beneficiario->estado_beneficiario = $request->estado_beneficiario;
+        $beneficiario->observacion = $request->observacion;
 		$beneficiario->id_usuario_inserta = $id_user;
 		$beneficiario->save();
+
+        $id_beneficiario = $beneficiario->id;
 		
+		if($request->estado_beneficiario==1){
+		
+			$beneficiario = Beneficiario::find($request->id_beneficiario);
+
+            $concepto = Concepto::find($request->concepto);
+			
+			$valorizacion = new Valorizacione;
+			$valorizacion->id_modulo = 9;
+			$valorizacion->pk_registro = $id_beneficiario;
+            $valorizacion->id_empresa = $empresa->id;
+			$valorizacion->id_concepto = $concepto->id;
+			$valorizacion->id_persona = $persona->id;
+			$valorizacion->monto = $concepto->importe;
+			$valorizacion->id_moneda = $concepto->id_moneda;
+			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+			$valorizacion->descripcion = $concepto->denominacion ." - ". $persona->nombres." ". $persona->apellido_paterno." ". $persona->apellido_materno;
+			//$valorizacion->estado = 1;
+			//print_r($valorizacion->descripcion).exit();
+			$valorizacion->id_usuario_inserta = $id_user;
+			$valorizacion->save();
+			
+		}else{
+		
+			$valorizaciones = Valorizacione::where("pk_registro",$request->id)->where("id_modulo", "9")->where("estado","1")->first();
+			if(isset($valorizaciones->id)){
+				$id_valorizaciones = $valorizaciones->id;
+				$valorizacion = Valorizacione::find($id_valorizaciones);
+				$valorizacion->estado = 0;
+				$valorizacion->save();
+			}
+		}
+        
+    }
+
+    public function eliminar_beneficiario($id,$estado)
+    {
+		$beneficiario = Beneficiario::find($id);
+		$valorizaciones = Valorizacione::where("pk_registro",$id)->where("id_modulo", "9")->where("estado","1")->first();
+
+		//$multa = Multa::find($id);
+		//print_r($agremiadoMulta->id).exit();
+
+		$id_valorizaciones = $valorizaciones->id;
+		$valorizacion = Valorizacione::find($id_valorizaciones);
+		$valorizacion->estado = $estado;
+		//print_r($id_valorizaciones).exit();
+		$beneficiario->estado = $estado;
+		$beneficiario->save();
+		$valorizacion->save();
+
+		echo $beneficiario->id;
     }
 
 }

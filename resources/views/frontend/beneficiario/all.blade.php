@@ -174,15 +174,14 @@
                         <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
 							<input class="form-control form-control-sm" id="ruc" name="ruc" placeholder="RUC">
 						</div>
+                        <div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
+							<input class="form-control form-control-sm" id="razon_social" name="razon_social" placeholder="Raz&oacute;n Social">
+						</div>
 						<div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
 							<input class="form-control form-control-sm" id="dni" name="dni" placeholder="DNI">
 						</div>
 						<div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
 							<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
-						</div>
-
-						<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
-							<input class="form-control form-control-sm" id="periodo" name="periodo" placeholder="Periodo">
 						</div>
 					
 						<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">

@@ -423,6 +423,10 @@ function save_beneficiario(){
     var id = $('#id').val();
     var dni = $('#dni').val();
     var ruc = $('#ruc').val();
+    var periodo = $('#periodo').val();
+    var concepto = $('#concepto').val();
+    var estado_beneficiario = $('#estado_beneficiario').val();
+    var observacion = $('#observacion').val();
     
     if(dni == "")msg += "Debe ingresar un DNI <br>";
     
@@ -434,10 +438,11 @@ function save_beneficiario(){
       $.ajax({
         url: "/ingreso/send_beneficiario",
               type: "POST",
-              data : {_token:_token,id:id,dni:dni,ruc:ruc},
+              data : {_token:_token,id:id,dni:dni,ruc:ruc,
+              periodo:periodo,concepto:concepto,estado_beneficiario:estado_beneficiario,
+              observacion:observacion},
               success: function (result) {
           
-              actualizarTablaBeneficiario();
 				
               }
       });
@@ -559,35 +564,11 @@ function modal_personaNuevoBeneficiario(){
                 
                 
                   <div class="row">
-
-                    <div class="col-lg-3">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Periodo</label>
-                        <input id="periodo" name="periodo" on class="form-control form-control-sm"  value="<?php echo $beneficiario->periodo?>" type="text" >
-                      
-                      </div>
-                    </div>
-
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="control-label form-control-sm">RUC</label>
                         <input name="ruc" id="ruc" type="text" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" onBlur="" readonly='readonly'>
                           
-                      </div>
-                    </div>
-
-                    <div class="col-lg-10">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Concepto</label>
-                        <select name="concepto" id="concepto" onChange="" class="form-control form-control-sm">
-                          <option value="">--Selecionar--</option>
-                          <?php
-                          foreach ($concepto as $row) {?>
-                            <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$beneficiario->id_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                          <?php
-                          }
-                          ?>
-                        </select>
                       </div>
                     </div>
 
@@ -621,28 +602,7 @@ function modal_personaNuevoBeneficiario(){
                           <input id="nombres" name="nombres" class="form-control form-control-sm" value="<?php echo $persona->nombres ?>" type="text" readonly="readonly">
                         </div>
                       </div>
-                      <div class="col-lg-5">
-
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Estado</label>
-                        <select name="estado_beneficiario" id="estado_beneficiario" class="form-control form-control-sm">
-                          <!--<option value="">--Selecionar--</option>-->
-                          <?php
-                          foreach ($estado_concepto as $row) {?>
-                          <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$beneficiario->id_estado_beneficiario)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                          <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-                    
-                    <div class="col-lg-10">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">Observaci&oacute;n</label>
-                        <textarea type="text" name="observacion_multa" id="observacion_multa" rows="2" placeholder="" class="form-control form-control-sm"><?php echo $beneficiario->observacion?></textarea>
-                      </div>
-                    </div>
+                  
                 </div>
               </div>
                 

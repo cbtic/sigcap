@@ -602,7 +602,9 @@ Route::get('ingreso/obtener_datos_actualizados/{id_empresa}', [IngresoController
 Route::get('persona/modal_personaNuevoBeneficiario', [PersonaController::class, 'modal_personaNuevoBeneficiario'])->name('persona.modal_personaNuevoBeneficiario');
 Route::post('persona/send_persona_newBeneficiario', [PersonaController::class, 'send_persona_newBeneficiario'])->name('persona.send_persona_newBeneficiario');
 
-Route::get('beneficiario/modal_personaNuevoBeneficiario', [BeneficiarioController::class, 'modal_personaNuevoBeneficiario'])->name('beneficiario.modal_personaNuevoBeneficiario');
+//Route::get('beneficiario/modal_personaNuevoBeneficiario', [BeneficiarioController::class, 'modal_personaNuevoBeneficiario'])->name('beneficiario.modal_personaNuevoBeneficiario');
 Route::get('beneficiario/consulta_beneficiario', [BeneficiarioController::class, 'consulta_beneficiario'])->name('beneficiario.consulta_beneficiario');
 Route::post('beneficiario/listar_beneficiario_ajax', [BeneficiarioController::class, 'listar_beneficiario_ajax'])->name('beneficiario.listar_beneficiario_ajax');
 Route::post('beneficiario/send_beneficiario', [BeneficiarioController::class, 'send_beneficiario'])->name('beneficiario.send_beneficiario');
+Route::get('beneficiario/modal_beneficiario_/{id}', [BeneficiarioController::class, 'modal_beneficiario_'])->name('beneficiario.modal_beneficiario_');
+Route::get('beneficiario/eliminar_beneficiario/{id}/{estado}', [BeneficiarioController::class, 'eliminar_beneficiario'])->name('beneficiario.eliminar_beneficiario');

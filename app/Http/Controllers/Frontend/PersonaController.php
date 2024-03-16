@@ -721,7 +721,6 @@ class PersonaController extends Controller
 		$beneficiario->id_usuario_inserta = $id_user;
 		$beneficiario->save();
 
-
     }
 
 	public function upload(Request $request){
@@ -773,7 +772,7 @@ class PersonaController extends Controller
 		$numero_documento = $request->dni;
 		
 
-		$tablaMaestra_model = new TablaMaestra;		
+		$tablaMaestra_model = new TablaMaestra;
 		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 

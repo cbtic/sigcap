@@ -8,7 +8,7 @@ use DB;
 
 class Beneficiario extends Model
 {
-    protected $table = 'curso_empresa_beneficiarios';
+    protected $table = 'concepto_empresa_beneficiarios';
 	
 	public function listar_empresa_beneficiario($p){
 
