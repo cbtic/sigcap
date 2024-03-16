@@ -212,8 +212,16 @@ $(document).ready(function() {
 	if(id==0){
 		var id_periodo = $("#id_periodo_bus").val();
 		var tipo_comision = $("#tipo_comision_bus").val();
-		$("#id_periodo").val(id_periodo);
-		$("#tipo_comision").val(tipo_comision);
+		$("#id_regional").attr("disabled",true);
+		$("#id_periodo").val(id_periodo).attr("disabled",true);
+		$("#tipo_comision").val(tipo_comision).attr("disabled",true);
+		
+		$("#id_regional_").val(5);
+		$("#id_periodo_").val(id_periodo);
+		$("#tipo_comision_").val(tipo_comision);
+		
+		obtenerComision();
+		
 	}else{
 		var fecha_ejecucion = $("#fecha_ejecucion").val();
 		var fecha_programado = $("#fecha_programado").val();
@@ -548,6 +556,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
+								<input type="hidden" name="id_regional_" id="id_regional_" value="" />
 								<select name="id_regional" id="id_regional" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
@@ -563,6 +572,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
+								<input type="hidden" name="id_periodo_" id="id_periodo_" value="" />
 								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComision()">
 									<option value="">--Seleccionar--</option>
 									<?php
@@ -581,6 +591,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tipo Comisi&oacute;n</label>
+								<input type="hidden" name="tipo_comision_" id="tipo_comision_" value="" />
 								<select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onChange="obtenerComision()">
 									<option value="0">--Tipo Comisi&oacute;n--</option>
 										<?php

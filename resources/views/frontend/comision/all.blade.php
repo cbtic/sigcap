@@ -151,7 +151,7 @@
                                                     <!--<option value="">--Selecionar--</option>-->
                                                         <?php
                                                         foreach ($periodoComision as $row) {?>
-                                                            <option value="<?php echo $row->id?>" <?php if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                                            <option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
                                                         <?php 
                                                         }
                                                         ?>

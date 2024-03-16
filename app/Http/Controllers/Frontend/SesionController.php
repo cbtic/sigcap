@@ -312,10 +312,13 @@ class SesionController extends Controller
 		
 		$id_user = Auth::user()->id;
 		
+		$id_regional = (isset($request->id_regional))?$request->id_regional:$request->id_regional_;
+		$id_periodo = (isset($request->id_periodo))?$request->id_periodo:$request->id_periodo_;
+		
 		$id_delegado = $request->id_delegado;
 		
 		if($request->id == 0){
-			$periodoComision = PeriodoComisione::find($request->id_periodo);
+			$periodoComision = PeriodoComisione::find($id_periodo);
 			$fecha_inicio = $periodoComision->fecha_inicio;
 			$fecha_fin = $periodoComision->fecha_fin;
 			$fechaInicio=strtotime($fecha_inicio);
@@ -329,8 +332,8 @@ class SesionController extends Controller
 			if($request->id_dia_semana=="398" || $request->id_tipo_sesion=="402"){
 				
 				$comisionSesion = new ComisionSesione;
-				$comisionSesion->id_regional = $request->id_regional;
-				$comisionSesion->id_periodo_comisione = $request->id_periodo;
+				$comisionSesion->id_regional = $id_regional;
+				$comisionSesion->id_periodo_comisione = $id_periodo;
 				$comisionSesion->id_tipo_sesion = $request->id_tipo_sesion;
 				$comisionSesion->fecha_programado = $request->fecha_programado;
 				$comisionSesion->observaciones = $request->observaciones;
@@ -369,8 +372,8 @@ class SesionController extends Controller
 					if($dia_semana == $dia){
 						//echo $fechaInicioTemp;
 						$comisionSesion = new ComisionSesione;
-						$comisionSesion->id_regional = $request->id_regional;
-						$comisionSesion->id_periodo_comisione = $request->id_periodo;
+						$comisionSesion->id_regional = $id_regional;
+						$comisionSesion->id_periodo_comisione = $id_periodo;
 						$comisionSesion->id_tipo_sesion = $request->id_tipo_sesion;
 						$comisionSesion->fecha_programado = $fechaInicioTemp;
 						//$comisionSesion->fecha_ejecucion = $request->fecha_ejecucion;

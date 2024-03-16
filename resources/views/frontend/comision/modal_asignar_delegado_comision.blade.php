@@ -274,7 +274,12 @@ function fn_save_confirmar(){
 	var tipo_comision = $("#frmAfiliacion #tipo_comision").val();
 	var id_tipo_agrupacion = "<?php echo $id_tipo_agrupacion?>";
 	//alert(tipo_comision);
-	if(tipo_comision==1){
+	
+	var coordinador = $('input[name=coordinador]:checked').val();
+	
+	//alert(coordinador);
+	
+	if(tipo_comision==1 && coordinador==undefined){
 	
 		bootbox.confirm({ 
 			size: "small",
@@ -301,12 +306,15 @@ function fn_save(){
 	var id_concurso_inscripcion = $('#id_concurso_inscripcion').val();
 	var id_concurso_inscripcion2 = $('#id_concurso_inscripcion2').val();
 	var coordinador = $('input[name=coordinador]:checked').val();
+	
+	var id_comision_delegado_1 = $('#id_comision_delegado_1').val();
+	var id_comision_delegado_2 = $('#id_comision_delegado_2').val();
 	//alert(coordinador);return false;
 	
     $.ajax({
 			url: "/comision/send_delegado",
             type: "POST",
-            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion,id_concurso_inscripcion2:id_concurso_inscripcion2,coordinador:coordinador},
+            data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_concurso_inscripcion:id_concurso_inscripcion,id_concurso_inscripcion2:id_concurso_inscripcion2,coordinador:coordinador,id_comision_delegado_1:id_comision_delegado_1,id_comision_delegado_2:id_comision_delegado_2},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				//datatablenew();
@@ -552,6 +560,9 @@ container: '#myModal modal-body'
 						<div class="col-lg-8">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado Titular 1<?php //echo $comisionDelegado[0]->id_agremiado?></label>
+								
+								<input type="hidden" name="id_comision_delegado_1" id="id_comision_delegado_1" value="<?php if(isset($comisionDelegado[0]->id))echo $comisionDelegado[0]->id?>" />
+								
 								<select name="id_concurso_inscripcion" id="id_concurso_inscripcion" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar--</option>
 									<?php
@@ -582,6 +593,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-8">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado Titular 2</label>
+								<input type="hidden" name="id_comision_delegado_2" id="id_comision_delegado_2" value="<?php if(isset($comisionDelegado[1]->id))echo $comisionDelegado[1]->id?>" />
 								<select name="id_concurso_inscripcion2" id="id_concurso_inscripcion2" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar--</option>
 									<?php
