@@ -69,7 +69,7 @@ $(document).ready(function () {
 	});
 
 	$('#btnNuevo').click(function () {
-		modalMulta(0);
+		modalBeneficiario(0);
 	});
 		
 	datatablenew();
@@ -644,7 +644,7 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalMulta('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalBeneficiario('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						html += '<a href="javascript:void(0)" onclick=eliminarMulta('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
@@ -795,13 +795,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalMulta(id){
+function modalBeneficiario(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/multa/modal_multa_nuevoMulta/"+id,
+			url: "/beneficiario/modal_beneficiario_/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
