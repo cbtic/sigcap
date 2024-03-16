@@ -112,7 +112,7 @@ $(document).ready(function() {
 <body class="hold-transition skin-blue sidebar-mini">
 
     <div>
-    <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">  
+    <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">
     <h3 style="text-align:center">CONSTANCIA</h3><br></br>
     <h3 style="text-align:left">  EL COLEGIO DE ARQUITECTOS DEL PER&Uacute; - REGIONAL LIMA, HACE CONSTAR, QUE <?php echo $articulo;?>: </h3>
         <div class="contenido">
@@ -123,7 +123,7 @@ $(document).ready(function() {
                              N° <?php echo $datos[0]->numero_regional;?>.</p>
 
             <p style="text-align: justify; font_size: 14">Actualmente <?php echo $tratodesc_minuscula;?> <b><?php echo $datos[0]->desc_cliente;?> </b> 
-            ha pagado sus cuotas institucionales hasta <?php //echo $datos[0]->mes;?>.</p> del Z; por lo tanto, se encuentra en condici&oacute;n
+            ha pagado sus cuotas institucionales hasta <?php //echo $datos[0]->mes;?> del Z; por lo tanto, se encuentra en condici&oacute;n
             de <?php echo $habilita;?> para ejercer la profesi&oacute;n.</p>
             <p></p>
             

@@ -169,6 +169,7 @@ class CertificadoController extends Controller
 		$certificado->save();
 		        
     }
+	
 	public function eliminar_certificado($id){
 
 		$segurosPlane = Certificado::find($id);

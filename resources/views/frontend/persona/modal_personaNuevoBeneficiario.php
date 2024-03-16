@@ -161,7 +161,7 @@
 
 	function validaDni() {
 
-		var dni = $('#frmPersona #numero_documento').val();
+		var dni = $('#frmPersona2 #numero_documento').val();
 
 		var settings = {
 			"url": "https://apiperu.dev/api/dni/" + dni,
@@ -201,15 +201,19 @@
 		});
 	}
 	
-	function fn_save() {
+	function guardarBeneficiario() {
 
 		var _token = $('#_token').val();
-		var id = $('#id').val();
-		var tipo_documento = $('#tipo_documento').val();
-		var numero_documento = $('#frmPersona #numero_documento').val();
-		var apellido_paterno = $('#apellido_paterno').val();
-		var apellido_materno = $('#apellido_materno').val();
-		var nombres = $('#nombres').val();
+		var id = $('#frmPersona2 #id').val();
+		var tipo_documento = $('#frmPersona2 #tipo_documento').val();
+		var numero_documento = $('#frmPersona2 #numero_documento').val();
+		var ruc = $('#numero_documento').val();
+		var apellido_paterno = $('#frmPersona2 #apellido_paterno').val();
+		var apellido_materno = $('#frmPersona2 #apellido_materno').val();
+		var nombres = $('#frmPersona2 #nombres').val();
+		var fecha_nacimiento = $('#frmPersona2 #fecha_nacimiento').val();
+		var sexo = $('#frmPersona2 #sexo').val();
+		
 		/*
 		var codigo = $('#codigo_').val();
 		var ocupacion = $('#ocupacion_').val();
@@ -223,7 +227,7 @@
 		if ($("#flag_negativo_").is(':checked')) flag_negativo = 1;
 */
 		$.ajax({
-			url: "/persona/send_persona_new",
+			url: "/persona/send_persona_newBeneficiario",
 			type: "POST",
 			data: {
 				_token: _token,
@@ -232,7 +236,10 @@
 				numero_documento: numero_documento,
 				apellido_paterno: apellido_paterno,
 				apellido_materno: apellido_materno,
-				nombres: nombres
+				nombres: nombres,
+				fecha_nacimiento:fecha_nacimiento,
+				sexo:sexo,
+				ruc:ruc
 				/*
 				codigo: codigo,
 				ocupacion: ocupacion,
@@ -254,7 +261,7 @@
 				*/
 
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//window.location.reload();
 
 
 				//datatablenew();
@@ -282,8 +289,9 @@
 
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
 
-							<form method="post" id="frmPersona" action="#" enctype="multipart/form-data">
-								<input type="hidden" name="_token" value="{{ csrf_token() }}">
+							<form method="post" id="frmPersona2" action="#" enctype="multipart/form-data">
+								<!--<input type="hidden" name="_token" value="{{ csrf_token() }}">-->
+								<meta name="_token" content="{{ csrf_token() }}">
 
 								<input type="hidden" name="id" id="id" value="0">
 
@@ -364,7 +372,7 @@
 									<div style="margin-top:10px" class="form-group">
 										<div class="col-sm-12 controls">
 											<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions" style="float:right">
-												<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+												<a href="javascript:void(0)" onClick="guardarBeneficiario()" class="btn btn-sm btn-success">Guardar</a>
 											</div>
 										</div>
 									</div>
