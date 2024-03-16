@@ -323,6 +323,19 @@ function habilitarProgramacion(){
 	
 }
 
+function habilitarAprobarPago(){
+	
+	var id_estado_aprobacion = $('#id_estado_aprobacion').val();
+	
+	$(".id_aprobar_pago").attr("checked",false);
+	
+	if(id_estado_aprobacion==2){
+		$(".id_aprobar_pago").attr("checked",true);
+	}
+	
+	
+}
+
 function obtenerComisionBusOld(){
 	
 	var id_periodo = $('#id_periodo_bus').val();
