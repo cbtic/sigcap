@@ -207,7 +207,7 @@ class IngresoController extends Controller
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
         $total_fraccionar = $request->total;
-        
+        //print_r($total_fraccionar); exit();
 
         $comprobante_detalle = $request->comprobante_detalle;
         $ind = 0;
