@@ -312,10 +312,13 @@ class SesionController extends Controller
 		
 		$id_user = Auth::user()->id;
 		
+		$id_regional = (isset($request->id_regional))?$request->id_regional:$request->id_regional_;
+		$id_periodo = (isset($request->id_periodo))?$request->id_periodo:$request->id_periodo_;
+		
 		$id_delegado = $request->id_delegado;
 		
 		if($request->id == 0){
-			$periodoComision = PeriodoComisione::find($request->id_periodo);
+			$periodoComision = PeriodoComisione::find($id_periodo);
 			$fecha_inicio = $periodoComision->fecha_inicio;
 			$fecha_fin = $periodoComision->fecha_fin;
 			$fechaInicio=strtotime($fecha_inicio);
@@ -329,8 +332,8 @@ class SesionController extends Controller
 			if($request->id_dia_semana=="398" || $request->id_tipo_sesion=="402"){
 				
 				$comisionSesion = new ComisionSesione;
-				$comisionSesion->id_regional = $request->id_regional;
-				$comisionSesion->id_periodo_comisione = $request->id_periodo;
+				$comisionSesion->id_regional = $id_regional;
+				$comisionSesion->id_periodo_comisione = $id_periodo;
 				$comisionSesion->id_tipo_sesion = $request->id_tipo_sesion;
 				$comisionSesion->fecha_programado = $request->fecha_programado;
 				$comisionSesion->observaciones = $request->observaciones;
@@ -369,8 +372,8 @@ class SesionController extends Controller
 					if($dia_semana == $dia){
 						//echo $fechaInicioTemp;
 						$comisionSesion = new ComisionSesione;
-						$comisionSesion->id_regional = $request->id_regional;
-						$comisionSesion->id_periodo_comisione = $request->id_periodo;
+						$comisionSesion->id_regional = $id_regional;
+						$comisionSesion->id_periodo_comisione = $id_periodo;
 						$comisionSesion->id_tipo_sesion = $request->id_tipo_sesion;
 						$comisionSesion->fecha_programado = $fechaInicioTemp;
 						//$comisionSesion->fecha_ejecucion = $request->fecha_ejecucion;
@@ -710,17 +713,11 @@ class SesionController extends Controller
 	public function ver_calendario_sesion_pdf($anio,$mes){
 		
 		$comisionSesion_model = new ComisionSesione(); 
-		$p[]="";//2;//$request->id_periodo;
-		$p[]="";
-		$p[]=$anio;//$request->anio;
-		$p[]=$mes;//$request->mes;
-		$p[]=1;
-		$p[]=10000;
-		$comisionSesion = $comisionSesion_model->lista_computo_sesion_ajax($p);
+		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesion($anio,$mes);
 		
 		$dias = array('L','M','M','J','V','S','D');
 		
-		$pdf = Pdf::loadView('pdf.ver_calendario_sesion',compact('comisionSesion','dias','anio','mes'));
+		$pdf = Pdf::loadView('pdf.ver_calendario_sesion',compact('municipalidadSesion','dias','anio','mes'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
