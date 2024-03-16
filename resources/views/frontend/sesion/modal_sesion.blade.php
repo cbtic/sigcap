@@ -701,7 +701,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Aprobaci&oacute;n Sesi&oacute;n</label>
-								<select name="id_estado_aprobacion" id="id_estado_aprobacion" class="form-control form-control-sm">
+								<select name="id_estado_aprobacion" id="id_estado_aprobacion" class="form-control form-control-sm" onChange="habilitarAprobarPago()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($estado_sesion_aprobado as $row) {?>
@@ -790,7 +790,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 											<input type="radio" name="coordinador" value="<?php echo $row->id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> />
 											</td>
 											<td class='text-center'>
-											<input type="checkbox" name="id_aprobar_pago[<?php echo $row->id_delegado?>]" value="<?php echo $row->id_delegado?>" <?php if($row->id_aprobar_pago==2)echo "checked='checked'"?> />
+											<input type="checkbox" class="id_aprobar_pago" name="id_aprobar_pago[<?php echo $row->id_delegado?>]" value="<?php echo $row->id_delegado?>" <?php if($row->id_aprobar_pago==2)echo "checked='checked'"?> />
 											</td>
 											<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('<?php echo $row->id?>') ><i class='fa fa-edit'></i> Editar</button></td>
 										<?php } ?>

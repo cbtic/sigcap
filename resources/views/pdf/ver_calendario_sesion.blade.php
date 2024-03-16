@@ -175,223 +175,159 @@
 					
 					?>
 				</tr>
-				<tr>
 				
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">ANCON - MI PERÚ - PUENTE PIEDRA - SANTA ROSA</td>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
+				<?php foreach($municipalidadSesion as $row){
 					
-				
-					<?php 
-					for($i=0;$i<($diax-1);$i++){
-					?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo 0 ?></td>
-					<?php	
-					}
+					$comisionSesion = \App\Models\ComisionSesione::getComisionMunicipalidadSesion($anio,$mes,$row->id);
 					
-					for($i=strtotime($fechaInicio); $i<=strtotime($fechaFin); $i+=86400){
-						$fechaInicioTemp = date("d", $i);
-						$fechaInicioTemp_ = date("d-m-Y", $i);
-						$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
-						if($dia!="D"){
-						?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo $fechaInicioTemp ?></td>
-						<?php
-						}
-					}
-					
-					
-					
-					for($i=((date('N', strtotime($fechaInicioTemp_))));$i<7;$i++){
-						if($dias[$i]!="D"){
-					?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;width:20px"><?php echo 0 ?></td>
-					<?php
-						}	
-					}
-					
-					?>
-					
-					
-					
-					
-				</tr>
-				
-				
-				
-				
-				<tr>
-				
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">COMISIÓN 01</td>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
-					
-				
-					<?php 
-					for($i=0;$i<($diax-1);$i++){
-					?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
-					<?php	
-					}
-					
-					for($i=strtotime($fechaInicio); $i<=strtotime($fechaFin); $i+=86400){
-						$fechaInicioTemp = date("d", $i);
-						$fechaInicioTemp_ = date("d-m-Y", $i);
-						$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
-						if($dia!="D"){
-						?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
-						<?php
-						}
-					}
-					
-					
-					
-					for($i=((date('N', strtotime($fechaInicioTemp_))));$i<7;$i++){
-						if($dias[$i]!="D"){
-					?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;width:20px"></td>
-					<?php
-						}	
-					}
-					
-					?>
-					
-						
-				</tr>
-				
-				
-				
-				<tr>
-				
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">TC</td>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">VILLANUEVA MONTALVO HERMES RAFAEL</td>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">3091</td>
-					
-				
-					<?php 
-					for($i=0;$i<($diax-1);$i++){
-					?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
-					<?php	
-					}
-					
-					for($i=strtotime($fechaInicio); $i<=strtotime($fechaFin); $i+=86400){
-						$fechaInicioTemp = date("d", $i);
-						$fechaInicioTemp_ = date("d-m-Y", $i);
-						$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
-						if($dia!="D"){
-						?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
-						<?php
-						}
-					}
-					
-					
-					
-					for($i=((date('N', strtotime($fechaInicioTemp_))));$i<7;$i++){
-						if($dias[$i]!="D"){
-					?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;width:20px"></td>
-					<?php
-						}	
-					}
-					
-					?>
-					
-						
-				</tr>
-				
-				<tr>
-				
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">T</td>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">CHAVEZ SALAS KARIM</td>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">6724</td>
-					
-				
-					<?php 
-					for($i=0;$i<($diax-1);$i++){
-					?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
-					<?php	
-					}
-					
-					for($i=strtotime($fechaInicio); $i<=strtotime($fechaFin); $i+=86400){
-						$fechaInicioTemp = date("d", $i);
-						$fechaInicioTemp_ = date("d-m-Y", $i);
-						$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
-						if($dia!="D"){
-						?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
-						<?php
-						}
-					}
-					
-					
-					
-					for($i=((date('N', strtotime($fechaInicioTemp_))));$i<7;$i++){
-						if($dias[$i]!="D"){
-					?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;width:20px"></td>
-					<?php
-						}	
-					}
-					
-					?>
-					
-						
-				</tr>
-				
-				
-				
-				
-				<!--
-				<?php 
-				$n = 0;
-				$suma_computada = 0;
-				$suma_adicional = 0;
-				$suma_total = 0; 
-				foreach($comisionSesion as $r){
-					$n++;
 				?>
-				<tr>
-					<td style="border:1px solid #A4A4A4;width:30px"><?php echo $n?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->municipalidad?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->comision?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->delegado?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->numero_cap?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->puesto?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->coordinador?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->computada?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->adicional?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->total?></td>
-				</tr>
-				<?php 
 					
-					$suma_computada += $r->computada;
-					$suma_adicional += $r->adicional;
-					$suma_total += $r->total;
+					<tr>
 					
-				} 
-				?>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo $row->municipalidad?></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
+						
+					
+						<?php 
+						for($i=0;$i<($diax-1);$i++){
+						?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo 0 ?></td>
+						<?php	
+						}
+						
+						for($i=strtotime($fechaInicio); $i<=strtotime($fechaFin); $i+=86400){
+							$fechaInicioTemp = date("d", $i);
+							$fechaInicioTemp_ = date("d-m-Y", $i);
+							$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
+							if($dia!="D"){
+							?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo $fechaInicioTemp ?></td>
+							<?php
+							}
+						}
+						
+						
+						
+						for($i=((date('N', strtotime($fechaInicioTemp_))));$i<7;$i++){
+							if($dias[$i]!="D"){
+						?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;width:20px"><?php echo 0 ?></td>
+						<?php
+							}	
+						}
+						
+						?>
+						
+						
+						
+						
+					</tr>
+					
+					
+					
+					<?php foreach($comisionSesion as $row2){
+						
+						$delegadoSesion = \App\Models\ComisionSesione::getDelegadoComisionMunicipalidadSesion($anio,$mes,$row->id,$row2->id);
+						
+					?>
+									
+					<tr>
+					
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo $row2->comision?></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">CAP</td>
+						
+					
+						<?php 
+						for($i=0;$i<($diax-1);$i++){
+						?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+						<?php	
+						}
+						
+						for($i=strtotime($fechaInicio); $i<=strtotime($fechaFin); $i+=86400){
+							$fechaInicioTemp = date("d", $i);
+							$fechaInicioTemp_ = date("d-m-Y", $i);
+							$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
+							if($dia!="D"){
+							?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+							<?php
+							}
+						}
+						
+						
+						
+						for($i=((date('N', strtotime($fechaInicioTemp_))));$i<7;$i++){
+							if($dias[$i]!="D"){
+						?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;width:20px"></td>
+						<?php
+							}	
+						}
+						
+						?>
+						
+							
+					</tr>
+					
+					<?php foreach($delegadoSesion as $row3){?>
+					
+					<tr>
+					
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">T</td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo $row3->delegado?></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo $row3->numero_cap?></td>
+						
+					
+						<?php 
+						for($i=0;$i<($diax-1);$i++){
+						?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+						<?php	
+						}
+						
+						for($i=strtotime($fechaInicio); $i<=strtotime($fechaFin); $i+=86400){
+							$fechaInicioTemp = date("d", $i);
+							$fechaInicioTemp_ = date("d-m-Y", $i);
+							$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
+							if($dia!="D"){
+						
+								$fechaSesion = \App\Models\ComisionSesione::getFechaDelegadoComisionMunicipalidadSesion($anio,$mes,$row->id,$row2->id,$row3->id,$fechaInicioTemp_);
+							?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo ($fechaSesion->cantidad>0)?"0":""?></td>
+							<?php
+							}
+						}
+						
+						
+						
+						for($i=((date('N', strtotime($fechaInicioTemp_))));$i<7;$i++){
+							if($dias[$i]!="D"){
+						?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;width:20px"></td>
+						<?php
+							}	
+						}
+						
+						?>
+						
+							
+					</tr>
+					
+					<?php }?>
+					
+					<?php }?>
+						
+						
 				
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="7" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">Total</th>
-					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_computada?></th>
-					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_adicional?></th>
-					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total?></th>
-				</tr>
-			</tfoot>
+				<?php }?>
+				
+				
+				
 		</table>
 		
-		<!--<table style="margin-top: 10px">
-            <tr>
-                <td class="td_ancho_espacios"></td>
-                <td class="td_ancho_espacios"></td>
-            </tr>
-        </table>-->
         <footer>
         <script type="text/php">
             if (isset($pdf)) {

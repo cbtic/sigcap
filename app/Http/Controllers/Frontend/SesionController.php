@@ -713,17 +713,11 @@ class SesionController extends Controller
 	public function ver_calendario_sesion_pdf($anio,$mes){
 		
 		$comisionSesion_model = new ComisionSesione(); 
-		$p[]="";//2;//$request->id_periodo;
-		$p[]="";
-		$p[]=$anio;//$request->anio;
-		$p[]=$mes;//$request->mes;
-		$p[]=1;
-		$p[]=10000;
-		$comisionSesion = $comisionSesion_model->lista_computo_sesion_ajax($p);
+		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesion($anio,$mes);
 		
 		$dias = array('L','M','M','J','V','S','D');
 		
-		$pdf = Pdf::loadView('pdf.ver_calendario_sesion',compact('comisionSesion','dias','anio','mes'));
+		$pdf = Pdf::loadView('pdf.ver_calendario_sesion',compact('municipalidadSesion','dias','anio','mes'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
