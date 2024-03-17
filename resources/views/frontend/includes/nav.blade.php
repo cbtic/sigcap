@@ -136,7 +136,7 @@
 					</li>
 					@endif
 
-					@if(Gate::check('Estado de Cuenta') || Gate::check('Certificado Tipo 4') || Gate::check('Consulta de Facturas'))
+					@if(Gate::check('Estado de Cuenta') || Gate::check('Certificado Tipo 4') || Gate::check('Consulta de Facturas') || Gate::check('Concepto Beneficiario'))
                     <li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Caja</a>
@@ -153,6 +153,10 @@
 
 								@can('Liquidacion de Caja')
                                 <a href="/ingreso/liquidacion_caja" class="dropdown-item">Liquidacion de Caja</a>								
+								@endcan
+
+								@can('Concepto Beneficiario')
+                                <a href="/beneficiario/consulta_beneficiario" class="dropdown-item">Concepto Beneficiario</a>								
 								@endcan
 
 						   </div>

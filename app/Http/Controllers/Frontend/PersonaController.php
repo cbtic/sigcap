@@ -13,6 +13,7 @@ use App\Models\Ubigeo;
 use App\Models\UnidadTrabajo;
 use App\Models\Contrato;
 use App\Models\TablaMaestra;
+use App\Models\Beneficiario;
 
 //use App\Models\CondicionLaborale;
 
@@ -688,6 +689,40 @@ class PersonaController extends Controller
 		
 		$persona->save();
     }
+
+	public function send_persona_newBeneficiario(Request $request){
+
+		$id_user = Auth::user()->id;
+		
+		if($request->id == 0){
+			$persona = new Persona;
+			$beneficiario = new Beneficiario;
+			$persona->id_usuario_inserta = $id_user;
+		}else{
+			$persona = Persona::find($request->id);
+			$persona->id_usuario_actualiza = $id_user;
+		}
+
+		$persona->id_tipo_documento = $request->tipo_documento;
+		$persona->numero_documento = $request->numero_documento;
+		$persona->apellido_paterno = $request->apellido_paterno;
+		$persona->apellido_materno = $request->apellido_materno;
+		$persona->nombres = $request->nombres;
+		$persona->fecha_nacimiento = $request->fecha_nacimiento;
+		$persona->id_sexo = $request->sexo;
+	
+		$persona->save();
+
+		$persona = Persona::where("numero_documento",$request->numero_documento)->where("estado","1")->first();
+        $empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
+
+		$beneficiario->id_persona = $persona->id;
+		$beneficiario->id_empresa = $empresa->id;
+		$beneficiario->id_usuario_inserta = $id_user;
+		$beneficiario->save();
+
+    }
+
 	public function upload(Request $request){
 
     	$filepath = public_path('img/frontend/tmp_agremiado/');
@@ -729,6 +764,21 @@ class PersonaController extends Controller
 
 		return view('frontend.persona.modal_personaNuevo',compact('sexo','tipo_documento', 'id_tipo_documento', 'numero_documento'));
 	}
+
+	public function modal_personaNuevoBeneficiario(Request $request){
+		
+		//$id_tipo_documento = $request->tipo_documento;
+		$id_tipo_documento = 78;
+		$numero_documento = $request->dni;
+		
+
+		$tablaMaestra_model = new TablaMaestra;
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+
+		return view('frontend.persona.modal_personaNuevoBeneficiario',compact('sexo','tipo_documento', 'id_tipo_documento', 'numero_documento'));
+	}
+
 
 	public function obtenerPersona($numero_documento){
 

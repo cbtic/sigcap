@@ -430,6 +430,26 @@ class IngresoController extends Controller
 		return view('frontend.ingreso.modal_beneficiario_',compact('persona','empresa','id_persona','id_agremiado','tipo_documento','empresa_beneficiario'));
 	
 	}
+
+    public function obtener_datos_actualizados($id_empresa){
+	
+		$beneficiario_model = new Beneficiario;
+		$empresa_beneficiario = $beneficiario_model->getBeneficiarioId($id_empresa);
+        $datos_formateados = [];
+
+        foreach ($empresa_beneficiario as $beneficiario) {
+            $datos_formateados[] = [
+                'numero_documento' => $beneficiario->numero_documento,
+                'nombres' => $beneficiario->nombres,
+                'direccion' => $beneficiario->direccion,
+                'numero_celular' => $beneficiario->numero_celular,
+                'correo' => $beneficiario->correo,
+                // Agrega más campos si es necesario
+            ];
+        }
+        return response()->json($datos_formateados);
+	
+	}
 	
 	public function listar_empresa_beneficiario_ajax(Request $request){
 	

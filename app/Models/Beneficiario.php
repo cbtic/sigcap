@@ -8,11 +8,17 @@ use DB;
 
 class Beneficiario extends Model
 {
-    protected $table = 'curso_empresa_beneficiarios';
+    protected $table = 'concepto_empresa_beneficiarios';
 	
 	public function listar_empresa_beneficiario($p){
 
         return $this->readFuntionPostgres('sp_listar_empresa_beneficiario_paginado',$p);
+
+    }
+
+    public function listar_beneficiario_ajax($p){
+
+        return $this->readFuntionPostgres('sp_listar_beneficiario_paginado',$p);
 
     }
 	
