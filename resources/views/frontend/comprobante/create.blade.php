@@ -871,6 +871,8 @@
                                                         <input type="hidden" name="valorizad[<?php echo $key ?>][id_concepto]" value="<?php echo $val['id_concepto'] ?>" />
                                                         <input type="hidden" name="valorizad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
 
+                                                        <input type="hidden" name="valorizad[<?php echo $key ?>][cantidad]" value="<?php echo $val['cantidad'] ?>" />
+
                                                     <?php } ?>
 
                                                     <input type="hidden" name="smodulo_guia" id="smodulo_guia" value="<?php echo $smodulo ?>" />
