@@ -178,14 +178,14 @@
 				
 				<?php foreach($municipalidadSesion as $row){
 					
-					$comisionSesion = \App\Models\ComisionSesione::getComisionMunicipalidadSesion($anio,$mes,$row->id);
+					$comisionSesion = \App\Models\ComisionSesione::getComisionDistritoSesion($anio,$mes,$row->id_ubigeo);
 					
 				?>
 					
 					<tr>
 					
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo $row->municipalidad?></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo $row->distrito?></td>
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
 						
 					
@@ -228,7 +228,7 @@
 					
 					<?php foreach($comisionSesion as $row2){
 						
-						$delegadoSesion = \App\Models\ComisionSesione::getDelegadoComisionMunicipalidadSesion($anio,$mes,$row->id,$row2->id);
+						$delegadoSesion = \App\Models\ComisionSesione::getDelegadoComisionDistritoSesion($anio,$mes,$row->id_ubigeo,$row2->id);
 						
 					?>
 									
@@ -294,9 +294,9 @@
 							$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
 							if($dia!="D"){
 						
-								$fechaSesion = \App\Models\ComisionSesione::getFechaDelegadoComisionMunicipalidadSesion($anio,$mes,$row->id,$row2->id,$row3->id,$fechaInicioTemp_);
+								$fechaSesion = \App\Models\ComisionSesione::getFechaDelegadoComisionDistritoSesion($anio,$mes,$row->id_ubigeo,$row2->id,$row3->id,$fechaInicioTemp_);
 							?>
-							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo ($fechaSesion->cantidad>0)?"0":""?></td>
+							<td class="ancho_nro" style="text-align:center;border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo isset($fechaSesion->tipo_sesion)?$fechaSesion->tipo_sesion:""?></td>
 							<?php
 							}
 						}

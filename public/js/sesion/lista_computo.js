@@ -8,7 +8,15 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		guardar_computo()
+		bootbox.confirm({ 
+			size: "small",
+			message: "&iquest;Esta seguro de generar el reporte?", 
+			callback: function(result){
+				if (result==true) {
+					guardar_computo()
+				}
+			}
+		});
 	});
 	
 	$('#btnVistaPreviaComputo').click(function () {

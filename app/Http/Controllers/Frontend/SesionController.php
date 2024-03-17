@@ -713,7 +713,7 @@ class SesionController extends Controller
 	public function ver_calendario_sesion_pdf($anio,$mes){
 		
 		$comisionSesion_model = new ComisionSesione(); 
-		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesion($anio,$mes);
+		$municipalidadSesion = $comisionSesion_model->getDistritoSesion($anio,$mes);
 		
 		$dias = array('L','M','M','J','V','S','D');
 		

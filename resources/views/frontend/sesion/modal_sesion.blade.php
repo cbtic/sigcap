@@ -214,11 +214,11 @@ $(document).ready(function() {
 		var tipo_comision = $("#tipo_comision_bus").val();
 		$("#id_regional").attr("disabled",true);
 		$("#id_periodo").val(id_periodo).attr("disabled",true);
-		$("#tipo_comision").val(tipo_comision).attr("disabled",true);
+		if(tipo_comision>0)$("#tipo_comision").val(tipo_comision).attr("disabled",true);
 		
 		$("#id_regional_").val(5);
 		$("#id_periodo_").val(id_periodo);
-		$("#tipo_comision_").val(tipo_comision);
+		if(tipo_comision>0)$("#tipo_comision_").val(tipo_comision);
 		
 		obtenerComision();
 		

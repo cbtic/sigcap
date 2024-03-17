@@ -9,6 +9,88 @@ use DB;
 class ComisionSesione extends Model
 {
 	
+	public function getDistritoSesion($anio,$mes){
+
+        $cad = "select distinct u.id_ubigeo,u.desc_ubigeo distrito
+from comision_sesiones t1 
+inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
+inner join solicitudes s2 on s2.id=csd.id_solicitud
+inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
+inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+inner join comisiones t4 on t1.id_comision=t4.id
+inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
+where t0.id_aprobar_pago=2
+And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' ";
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	public function getComisionDistritoSesion($anio,$mes,$id_ubigeo){
+
+        $cad = "select distinct t4.id,t4.comision comision
+from comision_sesiones t1 
+inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
+inner join solicitudes s2 on s2.id=csd.id_solicitud
+inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
+inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+inner join comisiones t4 on t1.id_comision=t4.id
+inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
+where t0.id_aprobar_pago=2
+And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+and u.id_ubigeo = '".$id_ubigeo."'";
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	public function getDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision){
+
+        $cad = "select distinct a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap
+from comision_sesiones t1 
+inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
+inner join solicitudes s2 on s2.id=csd.id_solicitud
+inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
+inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+inner join comisiones t4 on t1.id_comision=t4.id
+inner join comision_delegados cd on t0.id_delegado=cd.id  
+inner join agremiados a on cd.id_agremiado=a.id 
+inner join personas p on a.id_persona=p.id 
+where t0.id_aprobar_pago=2
+And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+and u.id_ubigeo = '".$id_ubigeo."' 
+and t1.id_comision=".$id_comision;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	public function getFechaDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision,$id_agremiado,$fecha){
+
+        $cad = "select case when id_tipo_sesion='401' then 'O' when id_tipo_sesion='402' then 'E' end tipo_sesion 
+from comision_sesiones t1 
+inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
+inner join solicitudes s2 on s2.id=csd.id_solicitud
+inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
+inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+inner join comisiones t4 on t1.id_comision=t4.id
+inner join comision_delegados cd on t0.id_delegado=cd.id  
+inner join agremiados a on cd.id_agremiado=a.id 
+inner join personas p on a.id_persona=p.id 
+where t0.id_aprobar_pago=2
+And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+and u.id_ubigeo = '".$id_ubigeo."' 
+and t1.id_comision=".$id_comision."
+and a.id=".$id_agremiado."
+and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
+
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
+			
 	public function getMunicipalidadSesion($anio,$mes){
 
         $cad = "select distinct mi.id,mi.denominacion municipalidad
