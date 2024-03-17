@@ -327,6 +327,10 @@ class IngresoController extends Controller
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
 
+        $id_concepto = $request->id_concepto;
+
+       // print_r($id_concepto); exit();
+
         $id_pk = 0;
        // $id_concepto = 0;
 
@@ -388,11 +392,17 @@ class IngresoController extends Controller
         }        
 */
 
+        if($id_concepto == "26412"){
+            $id_concepto="26527";
+        }else{
+            $id_concepto="26412";
+        }
+
         foreach($request->fraccionamiento as $key=>$frac){
             $valorizacion = new Valorizacione;
             $valorizacion->id_modulo = 6;
             $valorizacion->pk_registro = 0;
-            $valorizacion->id_concepto = 26412;
+            $valorizacion->id_concepto = $id_concepto; //26412;
             $valorizacion->id_agremido = $id_agremiado;
             $valorizacion->id_persona = $id_persona;
             $valorizacion->monto = $frac['total_frac'];
@@ -412,7 +422,7 @@ class IngresoController extends Controller
         $tipo_documento = $request->id_tipo_documento_;
         $periodo = $request->cboPeriodo_b;
         $tipo_couta = $request->cboTipoCuota_b;
-        $concepto = 26412;
+        $concepto = $id_concepto;//26412;
         //$filas = $request->cboFilas;
         $filas = "100";
         // print_r($concepto);exit();
