@@ -562,6 +562,8 @@ class ComprobanteController extends Controller
 				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
+                
+
 				$factura = Comprobante::where('id', $id_factura)->get()[0];
             
 				$fac_serie = $factura->serie;
@@ -619,7 +621,7 @@ class ComprobanteController extends Controller
 					}
 					$descuento = $value['descuento'];
 					if ($value['descuento']=='') $descuento = 0;
-					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
+					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], '0', $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
 					
                     
                     //(  serie,      numero,   tipo,      ubicacion,               persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
@@ -634,27 +636,48 @@ class ComprobanteController extends Controller
 				}
 
                 
+                
 
                 $descuentopp = $request->descuentopp;
                 $id_pronto_pago = $request->id_pronto_pago;
 
-                if ($descuentopp =="S"){
-                    $valorizad = $request->valorizad;
+                //if ($descuentopp =="S"){
+                    //$valorizad = $request->valorizad;
+                    //foreach ($valorizad as $key => $value) {
+                    
+                //echo "id_factura=>".$id_factura."<br>"; exit();
+                
+
+                //echo "id_val=>".$id_val."<br>"; exit();
+
+                $valorizad = $request->valorizad;
+
+                //print_r($tarifa); exit();
+
                     foreach ($valorizad as $key => $value) {
                         $id_val = $value['id'];
+                        
                         $valoriza_upd = Valorizacione::find($id_val);
+
+                       
+
                         $valoriza_upd->id_comprobante = $id_factura;
-                        $valoriza_upd->id_pronto_pago = $id_pronto_pago;                        
                         $valoriza_upd->pagado = "1";
 
+                        $valoriza_upd->valor_unitario = $value['monto'];
+                        $valoriza_upd->cantidad = $value['cantidad'];    
+
+
+                        if ($descuentopp =="S")$valoriza_upd->id_pronto_pago = $id_pronto_pago;
+
                         $valoriza_upd->save();
-    
-                    }                
-                }
+                        
+                    } 
+
+                //}
 
 
-                //$valorizad = $request->valorizad;
-                //foreach ($valorizad as $key => $value) {
+/*                    
                 foreach ($tarifa as $key => $value) {
 
                     $id_val = $value['id'];
@@ -666,7 +689,7 @@ class ComprobanteController extends Controller
                     $valoriza_upd1->save();
                 
                 }  
-
+*/
 
 
             if ($id_concepto == 26411) {

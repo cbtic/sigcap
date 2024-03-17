@@ -328,16 +328,17 @@ class IngresoController extends Controller
         $id_agremiado = $request->id_agremiado;
 
         $id_pk = 0;
-        $id_concepto = 0;
+       // $id_concepto = 0;
 
-        //print_r($request->fraccionamiento);
+        //print_r($request->valorizacion); exit();
 
         
-
+/*
         foreach($request->valorizacion as $key=>$tmp){
             //$id_pk = $tmp['id'];
             $id_concepto = $tmp['id_concepto'];
         }
+*/
 
 /*
         foreach($request->valorizacion as $key=>$tmp){
@@ -356,10 +357,25 @@ class IngresoController extends Controller
         $fraccionamiento->save();
         $id_fraccionamiento = $fraccionamiento->id;
 
+        foreach($request->valorizacion as $key=>$tmp){
+            
+            $valorizacion_ = Valorizacione::find($tmp['id']);
+
+            $valorizacion_->codigo_fraccionamiento = $id_fraccionamiento;
+            $valorizacion_->estado = '0';
+            $valorizacion_->save(); 
+
+        }
+
+        /*
         $id_persona = $request->id_persona;
         $tipo_documento = $request->id_tipo_documento_;
         $valorizaciones_model = new Valorizacione;        
         $valorizacion = $valorizaciones_model->ActualizaValorizacion_pp($tipo_documento, $id_fraccionamiento, $id_persona);
+*/
+
+
+
 /*
         foreach($request->valorizacion as $key=>$val){
 

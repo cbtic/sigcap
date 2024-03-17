@@ -1483,8 +1483,20 @@ function AplicarDescuento(){
 
 	if (periodo_pp!=cboPeriodo_b)msg+="El Periodo seleccionado no corresponde al ProntoPago... <br>";
 	
-	if (id_concepto_pp!=cboTipoConcepto_b)msg+="La Concepto Seleccionado no corresponde al ProntoPago.. <br>";
+	if (id_concepto_pp!=cboTipoConcepto_b)msg+="El Concepto Seleccionado no corresponde al ProntoPago.. <br>";
 	
+	var situacion = $('#situacion_').val();
+
+	if (situacion=="INHABILITADO")msg+="No aplica el prontoPago por estar INHABILITADO.. <br>";
+
+	//alert(situacion);
+/*
+	var vencio = '0';
+	$(".mov").each(function (){
+		vencio = $(this).parent().parent().parent().find('#vencio').val()
+	});
+	if (vencio=='1')msg+="No aplica ProntoPago por deudas vencidas.. <br>";
+*/
 
 	if(msg!=""){
         
@@ -1517,32 +1529,7 @@ function AplicarDescuento(){
 
 			total += Number(val_total);
 			stotal += Number(val_sub_total);
-			igv += Number(val_igv);
-
-			//$(this).parent().parent().parent().prev().find(".mov").prop('disabled',true);
-
-			//var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
-			//id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
-	
-			//var val_descuento =$('#DescuentoPP').val("");
-	
-
-					
-		/*
-			if(val_descuento=="S"){
-				valor_venta_bruto = val_total/1.18;
-				descuento = (importe_pp*numero_cuotas_pp);
-				valor_venta = valor_venta_bruto - descuento;
-				igv = valor_venta*0.18;
-				total += igv + valor_venta_bruto - descuento;
-				
-			}else{
-				total += Number(val_total);
-			}
-	
-	*/
-			
-	
+			igv += Number(val_igv);	
 
 		});
 
