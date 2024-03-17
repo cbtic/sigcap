@@ -252,7 +252,7 @@
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Computo" type="button" id="btnVistaPreviaComputo" style="margin-left:15px" />
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Calendario" type="button" id="btnVistaPreviaCalendario" style="margin-left:15px" />
-						<input class="btn btn-success pull-rigth" value="Nuevo Computo" type="button" id="btnNuevo" style="margin-left:15px" />
+						<input class="btn btn-danger pull-rigth" value="Generar Computo" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>
 				
