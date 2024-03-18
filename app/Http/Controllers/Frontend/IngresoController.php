@@ -424,7 +424,7 @@ class IngresoController extends Controller
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = $id_concepto;//26412;
         //$filas = $request->cboFilas;
-        $filas = "100";
+        $filas = "10000";
         // print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
@@ -564,7 +564,9 @@ class IngresoController extends Controller
 		//echo $id_caja_ingreso;
         return redirect('/ingreso/liquidacion_caja');
 		
-    }	
+    }
+    
+    
 	
 	public function listar_liquidacion_caja_ajax(Request $request){
 		
@@ -632,6 +634,31 @@ class IngresoController extends Controller
 		
 		$export = new InvoicesExport([$variable]);
 		return Excel::download($export, 'liquidacion_caja.xlsx');
+    }
+
+
+    public function anula_fraccionamiento(Request $request)
+    {
+        $id_persona = $request->id_persona;
+        $tipo_documento = $request->tipo_documento;
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+
+        $codigo_fraccionamiento = $request->codigo_fraccionamiento;
+        
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getAnulaFraccionamiento($tipo_documento,$id_persona,$codigo_fraccionamiento);
+
+        /*
+        $periodo = "";
+        $tipo_couta = "";
+        $concepto = "";
+        $filas = "10000";
+        $valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+        
+		return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
+		*/
     }
 
 }
