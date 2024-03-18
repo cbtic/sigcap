@@ -169,7 +169,7 @@
 								<option value="">--Periodo--</option>
 								<?php
 								foreach ($periodo as $row) {?>
-								<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+								<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
 								<?php 
 								}
 								?>
@@ -248,7 +248,7 @@
 
 				</div>
 
-					<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Computo" type="button" id="btnVistaPreviaComputo" style="margin-left:15px" />
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Calendario" type="button" id="btnVistaPreviaCalendario" style="margin-left:15px" />

@@ -613,16 +613,14 @@ class SesionController extends Controller
         ];
 		
 		$comisionDelegado_model = new ComisionDelegado;
-		
 		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
 
 		$comision_model = new Comisione;
-		
 		$comision = $comision_model->getComisionAll("","","","1");
-		
 		$periodo = $periodoComisione_model->getPeriodoAll();
-
-        return view('frontend.sesion.all_computo_sesion',compact('periodo','anio','mes','comision','concurso_inscripcion'));
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		
+        return view('frontend.sesion.all_computo_sesion',compact('periodo','anio','mes','comision','concurso_inscripcion','periodo_ultimo'));
     }
 
 	public function lista_computoSesion(){
