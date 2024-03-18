@@ -9,7 +9,7 @@ use DB;
 class ComisionSesione extends Model
 {
 	
-	public static function getDistritoSesion($anio,$mes){
+	public static function getDistritoSesion($anio,$mes,$id_municipalidad_integrada){
 
         $cad = "select distinct u.id_ubigeo,u.desc_ubigeo distrito
 from comision_sesiones t1 
@@ -21,7 +21,8 @@ inner join comisiones t4 on t1.id_comision=t4.id
 inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
 where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
-And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' ";
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' 
+and t4.id_municipalidad_integrada=".$id_municipalidad_integrada;
 		$data = DB::select($cad);
         return $data;
     }
@@ -91,7 +92,7 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
         if(isset($data[0]))return $data[0];
     }
 			
-	public function getMunicipalidadSesion($anio,$mes){
+	public static function getMunicipalidadSesion($anio,$mes){
 
         $cad = "select distinct mi.id,mi.denominacion municipalidad
 from comision_sesiones t1 
