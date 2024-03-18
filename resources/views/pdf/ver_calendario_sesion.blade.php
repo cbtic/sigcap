@@ -98,7 +98,7 @@
 								<tbody style="padding:0px!important;margin:0px!important">
 									<tr style="padding:0px!important;margin:0px!important">
 										<td style="padding:0px!important;margin:0px!important" align="center" colspan="11" class="titulo_principal">
-											<h2>REPORTE DE COMPUTO DE SESION</h2>
+											<h2>REPORTE DE CALENDARIO DE SESION</h2>
 										</td>
 									</tr>
 									<tr style="padding:0px!important;margin:0px!important">
@@ -178,14 +178,14 @@
 				
 				<?php foreach($municipalidadSesion as $row){
 					
-					$comisionSesion = \App\Models\ComisionSesione::getComisionDistritoSesion($anio,$mes,$row->id_ubigeo);
+					$distritoSesion = \App\Models\ComisionSesione::getDistritoSesion($anio,$mes,$row->id);
 					
-				?>
+					?>
 					
 					<tr>
 					
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo $row->distrito?></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo $row->municipalidad//$row->distrito?></td>
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
 						
 					
@@ -224,19 +224,67 @@
 						
 					</tr>
 					
+					<?php
+				foreach($distritoSesion as $row0){
+					
+					$comisionSesion = \App\Models\ComisionSesione::getComisionDistritoSesion($anio,$mes,$row0->id_ubigeo);
+				?>
+					
+					<tr>
+					
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo $row0->distrito?></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">CAP</td>
+						
+					
+						<?php 
+						for($i=0;$i<($diax-1);$i++){
+						?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+						<?php	
+						}
+						
+						for($i=strtotime($fechaInicio); $i<=strtotime($fechaFin); $i+=86400){
+							$fechaInicioTemp = date("d", $i);
+							$fechaInicioTemp_ = date("d-m-Y", $i);
+							$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
+							if($dia!="D"){
+							?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+							<?php
+							}
+						}
+						
+						
+						
+						for($i=((date('N', strtotime($fechaInicioTemp_))));$i<7;$i++){
+							if($dias[$i]!="D"){
+						?>
+							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;width:20px"></td>
+						<?php
+							}	
+						}
+						
+						?>
+						
+						
+						
+						
+					</tr>
+					
 					
 					
 					<?php foreach($comisionSesion as $row2){
 						
-						$delegadoSesion = \App\Models\ComisionSesione::getDelegadoComisionDistritoSesion($anio,$mes,$row->id_ubigeo,$row2->id);
+						$delegadoSesion = \App\Models\ComisionSesione::getDelegadoComisionDistritoSesion($anio,$mes,$row0->id_ubigeo,$row2->id);
 						
 					?>
 									
 					<tr>
 					
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo $row2->comision?></td>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">CAP</td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">&nbsp;&nbsp;&nbsp;<?php echo $row2->comision?></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
 						
 					
 						<?php 
@@ -277,7 +325,7 @@
 					<tr>
 					
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">T</td>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo $row3->delegado?></td>
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">&nbsp;&nbsp;&nbsp;<?php echo $row3->delegado?></td>
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo $row3->numero_cap?></td>
 						
 					
@@ -294,7 +342,7 @@
 							$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
 							if($dia!="D"){
 						
-								$fechaSesion = \App\Models\ComisionSesione::getFechaDelegadoComisionDistritoSesion($anio,$mes,$row->id_ubigeo,$row2->id,$row3->id,$fechaInicioTemp_);
+								$fechaSesion = \App\Models\ComisionSesione::getFechaDelegadoComisionDistritoSesion($anio,$mes,$row0->id_ubigeo,$row2->id,$row3->id,$fechaInicioTemp_);
 							?>
 							<td class="ancho_nro" style="text-align:center;border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo isset($fechaSesion->tipo_sesion)?$fechaSesion->tipo_sesion:""?></td>
 							<?php
@@ -320,7 +368,7 @@
 					
 					<?php }?>
 						
-						
+					<?php }?>
 				
 				<?php }?>
 				

@@ -625,8 +625,6 @@ class SesionController extends Controller
 
 	public function lista_computoSesion(){
 		
-		
-		
         return view('frontend.sesion.all_listar_computo_sesion');
     }
 	
@@ -685,17 +683,11 @@ class SesionController extends Controller
 		$computoSesion = ComputoSesione::find($id);
 		
 		$comisionSesion_model = new ComisionSesione(); 
-		$p[]="";//2;//$request->id_periodo;
-		$p[]="";
-		$p[]=$computoSesion->anio;//$request->anio;
-		$p[]=$computoSesion->mes;//$request->mes;
-		$p[]=1;
-		$p[]=10000;
-		$comisionSesion = $comisionSesion_model->lista_computo_sesion_ajax($p);
+		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesion($computoSesion->anio,$computoSesion->mes);
 		
 		$dias = array('L','M','M','J','V','S','D');
 		
-		$pdf = Pdf::loadView('pdf.calendario_sesion',compact('comisionSesion','computoSesion','dias'));
+		$pdf = Pdf::loadView('pdf.calendario_sesion',compact('municipalidadSesion','computoSesion','dias'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
@@ -711,7 +703,8 @@ class SesionController extends Controller
 	public function ver_calendario_sesion_pdf($anio,$mes){
 		
 		$comisionSesion_model = new ComisionSesione(); 
-		$municipalidadSesion = $comisionSesion_model->getDistritoSesion($anio,$mes);
+		
+		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesion($anio,$mes);
 		
 		$dias = array('L','M','M','J','V','S','D');
 		
@@ -728,6 +721,15 @@ class SesionController extends Controller
 	
 	}
 	
-	
+	public function eliminar_computo_sesion($id)
+    {
+		$computoSesion = ComputoSesione::find($id);
+		$computoSesion->estado = 0;
+		$computoSesion->save();
+
+		echo $computoSesion->id;
+
+    }
+		
 	
 }
