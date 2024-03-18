@@ -148,7 +148,21 @@
 				foreach($comisionSesion as $key=>$r){
 					if($key==0)$municipalidad_old = $r->municipalidad;
 					$n++;
-				?>
+				
+					if($municipalidad_old!=$r->municipalidad){
+					?>
+					<tr>
+						<th colspan="7" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">Sub Total</th>
+						<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_computada_?></th>
+						<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_adicional_?></th>
+						<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total_?></th>
+					</tr>
+					<?php
+						$suma_computada_ = 0;
+						$suma_adicional_ = 0;
+						$suma_total_ = 0;
+					}
+					?>
 				<tr>
 					<td style="border:1px solid #A4A4A4;width:30px"><?php echo $n?></td>
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->municipalidad?></td>
@@ -162,7 +176,7 @@
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->total?></td>
 				</tr>
 				<?php 
-					
+				
 					$suma_computada += $r->computada;
 					$suma_adicional += $r->adicional;
 					$suma_total += $r->total;
@@ -171,23 +185,26 @@
 					$suma_adicional_ += $r->adicional;
 					$suma_total_ += $r->total;
 					
-					if($municipalidad_old!=$r->municipalidad || ($key+1) == count($comisionSesion)){
-					?>
-					<tr>
-						<th colspan="7" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">Sub Total</th>
-						<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_computada_?></th>
-						<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_adicional_?></th>
-						<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total_?></th>
-					</tr>
-					<?php
-						$suma_computada_ = 0;
-						$suma_adicional_ = 0;
-						$suma_total_ = 0;
-					}
+					
 					
 					$municipalidad_old = $r->municipalidad;
 					
 				} 
+				
+				if(($key+1) == count($comisionSesion)){
+				?>
+				<tr>
+					<th colspan="7" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">Sub Total</th>
+					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_computada_?></th>
+					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_adicional_?></th>
+					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total_?></th>
+				</tr>
+				<?php
+					$suma_computada_ = 0;
+					$suma_adicional_ = 0;
+					$suma_total_ = 0;
+				}
+				
 				?>
 				
 			</tbody>
