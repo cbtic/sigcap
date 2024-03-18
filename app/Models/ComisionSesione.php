@@ -9,7 +9,7 @@ use DB;
 class ComisionSesione extends Model
 {
 	
-	public function getDistritoSesion($anio,$mes){
+	public static function getDistritoSesion($anio,$mes){
 
         $cad = "select distinct u.id_ubigeo,u.desc_ubigeo distrito
 from comision_sesiones t1 
@@ -26,7 +26,7 @@ And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' ";
         return $data;
     }
 	
-	public function getComisionDistritoSesion($anio,$mes,$id_ubigeo){
+	public static function getComisionDistritoSesion($anio,$mes,$id_ubigeo){
 
         $cad = "select distinct t4.id,t4.comision comision
 from comision_sesiones t1 
@@ -45,7 +45,7 @@ and u.id_ubigeo = '".$id_ubigeo."'";
         return $data;
     }
 	
-	public function getDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision){
+	public static function getDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision){
 
         $cad = "select distinct a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap
 from comision_sesiones t1 
@@ -67,7 +67,7 @@ and t1.id_comision=".$id_comision;
         return $data;
     }
 	
-	public function getFechaDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision,$id_agremiado,$fecha){
+	public static function getFechaDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision,$id_agremiado,$fecha){
 
         $cad = "select case when id_tipo_sesion='401' then 'O' when id_tipo_sesion='402' then 'E' end tipo_sesion 
 from comision_sesiones t1 
