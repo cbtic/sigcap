@@ -894,7 +894,29 @@ function cargarValorizacion(){
 
 				$("#btnFracciona").prop('disabled', false);
 
+				if(cboTipoConcepto_b==26412){
+
+					//$("#btnFracciona").prop(value, 'REFRACCIONAMIENTO');
+
+				}
+
 			}
+
+			if (cboTipoConcepto_b==26412) {
+
+				$("#btnAnulaFrac").prop('disabled', false);
+
+				$("#btnAnulaFrac").show();
+
+			}else{
+
+
+				$("#btnAnulaFrac").hide();
+
+			}
+
+
+
 
 			total_deuda();
 
@@ -1733,7 +1755,37 @@ function total_deuda(){
 
 };
 
+function anular_fraccionamiento(){
 
+	//var id="";
+
+	var codigo_fraccionamiento="";
+
+	$(".mov").each(function (){
+		codigo_fraccionamiento = $(this).parent().parent().parent().find('#codigo_fraccionamiento').val()
+		//alert(cf);
+	});
+	
+	var tipo_documento = $('#tipo_documento').val();
+    var id_persona = $('#id_persona').val();
+	var empresa_id = $('#empresa_id').val();
+	var _token = $('#_token').val();
+	
+
+    $.ajax({
+			url: "/ingreso/anula_fraccionamiento",
+            type: "POST",
+            data : {tipo_documento:tipo_documento,codigo_fraccionamiento:codigo_fraccionamiento, id_persona:id_persona, empresa_id:empresa_id,_token:_token},
+            success: function (result) {  
+
+				location.reload();
+              
+            }
+    });
+
+	
+
+};
 
 function fn_nota_credito(id){
 	

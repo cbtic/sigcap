@@ -534,38 +534,35 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group mb-0 clearfix">
-                                                    <!--<input class="btn btn-primary pull-right" value="NUEVA" <?php echo $disabled ?> name="crea" type="button" form="prestacionescrea" id="btnGuardar" data-toggle='dropdown' onclick="guardarValorizacion()" />-->
-                                                    <!--<input class="btn btn-primary pull-right" value="NUEVA" <?php echo $disabled ?> name="crea" type="button" form="prestacionescrea" id="btnGuardar" data-toggle='dropdown' />-->
-                                                    <!--
-									<input type="button" class="btn btn-primary pull-right" data-toggle='dropdown' <?php echo $disabled ?> value="NUEVA"/>
-									<ul class="dropdown-menu" role="menu" style="padding-left:10px">
-										<input type="hidden" name="TipoF" id="TipoF" value="" />
-										<input type="hidden" name="Trans" id="Trans" value="FA" />
-										<li><input class="btn btn-default pull-right" value="FACTURA" type="button" id="tipoFactura" onclick="enviarTipo(1)" /></li>
-                                        <li><input class="btn btn-default pull-right" value="BOLETA" type="button" id="tipoBoleta" onclick="enviarTipo(2)" /></li>
-                                        <li><input class="btn btn-default pull-right" value="TICKET" type="button" id="tipoBoleta" onclick="enviarTipo(3)" /></li>
-									</ul>
-									-->
                                                     <input type="hidden" name="TipoF" id="TipoF" value="" />
                                                     <input type="hidden" name="Trans" id="Trans" value="FA" />
                                                     <input class="btn btn-success pull-rigth" value="FACTURA" type="button" id="btnFactura" disabled="disabled" onclick="enviarTipo(1)" />
                                                     <input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnBoleta" disabled="disabled" onclick="enviarTipo(2)" />
 
                                                     <input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnTicket" disabled="disabled" onclick="enviarTipo(3)" style="display:none" />
+                                                
+                                                    <input class="btn btn-warning pull-right" value="PRONTO PAGO" type="button" id="btnDescuento" disabled="disabled" onclick="AplicarDescuento()" />
 
                                                     <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="modal_fraccionamiento()" />
 
-                                                    <input class="btn btn-warning pull-right" value="APLICAR PRONTO PAGO" type="button" id="btnDescuento" disabled="disabled" onclick="AplicarDescuento()" />
+                                                    <input style="display:none" class="btn btn-danger pull-rigth" value="ANULAR FRAC" type="button" id="btnAnulaFrac" disabled="disabled" onclick="anular_fraccionamiento()" />
 
-
-
-
-                                                    <!--<input class="btn btn-primary pull-right" value="BOLETA" name="crea" type="button" form="prestacionescrea" id="btnGuardar" onclick="guardarValorizacion()" />-->
                                                 </div><!--form-group-->
                                             </div><!--col-->
-
-
                                         </div><!--row-->
+
+                                        <br />
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group mb-0 clearfix">
+
+
+                                                </div><!--form-group-->
+                                            </div><!--col-->
+                                        </div><!--row-->
+
+
                                     </div><!--card-body-->
                                 </div><!--card-->
                                 <br />
