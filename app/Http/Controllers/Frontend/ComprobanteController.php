@@ -1113,7 +1113,7 @@ class ComprobanteController extends Controller
 
         if ($comprobante->tipo=="FT"){
             $empresa_model= new Comprobante;
-            $empresa=  $persona_model->getEmpresaRuc($comprobante->cod_tributario);
+            $empresa=  $empresa_model->getEmpresaRuc($comprobante->cod_tributario);
             $idcliente=$empresa->id;
             $direccion=$empresa->direccion;
             $correo=$empresa->email;
@@ -1702,5 +1702,118 @@ class ComprobanteController extends Controller
 
     }
 
+    public function send_nc(Request $request)
+    {
+         //print_r($request); exit();
+        $sw = true;
+		$msg = "";
+
+		$id_user = Auth::user()->id;
+        $facturas_model = new Comprobante;
+		$guia_model = new Guia;
+
+			/**********RUC***********/
+
+			$tarifa = $request->facturad;
+
+			$total = $request->totalF;
+			$serieF = $request->serieF;
+			$tipoF = $request->tipoF;
+			$ubicacion_id = $request->ubicacion;
+			$cod_tributario = $request->numero_documento;
+			$id_caja = $request->id_caja;
+			$adelanto   = $request->adelanto;
+
+            $id_comprobante = $request->id_comprobante;
+
+			$trans = $request->trans;
+            
+			//1	DOLARES
+			//2	SOLES
+            
+			if ($trans == 'FA' || $trans == 'FN'){
+
+				$ws_model = new TablaMaestra;
+				
+				/*************************************/
+				
+				foreach ($tarifa as $key => $value) {
+					//$vestab = $value['vestab'];
+					//$vcodigo = $value['vcodigo'];
+                    $id_val = $value['id'];
+
+				}
+               
+				
+				$id_moneda=1;
+
+                $descuento = $value['descuento'];
+		
+			  $id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',     $id_user,  1);
+              //  $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
+
+               // print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
+              
+				$factura = Comprobante::where('id', $id_factura)->get()[0];
+
+				$fac_serie = $factura->serie;
+				$fac_numero = $factura->numero;
+
+				$factura_upd = Comprobante::find($id_factura);
+				if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+                
+				$factura_upd->save();
+
+				//print_r($tarifa); exit();
+				foreach ($tarifa as $key => $value) {
+					//echo "denominacion=>".$value['denominacion']."<br>";
+					if ($adelanto == 'S'){
+						$total   = $request->MonAd;
+					}
+					else{
+						//$total   = $value['monto'];
+                        $total   ="1";
+					}
+					$descuento = $value['descuento'];
+					if ($value['descuento']=='') $descuento = 0;
+					$id_factura_detalle = $facturas_model->registrar_comprobante($serieF, $fac_numero, $tipoF, $value['item'], $total, $value['descripcion'], "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
+																				 //(  serie,      numero,   tipo,      ubicacion, persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
+					
+				
+				}
+
+				$estado_ws = $ws_model->getMaestroByTipo('96');
+				$flagWs = isset($estado_ws[0]->codigo)?$estado_ws[0]->codigo:1;
+
+				if ($flagWs==2 && $id_factura>0 && ($tipoF=="FT" || $tipoF=="BV")){
+					$this->firmar($id_factura);
+				}
+
+				//echo $id_factura;
+
+
+			}
+			if ($trans == 'FE') {
+				//echo $request->id_factura;
+				$id_factura = $request->id_factura;
+			}
+
+		//}else{
+			//$sw = false;
+			//$msg = "La Factura ingresada ya existe !!!";
+			//$id_factura = 0;
+		//}
+
+		$array["sw"] = $sw;
+        $array["msg"] = $msg;
+		$array["id_factura"] = $id_factura;
+        echo json_encode($array);
+
+        //echo 1;
+
+        //Mail::send(new SendContact($request));
+
+        //return redirect()->back()->withFlashSuccess(__('alerts.frontend.contact.sent'));
+    }
 
 }

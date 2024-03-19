@@ -674,5 +674,5 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/factura.js') }}"></script>
+<script src="{{ asset('js/facturaNC.js') }}"></script>
 @endpush

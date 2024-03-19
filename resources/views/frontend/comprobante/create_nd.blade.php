@@ -435,7 +435,7 @@
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                     <div class="form-group">
                                                         
-                                                        <input type="text" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FN') {
+                                                        <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FN') {
                                                                                                                             echo $comprobante->id;
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
@@ -533,7 +533,7 @@
                                                                                             -->
                                                                     <td>
                                                                     <input type="text" name="imported[]"  id="imported<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>)" value="<?php if ($trans == 'FN') {
-                                                                                                                            echo number_format($fac['pu'], 2);
+                                                                                                                            echo 0;
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
                                                                                                                                 echo number_format($fac['pu'], 2);
@@ -542,12 +542,12 @@
                                                                                         </td>
 
                                                                     <td class="text-right">                                                                        
-                                                                        <input type="text" readonly name="igvd[]"  id="igvd<?php echo $key?>" value="<?php echo number_format($fac['igv_total'],2)?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                        <input type="text" readonly name="igvd[]"  id="igvd<?php echo $key?>" value="<?php echo number_format(0,2)?>" placeholder="" class="form-control form-control-sm text-center"  >
                                                                     
                                                                     </td>
 
                                                                     <td class="text-right">                                                                        
-                                                                        <input type="text" readonly name="totald[]"  id="totald<?php echo $key?>" value="<?php echo number_format($fac['importe'],2)?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                        <input type="text" readonly name="totald[]"  id="totald<?php echo $key?>" value="<?php echo number_format(0,2)?>" placeholder="" class="form-control form-control-sm text-center"  >
                                                                     
                                                                     </td>
                                                                     
