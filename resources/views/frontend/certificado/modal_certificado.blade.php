@@ -457,7 +457,7 @@ $.mask.definitions['p'] = "[Mm]";
 
 						</div>
 
-						<div class="row">
+						<!--<div class="row">
 
 							<div class="col-lg-12">
 								<div class="form-group">
@@ -488,7 +488,7 @@ $.mask.definitions['p'] = "[Mm]";
 								</div>
 							</div>
 
-						</div>
+						</div>-->
 
 						<div class="row">
 							<div class="col-lg-2">

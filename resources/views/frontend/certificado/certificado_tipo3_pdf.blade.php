@@ -123,9 +123,9 @@ $(document).ready(function() {
             <p style="margin-left: 2cm;">         N° CAP                 : <?php echo $datos[0]->numero_cap;?> </p>
             <p style="margin-left: 2cm;">         FECHA DE COLEGIATURA   : <?php echo $datos[0]->fecha_colegiado;?> </p>
             <p style="margin-left: 2cm;">         N° INSCRIPCIÓN REGIONAL: <?php echo $datos[0]->numero_regional;?> </p>
-            <p style="text-align: justify;" > Está inscrito(a) en nuestra Institución de conformidad a la Ley N° 14085 y
+            <p style="text-align: justify;" > Está <?php echo $inscripcion;?> en nuestra Institución de conformidad a la Ley N° 14085 y
                              al Estatuto del Colegio de Arquitectos del Perú, encontrándose en condición 
-                             de MIEMBRO HABILITADO y por lo tanto  <?php echo $faculta;?>  para el ejercicio de la 
+                             de MIEMBRO <?php echo $habilita;?> y por lo tanto  <?php echo $faculta;?>  para el ejercicio de la 
                              profesión.</p>
             <p>Se extiende el presente a solicitud del interesado y para los fines de 
                             la solicitud.</p>
