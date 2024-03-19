@@ -162,26 +162,25 @@ class CertificadoController extends Controller
 
 		if($request->id == 0){
 			$proyecto = new Proyecto;
-			$proyectista = new Proyectista;
 			$propietario = new Propietario;
+			$proyectistaPrincipal = new Proyectista;
 			$solicitud = new Solicitude;
 			$presupuesto = new Presupuesto;
 			$usoEdificacione = new UsoEdificacione;
-			//$codigo = $certificado_model->getCodigoCertificado($request->tipo);
-			//$certificado->codigo = $codigo;
 		}else{
 			$proyecto = Proyecto::find($request->id);
 		}
-
-		$agremiado = Agremiado::where("id",$request->idagremiado)->where("estado","1")->first();
+		
+		$numero_cap_asociado = $request->numero_cap_asociado;
+		$agremiado = Agremiado::where("id",$request->idagremiado_)->where("estado","1")->first();
 		$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
-		$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();
-
-		$proyectista->id_agremiado = $agremiado->id;
-		$proyectista->celular = $agremiado->celular1;
-		$proyectista->email = $agremiado->email1;
-		$proyectista->id_usuario_inserta = $id_user;
-		$proyectista->save();
+		$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();		
+		
+		$proyectistaPrincipal->id_agremiado = $agremiado->id;
+		$proyectistaPrincipal->celular = $agremiado->celular1;
+		$proyectistaPrincipal->email = $agremiado->email1;
+		$proyectistaPrincipal->id_usuario_inserta = $id_user;
+		
 		
 		if($persona->id){
 			$propietario->id_persona = $persona->id;
@@ -214,29 +213,35 @@ class CertificadoController extends Controller
 
 		$usoEdificacione->id_tipo_uso = $request->tipo_uso;
 		$usoEdificacione->area_techada = $request->area_techada;
-		//$usoEdificacione->total_presupuesto = $request->valor_obra;
 		$usoEdificacione->id_usuario_inserta = $id_user;
 		$usoEdificacione->save();
 		
 		$solicitud->id_regional = 5;
 		$solicitud->fecha_registro = Carbon::now()->format('Y-m-d');
-		//$solicitud->id_tipo_solicitud = 
-		//$solicitud->id_tipo_tramite = 
-		//$solicitud->numero_revision = 
 		$solicitud->direccion = $request->direccion_tipo;
 		$solicitud->id_ubigeo = $request->distrito;
 		$solicitud->tipo_proyecto = $request->tipo_proyecto;
-		//$solicitud->valor_unitario = 
 		$solicitud->valor_obra = $request->valor_obra;
 		$solicitud->area_total = $request->area_techada;
 		$solicitud->id_proyecto = $proyecto->id;
-		$solicitud->id_proyectista = $proyectista->id;
+		$solicitud->id_proyectista = $proyectistaPrincipal->id;
 		$solicitud->id_usuario_inserta = $id_user;
 		$solicitud->save();
-
-		$proyectista->id_solicitud = $solicitud->id;
-		$proyectista->save();
-
+		
+		foreach($numero_cap_asociado as $row){
+			$proyectista = new Proyectista;
+			$agremiado = Agremiado::where("numero_cap",$row)->where("estado","1")->first();
+			$proyectista->id_solicitud = $solicitud->id;
+			$proyectista->id_agremiado = $agremiado->id;
+			$proyectista->celular = $agremiado->celular1;
+			$proyectista->email = $agremiado->email1;
+			$proyectista->id_usuario_inserta = $id_user;
+			$proyectista->save();
+		}
+		
+		$proyectistaPrincipal->id_solicitud = $solicitud->id;
+		$proyectistaPrincipal->save();
+		
 		$propietario->id_solicitud = $solicitud->id;
 		$propietario->save();
 

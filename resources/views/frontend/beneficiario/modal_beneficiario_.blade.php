@@ -388,7 +388,7 @@ function AddFila(){
     //var informe = '<select name="informe[]" id="informe" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
     
     
-    var estado_beneficiario = '<select name="estado_beneficiario" id="estado_beneficiario" class="form-control form-control-sm"><option value="">--Selecionar--</option><?php foreach ($estado_concepto as $row) {?> <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$beneficiario->id_estado_beneficiario)echo "selected='selected'"?>><?php echo $row->denominacion?></option> <?php } ?> </select>'
+    var estado_beneficiario = '<select name="estado_beneficiario[]" id="estado_beneficiario" class="form-control form-control-sm"><option value="">--Selecionar--</option><?php foreach ($estado_concepto as $row) {?> <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$beneficiario->id_estado_beneficiario)echo "selected='selected'"?>><?php echo $row->denominacion?></option> <?php } ?> </select>'
    
 
     nuevoContenido +='<div class="form-group">';
@@ -549,7 +549,7 @@ function save_beneficiario(){
     var estado_beneficiario = $('#estado_beneficiario').val();
     var observacion = $('#observacion').val();
     
-    if(dni == "")msg += "Debe ingresar un DNI <br>";
+    //if(dni == "")msg += "Debe ingresar un DNI <br>";
     
       if(msg!=""){
           bootbox.alert(msg);
@@ -559,12 +559,15 @@ function save_beneficiario(){
       $.ajax({
         url: "/beneficiario/send_beneficiario",
               type: "POST",
+			  data : $("#frmEmpresaBeneficiario").serialize(),
+			  /*
               data : {_token:_token,id:id,dni:dni,ruc:ruc,concepto:concepto,
               estado_beneficiario:estado_beneficiario,observacion:observacion},
+			  */
               success: function (result) {
           
                 $('#openOverlayOpc').modal('hide');
-                window.location.reload();
+                //window.location.reload();
                 datatablenew();
               }
       });
@@ -724,7 +727,7 @@ function modal_personaNuevoBeneficiario(){
                     <div class="col-lg-2">
                       <div class="form-group">
                         <label class="control-label form-control-sm">N&uacute;mero Beneficiarios</label>
-                        <input id="numero_beneficiario" name="numero_beneficiario" class="form-control form-control-sm" value="<?php //echo $agremiado->id_situacion?>" type="text" onchange="AddFila()">
+                        <input id="numero_beneficiario" name="numero_beneficiario" class="form-control form-control-sm" value="<?php //echo $agremiado->id_situacion?>" type="text" onChange="AddFila()">
                       </div>
                     </div>
                   </div>
