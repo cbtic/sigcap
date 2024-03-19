@@ -89,6 +89,8 @@ class CertificadoController extends Controller
 			
 			$tipo_certificado = $tablaMaestra_model->getMaestroByTipo(100);
 			$tipo_tramite = $tablaMaestra_model->getMaestroByTipo(44);
+			$tipo_tramite_tipo3 = $tablaMaestra_model->getMaestroByTipo(38);
+			
 			
 			$nombre_proyecto=$certificado_model2->datos_agremiado_certificado1($id);
 			$nombre_proy=$nombre_proyecto[0]->id_solicitud;
@@ -103,6 +105,7 @@ class CertificadoController extends Controller
 			$email1="";
 			$tipo_certificado = $tablaMaestra_model->getMaestroByTipo(100);
 			$tipo_tramite = $tablaMaestra_model->getMaestroByTipo(44);
+			$tipo_tramite_tipo3 = $tablaMaestra_model->getMaestroByTipo(38);
 			$nombre_proy="";
 			
 		} 
@@ -111,7 +114,7 @@ class CertificadoController extends Controller
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy'));
+		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_tramite_tipo3','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy'));
 
     }
 
@@ -546,12 +549,14 @@ class CertificadoController extends Controller
 		if ($trato==3) {
 			$tratodesc="EL ARQUITECTO ";
 			$faculta="facultado";
+			$cita="del citado arquitecto";
 			$inscripcion="inscrito";
 			$habilita="HABILITADO";
 		}
 		else{
 			$tratodesc="LA ARQUITECTA ";
 			$faculta="facultada";
+			$cita="de la citada arquitecta";
 			$inscripcion="inscrita";
 			$habilita="HABILITADA";
 		}
@@ -568,7 +573,7 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','habilita','inscripcion','formattedDate','tratodesc','faculta','numeroEnLetras'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','cita','habilita','inscripcion','formattedDate','tratodesc','faculta','numeroEnLetras'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
