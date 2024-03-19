@@ -9,6 +9,10 @@ $(document).ready(function () {
 		modalCertificado(0);
 	});
 
+	$('#btnNuevoTipo3').click(function () {
+		modalCertificadoTipo3(0);
+	});
+
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -258,6 +262,22 @@ function obtenerPlanDetalle(){
 		
 	});
 	
+}
+
+function modalCertificadoTipo3(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/certificado/modal_certificado_tipo3/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
 }
 
 function modalCertificado(id){

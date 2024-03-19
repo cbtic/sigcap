@@ -371,15 +371,6 @@ function fn_save_multa(){
 				$('#openOverlayOpc').modal('hide');
 				window.location.reload();
 				datatablenew();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
             }
     });
 }
