@@ -682,7 +682,7 @@ class AgremiadoController extends Controller
 	
 	public function importar_agremiado($fecha){ 
 		
-		$fecha = "12-02-2024";
+		//$fecha = "12-02-2024";
 		/*************WEB SERVICE - LEER TOKEN*****************/
 		
 		$data_string = '{"email":"pbravogutarra@gmail.com","password":"ua5DhY3oFDZ7aKg"}';
