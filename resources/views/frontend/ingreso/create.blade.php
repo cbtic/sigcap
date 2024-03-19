@@ -436,10 +436,15 @@
                                             </div>
                                             <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
+                                                    <!--
                                                     <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                                                    -->
+                                                    <select class="form-control form-control-sm" id="cboTipoConcepto_b" data-placeholder="Seleccionar Concepto" onchange="cargarValorizacion()" multiple >
+
                                                     </select>
                                                 </div>
                                             </div>
+
 
 
                                         </div>
