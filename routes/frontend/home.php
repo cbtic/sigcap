@@ -94,7 +94,7 @@ Route::get('persona/modal_personaNuevo', [PersonaController::class, 'modal_perso
 
 Route::get('agremiado', [AgremiadoController::class, 'index'])->name('agremiado');
 Route::get('agremiado/editar_agremiado/{id}', [AgremiadoController::class, 'editar_agremiado'])->name('agremiado.editar_agremiado');
-Route::get('agremiado/importar_agremiado', [AgremiadoController::class, 'importar_agremiado'])->name('agremiado.importar_agremiado');
+Route::get('agremiado/importar_agremiado/{fecha}', [AgremiadoController::class, 'importar_agremiado'])->name('agremiado.importar_agremiado');
 Route::get('agremiado/obtener_provincia/{idDepartamento}', [AgremiadoController::class, 'obtener_provincia'])->name('agremiado.obtener_provincia');
 Route::get('agremiado/obtener_distrito/{idDepartamento}/{idProvincia}', [AgremiadoController::class, 'obtener_distrito'])->name('agremiado.obtener_distrito');
 Route::get('agremiado/consulta_agremiado', [AgremiadoController::class, 'consulta_agremiado'])->name('agremiado.consulta_agremiado');
