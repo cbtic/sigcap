@@ -149,7 +149,7 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="row" style="padding:20px 20px 0px 20px;">
 						<!--
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -169,7 +169,7 @@
 								<option value="">--Periodo--</option>
 								<?php
 								foreach ($periodo as $row) {?>
-								<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+								<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
 								<?php 
 								}
 								?>
@@ -222,18 +222,19 @@
 						</div>
 					</div>
                     </div>
-                    <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 					<div class="table-responsive">
                     <table id="tblComputoCerrado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>N° de C&oacute;mputo</th>
+							<th>N° C&oacute;mputo</th>
 							<th>Año</th>
 							<th>Mes</th>
 							<th>Fecha C&oacute;mputo</th>
-							<th>Computo Mes Actual</th>
-							<th>Computo Meses Anteriores</th>
+							<th>Mes Actual</th>
+							<th>Meses Ant.</th>
 							<th>Reporte</th>
+							<th>Eliminar</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -248,11 +249,11 @@
 
 				</div>
 
-					<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Computo" type="button" id="btnVistaPreviaComputo" style="margin-left:15px" />
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Calendario" type="button" id="btnVistaPreviaCalendario" style="margin-left:15px" />
-						<input class="btn btn-success pull-rigth" value="Nuevo Computo" type="button" id="btnNuevo" style="margin-left:15px" />
+						<input class="btn btn-danger pull-rigth" value="Generar Computo" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>
 				

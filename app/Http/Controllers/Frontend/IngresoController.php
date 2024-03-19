@@ -237,7 +237,7 @@ class IngresoController extends Controller
         
         //$comprobanted = json_encode($comprobanted_);
 
-        print_r($total_fraccionar); exit();
+        //print_r($total_fraccionar); exit();
     
 		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado','comprobanted', 'valorizacion' ));
 	}
@@ -327,17 +327,22 @@ class IngresoController extends Controller
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
 
-        $id_pk = 0;
-        $id_concepto = 0;
+        $id_concepto = $request->id_concepto;
 
-        //print_r($request->fraccionamiento);
+       // print_r($id_concepto); exit();
+
+        $id_pk = 0;
+       // $id_concepto = 0;
+
+        //print_r($request->valorizacion); exit();
 
         
-
+/*
         foreach($request->valorizacion as $key=>$tmp){
             //$id_pk = $tmp['id'];
             $id_concepto = $tmp['id_concepto'];
         }
+*/
 
 /*
         foreach($request->valorizacion as $key=>$tmp){
@@ -356,10 +361,25 @@ class IngresoController extends Controller
         $fraccionamiento->save();
         $id_fraccionamiento = $fraccionamiento->id;
 
+        foreach($request->valorizacion as $key=>$tmp){
+            
+            $valorizacion_ = Valorizacione::find($tmp['id']);
+
+            $valorizacion_->codigo_fraccionamiento = $id_fraccionamiento;
+            $valorizacion_->estado = '0';
+            $valorizacion_->save(); 
+
+        }
+
+        /*
         $id_persona = $request->id_persona;
         $tipo_documento = $request->id_tipo_documento_;
         $valorizaciones_model = new Valorizacione;        
         $valorizacion = $valorizaciones_model->ActualizaValorizacion_pp($tipo_documento, $id_fraccionamiento, $id_persona);
+*/
+
+
+
 /*
         foreach($request->valorizacion as $key=>$val){
 
@@ -372,11 +392,17 @@ class IngresoController extends Controller
         }        
 */
 
+        if($id_concepto == "26412"){
+            $id_concepto="26527";
+        }else{
+            $id_concepto="26412";
+        }
+
         foreach($request->fraccionamiento as $key=>$frac){
             $valorizacion = new Valorizacione;
             $valorizacion->id_modulo = 6;
             $valorizacion->pk_registro = 0;
-            $valorizacion->id_concepto = 26412;
+            $valorizacion->id_concepto = $id_concepto; //26412;
             $valorizacion->id_agremido = $id_agremiado;
             $valorizacion->id_persona = $id_persona;
             $valorizacion->monto = $frac['total_frac'];
@@ -396,9 +422,9 @@ class IngresoController extends Controller
         $tipo_documento = $request->id_tipo_documento_;
         $periodo = $request->cboPeriodo_b;
         $tipo_couta = $request->cboTipoCuota_b;
-        $concepto = 26412;
+        $concepto = $id_concepto;//26412;
         //$filas = $request->cboFilas;
-        $filas = "100";
+        $filas = "10000";
         // print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
@@ -428,6 +454,26 @@ class IngresoController extends Controller
 		//$beneficiario = new Beneficiario;
 		//$valorizacion = $valorizaciones_model->getValorizacionFactura($id);
 		return view('frontend.ingreso.modal_beneficiario_',compact('persona','empresa','id_persona','id_agremiado','tipo_documento','empresa_beneficiario'));
+	
+	}
+
+    public function obtener_datos_actualizados($id_empresa){
+	
+		$beneficiario_model = new Beneficiario;
+		$empresa_beneficiario = $beneficiario_model->getBeneficiarioId($id_empresa);
+        $datos_formateados = [];
+
+        foreach ($empresa_beneficiario as $beneficiario) {
+            $datos_formateados[] = [
+                'numero_documento' => $beneficiario->numero_documento,
+                'nombres' => $beneficiario->nombres,
+                'direccion' => $beneficiario->direccion,
+                'numero_celular' => $beneficiario->numero_celular,
+                'correo' => $beneficiario->correo,
+                // Agrega más campos si es necesario
+            ];
+        }
+        return response()->json($datos_formateados);
 	
 	}
 	
@@ -518,7 +564,9 @@ class IngresoController extends Controller
 		//echo $id_caja_ingreso;
         return redirect('/ingreso/liquidacion_caja');
 		
-    }	
+    }
+    
+    
 	
 	public function listar_liquidacion_caja_ajax(Request $request){
 		
@@ -586,6 +634,31 @@ class IngresoController extends Controller
 		
 		$export = new InvoicesExport([$variable]);
 		return Excel::download($export, 'liquidacion_caja.xlsx');
+    }
+
+
+    public function anula_fraccionamiento(Request $request)
+    {
+        $id_persona = $request->id_persona;
+        $tipo_documento = $request->tipo_documento;
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+
+        $codigo_fraccionamiento = $request->codigo_fraccionamiento;
+        
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getAnulaFraccionamiento($tipo_documento,$id_persona,$codigo_fraccionamiento);
+
+        /*
+        $periodo = "";
+        $tipo_couta = "";
+        $concepto = "";
+        $filas = "10000";
+        $valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+        
+		return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
+		*/
     }
 
 }

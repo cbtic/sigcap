@@ -50,6 +50,7 @@ use App\Http\Controllers\Frontend\ProyectistaController;
 
 use App\Http\Controllers\Frontend\AsignacionCuentaController;
 use App\Http\Controllers\Frontend\ProyectoController;
+use App\Http\Controllers\Frontend\BeneficiarioController;
 
 /*
  * Frontend Controllers
@@ -225,6 +226,8 @@ Route::post('ingreso/listar_liquidacion_caja_ajax', [IngresoController::class, '
 Route::get('ingreso/exportar_liquidacion_caja/{fecha_inicio_desde}/{fecha_inicio_hasta}/{fecha_ini}/{fecha_fin}/{id_caja}/{estado}', [IngresoController::class, 'exportar_liquidacion_caja'])->name('ingreso.exportar_liquidacion_caja');
 Route::get('ingreso/exportar_estado_cuenta/{tipo}/{afiliado}/{numero_documento}/{periodo}/{fecha_inicio}/{fecha_fin}/{pago}/{order}/{sort}', [IngresoController::class, 'exportar_estado_cuenta'])->name('ingreso.exportar_estado_cuenta');
 Route::post('ingreso/listar_empresa_beneficiario_ajax', [IngresoController::class, 'listar_empresa_beneficiario_ajax'])->name('ingreso.listar_empresa_beneficiario_ajax');
+
+Route::post('ingreso/anula_fraccionamiento', [IngresoController::class, 'anula_fraccionamiento'])->name('ingreso.anula_fraccionamiento');
 
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
@@ -415,6 +418,8 @@ Route::get('sesion/ver_computo_sesion_pdf/{anio}/{mes}', [SesionController::clas
 Route::get('sesion/calendario_sesion_pdf/{id}', [SesionController::class, 'calendario_sesion_pdf'])->name('sesion.calendario_sesion_pdf');
 Route::get('sesion/ver_calendario_sesion_pdf/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
 
+Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eliminar_computo_sesion'])->name('sesion.eliminar_computo_sesion');
+
 Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
 Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
 Route::get('profesion/editar_profesion/{id}', [ProfesionController::class, 'editar_profesion'])->name('profesion.editar_profesion');
@@ -598,3 +603,13 @@ Route::get('proyecto/obtener_proyecto/{numero_cap}', [ProyectoController::class,
 Route::get('certificado/certificado_tipo/{id}', [CertificadoController::class, 'certificado_tipo'])->name('certificado.certificado_tipo');
 Route::post('coordinador_zonal/listar_coordinadorZonalSesion_ajax', [CoordinadorZonalController::class, 'listar_coordinadorZonalSesion_ajax'])->name('coordinador_zonal.listar_coordinadorZonalSesion_ajax');
 Route::get('derecho_revision/editar_derecho_revision_nuevo/{id}', [DerechoRevisionController::class, 'editar_derecho_revision_nuevo'])->name('derecho_revision.editar_derecho_revision_nuevo');
+Route::get('ingreso/obtener_datos_actualizados/{id_empresa}', [IngresoController::class, 'obtener_datos_actualizados'])->name('ingreso.obtener_datos_actualizados');
+Route::get('persona/modal_personaNuevoBeneficiario', [PersonaController::class, 'modal_personaNuevoBeneficiario'])->name('persona.modal_personaNuevoBeneficiario');
+Route::post('persona/send_persona_newBeneficiario', [PersonaController::class, 'send_persona_newBeneficiario'])->name('persona.send_persona_newBeneficiario');
+
+//Route::get('beneficiario/modal_personaNuevoBeneficiario', [BeneficiarioController::class, 'modal_personaNuevoBeneficiario'])->name('beneficiario.modal_personaNuevoBeneficiario');
+Route::get('beneficiario/consulta_beneficiario', [BeneficiarioController::class, 'consulta_beneficiario'])->name('beneficiario.consulta_beneficiario');
+Route::post('beneficiario/listar_beneficiario_ajax', [BeneficiarioController::class, 'listar_beneficiario_ajax'])->name('beneficiario.listar_beneficiario_ajax');
+Route::post('beneficiario/send_beneficiario', [BeneficiarioController::class, 'send_beneficiario'])->name('beneficiario.send_beneficiario');
+Route::get('beneficiario/modal_beneficiario_/{id}', [BeneficiarioController::class, 'modal_beneficiario_'])->name('beneficiario.modal_beneficiario_');
+Route::get('beneficiario/eliminar_beneficiario/{id}/{estado}', [BeneficiarioController::class, 'eliminar_beneficiario'])->name('beneficiario.eliminar_beneficiario');

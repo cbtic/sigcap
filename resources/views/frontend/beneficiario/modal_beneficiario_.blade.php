@@ -12,7 +12,7 @@
 
   .modal-dialog {
     width: 100%;
-    max-width: 60% !important
+    max-width: 50% !important
   }
 
   #tablemodal {
@@ -210,10 +210,12 @@
 <script type="text/javascript">
 
 
-$("#profesion").select2({ width: '100%' });
+//$("#profesion").select2({ width: '100%' });
+
+$("#concepto").select2({ width: '100%' });
 
 //datatablenewEmpresaBeneficiario();
-function actualizarTablaBeneficiario(){
+/*function actualizarTablaBeneficiario(){
     // Realiza una solicitud AJAX para obtener los datos actualizados
 
     var id_empresa = $('#frmEmpresaBeneficiario #id_empresa').val();
@@ -250,9 +252,9 @@ function actualizarTablaBeneficiario(){
             console.error("Error al obtener los datos actualizados:", error);
         }
     });
-}
+}*/
 
-
+/*
 function datatablenewEmpresaBeneficiario(){
     var oTable1 = $('#tblBeneficiario').dataTable({
         "bServerSide": true,
@@ -361,6 +363,21 @@ function datatablenewEmpresaBeneficiario(){
 
     });
 
+}*/
+
+function obtener_empresa(){
+
+  var ruc = $('#ruc').val();
+
+  $.ajax({
+      url: '/empresa/obtener_datos_empresa/'+ruc,
+      dataType: "json",
+      success: function(result){
+
+					$('#razon_social').val(result.empresa.razon_social);
+		}
+    });
+
 }
 
 
@@ -384,18 +401,21 @@ function obtener_profesional_(){
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si, Crear!'
           }).then((result) => {
-            //alert(result);exit();
             if (result.value) {
               var numero_documento_ = $('#dni').val();
               modal_personaNuevoBeneficiario(numero_documento_);
-            //document.location="eliminar.php?codigo="+id;
-            
+              /*$('#frmEmpresaBeneficiario').modal([
+                backdrop:'static',
+                keyboard: false
+              ]);
+
+              
+                $('#frmPersona2').modal.('show');
+         
+              */
             }
-          });//$('#openOverlayOpc').modal('hide');
-            
-          /*
-					bootbox.alert(result.msg);
-					$('#openOverlayOpc').modal('hide');*/
+          });
+      
 				}else{
 
 					$('#apellido_paterno').val(result.persona.apellido_paterno);
@@ -404,15 +424,6 @@ function obtener_profesional_(){
 				}
 		}
     });
-	/*var ruc = $("#numero_documento option:selected").attr("numero_ruc");
-	var nombre = $("#numero_documento option:selected").attr("nombre");
-  var apellido_paterno = $("#numero_documento option:selected").attr("apellido_paterno");
-  var apellido_materno = $("#numero_documento option:selected").attr("apellido_materno");
-  var fecha_nacimiento = $("#numero_documento option:selected").attr("fecha_nacimiento");
-*/
-	/*print_r(datos).exit();
-	$("#moneda").val(moneda);
-	$("#monto").val(monto);*/
 	
 }
 
@@ -423,7 +434,6 @@ function save_beneficiario(){
     var id = $('#id').val();
     var dni = $('#dni').val();
     var ruc = $('#ruc').val();
-    var periodo = $('#periodo').val();
     var concepto = $('#concepto').val();
     var estado_beneficiario = $('#estado_beneficiario').val();
     var observacion = $('#observacion').val();
@@ -436,14 +446,15 @@ function save_beneficiario(){
       }
     
       $.ajax({
-        url: "/ingreso/send_beneficiario",
+        url: "/beneficiario/send_beneficiario",
               type: "POST",
-              data : {_token:_token,id:id,dni:dni,ruc:ruc,
-              periodo:periodo,concepto:concepto,estado_beneficiario:estado_beneficiario,
-              observacion:observacion},
+              data : {_token:_token,id:id,dni:dni,ruc:ruc,concepto:concepto,
+              estado_beneficiario:estado_beneficiario,observacion:observacion},
               success: function (result) {
           
-				
+                $('#openOverlayOpc').modal('hide');
+                window.location.reload();
+
               }
       });
   }
@@ -526,9 +537,10 @@ function modal_personaNuevoBeneficiario(){
 			type: "get",
 			data : $("#frmEmpresaBeneficiario").serialize(),
 			success: function (result) {  
-					$("#diveditpregOpc").html(result);
+					
+          $("#diveditpregOpc").html(result);
 
-
+          
 					//$('#openOverlayOpc').modal('show');
 					
 			}
@@ -559,50 +571,101 @@ function modal_personaNuevoBeneficiario(){
 
               <form method="post" id="frmEmpresaBeneficiario" action="#" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="id_empresa" id="id_empresa" value="<?php echo $empresa->id ?>">
+                <!--<input type="hidden" name="id_empresa" id="id_empresa" value="<?php //echo $empresa->id ?>">-->
                 <!--<input type="hidden" name="id_persona" id="id_persona">-->
                 
                 
                   <div class="row">
-                    <div class="col-lg-4">
+
+                    <div class="col-lg-3">
                       <div class="form-group">
                         <label class="control-label form-control-sm">RUC</label>
-                        <input name="ruc" id="ruc" type="text" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" onBlur="" readonly='readonly'>
+                        <input name="ruc" id="ruc" type="text" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" onBlur="obtener_empresa()">
                           
                       </div>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                       <div class="form-group">
-                        <label class="control-label form-control-sm">N&uacute;mero Documento</label>
-                        <input name="dni" id="dni" type="text" class="form-control form-control-sm" value="<?php echo $persona->numero_documento?>" onChange="obtener_profesional_()" >
+                        <label class="control-label form-control-sm">Raz&oacute;n Social</label>
+                        <input name="razon_social" id="razon_social" type="text" class="form-control form-control-sm" value="<?php echo $empresa->razon_social?>" onBlur="" readonly='readonly'>
                           
+                      </div>
+                    </div>
+
+                    <div class="col-lg-9">
+                      <div class="form-group">
+                        <label class="control-label form-control-sm">Concepto</label>
+                        <select name="concepto" id="concepto" onChange="" class="form-control form-control-sm">
+                          <option value="">--Selecionar--</option>
+                          <?php
+                          foreach ($concepto as $row) {?>
+                            <option value="<?php echo $row->id?>" <?php if($row->id==$beneficiario->id_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                          <?php
+                          }
+                          ?>
+                        </select>
                       </div>
                     </div>
                   </div>
 
                   <div class="row">
-
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
+                      <div class="form-group">
+                        <label class="control-label form-control-sm">DNI</label>
+                        <input name="dni" id="dni" type="text" class="form-control form-control-sm" value="<?php echo $persona->numero_documento?>" onchange="obtener_profesional_()" >
+                          
+                      </div>
+                    </div>
+                  
+                    <div class="col-lg-3">
                       <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
                         <label class="control-label form-control-sm">Apellido Paterno</label>
                         <input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm" value="<?php echo $persona->apellido_paterno ?>" type="text" readonly="readonly">
                       </div>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                       <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
                         <label class="control-label form-control-sm">Apellido Materno</label>
                         <input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm" value="<?php echo $persona->apellido_materno ?>" type="text" readonly="readonly">
                       </div>
                     </div>
+                    
                       <div class="col-lg-4">
                         <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
                           <label class="control-label form-control-sm">Nombres</label>
                           <input id="nombres" name="nombres" class="form-control form-control-sm" value="<?php echo $persona->nombres ?>" type="text" readonly="readonly">
                         </div>
                       </div>
-                  
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-2">
+                    
+                      <div class="form-group">
+                        <label class="control-label form-control-sm">Estado</label>
+                        <select name="estado_beneficiario" id="estado_beneficiario" class="form-control form-control-sm">
+                          <!--<option value="">--Selecionar--</option>-->
+                          <?php
+                          foreach ($estado_concepto as $row) {?>
+                          <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$beneficiario->id_estado_beneficiario)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                          <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="control-label form-control-sm">Observaci&oacute;n</label>
+                        <textarea type="text" name="observacion" id="observacion" rows="2" placeholder="" class="form-control form-control-sm"><?php echo $beneficiario->observacion?></textarea>
+                      </div>
+                    </div>
                 </div>
               </div>
                 
@@ -615,40 +678,6 @@ function modal_personaNuevoBeneficiario(){
                       </div>
                     </div>
                   </div>
-
-                  <div class="card-body">
-
-                    <div class="table-responsive">
-                    <table id="tblBeneficiario" class="table table-hover table-sm">
-                        <thead>
-                        <tr style="font-size:13px">
-                            <th>N&uacute;mero Documento</th>
-                            <th>Nombres</th>
-                            <th>Direcci&oacute;n</th>
-                            <th>Celular</th>
-                            <th>Correo</th>
-                            
-                            <!--<th>Acciones</th>-->
-                        </tr>
-                        </thead>
-                        <tbody>
-						
-                        <?php foreach ($empresa_beneficiario as $row) {?>
-						
-                        <tr style='font-size:13px'>
-                          <td class='text-left'><?php echo $row->numero_documento?></td>
-                          <td class='text-left'><?php echo $row->nombres?></td>
-                          <td class='text-left'><?php echo $row->direccion?></td>
-                          <td class='text-left'><?php echo $row->numero_celular?></td>
-                          <td class='text-left'><?php echo $row->correo?></td>
-						
-                        <?php } ?>
-						
-                        </tbody>
-                    </table>
-                    </div>
-                    </div>
-
                 </div>
                 </form>
             </div>
@@ -658,10 +687,10 @@ function modal_personaNuevoBeneficiario(){
       </div>
 
 <script type="text/javascript">
+
 $(document).ready(function () {
-	actualizarTablaBeneficiario();
-	//var id_empresa = $('#id_empresa').val();
-  //datatablenewEmpresaBeneficiario(id_empresa);
+
+  //$("#concepto").select2({ width: '100%' });
 	
 });
 

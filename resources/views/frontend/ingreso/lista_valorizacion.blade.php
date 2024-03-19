@@ -40,7 +40,7 @@ foreach($valorizacion as $key=>$row):
         <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">		
 			<input type="checkbox" key="<?php echo $key?>" class="mov" name="comprobante_detalles[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)"  <?php echo $disabled?> />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][chek]" value="" class="form-control form-control-sm text-right chek" />
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
+			<input type="hidden" id="comprobante_detalle_id" name="comprobante_detalle[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][fecha]" value="<?php echo $row->fecha?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][denominacion]" value="<?php echo $row->concepto?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][monto]" value="<?php echo $row->monto?>" />
@@ -58,8 +58,10 @@ foreach($valorizacion as $key=>$row):
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][descuento]" value="0" />   
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][cod_contable]" value="" /> 
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][descripcion]" value="<?php echo $row->descripcion?>" />
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][vencio]" value="<?php echo $row->vencio?>" /> 
+			<input type="hidden" id="vencio" name="comprobante_detalle[<?php echo $key?>][vencio]" value="<?php echo $row->vencio?>" /> 
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][id_concepto]" value="<?php echo $row->id_concepto?>" /> 
+
+			<input type="hidden" id="codigo_fraccionamiento" name="comprobante_detalle[<?php echo $key?>][codigo_fraccionamiento]" value="<?php echo $row->codigo_fraccionamiento?>" /> 
 
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][item]" value="<?php echo $n?>" /> 
         </div>

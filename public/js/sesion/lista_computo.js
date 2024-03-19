@@ -8,7 +8,15 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		guardar_computo()
+		bootbox.confirm({ 
+			size: "small",
+			message: "&iquest;Esta seguro de generar el reporte?", 
+			callback: function(result){
+				if (result==true) {
+					guardar_computo()
+				}
+			}
+		});
 	});
 	
 	$('#btnVistaPreviaComputo').click(function () {
@@ -872,11 +880,21 @@ function datatablenewComputoCerrado(){
 				{
                 "mRender": function (data, type, row) {
                 	var newHtml = "";
-					newHtml += '<a href="/sesion/computo_sesion_pdf/'+row.id+'" target="_blank" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:0px">Descargar</a>';
+					newHtml += '<a href="/sesion/computo_sesion_pdf/'+row.id+'" target="_blank" class="btn btn-sm btn-secondary" style="font-size:12px;margin-left:0px">Computo</a><a href="/sesion/calendario_sesion_pdf/'+row.id+'" target="_blank" class="btn btn-sm btn-secondary" style="font-size:12px;margin-left:5px">Calendario</a>';
 					return newHtml;
                 },
                 "bSortable": true,
                 "aTargets": [6]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var newHtml = "";
+					newHtml += '<a href="javascript:void(0)" onclick=eliminar('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+					return newHtml;
+                },
+                "bSortable": true,
+                "aTargets": [7]
                 },
 				
             ]
@@ -1063,37 +1081,32 @@ function modalResponsable(id){
 
 }
 
-function eliminar(id,estado){
-	var act_estado = "";
-	if(estado==1){
-		act_estado = "Eliminar";
-		estado_=0;
-	}
-	if(estado==0){
-		act_estado = "Activar";
-		estado_=1;
-	}
+function eliminar(id){
+
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Municipalidad?", 
+        message: "&iquest;Deseas eliminar el computo de sesion?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar(id,estado_);
+                fn_eliminar(id);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar(id,estado){
+function fn_eliminar(id){
 	
     $.ajax({
-            url: "/municipalidad/eliminar_municipalidad/"+id+"/"+estado,
+            url: "/sesion/eliminar_computo_sesion/"+id,
             type: "GET",
             success: function (result) {
-                //if(result="success")obtenerPlanDetalle(id_plan);
-				datatablenew();
+                datatablenew();
+				datatablenewComputoCerrado();
             }
     });
+	
 }
+
+
 
