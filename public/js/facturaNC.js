@@ -2,45 +2,6 @@
 //jQuery.noConflict(true);
 
 $(document).ready(function () {
-/*
-	$('#producto01').autocomplete({
-		appendTo: "#producto01_list",
-		source: function (request, response) {
-			$.ajax({
-				url: '/comprobante/forma_pago/' + $('#producto01').val(),
-				dataType: "json",
-				success: function (data) {
-					//alert("fddf");					
-					 //alert(JSON.stringify(data));
-					var resp = $.map(data, function (obj) {
-						console.log(obj);
-						//return obj.denominacion;
-						var hash = { key: obj.codigo, value: obj.denominacion };
-						return hash;
-					});
-					//alert(JSON.stringify(resp));
-					response(resp);
-					
-				},
-				error: function () {
-					//alert("cc");
-				}
-			});
-		},
-		select: function (event, ui) {
-			alert(ui.item.key);
-			flag_select = true;
-			$('#producto01').attr("readonly", true);
-		},
-		minLength: 2,
-		delay: 100
-	}).blur(function () {
-		if (typeof flag_select == "undefined") {
-			$('#producto01').val("");
-		}
-	});
-
-	*/
 
 	$('#fechaF').datepicker({
 		autoclose: true,
@@ -56,45 +17,6 @@ $(document).ready(function () {
 		changeYear: true,
 	});
 
-/*
-	$(function() {
-		$('#producto01').keyup(function() {
-			this.value = this.value.toLocaleUpperCase();
-		});
-	});
-*/
-
-	$('#addRow').on('click', function () {
-		AddFila();
-	});
-
-	$('#tblMedioPago tbody').on('click', 'button.deleteFila', function () {
-		var obj = $(this);
-		obj.parent().parent().remove();
-		
-		var val_total = 0;
-		var total = 0;
-		$(".importe_especie").each(function (){
-			val_total = $(this).val();
-			if(val_total>0)total += Number(val_total);
-		});
-		
-		$("#precio_peso").val(total);
-		//simulaPesarCarreta();
-		
-	});
-
-	$('#numero_documento2').keypress(function (e) {
-		if (e.keyCode == 13) {
-			obtenerRepresentante();
-		}
-	});
-
-	
-
-	calculoDetraccion();
-
-	calculaPorcentaje(1);
 
 	
 });
@@ -123,7 +45,7 @@ function calculoDetraccion(){
 		$('#nc_detraccion').val(nc_detraccion);
 		$('#tipo_detraccion').val(tipo_detraccion);
 		$('#afecta_a').val(afecta_a);
-		$('#medio_pago').val(medio_pago);
+		$('#medio_pago').val(medio_pago);con
 	}else{
 		$('#porcentaje_detraccion').val("");
 		$('#monto_detraccion').val("");
@@ -769,20 +691,56 @@ function obtenerTitular(){
 		
 	}
 	
-    function calcular_total(obj){
-        var imported=$("#imported").val();
-        var igv = imported*0.18;
+    function calcular_total(fila){
 
-		alert(igv);
+        var imported=0;    
+		imported = $('#imported'+fila).val();
+
+		var igv = imported*0.18;
+
+
+		var totald = Number(imported) + Number(igv);
+
+		//alert(totald);
+
+		$("#igvd"+fila).val(igv.toFixed(2));
+
+		$("#totald"+fila).val(totald.toFixed(2));
+
 		
-        $(".imported").each(function (){
+		var gravadas=0;
+		igv=0;
+		var total=0;
 
-            alert(igv);
+		$("input[name^='imported']").each(function(i, obj) {
+			//alert(obj.value);
+			gravadas = Number(obj.value) + Number(gravadas);
 
-            $(this).parent().parent().find('.igvd').html();
+			//contador += parseInt(obj.value);
+		});
 
-        });
-       
+		$("#gravadas").val(gravadas.toFixed(2));
+
+		$("input[name^='igvd']").each(function(i, obj) {
+			//alert(obj.value);
+			igv = Number(obj.value) + Number(igv);
+
+			//contador += parseInt(obj.value);
+		});
+
+		$("#igv").val(igv.toFixed(2));
+
+		
+		$("input[name^='totald']").each(function(i, obj) {
+			//alert(obj.value);
+			total = Number(obj.value) + Number(total);
+
+			
+		});
+
+		$("#totalP").val(total.toFixed(2));
+
+		//$("#igvd"+fila).val(igv);       
         
     }
 

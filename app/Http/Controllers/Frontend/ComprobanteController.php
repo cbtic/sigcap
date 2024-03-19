@@ -752,119 +752,127 @@ class ComprobanteController extends Controller
         //return redirect()->back()->withFlashSuccess(__('alerts.frontend.contact.sent'));
     }
 
-    public function send_nc(Request $request)
-    {
-         //print_r($request); exit();
-        $sw = true;
-		$msg = "";
 
-		$id_user = Auth::user()->id;
-        $facturas_model = new Comprobante;
-		$guia_model = new Guia;
+    public function send_nd(Request $request){
+        //print_r($request); exit();
+       $sw = true;
+       $msg = "";
 
-			/**********RUC***********/
+       $id_user = Auth::user()->id;
+       $facturas_model = new Comprobante;
+       $guia_model = new Guia;
 
-			$tarifa = $request->facturad;
+           /**********RUC***********/
 
-			$total = $request->totalF;
-			$serieF = $request->serieF;
-			$tipoF = $request->tipoF;
-			$ubicacion_id = $request->ubicacion;
-			$cod_tributario = $request->numero_documento;
-			$id_caja = $request->id_caja;
-			$adelanto   = $request->adelanto;
+           $tarifa = $request->facturad;
 
-            $id_comprobante = $request->id_comprobante;
+          // print_r($request); exit();
 
-			$trans = $request->trans;
-            
-			//1	DOLARES
-			//2	SOLES
-            
-			if ($trans == 'FA' || $trans == 'FN'){
+           $total = $request->totalP;
+           $serieF = $request->serieF;
+           $tipoF = $request->tipoF;
+           $ubicacion_id = $request->ubicacion;
+           $cod_tributario = $request->numero_documento;
+           $razon_social=$request->razon_social;
+           $direccion=$request->direccion;
+           $correo=$request->correo;
+           $id_caja = $request->id_caja;
+           $adelanto   = $request->adelanto;
 
-				$ws_model = new TablaMaestra;
-				
-				/*************************************/
-				
-				foreach ($tarifa as $key => $value) {
-					//$vestab = $value['vestab'];
-					//$vcodigo = $value['vcodigo'];
-                    $id_val = $value['id'];
+           $id_comprobante_ncdc = $request->id_comprobante_ncdc;
+           $id_comprobante = $request->id_comprobante;
 
-				}
+
+           $trans = $request->trans;
+           
+           //1	DOLARES
+           //2	SOLES
+           
+           if ($trans == 'FA' || $trans == 'FN'){
+
+               $ws_model = new TablaMaestra;
                
-				
-				$id_moneda=1;
+               /*************************************/
+               
+               foreach ($tarifa as $key => $value) {
+                   //$vestab = $value['vestab'];
+                   //$vcodigo = $value['vcodigo'];
+                   $id_val = $value['id'];
 
-                $descuento = $value['descuento'];
-		
-			  $id_factura = $facturas_model->registrar_comprobante($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',     $id_user,  1);
-              //  $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
-
-               // print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
+               }
               
-				$factura = Comprobante::where('id', $id_factura)->get()[0];
+               
+               $id_moneda=1;
 
-				$fac_serie = $factura->serie;
-				$fac_numero = $factura->numero;
+               $descuento = $value['descuento'];
+       
+              $id_factura = $facturas_model->registrar_comprobante_ncnd($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',     $id_user,  1,$razon_social,$direccion,$id_comprobante_ncdc,$correo);
+             //  $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 
-				$factura_upd = Comprobante::find($id_factura);
-				if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
-                
-				$factura_upd->save();
+              // print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
+             
+               $factura = Comprobante::where('id', $id_factura)->get()[0];
 
-				//print_r($tarifa); exit();
-				foreach ($tarifa as $key => $value) {
-					//echo "denominacion=>".$value['denominacion']."<br>";
-					if ($adelanto == 'S'){
-						$total   = $request->MonAd;
-					}
-					else{
-						//$total   = $value['monto'];
-                        $total   ="1";
-					}
-					$descuento = $value['descuento'];
-					if ($value['descuento']=='') $descuento = 0;
-					$id_factura_detalle = $facturas_model->registrar_comprobante($serieF, $fac_numero, $tipoF, $value['item'], $total, $value['descripcion'], "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
-																				 //(  serie,      numero,   tipo,      ubicacion, persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
-					
-				
-				}
+               $fac_serie = $factura->serie;
+               $fac_numero = $factura->numero;
 
-				$estado_ws = $ws_model->getMaestroByTipo('96');
-				$flagWs = isset($estado_ws[0]->codigo)?$estado_ws[0]->codigo:1;
+               $factura_upd = Comprobante::find($id_factura);
+               if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+               
+               $factura_upd->save();
 
-				if ($flagWs==2 && $id_factura>0 && ($tipoF=="FT" || $tipoF=="BV")){
-					$this->firmar($id_factura);
-				}
+               //print_r($tarifa); exit();
+               foreach ($tarifa as $key => $value) {
+                   //echo "denominacion=>".$value['denominacion']."<br>";
+                   if ($adelanto == 'S'){
+                       $total   = $request->MonAd;
+                   }
+                   else{
+                       //$total   = $value['monto'];
+                       $total   ="1";
+                   }
+                   $descuento = $value['descuento'];
+                   if ($value['descuento']=='') $descuento = 0;
+                   $id_factura_detalle = $facturas_model->registrar_comprobante($serieF, $fac_numero, $tipoF, $value['item'], $total, $value['descripcion'], "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
+                                                                                //(  serie,      numero,   tipo,      ubicacion, persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
+                   
+               
+               }
 
-				//echo $id_factura;
+               $estado_ws = $ws_model->getMaestroByTipo('96');
+               $flagWs = isset($estado_ws[0]->codigo)?$estado_ws[0]->codigo:1;
+
+               if ($flagWs==2 && $id_factura>0 && ($tipoF=="FT" || $tipoF=="BV")){
+                   $this->firmar($id_factura);
+               }
+
+               //echo $id_factura;
 
 
-			}
-			if ($trans == 'FE') {
-				//echo $request->id_factura;
-				$id_factura = $request->id_factura;
-			}
+           }
+           if ($trans == 'FE') {
+               //echo $request->id_factura;
+               $id_factura = $request->id_factura;
+           }
 
-		//}else{
-			//$sw = false;
-			//$msg = "La Factura ingresada ya existe !!!";
-			//$id_factura = 0;
-		//}
+       //}else{
+           //$sw = false;
+           //$msg = "La Factura ingresada ya existe !!!";
+           //$id_factura = 0;
+       //}
 
-		$array["sw"] = $sw;
-        $array["msg"] = $msg;
-		$array["id_factura"] = $id_factura;
-        echo json_encode($array);
+       $array["sw"] = $sw;
+       $array["msg"] = $msg;
+       $array["id_factura"] = $id_factura;
+       echo json_encode($array);
 
-        //echo 1;
+       //echo 1;
 
-        //Mail::send(new SendContact($request));
+       //Mail::send(new SendContact($request));
 
-        //return redirect()->back()->withFlashSuccess(__('alerts.frontend.contact.sent'));
-    }
+       //return redirect()->back()->withFlashSuccess(__('alerts.frontend.contact.sent'));
+   }
+
 
 	public function show($id){
         $factura_model = new Comprobante;
@@ -1020,17 +1028,18 @@ class ComprobanteController extends Controller
     public function nd_edita(Request $request){
 
         $id_caja = $request->id_caja_;
+
+        
         $id = $request->id_comprobante;
-         //print_r($id);
 
+        $id_origen= $request->id_comprobante_origen;
 
-        $id_nc = $request->id_comprobante_nc;
-
+        
         if ($id=="" ){
-            $trans = "FE";
+            $trans = "FN";
         }
         else{
-            $trans = "FN";
+            $trans = "FE";
         }
         
         
@@ -1039,11 +1048,25 @@ class ComprobanteController extends Controller
 			$id_user = Auth::user()->id;
 			$caja_usuario = $valorizaciones_model->getCajaIngresoByusuario($id_user,'91');
 			//$id_caja = $caja_usuario->id_caja;
+
 			$id_caja = (isset($caja_usuario->id_caja))?$caja_usuario->id_caja:0;
 		}
        
       
         if ( $trans == "FN"){
+
+            $comprobante_model=new Comprobante;
+            $comprobante=$comprobante_model->getComprobanteById($id_origen);
+
+            $facturad = ComprobanteDetalle::where([
+                'serie' => $comprobante->serie,
+                'numero' => $comprobante->numero,
+                'tipo' => $comprobante->tipo
+            ])->get();
+
+           // print_r($facturad); exit();
+        }
+        else {
             $comprobante_model=new Comprobante;
             $comprobante=$comprobante_model->getComprobanteById($id);
 
@@ -1052,33 +1075,41 @@ class ComprobanteController extends Controller
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
             ])->get();
-
-           // print_r($facturad);
-            //exit();
-        }
-        else {
-            $comprobante_model=new Comprobante;
-            $comprobante=$comprobante_model->getComprobanteById($id_nc);
-
-            $facturad = ComprobanteDetalle::where([
-                'serie' => $comprobante->serie,
-                'numero' => $comprobante->numero,
-                'tipo' => $comprobante->tipo
-            ])->get();
         }
 
-        $empresa_model = new Empresa;
+        if ($comprobante->tipo=="BV"){
+            $persona_model= new Comprobante;
+            $persona=  $persona_model->getPersonaDni($comprobante->cod_tributario);
+           // print_r($persona); exit();
+            $idcliente=$persona->id;
+            
+            $direccion=$persona->direccion_sunat;
+            $correo=$persona->correo;
+            
+        }
+
+        if ($comprobante->tipo=="FT"){
+            $empresa_model= new Comprobante;
+            $empresa=  $persona_model->getEmpresaRuc($comprobante->cod_tributario);
+            $idcliente=$empresa->id;
+            $direccion=$empresa->direccion;
+            $correo=$empresa->email;
+            
+        }
+
+      
+
         $serie_model = new TablaMaestra;
 
 		$tabla_model = new TablaMaestra;
 		$forma_pago = $tabla_model->getMaestroByTipo('19');
-        $tipooperacion = $tabla_model->getMaestroByTipo('103');
+        $tipooperacion = $tabla_model->getMaestroByTipo('52');
         $formapago = $tabla_model->getMaestroByTipo('104');
 
         $serie = $serie_model->getMaestro('95');
 
 
-        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad'));
+        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','direccion','correo'));
         
 
     }

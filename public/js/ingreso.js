@@ -1454,7 +1454,7 @@ function nc(id){
 
 function nd(id){
 	$('#id_comprobante_nd').val(id);	
-	document.forms["frmPagos"].submit();
+	document.forms["frmPagos_nd"].submit();
 	return false;
 };
 

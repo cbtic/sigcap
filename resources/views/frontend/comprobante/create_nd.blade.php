@@ -78,6 +78,7 @@
         var tarjeta = document.getElementById('card_cuotas');
         tarjeta.style.display = (tarjeta.style.display == 'none' || tarjeta.style.display === '') ? 'block' : 'none';
     }
+
 </script>
 
 <style type="text/css">
@@ -236,12 +237,13 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col col-sm-12 align-self-center">
-                    <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}} " id="frmNC" name="frmNC" autocomplete="off">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    
+                    <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.nd_edita')}} " id="frmND" name="frmND" autocomplete="off">
+                        
+                        <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
-                        <input type="hidden" name="TipoF" value="<?php if ($trans == 'FA') {
-                                                                        echo $TipoF;
-                                                                    } ?>">
+                        <input type="hidden" name="tipoF" value="ND">
                         <input type="hidden" name="vestab" value="1">
                         <input type="hidden" name="totalF" value="<?php if ($trans == 'FA') {
                                                                         echo $total;
@@ -252,7 +254,7 @@
                         <input type="hidden" name="persona" value="<?php if ($trans == 'FA') {
                                                                         echo $persona;
                                                                     } ?>">
-                        <input type="hidden" name="id_caja" value="<?php if ($trans == 'FA') {
+                        <input type="hidden" name="id_caja" value="<?php if ($trans == 'FA' or $trans == 'FN') {
                                                                         echo $id_caja;
                                                                     } ?>">
                         <input type="hidden" name="MonAd" value="<?php if ($trans == 'FA') {
@@ -284,7 +286,7 @@
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Serie</label>
                                                             <select readonly name="serieF" id="serieF" class="form-control form-control-sm">
-                                                                <?php if ($trans == 'FA' || $trans == 'FN') { ?>
+                                                                <?php if ($trans == 'FA' ) { ?>
                                                                     <?php foreach ($serie as $row) : ?>
                                                                         <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
                                                                     <?php endforeach; ?>
@@ -292,6 +294,11 @@
                                                                 <?php if ($trans == 'FE') { ?>
                                                                     <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie ?></option>
                                                                 <?php } ?>
+
+                                                                <?php if ($trans == 'FN') { ?>
+                                                                    <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie ?></option>
+                                                                <?php } ?>
+
                                                             </select>
                                                         </div>
                                                     </div>
@@ -349,28 +356,36 @@
                                                     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Razón Social/Nombre</label>
-                                                            <input type="text" name="numero_documento" readonly id="numero_documento" value="<?php echo $comprobante->destinatario;?>" placeholder="" class="form-control form-control-sm">
+                                                            <input type="text" name="razon_social" readonly id="razon_social" value="<?php echo $comprobante->destinatario;?>" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Dirección</label>
-                                                            <input type="text" name="direccion" readonly id="numero_documento" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="direccion" readonly id="direccion" value="<?php if ($trans == 'FA') {
                                                                                                                                             echo $empresa->direccion;
                                                                                                                                         }
                                                                                                                                         if ($trans == 'FE') {
                                                                                                                                             echo $comprobante->direccion;
-                                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm">
+                                                                                                                                        }
+                                                                                                                                        if ($trans == 'FN') {
+                                                                                                                                            echo $direccion;
+                                                                                                                                        }
+                                                                                                                                         ?>" placeholder="" class="form-control form-control-sm">
+                                                                                                                                        
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Email</label>
-                                                            <input type="text" name="direccion" readonly id="numero_documento" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="correo" readonly id="correo" value="<?php if ($trans == 'FA') {
                                                                                                                                             echo $empresa->email;
                                                                                                                                         }
                                                                                                                                         if ($trans == 'FE') {
                                                                                                                                             echo $comprobante->correo_des;
+                                                                                                                                        }
+                                                                                                                                        if ($trans == 'FN') {
+                                                                                                                                            echo $correo;
                                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
@@ -388,7 +403,7 @@
                                                     <div class="form-group">
                                                         <label class="form-control-sm">Serie</label>
                                                         <select readonly name="serieF" id="serieF" class="form-control form-control-sm">
-                                                            <?php if ($trans == 'FA' || $trans == 'FN') { ?>
+                                                            <?php if ($trans == 'FA') { ?>
                                                                 <?php foreach ($serie as $row) : ?>
                                                                     <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
                                                                     <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie ?></option>
@@ -397,17 +412,34 @@
                                                             <?php if ($trans == 'FE') { ?>
                                                                 <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie_ncnd ?></option>
                                                             <?php } ?>
+
+                                                            <?php if ($trans == 'FN') { ?>
+                                                                <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie ?></option>
+                                                            <?php } ?>
+
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                     <div class="form-group">
                                                         <label class="form-control-sm">Número</label>
-                                                        <input type="text" name="numerof" readonly id="numerof" value="<?php if ($trans == 'FN') {
+                                                        <input type="text" name="numerof1" readonly id="numerof1" value="<?php if ($trans == 'FN') {
                                                                                                                             echo $comprobante->numero;
-                                                                                                                        } ?> 
+                                                                                                                        }  
                                                                                                                             if ($trans == 'FE') {
                                                                                                                             echo $comprobante->id_numero_ncnd;
+                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                    <div class="form-group">
+                                                        
+                                                        <input type="text" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FN') {
+                                                                                                                            echo $comprobante->id;
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $comprobante->id;
                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm text-center">
                                                     </div>
                                                 </div>
@@ -438,12 +470,12 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="text-right" width="5%">#</th>
-                                                            <th class="text-center" width="10%">Cant.</th>
+                                                            <th class="text-center" width="5%">Cant.</th>
                                                             <th width="40%">Descripción</th>
-                                                            <th width="40%">%Dscto.</th>
-                                                            <th class="text-right" width="15%">PU</th>
-                                                            <th class="text-right" width="15%">IGV</th>
-                                                            <th class="text-right" width="15%">P.Venta</th>
+                                                            <th width="15%">Total</th>
+                                                            <th class="text-center" width="15%">PU</th>
+                                                            <th class="text-right" width="10%">IGV</th>
+                                                            
                                                             <th class="text-right" width="15%">Total</th>
                                                         </tr>
                                                     </thead>
@@ -458,12 +490,18 @@
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac['fecha'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac['denominacion'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac['descripcion'] ?>" />
-                                                                s
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][tipoF]" value="ND" />
+                                                                
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo $fac['moneda'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo $fac['id_moneda'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][descuento]" value="<?php echo $fac['descuento'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][cod_contable]" value="<?php echo $fac['cod_contable'] ?>" />
+
+                                                                <input type="hidden" id="facturad_pu" name="facturad[<?php echo $key ?>][importe]" value="<?php echo $fac['pu'] ?>" />
+                                                                <input type="hidden" id="facturad_igv" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac['igv_total'] ?>" />
+                                                                <input type="hidden" id="facturad_total" name="facturad[<?php echo $key ?>][total]" value="<?php echo $fac['importe'] ?>" />
+
 
                                                                 <tr>
                                                                     <td class="text-right"><?php $n = $n + 1;
@@ -485,66 +523,34 @@
                                                                     </td>
 
                                                                     <td class="text-left"><?php if ($trans == 'FA') {
-                                                                                                echo $fac['descuento'];
-                                                                                            }
-                                                                                            if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                echo $fac['descuento'];
-                                                                                            } ?></td>
-
-                                                                    <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                                if ($adelanto == 'S') {
-                                                                                                    echo ($MonAd - $MonAd * 0.18);
-                                                                                                } else {
-                                                                                                    echo $fac['pu'];
-                                                                                                }
-                                                                                            }
-                                                                                            if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                echo number_format($fac['importe'], 2);
-                                                                                            } ?></td>
-                                                                    <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                                if ($adelanto == 'S') {
-                                                                                                    echo ($MonAd * 0.18);
-                                                                                                } else {
-                                                                                                    echo $fac['igv'];
-                                                                                                }
-                                                                                            }
-                                                                                            if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                echo number_format($fac['igv_total'], 2);
-                                                                                            } ?></td>
-                                                                    <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                                if ($adelanto == 'S') {
-                                                                                                    echo ($MonAd - $MonAd * 0.18);
-                                                                                                } else {
-                                                                                                    echo $fac['pv'];
-                                                                                                }
-                                                                                            }
-                                                                                            if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                echo number_format($fac['pu'], 2);
-                                                                                            } ?></td>
-                                                                    <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                                if ($adelanto == 'S') {
-                                                                                                    echo $MonAd;
-                                                                                                } else {
-                                                                                                    echo $fac['total'];
-                                                                                                }
+                                                                                                echo $fac['importe'];
                                                                                             }
                                                                                             if ($trans == 'FE' || $trans == 'FN') {
                                                                                                 echo number_format($fac['importe'], 2);
                                                                                             } ?></td>
 
-                                                                    <?php
-                                                                    if ($trans == 'FN') { ?>
-                                                                        <td class="text-center">
-                                                                            <div data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Editar Factura</b>">
-                                                                                <a href="/editar_receta_vale/1" class="btn btn-success btn-xs"><i class="fa fa-edit"></i></a>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <div data-toggle="tooltip" data-placement="top" data-html="true" title="<b>Anular Factura</b>">
-                                                                                <a href="/ver_receta_atendida/1/" class="btn btn-danger btn-xs"><i class="fa fa-xing"></i></a>
-                                                                            </div>
-                                                                        </td>
-                                                                    <?php } ?>
+                                                                  <!--  <td class="text-right"></td>
+                                                                                            -->
+                                                                    <td>
+                                                                    <input type="text" name="imported[]"  id="imported<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>)" value="<?php if ($trans == 'FN') {
+                                                                                                                            echo number_format($fac['pu'], 2);
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                                echo number_format($fac['pu'], 2);
+                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                                        
+                                                                                        </td>
+
+                                                                    <td class="text-right">                                                                        
+                                                                        <input type="text" readonly name="igvd[]"  id="igvd<?php echo $key?>" value="<?php echo number_format($fac['igv_total'],2)?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                    
+                                                                    </td>
+
+                                                                    <td class="text-right">                                                                        
+                                                                        <input type="text" readonly name="totald[]"  id="totald<?php echo $key?>" value="<?php echo number_format($fac['importe'],2)?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                    
+                                                                    </td>
+                                                                    
                                                                 </tr>
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
                                                             <?php } ?>
@@ -593,12 +599,12 @@
                                                             <th>Ope Gravadas</th>
                                                             <th></th>
                                                             <th></th>
-                                                            <th class="text-right"><span id="gravadas"></span> <?php if ($trans == 'FA') {
-                                                                                                                    echo number_format($stotal, 2);
-                                                                                                                }
-                                                                                                                if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                                    echo number_format($comprobante->subtotal, 2);
-                                                                                                                } ?></th>
+                                                            <th> <input type="text" name="gravadas" readonly id="gravadas" value="<?php if ($trans == 'FN') {
+                                                                                                                                echo number_format( $comprobante->subtotal,2);
+                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        </th>
+
+                                                            
                                                         </tr>
                                                         <tr style="display:none">
                                                             <th></th>
@@ -619,24 +625,25 @@
                                                             <th>I.G.V.</th>
                                                             <th></th>
                                                             <th></th>
-                                                            <th class="text-right"><span id="igv"></span> <?php if ($trans == 'FA') {
-                                                                                                                echo number_format($igv, 2);
-                                                                                                            }
-                                                                                                            if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                                echo number_format($comprobante->impuesto, 2);
-                                                                                                            } ?></th>
+
+                                                            <th> <input type="text" name="igv" readonly id="igv" value="<?php if ($trans == 'FN') {
+                                                                                                                                echo number_format( $comprobante->impuesto,2);
+                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        </th>
+
+                                                            
                                                         </tr>
                                                         <tr>
                                                             <th></th>
                                                             <th>Total</th>
                                                             <th></th>
                                                             <th></th>
-                                                            <th class="text-right"><span id="totalP"></span> <?php if ($trans == 'FA') {
-                                                                                                                    echo number_format($total, 2);
-                                                                                                                }
-                                                                                                                if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                                    echo number_format($comprobante->total, 2);
-                                                                                                                } ?></th>
+                                                            <th> <input type="text" name="totalP" readonly id="totalP" value="<?php if ($trans == 'FN') {
+                                                                                                                                echo number_format( $comprobante->total,2);
+                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        </th>
+
+                        
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -651,7 +658,7 @@
 
                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                         <div class="form-group">
-                                            <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardar').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarnc()">GUARDAR COMPROBANTE</button>
+                                            <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardar').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarnd()">GUARDAR COMPROBANTE</button>
                                         </div>
                                     </div>
                                 </div>
@@ -678,5 +685,5 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/factura.js') }}"></script>
+<script src="{{ asset('js/facturaND.js') }}"></script>
 @endpush

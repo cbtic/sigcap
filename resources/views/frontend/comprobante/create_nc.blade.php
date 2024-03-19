@@ -227,7 +227,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        <small class="text-muted">Nota de Credito</small>
+                        <small class="text-muted">Nota de Debito</small>
                         <!--Edita Factura-->
                         <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>

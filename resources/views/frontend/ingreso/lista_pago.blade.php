@@ -67,8 +67,11 @@ foreach($pago as $row){?>
 		
 	</td>
 	<td class="text-left">
-	<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nd_edita')}}" id="frmPagos_nd" name="frmPagos_nd" autocomplete="off">		
-		<input type='hidden' name='id_comprobante_nd' id="id_comprobante_nd" value='<?php echo $row->id_comprobante?>'>		
+	    <form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nd_edita')}}" id="frmPagos_nd" name="frmPagos_nd" autocomplete="off">		
+		<input type='hidden' name="id_comprobante" id="id_comprobante" value="">		
+		<input type='hidden' name="id_comprobante_origen" id="id_comprobante_origen" value="<?php echo $row->id_comprobante?>">		
+		
+		
 		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">		
 		<input class="btn btn-info pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>)">
 		

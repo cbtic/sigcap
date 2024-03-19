@@ -35,7 +35,7 @@ class Comprobante extends Model
 
     public function registrar_comprobante($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda) {
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
-        //print_r($serie ." numero". $numero." tipo". $tipo." ubicacion". $cod_tributario."persona ". $cod_tributario." total". $total."descripcion ". $descripcion." ". $cod_contable." ". $id_v." ". $id_caja." ". $descuento." ". $accion." ".    $id_user." ".   $id_moneda);exit();
+       // print_r($serie ." numero". $numero." tipo". $tipo." ubicacion". $cod_tributario."persona ". $cod_tributario." total". $total."descripcion ". $descripcion." ". $cod_contable." ". $id_v." ". $id_caja." ". $descuento." ". $accion." ".    $id_user." ".   $id_moneda);exit();
         $cad = "Select sp_crud_comprobante(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         //echo "Select sp_crud_factura(".$serie.",".$numero.", ".$tipo.", ".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$codigo_v.",".$estab_v.",".$modulo.",".$smodulo.",".$descuento.",".$accion.",".$id_user.")";
         
@@ -44,6 +44,29 @@ class Comprobante extends Model
         //print_r($data );exit();
        
         return $data[0]->sp_crud_comprobante;
+       
+    }
+
+    public function registrar_comprobante_ncnd($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$razon_social,$direccion,$id_comprobante_origen,$correo) {
+        //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
+      // print_r($serie ." numero". $numero." tipo". $tipo." ubicacion". $cod_tributario."persona ". $cod_tributario.
+       //              " total". $total."descripcion ". $descripcion." ". $cod_contable." ". $id_v." ". $id_caja." ". $descuento.
+       //              " ". $accion." ".    $id_user." ".   $id_moneda . " ". $razon_social. " ". $direccion." ". $id_comprobante_origen );exit();
+        
+       $cad = "Select sp_crud_comprobante_ncnd(?,?,?,?,?,
+                                                ?,?,?,?,?,
+                                                ?,?,?,?,?,
+                                                ?,?)";
+        //echo "Select sp_crud_factura(".$serie.",".$numero.", ".$tipo.", ".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$codigo_v.",".$estab_v.",".$modulo.",".$smodulo.",".$descuento.",".$accion.",".$id_user.")";
+       
+        $data = DB::select($cad, array($serie, $numero, $tipo, $cod_tributario, $total, 
+                                       $descripcion, $cod_contable, $id_comprobante_origen, $id_caja, $descuento, 
+                                       $accion,     $id_user,  $id_moneda, $razon_social, $direccion,
+                                       $id_comprobante_origen,$correo));
+        //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
+        //print_r($data );exit();
+       
+        return $data[0]->sp_crud_comprobante_ncnd;
        
     }
     
@@ -79,6 +102,38 @@ class Comprobante extends Model
         $cad = "select * 
 				from comprobantes c 
 				where c.id='".$numero_comprobante."'";
+    
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
+
+    function getPersonaDni($numero_documento){
+
+        $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres,direccion_sunat,correo
+		from personas p
+		Where p.numero_documento='".$numero_documento."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+
+    
+
+    function getEmpresaRuc($numero_documento){
+
+        $cad = "select id, direccion,email
+		        from empresas
+		        Where ruc='".$numero_documento."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+
+    function getExisteNotaById($numero_comprobante){
+
+        $cad = "select id,serie,numero,tipo 
+				from comprobantes c 
+				where c.id='".$numero_comprobante."' limit 1";
     
 		$data = DB::select($cad);
         if(isset($data[0]))return $data[0];
