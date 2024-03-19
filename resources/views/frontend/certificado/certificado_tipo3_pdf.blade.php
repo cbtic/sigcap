@@ -115,10 +115,10 @@ $(document).ready(function() {
     <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">  
     <h2 style="text-align:center">CERTIFICADO DE HABILITACION PROFESIONAL</h2>
     <p style="text-align:center">  N° : <?php echo $datos[0]->codigo;?> </p>
-        <p  style="text-align:center">Sin Fines de Construccion</p>
+        <p  style="text-align:center">PARA <?php //echo $tipo_tramite;?> </p>
         <hr>
         <div class="contenido">
-            <p id="primero">La Regional Lima del Colegio de Arquitectos del Perú, certifica que:</p>
+            <p id="primero">El Colegio de Arquitectos del Perú - Regi&oacute;n Lima, certifica que:</p>
             <p style="margin-left: 2cm;"><?php echo $tratodesc;?>   : <?php echo $datos[0]->desc_cliente;?> </p>
             <p style="margin-left: 2cm;">         N° CAP                 : <?php echo $datos[0]->numero_cap;?> </p>
             <p style="margin-left: 2cm;">         FECHA DE COLEGIATURA   : <?php echo $datos[0]->fecha_colegiado;?> </p>
@@ -127,10 +127,15 @@ $(document).ready(function() {
                              al Estatuto del Colegio de Arquitectos del Perú, encontrándose en condición 
                              de MIEMBRO <?php echo $habilita;?> y por lo tanto  <?php echo $faculta;?>  para el ejercicio de la 
                              profesión.</p>
-            <p>Se extiende el presente a solicitud del interesado y para los fines de 
-                            la solicitud.</p>
+            <p>Se extiende el presente Certificado a solicitud <?php echo $cita;?>.</p>
                             <p></p>
-            <p>Certificado para : Acreditar Habilitaci&oacute;n Profesional</p>
+            <h3 style="text-align:left">INFORMACI&Oacute;N GENERAL DEL EXPEDIENTE</h3>
+
+            <p>1. Expediente : <?php echo $cita;?>.</p>
+            <p>2. Proyecto   : <?php echo $cita;?>.</p>
+            <p>3. Propietario: <?php echo $cita;?>.</p>
+            <p>4. Valor Total de Obra S/.: <?php echo $cita;?>.</p>
+            <p>5. Ubicaci&oacute;n <?php echo $cita;?>.</p>
             
             <p>Validez por <?php echo $datos[0]->dias_validez;?>  (<?php echo $numeroEnLetras;?> ) d&iacute;as.</p>
             <p></p>

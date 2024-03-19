@@ -184,17 +184,21 @@ $.mask.definitions['p'] = "[Mm]";
 
 	$('#nombre_proyecto_').hide();
 	$('#tipo_tramite_').hide();
+	$('#tipo_tramite_certificado3_').hide();
+	
 	
 	if (id_tipo == "0")//SELECCIONAR
 	{
 		$('#nombre_proyecto_').hide();
 		$('#tipo_tramite_').hide();
+		$('#tipo_tramite_certificado3_').hide();
 	}else if (id_tipo == "1")//CERTIFICADO TIPO 1
 	{
 		$('#nombre_proyecto_').show();
 		$('#tipo_tramite_').hide();
 		//$('#nombre_proyecto_').show();
 		$('#tipo_tramite').val('0');
+		$('#tipo_tramite_certificado3_').hide();
 
 	}else if (id_tipo == "2") //CERTIFICADO TIPO 2
 	{
@@ -202,17 +206,20 @@ $.mask.definitions['p'] = "[Mm]";
 		$('#tipo_tramite_').hide();
 		//$('#nombre_proyecto_').show();
 		$('#tipo_tramite').val('0');
+		$('#tipo_tramite_certificado3_').hide();
 	}else if (id_tipo == "3") //CERTIFICADO TIPO 3
 	{
 		$('#nombre_proyecto_').show();
 		$('#tipo_tramite_').hide();
 		//$('#nombre_proyecto_').show();
 		$('#tipo_tramite').val('0');
+		$('#tipo_tramite_certificado3_').show();
 	}else if (id_tipo == "4") { //CERTIFICADO TIPO 4
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').show();
 		$('#vigencia_group').show();
 		$('#nombre_proyecto').val('0');
+		$('#tipo_tramite_certificado3_').hide();
 		//$('#tipo_tramite_').val('');
 	}else if (id_tipo == "5") { //CONSTANCIA
 		$('#nombre_proyecto_').hide(); 
@@ -220,17 +227,20 @@ $.mask.definitions['p'] = "[Mm]";
 		$('#vigencia_group').hide();
 		$('#nombre_proyecto').val('0');
 		$('#tipo_tramite').val('');
+		$('#tipo_tramite_certificado3_').hide();
 	}else if (id_tipo == "6"){ //RECORD DE PROYECTOS
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
 		$('#nombre_proyecto').val('0');
 		$('#tipo_tramite').val('0');
 		$('#vigencia_group').hide();
+		$('#tipo_tramite_certificado3_').hide();
 	}else{ //seleccionar
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
 		$('#nombre_proyecto').val('0');
 		$('#tipo_tramite').val('0');
+		$('#tipo_tramite_certificado3_').hide();
 	}
 }
 
@@ -505,6 +515,20 @@ $.mask.definitions['p'] = "[Mm]";
 										<option value="0">--Selecionar--</option>
 										<?php
 										foreach ($tipo_tramite as $row) { ?>
+											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $certificado->id_tipo_tramite) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group" id="tipo_tramite_certificado3_">
+								<div class="col-lg-12">
+									<label class="control-label">Tipo de Tramite</label>
+									<select name="tipo_tramite_certificado3" id="tipo_tramite_certificado3" class="form-control form-control-sm" onChange="obtenerTipoCertificado">
+										<option value="0">--Selecionar--</option>
+										<?php
+										foreach ($tipo_tramite_tipo3 as $row) { ?>
 											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $certificado->id_tipo_tramite) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
 										<?php
 										}
