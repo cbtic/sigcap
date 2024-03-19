@@ -98,11 +98,13 @@ class BeneficiarioController extends Controller
 
 		if($request->id == 0){
 			$beneficiario = new Beneficiario;
+            //$persona = new Persona;
 		}else{
 			$beneficiario = Beneficiario::find($request->id);
 		}
 		$persona = Persona::where("numero_documento",$request->dni)->where("estado","1")->first();
         $empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
+        $concepto = Concepto::find($request->concepto);
 
 		$beneficiario->id_persona = $persona->id;
 		$beneficiario->id_empresa = $empresa->id;
@@ -116,9 +118,7 @@ class BeneficiarioController extends Controller
 		
 		if($request->estado_beneficiario==1){
 		
-			$beneficiario = Beneficiario::find($request->id_beneficiario);
-
-            $concepto = Concepto::find($request->concepto);
+			//$beneficiario = Beneficiario::find($request->id_beneficiario);
 			
 			$valorizacion = new Valorizacione;
 			$valorizacion->id_modulo = 9;

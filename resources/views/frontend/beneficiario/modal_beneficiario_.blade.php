@@ -12,7 +12,7 @@
 
   .modal-dialog {
     width: 100%;
-    max-width: 50% !important
+    max-width: 70% !important
   }
 
   #tablemodal {
@@ -365,6 +365,66 @@ function datatablenewEmpresaBeneficiario(){
 
 }*/
 
+function AddFila(){
+	
+  var cantidad = $('#numero_beneficiario').val();
+  $('#frmBeneficiario').html("");
+  var nuevoContenido = "";
+  for (var i = 0; i < cantidad; i++) {
+    
+    var n = i+1;
+
+	  var id_n = '<input type="hidden" name="id_n" id="'+ i +'" value="">'
+	  var etiqueta_dni_beneficiario = '<label class="form-control-sm form-control-sm">DNI</label>'
+    var dni_beneficiario = '<input type="text" name="dni_beneficiario[]" id="dni_beneficiario' + i + '" value="" placeholder="" class="form-control form-control-sm" onchange ="obtener_profesional_beneficiario('+i+')">';
+    var etiqueta_apellidoP_beneficiario = '<label class="form-control-sm form-control-sm">Apellido Paterno</label>'
+	  var apellidoP_beneficiario = '<input id="apellidoP_beneficiario' + i + '" name="apellidoP_beneficiario[]" class="form-control form-control-sm" value="" type="text" readonly>'
+    var etiqueta_apellidoM_beneficiario = '<label class="form-control-sm form-control-sm">Apellido Materno</label>'
+	  var apellidoM_beneficiario = '<input id="apellidoM_beneficiario' + i + '" name="apellidoM_beneficiario[]" class="form-control form-control-sm" value="" type="text" readonly>'
+    var etiqueta_nombres_beneficiario = '<label class="form-control-sm form-control-sm">Nombres</label>'
+	  var nombres_beneficiario = '<input id="nombres_beneficiario' + i + '" name="nombres_beneficiario[]" class="form-control form-control-sm" value="" type="text" readonly>'
+    var etiqueta_estado_beneficiario = '<label class="form-control-sm form-control-sm">Estado</label>'
+	  //var estado_beneficiario = '<input id="estado_beneficiario' + i + '" name="estado_beneficiario[]" class="form-control form-control-sm" value="" type="text">'
+    //var informe = '<select name="informe[]" id="informe" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
+    
+    
+    var estado_beneficiario = '<select name="estado_beneficiario" id="estado_beneficiario" class="form-control form-control-sm"><option value="">--Selecionar--</option><?php foreach ($estado_concepto as $row) {?> <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$beneficiario->id_estado_beneficiario)echo "selected='selected'"?>><?php echo $row->denominacion?></option> <?php } ?> </select>'
+   
+
+    nuevoContenido +='<div class="form-group">';
+    //nuevoContenido += '<label class="control-label form-control-sm">Fila ' + n + '</label>';
+    nuevoContenido += '<div class="row">';
+    nuevoContenido += '<div class="col-lg-2">' + '<div class="form-group">' + etiqueta_dni_beneficiario;
+    nuevoContenido += dni_beneficiario;
+    nuevoContenido += '</div>';
+    nuevoContenido += '</div>';
+    nuevoContenido += '<div class="col-lg-2">' + '<div class="form-group">' + etiqueta_apellidoP_beneficiario;
+    nuevoContenido += apellidoP_beneficiario;
+    nuevoContenido += '</div>';
+    nuevoContenido += '</div>';
+    nuevoContenido += '<div class="col-lg-2">' + '<div class="form-group">' + etiqueta_apellidoM_beneficiario;
+    nuevoContenido += apellidoM_beneficiario;
+    nuevoContenido += '</div>';
+    nuevoContenido += '</div>';
+    //nuevoContenido += '<div class="row">';
+    nuevoContenido += '<div class="col-lg-4">' + '<div class="form-group">' + etiqueta_nombres_beneficiario;
+    nuevoContenido += nombres_beneficiario;
+    nuevoContenido += '</div>';
+    nuevoContenido += '</div>';
+    nuevoContenido += '<div class="col-lg-2">' + '<div class="form-group">' + etiqueta_estado_beneficiario;
+    nuevoContenido += estado_beneficiario;
+    nuevoContenido += '</div>';
+    nuevoContenido += '</div>';
+    nuevoContenido += '</div>';
+    nuevoContenido += '</div>';
+      //$('#tblSesion tbody').append(newRow);
+  }
+    //formulario += '</form>';
+
+  $('#frmBeneficiario').html(nuevoContenido);
+
+}
+
 function obtener_empresa(){
 
   var ruc = $('#ruc').val();
@@ -427,6 +487,57 @@ function obtener_profesional_(){
 	
 }
 
+function obtener_profesional_beneficiario($i){
+	
+  var numero_ = $i;
+
+  var numero_documento_ = $('#dni_beneficiario' + numero_).val();
+
+  //var numero_documento_ = $('#dni').val();
+  //console.log(numero_documento);
+  $.ajax({
+      url: '/persona/obtenerPersona/'+numero_documento_,
+      dataType: "json",
+      success: function(result){
+
+        if(result.sw==false){
+
+          Swal.fire({
+            title: 'El numero de documento no existe',
+            text: "¿Desea registrar como  nueva persona?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Crear!'
+          }).then((result) => {
+            if (result.value) {
+              var numero_documento_ = $('#dni').val();
+              modal_personaNuevoBeneficiario(numero_documento_);
+              /*$('#frmEmpresaBeneficiario').modal([
+                backdrop:'static',
+                keyboard: false
+              ]);
+
+              
+                $('#frmPersona2').modal.('show');
+         
+              */
+            }
+          });
+      
+				}else{
+
+					$('#apellidoP_beneficiario'+numero_).val(result.persona.apellido_paterno);
+          $('#apellidoM_beneficiario'+numero_).val(result.persona.apellido_materno);
+          $('#nombres_beneficiario'+numero_).val(result.persona.nombres);
+          $('#estado_beneficiario'+numero_).val(result.persona.nombres);
+				}
+		}
+    });
+	
+}
+
 function save_beneficiario(){
     
     var msg = "";
@@ -454,7 +565,7 @@ function save_beneficiario(){
           
                 $('#openOverlayOpc').modal('hide');
                 window.location.reload();
-
+                datatablenew();
               }
       });
   }
@@ -577,7 +688,7 @@ function modal_personaNuevoBeneficiario(){
                 
                   <div class="row">
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                       <div class="form-group">
                         <label class="control-label form-control-sm">RUC</label>
                         <input name="ruc" id="ruc" type="text" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" onBlur="obtener_empresa()">
@@ -612,51 +723,63 @@ function modal_personaNuevoBeneficiario(){
                   <div class="row">
                     <div class="col-lg-2">
                       <div class="form-group">
+                        <label class="control-label form-control-sm">N&uacute;mero Beneficiarios</label>
+                        <input id="numero_beneficiario" name="numero_beneficiario" class="form-control form-control-sm" value="<?php //echo $agremiado->id_situacion?>" type="text" onchange="AddFila()">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--<div class="modal-body">-->
+                    <div id="frmBeneficiario">
+                     <!--<label class="control-label form-control-sm">aaaaaaa</label>-->
+                    </div>
+                  <!--</div>-->
+
+                  <!--<div class="row">
+                    <div class="col-lg-2">
+                      <div class="form-group">
                         <label class="control-label form-control-sm">DNI</label>
-                        <input name="dni" id="dni" type="text" class="form-control form-control-sm" value="<?php echo $persona->numero_documento?>" onchange="obtener_profesional_()" >
+                        <input name="dni" id="dni" type="text" class="form-control form-control-sm" value="<?php //echo $persona->numero_documento?>" onchange="obtener_profesional_()" >
                           
                       </div>
                     </div>
                   
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                       <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
                         <label class="control-label form-control-sm">Apellido Paterno</label>
-                        <input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm" value="<?php echo $persona->apellido_paterno ?>" type="text" readonly="readonly">
+                        <input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm" value="<?php //echo $persona->apellido_paterno ?>" type="text" readonly="readonly">
                       </div>
                     </div>
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                       <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
                         <label class="control-label form-control-sm">Apellido Materno</label>
-                        <input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm" value="<?php echo $persona->apellido_materno ?>" type="text" readonly="readonly">
+                        <input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm" value="<?php //echo $persona->apellido_materno ?>" type="text" readonly="readonly">
                       </div>
                     </div>
                     
                       <div class="col-lg-4">
                         <div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
                           <label class="control-label form-control-sm">Nombres</label>
-                          <input id="nombres" name="nombres" class="form-control form-control-sm" value="<?php echo $persona->nombres ?>" type="text" readonly="readonly">
+                          <input id="nombres" name="nombres" class="form-control form-control-sm" value="<?php //echo $persona->nombres ?>" type="text" readonly="readonly">
                         </div>
                       </div>
-                    </div>
-
-                    <div class="row">
                       <div class="col-lg-2">
                     
                       <div class="form-group">
                         <label class="control-label form-control-sm">Estado</label>
                         <select name="estado_beneficiario" id="estado_beneficiario" class="form-control form-control-sm">
-                          <!--<option value="">--Selecionar--</option>-->
+                          --><!--<option value="">--Selecionar--</option>
                           <?php
-                          foreach ($estado_concepto as $row) {?>
-                          <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$beneficiario->id_estado_beneficiario)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                          //foreach ($estado_concepto as $row) {?>
+                          <option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$beneficiario->id_estado_beneficiario)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
                           <?php
-                          }
+                          //}
                           ?>
                         </select>
                       </div>
                     </div>
-                  </div>
+                  </div>-->
 
                   <div class="row">
                     
