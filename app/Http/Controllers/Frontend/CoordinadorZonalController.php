@@ -227,10 +227,11 @@ class CoordinadorZonalController extends Controller
 			$filepath_tmp = public_path('img/informe/tmp/');
 			$filepath_nuevo = public_path('img/informe/');
 			
-			if (file_exists($filepath_tmp.$img_foto[$key])) {
-				copy($filepath_tmp.$img_foto[$key], $filepath_nuevo.$img_foto[$key]);
+			if(isset($img_foto[$key]) && $img_foto[$key]!=""){
+				if (file_exists($filepath_tmp.$img_foto[$key])) {
+					copy($filepath_tmp.$img_foto[$key], $filepath_nuevo.$img_foto[$key]);
+				}
 			}
-			
 			/**********ComisionSesione**************/
             $comision_sesione = new ComisionSesione;
             $comision_sesione->id_regional = $coordinador_zonal->id_regional;
@@ -238,7 +239,7 @@ class CoordinadorZonalController extends Controller
             $comision_sesione->id_tipo_sesion = 401;
             $comision_sesione->fecha_programado = $row;
             $comision_sesione->fecha_ejecucion = $row;
-			$comision_sesione->ruta_informe = "img/informe/".$img_foto[$key];
+			if(isset($img_foto[$key]) && $img_foto[$key]!="")$comision_sesione->ruta_informe = "img/informe/".$img_foto[$key];
             //$comision_sesione->id_aprobado = 2;
             //$comision_sesione->observaciones = 1;
             $comision_sesione->id_comision = $id_comision;

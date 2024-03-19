@@ -543,6 +543,8 @@ function fn_save() {
 	$.ajax({
 		url: "/certificado/send_proyecto_tipo3",
 		type: "POST",
+		data : $("#frmCertificadoTipo3").serialize(),
+		/*
 		data: {
 			_token:_token,
 			id:id,
@@ -586,6 +588,7 @@ function fn_save() {
 			tipo_direccion:tipo_direccion,
 			direccion_tipo:direccion_tipo
 		},
+		*/
 		//dataType: 'json',
 		success: function(result) {
 			$('#openOverlayOpc').modal('hide');
@@ -710,15 +713,19 @@ function valida_pago() {
 	<div>
 
 		<div class="justify-content-center">
-
+			
+			
 			<div class="card">
 
 				<div class="card-header" style="padding:5px!important;padding-left:20px!important">
 					Edici&oacute;n de Certificados
 				</div>
-
+				
+				<form method="post" id="frmCertificadoTipo3" action="#" enctype="multipart/form-data">
+				
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
-
+				
+				
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id ?>">
 
@@ -831,7 +838,7 @@ function valida_pago() {
 						<div class="row">
 							<div class="col-lg-3">
 								<label class="control-label form-control-sm">Tipo de Proyectista</label>
-								<select name="tipo_proyectista" id="tipo_proyectista" class="form-control form-control-sm" onchange="activarNumeroProyectista()">
+								<select name="tipo_proyectista" id="tipo_proyectista" class="form-control form-control-sm" onChange="activarNumeroProyectista()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_proyectista as $row)  {
@@ -845,7 +852,7 @@ function valida_pago() {
 							<div class="form-group" id="numero_proyectistas_">
 								<div class="col-lg-12 col-md-1 col-sm-12 col-xs-12">
 									<label class="control-label form-control-sm">N&uacute;mero Proyectistas</label>
-									<select name="numero_proyectistas" id="numero_proyectistas" class="form-control form-control-sm" onchange="AddFila()">
+									<select name="numero_proyectistas" id="numero_proyectistas" class="form-control form-control-sm" onChange="AddFila()">
 										<option value="" selected="selected">--Seleccionar--</option>
 										<option value="1">1</option>
 										<option value="2">2</option>
@@ -869,7 +876,7 @@ function valida_pago() {
 						<div class="row">
 							<div class="col-lg-3">
 								<label class="control-label form-control-sm">Tipo Documento</label>
-								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="obtenerPropietario()">
+								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onChange="obtenerPropietario()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_documento as $row)  {
@@ -885,22 +892,22 @@ function valida_pago() {
 							<div class="col-lg-2">
 								<div class="form-group" id="dni_propietario_">
 								<label class="control-label form-control-sm">DNI</label>
-								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onchange="obtenerDatosDni()">
+								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onChange="obtenerDatosDni()">
 								</div>
 								<div class="form-group" id="ruc_propietario_">
 									<label class="control-label form-control-sm">RUC</label>
-									<input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" onchange="obtenerDatosRuc()">
+									<input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" onChange="obtenerDatosRuc()">
 								</div>
 							</div>
 
 							<div class="col-lg-6" >
 								<div class="form-group" id="nombre_propietario_">
 									<label class="control-label form-control-sm">Apellidos y Nombre</label>
-									<input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->desc_cliente_sunat?>" type="text" onchange="" readonly='readonly'>
+									<input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->desc_cliente_sunat?>" type="text" onChange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="razon_social_propietario_">
 									<label class="control-label form-control-sm">Raz&oacute;n Social</label>
-									<input id="razon_social_propietario" name="razon_social_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" onchange="" readonly='readonly'>
+									<input id="razon_social_propietario" name="razon_social_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" onChange="" readonly='readonly'>
 								</div>
 							</div>
 						</div>
@@ -908,33 +915,33 @@ function valida_pago() {
 							<div class="col-lg-5" >
 								<div class="form-group" id="direccion_dni_">
 									<label class="control-label form-control-sm">Direcci&oacute;n</label>
-									<input id="direccion_dni" name="direccion_dni" on class="form-control form-control-sm"  value="<?php echo $persona->direccion?>" type="text" onchange="" readonly='readonly'>
+									<input id="direccion_dni" name="direccion_dni" on class="form-control form-control-sm"  value="<?php echo $persona->direccion?>" type="text" onChange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="direccion_ruc_">
 									<label class="control-label form-control-sm">Direcci&oacute;n</label>
-									<input id="direccion_ruc" name="direccion_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text" onchange="" readonly='readonly'>
+									<input id="direccion_ruc" name="direccion_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text" onChange="" readonly='readonly'>
 								</div>
 							</div>
 							
 							<div class="col-lg-2" >
 								<div class="form-group" id="celular_dni_">
 									<label class="control-label form-control-sm">Celular</label>
-									<input id="celular_dni" name="celular_dni" on class="form-control form-control-sm"  value="<?php echo $persona->numero_celular?>" type="text" onchange="" readonly='readonly'>
+									<input id="celular_dni" name="celular_dni" on class="form-control form-control-sm"  value="<?php echo $persona->numero_celular?>" type="text" onChange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="telefono_ruc_">
 									<label class="control-label form-control-sm">Tel&eacute;fono</label>
-									<input id="telefono_ruc" name="telefono_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text" onchange="" readonly='readonly'>
+									<input id="telefono_ruc" name="telefono_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text" onChange="" readonly='readonly'>
 								</div>
 							</div>
 
 							<div class="col-lg-4" >
 								<div class="form-group" id="email_dni_">
 									<label class="control-label form-control-sm">Email</label>
-									<input id="email_dni" name="email_dni" on class="form-control form-control-sm"  value="<?php echo $persona->correo?>" type="text" onchange="" readonly='readonly'>
+									<input id="email_dni" name="email_dni" on class="form-control form-control-sm"  value="<?php echo $persona->correo?>" type="text" onChange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="email_ruc_">
 									<label class="control-label form-control-sm">Email</label>
-									<input id="email_ruc" name="email_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->email?>" type="text" onchange="" readonly='readonly'>
+									<input id="email_ruc" name="email_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->email?>" type="text" onChange="" readonly='readonly'>
 								</div>
 							</div>
 						</div>
@@ -962,7 +969,7 @@ function valida_pago() {
 							</div>
 							<div class="col-lg-4">
 								<label class="control-label form-control-sm">Tipo Proyecto</label>
-								<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onchange="">
+								<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_proyecto as $row){
@@ -981,7 +988,7 @@ function valida_pago() {
 
 							<div class="col-lg-3">
 								<label class="control-label form-control-sm">Tipo Obra</label>
-								<select name="tipo_obra" id="tipo_obra" class="form-control form-control-sm" onchange="">
+								<select name="tipo_obra" id="tipo_obra" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_obra as $row){
@@ -995,7 +1002,7 @@ function valida_pago() {
 
 							<div class="col-lg-3">
 								<label class="control-label form-control-sm">Tipo Uso</label>
-								<select name="tipo_uso" id="tipo_uso" class="form-control form-control-sm" onchange="">
+								<select name="tipo_uso" id="tipo_uso" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_uso as $row){
@@ -1010,19 +1017,19 @@ function valida_pago() {
 							<div class="col-lg-2" >
 								<div class="form-group">
 									<label class="control-label form-control-sm">Valor Total de Obra</label>
-									<input id="valor_obra" name="valor_obra" on class="form-control form-control-sm"  value="<?php //echo $proyecto->valor_obra?>" type="text" onchange="" >
+									<input id="valor_obra" name="valor_obra" on class="form-control form-control-sm"  value="<?php //echo $proyecto->valor_obra?>" type="text" onChange="" >
 								</div>
 							</div>
 							<div class="col-lg-2" >
 								<div class="form-group">
 									<label class="control-label form-control-sm">&Aacute;rea Techada M2</label>
-									<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php //echo $proyecto->area_techada?>" type="text" onchange="" >
+									<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php //echo $proyecto->area_techada?>" type="text" onChange="" >
 								</div>
 							</div>
 							<div class="col-lg-2" >
 								<div class="form-group">
 									<label class="control-label form-control-sm">&Aacute;rea Intervenida M2</label>
-									<input id="area_intervenida" name="area_intervenida" on class="form-control form-control-sm"  value="<?php //echo $proyecto->area_intervenida?>" type="text" onchange="" >
+									<input id="area_intervenida" name="area_intervenida" on class="form-control form-control-sm"  value="<?php //echo $proyecto->area_intervenida?>" type="text" onChange="" >
 								</div>
 							</div>
 						</div>
@@ -1076,7 +1083,7 @@ function valida_pago() {
 								</div>
 								<div class="col-lg-4">
 									<label class="control-label form-control-sm">Direcci&oacute;n</label>
-									<input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="<?php //echo $proyecto->valor_obra?>" type="text" onchange="" >
+									<input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="<?php //echo $proyecto->valor_obra?>" type="text" onChange="" >
 								</div>
 								<div class="col-lg-2">
 									<label class="control-label form-control-sm">Tipo Direcci&oacute;n</label>
@@ -1092,7 +1099,7 @@ function valida_pago() {
 								</div>
 								<div class="col-lg-4">
 									<label class="control-label form-control-sm">Direcci&oacute;n</label>
-									<input id="direccion_tipo" name="direccion_tipo" on class="form-control form-control-sm"  value="<?php //echo $proyecto->valor_obra?>" type="text" onchange="" >
+									<input id="direccion_tipo" name="direccion_tipo" on class="form-control form-control-sm"  value="<?php //echo $proyecto->valor_obra?>" type="text" onChange="" >
 								</div>
 							</div>
 
@@ -1115,22 +1122,22 @@ function valida_pago() {
                                 <div class="col-lg-3">
                                     <div class="form-group" id="dni_comprobante_">
                                     <label class="control-label form-control-sm">DNI</label>
-                                    <input id="dni_comprobante" name="dni_comprobante" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_documento?>" type="text" onchange="obtenerDatosDni()">
+                                    <input id="dni_comprobante" name="dni_comprobante" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_documento?>" type="text" onChange="obtenerDatosDni()">
                                     </div>
                                     <div class="form-group" id="ruc_comprobante_">
                                         <label class="control-label form-control-sm">RUC</label>
-                                        <input id="ruc_comprobante" name="ruc_comprobante" on class="form-control form-control-sm"  value="<?php //echo $empresa->ruc?>" type="text" onchange="obtenerDatosRuc()">
+                                        <input id="ruc_comprobante" name="ruc_comprobante" on class="form-control form-control-sm"  value="<?php //echo $empresa->ruc?>" type="text" onChange="obtenerDatosRuc()">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-5" >
                                 <div class="form-group" id="nombre_comprobante_">
                                     <label class="control-label form-control-sm">Nombre</label>
-                                    <input id="nombre_comprobante" name="nombre_comprobante" on class="form-control form-control-sm"  value="<?php //echo $persona->desc_cliente_sunat?>" type="text" onchange="" readonly='readonly'>
+                                    <input id="nombre_comprobante" name="nombre_comprobante" on class="form-control form-control-sm"  value="<?php //echo $persona->desc_cliente_sunat?>" type="text" onChange="" readonly='readonly'>
                                     </div>
                                     <div class="form-group" id="razon_social_comprobante_">
                                         <label class="control-label form-control-sm">Raz&oacute;n Social</label>
-                                        <input id="razon_social_comprobante" name="razon_social_comprobante" on class="form-control form-control-sm"  value="<?php //echo $empresa->razon_social?>" type="text" onchange="" readonly='readonly'>
+                                        <input id="razon_social_comprobante" name="razon_social_comprobante" on class="form-control form-control-sm"  value="<?php //echo $empresa->razon_social?>" type="text" onChange="" readonly='readonly'>
                                     </div>
                                 </div>
                             </div>
@@ -1138,33 +1145,33 @@ function valida_pago() {
                                 <div class="col-lg-6" >
                                     <div class="form-group" id="direccion_dni_comprobante_">
                                         <label class="control-label form-control-sm">Direcci&oacute;n</label>
-                                        <input id="direccion_dni_comprobante" name="direccion_dni_comprobante" on class="form-control form-control-sm"  value="<?php //echo $persona->direccion?>" type="text" onchange="" readonly='readonly'>
+                                        <input id="direccion_dni_comprobante" name="direccion_dni_comprobante" on class="form-control form-control-sm"  value="<?php //echo $persona->direccion?>" type="text" onChange="" readonly='readonly'>
                                     </div>
                                     <div class="form-group" id="direccion_ruc_comprobante_">
                                         <label class="control-label form-control-sm">Direcci&oacute;n</label>
-                                        <input id="direccion_ruc_comprobante" name="direccion_ruc_comprobante" on class="form-control form-control-sm"  value="<?php //echo $empresa->direccion?>" type="text" onchange="" readonly='readonly'>
+                                        <input id="direccion_ruc_comprobante" name="direccion_ruc_comprobante" on class="form-control form-control-sm"  value="<?php //echo $empresa->direccion?>" type="text" onChange="" readonly='readonly'>
                                     </div>
                                 </div>
                                
                                 <div class="col-lg-4" >
                                     <div class="form-group" id="celular_dni_comprobante_">
                                         <label class="control-label form-control-sm">Celular</label>
-                                        <input id="celular_dni_comprobante" name="celular_dni_comprobante" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_celular?>" type="text" onchange="" readonly='readonly'>
+                                        <input id="celular_dni_comprobante" name="celular_dni_comprobante" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_celular?>" type="text" onChange="" readonly='readonly'>
                                     </div>
                                     <div class="form-group" id="telefono_ruc_comprobante_">
                                         <label class="control-label form-control-sm">Tel&eacute;fono</label>
-                                        <input id="telefono_ruc_comprobante" name="telefono_ruc_comprobante" on class="form-control form-control-sm"  value="<?php //echo $empresa->telefono?>" type="text" onchange="" readonly='readonly'>
+                                        <input id="telefono_ruc_comprobante" name="telefono_ruc_comprobante" on class="form-control form-control-sm"  value="<?php //echo $empresa->telefono?>" type="text" onChange="" readonly='readonly'>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-5" >
                                     <div class="form-group" id="email_dni_comprobante_">
                                         <label class="control-label form-control-sm">Email</label>
-                                        <input id="email_dni_comprobante" name="email_dni_comprobante" on class="form-control form-control-sm"  value="<?php //echo $persona->correo?>" type="text" onchange="" readonly='readonly'>
+                                        <input id="email_dni_comprobante" name="email_dni_comprobante" on class="form-control form-control-sm"  value="<?php //echo $persona->correo?>" type="text" onChange="" readonly='readonly'>
                                     </div>
                                     <div class="form-group" id="email_ruc_comprobante_">
                                         <label class="control-label form-control-sm">Email</label>
-                                        <input id="email_ruc_comprobante" name="email_ruc_comprobante" on class="form-control form-control-sm"  value="<?php //echo $empresa->email?>" type="text" onchange="" readonly='readonly'>
+                                        <input id="email_ruc_comprobante" name="email_ruc_comprobante" on class="form-control form-control-sm"  value="<?php //echo $empresa->email?>" type="text" onChange="" readonly='readonly'>
                                     </div>
                                 </div>
                             </div>-->
@@ -1230,6 +1237,9 @@ function valida_pago() {
 
 				</div>
 			</div>
+			
+			</form>
+			
 		</div>
 	</div>
 	<!-- /.box -->
