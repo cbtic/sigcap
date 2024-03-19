@@ -174,39 +174,49 @@
 
 							<div class="row" style="padding:20px 20px 0px 20px;">
 
+							
+								<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+									<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="">
+										<option value="">--Periodo--</option>
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+								</div>
 
-								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+
+
+								<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
 									<select name="anio" id="anio" class="form-control form-control-sm">
 										@foreach ($anio as $anio)
-										<option value="{{ $anio }}">{{ $anio }}</option>
+											<option value="{{ $anio }}">{{ $anio }}</option>
 										@endforeach
 									</select>
 								</div>
 
-								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-
-
+								<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
 									<select name="mes" id="mes" class="form-control form-control-sm">
-										<?php
-										foreach ($mes as $row) { ?>
-											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $mes_actual) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-										<?php
-										}
-										?>
+										@foreach ($mes as $key=>$mes)
+											<option value="{{ $key }}">{{ $mes }}</option>
+										@endforeach
 									</select>
 								</div>
-
+<!--
 								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 									<select name="id_municipalidad" id="id_municipalidad" class="form-control form-control-sm">
 										<option value="">--Seleccionar Municipalidad--</option>
-										<?php
+										<//?php
 										foreach ($municipalidad as $row) { ?>
-											<option value="<?php echo $row->id ?>" <?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><?php echo $row->denominacion ?></option>
-										<?php
-										}
-										?>
+											<option value="<//?php echo $row->id ?>" <//?php /*if($row->id==$comision->id_municipalidad)echo "selected='selected'"*/ ?>><//?php echo $row->denominacion ?></option>
+										<//?php}?>
 									</select>
 								</div>
+
+									-->
+
 								<!--
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<input class="form-control form-control-sm" id="credipago" name="credipago" placeholder="Credipago">
