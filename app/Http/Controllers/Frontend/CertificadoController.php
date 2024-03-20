@@ -304,13 +304,14 @@ class CertificadoController extends Controller
 		$certificado->fecha_emision = $request->fecha_emi;
 		$certificado->id_agremiado = $request->idagremiado;
 		$certificado->id_tipo_tramite = $request->tipo_tramite;
+		$certificado->id_solicitud = $request->id_proyecto;
 		$certificado->dias_validez = $request->validez;
 		$certificado->especie_valorada = $request->ev;
 		//$certificado->codigo = getCodigoCertificado($request->tipo);//$request->codigo; 
 		$certificado->observaciones =$request->observaciones;
 		$certificado->estado =1;
 		$certificado->id_tipo =$request->tipo;
-		if($request->id_tipo==1 || $request->id_tipo==2){
+		if($request->tipo==1 || $request->tipo==2 || $request->tipo==3){
 			$certificado->id_solicitud = $request->nombre_proyecto;
 		}
 		$certificado->id_usuario_inserta = $id_user;
@@ -429,6 +430,15 @@ class CertificadoController extends Controller
 		$valor_unit=$tipo_proyectistas[0]->valor_unitario;
 		$tipo_obra=$tipo_proyectistas[0]->tipo_obras;
 		$sub_tipo_uso_=$tipo_proyectistas[0]->sub_tipo_uso;
+		$ubigeo=$tipo_proyectistas[0]->id_ubigeo;
+
+		$departamento_ = substr($ubigeo, 0, 2);
+		$provincia_ = substr($ubigeo, 2, 2);
+		$distrito_ = substr($ubigeo, 4, 2);
+
+		$departamento = $ubigeo_model->obtenerDepartamento($departamento_);
+		$provincia = $ubigeo_model->obtenerProvincia($departamento_,$provincia_);
+		$distrito = $ubigeo_model->obtenerDistrito($departamento_,$provincia_,$distrito_);
 		//$departamento=$ubigeo_model->obtenerDepartamento($tipo_proyectistas[0]->id_departamento);
 		//$departamento_numero=$tipo_proyectistas[0]->id_departamento;
 		//$departamento=$ubigeo_model->obtenerDepartamento($departamento_numero);
@@ -445,7 +455,7 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_obra','sub_tipo_uso_'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','formattedDate','departamento','provincia','distrito','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_obra','sub_tipo_uso_'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -541,6 +551,8 @@ class CertificadoController extends Controller
 	public function certificado_tipo3_pdf($id){
 		
 		$datos_model=new certificado;
+		$datos2_model=new Certificado;
+		$ubigeo_model = new Ubigeo;
 
 		$datos=$datos_model->datos_agremiado_certificado($id);
 		$nombre=$datos[0]->numero_cap;
@@ -568,6 +580,26 @@ class CertificadoController extends Controller
 
 		Carbon::setLocale('es');
 
+		$tipo_proyectistas=$datos2_model->datos_agremiado_certificado1($id);
+
+		$nombre_proyecto=$tipo_proyectistas[0]->nombre_proyecto;
+		$nombre_propietario=$tipo_proyectistas[0]->propietario;
+		$valor_obra=$tipo_proyectistas[0]->valor_obra;
+		$area_techada=$tipo_proyectistas[0]->area_techada;
+		$direccion=$tipo_proyectistas[0]->direccion;
+		$ubigeo=$tipo_proyectistas[0]->id_ubigeo;
+
+		$departamento_ = substr($ubigeo, 0, 2);
+		$provincia_ = substr($ubigeo, 2, 2);
+		$distrito_ = substr($ubigeo, 4, 2);
+
+		$departamento = $ubigeo_model->obtenerDepartamento($departamento_);
+		$provincia = $ubigeo_model->obtenerProvincia($departamento_,$provincia_);
+		$distrito = $ubigeo_model->obtenerDistrito($departamento_,$provincia_,$distrito_);
+		/*$tipo_tramite=$tipo_proyectistas[0]->tipo_tramite;
+		$tipo_uso=$tipo_proyectistas[0]->tipo_uso;
+		$zonificacion=$tipo_proyectistas[0]->zonificacion;
+		$area_total=$tipo_proyectistas[0]->area_total;*/
 
 		// Crear una instancia de Carbon a partir de la fecha
 		$carbonDate = new Carbon($fecha_emision);
@@ -578,7 +610,7 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','cita','habilita','inscripcion','formattedDate','tratodesc','faculta','numeroEnLetras'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','direccion','provincia','departamento','distrito','nombre_propietario','nombre_proyecto','cita','valor_obra','area_techada','habilita','inscripcion','formattedDate','tratodesc','faculta','numeroEnLetras'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros

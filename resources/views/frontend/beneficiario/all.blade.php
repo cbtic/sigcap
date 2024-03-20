@@ -221,7 +221,6 @@
                         <th>Nombres</th>
                         <th>Sexo</th>
                         <th>Fecha de Nacimiento</th>
-                        <th>Periodo</th>
                         <th>Concepto</th>
                         <th>Estado</th>
                         <th>Acciones</th>

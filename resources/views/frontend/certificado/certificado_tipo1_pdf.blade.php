@@ -134,7 +134,7 @@ $(document).ready(function() {
             <p style="text-align: justify; font_size: 11" > 4. UBICACI&Oacute;N:</p>
             
             <p></p>
-            <p style="text-align: justify; font_size: 11" >Departamento: <?php //echo $departamento;?> Provincia: <?php //echo $tipo_proyectista->tipo_proyectista;?> Distrito:</p>
+            <p style="text-align: justify; font_size: 11" >Departamento: <?php echo $departamento;?> Provincia: <?php echo $provincia;?> Distrito: <?php echo $distrito;?></p>
             <p style="text-align: justify; font_size: 11" >Direcci&oacute;n: <?php echo $direccion_proyecto;?> </p>
             <p style="text-align: justify; font_size: 11" >Lugar: <?php echo $lugar_proyecto;?> </p>
             <p></p>

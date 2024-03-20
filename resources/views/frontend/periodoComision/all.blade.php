@@ -207,6 +207,7 @@
                         <thead>
                         <tr style="font-size:13px">
                             <th>Descripci&oacute;n de Periodo</th>
+                            <th>Activo</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
                             <th>Estado</th>
