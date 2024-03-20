@@ -131,16 +131,25 @@ $(document).ready(function() {
                             <p></p>
             <h3 style="text-align:left">INFORMACI&Oacute;N GENERAL DEL EXPEDIENTE</h3>
 
-            <p>1. Expediente : <?php echo $cita;?>.</p>
-            <p>2. Proyecto   : <?php echo $cita;?>.</p>
-            <p>3. Propietario: <?php echo $cita;?>.</p>
-            <p>4. Valor Total de Obra S/.: <?php echo $cita;?>.</p>
-            <p>5. Ubicaci&oacute;n <?php echo $cita;?>.</p>
+            <p><b>1. Expediente :</b> <?php echo $cita;?></p>
+            <p><b>2. Proyecto   :</b> <?php echo $nombre_proyecto;?></p>
+            <p><b>3. Propietario:</b> <?php echo $nombre_propietario;?></p>
+            <!--<p>4. Valor Total de Obra S/.: <?php //echo $valor_obra;?></p>-->
+            <div style="text-align: center;">
+                <span style="float: left; font_size: 12"><b>4. Valor Total de Obra S/.: </b><?php echo $valor_obra;?></span>
+                <span style="float: right; font_size: 12"><b>&Aacute;rea Techada: </b><?php echo $area_techada;?></span>
+            </div>
+
+            <p style="margin-top: 35px;"><b>5. Ubicaci&oacute;n:</b></p>
+            <p>Departamento   : <?php echo $departamento;?></p>
+            <p>Provincia      : <?php echo $provincia;?></p>
+            <p>Distrito       : <?php echo $distrito;?></p>
+            <p>Direcci&oacute;n: <?php echo $direccion;?></p>
             
-            <p>Validez por <?php echo $datos[0]->dias_validez;?>  (<?php echo $numeroEnLetras;?> ) d&iacute;as.</p>
             <p></p>
             <p></p>
-            <p  style="text-align:right">Lima, <?php echo $formattedDate;?></p>
+            <p style="text-align:right">Lima, <?php echo $formattedDate;?></p>
+            <p style="text-align:right">Validez por <?php echo $numeroEnLetras;?>  (<?php echo $datos[0]->dias_validez;?>) d&iacute;as</p>
         </div>
     </div>
     <!-- /.content-wrapper -->

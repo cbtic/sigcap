@@ -236,21 +236,12 @@ function datatablenew(){
 				},
 				{
 					"mRender": function (data, type, row) {
-						var periodo = "";
-						if(row.periodo!= null)periodo = row.periodo;
-						return periodo;
-					},
-					"bSortable": false,
-					"aTargets": [6]
-				},
-				{
-					"mRender": function (data, type, row) {
 						var concepto = "";
 						if(row.concepto!= null)concepto = row.concepto;
 						return concepto;
 					},
 					"bSortable": false,
-					"aTargets": [7]
+					"aTargets": [6]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -259,7 +250,7 @@ function datatablenew(){
 						return estado_beneficiario;
 					},
 					"bSortable": false,
-					"aTargets": [8]
+					"aTargets": [7]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -284,7 +275,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [8],
 				},
 
             ]

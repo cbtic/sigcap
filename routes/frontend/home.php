@@ -617,3 +617,4 @@ Route::get('certificado/consultar_certificado_tipo3', [CertificadoController::cl
 
 Route::get('certificado/modal_certificado_tipo3/{id}', [CertificadoController::class, 'modal_certificado_tipo3'])->name('certificado.modal_certificado_tipo3');
 Route::post('certificado/send_proyecto_tipo3', [CertificadoController::class, 'send_proyecto_tipo3'])->name('certificado.send_proyecto_tipo3');
+Route::get('coordinador_zonal/eliminar_coordinador_zonal/{id}/{estado}', [CoordinadorZonalController::class, 'eliminar_coordinador_zonal'])->name('coordinador_zonal.eliminar_coordinador_zonal');

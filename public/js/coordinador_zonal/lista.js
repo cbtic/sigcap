@@ -742,10 +742,10 @@ function datatablenew(){
 					
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 					//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalCoordinadorZonal('+1+')" ><i class="fa fa-edit"></i> Registrarse</button>';
-					//html += '<a href="javascript:void(0)" onclick=eliminarAdelanto('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					
 					
 					html += '<a href="javascript:void(0)" onclick=modalCoordinadorZonal('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Registrar sesi&oacute;n</a>';
-					
+					html += '<a href="javascript:void(0)" onclick=eliminarCoordinadorZonal('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					html += '</div>';
 					return html;
 				},
@@ -1051,7 +1051,7 @@ function modalResponsable(id){
 
 }
 
-function eliminarAdelanto(id,estado){
+function eliminarCoordinadorZonal(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -1063,20 +1063,20 @@ function eliminarAdelanto(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" el Adelanto?", 
+        message: "&iquest;Deseas "+act_estado+" el Coordinador Zonal?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_adelanto(id,estado_);
+                fn_eliminar_coordinador_zonal(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_adelanto(id,estado){
+function fn_eliminar_coordinador_zonal(id,estado){
 
     $.ajax({
-            url: "/adelanto/eliminar_adelanto/"+id+"/"+estado,
+            url: "/coordinador_zonal/eliminar_coordinador_zonal/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

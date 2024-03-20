@@ -278,5 +278,14 @@ class CoordinadorZonalController extends Controller
 
         }
     }
+
+	public function eliminar_coordinador_zonal($id,$estado)
+    {
+		$coordinadorZonal = CoordinadorZonal::find($id);
+		$coordinadorZonal->estado = $estado;
+		$coordinadorZonal->save();
+
+		echo $coordinadorZonal->id;
+    }
     
 }
