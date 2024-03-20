@@ -92,7 +92,7 @@ foreach($valorizacion as $key=>$row):
 	<td class="text-right val_total_">	
 		<span class="val_descuento" style="float:left"></span>	
 
-		<span class="val_total"><?php echo number_format($monto,2)?></span>
+		<span class="val_total"><?php echo number_format($monto*$row->cantidad,2)?></span>
 		
 		<span hidden class="val_sub_total"><?php echo number_format($stotal,2)?></span>
 		<span hidden class="val_igv"><?php echo number_format($igv_,2)?></span>
