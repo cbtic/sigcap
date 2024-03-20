@@ -97,6 +97,8 @@ foreach($valorizacion as $key=>$row):
 		<span hidden class="val_sub_total"><?php echo number_format($stotal,2)?></span>
 		<span hidden class="val_igv"><?php echo number_format($igv_,2)?></span>
 		<span hidden class="id_concepto_modal_sel"><?php echo $row->id_concepto?></span>
+
+		<span hidden class="id_concepto"><?php echo $row->id_concepto?></span>
 		
 	</td>
 	
