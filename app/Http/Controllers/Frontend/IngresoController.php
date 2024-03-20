@@ -233,7 +233,11 @@ class IngresoController extends Controller
         }
 
         //print_r($comprobanted); exit();
-        $concepto = Concepto::find($id_concepto);
+        //$concepto = Concepto::find($id_concepto);
+
+        $concepto = Concepto::find(26411);
+
+        
         
         //$comprobanted = json_encode($comprobanted_);
 

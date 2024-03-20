@@ -73,7 +73,7 @@ class Valorizacione extends Model
             from valorizaciones                       
             where id_empresa = ".$id_persona."                              
                 and (case when fecha < now() then '1' else '0' end) ilike '1'
-                and id_concepto = ".$id_concepto."
+                and id_concepto in (26412, 26411)
                 and estado = '1'            
                 and pagado = '0'
 			";
@@ -83,7 +83,7 @@ class Valorizacione extends Model
             from valorizaciones                       
             where id_persona = ".$id_persona."                              
                 and (case when fecha < now() then '1' else '0' end) ilike '1'
-                and id_concepto = ".$id_concepto."
+                and id_concepto in (26412, 26411)
                 and estado = '1'            
                 and pagado = '0'
 			";
