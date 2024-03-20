@@ -437,6 +437,13 @@ function fn_save_periodoComision(){
 							
 							</div>
 						</div>
+						<div class="col-lg-3" style="padding-top:40px">
+							<div class="form-group">
+							
+							<input type="checkbox" class="fijar_periodo" name="fijar_periodo[]" value="" <?php //if($row->id_aprobar_pago==2)echo "checked='checked'"?> />
+							<label class="control-label form-control-sm">Fijar Periodo</label>
+							</div>
+						</div>
 					</div>
 					<div class="row" style="padding-left:10px">
 						<!--<div class="col-lg-6">

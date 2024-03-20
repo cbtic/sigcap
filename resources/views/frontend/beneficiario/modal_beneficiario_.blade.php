@@ -370,6 +370,8 @@ function AddFila(){
   var cantidad = $('#numero_beneficiario').val();
   $('#frmBeneficiario').html("");
   var nuevoContenido = "";
+  var n_beneficiario_vigente ="";
+  var m;
   for (var i = 0; i < cantidad; i++) {
     
     var n = i+1;
@@ -390,6 +392,9 @@ function AddFila(){
     
     var estado_beneficiario = '<select name="estado_beneficiario[]" id="estado_beneficiario" class="form-control form-control-sm"><option value="">--Selecionar--</option><?php foreach ($estado_concepto as $row) {?> <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$beneficiario->id_estado_beneficiario)echo "selected='selected'"?>><?php echo $row->denominacion?></option> <?php } ?> </select>'
    
+    /*if(estado_beneficiario==1){
+      n_beneficiario_vigente++
+    }*/
 
     nuevoContenido +='<div class="form-group">';
     //nuevoContenido += '<label class="control-label form-control-sm">Fila ' + n + '</label>';
@@ -418,9 +423,17 @@ function AddFila(){
     nuevoContenido += '</div>';
     nuevoContenido += '</div>';
       //$('#tblSesion tbody').append(newRow);
+      if(estado_beneficiario.value=="1"){
+      m++}
+    //var estado_beneficiario_value = document.getElementById('estado_beneficiario').value;
+
+    // Verificar si el valor seleccionado es '1' y luego incrementar la variable n_beneficiario_vigente
+    /*if (estado_beneficiario_value == '1') {
+        n_beneficiario_vigente++;
+    }*/
   }
     //formulario += '</form>';
-
+    nuevoContenido += '<input type="hidden" name="numero_vigente" id="numero_vigente" value="'+m+'">'
   $('#frmBeneficiario').html(nuevoContenido);
 
 }
@@ -544,7 +557,9 @@ function save_beneficiario(){
     var _token = $('#_token').val();
     var id = $('#id').val();
     var dni = $('#dni').val();
+    var numero_beneficiario = $('#numero_beneficiario').val();
     var ruc = $('#ruc').val();
+    var numero_vigente = $('#numero_vigente').val();
     var concepto = $('#concepto').val();
     var estado_beneficiario = $('#estado_beneficiario').val();
     var observacion = $('#observacion').val();

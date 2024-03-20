@@ -97,6 +97,7 @@ class BeneficiarioController extends Controller
 		$id_user = Auth::user()->id;
 		$dni_beneficiario = $request->dni_beneficiario;
 		$estado_beneficiario = $request->estado_beneficiario;
+        $n_beneficiario = $request->numero_vigente;
 		$empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
 		$concepto = Concepto::find($request->concepto);
 		$cadena_persona = "";
@@ -149,6 +150,8 @@ class BeneficiarioController extends Controller
 			$valorizacion->id_concepto = $concepto->id;
 			$valorizacion->id_persona = $persona->id;
 			$valorizacion->monto = $concepto->importe;
+            $valorizacion->cantidad = 4;
+            //$valorizacion->cantidad = 3;
 			$valorizacion->id_moneda = $concepto->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
