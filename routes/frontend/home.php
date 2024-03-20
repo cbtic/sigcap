@@ -419,6 +419,7 @@ Route::get('sesion/calendario_sesion_pdf/{id}', [SesionController::class, 'calen
 Route::get('sesion/ver_calendario_sesion_pdf/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
 
 Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eliminar_computo_sesion'])->name('sesion.eliminar_computo_sesion');
+Route::get('sesion/eliminar_comision_sesion_delegados/{id}', [SesionController::class, 'eliminar_comision_sesion_delegados'])->name('sesion.eliminar_comision_sesion_delegados');
 
 Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
 Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
