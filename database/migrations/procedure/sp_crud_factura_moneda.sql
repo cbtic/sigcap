@@ -221,11 +221,10 @@ begin
 			
 				Insert Into comprobante_detalles (serie, numero, tipo, item, cantidad, descripcion,
 					pu,  pu_con_igv,  igv_total, descuento, importe,afect_igv, cod_contable, valor_gratu, unidad,id_usuario_inserta,id_comprobante, id_concepto)
-					Values (_serie,numero,tipo,ubicacion,1,descripcion,
+					Values (_serie,numero,tipo,id_v,ubicacion,descripcion,
 					_pu, _pu_con_igv,_igv_total, _descuento, (_total - _descuento)  ,_id_tipo_afectacion,cod_contable,0,'ZZ',p_id_usuario, id_caja, persona);
 				
-				update valorizaciones Set id_comprobante  = id_caja, pagado = '1'
-					where id = id_v;
+				--update valorizaciones Set id_comprobante  = id_caja, pagado = '1' where id = id_v;
 								
 				idp:=numero;
 
