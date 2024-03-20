@@ -316,6 +316,7 @@ class SesionController extends Controller
 		$id_periodo = (isset($request->id_periodo))?$request->id_periodo:$request->id_periodo_;
 		
 		$id_delegado = $request->id_delegado;
+		$id_tipo = $request->id_tipo;
 		
 		if($request->id == 0){
 			$periodoComision = PeriodoComisione::find($id_periodo);
@@ -426,7 +427,12 @@ class SesionController extends Controller
 			
 			if(isset($request->id_delegado)){
 				foreach($id_delegado as $key=>$row){
-					$comisionSesionDelegado = ComisionSesionDelegado::where("id_comision_sesion",$id_comision_sesion)->where("id_delegado",$row)->first();
+					
+					if($id_tipo[$key]==1){
+						$comisionSesionDelegado = ComisionSesionDelegado::where("id_comision_sesion",$id_comision_sesion)->where("id_delegado",$row)->first();
+					}else{
+						$comisionSesionDelegado = ComisionSesionDelegado::where("id_comision_sesion",$id_comision_sesion)->where("id_agremiado",$row)->first();	
+					}
 					
 					$coordinador = 0;
 					if($request->coordinador == $row)$coordinador = 1;
@@ -554,7 +560,7 @@ class SesionController extends Controller
 		//if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
 		
 		//$profesion_sesion = $profesionalesOtro_model->getProfesionSesion();
-		$profesion_sesion = $agremiado_model->getAgremiadoAll();
+		$profesion_sesion = $agremiado_model->getAgremiadoHabilitadoAll();
 		
 		return view('frontend.sesion.modal_asignar_profesion_sesion',compact('id','profesion_sesion'));
 
@@ -731,5 +737,14 @@ class SesionController extends Controller
 
     }
 		
-	
+	public function eliminar_comision_sesion_delegados($id)
+    {
+		$comisionSesionDelegado = ComisionSesionDelegado::find($id);
+		$comisionSesionDelegado->estado = 0;
+		$comisionSesionDelegado->save();
+
+		echo $comisionSesionDelegado->id;
+
+    }
+		
 }
