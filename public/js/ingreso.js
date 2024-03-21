@@ -641,7 +641,11 @@ function obtenerBeneficiario(){
 
 	$('#totalDescuento').val("0");
 	$('#total').val("0");
-	$('#deudaTotal').val("0");	
+	$('#deudaTotal').val("0");
+
+	$('#SelFracciona').val("");
+	
+	
 	
 	
 	$.ajax({
@@ -842,8 +846,12 @@ function cargarValorizacion(){
 	var tipo_documento = $("#tipo_documento").val();
 	var id_persona = 0;
 
-	
+	var x = document.getElementById("cbox2").checked;
 
+	$("#SelFracciona").val("");
+	if (x) $("#SelFracciona").val("S");
+
+	
 	var idconcepto = $("#cboTipoConcepto_b").val();
 
 
@@ -874,6 +882,18 @@ function cargarValorizacion(){
 
 	var periodo_pp = $('#periodo_pp').val();
 	var id_concepto_pp = $('#id_concepto_pp').val();
+
+	alert(cboTipoConcepto_b);
+
+	if(cboTipoConcepto_b=="1"){
+		alert("hi");
+		$('#cbox2').show();
+		$('#lblFrac').show();
+	}else{
+		$('#cbox2').hide();
+		$('#lblFrac').hide();	
+	}
+	
 
 	
 	$("#btnFracciona").prop('disabled', true);
@@ -1359,6 +1379,7 @@ function muestraSeleccion() {
   }
 
 
+
 function modal_fraccionamiento(){
 
 	//muestraSeleccion(); 
@@ -1366,6 +1387,11 @@ function modal_fraccionamiento(){
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$('#SelFracciona').val("S");
+
+	
+
 
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
@@ -1488,7 +1514,7 @@ function modal_persona_new(){
 
 function guardar_fracciona_deuda(){
 
-	
+
     $.ajax({
 			url: "/ingreso/send_fracciona_deuda",
             type: "POST",

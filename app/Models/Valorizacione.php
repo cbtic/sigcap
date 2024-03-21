@@ -65,7 +65,61 @@ class Valorizacione extends Model
 		$data = DB::select($cad);
         return $data;
     }
+    function getValorizacionFrac($tipo_documento,$id_persona,$periodo,$cuota,$concepto, $filas){  
+        
+        if($filas!="")$filas="limit ".$filas;   
 
+        if($tipo_documento=="79"){  //RUC
+            $cad = "
+            select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
+                (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
+                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
+                coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto, 
+                codigo_fraccionamiento                
+                --, v.id_tipo_concepto
+            from valorizaciones v
+                inner join conceptos c  on c.id = v.id_concepto
+                --inner join agremiado_cuotas a  on a.id = v.pk_registro
+                inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
+                where v.id_empresa = ".$id_persona."            
+                and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
+                and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
+                and c.id in (26411, 26412)
+                and v.estado = '1'            
+                and v.pagado = '0'
+            order by v.fecha desc
+             ".$filas."
+			";
+        }else{
+            $cad = "
+            --select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
+            select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
+                (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
+                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
+                coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto,
+                codigo_fraccionamiento
+                --, v.id_tipo_concepto
+            from valorizaciones v
+                inner join conceptos c  on c.id = v.id_concepto
+                --inner join agremiado_cuotas a  on a.id = v.pk_registro
+                inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
+                where v.id_persona = ".$id_persona."            
+                and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
+                and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
+                and c.id in (26411, 26412)
+                and v.estado = '1'            
+                and v.pagado = '0'
+            order by v.fecha desc
+             ".$filas."
+			";
+        }
+
+
+        //echo $cad;
+
+		$data = DB::select($cad);
+        return $data;
+    }
     function getValorizacion_total($tipo_documento,$id_persona, $id_concepto){        
         if($tipo_documento=="79"){  //RUC
             $cad = "
