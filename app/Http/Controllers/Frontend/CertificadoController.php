@@ -645,6 +645,8 @@ class CertificadoController extends Controller
 		
 		$datos_model=new certificado;
 
+		$año = carbon::now()->year;
+
 		$datos=$datos_model->datos_agremiado_certificado($id);
 		$nombre=$datos[0]->numero_cap;
 		$fecha_emision=$datos[0]->fecha_emision;
@@ -655,7 +657,16 @@ class CertificadoController extends Controller
 		$tramite = $datos[0]->tipo_tramite;
 		
 		//$numeroEnLetras = $this->numeroALetras($numero); 
+		$agremiado_ = Agremiado::where("numero_cap",$nombre)->where("estado","1")->first();
+		$mes_minimo_=$datos_model->getMinMes($agremiado_->id,$año);
+		$mes_maximo_=$datos_model->getMaxMes($agremiado_->id,$año);
+
+		$mes_minimo = $mes_minimo_[0]->min;
+		$mes_maximo = $mes_maximo_[0]->max;
+
 		
+		$mes_minimoEnLetras = $this->mesesALetras($mes_minimo); 
+		$mes_maximoEnLetras = $this->mesesALetras($mes_maximo); 
 
 		if ($trato==3) {
 			$tratodesc="EL ARQUITECTO ";
@@ -689,7 +700,7 @@ class CertificadoController extends Controller
 		
 		$formattedDate_colegiado = $carbonDate_colegiado->timezone('America/Lima')->formatLocalized(' %d de %B %Y');
 		
-		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita'));
+		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita','mes_minimoEnLetras','mes_maximoEnLetras','año'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -730,6 +741,11 @@ class CertificadoController extends Controller
 			} 
 			return $texto; 
 		} 
+	}
+
+	function mesesALetras($mes) { 
+		$meses = array('','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'setiembre','octubre','noviembre','diciembre'); 
+		return $meses[$mes];
 	}
 
 	public function certificado_tipo($id){
