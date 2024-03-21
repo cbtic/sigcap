@@ -142,5 +142,25 @@ from certificados c where id_tipo=".$id_tipo;
         return $data;
     }
 
+    function getMinMes($id_agremiado,$año){
+
+        $cad = "select min(mes) from agremiado_cuotas ac
+        inner join valorizaciones v on ac.id = v.pk_registro and v.id_concepto ='26411'
+        where ac.id_agremiado ='".$id_agremiado."' and ac.periodo ='".$año."' and v.pagado ='1'";
+
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getMaxMes($id_agremiado,$año){
+
+        $cad = "select max(mes) from agremiado_cuotas ac
+        inner join valorizaciones v on ac.id = v.pk_registro and v.id_concepto ='26411'
+        where ac.id_agremiado ='".$id_agremiado."' and ac.periodo ='".$año."' and v.pagado = '1'";
+
+        $data = DB::select($cad);
+        return $data;
+    }
+
 }
 
