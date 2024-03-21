@@ -258,6 +258,9 @@
                                                     <input type="hidden" readonly name="importe_pp" id="importe_pp" value="<?php echo !empty($concepto->importe) ? $concepto->importe : '0' ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo !empty($concepto->id_tipo_afectacion) ? $concepto->id_tipo_afectacion : '0' ?>" class="form-control form-control-sm">
 
+
+                                                    <input type="hidden" readonly name="SelFracciona" id="SelFracciona" value="" class="form-control form-control-sm">
+
                                                 </div>
                                             </div>
                                         </div>
@@ -437,7 +440,12 @@
                                             <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     
-                                                    <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                                                    <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" onchange="cargarValorizacion()"><br />
+
+                                                    <input type="checkbox" id="cbox2" value="1" style="display:none" onchange="cargarValorizacion()"/>
+                                                    <label for="cbox2" id="lblFrac" style="display:none">Incluir Fraccionamiento/Cuota Gremial</label>
+
+                                                    
                                                     
                                                     <!--
                                                     <select class="form-control form-control-sm" id="cboTipoConcepto_b" data-placeholder="Seleccionar Concepto" onchange="cargarValorizacion()" multiple >

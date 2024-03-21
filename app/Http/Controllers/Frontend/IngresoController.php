@@ -68,11 +68,14 @@ class IngresoController extends Controller
 
     public function listar_valorizacion(Request $request){
 
+
         $id_persona = $request->id_persona;
         
         $tipo_documento = $request->tipo_documento;
 
-       //echo($tipo_documento);exit();
+        $SelFracciona = $request->SelFracciona;
+
+       //echo($SelFracciona);//exit();
 
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
 
@@ -83,7 +86,14 @@ class IngresoController extends Controller
         // print_r($filas);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+        
+
+        if ($SelFracciona=="S"){
+            $valorizacion = $valorizaciones_model->getValorizacionFrac($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+        }else{
+            $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+        }
+        
        
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
