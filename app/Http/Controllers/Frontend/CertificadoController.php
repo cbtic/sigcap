@@ -426,10 +426,12 @@ class CertificadoController extends Controller
 		$nombre_proyectista=$tipo_proyectistas[0]->tipo_proyectista;
 		$direccion_proyecto=$tipo_proyectistas[0]->direccion;
 		$lugar_proyecto=$tipo_proyectistas[0]->lugar;
+		$nombre_proyecto=$tipo_proyectistas[0]->nombre_proyecto;
 		$nombre_propietario=$tipo_proyectistas[0]->propietario;
 		$valor_unit=$tipo_proyectistas[0]->valor_unitario;
-		$tipo_obra=$tipo_proyectistas[0]->tipo_obras;
-		$sub_tipo_uso_=$tipo_proyectistas[0]->sub_tipo_uso;
+		$tipo_obra=$tipo_proyectistas[0]->tipo_obra;
+		$tipo_uso_=$tipo_proyectistas[0]->tipo_uso;
+		$area_techada=$tipo_proyectistas[0]->area_techada;
 		$ubigeo=$tipo_proyectistas[0]->id_ubigeo;
 
 		$departamento_ = substr($ubigeo, 0, 2);
@@ -455,7 +457,7 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','formattedDate','departamento','provincia','distrito','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_obra','sub_tipo_uso_'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','nombre_proyecto','formattedDate','departamento','provincia','distrito','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_obra','tipo_uso_','area_techada'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
