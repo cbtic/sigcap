@@ -61,7 +61,7 @@ from certificados c where id_tipo=".$id_tipo;
 
     public function datos_agremiado_certificado1($id){
 
-        $cad = "select c.id , a.numero_cap ,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado ,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez,t3.denominacion situacion,a.email1, t4.denominacion tipo_proyectista, u.id_departamento, u.id_provincia, u.id_distrito, pro.direccion direccion, pro.lugar lugar, p2.desc_cliente_sunat propietario, pre.valor_unitario, pre.area_techada,t5.denominacion tipo_obra, t6.denominacion tipo_uso, t7.denominacion sub_tipo_uso, c.id_solicitud id_solicitud, pro.nombre nombre_proyecto, s.valor_obra, pre.area_techada, s.id_ubigeo 
+        $cad = "select c.id , a.numero_cap ,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado ,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez,t3.denominacion situacion,a.email1, t4.denominacion tipo_proyectista, u.id_departamento, u.id_provincia, u.id_distrito, pro.direccion direccion, pro.lugar lugar, p2.desc_cliente_sunat propietario, pre.valor_unitario, pre.area_techada,t5.denominacion tipo_obra, t6.denominacion tipo_uso, t7.denominacion sub_tipo_uso, c.id_solicitud id_solicitud, pro.nombre nombre_proyecto, s.valor_obra, pre.area_techada, s.id_ubigeo, c.expediente  
         from certificados c 
         inner join agremiados a on c.id_agremiado =a.id 
         inner join tabla_maestras tm on c.id_tipo =tm.codigo::int and tm.tipo ='100' 
