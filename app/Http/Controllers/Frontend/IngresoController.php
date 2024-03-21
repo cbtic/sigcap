@@ -423,6 +423,8 @@ class IngresoController extends Controller
             $id_concepto="26412";
         }
 
+        //print_r($request->fraccionamiento); exit();
+
         foreach($request->fraccionamiento as $key=>$frac){
 
                 $valorizacion = new Valorizacione;
@@ -442,6 +444,7 @@ class IngresoController extends Controller
                 $valorizacion->save();
             
         }
+        
         
 
         $id_persona = $request->id_persona;
