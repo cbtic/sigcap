@@ -94,7 +94,7 @@ Route::get('persona/modal_personaNuevo', [PersonaController::class, 'modal_perso
 
 Route::get('agremiado', [AgremiadoController::class, 'index'])->name('agremiado');
 Route::get('agremiado/editar_agremiado/{id}', [AgremiadoController::class, 'editar_agremiado'])->name('agremiado.editar_agremiado');
-Route::get('agremiado/importar_agremiado', [AgremiadoController::class, 'importar_agremiado'])->name('agremiado.importar_agremiado');
+Route::get('agremiado/importar_agremiado/{fecha}', [AgremiadoController::class, 'importar_agremiado'])->name('agremiado.importar_agremiado');
 Route::get('agremiado/obtener_provincia/{idDepartamento}', [AgremiadoController::class, 'obtener_provincia'])->name('agremiado.obtener_provincia');
 Route::get('agremiado/obtener_distrito/{idDepartamento}/{idProvincia}', [AgremiadoController::class, 'obtener_distrito'])->name('agremiado.obtener_distrito');
 Route::get('agremiado/consulta_agremiado', [AgremiadoController::class, 'consulta_agremiado'])->name('agremiado.consulta_agremiado');
@@ -419,6 +419,7 @@ Route::get('sesion/calendario_sesion_pdf/{id}', [SesionController::class, 'calen
 Route::get('sesion/ver_calendario_sesion_pdf/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
 
 Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eliminar_computo_sesion'])->name('sesion.eliminar_computo_sesion');
+Route::get('sesion/eliminar_comision_sesion_delegados/{id}', [SesionController::class, 'eliminar_comision_sesion_delegados'])->name('sesion.eliminar_comision_sesion_delegados');
 
 Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
 Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
@@ -613,3 +614,8 @@ Route::post('beneficiario/listar_beneficiario_ajax', [BeneficiarioController::cl
 Route::post('beneficiario/send_beneficiario', [BeneficiarioController::class, 'send_beneficiario'])->name('beneficiario.send_beneficiario');
 Route::get('beneficiario/modal_beneficiario_/{id}', [BeneficiarioController::class, 'modal_beneficiario_'])->name('beneficiario.modal_beneficiario_');
 Route::get('beneficiario/eliminar_beneficiario/{id}/{estado}', [BeneficiarioController::class, 'eliminar_beneficiario'])->name('beneficiario.eliminar_beneficiario');
+Route::get('certificado/consultar_certificado_tipo3', [CertificadoController::class, 'consultar_certificado_tipo3'])->name('certificado.consultar_certificado_tipo3');
+
+Route::get('certificado/modal_certificado_tipo3/{id}', [CertificadoController::class, 'modal_certificado_tipo3'])->name('certificado.modal_certificado_tipo3');
+Route::post('certificado/send_proyecto_tipo3', [CertificadoController::class, 'send_proyecto_tipo3'])->name('certificado.send_proyecto_tipo3');
+Route::get('coordinador_zonal/eliminar_coordinador_zonal/{id}/{estado}', [CoordinadorZonalController::class, 'eliminar_coordinador_zonal'])->name('coordinador_zonal.eliminar_coordinador_zonal');

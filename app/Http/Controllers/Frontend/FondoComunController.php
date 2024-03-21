@@ -32,15 +32,15 @@ class FondoComunController extends Controller
 
         $municipalidad = $municipalidad_model -> getMunicipalidadAll();
 
+	
 		$anio = range(date('Y'), date('Y') - 20); 
-		/*
 		$mes = [
             '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
             '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
             '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
             '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
         ];
-		*/
+
 
 		$tablaMaestra_model = new TablaMaestra;
 
@@ -56,7 +56,7 @@ class FondoComunController extends Controller
 		$comision_model = new Comisione;
 		
 		$comision = $comision_model->getComisionAll("","","","1");
-		
+				
 		$periodo = $periodoComisione_model->getPeriodoAll();
 
         return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion','municipalidad'));
@@ -65,6 +65,7 @@ class FondoComunController extends Controller
     public function listar_fondo_comun_ajax(Request $request){
 	
 		$fondo_comun_model = new FondoComun;
+		$p[]=$request->id_periodo;
 		$p[]=$request->anio;
 		$p[]=$request->mes;
 		$p[]=$request->idMunicipalidad;

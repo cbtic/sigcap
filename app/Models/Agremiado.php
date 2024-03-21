@@ -36,6 +36,18 @@ class Agremiado extends Model
 		
         return $data;
 	}
+	
+	function getAgremiadoHabilitadoAll(){
+		$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, desc_cliente nombre_completo,t1.id_tipo_documento 								
+		from personas t1 
+		inner join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
+		left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'                    
+		Where  t1.estado='1' 
+		and t2.id_situacion not in(74,83)";
+		$data = DB::select($cad);
+		
+        return $data;
+	}
 
 	function getAgremiado($tipo_documento,$numero_documento){
 
@@ -47,15 +59,18 @@ class Agremiado extends Model
         }elseif($tipo_documento=="85"){ //NRO_CAP
 			
 			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,
-					t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, t1.apellido_paterno|| ' ' ||t1.apellido_materno || ', ' || t1.nombres as nombre_completo,t1.id_tipo_documento,email1 email, 
-					t4.denominacion actividad 								
-					from personas t1 
-					inner join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
-					left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'
-					left join tabla_maestras t4 on t2.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
-					Where  t2.numero_cap ='".$numero_documento."' 
-					and t1.estado='1' 
-					limit 1";
+			t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, t1.apellido_paterno|| ' ' ||t1.apellido_materno || ', ' || t1.nombres as nombre_completo,t1.id_tipo_documento,email1 email, 
+			t4.denominacion actividad, t2.numero_regional, r.denominacion regional, t5.denominacion autoriza_tramite, t6.denominacion ubicacion
+			from personas t1 
+			inner join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
+			left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'
+			left join tabla_maestras t4 on t2.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
+			inner join regiones r on t2.id_regional = r.id
+			left join tabla_maestras t5 on t2.id_autoriza_tramite = t5.codigo::int And t5.tipo ='45'	
+			left join tabla_maestras t6 on t2.id_ubicacion = t6.codigo::int And t6.tipo ='63'
+			Where  t2.numero_cap ='".$numero_documento."' 
+			and t1.estado='1' 
+			limit 1";
 								
         }else{
 			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,

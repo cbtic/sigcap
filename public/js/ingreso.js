@@ -38,6 +38,16 @@ $(document).ready(function () {
 			obtenerBeneficiario();
 		}
 	});
+/*
+	$( '#cboTipoConcepto_b' ).select2( {
+		theme: "bootstrap-5",
+		width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+		placeholder: $( this ).data( 'placeholder' ),
+		closeOnSelect: false,
+		tags: true
+	} );
+*/
+
 
 	/*$('#btnBeneficiario').click(function () {
 		modal_beneficiario(0);
@@ -161,6 +171,7 @@ function cargarcboTipoConcepto(){
 		data : $("#frmValorizacion").serialize(),
 		success: function(result){
 			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
+			var option;
 			$('#cboTipoConcepto_b').html("");
 			$(result).each(function (ii, oo) {
 				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
@@ -302,6 +313,8 @@ function calcular_total(obj){
 			$("#btnBoleta").prop('disabled', false);
 			
 			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
+
+			$("#btnFactura").prop('disabled', false);
 		}
 	}
 	
@@ -819,6 +832,8 @@ function cargarValorizacion1(){
 	});
 
 }
+
+
 function cargarValorizacion(){
 	//cargarcboPeriodo();
     
@@ -827,7 +842,10 @@ function cargarValorizacion(){
 	var tipo_documento = $("#tipo_documento").val();
 	var id_persona = 0;
 
+	
+
 	var idconcepto = $("#cboTipoConcepto_b").val();
+
 
 	$("#idConcepto").val(idconcepto);
 
@@ -890,7 +908,8 @@ function cargarValorizacion(){
 
 			}
 
-			if ((cboTipoConcepto_b==26411 && cboTipoCuota_b==1)||(cboTipoConcepto_b==26412)) {
+			//if ((cboTipoConcepto_b==26411 && cboTipoCuota_b==1)||(cboTipoConcepto_b==26412)) {			
+			if ((cboTipoConcepto_b==26411)||(cboTipoConcepto_b==26412)||(cboTipoCuota_b==1)) {
 
 				$("#btnFracciona").prop('disabled', false);
 
@@ -1328,7 +1347,21 @@ function modal_fraccionar(){
 	//cargarConceptos();
 
 }
+function muestraSeleccion() {
+	select = document.getElementById('cboTipoConcepto_b');
+	for (var i = 0; i < select.options.length; i++) {
+	  o = select.options[i];
+	  if (o.selected == true) {
+		//console.log(o.value)
+		alert(o.value);
+	  }
+	}
+  }
+
+
 function modal_fraccionamiento(){
+
+	//muestraSeleccion(); 
 
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
@@ -1367,7 +1400,12 @@ function modal_fraccionamiento(){
 
 		$(".mov").each(function (){
 			//$(this).parent().parent().parent().find(".mov").prop("checked", true);
-			$('.mov').prop('checked', true);
+			
+			var id_concepto = $(this).parent().parent().parent().find('.id_concepto').html();
+
+			alert(id_concepto);
+
+			if(id_concepto=='26411') $('.mov').prop('checked', true);
 			//calcular_total();
 	
 
@@ -1379,7 +1417,8 @@ function modal_fraccionamiento(){
 			var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
 
 			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
-			$(this).parent().parent().parent().find('.chek').val("1");
+
+			//$(this).parent().parent().parent().find('.chek').val("1");
 
 			//alert(val_sub_total);
 

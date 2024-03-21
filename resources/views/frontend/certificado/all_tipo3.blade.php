@@ -9,7 +9,7 @@
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
 <style>
-	#tblAfiliado tbody tr{
+	#tblCertificado tbody tr{
 		font-size:13px
 	}
     .table-sortable tbody tr {
@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Periodo de Comisiones</li>
+            <li class="breadcrumb-item active">Consulta de Empresas</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consultar Periodo de Comisiones <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consultar Certificados <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Periodo de Comisiones
+                        Lista de Certificados
                     </strong>
                 </div><!--card-header-->
 				
@@ -148,69 +148,40 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-				
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripci&oacute;n de Periodo">
-					</div>
-                    <!--<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio">
-					</div>
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_fin" name="fecha_fin" placeholder="Fecha Fin">
-					</div>-->
-                    <!--<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-                        <div style="float:left;padding-top:7px">Fecha Inicio</div>
-                        <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
-                            <input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control" placeholder="Fecha Inicio">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Fecha Inicio</label>
-                            <input id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio" class="form-control form-control-sm"  value="<?php if($periodoComision->fecha_inicio!="")echo date('d-m-Y',strtotime($periodoComision->fecha_inicio))?>" type="text"  >
-                        </div>
-					</div>-->
 
-                    <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="cap_lista" name="cap_lista" placeholder="CAP">
 					</div>
-							
-						
-                    <!--
-                    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-                        <div style="float:left;padding-top:7px">Fecha Fin</div>
-                        <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
-                            <input placeholder="Fecha" type="date" id="fecha_fin" class="form-control" placeholder="Fecha Fin">
-                            
-                        </div>
-					</div>-->
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Apellidos y Nombres">
+					</div>
+					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
 							<option value="0">Eliminado</option>
-                            <option value="2">Inactivo</option>
 						</select>
 					</div>
-                    
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-						
-                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
-                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
 
+                    
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
+						<input class="btn btn-success pull-rigth" value="Nuevo" type="button" id="btnNuevoTipo3" style="margin-left:15px" />
 					</div>
 				</div>
 				
-                <div class="card-body">
+                <div class="card-body">				
 
                     <div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
+                    <table id="tblCertificado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Descripci&oacute;n de Periodo</th>
-                            <th>Activo</th>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha Fin</th>
-                            <th>Estado</th>
+                            <th>Id</th>
+                            <th>CAP</th>
+                            <th>Apellidos y Nombres</th>
+                            <th>Tipo Certificado</th>
+							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
@@ -248,6 +219,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/periodoComision/lista.js') }}"></script>
+<script src="{{ asset('js/certificado.js') }}"></script>
 
 @endpush
