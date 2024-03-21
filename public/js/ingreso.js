@@ -1327,7 +1327,7 @@ function modal_fraccionar(){
 	var TotalFraccionar = $('#total').val();
 	//alert(TotalFraccionar);
 	var idConcepto = $('#idConcepto').val();
-	//alert(idConcepto);
+	alert(idConcepto);
 	
 	
 	$.ajax({
@@ -1397,38 +1397,41 @@ function modal_fraccionamiento(){
 
     }else{
 
+		var val_total = 0;
+		var val_sub_total = 0;
+		var val_igv = 0;
+
 
 		$(".mov").each(function (){
 			//$(this).parent().parent().parent().find(".mov").prop("checked", true);
+
+			$('.mov').prop('checked', true);
 			
 			var id_concepto = $(this).parent().parent().parent().find('.id_concepto').html();
 
-			alert(id_concepto);
-
-			if(id_concepto=='26411') $('.mov').prop('checked', true);
 			//calcular_total();
-	
 
-			var val_total = $(this).parent().parent().parent().find('.val_total').html();
-
-			
-
-			var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
-			var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+			val_total = $(this).parent().parent().parent().find('.val_total').html();
+			val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+			val_igv = $(this).parent().parent().parent().find('.val_igv').html();
 
 			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
 
-			//$(this).parent().parent().parent().find('.chek').val("1");
+			$(this).parent().parent().parent().find('.chek').val("1");
 
-			//alert(val_sub_total);
+			
+			if(id_concepto==26411 || id_concepto==26412) {				
+				total += Number(val_total);
+				stotal += Number(val_sub_total);
+				igv += Number(val_igv);								
+			}
+			
 
-			total += Number(val_total);
-			stotal += Number(val_sub_total);
-			igv += Number(val_igv);
+
 
 			//$(this).parent().parent().parent().prev().find(".mov").prop('disabled',true);
 
-		//	alert(total);
+			//alert(total);
 
 		});
 
@@ -1485,6 +1488,7 @@ function modal_persona_new(){
 
 function guardar_fracciona_deuda(){
 
+	
     $.ajax({
 			url: "/ingreso/send_fracciona_deuda",
             type: "POST",
