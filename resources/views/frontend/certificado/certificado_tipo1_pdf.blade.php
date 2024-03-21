@@ -134,15 +134,15 @@ $(document).ready(function() {
             <p style="text-align: justify; font_size: 11" > 4. UBICACI&Oacute;N:</p>
             
             <p></p>
-            <p style="text-align: justify; font_size: 11" >Departamento: <?php //echo $departamento;?> Provincia: <?php //echo $tipo_proyectista->tipo_proyectista;?> Distrito:</p>
+            <p style="text-align: justify; font_size: 11" >Departamento: <?php echo $departamento;?> Provincia: <?php echo $provincia;?> Distrito: <?php echo $distrito;?></p>
             <p style="text-align: justify; font_size: 11" >Direcci&oacute;n: <?php echo $direccion_proyecto;?> </p>
             <p style="text-align: justify; font_size: 11" >Lugar: <?php echo $lugar_proyecto;?> </p>
             <p></p>
             <p style="font_size: 11">II. DATOS T&Eacute;CNICOS DEL ANTEPROYECTO</p>
             <p style="text-align: justify; font_size: 11" >Valor Unitario M2: <?php echo $valor_unit;?> </p>
             <p style="text-align: justify; font_size: 11" >Tipo Obra: <?php echo $tipo_obra;?> </p>
-            <p style="text-align: justify; font_size: 11" >Uso Edificaci&oacute;n: <?php echo $sub_tipo_uso_;?> </p>
-            <p style="text-align: justify; font_size: 11" >&Aacute;rea Techada: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>
+            <p style="text-align: justify; font_size: 11" >Uso Edificaci&oacute;n: <?php echo $tipo_uso_;?> </p>
+            <p style="text-align: justify; font_size: 11" >&Aacute;rea Techada: <?php echo $area_techada;?> </p>
             <p></p>
             
             <p style="text-align: center; font_size: 11" >Sotano(s): <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  

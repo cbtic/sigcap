@@ -10,6 +10,13 @@ use App\Models\Proyecto;
 use App\Models\DerechoRevision;
 use App\Models\Agremiado;
 use App\Models\Ubigeo;
+use App\Models\Persona;
+use App\Models\Empresa;
+use App\Models\Presupuesto;
+use App\Models\Solicitude;
+use App\Models\Proyectista;
+use App\Models\UsoEdificacione;
+use App\Models\Propietario;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Auth;
@@ -20,7 +27,10 @@ class CertificadoController extends Controller
         return view('frontend.certificado.all');
     }
 
+	function consultar_certificado_tipo3(){
 
+        return view('frontend.certificado.all_tipo3');
+    }
 
     public function listar_certificado(Request $request){
        
@@ -79,6 +89,8 @@ class CertificadoController extends Controller
 			
 			$tipo_certificado = $tablaMaestra_model->getMaestroByTipo(100);
 			$tipo_tramite = $tablaMaestra_model->getMaestroByTipo(44);
+			$tipo_tramite_tipo3 = $tablaMaestra_model->getMaestroByTipo(38);
+			
 			
 			$nombre_proyecto=$certificado_model2->datos_agremiado_certificado1($id);
 			$nombre_proy=$nombre_proyecto[0]->id_solicitud;
@@ -93,6 +105,7 @@ class CertificadoController extends Controller
 			$email1="";
 			$tipo_certificado = $tablaMaestra_model->getMaestroByTipo(100);
 			$tipo_tramite = $tablaMaestra_model->getMaestroByTipo(44);
+			$tipo_tramite_tipo3 = $tablaMaestra_model->getMaestroByTipo(38);
 			$nombre_proy="";
 			
 		} 
@@ -101,9 +114,145 @@ class CertificadoController extends Controller
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy'));
+		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_tramite_tipo3','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy'));
 
     }
+
+	public function modal_certificado_tipo3($id){
+		
+		$id_user = Auth::user()->id;
+		$tablaMaestra_model=new TablaMaestra;
+		$ubigeo_model = new Ubigeo;
+
+		if($id>0){
+			$proyecto = Proyecto::find($id);
+			$propietario = new Propietario;
+			$empresa = new Empresa;
+			$persona = new Persona;
+			$certificado = new Certificado;
+			$agremiado = new Agremiado;
+		}else{
+			$proyecto = new Proyecto;
+			$propietario = new Propietario;
+			$empresa = new Empresa;
+			$persona = new Persona;
+			$certificado = new Certificado;
+			$agremiado = new Agremiado;
+		}
+        
+
+		$tipo_tramite = $tablaMaestra_model->getMaestroByTipo(38);
+		$sitio = $tablaMaestra_model->getMaestroByTipo(33);
+		$tipo_direccion = $tablaMaestra_model->getMaestroByTipo(35);
+		$departamento = $ubigeo_model->getDepartamento();
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(29);
+		$tipo_proyectista = $tablaMaestra_model->getMaestroByTipo(41);
+		$tipo_uso = $tablaMaestra_model->getMaestroByTipo(111);
+		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(24);
+		
+
+		return view('frontend.certificado.modal_certificado_tipo3',compact('id','empresa','tipo_proyecto','tipo_uso','tipo_proyectista','tipo_obra','certificado','tipo_documento','tipo_tramite','departamento','sitio','tipo_direccion','propietario','agremiado','persona','proyecto'));
+
+    }
+
+	public function send_proyecto_tipo3(Request $request){
+
+		$id_user = Auth::user()->id;
+
+		if($request->id == 0){
+			$proyecto = new Proyecto;
+			$propietario = new Propietario;
+			$proyectistaPrincipal = new Proyectista;
+			$solicitud = new Solicitude;
+			$presupuesto = new Presupuesto;
+			$usoEdificacione = new UsoEdificacione;
+		}else{
+			$proyecto = Proyecto::find($request->id);
+		}
+		
+		$numero_cap_asociado = $request->numero_cap_asociado;
+		$agremiado = Agremiado::where("id",$request->idagremiado_)->where("estado","1")->first();
+		$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
+		$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();		
+		
+		$proyectistaPrincipal->id_agremiado = $agremiado->id;
+		$proyectistaPrincipal->celular = $agremiado->celular1;
+		$proyectistaPrincipal->email = $agremiado->email1;
+		$proyectistaPrincipal->id_usuario_inserta = $id_user;
+		
+		
+		if($persona->id){
+			$propietario->id_persona = $persona->id;
+			$propietario->representante = $request->nombre_propietario;
+			$propietario->celular = $request->celular_dni;
+			$propietario->email = $request->email_dni;
+		}else{
+			$propietario->id_empresa = $empresa->id;
+			$propietario->representante = $empresa-> representante;
+			$propietario->celular = $request->telefono_ruc;
+			$propietario->email = $request->email_ruc;
+		}
+		$propietario->id_usuario_inserta = $id_user;
+		$propietario->save();
+		
+
+		$proyecto->id_ubigeo = $request->distrito;
+		$proyecto->id_tipo_sitio = $request->sitio;
+		$proyecto->nombre = $request->nombre_proyecto;
+		$proyecto->direccion = $request->direccion_tipo;
+		$proyecto->id_tipo_proyecto = $request->tipo_proyecto;
+		$proyecto->id_usuario_inserta = $id_user;
+		$proyecto->save();
+
+		$presupuesto->id_tipo_obra = $request->tipo_obra;
+		$presupuesto->area_techada = $request->area_techada;
+		$presupuesto->total_presupuesto = $request->valor_obra;
+		$presupuesto->id_usuario_inserta = $id_user;
+		$presupuesto->save();
+
+		$usoEdificacione->id_tipo_uso = $request->tipo_uso;
+		$usoEdificacione->area_techada = $request->area_techada;
+		$usoEdificacione->id_usuario_inserta = $id_user;
+		$usoEdificacione->save();
+		
+		$solicitud->id_regional = 5;
+		$solicitud->fecha_registro = Carbon::now()->format('Y-m-d');
+		$solicitud->direccion = $request->direccion_tipo;
+		$solicitud->id_ubigeo = $request->distrito;
+		$solicitud->tipo_proyecto = $request->tipo_proyecto;
+		$solicitud->valor_obra = $request->valor_obra;
+		$solicitud->area_total = $request->area_techada;
+		$solicitud->id_proyecto = $proyecto->id;
+		$solicitud->id_proyectista = $proyectistaPrincipal->id;
+		$solicitud->id_usuario_inserta = $id_user;
+		$solicitud->save();
+		
+		foreach($numero_cap_asociado as $row){
+			$proyectista = new Proyectista;
+			$agremiado = Agremiado::where("numero_cap",$row)->where("estado","1")->first();
+			$proyectista->id_solicitud = $solicitud->id;
+			$proyectista->id_agremiado = $agremiado->id;
+			$proyectista->celular = $agremiado->celular1;
+			$proyectista->email = $agremiado->email1;
+			$proyectista->id_usuario_inserta = $id_user;
+			$proyectista->save();
+		}
+		
+		$proyectistaPrincipal->id_solicitud = $solicitud->id;
+		$proyectistaPrincipal->save();
+		
+		$propietario->id_solicitud = $solicitud->id;
+		$propietario->save();
+
+		$presupuesto->id_solicitud = $solicitud->id;
+		$presupuesto->save();
+
+		$usoEdificacione->id_solicitud = $solicitud->id;
+		$usoEdificacione->save();
+
+
+	}
 
 	
 	public function certificado_vista($id){
@@ -155,13 +304,14 @@ class CertificadoController extends Controller
 		$certificado->fecha_emision = $request->fecha_emi;
 		$certificado->id_agremiado = $request->idagremiado;
 		$certificado->id_tipo_tramite = $request->tipo_tramite;
+		$certificado->id_solicitud = $request->id_proyecto;
 		$certificado->dias_validez = $request->validez;
 		$certificado->especie_valorada = $request->ev;
 		//$certificado->codigo = getCodigoCertificado($request->tipo);//$request->codigo; 
 		$certificado->observaciones =$request->observaciones;
 		$certificado->estado =1;
 		$certificado->id_tipo =$request->tipo;
-		if($request->id_tipo==1 || $request->id_tipo==2){
+		if($request->tipo==1 || $request->tipo==2 || $request->tipo==3){
 			$certificado->id_solicitud = $request->nombre_proyecto;
 		}
 		$certificado->id_usuario_inserta = $id_user;
@@ -198,14 +348,17 @@ class CertificadoController extends Controller
 		if ($trato==3) {
 			$tratodesc="EL ARQUITECTO ";
 			$faculta="facultado";
+			$habilita="HABILITADO";
+			$inscripcion="inscrito";
 		}
 		else{
 			$tratodesc="LA ARQUITECTA ";
 			$faculta="facultada";
+			$habilita="HABILITADA";
+			$inscripcion="inscrita";
 		}
 
 		Carbon::setLocale('es');
-
 
 		// Crear una instancia de Carbon a partir de la fecha
 		$carbonDate = new Carbon($fecha_emision);
@@ -216,7 +369,7 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_pdf',compact('datos','nombre','inscripcion','habilita','formattedDate','tratodesc','faculta','numeroEnLetras'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -273,10 +426,21 @@ class CertificadoController extends Controller
 		$nombre_proyectista=$tipo_proyectistas[0]->tipo_proyectista;
 		$direccion_proyecto=$tipo_proyectistas[0]->direccion;
 		$lugar_proyecto=$tipo_proyectistas[0]->lugar;
+		$nombre_proyecto=$tipo_proyectistas[0]->nombre_proyecto;
 		$nombre_propietario=$tipo_proyectistas[0]->propietario;
 		$valor_unit=$tipo_proyectistas[0]->valor_unitario;
-		$tipo_obra=$tipo_proyectistas[0]->tipo_obras;
-		$sub_tipo_uso_=$tipo_proyectistas[0]->sub_tipo_uso;
+		$tipo_obra=$tipo_proyectistas[0]->tipo_obra;
+		$tipo_uso_=$tipo_proyectistas[0]->tipo_uso;
+		$area_techada=$tipo_proyectistas[0]->area_techada;
+		$ubigeo=$tipo_proyectistas[0]->id_ubigeo;
+
+		$departamento_ = substr($ubigeo, 0, 2);
+		$provincia_ = substr($ubigeo, 2, 2);
+		$distrito_ = substr($ubigeo, 4, 2);
+
+		$departamento = $ubigeo_model->obtenerDepartamento($departamento_);
+		$provincia = $ubigeo_model->obtenerProvincia($departamento_,$provincia_);
+		$distrito = $ubigeo_model->obtenerDistrito($departamento_,$provincia_,$distrito_);
 		//$departamento=$ubigeo_model->obtenerDepartamento($tipo_proyectistas[0]->id_departamento);
 		//$departamento_numero=$tipo_proyectistas[0]->id_departamento;
 		//$departamento=$ubigeo_model->obtenerDepartamento($departamento_numero);
@@ -293,7 +457,7 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_obra','sub_tipo_uso_'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','nombre_proyecto','formattedDate','departamento','provincia','distrito','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_obra','tipo_uso_','area_techada'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -389,6 +553,8 @@ class CertificadoController extends Controller
 	public function certificado_tipo3_pdf($id){
 		
 		$datos_model=new certificado;
+		$datos2_model=new Certificado;
+		$ubigeo_model = new Ubigeo;
 
 		$datos=$datos_model->datos_agremiado_certificado($id);
 		$nombre=$datos[0]->numero_cap;
@@ -402,14 +568,40 @@ class CertificadoController extends Controller
 		if ($trato==3) {
 			$tratodesc="EL ARQUITECTO ";
 			$faculta="facultado";
+			$cita="del citado arquitecto";
+			$inscripcion="inscrito";
+			$habilita="HABILITADO";
 		}
 		else{
 			$tratodesc="LA ARQUITECTA ";
 			$faculta="facultada";
+			$cita="de la citada arquitecta";
+			$inscripcion="inscrita";
+			$habilita="HABILITADA";
 		}
 
 		Carbon::setLocale('es');
 
+		$tipo_proyectistas=$datos2_model->datos_agremiado_certificado1($id);
+
+		$nombre_proyecto=$tipo_proyectistas[0]->nombre_proyecto;
+		$nombre_propietario=$tipo_proyectistas[0]->propietario;
+		$valor_obra=$tipo_proyectistas[0]->valor_obra;
+		$area_techada=$tipo_proyectistas[0]->area_techada;
+		$direccion=$tipo_proyectistas[0]->direccion;
+		$ubigeo=$tipo_proyectistas[0]->id_ubigeo;
+
+		$departamento_ = substr($ubigeo, 0, 2);
+		$provincia_ = substr($ubigeo, 2, 2);
+		$distrito_ = substr($ubigeo, 4, 2);
+
+		$departamento = $ubigeo_model->obtenerDepartamento($departamento_);
+		$provincia = $ubigeo_model->obtenerProvincia($departamento_,$provincia_);
+		$distrito = $ubigeo_model->obtenerDistrito($departamento_,$provincia_,$distrito_);
+		/*$tipo_tramite=$tipo_proyectistas[0]->tipo_tramite;
+		$tipo_uso=$tipo_proyectistas[0]->tipo_uso;
+		$zonificacion=$tipo_proyectistas[0]->zonificacion;
+		$area_total=$tipo_proyectistas[0]->area_total;*/
 
 		// Crear una instancia de Carbon a partir de la fecha
 		$carbonDate = new Carbon($fecha_emision);
@@ -420,7 +612,7 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','direccion','provincia','departamento','distrito','nombre_propietario','nombre_proyecto','cita','valor_obra','area_techada','habilita','inscripcion','formattedDate','tratodesc','faculta','numeroEnLetras'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -456,6 +648,7 @@ class CertificadoController extends Controller
 			$faculta="facultado";
 			$habilita="habilitado";
 			$articulo="EL";
+			$inscripcion="inscrito";
 		}
 		else{
 			$tratodesc="LA ARQUITECTA ";
@@ -463,6 +656,7 @@ class CertificadoController extends Controller
 			$faculta="facultada";
 			$habilita="habilitada";
 			$articulo="LA";
+			$inscripcion="inscrita";
 		}
 
 		Carbon::setLocale('es');
@@ -480,7 +674,7 @@ class CertificadoController extends Controller
 		
 		$formattedDate_colegiado = $carbonDate_colegiado->timezone('America/Lima')->formatLocalized(' %d de %B %Y');
 		
-		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita'));
+		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros

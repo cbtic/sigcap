@@ -771,12 +771,17 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 											<th>Coordinador</th>
 											<th>Aprobar Pago</th>
 											<th>Editar</th>
+											<th>Eliminar</th>
 										</tr>
 										</thead>
 										<tbody>
-										<?php foreach ($delegados as $row) {?>
+										<?php foreach ($delegados as $row) {
+											$id_delegado = ($row->id_delegado>0)?$row->id_delegado:$row->id_agremiado;
+											$id_tipo = ($row->id_delegado>0)?1:2;
+										?>
 										<tr style='font-size:13px'>
-											<input type='hidden' name='id_delegado[]' value='<?php echo $row->id_delegado?>'>
+											<input type='hidden' name='id_delegado[]' value='<?php echo $id_delegado?>'>
+											<input type='hidden' name='id_tipo[]' value='<?php echo $id_tipo?>'>
 											<td class='text-left'>
 											<?php
 											$puesto = $row->puesto;
@@ -787,12 +792,18 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 											<td class='text-left'><?php echo $row->numero_cap?></td>
 											<td class='text-left'><?php echo $row->situacion?></td>
 											<td class='text-center'>
-											<input type="radio" name="coordinador" value="<?php echo $row->id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> />
+											<input type="radio" name="coordinador" value="<?php echo $id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> />
 											</td>
 											<td class='text-center'>
-											<input type="checkbox" class="id_aprobar_pago" name="id_aprobar_pago[<?php echo $row->id_delegado?>]" value="<?php echo $row->id_delegado?>" <?php if($row->id_aprobar_pago==2)echo "checked='checked'"?> />
+											<input type="checkbox" class="<?php if($row->situacion!="INHABILITADO" && $row->situacion!="FALLECIDO")echo "id_aprobar_pago"?>" name="id_aprobar_pago[<?php echo $id_delegado?>]" value="<?php echo $id_delegado?>" 
+											<?php 
+											if($row->id_aprobar_pago==2)echo "checked='checked'";
+											if($row->situacion=="INHABILITADO" || $row->situacion=="FALLECIDO")echo "disabled='disabled'";
+											?> 
+											/>
 											</td>
-											<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('<?php echo $row->id?>') ><i class='fa fa-edit'></i> Editar</button></td>
+											<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('<?php echo $row->id?>') >Editar</button></td>
+											<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-danger' data-toggle='modal' onclick=eliminarDelegadoSesion('<?php echo $row->id?>') >Eliminar</button></td>
 										<?php } ?>
 										</tbody>
 									</table>

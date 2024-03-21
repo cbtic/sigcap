@@ -55,10 +55,11 @@ inner join solicitudes s2 on s2.id=csd.id_solicitud
 inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 inner join comisiones t4 on t1.id_comision=t4.id
-inner join comision_delegados cd on t0.id_delegado=cd.id  
-inner join agremiados a on cd.id_agremiado=a.id 
+left join comision_delegados cd on t0.id_delegado=cd.id  
+left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
 inner join personas p on a.id_persona=p.id 
 where t0.id_aprobar_pago=2
+and t0.estado='1'
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and u.id_ubigeo = '".$id_ubigeo."' 
@@ -70,15 +71,15 @@ and t1.id_comision=".$id_comision;
 	
 	public static function getFechaDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision,$id_agremiado,$fecha){
 
-        $cad = "select case when id_tipo_sesion='401' then 'O' when id_tipo_sesion='402' then 'E' end tipo_sesion 
+        $cad = "select case when id_tipo_sesion='401' and t0.id_delegado>0 then 'O' when id_tipo_sesion='402' and t0.id_delegado>0 then 'E'  else 'AE' end tipo_sesion 
 from comision_sesiones t1 
 inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
 inner join solicitudes s2 on s2.id=csd.id_solicitud
 inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 inner join comisiones t4 on t1.id_comision=t4.id
-inner join comision_delegados cd on t0.id_delegado=cd.id  
-inner join agremiados a on cd.id_agremiado=a.id 
+left join comision_delegados cd on t0.id_delegado=cd.id  
+left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
 inner join personas p on a.id_persona=p.id 
 where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'

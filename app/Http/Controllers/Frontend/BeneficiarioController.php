@@ -95,56 +95,71 @@ class BeneficiarioController extends Controller
     public function send_beneficiario(Request $request){
 		
 		$id_user = Auth::user()->id;
-
-		if($request->id == 0){
-			$beneficiario = new Beneficiario;
-		}else{
-			$beneficiario = Beneficiario::find($request->id);
+		$dni_beneficiario = $request->dni_beneficiario;
+		$estado_beneficiario = $request->estado_beneficiario;
+        $n_beneficiario = $request->numero_vigente;
+		$empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
+		$concepto = Concepto::find($request->concepto);
+		$cadena_persona = "";
+		foreach($dni_beneficiario as $key=>$row){
+			
+			if($request->id == 0){
+				$beneficiario = new Beneficiario;
+			}else{
+				$beneficiario = Beneficiario::find($request->id);
+			}
+			
+			$persona = Persona::where("numero_documento",$row)->where("estado","1")->first();
+			
+			$beneficiario->id_persona = $persona->id;
+			$beneficiario->id_empresa = $empresa->id;
+			$beneficiario->id_concepto = $request->concepto;
+			$beneficiario->estado_beneficiario = $estado_beneficiario[$key];
+			$beneficiario->observacion = $request->observacion;
+			$beneficiario->id_usuario_inserta = $id_user;
+			$beneficiario->save();
+			$id_beneficiario = $beneficiario->id;
+			
+			$cadena_persona .= $persona->nombres." ". $persona->apellido_paterno." ". $persona->apellido_materno.", ";
+			/*
+			if($estado_beneficiario[$key]==1){
+				
+			}else{
+			
+				$valorizaciones = Valorizacione::where("pk_registro",$request->id)->where("id_modulo", "9")->where("estado","1")->first();
+				if(isset($valorizaciones->id)){
+					$id_valorizaciones = $valorizaciones->id;
+					$valorizacion = Valorizacione::find($id_valorizaciones);
+					$valorizacion->estado = 0;
+					$valorizacion->save();
+				}
+			}
+			*/
+			
+			
 		}
-		$persona = Persona::where("numero_documento",$request->dni)->where("estado","1")->first();
-        $empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
-
-		$beneficiario->id_persona = $persona->id;
-		$beneficiario->id_empresa = $empresa->id;
-        $beneficiario->id_concepto = $request->concepto;
-        $beneficiario->estado_beneficiario = $request->estado_beneficiario;
-        $beneficiario->observacion = $request->observacion;
-		$beneficiario->id_usuario_inserta = $id_user;
-		$beneficiario->save();
-
-        $id_beneficiario = $beneficiario->id;
 		
-		if($request->estado_beneficiario==1){
+		if(count($dni_beneficiario) > 0){
 		
-			$beneficiario = Beneficiario::find($request->id_beneficiario);
-
-            $concepto = Concepto::find($request->concepto);
+			$cadena_persona = substr($cadena_persona,0,strlen($cadena_persona)-2);
 			
 			$valorizacion = new Valorizacione;
 			$valorizacion->id_modulo = 9;
 			$valorizacion->pk_registro = $id_beneficiario;
-            $valorizacion->id_empresa = $empresa->id;
+			$valorizacion->id_empresa = $empresa->id;
 			$valorizacion->id_concepto = $concepto->id;
 			$valorizacion->id_persona = $persona->id;
 			$valorizacion->monto = $concepto->importe;
+            $valorizacion->cantidad = 4;
+            //$valorizacion->cantidad = 3;
 			$valorizacion->id_moneda = $concepto->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-			$valorizacion->descripcion = $concepto->denominacion ." - ". $persona->nombres." ". $persona->apellido_paterno." ". $persona->apellido_materno;
-			//$valorizacion->estado = 1;
-			//print_r($valorizacion->descripcion).exit();
+			$valorizacion->descripcion = $concepto->denominacion ." - ". $cadena_persona;
+			$valorizacion->estado = 1;
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
 			
-		}else{
-		
-			$valorizaciones = Valorizacione::where("pk_registro",$request->id)->where("id_modulo", "9")->where("estado","1")->first();
-			if(isset($valorizaciones->id)){
-				$id_valorizaciones = $valorizaciones->id;
-				$valorizacion = Valorizacione::find($id_valorizaciones);
-				$valorizacion->estado = 0;
-				$valorizacion->save();
-			}
 		}
         
     }

@@ -361,12 +361,20 @@ function fn_save_periodoComision(){
 	var id = $('#id').val();
 	var descripcion = $('#descripcion').val();
 	var fecha_inicio = $('#fecha_inicio').val();
+	
+	var fijar_periodo;
+	if ($('#fijar_periodo').is(':checked')) {
+		fijar_periodo = $('#fijar_periodo').val();
+	} else {
+		fijar_periodo = 0;
+	}
+	
 	var fecha_fin = $('#fecha_fin').val();
 	
     $.ajax({
 			url: "/periodoComision/send_periodoComision_nuevoPeriodoComision",
             type: "POST",
-            data : {_token:_token,id:id,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin},
+            data : {_token:_token,id:id,descripcion:descripcion,fijar_periodo:fijar_periodo,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -435,6 +443,17 @@ function fn_save_periodoComision(){
 								<label class="control-label form-control-sm">Descripci&oacute;n</label>
 								<input id="descripcion" name="descripcion" class="form-control form-control-sm"  value="<?php echo $periodoComision->descripcion?>" type="text" readonly="readonly" >
 							
+							</div>
+						</div>
+						<div class="col-lg-3" style="padding-top:40px">
+							<div class="form-group">
+
+							<input type="hidden" name="fijar_periodo" value="0"> <!-- Valor predeterminado -->
+							<input type="checkbox" name="fijar_periodo" value="1" id="fijar_periodo" <?php echo $periodoComision->activo ? 'checked' : '' ?>>
+
+							<!--<input type="checkbox" name="fijar_periodo" value="1" id="fijar_periodo" <?php echo $periodoComision->activo ? 'checked' :'' ?>>
+							<input type="checkbox" class="fijar_periodo" id="fijar_periodo" name="fijar_periodo" value="" <?php //if($row->id_aprobar_pago==2)echo "checked='checked'"?> />-->
+							<label class="control-label form-control-sm">Fijar Periodo</label>
 							</div>
 						</div>
 					</div>

@@ -170,9 +170,9 @@ class Persona extends Model
 
     function getPersonaDniPropietario($numero_documento){
 
-        $cad = "select p.id, p.desc_cliente_sunat nombres, p.direccion, p.numero_celular, p.correo 
+        $cad = "select p.id, p.apellido_paterno|| ' ' ||p.apellido_materno || ', ' || p.nombres nombres, p.direccion, p.numero_celular, p.correo 
         from personas p
-		Where p.numero_documento='".$numero_documento."'";
+        Where p.numero_documento='".$numero_documento."'";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data[0];

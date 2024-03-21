@@ -78,30 +78,39 @@ order by desc_ubigeo ";
         where id_departamento = '".$id_departamento."' and id_provincia ='00' and id_distrito ='00'
         ";
     
-		$data = DB::select($cad);
-        return $data;
+        $data = DB::select($cad);
+		if (!empty($data)) {
+            return $data[0]->desc_ubigeo;
+        }
+        return null;
     }
 
-    function obtenerProvincia($id_provincia){
+    function obtenerProvincia($id_departamento,$id_provincia){
 
         $cad = "select u.desc_ubigeo 
         from ubigeos u 
-        where id_departamento = '".$id_provincia."' and id_provincia ='00' and id_distrito ='00'
+        where id_departamento = '".$id_departamento."' and id_provincia ='".$id_provincia."' and id_distrito ='00'
         ";
     
 		$data = DB::select($cad);
-        return $data;
+        if (!empty($data)) {
+            return $data[0]->desc_ubigeo;
+        }
+        return null;
     }
 
-    function obtenerDistrito($id_distrito){
+    function obtenerDistrito($id_departamento,$id_provincia,$id_distrito){
 
         $cad = "select u.desc_ubigeo 
         from ubigeos u 
-        where id_departamento = '".$id_distrito."' and id_provincia ='00' and id_distrito ='00'
+        where id_departamento = '".$id_departamento."' and id_provincia ='".$id_provincia."' and id_distrito ='".$id_distrito."'
         ";
     
 		$data = DB::select($cad);
-        return $data;
+        if (!empty($data)) {
+            return $data[0]->desc_ubigeo;
+        }
+        return null;
     }
 
 }

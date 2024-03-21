@@ -1029,3 +1029,30 @@ function fn_eliminar(id,estado){
     });
 }
 
+
+function eliminarDelegadoSesion(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas Eliminar al delegado?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_delegado_sesion(id);
+            }
+        }
+    });
+    //$(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_delegado_sesion(id){
+	
+    $.ajax({
+            url: "/sesion/eliminar_comision_sesion_delegados/"+id,
+            type: "GET",
+            success: function (result) {
+                $('#openOverlayOpc').modal('hide');
+				datatablenew();
+            }
+    });
+}
+

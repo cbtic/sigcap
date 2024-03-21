@@ -98,6 +98,16 @@ class PeriodoComisionController extends Controller
 		]
 		);*/
 		//print("asdasd");exit();
+
+		$periodoActivo = PeriodoComisione::where("activo", 1)->where("estado", "1")->first();
+
+		
+		if ($periodoActivo) {
+			
+			$periodoActivo->activo = 0;
+			$periodoActivo->save();
+		}
+
 		$id_user = Auth::user()->id;
 
 		if($request->id == 0){
@@ -108,6 +118,7 @@ class PeriodoComisionController extends Controller
 			//$codigo = $request->codigo;
 		}
 		
+
 		$fecha_ini = Carbon::parse($request->fecha_inicio);
 		$periodo_mes_ini = $fecha_ini->month;
 		$periodo_año_ini = $fecha_ini->year;
@@ -117,6 +128,7 @@ class PeriodoComisionController extends Controller
 		$periodoComision->descripcion = $periodo_mes_ini.'/'.$periodo_año_ini.' - '.$periodo_mes_fin.'/'.$periodo_año_fin;
         $periodoComision->fecha_inicio = $request->fecha_inicio;
         $periodoComision->fecha_fin = $request->fecha_fin;
+		$periodoComision->activo = $request->fijar_periodo;
 		
 		$fecha_actual = Carbon::now()->format('Y-m-d');
 		

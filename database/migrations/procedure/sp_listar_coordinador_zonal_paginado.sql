@@ -19,7 +19,7 @@ begin
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
 	v_campos=' cz.id, a.numero_cap, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, 
-	zo.denominacion zonal,ec.denominacion estado_coordinador ';
+	zo.denominacion zonal,ec.denominacion estado_coordinador, cz.estado ';
 
 	v_tabla='from coordinador_zonales cz 
 	inner join agremiados a on cz.id_agremiado = a.id 

@@ -118,12 +118,12 @@ $(document).ready(function() {
         <div class="contenido">
             <h2 style="text-align:center"> <b> ARQ. <?php echo $datos[0]->desc_cliente;?> </b></h2>
             <h2 style="text-align:center"> CAP <?php echo $datos[0]->numero_cap;?> </h2>
-            <p style="text-align: justify; font_size: 14" >Se encuentra inscrito(a) en nuestra Instituci&oacute;n desde el <?php echo $formattedDate_colegiado;?> como Miembro 
+            <p style="text-align: justify; font_size: 14" >Se encuentra <?php echo $inscripcion;?> en nuestra Instituci&oacute;n desde el <?php echo $formattedDate_colegiado;?> como Miembro 
                              de la Orden con el n&uacute;mero de CAP <?php echo $datos[0]->numero_cap;?> y registro de inscripci&oacute;n en la Regional Lima
                              N° <?php echo $datos[0]->numero_regional;?>.</p>
 
             <p style="text-align: justify; font_size: 14">Actualmente <?php echo $tratodesc_minuscula;?> <b><?php echo $datos[0]->desc_cliente;?> </b> 
-            ha pagado sus cuotas institucionales hasta <?php //echo $datos[0]->mes;?> del Z; por lo tanto, se encuentra en condici&oacute;n
+            ha pagado sus cuotas institucionales desde <?php //echo $datos[0]->mes_inicio;?> del <?php //echo $datos[0]->año_inicio;?> hasta <?php //echo $datos[0]->mes_fin;?> del <?php //echo $datos[0]->año_fin;?>; por lo tanto, se encuentra en condici&oacute;n
             de <?php echo $habilita;?> para ejercer la profesi&oacute;n.</p>
             <p></p>
             

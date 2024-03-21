@@ -132,7 +132,32 @@ function guardarnd(){
 	
 
 }
- 
+
+function guardarnc(){
+
+	
+    var msg = "";
+    var tiponota = $('#tiponota_').val();
+	var motivo = $('#motivo_').val();
+	
+
+		if(tiponota=="")msg+="Debe ingresar un el tipo de nota<br>";	
+		if(motivo=="")msg+="Debe ingresar el motivo<br>";	
+		
+
+    if(msg!=""){
+		
+        Swal.fire(msg);
+        return false;
+    }
+    else{
+		
+        fn_save_nc();
+	}
+	
+
+}
+
 
 function fn_save(){
 
@@ -190,6 +215,35 @@ function fn_save_nd(){
 
 			//data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmND").serialize(),
+			dataType: 'json',
+            success: function (result) {
+				
+			//	$('.loader').hide();
+				
+				$('#numerof').val(result.id_factura);
+				$('#divNumeroF').show();
+				location.href=urlApp+"/comprobante/"+result.id_factura;
+
+            }
+    });
+}
+
+function fn_save_nc(){
+
+    /*
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	$('#guardar').hide();
+	*/
+    $.ajax({
+			url: "/comprobante/send_nc",
+            type: "POST",
+
+			//data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
+            data : $("#frmNC").serialize(),
 			dataType: 'json',
             success: function (result) {
 				
