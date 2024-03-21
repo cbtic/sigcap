@@ -260,6 +260,18 @@ br {
                                                                 <p>BOLETA ELECTRONICA</p>
                                                                 @break
 
+                                                                @case('FT')
+                                                                <p>FACTURA ELECTRONICA</p>
+                                                                @break
+
+                                                                @case('NC')
+                                                                <p>NOTA DE CREDITO</p>
+                                                                @break
+
+                                                                @case('ND')
+                                                                <p>NOTA DE DEBITO</p>
+                                                                @break
+
                                                                 @default
                                                                 <p>No esta identificado el tipo de documento</p>
                                                                 @endswitch
