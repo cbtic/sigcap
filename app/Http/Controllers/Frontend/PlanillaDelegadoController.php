@@ -17,14 +17,7 @@ class PlanillaDelegadoController extends Controller
 	
 	public function consulta_planilla_delegado(){
 		
-		//$agremiado_model = new Agremiado();
-		//$concurso_model = new Concurso();
-		//$tablaMaestra_model = new TablaMaestra;
-		
-		//$concurso = $concurso_model->getConcurso();
-		//$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
-		
-        //return view('frontend.concurso.create_resultado',compact('concurso','situacion_cliente'));
+		$periodoComisione_model = new PeriodoComisione;
 		
 		$anio = range(date('Y'), date('Y') - 20); 
 		$mes = [
@@ -34,9 +27,22 @@ class PlanillaDelegadoController extends Controller
             '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
         ];
 		
-		return view('frontend.planilla.consulta_planilla_delegado',compact('anio','mes'));
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		
+		return view('frontend.planilla.consulta_planilla_delegado',compact('periodo','anio','mes','periodo_ultimo','periodo_activo'));
 		
     }
+	
+	public function obtener_anio_periodo($id_periodo){
+			
+		$periodoComisione_model = new PeriodoComisione;
+		$periodoComision = PeriodoComisione::find($id_periodo);
+		$anio = $periodoComisione_model->getAnioByFecha($periodoComision->fecha_inicio,$periodoComision->fecha_fin);
+		echo json_encode($anio);
+		
+	}
 	
 	public function consulta_reintegro(){
 		
