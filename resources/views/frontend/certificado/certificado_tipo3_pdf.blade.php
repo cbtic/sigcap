@@ -115,7 +115,7 @@ $(document).ready(function() {
     <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">  
     <h2 style="text-align:center">CERTIFICADO DE HABILITACION PROFESIONAL</h2>
     <p style="text-align:center">  N° : <?php echo $datos[0]->codigo;?> </p>
-        <p  style="text-align:center">PARA <?php //echo $tipo_tramite;?> </p>
+        <p  style="text-align:center">PARA <?php echo $tipo_tramite_tipo3;?> </p>
         <hr>
         <div class="contenido">
             <p id="primero">El Colegio de Arquitectos del Perú - Regi&oacute;n Lima, certifica que:</p>
@@ -131,7 +131,7 @@ $(document).ready(function() {
                             <p></p>
             <h3 style="text-align:left">INFORMACI&Oacute;N GENERAL DEL EXPEDIENTE</h3>
 
-            <p><b>1. Expediente :</b> <?php echo $cita;?></p>
+            <p><b>1. Expediente :</b> <?php echo $expediente;?></p>
             <p><b>2. Proyecto   :</b> <?php echo $nombre_proyecto;?></p>
             <p><b>3. Propietario:</b> <?php echo $nombre_propietario;?></p>
             <!--<p>4. Valor Total de Obra S/.: <?php //echo $valor_obra;?></p>-->
