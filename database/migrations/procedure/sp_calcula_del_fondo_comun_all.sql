@@ -1,3 +1,5 @@
+-- DROP FUNCTION public.sp_calcula_del_fondo_comun_all(varchar, varchar, varchar);
+
 CREATE OR REPLACE FUNCTION public.sp_calcula_del_fondo_comun_all(p_id_periodo character varying, p_anio character varying, p_mes character varying)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -63,7 +65,7 @@ from (
 	having 
 	to_char(cs.fecha_ejecucion,'yyyy') = p_anio
 	And to_char(cs.fecha_ejecucion,'mm')= p_mes
-	and cs.id_periodo_comisione = p_id_periodo
+	and cs.id_periodo_comisione = p_id_periodo::integer
 	and t6.id_aprobar_pago=2
 )
 group by id_ubigeo, distrito;
