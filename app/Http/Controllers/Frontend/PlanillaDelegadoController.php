@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PlanillaDelegado;
+use App\Models\PlanillaDelegadoDetalle;
 use App\Models\DelegadoReintegro;
 use App\Models\PeriodoComisione;
 use App\Models\ComisionDelegado;
 use App\Models\Regione;
 use App\Models\ComisionSesionDelegado;
+use App\Models\TablaMaestra;
+use App\Models\Agremiado;
 use Auth;
 
 class PlanillaDelegadoController extends Controller
@@ -181,5 +184,30 @@ class PlanillaDelegadoController extends Controller
 		
 	}
 	
+	public function consulta_planilla_recibos_honorario(){
+		
+		$periodoComisione_model = new PeriodoComisione;
+		$planillaDelegadoDetalle = new PlanillaDelegadoDetalle;
+		$agremiado = new Agremiado;
+		$tablaMaestra_model = new TablaMaestra;
+		
+		
+		$anio = range(date('Y'), date('Y') - 20); 
+		$mes = [
+            '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
+            '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
+            '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
+            '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
+        ];
+		
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		$tipo_comprobante = $tablaMaestra_model->getMaestroByTipo(103);
+		$situacion = $tablaMaestra_model->getMaestroByTipo(14);
+
+		return view('frontend.planilla.consulta_planilla_recibos_honorario',compact('periodo','anio','mes','periodo_ultimo','periodo_activo','planillaDelegadoDetalle','tipo_comprobante','agremiado','situacion'));
+		
+    }
 	    
 }

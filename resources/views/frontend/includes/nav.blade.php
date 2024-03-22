@@ -185,6 +185,9 @@
 							@can('Planilla Delegados')
 						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
 							@endcan
+							@can('Planilla Delegados')
+						   	<a href="/planillaDelegado/consulta_planilla_recibos_honorario" class="dropdown-item">Registro Recibos por Honorarios</a>
+							@endcan
 						   </div>
 					</li>
 					@endif
