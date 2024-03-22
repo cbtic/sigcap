@@ -631,7 +631,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 														
 						<div class="col-lg-4">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Tipo Programaci&oacute;n</label>
+								<label class="control-label form-control-sm">Tipo Sesi&oacute;n</label>
 								<select name="id_tipo_sesion" id="id_tipo_sesion" class="form-control form-control-sm" onChange="habilitarProgramacion()">
 									<option value="">--Selecionar--</option>
 									<?php
@@ -670,7 +670,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Hora Inicio</label>
-								<input id="hora_inicio" name="hora_inicio" class="form-control form-control-sm" value="<?php echo $comisionSesion->hora_inicio?>" type="time">
+								<input id="hora_inicio" name="hora_inicio" class="form-control form-control-sm" value="<?php echo ($comisionSesion->hora_inicio!="")?$comisionSesion->hora_inicio:"09:00"?>" type="time">
 								
 							</div>
 						</div>
@@ -678,7 +678,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Hora Fin</label>
-								<input id="hora_fin" name="hora_fin" class="form-control form-control-sm" value="<?php echo $comisionSesion->hora_fin?>" type="time">
+								<input id="hora_fin" name="hora_fin" class="form-control form-control-sm" value="<?php echo ($comisionSesion->hora_fin!="")?$comisionSesion->hora_fin:"15:00"?>" type="time">
 								
 							</div>
 						</div>

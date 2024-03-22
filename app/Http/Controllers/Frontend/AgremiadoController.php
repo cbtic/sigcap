@@ -91,6 +91,8 @@ class AgremiadoController extends Controller
 		$p[]="";
 		$p[]="";
 		$p[]="";
+		$p[]="t1.id";
+		$p[]="desc";
 		$p[]="1";
 		$p[]="100";
 		$agremiado_rol = $concursoInscripcione_model->listar_concurso_agremiado($p);

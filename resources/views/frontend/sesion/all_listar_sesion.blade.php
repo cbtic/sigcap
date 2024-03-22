@@ -295,12 +295,13 @@
 					<table id="tblDictamen" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>C&oacute;digo</th>
+							<!--<th>C&oacute;digo</th>-->
 							<th>Tipo de Solicitud</th>
 							<th>Distrito</th>
 							<th>Revis&oacute;n</th>
 							<th>N&deg; Liquidaci&oacute;n</th>
-							<th>Nombre</th>
+							<th>Fecha Liquidaci&oacute;n</th>
+							<!--<th>Nombre</th>-->
 							<th>Direcci&oacute;n</th>
 							<th>Dictamen</th>
                         </tr>

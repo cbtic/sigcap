@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_listar_programacion_sesion_paginado(p_id_regional character varying, p_id_periodo_comisiones character varying, p_tipo_comision character varying, p_id_comision character varying, p_fecha_programado_desde character varying, p_fecha_programado_hasta character varying, p_id_tipo_sesion character varying, p_id_tipo_agrupacion character varying, p_id_estado_sesion character varying, p_id_estado_aprobacion character varying, p_cantidad_delegado character varying, p_id_situacion character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -21,7 +20,7 @@ begin
 	
 	v_campos=' t1.id,to_char(t1.fecha_programado,''dd-mm-yyyy'')fecha_programado,to_char(t1.fecha_ejecucion,''dd-mm-yyyy'')fecha_ejecucion,
 t1.hora_inicio,t1.hora_fin,t2.denominacion tipo_sesion,t3.denominacion estado_sesion,t7.denominacion estado_aprobacion,
-t4.comision||'' ''||t4.denominacion comision,t5.descripcion periodo,t6.denominacion region,
+t4.denominacion||'' ''||t4.comision comision,t5.descripcion periodo,t6.denominacion region,
 (select count(*) from comision_sesion_delegados csd where csd.id_comision_sesion=t1.id and coalesce(csd.id_delegado,0)!=0) cantidad_delegado,
 t8.denominacion tipo_comision,
 5 cantidad_situacion ';

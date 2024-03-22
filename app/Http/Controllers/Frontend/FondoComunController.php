@@ -30,7 +30,7 @@ class FondoComunController extends Controller
 
         $municipalidad_model = new Municipalidade;
 
-        $municipalidad = $municipalidad_model -> getMunicipalidadAll();
+        $municipalidad = $municipalidad_model->getMunicipalidadAll();
 
 	
 		$anio = range(date('Y'), date('Y') - 20); 
@@ -40,11 +40,11 @@ class FondoComunController extends Controller
             '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
             '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
         ];
-
+		
 
 		$tablaMaestra_model = new TablaMaestra;
 
-		$mes = $tablaMaestra_model->getMaestroByTipo(116);
+		//$mes = $tablaMaestra_model->getMaestroByTipo(116);
 
 		$mes_actual = date("m");
 
@@ -63,8 +63,8 @@ class FondoComunController extends Controller
 
 		//print_r($mes); exit();
 
-        //return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion','municipalidad','periodo_ultimo'));
-		return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes'));
+        return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion','municipalidad','periodo_ultimo'));
+		//return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes'));
     }
 
     public function listar_fondo_comun_ajax(Request $request){
