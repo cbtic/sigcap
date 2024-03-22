@@ -666,6 +666,29 @@ function cargarFondoComun() {
 
 }
 
+obtenerAnioPerido();
+
+function obtenerAnioPerido(){
+	
+	var id_periodo = $('#id_periodo').val();
+	
+	$.ajax({
+		url: '/planilla/obtener_anio_periodo/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#anio').html("");
+			//option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
+			});
+			$('#anio').html(option);
+		}
+		
+	});
+	
+}
+
 function fn_calcular(){
 	//var anio = $('#anio').val();
 	//var mes = $('#mes').val();

@@ -176,15 +176,48 @@
 
 							
 								<div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
-									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="">
+<!--
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="" disabled="disabled" >
+										<option value="">--Periodo--</option>
+										</?php
+										foreach ($periodo as $row) {?>
+										<option value="<//?php echo $row->id?>" <//?php if($row->id == $periodo_activo->id)echo "selected='selected'";?>><//?php echo $row->descripcion?></option>
+										<//?php 
+										}
+										?>
+									</select>
+									-->
+									<?php 
+									if($periodo_activo){
+									?>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerAnioPeriodo()" >
 										<option value="">--Periodo--</option>
 										<?php
 										foreach ($periodo as $row) {?>
-										<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_activo->id)echo "selected='selected'";?>><?php echo $row->descripcion?></option>
+										<option value="<?php echo $row->id?>" 
+										<?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
 										<?php 
 										}
 										?>
 									</select>
+									
+									<?php
+									}else{
+									?>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerAnioPerido()">
+										<option value="">--Periodo--</option>
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" 
+										<?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									<?php } ?>
+
+
+
 								</div>
 
 
@@ -195,6 +228,7 @@
 											<option value="{{ $anio }}">{{ $anio }}</option>
 										@endforeach
 									</select>
+
 								</div>
 
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
