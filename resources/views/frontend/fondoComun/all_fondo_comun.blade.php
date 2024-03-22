@@ -175,29 +175,63 @@
 							<div class="row" style="padding:20px 20px 0px 20px;">
 
 							
-								<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
-									<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="">
+								<div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
+<!--
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="" disabled="disabled" >
+										<option value="">--Periodo--</option>
+										</?php
+										foreach ($periodo as $row) {?>
+										<option value="<//?php echo $row->id?>" <//?php if($row->id == $periodo_activo->id)echo "selected='selected'";?>><//?php echo $row->descripcion?></option>
+										<//?php 
+										}
+										?>
+									</select>
+									-->
+									<?php 
+									if($periodo_activo){
+									?>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerAnioPeriodo()" >
 										<option value="">--Periodo--</option>
 										<?php
 										foreach ($periodo as $row) {?>
-										<option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+										<option value="<?php echo $row->id?>" 
+										<?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
 										<?php 
 										}
 										?>
 									</select>
+									
+									<?php
+									}else{
+									?>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerAnioPerido()">
+										<option value="">--Periodo--</option>
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" 
+										<?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									<?php } ?>
+
+
+
 								</div>
 
 
 
-								<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<select name="anio" id="anio" class="form-control form-control-sm">
 										@foreach ($anio as $anio)
 											<option value="{{ $anio }}">{{ $anio }}</option>
 										@endforeach
 									</select>
+
 								</div>
 
-								<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<select name="mes" id="mes" class="form-control form-control-sm">
 										@foreach ($mes as $key=>$mes)
 											<option value="{{ $key }}">{{ $mes }}</option>
