@@ -59,7 +59,12 @@ class FondoComunController extends Controller
 				
 		$periodo = $periodoComisione_model->getPeriodoAll();
 
-        return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion','municipalidad'));
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+
+		//print_r($mes); exit();
+
+        //return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion','municipalidad','periodo_ultimo'));
+		return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes'));
     }
 
     public function listar_fondo_comun_ajax(Request $request){
@@ -73,6 +78,8 @@ class FondoComunController extends Controller
 		$p[]=$request->credipago;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
+
+		//print_r($p); exit();
 
 		$data = $fondo_comun_model->listar_fondo_comun_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
