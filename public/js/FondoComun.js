@@ -672,6 +672,7 @@ function fn_calcular(){
 	var p = {};
 	p.anio =  $('#anio').val();
 	p.mes = $('#mes').val();
+	p.periodo = $('#id_periodo').val();
 
 	//alert(mes);
     $.ajax({
