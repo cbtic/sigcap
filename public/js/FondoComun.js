@@ -475,7 +475,7 @@ function datatablenew() {
 					fnCallback(result);
 				},
 				"error": function (msg, textStatus, errorThrown) {
-					//location.href="login";
+					//location.href="login";	2
 				}
 			});
 		},
