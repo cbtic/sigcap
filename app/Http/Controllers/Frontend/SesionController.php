@@ -46,8 +46,9 @@ class SesionController extends Controller
 		$periodo = $periodoComisione_model->getPeriodoAll();
 		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$situacion = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion','tipo_comision','periodo_ultimo'));
+        return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion','tipo_comision','periodo_ultimo','situacion'));
     }
 	
 	public function obtener_dictamen($id_comision_sesion){
@@ -72,6 +73,7 @@ class SesionController extends Controller
 		$p[]=$request->id_estado_sesion;
 		$p[]=$request->id_estado_aprobacion;
 		$p[]=$request->cantidad_delegado;
+		$p[]=$request->id_situacion;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comisionSesion_model->lista_programacion_sesion_ajax($p);

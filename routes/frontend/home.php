@@ -515,6 +515,7 @@ Route::get('planilla/modal_reintegro/{id}', [PlanillaDelegadoController::class, 
 Route::get('planilla/obtener_delegado_periodo/{id_periodo}', [PlanillaDelegadoController::class, 'obtener_delegado_periodo'])->name('planilla.obtener_delegado_periodo');
 Route::get('planilla/obtener_comision_delegado_periodo/{id_periodo}/{id_agremiado}', [PlanillaDelegadoController::class, 'obtener_comision_delegado_periodo'])->name('planilla.obtener_comision_delegado_periodo');
 Route::post('planilla/send_reintegro', [PlanillaDelegadoController::class, 'send_reintegro'])->name('planilla.send_reintegro');
+Route::get('planilla/obtener_anio_periodo/{id_periodo}', [PlanillaDelegadoController::class, 'obtener_anio_periodo'])->name('planilla.obtener_anio_periodo');
 
 Route::get('centro_costo/importar_centro_costo', [CentroCostoController::class, 'importar_centro_costo'])->name('centro_costo.importar_centro_costo');
 Route::get('partida_presupuestal/importar_partida_presupuestal', [PartidaPresupuestalController::class, 'importar_partida_presupuestal'])->name('partida_presupuestal.importar_partida_presupuestal');
@@ -619,3 +620,5 @@ Route::get('certificado/consultar_certificado_tipo3', [CertificadoController::cl
 Route::get('certificado/modal_certificado_tipo3/{id}', [CertificadoController::class, 'modal_certificado_tipo3'])->name('certificado.modal_certificado_tipo3');
 Route::post('certificado/send_proyecto_tipo3', [CertificadoController::class, 'send_proyecto_tipo3'])->name('certificado.send_proyecto_tipo3');
 Route::get('coordinador_zonal/eliminar_coordinador_zonal/{id}/{estado}', [CoordinadorZonalController::class, 'eliminar_coordinador_zonal'])->name('coordinador_zonal.eliminar_coordinador_zonal');
+
+Route::get('planillaDelegado/consulta_planilla_recibos_honorario', [PlanillaDelegadoController::class, 'consulta_planilla_recibos_honorario'])->name('planillaDelegado.consulta_planilla_recibos_honorario');

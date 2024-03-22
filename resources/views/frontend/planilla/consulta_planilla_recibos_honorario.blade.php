@@ -333,7 +333,7 @@ label.form-control-sm{
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
     <li class="breadcrumb-item text-primary">Inicio</li>
-    <li class="breadcrumb-item active">Registro de Solicitud</li>
+    <li class="breadcrumb-item active">Registro de Recibos por Honorarios de Delegados</li>
     </li>
 </ol>
 
@@ -360,7 +360,7 @@ label.form-control-sm{
         <div class="card-body">
 					
 			
-            <form class="form-horizontal" method="post" action="" id="frmPlanilla" autocomplete="off">
+            <form class="form-horizontal" method="post" action="" id="frmPlanillaDetalle" autocomplete="off">
 				<!--
                 <div class="row">
                     <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12" style="margin-top:15px">
@@ -380,7 +380,6 @@ label.form-control-sm{
                         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
                         <input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php //echo $agremiado->id?>">
-						<input type="hidden" name="id_concurso_inscripcion" id="id_concurso_inscripcion" value="0">
 						
                         <div class="row" id="divSolicitud">
 							
@@ -393,7 +392,7 @@ label.form-control-sm{
                                                 <div id="" class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <strong>
-                                                            Planilla de Delegados
+															Registro de Recibos por Honorarios de Delegados
                                                         </strong>
 														
                                                     </div>
@@ -402,7 +401,8 @@ label.form-control-sm{
 
                                             <div class="card-body" style="margin-top:15px;margin-bottom:15px">
 											
-												<div style="clear:both"></div>
+												<div style="clear:both">
+												</div>
 												
 												<div class="row">
 													
@@ -458,105 +458,139 @@ label.form-control-sm{
 														
 														<input class="btn btn-warning pull-rigth" onclick="cargarPlanillaDelegado()" value="Buscar" type="button" id="btnBuscar" />
 														
-														<input class="btn btn-success pull-rigth" onclick="generarPlanilla()" value="Generar Planilla" type="button" id="btnGenerar" style="margin-left:20px" />
-														
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 													</div>
 													
-													
 												</div>
-												
 											</div>
 											
+											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+											
+												<div style="clear:both"></div>
+												
+												<div class="row">
+													
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														N&deg; CAP
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="numero_cap" id="numero_cap" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Nombre
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="nombres" id="nombres" value="" class="form-control form-control-sm" readonly="readonly">
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Tipo Comprobante
+													</div>
+													<div class="col-lg-2">
+														<div class="form-group">
+															<select name="tipo_comprobante" id="tipo_comprobante" class="form-control form-control-sm" onchange="">
+																<option value="">--Selecionar--</option>
+																<?php
+																foreach ($tipo_comprobante as $row) {?>
+																<option value="<?php echo $row->codigo?>" <?php if($row->codigo=='13') echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+																<?php
+																}
+																?>
+															</select>
+														</div>
+													</div>
+												</div>
+											
+												<div class="row">
+												
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														N&uacute;mero Comprobante
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="numero_comprobante" id="numero_comprobante" value="" class="form-control form-control-sm">
+													</div>
+														
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Fecha Comprobante
+													</div>
+													<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+														<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php if($planillaDelegadoDetalle->fecha_comprobante!="")echo date('d-m-Y',strtotime($planillaDelegadoDetalle->fecha_comprobante))?>" type="text"  >
+													</div>
+												</div>
+														
+												<div class="row">
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input class="btn btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;" />
+													</div>
+												</div>
+												<!--****-->
+											</div>
+											<div class="card">
+												<div class="card-header">
+													<strong>
+														Lista de Agremiados
+													</strong>
+												</div>
+												<div class="row" style="margin-top:15px;margin-bottom:15px">
+													<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+														<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="Numero Cap">
+													</div>
+													<div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
+														<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
+													</div>		
+
+													<div class="col-lg-2">
+														<div class="form-group">
+															<select name="situacion" id="situacion" class="form-control form-control-sm" onchange="">
+																<option value="">--Selecionar Situaci&oacute;n--</option>
+																<?php
+																foreach ($situacion as $row) {?>
+																<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado->id_situacion) echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+																<?php
+																}
+																?>
+															</select>
+														</div>
+													</div>									
+													
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+														<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" style="margin-left:20px" />
+														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+													</div>
+												</div>
+											</div>
+								
 											<div class="card-body">				
 
-												<div id="divPlanilla" class="table-responsive">
-												<table id="tblPlanilla" class="table table-hover table-sm">
-													<thead>
-													<tr style="font-size:13px">
-														<th>Delegado</th>
-														<th>Municipio</th>
-														<th>Sesiones</th>
-														<th>Sub Total</th>
-														<th>Adelanto  
-															<br />Con Rec. 
-															<br />Hon.
-														</th>
-														<th>(+) 
-															<br />Reintegro</th>
-														<th>(+) 
-															<br />Adicional 
-															<br />por 
-															<br />Coordinador</th>
-														<th>Total 
-															<br />Honorario 
-															<br />Bruto por 
-															<br />Sesiones</th>
-														<th>Movilidad 
-															<br />Por Sesion 
-															<br />Regular</th>
-														<th>Total 
-															<br />Honorario por 
-															<br />Movilidad</th>
-														<th>Reintegro
-															<br />por Pago a Asesores
-															<br />Asumido por el CAP RL</th>
-														<th>Total Honorario
-															<br />Bruto</th>
-														<th>I.R. 4TA 
-															<br />8.00 %</th>
-														<th>Total Honorario
-															<br />Neto</th>
-														<th>Dscto</th>
-														<th>Saldo</th>
-														<th>OBSERVACI&Oacute;N</th>
-													</tr>
-													</thead>
-													<tbody>
-													</tbody>
-												</table>
+												<div class="table-responsive">
+													<table id="tblConcurso" class="table table-hover table-sm">
+														<thead>
+														<tr style="font-size:13px">
+															<th>N&uacute;mero CAP</th>
+															<th>Nombre</th>
+															<th>Situaci&oacute;n</th>
+															<th>N&uacute;mero Comprobante</th>
+															<th>Fecha Comprobante</th>
+															<th class="text-center">Acciones</th>
+														</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div><!--table-responsive-->	
-
-                                            </div>
-											
-											
-											
-                                            <!--card-body-->
-                                        </div>
+											</div>
+										</div>
                                         <!--card-->
-										
-									
-									
-										
                                     </div>
-									
-									
-									
-									
                                 </div>
-
-
-	
-
-
                             </div>
-							
-							
-							
-							
                         </div>
-
-					
-					
-
-        </div>
+					</div>
+        		</div>
         <!--col-->
-
-        </form>
-
-        
-
+        	</form>
+		</div>
     </div>
+</div>
     <!--row-->
     @endsection
 

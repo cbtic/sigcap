@@ -30,21 +30,21 @@ class FondoComunController extends Controller
 
         $municipalidad_model = new Municipalidade;
 
-        $municipalidad = $municipalidad_model -> getMunicipalidadAll();
+        $municipalidad = $municipalidad_model->getMunicipalidadAll();
 
 	
-		$anio = range(date('Y'), date('Y') - 20); 
+		$anio = range(date('Y'), date('Y') - 20); 		
 		$mes = [
             '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
             '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
             '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
             '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
         ];
-
+		
 
 		$tablaMaestra_model = new TablaMaestra;
 
-		$mes = $tablaMaestra_model->getMaestroByTipo(116);
+		//$mes = $tablaMaestra_model->getMaestroByTipo(116);
 
 		$mes_actual = date("m");
 
@@ -56,10 +56,17 @@ class FondoComunController extends Controller
 		$comision_model = new Comisione;
 		
 		$comision = $comision_model->getComisionAll("","","","1");
-				
-		$periodo = $periodoComisione_model->getPeriodoAll();
 
-        return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion','municipalidad'));
+
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+
+
+		//print_r($mes); exit();
+
+        return view('frontend.fondoComun.all_fondo_comun',compact('periodo','anio','mes','mes_actual','comision','concurso_inscripcion','municipalidad','periodo_activo', 'periodo_ultimo'));
+		
     }
 
     public function listar_fondo_comun_ajax(Request $request){
@@ -73,6 +80,8 @@ class FondoComunController extends Controller
 		$p[]=$request->credipago;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
+
+		//print_r($p); exit();
 
 		$data = $fondo_comun_model->listar_fondo_comun_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
@@ -93,9 +102,12 @@ class FondoComunController extends Controller
 		//exit("hola");
 		$anio =$request->anio;
 		$mes =$request->mes;
+		$periodo =$request->periodo;
+
+		//print_r($periodo); exit();
 
 		$fondo_comun_model = new FondoComun;
-		$data = $fondo_comun_model->calcula_fondo_comun($anio, $mes);
+		$data = $fondo_comun_model->calcula_fondo_comun($periodo,$anio, $mes);
 
 		$result["aaData"] = $data;
 
@@ -106,10 +118,10 @@ class FondoComunController extends Controller
 		
 		$anio = $request->anio;
 		$mes = $request->mes;
-		$municipalidad = $request->idMunicipalidad;
+		$periodo = $request->id_periodo;
 
 		$fondo_comun_model = new FondoComun;
-		$fondoComun = $fondo_comun_model->ListarFondoComun($anio, $mes, $municipalidad);
+		$fondoComun = $fondo_comun_model->ListarFondoComun($anio, $mes, $periodo);
 
         return view('frontend.fondoComun.lista_fondo_comun',compact('fondoComun'));
 
