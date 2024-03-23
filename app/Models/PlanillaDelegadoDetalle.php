@@ -30,4 +30,18 @@ class PlanillaDelegadoDetalle extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+    function getDatosRecibo($id){     
+        
+        $cad = "select pdd.id, a.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado from planilla_delegado_detalles pdd 
+        inner join agremiados a on pdd.id_agremiado = a.id
+        inner join personas p on a.id_persona = p.id
+        where pdd.id = '".$id."'";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
+
 }

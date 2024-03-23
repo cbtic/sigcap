@@ -456,7 +456,7 @@ label.form-control-sm{
 													
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 														
-														<input class="btn btn-warning pull-rigth" onclick="cargarPlanillaDelegado()" value="Buscar" type="button" id="btnBuscar" />
+														<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 														
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 													</div>
@@ -469,18 +469,18 @@ label.form-control-sm{
 												<div style="clear:both"></div>
 												
 												<div class="row">
-													
+													<input type="hidden" name="id_recibo" id="id_recibo" value="<?php echo $planillaDelegadoDetalle->id?>">
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														N&deg; CAP
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-														<input type="text" name="numero_cap" id="numero_cap" value="" class="form-control form-control-sm" readonly="readonly">
+														<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $planillaDelegadoDetalle->numero_Cap?>" class="form-control form-control-sm" readonly="readonly">
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														Nombre
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-														<input type="text" name="nombres" id="nombres" value="" class="form-control form-control-sm" readonly="readonly">
+														<input type="text" name="nombres" id="nombres" value="<?php echo $planillaDelegadoDetalle->agremiado?>" class="form-control form-control-sm" readonly="readonly">
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														Tipo Comprobante
