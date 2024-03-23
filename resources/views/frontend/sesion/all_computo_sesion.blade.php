@@ -168,7 +168,7 @@
 							<?php 
 							if($periodo_activo){
 							?>
-							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()" disabled="disabled">
+							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido()" disabled="disabled">
 								<option value="">--Periodo--</option>
 								<?php
 								foreach ($periodo as $row) {?>
@@ -180,7 +180,7 @@
 							<?php
 							}else{
 							?>
-							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
+							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido()">
 								<option value="">--Periodo--</option>
 								<?php
 								foreach ($periodo as $row) {?>

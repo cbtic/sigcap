@@ -622,3 +622,4 @@ Route::post('certificado/send_proyecto_tipo3', [CertificadoController::class, 's
 Route::get('coordinador_zonal/eliminar_coordinador_zonal/{id}/{estado}', [CoordinadorZonalController::class, 'eliminar_coordinador_zonal'])->name('coordinador_zonal.eliminar_coordinador_zonal');
 
 Route::get('planillaDelegado/consulta_planilla_recibos_honorario', [PlanillaDelegadoController::class, 'consulta_planilla_recibos_honorario'])->name('planillaDelegado.consulta_planilla_recibos_honorario');
+Route::get('sesion/obtener_anio_periodo/{id_periodo}', [SesionController::class, 'obtener_anio_periodo'])->name('sesion.obtener_anio_periodo');
