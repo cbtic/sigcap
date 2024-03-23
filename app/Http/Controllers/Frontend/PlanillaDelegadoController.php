@@ -153,7 +153,7 @@ class PlanillaDelegadoController extends Controller
 	
 	public function obtener_planilla_delegado(Request $request){
 		
-		$planillaDelegado = PlanillaDelegado::where("periodo",$request->anio)->where("mes",$request->mes)->first();
+		$planillaDelegado = PlanillaDelegado::where("id_periodo_comision",$request->id_periodo_bus)->where("periodo",$request->anio)->where("mes",$request->mes)->first();
 		
         $planillaDelegado_model = new PlanillaDelegado;
 		
@@ -162,14 +162,14 @@ class PlanillaDelegadoController extends Controller
 		
 		if(isset($planillaDelegado->id)){
         	$planilla = $planillaDelegado_model->getPlanillaDelegadoDetalleByIdPlanilla($planillaDelegado->id);
-			$fondo_comun = $planillaDelegado_model->getSaldoDelegadoFondoComun($request->anio,$request->mes);
+			$fondo_comun = $planillaDelegado_model->getSaldoDelegadoFondoComun($request->id_periodo_bus,$request->anio,$request->mes);
 		}
         return view('frontend.planilla.lista_planilla_delegado',compact('planilla','fondo_comun'));
 
     }
 	
 	public function send_planilla_delegado(Request $request){
-		
+		//exit();
 		$msg = "";
 		$planillaDelegadoExiste = PlanillaDelegado::where("periodo",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
 		
@@ -177,7 +177,7 @@ class PlanillaDelegadoController extends Controller
 			$msg = false;
 		}else{
 			$planillaDelegado_model = new PlanillaDelegado;
-			$planillaDelegado_model->generar_planilla_delegado($request->anio,$request->mes);
+			$planillaDelegado_model->generar_planilla_delegado($request->id_periodo_bus,$request->anio,$request->mes);
 		}
 		
 		return $msg;

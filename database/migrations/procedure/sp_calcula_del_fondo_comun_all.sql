@@ -67,7 +67,7 @@ from (
 	And to_char(cs.fecha_ejecucion,'mm')= p_mes
 	and cs.id_periodo_comisione = p_id_periodo::integer
 	and t6.id_aprobar_pago=2
-)
+)R
 group by id_ubigeo, distrito;
 
 

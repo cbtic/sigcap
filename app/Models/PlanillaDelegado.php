@@ -24,20 +24,22 @@ where pd.id=".$id;
         return $data;
     }
 	
-	public function generar_planilla_delegado($anio,$mes) {
+	public function generar_planilla_delegado($id_periodo,$anio,$mes) {
 		
-        $cad = "Select sp_planilla_delegado(?,?)";
-        $data = DB::select($cad, array($anio,$mes));
+        $cad = "Select sp_planilla_delegado(?,?,?)";
+        $data = DB::select($cad, array($id_periodo,$anio,$mes));
         return $data[0]->sp_planilla_delegado;
     }
 	
-	function getSaldoDelegadoFondoComun($anio,$mes){
+	function getSaldoDelegadoFondoComun($id_periodo,$anio,$mes){
 
-        $cad = "select sum(d.saldo)::decimal saldo
-	from delegado_fondo_comuns d
-	inner join periodo_delegado_detalles p on p.id = d.id_periodo_delegado_detalle and p.id_periodo_delegado = d.id_periodo_delegado   
-	where extract(year from p.fecha)::varchar = '".$anio."'
-	and extract(month from  p.fecha)::varchar = '".$mes."'::int::varchar; ";
+        $cad = "select sum(t1.saldo)::decimal saldo
+	from delegado_fondo_comuns t1               
+	inner join ubigeos t3 on t3.id_ubigeo = t1.id_ubigeo
+	inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle 
+	Where EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
+	And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'::int::varchar
+	And t1.id_periodo_comision = '".$id_periodo."'::int";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data[0];
