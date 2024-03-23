@@ -628,8 +628,9 @@ class SesionController extends Controller
 		$comision = $comision_model->getComisionAll("","","","1");
 		$periodo = $periodoComisione_model->getPeriodoAll();
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.sesion.all_computo_sesion',compact('periodo','anio','mes','comision','concurso_inscripcion','periodo_ultimo'));
+        return view('frontend.sesion.all_computo_sesion',compact('periodo','anio','mes','comision','concurso_inscripcion','periodo_ultimo','periodo_activo'));
     }
 
 	public function lista_computoSesion(){
