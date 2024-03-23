@@ -562,7 +562,7 @@ label.form-control-sm{
 											<div class="card-body">				
 
 												<div class="table-responsive">
-													<table id="tblConcurso" class="table table-hover table-sm">
+													<table id="tblReciboHonorario" class="table table-hover table-sm">
 														<thead>
 														<tr style="font-size:13px">
 															<th>N&uacute;mero CAP</th>

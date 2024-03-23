@@ -176,6 +176,22 @@
                                     Periodo
                                 </div>
                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                <?php 
+                                if($periodo_activo){
+                                ?>
+                                <input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo_activo->id?>">
+                                <select name="periodo" id="periodo" class="form-control form-control-sm" onChange="" disabled="disabled">
+                                    <option value="">--Selecionar--</option>
+                                    <?php
+									foreach ($periodo as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<?php 
+                                        }
+                                        ?>
+                                </select>
+                                <?php
+                                }else{
+                                ?>
                                 <select name="periodo" id="periodo" class="form-control form-control-sm" onChange="">
                                     <option value="">--Selecionar--</option>
                                     <?php
@@ -185,6 +201,7 @@
                                         }
                                         ?>
                                 </select>
+                                <?php } ?>
                                 </div>
                             </div>
                             <div class="row">
@@ -273,6 +290,22 @@
                             
                         <div class="col-lg-2">
                             <div class="form-group">
+                                <?php 
+                                if($periodo_activo){
+                                ?>
+                                <input type="hidden" name="periodo_" id="periodo_" value="<?php echo $periodo_activo->id?>">
+                                <select name="periodo_" id="periodo_" class="form-control form-control-sm" onchange="" disabled="disabled">
+                                <option value="0">--Selecionar--</option>
+                                    <?php
+                                    foreach ($periodo as $row) {?>
+                                        <option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                    <?php 
+                                    }
+                                    ?>
+                                </select>
+                                <?php
+                                }else{
+                                ?>
                                 <select name="periodo_" id="periodo_" class="form-control form-control-sm" onchange="">
                                 <option value="0">--Selecionar--</option>
                                     <?php
@@ -282,6 +315,7 @@
                                     }
                                     ?>
                                 </select>
+                                <?php } ?>
                             </div>
                         </div>
 
@@ -343,7 +377,23 @@
                             
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <select name="periodo_2" id="periodo_2" class="form-control form-control-sm" onchange="">
+                                <?php 
+                                if($periodo_activo){
+                                ?>
+                                <input type="hidden" name="periodo_2" id="periodo_2" value="<?php echo $periodo_activo->id?>">
+                                <select name="periodo_2" id="periodo_2" class="form-control form-control-sm" onchange="" disabled="disabled">
+                                <option value="0">--Selecionar--</option>
+                                    <?php
+                                    foreach ($periodo as $row) {?>
+                                        <option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                    <?php 
+                                    }
+                                    ?>
+                                </select>
+                                <?php
+                                }else{
+                                ?>
+                                <select name="periodo_2" id="periodo_2" class="form-control form-control-sm" onchange="" disabled="disabled">
                                 <option value="0">--Selecionar--</option>
                                     <?php
                                     foreach ($periodo as $row) {?>
@@ -352,6 +402,7 @@
                                     }
                                     ?>
                                 </select>
+                                <?php } ?>
                             </div>
                         </div>
 

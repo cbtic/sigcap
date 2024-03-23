@@ -906,7 +906,7 @@ function datatablenew2(){
 							//ruta_informe_ = "<button onclick=<a href="/' + ruta + '" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>";
 							//ruta_informe_ = '<a href="/' + ruta + '" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>';
 						}
-						return ruta_informe_;
+						return ruta_informe;
 					},
 					"bSortable": false,
 					"aTargets": [9]

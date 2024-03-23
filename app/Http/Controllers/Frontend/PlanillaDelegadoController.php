@@ -209,5 +209,31 @@ class PlanillaDelegadoController extends Controller
 		return view('frontend.planilla.consulta_planilla_recibos_honorario',compact('periodo','anio','mes','periodo_ultimo','periodo_activo','planillaDelegadoDetalle','tipo_comprobante','agremiado','situacion'));
 		
     }
+
+	public function listar_recibo_honorario_ajax(Request $request){
+	
+		$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle();
+		$p[]=$request->denominacion;
+		$p[]="";
+		$p[]="";
+		$p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $planillaDelegadoDetalle_model->listar_recibo_honorario_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
 	    
 }

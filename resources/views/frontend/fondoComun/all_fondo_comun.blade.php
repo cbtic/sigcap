@@ -190,7 +190,7 @@
 									<?php 
 									if($periodo_activo){
 									?>
-									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerAnioPeriodo()" >
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerAnioPeriodo()" disabled="disabled">
 										<option value="">--Periodo--</option>
 										<?php
 										foreach ($periodo as $row) {?>

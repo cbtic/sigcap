@@ -45,8 +45,10 @@ class CoordinadorZonalController extends Controller
 		$estado_aprobacion = $tablaMaestra_model->getMaestroByTipo(109);
 		$estado = $tablaMaestra_model->getMaestroByTipo(119);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion'));
+		
+        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion','periodo_activo'));
 
     }
 
