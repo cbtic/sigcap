@@ -213,9 +213,10 @@ class PlanillaDelegadoController extends Controller
 	public function listar_recibo_honorario_ajax(Request $request){
 	
 		$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle();
-		$p[]=$request->denominacion;
-		$p[]="";
-		$p[]="";
+		$p[]="";//$request->numero_cap;
+		$p[]="";//$request->agremiado;
+		$p[]="";//$request->numero_comprobante;
+		$p[]="";//$request->fecha_comprobante;
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -235,5 +236,31 @@ class PlanillaDelegadoController extends Controller
 
 	
 	}
+
+	public function obtener_datos_recibo($id){
+
+		$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle;
+		$datosRecibo = $planillaDelegadoDetalle_model->getDatosRecibo($id);
+		echo json_encode($datosRecibo);
+
+	}
+
+	public function send_recibo_honorario(Request $request){
+		
+		$id_user = Auth::user()->id;
+
+		/*if($request->id == 0){
+			$planillaDelegadoDetalle = new PlanillaDelegadoDetalle;
+		}else{*/
+			$planillaDelegadoDetalle = PlanillaDelegadoDetalle::find($request->id);
+		/*}*/
+		
+		$planillaDelegadoDetalle->tipo_comprobante = $request->tipo_comprobante;
+		$planillaDelegadoDetalle->numero_comprobante = $request->numero_comprobante;
+		$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
+		$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
+		$planillaDelegadoDetalle->save();
+		
+    }
 	    
 }
