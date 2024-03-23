@@ -190,6 +190,7 @@
 									<?php 
 									if($periodo_activo){
 									?>
+									<input type="hidden" name="id_periodo" id="id_periodo" value="<?php echo $periodo_activo->id?>">
 									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerAnioPeriodo()" disabled="disabled">
 										<option value="">--Periodo--</option>
 										<?php
