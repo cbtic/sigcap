@@ -103,7 +103,7 @@ function guardar_computo(){
 	var anio = $("#anio").val();
 	var mes = $("#mes").val();
 	
-	if(anio=="")msg += "Debe seleccionar un año";
+	if(anio=="")msg += "Debe seleccionar un aï¿½o";
 	if(mes=="")msg += "Debe seleccionar un mes";
 	if(id_periodo_bus=="")msg += "Debe seleccionar un periodo";
 	
@@ -192,6 +192,29 @@ function fn_save___(){
 					location.href="/afiliacion";
             }
     });
+}
+
+obtenerAnioPerido();
+
+function obtenerAnioPerido(){
+	
+	var id_periodo = $('#id_periodo_bus').val();
+	
+	$.ajax({
+		url: '/sesion/obtener_anio_periodo/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#anio').html("");
+			//option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
+			});
+			$('#anio').html(option);
+		}
+		
+	});
+	
 }
 
 function validaTipoDocumento(){

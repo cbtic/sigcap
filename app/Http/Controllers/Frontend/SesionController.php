@@ -633,6 +633,15 @@ class SesionController extends Controller
         return view('frontend.sesion.all_computo_sesion',compact('periodo','anio','mes','comision','concurso_inscripcion','periodo_ultimo','periodo_activo'));
     }
 
+	public function obtener_anio_periodo($id_periodo){
+			
+		$periodoComisione_model = new PeriodoComisione;
+		$periodoComision = PeriodoComisione::find($id_periodo);
+		$anio = $periodoComisione_model->getAnioByFecha($periodoComision->fecha_inicio,$periodoComision->fecha_fin);
+		echo json_encode($anio);
+		
+	}
+
 	public function lista_computoSesion(){
 		
         return view('frontend.sesion.all_listar_computo_sesion');
