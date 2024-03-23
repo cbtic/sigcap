@@ -497,15 +497,31 @@ container: '#myModal modal-body'
 								<?php if($id>0){?>
 								<input type="text" id="periodo" name="periodo" class="form-control form-control-sm" value="<?php echo $periodo_->descripcion?>" readonly="readonly">
 								<?php }else{?>
-								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComisionPeridoTipoComision();obtenerConcursoInscripcionPeridoTipoComision()">
-									<!--<option value="">--Seleccionar--</option>-->
-									<?php
-									foreach ($periodo as $row) {?>
-									<option value="<?php echo $row->id?>" <?php //if($row->id==$comision->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
 									<?php 
-									}
+									if($periodo_activo){
 									?>
-								</select>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComisionPeridoTipoComision();obtenerConcursoInscripcionPeridoTipoComision()" disabled="disabled">
+										<!--<option value="">--Seleccionar--</option>-->
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									<?php
+									}else{
+									?>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerComisionPeridoTipoComision();obtenerConcursoInscripcionPeridoTipoComision()">
+										<!--<option value="">--Seleccionar--</option>-->
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									<?php } ?>
 								<?php } ?>
 							</div>
 						</div>
