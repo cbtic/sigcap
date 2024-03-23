@@ -46,9 +46,10 @@ class SesionController extends Controller
 		$periodo = $periodoComisione_model->getPeriodoAll();
 		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		$situacion = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion','tipo_comision','periodo_ultimo','situacion'));
+        return view('frontend.sesion.all_listar_sesion',compact(/*'region',*/'periodo','tipo_programacion','estado_sesion','estado_aprobacion','tipo_comision','periodo_ultimo','situacion','periodo_activo'));
     }
 	
 	public function obtener_dictamen($id_comision_sesion){

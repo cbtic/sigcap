@@ -37,8 +37,10 @@ class MovilidadController extends Controller
 		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
 		$tipoComision = $tablaMaestra_model->getMaestroByTipo(102);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		
 
-        return view('frontend.movilidad.all',compact('municipalidadIntegrada','comision_movilidades','periodoComision','tipoComision','periodo_ultimo'));
+        return view('frontend.movilidad.all',compact('municipalidadIntegrada','comision_movilidades','periodoComision','tipoComision','periodo_ultimo','periodo_activo'));
     }
 
     public function listar_movilidad_ajax(Request $request){
@@ -107,8 +109,10 @@ class MovilidadController extends Controller
         $periodoComision = $periodoComision_model->getPeriodoAll();
 		$tipoComision = $tablaMaestra_model->getMaestroByTipo(102);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		
 
-		return view('frontend.movilidad.modal_movilidad_nuevoMovilidad',compact('id','comision_movilidades','region','municipalidadIntegrada','periodoComision','tipoComision','periodo_ultimo'));
+		return view('frontend.movilidad.modal_movilidad_nuevoMovilidad',compact('id','comision_movilidades','region','municipalidadIntegrada','periodoComision','tipoComision','periodo_ultimo','periodo_activo'));
 	
 	}
 

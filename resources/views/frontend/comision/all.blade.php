@@ -147,6 +147,21 @@
                                         <div class="form-group">
                                             <div style="float:left;padding-top:7px">Periodo</div>
                                                 <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
+                                                <?php 
+                                                if($periodo_activo){
+                                                ?>
+                                                <select name="periodo" id="periodo" class="form-control" onChange="obtenerPeriodo();obtenerTipoComision()" disabled="disabled">
+                                                    <!--<option value="">--Selecionar--</option>-->
+                                                        <?php
+                                                        foreach ($periodoComision as $row) {?>
+                                                            <option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                                        <?php 
+                                                        }
+                                                        ?>
+                                                </select>
+                                                <?php
+                                                }else{
+                                                ?>
                                                 <select name="periodo" id="periodo" class="form-control" onChange="obtenerPeriodo();obtenerTipoComision()" >
                                                     <!--<option value="">--Selecionar--</option>-->
                                                         <?php
@@ -156,7 +171,8 @@
                                                         }
                                                         ?>
                                                 </select>
-                                                </div>
+                                                <?php } ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mx-auto">

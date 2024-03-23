@@ -162,7 +162,22 @@
 					</div>
 					-->
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
+						<?php 
+                        if($periodo_activo){
+                        ?>
+						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()" disabled="disabled">
+							<option value="0">--Periodo--</option>
+							<?php
+							foreach ($periodo as $row) {?>
+							<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+							<?php 
+							}
+							?>
+						</select>
+						<?php
+                        }else{
+                        ?>
+						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()" disabled="disabled">
 							<option value="0">--Periodo--</option>
 							<?php
 							foreach ($periodo as $row) {?>
@@ -171,6 +186,7 @@
 							}
 							?>
 						</select>
+						<?php } ?>
 					</div>
 					
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">

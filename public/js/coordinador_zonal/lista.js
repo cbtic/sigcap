@@ -900,9 +900,13 @@ function datatablenew2(){
 				},
 				{
 					"mRender": function (data, type, row) {
-						var informe = "";
-						if(row.informe!= null)informe = row.informe;
-						return informe;
+						var ruta_informe = "";
+						if(row.ruta_informe!= null){
+							ruta = ruta_informe;
+							//ruta_informe_ = "<button onclick=<a href="/' + ruta + '" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>";
+							//ruta_informe_ = '<a href="/' + ruta + '" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>';
+						}
+						return ruta_informe_;
 					},
 					"bSortable": false,
 					"aTargets": [9]

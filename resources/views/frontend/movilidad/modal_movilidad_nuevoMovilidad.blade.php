@@ -625,6 +625,32 @@ container: '#myModal modal-body'
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
+								<?php 
+								if($periodo_activo){
+								?>
+								<select name="periodo" id="periodo" class="form-control form-control-sm" onchange="obtenerComisionBus()" disabled="disabled">
+									<?php if($id=="0") {?>
+									<option value="0">--Selecionar--</option>
+										<?php
+										foreach ($periodoComision as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									<?php } else { ?>
+										<option value="0">--Selecionar--</option>
+										<?php
+										foreach ($periodoComision as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									<?php }?>
+
+								</select>
+								<?php
+								}else{
+								?>
 								<select name="periodo" id="periodo" class="form-control form-control-sm" onchange="obtenerComisionBus()">
 									<?php if($id=="0") {?>
 									<option value="0">--Selecionar--</option>
@@ -645,6 +671,7 @@ container: '#myModal modal-body'
 									<?php }?>
 
 								</select>
+								<?php } ?>
 							</div>
 						</div>
 
