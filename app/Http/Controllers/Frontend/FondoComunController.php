@@ -107,7 +107,7 @@ class FondoComunController extends Controller
 		//print_r($periodo); exit();
 
 		$fondo_comun_model = new FondoComun;
-		$data = $fondo_comun_model->calcula_fondo_comun($periodo,$anio, $mes);
+		$data = $fondo_comun_model->calcula_fondo_comun($periodo ,$anio, $mes);
 
 		$result["aaData"] = $data;
 

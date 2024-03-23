@@ -24,9 +24,9 @@ class FondoComun extends Model
 
     public function calcula_fondo_comun($periodo, $anio, $mes) {
 
-        $cad = "Select sp_calcula_del_fondo_comun_all(?,?,?)";
+        $cad = "Select  sp_calcula_del_fondo_comun_all(?, ?, ?)";
      
-		$data = DB::select($cad, array($periodo, $anio, $mes));
+		$data = DB::select($cad, array($periodo, $anio, $mes ));
         return $data[0]->sp_calcula_del_fondo_comun_all;
     }
 
