@@ -218,7 +218,8 @@ class CoordinadorZonalController extends Controller
 		$id_user = Auth::user()->id;
 		
         $agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
-        $coordinador_zonal = CoordinadorZonal::where("id_agremiado",$agremiado->id)->where("estado","1")->first();
+        //$coordinador_zonal = CoordinadorZonal::where("id_agremiado",$agremiado->id)->where("estado","1")->first();
+		$coordinador_zonal = CoordinadorZonal::find($request->id);
 		$estado_sesion = $request->estado_sesion;
 		$aprobar_pago = $request->aprobar_pago;
 		$id_comision = $coordinador_zonal->id_comision;

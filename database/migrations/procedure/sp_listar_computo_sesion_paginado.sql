@@ -1,12 +1,5 @@
 
-CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(
-p_id_periodo_comisiones character varying, 
-p_id_comision character varying,
-p_anio character varying,
-p_mes character varying,
-p_pagina character varying, 
-p_limit character varying, 
-p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(p_id_periodo_comisiones character varying, p_id_comision character varying, p_anio character varying, p_mes character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -33,7 +26,7 @@ select mi.denominacion municipalidad,t4.comision comision,
 p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres delegado,a.numero_cap,tmp.denominacion puesto, 
 t5.descripcion periodo,
 (case when t0.coordinador=''1'' then ''COORDINADOR'' else '''' end) coordinador,
-sum(case when tmts.denominacion=''PROGRAMADO'' then 1 else 0 end) computada,
+sum(case when tmts.denominacion=''ORDINARIA'' then 1 else 0 end) computada,
 sum(case when tmts.denominacion=''EXTRAORDINARIA'' then 1 else 0 end) adicional,
 count(*) total
 from comision_sesiones t1 
@@ -56,11 +49,11 @@ where t0.id_aprobar_pago=2 ';
 	End If;
 
 	If p_anio<>'' Then
-	 v_tabla:=v_tabla||'And to_char(t0.fecha_aprobar_pago,''yyyy'') = '''||p_anio||''' ';
+	 v_tabla:=v_tabla||'And to_char(t1.fecha_ejecucion,''yyyy'') = '''||p_anio||''' ';
 	End If;
 
 	If p_mes<>'' Then
-	 v_tabla:=v_tabla||'And to_char(t0.fecha_aprobar_pago,''mm'') = '''||p_mes||''' ';
+	 v_tabla:=v_tabla||'And to_char(t1.fecha_ejecucion,''mm'') = '''||p_mes||''' ';
 	End If;
 
 	v_tabla:=v_tabla||'group by t0.coordinador,mi.denominacion,t4.comision,p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres,a.numero_cap,tmp.denominacion, t5.descripcion
@@ -118,3 +111,4 @@ End
 
 $function$
 ;
+

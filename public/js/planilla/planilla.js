@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 	$('#fecha_comprobante').datepicker({
         autoclose: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
