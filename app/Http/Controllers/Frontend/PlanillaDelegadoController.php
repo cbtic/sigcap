@@ -218,6 +218,7 @@ class PlanillaDelegadoController extends Controller
 		$p[]=$request->mes;
 		$p[]=$request->numero_cap;
 		$p[]=$request->agremiado;
+		$p[]=$request->municipalidad;
 		$p[]=$request->situacion;
 		$p[]=$request->numero_comprobante;
 		$p[]=$request->fecha_inicio;

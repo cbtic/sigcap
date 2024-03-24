@@ -236,6 +236,7 @@ function datatablenew(){
 			var mes = $('#mes').val();
 			var numero_cap = $('#numero_cap_bus').val();
             var agremiado = $('#agremiado_bus').val();
+			var municipalidad = $('#municipalidad_bus').val();
 			var situacion = $('#situacion_bus').val();
 			var numero_comprobante = $('#numero_comprobante_bus').val();
 			var fecha_inicio = $('#fecha_inicio_bus').val();
@@ -248,7 +249,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,periodo:periodo,anio:anio,mes:mes,numero_cap:numero_cap,
+						id:id,periodo:periodo,anio:anio,mes:mes,numero_cap:numero_cap,municipalidad:municipalidad,
 						agremiado:agremiado,situacion:situacion,numero_comprobante:numero_comprobante,
 						fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
 						_token:_token
@@ -287,12 +288,22 @@ function datatablenew(){
                 },
 				{
 				"mRender": function (data, type, row) {
+					var municipalidad = "";
+					if(row.municipalidad!= null)municipalidad = row.municipalidad;
+					return municipalidad;
+				},
+				"bSortable": false,
+				"aTargets": [2],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
 					var situacion = "";
 					if(row.situacion!= null)situacion = row.situacion;
 					return situacion;
 				},
 				"bSortable": false,
-				"aTargets": [2]
+				"aTargets": [3]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -301,7 +312,7 @@ function datatablenew(){
 					return numero_comprobante;
 				},
 				"bSortable": false,
-				"aTargets": [3]
+				"aTargets": [4]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -313,7 +324,7 @@ function datatablenew(){
 					return fecha_comprobante;
 				},
 				"bSortable": false,
-				"aTargets": [4]
+				"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -338,7 +349,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [6],
 				},
 
             ]
