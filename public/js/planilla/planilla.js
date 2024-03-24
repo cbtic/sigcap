@@ -306,7 +306,10 @@ function datatablenew(){
 				{
 				"mRender": function (data, type, row) {
 					var fecha_comprobante = "";
-					if(row.fecha_comprobante!= null)fecha_comprobante = row.fecha_comprobante;
+					if(row.fecha_comprobante!= null){
+						var dateParts = row.fecha_comprobante.split(' ');
+            			fecha_comprobante = dateParts[0];
+					}
 					return fecha_comprobante;
 				},
 				"bSortable": false,
@@ -351,6 +354,8 @@ function editarRecibo(id){
 
 	//var id_periodo = $('#id_periodo').val();
 	//$('#id_recibo').val(id);
+	
+	
 	$.ajax({
 		url: '/planillaDelegado/obtener_datos_recibo/'+id,
 		type: 'GET',
@@ -359,9 +364,18 @@ function editarRecibo(id){
 		dataType: "json",
 		success: function(result){
 			//console.log(result[0].numero_cap);
-			$('#id_recibo').val(result[0].id);
-			$('#numero_cap').val(result[0].numero_cap);
-			$('#nombres').val(result[0].agremiado);
+
+				if(result[0].fecha_comprobante==null)
+				{
+					$('#fecha_comprobante').val('');
+				}
+				$('#id_recibo').val(result[0].id);
+				$('#numero_cap').val(result[0].numero_cap);
+				$('#nombres').val(result[0].agremiado);
+				$('#numero_comprobante').val(result[0].numero_comprobante);
+				$('#fecha_comprobante').val(result[0].fecha_comprobante.split(' ')[0]);
+			
+			
 			
         }
 			
@@ -384,8 +398,14 @@ function save_recibo(){
             data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante},
 			success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				//datatablenew();
+				//window.location.reload();
+				datatablenew();
+
+				$('#id_recibo').val('');
+				$('#numero_cap').val('');
+				$('#nombres').val('');
+				$('#numero_comprobante').val('');
+				$('#fecha_comprobante').val('');
 								
             }
     });

@@ -455,7 +455,7 @@ label.form-control-sm{
 													
 												</div>
 											</div>
-											
+											<hr>
 											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
 											
 												<div style="clear:both"></div>
@@ -498,14 +498,14 @@ label.form-control-sm{
 														N&uacute;mero Comprobante
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-														<input type="text" name="numero_comprobante" id="numero_comprobante" value="" class="form-control form-control-sm">
+														<input type="text" name="numero_comprobante" id="numero_comprobante" value="<?php //echo $planillaDelegadoDetalle->numero_comprobante ?>" class="form-control form-control-sm">
 													</div>
 														
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														Fecha Comprobante
 													</div>
 													<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-														<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php if($planillaDelegadoDetalle->fecha_comprobante!="")echo date('d-m-Y',strtotime($planillaDelegadoDetalle->fecha_comprobante))?>" type="text"  >
+														<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php //if($planillaDelegadoDetalle->fecha_comprobante!="")echo date('d-m-Y',strtotime($planillaDelegadoDetalle->fecha_comprobante))?>" type="text"  >
 													</div>
 												</div>
 														
