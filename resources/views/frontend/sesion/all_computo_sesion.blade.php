@@ -168,7 +168,8 @@
 							<?php 
 							if($periodo_activo){
 							?>
-							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido()" disabled="disabled">
+							<input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+							<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido()" disabled="disabled">
 								<option value="">--Periodo--</option>
 								<?php
 								foreach ($periodo as $row) {?>
