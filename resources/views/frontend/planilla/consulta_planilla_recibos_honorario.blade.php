@@ -2,26 +2,26 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
 <style type="text/css">
 
-table, tr td {
-    /*border: 1px solid red*/
-}
+/*
 tbody {
     display: block;
     height: 520px;
     overflow: auto;
 }
+
 thead, tbody tr, tfoot tr {
     display: table;
     width: 100%;
-    table-layout: fixed;/* even columns width , fix width of table too*/
+    table-layout: fixed;
 }
+
 thead {
-    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+    width: calc( 100% - 1em )
 }
 table {
     width: 500px;
 }
-
+*/
 
 
 #tblConcurso tbody tr{
@@ -75,7 +75,7 @@ body {
     border-color: #e67e22;
 }
 
-/* Begin - Overriding styles for this page */
+
 .card-body {
     padding: 0 1.25rem !important;
 }
@@ -113,14 +113,14 @@ br {
     line-height: 30px;
 }
 
-/* Chrome, Safari, Edge, Opera */
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Firefox */
+
 input[type=number] {
     -moz-appearance: textfield;
 }
@@ -133,8 +133,7 @@ ul.ui-autocomplete {
     font-size: 11px !important;
 }
 
-/* End - Overriding styles for this page */
-/*********************************************************/
+
 .switch {
   position: relative;
   display: inline-block;
@@ -142,14 +141,12 @@ ul.ui-autocomplete {
   height: 24px;
 }
 
-/* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -188,7 +185,6 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
@@ -219,13 +215,12 @@ label.form-control-sm{
 	padding-right:0px;
 	padding-top:5px!important;
 	height:25px!important;
-	/*line-height:10px!important*/
+	
 }
 
 .loader {
 	width: 100%;
 	height: 100%;
-	/*height: 1500px;*/
 	overflow: hidden; 
 	top: 0px;
 	left: 0px;
@@ -272,8 +267,6 @@ label.form-control-sm{
 }
 
 .wrapper { 
-	/*background:#EFEFEF; */
-	/*box-shadow: 1px 1px 10px #999; */
 	margin: auto; 
 	text-align: center; 
 	position: relative;

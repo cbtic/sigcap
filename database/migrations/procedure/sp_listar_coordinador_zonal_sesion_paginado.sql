@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE FUNCTION public.sp_listar_coordinador_zonal_sesion_paginado(p_periodo character varying, p_agremiado character varying, p_tipo_comision character varying, p_comision character varying, p_estado_sesion character varying, p_estado_aprobado character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -76,7 +77,9 @@ begin
 	 v_where:=v_where||'And t0.estado = '''||p_estado||''' ';
 	End If;
 
-	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
+	--EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
+	EXECUTE ('SELECT count(1) from (select '||v_tabla||v_where||')R') INTO v_count;
+	--select count(*) from ()R
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
