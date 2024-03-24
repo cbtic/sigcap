@@ -9,7 +9,75 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
+	$('#agremiado_bus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#situacion_bus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+	
+	$('#numero_cap_bus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#numero_comprobante_bus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+
+	$('#fecha_inicio_bus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#fecha_fin_bus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#btnBuscar_').click(function () {
+		fn_ListarBusqueda();
+	});
+
 	$('#fecha_comprobante').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+
+	$('#fecha_inicio_bus').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
+	$('#fecha_fin_bus').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+
+	$('#fecha_comprobante_bus').datepicker({
         autoclose: true,
 		format: 'dd/mm/yyyy',
 		changeMonth: true,
@@ -163,10 +231,15 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			var id = $('#id').val();
-			var numero_cap = $('#numero_cap').val();
-            var agremiado = $('#agremiado').val();
-			var numero_comprobante = $('#numero_comprobante').val();
-			var fecha_comprobante = $('#fecha_comprobante').val();
+			var periodo = $('#id_periodo_bus').val();
+			var anio = $('#anio').val();
+			var mes = $('#mes').val();
+			var numero_cap = $('#numero_cap_bus').val();
+            var agremiado = $('#agremiado_bus').val();
+			var situacion = $('#situacion_bus').val();
+			var numero_comprobante = $('#numero_comprobante_bus').val();
+			var fecha_inicio = $('#fecha_inicio_bus').val();
+			var fecha_fin = $('#fecha_fin_bus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -175,8 +248,9 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,numero_cap:numero_cap,agremiado:agremiado,numero_comprobante:numero_comprobante,
-						fecha_comprobante:fecha_comprobante,estado:estado,
+						id:id,periodo:periodo,anio:anio,mes:mes,numero_cap:numero_cap,
+						agremiado:agremiado,situacion:situacion,numero_comprobante:numero_comprobante,
+						fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {

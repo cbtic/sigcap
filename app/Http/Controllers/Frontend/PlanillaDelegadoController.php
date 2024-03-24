@@ -213,10 +213,15 @@ class PlanillaDelegadoController extends Controller
 	public function listar_recibo_honorario_ajax(Request $request){
 	
 		$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle();
-		$p[]="";//$request->numero_cap;
-		$p[]="";//$request->agremiado;
-		$p[]="";//$request->numero_comprobante;
-		$p[]="";//$request->fecha_comprobante;
+		$p[]=$request->periodo;
+		$p[]=$request->anio;
+		$p[]=$request->mes;
+		$p[]=$request->numero_cap;
+		$p[]=$request->agremiado;
+		$p[]=$request->situacion;
+		$p[]=$request->numero_comprobante;
+		$p[]=$request->fecha_inicio;
+		$p[]=$request->fecha_fin;
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
