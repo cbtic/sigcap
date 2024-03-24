@@ -703,7 +703,7 @@ class SesionController extends Controller
 		$computoSesion = ComputoSesione::find($id);
 		
 		$comisionSesion_model = new ComisionSesione(); 
-		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesion($computoSesion->anio,$computoSesion->mes);
+		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesion($computoSesion->id_periodo_comision,$computoSesion->anio,$computoSesion->mes);
 		
 		$dias = array('L','M','M','J','V','S','D');
 		

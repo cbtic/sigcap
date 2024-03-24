@@ -93,7 +93,7 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
         if(isset($data[0]))return $data[0];
     }
 			
-	public static function getMunicipalidadSesion($anio,$mes){
+	public static function getMunicipalidadSesion($id_periodo,$anio,$mes){
 
         $cad = "select distinct mi.id,mi.denominacion municipalidad
 from comision_sesiones t1 
@@ -102,7 +102,9 @@ inner join comisiones t4 on t1.id_comision=t4.id
 inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
 where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
-And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' ";
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' 
+And t1.id_periodo_comisione = ".$id_periodo." 
+and t4.denominacion not ilike '%coordinador%'";
 		$data = DB::select($cad);
         return $data;
     }
