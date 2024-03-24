@@ -25,7 +25,7 @@ $(document).ready(function () {
 		var anio = $("#anio").val();
 		var mes = $("#mes").val();
 		//if (fecha == "")fecha = 0;
-		var href = '/sesion/ver_computo_sesion_pdf/' + anio + '/' + mes;
+		var href = '/sesion/ver_computo_sesion_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
 		window.open(href, '_blank');
 	});
 	
@@ -35,7 +35,7 @@ $(document).ready(function () {
 		var anio = $("#anio").val();
 		var mes = $("#mes").val();
 		//if (fecha == "")fecha = 0;
-		var href = '/sesion/ver_calendario_sesion_pdf/' + anio + '/' + mes;
+		var href = '/sesion/ver_calendario_sesion_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
 		window.open(href, '_blank');
 	});
 

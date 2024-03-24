@@ -413,10 +413,10 @@ Route::post('sesion/send_computo_sesion', [SesionController::class, 'send_comput
 Route::get('sesion/obtener_dictamen/{id}', [SesionController::class, 'obtener_dictamen'])->name('sesion.obtener_dictamen');
 
 Route::get('sesion/computo_sesion_pdf/{id}', [SesionController::class, 'computo_sesion_pdf'])->name('sesion.computo_sesion_pdf');
-Route::get('sesion/ver_computo_sesion_pdf/{anio}/{mes}', [SesionController::class, 'ver_computo_sesion_pdf'])->name('sesion.ver_computo_sesion_pdf');
+Route::get('sesion/ver_computo_sesion_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_computo_sesion_pdf'])->name('sesion.ver_computo_sesion_pdf');
 
 Route::get('sesion/calendario_sesion_pdf/{id}', [SesionController::class, 'calendario_sesion_pdf'])->name('sesion.calendario_sesion_pdf');
-Route::get('sesion/ver_calendario_sesion_pdf/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
+Route::get('sesion/ver_calendario_sesion_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
 
 Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eliminar_computo_sesion'])->name('sesion.eliminar_computo_sesion');
 Route::get('sesion/eliminar_comision_sesion_delegados/{id}', [SesionController::class, 'eliminar_comision_sesion_delegados'])->name('sesion.eliminar_comision_sesion_delegados');

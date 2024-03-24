@@ -468,6 +468,7 @@ class SesionController extends Controller
 			$computoSesion = new ComputoSesione;
 			$computoSesion->anio = $request->anio;
 			$computoSesion->mes = $request->mes;
+			$computoSesion->id_periodo_comision = $request->id_periodo_bus;
 			$computoSesion->fecha = Carbon::now()->format('Y-m-d');
 			$computoSesion->estado = 1;
 			$computoSesion->id_usuario_inserta = $id_user;
@@ -652,7 +653,7 @@ class SesionController extends Controller
 		$computoSesion = ComputoSesione::find($id);
 		
 		$comisionSesion_model = new ComisionSesione(); 
-		$p[]="";//2;//$request->id_periodo;
+		$p[]=$computoSesion->id_periodo_comision;
 		$p[]="";
 		$p[]=$computoSesion->anio;//$request->anio;
 		$p[]=$computoSesion->mes;//$request->mes;
@@ -673,10 +674,10 @@ class SesionController extends Controller
 	
 	}
 	
-	public function ver_computo_sesion_pdf($anio,$mes){
+	public function ver_computo_sesion_pdf($id_periodo,$anio,$mes){
 		
 		$comisionSesion_model = new ComisionSesione(); 
-		$p[]="";//2;//$request->id_periodo;
+		$p[]=$id_periodo;
 		$p[]="";
 		$p[]=$anio;//$request->anio;
 		$p[]=$mes;//$request->mes;
