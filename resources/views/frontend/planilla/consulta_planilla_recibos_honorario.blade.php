@@ -27,6 +27,11 @@ table {
 #tblConcurso tbody tr{
 		font-size:13px
 }
+
+#tblReciboHonorario tbody tr{
+		font-size:13px
+}
+
 #tblAfiliado tbody tr{
 	font-size:13px
 }
@@ -113,7 +118,6 @@ br {
     line-height: 30px;
 }
 
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -132,6 +136,7 @@ ul.ui-autocomplete {
 .btn-xsm {
     font-size: 11px !important;
 }
+
 
 
 .switch {
@@ -510,6 +515,7 @@ label.form-control-sm{
 												
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														<input class="btn btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;" />
+														<a href="javascript:void(0)" onClick="limpiar()" class="btn btn-warning btn-warning" style="margin-left:10px">Limpiar</a>
 													</div>
 												</div>
 												<!--****-->

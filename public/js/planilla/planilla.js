@@ -22,7 +22,15 @@ $(document).ready(function () {
 			return false;
 		}
 	});
+
+	$('#municipalidad_bus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
 	
+
 	$('#numero_cap_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -360,6 +368,13 @@ function datatablenew(){
 function fn_ListarBusqueda() {
     datatablenew();
 };
+
+function limpiar(){
+	$("#numero_cap").val("");
+	$("#nombres").val("");
+	$("#numero_comprobante").val("");
+	$("#fecha_comprobante").val("");
+}
 
 function editarRecibo(id){
 

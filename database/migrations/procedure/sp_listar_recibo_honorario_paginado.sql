@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_recibo_honorario_paginado(p_periodo character varying, p_anio character varying, p_mes character varying, p_numero_cap character varying, p_agremiado character varying, p_situacion character varying, p_numero_comprobante character varying, p_fecha_inicio character varying, p_fecha_fin character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_recibo_honorario_paginado(p_periodo character varying, p_anio character varying, p_mes character varying, p_numero_cap character varying, p_agremiado character varying, p_municipalidad character varying, p_situacion character varying, p_numero_comprobante character varying, p_fecha_inicio character varying, p_fecha_fin character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,14 +18,15 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 
-	v_campos=' pdd.id, pc.descripcion periodo, pd.periodo anio, pd.mes , a.numero_cap, tm.denominacion situacion, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres agremiado, pdd.numero_comprobante, pdd.fecha_comprobante, pd.estado ';
+	v_campos=' pdd.id, pc.descripcion periodo, pd.periodo anio, pd.mes , a.numero_cap, tm.denominacion situacion, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres agremiado, c.denominacion municipalidad, pdd.numero_comprobante, pdd.fecha_comprobante, pd.estado ';
 
 	v_tabla=' from planilla_delegados pd 
 	inner join planilla_delegado_detalles pdd on pdd.id_planilla = pd.id
 	inner join agremiados a on pdd.id_agremiado = a.id
 	inner join personas p on a.id_persona = p.id
-	inner join tabla_maestras tm on a.id_situacion = tm.codigo::int and  tm.tipo =''14'' 
-	inner join periodo_comisiones pc on pd.id_periodo_comision = pc.id ';
+	inner join tabla_maestras tm on a.id_situacion = tm.codigo::int and  tm.tipo =''14''
+	inner join periodo_comisiones pc on pd.id_periodo_comision = pc.id 
+	inner join comisiones c on pdd.id_comision=c.id ';
 	
 	v_where = ' Where 1=1  ';
 	/*
@@ -40,6 +41,10 @@ begin
 	
 	If p_situacion<>'' Then
 	 v_where:=v_where||'And a.id_situacion = '''||p_situacion||''' ';
+	End If;
+
+	If p_municipalidad<>'' Then
+	 v_where:=v_where||'And c.denominacion ilike ''%'||p_municipalidad||'%'' ';
 	End If;
 
 	If p_periodo<>'' Then
@@ -82,9 +87,9 @@ begin
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By pd.id Desc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By pdd.id Desc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By pd.id Desc;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By pdd.id Desc;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;
