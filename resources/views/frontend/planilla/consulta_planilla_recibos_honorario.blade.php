@@ -401,8 +401,7 @@ label.form-control-sm{
 
                                             <div class="card-body" style="margin-top:15px;margin-bottom:15px">
 											
-												<div style="clear:both">
-												</div>
+												<div style="clear:both"></div>
 												
 												<div class="row">
 													
@@ -524,23 +523,41 @@ label.form-control-sm{
 												</div>
 												<!--****-->
 											</div>
+											
 											<div class="card">
 												<div class="card-header">
 													<strong>
 														Lista de Agremiados
 													</strong>
 												</div>
+												<div class="card-body" style="margin-top:15px;margin-bottom:15px">
+											
+												<div style="clear:both"></div>
 												<div class="row" style="margin-top:15px;margin-bottom:15px">
 													<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="Numero Cap">
 													</div>
-													<div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
-													</div>		
+													</div>	
+
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+														<input class="form-control form-control-sm" id="numero_comprobante_bus" name="numero_comprobante_bus" placeholder="N&uacute;mero Comprobante">
+													</div>	
+
+													<div class="col-lg-1-5 col-md-2 col-sm-12 col-xs-12">
+														<!--<input class="form-control form-control-sm" id="fecha_comprobante_bus" name="fecha_comprobante" placeholder="Fecha Comprobante">-->
+														<input id="fecha_inicio_bus" name="fecha_inicio_bus" class="form-control form-control-sm" placeholder="Fecha desde" type="text"  >
+													</div>	
+													
+													<div class="col-lg-1-5 col-md-2 col-sm-12 col-xs-12">
+														<!--<input class="form-control form-control-sm" id="fecha_comprobante_bus" name="fecha_comprobante" placeholder="Fecha Comprobante">-->
+														<input id="fecha_fin_bus" name="fecha_fin_bus" class="form-control form-control-sm" placeholder="Fecha hasta" type="text"  >
+													</div>	
 
 													<div class="col-lg-2">
 														<div class="form-group">
-															<select name="situacion" id="situacion" class="form-control form-control-sm" onchange="">
+															<select name="situacion_bus" id="situacion_bus" class="form-control form-control-sm" onchange="">
 																<option value="">--Selecionar Situaci&oacute;n--</option>
 																<?php
 																foreach ($situacion as $row) {?>
@@ -553,7 +570,7 @@ label.form-control-sm{
 													</div>									
 													
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-														<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" style="margin-left:20px" />
+														<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar_" style="margin-left:20px" />
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 													</div>
 												</div>
