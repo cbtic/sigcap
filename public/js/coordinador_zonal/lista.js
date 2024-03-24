@@ -1006,9 +1006,9 @@ function GuardarCoordinadorZonal(){
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//window.location.reload();
 				datatablenew();
-				
+				limpiar();
 				/*
 				$('#openOverlayOpc').modal('hide');
 				if(result==1){
@@ -1019,6 +1019,16 @@ function GuardarCoordinadorZonal(){
 				*/
             }
     });
+}
+
+function limpiar(){
+	$("#numero_cap").val("");
+	$("#zonal").val("");
+	$("#estado_coordinador").val("");
+	$("#dni").val("");
+	$("#apellido_paterno").val("");
+	$("#apellido_materno").val("");
+	$("#nombre").val("");
 }
 
 function modalDetalle(id){
@@ -1085,6 +1095,7 @@ function fn_eliminar_coordinador_zonal(id,estado){
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
 				datatablenew();
+				limpiar();
             }
     });
 }
