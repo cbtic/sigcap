@@ -33,7 +33,7 @@ class PlanillaDelegadoDetalle extends Model
 
     function getDatosRecibo($id){     
         
-        $cad = "select pdd.id, a.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado from planilla_delegado_detalles pdd 
+        $cad = "select pdd.id, a.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, pdd.numero_comprobante, pdd.fecha_comprobante from planilla_delegado_detalles pdd 
         inner join agremiados a on pdd.id_agremiado = a.id
         inner join personas p on a.id_persona = p.id
         where pdd.id = '".$id."'";
