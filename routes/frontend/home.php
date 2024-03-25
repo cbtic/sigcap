@@ -49,6 +49,7 @@ use App\Http\Controllers\Frontend\CoordinadorZonalController;
 use App\Http\Controllers\Frontend\ProyectistaController;
 
 use App\Http\Controllers\Frontend\AsignacionCuentaController;
+use App\Http\Controllers\Frontend\AsientoPlanillaController;
 use App\Http\Controllers\Frontend\ProyectoController;
 use App\Http\Controllers\Frontend\BeneficiarioController;
 
@@ -600,6 +601,18 @@ Route::post('asignacion/send_asignacion', [AsignacionCuentaController::class, 's
 Route::get('asignacion/eliminar_asignacion/{id}/{estado}', [AsignacionCuentaController::class, 'eliminar_asignacion'])->name('persona.eliminar_asignacion');
 
 Route::get('asignacion/consulta_asignacion', [AsignacionCuentaController::class, 'consulta_asignacion'])->name('asignacion.consulta_asignacion');
+
+
+Route::get('asiento', [AsientoPlanillaController::class, 'index'])->name('asiento');
+Route::post('asientos', [AsientoPlanillaController::class, 'store'])->name('asientos');
+Route::post('asiento/listar_asiento_ajax', [AsientoPlanillaController::class, 'listar_asiento_ajax'])->name('asiento.listar_asiento_ajax');
+Route::get('asiento/modal_asiento/{id}', [AsientoPlanillaController::class, 'modal_asiento'])->name('asiento.modal_asiento');
+Route::post('asiento/send_asiento', [AsientoPlanillaController::class, 'send_asiento'])->name('asiento.send_asiento');
+Route::get('asiento/eliminar_asiento/{id}/{estado}', [AsientoPlanillaController::class, 'eliminar_asiento'])->name('persona.eliminar_asiento');
+
+Route::post('asiento/obtener_asiento_planilla', [AsientoPlanillaController::class, 'obtener_asiento_planilla'])->name('asiento.obtener_asiento_planilla');
+Route::get('asiento/consulta_asiento', [AsientoPlanillaController::class, 'consulta_asiento'])->name('asiento.consulta_asiento');
+
 
 Route::get('proyecto/obtener_proyecto/{numero_cap}', [ProyectoController::class, 'obtener_proyecto'])->name('proyecto.obtener_proyecto');
 Route::get('certificado/certificado_tipo/{id}', [CertificadoController::class, 'certificado_tipo'])->name('certificado.certificado_tipo');
