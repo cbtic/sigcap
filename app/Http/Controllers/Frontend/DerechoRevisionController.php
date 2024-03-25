@@ -16,6 +16,8 @@ use App\Models\Proyectista;
 use App\Models\Propietario;
 use App\Models\Proyecto;
 use App\Models\Empresa;
+use App\Models\Valorizacione;
+use App\Models\Concepto;
 use App\Models\Parametro;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -158,11 +160,16 @@ class DerechoRevisionController extends Controller
 	public function send_credipago(Request $request){
 		
 		$derechoRevision_model = new DerechoRevision;
+		$propietario_model = new Propietario;
 		
 		$solicitud = Solicitude::find($request->id);
 		$valor_obra = $solicitud->valor_obra;
 		$area_total = $solicitud->area_total;
 		$id_tipo_solicitud = $solicitud->id_tipo_solicitud;
+
+		$propietario = Propietario::where("id_solicitud",$request->id)->where("estado","1")->first();
+		$empresa = Empresa::where("id",$propietario->id_empresa)->where("estado","1")->first();
+		$concepto = Concepto::where("id",26474)->where("estado","1")->first();
 		
 		$uit = 4950;
 		
@@ -223,7 +230,7 @@ class DerechoRevisionController extends Controller
 		$id_user = Auth::user()->id;		
 		$liquidacion = new Liquidacione;
 		$liquidacion->id_solicitud = $request->id;
-		$liquidacion->fecha = Carbon::now()->format('Y-m-d');;
+		$liquidacion->fecha = Carbon::now()->format('Y-m-d');
 		$liquidacion->credipago = $codigo;
 		$liquidacion->sub_total = $sub_total;
 		$liquidacion->igv = $igv;
@@ -235,6 +242,20 @@ class DerechoRevisionController extends Controller
 		$id_liquidacion = $liquidacion->id;
 		echo $id_liquidacion;
 		
+		$valorizacion = new Valorizacione;
+		$valorizacion->id_modulo = 7;
+		$valorizacion->pk_registro = $liquidacion->id;
+		$valorizacion->id_concepto = $concepto->id;
+		$valorizacion->id_empresa = $empresa->id;
+		$valorizacion->monto = $liquidacion->total;
+		$valorizacion->id_moneda = $concepto->id_moneda;
+		$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+		$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+		$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago;
+		//$valorizacion->estado = 1;
+		//print_r($valorizacion->descripcion).exit();
+		$valorizacion->id_usuario_inserta = $id_user;
+		$valorizacion->save();
     }
 
 	public function modal_solicitud_nuevoSolicitud($id){
