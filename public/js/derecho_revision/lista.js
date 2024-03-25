@@ -92,6 +92,11 @@ function guardar_credipago(){
     });
 }
 
+function credipago_pdf(id){
+	var href = '/derecho_revision/credipago_pdf/'+id;
+	window.open(href, '_blank');
+}
+
 function obtenerSolicitante(){
 	
 	var tipo_solicitante = $("#tipo_solicitante").val();

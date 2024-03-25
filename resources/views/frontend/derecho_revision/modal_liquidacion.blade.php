@@ -281,6 +281,7 @@ function fn_save_requisito(){
 							<th>IGV</th>
 							<th>Total</th>
 							<th>Observaci&oacute;n</th>
+                            <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody style="font-size:13px">
@@ -294,6 +295,7 @@ function fn_save_requisito(){
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->igv?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->total?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
+                            <td class="text-left" style="vertical-align:middle"><button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="credipago_pdf('<?php echo $row->id?>')" ><i class="fa fa-edit"></i> Ver Certificado</button></td>
 						</tr>
 						<?php 
 							}	
