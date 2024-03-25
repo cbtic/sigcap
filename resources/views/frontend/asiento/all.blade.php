@@ -133,82 +133,79 @@
                 </div><!--col-->
             </div>
 
-        <div class="row justify-content-center">
-        
-        <div class="col col-sm-12 align-self-center">
+            <div class="row justify-content-center">
+            
+                <div class="col col-sm-12 align-self-center">
 
-            <div class="card">
-                <div class="card-header">
-                    <strong>
-                    Lista de Asientos
-                    </strong>
-                </div><!--card-header-->
-				
-				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
-				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-				
-				<div class="row" style="padding:20px 20px 0px 20px;">
-				
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacion_b" name="denominacion_b" placeholder="Denominación">
-					</div>
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>
+                            Lista de Asientos
+                            </strong>
+                        </div><!--card-header-->
+                        
+                        <form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
+                            <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                        
+                            <div class="row" style="padding:20px 20px 0px 20px;">
+                            
+                                <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                                    <input class="form-control form-control-sm" id="denominacion_b" name="denominacion_b" placeholder="Denominación">
+                                </div>
 
-                    <input type="hidden" name="cuenta_b" id="cuenta_b" value="">
-                    <input type="hidden" name="tipo_cuenta_b" id="tipo_cuenta_b" value="">
-                    <input type="hidden" name="centro_costo_b" id="centro_costo_b" value="">
-                    <input type="hidden" name="partida_presupuestal_b" id="partida_presupuestal_b" value="">
-                    <input type="hidden" name="codigo_financiamiento_b" id="codigo_financiamiento_b" value="">
-                    <input type="hidden" name="medio_pago_b" id="medio_pago_b" value="">
-                    <input type="hidden" name="origen_b" id="origen_b" value="">
-                                 
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado_b" id="estado_b" class="form-control form-control-sm">
-							<option value="">Todos</option>
-							<option value="1" selected="selected">Activo</option>
-							<option value="0">Eliminado</option>
-						</select>
-					</div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-						
-                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
-                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+                                <input type="hidden" name="cuenta_b" id="cuenta_b" value="">
+                                <input type="hidden" name="tipo_cuenta_b" id="tipo_cuenta_b" value="">
+                                <input type="hidden" name="centro_costo_b" id="centro_costo_b" value="">
+                                <input type="hidden" name="partida_presupuestal_b" id="partida_presupuestal_b" value="">
+                                <input type="hidden" name="codigo_financiamiento_b" id="codigo_financiamiento_b" value="">
+                                <input type="hidden" name="medio_pago_b" id="medio_pago_b" value="">
+                                <input type="hidden" name="origen_b" id="origen_b" value="">
+                                            
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                    <select name="estado_b" id="estado_b" class="form-control form-control-sm">
+                                        <option value="">Todos</option>
+                                        <option value="1" selected="selected">Activo</option>
+                                        <option value="0">Eliminado</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                                    <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+                                    
+                                    <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                                    <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
 
-					</div>
-				</div>
-				
-                <div class="card-body">
+                                </div>
+                            </div>
+                        
+                            <div class="card-body">
+                                <div  id="divPlanilla" class="table-responsive">
+                                    <table id="tblPlanilla" class="table table-hover table-sm">
+                                        <thead>
+                                            <tr style="font-size:13px">
+                                        
+                                                <th>Cuenta</th>
+                                                <th>Denominaci&oacute;n</th>                            
+                                                <th>Tipo</th>
+                                                <th>Centro Costo</th>                            
+                                                <th>Partida Pres.</th>
+                                                <th>Cod. Financiero</th>
+                                                <th>Medio Pago</th>
+                                                <th>Origen</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
 
-                    <div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
-                        <thead>
-                        <tr style="font-size:13px">
-                     
-                            <th>Cuenta</th>
-                            <th>Denominaci&oacute;n</th>                            
-                            <th>Tipo</th>
-                            <th>Centro Costo</th>                            
-							<th>Partida Pres.</th>
-                            <th>Cod. Financiero</th>
-                            <th>Medio Pago</th>
-                            <th>Origen</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div><!--table-responsive-->
-                </form>
-
-
-
-                </div><!--card-body-->
-            </div><!--card-->
-        <!--</div>--><!--col-->
-    <!--</div>--><!--row-->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><!--table-responsive-->
+                        </form>
+                    </div><!--card-body-->
+                </div><!--card-->
+            </div><!--col-->
+        </div><!--row-->
 
 @endsection
 
