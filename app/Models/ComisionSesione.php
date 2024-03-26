@@ -71,7 +71,7 @@ and t1.id_comision=".$id_comision;
 	
 	public static function getDelegadoComisionSesionCoordinadorZonal($anio,$mes,$id_municipalidad_integrada){
 
-        $cad = "select distinct case when t0.id_agremiado>0 then 'AE' else 'T' end tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap
+        $cad = "select distinct 'CZ' tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 inner join comisiones t4 on t1.id_comision=t4.id
