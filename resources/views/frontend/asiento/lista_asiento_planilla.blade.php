@@ -22,56 +22,45 @@
 	</thead>
 	<tbody>
 		<?php
-		$importe_bruto = 0;
-		$sub_total = 0;
-		$importe_igv = 0;
-		$importe_comision_cap = 0;
-		$importe_fondo_asistencia = 0;
-		$saldo = 0;
+		$debe = 0;
+		$haber = 0;
+
 
 
 		if ($asientoPlanilla) {
-			foreach ($asientoPlanilla as $row) { ?>
+			foreach ($asientoPlanilla as $key=>$row) { ?>
 				<tr style="font-size:13px">
-					<td class="text-left" style="vertical-align:middle"><?php echo $row->municipalidad ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo $row->importe_bruto ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo $row->importe_igv ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo $row->importe_comision_cap ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo $row->importe_fondo_asistencia ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo $row->saldo ?></td>
 
-					id, 
-					id_persona, 
-					cuenta, 
-					debe, 
-					haber, 
-					glosa, 
-					centro_costo, 
-					presupuesto, 
-					codigo_financiero, 
-					medio_pago, 
-					id_tipo_documento, 
-					serie, 
-					numero, 
-					fecha_documento, 
-					fecha_vencimiento, 
-					id_moneda, 
-					tipo_cambio, 
-					id_estado_doc, 
-					estado, 
-					id_usuario_inserta, 
-					id_asiento_planilla, 
-					id_periodo_comision, i
-					d_periodo_comision_detalle
+					<input type="hidden" name="asiento[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
+					<input type="hidden" name="asiento[<?php echo $key?>][id_persona]" value="<?php echo $row->id_persona?>" />
+					<input type="hidden" name="asiento[<?php echo $key?>][id_asiento_planilla]" value="<?php echo $row->id_asiento_planilla?>" />
+					<input type="hidden" name="asiento[<?php echo $key?>][id_periodo_comision]" value="<?php echo $row->id_periodo_comision?>" />
+					<input type="hidden" name="asiento[<?php echo $key?>][id_periodo_comision_detalle]" value="<?php echo $row->id_periodo_comision_detalle?>" />
+					<input type="hidden" name="asiento[<?php echo $key?>][id_moneda]" value="<?php echo $row->id_moneda?>" />
+					
+
+					<td class="text-left"  style="vertical-align:middle"><?php echo $row->cuenta ?></td>
+					<td class="text-left"  style="vertical-align:middle"><?php echo $row->persona ?></td>
+					<td class="text-right" style="vertical-align:middle"><?php echo $row->debe ?></td>
+					<td class="text-right"  style="vertical-align:middle"><?php echo $row->haber ?></td>
+					<td class="text-left" style="vertical-align:middle"><?php echo $row->glosa ?></td>
+					<td class="text-left"  style="vertical-align:middle"><?php echo $row->centro_costo ?></td>
+					<td class="text-left" style="vertical-align:middle"><?php echo $row->presupuesto ?></td>
+					<td class="text-left"  style="vertical-align:middle"><?php echo $row->codigo_financiero ?></td>
+					<td class="text-left" style="vertical-align:middle"><?php echo $row->medio_pago ?></td>
+					<td class="text-left"  style="vertical-align:middle"><?php echo $row->id_tipo_documento ?></td>
+					<td class="text-center" style="vertical-align:middle"><?php echo $row->serie ?></td>
+					<td class="text-center"  style="vertical-align:middle"><?php echo $row->numero ?></td>
+					<td class="text-left" style="vertical-align:middle"><?php echo $row->fecha_documento ?></td>
+					<td class="text-left"  style="vertical-align:middle"><?php echo $row->fecha_vencimiento ?></td>
+					<td class="text-left" style="vertical-align:middle"><?php echo $row->id_moneda ?></td>
+					<td class="text-right"  style="vertical-align:middle"><?php echo $row->tipo_cambio ?></td>
+					<td class="text-right" style="vertical-align:middle"><?php echo $row->id_estado_doc ?></td>
 
 				</tr>
 		<?php
-
-				$importe_bruto += $row->importe_bruto;
-				$importe_igv += $row->importe_igv;
-				$importe_comision_cap += $row->importe_comision_cap;
-				$importe_fondo_asistencia += $row->importe_fondo_asistencia;
-				$saldo += $row->saldo;
+				$debe += $row->debe;
+				$haber += $row->haber;
 			}
 		}
 		?>
@@ -79,11 +68,11 @@
 	<tfoot>
 		<tr style="font-size:13px">
 			<th class="text-left" style="vertical-align:middle" colspan="1">Totales Generales</th>
-			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $importe_bruto ?></th>
-			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $importe_igv ?></th>
-			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $importe_comision_cap ?></th>
-			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $importe_fondo_asistencia ?></th>
-			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $saldo ?></th>
+			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $debe ?></th>
+			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $haber ?></th>
+			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"></th>
+			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"></th>
+			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"></th>
 		</tr>
 	</tfoot>
 </table>

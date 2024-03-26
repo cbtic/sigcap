@@ -187,6 +187,8 @@ class AsientoPlanillaController extends Controller
 		$mes = $request->mes;
 		$periodo = $request->id_periodo;
 
+		//echo($mes); exit();
+
 		$asiento_planilla_model = new AsientoPlanilla;
 		$asientoPlanilla = $asiento_planilla_model->ListarAsientoPlanilla($anio, $mes, $periodo);
 
