@@ -415,9 +415,11 @@ Route::get('sesion/obtener_dictamen/{id}', [SesionController::class, 'obtener_di
 
 Route::get('sesion/computo_sesion_pdf/{id}', [SesionController::class, 'computo_sesion_pdf'])->name('sesion.computo_sesion_pdf');
 Route::get('sesion/ver_computo_sesion_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_computo_sesion_pdf'])->name('sesion.ver_computo_sesion_pdf');
+Route::get('sesion/ver_delegado_coordinador_pdf/{id_periodo}', [SesionController::class, 'ver_delegado_coordinador_pdf'])->name('sesion.ver_delegado_coordinador_pdf');
 
 Route::get('sesion/calendario_sesion_pdf/{id}', [SesionController::class, 'calendario_sesion_pdf'])->name('sesion.calendario_sesion_pdf');
 Route::get('sesion/ver_calendario_sesion_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
+Route::get('sesion/ver_calendario_sesion_coordinador_zonal_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_coordinador_zonal_pdf'])->name('sesion.ver_calendario_sesion_coordinador_zonal_pdf');
 
 Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eliminar_computo_sesion'])->name('sesion.eliminar_computo_sesion');
 Route::get('sesion/eliminar_comision_sesion_delegados/{id}', [SesionController::class, 'eliminar_comision_sesion_delegados'])->name('sesion.eliminar_comision_sesion_delegados');
@@ -560,6 +562,8 @@ Route::post('coordinador_zonal/upload_informe', [CoordinadorZonalController::cla
 
 Route::get('movilidad/obtener_comision/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision'])->name('movilidad.obtener_comision');
 Route::get('movilidad/obtener_comision_movilidad/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision_movilidad'])->name('movilidad.obtener_comision_movilidad');
+
+Route::get('movilidad/ver_movilidad_pdf/{id_periodo}', [MovilidadController::class, 'ver_movilidad_pdf'])->name('movilidad.ver_movilidad_pdf');
 
 Route::get('ingreso/modal_beneficiario_/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_beneficiario_'])->name('ingreso.modal_beneficiario_');
 

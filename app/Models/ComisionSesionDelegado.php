@@ -86,5 +86,23 @@ and t0.estado='1'";
         return $data;
     }
 	
+	function getComisionSesionDelegadoCoordinadorByIdPeriodo($id_periodo){ 
+		
+		$cad = "select distinct t4.denominacion comision,t3.apellido_paterno||' '||t3.apellido_materno||' '||t3.nombres agremiado,t2.numero_cap
+from comision_sesiones t1 
+inner join comision_sesion_delegados csd on t1.id=csd.id_comision_sesion 
+left join comision_delegados cd on csd.id_delegado=cd.id left join agremiados a on coalesce(cd.id_agremiado,csd.id_agremiado)=a.id
+left join agremiados t2 on coalesce(cd.id_agremiado,csd.id_agremiado)=t2.id
+inner join personas t3 on t2.id_persona=t3.id
+inner join comisiones t4 on t1.id_comision=t4.id
+where csd.estado='1' 
+and csd.coordinador='1'
+and t1.id_periodo_comisione=".$id_periodo;
+
+		
+		$data = DB::select($cad);
+        return $data;
+    }
+	
 	
 }

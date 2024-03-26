@@ -39,6 +39,24 @@ $(document).ready(function () {
 		window.open(href, '_blank');
 	});
 
+	$('#btnVistaPreviaMovilidad').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		var href = '/movilidad/ver_movilidad_pdf/' +id_periodo_bus;
+		window.open(href, '_blank');
+	});
+	
+	$('#btnVistaPreviaCoordinador').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		var href = '/sesion/ver_delegado_coordinador_pdf/' +id_periodo_bus;
+		window.open(href, '_blank');
+	});
+	
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
