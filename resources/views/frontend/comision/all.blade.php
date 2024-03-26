@@ -150,7 +150,8 @@
                                                 <?php 
                                                 if($periodo_activo){
                                                 ?>
-                                                <select name="periodo" id="periodo" class="form-control" onChange="obtenerPeriodo();obtenerTipoComision()" disabled="disabled">
+                                                <input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo_activo->id?>">
+                                                <select name="periodo_" id="periodo_" class="form-control" onChange="obtenerPeriodo();obtenerTipoComision()" disabled="disabled">
                                                     <!--<option value="">--Selecionar--</option>-->
                                                         <?php
                                                         foreach ($periodoComision as $row) {?>

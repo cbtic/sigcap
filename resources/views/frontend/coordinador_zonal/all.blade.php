@@ -381,7 +381,7 @@
                                 if($periodo_activo){
                                 ?>
                                 <input type="hidden" name="periodo_2" id="periodo_2" value="<?php echo $periodo_activo->id?>">
-                                <select name="periodo_2" id="periodo_2" class="form-control form-control-sm" onchange="" disabled="disabled">
+                                <select name="periodo_2_" id="periodo_2_" class="form-control form-control-sm" onchange="" disabled="disabled">
                                 <option value="0">--Selecionar--</option>
                                     <?php
                                     foreach ($periodo as $row) {?>
