@@ -383,7 +383,7 @@ function cargarAsientoPlanilla() {
 	$("#divPlanilla").html("");
 	$.ajax({
 		//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
-		url: "/fondoComun/obtener_asiento_planilla",
+		url: "/asiento/obtener_asiento_planilla",
 		data: $("#frmAfiliacion").serialize(),
 		type: "POST",
 		success: function(result) {

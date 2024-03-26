@@ -148,10 +148,68 @@
                             <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                         
                             <div class="row" style="padding:20px 20px 0px 20px;">
-                            
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                    <select name="Tipo_b" id="Tipo_b" class="form-control form-control-sm">
+                                        <option value="">Todos</option>
+                                        <option value="1" selected="selected">ASIENTO DE PROVISION</option>
+                                        <option value="0">Eliminado</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<?php 
+									if($periodo_activo){
+									?>
+									<input type="hidden" name="id_periodo" id="id_periodo" value="<?php echo $periodo_activo->id?>">
+									<select name="id_periodo_" id="id_periodo_" class="form-control form-control-sm" onChange="obtenerAnioPeriodo()" disabled="disabled">
+										<option value="">--Periodo--</option>
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" 
+										<?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									
+									<?php
+									}else{
+									?>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerAnioPerido()">
+										<option value="">--Periodo--</option>
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" 
+										<?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									<?php } ?>
+								</div>
+
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<select name="anio" id="anio" class="form-control form-control-sm">
+										@foreach ($anio as $anio)
+											<option value="{{ $anio }}">{{ $anio }}</option>
+										@endforeach
+									</select>
+
+								</div>
+
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<select name="mes" id="mes" class="form-control form-control-sm">
+										@foreach ($mes as $key=>$mes)
+											<option value="{{ $key }}">{{ $mes }}</option>
+										@endforeach
+									</select>
+								</div>
+
+  <!--                          
                                 <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                                     <input class="form-control form-control-sm" id="denominacion_b" name="denominacion_b" placeholder="Denominación">
                                 </div>
+                                    -->
 
                                 <input type="hidden" name="cuenta_b" id="cuenta_b" value="">
                                 <input type="hidden" name="tipo_cuenta_b" id="tipo_cuenta_b" value="">
@@ -184,15 +242,22 @@
                                             <tr style="font-size:13px">
                                         
                                                 <th>Cuenta</th>
-                                                <th>Denominaci&oacute;n</th>                            
-                                                <th>Tipo</th>
-                                                <th>Centro Costo</th>                            
-                                                <th>Partida Pres.</th>
-                                                <th>Cod. Financiero</th>
-                                                <th>Medio Pago</th>
-                                                <th>Origen</th>
+                                                <th>Nombre</th>                            
+                                                <th>Debe</th>
+                                                <th>Haber</th>                            
+                                                <th>Moneda</th>
+                                                <th>Tipo Cambio</th>
+                                                <th>Equivalente</th>
+                                                <th>Tipo Doc.</th>
+                                                <th>Numero</th>
+                                                <th>Código</th>
+                                                <th>Razon Social</th>
+                                                <th>C.C.</th>
+                                                <th>Presupuesto</th>
+                                                <th>F.E</th>
+                                                <th>Glosa</th>
+                                                <th>M. Pago</th>
                                                 <th>Estado</th>
-                                                <th>Acciones</th>
 
                                             </tr>
                                         </thead>

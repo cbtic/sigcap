@@ -11,6 +11,9 @@ use App\Models\PlanContable;
 use App\Models\CentroCosto;
 use App\Models\PartidaPresupuestale;
 
+use App\Models\PeriodoComisione;
+use App\Models\PeriodoComisionDetalle;
+
 
 //use App\Models\CondicionLaborale;
 
@@ -29,7 +32,28 @@ class AsientoPlanillaController extends Controller
 	}
 	
     public function index(){
-        return view('frontend.asiento.all');
+
+		$anio = range(date('Y'), date('Y') - 20); 		
+		$mes = [
+            '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
+            '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
+            '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
+            '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
+        ];
+
+		$mes_actual = date("m");
+
+		$periodoComisione_model = new PeriodoComisione;
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+
+		$periodoDet = $periodoComisione_model->getPeriodoDetAll();
+		$periodoDet_ultimo = PeriodoComisionDetalle::where("estado",1)->orderBy("id","desc")->first();
+		$periodoDet_activo = PeriodoComisionDetalle::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+
+
+        return view('frontend.asiento.all',compact('periodo','periodo_activo', 'periodo_ultimo','periodoDet','periodoDet_activo', 'periodoDet_ultimo', 'anio', 'mes','mes_actual'));
     }
 
 	public function create()
@@ -169,5 +193,7 @@ class AsientoPlanillaController extends Controller
         return view('frontend.asiento.lista_asiento_planilla',compact('asientoPlanilla'));
 
     }
+
+
 
 }
