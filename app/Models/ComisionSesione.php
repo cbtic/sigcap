@@ -77,6 +77,7 @@ inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion
 inner join comisiones t4 on t1.id_comision=t4.id
 left join comision_delegados cd on t0.id_delegado=cd.id  
 left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
+inner join coordinador_zonales cz on a.id=cz.id_agremiado and t4.id=cz.id_comision and t1.id_periodo_comisione=cz.id_periodo 
 inner join personas p on a.id_persona=p.id 
 where t0.id_aprobar_pago=2
 and t0.estado='1'
