@@ -27,14 +27,11 @@ Where c.id_concurso = ".$id;
 
         $mes= intval($mes);
 
-        $cad = "select t3.desc_ubigeo municipalidad,round(t1.importe_bruto::numeric,2)importe_bruto, round(t1.importe_igv::numeric,2)importe_igv, round(t1.importe_comision_cap::numeric,2)importe_comision_cap, round(t1.importe_fondo_asistencia::numeric,2)importe_fondo_asistencia, round(t1.saldo::numeric,2)saldo
-                from delegado_fondo_comuns t1
-                --inner join municipalidades t3 on t3.id = t1.id_municipalidad
-                inner join ubigeos t3 on t3.id_ubigeo = t1.id_ubigeo
-                inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle 
-            Where EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
-            And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'
-            And t1.id_periodo_comision = '".$periodo."' ";
+        $cad = "select id, id_persona, cuenta, debe, haber, glosa, centro_costo, presupuesto, codigo_financiero, medio_pago, id_tipo_documento, serie, numero, fecha_documento, fecha_vencimiento, id_moneda, tipo_cambio, id_estado_doc, estado, id_usuario_inserta, id_asiento_planilla, id_periodo_comision, id_periodo_comision_detalle
+        from asiento_planillas
+        where EXTRACT(YEAR FROM fecha_documento)::varchar = ".$anio."'
+        And EXTRACT(MONTH FROM fecha_documento)::varchar = '".$mes."'
+        And id_periodo_comision = ".$periodo."'  ";
 
 		//echo $cad;
 		$data = DB::select($cad);

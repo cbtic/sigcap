@@ -176,17 +176,6 @@
 
 							
 								<div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
-<!--
-									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="" disabled="disabled" >
-										<option value="">--Periodo--</option>
-										</?php
-										foreach ($periodo as $row) {?>
-										<option value="<//?php echo $row->id?>" <//?php if($row->id == $periodo_activo->id)echo "selected='selected'";?>><//?php echo $row->descripcion?></option>
-										<//?php 
-										}
-										?>
-									</select>
-									-->
 									<?php 
 									if($periodo_activo){
 									?>
@@ -216,12 +205,7 @@
 										?>
 									</select>
 									<?php } ?>
-
-
-
 								</div>
-
-
 
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<select name="anio" id="anio" class="form-control form-control-sm">

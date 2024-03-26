@@ -25,6 +25,16 @@ class PeriodoComisione extends Model
         return $data;
 		
 	}
+
+    public function getPeriodoDetAll(){
+		
+		$cad = "select id, denominacion, activo  
+		from periodo_comision_detalles pc where estado='1'";
+
+		$data = DB::select($cad);
+        return $data;
+		
+	}
 	
 	public function getAnioByFecha($fecha_inicio,$fecha_fin){
 		
