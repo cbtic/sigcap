@@ -86,7 +86,7 @@ and t0.estado='1'";
         return $data;
     }
 	
-	function getComisionSesionDelegadoCoordinadorByIdPeriodo($id_periodo){ 
+	function getComisionSesionDelegadoCoordinadorByIdPeriodo($id_periodo,$anio,$mes){ 
 		
 		$cad = "select distinct t4.denominacion comision,t3.apellido_paterno||' '||t3.apellido_materno||' '||t3.nombres agremiado,t2.numero_cap
 from comision_sesiones t1 
@@ -97,8 +97,9 @@ inner join personas t3 on t2.id_persona=t3.id
 inner join comisiones t4 on t1.id_comision=t4.id
 where csd.estado='1' 
 and csd.coordinador='1'
-and t1.id_periodo_comisione=".$id_periodo;
-
+And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+and t1.id_periodo_comisione=".$id_periodo ;
 		
 		$data = DB::select($cad);
         return $data;

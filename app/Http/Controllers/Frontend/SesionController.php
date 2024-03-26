@@ -698,10 +698,10 @@ class SesionController extends Controller
 	
 	}
 	
-	public function ver_delegado_coordinador_pdf($id_periodo){
+	public function ver_delegado_coordinador_pdf($id_periodo,$anio,$mes){
 		
 		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
-		$coordinador = $comisionSesionDelegado_model->getComisionSesionDelegadoCoordinadorByIdPeriodo($id_periodo);
+		$coordinador = $comisionSesionDelegado_model->getComisionSesionDelegadoCoordinadorByIdPeriodo($id_periodo,$anio,$mes);
 		
 		$pdf = Pdf::loadView('pdf.ver_delegado_coordinador',compact('coordinador'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
