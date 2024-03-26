@@ -57,6 +57,16 @@ $(document).ready(function () {
 		window.open(href, '_blank');
 	});
 	
+	$('#btnVistaPreviaCalendarioCoordinadorZonal').click(function () {
+		//guardar_computo()
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		//if (fecha == "")fecha = 0;
+		var href = '/sesion/ver_calendario_sesion_coordinador_zonal_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		window.open(href, '_blank');
+	});
+	
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
