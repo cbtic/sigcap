@@ -161,6 +161,8 @@ class DerechoRevisionController extends Controller
 		
 		$derechoRevision_model = new DerechoRevision;
 		$propietario_model = new Propietario;
+
+		$sw = 1;
 		
 		$solicitud = Solicitude::find($request->id);
 		$valor_obra = $solicitud->valor_obra;
@@ -169,93 +171,105 @@ class DerechoRevisionController extends Controller
 
 		$propietario = Propietario::where("id_solicitud",$request->id)->where("estado","1")->first();
 		$empresa = Empresa::where("id",$propietario->id_empresa)->where("estado","1")->first();
+		$empresa_cantidad = Empresa::where("ruc",$empresa->ruc)->where("estado","1")->count();
 		$concepto = Concepto::where("id",26474)->where("estado","1")->first();
+		//print_r($empresa_cantidad);exit();
+		if($empresa_cantidad==1){
+
+			$uit = 4950;
 		
-		$uit = 4950;
-		
-		/*****Edificaciones*********/
-		if($id_tipo_solicitud == 123){
-			
-			$sub_total 	= (0.0005*$valor_obra);
-			$igv		= (0.18*$sub_total);
-			$total		= $sub_total + $igv;
-			
-			$sub_total_minimo 	= (0.025*$uit);//123.75
-			$igv_minimo			= (0.18*$sub_total_minimo);//22.275
-			$total_minimo		= $sub_total_minimo + $igv_minimo;//146.025
-			
-			if($total<$total_minimo){
-				$sub_total 	= $sub_total_minimo;
-				$igv		= $igv_minimo;
-				$total		= $total_minimo;
+			/*****Edificaciones*********/
+			if($id_tipo_solicitud == 123){
+				
+				$sub_total 	= (0.0005*$valor_obra);
+				$igv		= (0.18*$sub_total);
+				$total		= $sub_total + $igv;
+				
+				$sub_total_minimo 	= (0.025*$uit);//123.75
+				$igv_minimo			= (0.18*$sub_total_minimo);//22.275
+				$total_minimo		= $sub_total_minimo + $igv_minimo;//146.025
+				
+				if($total<$total_minimo){
+					$sub_total 	= $sub_total_minimo;
+					$igv		= $igv_minimo;
+					$total		= $total_minimo;
+				}
+				
 			}
 			
+			/*****Habilitaciones urbanas*********/
+			if($id_tipo_solicitud == 124){
+				
+				$m2 = 0.23405;
+				
+				$sub_total 	= ($m2*$area_total);
+				$igv		= (0.18*$sub_total);
+				$total		= $sub_total + $igv;
+				
+				$total_minimo		= 1170;
+				$igv_minimo			= $total_minimo/1.18;
+				$sub_total_minimo 	= $total_minimo - $igv_minimo;
+				
+				$total_maximo		= 60000*$m2;
+				$igv_maximo			= $total_maximo/1.18;
+				$sub_total_maximo 	= $total_maximo - $igv_maximo;
+				
+				if($total<$total_minimo){
+					$sub_total 	= $sub_total_minimo;
+					$igv		= $igv_minimo;
+					$total		= $total_minimo;
+				}
+				
+				if($total>$total_maximo){
+					$sub_total 	= $sub_total_maximo;
+					$igv		= $igv_maximo;
+					$total		= $total_maximo;
+				}
+				
+			}
+			
+			$codigo1 = $derechoRevision_model->getCodigoSolicitud($id_tipo_solicitud);
+			$codigo2 = $derechoRevision_model->getCountProyectoTipoSolicitud($solicitud->id_proyecto,$id_tipo_solicitud);
+			$codigo = $codigo1.$codigo2;
+			
+			$id_user = Auth::user()->id;
+			$liquidacion = new Liquidacione;
+			$liquidacion->id_solicitud = $request->id;
+			$liquidacion->fecha = Carbon::now()->format('Y-m-d');
+			$liquidacion->credipago = $codigo;
+			$liquidacion->sub_total = $sub_total;
+			$liquidacion->igv = $igv;
+			$liquidacion->total = $total;
+			$liquidacion->observacion = "obs";
+			$liquidacion->id_usuario_inserta = $id_user;
+			$liquidacion->save();
+			
+			$id_liquidacion = $liquidacion->id;
+			echo $id_liquidacion;
+			
+			$valorizacion = new Valorizacione;
+			$valorizacion->id_modulo = 7;
+			$valorizacion->pk_registro = $liquidacion->id;
+			$valorizacion->id_concepto = $concepto->id;
+			$valorizacion->id_empresa = $empresa->id;
+			$valorizacion->monto = $liquidacion->total;
+			$valorizacion->id_moneda = $concepto->id_moneda;
+			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+			$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago;
+			//$valorizacion->estado = 1;
+			//print_r($valorizacion->descripcion).exit();
+			$valorizacion->id_usuario_inserta = $id_user;
+			$valorizacion->save();
+			$sw = 1;
+		}else{
+			$sw = 2;
 		}
 		
-		/*****Habilitaciones urbanas*********/
-		if($id_tipo_solicitud == 124){
-			
-			$m2 = 0.23405;
-			
-			$sub_total 	= ($m2*$area_total);
-			$igv		= (0.18*$sub_total);
-			$total		= $sub_total + $igv;
-			
-			$total_minimo		= 1170;
-			$igv_minimo			= $total_minimo/1.18;
-			$sub_total_minimo 	= $total_minimo - $igv_minimo;
-			
-			$total_maximo		= 60000*$m2;
-			$igv_maximo			= $total_maximo/1.18;
-			$sub_total_maximo 	= $total_maximo - $igv_maximo;
-			
-			if($total<$total_minimo){
-				$sub_total 	= $sub_total_minimo;
-				$igv		= $igv_minimo;
-				$total		= $total_minimo;
-			}
-			
-			if($total>$total_maximo){
-				$sub_total 	= $sub_total_maximo;
-				$igv		= $igv_maximo;
-				$total		= $total_maximo;
-			}
-			
-		}
+		$array["sw"] = $sw;
+		echo json_encode($array);
 		
-		$codigo1 = $derechoRevision_model->getCodigoSolicitud($id_tipo_solicitud);
-		$codigo2 = $derechoRevision_model->getCountProyectoTipoSolicitud($solicitud->id_proyecto,$id_tipo_solicitud);
-		$codigo = $codigo1.$codigo2;
 		
-		$id_user = Auth::user()->id;		
-		$liquidacion = new Liquidacione;
-		$liquidacion->id_solicitud = $request->id;
-		$liquidacion->fecha = Carbon::now()->format('Y-m-d');
-		$liquidacion->credipago = $codigo;
-		$liquidacion->sub_total = $sub_total;
-		$liquidacion->igv = $igv;
-		$liquidacion->total = $total;
-		$liquidacion->observacion = "obs";
-		$liquidacion->id_usuario_inserta = $id_user;
-		$liquidacion->save();
-		
-		$id_liquidacion = $liquidacion->id;
-		echo $id_liquidacion;
-		
-		$valorizacion = new Valorizacione;
-		$valorizacion->id_modulo = 7;
-		$valorizacion->pk_registro = $liquidacion->id;
-		$valorizacion->id_concepto = $concepto->id;
-		$valorizacion->id_empresa = $empresa->id;
-		$valorizacion->monto = $liquidacion->total;
-		$valorizacion->id_moneda = $concepto->id_moneda;
-		$valorizacion->fecha = Carbon::now()->format('Y-m-d');
-		$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-		$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago;
-		//$valorizacion->estado = 1;
-		//print_r($valorizacion->descripcion).exit();
-		$valorizacion->id_usuario_inserta = $id_user;
-		$valorizacion->save();
     }
 
 	public function modal_solicitud_nuevoSolicitud($id){

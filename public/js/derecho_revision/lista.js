@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 	
 	$('#fecha_registro_bus').datepicker({
@@ -87,7 +86,17 @@ function guardar_credipago(){
             type: "POST",
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
+				if(result.sw==1){
 					datatablenew();
+				}else{
+					//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
+					bootbox.alert({
+						message: "Existe más de un registro de propietario con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.",
+						//className: "alert_style"
+					});
+					datatablenew();
+				}
+				
             }
     });
 }
