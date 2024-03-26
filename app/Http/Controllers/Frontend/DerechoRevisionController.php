@@ -169,6 +169,13 @@ class DerechoRevisionController extends Controller
 
 		$propietario = Propietario::where("id_solicitud",$request->id)->where("estado","1")->first();
 		$empresa = Empresa::where("id",$propietario->id_empresa)->where("estado","1")->first();
+		$empresa_cantidad = Empresa::where("ruc",$empresa->ruc)->where("estado","1")->count();
+		print_r($empresa_cantidad);exit();
+		if($empresa_cantidad==1){
+
+
+
+		}
 		$concepto = Concepto::where("id",26474)->where("estado","1")->first();
 		
 		$uit = 4950;
@@ -227,7 +234,7 @@ class DerechoRevisionController extends Controller
 		$codigo2 = $derechoRevision_model->getCountProyectoTipoSolicitud($solicitud->id_proyecto,$id_tipo_solicitud);
 		$codigo = $codigo1.$codigo2;
 		
-		$id_user = Auth::user()->id;		
+		$id_user = Auth::user()->id;
 		$liquidacion = new Liquidacione;
 		$liquidacion->id_solicitud = $request->id;
 		$liquidacion->fecha = Carbon::now()->format('Y-m-d');
