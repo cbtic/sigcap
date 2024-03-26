@@ -266,15 +266,20 @@
 
 				</div>
 
-					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Computo" type="button" id="btnVistaPreviaComputo" style="margin-left:15px" />
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Calendario" type="button" id="btnVistaPreviaCalendario" style="margin-left:15px" />
 						<input class="btn btn-danger pull-rigth" value="Generar Computo" type="button" id="btnNuevo" style="margin-left:15px" />
+						
+						<input class="btn btn-secondary pull-rigth" value="Movilidad Delegados" type="button" id="btnVistaPreviaMovilidad" style="margin-left:15px" />
+						<input class="btn btn-secondary pull-rigth" value="Delegado Coordinadores" type="button" id="btnVistaPreviaCoordinador" style="margin-left:15px" />
+						<input class="btn btn-secondary pull-rigth" value="Calendario Coordinador Zonal" type="button" id="btnVistaPreviaCalendarioCoordinadorZonal" style="margin-left:15px" />
+						
 					</div>
 				</div>
 				
-                <div class="card-body">				
+                <div class="card-body">
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">
