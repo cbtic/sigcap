@@ -113,7 +113,7 @@
 								<a href="/sesion/lista_programacion_sesion" class="dropdown-item">Programaci&oacute;n de Sesiones</a>
 								@endcan
 								@can('Derecho de Revision')
-								<a href="/derecho_revision/consulta_derecho_revision" class="dropdown-item">Derecho Revisi&oacute;n</a>
+								<a href="/derecho_revision/consulta_derecho_revision" class="dropdown-item">Derecho Revisi&oacute;n - Edificaciones</a>
 								@endcan
 								@can('Registro Revisor Urbano')
 								<a href="/revisorUrbano/consulta_revisorUrbano" class="dropdown-item">Registro Revisor Urbano</a>
@@ -127,7 +127,7 @@
 								<a href="/sesion/consulta_computoSesion" class="dropdown-item">C&oacute;mputo de Sesiones</a>
 								@endcan
 								@can('Consulta Derecho de Revision')
-								<a href="/derecho_revision/consulta_solicitud_derecho_revision" class="dropdown-item">Consulta Solicitud de Derecho Revisi&oacute;n</a>
+								<a href="/derecho_revision/consulta_solicitud_derecho_revision" class="dropdown-item">Derecho Revisi&oacute;n - HU</a>
 								@endcan
 								@can('Registro Derecho de Revision')
 								<a href="/derecho_revision/consulta_derecho_revision_nuevo" class="dropdown-item">Registro Solicitud de Derecho Revisi&oacute;n</a>
