@@ -645,3 +645,10 @@ Route::get('planillaDelegado/obtener_datos_recibo/{id}', [PlanillaDelegadoContro
 Route::post('planillaDelegado/send_recibo_honorario', [PlanillaDelegadoController::class, 'send_recibo_honorario'])->name('planillaDelegado.send_recibo_honorario');
 
 Route::get('derecho_revision/credipago_pdf/{id}', [DerechoRevisionController::class, 'credipago_pdf'])->name('derecho_revision.credipago_pdf');
+Route::get('derecho_revision/credipago_pdf_eficicaciones/{id}', [DerechoRevisionController::class, 'credipago_pdf_eficicaciones'])->name('derecho_revision.credipago_pdf_eficicaciones');
+Route::get('derecho_revision/credipago_pdf_HU/{id}', [DerechoRevisionController::class, 'credipago_pdf_HU'])->name('derecho_revision.credipago_pdf_HU');
+Route::get('derecho_revision/obtener_tipo_credipago/{id}', [DerechoRevisionController::class, 'obtener_tipo_credipago'])->name('derecho_revision.obtener_tipo_credipago');
+
+Route::post('derecho_revision/listar_derecho_revision_hu_ajax', [DerechoRevisionController::class, 'listar_derecho_revision_hu_ajax'])->name('derecho_revision.listar_derecho_revision_hu_ajax');
+
+
