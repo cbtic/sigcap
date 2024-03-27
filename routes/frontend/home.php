@@ -613,9 +613,9 @@ Route::post('asiento/listar_asiento_ajax', [AsientoPlanillaController::class, 'l
 Route::get('asiento/modal_asiento/{id}', [AsientoPlanillaController::class, 'modal_asiento'])->name('asiento.modal_asiento');
 Route::post('asiento/send_asiento', [AsientoPlanillaController::class, 'send_asiento'])->name('asiento.send_asiento');
 Route::get('asiento/eliminar_asiento/{id}/{estado}', [AsientoPlanillaController::class, 'eliminar_asiento'])->name('persona.eliminar_asiento');
-
 Route::post('asiento/obtener_asiento_planilla', [AsientoPlanillaController::class, 'obtener_asiento_planilla'])->name('asiento.obtener_asiento_planilla');
 Route::get('asiento/consulta_asiento', [AsientoPlanillaController::class, 'consulta_asiento'])->name('asiento.consulta_asiento');
+Route::get('asiento/generar_asiento_planilla', [AsientoPlanillaController::class, 'generar_asiento_planilla'])->name('asiento.generar_asiento_planilla');
 
 
 Route::get('proyecto/obtener_proyecto/{numero_cap}', [ProyectoController::class, 'obtener_proyecto'])->name('proyecto.obtener_proyecto');

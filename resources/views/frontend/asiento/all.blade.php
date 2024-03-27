@@ -152,7 +152,7 @@
                                     <select name="Tipo_b" id="Tipo_b" class="form-control form-control-sm">
                                         <option value="">Todos</option>
                                         <option value="1" selected="selected">ASIENTO DE PROVISION</option>
-                                        <option value="0">Eliminado</option>
+                                        <option value="2">ASIENTO DE CANCELACION</option>
                                     </select>
                                 </div>
 
