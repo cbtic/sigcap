@@ -356,7 +356,7 @@ function fn_ListarBusqueda() {
     cargarAsientoPlanilla();
 };
 
-function fn_calcular(){
+function fn_genera_asiento(){
 	//var anio = $('#anio').val();
 	//var mes = $('#mes').val();
 	var p = {};
@@ -367,7 +367,7 @@ function fn_calcular(){
 
 	//alert(mes);
     $.ajax({
-            url: "/fondoComun/calcula_fondo_comun",
+            url: "/asiento/generar_asiento_planilla",
             type: "GET",
 			data: p,
             success: function (result) {
@@ -392,4 +392,6 @@ function cargarAsientoPlanilla() {
 	});
 
 }
+
+
 
