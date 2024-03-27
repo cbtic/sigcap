@@ -92,7 +92,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Derecho de Revisi&oacute;n</li>
+            <li class="breadcrumb-item active">Derecho de Revisi&oacute;n - Edificaciones</li>
         </li>
     </ol>
 @endsection
@@ -110,7 +110,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Derecho de Revisi&oacute;n<!--<small class="text-muted">Usuarios activos</small>-->
+                        Derecho de Revisi&oacute;n - Edificaciones<!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -122,7 +122,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Derecho de Revisi&oacute;n
+                        Lista de Derecho de Revisi&oacute;n - Edificaciones
                     </strong>
                 </div>
 				

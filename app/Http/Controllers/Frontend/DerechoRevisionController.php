@@ -102,7 +102,7 @@ class DerechoRevisionController extends Controller
         return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud'));
     }
 
-    public function listar_derecho_revision_ajax(Request $request){
+	public function listar_derecho_revision_ajax(Request $request){
 	
 		$derecho_revision_model = new DerechoRevision;
 		$p[]=$request->nombre_proyecto;
@@ -119,6 +119,37 @@ class DerechoRevisionController extends Controller
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	
+	}
+
+    public function listar_derecho_revision_HU_ajax(Request $request){
+	
+		$derecho_revision_model = new DerechoRevision;
+		$p[]=$request->nombre_proyecto;
+        $p[]=$request->id_tipo_proyecto;
+        $p[]="";
+        $p[]="";
+        $p[]=$request->id_municipalidad;
+        $p[]="";
+        $p[]="";
+        $p[]="";
+        $p[]="";
+        $p[]=$request->fecha_registro;
+		$p[]=$request->id_estado_proyecto;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $derecho_revision_model->listar_derecho_revision_HU_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -162,7 +193,7 @@ class DerechoRevisionController extends Controller
 		$derechoRevision_model = new DerechoRevision;
 		$propietario_model = new Propietario;
 
-		$sw = 1;
+		$sw = true;
 		
 		$solicitud = Solicitude::find($request->id);
 		$valor_obra = $solicitud->valor_obra;
@@ -261,13 +292,22 @@ class DerechoRevisionController extends Controller
 			//print_r($valorizacion->descripcion).exit();
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
-			$sw = 1;
+			$sw = true;
 		}else{
-			$sw = 2;
+			$sw = false;
 		}
 		
-		$array["sw"] = $sw;
-		echo json_encode($array);
+		/*$array["sw"] = $sw;
+		echo json_encode($array);*/
+
+		$datos_formateados = [];
+
+        
+		$datos_formateados[] = [
+			'sw' => $sw,
+		];
+        
+        return response()->json($datos_formateados);
 		
 		
     }
@@ -655,4 +695,153 @@ class DerechoRevisionController extends Controller
 		//return view('frontend.certificado.certificado_pdf');
 
 	}
+
+	public function credipago_pdf_HU($id){
+		
+		$derecho_revision_model=new DerechoRevision;
+		$ubigeo_model = new Ubigeo;
+		$parametro_model = new Parametro;
+
+		$datos=$derecho_revision_model->getSolicitudPdf($id);
+		$credipago=$datos[0]->credipago;
+		$proyectista=$datos[0]->proyectista;
+		$numero_cap=$datos[0]->numero_cap;
+		$razon_social = $datos[0]->razon_social;
+		$nombre = $datos[0]->nombre;
+		$departamento_=$datos[0]->departamento;
+		$provincia_=$datos[0]->provincia;
+		$distrito_=$datos[0]->distrito;
+		$direccion = $datos[0]->direccion;
+		$numero_revision = $datos[0]->numero_revision;
+		$municipalidad = $datos[0]->municipalidad;
+		$total_area_techada=$datos[0]->total_area_techada;
+		$valor_obra=$datos[0]->valor_obra;
+		$sub_total=$datos[0]->sub_total;
+		$igv = $datos[0]->igv;
+		$total = $datos[0]->total;
+		$tipo_proyectista = $datos[0]->tipo_proyectista;
+
+		$year = Carbon::now()->year;
+
+		$parametro = $parametro_model->getParametroAnio($year);
+
+		$porcentaje_ = $parametro[0]->porcentaje_calculo_edificacion;
+
+		$porcentaje = floatval($porcentaje_) * 100;
+		
+		$departamento = $ubigeo_model->obtenerDepartamento($departamento_);
+		$provincia = $ubigeo_model->obtenerProvincia($departamento_,$provincia_);
+		$distrito = $ubigeo_model->obtenerDistrito($departamento_,$provincia_,$distrito_);
+
+		Carbon::setLocale('es');
+
+		// Crear una instancia de Carbon a partir de la fecha
+
+		 $carbonDate =Carbon::now()->format('Y-m-d');
+
+		 $currentHour = Carbon::now()->format('H:i:s');
+
+		
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje'));
+		
+
+
+		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+
+		
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream();
+    	//return $pdf->download('invoice.pdf');
+		//return view('frontend.certificado.certificado_pdf');
+
+	}
+
+	public function credipago_pdf_edificaciones($id){
+		
+		$derecho_revision_model=new DerechoRevision;
+		$ubigeo_model = new Ubigeo;
+		$parametro_model = new Parametro;
+
+		$datos=$derecho_revision_model->getSolicitudPdf($id);
+		$credipago=$datos[0]->credipago;
+		$proyectista=$datos[0]->proyectista;
+		$numero_cap=$datos[0]->numero_cap;
+		$razon_social = $datos[0]->razon_social;
+		$nombre = $datos[0]->nombre;
+		$departamento_=$datos[0]->departamento;
+		$provincia_=$datos[0]->provincia;
+		$distrito_=$datos[0]->distrito;
+		$direccion = $datos[0]->direccion;
+		$numero_revision = $datos[0]->numero_revision;
+		$municipalidad = $datos[0]->municipalidad;
+		$total_area_techada=$datos[0]->total_area_techada;
+		$valor_obra=$datos[0]->valor_obra;
+		$sub_total=$datos[0]->sub_total;
+		$igv = $datos[0]->igv;
+		$total = $datos[0]->total;
+		$tipo_proyectista = $datos[0]->tipo_proyectista;
+
+		$year = Carbon::now()->year;
+
+		$parametro = $parametro_model->getParametroAnio($year);
+
+		$porcentaje_ = $parametro[0]->porcentaje_calculo_edificacion;
+
+		$porcentaje = floatval($porcentaje_) * 100;
+		
+		$departamento = $ubigeo_model->obtenerDepartamento($departamento_);
+		$provincia = $ubigeo_model->obtenerProvincia($departamento_,$provincia_);
+		$distrito = $ubigeo_model->obtenerDistrito($departamento_,$provincia_,$distrito_);
+
+		Carbon::setLocale('es');
+
+		// Crear una instancia de Carbon a partir de la fecha
+
+		 $carbonDate =Carbon::now()->format('Y-m-d');
+
+		 $currentHour = Carbon::now()->format('H:i:s');
+
+		
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje'));
+		
+
+
+		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+
+		
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream();
+    	//return $pdf->download('invoice.pdf');
+		//return view('frontend.certificado.certificado_pdf');
+
+	}
+
+	public function obtener_tipo_credipago($id){
+			
+		$derecho_revision_model = new DerechoRevision;
+		$tipo_solicitud = $derecho_revision_model->getTipoSolicitud($id);
+		//print_r($tipo_solicitud);
+		//$array["id"] = $tipo_solicitud->id;
+		//echo json_encode($tipo_solicitud);
+
+		$datos_formateados = [];
+
+        foreach ($tipo_solicitud as $solicitud) {
+            $datos_formateados[] = [
+                'id' => $solicitud->id,
+                'id_tipo_solicitud' => $solicitud->id_tipo_solicitud,
+            ];
+        }
+        return response()->json($datos_formateados);
+		
+	}
+
 }

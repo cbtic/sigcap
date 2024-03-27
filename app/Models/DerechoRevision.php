@@ -17,6 +17,12 @@ class DerechoRevision extends Model
         return $this->readFuntionPostgres('sp_listar_derecho_revision_paginado',$p);
 
     }
+
+    public function listar_derecho_revision_HU_ajax($p){
+
+        return $this->readFuntionPostgres('sp_listar_derecho_revision_hu_paginado',$p);
+
+    }
 	
 	function getCodigoSolicitud($id_tipo_solicitud){
 		
@@ -146,6 +152,16 @@ where p.id_solicitud=".$id;
 
 		//echo $cad;
 		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getTipoSolicitud($id){
+
+        $cad = "select l.id, s.id_tipo_solicitud from liquidaciones l 
+        inner join solicitudes s on l.id_solicitud = s.id 
+        where l.id='".$id."'";
+
+        $data = DB::select($cad);
         return $data;
     }
     
