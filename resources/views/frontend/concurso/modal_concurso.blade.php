@@ -349,7 +349,10 @@ function obtenerSubTipoConcursoEdit(id_tipo_concurso,id_sub_tipo_concurso){
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($periodo as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<option value="<?php echo $row->id?>" <?php 
+									if($id==0 && $row->id==$periodo_ultimo->id)echo "selected='selected'";
+									if($id>0 && $row->id==$concurso->id_periodo)echo "selected='selected'";
+									?>><?php echo $row->descripcion?></option>
 									<?php 
 									}
 									?>
