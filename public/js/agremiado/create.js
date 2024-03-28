@@ -224,8 +224,18 @@ function fn_save(){
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
-                    
+                    if(result==1){
+						bootbox.alert("En Numero de CAP ya esta registrado");
+						return false;	
+					}
+					
+					if(result==2){
+						bootbox.alert("En Numero de documento ya esta registrado");
+						return false;	
+					}
+					
 					window.location.reload();
+					
 					//Limpiar();
 					/*$('#openOverlayOpc').modal('hide');
 					$('#calendar').fullCalendar("refetchEvents");
