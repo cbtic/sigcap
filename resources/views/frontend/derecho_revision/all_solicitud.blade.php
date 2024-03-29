@@ -15,6 +15,18 @@
     .table-sortable tbody tr {
         cursor: move;
     }
+
+    #tblSolicitudHU tbody tr{
+		font-size:13px
+	}
+
+    .form-control:disabled, .form-control[readonly]{
+	background-color:#cff4fc!important;
+	border-color:#b6effb!important;
+	color:#055160!important;
+	opacity:1
+}
+
 	#global {
         height: 650px !important;
         width: auto;
@@ -96,7 +108,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Derecho de Solicitud de Derecho de Revisi&oacute;n - Habilitaci&oacute;n Urbana<!--<small class="text-muted">Usuarios activos</small>-->
+                        Derecho de Revisi&oacute;n - Habilitaci&oacute;n Urbana<!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -108,14 +120,145 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Solicitud de Derecho de Revisi&oacute;n - Habilitaci&oacute;n Urbana
+                        Lista de Derecho de Revisi&oacute;n - Habilitaci&oacute;n Urbana
                     </strong>
                 </div>
 				
 				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                <!--<meta name="_token" id="_token" content="{{ csrf_token() }}">-->
                 <input type="hidden" name="id" id="id" value="0">
 				
+                <div class="row" style="padding:20px 20px 0px 20px;">
+				
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Nombre Proyecto
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="nombre_proyecto" id="nombre_proyecto" value="<?php echo $derecho_revision->nombre_proyecto?>" class="form-control form-control-sm celeste" readonly='readonly'>
+                    </div>
+
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Direcci&oacute;n
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="direccion" id="direccion" value="<?php echo $derecho_revision->direccion?>" class="form-control form-control-sm" readonly='readonly'>
+                    </div>
+
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Departamento
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                    <input type="hidden" name="id_ubigeo_domicilio" id="id_ubigeo_domicilio" value="<?php echo $agremiado->id_ubigeo_domicilio?>">
+                    <input type="text" name="departamento_domiciliario" id="departamento_domiciliario" value="<?php echo $derecho_revision->departamento_domiciliario?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Provincia
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                    <input type="text" name="provincia_domiciliario" id="provincia_domiciliario" value="<?php echo $derecho_revision->provincia_domiciliario?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Distrito
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                    <input type="text" name="distrito_domiciliario" id="distrito_domiciliario" value="<?php echo $derecho_revision->distrito_domiciliario?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+					<!--
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    N° CAP
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="numero_cap" id="numero_cap" value="<?php //echo $agremiado->numero_cap?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Proyectista
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="proyectista" id="proyectista" value="<?php //echo $agremiado->desc_cliente?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+					
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    N° Documento
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="numero_documento" id="numero_documento" value="<?php //echo $persona->numero_documento?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+					
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Propietario
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="propietario" id="propietario" value="<?php //echo $persona->nombres?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+					-->
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Municipalidad
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">					
+                    <input type="text" name="municipalidad" id="municipalidad" value="<?php echo $derecho_revision->municipalidad?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Tipo Solicitud
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="tipo_solicitud" id="tipo_solicitud" value="<?php echo $derecho_revision->id_tipo_solicitud?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Tipo Proyecto
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="tipo_proyecto" id="tipo_proyecto" value="<?php echo $derecho_revision->tipo_proyecto?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    N&uacute;mero Revisi&oacute;n
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="numero_revision" id="numero_revision" value="<?php echo $derecho_revision->numero_revision?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+                    <!--
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Credipago
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="credipago" id="credipago" value="<?php /*echo $liquidacion->credipago*/?>" class="form-control form-control-sm" <?php /*"readonly='readonly'"*/?> >
+                    </div>-->
+                    
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    &Aacute;rea Total
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="area_techada" id="area_techada" value="<?php echo $derecho_revision->area_total?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                    Valor de Obra
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="valor_obra" id="valor_obra" value="<?php echo $derecho_revision->valor_obra?>" class="form-control form-control-sm" readonly='readonly' >
+                    </div>
+                    
+
+                    
+                    <!--
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="estado" id="estado" class="form-control form-control-sm">
+							<option value="">Todos</option>
+							<option value="1" selected="selected">Activo</option>
+							<option value="0">Eliminado</option>
+						</select>
+					</div>
+                    -->
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+						<!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />-->
+						<input class="btn btn-success" value="Generar Credipago" type="button" id="btnNuevo_solicitud" style="margin-left:15px"/>
+
+					</div>
+				</div>
+
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
@@ -252,7 +395,7 @@
                 <div class="card-body">				
 
                     <div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
+                    <table id="tblSolicitudHU" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
                             <th>Nombre Proyecto</th>

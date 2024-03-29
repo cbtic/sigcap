@@ -402,7 +402,7 @@ function datatablenew(){
 			
 			var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
             var id_sub_tipo_concurso = $('#id_sub_tipo_concurso_bus').val();
-			var periodo = $('#id_periodo_bus_').val();
+			var periodo = $('#id_periodo_bus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
 			

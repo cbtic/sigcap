@@ -172,6 +172,38 @@ function editarPuesto(id){
 
 }
 
+function credipago_pdf_(id){
+
+$.ajax({
+    url: "/derecho_revision/obtener_tipo_credipago/"+id,
+    type: "GET",
+    success: function (result) {
+        
+        var tipo_solicitud = result[0].id_tipo_solicitud;
+        var id_ = result[0].id;
+        //console.log(result[0].id);
+        //alert(result);exit();
+        //print_r(tipo_solicitud);exit();
+
+        if(tipo_solicitud=="123"){
+            credipago_pdf_eficicaciones(id_);
+        }else if(tipo_solicitud=="124"){
+            credipago_pdf_HU(id_);
+        }
+    }
+});
+}
+
+function credipago_pdf_eficicaciones(id){
+var href = '/derecho_revision/credipago_pdf/'+id;
+window.open(href, '_blank');
+}
+
+function credipago_pdf_HU(id){
+var href = '/derecho_revision/credipago_pdf_HU/'+id;
+window.open(href, '_blank');
+}
+
 function eliminarPuesto(id){
 	
     bootbox.confirm({ 
@@ -295,7 +327,7 @@ function fn_save_requisito(){
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->igv?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->total?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
-                            <td class="text-left" style="vertical-align:middle"><button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="credipago_pdf('<?php echo $row->id?>')" ><i class="fa fa-edit"></i> Ver Certificado</button></td>
+                            <td class="text-left" style="vertical-align:middle"><button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="credipago_pdf_('<?php echo $row->id?>')" ><i class="fa fa-edit"></i> Ver Certificado</button></td>
 						</tr>
 						<?php 
 							}	

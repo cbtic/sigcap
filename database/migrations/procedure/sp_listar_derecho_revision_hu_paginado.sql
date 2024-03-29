@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_derecho_revision_paginado(p_nombre_proyecto character varying, p_tipo_proyecto character varying, p_numero_revision character varying, p_credipago character varying, p_municipalidad character varying, p_numero_cap character varying, p_agremiado character varying, p_numero_documento character varying, p_propietario character varying, p_fecha_registro character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_derecho_revision_hu_paginado(p_nombre_proyecto character varying, p_tipo_proyecto character varying, p_numero_revision character varying, p_credipago character varying, p_municipalidad character varying, p_numero_cap character varying, p_agremiado character varying, p_numero_documento character varying, p_propietario character varying, p_fecha_registro character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -27,7 +27,7 @@ begin
 	left join tabla_maestras tm on s.id_tipo_solicitud=tm.codigo::int and tm.tipo=''24'' 
 	left join tabla_maestras tmr on s.id_resultado=tmr.codigo::int and tmr.tipo=''118'' ';
 	
-	v_where = ' Where 1=1 and s.id_tipo_solicitud=''123'' ';
+	v_where = ' Where 1=1 and s.id_tipo_solicitud=''124''';
 
 	If p_nombre_proyecto<>'' Then
 	 v_where:=v_where||'And p2.nombre ilike ''%'||p_nombre_proyecto||'%'' ';
