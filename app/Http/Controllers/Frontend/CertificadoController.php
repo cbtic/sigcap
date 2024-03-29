@@ -527,6 +527,7 @@ class CertificadoController extends Controller
 		$id_departamento=$tipo_proyectistas[0]->id_departamento;
 		$id_provincia=$tipo_proyectistas[0]->id_provincia;
 		$id_distrito=$tipo_proyectistas[0]->id_distrito;
+		//$area_total=$tipo_proyectistas[0]->direccion;
 
 
 		$departamento = $ubigeo_model->obtenerDepartamento($id_departamento);
@@ -754,6 +755,42 @@ class CertificadoController extends Controller
 		$tipo_certificado = $certificado_model->getTipoCertificado($id);
 		echo json_encode($tipo_certificado);
 		
+	}
+
+	public function record_proyectos_pdf($numero_cap){
+		
+		$certificado_model = new Certificado();
+		$proyectos = $certificado_model->getRecordProyecto($numero_cap);
+		
+		$trato=$proyectos[0]->id_sexo;
+		$numero_cap=$proyectos[0]->numero_cap;
+		$agremiado=$proyectos[0]->agremiado;
+		$fecha_colegiado=$proyectos[0]->fecha_colegiado;
+
+
+
+		if ($trato==3) {
+			$tratodesc="ARQUITECTO ";
+		}
+		else{
+			$tratodesc="ARQUITECTA ";
+		}
+		
+		$fecha_actual = Carbon::now()->format('d-m-Y');
+		$fecha_colegiado = Carbon::createFromFormat('Y-m-d', $fecha_colegiado)->format('d-m-Y');
+
+
+		$pdf = Pdf::loadView('frontend.certificado.record_proyectos_pdf',compact('proyectos','tratodesc','numero_cap','agremiado','fecha_colegiado','fecha_actual'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream('record_proyectos_pdf.pdf');
+	
 	}
 }
 

@@ -132,7 +132,7 @@ $(document).ready(function() {
             <p style="text-align: justify; font_size: 11" > 1. PROYECTISTA(S) ASOCIADOS: <?php echo $tipo_proyectista //$tipo_proyectistas[0]->tipo_proyectista;?> </p>
             <p style="text-align: justify; font_size: 11" > 2. NOMBRE DEL PROPIETARIO: <?php echo $nombre_propietario;?> </p>
             <p style="text-align: justify; font_size: 11" > 3. DENOMINACI&Oacute;N DEL PROYECTO: <?php echo $nombre_proyecto;?> </p>
-            <p style="text-align: justify; font_size: 11" > 4. UBICACI&Oacute;N:</p>
+            <p style="text-align: justify; font_size: 11" > 4. UBICACI&Oacute;N: <?php echo $direccion_proyecto;?></p>
             
             <p></p>
             <p style="text-align: justify; font_size: 11" >Departamento: <?php echo $departamento;?> Provincia: <?php echo $provincia;?> Distrito:<?php echo $distrito;?></p>

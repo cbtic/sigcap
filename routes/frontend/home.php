@@ -651,4 +651,5 @@ Route::get('derecho_revision/obtener_tipo_credipago/{id}', [DerechoRevisionContr
 
 Route::post('derecho_revision/listar_derecho_revision_hu_ajax', [DerechoRevisionController::class, 'listar_derecho_revision_hu_ajax'])->name('derecho_revision.listar_derecho_revision_hu_ajax');
 
+Route::get('certificado/record_proyectos_pdf/{numero_cap}', [CertificadoController::class, 'record_proyectos_pdf'])->name('certificado.record_proyectos_pdf');
 

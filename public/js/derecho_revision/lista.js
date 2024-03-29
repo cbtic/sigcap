@@ -90,7 +90,7 @@ function guardar_credipago(){
 			url: "/derecho_revision/send_credipago",
             type: "POST",
             data : $("#frmExpediente").serialize(),
-            success: function (result) {  
+            success: function (result) {
 				if(result.sw==1){
 					datatablenew();
 				}else{
