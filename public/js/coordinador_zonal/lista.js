@@ -741,9 +741,7 @@ function datatablenew(){
 					}
 					
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalCoordinadorZonal('+1+')" ><i class="fa fa-edit"></i> Registrarse</button>';
-					
-					
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarCoordinadorZonal('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 					html += '<a href="javascript:void(0)" onclick=modalCoordinadorZonal('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Registrar sesi&oacute;n</a>';
 					html += '<a href="javascript:void(0)" onclick=eliminarCoordinadorZonal('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					html += '</div>';
@@ -924,7 +922,7 @@ function datatablenew2(){
 					},
 					"bSortable": false,
 					"aTargets": [9]
-				},
+				},*/
 				{
 				"mRender": function (data, type, row) {
 					var estado = "";
@@ -939,8 +937,8 @@ function datatablenew2(){
 					}
 					
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalMovilidad('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-					html += '<a href="javascript:void(0)" onclick=eliminarMovilidad('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEditarCoordinador('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					//html += '<a href="javascript:void(0)" onclick=eliminarMovilidad('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 					
@@ -949,7 +947,7 @@ function datatablenew2(){
 				},
 				"bSortable": false,
 				"aTargets": [10],
-				},*/
+				},
             ]
     });
 
@@ -962,6 +960,46 @@ function fn_ListarBusqueda() {
 function fn_ListarBusqueda_() {
     datatablenew2();
 };
+
+function editarCoordinadorZonal(id){
+
+	$.ajax({
+		url: '/coordinador_zonal/obtener_coordinador/'+id,
+		dataType: "json",
+		success: function(result){
+			
+			$('#frmAfiliacion #id').val(result.id);
+			$('#frmAfiliacion #regional').val(result.id_regional);
+			$('#frmAfiliacion #periodo').val(result.id_periodo);
+			$('#frmAfiliacion #numero_cap').val(result.numero_cap);
+			$('#frmAfiliacion #dni').val(result.numero_documento);
+			$('#frmAfiliacion #apellido_paterno').val(result.apellido_paterno);
+			$('#frmAfiliacion #apellido_materno').val(result.apellido_materno);
+			$('#frmAfiliacion #nombre').val(result.nombres);
+			$('#frmAfiliacion #zonal').val(result.id_zonal);
+			$('#frmAfiliacion #estado_coordinador').val(result.estado_coordinador);
+			
+		}
+		
+	});
+
+}
+
+function modalEditarCoordinador(id){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/coordinador_zonal/modal_coordinadorZonal_editarCoordinadorZonal/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
 
 function modalCoordinadorZonal(id){
 	
@@ -983,7 +1021,7 @@ function modalCoordinadorZonal(id){
 function GuardarCoordinadorZonal(){
     
 	var _token = $('#_token').val();
-	//var id = $('#id').val();
+	var id = $('#id').val();
 	var numero_cap = $('#numero_cap').val();
 	var periodo = $('#periodo').val();
 	var regional = $('#regional').val();
@@ -1002,7 +1040,7 @@ function GuardarCoordinadorZonal(){
     $.ajax({
 			url: "/coordinador_zonal/send_coordinador_zonal_nuevoCoordinadorZonal",
             type: "POST",
-            data : {_token:_token,numero_cap:numero_cap,periodo:periodo,regional:regional,dni:dni,apellido_paterno:apellido_paterno,apellido_materno:apellido_materno,nombre:nombre,zonal:zonal,estado_coordinador:estado_coordinador},
+            data : {_token:_token,id:id,numero_cap:numero_cap,periodo:periodo,regional:regional,dni:dni,apellido_paterno:apellido_paterno,apellido_materno:apellido_materno,nombre:nombre,zonal:zonal,estado_coordinador:estado_coordinador},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');

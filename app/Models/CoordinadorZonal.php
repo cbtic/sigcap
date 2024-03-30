@@ -39,4 +39,19 @@ class CoordinadorZonal extends Model
         return $data;
     }
 
+    function getCoordinadorZonalById($id){
+
+        $cad = "select cz.id, cz.id_regional, cz.id_periodo , a.numero_cap, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, cz.id_zonal , cz.estado_coordinador from coordinador_zonales cz 
+        inner join regiones r on cz.id_regional = r.id 
+        inner join periodo_comisiones pc on cz.id_periodo =pc.id 
+        inner join agremiados a on cz.id_agremiado = a.id 
+        inner join personas p on a.id_persona = p.id 
+        --inner join tabla_maestras tm on cz.id_zonal = tm.codigo::int And tm.tipo ='117'
+        --inner join tabla_maestras tm2 on cz.estado_coordinador = tm2.codigo::int And tm2.tipo ='119'
+        where cz.id ='".$id."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+
 }
