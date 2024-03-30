@@ -257,6 +257,15 @@ function fn_save_nc(){
     });
 }
 
+function ActualizaDetalle(){
+	
+	var campos = document.querySelectorAll('input[name^="importe"]');
+    campos.forEach(function(campo) {
+		alert('sss')
+        campo.readOnly = true;
+    });
+}
+
 function validaTipoDocumento(){
 	var tipo_documento = $("#tipo_documento").val();
 	$('#nombre_afiliado').val("");
