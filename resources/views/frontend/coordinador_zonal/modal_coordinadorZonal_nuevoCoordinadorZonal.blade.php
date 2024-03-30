@@ -212,8 +212,6 @@
 
 $("#profesion").select2();
 
-
-
 function obtener_profesional(){
 	
   var numero_cap = $('#numero_cap').val();
@@ -290,7 +288,7 @@ $.ajax({
         //dataType: 'json', 
         success: function (result) {				
     		$('#openOverlayOpc').modal('hide');
-			
+        window.location.reload();
         }
 });
 }

@@ -1,5 +1,7 @@
 //const { truncate } = require("lodash");
 
+//const { replace } = require("lodash");
+
 $(document).ready(function () {
 
 	$('#example-select-all').on('click', function(){
@@ -349,8 +351,11 @@ function calcular_total(obj){
 	
 	$(".mov:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		val_total =val_total.replace(',','');
 		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		val_sub_total =val_sub_total.replace(',','');
 		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		val_igv =val_igv.replace(',','');
 
 		//var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
 		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
@@ -359,16 +364,10 @@ function calcular_total(obj){
 
 		var numero_cuotas_pp =$('#numero_cuotas_pp').val("");
 		var importe_pp =$('#importe_pp').val("");
-				
-	
+		
 		total += Number(val_total);
 		stotal += Number(val_sub_total);
 		igv += Number(val_igv);
-
-
-
-		//alert(igv);
-		
 
 	});
 	descuento = 0;
@@ -439,12 +438,19 @@ function calcular_total_otros(obj){
 	$(".mov:checked").each(function (){
 
 		var val_precio = $(this).parent().parent().parent().find('.val_precio').html();
+
+		val_precio =val_precio.replace(',','');
+
 		var val_cantidad = $(this).parent().parent().parent().find('#cantidad').val();
 
 
 		//alert(val_precio+"|"+val_cantidad);
 		var val_total = val_precio * val_cantidad;
+		
+
 		$(this).parent().parent().parent().find('.val_total').html(val_total);
+		val_total =val_total.replace(',','');
+		
 		//var val_total = $(this).parent().parent().parent().find('.val_total').html();
 
 		//var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
@@ -452,7 +458,9 @@ function calcular_total_otros(obj){
 		var val_sub_total = (val_total/1.18);
 		var val_igv = (val_total* 0.18);
 		$(this).parent().parent().parent().find('.val_sub_total').html(val_sub_total);
+		val_sub_total =val_sub_total.replace(',','');
 		$(this).parent().parent().parent().find('.val_igv').html(val_igv);
+		val_igv =val_igv.replace(',','');
 
 		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
 		var val_descuento =$('#DescuentoPP').val("");
@@ -503,6 +511,7 @@ function calcular_total_(obj){
 	
 	$(".mov_:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		val_total =val_total.replace(',','');
 		total += Number(val_total);
 	});
 	
@@ -529,7 +538,9 @@ function calcular_dudoso(obj){
 	
 	$(".mov_dudoso:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total_dudoso').html();
+		val_total =val_total.replace(',','');
 		var val_descuento = $(this).parent().parent().parent().find('.val_descuento_dudoso').html();
+		val_descuento =val_descuento.replace(',','');
 		
 		if(val_descuento!=""){
 			valor_venta_bruto = val_total/1.18;
@@ -641,7 +652,11 @@ function obtenerBeneficiario(){
 
 	$('#totalDescuento').val("0");
 	$('#total').val("0");
-	$('#deudaTotal').val("0");	
+	$('#deudaTotal').val("0");
+
+	$('#SelFracciona').val("");
+	
+	
 	
 	
 	$.ajax({
@@ -835,6 +850,13 @@ function cargarValorizacion1(){
 
 
 function cargarValorizacion(){
+
+	
+	var numero_documento =$("#numero_documento").val();
+	if (numero_documento=="")exit();
+
+	
+
 	//cargarcboPeriodo();
     
     //alert("hi");
@@ -842,8 +864,12 @@ function cargarValorizacion(){
 	var tipo_documento = $("#tipo_documento").val();
 	var id_persona = 0;
 
-	
+	var x = document.getElementById("cbox2").checked;
 
+	$("#SelFracciona").val("");
+	if (x) $("#SelFracciona").val("S");
+
+	
 	var idconcepto = $("#cboTipoConcepto_b").val();
 
 
@@ -913,13 +939,29 @@ function cargarValorizacion(){
 
 				$("#btnFracciona").prop('disabled', false);
 
-				if(cboTipoConcepto_b==26412){
-
+				//if(cboTipoConcepto_b==26412){
 					//$("#btnFracciona").prop(value, 'REFRACCIONAMIENTO');
-
-				}
+				//}
 
 			}
+
+			if (cboTipoCuota_b==1 &&  cboTipoConcepto_b=="") {
+				$('#cbox2').show();
+				$('#lblFrac').show();
+				
+
+			}else{
+				$('#cbox2').hide();
+				$('#lblFrac').hide();
+
+				
+				$("#cbox2").prop('checked', false);
+
+				$("#SelFracciona").val("");
+
+
+			}
+
 
 			if (cboTipoConcepto_b==26412) {
 
@@ -1327,7 +1369,7 @@ function modal_fraccionar(){
 	var TotalFraccionar = $('#total').val();
 	//alert(TotalFraccionar);
 	var idConcepto = $('#idConcepto').val();
-	//alert(idConcepto);
+	alert(idConcepto);
 	
 	
 	$.ajax({
@@ -1359,13 +1401,18 @@ function muestraSeleccion() {
   }
 
 
+
 function modal_fraccionamiento(){
 
-	//muestraSeleccion(); 
-
+/*
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$('#SelFracciona').val("S");
+*/
+	
+
 
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
@@ -1397,63 +1444,84 @@ function modal_fraccionamiento(){
 
     }else{
 
+		var val_total = 0;
+		var val_sub_total = 0;
+		var val_igv = 0;
+
 
 		$(".mov").each(function (){
 			//$(this).parent().parent().parent().find(".mov").prop("checked", true);
+
+			$('.mov').prop('checked', true);
 			
 			var id_concepto = $(this).parent().parent().parent().find('.id_concepto').html();
 
-			alert(id_concepto);
-
-			if(id_concepto=='26411') $('.mov').prop('checked', true);
 			//calcular_total();
-	
 
-			var val_total = $(this).parent().parent().parent().find('.val_total').html();
-
-			
-
-			var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
-			var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+			val_total = $(this).parent().parent().parent().find('.val_total').html();
+			val_total =val_total.replace(',','');
+			val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+			val_sub_total =val_sub_total.replace(',','');
+			val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+			val_igv =val_igv.replace(',','');
 
 			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
 
-			//$(this).parent().parent().parent().find('.chek').val("1");
+			$(this).parent().parent().parent().find('.chek').val("1");
 
-			//alert(val_sub_total);
+			
+			if(id_concepto==26411 || id_concepto==26412) {				
+				total += Number(val_total);
+				stotal += Number(val_sub_total);
+				igv += Number(val_igv);								
+			}else{
+				msg="";
+				msg+="Lista seleccionada  existen conceptos distintos Fraccionamiento y Cuota Gremial <br>";
+				alert(msg);				
+				return false;
+				//exit();
+			}
+			
 
-			total += Number(val_total);
-			stotal += Number(val_sub_total);
-			igv += Number(val_igv);
+
 
 			//$(this).parent().parent().parent().prev().find(".mov").prop('disabled',true);
 
-		//	alert(total);
+			//alert(total);
 
 		});
 
 		//alert(total);
 
-		$('#total').val(total.toFixed(2));
-		$('#stotal').val(stotal.toFixed(2));
-		$('#igv').val(igv.toFixed(2));
+		if(msg==""){
 
-	
-		//alert($('#total').val());
+			$(".modal-dialog").css("width","85%");
+			$('#openOverlayOpc').modal('show');
+			$('#openOverlayOpc .modal-body').css('height', 'auto');
+		
+			$('#SelFracciona').val("S");
 
-		$.ajax({
-			url: "/ingreso/modal_fraccionamiento",
-			type: "POST",
-			data : $("#frmValorizacion").serialize(),
-			success: function (result) { 
-				
-				//alert(result);
+			$('#total').val(total.toFixed(2));
+			$('#stotal').val(stotal.toFixed(2));
+			$('#igv').val(igv.toFixed(2));
 
-					$("#diveditpregOpc").html(result);
-					//$('#openOverlayOpc').modal('show');
+		
+			//alert($('#total').val());
+
+			$.ajax({
+				url: "/ingreso/modal_fraccionamiento",
+				type: "POST",
+				data : $("#frmValorizacion").serialize(),
+				success: function (result) { 
 					
-			}
-		});
+					//alert(result);
+
+						$("#diveditpregOpc").html(result);
+						//$('#openOverlayOpc').modal('show');
+						
+				}
+			});
+		}
 
 		
 
@@ -1484,6 +1552,7 @@ function modal_persona_new(){
 }
 
 function guardar_fracciona_deuda(){
+
 
     $.ajax({
 			url: "/ingreso/send_fracciona_deuda",
@@ -1580,8 +1649,11 @@ function AplicarDescuento(){
 			//calcular_total();
 
 			var val_total = $(this).parent().parent().parent().find('.val_total').html();
+			val_total =val_total.replace(',','');
 			var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+			val_sub_total =val_sub_total.replace(',','');
 			var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+			val_igv =val_igv.replace(',','');
 
 			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
 			$(this).parent().parent().parent().find('.chek').val("1");
@@ -1681,8 +1753,11 @@ function select_all(){
 		
 
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		val_total =val_total.replace(',','');
 		var val_stotal = $(this).parent().parent().parent().find('.val_sub_total').html();
+		val_stotal =val_stotal.replace(',','');
 		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		val_igv =val_igv.replace(',','');
 
 		$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
 		$(this).parent().parent().parent().find('.chek').val("1");
@@ -1777,8 +1852,11 @@ function total_deuda(){
 	$(".mov").each(function (){
 		
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
+		val_total =val_total.replace(',','');
 		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
+		val_sub_total =val_sub_total.replace(',','');
 		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
+		val_igv =val_igv.replace(',','');
 
 		total += Number(val_total);
 		stotal += Number(val_sub_total);

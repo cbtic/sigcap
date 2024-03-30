@@ -113,7 +113,7 @@
 								<a href="/sesion/lista_programacion_sesion" class="dropdown-item">Programaci&oacute;n de Sesiones</a>
 								@endcan
 								@can('Derecho de Revision')
-								<a href="/derecho_revision/consulta_derecho_revision" class="dropdown-item">Derecho Revisi&oacute;n</a>
+								<a href="/derecho_revision/consulta_derecho_revision" class="dropdown-item">Derecho Revisi&oacute;n - Edificaciones</a>
 								@endcan
 								@can('Registro Revisor Urbano')
 								<a href="/revisorUrbano/consulta_revisorUrbano" class="dropdown-item">Registro Revisor Urbano</a>
@@ -127,7 +127,7 @@
 								<a href="/sesion/consulta_computoSesion" class="dropdown-item">C&oacute;mputo de Sesiones</a>
 								@endcan
 								@can('Consulta Derecho de Revision')
-								<a href="/derecho_revision/consulta_solicitud_derecho_revision" class="dropdown-item">Consulta Solicitud de Derecho Revisi&oacute;n</a>
+								<a href="/derecho_revision/consulta_solicitud_derecho_revision" class="dropdown-item">Derecho Revisi&oacute;n - HU</a>
 								@endcan
 								@can('Registro Derecho de Revision')
 								<a href="/derecho_revision/consulta_derecho_revision_nuevo" class="dropdown-item">Registro Solicitud de Derecho Revisi&oacute;n</a>
@@ -178,6 +178,7 @@
 							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>
 							@endcan
 						   	<a href="/planillaDelegado/consulta_reintegro" class="dropdown-item">Delegado Reintegro</a>
+
 							@can('Asignacion de Cuentas')
 							<a href="/asignacion" class="dropdown-item">Asignacion de Cuentas</a>
 							@endcan
@@ -185,6 +186,14 @@
 							@can('Planilla Delegados')
 						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
 							@endcan
+							@can('Planilla Delegados')
+						   	<a href="/planillaDelegado/consulta_planilla_recibos_honorario" class="dropdown-item">Registro Recibos por Honorarios</a>
+							@endcan
+
+							@can('Asiento Planilla Delegados')
+							<a href="/asiento" class="dropdown-item">Asiento Planilla Delegados</a>
+							@endcan
+
 						   </div>
 					</li>
 					@endif

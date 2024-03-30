@@ -161,8 +161,24 @@
 						</select>
 					</div>
 					-->
-                    <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<?php 
+                        if($periodo_activo){
+                        ?>
+						<input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+						<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComisionBus()" disabled="disabled">
+							<option value="0">--Periodo--</option>
+							<?php
+							foreach ($periodo as $row) {?>
+							<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+							<?php 
+							}
+							?>
+						</select>
+						<?php
+                        }else{
+                        ?>
+						<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()" disabled="disabled">
 							<option value="0">--Periodo--</option>
 							<?php
 							foreach ($periodo as $row) {?>
@@ -171,9 +187,10 @@
 							}
 							?>
 						</select>
+						<?php } ?>
 					</div>
 					
-					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="tipo_comision_bus" id="tipo_comision_bus" class="form-control form-control-sm" onchange="obtenerComisionBus()">
 							<option value="0">--Tipo Comisi&oacute;n--</option>
 								<?php
@@ -185,7 +202,7 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+					<div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_comision_bus" id="id_comision_bus" class="form-control form-control-sm">
 							<option value="0">--Comisi&oacute;n--</option>
 						</select>
@@ -198,7 +215,7 @@
 						<input class="form-control form-control-sm" id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Hasta">
 					</div>
 					
-					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     	<select name="id_tipo_sesion_bus" id="id_tipo_sesion_bus" class="form-control form-control-sm" onChange="">
 							<option value="">--Tipo Programci&oacute;n--</option>
 							<?php
@@ -209,8 +226,12 @@
 							?>
 						</select>
 					</div>
+						
+				</div>
+				
+				<div class="row" style="padding:20px 20px 0px 20px;">
 					
-					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     	<select name="id_estado_sesion_bus" id="id_estado_sesion_bus" class="form-control form-control-sm">
 							<option value="">--Estado Sesi&oacute;n--</option>
 							<?php
@@ -222,7 +243,7 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     	<select name="id_estado_aprobacion_bus" id="id_estado_aprobacion_bus" class="form-control form-control-sm">
 							<option value="">--Estado Aprobaci&oacute;n--</option>
 							<?php
@@ -234,7 +255,7 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     	<select name="cantidad_delegado" id="cantidad_delegado" class="form-control form-control-sm">
 							<option value="">--Cantidad Delegado--</option>
 							<option value="0">0</option>
@@ -243,10 +264,22 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px;padding-left:0px">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    	<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm">
+							<option value="">--Situaci&oacute;n--</option>
+							<?php
+							foreach ($situacion as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px;padding-left:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success pull-rigth" value="N. Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:5px" />
-						<input class="btn btn-danger pull-rigth" value="Ejecutar" type="button" id="btnEjecutar" style="margin-left:5px" />
+						<input class="btn btn-success pull-rigth" value="N. Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:10px" />
+						<input class="btn btn-danger pull-rigth" value="Ejecutar" type="button" id="btnEjecutar" style="margin-left:10px" />
 					</div>
 				</div>
 				
@@ -267,6 +300,7 @@
                             <th>Estado Sesi&oacute;n</th>
 							<th>Estado Aprobaci&oacute;n</th>
 							<th>Num Delegado</th>
+							<th>Num Situaci&oacute;n</th>
 							<th>Dictamen</th>
 							<th>Editar</th>
                         </tr>
@@ -278,12 +312,13 @@
 					<table id="tblDictamen" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>C&oacute;digo</th>
+							<!--<th>C&oacute;digo</th>-->
 							<th>Tipo de Solicitud</th>
 							<th>Distrito</th>
 							<th>Revis&oacute;n</th>
 							<th>N&deg; Liquidaci&oacute;n</th>
-							<th>Nombre</th>
+							<th>Fecha Liquidaci&oacute;n</th>
+							<!--<th>Nombre</th>-->
 							<th>Direcci&oacute;n</th>
 							<th>Dictamen</th>
                         </tr>

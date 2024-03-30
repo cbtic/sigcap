@@ -586,9 +586,11 @@ legend.scheduler-border {
 															<div class="col-lg-2">
 																<div class="form-group form-group-sm">
 																	<label class="form-control-sm">Total Fraccionar</label>
-																	<input type="text" readonly name="txtTotalFrac" id="txtTotalFrac" value="<?php echo $total_fraccionar //$valorizacion[0]->monto?>" class="form-control form-control-sm">
+																	<input type="text" readonly name="txtTotalFrac" id="txtTotalFrac" value="<?php echo $total_fraccionar //$valorizacion[0]->monto?>" class="form-control form-control-sm">																	
 																</div>
 															</div>
+
+															
 
 															<div class="col-lg-2">
 																<div class="form-group">

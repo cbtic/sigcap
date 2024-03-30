@@ -1960,8 +1960,20 @@ function editarConcursoInscripcion(id){
 			$('#puesto').val(result.nombre_puesto);
 			$('#tipo_concurso').val(result.periodo+" - "+result.tipo_concurso);
 			$('#id_concurso').val(result.id_concurso);
-			$('#puntaje').val(result.puntaje);
-			$('#id_estado').val(result.resultado);
+
+			if(result.situacion=="HABILITADO"){
+				$('#puntaje').val(result.puntaje);
+				$('#id_estado').val(result.resultado);
+				$('#puntaje').attr("disabled",false);
+				$('#id_estado').attr("disabled",false);
+				$('#asignar_puesto').attr("disabled",false);
+			}else if(result.situacion=="INHABILITADO"){
+				$('#puntaje').attr("disabled",true);
+				$('#id_estado').attr("disabled",true);
+				$('#asignar_puesto').attr("disabled",true);
+			}
+			
+
 			cargarRequisitos(result.id);
 			obtenerPuesto(result.id_concurso,result.puesto);
 			

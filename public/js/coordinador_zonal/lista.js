@@ -50,6 +50,24 @@ $(document).ready(function () {
 		*/
 	});
 
+	$('#agremiado_2').keypress(function(e){
+		if(e.which == 13) {
+		datatablenew2();
+	}
+	});
+	
+	$('#mes_').keypress(function(e){
+		if(e.which == 13) {
+		datatablenew2();
+	}
+	});
+	
+	$('#id_estado_aprobacion_bus').keypress(function(e){
+		if(e.which == 13) {
+		datatablenew2();
+	}
+	});
+
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
@@ -741,9 +759,7 @@ function datatablenew(){
 					}
 					
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalCoordinadorZonal('+1+')" ><i class="fa fa-edit"></i> Registrarse</button>';
-					
-					
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarCoordinadorZonal('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 					html += '<a href="javascript:void(0)" onclick=modalCoordinadorZonal('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Registrar sesi&oacute;n</a>';
 					html += '<a href="javascript:void(0)" onclick=eliminarCoordinadorZonal('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					html += '</div>';
@@ -791,6 +807,7 @@ function datatablenew2(){
 			var id = $('#id').val();
 			var periodo = $('#periodo_2').val();
 			var agremiado = $('#agremiado_2').val();
+			var mes = $('#mes_').val();
 			var estado_aprobado = $('#id_estado_aprobacion_bus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
@@ -800,7 +817,7 @@ function datatablenew2(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,periodo:periodo,agremiado:agremiado,estado_aprobado:estado_aprobado,estado:estado,
+						id:id,periodo:periodo,agremiado:agremiado,mes:mes,estado_aprobado:estado_aprobado,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -900,9 +917,13 @@ function datatablenew2(){
 				},
 				{
 					"mRender": function (data, type, row) {
-						var informe = "";
-						if(row.informe!= null)informe = row.informe;
-						return informe;
+						var ruta_informe = "";
+						if(row.ruta_informe!= null){
+							ruta = ruta_informe;
+							//ruta_informe_ = "<button onclick=<a href="/' + ruta + '" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>";
+							//ruta_informe_ = '<a href="/' + ruta + '" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>';
+						}
+						return ruta_informe;
 					},
 					"bSortable": false,
 					"aTargets": [9]
@@ -920,7 +941,7 @@ function datatablenew2(){
 					},
 					"bSortable": false,
 					"aTargets": [9]
-				},
+				},*/
 				{
 				"mRender": function (data, type, row) {
 					var estado = "";
@@ -935,8 +956,8 @@ function datatablenew2(){
 					}
 					
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalMovilidad('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-					html += '<a href="javascript:void(0)" onclick=eliminarMovilidad('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEditarCoordinador('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					//html += '<a href="javascript:void(0)" onclick=eliminarMovilidad('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 					
@@ -945,7 +966,7 @@ function datatablenew2(){
 				},
 				"bSortable": false,
 				"aTargets": [10],
-				},*/
+				},
             ]
     });
 
@@ -958,6 +979,46 @@ function fn_ListarBusqueda() {
 function fn_ListarBusqueda_() {
     datatablenew2();
 };
+
+function editarCoordinadorZonal(id){
+
+	$.ajax({
+		url: '/coordinador_zonal/obtener_coordinador/'+id,
+		dataType: "json",
+		success: function(result){
+			
+			$('#frmAfiliacion #id').val(result.id);
+			$('#frmAfiliacion #regional').val(result.id_regional);
+			$('#frmAfiliacion #periodo').val(result.id_periodo);
+			$('#frmAfiliacion #numero_cap').val(result.numero_cap);
+			$('#frmAfiliacion #dni').val(result.numero_documento);
+			$('#frmAfiliacion #apellido_paterno').val(result.apellido_paterno);
+			$('#frmAfiliacion #apellido_materno').val(result.apellido_materno);
+			$('#frmAfiliacion #nombre').val(result.nombres);
+			$('#frmAfiliacion #zonal').val(result.id_zonal);
+			$('#frmAfiliacion #estado_coordinador').val(result.estado_coordinador);
+			
+		}
+		
+	});
+
+}
+
+function modalEditarCoordinador(id){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/coordinador_zonal/modal_coordinadorZonal_editarCoordinadorZonal/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
 
 function modalCoordinadorZonal(id){
 	
@@ -979,7 +1040,7 @@ function modalCoordinadorZonal(id){
 function GuardarCoordinadorZonal(){
     
 	var _token = $('#_token').val();
-	//var id = $('#id').val();
+	var id = $('#id').val();
 	var numero_cap = $('#numero_cap').val();
 	var periodo = $('#periodo').val();
 	var regional = $('#regional').val();
@@ -998,13 +1059,13 @@ function GuardarCoordinadorZonal(){
     $.ajax({
 			url: "/coordinador_zonal/send_coordinador_zonal_nuevoCoordinadorZonal",
             type: "POST",
-            data : {_token:_token,numero_cap:numero_cap,periodo:periodo,regional:regional,dni:dni,apellido_paterno:apellido_paterno,apellido_materno:apellido_materno,nombre:nombre,zonal:zonal,estado_coordinador:estado_coordinador},
+            data : {_token:_token,id:id,numero_cap:numero_cap,periodo:periodo,regional:regional,dni:dni,apellido_paterno:apellido_paterno,apellido_materno:apellido_materno,nombre:nombre,zonal:zonal,estado_coordinador:estado_coordinador},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//window.location.reload();
 				datatablenew();
-				
+				limpiar();
 				/*
 				$('#openOverlayOpc').modal('hide');
 				if(result==1){
@@ -1015,6 +1076,16 @@ function GuardarCoordinadorZonal(){
 				*/
             }
     });
+}
+
+function limpiar(){
+	$("#numero_cap").val("");
+	$("#zonal").val("");
+	$("#estado_coordinador").val("");
+	$("#dni").val("");
+	$("#apellido_paterno").val("");
+	$("#apellido_materno").val("");
+	$("#nombre").val("");
 }
 
 function modalDetalle(id){
@@ -1081,6 +1152,7 @@ function fn_eliminar_coordinador_zonal(id,estado){
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
 				datatablenew();
+				limpiar();
             }
     });
 }

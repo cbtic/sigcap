@@ -18,8 +18,28 @@ class PeriodoComisione extends Model
 	
 	public function getPeriodoAll(){
 		
-		$cad = "select pc.id,pc.descripcion 
+		$cad = "select pc.id,pc.descripcion,pc.activo  
 		from periodo_comisiones pc where pc.estado='1'";
+
+		$data = DB::select($cad);
+        return $data;
+		
+	}
+
+    public function getPeriodoDetAll(){
+		
+		$cad = "select id, denominacion, activo  
+		from periodo_comision_detalles pc where estado='1'";
+
+		$data = DB::select($cad);
+        return $data;
+		
+	}
+	
+	public function getAnioByFecha($fecha_inicio,$fecha_fin){
+		
+		$cad = "select to_char(anio::date,'yyyy')anio 
+from generate_series(('01-01-'||to_char('".$fecha_inicio."'::date,'yyyy'))::date,('01-01-'||to_char('".$fecha_fin."'::date,'yyyy'))::date, '1 years'::interval) anio";
 
 		$data = DB::select($cad);
         return $data;

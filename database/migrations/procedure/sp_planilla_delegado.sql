@@ -1,4 +1,5 @@
-CREATE OR REPLACE FUNCTION public.sp_planilla_delegado(p_anio character varying, p_mes character varying)
+
+CREATE OR REPLACE FUNCTION public.sp_planilla_delegado(p_id_periodo_comision character varying,p_anio character varying, p_mes character varying)
  RETURNS character varying
  LANGUAGE plpgsql
 AS $function$
@@ -45,11 +46,21 @@ begin
 	select id into p_id_computo_sesion from computo_sesiones cs where anio=p_anio and mes=p_mes and estado='1';
 	
 	/*********OBTIENE EL SALDO DE LOS DELEGADOS DEL FONDO COMUN*****************/
+	/*
 	select sum(d.saldo)::decimal into p_saldo_delegado_fondo_comun
 	from delegado_fondo_comuns d
 	inner join periodo_delegado_detalles p on p.id = d.id_periodo_delegado_detalle and p.id_periodo_delegado = d.id_periodo_delegado   
 	where extract(year from p.fecha)::varchar = p_anio 
 	and extract(month from  p.fecha)::varchar = p_mes::int::varchar; 
+	*/
+
+	select sum(t1.saldo)::decimal into p_saldo_delegado_fondo_comun
+	from delegado_fondo_comuns t1               
+	inner join ubigeos t3 on t3.id_ubigeo = t1.id_ubigeo
+	inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle 
+	Where EXTRACT(YEAR FROM t4.fecha)::varchar = p_anio
+	And EXTRACT(MONTH FROM t4.fecha)::varchar = p_mes::int::varchar
+	And t1.id_periodo_comision = p_id_periodo_comision::int;
 
 	/*********OBTIENE LA SUMA DEL TOTAL DE MOVILIDAD Y LA SUMA DEL PAGO FIJO A COORDINADORES*****************/
 	select 
@@ -86,8 +97,8 @@ begin
 	p_importe_por_sesion:=(p_fondo_comun/(v_suma_sesion_mes_actual-(0.5 * v_suma_asesor_sesion_mes_actual)));
 	
 	/*********INSERTA LA CABECERA DE LA PLANILLA DELEGADO*****************/
-	insert into planilla_delegados(id_regional,periodo,mes,importe_sesion,estado,id_usuario_inserta,created_at,updated_at)
-	values (5,p_anio::int,p_mes::int,p_importe_por_sesion,1,1,now(),now());
+	insert into planilla_delegados(id_periodo_comision,id_regional,periodo,mes,importe_sesion,estado,id_usuario_inserta,created_at,updated_at)
+	values (p_id_periodo_comision::int,5,p_anio::int,p_mes::int,p_importe_por_sesion,1,1,now(),now());
 	
 	p_id_planilla_delegado := (SELECT currval('planilla_delegados_id_seq'));
 	
@@ -165,3 +176,4 @@ begin
 end;
 $function$
 ;
+

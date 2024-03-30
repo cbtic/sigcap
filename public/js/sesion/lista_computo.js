@@ -25,7 +25,7 @@ $(document).ready(function () {
 		var anio = $("#anio").val();
 		var mes = $("#mes").val();
 		//if (fecha == "")fecha = 0;
-		var href = '/sesion/ver_computo_sesion_pdf/' + anio + '/' + mes;
+		var href = '/sesion/ver_computo_sesion_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
 		window.open(href, '_blank');
 	});
 	
@@ -35,10 +35,38 @@ $(document).ready(function () {
 		var anio = $("#anio").val();
 		var mes = $("#mes").val();
 		//if (fecha == "")fecha = 0;
-		var href = '/sesion/ver_calendario_sesion_pdf/' + anio + '/' + mes;
+		var href = '/sesion/ver_calendario_sesion_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
 		window.open(href, '_blank');
 	});
 
+	$('#btnVistaPreviaMovilidad').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		var href = '/movilidad/ver_movilidad_pdf/' +id_periodo_bus;
+		window.open(href, '_blank');
+	});
+	
+	$('#btnVistaPreviaCoordinador').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		var href = '/sesion/ver_delegado_coordinador_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		window.open(href, '_blank');
+	});
+	
+	$('#btnVistaPreviaCalendarioCoordinadorZonal').click(function () {
+		//guardar_computo()
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		//if (fecha == "")fecha = 0;
+		var href = '/sesion/ver_calendario_sesion_coordinador_zonal_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		window.open(href, '_blank');
+	});
+	
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -103,7 +131,7 @@ function guardar_computo(){
 	var anio = $("#anio").val();
 	var mes = $("#mes").val();
 	
-	if(anio=="")msg += "Debe seleccionar un año";
+	if(anio=="")msg += "Debe seleccionar un aï¿½o";
 	if(mes=="")msg += "Debe seleccionar un mes";
 	if(id_periodo_bus=="")msg += "Debe seleccionar un periodo";
 	
@@ -192,6 +220,29 @@ function fn_save___(){
 					location.href="/afiliacion";
             }
     });
+}
+
+obtenerAnioPerido();
+
+function obtenerAnioPerido(){
+	
+	var id_periodo = $('#id_periodo_bus').val();
+	
+	$.ajax({
+		url: '/sesion/obtener_anio_periodo/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#anio').html("");
+			//option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
+			});
+			$('#anio').html(option);
+		}
+		
+	});
+	
 }
 
 function validaTipoDocumento(){

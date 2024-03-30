@@ -86,5 +86,46 @@ and t0.estado='1'";
         return $data;
     }
 	
+	function getComisionSesionDelegadoCoordinadorByIdPeriodo($id_periodo,$anio,$mes){ 
+		
+		$cad = "select distinct t4.denominacion comision,t3.apellido_paterno||' '||t3.apellido_materno||' '||t3.nombres agremiado,t2.numero_cap
+from comision_sesiones t1 
+inner join comision_sesion_delegados csd on t1.id=csd.id_comision_sesion 
+left join comision_delegados cd on csd.id_delegado=cd.id left join agremiados a on coalesce(cd.id_agremiado,csd.id_agremiado)=a.id
+left join agremiados t2 on coalesce(cd.id_agremiado,csd.id_agremiado)=t2.id
+inner join personas t3 on t2.id_persona=t3.id
+inner join comisiones t4 on t1.id_comision=t4.id
+where csd.estado='1' 
+and csd.coordinador='1'
+And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+and t1.id_periodo_comisione=".$id_periodo ;
+		
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+    function getSesionCoordinador($id){
+
+        $cad = "select distinct t0.id,cs.id_periodo_comisione periodo, tm3.denominacion tipo_comision, t3.apellido_paterno||' '||t3.apellido_materno||' '||t3.nombres agremiado, 
+        c.denominacion comision, cs.fecha_programado, cs.fecha_ejecucion, tm2.denominacion estado_sesion, tm.denominacion estado_aprobacion, tm4.denominacion tipo_programacion, cs.ruta_informe,
+        t2.numero_cap, cs.estado 
+        from comision_sesion_delegados t0 
+        inner join comision_sesiones cs on t0.id_comision_sesion=cs.id
+        left join comision_delegados t1 on t0.id_delegado=t1.id
+        left join agremiados t2 on coalesce(t1.id_agremiado,t0.id_agremiado)=t2.id
+        inner join personas t3 on t2.id_persona=t3.id
+        inner join coordinador_zonales cz on t2.id=cz.id_agremiado
+        inner join comisiones c on cs.id_comision = c.id
+        inner join periodo_comisiones pc on cs.id_periodo_comisione = pc.id 
+        left join tabla_maestras tm on cs.id_estado_aprobacion = tm.codigo::int And tm.tipo ='109'
+        left join tabla_maestras tm2 on cs.id_estado_sesion = tm2.codigo::int And tm2.tipo ='56'
+        left join tabla_maestras tm3 on c.id_tipo_comision = tm3.codigo::int And tm3.tipo ='102'
+        left join tabla_maestras tm4 on cs.id_tipo_sesion = tm4.codigo::int And tm4.tipo ='71'
+         Where t0.estado ='1' and c.denominacion ilike '%coordinador%' and t0.id='".$id."'";
+
+		$data = DB::select($cad);
+        return $data;
+    }
 	
 }

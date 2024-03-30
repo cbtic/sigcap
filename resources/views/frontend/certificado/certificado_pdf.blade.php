@@ -119,7 +119,7 @@ $(document).ready(function() {
         <hr>
         <div class="contenido">
             <p id="primero">La Regional Lima del Colegio de Arquitectos del Perú, certifica que:</p>
-            <p style="margin-left: 2cm;"><?php echo $tratodesc;?>   : <?php echo $datos[0]->desc_cliente;?> </p>
+            <p style="margin-left: 2cm;"><?php echo $tratodesc;?>   : <?php echo $datos[0]->agremiado;?> </p>
             <p style="margin-left: 2cm;">         N° CAP                 : <?php echo $datos[0]->numero_cap;?> </p>
             <p style="margin-left: 2cm;">         FECHA DE COLEGIATURA   : <?php echo $datos[0]->fecha_colegiado;?> </p>
             <p style="margin-left: 2cm;">         N° INSCRIPCIÓN REGIONAL: <?php echo $datos[0]->numero_regional;?> </p>

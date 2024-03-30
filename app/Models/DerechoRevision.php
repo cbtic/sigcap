@@ -17,6 +17,12 @@ class DerechoRevision extends Model
         return $this->readFuntionPostgres('sp_listar_derecho_revision_paginado',$p);
 
     }
+
+    public function listar_derecho_revision_HU_ajax($p){
+
+        return $this->readFuntionPostgres('sp_listar_derecho_revision_hu_paginado',$p);
+
+    }
 	
 	function getCodigoSolicitud($id_tipo_solicitud){
 		
@@ -64,7 +70,7 @@ where s.id=".$id;
 	
 	public function getLiquidacionByIdSolicitud($id){
 
-        $cad = "select to_char(fecha,'dd-mm-yyyy')fecha,credipago,sub_total,igv,total,observacion  
+        $cad = "select l.id, to_char(fecha,'dd-mm-yyyy')fecha,credipago,sub_total,igv,total,observacion  
 from liquidaciones l 
 where id_solicitud=".$id;
 		//echo $cad;
@@ -124,6 +130,38 @@ where p.id_solicitud=".$id;
         where a.numero_cap = '".$numero_cap."'";
 		//echo $cad;
 		$data = DB::select($cad);
+        return $data;
+    }
+
+    public function getSolicitudPdf($id){
+
+        $cad = "select l.credipago, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres proyectista, a.numero_cap, e.razon_social, pro.nombre, u.id_departamento departamento, u.id_provincia provincia,
+        u.id_distrito distrito, pro.direccion, s.numero_revision, m.denominacion municipalidad, s.area_total total_area_techada, s.valor_obra, l.sub_total, l.igv, l.total, tm.denominacion tipo_proyectista
+        from solicitudes s 
+        inner join liquidaciones l on l.id_solicitud = s.id
+        inner join proyectistas p on s.id_proyectista = p.id
+        inner join agremiados a on p.id_agremiado = a.id
+        inner join personas pe on a.id_persona = pe.id
+        inner join propietarios pr on pr.id_solicitud = s.id
+        inner join empresas e on pr.id_empresa = e.id
+        inner join proyectos pro on s.id_proyecto = pro.id
+        inner join ubigeos u on pro.id_ubigeo = u.id
+        inner join municipalidades m on s.id_municipalidad = m.id
+        inner join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41' 
+        where l.id='".$id."'";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getTipoSolicitud($id){
+
+        $cad = "select l.id, s.id_tipo_solicitud from liquidaciones l 
+        inner join solicitudes s on l.id_solicitud = s.id 
+        where l.id='".$id."'";
+
+        $data = DB::select($cad);
         return $data;
     }
     

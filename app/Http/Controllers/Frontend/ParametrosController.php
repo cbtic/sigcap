@@ -96,7 +96,10 @@ class ParametrosController extends Controller
 		$parametro->anio = $request->anio;
         $parametro->porcentaje_calculo_edificacion = $request->porcentaje_calculo_edificacion;
         $parametro->valor_metro_cuadrado_habilitacion_urbana = $request->valor_metro_cuadrado_habilitacion_urbana;
+		$parametro->valor_minimo_edificaciones = $request->valor_minimo_edificaciones;
         $parametro->valor_uit = $request->valor_uit;
+		$parametro->valor_minimo_hu = $request->valor_minimo_hu;
+		$parametro->valor_maximo_hu = $request->valor_maximo_hu;
         $parametro->igv = $request->igv;
 		$parametro->id_usuario_inserta = $id_user;
 		$parametro->save();

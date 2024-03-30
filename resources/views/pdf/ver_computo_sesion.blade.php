@@ -152,10 +152,10 @@
 					if($municipalidad_old!=$r->municipalidad){
 					?>
 					<tr>
-						<th colspan="7" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">Sub Total</th>
-						<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_computada_?></th>
-						<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_adicional_?></th>
-						<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total_?></th>
+						<th colspan="7" class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">Sub Total</th>
+						<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_computada_?></th>
+						<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_adicional_?></th>
+						<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total_?></th>
 					</tr>
 					<?php
 						$suma_computada_ = 0;
@@ -194,10 +194,10 @@
 				if(($key+1) == count($comisionSesion)){
 				?>
 				<tr>
-					<th colspan="7" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">Sub Total</th>
-					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_computada_?></th>
-					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_adicional_?></th>
-					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total_?></th>
+					<th colspan="7" class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">Sub Total</th>
+					<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_computada_?></th>
+					<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_adicional_?></th>
+					<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total_?></th>
 				</tr>
 				<?php
 					$suma_computada_ = 0;

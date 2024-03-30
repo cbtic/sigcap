@@ -155,5 +155,14 @@ class Comisione extends Model
         return $data[0]->codigo;
     }
     
+    function getAllComision($id){
+        $cad = "select *, c.denominacion comision from comision_sesiones cs 
+        inner join comisiones c on cs.id_comision = c.id
+        where cs.id='".$id."'";
+
+        //echo $cad;exit();
+		$data = DB::select($cad);
+        return $data[0];
+    }
     
 }

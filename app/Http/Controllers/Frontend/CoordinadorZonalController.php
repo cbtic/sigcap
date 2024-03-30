@@ -45,8 +45,12 @@ class CoordinadorZonalController extends Controller
 		$estado_aprobacion = $tablaMaestra_model->getMaestroByTipo(109);
 		$estado = $tablaMaestra_model->getMaestroByTipo(119);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		$meses =[1=>'Enero',2=>'Febrero',3=>'Marzo',4=>'Abril',5=>'Mayo',6=>'Junio',7=>'Julio',8=>'Agosto',9=>'Setiembre',
+		10=>'Octubre',11=>'Noviembre',12=>'Diciembre'];
 		
-        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion'));
+		
+        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion','periodo_activo','meses'));
 
     }
 
@@ -78,6 +82,7 @@ class CoordinadorZonalController extends Controller
 		$coordinadorZonal_model = new CoordinadorZonal;
 		$p[]=$request->periodo;
 		$p[]=$request->agremiado;
+		$p[]=$request->mes;
 		$p[]="";
 		$p[]="";
 		$p[]="";
@@ -147,10 +152,17 @@ class CoordinadorZonalController extends Controller
 
     public function send_coordinador_zonal_nuevoCoordinadorZonal(Request $request){
 		
+
 		$id_user = Auth::user()->id;
 		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		$mensaje = "";
 		
+		if($request->id == 0){
+			$coordinadorZonal = new CoordinadorZonal;
+		}else{
+			$coordinadorZonal = CoordinadorZonal::find($request->id);
+		}
+
 		/**********Comision**************/
 
 		$denominacion = "COORDINADOR ZONAL ".$request->zonal;
@@ -190,7 +202,7 @@ class CoordinadorZonalController extends Controller
 		
 		if($agremiado){
 				
-            $coordinadorZonal = new CoordinadorZonal;
+            //$coordinadorZonal = new CoordinadorZonal;
             $coordinadorZonal->id_regional = $request->regional;
             $coordinadorZonal->id_periodo = $request->periodo;
             $coordinadorZonal->id_agremiado = $agremiado->id;
@@ -216,9 +228,11 @@ class CoordinadorZonalController extends Controller
 		$id_user = Auth::user()->id;
 		
         $agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
-        $coordinador_zonal = CoordinadorZonal::where("id_agremiado",$agremiado->id)->where("estado","1")->first();
+        //$coordinador_zonal = CoordinadorZonal::where("id_agremiado",$agremiado->id)->where("estado","1")->first();
+		$coordinador_zonal = CoordinadorZonal::find($request->id);
 		$estado_sesion = $request->estado_sesion;
 		$aprobar_pago = $request->aprobar_pago;
+		$municipalidad = $request->municipalidad;
 		$id_comision = $coordinador_zonal->id_comision;
         $img_foto = $request->img_foto;
 		
@@ -243,6 +257,7 @@ class CoordinadorZonalController extends Controller
             //$comision_sesione->id_aprobado = 2;
             //$comision_sesione->observaciones = 1;
             $comision_sesione->id_comision = $id_comision;
+			$comision_sesione->id_municipalidad = $municipalidad[$key];    
             $comision_sesione->id_estado_sesion = 290;//$estado_sesion[$key];
             $comision_sesione->id_estado_aprobacion = $estado_sesion[$key];      
             $comision_sesione->id_usuario_inserta = $id_user;
@@ -268,6 +283,7 @@ class CoordinadorZonalController extends Controller
 			$comisionSesionDelegado = new ComisionSesionDelegado();
 			$comisionSesionDelegado->id_comision_sesion = $id_comision_sesion;
 			$comisionSesionDelegado->id_delegado = $id_delegado;
+			$comisionSesionDelegado->id_agremiado = $agremiado->id;
 			$comisionSesionDelegado->coordinador = $coordinador;
 			$comisionSesionDelegado->id_profesion_otro = NULL;
 			$comisionSesionDelegado->id_aprobar_pago = ($aprobar_pago[$key]==1)?2:1;
@@ -286,6 +302,102 @@ class CoordinadorZonalController extends Controller
 		$coordinadorZonal->save();
 
 		echo $coordinadorZonal->id;
+    }
+
+	public function obtener_coordinador($id)
+	{
+		$coordinador_zonal_model = new CoordinadorZonal;
+		$coordinador_zonal = $coordinador_zonal_model->getCoordinadorZonalById($id);
+		
+		echo json_encode($coordinador_zonal);
+	}
+	
+	public function modal_coordinadorZonal_editarCoordinadorZonal($id){
+		
+		$coordinadorZonal = new CoordinadorZonal;
+        $tablaMaestra_model = new TablaMaestra;
+        $periodo_model = new PeriodoComisione;
+        $agremiado_model = new Agremiado;
+        $municipalidad_model = new Municipalidade;
+		$regione_model = new Regione;
+
+		//$coordinadorZonal = CoordinadorZonal::find($id);
+		//$agremiado = Agremiado::where("id",$coordinadorZonal->id_agremiado)->where("estado","1")->first();
+		$sesion_delegado = ComisionSesionDelegado::find($id);
+		//$agremiado_model = Agremiado::find($id);
+
+		/*$sesion_delegado_modal = new ComisionSesionDelegado;
+		$datos_sesion = $sesion_delegado_modal->getSesionCoordinador($id);*/
+
+		$agremiado = Agremiado::where("id",$sesion_delegado->id_agremiado)->where("estado","1")->first();
+		$persona = Persona::where("id",$agremiado->id_persona)->where("estado","1")->first();
+		$comision_sesion = ComisionSesione::where("id",$sesion_delegado->id_comision_sesion)->where("estado","1")->first();
+		$comision = Comisione::where("id",$comision_sesion->id_comision)->where("estado","1")->first();
+
+		$comision_model = new Comisione;
+
+		$comision_ = $comision_model->getAllComision($comision_sesion->id);
+
+		$comision_nombre = $comision_->comision;
+
+		$numero_cap = $agremiado->numero_cap;
+		$periodo = $comision_sesion->id_periodo_comisione;
+		$id_aprobar_pago =$sesion_delegado->id_aprobar_pago;
+		
+
+        $periodo = $periodo_model->getPeriodoVigenteAll();
+        $mes = $tablaMaestra_model->getMaestroByTipo(116);
+        $estado_sesion = $tablaMaestra_model->getMaestroByTipo(109);
+		$aprobar_pago = [2=>"Si",0=>"No"];
+        $municipalidad = $municipalidad_model->getMunicipalidadOrden();
+		$region = $regione_model->getRegionAll();
+		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
+		
+		//$concepto = $concepto_model->getConceptoAll();
+		
+		return view('frontend.coordinador_zonal.modal_coordinadorZonal_editarCoordinadorZonal',compact('id','periodo','mes','municipalidad','estado_sesion','agremiado','comision_sesion','region','tipo_comision','comision','persona','aprobar_pago','id_aprobar_pago','comision_','comision_nombre'));
+	
+	}
+
+	function send_coordinador_sesion_editar(Request $request)
+    {
+        
+		$id_user = Auth::user()->id;
+		
+        $agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+        //$coordinador_zonal = CoordinadorZonal::where("id_agremiado",$agremiado->id)->where("estado","1")->first();
+		$comisionSesionDelegado = ComisionSesionDelegado::find($request->id);
+		$comisionSesion = ComisionSesione::find($comisionSesionDelegado->id_comision_sesion);
+
+		
+
+        $img_foto = $request->img_foto;
+		
+            
+		/*$filepath_tmp = public_path('img/informe/tmp/');
+		$filepath_nuevo = public_path('img/informe/');
+		
+		if(isset($img_foto[$key]) && $img_foto[$key]!=""){
+			if (file_exists($filepath_tmp.$img_foto[$key])) {
+				copy($filepath_tmp.$img_foto[$key], $filepath_nuevo.$img_foto[$key]);
+			}
+		}*/
+		
+		
+		/**********ComisionDelegado**************/
+		$comisionSesion->fecha_programado = $request->fecha_programada_;
+		$comisionSesion->fecha_ejecucion = $request->fecha_ejecucion_;
+		$comisionSesion->id_estado_aprobacion = $request->estado_sesion_;
+		$comisionSesion->id_municipalidad = $request->municipalidad_;
+		$comisionSesion->id_usuario_inserta = $id_user;
+		$comisionSesion->save();
+		
+		/**********ComisionSesionDelegado**************/
+		$comisionSesionDelegado->id_aprobar_pago = $request->aprobar_pago_;
+		$comisionSesionDelegado->id_usuario_inserta = $id_user;
+		$comisionSesionDelegado->save();
+
+        
     }
     
 }

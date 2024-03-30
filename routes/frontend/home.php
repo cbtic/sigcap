@@ -49,6 +49,7 @@ use App\Http\Controllers\Frontend\CoordinadorZonalController;
 use App\Http\Controllers\Frontend\ProyectistaController;
 
 use App\Http\Controllers\Frontend\AsignacionCuentaController;
+use App\Http\Controllers\Frontend\AsientoPlanillaController;
 use App\Http\Controllers\Frontend\ProyectoController;
 use App\Http\Controllers\Frontend\BeneficiarioController;
 
@@ -413,10 +414,12 @@ Route::post('sesion/send_computo_sesion', [SesionController::class, 'send_comput
 Route::get('sesion/obtener_dictamen/{id}', [SesionController::class, 'obtener_dictamen'])->name('sesion.obtener_dictamen');
 
 Route::get('sesion/computo_sesion_pdf/{id}', [SesionController::class, 'computo_sesion_pdf'])->name('sesion.computo_sesion_pdf');
-Route::get('sesion/ver_computo_sesion_pdf/{anio}/{mes}', [SesionController::class, 'ver_computo_sesion_pdf'])->name('sesion.ver_computo_sesion_pdf');
+Route::get('sesion/ver_computo_sesion_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_computo_sesion_pdf'])->name('sesion.ver_computo_sesion_pdf');
+Route::get('sesion/ver_delegado_coordinador_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_delegado_coordinador_pdf'])->name('sesion.ver_delegado_coordinador_pdf');
 
 Route::get('sesion/calendario_sesion_pdf/{id}', [SesionController::class, 'calendario_sesion_pdf'])->name('sesion.calendario_sesion_pdf');
-Route::get('sesion/ver_calendario_sesion_pdf/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
+Route::get('sesion/ver_calendario_sesion_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
+Route::get('sesion/ver_calendario_sesion_coordinador_zonal_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_coordinador_zonal_pdf'])->name('sesion.ver_calendario_sesion_coordinador_zonal_pdf');
 
 Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eliminar_computo_sesion'])->name('sesion.eliminar_computo_sesion');
 Route::get('sesion/eliminar_comision_sesion_delegados/{id}', [SesionController::class, 'eliminar_comision_sesion_delegados'])->name('sesion.eliminar_comision_sesion_delegados');
@@ -515,6 +518,7 @@ Route::get('planilla/modal_reintegro/{id}', [PlanillaDelegadoController::class, 
 Route::get('planilla/obtener_delegado_periodo/{id_periodo}', [PlanillaDelegadoController::class, 'obtener_delegado_periodo'])->name('planilla.obtener_delegado_periodo');
 Route::get('planilla/obtener_comision_delegado_periodo/{id_periodo}/{id_agremiado}', [PlanillaDelegadoController::class, 'obtener_comision_delegado_periodo'])->name('planilla.obtener_comision_delegado_periodo');
 Route::post('planilla/send_reintegro', [PlanillaDelegadoController::class, 'send_reintegro'])->name('planilla.send_reintegro');
+Route::get('planilla/obtener_anio_periodo/{id_periodo}', [PlanillaDelegadoController::class, 'obtener_anio_periodo'])->name('planilla.obtener_anio_periodo');
 
 Route::get('centro_costo/importar_centro_costo', [CentroCostoController::class, 'importar_centro_costo'])->name('centro_costo.importar_centro_costo');
 Route::get('partida_presupuestal/importar_partida_presupuestal', [PartidaPresupuestalController::class, 'importar_partida_presupuestal'])->name('partida_presupuestal.importar_partida_presupuestal');
@@ -559,6 +563,8 @@ Route::post('coordinador_zonal/upload_informe', [CoordinadorZonalController::cla
 Route::get('movilidad/obtener_comision/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision'])->name('movilidad.obtener_comision');
 Route::get('movilidad/obtener_comision_movilidad/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision_movilidad'])->name('movilidad.obtener_comision_movilidad');
 
+Route::get('movilidad/ver_movilidad_pdf/{id_periodo}', [MovilidadController::class, 'ver_movilidad_pdf'])->name('movilidad.ver_movilidad_pdf');
+
 Route::get('ingreso/modal_beneficiario_/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_beneficiario_'])->name('ingreso.modal_beneficiario_');
 
 Route::get('persona/obtenerPersona/{numero_documento}', [PersonaController::class, 'obtenerPersona'])->name('persona.obtenerPersona');
@@ -600,6 +606,18 @@ Route::get('asignacion/eliminar_asignacion/{id}/{estado}', [AsignacionCuentaCont
 
 Route::get('asignacion/consulta_asignacion', [AsignacionCuentaController::class, 'consulta_asignacion'])->name('asignacion.consulta_asignacion');
 
+
+Route::get('asiento', [AsientoPlanillaController::class, 'index'])->name('asiento');
+Route::post('asientos', [AsientoPlanillaController::class, 'store'])->name('asientos');
+Route::post('asiento/listar_asiento_ajax', [AsientoPlanillaController::class, 'listar_asiento_ajax'])->name('asiento.listar_asiento_ajax');
+Route::get('asiento/modal_asiento/{id}', [AsientoPlanillaController::class, 'modal_asiento'])->name('asiento.modal_asiento');
+Route::post('asiento/send_asiento', [AsientoPlanillaController::class, 'send_asiento'])->name('asiento.send_asiento');
+Route::get('asiento/eliminar_asiento/{id}/{estado}', [AsientoPlanillaController::class, 'eliminar_asiento'])->name('persona.eliminar_asiento');
+Route::post('asiento/obtener_asiento_planilla', [AsientoPlanillaController::class, 'obtener_asiento_planilla'])->name('asiento.obtener_asiento_planilla');
+Route::get('asiento/consulta_asiento', [AsientoPlanillaController::class, 'consulta_asiento'])->name('asiento.consulta_asiento');
+Route::get('asiento/generar_asiento_planilla', [AsientoPlanillaController::class, 'generar_asiento_planilla'])->name('asiento.generar_asiento_planilla');
+
+
 Route::get('proyecto/obtener_proyecto/{numero_cap}', [ProyectoController::class, 'obtener_proyecto'])->name('proyecto.obtener_proyecto');
 Route::get('certificado/certificado_tipo/{id}', [CertificadoController::class, 'certificado_tipo'])->name('certificado.certificado_tipo');
 Route::post('coordinador_zonal/listar_coordinadorZonalSesion_ajax', [CoordinadorZonalController::class, 'listar_coordinadorZonalSesion_ajax'])->name('coordinador_zonal.listar_coordinadorZonalSesion_ajax');
@@ -619,3 +637,22 @@ Route::get('certificado/consultar_certificado_tipo3', [CertificadoController::cl
 Route::get('certificado/modal_certificado_tipo3/{id}', [CertificadoController::class, 'modal_certificado_tipo3'])->name('certificado.modal_certificado_tipo3');
 Route::post('certificado/send_proyecto_tipo3', [CertificadoController::class, 'send_proyecto_tipo3'])->name('certificado.send_proyecto_tipo3');
 Route::get('coordinador_zonal/eliminar_coordinador_zonal/{id}/{estado}', [CoordinadorZonalController::class, 'eliminar_coordinador_zonal'])->name('coordinador_zonal.eliminar_coordinador_zonal');
+
+Route::get('planillaDelegado/consulta_planilla_recibos_honorario', [PlanillaDelegadoController::class, 'consulta_planilla_recibos_honorario'])->name('planillaDelegado.consulta_planilla_recibos_honorario');
+Route::get('sesion/obtener_anio_periodo/{id_periodo}', [SesionController::class, 'obtener_anio_periodo'])->name('sesion.obtener_anio_periodo');
+Route::post('planillaDelegado/listar_recibo_honorario_ajax', [PlanillaDelegadoController::class, 'listar_recibo_honorario_ajax'])->name('planillaDelegado.listar_recibo_honorario_ajax');
+Route::get('planillaDelegado/obtener_datos_recibo/{id}', [PlanillaDelegadoController::class, 'obtener_datos_recibo'])->name('planillaDelegado.obtener_datos_recibo');
+Route::post('planillaDelegado/send_recibo_honorario', [PlanillaDelegadoController::class, 'send_recibo_honorario'])->name('planillaDelegado.send_recibo_honorario');
+
+Route::get('derecho_revision/credipago_pdf/{id}', [DerechoRevisionController::class, 'credipago_pdf'])->name('derecho_revision.credipago_pdf');
+Route::get('derecho_revision/credipago_pdf_eficicaciones/{id}', [DerechoRevisionController::class, 'credipago_pdf_eficicaciones'])->name('derecho_revision.credipago_pdf_eficicaciones');
+Route::get('derecho_revision/credipago_pdf_HU/{id}', [DerechoRevisionController::class, 'credipago_pdf_HU'])->name('derecho_revision.credipago_pdf_HU');
+Route::get('derecho_revision/obtener_tipo_credipago/{id}', [DerechoRevisionController::class, 'obtener_tipo_credipago'])->name('derecho_revision.obtener_tipo_credipago');
+
+Route::post('derecho_revision/listar_derecho_revision_hu_ajax', [DerechoRevisionController::class, 'listar_derecho_revision_hu_ajax'])->name('derecho_revision.listar_derecho_revision_hu_ajax');
+
+Route::get('certificado/record_proyectos_pdf/{numero_cap}', [CertificadoController::class, 'record_proyectos_pdf'])->name('certificado.record_proyectos_pdf');
+Route::get('coordinador_zonal/obtener_coordinador/{id}', [CoordinadorZonalController::class, 'obtener_coordinador'])->name('coordinador_zonal.obtener_coordinador');
+Route::get('coordinador_zonal/modal_coordinadorZonal_editarCoordinadorZonal/{id}', [CoordinadorZonalController::class, 'modal_coordinadorZonal_editarCoordinadorZonal'])->name('coordinador_zonal.modal_coordinadorZonal_editarCoordinadorZonal');
+Route::post('coordinador_zonal/send_coordinador_sesion_editar', [CoordinadorZonalController::class, 'send_coordinador_sesion_editar'])->name('coordinador_zonal.send_coordinador_sesion_editar');
+

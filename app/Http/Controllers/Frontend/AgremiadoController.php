@@ -91,6 +91,8 @@ class AgremiadoController extends Controller
 		$p[]="";
 		$p[]="";
 		$p[]="";
+		$p[]="t1.id";
+		$p[]="desc";
 		$p[]="1";
 		$p[]="100";
 		$agremiado_rol = $concursoInscripcione_model->listar_concurso_agremiado($p);
@@ -168,13 +170,29 @@ class AgremiadoController extends Controller
     }
 	
 	public function send(Request $request){
-
-        $sw = true;
+		
 		$msg = "";
 		$id_user = Auth::user()->id;
 		
 		$id_agremiado = $request->id_agremiado;
 		$id_persona = $request->id_persona;
+		
+		if($id_agremiado==0){
+			$agremiadoExiste = Agremiado::where("numero_cap",$request->numero_cap)->where("estado",1)->get();
+			if(count($agremiadoExiste)>0){
+				echo "1";
+				exit();
+			}
+		}
+		
+		if($id_persona==0){
+			$personaExiste = Persona::where("numero_documento",$request->numero_documento)->where("estado",1)->get();
+			if(count($personaExiste)>0){
+				echo "2";
+				exit();
+			}
+		}
+		
 		
 		if($id_persona> 0){
 			$persona = Persona::find($id_persona);

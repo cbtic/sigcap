@@ -165,7 +165,23 @@
 						</div>
 						-->
 						<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
-							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()">
+							<?php 
+							if($periodo_activo){
+							?>
+							<input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+							<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido()" disabled="disabled">
+								<option value="">--Periodo--</option>
+								<?php
+								foreach ($periodo as $row) {?>
+								<option value="<?php echo $row->id?>" <?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+								<?php 
+								}
+								?>
+							</select>
+							<?php
+							}else{
+							?>
+							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido()">
 								<option value="">--Periodo--</option>
 								<?php
 								foreach ($periodo as $row) {?>
@@ -174,6 +190,7 @@
 								}
 								?>
 							</select>
+							<?php } ?>
 						</div>
 
 						<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
@@ -249,15 +266,20 @@
 
 				</div>
 
-					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Computo" type="button" id="btnVistaPreviaComputo" style="margin-left:15px" />
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Calendario" type="button" id="btnVistaPreviaCalendario" style="margin-left:15px" />
-						<input class="btn btn-danger pull-rigth" value="Generar Computo" type="button" id="btnNuevo" style="margin-left:15px" />
+						<input class="btn btn-danger pull-rigth" value="Finalizar Computo" type="button" id="btnNuevo" style="margin-left:15px" />
+						
+						<input class="btn btn-secondary pull-rigth" value="Movilidad Delegados" type="button" id="btnVistaPreviaMovilidad" style="margin-left:15px" />
+						<input class="btn btn-secondary pull-rigth" value="Delegado Coordinadores" type="button" id="btnVistaPreviaCoordinador" style="margin-left:15px" />
+						<input class="btn btn-secondary pull-rigth" value="Calendario C Z" type="button" id="btnVistaPreviaCalendarioCoordinadorZonal" style="margin-left:15px" />
+						
 					</div>
 				</div>
 				
-                <div class="card-body">				
+                <div class="card-body">
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">

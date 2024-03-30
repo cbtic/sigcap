@@ -34,16 +34,20 @@ class ComisionController extends Controller
 		$tablaMaestra_model2 = new TablaMaestra;
 		$comision = new Comisione;
 		$periodoComision_model = new PeriodoComisione;
+		$periodoComisione_model = new PeriodoComisione;
 		$municipalidadIntegrada = new Comisione;
 		$municipalidadIntegrada2 = new MunicipalidadIntegrada;
 		//$tablaMaestra_model = new TablaMaestra;
         $tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
 		$tipoAgrupacion = $tablaMaestra_model2->getMaestroByTipo(99);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
         //$tipo_agrupacion = $tablaMaestra_model->getMaestroByTipo(99);
 
-        return view('frontend.comision.all',compact('comision','periodoComision','tipo_comision','municipalidadIntegrada','tipoAgrupacion','periodo_ultimo'));
+        return view('frontend.comision.all',compact('comision','periodoComision','periodo_ultimo','periodo_activo','tipo_comision','municipalidadIntegrada','tipoAgrupacion','periodo_ultimo'));
     }
 	
 	function lista_comision(){
@@ -55,8 +59,9 @@ class ComisionController extends Controller
 		$tipoAgrupacion = $tablaMaestra_model->getMaestroByTipo(99);
 		$tipoComision = $tablaMaestra_model->getMaestroByTipo(102);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.comision.all_listar_comision',compact('periodo','tipoAgrupacion','tipoComision','periodo_ultimo'));
+        return view('frontend.comision.all_listar_comision',compact('periodo','tipoAgrupacion','tipoComision','periodo_ultimo','periodo_activo'));
     }
 	
 	public function lista_comision_ajax(Request $request){
@@ -114,11 +119,14 @@ class ComisionController extends Controller
 		$region = $regione_model->getRegionAll();
 		
 		$periodo = $periodoComisione_model->getPeriodoVigenteAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		
 		
 		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
 		//$tipo_comision = TablaMaestra::where("codigo",$comision_->id_tipo_comision)->where("tipo",102)->first();
 		
-		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region','periodo','periodo_','tipo_comision','tipo_comision_'));
+		return view('frontend.comision.modal_asignar_delegado',compact('id','comisionDelegado','comision','concurso_inscripcion','region','periodo','periodo_','tipo_comision','tipo_comision_','periodo_ultimo','periodo_activo'));
 
     }
 	

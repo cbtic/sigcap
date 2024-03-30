@@ -426,19 +426,21 @@ class CertificadoController extends Controller
 		$nombre_proyectista=$tipo_proyectistas[0]->tipo_proyectista;
 		$direccion_proyecto=$tipo_proyectistas[0]->direccion;
 		$lugar_proyecto=$tipo_proyectistas[0]->lugar;
+		$nombre_proyecto=$tipo_proyectistas[0]->nombre_proyecto;
 		$nombre_propietario=$tipo_proyectistas[0]->propietario;
 		$valor_unit=$tipo_proyectistas[0]->valor_unitario;
-		$tipo_obra=$tipo_proyectistas[0]->tipo_obras;
-		$sub_tipo_uso_=$tipo_proyectistas[0]->sub_tipo_uso;
+		$tipo_obra=$tipo_proyectistas[0]->tipo_obra;
+		$tipo_uso_=$tipo_proyectistas[0]->tipo_uso;
+		$area_techada=$tipo_proyectistas[0]->area_techada;
 		$ubigeo=$tipo_proyectistas[0]->id_ubigeo;
+		$id_departamento=$tipo_proyectistas[0]->id_departamento;
+		$id_provincia=$tipo_proyectistas[0]->id_provincia;
+		$id_distrito=$tipo_proyectistas[0]->id_distrito;
 
-		$departamento_ = substr($ubigeo, 0, 2);
-		$provincia_ = substr($ubigeo, 2, 2);
-		$distrito_ = substr($ubigeo, 4, 2);
 
-		$departamento = $ubigeo_model->obtenerDepartamento($departamento_);
-		$provincia = $ubigeo_model->obtenerProvincia($departamento_,$provincia_);
-		$distrito = $ubigeo_model->obtenerDistrito($departamento_,$provincia_,$distrito_);
+		$departamento = $ubigeo_model->obtenerDepartamento($id_departamento);
+		$provincia = $ubigeo_model->obtenerProvincia($id_departamento,$id_provincia);
+		$distrito = $ubigeo_model->obtenerDistrito($id_departamento,$id_provincia,$id_distrito);
 		//$departamento=$ubigeo_model->obtenerDepartamento($tipo_proyectistas[0]->id_departamento);
 		//$departamento_numero=$tipo_proyectistas[0]->id_departamento;
 		//$departamento=$ubigeo_model->obtenerDepartamento($departamento_numero);
@@ -455,7 +457,7 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','formattedDate','departamento','provincia','distrito','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_obra','sub_tipo_uso_'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','nombre_proyecto','formattedDate','departamento','provincia','distrito','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_obra','tipo_uso_','area_techada'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -507,10 +509,13 @@ class CertificadoController extends Controller
 			$habilita="HABILITADA";
 		}
 
+		
 		//$tipo_proyectistas = $solicitud_model->getSolicitudNumeroCap($agremiado->numero_cap);
 
-		$nombre_proyectista=$tipo_proyectistas[0]->tipo_proyectista;
+		$nombre_proyectista=$tipo_proyectistas[0]->agremiado;
 		$direccion_proyecto=$tipo_proyectistas[0]->direccion;
+		$nombre_proyecto=$tipo_proyectistas[0]->nombre_proyecto;
+		$tipo_proyectista=$tipo_proyectistas[0]->tipo_proyectista;
 		$lugar_proyecto=$tipo_proyectistas[0]->lugar;
 		$nombre_propietario=$tipo_proyectistas[0]->propietario;
 		$valor_unit=$tipo_proyectistas[0]->valor_unitario;
@@ -518,6 +523,16 @@ class CertificadoController extends Controller
 		$tipo_uso=$tipo_proyectistas[0]->tipo_uso;
 		$zonificacion=$tipo_proyectistas[0]->zonificacion;
 		$area_total=$tipo_proyectistas[0]->area_total;
+
+		$id_departamento=$tipo_proyectistas[0]->id_departamento;
+		$id_provincia=$tipo_proyectistas[0]->id_provincia;
+		$id_distrito=$tipo_proyectistas[0]->id_distrito;
+		//$area_total=$tipo_proyectistas[0]->direccion;
+
+
+		$departamento = $ubigeo_model->obtenerDepartamento($id_departamento);
+		$provincia = $ubigeo_model->obtenerProvincia($id_departamento,$id_provincia);
+		$distrito = $ubigeo_model->obtenerDistrito($id_departamento,$id_provincia,$id_distrito);
 		//$departamento=$ubigeo_model->obtenerDepartamento($tipo_proyectistas[0]->id_departamento);
 		//$departamento_numero=$tipo_proyectistas[0]->id_departamento;
 		//$departamento=$ubigeo_model->obtenerDepartamento($departamento_numero);
@@ -534,7 +549,7 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo2_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_tramite','tipo_uso','zonificacion','area_total'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo2_pdf',compact('datos','nombre','formattedDate','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_tramite','tipo_uso','zonificacion','area_total','tipo_proyectista','nombre_proyecto','departamento','provincia','distrito'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -583,11 +598,14 @@ class CertificadoController extends Controller
 		$tipo_proyectistas=$datos2_model->datos_agremiado_certificado1($id);
 
 		$nombre_proyecto=$tipo_proyectistas[0]->nombre_proyecto;
+		$expediente=$tipo_proyectistas[0]->expediente;
+		$tipo_tramite_tipo3=$tipo_proyectistas[0]->tipo_tramite_tipo3;
 		$nombre_propietario=$tipo_proyectistas[0]->propietario;
 		$valor_obra=$tipo_proyectistas[0]->valor_obra;
 		$area_techada=$tipo_proyectistas[0]->area_techada;
 		$direccion=$tipo_proyectistas[0]->direccion;
 		$ubigeo=$tipo_proyectistas[0]->id_ubigeo;
+		
 
 		$departamento_ = substr($ubigeo, 0, 2);
 		$provincia_ = substr($ubigeo, 2, 2);
@@ -610,7 +628,7 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','direccion','provincia','departamento','distrito','nombre_propietario','nombre_proyecto','cita','valor_obra','area_techada','habilita','inscripcion','formattedDate','tratodesc','faculta','numeroEnLetras'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','direccion','provincia','departamento','distrito','nombre_propietario','nombre_proyecto','cita','valor_obra','area_techada','habilita','inscripcion','formattedDate','tratodesc','faculta','numeroEnLetras','tipo_tramite_tipo3','expediente'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -628,6 +646,8 @@ class CertificadoController extends Controller
 		
 		$datos_model=new certificado;
 
+		$año = carbon::now()->year;
+
 		$datos=$datos_model->datos_agremiado_certificado($id);
 		$nombre=$datos[0]->numero_cap;
 		$fecha_emision=$datos[0]->fecha_emision;
@@ -638,7 +658,16 @@ class CertificadoController extends Controller
 		$tramite = $datos[0]->tipo_tramite;
 		
 		//$numeroEnLetras = $this->numeroALetras($numero); 
+		$agremiado_ = Agremiado::where("numero_cap",$nombre)->where("estado","1")->first();
+		$mes_minimo_=$datos_model->getMinMes($agremiado_->id,$año);
+		$mes_maximo_=$datos_model->getMaxMes($agremiado_->id,$año);
+
+		$mes_minimo = $mes_minimo_[0]->min;
+		$mes_maximo = $mes_maximo_[0]->max;
+
 		
+		$mes_minimoEnLetras = $this->mesesALetras($mes_minimo); 
+		$mes_maximoEnLetras = $this->mesesALetras($mes_maximo); 
 
 		if ($trato==3) {
 			$tratodesc="EL ARQUITECTO ";
@@ -672,7 +701,7 @@ class CertificadoController extends Controller
 		
 		$formattedDate_colegiado = $carbonDate_colegiado->timezone('America/Lima')->formatLocalized(' %d de %B %Y');
 		
-		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita'));
+		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita','mes_minimoEnLetras','mes_maximoEnLetras','año'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -715,12 +744,53 @@ class CertificadoController extends Controller
 		} 
 	}
 
+	function mesesALetras($mes) { 
+		$meses = array('','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'setiembre','octubre','noviembre','diciembre'); 
+		return $meses[$mes];
+	}
+
 	public function certificado_tipo($id){
 			
 		$certificado_model = new Certificado;
 		$tipo_certificado = $certificado_model->getTipoCertificado($id);
 		echo json_encode($tipo_certificado);
 		
+	}
+
+	public function record_proyectos_pdf($numero_cap){
+		
+		$certificado_model = new Certificado();
+		$proyectos = $certificado_model->getRecordProyecto($numero_cap);
+		
+		$trato=$proyectos[0]->id_sexo;
+		$numero_cap=$proyectos[0]->numero_cap;
+		$agremiado=$proyectos[0]->agremiado;
+		$fecha_colegiado=$proyectos[0]->fecha_colegiado;
+
+
+
+		if ($trato==3) {
+			$tratodesc="ARQUITECTO ";
+		}
+		else{
+			$tratodesc="ARQUITECTA ";
+		}
+		
+		$fecha_actual = Carbon::now()->format('d-m-Y');
+		$fecha_colegiado = Carbon::createFromFormat('Y-m-d', $fecha_colegiado)->format('d-m-Y');
+
+
+		$pdf = Pdf::loadView('frontend.certificado.record_proyectos_pdf',compact('proyectos','tratodesc','numero_cap','agremiado','fecha_colegiado','fecha_actual'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream('record_proyectos_pdf.pdf');
+	
 	}
 }
 

@@ -475,7 +475,7 @@ function datatablenew() {
 					fnCallback(result);
 				},
 				"error": function (msg, textStatus, errorThrown) {
-					//location.href="login";
+					//location.href="login";	2
 				}
 			});
 		},
@@ -666,12 +666,37 @@ function cargarFondoComun() {
 
 }
 
+obtenerAnioPerido();
+
+function obtenerAnioPerido(){
+	
+	var id_periodo = $('#id_periodo').val();
+	
+	$.ajax({
+		url: '/planilla/obtener_anio_periodo/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#anio').html("");
+			//option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
+			});
+			$('#anio').html(option);
+		}
+		
+	});
+	
+}
+
 function fn_calcular(){
 	//var anio = $('#anio').val();
 	//var mes = $('#mes').val();
 	var p = {};
 	p.anio =  $('#anio').val();
 	p.mes = $('#mes').val();
+	p.periodo  = $('#id_periodo').val();
+
 
 	//alert(mes);
     $.ajax({

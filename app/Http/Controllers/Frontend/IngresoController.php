@@ -68,11 +68,14 @@ class IngresoController extends Controller
 
     public function listar_valorizacion(Request $request){
 
+
         $id_persona = $request->id_persona;
         
         $tipo_documento = $request->tipo_documento;
 
-       //echo($tipo_documento);exit();
+        $SelFracciona = $request->SelFracciona;
+
+       //echo($SelFracciona);//exit();
 
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
 
@@ -83,7 +86,14 @@ class IngresoController extends Controller
         // print_r($filas);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+        
+
+        if ($SelFracciona=="S"){
+            $valorizacion = $valorizaciones_model->getValorizacionFrac($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+        }else{
+            $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+        }
+        
        
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
@@ -202,7 +212,7 @@ class IngresoController extends Controller
     public function modal_fraccionamiento(Request $request){
 
         $id_concepto = $request->idConcepto;
-       // print_r($id_concepto); exit();
+        //print_r($id_concepto); //exit();
 
         $id_persona = $request->id_persona;
         $id_agremiado = $request->id_agremiado;
@@ -233,9 +243,14 @@ class IngresoController extends Controller
         }
 
         //print_r($comprobanted); exit();
-        //$concepto = Concepto::find($id_concepto);
 
-        $concepto = Concepto::find(26411);
+        if ($id_concepto=="")$id_concepto=26411;
+
+        $concepto = Concepto::find($id_concepto);
+
+        
+
+        //$concepto = Concepto::find(26411);
 
         
         
@@ -333,7 +348,7 @@ class IngresoController extends Controller
 
         $id_concepto = $request->id_concepto;
 
-       // print_r($id_concepto); exit();
+        //print_r($id_concepto); exit();
 
         $id_pk = 0;
        // $id_concepto = 0;
@@ -366,12 +381,18 @@ class IngresoController extends Controller
         $id_fraccionamiento = $fraccionamiento->id;
 
         foreach($request->valorizacion as $key=>$tmp){
-            
-            $valorizacion_ = Valorizacione::find($tmp['id']);
 
-            $valorizacion_->codigo_fraccionamiento = $id_fraccionamiento;
-            $valorizacion_->estado = '0';
-            $valorizacion_->save(); 
+            $id_concepto_sel = $tmp['id_concepto'];
+            
+            if($id_concepto_sel==26411 or $id_concepto_sel==26412){
+            
+                $valorizacion_ = Valorizacione::find($tmp['id']);
+
+                $valorizacion_->codigo_fraccionamiento = $id_fraccionamiento;
+                $valorizacion_->estado = '0';
+                $valorizacion_->save(); 
+
+            }
 
         }
 
@@ -402,24 +423,28 @@ class IngresoController extends Controller
             $id_concepto="26412";
         }
 
+        //print_r($request->fraccionamiento); exit();
+
         foreach($request->fraccionamiento as $key=>$frac){
-            $valorizacion = new Valorizacione;
-            $valorizacion->id_modulo = 6;
-            $valorizacion->pk_registro = 0;
-            $valorizacion->id_concepto = $id_concepto; //26412;
-            $valorizacion->id_agremido = $id_agremiado;
-            $valorizacion->id_persona = $id_persona;
-            $valorizacion->monto = $frac['total_frac'];
-            $valorizacion->id_moneda = 1;
-            $valorizacion->fecha = $frac['fecha_cuota'];
-            $valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');            
-            $valorizacion->id_usuario_inserta = $id_user;
-            $valorizacion->descripcion = $frac['denominacion'];
-            $valorizacion->codigo_fraccionamiento =  $id_fraccionamiento;
 
-            $valorizacion->save();
+                $valorizacion = new Valorizacione;
+                $valorizacion->id_modulo = 6;
+                $valorizacion->pk_registro = 0;
+                $valorizacion->id_concepto = $id_concepto; //26412;
+                $valorizacion->id_agremido = $id_agremiado;
+                $valorizacion->id_persona = $id_persona;
+                $valorizacion->monto = $frac['total_frac'];
+                $valorizacion->id_moneda = 1;
+                $valorizacion->fecha = $frac['fecha_cuota'];
+                $valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');            
+                $valorizacion->id_usuario_inserta = $id_user;
+                $valorizacion->descripcion = $frac['denominacion'];
+                $valorizacion->codigo_fraccionamiento =  $id_fraccionamiento;
 
+                $valorizacion->save();
+            
         }
+        
         
 
         $id_persona = $request->id_persona;

@@ -43,8 +43,9 @@ class ConcursoController extends Controller
 		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
 		$periodo = $periodoComisione_model->getPeriodoAll();
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.concurso.all',compact('tipo_concurso','periodo','periodo_ultimo'));
+        return view('frontend.concurso.all',compact('tipo_concurso','periodo','periodo_ultimo','periodo_activo'));
     }
 	
 	public function consulta_resultado(){
@@ -216,8 +217,11 @@ class ConcursoController extends Controller
 		if($id>0) $concurso = Concurso::find($id);else $concurso = new Concurso;
 
 		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		
 
-		return view('frontend.concurso.modal_concurso',compact('id','concurso','tipo_concurso','periodo'));
+		return view('frontend.concurso.modal_concurso',compact('id','concurso','tipo_concurso','periodo','periodo_ultimo','periodo_activo'));
 
     }
 	

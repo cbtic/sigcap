@@ -143,8 +143,11 @@
                         <thead>
                         <tr style="font-size:13px">
                             <th>Año</th>
-                            <th>Porcentaje calculo Edificaciones</th>
-                            <th>Valor metro cuadrado habilitacion urbana</th>
+                            <th>% C&aacute;lculo Edificaciones</th>
+                            <th>Valor M&iacute;nimo % de UIT - Edificaciones</th>
+                            <th>Valor m2 HU</th>
+                            <th>Costo M&iacute;nimo - HU</th>
+                            <th>Valor M&aacute;ximo Ha (m2) - HU</th>
                             <th>Valor UIT</th>
                             <th>IGV</th>
                             <th>Estado</th>

@@ -330,15 +330,34 @@ function obtenerSubTipoConcursoEdit(id_tipo_concurso,id_sub_tipo_concurso){
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
-								<select name="periodo" id="periodo" class="form-control form-control-sm" onChange="">
+								<?php 
+								if($periodo_activo){
+								?>
+								<select name="periodo" id="periodo" class="form-control form-control-sm" onChange="" disabled="disabled">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($periodo as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$concurso->id_periodo)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
 									<?php 
 									}
 									?>
 								</select>
+								<?php
+								}else{
+								?>
+								<select name="periodo" id="periodo" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($periodo as $row) {?>
+									<option value="<?php echo $row->id?>" <?php 
+									if($id==0 && $row->id==$periodo_ultimo->id)echo "selected='selected'";
+									if($id>0 && $row->id==$concurso->id_periodo)echo "selected='selected'";
+									?>><?php echo $row->descripcion?></option>
+									<?php 
+									}
+									?>
+								</select>
+								<?php } ?>
 							</div>
 						</div>
 						

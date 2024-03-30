@@ -11,6 +11,7 @@ use App\Models\PeriodoComisione;
 use App\Models\TablaMaestra;
 use App\Models\Comisione;
 use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MovilidadController extends Controller
 {
@@ -37,8 +38,10 @@ class MovilidadController extends Controller
 		$periodoComision = $periodoComision_model->getPeriodoComisionAll();
 		$tipoComision = $tablaMaestra_model->getMaestroByTipo(102);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		
 
-        return view('frontend.movilidad.all',compact('municipalidadIntegrada','comision_movilidades','periodoComision','tipoComision','periodo_ultimo'));
+        return view('frontend.movilidad.all',compact('municipalidadIntegrada','comision_movilidades','periodoComision','tipoComision','periodo_ultimo','periodo_activo'));
     }
 
     public function listar_movilidad_ajax(Request $request){
@@ -66,6 +69,35 @@ class MovilidadController extends Controller
 		echo json_encode($result);
 	
 	}
+	
+	public function ver_movilidad_pdf($id_periodo){
+		
+		$movilidad_model = new ComisionMovilidade;
+		$p[]="";
+		$p[]=$id_periodo;
+        $p[]="";
+        $p[]="";
+		$p[]="";
+		$p[]="1";
+		$p[]="1";
+		$p[]="1000";
+		$movilidad = $movilidad_model->listar_movilidad_ajax($p);
+		
+		$dias = array('L','M','M','J','V','S','D');
+		
+		$pdf = Pdf::loadView('pdf.ver_movilidad',compact('movilidad'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream('ver_movilidad.pdf');
+	
+	}
+	
 
 	public function editar_movilidad($id){
         
@@ -107,8 +139,10 @@ class MovilidadController extends Controller
         $periodoComision = $periodoComision_model->getPeriodoAll();
 		$tipoComision = $tablaMaestra_model->getMaestroByTipo(102);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		
 
-		return view('frontend.movilidad.modal_movilidad_nuevoMovilidad',compact('id','comision_movilidades','region','municipalidadIntegrada','periodoComision','tipoComision','periodo_ultimo'));
+		return view('frontend.movilidad.modal_movilidad_nuevoMovilidad',compact('id','comision_movilidades','region','municipalidadIntegrada','periodoComision','tipoComision','periodo_ultimo','periodo_activo'));
 	
 	}
 
