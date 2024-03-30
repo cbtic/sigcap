@@ -46,9 +46,11 @@ class CoordinadorZonalController extends Controller
 		$estado = $tablaMaestra_model->getMaestroByTipo(119);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		$meses =[1=>'Enero',2=>'Febrero',3=>'Marzo',4=>'Abril',5=>'Mayo',6=>'Junio',7=>'Julio',8=>'Agosto',9=>'Setiembre',
+		10=>'Octubre',11=>'Noviembre',12=>'Diciembre'];
 		
 		
-        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion','periodo_activo'));
+        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion','periodo_activo','meses'));
 
     }
 
@@ -80,6 +82,7 @@ class CoordinadorZonalController extends Controller
 		$coordinadorZonal_model = new CoordinadorZonal;
 		$p[]=$request->periodo;
 		$p[]=$request->agremiado;
+		$p[]=$request->mes;
 		$p[]="";
 		$p[]="";
 		$p[]="";

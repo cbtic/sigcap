@@ -1,5 +1,4 @@
-
-CREATE OR REPLACE FUNCTION public.sp_listar_coordinador_zonal_sesion_paginado(p_periodo character varying, p_agremiado character varying, p_tipo_comision character varying, p_comision character varying, p_estado_sesion character varying, p_estado_aprobado character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_coordinador_zonal_sesion_paginado(p_periodo character varying, p_agremiado character varying, p_mes character varying, p_tipo_comision character varying, p_comision character varying, p_estado_sesion character varying, p_estado_aprobado character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -13,6 +12,7 @@ v_tabla varchar;
 v_where varchar;
 v_count varchar;
 v_col_count varchar;
+v_mes INTEGER;
 --v_perfil varchar;
 
 begin
@@ -37,37 +37,23 @@ begin
 	
 	v_where = ' Where 1=1  and c.denominacion ilike ''%coordinador%''';
 	
-	
-	/*If p_denominacion<>'' Then
-	 v_where:=v_where||'And m.denominacion ilike ''%'||p_denominacion||'%'' ';
-	End If;
-
-	if p_cuenta<>'' Then
-	 v_where:=v_where||'And pc.cuenta ilike ''%'||p_cuenta||'%'' ';
-	End If;
-
-	If p_cuenta<>'' Then
-	 v_where:=v_where||'And pc.cuenta = '''||p_cuenta||''' ';
-	End If;
-
-	If p_monto<>'' Then
-	 v_where:=v_where||'And m.monto = '''||p_monto||''' ';
-	End If;
-
-	If p_moneda<>'' Then
-	 v_where:=v_where||'And m.id_moneda = '''||p_moneda||''' ';
-	End If;
-	If p_numero_cap<>'' Then
-	 v_where:=v_where||'And a.numero_cap = '''||p_numero_cap||''' ';
-	End If;
-*/
 	If p_agremiado<>'' Then
-	 v_where:=v_where||'And p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres ilike ''%'||p_agremiado||'%'' ';
+	 v_where:=v_where||'And t3.apellido_paterno||'' ''||t3.apellido_materno||'' ''||t3.nombres ilike ''%'||p_agremiado||'%'' ';
 	End If;
 
 	if p_periodo<>'' Then
 	 v_where:=v_where||'And cz.id_periodo = '''||p_periodo||''' ';
 	End If;
+
+	IF p_mes <> '' THEN
+    IF length(p_mes) > 2 THEN
+        v_mes := EXTRACT(MONTH FROM p_mes::date);
+    ELSE
+        v_mes := p_mes::int;
+    END IF;
+    
+    v_where := v_where || 'AND EXTRACT(MONTH FROM cs.fecha_ejecucion) = ' || v_mes::text || ' ';
+	END IF;
 
 	If p_estado_aprobado<>'' Then
 	 v_where:=v_where||'And cs.id_estado_aprobacion = '''||p_estado_aprobado||''' ';
@@ -78,7 +64,7 @@ begin
 	End If;
 
 	--EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
-	EXECUTE ('SELECT count(1) from (select '||v_tabla||v_where||')R') INTO v_count;
+	EXECUTE ('SELECT count(1) from (select '||v_campos||v_tabla||v_where||')R') INTO v_count;
 	--select count(*) from ()R
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
@@ -88,7 +74,7 @@ begin
 		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By t0.id Desc;'; 
 	End If;
 	
-	--Raise Notice '%',v_scad;
+	Raise Notice '%',v_scad;
 	Open p_ref For Execute(v_scad);
 	Return p_ref;
 End

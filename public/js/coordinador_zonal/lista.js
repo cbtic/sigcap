@@ -50,6 +50,24 @@ $(document).ready(function () {
 		*/
 	});
 
+	$('#agremiado_2').keypress(function(e){
+		if(e.which == 13) {
+		datatablenew2();
+	}
+	});
+	
+	$('#mes_').keypress(function(e){
+		if(e.which == 13) {
+		datatablenew2();
+	}
+	});
+	
+	$('#id_estado_aprobacion_bus').keypress(function(e){
+		if(e.which == 13) {
+		datatablenew2();
+	}
+	});
+
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
@@ -789,6 +807,7 @@ function datatablenew2(){
 			var id = $('#id').val();
 			var periodo = $('#periodo_2').val();
 			var agremiado = $('#agremiado_2').val();
+			var mes = $('#mes_').val();
 			var estado_aprobado = $('#id_estado_aprobacion_bus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
@@ -798,7 +817,7 @@ function datatablenew2(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,periodo:periodo,agremiado:agremiado,estado_aprobado:estado_aprobado,estado:estado,
+						id:id,periodo:periodo,agremiado:agremiado,mes:mes,estado_aprobado:estado_aprobado,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
