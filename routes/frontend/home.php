@@ -52,6 +52,7 @@ use App\Http\Controllers\Frontend\AsignacionCuentaController;
 use App\Http\Controllers\Frontend\AsientoPlanillaController;
 use App\Http\Controllers\Frontend\ProyectoController;
 use App\Http\Controllers\Frontend\BeneficiarioController;
+use App\Http\Controllers\Frontend\AgremiadoRolesController;
 
 /*
  * Frontend Controllers
@@ -655,4 +656,6 @@ Route::get('certificado/record_proyectos_pdf/{numero_cap}', [CertificadoControll
 Route::get('coordinador_zonal/obtener_coordinador/{id}', [CoordinadorZonalController::class, 'obtener_coordinador'])->name('coordinador_zonal.obtener_coordinador');
 Route::get('coordinador_zonal/modal_coordinadorZonal_editarCoordinadorZonal/{id}', [CoordinadorZonalController::class, 'modal_coordinadorZonal_editarCoordinadorZonal'])->name('coordinador_zonal.modal_coordinadorZonal_editarCoordinadorZonal');
 Route::post('coordinador_zonal/send_coordinador_sesion_editar', [CoordinadorZonalController::class, 'send_coordinador_sesion_editar'])->name('coordinador_zonal.send_coordinador_sesion_editar');
+Route::get('agremiado_rol/consulta_agremiado_rol', [AgremiadoRolesController::class, 'consulta_agremiado_rol'])->name('agremiado_rol.consulta_agremiado_rol');
+Route::post('agremiado_rol/listar_agremiado_rol_ajax', [AgremiadoRolesController::class, 'listar_agremiado_rol_ajax'])->name('agremiado_rol.listar_agremiado_rol_ajax');
 

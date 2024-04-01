@@ -86,7 +86,7 @@
 					</li>
 					@endif
 
-                    @if(Gate::check('Concurso') || Gate::check('Resultado de Concurso') || Gate::check('Consulta de Resultado de Concurso') || Gate::check('Coordinador Zonal') || Gate::check('Comisiones') || Gate::check('Consulta de Comisiones') || Gate::check('Programacion de Sesiones') || Gate::check('Derecho de Revision') || Gate::check('Registro Revisor Urbano') || Gate::check('Computo de Sesiones') || Gate::check('Consulta Derecho de Revision') || Gate::check('Registro Derecho de Revision'))
+                    @if(Gate::check('Concurso') || Gate::check('Resultado de Concurso') || Gate::check('Consulta de Resultado de Concurso') || Gate::check('Coordinador Zonal') || Gate::check('Comisiones') || Gate::check('Consulta de Comisiones') || Gate::check('Programacion de Sesiones') || Gate::check('Derecho de Revision') || Gate::check('Registro Revisor Urbano') || Gate::check('Computo de Sesiones') || Gate::check('Consulta Derecho de Revision') || Gate::check('Registro Derecho de Revision') || Gate::check('Agremiado Rol'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Asuntos Tecnicos</a>
@@ -131,6 +131,9 @@
 								@endcan
 								@can('Registro Derecho de Revision')
 								<a href="/derecho_revision/consulta_derecho_revision_nuevo" class="dropdown-item">Registro Solicitud de Derecho Revisi&oacute;n</a>
+								@endcan
+								@can('Agremiado Rol')
+								<a href="/agremiado_rol/consulta_agremiado_rol" class="dropdown-item">Agremiado Rol</a>
 								@endcan
 						   </div>
 					</li>
