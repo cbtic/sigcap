@@ -533,7 +533,7 @@
                                                                                             -->
                                                                     <td>
                                                                     <input type="text" name="imported[]"  id="imported<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>)" value="<?php if ($trans == 'FN') {
-                                                                                                                            echo 0;
+                                                                                                                            echo number_format($fac['pu'], 2);
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
                                                                                                                                 echo number_format($fac['pu'], 2);

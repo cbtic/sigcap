@@ -851,8 +851,8 @@ class ComprobanteController extends Controller
                        $total   = $request->MonAd;
                    }
                    else{
-                       //$total   = $value['monto'];
-                       $total   ="1";
+                       //$total   = ;
+                       $total   =$value['importe'];
                    }
                    $descuento = $value['descuento'];
                    if ($value['descuento']=='') $descuento = 0;
@@ -1797,8 +1797,8 @@ class ComprobanteController extends Controller
                         $total   = $request->MonAd;
                     }
                     else{
-                        //$total   = $value['monto'];
-                        $total   ="1";
+                        //$total   = $value['importe'];
+                        $total   =$value['importe'];
                     }
                     $descuento = $value['descuento'];
                     if ($value['descuento']=='') $descuento = 0;

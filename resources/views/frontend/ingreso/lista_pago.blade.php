@@ -64,7 +64,7 @@ foreach($pago as $row){?>
 		<input type='hidden' name="id_comprobante_origen" id="id_comprobante_origen" value="<?php echo $row->id_comprobante?>">	
 
 		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">		
-		<input class="btn btn-info pull-rigth" value="NC" type="button" id="btnBoleta" onclick="nc(<?php echo $row->id_comprobante?>)">
+		<input class="btn btn-info pull-rigth" value="NC" type="button" id="btnBoleta" onclick="nc(<?php echo $row->id_comprobante?> )">
 		
 		</form>
 		
