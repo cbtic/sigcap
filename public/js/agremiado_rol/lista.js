@@ -12,6 +12,34 @@ $(document).ready(function () {
 		}
 	});
 
+	$('#numero_cap').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#nombre').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#rol').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#rol_especifico').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
 	$('#codigo').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -64,6 +92,8 @@ function datatablenew(){
 			
 			var numero_cap = $('#numero_cap').val();
 			var agremiado = $('#nombre').val();
+			var rol = $('#rol').val();
+			var rol_especifico = $('#rol_especifico').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -71,7 +101,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						numero_cap:numero_cap,agremiado:agremiado,estado:estado,
+						numero_cap:numero_cap,agremiado:agremiado,rol:rol,rol_especifico:rol_especifico,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {

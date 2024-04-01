@@ -12,6 +12,13 @@ $(document).ready(function () {
 		}
 	});
 
+	$('#anio').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
 	$('#estado').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();

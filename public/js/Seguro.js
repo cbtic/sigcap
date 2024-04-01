@@ -384,7 +384,7 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#nombre').val();
+			var denominacion = $('#denominacion').val();
 			var estado = $('#estado').val();
 			
 			var _token = $('#_token').val();

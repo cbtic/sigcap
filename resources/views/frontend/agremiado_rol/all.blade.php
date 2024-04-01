@@ -125,6 +125,32 @@
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Nombres">
 					</div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select name="rol" id="rol" class="form-control form-control-sm" onchange="">
+                                <option value="">--Selecionar Rol--</option>
+                                <?php
+                                foreach ($rol as $row) {?>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado_rol->rol)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+					</div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select name="rol_especifico" id="rol_especifico" class="form-control form-control-sm" onchange="">
+                                <option value="">--Selecionar Espec&iacute;fico--</option>
+                                <?php
+                                foreach ($rol_especifico as $row) {?>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado_rol->rol_especifico)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>

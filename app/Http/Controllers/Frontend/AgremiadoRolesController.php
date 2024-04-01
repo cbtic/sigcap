@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AgremiadoRole;
+use App\Models\TablaMaestra;
 use Auth;
 
 class AgremiadoRolesController extends Controller
@@ -21,7 +22,13 @@ class AgremiadoRolesController extends Controller
 
     function consulta_agremiado_rol(){
 
-        return view('frontend.agremiado_rol.all');
+		$agremiado_rol = new AgremiadoRole;
+		$tablaMaestra_model = new TablaMaestra;
+
+		$rol_especifico = $tablaMaestra_model->getMaestroByTipo(94);
+		$rol = $tablaMaestra_model->getMaestroByTipo(101);
+
+        return view('frontend.agremiado_rol.all',compact('agremiado_rol','rol','rol_especifico'));
     }
 
     public function listar_agremiado_rol_ajax(Request $request){

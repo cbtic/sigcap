@@ -37,6 +37,15 @@ begin
 	If p_agremiado<>'' Then
 	 v_where:=v_where||'And p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres ilike ''%'||p_agremiado||'%'' ';
 	End If;
+
+	If p_rol<>'' Then
+	 v_where:=v_where||'And ar.rol = '''||p_rol||''' ';
+	End If;
+
+	If p_rol_especifico<>'' Then
+	 v_where:=v_where||'And ar.rol_especifico = '''||p_rol_especifico||''' ';
+	End If;
+
 	If p_estado<>'' Then
 	 v_where:=v_where||'And ar.estado = '''||p_estado||''' ';
 	End If;
