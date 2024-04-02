@@ -917,13 +917,19 @@ function datatablenew2(){
 				},
 				{
 					"mRender": function (data, type, row) {
-						var ruta_informe = "";
+						/*var ruta_informe = "";
 						if(row.ruta_informe!= null){
-							ruta = ruta_informe;
+							ruta_informe = row.ruta_informe;
+							
 							//ruta_informe_ = "<button onclick=<a href="/' + ruta + '" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>";
 							//ruta_informe_ = '<a href="/' + ruta + '" target="_blank" class="btn btn-sm btn-secondary">Ver Imagen</a>';
 						}
-						return ruta_informe;
+						return ruta_informe;*/
+						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+						
+						html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerInforme('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Informe</button>';
+						html += '</div>';
+						return html;
 					},
 					"bSortable": false,
 					"aTargets": [9]
@@ -979,6 +985,22 @@ function fn_ListarBusqueda() {
 function fn_ListarBusqueda_() {
     datatablenew2();
 };
+
+function modalVerInforme(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/coordinador_zonal/modal_informes/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
 
 function editarCoordinadorZonal(id){
 

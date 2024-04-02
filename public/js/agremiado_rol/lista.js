@@ -90,6 +90,7 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
+			var periodo = $('#id_periodo_bus').val();
 			var numero_cap = $('#numero_cap').val();
 			var agremiado = $('#nombre').val();
 			var rol = $('#rol').val();
@@ -101,7 +102,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						numero_cap:numero_cap,agremiado:agremiado,rol:rol,rol_especifico:rol_especifico,estado:estado,
+						periodo:periodo,numero_cap:numero_cap,agremiado:agremiado,rol:rol,rol_especifico:rol_especifico,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -113,7 +114,17 @@ function datatablenew(){
         },
 
         "aoColumnDefs":
-            [	
+            [
+				{
+				"mRender": function (data, type, row) {
+					var periodo = "";
+					if(row.periodo!= null)periodo = row.periodo;
+					return periodo;
+				},
+				"bSortable": false,
+				"aTargets": [0],
+				"className": "dt-center",
+				},
 				{
                 "mRender": function (data, type, row) {
                 	var numero_cap = "";
@@ -121,7 +132,7 @@ function datatablenew(){
 					return numero_cap;
                 },
                 "bSortable": false,
-                "aTargets": [0],
+                "aTargets": [1],
 				"className": "dt-center",
                 },
 				{
@@ -131,7 +142,7 @@ function datatablenew(){
 					return agremiado;
 				},
 				"bSortable": false,
-				"aTargets": [1],
+				"aTargets": [2],
 				"className": "dt-center",
 				},
 				{
@@ -141,7 +152,7 @@ function datatablenew(){
 					return rol;
 				},
 				"bSortable": false,
-				"aTargets": [2],
+				"aTargets": [3],
 				"className": "dt-center",
 				},
 				{
@@ -151,7 +162,7 @@ function datatablenew(){
 					return rol_especifico;
 				},
 				"bSortable": false,
-				"aTargets": [3],
+				"aTargets": [4],
 				"className": "dt-center",
 				},
 				{
@@ -161,7 +172,7 @@ function datatablenew(){
 					return fecha_inicio;
 				},
 				"bSortable": false,
-				"aTargets": [4],
+				"aTargets": [5],
 				"className": "dt-center",
 				},
 				{
@@ -171,7 +182,7 @@ function datatablenew(){
 					return fecha_fin;
 				},
 				"bSortable": false,
-				"aTargets": [5],
+				"aTargets": [6],
 				"className": "dt-center",
 				},
 				{
@@ -186,7 +197,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [6]
+				"aTargets": [7]
 				},
 				/*{
 				"mRender": function (data, type, row) {
