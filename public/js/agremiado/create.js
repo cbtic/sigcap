@@ -205,8 +205,10 @@ function guardar_agremiado(){
     var msg = "";
     
 	var id_regional = $("#id_regional").val();
+	var fecha_colegiado = $("#fecha_colegiado").val();
+	
 	if(id_regional=="")msg += "Debe seleccionar una region<br>";
-	//if(tipo_comision=="")msg += "Debe seleccionar un tipo de comision<br>";
+	if(fecha_colegiado=="")msg += "Debe ingrear una fecha de colegiado<br>";
 	
 	if (msg != "") {
 		bootbox.alert(msg);
