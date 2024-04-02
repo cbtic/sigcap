@@ -14,7 +14,7 @@ class AddColumnsPlanillaDelegadoDetalles extends Migration
     public function up()
     {
         Schema::table('planilla_delegado_detalles', function (Blueprint $table) {
-            //$table->string('cancelado',1)->nullable()->default('0');
+            $table->string('cancelado',1)->nullable()->default('0');
             //$table->string('numero_operacion',50)->nullable();
             
             
