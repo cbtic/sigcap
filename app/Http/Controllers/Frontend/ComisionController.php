@@ -710,6 +710,7 @@ class ComisionController extends Controller
 					$agremiadoRol->rol_especifico = $rol_especifico;
 					$agremiadoRol->fecha_inicio = $concurso->fecha_acreditacion_inicio;
 					$agremiadoRol->fecha_fin = $concurso->fecha_acreditacion_fin;
+					$agremiadoRol->id_periodo = $request->periodo;
 					$agremiadoRol->estado = 1;
 					$agremiadoRol->id_usuario_inserta = $id_user;
 					$agremiadoRol->save();
@@ -741,6 +742,7 @@ class ComisionController extends Controller
 					$agremiadoRol->rol_especifico = $rol_especifico;
 					$agremiadoRol->fecha_inicio = $row2->fecha_acreditacion_inicio;
 					$agremiadoRol->fecha_fin = $row2->fecha_acreditacion_fin;
+					$agremiadoRol->id_periodo = $request->periodo;
 					$agremiadoRol->estado = 1;
 					$agremiadoRol->id_usuario_inserta = $id_user;
 					$agremiadoRol->save();
