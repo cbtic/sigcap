@@ -400,5 +400,14 @@ class CoordinadorZonalController extends Controller
 
         
     }
+
+	public function modal_informes($id){
+		 
+		$coordinador_zonal_model = new CoordinadorZonal;
+        $informe = $coordinador_zonal_model->getInformeById($id);
+		
+        return view('frontend.coordinador_zonal.modal_informes',compact('informe'));
+		
+    }
     
 }

@@ -54,4 +54,14 @@ class CoordinadorZonal extends Model
         return $data[0];
     }
 
+    function getInformeById($id){
+
+        $cad = "select 'Informe' ruta ,cs.ruta_informe from comision_sesion_delegados csd
+        inner join comision_sesiones cs on csd.id_comision_sesion = cs.id
+        where csd.id='".$id."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }

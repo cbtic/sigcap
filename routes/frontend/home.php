@@ -658,4 +658,5 @@ Route::get('coordinador_zonal/modal_coordinadorZonal_editarCoordinadorZonal/{id}
 Route::post('coordinador_zonal/send_coordinador_sesion_editar', [CoordinadorZonalController::class, 'send_coordinador_sesion_editar'])->name('coordinador_zonal.send_coordinador_sesion_editar');
 Route::get('agremiado_rol/consulta_agremiado_rol', [AgremiadoRolesController::class, 'consulta_agremiado_rol'])->name('agremiado_rol.consulta_agremiado_rol');
 Route::post('agremiado_rol/listar_agremiado_rol_ajax', [AgremiadoRolesController::class, 'listar_agremiado_rol_ajax'])->name('agremiado_rol.listar_agremiado_rol_ajax');
+Route::get('coordinador_zonal/modal_informes/{id}', [CoordinadorZonalController::class, 'modal_informes'])->name('coordinador_zonal.modal_informes');
 
