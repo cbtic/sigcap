@@ -844,4 +844,14 @@ class DerechoRevisionController extends Controller
 		
 	}
 
+	public function modal_reintegro($id){
+		 
+		$derechoRevision = new DerechoRevision;
+		$derechoRevision_model = new DerechoRevision;
+        $liquidacion = $derechoRevision_model->getLiquidacionByIdSolicitud($id);
+		
+        return view('frontend.derecho_revision.modal_reintegro',compact('id','derechoRevision'));
+		
+    }
+
 }
