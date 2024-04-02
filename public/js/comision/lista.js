@@ -31,6 +31,10 @@ $(document).ready(function () {
 		//modalComision(0);
 		fn_guardar();
 	});
+	
+	$('#btnCerrarComision').click(function () {
+		fn_cerrar_comision();
+	});
 
 	$('#btnNuevoComision').click(function () {
 		var tipo_comision = $("#tipo_comision").val();
@@ -933,4 +937,21 @@ function modalAsignarDelegado(id){
 
 }
 
+function fn_cerrar_comision(){
+
+	var periodo = $("#frmAfiliacion #periodo").val();
+	var tipo_comision=$("#tipo_comision").val();
+	
+    $.ajax({
+			url: "/comision/send_asignar_agremiado_rol",
+            type: "POST",
+            data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
+            success: function (result) {  
+				cargarMunicipalidades();
+				cargarMunicipalidadesIntegradas();
+				cargarComisiones();
+				$('#openOverlayOpc').modal('hide');
+            }
+    });
+}
 
