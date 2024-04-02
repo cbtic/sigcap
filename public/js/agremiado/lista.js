@@ -14,6 +14,11 @@ $(document).ready(function () {
 	$('#btnSuspension').click(function () {
 		modal_suspension(0);
 	});
+
+	$('#btnDescargar').on('click', function () {
+		DescargarArchivos()
+
+	});
 		
 	datatablenew();
 	/*	
@@ -661,5 +666,31 @@ function fn_eliminar_empresa(id,estado){
 				datatablenew();
             }
     });
+}
+
+function DescargarArchivos(){
+		
+	var id_regional = $('#id_regional_bus').val();
+	var numero_cap = $('#numero_cap_bus').val();
+	var numero_documento = $('#numero_documento_bus').val();
+	var agremiado = $('#agremiado_bus').val();
+	var fecha_inicio = $('#fecha_inicio_bus').val();
+	var fecha_fin = $('#fecha_fin_bus').val();
+	var id_situacion = $('#id_situacion_bus').val();
+	//var id_agremiado = 0;
+	//var id_regional = 0;
+	
+	if (id_regional == "")id_regional = 0;
+	if (numero_cap == "")numero_cap = 0;
+	if (numero_documento == "")numero_documento = 0;
+	if (agremiado == "")agremiado = 0;
+	if (fecha_inicio == "")fecha_inicio = 0;
+	if (fecha_fin == "")fecha_fin = 0;
+	if (id_situacion == "")id_situacion = 0;
+	//if (campo == "")campo = 0;
+	//if (orden == "")orden = 0;
+	
+	location.href = '/agremiado/exportar_listar_agremiado/' + id_regional + '/' + numero_cap + '/' + numero_documento + '/' + agremiado + '/' + fecha_inicio + '/' + fecha_fin + '/' + id_situacion;
+	
 }
 

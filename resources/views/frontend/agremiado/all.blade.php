@@ -191,6 +191,9 @@
                         <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 							
 						<a class="btn btn-success" href="/agremiado" style="margin-left:15px">Nuevo</a>
+
+                        <input class="btn btn-sm btn-secondary float-rigth" value="Descargar" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
+														
 	
 					</div>
 				</div>

@@ -95,7 +95,6 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 	
-	
 	$('#fecha_colegiado').datepicker({
         autoclose: true,
 		format: 'dd-mm-yyyy',
@@ -3786,4 +3785,6 @@ function validarSituacion(){
 	
 
 }
+
+
 
