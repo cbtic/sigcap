@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnsPlanillaDelegadoDetalles extends Migration
+class AddCanceladoToPlanillaDelegadoDetallesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,8 +16,7 @@ class AddColumnsPlanillaDelegadoDetalles extends Migration
         Schema::table('planilla_delegado_detalles', function (Blueprint $table) {
             //$table->string('cancelado',1)->nullable()->default('0');
             //$table->string('numero_operacion',50)->nullable();
-            
-            
+
         });
     }
 
@@ -28,6 +27,8 @@ class AddColumnsPlanillaDelegadoDetalles extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('planilla_delegado_detalles', function (Blueprint $table) {
+            //
+        });
     }
 }

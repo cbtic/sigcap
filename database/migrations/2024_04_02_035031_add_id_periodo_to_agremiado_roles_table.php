@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnsPlanillaDelegadoDetalles extends Migration
+class AddIdPeriodoToAgremiadoRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class AddColumnsPlanillaDelegadoDetalles extends Migration
      */
     public function up()
     {
-        Schema::table('planilla_delegado_detalles', function (Blueprint $table) {
-            //$table->string('cancelado',1)->nullable()->default('0');
-            //$table->string('numero_operacion',50)->nullable();
-            
-            
+        Schema::table('agremiado_roles', function (Blueprint $table) {
+            $table->bigInteger('id_periodo')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ class AddColumnsPlanillaDelegadoDetalles extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('agremiado_roles', function (Blueprint $table) {
+            //
+        });
     }
 }
