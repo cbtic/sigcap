@@ -378,7 +378,7 @@ function AddFila(){
 
 	  var id_n = '<input type="hidden" name="id_n" id="'+ i +'" value="">'
 	  var etiqueta_dni_beneficiario = '<label class="form-control-sm form-control-sm">DNI</label>'
-    var dni_beneficiario = '<input type="text" name="dni_beneficiario[]" id="dni_beneficiario' + i + '" value="" placeholder="" class="form-control form-control-sm" onchange ="obtener_profesional_beneficiario('+i+')">';
+    var dni_beneficiario = '<input type="text" name="dni_beneficiario[]" id="dni_beneficiario' + i + '" value="" placeholder="" class="form-control form-control-sm" onchange ="obtener_profesional_('+i+')">';
     var etiqueta_apellidoP_beneficiario = '<label class="form-control-sm form-control-sm">Apellido Paterno</label>'
 	  var apellidoP_beneficiario = '<input id="apellidoP_beneficiario' + i + '" name="apellidoP_beneficiario[]" class="form-control form-control-sm" value="" type="text" readonly>'
     var etiqueta_apellidoM_beneficiario = '<label class="form-control-sm form-control-sm">Apellido Materno</label>'
@@ -454,9 +454,11 @@ function obtener_empresa(){
 }
 
 
-function obtener_profesional_(){
+function obtener_profesional_($i){
 	
-  var numero_documento_ = $('#dni').val();
+  var numero_ = $i;
+
+  var numero_documento_ = $('#dni_beneficiario'+ numero_).val();
   //console.log(numero_documento);
   $.ajax({
       url: '/persona/obtenerPersona/'+numero_documento_,
@@ -475,8 +477,8 @@ function obtener_profesional_(){
             confirmButtonText: 'Si, Crear!'
           }).then((result) => {
             if (result.value) {
-              var numero_documento_ = $('#dni').val();
-              modal_personaNuevoBeneficiario(numero_documento_);
+              var numero_documento_ = $('#dni_beneficiario'+ numero_).val();
+              modal_personaNuevoBeneficiario(numero_documento_,numero_);
               /*$('#frmEmpresaBeneficiario').modal([
                 backdrop:'static',
                 keyboard: false
@@ -491,9 +493,9 @@ function obtener_profesional_(){
       
 				}else{
 
-					$('#apellido_paterno').val(result.persona.apellido_paterno);
-          $('#apellido_materno').val(result.persona.apellido_materno);
-          $('#nombres').val(result.persona.nombres);
+					$('#apellidoP_beneficiario'+numero_).val(result.persona.apellido_paterno);
+          $('#apellidoM_beneficiario'+numero_).val(result.persona.apellido_materno);
+          $('#nombres_beneficiario'+numero_).val(result.persona.nombres);
 				}
 		}
     });
@@ -504,7 +506,7 @@ function obtener_profesional_beneficiario($i){
 	
   var numero_ = $i;
 
-  var numero_documento_ = $('#dni_beneficiario' + numero_).val();
+  var numero_documento_ = $('#dni_beneficiario'+ numero_).val();
 
   //var numero_documento_ = $('#dni').val();
   //console.log(numero_documento);
@@ -525,7 +527,7 @@ function obtener_profesional_beneficiario($i){
             confirmButtonText: 'Si, Crear!'
           }).then((result) => {
             if (result.value) {
-              var numero_documento_ = $('#dni').val();
+              var numero_documento_ = $('#dni_beneficiario'+ numero_).val();
               modal_personaNuevoBeneficiario(numero_documento_);
               /*$('#frmEmpresaBeneficiario').modal([
                 backdrop:'static',
@@ -544,7 +546,7 @@ function obtener_profesional_beneficiario($i){
 					$('#apellidoP_beneficiario'+numero_).val(result.persona.apellido_paterno);
           $('#apellidoM_beneficiario'+numero_).val(result.persona.apellido_materno);
           $('#nombres_beneficiario'+numero_).val(result.persona.nombres);
-          $('#estado_beneficiario'+numero_).val(result.persona.nombres);
+          //$('#estado_beneficiario'+numero_).val(result.persona.nombres);
 				}
 		}
     });
@@ -653,10 +655,16 @@ function obtenerPersona(){
     
   }
 
-function modal_personaNuevoBeneficiario(){
+function modal_personaNuevoBeneficiario($dni,$i){
 
-  var numero_documento_ = $('#dni').val();
+  var numero_ = $i;
+  
+  var dni = $('#dni_beneficiario'+ numero_).val();
 
+  $('#dni_').val(dni);
+
+  
+  //alert(dni);exit();
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
@@ -743,6 +751,7 @@ function modal_personaNuevoBeneficiario(){
                       <div class="form-group">
                         <label class="control-label form-control-sm">N&uacute;mero Beneficiarios</label>
                         <input id="numero_beneficiario" name="numero_beneficiario" class="form-control form-control-sm" value="<?php //echo $agremiado->id_situacion?>" type="text" onChange="AddFila()">
+                        <input type="hidden" id="dni_" name="dni_" class="form-control form-control-sm" value="<?php //echo $agremiado->id_situacion?>" type="text">
                       </div>
                     </div>
                   </div>
