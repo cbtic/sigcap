@@ -673,13 +673,22 @@ class CertificadoController extends Controller
 		$agremiado_ = Agremiado::where("numero_cap",$nombre)->where("estado","1")->first();
 		$mes_minimo_=$datos_model->getMinMes($agremiado_->id,$año);
 		$mes_maximo_=$datos_model->getMaxMes($agremiado_->id,$año);
-
+		//var_dump($agremiado_->id);exit;
 		$mes_minimo = $mes_minimo_[0]->min;
 		$mes_maximo = $mes_maximo_[0]->max;
 
 		
-		$mes_minimoEnLetras = $this->mesesALetras($mes_minimo); 
-		$mes_maximoEnLetras = $this->mesesALetras($mes_maximo); 
+		if($mes_minimo == null)
+		{
+			session()->flash('mensaje', 'No hay datos disponibles');
+		}else {
+			$mes_minimoEnLetras = $this->mesesALetras($mes_minimo); 
+
+			$mes_maximoEnLetras = $this->mesesALetras($mes_maximo); 
+			
+		}
+		//var_dump($mes_maximoEnLetras);exit;
+		
 
 		if ($trato==3) {
 			$tratodesc="EL ARQUITECTO ";
@@ -713,7 +722,16 @@ class CertificadoController extends Controller
 		
 		$formattedDate_colegiado = $carbonDate_colegiado->timezone('America/Lima')->formatLocalized(' %d de %B %Y');
 		
-		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita','mes_minimoEnLetras','mes_maximoEnLetras','año'));
+		$dia = $carbonDate->format('d');
+		$mes = ltrim($carbonDate->format('m'), '0');
+		$anio = $carbonDate->format('Y');
+
+		
+		$mesEnLetras = $this->mesesALetras($mes);
+
+		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
+
+		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita','mes_minimoEnLetras','mes_maximoEnLetras','año','fecha_detallada'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -803,6 +821,30 @@ class CertificadoController extends Controller
 
 		return $pdf->stream('record_proyectos_pdf.pdf');
 	
+	}
+	
+	public function validez_constancia($id){
+		
+		$sw = true;
+		$certificado_model = new Certificado;
+		$datos_model = new Certificado;
+		$tipo_certificado = $certificado_model->datos_agremiado_certificado($id);
+		$datos=$datos_model->datos_agremiado_certificado($id);
+		$nombre=$datos[0]->numero_cap;
+		$año = carbon::now()->year;
+		$agremiado_ = Agremiado::where("numero_cap",$nombre)->where("estado","1")->first();
+		$mes_minimo_=$datos_model->getMinMes($agremiado_->id,$año);
+		$mes_maximo_=$datos_model->getMaxMes($agremiado_->id,$año);
+		
+		if($mes_minimo_==null)
+		{
+			$sw = false;
+		}if($mes_maximo_==null)
+		{
+			$sw = false;
+		}
+		echo json_encode($tipo_certificado);
+		
 	}
 }
 
