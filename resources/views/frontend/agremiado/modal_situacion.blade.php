@@ -272,7 +272,7 @@ function fn_save_situacion(){
 	
 	if(id_pais_destino == "0" || id_pais_destino == "")msg+="Debe seleccionar un Pa&iacute;s Destion<br>";
 	if(fecha_inicio == "")msg += "Debe ingresar una fecha de inicio <br>";
-	if(fecha_fin == "")msg += "Debe ingresar una fecha de fin <br>";
+	//if(fecha_fin == "")msg += "Debe ingresar una fecha de fin <br>";
 	if(ruta_documento == "")msg += "Debe ingresar una ruta de documento <br>";
 	
     if(msg!=""){

@@ -596,6 +596,9 @@ class AgremiadoController extends Controller
 		$agremiadoSituacion->id_usuario_inserta = 1;
 		$agremiadoSituacion->save();
 		
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_extranjero($request->id_agremiado,$request->fecha_inicio,$request->fecha_fin);
+		
     }
 	
 	public function send_agremiado_traslado(Request $request){
@@ -615,6 +618,14 @@ class AgremiadoController extends Controller
 		$agremiadoTraslado->estado = 1;
 		$agremiadoTraslado->id_usuario_inserta = 1;
 		$agremiadoTraslado->save();
+		
+		$agremiado = Agremiado::find($request->id_agremiado);
+		$agremiado->id_regional = $request->id_region;
+		$agremiado->id_ubicacion = 335;
+		$agremiado->save();
+		
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_traslado($request->id_agremiado,$request->fecha_inicio);
 		
     }
 	
