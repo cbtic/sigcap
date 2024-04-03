@@ -57,7 +57,8 @@ foreach($pago as $row){?>
 		</div>
 	</td>
 	<td class="text-left">
-	
+		@hasanyrole('Administrator|Caja')
+                                        
 		<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmPagos" name="frmPagos" autocomplete="off">		
 		
 		<input type='hidden' name="id_comprobante" id="id_comprobante" value="">		
@@ -67,9 +68,11 @@ foreach($pago as $row){?>
 		<input class="btn btn-info pull-rigth" value="NC" type="button" id="btnBoleta" onclick="nc(<?php echo $row->id_comprobante?> )">
 		
 		</form>
-		
+		@endhasanyrole
 	</td>
 	<td class="text-left">
+
+		@hasanyrole('Administrator|Caja')
 	    <form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nd_edita')}}" id="frmPagos_nd" name="frmPagos_nd" autocomplete="off">		
 		<input type='hidden' name="id_comprobante" id="id_comprobante" value="">		
 		<input type='hidden' name="id_comprobante_origen" id="id_comprobante_origen" value="<?php echo $row->id_comprobante?>">	
@@ -78,6 +81,7 @@ foreach($pago as $row){?>
 		<input class="btn btn-info pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>)">
 		
 		</form>
+		@endhasanyrole
 	</td>
 </tr>
 <?php 	
