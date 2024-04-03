@@ -859,7 +859,10 @@ class DerechoRevisionController extends Controller
 		$distrito = $ubigeo_model->obtenerDistrito($ubigeo_id->id_departamento,$ubigeo_id->id_provincia,$ubigeo_id->id_distrito);
 		$tipo_liquidacion = $tablaMaestra_model->getMaestroByTipo(27);
 		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
-		$parametro = $parametro_model->getParametroAll();
+		$anio_actual = Carbon::now()->year;
+		$parametro = $parametro_model->getParametroAnio($anio_actual);
+
+		//var_dump($parametro);exit;
 
         return view('frontend.derecho_revision.modal_reintegro',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro'));
 		

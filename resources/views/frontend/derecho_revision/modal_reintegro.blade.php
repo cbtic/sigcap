@@ -415,7 +415,7 @@ function fn_save_requisito(){
                     <div class="col-lg-5">
                         <div class="form-group">
                             <label class="control-label form-control-sm">Tipo Liquidaci&oacute;n 2</label>
-                            <select name="tipo_liquidacion1" id="tipo_liquidacion1" class="form-control form-control-sm">
+                            <select name="tipo_liquidacion2" id="tipo_liquidacion2" class="form-control form-control-sm">
                                 <option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($tipo_liquidacion as $row) {
@@ -450,12 +450,14 @@ function fn_save_requisito(){
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">M&iacute;mino</label>
                                 <?php
-                                $valor_minimo_edificaciones = $parametro[2]->valor_minimo_edificaciones;
-                                $uit_edificaciones = $parametro[2]->valor_uit;
+                                
+                                $valor_minimo_edificaciones = $parametro[0]->valor_minimo_edificaciones;
+                                $uit_edificaciones = $parametro[0]->valor_uit;
                                 $sub_total_minimo = $valor_minimo_edificaciones * $uit_edificaciones;
-                                $igv_valor = $parametro[2]->igv;
+                                $igv_valor = $parametro[0]->igv;
                                 $igv_minimo	= $igv_valor * $sub_total_minimo;
                                 $total_minimo = $sub_total_minimo + $igv_minimo;
+                                //var_dump($total_minimo);exit;
                                 ?>
                                 <input id="minimo" name="minimo" on class="form-control form-control-sm"  value="<?php echo $total_minimo?>" type="text" readonly='readonly'>
                             </div>
@@ -476,7 +478,7 @@ function fn_save_requisito(){
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-12">
                                 <label class="control-label form-control-sm">Observaci&oacute;n</label>
-                                <input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                                <input id="observacion" name="observacion" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                     </div>
@@ -494,21 +496,26 @@ function fn_save_requisito(){
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">IGV</label>
-                                <input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                                <input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">IGV</label>
-                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                                <?php
+                                $valor_obra = $liquidacion[0]->valor_obra;
+                                $igv_valor = $parametro[0]->igv;
+                                $igv_ = $valor_obra * $igv_valor;
+                                ?>
+                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php echo $igv_?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Total</label>
-                                <input id="total" name="total" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                                <input id="total" name="total" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->valor_obra?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Total a Pagar</label>
-                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text">
+                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->valor_obra?>" type="text">
                             </div>
                         </div>
                     </div>
