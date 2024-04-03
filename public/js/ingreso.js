@@ -351,11 +351,11 @@ function calcular_total(obj){
 	
 	$(".mov:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
-		val_total =val_total.replace(',','');
+		val_total =val_total.toString().replace(',','');
 		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
-		val_sub_total =val_sub_total.replace(',','');
+		val_sub_total =val_sub_total.toString().replace(',','');
 		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
-		val_igv =val_igv.replace(',','');
+		val_igv =val_igv.toString().replace(',','');
 
 		//var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
 		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
@@ -439,7 +439,7 @@ function calcular_total_otros(obj){
 
 		var val_precio = $(this).parent().parent().parent().find('.val_precio').html();
 
-		val_precio =val_precio.replace(',','');
+		val_precio =val_precio.toString().replace(',','');
 
 		var val_cantidad = $(this).parent().parent().parent().find('#cantidad').val();
 
@@ -458,9 +458,13 @@ function calcular_total_otros(obj){
 		var val_sub_total = (val_total/1.18);
 		var val_igv = (val_total* 0.18);
 		$(this).parent().parent().parent().find('.val_sub_total').html(val_sub_total);
-		val_sub_total =val_sub_total.replace(',','');
+		
+		//alert(val_sub_total.toString().replace(".",','));
+		
+		val_sub_total =val_sub_total.toString().replace(/(,)/,'');
+
 		$(this).parent().parent().parent().find('.val_igv').html(val_igv);
-		val_igv =val_igv.replace(',','');
+		val_igv =val_igv.toString().replace(',','');
 
 		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
 		var val_descuento =$('#DescuentoPP').val("");
@@ -482,6 +486,20 @@ function calcular_total_otros(obj){
 		//comprobante_detalle[0][igv]
 
 	});
+
+	if (!String.prototype.includes) {
+		String.prototype.includes = function (search, start) {
+		  "use strict";
+	  
+		  if (search instanceof RegExp) {
+			throw TypeError("first argument must not be a RegExp");
+		  }
+		  if (start === undefined) {
+			start = 0;
+		  }
+		  return this.indexOf(search, start) !== -1;
+		};
+	  }
 
 	descuento = 0;
 	//alert(total);
@@ -511,7 +529,7 @@ function calcular_total_(obj){
 	
 	$(".mov_:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
-		val_total =val_total.replace(',','');
+		val_total =val_total.toString().replace(',','');
 		total += Number(val_total);
 	});
 	
@@ -538,9 +556,9 @@ function calcular_dudoso(obj){
 	
 	$(".mov_dudoso:checked").each(function (){
 		var val_total = $(this).parent().parent().parent().find('.val_total_dudoso').html();
-		val_total =val_total.replace(',','');
+		val_total =val_total.toString().replace(',','');
 		var val_descuento = $(this).parent().parent().parent().find('.val_descuento_dudoso').html();
-		val_descuento =val_descuento.replace(',','');
+		val_descuento =val_descuento.toString().replace(',','');
 		
 		if(val_descuento!=""){
 			valor_venta_bruto = val_total/1.18;
@@ -1459,11 +1477,11 @@ function modal_fraccionamiento(){
 			//calcular_total();
 
 			val_total = $(this).parent().parent().parent().find('.val_total').html();
-			val_total =val_total.replace(',','');
+			val_total =val_total.toString().replace(',','');
 			val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
-			val_sub_total =val_sub_total.replace(',','');
+			val_sub_total =val_sub_total.toString().replace(',','');
 			val_igv = $(this).parent().parent().parent().find('.val_igv').html();
-			val_igv =val_igv.replace(',','');
+			val_igv =val_igv.toString().replace(',','');
 
 			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
 
@@ -1649,11 +1667,11 @@ function AplicarDescuento(){
 			//calcular_total();
 
 			var val_total = $(this).parent().parent().parent().find('.val_total').html();
-			val_total =val_total.replace(',','');
+			val_total =val_total.toString().replace(',','');
 			var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
-			val_sub_total =val_sub_total.replace(',','');
+			val_sub_total =val_sub_total.toString().replace(',','');
 			var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
-			val_igv =val_igv.replace(',','');
+			val_igv =val_igv.toString().replace(',','');
 
 			$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
 			$(this).parent().parent().parent().find('.chek').val("1");
@@ -1753,11 +1771,11 @@ function select_all(){
 		
 
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
-		val_total =val_total.replace(',','');
+		val_total =val_total.toString().replace(',','');
 		var val_stotal = $(this).parent().parent().parent().find('.val_sub_total').html();
-		val_stotal =val_stotal.replace(',','');
+		val_stotal =val_stotal.toString().replace(',','');
 		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
-		val_igv =val_igv.replace(',','');
+		val_igv =val_igv.toString().replace(',','');
 
 		$(this).parent().parent().parent().prev().find(".mov").prop('disabled',false);
 		$(this).parent().parent().parent().find('.chek').val("1");
@@ -1852,11 +1870,11 @@ function total_deuda(){
 	$(".mov").each(function (){
 		
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
-		val_total =val_total.replace(',','');
+		val_total =val_total.toString().replace(',','');
 		var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
-		val_sub_total =val_sub_total.replace(',','');
+		val_sub_total =val_sub_total.toString().replace(',','');
 		var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
-		val_igv =val_igv.replace(',','');
+		val_igv =val_igv.toString().replace(',','');
 
 		total += Number(val_total);
 		stotal += Number(val_sub_total);
