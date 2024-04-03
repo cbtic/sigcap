@@ -135,7 +135,7 @@ $(document).ready(function() {
             <p>Validez por <?php echo $datos[0]->dias_validez;?>  (<?php echo $numeroEnLetras;?> ) d&iacute;as.</p>
             <p></p>
             <p></p>
-            <p  style="text-align:right">Lima, <?php echo $dia .' '. $mesEnLetras .' '. $anio;?></p>
+            <p  style="text-align:right">Lima, <?php echo $fecha_detallada;?></p>
         </div>
     </div>
     <!-- /.content-wrapper -->
