@@ -1728,7 +1728,7 @@ class AgremiadoController extends Controller
 		$p[]=$fecha_fin;
 		$p[]=$id_situacion;
 		$p[]=1;
-		$p[]=10000;
+		$p[]=25000;
 		$data = $agremiado_model->listar_agremiado_ajax($p);
 	
 		$variable = [];
