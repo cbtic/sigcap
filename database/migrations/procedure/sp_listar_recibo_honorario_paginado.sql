@@ -18,7 +18,7 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 
-	v_campos=' pdd.id, pc.descripcion periodo, pd.periodo anio, pd.mes , a.numero_cap, tm.denominacion situacion, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres agremiado, c.denominacion municipalidad, pdd.numero_comprobante, pdd.fecha_comprobante, pd.estado ';
+	v_campos=' pdd.id, pc.descripcion periodo, pd.periodo anio, pd.mes , a.numero_cap, tm.denominacion situacion, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres agremiado, c.denominacion municipalidad, pdd.numero_comprobante, pdd.fecha_comprobante, pdd.numero_operacion, pd.estado ';
 
 	v_tabla=' from planilla_delegados pd 
 	inner join planilla_delegado_detalles pdd on pdd.id_planilla = pd.id

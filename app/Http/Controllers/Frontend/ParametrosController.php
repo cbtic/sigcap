@@ -27,7 +27,7 @@ class ParametrosController extends Controller
     public function listar_parametro_ajax(Request $request){
 	
 		$parametro_model = new Parametro;
-		$p[]="";//$request->nombre;
+		$p[]=$request->anio;
         $p[]="";
         $p[]="";
         $p[]="";

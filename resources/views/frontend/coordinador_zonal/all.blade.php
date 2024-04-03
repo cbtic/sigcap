@@ -407,19 +407,20 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
-                            <input class="form-control form-control-sm" id="agremiado_2" name="agremiado_2" placeholder="Nombres">
-                        </div>
-
                         <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
                             <select name="mes_" id="mes_" class="form-control form-control-sm">
                                 <option value="">--Seleccionar Mes--</option>
                                 <?php
                                 foreach ($meses as $numero => $nombre) {
-                                    echo "<option value='{$numero}'>{$nombre}</option>";
+                                    $selected = ($numero == $mes_actual) ? 'selected="selected"' : '';
+                                    echo "<option value='{$numero}' {$selected}>{$nombre}</option>";
                                 }
                                 ?> 
                             </select>
+                        </div>
+
+                        <div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
+                            <input class="form-control form-control-sm" id="agremiado_2" name="agremiado_2" placeholder="Nombres">
                         </div>
                         
                         <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">

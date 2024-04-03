@@ -48,9 +48,10 @@ class CoordinadorZonalController extends Controller
 		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		$meses =[1=>'Enero',2=>'Febrero',3=>'Marzo',4=>'Abril',5=>'Mayo',6=>'Junio',7=>'Julio',8=>'Agosto',9=>'Setiembre',
 		10=>'Octubre',11=>'Noviembre',12=>'Diciembre'];
+		$mes_actual = date('m');
 		
 		
-        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion','periodo_activo','meses'));
+        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion','periodo_activo','meses','mes_actual'));
 
     }
 
@@ -398,6 +399,15 @@ class CoordinadorZonalController extends Controller
 		$comisionSesionDelegado->save();
 
         
+    }
+
+	public function modal_informes($id){
+		 
+		$coordinador_zonal_model = new CoordinadorZonal;
+        $informe = $coordinador_zonal_model->getInformeById($id);
+		
+        return view('frontend.coordinador_zonal.modal_informes',compact('informe'));
+		
     }
     
 }

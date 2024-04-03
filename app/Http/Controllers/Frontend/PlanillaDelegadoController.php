@@ -254,7 +254,6 @@ class PlanillaDelegadoController extends Controller
 	public function send_recibo_honorario(Request $request){
 		
 		$id_user = Auth::user()->id;
-
 		/*if($request->id == 0){
 			$planillaDelegadoDetalle = new PlanillaDelegadoDetalle;
 		}else{*/
@@ -264,6 +263,7 @@ class PlanillaDelegadoController extends Controller
 		$planillaDelegadoDetalle->tipo_comprobante = $request->tipo_comprobante;
 		$planillaDelegadoDetalle->numero_comprobante = $request->numero_comprobante;
 		$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
+		$planillaDelegadoDetalle->numero_operacion = $request->numero_operacion;
 		$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
 		$planillaDelegadoDetalle->save();
 		

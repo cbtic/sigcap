@@ -164,5 +164,29 @@ where p.id_solicitud=".$id;
         $data = DB::select($cad);
         return $data;
     }
+
+    public function getReintegroByIdSolicitud($id){
+
+        $cad = "select p.nombre, e.razon_social, s.valor_obra, s.area_total, pre.area_techada, p.id_ubigeo, tm.denominacion tipo, p.direccion direccion_proyecto, a.numero_cap, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres agremiado, tm2.denominacion ubicacion, a.numero_regional, a.direccion, l.denominacion as local, r.denominacion regional, tm3.denominacion autoriza, tm4.denominacion actividad_gremial, tm5.denominacion situacion, m.denominacion municipalidad, s.valor_obra from solicitudes s 
+        left join proyectos p on s.id_proyecto = p.id
+        left join propietarios pr on pr.id_solicitud = s.id
+        left join empresas e on pr.id_empresa = e.id
+        left join presupuestos pre on pre.id_solicitud = s.id 
+        left join tabla_maestras tm on p.id_tipo_direccion = tm.codigo::int And tm.tipo ='35'
+        left join proyectistas pro on pro.id_solicitud = s.id 
+        left join agremiados a on pro.id_agremiado = a.id 
+        left join personas pe on a.id_persona = pe.id
+        left join tabla_maestras tm2 on a.id_ubicacion = tm2.codigo::int And tm2.tipo ='63'
+        left join locales l on a.id_local = l.id
+        left join regiones r on a.id_regional = r.id 
+        left join tabla_maestras tm3 on a.id_autoriza_tramite = tm3.codigo::int And tm3.tipo ='45'
+        left join tabla_maestras tm4 on a.id_actividad_gremial = tm4.codigo::int And tm4.tipo ='46'
+        left join tabla_maestras tm5 on a.id_situacion = tm5.codigo::int And tm5.tipo ='14'
+        left join municipalidades m on s.id_municipalidad = m.id
+        where s.id=".$id;
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
     
 }

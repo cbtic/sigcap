@@ -10,7 +10,7 @@ class AgremiadoRole extends Model
 {
     use HasFactory;
 
-    public function listar_agremiado_roles_ajax($p){
+    public function listar_agremiado_rol_ajax($p){
 
         return $this->readFuntionPostgres('sp_listar_agremiado_roles_paginado',$p);
 

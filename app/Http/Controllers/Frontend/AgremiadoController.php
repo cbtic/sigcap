@@ -24,6 +24,9 @@ use App\Models\Locale;
 use App\Models\Suspensione;
 use Carbon\Carbon;
 use Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
+use stdClass;
 
 class AgremiadoController extends Controller
 {
@@ -338,7 +341,9 @@ class AgremiadoController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
-		return view('frontend.agremiado.all',compact('region','situacion_cliente'));
+		$categoria_cliente = $tablaMaestra_model->getMaestroByTipo(18);
+		
+		return view('frontend.agremiado.all',compact('region','situacion_cliente','categoria_cliente'));
 		
 	}
 	
@@ -352,6 +357,7 @@ class AgremiadoController extends Controller
 		$p[]=$request->fecha_inicio;
 		$p[]=$request->fecha_fin;
 		$p[]=$request->id_situacion;
+		$p[]=$request->id_categoria;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $agremiado_model->listar_agremiado_ajax($p);
@@ -593,6 +599,15 @@ class AgremiadoController extends Controller
 		$agremiadoSituacion->id_usuario_inserta = 1;
 		$agremiadoSituacion->save();
 		
+		$agremiado = Agremiado::find($request->id_agremiado);
+		$agremiado->id_ubicacion = 336;
+		$agremiado->save();
+		
+		$fecha_fin = "";
+		if(isset($request->fecha_fin) && $request->fecha_fin!="")$fecha_fin = $request->fecha_fin;
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_extranjero($request->id_agremiado,$request->fecha_inicio,$fecha_fin);
+		
     }
 	
 	public function send_agremiado_traslado(Request $request){
@@ -612,6 +627,14 @@ class AgremiadoController extends Controller
 		$agremiadoTraslado->estado = 1;
 		$agremiadoTraslado->id_usuario_inserta = 1;
 		$agremiadoTraslado->save();
+		
+		$agremiado = Agremiado::find($request->id_agremiado);
+		$agremiado->id_regional = $request->id_region;
+		$agremiado->id_ubicacion = 335;
+		$agremiado->save();
+		
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_traslado($request->id_agremiado,$request->fecha_inicio);
 		
     }
 	
@@ -1694,6 +1717,60 @@ class AgremiadoController extends Controller
         return view('frontend.agremiado.lista_suspension',compact('suspension_lista'));
 
     }
+
+	public function exportar_listar_agremiado($id_regional, $numero_cap, $numero_documento, $agremiado, $fecha_inicio, $fecha_fin, $id_situacion) {
+		
+		if($id_regional==0)$id_regional = "";
+		if($numero_cap==0)$numero_cap = "";
+		if($numero_documento==0)$numero_documento = "";
+		if($agremiado==0)$agremiado = "";
+		if($fecha_inicio==0)$fecha_inicio = "";
+		if($fecha_fin==0)$fecha_fin = "";
+		if($id_situacion==0)$id_situacion = "";
+	
+		$agremiado_model = new Agremiado;
+		$p[]=$id_regional;
+		$p[]=$numero_cap;
+		$p[]=$numero_documento;
+		$p[]=$agremiado;
+		$p[]=$fecha_inicio;
+		$p[]=$fecha_fin;
+		$p[]=$id_situacion;
+		$p[]=1;
+		$p[]=25000;
+		$data = $agremiado_model->listar_agremiado_ajax($p);
+	
+		$variable = [];
+		$n = 1;
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		array_push($variable, array("N","Tipo Documento","Numero Documento","Numero CAP","Regional", "Fecha Inicio", "Agremiado", "Fecha Nacimiento", "Situacion"));
+		
+		foreach ($data as $r) {
+			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+			array_push($variable, array($n++,$r->tipo_documento, $r->numero_documento, $r->numero_cap,$r->region,$r->fecha_colegiado, $r->agremiado, $r->fecha_nacimiento, $r->situacion));
+		}
+		
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'lista_agremiados.xlsx');
+		
+    }
 			
+}
+
+class InvoicesExport implements FromArray
+{
+	protected $invoices;
+
+	public function __construct(array $invoices)
+	{
+		$this->invoices = $invoices;
+	}
+
+	public function array(): array
+	{
+		return $this->invoices;
+	}
 }
 

@@ -49,6 +49,10 @@ begin
 	 v_where:=v_where||'And t2.id_situacion = '''||p_id_situacion||''' ';
 	End If;
 */
+	If p_anio<>'' Then
+	 v_where:=v_where||'And p.anio = '''||p_anio||''' ';
+	End If;
+
 	If p_estado<>'' Then
 	 v_where:=v_where||'And p.estado = '''||p_estado||''' ';
 	End If;

@@ -5,6 +5,20 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
+	$('#denominacion').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#numero_cap').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
 	$('#nombre').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -12,7 +26,21 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#anio').keypress(function(e){
+	$('#rol').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#rol_especifico').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#codigo').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
@@ -27,7 +55,7 @@ $(document).ready(function () {
 	});
 		
 	$('#btnNuevo').click(function () {
-		modalParametro(0);
+		modalPlanContable(0);
 	});
 		
 	datatablenew();
@@ -37,7 +65,7 @@ $(document).ready(function () {
 function datatablenew(){
     var oTable1 = $('#tblAfiliado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/parametro/listar_parametro_ajax",
+        "sAjaxSource": "/agremiado_rol/listar_agremiado_rol_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         "bFilter": false,
@@ -62,12 +90,11 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id = $('#id').val();
-			var anio = $('#anio').val();
-			var porcentaje_calculo_edificaciones = $('#porcentaje_calculo_edificaciones').val();
-			var valor_metro_cuadrado_habilitacion_urbana = $('#valor_metro_cuadrado_habilitacion_urbana').val();
-			var valor_uit = $('#valor_uit').val();
-			var igv = $('#igv').val();
+			var periodo = $('#id_periodo_bus').val();
+			var numero_cap = $('#numero_cap').val();
+			var agremiado = $('#nombre').val();
+			var rol = $('#rol').val();
+			var rol_especifico = $('#rol_especifico').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -75,9 +102,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,anio:anio,porcentaje_calculo_edificaciones:porcentaje_calculo_edificaciones,estado:estado,
-						valor_metro_cuadrado_habilitacion_urbana:valor_metro_cuadrado_habilitacion_urbana,
-						valor_uit:valor_uit,igv:igv,
+						periodo:periodo,numero_cap:numero_cap,agremiado:agremiado,rol:rol,rol_especifico:rol_especifico,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -89,32 +114,32 @@ function datatablenew(){
         },
 
         "aoColumnDefs":
-            [	
-				{
-                "mRender": function (data, type, row) {
-                	var anio = "";
-					if(row.anio!= null)anio = row.anio;
-					return anio;
-                },
-                "bSortable": false,
-                "aTargets": [0],
-				"className": "dt-center",
-                },
+            [
 				{
 				"mRender": function (data, type, row) {
-					var porcentaje_calculo_edificacion = "";
-					if(row.porcentaje_calculo_edificacion!= null)porcentaje_calculo_edificacion = row.porcentaje_calculo_edificacion;
-					return porcentaje_calculo_edificacion;
+					var periodo = "";
+					if(row.periodo!= null)periodo = row.periodo;
+					return periodo;
 				},
 				"bSortable": false,
-				"aTargets": [1],
+				"aTargets": [0],
 				"className": "dt-center",
 				},
 				{
+                "mRender": function (data, type, row) {
+                	var numero_cap = "";
+					if(row.numero_cap!= null)numero_cap = row.numero_cap;
+					return numero_cap;
+                },
+                "bSortable": false,
+                "aTargets": [1],
+				"className": "dt-center",
+                },
+				{
 				"mRender": function (data, type, row) {
-					var valor_minimo_edificaciones = "";
-					if(row.valor_minimo_edificaciones!= null)valor_minimo_edificaciones = row.valor_minimo_edificaciones;
-					return valor_minimo_edificaciones;
+					var agremiado = "";
+					if(row.agremiado!= null)agremiado = row.agremiado;
+					return agremiado;
 				},
 				"bSortable": false,
 				"aTargets": [2],
@@ -122,9 +147,9 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var valor_metro_cuadrado_habilitacion_urbana = "";
-					if(row.valor_metro_cuadrado_habilitacion_urbana!= null)valor_metro_cuadrado_habilitacion_urbana = row.valor_metro_cuadrado_habilitacion_urbana;
-					return valor_metro_cuadrado_habilitacion_urbana;
+					var rol = "";
+					if(row.rol!= null)rol = row.rol;
+					return rol;
 				},
 				"bSortable": false,
 				"aTargets": [3],
@@ -132,9 +157,9 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var valor_minimo_hu = "";
-					if(row.valor_minimo_hu!= null)valor_minimo_hu = row.valor_minimo_hu;
-					return valor_minimo_hu;
+					var rol_especifico = "";
+					if(row.rol_especifico!= null)rol_especifico = row.rol_especifico;
+					return rol_especifico;
 				},
 				"bSortable": false,
 				"aTargets": [4],
@@ -142,9 +167,9 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var valor_maximo_hu = "";
-					if(row.valor_maximo_hu!= null)valor_maximo_hu = row.valor_maximo_hu;
-					return valor_maximo_hu;
+					var fecha_inicio = "";
+					if(row.fecha_inicio!= null)fecha_inicio = row.fecha_inicio;
+					return fecha_inicio;
 				},
 				"bSortable": false,
 				"aTargets": [5],
@@ -152,22 +177,12 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var valor_uit = "";
-					if(row.valor_uit!= null)valor_uit = row.valor_uit;
-					return valor_uit;
+					var fecha_fin = "";
+					if(row.fecha_fin!= null)fecha_fin = row.fecha_fin;
+					return fecha_fin;
 				},
 				"bSortable": false,
 				"aTargets": [6],
-				"className": "dt-center",
-				},
-				{
-				"mRender": function (data, type, row) {
-					var igv = "";
-					if(row.igv!= null)igv = row.igv;
-					return igv;
-				},
-				"bSortable": false,
-				"aTargets": [7],
 				"className": "dt-center",
 				},
 				{
@@ -182,9 +197,9 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [8]
+				"aTargets": [7]
 				},
-				{
+				/*{
 				"mRender": function (data, type, row) {
 					var estado = "";
 					var clase = "";
@@ -198,15 +213,15 @@ function datatablenew(){
 					}
 				
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalParametro('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-					html += '<a href="javascript:void(0)" onclick=eliminarParametro('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalPlanContable('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					html += '<a href="javascript:void(0)" onclick=eliminarPlanContable('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
-				},
+					"aTargets": [3],
+				},*/
             ]
     });
 }
@@ -215,13 +230,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalParametro(id){
+function modalPlanContable(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/parametro/modal_parametro_nuevoParametro/"+id,
+			url: "/plan_contable/modal_plan_contable_nuevoPlanContable/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -231,7 +246,7 @@ function modalParametro(id){
 
 }
 
-function eliminarParametro(id,estado){
+function eliminarPlanContable(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -243,20 +258,20 @@ function eliminarParametro(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" el Parametro?", 
+        message: "&iquest;Deseas "+act_estado+" el Plan Contable?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_parametro(id,estado_);
+                fn_eliminar_plan_contable(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_parametro(id,estado){
+function fn_eliminar_plan_contable(id,estado){
 	
     $.ajax({
-            url: "/parametro/eliminar_parametro/"+id+"/"+estado,
+            url: "/plan_contable/eliminar_plan_contable/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
 				datatablenew();

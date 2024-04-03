@@ -1,5 +1,4 @@
-
-CREATE OR REPLACE FUNCTION public.sp_generar_asiento_planilla(p_id_periodo character varying, p_anio character varying, p_mes character varying)
+CREATE OR REPLACE FUNCTION sp_generar_asiento_planilla(p_id_periodo character varying, p_anio character varying, p_mes character varying)
  RETURNS character varying
  LANGUAGE plpgsql
 AS $function$
@@ -15,129 +14,95 @@ declare
 	_anio integer;
 	_ruc character varying;
 
+	_grupo integer;
+
 	_id_periodo_comision integer;
 	_id_periodo_comision_detalle integer;
 
+	cursor_rh record;
+
 begin
-
---	Select count(EXTRACT(MONTH FROM payment_date)) as total, EXTRACT(MONTH FROM payment_date), EXTRACT(YEAR FROM payment_date) as año FROM payment 
-
-	--select LPAD('11', 2, '0')
-
---	_mes:= (select EXTRACT(MONTH FROM fecha) mes from periodo_delegado_detalles where id = pIdDelPeriodoDetalle);
---	_anio:=(select EXTRACT(YEAR FROM fecha) anio from periodo_delegado_detalles where id = pIdDelPeriodoDetalle);
 	
 	
+
 	_id_periodo_comision:=(select id_periodo_comision from periodo_comision_detalles where denominacion = p_anio||p_mes);
 	_id_periodo_comision_detalle:=(select id from periodo_comision_detalles where denominacion = p_anio||p_mes);
 
-	--_total := to_number(total,'9999999999.99');
+	select max(id_grupo) into _grupo from asiento_planillas p 
+	where p.id_periodo_comision = _id_periodo_comision and p.id_periodo_comision_detalle = _id_periodo_comision_detalle and p.estado = '1';
 
-CREATE TEMPORARY TABLE temp_fondo_comun (
-  id_ubigeo	text,
-  distrito text,
-  importe_bruto numeric,
-  igv numeric,
-  comision numeric,
-  asistencia numeric,
-  saldo numeric  
-);
-
-INSERT INTO temp_fondo_comun (id_ubigeo, distrito,importe_bruto,igv,comision,asistencia,saldo)
-select id_ubigeo, distrito, sum(importe_bruto)importe_bruto, sum(igv)igv, sum(comision)comision, sum(asistencia)asistencia, sum(saldo)saldo
-from (
-	select u.id_ubigeo, u.desc_ubigeo distrito, 
-	sum(l.total) importe_bruto, 
-	sum(l.igv) igv, 
-	sum((l.total-l.igv)*0.3) comision, 
-	Sum((l.total-l.igv)*0.02) asistencia, 
-	sum(l.total-l.igv-((l.total-l.igv)*0.3-((l.total-l.igv)*0.02))) saldo
-	from comision_sesion_dictamenes csd 
-	inner join comision_sesiones cs on csd.id_comision_sesion =cs.id
-	inner join comision_sesion_delegados t6 on t6.id_comision_sesion = cs.id
-	inner join comisiones t7 on t7.id = cs.id_comision 
-	inner join solicitudes s2 on s2.id =csd.id_solicitud  
-	inner join proyectos p on p.id=s2.id_proyecto  
-	inner join liquidaciones l on l.id_solicitud =s2.id
-	inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo 
-	group by u.id_ubigeo, u.desc_ubigeo, cs.fecha_ejecucion, cs.id_periodo_comisione, id_aprobar_pago
-	having 
-	to_char(cs.fecha_ejecucion,'yyyy') = p_anio
-	And to_char(cs.fecha_ejecucion,'mm')= p_mes
-	and cs.id_periodo_comisione = p_id_periodo::integer
-	and t6.id_aprobar_pago=2
-)
-group by id_ubigeo, distrito;
+	_grupo := _grupo + 1;
 
 
-/*
-INSERT INTO temp_fondo_comun (id_municipalidad, municipalidad,importe_bruto,igv,comision,asistencia,saldo) 
-select t2.id, t2.denominacion municipalidad, 
-sum(t3.total) importe_bruto, 
-sum(t3.igv) igv, 
-sum((t3.total-t3.igv)*0.3) comision, 
-Sum((t3.total-t3.igv)*0.02) asistencia, 
-sum(t3.total-t3.igv-((t3.total-t3.igv)*0.3-((t3.total-t3.igv)*0.02))) saldo
-from solicitudes t1 
-inner join municipalidades t2  on t2.id = t1.id_municipalidad 
-inner join liquidaciones t3 on t3.id_solicitud = t1.id
-group by t2.id, t2.denominacion
-,t3.fecha
-,t3.credipago
-having  
-EXTRACT(YEAR FROM t3.fecha) = p_anio and
-EXTRACT(MONTH FROM t3.fecha) = p_mes and 
-t3.credipago is not null;
-*/
---select * from delegado_fondo_comuns
+	
+	For cursor_rh In	
+	
+		select pd.id, sub_total,  monto, adelanto, reintegro, total_bruto, ir_cuarta, total_honorario, descuento, 
+		saldo, id_agremiado, 
+		tipo_comprobante, numero_comprobante, fecha_comprobante, a.id_persona, 
+		p.apellido_paterno ||' '|| p.apellido_materno || ' ' || p.nombres ||'-'|| p_mes ||'-'|| _grupo::varchar  glosa
+		from planilla_delegados pl 
+		inner join planilla_delegado_detalles pd on pd.id_planilla = pl.id  
+		inner join agremiados a on a.id = pd.id_agremiado
+		inner join personas p on p.id = a.id_persona
+		
+		loop
+ 			
+			insert into  asiento_planillas
+				(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
+				id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle, centro_costo, presupuesto)				
+				select 
+				1, cursor_rh.id_persona, '63291', cursor_rh.total_bruto, 0,  cursor_rh.total_bruto/3.71, cursor_rh.glosa, 1, 1, 3.73, 1, 
+				_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id, '2025601', '01P2501';
+	
+			insert into  asiento_planillas
+				(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
+				id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle)				
+				select 
+				1, cursor_rh.id_persona, '40172', 0, cursor_rh.ir_cuarta, cursor_rh.ir_cuarta/3.71, cursor_rh.glosa, 1, 1, 3.73, 1, 
+				_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id;
 
-delete from delegado_fondo_comuns where id_periodo_comision_detalle = _id_periodo_comision_detalle ;
+			insert into  asiento_planillas
+				(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
+				id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle)				
+				select 
+				1, cursor_rh.id_persona, '4241', 0, cursor_rh.total_honorario, cursor_rh.total_honorario/3.71, cursor_rh.glosa, 1, 1, 3.73, 1, 
+				_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id;			
 
-INSERT INTO delegado_fondo_comuns
-(id_ubigeo,
-id_periodo_comision, 
-id_periodo_comision_detalle, 
-porcentaje_igv, 
-porcentaje_comision_cap, 
-porcentaje_fondo_asistencia, 
-porcentaje_reserva_acuerdo_n5, 
-importe_bruto, 
-importe_igv, 
-importe_comision_cap, 
-importe_fondo_asistencia, 
-importe_reserva, 
-saldo, 
-estado, 
-id_usuario_inserta)
-select
-id_ubigeo,
-_id_periodo_comision,
-_id_periodo_comision_detalle,
-igv,
-comision,
-asistencia,
-0,
-importe_bruto,
-igv,
-comision,
-asistencia,
-0,
-saldo,
-1,
-1
-FROM temp_fondo_comun
-order by 2;
+			
+			
+			insert into  asiento_planillas
+				(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
+				id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle)				
+				select 
+				2, cursor_rh.id_persona, '4241',cursor_rh.total_honorario, 0, cursor_rh.total_honorario/3.71, cursor_rh.glosa, 1, 1, 3.73, 1, 
+				_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id;	
+			
+			insert into  asiento_planillas
+				(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
+				id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle)				
+				select 
+				2, cursor_rh.id_persona, '1692', 0, cursor_rh.descuento, cursor_rh.descuento/3.71, cursor_rh.glosa, 1, 1, 3.73, 1, 
+				_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id;
+	
+			insert into  asiento_planillas
+				(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
+				id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle, codigo_financiero, medio_pago)				
+				select 
+				2, cursor_rh.id_persona, '104141', cursor_rh.total_honorario-cursor_rh.descuento, 0, (cursor_rh.total_honorario-cursor_rh.descuento)/3.71, cursor_rh.glosa, 1, 1, 3.73, 1, 
+				_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id, '110', '001';
 
-DROP TABLE temp_fondo_comun; 
 
---select * from delegado_fondo_comuns;
-
+		End Loop;
 
 idp:=1;
 
 return idp;
 
+--Select sp_generar_asiento_planilla('7', '2024', '03');
 
 end;
 $function$
 ;
+
+

@@ -364,12 +364,18 @@ class CertificadoController extends Controller
 		$carbonDate = new Carbon($fecha_emision);
 
 		// Formatear la fecha en un formato largo
+		$dia = $carbonDate->format('d');
+		$mes = ltrim($carbonDate->format('m'), '0');
+		$anio = $carbonDate->format('Y');
 
-	
-		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
+		$mesEnLetras = $this->mesesALetras($mes);
+
+		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
+		//$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
+		//var_dump($mes_minimoEnLetras);exit;
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_pdf',compact('datos','nombre','inscripcion','habilita','formattedDate','tratodesc','faculta','numeroEnLetras'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_pdf',compact('datos','nombre','inscripcion','habilita','tratodesc','faculta','numeroEnLetras','fecha_detallada'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros

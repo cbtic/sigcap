@@ -52,6 +52,7 @@ use App\Http\Controllers\Frontend\AsignacionCuentaController;
 use App\Http\Controllers\Frontend\AsientoPlanillaController;
 use App\Http\Controllers\Frontend\ProyectoController;
 use App\Http\Controllers\Frontend\BeneficiarioController;
+use App\Http\Controllers\Frontend\AgremiadoRolesController;
 
 /*
  * Frontend Controllers
@@ -348,6 +349,7 @@ Route::get('comision/obtener_municipalidades', [ComisionController::class, 'obte
 Route::get('comision/obtener_municipalidadesIntegradas/{periodo}/{tipo_agrupacion}/{tipo_comision}', [ComisionController::class, 'obtener_municipalidadesIntegradas'])->name('comision.obtener_municipalidadesIntegradas');
 Route::post('comision/listar_municipalidad_integrada_ajax', [ComisionController::class, 'listar_municipalidad_integrada_ajax'])->name('comision.listar_municipalidad_integrada_ajax');
 Route::get('comision/consulta_municipalidadIntegrada', [ComisionController::class, 'consulta_municipalidadIntegrada'])->name('comision.consulta_municipalidadIntegrada');
+Route::post('comision/send_asignar_agremiado_rol', [ComisionController::class, 'send_asignar_agremiado_rol'])->name('comision.send_asignar_agremiado_rol');
 
 Route::get('concurso/consulta_resultado', [ConcursoController::class, 'consulta_resultado'])->name('concurso.consulta_resultado');
 Route::post('concurso/listar_resultado_ajax', [ConcursoController::class, 'listar_resultado_ajax'])->name('concurso.listar_resultado_ajax');
@@ -655,4 +657,9 @@ Route::get('certificado/record_proyectos_pdf/{numero_cap}', [CertificadoControll
 Route::get('coordinador_zonal/obtener_coordinador/{id}', [CoordinadorZonalController::class, 'obtener_coordinador'])->name('coordinador_zonal.obtener_coordinador');
 Route::get('coordinador_zonal/modal_coordinadorZonal_editarCoordinadorZonal/{id}', [CoordinadorZonalController::class, 'modal_coordinadorZonal_editarCoordinadorZonal'])->name('coordinador_zonal.modal_coordinadorZonal_editarCoordinadorZonal');
 Route::post('coordinador_zonal/send_coordinador_sesion_editar', [CoordinadorZonalController::class, 'send_coordinador_sesion_editar'])->name('coordinador_zonal.send_coordinador_sesion_editar');
+Route::get('agremiado_rol/consulta_agremiado_rol', [AgremiadoRolesController::class, 'consulta_agremiado_rol'])->name('agremiado_rol.consulta_agremiado_rol');
+Route::post('agremiado_rol/listar_agremiado_rol_ajax', [AgremiadoRolesController::class, 'listar_agremiado_rol_ajax'])->name('agremiado_rol.listar_agremiado_rol_ajax');
+Route::get('coordinador_zonal/modal_informes/{id}', [CoordinadorZonalController::class, 'modal_informes'])->name('coordinador_zonal.modal_informes');
+Route::get('derecho_revision/modal_reintegro/{id}', [DerechoRevisionController::class, 'modal_reintegro'])->name('derecho_revision.modal_reintegro');
+Route::get('agremiado/exportar_listar_agremiado/{id_regional}/{numero_cap}/{numero_documento}/{agremiado}/{fecha_inicio}/{fecha_fin}/{id_situacion}', [AgremiadoController::class, 'exportar_listar_agremiado'])->name('agremiado.exportar_listar_agremiado');
 

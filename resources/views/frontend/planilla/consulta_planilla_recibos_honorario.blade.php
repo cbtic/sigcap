@@ -516,6 +516,13 @@ label.form-control-sm{
 													<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 														<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php //if($planillaDelegadoDetalle->fecha_comprobante!="")echo date('d-m-Y',strtotime($planillaDelegadoDetalle->fecha_comprobante))?>" type="text"  >
 													</div>
+
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														N&uacute;mero Operaci&oacute;n
+													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														<input type="text" name="numero_operacion" id="numero_operacion" value="<?php //echo $planillaDelegadoDetalle->numero_comprobante ?>" class="form-control form-control-sm">
+													</div>
 												
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														<input class="btn btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;" />
@@ -594,6 +601,7 @@ label.form-control-sm{
 															<th>Situaci&oacute;n</th>
 															<th>N&uacute;mero Comprobante</th>
 															<th>Fecha Comprobante</th>
+															<th>N&uacute;mero Operaci&oacute;n</th>
 															<th class="text-center">Acciones</th>
 														</tr>
 														</thead>
