@@ -631,10 +631,16 @@ class CertificadoController extends Controller
 		// Formatear la fecha en un formato largo
 
 	
-		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
+		$dia = $carbonDate->format('d');
+		$mes = ltrim($carbonDate->format('m'), '0');
+		$anio = $carbonDate->format('Y');
+
 		
+		$mesEnLetras = $this->mesesALetras($mes);
+
+		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','direccion','provincia','departamento','distrito','nombre_propietario','nombre_proyecto','cita','valor_obra','area_techada','habilita','inscripcion','formattedDate','tratodesc','faculta','numeroEnLetras','tipo_tramite_tipo3','expediente'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','direccion','provincia','departamento','distrito','nombre_propietario','nombre_proyecto','cita','valor_obra','area_techada','habilita','inscripcion','tratodesc','faculta','numeroEnLetras','tipo_tramite_tipo3','expediente','fecha_detallada'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
