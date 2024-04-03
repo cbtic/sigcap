@@ -672,8 +672,20 @@ function certificado_pdf(id){
 }
 
 function constancia_pdf(id){
-	var href = '/certificado/constancia_pdf/'+id;
-	window.open(href, '_blank');
+	$.ajax({
+		url: "/certificado/validez_constancia/"+id,
+		type: "GET",
+		success: function (result) {
+			
+			if(result.sw=true){
+				var href = '/certificado/constancia_pdf/'+id;
+				window.open(href, '_blank');
+			}else{
+				bootbox.alert('No tiene pagos realizados en el presente ejercicio')	
+			}
+		
+		}
+	});
 }
 
 
