@@ -274,29 +274,29 @@ function fn_save_requisito(){
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-12">
                         <label class="control-label form-control-sm">Nombre del Proyecto</label>
-                        <input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->nombre?>" type="text" readonly='readonly'>
                     </div>
                 </div>
 
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-12">
                         <label class="control-label form-control-sm">Propietario</label>
-                        <input id="propietario" name="propietario" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="propietario" name="propietario" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->razon_social?>" type="text" readonly='readonly'>
                     </div>
                 </div>
 
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Valor Total Obra</label>
-                        <input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->valor_obra?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea del Terreno</label>
-                        <input id="area_terreno" name="area_terreno" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="area_terreno" name="area_terreno" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_total?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea Techada</label>
-                        <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_techada?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div style="padding: 15px 0px 15px 10px; font-weight: bold">
@@ -305,25 +305,25 @@ function fn_save_requisito(){
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Departamento</label>
-                        <input id="departamento" name="departamento" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="departamento" name="departamento" on class="form-control form-control-sm"  value="<?php echo $departamento?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Provincia</label>
-                        <input id="provincia" name="provincia" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="provincia" name="provincia" on class="form-control form-control-sm"  value="<?php echo $provincia?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Distrito</label>
-                        <input id="distrito" name="distrito" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="distrito" name="distrito" on class="form-control form-control-sm"  value="<?php echo $distrito?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-2">
                         <label class="control-label form-control-sm">Tipo</label>
-                        <input id="tipo" name="tipo" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="tipo" name="tipo" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->tipo?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-10">
                         <label class="control-label form-control-sm">Direcci&oacute;n</label>
-                        <input id="direccion_proyecto" name="direccion_proyecto" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="direccion_proyecto" name="direccion_proyecto" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->direccion_proyecto?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div style="padding: 15px 0px 15px 10px; font-weight: bold">
@@ -332,55 +332,187 @@ function fn_save_requisito(){
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">N&uacute;mero CAP</label>
-                        <input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->numero_cap?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Nombres</label>
-                        <input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->agremiado?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Ubicaci&oacute;n</label>
-                        <input id="ubicacion" name="ubicacion" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="ubicacion" name="ubicacion" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->ubicacion?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">N° Regional</label>
-                        <input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->numero_regional?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Direcci&oacute;n</label>
-                        <input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->direccion?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Zonal</label>
-                        <input id="zonal" name="zonal" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="zonal" name="zonal" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->local?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Regional</label>
-                        <input id="regional" name="regional" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="regional" name="regional" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->regional?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Autoriza</label>
-                        <input id="autoriza" name="autoriza" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
-                    </div>
-                    <div class="col-lg-3">
-                        <label class="control-label form-control-sm">Zonal</label>
-                        <input id="zonal" name="zonal" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="autoriza" name="autoriza" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->autoriza?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Actividad Gremial</label>
-                        <input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->actividad_gremial?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Situaci&oacute;n</label>
-                        <input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php //echo $proyecto->nombre?>" type="text" readonly='readonly'>
+                        <input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
                     </div>
                 </div>
-			  
-              
+                <div style="padding: 15px 0px 15px 10px; font-weight: bold">
+                    C&aacute;lculo Liquidaci&oacute;n
+                </div>
+                <div class="row" style="padding-left:10px">
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label class="control-label form-control-sm">Tipo Liquidaci&oacute;n 1</label>
+                            <select name="tipo_liquidacion1" id="tipo_liquidacion1" class="form-control form-control-sm">
+                                <option value="">--Selecionar--</option>
+                                <?php
+                                foreach ($tipo_liquidacion as $row) {
+                                    if (in_array($row->codigo, [135,142,136,138,306,137,143,258])){
+                                ?>
+                                <option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$agremiadoMulta->id_estado_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label class="control-label form-control-sm">Instancia</label>
+                            <select name="instancia" id="instancia" class="form-control form-control-sm">
+                                <option value="">--Selecionar--</option>
+                                <?php
+                                foreach ($instancia as $row) {?>
+                                <option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$agremiadoMulta->id_estado_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-left:10px">
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label class="control-label form-control-sm">Tipo Liquidaci&oacute;n 2</label>
+                            <select name="tipo_liquidacion1" id="tipo_liquidacion1" class="form-control form-control-sm">
+                                <option value="">--Selecionar--</option>
+                                <?php
+                                foreach ($tipo_liquidacion as $row) {
+                                    if (in_array($row->codigo, [143,258])){
+                                ?>
+                                <option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$agremiadoMulta->id_estado_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="control-label form-control-sm">Municipalidad</label>
+                        <input id="municipalidad" name="municipalidad" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->municipalidad?>" type="text" readonly='readonly'>
+                    </div>
+                </div>
+                <div class="row" style="padding-left:10px">
+                    <div class="col-lg-3">
+                        <label class="control-label form-control-sm">N&uacute;mero Revisi&oacute;n</label>
+                        <input id="numero_revision" name="numero_revision" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text">
+                    </div>
+                </div>
+                <div class="row" style="padding-left:10px;padding-top:15px">
+                    <div class="col-lg-6" style="padding:10px; border:1px solid #ccc;">
+                        <div class="row" style="padding-left:10px;">
+                            <div class="col-lg-6">
+                                <label class="control-label form-control-sm">Factor</label>
+                                <input id="factor" name="factor" on class="form-control form-control-sm"  value="<?php echo $parametro[0]->porcentaje_calculo_edificacion?>" type="text" readonly='readonly'>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="control-label form-control-sm">M&iacute;mino</label>
+                                <?php
+                                $valor_minimo_edificaciones = $parametro[2]->valor_minimo_edificaciones;
+                                $uit_edificaciones = $parametro[2]->valor_uit;
+                                $sub_total_minimo = $valor_minimo_edificaciones * $uit_edificaciones;
+                                $igv_valor = $parametro[2]->igv;
+                                $igv_minimo	= $igv_valor * $sub_total_minimo;
+                                $total_minimo = $sub_total_minimo + $igv_minimo;
+                                ?>
+                                <input id="minimo" name="minimo" on class="form-control form-control-sm"  value="<?php echo $total_minimo?>" type="text" readonly='readonly'>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:10px;">
+                            <div class="col-lg-6">
+                                <label class="control-label form-control-sm">% IGV</label>
+                                <?php
+                                $igv_valor = $parametro[0]->igv * 100;
+                                ?>
+                                <input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php echo $igv_valor . '%'?>" type="text" readonly='readonly'>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="control-label form-control-sm">M&aacute;ximo</label>
+                                <input id="maximo" name="maximo" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:10px;">
+                            <div class="col-lg-12">
+                                <label class="control-label form-control-sm">Observaci&oacute;n</label>
+                                <input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" style="padding:10px; border:1px solid #ccc;">
+                        <div class="row" style="padding-left:10px;">
+                            <div class="col-lg-6">
+                                <label class="control-label form-control-sm">Sub Total</label>
+                                <input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="control-label form-control-sm">Sub Total</label>
+                                <input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:10px;">
+                            <div class="col-lg-6">
+                                <label class="control-label form-control-sm">IGV</label>
+                                <input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="control-label form-control-sm">IGV</label>
+                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:10px;">
+                            <div class="col-lg-6">
+                                <label class="control-label form-control-sm">Total</label>
+                                <input id="total" name="total" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="control-label form-control-sm">Total a Pagar</label>
+                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
           </div>
           <!-- /.box -->
           

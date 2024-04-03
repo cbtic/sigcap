@@ -846,11 +846,22 @@ class DerechoRevisionController extends Controller
 
 	public function modal_reintegro($id){
 		 
-		$derechoRevision = new DerechoRevision;
+		//$derechoRevision = new DerechoRevision;
 		$derechoRevision_model = new DerechoRevision;
-        $liquidacion = $derechoRevision_model->getLiquidacionByIdSolicitud($id);
-		
-        return view('frontend.derecho_revision.modal_reintegro',compact('id','derechoRevision'));
+		$tablaMaestra_model = new TablaMaestra;
+		$parametro_model = new Parametro;
+		$ubigeo_model=new Ubigeo;
+        $liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
+		$ubigeo = $liquidacion[0]->id_ubigeo;
+		$ubigeo_id = Ubigeo::where("id",$ubigeo)->where("estado","1")->first();
+		$departamento = $ubigeo_model->obtenerDepartamento($ubigeo_id->id_departamento);
+		$provincia = $ubigeo_model->obtenerProvincia($ubigeo_id->id_departamento,$ubigeo_id->id_provincia);
+		$distrito = $ubigeo_model->obtenerDistrito($ubigeo_id->id_departamento,$ubigeo_id->id_provincia,$ubigeo_id->id_distrito);
+		$tipo_liquidacion = $tablaMaestra_model->getMaestroByTipo(27);
+		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
+		$parametro = $parametro_model->getParametroAll();
+
+        return view('frontend.derecho_revision.modal_reintegro',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro'));
 		
     }
 
