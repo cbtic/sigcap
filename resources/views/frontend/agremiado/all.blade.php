@@ -175,7 +175,8 @@
 					<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Hasta">
 					</div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+				
+                    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 						<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm" >
 							<option value="">--Situaci&oacute;n--</option>
 							<?php
@@ -186,11 +187,22 @@
 							?>
 						</select>
 					</div>
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+						<select name="id_categoria_bus" id="id_categoria_bus" class="form-control form-control-sm" >
+							<option value="">--Categoria--</option>
+							<?php
+							foreach ($categoria_cliente as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
                     
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-left:0px;padding-right:0px">
                         <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 							
-						<a class="btn btn-success" href="/agremiado" style="margin-left:15px">Nuevo</a>
+						<a class="btn btn-success" href="/agremiado" style="margin-left:0px">Nuevo</a>
 
                         <input class="btn btn-sm btn-secondary float-rigth" value="Descargar" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
 														
@@ -212,6 +224,7 @@
 							<th>Agremiado</th>
 							<th>Fecha Nacimiento</th>
 							<th>Situaci&oacute;n</th>
+							<th>Categoria</th>
 							<th>Acciones</th>
                         </tr>
                         </thead>

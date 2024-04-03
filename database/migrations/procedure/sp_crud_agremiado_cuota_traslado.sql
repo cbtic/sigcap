@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE FUNCTION public.sp_crud_agremiado_cuota_traslado(p_id_agremiado integer, p_fecha character varying)
  RETURNS character varying
  LANGUAGE plpgsql

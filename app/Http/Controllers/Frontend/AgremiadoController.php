@@ -341,7 +341,9 @@ class AgremiadoController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
-		return view('frontend.agremiado.all',compact('region','situacion_cliente'));
+		$categoria_cliente = $tablaMaestra_model->getMaestroByTipo(18);
+		
+		return view('frontend.agremiado.all',compact('region','situacion_cliente','categoria_cliente'));
 		
 	}
 	
@@ -355,6 +357,7 @@ class AgremiadoController extends Controller
 		$p[]=$request->fecha_inicio;
 		$p[]=$request->fecha_fin;
 		$p[]=$request->id_situacion;
+		$p[]=$request->id_categoria;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $agremiado_model->listar_agremiado_ajax($p);
@@ -596,8 +599,14 @@ class AgremiadoController extends Controller
 		$agremiadoSituacion->id_usuario_inserta = 1;
 		$agremiadoSituacion->save();
 		
+		$agremiado = Agremiado::find($request->id_agremiado);
+		$agremiado->id_ubicacion = 336;
+		$agremiado->save();
+		
+		$fecha_fin = "";
+		if(isset($request->fecha_fin) && $request->fecha_fin!="")$fecha_fin = $request->fecha_fin;
 		$agremiado_model = new Agremiado;
-		$agremiado_model->agremiado_cuota_extranjero($request->id_agremiado,$request->fecha_inicio,$request->fecha_fin);
+		$agremiado_model->agremiado_cuota_extranjero($request->id_agremiado,$request->fecha_inicio,$fecha_fin);
 		
     }
 	
