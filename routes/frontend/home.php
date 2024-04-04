@@ -664,3 +664,5 @@ Route::get('derecho_revision/modal_reintegro/{id}', [DerechoRevisionController::
 Route::get('agremiado/exportar_listar_agremiado/{id_regional}/{numero_cap}/{numero_documento}/{agremiado}/{fecha_inicio}/{fecha_fin}/{id_situacion}/{id_categoria}', [AgremiadoController::class, 'exportar_listar_agremiado'])->name('agremiado.exportar_listar_agremiado');
 Route::get('certificado/validez_constancia/{id}/{sw}', [CertificadoController::class, 'validez_constancia'])->name('certificado.validez_constancia');
 
+
+
