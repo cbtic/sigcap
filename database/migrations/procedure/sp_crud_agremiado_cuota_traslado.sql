@@ -1,5 +1,6 @@
 
-CREATE OR REPLACE FUNCTION public.sp_crud_agremiado_cuota_traslado(p_id_agremiado integer, p_fecha character varying)
+
+CREATE OR REPLACE FUNCTION public.sp_crud_agremiado_cuota_traslado(p_op character varying, p_id_agremiado integer, p_fecha_ini character varying, p_fecha_fin character varying)
  RETURNS character varying
  LANGUAGE plpgsql
 AS $function$
@@ -30,18 +31,54 @@ declare
 begin
 	
 	idp:=0;
+	
+	if p_op = 'i' then 
+	
+		if p_fecha_fin='' then
+			
+			for entradas in 
+			select id from agremiado_cuotas where id_agremiado=p_id_agremiado
+			and fecha_venc_pago::date>=p_fecha_ini::date
+			loop
+				update valorizaciones set estado='0' where id_modulo=2 and pk_registro=entradas.id;
+			end loop;
+			
+			update agremiado_cuotas set estado=0 
+			where id_agremiado=p_id_agremiado
+			and fecha_venc_pago::date>=p_fecha_ini::date;	
 		
-	for entradas in 
-	select id from agremiado_cuotas where id_agremiado=p_id_agremiado
-	and fecha_venc_pago::date>=p_fecha::date
-	loop
-		update valorizaciones set estado='0' where id_modulo=2 and pk_registro=entradas.id;
-	end loop;
+		end if;
 	
-	update agremiado_cuotas set estado=0 
-	where id_agremiado=p_id_agremiado
-	and fecha_venc_pago::date>=p_fecha::date;
+		if p_fecha_fin!='' then
+			
+			update valorizaciones set estado='1' where /*id_modulo=2 and*/ pk_registro in(select id from agremiado_cuotas where id_agremiado=p_id_agremiado); 
+			update agremiado_cuotas set estado=1 where id_agremiado=p_id_agremiado;
+			
+			for entradas in 
+			select id from agremiado_cuotas where id_agremiado=p_id_agremiado
+			and fecha_venc_pago::date>=p_fecha_ini::date
+			and fecha_venc_pago::date<=p_fecha_fin::date
+			
+			loop
+				update valorizaciones set estado='0' where /*id_modulo=2 and*/ pk_registro=entradas.id;
+			end loop;
+			
+			update agremiado_cuotas set estado=0 
+			where id_agremiado=p_id_agremiado
+			and fecha_venc_pago::date>=p_fecha_ini::date
+			and fecha_venc_pago::date<=p_fecha_fin::date;
+		
+		end if;
 	
+	end if;
+	
+	if p_op = 'd' then
+		
+		update valorizaciones set estado='1' where /*id_modulo=2 and*/ pk_registro in(select id from agremiado_cuotas where id_agremiado=p_id_agremiado); 
+		update agremiado_cuotas set estado=1 where id_agremiado=p_id_agremiado;
+	
+	end if;
+
 	return idp;
 	/*EXCEPTION
 	WHEN OTHERS THEN
