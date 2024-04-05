@@ -264,12 +264,21 @@ function datatablenewPlan(){
                 },
 				{
                 "mRender": function (data, type, row) {
+                	var moneda = "";
+					if(row.moneda!= null)moneda = row.moneda;
+					return moneda;
+                },
+                "bSortable": true,
+                "aTargets": [6]
+                },
+				{
+                "mRender": function (data, type, row) {
                 	var edad_minima = "";
 					if(row.edad_minima!= null)edad_minima = row.edad_minima;
 					return edad_minima;
                 },
                 "bSortable": true,
-                "aTargets": [6]
+                "aTargets": [7]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -278,7 +287,7 @@ function datatablenewPlan(){
 					return edad_maxima;
                 },
                 "bSortable": true,
-                "aTargets": [7]
+                "aTargets": [8]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -287,7 +296,7 @@ function datatablenewPlan(){
 					return sexo;
                 },
                 "bSortable": true,
-                "aTargets": [8]
+                "aTargets": [9]
                 },
 				
 				{
@@ -302,7 +311,7 @@ function datatablenewPlan(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [9]
+					"aTargets": [10]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -316,7 +325,7 @@ function datatablenewPlan(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [10],
+					"aTargets": [11],
 				},
 
             ]
@@ -579,6 +588,7 @@ function fn_save_plan(){
 							<th>Fecha Inicio</th>
 							<th>Fecha Fin</th>
 							<th>Monto</th>
+							<th>Moneda</th>
 							<th>Edad M&iacute;nima</th>
 							<th>Edad M&aacute;xima</th>
 							<th>Sexo</th>

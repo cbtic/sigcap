@@ -1,6 +1,15 @@
 
 $(document).ready(function () {
 	
+	$('#numero_operacion').prop('disabled', true);
+	$('#chk_activar_numero_operacion').change(function(){
+        if($(this).is(':checked')){
+            $('#numero_operacion').prop('disabled', false);
+        } else {
+            $('#numero_operacion').prop('disabled', true);
+        }
+    });
+
 	datatablenew();
 
 	$("#id_regional_bus").select2({ width: '100%' });

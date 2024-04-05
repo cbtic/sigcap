@@ -201,7 +201,7 @@
 					</li>
 					@endif
 
-					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales') || Gate::check('Plan contable') || Gate::check('Partida Presupuestal') || Gate::check('Centro de costos') || Gate::check('Multas Mantenimiento'))
+					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales') || Gate::check('Plan contable') || Gate::check('Partida Presupuestal') || Gate::check('Centro de costos') || Gate::check('Multas Mantenimiento') || Gate::check('Tabla Maestra'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
@@ -241,6 +241,9 @@
 								@endcan
 								@can('Multas Mantenimiento')
                                 <a href="/multa/consulta_multa_mantenimiento" class="dropdown-item">Multa</a>
+								@endcan
+								@can('Tabla Maestra')
+                                <a href="/tabla_maestra/consulta_tabla_maestra" class="dropdown-item">Tabla Maestra</a>
 								@endcan
 								<!--@can('Profesion')
 								<a href="/profesion/consulta_profesion" class="dropdown-item">Profesi&oacute;n</a>

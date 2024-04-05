@@ -516,6 +516,16 @@ label.form-control-sm{
 													<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 														<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php //if($planillaDelegadoDetalle->fecha_comprobante!="")echo date('d-m-Y',strtotime($planillaDelegadoDetalle->fecha_comprobante))?>" type="text"  >
 													</div>
+													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+														Fecha 2
+													</div>
+													<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+														<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php //if($planillaDelegadoDetalle->fecha_comprobante!="")echo date('d-m-Y',strtotime($planillaDelegadoDetalle->fecha_comprobante))?>" type="text"  >
+													</div>
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+														<label for="chk_activar_numero_operacion">Cancelado</label>
+														<input id="chk_activar_numero_operacion" type="checkbox">
+													</div>
 
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														N&uacute;mero Operaci&oacute;n
