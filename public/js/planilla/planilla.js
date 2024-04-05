@@ -1,12 +1,12 @@
 
 $(document).ready(function () {
 	
-	$('#numero_operacion').prop('disabled', true);
+	$('#numero_operacion').prop('readonly', true);
 	$('#chk_activar_numero_operacion').change(function(){
         if($(this).is(':checked')){
-            $('#numero_operacion').prop('disabled', false);
+            $('#numero_operacion').prop('readonly', false);
         } else {
-            $('#numero_operacion').prop('disabled', true);
+            $('#numero_operacion').prop('readonly', true);
         }
     });
 
@@ -373,6 +373,20 @@ function datatablenew(){
 				},
 				{
 					"mRender": function (data, type, row) {
+						var cancelado = "";
+						if(row.cancelado == 1){
+							cancelado = "Cancelado";
+						}
+						if(row.cancelado == 0){
+							cancelado = "No Cancelado";
+						}
+						return cancelado;
+					},
+					"bSortable": false,
+					"aTargets": [8]
+				},
+				{
+					"mRender": function (data, type, row) {
 						var estado = "";
 						var clase = "";
 						if(row.estado == 1){
@@ -394,7 +408,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [8],
+					"aTargets": [9],
 				},
 
             ]
@@ -413,6 +427,8 @@ function limpiar(){
 	$("#fecha_comprobante").val("");
 	$("#fecha_vencimiento").val("");
 	$("#numero_operacion").val("");
+	$('#chk_activar_numero_operacion').prop('checked', false);
+	$('#numero_operacion').prop('readonly', true);
 }
 
 function editarRecibo(id){
@@ -430,10 +446,12 @@ function editarRecibo(id){
 		success: function(result){
 			//console.log(result[0].numero_cap);
 
+				limpiar();
 				if(result[0].fecha_comprobante==null)
 				{
 					$('#fecha_comprobante').val('');
 				}
+
 				$('#id_recibo').val(result[0].id);
 				$('#numero_cap').val(result[0].numero_cap);
 				$('#nombres').val(result[0].agremiado);
@@ -441,8 +459,18 @@ function editarRecibo(id){
 				$('#fecha_comprobante').val(result[0].fecha_comprobante.split(' ')[0]);
 				$('#fecha_vencimiento').val(result[0].fecha_vencimiento.split(' ')[0]);
 				$('#numero_operacion').val(result[0].numero_operacion);
-			
-			
+				
+				//var_dump(result[0].cancelado);exit;
+				if(result[0].cancelado == 1) {
+					$('#chk_activar_numero_operacion').prop('checked', true);
+					$('#numero_operacion').prop('readonly', false);
+				} else{
+					$('#chk_activar_numero_operacion').prop('checked', false);
+					$('#numero_operacion').prop('readonly', true);
+				}
+
+				
+				
         }
 			
 		
@@ -459,24 +487,28 @@ function save_recibo(){
     var fecha_comprobante = $('#fecha_comprobante').val();
 	var fecha_vencimiento = $('#fecha_vencimiento').val();
 	var numero_operacion = $('#numero_operacion').val();
+	var cancelado = $('#chk_activar_numero_operacion').prop('checked') ? 1 : 0;
 	
 	$.ajax({
 			url: "/planillaDelegado/send_recibo_honorario",
             type: "POST",
-            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion},
+            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion,cancelado:cancelado},
 			success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
 				datatablenew();
 
-				$('#id_recibo').val('');
+				limpiar();
+				/*$('#id_recibo').val('');
 				$('#numero_cap').val('');
 				$('#nombres').val('');
 				$('#numero_comprobante').val('');
 				$('#fecha_comprobante').val('');
 				$('#fecha_vencimiento').val('');
+				$('#numero_operacion').prop('disabled', true);
 				$('#numero_operacion').val('');
-								
+				$('#chk_activar_numero_operacion').prop('checked', false);*/
+				
             }
     });
 }

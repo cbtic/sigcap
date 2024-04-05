@@ -613,6 +613,7 @@ label.form-control-sm{
 															<th>Fecha Comprobante</th>
 															<th>Fecha Vencimiento</th>
 															<th>N&uacute;mero Operaci&oacute;n</th>
+															<th>Estado</th>
 															<th class="text-center">Acciones</th>
 														</tr>
 														</thead>
