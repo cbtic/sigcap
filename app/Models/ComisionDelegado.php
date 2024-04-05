@@ -44,7 +44,7 @@ and resultado='Ingreso'
     }
 	
 	function getComisionDelegado(){
-
+ 
         $cad = "select t1.id,t1.id_agremiado,t1.id_puesto,t5.periodo,t6.denominacion tipo_concurso,
 to_char(t1.created_at,'dd-mm-yyyy')fecha_inscripcion,
 t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,
