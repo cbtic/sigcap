@@ -263,6 +263,7 @@ class PlanillaDelegadoController extends Controller
 		$planillaDelegadoDetalle->tipo_comprobante = $request->tipo_comprobante;
 		$planillaDelegadoDetalle->numero_comprobante = $request->numero_comprobante;
 		$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
+		$planillaDelegadoDetalle->fecha_vencimiento = $request->fecha_vencimiento;
 		$planillaDelegadoDetalle->numero_operacion = $request->numero_operacion;
 		$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
 		$planillaDelegadoDetalle->save();

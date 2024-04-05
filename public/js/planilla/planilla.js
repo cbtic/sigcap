@@ -80,6 +80,13 @@ $(document).ready(function () {
 		changeYear: true,
     });
 
+	$('#fecha_vencimiento').datepicker({
+        autoclose: true,
+		format: 'dd-mm-yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+
 	$('#fecha_inicio_bus').datepicker({
         autoclose: true,
 		format: 'dd/mm/yyyy',
@@ -345,12 +352,24 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
+					var fecha_vencimiento = "";
+					if(row.fecha_vencimiento!= null){
+						var dateParts = row.fecha_vencimiento.split(' ');
+						fecha_vencimiento = dateParts[0];
+					}
+					return fecha_vencimiento;
+				},
+				"bSortable": false,
+				"aTargets": [6]
+				},
+				{
+				"mRender": function (data, type, row) {
 					var numero_operacion = "";
 					if(row.numero_operacion!= null)numero_operacion = row.numero_operacion;
 					return numero_operacion;
 				},
 				"bSortable": false,
-				"aTargets": [6]
+				"aTargets": [7]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -375,7 +394,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [7],
+					"aTargets": [8],
 				},
 
             ]
@@ -392,6 +411,7 @@ function limpiar(){
 	$("#nombres").val("");
 	$("#numero_comprobante").val("");
 	$("#fecha_comprobante").val("");
+	$("#fecha_vencimiento").val("");
 	$("#numero_operacion").val("");
 }
 
@@ -419,6 +439,7 @@ function editarRecibo(id){
 				$('#nombres').val(result[0].agremiado);
 				$('#numero_comprobante').val(result[0].numero_comprobante);
 				$('#fecha_comprobante').val(result[0].fecha_comprobante.split(' ')[0]);
+				$('#fecha_vencimiento').val(result[0].fecha_vencimiento.split(' ')[0]);
 				$('#numero_operacion').val(result[0].numero_operacion);
 			
 			
@@ -436,12 +457,13 @@ function save_recibo(){
     var tipo_comprobante = $('#tipo_comprobante').val();
 	var numero_comprobante = $('#numero_comprobante').val();
     var fecha_comprobante = $('#fecha_comprobante').val();
+	var fecha_vencimiento = $('#fecha_vencimiento').val();
 	var numero_operacion = $('#numero_operacion').val();
 	
 	$.ajax({
 			url: "/planillaDelegado/send_recibo_honorario",
             type: "POST",
-            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,numero_operacion:numero_operacion},
+            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion},
 			success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
@@ -452,6 +474,7 @@ function save_recibo(){
 				$('#nombres').val('');
 				$('#numero_comprobante').val('');
 				$('#fecha_comprobante').val('');
+				$('#fecha_vencimiento').val('');
 				$('#numero_operacion').val('');
 								
             }
