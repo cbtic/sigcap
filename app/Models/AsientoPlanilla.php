@@ -41,7 +41,7 @@ class AsientoPlanilla extends Model
                     And EXTRACT(MONTH FROM fecha_documento)::varchar = '".$mes."'
                     And id_periodo_comision = '".$periodo."'  ";
 
-		//echo $cad; exit();
+		echo $cad; exit();
 		$data = DB::select($cad);
         return $data;
     }
