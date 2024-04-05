@@ -211,6 +211,8 @@
 		var apellido_paterno = $('#frmPersona2 #apellido_paterno').val();
 		var apellido_materno = $('#frmPersona2 #apellido_materno').val();
 		var nombres = $('#frmPersona2 #nombres').val();
+		var celular = $('#frmPersona2 #celular').val();
+		var correo = $('#frmPersona2 #correo').val();
 		var fecha_nacimiento = $('#frmPersona2 #fecha_nacimiento').val();
 		var sexo = $('#frmPersona2 #sexo').val();
 		
@@ -237,6 +239,8 @@
 				apellido_paterno: apellido_paterno,
 				apellido_materno: apellido_materno,
 				nombres: nombres,
+				celular:celular,
+				correo:correo,
 				fecha_nacimiento:fecha_nacimiento,
 				sexo:sexo,
 				ruc:ruc
@@ -330,6 +334,22 @@
 									<div class="col-lg-12">
 										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:10px;margin-bottom:0px">
 											<input id="nombres" name="nombres" class="form-control form-control-sm" placeholder="Nombres" value="" type="text" readonly>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:10px;margin-bottom:0px">
+											<input id="celular" name="celular" class="form-control form-control-sm" placeholder="Celular" value="" type="text" >
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:10px;margin-bottom:0px">
+											<input id="correo" name="correo" class="form-control form-control-sm" placeholder="Correo" value="" type="text" >
 										</div>
 									</div>
 								</div>

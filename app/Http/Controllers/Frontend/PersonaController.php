@@ -708,18 +708,20 @@ class PersonaController extends Controller
 		$persona->apellido_paterno = $request->apellido_paterno;
 		$persona->apellido_materno = $request->apellido_materno;
 		$persona->nombres = $request->nombres;
+		$persona->numero_celular = $request->celular;
+		$persona->correo = $request->correo;
 		$persona->fecha_nacimiento = $request->fecha_nacimiento;
 		$persona->id_sexo = $request->sexo;
 	
 		$persona->save();
 
-		$persona = Persona::where("numero_documento",$request->numero_documento)->where("estado","1")->first();
+		/*$persona = Persona::where("numero_documento",$request->numero_documento)->where("estado","1")->first();
         $empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
 
 		$beneficiario->id_persona = $persona->id;
 		$beneficiario->id_empresa = $empresa->id;
 		$beneficiario->id_usuario_inserta = $id_user;
-		$beneficiario->save();
+		$beneficiario->save();*/
 
     }
 
@@ -769,7 +771,7 @@ class PersonaController extends Controller
 		
 		//$id_tipo_documento = $request->tipo_documento;
 		$id_tipo_documento = 78;
-		$numero_documento = $request->dni;
+		$numero_documento = $request->dni_;
 		
 
 		$tablaMaestra_model = new TablaMaestra;
