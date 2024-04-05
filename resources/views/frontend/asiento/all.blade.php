@@ -150,7 +150,7 @@
                             <div class="row" style="padding:20px 20px 0px 20px;">
                                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                     <select name="Tipo_b" id="Tipo_b" class="form-control form-control-sm">
-                                        <option value="">Todos</option>
+                                        
                                         <option value="1" selected="selected">ASIENTO DE PROVISION</option>
                                         <option value="2">ASIENTO DE CANCELACION</option>
                                     </select>
