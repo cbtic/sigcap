@@ -113,5 +113,25 @@ class TablaMaestra extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getIdTablaMaestra(){
+
+        $cad = "select tm.id 
+        from tabla_maestras tm 
+        order by tm.id desc 
+        limit 1;";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getTipoTablaMaestra($tipo_nombre){
+
+        $cad = "select tm.tipo, tm.denominacion, tm.codigo, tm.tipo_nombre from tabla_maestras tm 
+        where tm.tipo ='".$tipo_nombre."'";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 	
 }

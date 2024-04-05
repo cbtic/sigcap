@@ -10,12 +10,14 @@ $(document).ready(function () {
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
+			return false;
 		}
 	});
 
 	$('#tipo_nombre').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
+
 		}
 	});
 
@@ -746,7 +748,7 @@ function modalTablaMaestra(id){
 	$.ajax({
 			url: "/tabla_maestra/modal_tablaMaestra_nuevoTablaMaestra/"+id,
 			type: "GET",
-			success: function (result) {  
+			success: function (result) {
 					$("#diveditpregOpc").html(result);
 					$('#openOverlayOpc').modal('show');
 			}

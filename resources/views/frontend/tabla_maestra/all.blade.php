@@ -174,9 +174,6 @@
                                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                                         <input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominaci&oacute;n">
                                     </div>
-                                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                                        <input class="form-control form-control-sm" id="tipo_nombre" name="tipo_nombre" placeholder="Tipo Nombre">
-                                    </div>
 
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                         <select name="tipo_nombre" id="tipo_nombre" class="form-control form-control-sm" onChange="">

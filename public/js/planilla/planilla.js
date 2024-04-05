@@ -375,10 +375,10 @@ function datatablenew(){
 					"mRender": function (data, type, row) {
 						var cancelado = "";
 						if(row.cancelado == 1){
-							cancelado = "Cancelado";
+							cancelado = "Si";
 						}
 						if(row.cancelado == 0){
-							cancelado = "No Cancelado";
+							cancelado = "No";
 						}
 						return cancelado;
 					},
