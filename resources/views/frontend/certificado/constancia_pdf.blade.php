@@ -132,7 +132,7 @@ $(document).ready(function() {
             <p></p>
             <p></p>
             <br></br>
-            <p style="text-align:right; font_size: 14">Lima, <?php echo $formattedDate;?></p>
+            <p style="text-align:right; font_size: 14">Lima, <?php echo $fecha_detallada;?></p>
             <br></br>
         </div>
     </div>

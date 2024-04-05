@@ -148,7 +148,7 @@ $(document).ready(function() {
             
             <p></p>
             <p></p>
-            <p style="text-align:right">Lima, <?php echo $formattedDate;?></p>
+            <p style="text-align:right">Lima, <?php echo $fecha_detallada;?></p>
             <p style="text-align:right">Validez por <?php echo $numeroEnLetras;?>  (<?php echo $datos[0]->dias_validez;?>) d&iacute;as</p>
         </div>
     </div>
