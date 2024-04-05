@@ -17,7 +17,7 @@
 			<th>F.E</th>
 			<th>Glosa</th>
 			<th>M. Pago</th>
-			<th>Estado</th>
+			<th>Grupo</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -50,7 +50,7 @@
 					<td class="text-center"  style="vertical-align:middle"><?php echo $row->tipo_cambio ?></td>
 					<td class="text-right"  style="vertical-align:middle"><?php echo $row->equivalente ?></td>
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->id_tipo_documento ?></td>
-					<td class="text-center" style="vertical-align:middle"><?php echo $row->serie.'-'.$row->numero ?></td>					
+					<td class="text-center" style="vertical-align:middle"><?php echo $row->numero_comprobante ?></td>					
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->numero_ruc ?></td>
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->desc_cliente_sunat ?></td>
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->centro_costo ?></td>
@@ -58,7 +58,8 @@
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->codigo_financiero ?></td>
 					<td class="text-left" style="vertical-align:middle"><?php echo $row->glosa ?></td>
 					<td class="text-left" style="vertical-align:middle"><?php echo $row->medio_pago ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo $row->id_estado_doc ?></td>
+					<td class="text-left" style="vertical-align:middle"><?php echo $row->id_grupo ?></td>
+					
 
 
 

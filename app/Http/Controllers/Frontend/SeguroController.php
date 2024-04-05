@@ -261,9 +261,6 @@ class SeguroController extends Controller
         return redirect('/ingreso/liquidacion_caja');
 		
     }	
-
-    
-    
     
 }
 

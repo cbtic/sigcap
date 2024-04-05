@@ -62,9 +62,9 @@ class Concepto extends Model
     function getConceptoAllDenominacion(){
 
         $cad = "select *
-        from conceptos
-        where estado='1'
-        order by denominacion ";
+                from conceptos
+                where estado='1' and id_tipo_concepto=48
+                order by denominacion ";
     
 		$data = DB::select($cad);
         return $data;

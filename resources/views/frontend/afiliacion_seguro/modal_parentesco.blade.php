@@ -466,7 +466,7 @@ function guardar_seguro_afiliado_parentesco() {
 			//Limpiar();
             $('#openOverlayOpc').modal('hide');
 			datatablenew();
-			//location.reload();
+			location.reload();
         }
     });
 }

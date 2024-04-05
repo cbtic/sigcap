@@ -43,4 +43,15 @@ class SegurosPlane extends Model
         return $data;
     }
 	
+    function getSeguroById($id){
+
+        $cad = "select sa.id, s.nombre , sp.monto from seguro_afiliados sa 
+        inner join seguros_planes sp on sa.id_plan = sp.id 
+        inner join seguros s on sp.id_seguro = s.id
+        where sa.id='".$id."'";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }

@@ -186,11 +186,12 @@ class AsientoPlanillaController extends Controller
 		$anio = $request->anio;
 		$mes = $request->mes;
 		$periodo = $request->id_periodo;
+		$tipo = $request->Tipo_b;
 
-		//echo($mes); exit();
+		//echo($tipo); exit();
 
 		$asiento_planilla_model = new AsientoPlanilla;
-		$asientoPlanilla = $asiento_planilla_model->ListarAsientoPlanilla($anio, $mes, $periodo);
+		$asientoPlanilla = $asiento_planilla_model->ListarAsientoPlanilla($anio, $mes, $periodo,$tipo);
 
         return view('frontend.asiento.lista_asiento_planilla',compact('asientoPlanilla'));
 
