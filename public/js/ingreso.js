@@ -449,7 +449,7 @@ function calcular_total_otros(obj){
 		
 
 		$(this).parent().parent().parent().find('.val_total').html(val_total);
-		//val_total =val_total.replace(',','');
+		val_total =val_total.replace(',','');
 		
 		//var val_total = $(this).parent().parent().parent().find('.val_total').html();
 
