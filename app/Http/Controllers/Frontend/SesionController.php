@@ -529,8 +529,45 @@ class SesionController extends Controller
 			$comisionSesionDelegado = ComisionSesionDelegado::find($request->id);
 		}
 		
+		if($request->flag_titular_suplente == 1){ //TITULAR
+		
+			$comisionDelegadoOld = ComisionDelegado::find($comisionSesionDelegado->id_delegado);
+			$comisionDelegadoOld->estado = 0;
+			$comisionDelegadoOld->save();
+			
+			$comisionDelegado = new ComisionDelegado;
+			$comisionDelegado->id_regional = $comisionDelegadoOld->id_regional;
+			$comisionDelegado->id_comision = $comisionDelegadoOld->id_comision;
+			$comisionDelegado->coordinador = $comisionDelegadoOld->coordinador;
+			$comisionDelegado->id_agremiado = $request->id_delegado;
+			$comisionDelegado->id_puesto = $comisionDelegadoOld->id_puesto;
+			$comisionDelegado->id_usuario_inserta = $id_user;
+			$comisionDelegado->save();
+			$id_delegado = $comisionDelegado->id;
+			
+		}
+		
+		if($request->flag_titular_suplente == 2){ //SUPLENTE
+		
+			$comisionDelegadoOld = ComisionDelegado::find($comisionSesionDelegado->id_delegado);
+			
+			$comisionDelegado = new ComisionDelegado;
+			$comisionDelegado->id_regional = $comisionDelegadoOld->id_regional;
+			$comisionDelegado->id_comision = $comisionDelegadoOld->id_comision;
+			$comisionDelegado->coordinador = $comisionDelegadoOld->coordinador;
+			$comisionDelegado->id_agremiado = $request->id_delegado;
+			$comisionDelegado->id_puesto = $comisionDelegadoOld->id_puesto;
+			$comisionDelegado->estado = 2;
+			$comisionDelegado->id_usuario_inserta = $id_user;
+			$comisionDelegado->save();
+			$id_delegado = $comisionDelegado->id;
+			
+		}
+		
+		/***********************/
+		
 		$comisionSesionDelegado->id_comision_sesion = $request->id_comision_sesion;
-		$comisionSesionDelegado->id_delegado = $request->id_delegado;
+		$comisionSesionDelegado->id_delegado = $id_delegado;
 		$comisionSesionDelegado->id_profesion_otro = NULL;
 		$comisionSesionDelegado->id_aprobar_pago = NULL;
 		$comisionSesionDelegado->observaciones = NULL;
@@ -548,8 +585,16 @@ class SesionController extends Controller
 		
 		//if($id>0) $comisionDelegado = ComisionDelegado::find($id);else $comisionDelegado = new ComisionDelegado;
 		
-		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
-
+		$comisionSesionDelegado = ComisionSesionDelegado::find($id);
+		//echo $comisionSesionDelegado->id_comision_sesion;exit();
+		//$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
+		$comisionSesion = ComisionSesione::find($comisionSesionDelegado->id_comision_sesion);
+		$id_comision = $comisionSesion->id_comision;
+		$comision_=Comisione::find($id_comision);
+		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll($comision_->id_periodo_comisiones,$comision_->id_tipo_comision);
+		
+		//print_r($concurso_inscripcion);
+		
 		return view('frontend.sesion.modal_asignar_delegado_sesion',compact('id','concurso_inscripcion'));
 
     }

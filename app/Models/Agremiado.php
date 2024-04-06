@@ -26,17 +26,17 @@ class Agremiado extends Model
 		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_vitalicio',$p);
     }
 	
-	public function agremiado_cuota_traslado($id_agremiado,$fecha) {
+	public function agremiado_cuota_traslado($op,$id_agremiado,$fecha_ini,$fecha_fin) {
 		
-        $cad = "Select sp_crud_agremiado_cuota_traslado(?,?)";
-        $data = DB::select($cad, array($id_agremiado,$fecha));
+        $cad = "Select sp_crud_agremiado_cuota_traslado(?,?,?,?)";
+        $data = DB::select($cad, array($op,$id_agremiado,$fecha_ini,$fecha_fin));
         return $data[0]->sp_crud_agremiado_cuota_traslado;
     }
 	
-	public function agremiado_cuota_extranjero($id_agremiado,$fecha_ini,$fecha_fin) {
+	public function agremiado_cuota_extranjero($op,$id_agremiado,$fecha_ini,$fecha_fin) {
 		
-        $cad = "Select sp_crud_agremiado_cuota_extranjero(?,?,?)";
-        $data = DB::select($cad, array($id_agremiado,$fecha_ini,$fecha_fin));
+        $cad = "Select sp_crud_agremiado_cuota_extranjero(?,?,?,?)";
+        $data = DB::select($cad, array($op,$id_agremiado,$fecha_ini,$fecha_fin));
         return $data[0]->sp_crud_agremiado_cuota_extranjero;
     }
 	
