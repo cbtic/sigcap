@@ -670,5 +670,7 @@ Route::post('tabla_maestra/listar_tablaMaestra_ajax', [TablaMaestraController::c
 Route::get('tabla_maestra/modal_tablaMaestra_nuevoTablaMaestra/{id}', [TablaMaestraController::class, 'modal_tablaMaestra_nuevoTablaMaestra'])->name('tabla_maestra.modal_tablaMaestra_nuevoTablaMaestra');
 Route::post('tabla_maestra/send_tablaMaestra_nuevoTablaMaestra', [TablaMaestraController::class, 'send_tablaMaestra_nuevoTablaMaestra'])->name('tabla_maestra.send_tablaMaestra_nuevoTablaMaestra');
 Route::get('tabla_maestra/eliminar_tablaMaestra/{id}/{estado}', [TablaMaestraController::class, 'eliminar_tablaMaestra'])->name('tabla_maestra.eliminar_tablaMaestra');
-
+Route::get('tabla_maestra/obtener_datos_tabla_maestra/{tipo_nombre}', [TablaMaestraController::class, 'obtener_datos_tabla_maestra'])->name('tabla_maestra.obtener_datos_tabla_maestra');
+Route::get('agremiado/consulta_reporte_deuda', [AgremiadoController::class, 'consulta_reporte_deuda'])->name('agremiado.consulta_reporte_deuda');
+Route::post('agremiado/listar_reporte_deudas_ajax', [AgremiadoController::class, 'listar_reporte_deudas_ajax'])->name('agremiado.listar_reporte_deudas_ajax');
 

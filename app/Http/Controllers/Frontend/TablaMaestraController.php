@@ -53,12 +53,8 @@ class TablaMaestraController extends Controller
     public function modal_tablaMaestra_nuevoTablaMaestra($id){
 		
 		//$id->moneda;
-		$tablaMaestra = new TablaMaestra;
-		$concepto_model = new Concepto;
 		$tablaMaestra_model = new TablaMaestra;
-
-        $moneda = $tablaMaestra_model->getMaestroByTipo(1);
-		$concepto = $concepto_model->getConceptoAllDenominacion();
+        $tipo_nombre = $tablaMaestra_model->getTipoNombre();
 		
 		if($id>0){
 			$tablaMaestra = TablaMaestra::find($id);
@@ -66,25 +62,37 @@ class TablaMaestraController extends Controller
 			$tablaMaestra = new TablaMaestra;
 		}
 		
-		return view('frontend.tabla_maestra.modal_tablaMaestra_nuevoTablaMaestra',compact('id','moneda','multa','concepto'));
+		return view('frontend.tabla_maestra.modal_tablaMaestra_nuevoTablaMaestra',compact('id','tipo_nombre','tablaMaestra'));
 	
 	}
 
     public function send_tablaMaestra_nuevoTablaMaestra(Request $request){
 		
 		$id_user = Auth::user()->id;
+        $tablaMaestra_model = new TablaMaestra;
 
 		if($request->id == 0){
 			$tablaMaestra = new TablaMaestra;
 		}else{
 			$tablaMaestra = TablaMaestra::find($request->id);
 		}
-		
+
+        $datos_tablaMaestra = TablaMaestra::where("tipo",$request->tipo_nombre)->where("estado","1")->orderBy('id','desc')->first();
+		//dd($datos_tablaMaestra);
+        $tipo_nombre = $datos_tablaMaestra->tipo_nombre;
+        $codigo = $datos_tablaMaestra->codigo;
+        $orden = $datos_tablaMaestra->orden;
+        $id_ = $tablaMaestra_model->getIdTablaMaestra();
+        $ultimo_id =  $id_[0]->id;
+
+        $tablaMaestra->id = intval($ultimo_id) + 1;
+        $tablaMaestra->tipo = $request->tipo_nombre;
 		$tablaMaestra->denominacion = $request->denominacion;
-		$tablaMaestra->monto = $request->monto;
-		$tablaMaestra->id_moneda = $request->moneda;
-		$tablaMaestra->id_concepto = $request->concepto;
-		$tablaMaestra->id_usuario_inserta = $id_user;
+		$tablaMaestra->tipo_nombre = $tipo_nombre;
+        $tablaMaestra->codigo = $codigo + 1;
+        $tablaMaestra->orden = $orden + 1;
+        $tablaMaestra->estado = 1;
+		//$tablaMaestra->id_usuario_inserta = $id_user;
 		$tablaMaestra->save();
 		
     }
@@ -96,6 +104,16 @@ class TablaMaestraController extends Controller
 		$tablaMaestra->save();
 
 		echo $tablaMaestra->id;
+    }
+
+    public function obtener_datos_tabla_maestra($tipo_nombre){
+
+        $tablaMaestra_model = new TablaMaestra;
+        $sw = true;
+        $tipo_nombre_lista = $tablaMaestra_model->getTipoTablaMaestra($tipo_nombre);
+        //print_r($parentesco_lista);exit();
+        return view('frontend.tabla_maestra.lista_datos_tabla_maestra',compact('tipo_nombre_lista'));
+
     }
 
 }

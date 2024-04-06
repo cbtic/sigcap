@@ -181,6 +181,7 @@ class AfiliacionSeguroController extends Controller
 		$afiliacion->save();
 			
     }
+	
     public function send_afiliacion(Request $request){
 		$id_user = Auth::user()->id;
 

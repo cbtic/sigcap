@@ -123,7 +123,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Tabla Maestra</li>
+            <li class="breadcrumb-item active">Consulta de Deudas Agremiado</li>
         </li>
     </ol>
 @endsection
@@ -148,7 +148,7 @@
                 <div class="row">
                     <div class="col-sm-5">
                         <h4 class="card-title mb-0 text-primary">
-                            Consulta de Tabla Maestra <!--<small class="text-muted">Usuarios activos</small>-->
+                            Consulta de Deudas por Concepto <!--<small class="text-muted">Usuarios activos</small>-->
                         </h4>
                     </div><!--col-->
                 </div>
@@ -160,11 +160,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <strong>
-                                    Lista de Tabla Maestra
+                                    Lista de Deudas por Concepto
                                 </strong>
                             </div><!--card-header-->
                             
-                            <form class="form-horizontal" method="post" action="" id="frmTablaMaestra" autocomplete="off">
+                            <form class="form-horizontal" method="post" action="" id="frmDeudas" autocomplete="off">
                             <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                             
                             <div style="padding:20px 20px 0px 20px;">
@@ -172,33 +172,41 @@
                                 <div class="row">
                             
                                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                                        <input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominaci&oacute;n">
+                                        <input class="form-control form-control-sm" id="anio" name="anio" placeholder="Año">
                                     </div>
 
-                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                        <select name="tipo_nombre" id="tipo_nombre" class="form-control form-control-sm" onChange="">
-                                            <option value="">--Selecionar Tipo Nombre--</option>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <select name="concepto" id="concepto" class="form-control form-control-sm" onchange="">
+                                                <option value="">--Selecionar Concepto--</option>
                                                 <?php
-                                                foreach ($tipo_nombre as $row) {?>
-                                                    <option value="<?php echo $row->tipo?>"><?php echo $row->tipo_nombre?></option>
+                                                foreach ($concepto as $row) {?>
+                                                <option value="<?php echo $row->id?>" <?php //if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                                 <?php
                                                 }
                                                 ?>
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
-                                
-                                    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
-                                        <select name="estado" id="estado" class="form-control form-control-sm">
-                                            <option value="">Todos</option>
-                                            <option value="1" selected="selected">Activo</option>
-                                            <option value="0">Inactivo</option>
-                                        </select>
+
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <select name="mes" id="mes" class="form-control form-control-sm" onchange="">
+                                                <option value="">--Selecionar Mes--</option>
+                                                <?php
+                                                foreach ($mes as $row) {?>
+                                                <option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
                                     
-                                    </div>
                                     <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
-                                        <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+                                        <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscarDeuda" />
                                         
-                                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+                                        <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
                 
                                     </div>
                                 </div>
@@ -207,17 +215,22 @@
                             <div class="card-body">
 
                                 <div class="table-responsive">
-                                <table id="tblTablaMaestra" class="table table-hover table-sm">
+                                <table id="tblDeuda" class="table table-hover table-sm">
                                     <thead>
                                     <tr style="font-size:13px">
-                                        <th>Id</th>
-                                        <th>Tipo</th>
-                                        <th>Denominaci&oacute;n</th>
-                                        <th>Codigo</th>
-                                        <th>Tipo Nombre</th>
-                                        <th>Orden</th>
-                                        <th>Estado</th>
-                                        <th>Acciones</th>
+                                        <th>N&uacute;mero CAP</th>
+                                        <th>Nombre del Arquitecto</th>
+                                        <th>Concepto</th>
+                                        <th>Detalle de Afiliado</th>
+                                        <th>Edad</th>
+                                        <th>Importe</th>
+                                        <th>Situaci&oacute;n</th>
+                                        <th>Correo 1</th>
+                                        <th>Correo 2</th>
+                                        <th>Tel&eacute;fono 1</th>
+                                        <th>Tel&eacute;fono 2</th>
+                                        <th>Celular 1</th>
+                                        <th>Celular 2</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -252,6 +265,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/tabla_maestra/lista.js') }}"></script>
+<script src="{{ asset('js/agremiado/lista_deuda.js') }}"></script>
 
 @endpush

@@ -52,7 +52,7 @@
                     @endif
                 @else
 					
-					@if(Gate::check('Nuevo Agremiado') || Gate::check('Consulta de Agremiado') || Gate::check('Multas') || Gate::check('Afiliciacion a Seguro'))
+					@if(Gate::check('Nuevo Agremiado') || Gate::check('Consulta de Agremiado') || Gate::check('Multas') || Gate::check('Afiliciacion a Seguro') || Gate::check('Reporte Deudas'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Agremiado</a>
@@ -68,6 +68,9 @@
 								@endcan
 								@can('Afiliciacion a Seguro')
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
+								@endcan
+								@can('Reporte Deudas')
+                                <a href="/agremiado/consulta_reporte_deuda" class="dropdown-item">Reporte Deudas Seguros</a>
 								@endcan
 								
 						   </div>

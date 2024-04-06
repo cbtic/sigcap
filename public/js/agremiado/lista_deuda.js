@@ -3,7 +3,7 @@
 
 $(document).ready(function () {
 	
-	$('#btnBuscar').click(function () {
+	$('#btnBuscarDeuda').click(function () {
 		fn_ListarBusqueda();
 	});
 
@@ -431,16 +431,14 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 
 
 function datatablenew(){
-    var oTable1 = $('#tblTablaMaestra').dataTable({
+    var oTable = $('#tblDeuda').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/tabla_maestra/listar_tablaMaestra_ajax",
+        "sAjaxSource": "/agremiado/listar_reporte_deudas_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
-        //"paging":false,
         "bFilter": false,
         "bSort": false,
         "info": true,
-		//"responsive": true,
         "language": {"url": "/js/Spanish.json"},
         "autoWidth": false,
         "bLengthChange": true,
@@ -460,280 +458,151 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#denominacion').val();
-			var tipo_nombre = $('#tipo_nombre').val();
-			var estado = $('#estado').val();
-			var _token = $('#_token').val();
-            oSettings.jqXHR = $.ajax({
-				"dataType": 'json',
-                //"contentType": "application/json; charset=utf-8",
-                "type": "POST",
-                "url": sSource,
-                "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,tipo_nombre:tipo_nombre,estado:estado,
-						_token:_token
-                       },
-                "success": function (result) {
-                    fnCallback(result);
-                },
-                "error": function (msg, textStatus, errorThrown) {
-                    //location.href="login";
-                }
-            });
-        },
-
-        "aoColumnDefs":
-		[	
-			{
-			"mRender": function (data, type, row) {
-				var id = "";
-				if(row.id!= null)id = row.id;
-				return id;
-			},
-			"bSortable": false,
-			"aTargets": [0],
-			"className": "dt-center",
-			//"className": 'control'
-			},
-			/*{
-			"mRender": function (data, type, row) {
-				var nombre_comercial = "";
-				if(row.nombre_comercial!= null)nombre_comercial = row.nombre_comercial;
-				return nombre_comercial;
-			},
-			"bSortable": false,
-			"aTargets": [1]
-			},*/
-			{
-			"mRender": function (data, type, row) {
-				var tipo = "";
-				if(row.tipo!= null)tipo = row.tipo;
-				return tipo;
-			},
-			"bSortable": false,
-			"aTargets": [1],
-			"className": "dt-center",
-			},
-			{
-			"mRender": function (data, type, row) {
-				var denominacion = "";
-				if(row.denominacion!= null)denominacion = row.denominacion;
-				return denominacion;
-			},
-			"bSortable": false,
-			"aTargets": [2]
-			},
-			{
-			"mRender": function (data, type, row) {
-				var codigo = "";
-				if(row.codigo!= null)codigo = row.codigo;
-				return codigo;
-			},
-			"bSortable": false,
-			"aTargets": [3]
-			},
-			{
-			"mRender": function (data, type, row) {
-				var tipo_nombre = "";
-				if(row.tipo_nombre!= null)tipo_nombre = row.tipo_nombre;
-				return tipo_nombre;
-			},
-			"bSortable": false,
-			"aTargets": [4]
-			},
-			{
-			"mRender": function (data, type, row) {
-				var orden = "";
-				if(row.orden!= null)orden = row.orden;
-				return orden;
-			},
-			"bSortable": false,
-			"aTargets": [5]
-			},
-			{
-			"mRender": function (data, type, row) {
-				var estado = "";
-				if(row.estado == 1){
-					estado = "Activo";
-				}
-				if(row.estado == 0){
-					estado = "Eliminado";
-				}
-				return estado;
-			},
-			"bSortable": false,
-			"aTargets": [6]
-			},
-			{
-			"mRender": function (data, type, row) {
-				var estado = "";
-				var clase = "";
-				if(row.estado == 1){
-					estado = "Eliminar";
-					clase = "btn-danger";
-				}
-				if(row.estado == 0){
-					estado = "Activar";
-					clase = "btn-success";
-				}
-				
-				var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-				html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalTablaMaestra('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-				//html += '<a href="javascript:void(0)" onclick=eliminarMultaMantenimiento('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
-				
-				//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
-				
-				html += '</div>';
-				return html;
-				},
-				"bSortable": false,
-				"aTargets": [7],
-			},
-
-		]
-
-
-    });
-
-}
-
-function datatablenew2(){
-    var oTable1 = $('#tblTablaMaestra').dataTable({
-        "bServerSide": true,
-        "sAjaxSource": "/tabla_maestra/listar_tablaMaestra_ajax",
-        "bProcessing": true,
-        "sPaginationType": "full_numbers",
-        //"paging":false,
-        "bFilter": false,
-        "bSort": false,
-        "info": true,
-		//"responsive": true,
-        "language": {"url": "/js/Spanish.json"},
-        "autoWidth": false,
-        "bLengthChange": true,
-        "destroy": true,
-        "lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
-        "aoColumns": [
-                        {},
-        ],
-		"dom": '<"top">rt<"bottom"flpi><"clear">',
-        "fnDrawCallback": function(json) {
-            $('[data-toggle="tooltip"]').tooltip();
-        },
-
-        "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
-
-            var sEcho           = aoData[0].value;
-            var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
-            var iCantMostrar 	= aoData[4].value;
+			var anio = $('#anio').val();
+			var concepto = $('#concepto').val();
+			//var estado = $('#estado').val();
+			var mes = $('#mes').val();
 			
-			var denominacion = $('#denominacion').val();
-			var tipo_nombre = $('#tipo_nombre').val();
-			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
-                //"contentType": "application/json; charset=utf-8",
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,tipo_nombre:tipo_nombre,estado:estado,
+						anio:anio,concepto:concepto,
+						mes:mes,
 						_token:_token
                        },
                 "success": function (result) {
                     fnCallback(result);
+					
                 },
                 "error": function (msg, textStatus, errorThrown) {
-                    //location.href="login";
                 }
             });
         },
 
         "aoColumnDefs":
             [	
+			 	{
+                "mRender": function (data, type, row, meta) {	
+                	var numero_cap = "";
+					if(row.numero_cap!= null)numero_cap = row.numero_cap;
+					return numero_cap;
+                },
+                "bSortable": false,
+                "aTargets": [0]
+                },
 				{
                 "mRender": function (data, type, row) {
-                	var id = "";
-					if(row.id!= null)id = row.id;
-					return id;
-                },
-                "bSortable": false,
-                "aTargets": [0],
-				"className": "dt-center",
-				//"className": 'control'
-                },
-				/*{
-                "mRender": function (data, type, row) {
-                    var nombre_comercial = "";
-					if(row.nombre_comercial!= null)nombre_comercial = row.nombre_comercial;
-					return nombre_comercial;
-                },
-                "bSortable": false,
-                "aTargets": [1]
-                },*/
-                {
-                "mRender": function (data, type, row) {
-                	var tipo = "";
-					if(row.tipo!= null)tipo = row.tipo;
-					return tipo;
+                	var agremiado = "";
+					if(row.agremiado!= null)agremiado = row.agremiado;
+					return agremiado;
                 },
                 "bSortable": false,
                 "aTargets": [1],
-				"className": "dt-center",
+				},
+				{
+                "mRender": function (data, type, row) {
+					var concepto = "";
+					if(row.concepto!= null)concepto = row.concepto;
+					return concepto;
+                },
+                "bSortable": false,
+                "aTargets": [2],
+                },
+				{
+                "mRender": function (data, type, row) {
+					var plan = "";
+					if(row.plan!= null)plan = row.plan;
+					return plan;
+                },
+                "bSortable": false,
+                "aTargets": [3],
                 },
 				{
 				"mRender": function (data, type, row) {
-					var denominacion = "";
-					if(row.denominacion!= null)denominacion = row.denominacion;
-					return denominacion;
+					var edad = "";
+					if(row.edad!= null)edad = row.edad;
+					return edad;
 				},
 				"bSortable": false,
-				"aTargets": [2]
+				"aTargets": [4],
 				},
 				{
-					"mRender": function (data, type, row) {
-						var codigo = "";
-						if(row.codigo!= null)codigo = row.codigo;
-						return codigo;
-					},
-					"bSortable": false,
-					"aTargets": [3]
+				"mRender": function (data, type, row) {
+					var importe = "";
+					if(row.importe!= null)importe = row.importe;
+					return importe;
+				},
+				"bSortable": false,
+				"aTargets": [5],
 				},
 				{
-					"mRender": function (data, type, row) {
-						var tipo_nombre = "";
-						if(row.tipo_nombre!= null)tipo_nombre = row.tipo_nombre;
-						return tipo_nombre;
-					},
-					"bSortable": false,
-					"aTargets": [4]
-				},
+                "mRender": function (data, type, row) {
+                    var situacion = "";
+					if(row.situacion!= null)situacion = row.situacion;
+					return situacion;
+                },
+                "bSortable": false,
+                "aTargets": [6]
+                },
+                {
+                "mRender": function (data, type, row) {
+                	var email1 = "";
+					if(row.email1!= null)email1 = row.email1;
+					return email1;
+                },
+                "bSortable": false,
+                "aTargets": [7]
+                },
 				{
-					"mRender": function (data, type, row) {
-						var orden = "";
-						if(row.orden!= null)orden = row.orden;
-						return orden;
-					},
-					"bSortable": false,
-					"aTargets": [5]
-				},
+                "mRender": function (data, type, row) {
+                	var email2 = "";
+					if(row.email2!= null)email2 = row.email2;
+					return email2;
+                },
+                "bSortable": false,
+                "aTargets": [8]
+                },
 				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Pendiente";
-						}
-						if(row.estado == 0){
-							estado = "Pagado";
-						}
-						return estado;
-					},
-					"bSortable": false,
-					"aTargets": [6]
-				},
+                "mRender": function (data, type, row) {
+                	var telefono1 = "";
+					if(row.telefono1!= null)telefono1 = row.telefono1;
+					return telefono1;
+                },
+                "bSortable": false,
+                "aTargets": [9]
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var telefono2 = "";
+					if(row.telefono2!= null)telefono2 = row.telefono2;
+					return telefono2;
+                },
+                "bSortable": false,
+                "aTargets": [10]
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var celular1 = "";
+					if(row.celular1!= null)celular1 = row.celular1;
+					return celular1;
+                },
+                "bSortable": false,
+                "aTargets": [11]
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var celular2 = "";
+					if(row.celular2!= null)celular2 = row.celular2;
+					return celular2;
+                },
+                "bSortable": false,
+                "aTargets": [12]
+                },
             ]
     });
-
 }
 
 function fn_ListarBusqueda() {
