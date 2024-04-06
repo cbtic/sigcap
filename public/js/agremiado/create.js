@@ -94,6 +94,10 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
+
+	$('#frmDeudas #btnBuscarDeuda').click(function () {
+		fn_ListarBusqueda2();
+	});
 	
 	$('#fecha_colegiado').datepicker({
         autoclose: true,
@@ -2415,6 +2419,7 @@ function modalSolicitud(idSolicitud){
 function fn_ListarBusqueda() {
     datatablenew();
 };
+
 
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
     //fn_util_bloquearPantalla("Buscando");

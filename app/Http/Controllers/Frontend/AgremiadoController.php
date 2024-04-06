@@ -22,6 +22,8 @@ use App\Models\AgremiadoRole;
 use App\Models\ConcursoInscripcione;
 use App\Models\Locale;
 use App\Models\Suspensione;
+use App\Models\Concepto;
+use App\Models\Valorizacione;
 use Carbon\Carbon;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -1758,6 +1760,43 @@ class AgremiadoController extends Controller
 		return Excel::download($export, 'lista_agremiados.xlsx');
 		
     }
+
+	public function consulta_reporte_deuda(){
+
+		/*$agremiado_model = new Agremiado;
+		$agremiado = $agremiado_model->getTipoNombre();*/
+		$tablaMaestra_model = new TablaMaestra;
+		$concepto_model = new Concepto;
+
+		$concepto = $concepto_model->getConceptoAllDenominacion();
+		$mes = $tablaMaestra_model->getMaestroByTipo(116);
+		
+		return view('frontend.agremiado.all_deuda',compact('mes','concepto'));
+	
+	}
+
+	public function listar_reporte_deudas_ajax(Request $request){
+	
+		$valorizacion_model = new Valorizacione;
+		$p[]=$request->anio;
+		$p[]=$request->concepto;
+		$p[]=$request->mes;
+        $p[]=$request->estado;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $valorizacion_model->listar_reporte_deudas_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	}
 			
 }
 
@@ -1774,5 +1813,9 @@ class InvoicesExport implements FromArray
 	{
 		return $this->invoices;
 	}
+
 }
+
+
+
 

@@ -428,4 +428,8 @@ class Valorizacione extends Model
 		return $this->readFunctionPostgres('sp_listar_liquidacion_caja_paginado',$p);
     }
 
+    public function listar_reporte_deudas_ajax($p){
+		return $this->readFunctionPostgres('sp_listar_deudas_seguro_paginado',$p);
+    }
+
 }
