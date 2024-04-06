@@ -266,11 +266,12 @@ function fn_save(){
 	var id = $('#id_').val();
 	var id_comision_sesion = $('#id').val();
 	var id_delegado = $('#id_delegado').val();
+	var flag_titular_suplente = $('#flag_titular_suplente option:selected').val();
 	
     $.ajax({
 			url: "/sesion/send_delegado_sesion",
             type: "POST",
-            data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado},
+            data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado,flag_titular_suplente:flag_titular_suplente},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				datatablenew();

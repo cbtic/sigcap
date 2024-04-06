@@ -296,7 +296,7 @@ class AgremiadoController extends Controller
 		$agremiado->id_ubicacion = $request->id_ubicacion;
 		$agremiado->id_autoriza_tramite = $request->id_autoriza_tramite;
 		$agremiado->id_categoria = $request->id_categoria;
-		$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
+		//$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
 		$agremiado->desc_situacion_otro = $request->desc_situacion_otro;
 		$agremiado->fecha_fallecido = $request->fecha_fallecido;
 		
@@ -310,8 +310,20 @@ class AgremiadoController extends Controller
 			$agremiado->observacion_temp = NULL;
 		}
 		
+		$agremiado_model = new Agremiado;
+		
+		if($request->id_situacion==83){	
+			$agremiado_model->agremiado_cuota_fallecido('i',$request->id_agremiado,$request->fecha_fallecido);
+		}
+		
+		if($agremiado->id_situacion==83 && $request->id_situacion!=83){
+			$agremiado_model->agremiado_cuota_fallecido('d',$request->id_agremiado,"");
+		}
+		
 		//$agremiado->estado = 1;
+		$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
 		$agremiado->save();
+		
 		
 		
 	}

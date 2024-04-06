@@ -40,6 +40,13 @@ class Agremiado extends Model
         return $data[0]->sp_crud_agremiado_cuota_extranjero;
     }
 	
+	public function agremiado_cuota_fallecido($op,$id_agremiado,$fecha_fallecido) {
+		
+        $cad = "Select sp_crud_agremiado_cuota_fallecido(?,?,?)";
+        $data = DB::select($cad, array($op,$id_agremiado,$fecha_fallecido));
+        return $data[0]->sp_crud_agremiado_cuota_fallecido;
+    }
+	
 	function getAgremiadoAll(){
 		$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, desc_cliente nombre_completo,t1.id_tipo_documento 								
 		from personas t1 

@@ -521,6 +521,8 @@ class SesionController extends Controller
 	
 	public function send_delegado_sesion(Request $request){
 		
+		//exit($request->flag_titular_suplente);
+		
 		$id_user = Auth::user()->id;
 		
 		if($request->id == 0){
