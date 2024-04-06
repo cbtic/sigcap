@@ -70,7 +70,7 @@
                                 <a href="/afiliacion_seguro/consulta_afiliacion_seguro" class="dropdown-item">Afiliciaci&oacute;n a Seguro</a>
 								@endcan
 								@can('Reporte Deudas')
-                                <a href="/agremiado/consulta_reporte_deuda" class="dropdown-item">Reporte Deudas</a>
+                                <a href="/agremiado/consulta_reporte_deuda" class="dropdown-item">Reporte Deudas Seguros</a>
 								@endcan
 								
 						   </div>
