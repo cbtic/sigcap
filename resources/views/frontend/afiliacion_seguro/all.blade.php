@@ -187,7 +187,8 @@
                             <th>Apellidos y nombres</th>
                             <th>Seguro</th>
                             <th>Plan</th>
-                            <th>Monto</th>                            
+                            <th>Monto</th>
+                            <th>Moneda</th>
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

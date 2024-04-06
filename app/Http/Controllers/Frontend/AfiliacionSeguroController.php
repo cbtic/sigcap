@@ -236,7 +236,7 @@ class AfiliacionSeguroController extends Controller
 	public function obtener_plan($id){
 		
 		$seguroplan_model = new SegurosPlane();
-		$plan = $seguroplan_model->getPlanBySeguro($id);
+		$plan = $seguroplan_model->getSeguroById($id);
 		
 		echo json_encode($plan);
 	}

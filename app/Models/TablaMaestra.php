@@ -84,6 +84,11 @@ class TablaMaestra extends Model
         return $data;
     }
 
+    public function listar_tablaMaestra_ajax($p){
+
+        return $this->readFuntionPostgres('sp_listar_tabla_maestra_paginado',$p);
+
+    }
 
     public function readFuntionPostgres($function, $parameters = null){
 
@@ -99,6 +104,14 @@ class TablaMaestra extends Model
         $data = DB::select($cad);
         return $data;
 
+    }
+
+    function getTipoNombre(){
+
+        $cad = "select distinct tm.tipo::int ,tm.tipo_nombre from tabla_maestras tm order by 1 asc";
+    
+		$data = DB::select($cad);
+        return $data;
     }
 	
 }
