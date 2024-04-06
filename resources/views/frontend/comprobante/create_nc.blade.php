@@ -326,7 +326,7 @@
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-group">Tipo de Nota</label>
-                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" onChange="ActualizaDetalle()">
+                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" >
                                                                 <option value="">--Selecionar--</option>
                                                                 <?php
                                                                 foreach ($tipooperacion as $row) { ?>

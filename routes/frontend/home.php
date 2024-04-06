@@ -53,6 +53,7 @@ use App\Http\Controllers\Frontend\AsientoPlanillaController;
 use App\Http\Controllers\Frontend\ProyectoController;
 use App\Http\Controllers\Frontend\BeneficiarioController;
 use App\Http\Controllers\Frontend\AgremiadoRolesController;
+use App\Http\Controllers\Frontend\TablaMaestraController;
 
 /*
  * Frontend Controllers
@@ -661,5 +662,13 @@ Route::get('agremiado_rol/consulta_agremiado_rol', [AgremiadoRolesController::cl
 Route::post('agremiado_rol/listar_agremiado_rol_ajax', [AgremiadoRolesController::class, 'listar_agremiado_rol_ajax'])->name('agremiado_rol.listar_agremiado_rol_ajax');
 Route::get('coordinador_zonal/modal_informes/{id}', [CoordinadorZonalController::class, 'modal_informes'])->name('coordinador_zonal.modal_informes');
 Route::get('derecho_revision/modal_reintegro/{id}', [DerechoRevisionController::class, 'modal_reintegro'])->name('derecho_revision.modal_reintegro');
-Route::get('agremiado/exportar_listar_agremiado/{id_regional}/{numero_cap}/{numero_documento}/{agremiado}/{fecha_inicio}/{fecha_fin}/{id_situacion}', [AgremiadoController::class, 'exportar_listar_agremiado'])->name('agremiado.exportar_listar_agremiado');
+Route::get('agremiado/exportar_listar_agremiado/{id_regional}/{numero_cap}/{numero_documento}/{agremiado}/{fecha_inicio}/{fecha_fin}/{id_situacion}/{id_categoria}', [AgremiadoController::class, 'exportar_listar_agremiado'])->name('agremiado.exportar_listar_agremiado');
+Route::get('certificado/validez_constancia/{id}/{sw}', [CertificadoController::class, 'validez_constancia'])->name('certificado.validez_constancia');
+
+Route::get('tabla_maestra/consulta_tabla_maestra', [TablaMaestraController::class, 'consulta_tabla_maestra'])->name('tabla_maestra.consulta_tabla_maestra');
+Route::post('tabla_maestra/listar_tablaMaestra_ajax', [TablaMaestraController::class, 'listar_tablaMaestra_ajax'])->name('tabla_maestra.listar_tablaMaestra_ajax');
+Route::get('tabla_maestra/modal_tablaMaestra_nuevoTablaMaestra/{id}', [TablaMaestraController::class, 'modal_tablaMaestra_nuevoTablaMaestra'])->name('tabla_maestra.modal_tablaMaestra_nuevoTablaMaestra');
+Route::post('tabla_maestra/send_tablaMaestra_nuevoTablaMaestra', [TablaMaestraController::class, 'send_tablaMaestra_nuevoTablaMaestra'])->name('tabla_maestra.send_tablaMaestra_nuevoTablaMaestra');
+Route::get('tabla_maestra/eliminar_tablaMaestra/{id}/{estado}', [TablaMaestraController::class, 'eliminar_tablaMaestra'])->name('tabla_maestra.eliminar_tablaMaestra');
+
 

@@ -1,16 +1,10 @@
+//alert("ok");
+//jQuery.noConflict(true);
 
 $(document).ready(function () {
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
-	});
-		
-	$('#btnNuevo').click(function () {
-		modalCertificado(0);
-	});
-
-	$('#btnNuevoTipo3').click(function () {
-		modalCertificadoTipo3(0);
 	});
 
 	$('#denominacion').keypress(function(e){
@@ -18,16 +12,89 @@ $(document).ready(function () {
 			datatablenew();
 		}
 	});
+
+	$('#tipo_nombre').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		}
+	});
+
+	$('#estado').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
+	$('#btnNuevo').click(function () {
+		modalTablaMaestra(0);
+	});
 		
 	datatablenew();
+	/*	
+	$("#plan_id").select2();
+	$("#ubicacion_id").select2();
+	
+	$('#fecha_inicio').datepicker({
+        autoclose: true,
+		dateFormat: 'dd/mm/yy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
+	//$("#fecha_vencimiento").datepicker($.datepicker.regional["es"]);
+	$('#fecha_vencimiento').datepicker({
+        autoclose: true,
+        dateFormat: 'dd/mm/yy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	*/
+	
+	/*
+    $('#tblAlquiler').dataTable({
+    	"language": {
+    	"emptyTable": "No se encontraron resultados"
+    	}
+	});
+	*/
+	/*
+	$('#tblAlquiler').dataTable( {
+            "language": {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningun dato disponible en esta tabla",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "ultimo",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                },
+                "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        } );
+	*/
+
 
 	$(function() {
-		$('#modalSeguro #nombre_plan_').keyup(function() {
+		$('#modalEmpresaForm #apellido_paterno').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
 	$(function() {
-		$('#nombre').keyup(function() {
+		$('#modalEmpresaForm #apellido_materno').keyup(function() {
 			this.value = this.value.toLocaleUpperCase();
 		});
 	});
@@ -264,53 +331,40 @@ function obtenerPlanDetalle(){
 	
 }
 
-function modalCertificadoTipo3(id){
+/*
+function cargarAlquiler(){
+    
+    var empresa_id = $('#empresa_id').val();
+	if(empresa_id == "")empresa_id=0;
 	
-	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
-
+    $("#tblAlquiler tbody").html("");
 	$.ajax({
-			url: "/certificado/modal_certificado_tipo3/"+id,
-			type: "GET",
-			success: function (result) {
-					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
-			}
-	});
-
-}
-
-function modalCertificado(id){
-	
-	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
-
-	$.ajax({
-			url: "/certificado/modal_certificado/"+id,
+			url: "/alquiler/obtener_alquiler/"+empresa_id,
 			type: "GET",
 			success: function (result) {  
-					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
+					$("#tblAlquiler tbody").html(result);
+					//$('#tblAlquiler').dataTable();
 			}
 	});
 
 }
 
-function modalPlanes(id){
-	
-	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
+function cargarDevolucion(){
+    
+    
+    var numero_documento = $("#numero_documento").val();
+    $("#tblPago tbody").html("");
 	$.ajax({
-			url: "/seguro/modal_plan/"+id,
+			url: "/alquiler/obtener_devolucion/"+numero_documento,
 			type: "GET",
 			success: function (result) {  
-					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
+					$("#tblDevolucion tbody").html(result);
 			}
 	});
 
 }
+*/
 
 
 $('#modalEmpresaSaveBtn').click(function (e) {
@@ -375,10 +429,9 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 
 
 function datatablenew(){
-                      
-    var oTable1 = $('#tblCertificado').dataTable({
+    var oTable1 = $('#tblTablaMaestra').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/certificado/listar_certificado",
+        "sAjaxSource": "/tabla_maestra/listar_tablaMaestra_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -405,10 +458,9 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-            var cap = $('#cap_lista').val();
-			var agremiado = $('#denominacion').val();
+			var denominacion = $('#denominacion').val();
+			var tipo_nombre = $('#tipo_nombre').val();
 			var estado = $('#estado').val();
-			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -416,7 +468,174 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						agremiado:agremiado,cap:cap,estado:estado,
+						denominacion:denominacion,tipo_nombre:tipo_nombre,estado:estado,
+						_token:_token
+                       },
+                "success": function (result) {
+                    fnCallback(result);
+                },
+                "error": function (msg, textStatus, errorThrown) {
+                    //location.href="login";
+                }
+            });
+        },
+
+        "aoColumnDefs":
+		[	
+			{
+			"mRender": function (data, type, row) {
+				var id = "";
+				if(row.id!= null)id = row.id;
+				return id;
+			},
+			"bSortable": false,
+			"aTargets": [0],
+			"className": "dt-center",
+			//"className": 'control'
+			},
+			/*{
+			"mRender": function (data, type, row) {
+				var nombre_comercial = "";
+				if(row.nombre_comercial!= null)nombre_comercial = row.nombre_comercial;
+				return nombre_comercial;
+			},
+			"bSortable": false,
+			"aTargets": [1]
+			},*/
+			{
+			"mRender": function (data, type, row) {
+				var tipo = "";
+				if(row.tipo!= null)tipo = row.tipo;
+				return tipo;
+			},
+			"bSortable": false,
+			"aTargets": [1],
+			"className": "dt-center",
+			},
+			{
+			"mRender": function (data, type, row) {
+				var denominacion = "";
+				if(row.denominacion!= null)denominacion = row.denominacion;
+				return denominacion;
+			},
+			"bSortable": false,
+			"aTargets": [2]
+			},
+			{
+			"mRender": function (data, type, row) {
+				var codigo = "";
+				if(row.codigo!= null)codigo = row.codigo;
+				return codigo;
+			},
+			"bSortable": false,
+			"aTargets": [3]
+			},
+			{
+			"mRender": function (data, type, row) {
+				var tipo_nombre = "";
+				if(row.tipo_nombre!= null)tipo_nombre = row.tipo_nombre;
+				return tipo_nombre;
+			},
+			"bSortable": false,
+			"aTargets": [4]
+			},
+			{
+			"mRender": function (data, type, row) {
+				var orden = "";
+				if(row.orden!= null)orden = row.orden;
+				return orden;
+			},
+			"bSortable": false,
+			"aTargets": [5]
+			},
+			{
+			"mRender": function (data, type, row) {
+				var estado = "";
+				if(row.estado == 1){
+					estado = "Activo";
+				}
+				if(row.estado == 0){
+					estado = "Eliminado";
+				}
+				return estado;
+			},
+			"bSortable": false,
+			"aTargets": [6]
+			},
+			{
+			"mRender": function (data, type, row) {
+				var estado = "";
+				var clase = "";
+				if(row.estado == 1){
+					estado = "Eliminar";
+					clase = "btn-danger";
+				}
+				if(row.estado == 0){
+					estado = "Activar";
+					clase = "btn-success";
+				}
+				
+				var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+				html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalTablaMaestra('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+				html += '<a href="javascript:void(0)" onclick=eliminarMultaMantenimiento('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+				
+				//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
+				
+				html += '</div>';
+				return html;
+				},
+				"bSortable": false,
+				"aTargets": [7],
+			},
+
+		]
+
+
+    });
+
+}
+
+function datatablenew2(){
+    var oTable1 = $('#tblTablaMaestra').dataTable({
+        "bServerSide": true,
+        "sAjaxSource": "/tabla_maestra/listar_tablaMaestra_ajax",
+        "bProcessing": true,
+        "sPaginationType": "full_numbers",
+        //"paging":false,
+        "bFilter": false,
+        "bSort": false,
+        "info": true,
+		//"responsive": true,
+        "language": {"url": "/js/Spanish.json"},
+        "autoWidth": false,
+        "bLengthChange": true,
+        "destroy": true,
+        "lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
+        "aoColumns": [
+                        {},
+        ],
+		"dom": '<"top">rt<"bottom"flpi><"clear">',
+        "fnDrawCallback": function(json) {
+            $('[data-toggle="tooltip"]').tooltip();
+        },
+
+        "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
+
+            var sEcho           = aoData[0].value;
+            var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
+            var iCantMostrar 	= aoData[4].value;
+			
+			var denominacion = $('#denominacion').val();
+			var tipo_nombre = $('#tipo_nombre').val();
+			var estado = $('#estado').val();
+			var _token = $('#_token').val();
+            oSettings.jqXHR = $.ajax({
+				"dataType": 'json',
+                //"contentType": "application/json; charset=utf-8",
+                "type": "POST",
+                "url": sSource,
+                "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
+						denominacion:denominacion,tipo_nombre:tipo_nombre,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -441,82 +660,76 @@ function datatablenew(){
 				"className": "dt-center",
 				//"className": 'control'
                 },
-				
-				{
+				/*{
                 "mRender": function (data, type, row) {
-                	var numero_cap = "";
-					if(row.numero_cap!= null)numero_cap = row.numero_cap;
-					return numero_cap;
+                    var nombre_comercial = "";
+					if(row.nombre_comercial!= null)nombre_comercial = row.nombre_comercial;
+					return nombre_comercial;
                 },
-                "bSortable": true,
+                "bSortable": false,
                 "aTargets": [1]
-                },
-				
+                },*/
                 {
                 "mRender": function (data, type, row) {
-                	var agremiado = "";
-					if(row.agremiado!= null)agremiado = row.agremiado;
-					return agremiado;
+                	var tipo = "";
+					if(row.tipo!= null)tipo = row.tipo;
+					return tipo;
                 },
-                "bSortable": true,
-                "aTargets": [2]
+                "bSortable": false,
+                "aTargets": [1],
+				"className": "dt-center",
                 },
-				
 				{
-                "mRender": function (data, type, row) {
-                	var tipo_certificado = "";
-					if(row.tipo_certificado!= null)tipo_certificado = row.tipo_certificado;
-					return tipo_certificado;
-                },
-                "bSortable": true,
-                "aTargets": [3]
-                },
-				
+				"mRender": function (data, type, row) {
+					var denominacion = "";
+					if(row.denominacion!= null)denominacion = row.denominacion;
+					return denominacion;
+				},
+				"bSortable": false,
+				"aTargets": [2]
+				},
 				{
 					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Activo";
-						}
-						if(row.estado == 0){
-							estado = "Inactivo";
-						}
-						return estado;
+						var codigo = "";
+						if(row.codigo!= null)codigo = row.codigo;
+						return codigo;
+					},
+					"bSortable": false,
+					"aTargets": [3]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var tipo_nombre = "";
+						if(row.tipo_nombre!= null)tipo_nombre = row.tipo_nombre;
+						return tipo_nombre;
 					},
 					"bSortable": false,
 					"aTargets": [4]
 				},
 				{
 					"mRender": function (data, type, row) {
-						var estado = "";
-						var clase = "";
-						if(row.estado == 1){
-							estado = "Eliminar";
-							clase = "btn-danger";
-						}
-						if(row.estado == 0){
-							estado = "Activar";
-							clase = "btn-success";
-						}
-						
-						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalCertificado('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="valida_certificado('+row.id+')" ><i class="fa fa-edit"></i> Ver Certificado</button>';    
-						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
-						
-						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
-						
-						html += '</div>';
-						return html;
+						var orden = "";
+						if(row.orden!= null)orden = row.orden;
+						return orden;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [5]
 				},
-
+				{
+					"mRender": function (data, type, row) {
+						var estado = "";
+						if(row.estado == 1){
+							estado = "Pendiente";
+						}
+						if(row.estado == 0){
+							estado = "Pagado";
+						}
+						return estado;
+					},
+					"bSortable": false,
+					"aTargets": [6]
+				},
             ]
-
-
     });
 
 }
@@ -525,13 +738,13 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
-function modalEmpresa(id){
+function modalTablaMaestra(id){
 	
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/empresa/modal_empresa/"+id,
+			url: "/tabla_maestra/modal_tablaMaestra_nuevoTablaMaestra/"+id,
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
@@ -541,23 +754,7 @@ function modalEmpresa(id){
 
 }
 
-function modalResponsable(id){
-	
-	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
-
-	$.ajax({
-			url: "/afiliacion/modal_afiliacion_empresa/"+id,
-			type: "GET",
-			success: function (result) {  
-					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
-			}
-	});
-
-}
-
-function eliminar(id,estado){
+function eliminarMultaMantenimiento(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -569,20 +766,21 @@ function eliminar(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" el certificado?", 
+        message: "&iquest;Deseas "+act_estado+" la Multa?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar(id,estado_);
+                fn_eliminar_multa_mantenimiento(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar(id,estado){
+function fn_eliminar_multa_mantenimiento(id,estado){
 	
+	//alert(id,estado);
     $.ajax({
-            url: "/certificado/eliminar_certificado/"+id+"/"+estado,
+            url: "/multa/eliminar_multa_mantenimiento/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
@@ -590,261 +788,4 @@ function fn_eliminar(id,estado){
             }
     });
 }
-
-
-function modalCertificado_i(id){
-	
-	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
-
-	$.ajax({
-			url: "/certificado/certificado_vista/"+id,
-			type: "GET",
-			success: function (result) {  
-					$("#diveditpregOpc").html(result);
-					$('#openOverlayOpc').modal('show');
-			}
-	});
-	
-
-}
-
-function valida_certificado(id){
-	
-	/*var href = '/certificado/certificado_pdf/'+id;
-				window.open(href, '_blank');*/
-	$.ajax({
-		url: "/certificado/certificado_tipo/"+id,
-		type: "GET",
-		success: function (result) {
-			//var tipo_certificado="";
-			//tipo_certificado.val(result.tipo_certificado);
-			//alert(result);exit();
-			
-			
-			/*if (Array.isArray(result) && result.length > 0) {
-                var tipo_certificado2 = result[0].tipo_certificado;*/
-
-			//var tipo_certificado =2;
-			//var tipo_certificado = parseInt(tipo_certificado2);
-			//alert(result);exit();
-			var tipo_certificado = result[21];
-			//console.log('dato1',result[21]);exit();
-			//alert(tipo_certificado);exit();
-
-			//var tipo_certificado=tipo_certificado2.toString();
-
-			if(tipo_certificado=="1"){
-				certificado_tipo1_pdf(id);
-			}else if(tipo_certificado=="2"){
-				certificado_tipo2_pdf(id);
-			}else if(tipo_certificado=="3"){
-				certificado_tipo3_pdf(id);
-			}else if(tipo_certificado=="4"){
-				certificado_pdf(id);
-			}else if(tipo_certificado=="5"){
-				constancia_pdf(id);
-			}
-		//}
-		}
-	});
-
-}
-
-function certificado_tipo1_pdf(id){
-	var href = '/certificado/certificado_tipo1_pdf/'+id;
-	window.open(href, '_blank');
-}
-
-function certificado_tipo2_pdf(id){
-	var href = '/certificado/certificado_tipo2_pdf/'+id;
-	window.open(href, '_blank');
-}
-
-function certificado_tipo3_pdf(id){
-	var href = '/certificado/certificado_tipo3_pdf/'+id;
-	window.open(href, '_blank');
-}
-
-function certificado_pdf(id){
-	var href = '/certificado/certificado_pdf/'+id;
-	window.open(href, '_blank');
-}
-
-function constancia_pdf(id){
-	$.ajax({
-		url: "/certificado/validez_constancia/"+id,
-		type: "GET",
-		success: function (result) {
-			
-			if(result.sw=true){
-				var href = '/certificado/constancia_pdf/'+id;
-				window.open(href, '_blank');
-			}else{
-				bootbox.alert('No tiene pagos realizados en el presente ejercicio')	
-			}
-		
-		}
-	});
-}
-
-
-function Unidades(num){
-
-    switch(num)
-    {
-        case 1: return "UN";
-        case 2: return "DOS";
-        case 3: return "TRES";
-        case 4: return "CUATRO";
-        case 5: return "CINCO";
-        case 6: return "SEIS";
-        case 7: return "SIETE";
-        case 8: return "OCHO";
-        case 9: return "NUEVE";
-    }
-
-    return "";
-}//Unidades()
-
-function Decenas(num){
-
-    decena = Math.floor(num/10);
-    unidad = num - (decena * 10);
-
-    switch(decena)
-    {
-        case 1:
-            switch(unidad)
-            {
-                case 0: return "DIEZ";
-                case 1: return "ONCE";
-                case 2: return "DOCE";
-                case 3: return "TRECE";
-                case 4: return "CATORCE";
-                case 5: return "QUINCE";
-                default: return "DIECI" + Unidades(unidad);
-            }
-        case 2:
-            switch(unidad)
-            {
-                case 0: return "VEINTE";
-                default: return "VEINTI" + Unidades(unidad);
-            }
-        case 3: return DecenasY("TREINTA", unidad);
-        case 4: return DecenasY("CUARENTA", unidad);
-        case 5: return DecenasY("CINCUENTA", unidad);
-        case 6: return DecenasY("SESENTA", unidad);
-        case 7: return DecenasY("SETENTA", unidad);
-        case 8: return DecenasY("OCHENTA", unidad);
-        case 9: return DecenasY("NOVENTA", unidad);
-        case 0: return Unidades(unidad);
-    }
-}//Unidades()
-
-function DecenasY(strSin, numUnidades) {
-    if (numUnidades > 0)
-    return strSin + " Y " + Unidades(numUnidades)
-
-    return strSin;
-}//DecenasY()
-
-function Centenas(num) {
-    centenas = Math.floor(num / 100);
-    decenas = num - (centenas * 100);
-
-    switch(centenas)
-    {
-        case 1:
-            if (decenas > 0)
-                return "CIENTO " + Decenas(decenas);
-            return "CIEN";
-        case 2: return "DOSCIENTOS " + Decenas(decenas);
-        case 3: return "TRESCIENTOS " + Decenas(decenas);
-        case 4: return "CUATROCIENTOS " + Decenas(decenas);
-        case 5: return "QUINIENTOS " + Decenas(decenas);
-        case 6: return "SEISCIENTOS " + Decenas(decenas);
-        case 7: return "SETECIENTOS " + Decenas(decenas);
-        case 8: return "OCHOCIENTOS " + Decenas(decenas);
-        case 9: return "NOVECIENTOS " + Decenas(decenas);
-    }
-
-    return Decenas(decenas);
-}//Centenas()
-
-function Seccion(num, divisor, strSingular, strPlural) {
-    cientos = Math.floor(num / divisor)
-    resto = num - (cientos * divisor)
-
-    letras = "";
-
-    if (cientos > 0)
-        if (cientos > 1)
-            letras = Centenas(cientos) + " " + strPlural;
-        else
-            letras = strSingular;
-
-    if (resto > 0)
-        letras += "";
-
-    return letras;
-}//Seccion()
-
-function Miles(num) {
-    divisor = 1000;
-    cientos = Math.floor(num / divisor)
-    resto = num - (cientos * divisor)
-
-    strMiles = Seccion(num, divisor, "UN MIL", "MIL");
-    strCentenas = Centenas(resto);
-
-    if(strMiles == "")
-        return strCentenas;
-
-    return strMiles + " " + strCentenas;
-}//Miles()
-
-function Millones(num) {
-    divisor = 1000000;
-    cientos = Math.floor(num / divisor)
-    resto = num - (cientos * divisor)
-
-    strMillones = Seccion(num, divisor, "UN MILLON DE", "MILLONES DE");
-    strMiles = Miles(resto);
-
-    if(strMillones == "")
-        return strMiles;
-
-    return strMillones + " " + strMiles;
-}//Millones()
-
-function NumeroALetras(num) {
-    var data = {
-        numero: num,
-        enteros: Math.floor(num),
-        centavos: (((Math.round(num * 100)) - (Math.floor(num) * 100))),
-        letrasCentavos: "",
-        letrasMonedaPlural: '',//"PESOS", 'Dólares', 'Bolívares', 'etcs'
-        letrasMonedaSingular: '', //"PESO", 'Dólar', 'Bolivar', 'etc'
-
-        letrasMonedaCentavoPlural: "CENTAVOS",
-        letrasMonedaCentavoSingular: "CENTAVO"
-    };
-
-    if (data.centavos > 0) {
-        data.letrasCentavos = "CON " + (function (){
-            if (data.centavos == 1)
-                return Millones(data.centavos) + " " + data.letrasMonedaCentavoSingular;
-            else
-                return Millones(data.centavos) + " " + data.letrasMonedaCentavoPlural;
-            })();
-    };
-
-    if(data.enteros == 0)
-        return "CERO " + data.letrasMonedaPlural + " " + data.letrasCentavos;
-    if (data.enteros == 1)
-        return Millones(data.enteros) + " " + data.letrasMonedaSingular + " " + data.letrasCentavos;
-    else
-        return Millones(data.enteros) + " " + data.letrasMonedaPlural + " " + data.letrasCentavos;
-}//NumeroALetras()
 

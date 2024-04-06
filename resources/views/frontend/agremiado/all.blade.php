@@ -154,7 +154,7 @@
 							<option value="">--Regional--</option>
 							<?php
 							foreach ($region as $row) {?>
-							<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+							<option value="<?php echo $row->id?>" <?php if($row->id=='5')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 							<?php 
 							}
 							?>
