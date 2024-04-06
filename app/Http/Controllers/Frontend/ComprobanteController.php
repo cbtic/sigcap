@@ -931,8 +931,12 @@ class ComprobanteController extends Controller
         ])->get();
         //print_r($factura_detalles);
 
+        $model = new ComprobanteDetalle;
+        $comprobanteDetalle = $model->getMaestroByTipo(85);
+
         return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia'));
     }
+
 	public function listar_comprobante(Request $request){
 		$factura_model = new comprobante();
 		$p[]=$request->fecha_ini;

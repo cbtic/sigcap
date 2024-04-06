@@ -32,6 +32,7 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
+                --and v.exonerado = '0'
             order by v.fecha desc
              ".$filas."
 			";
@@ -54,6 +55,7 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
+                --and v.exonerado = '0'
             order by v.fecha desc
              ".$filas."
 			";
@@ -87,6 +89,7 @@ class Valorizacione extends Model
                 and c.id in (26411, 26412)
                 and v.estado = '1'            
                 and v.pagado = '0'
+                --and v.exonerado = '0'
             order by v.fecha desc
              ".$filas."
 			";
@@ -109,6 +112,7 @@ class Valorizacione extends Model
                 and c.id in (26411, 26412)
                 and v.estado = '1'            
                 and v.pagado = '0'
+                --and v.exonerado = '0'
             order by v.fecha desc
              ".$filas."
 			";
