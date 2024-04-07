@@ -75,7 +75,9 @@ class IngresoController extends Controller
 
         $SelFracciona = $request->SelFracciona;
 
-       //echo($SelFracciona);//exit();
+        $Exonerado = $request->Exonerado;
+
+      // echo($Exonerado);exit();
 
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
 
@@ -91,7 +93,7 @@ class IngresoController extends Controller
         if ($SelFracciona=="S"){
             $valorizacion = $valorizaciones_model->getValorizacionFrac($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
         }else{
-            $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+            $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas,$Exonerado);
         }
         
        

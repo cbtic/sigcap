@@ -276,8 +276,9 @@
                                                     <input type="hidden" readonly name="importe_pp" id="importe_pp" value="<?php echo !empty($concepto->importe) ? $concepto->importe : '0' ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo !empty($concepto->id_tipo_afectacion) ? $concepto->id_tipo_afectacion : '0' ?>" class="form-control form-control-sm">
 
-
                                                     <input type="hidden" readonly name="SelFracciona" id="SelFracciona" value="" class="form-control form-control-sm">
+
+                                                    <input type="hidden" readonly name="Exonerado" id="Exonerado" value="0" class="form-control form-control-sm">
 
                                                 </div>
                                             </div>
@@ -451,7 +452,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     <select name="cboTipoCuota_b" id="cboTipoCuota_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
                                                         <option value="" selected>Todas cuotas</option>
@@ -460,7 +461,10 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12">
+
+
+
+                                            <div class="col-lg-5 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     
                                                     <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" onchange="cargarValorizacion()"><br />
@@ -478,6 +482,14 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                                                <div class="form-group form-group-sm">
+                                                    <input class="form-check-input" type="checkbox"  id="chkExonerado"  value="false" onchange="">
+                                                    <label class="form-check-label">
+                                                        Exonerados
+                                                    </label>
+                                                </div>
+                                            </div>
 
 
                                         </div>

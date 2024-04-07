@@ -270,5 +270,16 @@ class PlanillaDelegadoController extends Controller
 		$planillaDelegadoDetalle->save();
 		
     }
+
+	public function generar_asiento_planilla(Request $request){
+
+		$asiento = $request->asiento;
+		
+		
+        $planillaDelegado_model = new PlanillaDelegado;
+		
+		$fondo_comun = $planillaDelegado_model->getGenerarAsientoPlanilla($asiento, $request->id_periodo_bus,$request->anio,$request->mes);
+
+    }
 	    
 }

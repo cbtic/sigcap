@@ -455,7 +455,8 @@ label.form-control-sm{
 													<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 														
 														<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-														<input class="btn btn-primary pull-rigth" value="Generar Asiento" type="button" id="btnGenerar" />
+														<input class="btn btn-primary pull-rigth" value="Asiento Provisión" type="button" id="btnGenerarProv" />
+														<input class="btn btn-primary pull-rigth" value="Asiento Cancelación" type="button" id="btnGenerarCanc" />
 														
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 													</div>

@@ -45,5 +45,11 @@ where pd.id=".$id;
         return $data[0];
     }
 	
+	public function getGenerarAsientoPlanilla($asiento,$id_periodo,$anio,$mes) {
+		
+        $cad = "Select sp_generar_asiento_planilla(?,?,?,?)";
+        $data = DB::select($cad, array($asiento, $id_periodo,$anio,$mes));
+        return $data[0]->sp_generar_asiento_planilla;
+    }
 	    
 }
