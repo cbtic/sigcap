@@ -35,6 +35,24 @@ $(document).ready(function () {
 
 	});
 
+	$("#chkExonerado").on('change', function() {
+		if ($(this).is(':checked')) {						
+		  $(this).attr('value', 'true');
+
+		  $('#Exonerado').val("1");
+
+		} else {
+		  $(this).attr('value', 'false');
+		  $('#Exonerado').val("0");
+		}
+		cargarValorizacion();
+
+		//alert($('#chkExonerado').val());
+		
+		
+	  });
+	  
+
 	$('#numero_documento').keypress(function (e) {
 		if (e.keyCode == 13) {
 			obtenerBeneficiario();
@@ -919,6 +937,7 @@ function cargarValorizacion(){
 	var periodo_pp = $('#periodo_pp').val();
 	var id_concepto_pp = $('#id_concepto_pp').val();
 
+
 	
 	$("#btnFracciona").prop('disabled', true);
 	$("#btnDescuento").prop('disabled', true);
@@ -1064,6 +1083,17 @@ function cargarDudoso(){
 
 
 function enviarTipo(tipo){
+
+	var exonerado = $('#Exonerado').val();
+
+	//alert(exonerado);
+
+	if (exonerado=='1'){		
+		Swal.fire("Cuentas Exoneradas!");
+		exit();
+	}
+	
+
 	if(tipo == 1)$('#TipoF').val("FTFT");
 	if(tipo == 2)$('#TipoF').val("BVBV");
 	if(tipo == 3)$('#TipoF').val("TKTK");
@@ -1430,7 +1460,12 @@ function modal_fraccionamiento(){
 	$('#SelFracciona').val("S");
 */
 	
+	var exonerado = $('#Exonerado').val("");
 
+	if (exonerado=='1'){
+		Swal.fire("Cuentas Exoneradas!");
+		exit();
+	}
 
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
@@ -1609,6 +1644,13 @@ function nd(id){
 
 function AplicarDescuento(){
 	
+	var exonerado = $('#Exonerado').val("");
+
+	if (exonerado=='1'){
+		Swal.fire("Cuentas Exoneradas!");
+		exit();
+	}
+
 	var msg = "";
 	var periodo_pp = $('#periodo_pp').val();
 	var id_concepto_pp = $('#id_concepto_pp').val();
@@ -1893,6 +1935,12 @@ function total_deuda(){
 function anular_fraccionamiento(){
 
 	//var id="";
+	var exonerado = $('#Exonerado').val("");
+
+	if (exonerado=='1'){
+		Swal.fire("Cuentas Exoneradas!");
+		exit();
+	}
 
 	var codigo_fraccionamiento="";
 

@@ -10,7 +10,7 @@ use DB;
 
 class Valorizacione extends Model
 {
-    function getValorizacion($tipo_documento,$id_persona,$periodo,$cuota,$concepto, $filas){  
+    function getValorizacion($tipo_documento,$id_persona,$periodo,$cuota,$concepto, $filas,$exonerado){  
         
         if($filas!="")$filas="limit ".$filas;   
 
@@ -20,7 +20,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto, 
-                codigo_fraccionamiento                
+                codigo_fraccionamiento, v.exonerado                
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -32,7 +32,7 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-                --and v.exonerado = '0'
+                and v.exonerado = $exonerado
             order by v.fecha desc
              ".$filas."
 			";
@@ -43,7 +43,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto,
-                codigo_fraccionamiento
+                codigo_fraccionamiento, v.exonerado
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -55,7 +55,7 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-                --and v.exonerado = '0'
+                and v.exonerado ilike '%".$exonerado."' 
             order by v.fecha desc
              ".$filas."
 			";
@@ -77,7 +77,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto, 
-                codigo_fraccionamiento                
+                codigo_fraccionamiento, v.exonerado                
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -100,7 +100,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto,
-                codigo_fraccionamiento
+                codigo_fraccionamiento, v.exonerado
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto

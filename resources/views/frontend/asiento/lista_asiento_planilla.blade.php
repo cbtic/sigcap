@@ -28,7 +28,10 @@
 
 
 		if ($asientoPlanilla) {
-			foreach ($asientoPlanilla as $key=>$row) { ?>
+			foreach ($asientoPlanilla as $key=>$row) { 
+				//$debe_ =$row->debe;
+				//$debe_ =str_replace(",","",number_format($debe));
+				?>
 				<tr style="font-size:13px">
 
 					<input type="hidden" name="asiento[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
@@ -44,11 +47,11 @@
 
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->cuenta ?></td>
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->cuenta_den ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo $row->debe ?></td>
-					<td class="text-right"  style="vertical-align:middle"><?php echo $row->haber ?></td>
+					<td class="text-right" style="vertical-align:middle"><?php echo round($row->debe,4) ?></td>
+					<td class="text-right"  style="vertical-align:middle"><?php echo round($row->haber,4) ?></td>
 					<td class="text-center" style="vertical-align:middle"><?php echo $row->id_moneda ?></td>
 					<td class="text-center"  style="vertical-align:middle"><?php echo $row->tipo_cambio ?></td>
-					<td class="text-right"  style="vertical-align:middle"><?php echo $row->equivalente ?></td>
+					<td class="text-right"  style="vertical-align:middle"><?php echo round($row->equivalente,2) ?></td>
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->id_tipo_documento ?></td>
 					<td class="text-center" style="vertical-align:middle"><?php echo $row->numero_comprobante ?></td>					
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->numero_ruc ?></td>
@@ -75,8 +78,8 @@
 		<tr style="font-size:13px">
 			<th class="text-left" style="vertical-align:middle" colspan="1">Totales Generales</th>
 			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"></th>
-			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $debe ?></th>
-			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $haber ?></th>			
+			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo round($debe,3) ?></th>
+			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo round($haber,3) ?></th>			
 			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"></th>
 			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"></th>
 		</tr>
