@@ -29,8 +29,8 @@ class AsientoPlanilla extends Model
 
         $cad = "select a.id, a.id_persona, c.denominacion  cuenta_den, p.numero_ruc, 
                     case when p.desc_cliente_sunat is null then p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres else p.desc_cliente_sunat end desc_cliente_sunat, a.cuenta, 
-                    case when a.debe = 0 then '' else a.debe end debe, 
-                    case when a.haber = 0 then '' else a.haber end haber,
+                    case when a.debe = 0 then 0 else a.debe end debe, 
+                    case when a.haber = 0 then 0 else a.haber end haber,
                     a.equivalente, 
                     a.glosa, a.centro_costo, a.presupuesto, a.codigo_financiero, a.medio_pago, a.id_tipo_documento, a.serie, a.numero, a.fecha_documento, 
                     a.fecha_vencimiento, a.id_moneda, a.tipo_cambio, a.id_estado_doc, a.estado, a.id_asiento_planilla, a.id_periodo_comision, a.id_periodo_comision_detalle,
