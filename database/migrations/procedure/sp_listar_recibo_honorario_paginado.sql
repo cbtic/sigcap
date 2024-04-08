@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_recibo_honorario_paginado(p_periodo character varying, p_anio character varying, p_mes character varying, p_numero_cap character varying, p_agremiado character varying, p_municipalidad character varying, p_situacion character varying, p_numero_comprobante character varying, p_fecha_inicio character varying, p_fecha_fin character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_recibo_honorario_paginado(p_periodo character varying, p_anio character varying, p_mes character varying, p_numero_cap character varying, p_agremiado character varying, p_municipalidad character varying, p_situacion character varying, p_numero_comprobante character varying, p_fecha_inicio character varying, p_fecha_fin character varying, p_provision character varying, p_cancelacion character varying, p_grupo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,7 +18,9 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 
-	v_campos=' pdd.id, pc.descripcion periodo, pd.periodo anio, pd.mes , a.numero_cap, tm.denominacion situacion, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres agremiado, p.numero_ruc ruc, c.denominacion municipalidad, pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado, pd.estado ';
+	v_campos=' pdd.id, pc.descripcion periodo, pd.periodo anio, pd.mes , a.numero_cap, tm.denominacion situacion, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres agremiado, p.numero_ruc ruc, c.denominacion municipalidad, pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado, pd.estado,pdd.id_grupo, 
+	(case when (select count(*) from asiento_planillas ap where ap.id_planilla_delegado_detalle = pdd.id and ap.id_tipo = 1 )>0 then ''Si'' else ''No'' end) provision,
+	(case when (select count(*) from asiento_planillas ap where ap.id_planilla_delegado_detalle = pdd.id and ap.id_tipo = 2 )>0 then ''Si'' else ''No'' end) cancelacion ';
 
 	v_tabla=' from planilla_delegados pd 
 	inner join planilla_delegado_detalles pdd on pdd.id_planilla = pd.id
@@ -81,6 +83,18 @@ begin
 
 	If p_estado<>'' Then
 	 v_where:=v_where||'And pd.estado = '''||p_estado||''' ';
+	End If;
+
+	If p_provision<>'' Then
+	 v_where:=v_where||'And (case when (select count(*) from asiento_planillas ap where ap.id_planilla_delegado_detalle = pdd.id and ap.id_tipo = 1 )>0 then ''Si'' else ''No'' end) = '''||p_provision||''' ';
+	End If;
+
+	If p_cancelacion<>'' Then
+	 v_where:=v_where||'And (case when (select count(*) from asiento_planillas ap where ap.id_planilla_delegado_detalle = pdd.id and ap.id_tipo = 2 )>0 then ''Si'' else ''No'' end) = '''||p_cancelacion||''' ';
+	End If;
+
+	If p_grupo<>'' Then
+	 v_where:=v_where||'And pdd.id_grupo = '''||p_grupo||''' ';
 	End If;
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;

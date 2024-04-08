@@ -277,8 +277,8 @@ function generarAsientoPlanilla(){
             type: "GET",
 			data: p,
             success: function (result) {
-                //if(result="success")obtenerPlanDetalle(id_plan);
-				cargarPlanillaDelegado();
+                //if(result="success")obtenerPlanDetalle(id_plan);				
+				fn_ListarBusqueda();
 				$('.loader').hide();
             }
     });
@@ -327,6 +327,11 @@ function datatablenew(){
 			var numero_comprobante = $('#numero_comprobante_bus').val();
 			var fecha_inicio = $('#fecha_inicio_bus').val();
 			var fecha_fin = $('#fecha_fin_bus').val();
+
+			var provision = $('#Provision_b').val();
+			var cancelacion = $('#cancelacion_b').val();
+			var grupo = '';
+
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -337,7 +342,7 @@ function datatablenew(){
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id:id,periodo:periodo,anio:anio,mes:mes,numero_cap:numero_cap,municipalidad:municipalidad,
 						agremiado:agremiado,situacion:situacion,numero_comprobante:numero_comprobante,
-						fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
+						fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,provision:provision,cancelacion:cancelacion,grupo:grupo,
 						_token:_token
                        },
                 "success": function (result) {
@@ -435,15 +440,6 @@ function datatablenew(){
 				"aTargets": [7]
 				},
 				{
-				"mRender": function (data, type, row) {
-					var numero_operacion = "";
-					if(row.numero_operacion!= null)numero_operacion = row.numero_operacion;
-					return numero_operacion;
-				},
-				"bSortable": false,
-				"aTargets": [8]
-				},
-				{
 					"mRender": function (data, type, row) {
 						var cancelado = "";
 						if(row.cancelado == 1){
@@ -455,7 +451,34 @@ function datatablenew(){
 						return cancelado;
 					},
 					"bSortable": false,
+					"aTargets": [8]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var id_grupo = "";
+						if(row.id_grupo!= null)id_grupo = row.id_grupo;
+						return id_grupo;
+					},
+					"bSortable": false,
 					"aTargets": [9]
+				},				
+				{
+					"mRender": function (data, type, row) {
+						var provision = "";
+						if(row.provision!= null)provision = row.provision;
+						return provision;
+					},
+					"bSortable": false,
+					"aTargets": [10]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var cancelacion = "";
+						if(row.cancelacion!= null)cancelacion = row.cancelacion;
+						return cancelacion;
+					},
+					"bSortable": false,
+					"aTargets": [11]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -480,7 +503,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [10],
+					"aTargets": [12],
 				},
 
             ]

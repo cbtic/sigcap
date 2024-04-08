@@ -457,8 +457,8 @@ label.form-control-sm{
 													<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 														
 														<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-														<input class="btn btn-primary pull-rigth" value="Asiento Provisión" type="button" id="btnGenerarProv" />
-														<input class="btn btn-primary pull-rigth" value="Asiento Cancelación" type="button" id="btnGenerarCanc" />
+														<input class="btn btn-info pull-rigth" value="Generar Asiento Provisión" type="button" id="btnGenerarProv" />
+														<input class="btn btn-primary pull-rigth" value="Generar Asiento Cancelación" type="button" id="btnGenerarCanc" />
 														
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 													</div>
@@ -526,7 +526,7 @@ label.form-control-sm{
 														<input id="fecha_vencimiento" name="fecha_vencimiento" class="form-control form-control-sm"  value="<?php //if($planillaDelegadoDetalle->fecha_comprobante!="")echo date('d-m-Y',strtotime($planillaDelegadoDetalle->fecha_comprobante))?>" type="text"  >
 													</div>
 													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-														<label for="chk_activar_numero_operacion">Cancelado</label>
+														<label for="chk_activar_numero_operacion">Abonado</label>
 														<input id="chk_activar_numero_operacion" type="checkbox">
 													</div>
 
@@ -562,7 +562,7 @@ label.form-control-sm{
 														<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
 													</div>	
 
-													<div class="col-lg-2 col-md-1-5 col-sm-12 col-xs-12">
+													<div class="col-lg-1 col-md-1-5 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="municipalidad_bus" name="municipalidad_bus" placeholder="Municipalidad">
 																
 													</div>	
@@ -571,29 +571,34 @@ label.form-control-sm{
 														<input class="form-control form-control-sm" id="numero_comprobante_bus" name="numero_comprobante_bus" placeholder="N&uacute;mero Comprobante">
 													</div>	-->
 
-													<div class="col-lg-1-5 col-md-2 col-sm-12 col-xs-12">
+													<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
 														<!--<input class="form-control form-control-sm" id="fecha_comprobante_bus" name="fecha_comprobante" placeholder="Fecha Comprobante">-->
 														<input id="fecha_inicio_bus" name="fecha_inicio_bus" class="form-control form-control-sm" placeholder="Fecha desde" type="text"  >
 													</div>	
 													
-													<div class="col-lg-1-5 col-md-2 col-sm-12 col-xs-12">
+													<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
 														<!--<input class="form-control form-control-sm" id="fecha_comprobante_bus" name="fecha_comprobante" placeholder="Fecha Comprobante">-->
 														<input id="fecha_fin_bus" name="fecha_fin_bus" class="form-control form-control-sm" placeholder="Fecha hasta" type="text"  >
-													</div>	
+													</div>
+													
+													
+													<div class="col-lg-2 col-md-1-5 col-sm-12 col-xs-12">
+														<select name="provision_b" id="provision_b" class="form-control form-control-sm">
+															<option value="">Todos Provisión</option>
+															<option value="Si">Si</option>
+															<option value="No">No</option>
+														</select>
+													</div>
 
-													<!--<div class="col-lg-2">
-														<div class="form-group">
-															<select name="situacion_bus" id="situacion_bus" class="form-control form-control-sm" onchange="">
-																<option value="">--Selecionar Situaci&oacute;n--</option>
-																<?php
-																//foreach ($situacion as $row) {?>
-																<option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$agremiado->id_situacion) echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
-																<?php
-																//}
-																?>
-															</select>
-														</div>
-													</div>	-->								
+													<div class="col-lg-2 col-md-1-5 col-sm-12 col-xs-12">
+														<select name="cancelacion_b" id="cancelacion_b" class="form-control form-control-sm">
+															<option value="">Todos Cancelación</option>
+															<option value="Si">Si</option>
+															<option value="No">No</option>
+														</select>
+													</div>
+
+						
 													
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 														<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar_" style="margin-left:20px" />
@@ -615,9 +620,11 @@ label.form-control-sm{
 															<th>Situaci&oacute;n</th>
 															<th>N&uacute;mero Comprobante</th>
 															<th>Fecha Comprobante</th>
-															<th>Fecha Vencimiento</th>
-															<th>N&uacute;mero Operaci&oacute;n</th>
-															<th>Cancelado</th>
+															<th>Fecha Vencimiento</th>															
+															<th>Abonado</th>
+															<th>Grupo</th>
+															<th>Asiento <br/>Provisión</th>
+															<th>Asiento <br/>Cancelación</th>
 															<th class="text-center">Acciones</th>
 														</tr>
 														</thead>

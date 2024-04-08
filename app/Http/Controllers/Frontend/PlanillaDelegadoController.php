@@ -223,6 +223,9 @@ class PlanillaDelegadoController extends Controller
 		$p[]=$request->numero_comprobante;
 		$p[]=$request->fecha_inicio;
 		$p[]=$request->fecha_fin;
+		$p[]=$request->provision;
+		$p[]=$request->cancelacion;
+		$p[]=$request->grupo;
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
