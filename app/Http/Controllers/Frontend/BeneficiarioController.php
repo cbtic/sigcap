@@ -79,7 +79,7 @@ class BeneficiarioController extends Controller
             $beneficiario = new Beneficiario();
 		}
 
-        $concepto = $concepto_model->getConceptoAllDenominacion();
+        $concepto = $concepto_model->getConceptoAllDenominacion2();
         $estado_concepto = $tablaMaestra_model->getMaestroByTipo(120);
         
         
