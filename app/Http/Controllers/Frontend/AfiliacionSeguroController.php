@@ -114,13 +114,10 @@ class AfiliacionSeguroController extends Controller
 			$datosafiliado=$afiliado_model->datos_afiliacion_seguro($id);
 
 			$cap_numero=$datosafiliado[0]->numero_cap;
-			$desc_cliente=$datosafiliado[0]->apellido_paterno . " " . $datosafiliado[0]->apellido_materno. ", " . $datosafiliado[0]->nombres;
-			$situacion=$datosafiliado[0]->denominacion;
+			$desc_cliente=$datosafiliado[0]->agremiado;
+			$situacion=$datosafiliado[0]->situacion;
 			$id_seguro=$datosafiliado[0]->id_seguro;
-			$id_plan = $datosafiliado[0]->id_plan;
-
-			
-			
+			$id_plan = $datosafiliado[0]->id_seguro;
 		} 
 		else{
 			$afiliado = new Seguro_afiliado;
@@ -181,7 +178,7 @@ class AfiliacionSeguroController extends Controller
 		$afiliacion->save();
 			
     }
-	
+
     public function send_afiliacion(Request $request){
 		$id_user = Auth::user()->id;
 
@@ -203,7 +200,7 @@ class AfiliacionSeguroController extends Controller
 
 		
 		$afiliacion->id_regional = $request->id_regional;
-        $afiliacion->id_plan = $request->id_plan;
+        $afiliacion->id_seguro = $request->id_plan;
 		$afiliacion->id_agremiado = $request->id_agremiado;
 		$afiliacion->fecha = $request->fecha;
 		$afiliacion->observaciones = $request->observaciones;
@@ -242,11 +239,11 @@ class AfiliacionSeguroController extends Controller
 		echo json_encode($plan);
 	}
 
-	public function obtener_parentesco($id_afiliacion,$id_agremiado){
+	public function obtener_parentesco($id_afiliacion,$id_agremiado,$id_seguro){
 
         $parentesco_model = new Seguro_afiliado;
         $sw = true;
-        $parentesco_lista = $parentesco_model->listar_parentesco_agremiado($id_afiliacion,$id_agremiado);
+        $parentesco_lista = $parentesco_model->listar_parentesco_agremiado($id_afiliacion,$id_agremiado,$id_seguro);
         //print_r($parentesco_lista);exit();
         return view('frontend.afiliacion_seguro.lista_parentesco',compact('parentesco_lista'));
 
@@ -259,9 +256,11 @@ class AfiliacionSeguroController extends Controller
 		$parentesco = $request->parentesco;
 		
 		$seguro_afiliado = Seguro_afiliado::find($request->id_afiliacion);
-		$id_plan = $seguro_afiliado->id_plan;
+		$id_seguro = $seguro_afiliado->id_seguro;
+		/*$seguro_plan = SegurosPlane::where("id_seguro",$id_seguro)->where("estado","1")->first();
+		$id_plan = $seguro_plan->id_plan;
 		$segurosPlan = SegurosPlane::find($id_plan);
-		$id_seguro = $segurosPlan->id_seguro;
+		$id_seguro = $segurosPlan->id_seguro;*/
 		$seguro = Seguro::find($id_seguro);
 		$id_concepto = $seguro->id_concepto;
 		
@@ -273,7 +272,7 @@ class AfiliacionSeguroController extends Controller
 			$seguro_afiliado_parentesco->id_familia = $parentesco[$key]["id_familia"];
 			$seguro_afiliado_parentesco->edad = $parentesco[$key]["edad"];
 			$seguro_afiliado_parentesco->sexo = $parentesco[$key]["sexo"];
-			$seguro_afiliado_parentesco->id_plan = $parentesco[$key]["id_plan"];
+			$seguro_afiliado_parentesco->id_plan= $parentesco[$key]["id_plan"];
 			$seguro_afiliado_parentesco->id_usuario_inserta = $id_user;
 			$seguro_afiliado_parentesco->save();
 			$id_seguro_afiliado_parentesco = $seguro_afiliado_parentesco->id;

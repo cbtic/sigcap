@@ -532,6 +532,7 @@ class SesionController extends Controller
 		if($request->flag_titular_suplente == 1){ //TITULAR
 		
 			$comisionDelegadoOld = ComisionDelegado::find($comisionSesionDelegado->id_delegado);
+			//echo $comisionDelegadoOld->id;exit();
 			$comisionDelegadoOld->estado = 0;
 			$comisionDelegadoOld->save();
 			
@@ -574,6 +575,16 @@ class SesionController extends Controller
 		$comisionSesionDelegado->estado = 1;
 		$comisionSesionDelegado->id_usuario_inserta = $id_user;
 		$comisionSesionDelegado->save();
+		
+		$comisionSesion = ComisionSesione::find($comisionSesionDelegado->id_comision_sesion);
+		$comisionSesionDelegado_model = new ComisionSesionDelegado();
+		$comisionSesionDelegados = $comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndFecha($comisionDelegadoOld->id_agremiado,$comisionSesion->fecha_programado,$request->fecha_inicio_sesion,$request->fecha_fin_sesion);
+		
+		foreach($comisionSesionDelegados as $row){
+			$comisionSesionDelegadoObj = ComisionSesionDelegado::find($row->id);
+			$comisionSesionDelegadoObj->id_delegado = $id_delegado;
+			$comisionSesionDelegadoObj->save();
+		}
 			
     }
 	

@@ -206,6 +206,8 @@
                                     <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
                                         <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscarDeuda" />
                                         
+                                        <input class="btn btn-sm btn-secondary float-rigth" value="Descargar" name="descargar" type="button" id="btnDescargarDeuda" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
+						
                                         <!--<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>-->
                 
                                     </div>

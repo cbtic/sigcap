@@ -296,7 +296,7 @@ class AgremiadoController extends Controller
 		$agremiado->id_ubicacion = $request->id_ubicacion;
 		$agremiado->id_autoriza_tramite = $request->id_autoriza_tramite;
 		$agremiado->id_categoria = $request->id_categoria;
-		$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
+		//$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
 		$agremiado->desc_situacion_otro = $request->desc_situacion_otro;
 		$agremiado->fecha_fallecido = $request->fecha_fallecido;
 		
@@ -310,8 +310,20 @@ class AgremiadoController extends Controller
 			$agremiado->observacion_temp = NULL;
 		}
 		
+		$agremiado_model = new Agremiado;
+		
+		if($request->id_situacion==83){	
+			$agremiado_model->agremiado_cuota_fallecido('i',$request->id_agremiado,$request->fecha_fallecido);
+		}
+		
+		if($agremiado->id_situacion==83 && $request->id_situacion!=83){
+			$agremiado_model->agremiado_cuota_fallecido('d',$request->id_agremiado,"");
+		}
+		
 		//$agremiado->estado = 1;
+		$agremiado->id_situacion = ($request->id_situacion!="")?$request->id_situacion:73;
 		$agremiado->save();
+		
 		
 		
 	}
@@ -1814,6 +1826,38 @@ class AgremiadoController extends Controller
 
 		echo json_encode($result);
 	}
+
+	public function exportar_lista_deudas($anio, $concepto, $mes) {
+		
+		if($anio==0)$anio = "";
+		if($concepto==0)$concepto = "";
+		if($mes==0)$mes = "";
+	
+		$valorizacion_model = new Valorizacione;
+		$p[]=$request->anio;
+		$p[]=$request->concepto;
+		$p[]=$request->mes;
+        $p[]=$request->estado;
+		$p[]=1;
+		$p[]=10000;
+		$data = $valorizacion_model->listar_reporte_deudas_ajax($p);
+	
+		$variable = [];
+		$n = 1;
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		array_push($variable, array("N","Numero CAP","Nombre Arquitecto","Concepto","Detalle de Afiliado", "Edad", "Importe", "Situacion", "Correo1", "Correo2", "Telefono1", "Telefono2", "Celular1", "Celular2"));
+		
+		foreach ($data as $r) {
+			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->concepto,$r->nombre_seguro,$r->edad, $r->monto, $r->situacion, $r->email1, $r->email2, $r->telefono1, $r->telefono2, $r->celular1, $r->celular2));
+		}
+		
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'lista_deudas.xlsx');
+		
+    }
 			
 }
 
