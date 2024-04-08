@@ -21,6 +21,11 @@ $(document).ready(function () {
 		}
 	});
 
+	$('#btnDescargarDeuda').on('click', function () {
+		DescargarArchivosDeuda()
+
+	});
+
 	$('#estado').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -513,9 +518,9 @@ function datatablenew(){
                 },
 				{
                 "mRender": function (data, type, row) {
-					var plan = "";
-					if(row.plan!= null)plan = row.plan;
-					return plan;
+					var nombre_seguro = "";
+					if(row.nombre_seguro!= null)nombre_seguro = row.nombre_seguro;
+					return nombre_seguro;
                 },
                 "bSortable": false,
                 "aTargets": [3],
@@ -531,9 +536,9 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var importe = "";
-					if(row.importe!= null)importe = row.importe;
-					return importe;
+					var monto = "";
+					if(row.monto!= null)monto = row.monto;
+					return monto;
 				},
 				"bSortable": false,
 				"aTargets": [5],
@@ -658,5 +663,23 @@ function fn_eliminar_multa_mantenimiento(id,estado){
 				datatablenew();
             }
     });
+}
+
+function DescargarArchivosDeuda(){
+		
+	var anio = $('#anio').val();
+	var concepto = $('#concepto').val();
+	var mes = $('#mes').val();
+	//var id_agremiado = 0;
+	//var id_regional = 0;
+	
+	if (anio == "")anio = 0;
+	if (concepto == "")concepto = 0;
+	if (mes == "")mes = 0;
+	//if (campo == "")campo = 0;
+	//if (orden == "")orden = 0;
+	
+	location.href = '/agremiado/exportar_lista_deudas/' + anio + '/' + concepto + '/' + mes;
+	
 }
 

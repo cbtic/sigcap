@@ -312,12 +312,22 @@ function datatablenew(){
                 },
 				{
 				"mRender": function (data, type, row) {
+					var ruc = "";
+					if(row.ruc!= null)ruc = row.ruc;
+					return ruc;
+				},
+				"bSortable": false,
+				"aTargets": [2],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
 					var municipalidad = "";
 					if(row.municipalidad!= null)municipalidad = row.municipalidad;
 					return municipalidad;
 				},
 				"bSortable": false,
-				"aTargets": [2],
+				"aTargets": [3],
 				"className": "dt-center",
 				},
 				{
@@ -327,7 +337,7 @@ function datatablenew(){
 					return situacion;
 				},
 				"bSortable": false,
-				"aTargets": [3]
+				"aTargets": [4]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -336,7 +346,7 @@ function datatablenew(){
 					return numero_comprobante;
 				},
 				"bSortable": false,
-				"aTargets": [4]
+				"aTargets": [5]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -348,7 +358,7 @@ function datatablenew(){
 					return fecha_comprobante;
 				},
 				"bSortable": false,
-				"aTargets": [5]
+				"aTargets": [6]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -360,7 +370,7 @@ function datatablenew(){
 					return fecha_vencimiento;
 				},
 				"bSortable": false,
-				"aTargets": [6]
+				"aTargets": [7]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -369,7 +379,7 @@ function datatablenew(){
 					return numero_operacion;
 				},
 				"bSortable": false,
-				"aTargets": [7]
+				"aTargets": [8]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -383,7 +393,7 @@ function datatablenew(){
 						return cancelado;
 					},
 					"bSortable": false,
-					"aTargets": [8]
+					"aTargets": [9]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -408,7 +418,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [10],
 				},
 
             ]
@@ -447,30 +457,32 @@ function editarRecibo(id){
 			//console.log(result[0].numero_cap);
 
 				limpiar();
-				if(result[0].fecha_comprobante==null)
+				if(result[0].ruc!=null)
 				{
-					$('#fecha_comprobante').val('');
+					if(result[0].fecha_comprobante==null)
+					{
+						$('#fecha_comprobante').val('');
+					}
+	
+					$('#id_recibo').val(result[0].id);
+					$('#numero_cap').val(result[0].numero_cap);
+					$('#nombres').val(result[0].agremiado);
+					$('#numero_comprobante').val(result[0].numero_comprobante);
+					$('#fecha_comprobante').val(result[0].fecha_comprobante.split(' ')[0]);
+					$('#fecha_vencimiento').val(result[0].fecha_vencimiento.split(' ')[0]);
+					$('#numero_operacion').val(result[0].numero_operacion);
+					
+					//var_dump(result[0].cancelado);exit;
+					if(result[0].cancelado == 1) {
+						$('#chk_activar_numero_operacion').prop('checked', true);
+						$('#numero_operacion').prop('readonly', false);
+					} else{
+						$('#chk_activar_numero_operacion').prop('checked', false);
+						$('#numero_operacion').prop('readonly', true);
+					}
+				}else {
+					bootbox.alert('El delegado no tiene RUC, coordine con el Área Gremial para que le ingrese el RUC.');
 				}
-
-				$('#id_recibo').val(result[0].id);
-				$('#numero_cap').val(result[0].numero_cap);
-				$('#nombres').val(result[0].agremiado);
-				$('#numero_comprobante').val(result[0].numero_comprobante);
-				$('#fecha_comprobante').val(result[0].fecha_comprobante.split(' ')[0]);
-				$('#fecha_vencimiento').val(result[0].fecha_vencimiento.split(' ')[0]);
-				$('#numero_operacion').val(result[0].numero_operacion);
-				
-				//var_dump(result[0].cancelado);exit;
-				if(result[0].cancelado == 1) {
-					$('#chk_activar_numero_operacion').prop('checked', true);
-					$('#numero_operacion').prop('readonly', false);
-				} else{
-					$('#chk_activar_numero_operacion').prop('checked', false);
-					$('#numero_operacion').prop('readonly', true);
-				}
-
-				
-				
         }
 			
 		

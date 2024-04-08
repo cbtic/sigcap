@@ -608,6 +608,7 @@ label.form-control-sm{
 														<tr style="font-size:13px">
 															<th>N&uacute;mero CAP</th>
 															<th>Nombre</th>
+															<th>RUC</th>
 															<th>Municipalidad</th>
 															<th>Situaci&oacute;n</th>
 															<th>N&uacute;mero Comprobante</th>
