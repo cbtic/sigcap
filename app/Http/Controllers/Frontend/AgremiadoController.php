@@ -1797,6 +1797,38 @@ class AgremiadoController extends Controller
 
 		echo json_encode($result);
 	}
+
+	public function exportar_lista_deudas($anio, $concepto, $mes) {
+		
+		if($anio==0)$anio = "";
+		if($concepto==0)$concepto = "";
+		if($mes==0)$mes = "";
+	
+		$valorizacion_model = new Valorizacione;
+		$p[]=$request->anio;
+		$p[]=$request->concepto;
+		$p[]=$request->mes;
+        $p[]=$request->estado;
+		$p[]=1;
+		$p[]=10000;
+		$data = $valorizacion_model->listar_reporte_deudas_ajax($p);
+	
+		$variable = [];
+		$n = 1;
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		array_push($variable, array("N","Numero CAP","Nombre Arquitecto","Concepto","Detalle de Afiliado", "Edad", "Importe", "Situacion", "Correo1", "Correo2", "Telefono1", "Telefono2", "Celular1", "Celular2"));
+		
+		foreach ($data as $r) {
+			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->concepto,$r->nombre_seguro,$r->edad, $r->monto, $r->situacion, $r->email1, $r->email2, $r->telefono1, $r->telefono2, $r->celular1, $r->celular2));
+		}
+		
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'lista_deudas.xlsx');
+		
+    }
 			
 }
 

@@ -152,7 +152,14 @@ $.mask.definitions['p'] = "[Mm]";
 
 	$(document).ready(function() {
 
-
+		$(document).ready(function(){
+        
+        if($('#id').val() > 0) {
+            $('#cap_').prop('readonly', true);
+			$('#fecha_').prop('readonly', true);
+			$('#id_seguro').prop('disabled', true);
+        }
+    });
 
 	});
 
@@ -302,7 +309,7 @@ $.mask.definitions['p'] = "[Mm]";
 
 										<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
 											<label class="control-label">Seguro</label>
-											<select name="id_seguro" id="id_seguro" class="form-control form-control-sm" onChange="obtenerPlan()">
+											<select name="id_seguro" id="id_seguro" class="form-control form-control-sm" onChange="">
 												<option value="">--Selecionar--</option>
 												<?php
 												foreach ($seguro as $row) { ?>

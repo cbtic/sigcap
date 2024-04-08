@@ -276,7 +276,7 @@ Route::get('afiliacion_seguro/obtener_agremiado/{id}', [AfiliacionSeguroControll
 Route::post('afiliacion_seguro/send_parentesco_fila', [AfiliacionSeguroController::class, 'send_parentesco_fila'])->name('afiliacion_seguro.send_parentesco_fila');
 //Route::get('afiliacion_seguro/obtener_parentesco/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
 //Route::get('afiliacion_seguro/obtener_parentesco/{id}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco');
-Route::get('afiliacion_seguro/obtener_parentesco/{id_afiliacion}/{id_agremiado}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
+Route::get('afiliacion_seguro/obtener_parentesco/{id_afiliacion}/{id_agremiado}/{id_seguro}', [AfiliacionSeguroController::class, 'obtener_parentesco'])->name('afiliacion_seguro.obtener_parentesco')->where('id_agremiado', '(.*)');
 
 Route::post('afiliacion_seguro/send_seguro_afiliado_parentesco', [AfiliacionSeguroController::class, 'send_seguro_afiliado_parentesco'])->name('afiliacion_seguro.send_seguro_afiliado_parentesco');
 
@@ -673,4 +673,5 @@ Route::get('tabla_maestra/eliminar_tablaMaestra/{id}/{estado}', [TablaMaestraCon
 Route::get('tabla_maestra/obtener_datos_tabla_maestra/{tipo_nombre}', [TablaMaestraController::class, 'obtener_datos_tabla_maestra'])->name('tabla_maestra.obtener_datos_tabla_maestra');
 Route::get('agremiado/consulta_reporte_deuda', [AgremiadoController::class, 'consulta_reporte_deuda'])->name('agremiado.consulta_reporte_deuda');
 Route::post('agremiado/listar_reporte_deudas_ajax', [AgremiadoController::class, 'listar_reporte_deudas_ajax'])->name('agremiado.listar_reporte_deudas_ajax');
+Route::get('agremiado/exportar_lista_deudas/{anio}/{concepto}/{mes}', [AgremiadoController::class, 'exportar_lista_deudas'])->name('agremiado.exportar_lista_deudas');
 

@@ -45,9 +45,8 @@ class SegurosPlane extends Model
 	
     function getSeguroById($id){
 
-        $cad = "select sa.id, s.nombre , sp.monto from seguro_afiliados sa 
-        inner join seguros_planes sp on sa.id_plan = sp.id 
-        inner join seguros s on sp.id_seguro = s.id
+        $cad = "select sa.id, s.nombre , (select sp3.monto from seguros_planes sp3 where sp3.id_seguro = s.id limit 1) monto from seguro_afiliados sa     
+        inner join seguros s on sa.id_seguro = s.id
         where sa.id='".$id."'";
     
 		$data = DB::select($cad);
