@@ -47,7 +47,7 @@
   
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->cuenta ?></td>
 					<td class="text-left"  style="vertical-align:middle"><?php echo $row->cuenta_den ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo round($row->debe,3,PHP_ROUND_HALF_UP) ?></td>
+					<td class="text-right" style="vertical-align:middle"><?php echo round($row->debe,3) ?></td>
 					<td class="text-right"  style="vertical-align:middle"><?php echo $row->haber ?></td>
 					<td class="text-center" style="vertical-align:middle"><?php echo $row->id_moneda ?></td>
 					<td class="text-center"  style="vertical-align:middle"><?php echo $row->tipo_cambio ?></td>
