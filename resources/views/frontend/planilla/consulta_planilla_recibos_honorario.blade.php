@@ -378,6 +378,8 @@ label.form-control-sm{
                         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
                         <input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php //echo $agremiado->id?>">
+
+						<input type="hidden" name="TipoAsiento" id="TipoAsiento" value="">
 						
                         <div class="row" id="divSolicitud">
 							

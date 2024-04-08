@@ -18,6 +18,19 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
+	$('#btnGenerarProv').click(function () {
+		$('#TipoAsiento').val("1");
+		generarAsientoPlanilla();
+	});
+
+	$('#btnGenerarCanc').click(function () {
+		$('#TipoAsiento').val("2");
+		generarAsientoPlanilla();
+	});
+	
+
+	
+
 	$('#agremiado_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -223,6 +236,55 @@ function generarPlanilla(){
 	});
 	
 }
+/*
+function generarAsientoPlanilla(){
+	
+	$.ajax({
+			url: "/asiento/generar_asiento_planilla",
+			
+			type: "POST",
+			data : $("#frmPlanilla").serialize(),
+			success: function (result) {
+					
+					if(result==false){
+						bootbox.alert("Asiento provisión ya esta registrado"); 
+						return false;
+					}
+					
+					cargarPlanillaDelegado();
+			}
+	});
+	
+}
+*/
+
+function generarAsientoPlanilla(){
+
+	var p = {};
+	p.anio =  $('#anio').val();
+	p.mes = $('#mes').val();
+	p.periodo  = $('#id_periodo').val();
+	p.tipo  = $('#TipoAsiento').val();
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+    $.ajax({
+            url: "/asiento/generar_asiento_planilla",
+            type: "GET",
+			data: p,
+            success: function (result) {
+                //if(result="success")obtenerPlanDetalle(id_plan);
+				cargarPlanillaDelegado();
+				$('.loader').hide();
+            }
+    });
+}
+
+
 
 function datatablenew(){
     var oTable1 = $('#tblReciboHonorario').dataTable({

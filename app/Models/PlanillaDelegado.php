@@ -51,5 +51,6 @@ where pd.id=".$id;
         $data = DB::select($cad, array($asiento, $id_periodo,$anio,$mes));
         return $data[0]->sp_generar_asiento_planilla;
     }
+    
 	    
 }
