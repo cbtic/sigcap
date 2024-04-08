@@ -508,22 +508,31 @@ function datatablenew(){
                 "aTargets": [1],
 				},
 				{
+				"mRender": function (data, type, row) {
+					var beneficiario = "";
+					if(row.beneficiario!= null)beneficiario = row.beneficiario;
+					return beneficiario;
+				},
+				"bSortable": false,
+				"aTargets": [2],
+				},
+				{
                 "mRender": function (data, type, row) {
 					var concepto = "";
 					if(row.concepto!= null)concepto = row.concepto;
 					return concepto;
                 },
                 "bSortable": false,
-                "aTargets": [2],
+                "aTargets": [3],
                 },
 				{
                 "mRender": function (data, type, row) {
-					var nombre_seguro = "";
-					if(row.nombre_seguro!= null)nombre_seguro = row.nombre_seguro;
-					return nombre_seguro;
+					var plan = "";
+					if(row.plan!= null)plan = row.plan;
+					return plan;
                 },
                 "bSortable": false,
-                "aTargets": [3],
+                "aTargets": [4],
                 },
 				{
 				"mRender": function (data, type, row) {
@@ -532,7 +541,7 @@ function datatablenew(){
 					return edad;
 				},
 				"bSortable": false,
-				"aTargets": [4],
+				"aTargets": [5],
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -541,7 +550,7 @@ function datatablenew(){
 					return monto;
 				},
 				"bSortable": false,
-				"aTargets": [5],
+				"aTargets": [6],
 				},
 				{
                 "mRender": function (data, type, row) {
@@ -550,7 +559,7 @@ function datatablenew(){
 					return situacion;
                 },
                 "bSortable": false,
-                "aTargets": [6]
+                "aTargets": [7]
                 },
                 {
                 "mRender": function (data, type, row) {
@@ -559,7 +568,7 @@ function datatablenew(){
 					return email1;
                 },
                 "bSortable": false,
-                "aTargets": [7]
+                "aTargets": [8]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -568,7 +577,7 @@ function datatablenew(){
 					return email2;
                 },
                 "bSortable": false,
-                "aTargets": [8]
+                "aTargets": [9]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -577,7 +586,7 @@ function datatablenew(){
 					return telefono1;
                 },
                 "bSortable": false,
-                "aTargets": [9]
+                "aTargets": [10]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -586,7 +595,7 @@ function datatablenew(){
 					return telefono2;
                 },
                 "bSortable": false,
-                "aTargets": [10]
+                "aTargets": [11]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -595,7 +604,7 @@ function datatablenew(){
 					return celular1;
                 },
                 "bSortable": false,
-                "aTargets": [11]
+                "aTargets": [12]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -604,7 +613,7 @@ function datatablenew(){
 					return celular2;
                 },
                 "bSortable": false,
-                "aTargets": [12]
+                "aTargets": [13]
                 },
             ]
     });
