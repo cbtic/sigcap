@@ -231,6 +231,7 @@ Route::get('ingreso/exportar_estado_cuenta/{tipo}/{afiliado}/{numero_documento}/
 Route::post('ingreso/listar_empresa_beneficiario_ajax', [IngresoController::class, 'listar_empresa_beneficiario_ajax'])->name('ingreso.listar_empresa_beneficiario_ajax');
 
 Route::post('ingreso/anula_fraccionamiento', [IngresoController::class, 'anula_fraccionamiento'])->name('ingreso.anula_fraccionamiento');
+Route::post('ingreso/exonerar_valorizacion', [IngresoController::class, 'exonerar_valorizacion'])->name('ingreso.exonerar_valorizacion');
 
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');

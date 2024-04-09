@@ -605,24 +605,14 @@
 
                                         @endhasanyrole
 
-                                        @hasanyrole('Administrator|Asuntos Gremiales|Asuntos Gremiales Jefe')
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group mb-0 clearfix">
-                                                    <input  class="btn btn-danger pull-rigth" value="EXONERAR" type="button" id="btnExonerar" disabled="disabled" onclick="ExonerarDeuda()" />
-                                                </div><!--form-group-->
-                                            </div><!--col-->
-                                        </div><!--row-->
-                                        @endhasanyrole
-
-                                        <br />
 
                                         @hasanyrole('Administrator|Asuntos Gremiales|Asuntos Gremiales Jefe')
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group mb-0 clearfix">
 
-                                                    <input class="btn btn-danger pull-rigth" value="EXONERAR" type="button" id="btnExonerar" disabled="disabled"  />
+                                                    <input style="display:none" class="btn btn-warning pull-rigth" value="EXONERAR" type="button" id="btnExonerarS" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
+                                                    <input style="display:none" class="btn btn-success pull-rigth" value="NO EXONERAR" type="button" id="btnExonerarN" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
 
                                                 </div><!--form-group-->
                                             </div><!--col-->
