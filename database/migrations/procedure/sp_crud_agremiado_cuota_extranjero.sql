@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_crud_agremiado_cuota_extranjero(p_op character varying, p_id_agremiado integer, p_fecha_ini character varying, p_fecha_fin character varying)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -34,6 +33,15 @@ begin
 	if p_op = 'i' then
 		
 		if p_fecha_fin='' then
+			
+			v_dia := to_char(p_fecha_ini::date,'dd')::int;
+			v_mes := to_char(p_fecha_ini::date,'mm')::int;
+			v_anio := to_char(p_fecha_ini::date,'yyyy')::int;
+		
+			if v_dia > 25 and v_mes!=12 then
+				v_mes:=v_mes+1;
+				p_fecha_ini='01-'||v_mes||'-'||v_anio;
+			end if;
 		
 			for entradas in 
 			select id from agremiado_cuotas where id_agremiado=p_id_agremiado
@@ -50,6 +58,24 @@ begin
 	
 		if p_fecha_fin!='' then
 			
+			v_dia := to_char(p_fecha_ini::date,'dd')::int;
+			v_mes := to_char(p_fecha_ini::date,'mm')::int;
+			v_anio := to_char(p_fecha_ini::date,'yyyy')::int;
+		
+			if v_dia > 25 and v_mes!=12 then
+				v_mes:=v_mes+1;
+				p_fecha_ini='01-'||v_mes||'-'||v_anio;
+			end if;
+		
+			v_dia := to_char(p_fecha_fin::date,'dd')::int;
+			v_mes := to_char(p_fecha_fin::date,'mm')::int;
+			v_anio := to_char(p_fecha_fin::date,'yyyy')::int;
+		
+			if v_dia > 25 and v_mes!=12 then
+				v_mes:=v_mes+1;
+				p_fecha_fin='01-'||v_mes||'-'||v_anio;
+			end if;
+		
 			update valorizaciones set exonerado='0' where /*id_modulo=2 and*/ pk_registro in(select id from agremiado_cuotas where id_agremiado=p_id_agremiado); 
 			update agremiado_cuotas set id_exonerado=0 where id_agremiado=p_id_agremiado;
 			

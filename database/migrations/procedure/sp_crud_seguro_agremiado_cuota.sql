@@ -35,13 +35,14 @@ begin
 	select a.id_persona,R.id_agremiado,id_familia,
 	(select sp2.id from seguros_planes sp2 where sp2.id_seguro = s.id limit 1) id_plan,1 id_moneda,
 	(select sp5.monto from seguros_planes sp5 where sp5.id_seguro = s.id limit 1) monto,id_concepto, s.nombre nombre_seguro,
-	(select sp3.fecha_inicio from seguros_planes sp3 where sp3.id_seguro = s.id limit 1) fecha_inicio,
+	--(select sp3.fecha_inicio from seguros_planes sp3 where sp3.id_seguro = s.id limit 1) fecha_inicio,
+	(select fecha from seguro_afiliados where id=s.id) fecha_inicio,
 	(select sp4.fecha_fin from seguros_planes sp4 where sp4.id_seguro = s.id limit 1) fecha_fin,nombres
 	
 	from(
 	select sa.id_agremiado, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres nombres,0 id_familia,id_seguro 
 	from seguro_afiliados sa 
-	inner join agremiados a on sa.id_agremiado = a.id
+	inner join agremiados a on sa.id_agremiado = a.id 
 	inner join personas p on a.id_persona = p.id
 	where sa.id = p_afiliacion
 	union all 
