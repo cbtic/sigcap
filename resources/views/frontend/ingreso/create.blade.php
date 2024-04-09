@@ -606,19 +606,24 @@
                                         @endhasanyrole
 
 
-                                        @hasanyrole('Administrator|Asuntos Gremiales|Asuntos Gremiales Jefe')
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group mb-0 clearfix">
 
-                                                    <input style="display:none" class="btn btn-warning pull-rigth" value="EXONERAR" type="button" id="btnExonerarS" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
-                                                    <input style="display:none" class="btn btn-success pull-rigth" value="NO EXONERAR" type="button" id="btnExonerarN" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
+                                        @hasanyrole('Asuntos Gremiales|Asuntos Gremiales Jefe')
+                                            <?php $rol_exonera = 1;?>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group mb-0 clearfix">
 
-                                                </div><!--form-group-->
-                                            </div><!--col-->
-                                        </div><!--row-->
+                                                        <input style="display:none" class="btn btn-warning pull-rigth" value="EXONERAR" type="button" id="btnExonerarS" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
+                                                        <input style="display:none" class="btn btn-success pull-rigth" value="NO EXONERAR" type="button" id="btnExonerarN" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
 
+                                                    </div><!--form-group-->
+                                                </div><!--col-->
+                                            </div><!--row-->
+                                        @else
+                                            <?php $rol_exonera = 0;?>
                                         @endhasanyrole
+
+                                        <input type="hidden" name="rol_exonera" id="rol_exonera" value="<?php echo $rol_exonera?>" />
 
                                         <div class="row">
                                             <div class="col">
