@@ -606,17 +606,12 @@ container: '#myModal modal-body'
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
-					
-					
-					
 					<div class="row"  style="padding-left:10px">
 
-
-						<div class="col-lg-12">
+						<div class="col-lg-5">
 							<div class="form-group">
 								<label for="ruc" class="control-label required-field form-control-sm">Ruc</label>
 								<input id="ruc" name="ruc" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" required type="text" >
-							    
 							</div>
 						</div>
 						
@@ -641,7 +636,7 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label for="email" class="control-label form-control-sm">Email</label>
 								<input id="email" name="email" class="form-control form-control-sm "  value="<?php echo $empresa->email?>" required type="text">																				
@@ -649,7 +644,7 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tel&eacute;fono</label>
 								<input id="telefono" name="telefono" class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" required type="text">																				

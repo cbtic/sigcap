@@ -281,11 +281,11 @@
                                 <input class="btn btn-success" value="Generar C&oacute;digo RU" type="button" id="btnNuevo" style="margin-left:15px"/>
                             </div>
 
-                            <div style="float:left;padding-top:7px">C&oacute;digo RU</div>
+                            <!--<div style="float:left;padding-top:7px">C&oacute;digo RU</div>
                                 <div style="float:left" class="col-lg-2 md-form md-outline input-with-post-icon">
                                 <input class="form-control form-control-sm" id="codigo_ru" name="codigo_ru" readonly="readonly">
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
 					</form>
