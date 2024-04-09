@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION public.sp_crud_agremiado_cuota_extranjero(p_id_agremiado integer, p_fecha_ini character varying, p_fecha_fin character varying)
+CREATE OR REPLACE FUNCTION public.sp_crud_agremiado_cuota_extranjero(p_op character varying, p_id_agremiado integer, p_fecha_ini character varying, p_fecha_fin character varying)
  RETURNS character varying
  LANGUAGE plpgsql
 AS $function$
@@ -31,42 +31,52 @@ begin
 	
 	idp:=0;
 	
-	if p_fecha_fin='' then
-	
-		for entradas in 
-		select id from agremiado_cuotas where id_agremiado=p_id_agremiado
-		and fecha_venc_pago::date>=p_fecha_ini::date
-		loop
-			update valorizaciones set exonerado='1' where /*id_modulo=2 and*/ pk_registro=entradas.id;
-		end loop;
+	if p_op = 'i' then
 		
-		update agremiado_cuotas set id_exonerado=1 
-		where id_agremiado=p_id_agremiado
-		and fecha_venc_pago::date>=p_fecha_ini::date;
+		if p_fecha_fin='' then
+		
+			for entradas in 
+			select id from agremiado_cuotas where id_agremiado=p_id_agremiado
+			and fecha_venc_pago::date>=p_fecha_ini::date
+			loop
+				update valorizaciones set exonerado='1' where /*id_modulo=2 and*/ pk_registro=entradas.id;
+			end loop;
+			
+			update agremiado_cuotas set id_exonerado=1 
+			where id_agremiado=p_id_agremiado
+			and fecha_venc_pago::date>=p_fecha_ini::date;
+		
+		end if;
 	
+		if p_fecha_fin!='' then
+			
+			update valorizaciones set exonerado='0' where /*id_modulo=2 and*/ pk_registro in(select id from agremiado_cuotas where id_agremiado=p_id_agremiado); 
+			update agremiado_cuotas set id_exonerado=0 where id_agremiado=p_id_agremiado;
+			
+			for entradas in 
+			select id from agremiado_cuotas where id_agremiado=p_id_agremiado
+			and fecha_venc_pago::date>=p_fecha_ini::date
+			and fecha_venc_pago::date<=p_fecha_fin::date
+			
+			loop
+				update valorizaciones set exonerado='1' where /*id_modulo=2 and*/ pk_registro=entradas.id;
+			end loop;
+			
+			update agremiado_cuotas set id_exonerado=1 
+			where id_agremiado=p_id_agremiado
+			and fecha_venc_pago::date>=p_fecha_ini::date
+			and fecha_venc_pago::date<=p_fecha_fin::date;
+		
+		end if;
+
 	end if;
 
-	if p_fecha_fin!='' then
+	if p_op = 'd' then
 		
 		update valorizaciones set exonerado='0' where /*id_modulo=2 and*/ pk_registro in(select id from agremiado_cuotas where id_agremiado=p_id_agremiado); 
 		update agremiado_cuotas set id_exonerado=0 where id_agremiado=p_id_agremiado;
-		
-		for entradas in 
-		select id from agremiado_cuotas where id_agremiado=p_id_agremiado
-		and fecha_venc_pago::date>=p_fecha_ini::date
-		and fecha_venc_pago::date<=p_fecha_fin::date
-		
-		loop
-			update valorizaciones set exonerado='1' where /*id_modulo=2 and*/ pk_registro=entradas.id;
-		end loop;
-		
-		update agremiado_cuotas set id_exonerado=1 
-		where id_agremiado=p_id_agremiado
-		and fecha_venc_pago::date>=p_fecha_ini::date
-		and fecha_venc_pago::date<=p_fecha_fin::date;
 	
 	end if;
-
 
 	return idp;
 	/*EXCEPTION

@@ -344,7 +344,16 @@ br {
                                                             @foreach ($factura_detalles as $factura_detalle)
                                                             <tr id="fila{{ $loop->iteration }}">
                                                                 <td class="text-center">
-                                                                    {{ $factura_detalle->cantidad }}</td>
+                                                                    {{ $factura_detalle->cantidad }} 
+                                                                    
+                                                                    @if($factura_detalle->id_concepto ==="26475")
+                                                                        {{" Revisiones "}}
+                                                                    @endif
+                                                                    
+                                                            
+                                                                    
+                                                                
+                                                                </td>
                                                                 <td class="text-left">
                                                                     {{ $factura_detalle->descripcion }}
                                                                 </td>

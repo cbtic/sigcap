@@ -75,7 +75,9 @@ class IngresoController extends Controller
 
         $SelFracciona = $request->SelFracciona;
 
-       //echo($SelFracciona);//exit();
+        $Exonerado = $request->Exonerado;
+
+      // echo($Exonerado);exit();
 
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
 
@@ -91,7 +93,7 @@ class IngresoController extends Controller
         if ($SelFracciona=="S"){
             $valorizacion = $valorizaciones_model->getValorizacionFrac($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
         }else{
-            $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+            $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas,$Exonerado);
         }
         
        
@@ -688,6 +690,39 @@ class IngresoController extends Controller
         
 		return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 		*/
+    }
+
+    public function exonerar_valorizacion(Request $request){
+        $msg = "";
+        $id_user = Auth::user()->id;
+
+        //print_r($request->comprobante_detalle); exit();
+        $opcion = $request->Exonerado; 
+
+        foreach($request->comprobante_detalle as $key=>$val){
+
+            $chek = $val['chek'];
+            $id = $val['id'];
+            
+            if($chek==1){
+                if($opcion=="0"){
+                    $valorizacion = Valorizacione::find($id);            
+                    $valorizacion-> exonerado = "1";
+                    $valorizacion-> id_usuario_actualiza = $id_user;                    
+                    $valorizacion->save();  
+                }
+
+                if($opcion=="1"){
+                    $valorizacion = Valorizacione::find($id);            
+                    $valorizacion-> id_usuario_actualiza = $id_user;
+                    $valorizacion-> exonerado = "0";
+                    $valorizacion->save();  
+                }
+
+            }
+                    
+        }   
+    
     }
 
 }

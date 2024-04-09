@@ -35,6 +35,37 @@ $(document).ready(function () {
 
 	});
 
+	$("#chkExonerado").on('change', function() {
+		if ($(this).is(':checked')) {						
+		  $(this).attr('value', 'true');
+
+		  $('#Exonerado').val("1");
+
+		  $("#btnExonerarS").hide();
+		  $("#btnExonerarN").show();
+
+		} else {
+		  $(this).attr('value', 'false');
+		  $('#Exonerado').val("0");
+
+		  $("#btnExonerarN").hide();
+		  $("#btnExonerarS").show();
+
+		}
+		cargarValorizacion();
+
+		//alert($('#chkExonerado').val());	
+	  });
+
+	$('#btnExonerarS').click(function () {
+		//modalPersona(0);
+	});
+	
+	$('#btnExonerarN').click(function () {
+		//modalPersona(0);
+	});
+	  
+
 	$('#numero_documento').keypress(function (e) {
 		if (e.keyCode == 13) {
 			obtenerBeneficiario();
@@ -211,8 +242,12 @@ function cargarcboPeriodo(){
 
 
 function calcular_total(obj){
+
+	var rol_exonera = $('#rol_exonera').val();
+
+	//alert(rol_exonera);
 	
-	if(id_caja_usuario=="0"){
+	if(id_caja_usuario=="0" && rol_exonera=="0"){
 		bootbox.alert("Debe seleccionar una Caja disponible");
 		$(obj).prop("checked",false);
 		return false;
@@ -318,6 +353,19 @@ function calcular_total(obj){
 
 			$("#btnFactura").prop('disabled', false);
 		}
+
+
+		var exonerado = $('#Exonerado').val();
+		$("#btnExonerarS").prop('disabled', true);
+		$("#btnExonerarN").prop('disabled', true);
+		
+		if(exonerado=="0"){
+			$("#btnExonerarS").prop('disabled', false);			
+		}else{
+			$("#btnExonerarN").prop('disabled', false);			
+		}
+
+
 	}
 	
 
@@ -673,6 +721,14 @@ function obtenerBeneficiario(){
 	$('#deudaTotal').val("0");
 
 	$('#SelFracciona').val("");
+
+	$("#btnExonerarN").hide();
+	$("#btnExonerarS").show();
+	$("#btnExonerarS").prop('disabled', true);
+	$("#btnExonerarN").prop('disabled', true);
+
+	$("#chkExonerado").prop('checked', false);
+	$('#Exonerado').val("0");
 	
 	
 	
@@ -873,6 +929,8 @@ function cargarValorizacion(){
 	var numero_documento =$("#numero_documento").val();
 	if (numero_documento=="")exit();
 
+	$("#btnExonerarS").prop('disabled', true);
+	$("#btnExonerarN").prop('disabled', true);
 	
 
 	//cargarcboPeriodo();
@@ -918,6 +976,7 @@ function cargarValorizacion(){
 
 	var periodo_pp = $('#periodo_pp').val();
 	var id_concepto_pp = $('#id_concepto_pp').val();
+
 
 	
 	$("#btnFracciona").prop('disabled', true);
@@ -1064,6 +1123,17 @@ function cargarDudoso(){
 
 
 function enviarTipo(tipo){
+
+	var exonerado = $('#Exonerado').val();
+
+	//alert(exonerado);
+
+	if (exonerado=='1'){		
+		Swal.fire("Cuentas Exoneradas!");
+		exit();
+	}
+	
+
 	if(tipo == 1)$('#TipoF').val("FTFT");
 	if(tipo == 2)$('#TipoF').val("BVBV");
 	if(tipo == 3)$('#TipoF').val("TKTK");
@@ -1430,7 +1500,12 @@ function modal_fraccionamiento(){
 	$('#SelFracciona').val("S");
 */
 	
+	var exonerado = $('#Exonerado').val("");
 
+	if (exonerado=='1'){
+		Swal.fire("Cuentas Exoneradas!");
+		exit();
+	}
 
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
@@ -1609,6 +1684,13 @@ function nd(id){
 
 function AplicarDescuento(){
 	
+	var exonerado = $('#Exonerado').val("");
+
+	if (exonerado=='1'){
+		Swal.fire("Cuentas Exoneradas!");
+		exit();
+	}
+
 	var msg = "";
 	var periodo_pp = $('#periodo_pp').val();
 	var id_concepto_pp = $('#id_concepto_pp').val();
@@ -1893,6 +1975,12 @@ function total_deuda(){
 function anular_fraccionamiento(){
 
 	//var id="";
+	var exonerado = $('#Exonerado').val("");
+
+	if (exonerado=='1'){
+		Swal.fire("Cuentas Exoneradas!");
+		exit();
+	}
 
 	var codigo_fraccionamiento="";
 
@@ -1939,4 +2027,41 @@ function fn_nota_credito(id){
 			}
 	});
 	//cargarConceptos();
+}
+
+
+
+function fn_exonerar_valorizacion(){
+
+	var exonerado = $('#Exonerado').val();
+	var mensaje = "";
+
+	if(exonerado==0){
+		mensaje = "¿Esta seguro de exonerar la cuenta?"
+	}else{
+		mensaje = "¿Esta seguro de quitar la exoneración la cuenta?"
+	}
+
+	Swal.fire({
+		title: 'Mensaje',
+		text: mensaje,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Si'
+	  }).then((result) => {
+			if (result.value) {
+				$.ajax({
+					url: "/ingreso/exonerar_valorizacion",
+					type: "POST",
+					data : $("#frmValorizacion").serialize()+"&tipo=",
+					success: function (result) {  
+							cargarValorizacion();
+					}
+				});
+			}
+	  });
+    
+
 }

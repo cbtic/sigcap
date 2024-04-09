@@ -29,9 +29,9 @@ class AsientoPlanilla extends Model
 
         $cad = "select a.id, a.id_persona, c.denominacion  cuenta_den, p.numero_ruc, 
                     case when p.desc_cliente_sunat is null then p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres else p.desc_cliente_sunat end desc_cliente_sunat, a.cuenta, 
-                    case when a.debe = 0 then '' else round(a.debe::numeric,2)::varchar end debe, 
-                    case when a.haber = 0 then '' else round(a.haber::numeric,2)::varchar end haber,
-                    case when a.debe = 0 then round((a.haber/a.tipo_cambio)::numeric,2) else round((a.debe/a.tipo_cambio)::numeric,2) end equivalente, 
+                    case when a.debe = 0 then 0 else a.debe end debe, 
+                    case when a.haber = 0 then 0 else a.haber end haber,
+                    a.equivalente, 
                     a.glosa, a.centro_costo, a.presupuesto, a.codigo_financiero, a.medio_pago, a.id_tipo_documento, a.serie, a.numero, a.fecha_documento, 
                     a.fecha_vencimiento, a.id_moneda, a.tipo_cambio, a.id_estado_doc, a.estado, a.id_asiento_planilla, a.id_periodo_comision, a.id_periodo_comision_detalle,
                     case when a.id_tipo = 1 then 'PROVISION ' else 'CANCELACION' end tipo, a.orden, a.numero_comprobante, a.id_grupo
@@ -52,13 +52,15 @@ class AsientoPlanilla extends Model
         return $data;
     }
 
-    public function generar_asiento_planilla($periodo, $anio, $mes) {
+    public function generar_asiento_planilla($tipo, $periodo, $anio, $mes) {
 
-        $cad = "Select  sp_generar_asiento_planilla(?, ?, ?)";
+        $cad = "Select  sp_generar_asiento_planilla(?, ?, ?, ?)";
      
-		$data = DB::select($cad, array($periodo, $anio, $mes ));
+		$data = DB::select($cad, array($tipo, $periodo, $anio, $mes ));
         return $data[0]->sp_generar_asiento_planilla;
     }
+
+
 
     public function readFunctionPostgres($function, $parameters = null){
 	

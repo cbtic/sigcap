@@ -223,6 +223,9 @@ class PlanillaDelegadoController extends Controller
 		$p[]=$request->numero_comprobante;
 		$p[]=$request->fecha_inicio;
 		$p[]=$request->fecha_fin;
+		$p[]=$request->provision;
+		$p[]=$request->cancelacion;
+		$p[]=$request->grupo;
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -269,6 +272,17 @@ class PlanillaDelegadoController extends Controller
 		$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
 		$planillaDelegadoDetalle->save();
 		
+    }
+
+	public function generar_asiento_planilla(Request $request){
+
+		$asiento = $request->asiento;
+		
+		
+        $planillaDelegado_model = new PlanillaDelegado;
+		
+		$fondo_comun = $planillaDelegado_model->getGenerarAsientoPlanilla($asiento, $request->id_periodo_bus,$request->anio,$request->mes);
+
     }
 	    
 }

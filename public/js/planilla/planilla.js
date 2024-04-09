@@ -18,6 +18,19 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
+	$('#btnGenerarProv').click(function () {
+		$('#TipoAsiento').val("1");
+		generarAsientoPlanilla();
+	});
+
+	$('#btnGenerarCanc').click(function () {
+		$('#TipoAsiento').val("2");
+		generarAsientoPlanilla();
+	});
+	
+
+	
+
 	$('#agremiado_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -223,6 +236,55 @@ function generarPlanilla(){
 	});
 	
 }
+/*
+function generarAsientoPlanilla(){
+	
+	$.ajax({
+			url: "/asiento/generar_asiento_planilla",
+			
+			type: "POST",
+			data : $("#frmPlanilla").serialize(),
+			success: function (result) {
+					
+					if(result==false){
+						bootbox.alert("Asiento provisión ya esta registrado"); 
+						return false;
+					}
+					
+					cargarPlanillaDelegado();
+			}
+	});
+	
+}
+*/
+
+function generarAsientoPlanilla(){
+
+	var p = {};
+	p.anio =  $('#anio').val();
+	p.mes = $('#mes').val();
+	p.periodo  = $('#id_periodo').val();
+	p.tipo  = $('#TipoAsiento').val();
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+    $.ajax({
+            url: "/asiento/generar_asiento_planilla",
+            type: "GET",
+			data: p,
+            success: function (result) {
+                //if(result="success")obtenerPlanDetalle(id_plan);				
+				fn_ListarBusqueda();
+				$('.loader').hide();
+            }
+    });
+}
+
+
 
 function datatablenew(){
     var oTable1 = $('#tblReciboHonorario').dataTable({
@@ -265,6 +327,11 @@ function datatablenew(){
 			var numero_comprobante = $('#numero_comprobante_bus').val();
 			var fecha_inicio = $('#fecha_inicio_bus').val();
 			var fecha_fin = $('#fecha_fin_bus').val();
+
+			var provision = $('#Provision_b').val();
+			var cancelacion = $('#cancelacion_b').val();
+			var grupo = '';
+
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -275,7 +342,7 @@ function datatablenew(){
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id:id,periodo:periodo,anio:anio,mes:mes,numero_cap:numero_cap,municipalidad:municipalidad,
 						agremiado:agremiado,situacion:situacion,numero_comprobante:numero_comprobante,
-						fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,
+						fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,provision:provision,cancelacion:cancelacion,grupo:grupo,
 						_token:_token
                        },
                 "success": function (result) {
@@ -373,15 +440,6 @@ function datatablenew(){
 				"aTargets": [7]
 				},
 				{
-				"mRender": function (data, type, row) {
-					var numero_operacion = "";
-					if(row.numero_operacion!= null)numero_operacion = row.numero_operacion;
-					return numero_operacion;
-				},
-				"bSortable": false,
-				"aTargets": [8]
-				},
-				{
 					"mRender": function (data, type, row) {
 						var cancelado = "";
 						if(row.cancelado == 1){
@@ -393,7 +451,34 @@ function datatablenew(){
 						return cancelado;
 					},
 					"bSortable": false,
+					"aTargets": [8]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var id_grupo = "";
+						if(row.id_grupo!= null)id_grupo = row.id_grupo;
+						return id_grupo;
+					},
+					"bSortable": false,
 					"aTargets": [9]
+				},				
+				{
+					"mRender": function (data, type, row) {
+						var provision = "";
+						if(row.provision!= null)provision = row.provision;
+						return provision;
+					},
+					"bSortable": false,
+					"aTargets": [10]
+				},
+				{
+					"mRender": function (data, type, row) {
+						var cancelacion = "";
+						if(row.cancelacion!= null)cancelacion = row.cancelacion;
+						return cancelacion;
+					},
+					"bSortable": false,
+					"aTargets": [11]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -418,7 +503,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [10],
+					"aTargets": [12],
 				},
 
             ]

@@ -142,12 +142,12 @@
                                         $total_recaudado = number_format($caja_usuario->total_recaudado, 2);
                                         $saldo_total = number_format($caja_usuario->saldo_total, 2);
                                     ?>
-                                        @hasanyrole('Administrator|Caja')
+                                        @hasanyrole('Administrator|Caja|Caja Jefe')
                                         <input class="btn btn-warning btn-sm pull-right" value="CERRAR DE CAJA" name="cerrar" type="button" form="prestacionescrea" id="btnGuardar" onclick="aperturar('u')" />
                                         @endhasanyrole
 
                                     <?php else : ?>
-                                        @hasanyrole('Administrator|Caja')
+                                        @hasanyrole('Administrator|Caja|Caja Jefe')
                                         <input class="btn btn-warning btn-sm pull-right" value="APERTURA DE CAJA" name="aperturar" type="button" form="prestacionescrea" id="btnGuardar" onclick="aperturar('i')" />
                                         @endhasanyrole
                                     <?php endif; ?>
@@ -159,7 +159,7 @@
                            
                             <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                @hasanyrole('Administrator|Caja')
+                                @hasanyrole('Administrator|Caja|Caja Jefe')
 
                                     <label class="form-control-sm">Caja</label>
 
@@ -185,7 +185,7 @@
 
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                @hasanyrole('Administrator|Caja')
+                                @hasanyrole('Administrator|Caja|Caja Jefe')
 
                                     <label class="form-control-sm">Saldo Caja</label>
                                     <input type="text" name="saldo_inicial" id="saldo_inicial" <?php echo $readonly ?> value="<?php echo $saldo_inicial ?>" placeholder="" class="form-control form-control-sm text-right">
@@ -195,7 +195,7 @@
 
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                @hasanyrole('Administrator|Caja')
+                                @hasanyrole('Administrator|Caja|Caja Jefe')
 
                                     <label class="form-control-sm">Total Recaudado</label>
                                     <input type="text" name="total_recaudado" id="total_recaudado" value="<?php echo $total_recaudado ?>" readonly="" placeholder="" class="form-control form-control-sm text-right">
@@ -205,7 +205,7 @@
 
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                @hasanyrole('Administrator|Caja')
+                                @hasanyrole('Administrator|Caja|Caja Jefe')
 
                                     <label class="form-control-sm">Saldo Total</label>
                                     <input type="text" name="saldo_total" id="saldo_total" value="<?php echo $saldo_total ?>" readonly="" placeholder="" class="form-control form-control-sm text-right">
@@ -276,8 +276,9 @@
                                                     <input type="hidden" readonly name="importe_pp" id="importe_pp" value="<?php echo !empty($concepto->importe) ? $concepto->importe : '0' ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_tipo_afectacion_pp" id="id_tipo_afectacion_pp" value="<?php echo !empty($concepto->id_tipo_afectacion) ? $concepto->id_tipo_afectacion : '0' ?>" class="form-control form-control-sm">
 
-
                                                     <input type="hidden" readonly name="SelFracciona" id="SelFracciona" value="" class="form-control form-control-sm">
+
+                                                    <input type="hidden" readonly name="Exonerado" id="Exonerado" value="0" class="form-control form-control-sm">
 
                                                 </div>
                                             </div>
@@ -390,7 +391,7 @@
                                             </div>
                                         </div>
 
-                                        @hasanyrole('Administrator|Caja')
+                                        @hasanyrole('Administrator|Caja|Caja Jefe')
                                                                                 
                                         <div class="row">
                                             <div class="col">
@@ -451,7 +452,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     <select name="cboTipoCuota_b" id="cboTipoCuota_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
                                                         <option value="" selected>Todas cuotas</option>
@@ -460,7 +461,10 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12">
+
+
+
+                                            <div class="col-lg-5 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     
                                                     <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" onchange="cargarValorizacion()"><br />
@@ -478,6 +482,14 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                                                <div class="form-group form-group-sm">
+                                                    <input class="form-check-input" type="checkbox"  id="chkExonerado"  value="false" onchange="">
+                                                    <label class="form-check-label">
+                                                        Exonerados
+                                                    </label>
+                                                </div>
+                                            </div>
 
 
                                         </div>
@@ -568,7 +580,7 @@
 
                                         </div><!--table-responsive-->
 
-                                        @hasanyrole('Administrator|Caja')
+                                        @hasanyrole('Administrator|Caja|Caja Jefe')
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group mb-0 clearfix">
@@ -589,9 +601,29 @@
                                             </div><!--col-->
                                         </div><!--row-->
 
+                                        <br />
+
                                         @endhasanyrole
 
-                                        <br />
+
+
+                                        @hasanyrole('Administrator|Asuntos Gremiales|Asuntos Gremiales Jefe')
+                                            <?php $rol_exonera = 1;?>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group mb-0 clearfix">
+
+                                                        <input style="display:none" class="btn btn-warning pull-rigth" value="EXONERAR" type="button" id="btnExonerarS" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
+                                                        <input style="display:none" class="btn btn-success pull-rigth" value="NO EXONERAR" type="button" id="btnExonerarN" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
+
+                                                    </div><!--form-group-->
+                                                </div><!--col-->
+                                            </div><!--row-->
+                                        @else
+                                            <?php $rol_exonera = 0;?>
+                                        @endhasanyrole
+
+                                        <input type="hidden" name="rol_exonera" id="rol_exonera" value="<?php echo $rol_exonera?>" />
 
                                         <div class="row">
                                             <div class="col">

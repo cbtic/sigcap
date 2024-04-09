@@ -262,18 +262,30 @@ function guardarCita(id_medico,fecha_cita){
 
 function fn_save(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id_').val();
 	var id_comision_sesion = $('#id').val();
 	var id_delegado = $('#id_delegado').val();
+	var flag_titular_suplente = $('input[name=flag_titular_suplente]:checked').val();
+	var fecha_inicio_sesion = $('#fecha_inicio_sesion').val();
+	var fecha_fin_sesion = $('#fecha_fin_sesion').val();
+	
+	if($('input[name=flag_titular_suplente]').is(':checked')==false){msg+="Debe seleccionar cambiar titular o suplente<br>";}
+	
+	if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
 	
     $.ajax({
 			url: "/sesion/send_delegado_sesion",
             type: "POST",
-            data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado},
+            data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado,flag_titular_suplente:flag_titular_suplente,fecha_inicio_sesion:fecha_inicio_sesion,fecha_fin_sesion:fecha_fin_sesion},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				datatablenew();
+				//datatablenew();
+				location.reload();
 				//obtenerInversionista(0);
 				//obtenerDetalleInversionista(0);
 				//window.location.reload();
@@ -389,15 +401,24 @@ function cargar_tipo_proveedor(){
 	
 }
 
-/*
-$('#fecha_solicitud').datepicker({
+
+$('#fecha_inicio_sesion').datepicker({
 	autoclose: true,
-	dateFormat: 'dd-mm-yy',
+	format: 'dd-mm-yyyy',
 	changeMonth: true,
 	changeYear: true,
 	container: '#openOverlayOpc modal-body'
 });
-*/
+
+$('#fecha_fin_sesion').datepicker({
+	autoclose: true,
+	format: 'dd-mm-yyyy',
+	changeMonth: true,
+	changeYear: true,
+	container: '#openOverlayOpc modal-body'
+});
+
+
 /*
 $('#fecha_solicitud').datepicker({
 	format: "dd/mm/yyyy",
@@ -458,13 +479,56 @@ container: '#myModal modal-body'
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($concurso_inscripcion as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
+									<option value="<?php echo $row->id_agremiado?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
 									<?php 
 									}
 									?>
 								</select>
 							</div>
 						</div>
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+								<div class="row">
+									
+									<div class="col-lg-4">
+										<label class="radio-inline">
+										  <input type="radio" name="flag_titular_suplente" value="1"> &nbsp; Cambiar Titular &nbsp;
+										</label>
+										<label class="radio-inline">
+										  <input type="radio" name="flag_titular_suplente" value="2"> &nbsp; Suplente &nbsp;
+										</label>
+									</div>
+									
+									<div id="divSuplente" class="col-lg-8">
+										<div class="row">
+											<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+												Fecha Inicio
+											</div>
+											<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="fecha_inicio_sesion" id="fecha_inicio_sesion" value="" placeholder="" class="form-control form-control-sm col-lg-12">
+											</div>
+											<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+												Fecha Fin
+											</div>
+											<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+												<input type="text" name="fecha_fin_sesion" id="fecha_fin_sesion" value="" placeholder="" class="form-control form-control-sm col-lg-12">
+											</div>
+										</div>
+									</div>
+									
+									<!--
+									<div class="col-lg-6">
+									<label class="radio-inline">Fecha Inicio</label>
+									<input type="text" name="fecha_inicio" id="fecha_inicio" value="" placeholder="" class="form-control form-control-sm col-lg-12">
+									</div>
+									-->
+									
+								</div>
+								
+							</div>
+						</div>
+						
 						
 					</div>
 					
