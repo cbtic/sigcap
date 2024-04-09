@@ -336,6 +336,16 @@ function calcular_total(obj){
 
 			$("#btnFactura").prop('disabled', false);
 		}
+
+		var exonerado = $('#Exonerado').val();
+
+		if(exonerado=="0"){
+			$("#btnExonerar").prop('disabled', false);
+		}else{
+			$("#btnExonerar").prop('disabled', true);
+		}
+
+
 	}
 	
 

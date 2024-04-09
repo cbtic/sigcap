@@ -605,6 +605,19 @@
 
                                         <br />
 
+                                        @hasanyrole('Administrator|Asuntos Gremiales|Asuntos Gremiales Jefe')
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group mb-0 clearfix">
+
+                                                    <input class="btn btn-danger pull-rigth" value="EXONERAR" type="button" id="btnExonerar" disabled="disabled"  />
+
+                                                </div><!--form-group-->
+                                            </div><!--col-->
+                                        </div><!--row-->
+
+                                        @endhasanyrole
+
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group mb-0 clearfix">
