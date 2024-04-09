@@ -1,8 +1,3 @@
-
---select * from sp_crud_seguro_agremiado_cuota(11);
---select max(id) from agremiado_cuotas
---SELECT setval('agremiado_cuotas_id_seq', 2583062)
-
 CREATE OR REPLACE FUNCTION public.sp_crud_seguro_agremiado_cuota(p_afiliacion integer)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -37,17 +32,30 @@ begin
 	idp:=0;
 
 	For entradas_mes in
-	select a.id_persona,R.id_agremiado,id_familia,id_plan,1 id_moneda,monto,id_concepto,sp.fecha_inicio,sp.fecha_fin  
+	select a.id_persona,R.id_agremiado,id_familia,
+	(select sp2.id from seguros_planes sp2 where sp2.id_seguro = s.id limit 1) id_plan,1 id_moneda,
+	(select sp5.monto from seguros_planes sp5 where sp5.id_seguro = s.id limit 1) monto,id_concepto, s.nombre nombre_seguro,
+	(select sp3.fecha_inicio from seguros_planes sp3 where sp3.id_seguro = s.id limit 1) fecha_inicio,
+	(select sp4.fecha_fin from seguros_planes sp4 where sp4.id_seguro = s.id limit 1) fecha_fin,nombres
+	
 	from(
-	select id_agremiado,0 id_familia,id_plan  
+	select sa.id_agremiado, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres nombres,0 id_familia,id_seguro 
 	from seguro_afiliados sa 
-	where id=p_afiliacion 
+	inner join agremiados a on sa.id_agremiado = a.id
+	inner join personas p on a.id_persona = p.id
+	where sa.id = p_afiliacion
 	union all 
-	select id_agremiado,id_familia,id_plan 
+	select sap.id_agremiado,
+	(select ap.apellido_nombre from agremiado_parentecos ap where ap.id_agremiado = a.id and sap.id_familia = ap.id limit 1),sap.id_familia,sp.id_seguro 
 	from seguro_afiliado_parentescos sap 
-	where id_afiliacion=p_afiliacion
-	)R inner join seguros_planes sp on R.id_plan=sp.id 
-	inner join seguros s on sp.id_seguro=s.id 
+	inner join seguros_planes sp on sap.id_plan = sp.id 
+	inner join agremiados a on sap.id_agremiado = a.id
+	inner join personas p on a.id_persona = p.id
+	where sap.id_afiliacion= p_afiliacion
+	)R 
+	inner join seguros s on R.id_seguro=s.id 
+	inner join conceptos c on s.id_concepto::int = c.id
+	--inner join seguros_planes sp on s.id=sp.id_seguro 
 	inner join agremiados a on R.id_agremiado=a.id 
 	
 	loop
@@ -75,8 +83,8 @@ begin
 		
 			p_i_id_agremiado_cuota := currval('agremiado_cuotas_id_seq');
 			
-			insert into valorizaciones(id_modulo,pk_registro,id_concepto,id_agremido,id_persona,monto,id_moneda,fecha,fecha_proceso,estado,id_usuario_inserta,created_at,updated_at,id_familia)
-			values (4,p_i_id_agremiado_cuota,entradas_mes.id_concepto::int,entradas_mes.id_agremiado,entradas_mes.id_persona,entradas_mes.monto,entradas_mes.id_moneda,v_last_day_month::date,now(),1,1,now(),now(),entradas_mes.id_familia);
+			insert into valorizaciones(id_modulo,pk_registro,id_concepto,id_agremido,id_persona,monto,id_moneda,fecha,fecha_proceso,estado,id_usuario_inserta,created_at,updated_at,id_familia,descripcion)
+			values (4,p_i_id_agremiado_cuota,entradas_mes.id_concepto::int,entradas_mes.id_agremiado,entradas_mes.id_persona,entradas_mes.monto,entradas_mes.id_moneda,v_last_day_month::date,now(),1,1,now(),now(),entradas_mes.id_familia,entradas_mes.nombre_seguro|| ' - ' ||entradas_mes.nombres);
 			
 		end loop;
 		
@@ -92,5 +100,3 @@ begin
 end;
 $function$
 ;
-
-

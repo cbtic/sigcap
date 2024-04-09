@@ -19,13 +19,15 @@ begin
 	 --select * from seguro_afiliados sa inner join agremiados a on sa.id_agremiado =a.id inner join seguros s on sp.id_seguro =s.id inner join seguros_planes sp on s.id =sp.id_seguro and sa.id_plan =sp.id  ;  
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' sa.id,a.numero_cap, p.apellido_paterno||'' ''|| p.apellido_materno || '', '' || p.nombres agremiado,s.nombre, sa.estado, sp.nombre plan,sp.monto, tm.denominacion moneda ';
+	v_campos=' sa.id,a.numero_cap, p.apellido_paterno||'' ''|| p.apellido_materno || '', '' || p.nombres agremiado,s.nombre, 
+	(select sp2.nombre from seguros_planes sp2 where sp2.id_seguro = s.id limit 1) plan,
+	(select sp3.monto from seguros_planes sp3 where sp3.id_seguro = s.id limit 1) monto, sa.estado, tm.denominacion moneda  ';
 
 	v_tabla=' from seguro_afiliados sa
 	inner join agremiados a on sa.id_agremiado =a.id
-	inner join seguros_planes sp on sa.id_plan =sp.id
-	inner join seguros s on sp.id_seguro =s.id
-	inner join personas p on p.id=a.id_persona
+	inner join seguros s on sa.id_seguro =s.id
+	--inner join seguros_planes sp on sp.id_seguro = s.id 
+	inner join personas p on p.id = a.id_persona
 	inner join conceptos c on s.id_concepto::int = c.id
 	inner join tabla_maestras tm on c.id_moneda = tm.codigo::int And tm.tipo =''1''';
 	
@@ -53,9 +55,9 @@ begin
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By sa.id desc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By sa.id Desc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By sa.id ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By sa.id Desc;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;

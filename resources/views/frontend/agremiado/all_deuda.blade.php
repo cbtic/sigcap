@@ -222,6 +222,7 @@
                                     <tr style="font-size:13px">
                                         <th>N&uacute;mero CAP</th>
                                         <th>Nombre del Arquitecto</th>
+                                        <th>Beneficiario</th>
                                         <th>Concepto</th>
                                         <th>Detalle de Afiliado</th>
                                         <th>Edad</th>
