@@ -142,12 +142,12 @@
                                         $total_recaudado = number_format($caja_usuario->total_recaudado, 2);
                                         $saldo_total = number_format($caja_usuario->saldo_total, 2);
                                     ?>
-                                        @hasanyrole('Administrator|Caja')
+                                        @hasanyrole('Administrator|Caja|Caja Jefe')
                                         <input class="btn btn-warning btn-sm pull-right" value="CERRAR DE CAJA" name="cerrar" type="button" form="prestacionescrea" id="btnGuardar" onclick="aperturar('u')" />
                                         @endhasanyrole
 
                                     <?php else : ?>
-                                        @hasanyrole('Administrator|Caja')
+                                        @hasanyrole('Administrator|Caja|Caja Jefe')
                                         <input class="btn btn-warning btn-sm pull-right" value="APERTURA DE CAJA" name="aperturar" type="button" form="prestacionescrea" id="btnGuardar" onclick="aperturar('i')" />
                                         @endhasanyrole
                                     <?php endif; ?>
@@ -159,7 +159,7 @@
                            
                             <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                @hasanyrole('Administrator|Caja')
+                                @hasanyrole('Administrator|Caja|Caja Jefe')
 
                                     <label class="form-control-sm">Caja</label>
 
@@ -185,7 +185,7 @@
 
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                @hasanyrole('Administrator|Caja')
+                                @hasanyrole('Administrator|Caja|Caja Jefe')
 
                                     <label class="form-control-sm">Saldo Caja</label>
                                     <input type="text" name="saldo_inicial" id="saldo_inicial" <?php echo $readonly ?> value="<?php echo $saldo_inicial ?>" placeholder="" class="form-control form-control-sm text-right">
@@ -195,7 +195,7 @@
 
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                @hasanyrole('Administrator|Caja')
+                                @hasanyrole('Administrator|Caja|Caja Jefe')
 
                                     <label class="form-control-sm">Total Recaudado</label>
                                     <input type="text" name="total_recaudado" id="total_recaudado" value="<?php echo $total_recaudado ?>" readonly="" placeholder="" class="form-control form-control-sm text-right">
@@ -205,7 +205,7 @@
 
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                @hasanyrole('Administrator|Caja')
+                                @hasanyrole('Administrator|Caja|Caja Jefe')
 
                                     <label class="form-control-sm">Saldo Total</label>
                                     <input type="text" name="saldo_total" id="saldo_total" value="<?php echo $saldo_total ?>" readonly="" placeholder="" class="form-control form-control-sm text-right">
@@ -391,7 +391,7 @@
                                             </div>
                                         </div>
 
-                                        @hasanyrole('Administrator|Caja')
+                                        @hasanyrole('Administrator|Caja|Caja Jefe')
                                                                                 
                                         <div class="row">
                                             <div class="col">
@@ -580,7 +580,7 @@
 
                                         </div><!--table-responsive-->
 
-                                        @hasanyrole('Administrator|Caja')
+                                        @hasanyrole('Administrator|Caja|Caja Jefe')
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group mb-0 clearfix">
@@ -607,7 +607,7 @@
 
 
 
-                                        @hasanyrole('Asuntos Gremiales|Asuntos Gremiales Jefe')
+                                        @hasanyrole('Administrator|Asuntos Gremiales|Asuntos Gremiales Jefe')
                                             <?php $rol_exonera = 1;?>
                                             <div class="row">
                                                 <div class="col">
