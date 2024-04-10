@@ -44,7 +44,7 @@ $(document).ready(function () {
 		var id_periodo_bus = $("#id_periodo_bus").val();
 		var anio = $("#anio").val();
 		var mes = $("#mes").val();
-		var href = '/movilidad/ver_movilidad_pdf/' +id_periodo_bus;
+		var href = '/movilidad/ver_movilidad_pdf/'+id_periodo_bus+'/'+anio+'/'+mes;
 		window.open(href, '_blank');
 	});
 	
