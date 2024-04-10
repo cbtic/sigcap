@@ -198,7 +198,29 @@ class RevisorUrbanoController extends Controller
 		
 		foreach ($data as $r) {
 			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
-			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->fecha_colegiado, $r->situacion,$r->codigo_itf,$r->codigo_ru, $r->fecha, $r->serie, $r->numero, $r->situacion_pago, $r->estado));
+			
+			$situacion_pago_texto = '';
+			switch ($r->situacion_pago) {
+				case 'P':
+					$situacion_pago_texto = 'PAGADO';
+					break;
+				case 'PE':
+					$situacion_pago_texto = 'PENDIENTE';
+					break;
+				case 'E':
+					$situacion_pago_texto = 'EXONERADO';
+					break;
+				case 'ANULADO':
+					$situacion_pago_texto = 'A';
+					break;
+				default:
+					$situacion_pago_texto = $r->situacion_pago;
+					break;
+			}
+
+			$estado_texto = ($r->estado == 1) ? 'Activo' : 'Inactivo';
+
+			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->fecha_colegiado, $r->situacion,$r->codigo_itf,$r->codigo_ru, $r->fecha, $r->serie, $r->numero, $situacion_pago_texto, $estado_texto));
 		}
 		
 		
