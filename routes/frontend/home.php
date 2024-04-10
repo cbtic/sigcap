@@ -567,7 +567,7 @@ Route::post('coordinador_zonal/upload_informe', [CoordinadorZonalController::cla
 Route::get('movilidad/obtener_comision/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision'])->name('movilidad.obtener_comision');
 Route::get('movilidad/obtener_comision_movilidad/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision_movilidad'])->name('movilidad.obtener_comision_movilidad');
 
-Route::get('movilidad/ver_movilidad_pdf/{id_periodo}', [MovilidadController::class, 'ver_movilidad_pdf'])->name('movilidad.ver_movilidad_pdf');
+Route::get('movilidad/ver_movilidad_pdf/{id_periodo}/{anio}/{mes}', [MovilidadController::class, 'ver_movilidad_pdf'])->name('movilidad.ver_movilidad_pdf');
 
 Route::get('ingreso/modal_beneficiario_/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_beneficiario_'])->name('ingreso.modal_beneficiario_');
 
@@ -675,4 +675,6 @@ Route::get('tabla_maestra/obtener_datos_tabla_maestra/{tipo_nombre}', [TablaMaes
 Route::get('agremiado/consulta_reporte_deuda', [AgremiadoController::class, 'consulta_reporte_deuda'])->name('agremiado.consulta_reporte_deuda');
 Route::post('agremiado/listar_reporte_deudas_ajax', [AgremiadoController::class, 'listar_reporte_deudas_ajax'])->name('agremiado.listar_reporte_deudas_ajax');
 Route::get('agremiado/exportar_lista_deudas/{anio}/{concepto}/{mes}', [AgremiadoController::class, 'exportar_lista_deudas'])->name('agremiado.exportar_lista_deudas');
+Route::get('revisorUrbano/eliminar_revisor_urbano/{id}/{estado}', [RevisorUrbanoController::class, 'eliminar_revisor_urbano'])->name('revisorUrbano.eliminar_revisor_urbano');
+Route::get('revisorUrbano/exportar_listar_revisor_urbano/{numero_cap}/{agremiado}/{codigo_itf}/{codigo_ru}/{situacion_pago}/{estado}', [RevisorUrbanoController::class, 'exportar_listar_revisor_urbano'])->name('revisorUrbano.exportar_listar_revisor_urbano');
 

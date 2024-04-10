@@ -98,7 +98,7 @@
 								<tbody style="padding:0px!important;margin:0px!important">
 									<tr style="padding:0px!important;margin:0px!important">
 										<td style="padding:0px!important;margin:0px!important" align="center" class="titulo_principal">
-											<h2>REPORTE DE MOVILIDAD</h2>
+											<h2>REPORTE DE MOVILIDAD - <?php echo $mesEnLetras?> <?php echo $anio?> </h2>
 										</td>
 									</tr>
 								</tbody>

@@ -70,7 +70,7 @@ class MovilidadController extends Controller
 	
 	}
 	
-	public function ver_movilidad_pdf($id_periodo){
+	public function ver_movilidad_pdf($id_periodo,$anio,$mes){
 		
 		$movilidad_model = new ComisionMovilidade;
 		$p[]="";
@@ -84,18 +84,26 @@ class MovilidadController extends Controller
 		$movilidad = $movilidad_model->listar_movilidad_ajax($p);
 		
 		$dias = array('L','M','M','J','V','S','D');
+
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
 		
-		$pdf = Pdf::loadView('pdf.ver_movilidad',compact('movilidad'));
+		$pdf = Pdf::loadView('pdf.ver_movilidad',compact('movilidad','anio','mesEnLetras'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
-		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
-    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
-   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
-    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
-    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+		//$pdf->setPaper('A4', 'landscape'); // Tamaï¿½o de papel (puedes cambiarlo segï¿½n tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Mï¿½rgen superior en milï¿½metros
+   		$pdf->setOption('margin-right', 50); // Mï¿½rgen derecho en milï¿½metros
+    	$pdf->setOption('margin-bottom', 20); // Mï¿½rgen inferior en milï¿½metros
+    	$pdf->setOption('margin-left', 100); // Mï¿½rgen izquierdo en milï¿½metros
 
 		return $pdf->stream('ver_movilidad.pdf');
 	
+	}
+
+	function mesesALetras($mes) { 
+		$meses = array('','ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SETIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'); 
+		return $meses[$mes];
 	}
 	
 

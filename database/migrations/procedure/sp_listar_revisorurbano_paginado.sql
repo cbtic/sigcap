@@ -18,14 +18,20 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 
-	v_campos=' ru.id, a.numero_cap, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, a.fecha_colegiado, tm.denominacion situacion, ru.codigo_itf, ru.codigo_ru, c.fecha, c.serie, c.numero, c.estado_pago situacion_venta, ru.estado ';
+	v_campos=' ru.id, a.numero_cap, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, a.fecha_colegiado, tm.denominacion situacion, ru.codigo_itf, ru.codigo_ru,
+	(select c.fecha from valorizaciones v
+	left join comprobantes c on v.id_comprobante = c.id where v.pk_registro = ru.id limit 1) fecha,
+	(select c.serie from valorizaciones v
+	left join comprobantes c on v.id_comprobante = c.id where v.pk_registro = ru.id limit 1) serie, 
+	(select c.numero from valorizaciones v
+	left join comprobantes c on v.id_comprobante = c.id where v.pk_registro = ru.id limit 1) numero, 
+	(select c.estado_pago from valorizaciones v
+	left join comprobantes c on v.id_comprobante = c.id where v.pk_registro = ru.id limit 1) situacion_venta, ru.estado  ';
 
 	v_tabla=' from revisor_urbanos ru 
 	inner join agremiados a on ru.id_agremiado= a.id
 	inner join personas p on a.id_persona = p.id
-	left join valorizaciones v on v.pk_registro = ru.id 
-	left join comprobantes c on v.id_comprobante = c.id
-	inner join tabla_maestras tm on a.id_situacion::int =tm.codigo:: int and tm.tipo = ''14'' ';
+	inner join tabla_maestras tm on a.id_situacion::int =tm.codigo:: int and tm.tipo = ''14''';
 	
 	v_where = ' Where 1=1  ';
 	/*
