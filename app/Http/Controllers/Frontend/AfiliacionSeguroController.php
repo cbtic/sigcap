@@ -220,6 +220,10 @@ class AfiliacionSeguroController extends Controller
 		$afiliacionSeguro->save();
 
 		echo $afiliacionSeguro->id;
+		
+		$seguro_afiliado_parentesco_model = new seguro_afiliado_parentesco;
+		
+		$seguro_afiliado_parentesco_model->eliminar_afiliado_seguro_cuota($id);
 
     }
 					
