@@ -57,7 +57,7 @@ foreach($pago as $row){?>
 		</div>
 	</td>
 	<td class="text-left">
-		@hasanyrole('Administrator|Caja')
+		@hasanyrole('Administrator|Caja|Caja Jefe')
                                         
 		<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nc_edita')}}" id="frmPagos" name="frmPagos" autocomplete="off">		
 		
@@ -72,7 +72,7 @@ foreach($pago as $row){?>
 	</td>
 	<td class="text-left">
 
-		@hasanyrole('Administrator|Caja')
+		@hasanyrole('Administrator|Caja|Caja Jefe')
 	    <form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nd_edita')}}" id="frmPagos_nd" name="frmPagos_nd" autocomplete="off">		
 		<input type='hidden' name="id_comprobante" id="id_comprobante" value="">		
 		<input type='hidden' name="id_comprobante_origen" id="id_comprobante_origen" value="<?php echo $row->id_comprobante?>">	

@@ -692,4 +692,37 @@ class IngresoController extends Controller
 		*/
     }
 
+    public function exonerar_valorizacion(Request $request){
+        $msg = "";
+        $id_user = Auth::user()->id;
+
+        //print_r($request->comprobante_detalle); exit();
+        $opcion = $request->Exonerado; 
+
+        foreach($request->comprobante_detalle as $key=>$val){
+
+            $chek = $val['chek'];
+            $id = $val['id'];
+            
+            if($chek==1){
+                if($opcion=="0"){
+                    $valorizacion = Valorizacione::find($id);            
+                    $valorizacion-> exonerado = "1";
+                    $valorizacion-> id_usuario_actualiza = $id_user;                    
+                    $valorizacion->save();  
+                }
+
+                if($opcion=="1"){
+                    $valorizacion = Valorizacione::find($id);            
+                    $valorizacion-> id_usuario_actualiza = $id_user;
+                    $valorizacion-> exonerado = "0";
+                    $valorizacion->save();  
+                }
+
+            }
+                    
+        }   
+    
+    }
+
 }
