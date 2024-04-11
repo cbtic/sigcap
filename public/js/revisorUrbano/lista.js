@@ -488,17 +488,16 @@ function DescargarArchivosRU(){
 	var estado = $('#estado').val();
 	//var id_agremiado = 0;
 	//var id_regional = 0;
-	
 	if (numero_cap == "")numero_cap = 0;
 	if (agremiado == "")agremiado = 0;
 	if (codigo_itf == "")codigo_itf = 0;
 	if (codigo_ru == "")codigo_ru = 0;
-	if (situacion_pago == "")situacion_pago = 0;
+	if (situacion_pago == "")situacion_pago = 9;
 	if (estado == "")estado = 0;
 	//if (campo == "")campo = 0;
 	//if (orden == "")orden = 0;
 	
-	location.href = '/revisorUrbano/exportar_listar_revisor_urbano/'+numero_cap+'/'+agremiado+'/'+codigo_itf+'/'+codigo_ru+'/'+situacion_pago+'/'+estado;
 	
+	location.href = '/revisorUrbano/exportar_listar_revisor_urbano/'+numero_cap+'/'+agremiado+'/'+codigo_itf+'/'+codigo_ru+'/'+situacion_pago+'/'+estado;
 }
 

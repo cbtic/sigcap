@@ -169,14 +169,19 @@ class RevisorUrbanoController extends Controller
     }
 
 	public function exportar_listar_revisor_urbano($numero_cap, $agremiado, $codigo_itf, $codigo_ru, $situacion_pago, $estado) {
-		
+
+
 		if($numero_cap==0)$numero_cap = "";
-		if($agremiado==0)$agremiado = "";
-		if($codigo_itf==0)$codigo_itf = "";
-		if($codigo_ru==0)$codigo_ru = "";
-		if($situacion_pago==0)$situacion_pago = "";
+		if($agremiado=="0")$agremiado = "";
+		if($codigo_itf=="0")$codigo_itf = "";
+		if($codigo_ru=="0")$codigo_ru = "";
+		if($situacion_pago==9)$situacion_pago = "";
+		/*if($situacion_pago==0)$situacion_pago = "PE";
+		if($situacion_pago==1)$situacion_pago = "P";
+		if($situacion_pago==2)$situacion_pago = "E";
+		if($situacion_pago==3)$situacion_pago = "A";*/
 		if($estado==0)$estado = "";
-	
+		//var_dump($agremiado);exit();
 		$revisorUrbano_model = new RevisorUrbano;
 		$p[]=$numero_cap;
 		$p[]=$agremiado;
@@ -199,7 +204,7 @@ class RevisorUrbanoController extends Controller
 		foreach ($data as $r) {
 			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
 			
-			/*$situacion_pago_texto = '';
+			$situacion_pago_texto = '';
 			switch ($r->situacion_pago) {
 				case 'P':
 					$situacion_pago_texto = 'PAGADO';
@@ -218,9 +223,7 @@ class RevisorUrbanoController extends Controller
 					break;
 			}
 
-			$estado_texto = ($r->estado == 1) ? 'Activo' : 'Inactivo';*/
-
-			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->fecha_colegiado, $r->situacion,$r->codigo_itf,$r->codigo_ru, $r->fecha, $r->serie, $r->numero, $r->situacion_pago));
+			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->fecha_colegiado, $r->situacion,$r->codigo_itf,$r->codigo_ru, $r->fecha, $r->serie, $r->numero, $situacion_pago_texto));
 		}
 		
 		
