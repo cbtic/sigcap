@@ -151,7 +151,7 @@ function obtenerAgremiado(){
 					}else if(agremiado.situacion==83){
 						msg += "El Agremiado esta FALLECIDO <br>";
 					}else if(agremiado.situacion==265){
-						msg += "El Agremiado esta en otra REGIONAL <br>";
+						msg += "El Agremiado pertenece a otra REGIONAL <br>";
 					}else if(agremiado.situacion==266){
 						msg += "El Agremiado esta en otra PROVINCIA <br>";
 					}else if(agremiado.situacion==267){
