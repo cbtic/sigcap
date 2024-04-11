@@ -281,11 +281,11 @@
                                 <input class="btn btn-success" value="Generar C&oacute;digo RU" type="button" id="btnNuevo" style="margin-left:15px"/>
                             </div>
 
-                            <div style="float:left;padding-top:7px">C&oacute;digo RU</div>
+                            <!--<div style="float:left;padding-top:7px">C&oacute;digo RU</div>
                                 <div style="float:left" class="col-lg-2 md-form md-outline input-with-post-icon">
                                 <input class="form-control form-control-sm" id="codigo_ru" name="codigo_ru" readonly="readonly">
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
 					</form>
@@ -310,19 +310,19 @@
                     <div class="row" style="padding:20px 20px 0px 20px;">
 
                         <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
-							<input class="form-control form-control-sm" id="numero_cap" name="numero_cap" placeholder="N° de CAP">
+							<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="N° de CAP">
 						</div>
 
                         <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-							<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Agremiado">
+							<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
 						</div>
 
                         <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-							<input class="form-control form-control-sm" id="codigo_itf" name="codigo_itf" placeholder="C&oacute;digo ITF">
+							<input class="form-control form-control-sm" id="codigo_itf_bus" name="codigo_itf_bus" placeholder="C&oacute;digo ITF">
 						</div>
 
                         <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-							<input class="form-control form-control-sm" id="codigo_ru" name="codigo_ru" placeholder="C&oacute;digo RU">
+							<input class="form-control form-control-sm" id="codigo_ru_bus" name="codigo_ru_bus" placeholder="C&oacute;digo RU">
 						</div>
 
                         <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
@@ -355,6 +355,8 @@
                         </div>
 						<div class="col-lg-2 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
 							<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+                            <input class="btn btn-sm btn-secondary float-rigth" value="Descargar" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
+						
 						</div>
 
                     </div>

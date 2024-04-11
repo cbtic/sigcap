@@ -215,11 +215,15 @@ class AfiliacionSeguroController extends Controller
     
     public function eliminar_afiliacion($id,$estado)
     {
-		$municipalidad = AfiliacionSeguro::find($id);
-		$municipalidad->estado = $estado;
-		$municipalidad->save();
+		$afiliacionSeguro = AfiliacionSeguro::find($id);
+		$afiliacionSeguro->estado = $estado;
+		$afiliacionSeguro->save();
 
-		echo $afiliacion_seguro->id;
+		echo $afiliacionSeguro->id;
+		
+		$seguro_afiliado_parentesco_model = new seguro_afiliado_parentesco;
+		
+		$seguro_afiliado_parentesco_model->eliminar_afiliado_seguro_cuota($id);
 
     }
 					

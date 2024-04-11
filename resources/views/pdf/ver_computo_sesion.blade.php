@@ -227,8 +227,8 @@
         <footer>
         <script type="text/php">
             if (isset($pdf)) {
-				$x = 510;
-				$y = 815;
+				$x = 760;
+				$y = 572;
                 $text = "Pagina {PAGE_NUM} de {PAGE_COUNT}";
                 $font = null;
                 $size = 8;

@@ -68,15 +68,22 @@ class BeneficiarioController extends Controller
 
         if($id>0){
 			$beneficiario = Beneficiario::find($id);
+			$beneficiario_buscar = Beneficiario::where("id",$id)->where("estado","1")->first();
+			$estado_beneficiario = $beneficiario_buscar->estado_beneficiario;
             $id_persona = $beneficiario->id_persona;
-            $persona = Persona::find($id_persona);
+			$persona = Persona::find($id_persona);
+			$persona_buscar = Persona::where("id",$id_persona)->where("estado","1")->first();
+            $dni = $persona_buscar->numero_documento;
             $id_empresa = $beneficiario->id_empresa;
             $empresa = Empresa::find($id_empresa);
+			//var_dump($dni);exit;
             
 		}else{
 			$persona = new Persona();
             $empresa = new Empresa();
             $beneficiario = new Beneficiario();
+			$dni='';
+			$estado_beneficiario='';
 		}
 
         $concepto = $concepto_model->getConceptoAllDenominacion2();
@@ -88,7 +95,7 @@ class BeneficiarioController extends Controller
        
 		//$beneficiario = new Beneficiario;
 		//$valorizacion = $valorizaciones_model->getValorizacionFactura($id);
-		return view('frontend.beneficiario.modal_beneficiario_',compact('persona','empresa'/*,'id_persona','id_agremiado','tipo_documento'*/,'beneficiario','concepto','estado_concepto'));
+		return view('frontend.beneficiario.modal_beneficiario_',compact('id','persona','empresa','dni','estado_beneficiario'/*,'id_persona','id_agremiado','tipo_documento'*/,'beneficiario','concepto','estado_concepto'));
 	
 	}
 
@@ -101,24 +108,50 @@ class BeneficiarioController extends Controller
 		$empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
 		$concepto = Concepto::find($request->concepto);
 		$cadena_persona = "";
+
+		if($request->id_edit > 0){
+			$persona = Persona::where("numero_documento",$request->dni_beneficiario_edit)->where("estado","1")->first();
+				$beneficiario = Beneficiario::find($request->id_edit);
+				$beneficiario->id_persona = $persona->id;
+				$beneficiario->id_empresa = $empresa->id;
+				$beneficiario->id_concepto = $request->concepto;
+				$beneficiario->estado_beneficiario = $request->estado_beneficiario_edit;
+				$beneficiario->observacion = $request->observacion;
+				$beneficiario->id_usuario_inserta = $id_user;
+				$beneficiario->save();
+				$id_beneficiario = $beneficiario->id;
+		}else{
+
 		foreach($dni_beneficiario as $key=>$row){
 			
 			if($request->id == 0){
+				$persona = Persona::where("numero_documento",$row)->where("estado","1")->first();
 				$beneficiario = new Beneficiario;
+				$beneficiario->id_persona = $persona->id;
+				$beneficiario->id_empresa = $empresa->id;
+				$beneficiario->id_concepto = $request->concepto;
+				$beneficiario->estado_beneficiario = $estado_beneficiario[$key];
+				$beneficiario->observacion = $request->observacion;
+				$beneficiario->id_usuario_inserta = $id_user;
+				$beneficiario->save();
+				$id_beneficiario = $beneficiario->id;
+
 			}else{
+				$persona = Persona::where("numero_documento",$request->dni_beneficiario_edit)->where("estado","1")->first();
 				$beneficiario = Beneficiario::find($request->id);
+				$beneficiario->id_persona = $persona->id;
+				$beneficiario->id_empresa = $empresa->id;
+				$beneficiario->id_concepto = $request->concepto;
+				$beneficiario->estado_beneficiario = $request->estado_beneficiario_edit;
+				$beneficiario->observacion = $request->observacion;
+				$beneficiario->id_usuario_inserta = $id_user;
+				$beneficiario->save();
+				$id_beneficiario = $beneficiario->id;
 			}
 			
-			$persona = Persona::where("numero_documento",$row)->where("estado","1")->first();
 			
-			$beneficiario->id_persona = $persona->id;
-			$beneficiario->id_empresa = $empresa->id;
-			$beneficiario->id_concepto = $request->concepto;
-			$beneficiario->estado_beneficiario = $estado_beneficiario[$key];
-			$beneficiario->observacion = $request->observacion;
-			$beneficiario->id_usuario_inserta = $id_user;
-			$beneficiario->save();
-			$id_beneficiario = $beneficiario->id;
+			
+			
 			
 			$cadena_persona .= $persona->nombres." ". $persona->apellido_paterno." ". $persona->apellido_materno.", ";
 			/*
@@ -160,7 +193,7 @@ class BeneficiarioController extends Controller
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
 			
-		}
+		}}
         
     }
 

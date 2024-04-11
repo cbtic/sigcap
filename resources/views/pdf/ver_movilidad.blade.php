@@ -98,7 +98,7 @@
 								<tbody style="padding:0px!important;margin:0px!important">
 									<tr style="padding:0px!important;margin:0px!important">
 										<td style="padding:0px!important;margin:0px!important" align="center" class="titulo_principal">
-											<h2>REPORTE DE MOVILIDAD</h2>
+											<h2>REPORTE DE MOVILIDAD - <?php echo $mesEnLetras?> <?php echo $anio?> </h2>
 										</td>
 									</tr>
 								</tbody>
@@ -115,8 +115,9 @@
 			<tbody>
 				<tr>
 					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center">N°</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;text-align:left;padding-top:5px;padding-bottom:5pxM;text-align:center" width="35%">Municipalidad</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Importe</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;text-align:left;padding-top:5px;padding-bottom:5pxM;text-align:center" width="25%">Municipalidad</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Importe por Distrito S/.</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="12%">Importe Mes Actual S/.</td>
 				</tr>
 				
 				<?php 
@@ -126,6 +127,7 @@
 					<td style="border:1px solid #A4A4A4;width:40px;text-align:center"><?php echo ($key+1)?></td>
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->comision?></td>
 					<td class="td_right" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->monto?></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo ($r->cantidad>0)?$r->monto:"0"?></td>
 				</tr>
 				<?php
 				} 

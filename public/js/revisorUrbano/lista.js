@@ -5,28 +5,28 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
-	$('#frmCodigoRU #numero_cap').keypress(function(e){
+	$('#frmCodigoRU #numero_cap_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
 		}
 	});
 
-	$('#frmCodigoRU #agremiado').keypress(function(e){
+	$('#frmCodigoRU #agremiado_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
 		}
 	});
 
-	$('#frmCodigoRU #codigo_itf').keypress(function(e){
+	$('#frmCodigoRU #codigo_itf_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
 		}
 	});
 
-	$('#frmCodigoRU #codigo_ru').keypress(function(e){
+	$('#frmCodigoRU #codigo_ru_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
@@ -38,6 +38,11 @@ $(document).ready(function () {
 			datatablenew();
 			return false;
 		}
+	});
+
+	$('#btnDescargar').on('click', function () {
+		DescargarArchivosRU()
+
 	});
 		
 	$('#btnNuevo').click(function () {
@@ -61,27 +66,33 @@ function generar_codigo_ru(){
 	//var id_concurso_inscripcion = $("#id_concurso_inscripcion").val();
 	var _token = $("#_token").val();
 	var numero_cap = $("#numero_cap").val();
-    $.ajax({
-			url: "/revisorUrbano/send_revisor_urbano",
-            type: "POST",
-			dataType: "json",
-            data : $("#frmRevisorUrbano").serialize()+"&_token="+_token+"&numero_cap="+numero_cap,
-            success: function (result) {
-					var mensaje = result.mensaje;
-					
-					if(mensaje!=""){
-						bootbox.alert(mensaje);
-        				return false;
-					}
-					$("#codigo_itf").val("");
-					$("#numero_cap").val("");
-					
-                    datatablenew();
-					limpiar()
-					//cargarRequisitos(id_concurso_inscripcion);
-					//editarConcursoInscripcion(id_concurso_inscripcion);
-            }
-    });
+
+	if($("#codigo_itf").val()==''){
+		bootbox.alert('Debe ingresar un codigo ITF');
+	}else{
+
+		$.ajax({
+				url: "/revisorUrbano/send_revisor_urbano",
+				type: "POST",
+				dataType: "json",
+				data : $("#frmRevisorUrbano").serialize()+"&_token="+_token+"&numero_cap="+numero_cap,
+				success: function (result) {
+						var mensaje = result.mensaje;
+						
+						if(mensaje!=""){
+							bootbox.alert(mensaje);
+							return false;
+						}
+						$("#codigo_itf").val("");
+						$("#numero_cap").val("");
+						
+						datatablenew();
+						limpiar()
+						//cargarRequisitos(id_concurso_inscripcion);
+						//editarConcursoInscripcion(id_concurso_inscripcion);
+				}
+		});
+	}
 }
 
 
@@ -135,7 +146,18 @@ function obtenerAgremiado(){
 					$('.loader').hide();
 				}else
 				{
-					msg += "El Agremiado no esta HABILITADO <br>";
+					if(agremiado.situacion==74){
+						msg += "El Agremiado esta INHABILITADO <br>";
+					}else if(agremiado.situacion==83){
+						msg += "El Agremiado esta FALLECIDO <br>";
+					}else if(agremiado.situacion==265){
+						msg += "El Agremiado esta en otra REGIONAL <br>";
+					}else if(agremiado.situacion==266){
+						msg += "El Agremiado esta en otra PROVINCIA <br>";
+					}else if(agremiado.situacion==267){
+						msg += "El Agremiado esta en el EXTRANJERO <br>";
+					}
+					
 					$('.loader').hide();
 					$('#id_tipo_documento').val(agremiado.tipo_documento);
 					$('#numero_documento').val(agremiado.numero_documento);
@@ -210,10 +232,11 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var numero_cap = $('#frmCodigoRU #numero_cap').val();
-			var agremiado = $('#frmCodigoRU #agremiado').val();
-			var codigo_itf = $('#frmCodigoRU #codigo_itf').val();
-			var codigo_ru = $('#frmCodigoRU #codigo_ru').val();
+			var numero_cap = $('#frmCodigoRU #numero_cap_bus').val();
+			var agremiado = $('#frmCodigoRU #agremiado_bus').val();
+			var codigo_itf = $('#frmCodigoRU #codigo_itf_bus').val();
+			var codigo_ru = $('#frmCodigoRU #codigo_ru_bus').val();
+			var estado = $('#frmCodigoRU #estado').val();
 			var situacion_pago = $('#frmCodigoRU #situacion_pago').val();
 			if(situacion_pago=="")
 			{ 
@@ -237,7 +260,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						numero_cap:numero_cap,agremiado:agremiado,codigo_itf:codigo_itf,codigo_ru:codigo_ru,situacion_pago:situacion_pago,
-						_token:_token
+						estado:estado,_token:_token
                        },
                 "success": function (result) {
                     fnCallback(result);
@@ -341,20 +364,21 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var situacion_venta = "";
-					if(row.situacion_venta!= null){
-						if(row.situacion_venta="P"){
-							situacion_venta = "PAGADO"
-						} else if (row.situacion_venta="E"){
-							situacion_venta = "EXONERADO"
+					var situacion_pago = "";
+					//if(row.situacion_pago!= null){
+						if(row.situacion_pago=="P"){
+							situacion_pago = "PAGADO"
+						} else if (row.situacion_pago=="E"){
+							situacion_pago = "EXONERADO"
 						}
-						else if (row.situacion_venta="A"){
-							situacion_venta = "ANULADO"
+						else if (row.situacion_pago=="A"){
+							situacion_pago = "ANULADO"
+						}else if (row.situacion_pago=="PE"){
+							situacion_pago = "PENDIENTE"
 						}
-					}else{
-						situacion_venta = "PENDIENTE"
-					}
-					return situacion_venta;
+					//}else{
+					//}
+					return situacion_pago;
 				},
 				"bSortable": false,
 				"aTargets": [9],
@@ -389,7 +413,7 @@ function datatablenew(){
 				
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 					//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalProfesion('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-					html += '<a href="javascript:void(0)" onclick=eliminarProfesion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '<a href="javascript:void(0)" onclick=eliminarRevisorUrbano('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
 					return html;
@@ -421,7 +445,7 @@ function modalProfesion(id){
 
 }
 
-function eliminarProfesion(id,estado){
+function eliminarRevisorUrbano(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -433,24 +457,48 @@ function eliminarProfesion(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Profesion?", 
+        message: "&iquest;Deseas "+act_estado+" el registro del codigo de RU?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_profesion(id,estado_);
+                fn_eliminar_revisor_urbano(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_profesion(id,estado){
+function fn_eliminar_revisor_urbano(id,estado){
 	
     $.ajax({
-            url: "/profesion/eliminar_profesion/"+id+"/"+estado,
+            url: "/revisorUrbano/eliminar_revisor_urbano/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
 				datatablenew();
             }
     });
+}
+
+function DescargarArchivosRU(){
+		
+	var numero_cap = $('#numero_cap_bus').val();
+	var agremiado = $('#agremiado_bus').val();
+	var codigo_itf = $('#codigo_itf_bus').val();
+	var codigo_ru = $('#codigo_ru_bus').val();
+	var situacion_pago = $('#situacion_pago').val();
+	var estado = $('#estado').val();
+	//var id_agremiado = 0;
+	//var id_regional = 0;
+	
+	if (numero_cap == "")numero_cap = 0;
+	if (agremiado == "")agremiado = 0;
+	if (codigo_itf == "")codigo_itf = 0;
+	if (codigo_ru == "")codigo_ru = 0;
+	if (situacion_pago == "")situacion_pago = 0;
+	if (estado == "")estado = 0;
+	//if (campo == "")campo = 0;
+	//if (orden == "")orden = 0;
+	
+	location.href = '/revisorUrbano/exportar_listar_revisor_urbano/'+numero_cap+'/'+agremiado+'/'+codigo_itf+'/'+codigo_ru+'/'+situacion_pago+'/'+estado;
+	
 }
 

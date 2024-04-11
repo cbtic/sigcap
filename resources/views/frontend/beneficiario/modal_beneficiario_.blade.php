@@ -502,6 +502,53 @@ function obtener_profesional_($i){
 	
 }
 
+function obtener_profesional(){
+	
+
+  var numero_documento_ = $('#dni_beneficiario_edit').val();
+  //console.log(numero_documento);
+  $.ajax({
+      url: '/persona/obtenerPersona/'+numero_documento_,
+      dataType: "json",
+      success: function(result){
+
+        if(result.sw==false){
+
+          Swal.fire({
+            title: 'El numero de documento no existe',
+            text: "¿Desea registrar como  nueva persona?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Crear!'
+          }).then((result) => {
+            if (result.value) {
+              var numero_documento_ = $('#dni_beneficiario_edit').val();
+              modal_personaNuevoBeneficiarioEdit(numero_documento_);
+              /*$('#frmEmpresaBeneficiario').modal([
+                backdrop:'static',
+                keyboard: false
+              ]);
+
+              
+                $('#frmPersona2').modal.('show');
+         
+              */
+            }
+          });
+      
+				}else{
+
+					$('#apellidoP_beneficiario_edit').val(result.persona.apellido_paterno);
+          $('#apellidoM_beneficiario_edit').val(result.persona.apellido_materno);
+          $('#nombres_beneficiario_edit').val(result.persona.nombres);
+				}
+		}
+    });
+	
+}
+
 function obtener_profesional_beneficiario($i){
 	
   var numero_ = $i;
@@ -687,6 +734,37 @@ function modal_personaNuevoBeneficiario($dni,$i){
 
 }
 
+function modal_personaNuevoBeneficiarioEdit($numero_documento_){
+
+
+var dni = $('#dni_beneficiario_edit').val();
+
+$('#dni_').val(dni);
+
+
+//alert(dni);exit();
+$(".modal-dialog").css("width","85%");
+$('#openOverlayOpc').modal('show');
+$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+$.ajax({
+    url: "/persona/modal_personaNuevoBeneficiario",
+    type: "get",
+    data : $("#frmEmpresaBeneficiario").serialize(),
+    success: function (result) {
+        
+        $("#diveditpregOpc").html(result);
+
+        
+        //$('#openOverlayOpc').modal('show');
+        
+    }
+});
+
+//cargarConceptos();
+
+}
+
 </script>
 
 
@@ -709,7 +787,7 @@ function modal_personaNuevoBeneficiario($dni,$i){
               <form method="post" id="frmEmpresaBeneficiario" action="#" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                 <!--<input type="hidden" name="id_empresa" id="id_empresa" value="<?php //echo $empresa->id ?>">-->
-                <!--<input type="hidden" name="id_persona" id="id_persona">-->
+                <input type="hidden" name="id_edit" id="id_edit" value="<?php echo $id ?>">
                 
                 
                   <div class="row">
@@ -748,7 +826,7 @@ function modal_personaNuevoBeneficiario($dni,$i){
 
                   <div class="row">
                     <div class="col-lg-2">
-                      <div class="form-group">
+                      <div class="form-group" id='numero_beneficiario_'>
                         <label class="control-label form-control-sm">N&uacute;mero Beneficiarios</label>
                         <input id="numero_beneficiario" name="numero_beneficiario" class="form-control form-control-sm" value="<?php //echo $agremiado->id_situacion?>" type="text" onChange="AddFila()">
                         <input type="hidden" id="dni_" name="dni_" class="form-control form-control-sm" value="<?php //echo $agremiado->id_situacion?>" type="text">
@@ -759,6 +837,38 @@ function modal_personaNuevoBeneficiario($dni,$i){
                   <!--<div class="modal-body">-->
                     <div id="frmBeneficiario">
                      <!--<label class="control-label form-control-sm">aaaaaaa</label>-->
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <div class="form-group" id='dni_beneficiario_edit_'>
+                          <label class="form-control-sm form-control-sm">DNI</label>
+                          <input type="text" name="dni_beneficiario_edit" id="dni_beneficiario_edit" value="<?php echo $dni?>" placeholder="" class="form-control form-control-sm" onchange ="obtener_profesional()">
+                        </div>
+                      </div>
+                      <div class="col-lg-2">
+                        <div class="form-group" id='apellidoP_beneficiario_edit_'>
+                          <label class="form-control-sm form-control-sm">Apellido Paterno</label>
+                          <input id="apellidoP_beneficiario_edit" name="apellidoP_beneficiario_edit" class="form-control form-control-sm" value="" type="text" readonly>
+                        </div>
+                      </div>
+                      <div class="col-lg-2">
+                        <div class="form-group" id='apellidoM_beneficiario_edit_'>
+                          <label class="form-control-sm form-control-sm">Apellido Materno</label>
+                          <input id="apellidoM_beneficiario_edit" name="apellidoM_beneficiario_edit" class="form-control form-control-sm" value="" type="text" readonly>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="form-group" id='nombres_beneficiario_edit_'>
+                          <label class="form-control-sm form-control-sm">Nombres</label>
+                          <input id="nombres_beneficiario_edit" name="nombres_beneficiario_edit" class="form-control form-control-sm" value="" type="text" readonly>
+                        </div>
+                      </div>
+                      <div class="col-lg-2">
+                        <div class="form-group" id='estado_beneficiario_edit_'>
+                          <label class="form-control-sm form-control-sm">Estado</label>
+                          <select name="estado_beneficiario_edit" id="estado_beneficiario_edit" class="form-control form-control-sm"><option value="">--Selecionar--</option><?php foreach ($estado_concepto as $row) {?> <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$estado_beneficiario)echo "selected='selected'"?>><?php echo $row->denominacion?></option> <?php } ?> </select>
+                        </div>
+                      </div>
                     </div>
                   <!--</div>-->
 
@@ -841,6 +951,18 @@ function modal_personaNuevoBeneficiario($dni,$i){
 $(document).ready(function () {
 
   //$("#concepto").select2({ width: '100%' });
+
+  if($('#id_edit').val()==0){
+    $('#dni_beneficiario_edit_').hide();
+    $('#apellidoP_beneficiario_edit_').hide();
+    $('#apellidoM_beneficiario_edit_').hide();
+    $('#nombres_beneficiario_edit_').hide();
+    $('#estado_beneficiario_edit_').hide();
+  }else{
+    $('#numero_beneficiario_').hide();
+    obtener_profesional();
+  }
+  
 	
 });
 

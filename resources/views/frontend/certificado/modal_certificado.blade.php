@@ -332,11 +332,21 @@ $.mask.definitions['p'] = "[Mm]";
 				//alert(result);
 				console.log(result);
 
-				$('#idagremiado_').val(result.id);
-				$('#nombre_').val(result.nombre_completo);
-				$('#situacion_').val(result.situacion);
-				$('#email_').val(result.email);
-				obtenerNombreProyecto();
+					$('#idagremiado_').val('');
+					$('#nombre_').val('');
+					$('#situacion_').val('');
+					$('#email_').val('');
+				//alert(result.situacion).exit();
+				if(result.situacion=='HABILITADO'){
+					$('#idagremiado_').val(result.id);
+					$('#nombre_').val(result.nombre_completo);
+					$('#situacion_').val(result.situacion);
+					$('#email_').val(result.email);
+					obtenerNombreProyecto();
+				}else{
+					bootbox.alert("El Agremiado est&aacute; INHABILITADO");
+				}
+				
 			}
 		});
 	}
