@@ -213,7 +213,8 @@
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                         <input type="text" name="tipo_proyecto" id="tipo_proyecto" value="<?php echo $derecho_revision->tipo_proyecto?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
-
+                </div>
+                <div class="row" style="padding:15px 20px 15px 20px;">
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                     N&uacute;mero Revisi&oacute;n
                     </div>
@@ -261,21 +262,21 @@
 				</div>
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre_proyecto_bus" name="nombre_proyecto_bus" placeholder="Nombre Proyecto">
-					</div>
-					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
-						<select name="id_tipo_proyecto_bus" id="id_tipo_proyecto_bus" class="form-control form-control-sm" >
-							<option value="">--Tipo Solicitud--</option>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+						<select name="id_estado_proyecto_bus" id="id_estado_proyecto_bus" class="form-control form-control-sm">
+							<option value="">--Estado Proyecto--</option>
 							<?php
-							foreach ($tipo_solicitud as $row) {?>
+							foreach ($estado_proyecto as $row) {?>
 							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
 							<?php 
 							}
 							?>
 						</select>
 					</div>
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
+                        <input type="text" name="numero_liquidacion" id="numero_liquidacion" placeholder="Liquidaci&oacute;n" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    </div> 
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_municipalidad_bus" id="id_municipalidad_bus" class="form-control form-control-sm" >
 							<option value="">--Municipalidad--</option>
 							<?php
@@ -287,21 +288,55 @@
 						</select>
 					</div>
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_registro_bus" name="fecha_registro_bus" placeholder="Fecha Registro">
+						<input class="form-control form-control-sm" id="nombre_proyecto_bus" name="nombre_proyecto_bus" placeholder="Nombre Proyecto">
 					</div>
-					
-					<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-						<select name="id_estado_proyecto_bus" id="id_estado_proyecto_bus" class="form-control form-control-sm">
-							<option value="">--Estado Proyecto--</option>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <select name="id_distrito_domiciliario" id="id_distrito_domiciliario" class="form-control form-control-sm" onchange="">
+                        <option value="">--Selecionar Distrito--</option>
+                            <?php
+                            foreach ($distrito as $row) {?>
+                            <option value="<?php echo $row->id_distrito?>" <?php if($row->id_distrito==$agremiado->id_ubigeo_domicilio)echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
+                            <?php 
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="numero_cap" id="numero_cap" placeholder="N° CAP" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    </div>
+                </div>
+                <div class="row" style="padding:15px 20px 15px 20px;">
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="proyectista" id="proyectista" placeholder="Proyectista" value="<?php echo $agremiado->desc_cliente?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="numero_documento" id="numero_documento" placeholder="N° Documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="propietario" id="propietario" placeholder="Propietario" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    </div>
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="id_tipo_proyecto_bus" id="id_tipo_proyecto_bus" class="form-control form-control-sm" >
+							<option value="">--Tipo Solicitud--</option>
 							<?php
-							foreach ($estado_proyecto as $row) {?>
+							foreach ($tipo_solicitud as $row) {?>
 							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
 							<?php 
 							}
 							?>
 						</select>
 					</div>
-					
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="tipo_proyecto" id="tipo_proyecto" placeholder="Tipo Proyecto" value="<?php echo $derecho_revision->tipo_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
+                        <input type="text" name="direccion_proyecto" id="direccion_proyecto" placeholder="Direcci&oacute;n Proyecto" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    </div> 
+				</div>
+                <div class="row" style="padding:0px 20px 0px 20px;">
+					<!--<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="fecha_registro_bus" name="fecha_registro_bus" placeholder="Fecha Registro">
+					</div>-->
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
