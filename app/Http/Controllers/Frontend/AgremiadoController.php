@@ -1754,7 +1754,7 @@ class AgremiadoController extends Controller
 		if($id_regional==0)$id_regional = "";
 		if($numero_cap==0)$numero_cap = "";
 		if($numero_documento==0)$numero_documento = "";
-		if($agremiado==0)$agremiado = "";
+		if($agremiado=="0")$agremiado = "";
 		if($fecha_inicio==0)$fecha_inicio = "";
 		if($fecha_fin==0)$fecha_fin = "";
 		if($id_situacion==0)$id_situacion = "";

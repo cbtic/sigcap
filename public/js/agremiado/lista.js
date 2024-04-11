@@ -684,8 +684,8 @@ function DescargarArchivos(){
 	var numero_cap = $('#numero_cap_bus').val();
 	var numero_documento = $('#numero_documento_bus').val();
 	var agremiado = $('#agremiado_bus').val();
-	var fecha_inicio = $('#fecha_inicio_bus').val();
-	var fecha_fin = $('#fecha_fin_bus').val();
+	var fecha_inicio = $('#fecha_inicio_bus').val().replace(/\//g, '-');
+	var fecha_fin = $('#fecha_fin_bus').val().replace(/\//g, '-');
 	var id_situacion = $('#id_situacion_bus').val();
 	var id_categoria = $('#id_categoria_bus').val();
 	//var id_agremiado = 0;
