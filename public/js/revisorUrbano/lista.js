@@ -498,7 +498,7 @@ function DescargarArchivosRU(){
 	//if (campo == "")campo = 0;
 	//if (orden == "")orden = 0;
 	
-	location.href = '/revisorUrbano/exportar_listar_revisor_urbano/' + numero_cap + '/' + agremiado + '/' + codigo_itf + '/' + codigo_ru + '/' + situacion_pago + '/' + estado;
+	location.href = '/revisorUrbano/exportar_listar_revisor_urbano/'+numero_cap+'/'+agremiado+'/'+codigo_itf+'/'+codigo_ru+'/'+situacion_pago+'/'+estado;
 	
 }
 

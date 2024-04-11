@@ -126,6 +126,12 @@ $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
+
+    $('#valor_reintegro_').hide();
+
+    
+    
+    
 });
 </script>
 
@@ -154,6 +160,90 @@ $(document).ready(function() {
 
 });
 
+
+function habilitar_reintegro(){
+
+    if($('#instancia').val()==250){
+        $('#valor_reintegro_').show();
+        /*$('#total2').val('0');
+        $('#igv2').val('0');
+        $('#sub_total2').val('0');*/
+    }
+}
+
+function calcularReintegro(){
+
+    if($('#valor_reintegro').val()!=''){
+        var reintegro=parseFloat($('#valor_reintegro').val());
+        var igv_=parseFloat($('#igv').val());
+        var valor_edificaciones=parseFloat($('#factor').val());
+
+        var sub_totalR=reintegro*valor_edificaciones;
+        var igv_totalR=sub_totalR*igv_/100;
+        var totalR=sub_totalR+igv_totalR;
+        
+        if(totalR<parseFloat($('#minimo').val())){
+            
+            var total_minimo = parseFloat($('#minimo').val());
+            var igv_minimo = total_minimo*igv_/100;
+            var sub_total_minimo = total_minimo - igv_minimo;
+
+            var sub_totalR=reintegro*valor_edificaciones;
+            var igv_totalR=sub_totalR*igv_/100;
+            var totalR=sub_totalR+igv_totalR;
+
+            $('#total2').val(total_minimo.toFixed(2));
+            $('#igv2').val(igv_minimo.toFixed(2));
+            $('#sub_total2').val(sub_total_minimo.toFixed(2));
+            $('#total').val(totalR.toFixed(2));
+            $('#igv_').val(igv_totalR.toFixed(2));
+            $('#sub_total').val(sub_totalR.toFixed(2));
+        }else{
+
+            //var sub_totalR_formateado = number_format(sub_totalR, 2, '.', ',');
+            //var igv_totalR_formateado = number_format(igv_totalR, 2, '.', ',');
+            //var totalR_formateado = number_format(totalR, 2, '.', ',');
+            $('#total2').val(totalR.toFixed(2));
+            $('#igv2').val(igv_totalR.toFixed(2));
+            $('#sub_total2').val(sub_totalR.toFixed(2));
+            $('#total').val(totalR.toFixed(2));
+            $('#igv_').val(igv_totalR.toFixed(2));
+            $('#sub_total').val(sub_totalR.toFixed(2));
+        }
+        
+    }
+}
+
+function cambioPlantaTipica(){
+
+    if($('#tipo_liquidacion1').val()==136){
+        var valor_planta_tipica=parseFloat($('#total2').val());
+        var igv_PT=parseFloat($('#igv').val());
+        
+        var sub_totalPT=valor_planta_tipica/(1+(igv_PT/100));
+        var igv_totalPT=sub_totalPT*igv_PT/100;
+
+        if(valor_planta_tipica<parseFloat($('#minimo').val())){
+            
+            var total_minimoPT = parseFloat($('#minimo').val());
+            var igv_minimoPT = total_minimoPT*igv_PT/100;
+            var sub_total_minimoPT = total_minimoPT - igv_minimoPT;
+
+            $('#total2').val(total_minimoPT.toFixed(2));
+            $('#igv2').val(igv_minimoPT.toFixed(2));
+            $('#sub_total2').val(sub_total_minimoPT.toFixed(2));
+            $('#total').val(valor_planta_tipica.toFixed(2));
+            $('#igv_').val(igv_totalPT.toFixed(2));
+            $('#sub_total').val(sub_totalPT.toFixed(2));
+        }else{
+            $('#igv2').val(igv_totalPT.toFixed(2));
+            $('#sub_total2').val(sub_totalPT.toFixed(2));
+            $('#total').val(valor_planta_tipica.toFixed(2));
+            $('#igv_').val(igv_totalPT.toFixed(2));
+            $('#sub_total').val(sub_totalPT.toFixed(2));
+        }
+    }
+}
 
 function editarPuesto(id){
 
@@ -288,7 +378,11 @@ function fn_save_requisito(){
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Valor Total Obra</label>
-                        <input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->valor_obra?>" type="text" readonly='readonly'>
+                        <?php
+                        $valor_obra_=$liquidacion[0]->valor_obra;
+                        $valor_obra_formateado = number_format($valor_obra_, 2, '.', ',');
+                        ?>
+                        <input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo $valor_obra_formateado?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea del Terreno</label>
@@ -388,7 +482,7 @@ function fn_save_requisito(){
                                 foreach ($tipo_liquidacion as $row) {
                                     if (in_array($row->codigo, [135,142,136,138,306,137,143,258])){
                                 ?>
-                                <option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$agremiadoMulta->id_estado_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo=='135')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
                                     }
                                 }
@@ -399,11 +493,11 @@ function fn_save_requisito(){
                     <div class="col-lg-5">
                         <div class="form-group">
                             <label class="control-label form-control-sm">Instancia</label>
-                            <select name="instancia" id="instancia" class="form-control form-control-sm">
+                            <select name="instancia" id="instancia" class="form-control form-control-sm" onchange="habilitar_reintegro()">
                                 <option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($instancia as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$agremiadoMulta->id_estado_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo=='246')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
                                 }
                                 ?>
@@ -421,7 +515,7 @@ function fn_save_requisito(){
                                 foreach ($tipo_liquidacion as $row) {
                                     if (in_array($row->codigo, [143,258])){
                                 ?>
-                                <option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$agremiadoMulta->id_estado_multa)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo=='258')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
                                     }
                                 }
@@ -431,13 +525,19 @@ function fn_save_requisito(){
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Municipalidad</label>
-                        <input id="municipalidad" name="municipalidad" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->municipalidad?>" type="text" readonly='readonly'>
+                        <input id="municipalidad" name="municipalidad" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->municipalidad;?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">N&uacute;mero Revisi&oacute;n</label>
                         <input id="numero_revision" name="numero_revision" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text">
+                    </div>
+                    <div class="col-lg-3">
+                        <div id="valor_reintegro_" name="valor_reintegro_">
+                            <label class="control-label form-control-sm">Valor Reintegro S/.</label>
+                            <input id="valor_reintegro" name="valor_reintegro" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" onchange="calcularReintegro()">
+                        </div>
                     </div>
                 </div>
                 <div class="row" style="padding-left:10px;padding-top:15px">
@@ -486,36 +586,49 @@ function fn_save_requisito(){
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Sub Total</label>
-                                <input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                                <?php
+                                $valor_obra_=$liquidacion[0]->valor_obra;
+                                $porcentaje_calculo_edificacion = $parametro[0]->porcentaje_calculo_edificacion;
+                                $sub_total=$valor_obra_*$porcentaje_calculo_edificacion;
+                                $sub_total_formateado = number_format($sub_total, 2, '.', ',');
+                                //var_dump($total_minimo);exit;
+                                ?>
+                                <input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Sub Total</label>
-                                <input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                                <input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">IGV</label>
-                                <input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                                <?php
+                                
+                                $igv_ = $parametro[0]->igv;
+                                $igv_total=$sub_total*$igv_;
+                                $igv_total_formateado = number_format($igv_total, 2, '.', ',');
+                                //var_dump($total_minimo);exit;
+                                ?>
+                                <input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php echo $igv_total_formateado?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">IGV</label>
-                                <?php
-                                $valor_obra = $liquidacion[0]->valor_obra;
-                                $igv_valor = $parametro[0]->igv;
-                                $igv_ = $valor_obra * $igv_valor;
-                                ?>
-                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php echo $igv_?>" type="text" readonly='readonly'>
+                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php echo $igv_total_formateado?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Total</label>
-                                <input id="total" name="total" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->valor_obra?>" type="text" readonly='readonly'>
+                                <?php
+                                $total=$sub_total+$igv_total;
+                                $total_formateado = number_format($total, 2, '.', ',');
+                                ?>
+                                <input id="total" name="total" on class="form-control form-control-sm"  value="<?php echo $total_formateado?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
-                                <label class="control-label form-control-sm">Total a Pagar</label>
-                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->valor_obra?>" type="text">
+                                <label class="control-label form-control-sm">Total a Pagar Soles</label>
+                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $total_formateado?>" type="text" onchange="cambioPlantaTipica()">
                             </div>
                         </div>
                     </div>

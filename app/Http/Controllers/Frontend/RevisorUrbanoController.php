@@ -185,7 +185,7 @@ class RevisorUrbanoController extends Controller
 		$p[]=$codigo_itf;
         $p[]=$codigo_ru;
 		$p[]=$situacion_pago;
-		$p[]=$estado;
+		$p[]=1;
 		$p[]=1;
 		$p[]=10000;
 		$data = $revisorUrbano_model->listar_revisorUrbano_ajax($p);
@@ -194,11 +194,33 @@ class RevisorUrbanoController extends Controller
 		$n = 1;
 		//array_push($variable, array("SISTEMA CAP"));
 		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
-		array_push($variable, array("N","Numero CAP","Nombre","Fecha Colegiado","Situacion","Codigo ITF", "Codigo RU", "Fecha", "Serie", "Numero", "Situacion Documento Venta", "Estado"));
+		array_push($variable, array("N","Numero CAP","Nombre","Fecha Colegiado","Situacion","Codigo ITF", "Codigo RU", "Fecha", "Serie", "Numero", "Situacion Documento Venta"));
 		
 		foreach ($data as $r) {
 			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
-			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->fecha_colegiado, $r->situacion,$r->codigo_itf,$r->codigo_ru, $r->fecha, $r->serie, $r->numero, $r->situacion_pago, $r->estado));
+			
+			/*$situacion_pago_texto = '';
+			switch ($r->situacion_pago) {
+				case 'P':
+					$situacion_pago_texto = 'PAGADO';
+					break;
+				case 'PE':
+					$situacion_pago_texto = 'PENDIENTE';
+					break;
+				case 'E':
+					$situacion_pago_texto = 'EXONERADO';
+					break;
+				case 'ANULADO':
+					$situacion_pago_texto = 'A';
+					break;
+				default:
+					$situacion_pago_texto = $r->situacion_pago;
+					break;
+			}
+
+			$estado_texto = ($r->estado == 1) ? 'Activo' : 'Inactivo';*/
+
+			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->fecha_colegiado, $r->situacion,$r->codigo_itf,$r->codigo_ru, $r->fecha, $r->serie, $r->numero, $r->situacion_pago));
 		}
 		
 		
