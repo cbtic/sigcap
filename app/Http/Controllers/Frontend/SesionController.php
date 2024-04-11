@@ -277,12 +277,13 @@ class SesionController extends Controller
 								
 								foreach($delegados as $row){
 									
-									$coordinador = 0;
-									if($request->coordinador == $row)$coordinador = 1;
+									//$coordinador = 0;
+									//if($request->coordinador == $row)$coordinador = 1;
 									$comisionSesionDelegado = new ComisionSesionDelegado();
 									$comisionSesionDelegado->id_comision_sesion = $id_comision_sesion;
 									$comisionSesionDelegado->id_delegado = $row->id;
-									$comisionSesionDelegado->coordinador = $coordinador;
+									//$comisionSesionDelegado->coordinador = $coordinador;
+									$comisionSesionDelegado->coordinador = $row->coordinador;
 									$comisionSesionDelegado->id_profesion_otro = NULL;
 									$comisionSesionDelegado->id_aprobar_pago = NULL;
 									$comisionSesionDelegado->observaciones = NULL;

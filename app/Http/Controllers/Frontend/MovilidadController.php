@@ -73,6 +73,7 @@ class MovilidadController extends Controller
 	public function ver_movilidad_pdf($id_periodo,$anio,$mes){
 		
 		$movilidad_model = new ComisionMovilidade;
+		/*
 		$p[]="";
 		$p[]=$id_periodo;
         $p[]="";
@@ -82,6 +83,8 @@ class MovilidadController extends Controller
 		$p[]="1";
 		$p[]="1000";
 		$movilidad = $movilidad_model->listar_movilidad_ajax($p);
+		*/
+		$movilidad = $movilidad_model->getMovilidadByPeriodo($id_periodo,$anio,$mes);
 		
 		$dias = array('L','M','M','J','V','S','D');
 
