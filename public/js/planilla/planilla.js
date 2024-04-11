@@ -585,27 +585,102 @@ function save_recibo(){
 	var fecha_vencimiento = $('#fecha_vencimiento').val();
 	var numero_operacion = $('#numero_operacion').val();
 	var cancelado = $('#chk_activar_numero_operacion').prop('checked') ? 1 : 0;
+
+	$('#Cancelado').val(cancelado);
+
 	
-	$.ajax({
+
+	var selTipo = 'S';
+	$('#selTipo').val(selTipo);
+
+	if(cancelado==1){
+
+	  const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+		  confirmButton: "btn btn-success",
+		  cancelButton: "btn btn-warning"
+		},
+		buttonsStyling: false
+	  });
+	  swalWithBootstrapButtons.fire({
+		title: 'Cancelación',
+		text: "Seleccionar el tipo de cancelación!",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonText: "Solo Selccionado!",
+		cancelButtonText: "Todo el Grupo!",
+		reverseButtons: true
+	  }).then((result) => {
+		if (result.isConfirmed) {
+			selTipo = 'S';
+			$('#selTipo').val(selTipo);
+			send_recibo_honorario();
+/*
+			$.ajax({
+				url: "/planillaDelegado/send_recibo_honorario",
+				type: "POST",
+				data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion,cancelado:cancelado,sel:sel},
+				success: function (result) {
+
+					datatablenew();
+	
+					limpiar();					
+				}
+			});
+			*/
+		} else if 
+			(result.dismiss === Swal.DismissReason.cancel) 
+			  
+			{
+				selTipo = 'T';
+				$('#selTipo').val(selTipo);
+
+				send_recibo_honorario();
+				/*
+				$.ajax({
+					url: "/planillaDelegado/send_recibo_honorario",
+					type: "POST",
+					data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion,cancelado:cancelado,sel:sel},
+					success: function (result) {
+
+						datatablenew();
+		
+						limpiar();					
+					}
+				});
+				*/
+			}
+	  });
+
+	}else{
+		send_recibo_honorario();
+		/*
+		$.ajax({
 			url: "/planillaDelegado/send_recibo_honorario",
-            type: "POST",
-            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion,cancelado:cancelado},
+			type: "POST",
+			data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion,cancelado:cancelado,sel:sel},
 			success: function (result) {
-				//$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
+
+				datatablenew();
+
+				limpiar();					
+			}
+		});
+		*/
+	}
+
+}
+
+function send_recibo_honorario(){
+    $.ajax({
+			url:"/planillaDelegado/send_recibo_honorario",
+            type: "POST",
+            data : $("#frmPlanillaDetalle").serialize(),
+            success: function (result) {				
 				datatablenew();
 
 				limpiar();
-				/*$('#id_recibo').val('');
-				$('#numero_cap').val('');
-				$('#nombres').val('');
-				$('#numero_comprobante').val('');
-				$('#fecha_comprobante').val('');
-				$('#fecha_vencimiento').val('');
-				$('#numero_operacion').prop('disabled', true);
-				$('#numero_operacion').val('');
-				$('#chk_activar_numero_operacion').prop('checked', false);*/
-				
+					
             }
     });
 }

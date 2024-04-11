@@ -1,6 +1,11 @@
 <!--<link rel="stylesheet" href="<?php //echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">-->
+<link rel="stylesheet" href="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style type="text/css">
+
+
 
 /*
 tbody {
@@ -380,6 +385,14 @@ label.form-control-sm{
                         <input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php //echo $agremiado->id?>">
 
 						<input type="hidden" name="TipoAsiento" id="TipoAsiento" value="">
+
+						<input type="hidden" name="selTipo" id="selTipo" value="">
+						
+						<input type="hidden" name="Cancelado" id="Cancelado" value="">
+
+						
+
+
 						
                         <div class="row" id="divSolicitud">
 							
