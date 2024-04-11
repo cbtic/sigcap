@@ -586,7 +586,12 @@ function save_recibo(){
 	var numero_operacion = $('#numero_operacion').val();
 	var cancelado = $('#chk_activar_numero_operacion').prop('checked') ? 1 : 0;
 
+	$('#Cancelado').val(cancelado);
+
+	
+
 	var selTipo = 'S';
+	$('#selTipo').val(selTipo);
 
 	if(cancelado==1){
 
@@ -608,6 +613,7 @@ function save_recibo(){
 	  }).then((result) => {
 		if (result.isConfirmed) {
 			selTipo = 'S';
+			$('#selTipo').val(selTipo);
 			send_recibo_honorario();
 /*
 			$.ajax({
@@ -627,6 +633,8 @@ function save_recibo(){
 			  
 			{
 				selTipo = 'T';
+				$('#selTipo').val(selTipo);
+
 				send_recibo_honorario();
 				/*
 				$.ajax({
