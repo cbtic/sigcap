@@ -255,14 +255,23 @@ class PlanillaDelegadoController extends Controller
 	}
 
 	public function send_recibo_honorario(Request $request){
+
+/*
+		$planilla_detalle = PlanillaDelegadoDetalle::where('id_grupo',1)->where('estado','1')->get();
+
+		foreach($planilla_detalle as $row){
+			print_r($row->id);
+
+		}
+*/
+		//print_r($request->tblReciboHonorario); 
+
+		
 		
 		$id_user = Auth::user()->id;
-		/*if($request->id == 0){
-			$planillaDelegadoDetalle = new PlanillaDelegadoDetalle;
-		}else{*/
-			$planillaDelegadoDetalle = PlanillaDelegadoDetalle::find($request->id);
-		/*}*/
-		
+
+
+		$planillaDelegadoDetalle = PlanillaDelegadoDetalle::find($request->id);		
 		$planillaDelegadoDetalle->tipo_comprobante = $request->tipo_comprobante;
 		$planillaDelegadoDetalle->numero_comprobante = $request->numero_comprobante;
 		$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
@@ -271,6 +280,16 @@ class PlanillaDelegadoController extends Controller
 		$planillaDelegadoDetalle->cancelado = $request->cancelado;
 		$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
 		$planillaDelegadoDetalle->save();
+
+
+
+		$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle();
+		$data = $planillaDelegadoDetalle_model->actualizarReciboHonorario($request->id_periodo_bus, $request->anio, $request->mes,
+		$request->grupo, $request->tipo_comprobante, $request->numero_comprobante, $request->fecha_comprobante, $request->fecha_vencimiento,
+		$request->numero_operacion, $request->cancelado, $request->id_usuario_inserta);
+
+
+		echo json_encode($data);
 		
     }
 
