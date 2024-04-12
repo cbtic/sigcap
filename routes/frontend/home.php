@@ -677,4 +677,5 @@ Route::post('agremiado/listar_reporte_deudas_ajax', [AgremiadoController::class,
 Route::get('agremiado/exportar_lista_deudas/{anio}/{concepto}/{mes}', [AgremiadoController::class, 'exportar_lista_deudas'])->name('agremiado.exportar_lista_deudas');
 Route::get('revisorUrbano/eliminar_revisor_urbano/{id}/{estado}', [RevisorUrbanoController::class, 'eliminar_revisor_urbano'])->name('revisorUrbano.eliminar_revisor_urbano');
 Route::get('revisorUrbano/exportar_listar_revisor_urbano/{numero_cap}/{agremiado}/{codigo_itf}/{codigo_ru}/{situacion_pago}/{estado}', [RevisorUrbanoController::class, 'exportar_listar_revisor_urbano'])->name('revisorUrbano.exportar_listar_revisor_urbano');
+Route::get('derecho_revision/modal_reintegroRU/{id}', [DerechoRevisionController::class, 'modal_reintegroRU'])->name('derecho_revision.modal_reintegroRU');
 

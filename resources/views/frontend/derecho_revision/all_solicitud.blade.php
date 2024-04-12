@@ -265,7 +265,7 @@
 
 				<div class="row" style="padding:20px 20px 0px 20px;">
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <select name="numero_liquidacion" id="numero_liquidacion" class="form-control form-control-sm" onChange="">
+                        <select name="estado_solicitud_bus" id="estado_solicitud_bus" class="form-control form-control-sm" onChange="">
                             <option value="">--Selecionar Estado Solicitud--</option>
                                 <?php
                                 foreach ($estado_solicitud as $row) {?>
@@ -281,7 +281,7 @@
                     </div>    
 
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
-                        <select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="">
+                        <select name="municipalidad_bus" id="municipalidad_bus" class="form-control form-control-sm" onChange="">
                             <option value="">--Selecionar Municipalidad--</option>
                                 <?php
                                 foreach ($municipalidad as $row) {?>
@@ -293,7 +293,7 @@
                     </div>
 
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="nombre_proyecto" id="nombre_proyecto" placeholder="Nombre Proyecto" value="<?php echo $derecho_revision->nombre_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="nombre_proyecto_bus" id="nombre_proyecto_bus" placeholder="Nombre Proyecto" value="<?php echo $derecho_revision->nombre_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
 
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
@@ -325,13 +325,28 @@
                         <input type="text" name="propietario" id="propietario" placeholder="Propietario" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
 
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="tipo_solicitud" id="tipo_solicitud" placeholder="Tipo Solicitud" value="<?php echo $derecho_revision->id_tipo_solicitud?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                    </div>
-
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="tipo_proyecto" id="tipo_proyecto" placeholder="Tipo Proyecto" value="<?php echo $derecho_revision->tipo_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="id_tipo_proyecto_bus" id="id_tipo_proyecto_bus" class="form-control form-control-sm" >
+							<option value="">--Tipo Solicitud--</option>
+							<?php
+							foreach ($tipo_solicitud as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="tipo_proyecto_bus" id="tipo_proyecto_bus" class="form-control form-control-sm" >
+							<option value="">--Tipo Tipo Proyecto--</option>
+							<?php
+							foreach ($tipo_proyecto as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
                         <input type="text" name="direccion_proyecto" id="direccion_proyecto" placeholder="Direcci&oacute;n Proyecto" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>   

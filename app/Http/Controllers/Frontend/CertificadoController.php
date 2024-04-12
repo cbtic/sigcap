@@ -71,6 +71,7 @@ class CertificadoController extends Controller
 		$proyecto = new Proyecto();
 
 		$proyecto_model = new Proyecto();
+		$sw=true;
 		//$nombre_proyecto = $proyecto_model->obtenerNombreProyecto();
         
         if($id>0)  {
