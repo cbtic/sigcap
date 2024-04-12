@@ -537,12 +537,22 @@ class SesionController extends Controller
 			$comisionDelegadoOld->estado = 0;
 			$comisionDelegadoOld->save();
 			
+			$id_puesto = $comisionDelegadoOld->id_puesto;
+			
+			if($id_puesto==12){
+				$comisionSesionDelegado_model = new ComisionSesionDelegado();
+				$comisionSesionDelegadoObj = $comisionSesionDelegado_model->getPuestoComisionSesionDelegadoByIdComisionSesion($comisionSesionDelegado->id_comision_sesion);
+				$id_puesto = $comisionSesionDelegadoObj->id_puesto;
+				//ComisionDelegado::where("id_agremiado",$request->id_delegado)
+			}
+			
 			$comisionDelegado = new ComisionDelegado;
 			$comisionDelegado->id_regional = $comisionDelegadoOld->id_regional;
 			$comisionDelegado->id_comision = $comisionDelegadoOld->id_comision;
 			$comisionDelegado->coordinador = $comisionDelegadoOld->coordinador;
 			$comisionDelegado->id_agremiado = $request->id_delegado;
-			$comisionDelegado->id_puesto = $comisionDelegadoOld->id_puesto;
+			//$comisionDelegado->id_puesto = $comisionDelegadoOld->id_puesto;
+			$comisionDelegado->id_puesto = $id_puesto;
 			$comisionDelegado->id_usuario_inserta = $id_user;
 			$comisionDelegado->save();
 			$id_delegado = $comisionDelegado->id;
@@ -558,7 +568,8 @@ class SesionController extends Controller
 			$comisionDelegado->id_comision = $comisionDelegadoOld->id_comision;
 			$comisionDelegado->coordinador = $comisionDelegadoOld->coordinador;
 			$comisionDelegado->id_agremiado = $request->id_delegado;
-			$comisionDelegado->id_puesto = $comisionDelegadoOld->id_puesto;
+			//$comisionDelegado->id_puesto = $comisionDelegadoOld->id_puesto;
+			$comisionDelegado->id_puesto = 12;
 			$comisionDelegado->estado = 2;
 			$comisionDelegado->id_usuario_inserta = $id_user;
 			$comisionDelegado->save();

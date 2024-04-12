@@ -194,7 +194,7 @@
                                     </div>
                                     
                                     <div class="col-lg-4 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-                                        <input class="btn btn-success pull-rigth" value="Cerrar Comisi&oacute;n" type="button" id="btnCerrarComision" style="margin-left:15px" />
+                                        <input class="btn btn-success pull-rigth" value="Cerrar Asignaci&oacute;n de Plaza" type="button" id="btnCerrarComision" style="margin-left:15px" />
                                     </div>
                                 </div>
                             </form>
