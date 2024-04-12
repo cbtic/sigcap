@@ -388,7 +388,9 @@ label.form-control-sm{
 
 						<input type="hidden" name="selTipo" id="selTipo" value="">
 						
-						<input type="hidden" name="Cancelado" id="Cancelado" value="">
+						<input type="hidden" name="cancelado" id="cancelado" value="">
+
+						<input type="hidden" name="id_grupo" id="id_grupo" value="">
 
 						
 
@@ -523,7 +525,7 @@ label.form-control-sm{
 														N&uacute;mero Comprobante
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-														<input type="text" name="numero_comprobante" id="numero_comprobante" value="<?php //echo $planillaDelegadoDetalle->numero_comprobante ?>" class="form-control form-control-sm">
+														<input type="text" name="numero_comprobante" id="numero_comprobante" value="" class="form-control form-control-sm">
 													</div>
 														
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
@@ -635,6 +637,7 @@ label.form-control-sm{
 															<th>Fecha Comprobante</th>
 															<th>Fecha Vencimiento</th>															
 															<th>Abonado</th>
+															<th>Nro. Operación</th>
 															<th>Grupo</th>
 															<th>Asiento <br/>Provisión</th>
 															<th>Asiento <br/>Cancelación</th>
