@@ -132,6 +132,7 @@
 					<td colspan="6" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">3ra. Semana</td>
 					<td colspan="6" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">4ta. Semana</td>
 					<td colspan="6" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">5ta. Semana</td>
+					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">Total</td>
 				</tr>
 			
 				<tr>
@@ -174,6 +175,9 @@
 					}
 					
 					?>
+					
+					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;"></td>
+					
 				</tr>
 				
 				<?php foreach($municipalidadSesion as $row){
@@ -220,13 +224,16 @@
 						
 						?>
 						
-						
-						
+					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;"></td>
 						
 					</tr>
 					
 					
-					<?php foreach($delegadoSesion as $row3){?>
+					<?php 
+					$total_delegado = 0;
+					foreach($delegadoSesion as $row3){
+					$total_delegado = 0;
+					?>
 					
 					<tr>
 					
@@ -252,6 +259,7 @@
 							?>
 							<td class="ancho_nro" style="text-align:center;border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo isset($fechaSesion->tipo_sesion)?$fechaSesion->tipo_sesion:""?></td>
 							<?php
+							if(isset($fechaSesion->tipo_sesion))$total_delegado++;
 							}
 						}
 						
@@ -267,6 +275,7 @@
 						
 						?>
 						
+						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:center"><?php echo $total_delegado?></td>
 							
 					</tr>
 					

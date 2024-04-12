@@ -200,7 +200,8 @@ class ComisionController extends Controller
 				$comisionDelegado->id_comision = $request->id_comision;
 				$comisionDelegado->coordinador = $coordinador;
 				$comisionDelegado->id_agremiado = $concursoInscripcion->id_agremiado;
-				$comisionDelegado->id_puesto = $concursoInscripcion->puesto_postula;
+				//$comisionDelegado->id_puesto = $concursoInscripcion->puesto;
+				$comisionDelegado->id_puesto = 1;
 				$comisionDelegado->id_usuario_inserta = $id_user;
 				$comisionDelegado->save();
 				
@@ -226,7 +227,8 @@ class ComisionController extends Controller
 					$comisionDelegado2->id_comision = $request->id_comision;
 					$comisionDelegado2->coordinador = $coordinador;
 					$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
-					$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
+					//$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto;
+					$comisionDelegado2->id_puesto = 2;
 					$comisionDelegado2->estado = 1;
 					$comisionDelegado2->id_usuario_inserta = $id_user;
 					$comisionDelegado2->save();
@@ -256,7 +258,8 @@ class ComisionController extends Controller
 				$comisionDelegado->id_comision = $request->id_comision;
 				$comisionDelegado->coordinador = $coordinador;
 				$comisionDelegado->id_agremiado = $concursoInscripcion1->id_agremiado;
-				$comisionDelegado->id_puesto = $concursoInscripcion1->puesto_postula;
+				//$comisionDelegado->id_puesto = $concursoInscripcion1->puesto;
+				$comisionDelegado->id_puesto = 1;
 				$comisionDelegado->estado = 1;
 				$comisionDelegado->id_usuario_inserta = $id_user;
 				$comisionDelegado->save();
@@ -282,7 +285,8 @@ class ComisionController extends Controller
 					$comisionDelegado2->id_comision = $request->id_comision;
 					$comisionDelegado2->coordinador = $coordinador;
 					$comisionDelegado2->id_agremiado = $concursoInscripcion2->id_agremiado;
-					$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto_postula;
+					//$comisionDelegado2->id_puesto = $concursoInscripcion2->puesto;
+					$comisionDelegado2->id_puesto = 2;
 					$comisionDelegado2->estado = 1;
 					$comisionDelegado2->id_usuario_inserta = $id_user;
 					$comisionDelegado2->save();
@@ -707,13 +711,16 @@ class ComisionController extends Controller
 					$agremiadoRol = new AgremiadoRole;
 					$agremiadoRol->id_agremiado = $row2->id_agremiado;
 					$agremiadoRol->rol = $id_tipo_concurso;
-					$agremiadoRol->rol_especifico = $rol_especifico;
+					$agremiadoRol->rol_especifico = $rol_especifico;///
 					$agremiadoRol->fecha_inicio = $concurso->fecha_acreditacion_inicio;
 					$agremiadoRol->fecha_fin = $concurso->fecha_acreditacion_fin;
 					$agremiadoRol->id_periodo = $request->periodo;
 					$agremiadoRol->estado = 1;
 					$agremiadoRol->id_usuario_inserta = $id_user;
 					$agremiadoRol->save();
+					
+					$agremiadoRol_model = new AgremiadoRole;
+					$agremiadoRol_model->updatePuestoConcursoInscripcion($row2->id_agremiado,$concurso->id,$rol_especifico);
 					
 				}
 				

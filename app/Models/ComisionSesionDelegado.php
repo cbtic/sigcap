@@ -152,4 +152,18 @@ and t1.id_periodo_comisione=".$id_periodo ;
         return $data;
     }
 	
+	function getPuestoComisionSesionDelegadoByIdComisionSesion($id_comision_sesion){ 
+		
+		$cad = "select case when t1.id_puesto=1 then 2 when t1.id_puesto=2 then 1 end id_puesto
+from comision_sesion_delegados t0 
+left join comision_delegados t1 on t0.id_delegado=t1.id
+where t0.id_comision_sesion=".$id_comision_sesion."
+and t0.estado='1'
+and id_puesto!=12
+limit 1";
+		
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
+		
 }
