@@ -349,6 +349,7 @@ class IngresoController extends Controller
         $id_agremiado = $request->id_agremiado;
 
         $id_concepto = $request->id_concepto;
+        $Exonerado = $request->Exonerado;
 
         //print_r($id_concepto); exit();
 
@@ -459,7 +460,7 @@ class IngresoController extends Controller
         // print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas,$Exonerado);
        
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
