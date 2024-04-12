@@ -33,7 +33,9 @@ class PlanillaDelegadoDetalle extends Model
 
     function getDatosRecibo($id){     
         
-        $cad = "select pdd.id, a.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.numero_ruc ruc, pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado from planilla_delegado_detalles pdd 
+        $cad = "select pdd.id, a.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.numero_ruc ruc, 
+        pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado,pdd.id_grupo
+        from planilla_delegado_detalles pdd 
         inner join agremiados a on pdd.id_agremiado = a.id
         inner join personas p on a.id_persona = p.id
         where pdd.id ='".$id."' ";
@@ -43,26 +45,41 @@ class PlanillaDelegadoDetalle extends Model
         return $data;
     }
 
-    function actualizarReciboHonorario($id_periodo,$anio,$mes,$grupo,$tipo_comprobante,$numero_comprobante,$fecha_comprobante,$fecha_vencimiento,$numero_operacion,$cancelado,$id_usuario_inserta){
+    function actualizarReciboHonorario($id_periodo,$anio,$mes,$grupo,$tipo_comprobante,$numero_comprobante,$fecha_comprobante,$fecha_vencimiento,$numero_operacion,$cancelado,$id_usuario){
   
         $cad = "
-            update planilla_delegado_detalles set 
-            tipo_comprobante= '".$tipo_comprobante."',
-            numero_comprobante= '".$numero_comprobante."',
-            fecha_comprobante= '".$fecha_comprobante."',
-            fecha_vencimiento= '".$fecha_vencimiento."',
-            numero_operacion= '".$numero_operacion."',
-            cancelado= '".$cancelado."',
-            id_usuario_inserta= '".$id_usuario_inserta."'
-            from planilla_delegados pd 
-                inner join planilla_delegado_detalles pdd on pdd.id_planilla = pd.id
-            where pd.id_periodo_comision = '".$id_periodo."' 
-                and pd.periodo = '".$anio."' 
-                and pd.mes = '".$mes."' 
-                and pdd.estado = '1'
-                and pdd.id_grupo = '".$grupo."' 
+            update planilla_delegado_detalles set numero_operacion= '".$numero_operacion."', cancelado= '".$cancelado."', id_usuario_actualiza= '".$id_usuario."'
+            where id in (
+                select pdd.id
+                from planilla_delegados pd 
+                    inner join planilla_delegado_detalles pdd on pdd.id_planilla = pd.id
+                where pd.id_periodo_comision = '".$id_periodo."' 
+                    and pd.periodo = '".$anio."' 
+                    and pd.mes = '".$mes."' 
+                    and pdd.estado = '1'
+                    and pdd.id_grupo = '".$grupo."' 
+                )
         ";
-        //echo $cad;
+/*
+        $cad = "
+        update planilla_delegado_detalles set 
+        tipo_comprobante= '".$tipo_comprobante."',
+        numero_comprobante= '".$numero_comprobante."',
+        fecha_comprobante= '".$fecha_comprobante."',
+        fecha_vencimiento= '".$fecha_vencimiento."',
+        numero_operacion= '".$numero_operacion."',
+        cancelado= '".$cancelado."',
+        id_usuario_actualiza= '".$id_usuario."'
+        from planilla_delegados pd 
+            inner join planilla_delegado_detalles pdd on pdd.id_planilla = pd.id
+        where pd.id_periodo_comision = '".$id_periodo."' 
+            and pd.periodo = '".$anio."' 
+            and pd.mes = '".$mes."' 
+            and pdd.estado = '1'
+            and pdd.id_grupo = '".$grupo."' 
+    ";
+    */
+       // echo $cad; exit();
         $data = DB::select($cad);
         return $data;
     }
