@@ -35,24 +35,26 @@ begin
 	select a.id_persona,R.id_agremiado,id_familia,
 	(select sp2.id from seguros_planes sp2 where sp2.id_seguro = s.id limit 1) id_plan,1 id_moneda,
 	(select sp5.monto from seguros_planes sp5 where sp5.id_seguro = s.id limit 1) monto,id_concepto, s.nombre nombre_seguro,
-	--(select sp3.fecha_inicio from seguros_planes sp3 where sp3.id_seguro = s.id limit 1) fecha_inicio,
-	(select fecha from seguro_afiliados where id=p_afiliacion) fecha_inicio,
+	(select sp3.fecha_inicio from seguros_planes sp3 where sp3.id_seguro = s.id limit 1) fecha_inicio,
 	(select sp4.fecha_fin from seguros_planes sp4 where sp4.id_seguro = s.id limit 1) fecha_fin,nombres
 	
 	from(
-	select sa.id_agremiado, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres nombres,0 id_familia,id_seguro 
+	
+	select sa.id_agremiado, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres nombres,'TITULAR' id_familia,id_seguro 
 	from seguro_afiliados sa 
-	inner join agremiados a on sa.id_agremiado = a.id 
+	inner join agremiados a on sa.id_agremiado = a.id
 	inner join personas p on a.id_persona = p.id
-	where sa.id = p_afiliacion
+	where sa.id = '46'
 	union all 
 	select sap.id_agremiado,
-	(select ap.apellido_nombre from agremiado_parentecos ap where ap.id_agremiado = a.id and sap.id_familia = ap.id limit 1),sap.id_familia,sp.id_seguro 
+	(select ap.apellido_nombre from agremiado_parentecos ap where ap.id_agremiado = a.id and sap.id_familia = ap.id limit 1),tm2.denominacion id_familia,sp.id_seguro 
 	from seguro_afiliado_parentescos sap 
 	inner join seguros_planes sp on sap.id_plan = sp.id 
 	inner join agremiados a on sap.id_agremiado = a.id
 	inner join personas p on a.id_persona = p.id
-	where sap.id_afiliacion= p_afiliacion
+	inner join agremiado_parentecos ap on sap.id_familia = ap.id
+	inner join tabla_maestras tm2 on ap.id_parentesco = tm2.codigo::int and  tm2.tipo ='12'
+	where sap.id_afiliacion= '46'
 	)R 
 	inner join seguros s on R.id_seguro=s.id 
 	inner join conceptos c on s.id_concepto::int = c.id
