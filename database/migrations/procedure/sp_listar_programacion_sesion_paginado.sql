@@ -21,10 +21,10 @@ begin
 	v_campos=' t1.id,to_char(t1.fecha_programado,''dd-mm-yyyy'')fecha_programado,to_char(t1.fecha_ejecucion,''dd-mm-yyyy'')fecha_ejecucion,
 t1.hora_inicio,t1.hora_fin,t2.denominacion tipo_sesion,t3.denominacion estado_sesion,t7.denominacion estado_aprobacion,
 t4.denominacion||'' ''||t4.comision comision,t5.descripcion periodo,t6.denominacion region,
-(select count(*) from comision_sesion_delegados csd where csd.id_comision_sesion=t1.id and coalesce(csd.id_delegado,0)!=0 and csd.estado=''1'') cantidad_delegado,
+(select count(*) from comision_sesion_delegados csd where csd.id_comision_sesion=t1.id and (coalesce(csd.id_delegado,0)!=0 or coalesce(csd.id_agremiado,0)!=0) and csd.estado=''1'') cantidad_delegado,
 t8.denominacion tipo_comision,
 (select count(*) from comision_sesion_delegados csd left join comision_delegados cd on csd.id_delegado=cd.id left join agremiados a on coalesce(cd.id_agremiado,csd.id_agremiado)=a.id
-where csd.id_comision_sesion=t1.id and coalesce(csd.id_delegado,0)!=0 '; 
+where csd.id_comision_sesion=t1.id and (coalesce(csd.id_delegado,0)!=0 or coalesce(csd.id_agremiado,0)!=0) '; 
 	
 	If p_id_situacion<>'' Then
 		v_campos:=v_campos||' and a.id_situacion='||p_id_situacion; 
@@ -85,12 +85,12 @@ inner join regiones t6 on t1.id_regional=t6.id ';
 	End If;
 	
 	if p_cantidad_delegado<>'' then
-		v_where:=v_where||'And (select count(*) from comision_sesion_delegados csd where csd.id_comision_sesion=t1.id and coalesce(csd.id_delegado,0)!=0) = '''||p_cantidad_delegado||''' ';
+		v_where:=v_where||'And (select count(*) from comision_sesion_delegados csd where csd.id_comision_sesion=t1.id and (coalesce(csd.id_delegado,0)!=0) or coalesce(csd.id_agremiado,0)!=0) = '''||p_cantidad_delegado||''' ';
 	End If;
 	
 	If p_id_situacion<>'' Then
 		v_where:=v_where||'And (select count(*) from comision_sesion_delegados csd left join comision_delegados cd on csd.id_delegado=cd.id left join agremiados a on coalesce(cd.id_agremiado,csd.id_agremiado)=a.id
-where csd.id_comision_sesion=t1.id and coalesce(csd.id_delegado,0)!=0 and a.id_situacion='||p_id_situacion||' and csd.estado=''1'') > 0';
+where csd.id_comision_sesion=t1.id and (coalesce(csd.id_delegado,0)!=0 or coalesce(csd.id_agremiado,0)!=0) and a.id_situacion='||p_id_situacion||' and csd.estado=''1'') > 0';
 	End If;
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
