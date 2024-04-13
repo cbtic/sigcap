@@ -80,10 +80,10 @@ class Persona extends Model
 
     function getPersona($tipo_documento,$numero_documento){
 
-        $cad = "select id, tipo_documento, numero_documento, apellido_paterno, apellido_materno, nombres, fecha_nacimiento, sexo
+        $cad = "select id, id_tipo_documento, numero_documento, apellido_paterno, apellido_materno, nombres, fecha_nacimiento, id_sexo
 		from personas 
-		Where tipo_documento='".$tipo_documento."' And numero_documento='".$numero_documento."'";
-		//echo $cad;
+		Where id_tipo_documento='".$tipo_documento."' And numero_documento='".$numero_documento."'";
+		
 		$data = DB::select($cad);
         return $data[0];
     }

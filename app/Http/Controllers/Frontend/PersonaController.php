@@ -21,7 +21,7 @@ use Auth;
 
 class PersonaController extends Controller
 {
-
+	/*
 	public function __construct(){
 
 		$this->middleware(function ($request, $next) {
@@ -31,6 +31,7 @@ class PersonaController extends Controller
 			return $next($request);
     	});
 	}
+	*/
 	
     public function index(){
         //$persona_model = new Persona;
@@ -130,6 +131,17 @@ class PersonaController extends Controller
 	}
 
     public function obtener_persona($tipo_documento,$numero_documento){
+
+        $persona_model = new Persona;
+        $sw = true;
+        $persona = $persona_model->getPersona($tipo_documento,$numero_documento);
+        $array["sw"] = $sw;
+        $array["persona"] = $persona;
+        echo json_encode($array);
+
+    }
+	
+	public function obtener_persona_login($tipo_documento,$numero_documento){
 
         $persona_model = new Persona;
         $sw = true;
