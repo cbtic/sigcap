@@ -255,22 +255,58 @@ class PlanillaDelegadoController extends Controller
 	}
 
 	public function send_recibo_honorario(Request $request){
+
+/*
+		$planilla_detalle = PlanillaDelegadoDetalle::where('id_grupo',1)->where('estado','1')->get();
+
+		foreach($planilla_detalle as $row){
+			print_r($row->id);
+
+		}
+*/
+	//	print_r($request->numero_comprobante); exit();
+
+		
 		
 		$id_user = Auth::user()->id;
-		/*if($request->id == 0){
-			$planillaDelegadoDetalle = new PlanillaDelegadoDetalle;
-		}else{*/
-			$planillaDelegadoDetalle = PlanillaDelegadoDetalle::find($request->id);
-		/*}*/
-		
-		$planillaDelegadoDetalle->tipo_comprobante = $request->tipo_comprobante;
-		$planillaDelegadoDetalle->numero_comprobante = $request->numero_comprobante;
-		$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
-		$planillaDelegadoDetalle->fecha_vencimiento = $request->fecha_vencimiento;
-		$planillaDelegadoDetalle->numero_operacion = $request->numero_operacion;
-		$planillaDelegadoDetalle->cancelado = $request->cancelado;
-		$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
-		$planillaDelegadoDetalle->save();
+
+		$id = $request->id_recibo;
+
+		if ($request->selTipo=='S' or $request->selTipo==''){
+			$planillaDelegadoDetalle = PlanillaDelegadoDetalle::find($id);
+			
+			$planillaDelegadoDetalle->tipo_comprobante = $request->tipo_comprobante;
+			$planillaDelegadoDetalle->numero_comprobante = $request->numero_comprobante;
+			$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
+			$planillaDelegadoDetalle->fecha_vencimiento = $request->fecha_vencimiento;
+			$planillaDelegadoDetalle->numero_operacion = $request->numero_operacion;
+			$planillaDelegadoDetalle->cancelado = $request->cancelado;
+			$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
+			$planillaDelegadoDetalle->save();
+
+
+
+			/*
+			$planillaDelegadoDetalle->tipo_comprobante = $request->tipo_comprobante;
+			$planillaDelegadoDetalle->numero_comprobante = $request->numero_comprobante;
+			$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
+			$planillaDelegadoDetalle->fecha_vencimiento = $request->fecha_vencimiento;
+			$planillaDelegadoDetalle->numero_operacion = $request->numero_operacion;
+			$planillaDelegadoDetalle->cancelado = $request->cancelado;
+			$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
+			$planillaDelegadoDetalle->save();
+			*/
+
+		}else if ($request->selTipo=='T'){
+			$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle();
+			$data = $planillaDelegadoDetalle_model->actualizarReciboHonorario($request->id_periodo_bus, $request->anio, $request->mes,
+			$request->id_grupo, $request->tipo_comprobante, $request->numero_comprobante, $request->fecha_comprobante, $request->fecha_vencimiento,
+			$request->numero_operacion, $request->cancelado, $id_user);	
+		}
+
+
+
+		//echo json_encode($data);
 		
     }
 

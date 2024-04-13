@@ -326,9 +326,17 @@
 							?>
 						</select>
 					</div>
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="tipo_proyecto" id="tipo_proyecto" placeholder="Tipo Proyecto" value="<?php echo $derecho_revision->tipo_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="tipo_proyecto_bus" id="tipo_proyecto_bus" class="form-control form-control-sm" >
+							<option value="">--Tipo Tipo Proyecto--</option>
+							<?php
+							foreach ($tipo_proyecto as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
                         <input type="text" name="direccion_proyecto" id="direccion_proyecto" placeholder="Direcci&oacute;n Proyecto" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div> 

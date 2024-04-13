@@ -48,7 +48,7 @@ and u.id_ubigeo = '".$id_ubigeo."'";
 	
 	public static function getDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision){
 
-        $cad = "select distinct case when t0.id_agremiado>0 then 'AE' else 'T' end tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap
+        $cad = "select distinct case when cd.id_puesto=12 then 'S' when t0.id_agremiado>0 then 'AE' else 'T' end tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap
 from comision_sesiones t1 
 inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
 inner join solicitudes s2 on s2.id=csd.id_solicitud

@@ -71,6 +71,7 @@ class CertificadoController extends Controller
 		$proyecto = new Proyecto();
 
 		$proyecto_model = new Proyecto();
+		$sw=true;
 		//$nombre_proyecto = $proyecto_model->obtenerNombreProyecto();
         
         if($id>0)  {
@@ -677,16 +678,16 @@ class CertificadoController extends Controller
 		$mes_minimo = $mes_minimo_[0]->min;
 		$mes_maximo = $mes_maximo_[0]->max;
 
-		
-		if($mes_minimo == null)
+		//var_dump($mes_minimo);exit;
+		/*if($mes_minimo == NULL)
 		{
-			session()->flash('mensaje', 'No hay datos disponibles');
-		}else {
+			return back()->with('mensaje', 'No hay datos disponibles');
+		}else {*/
 			$mes_minimoEnLetras = $this->mesesALetras($mes_minimo); 
 
 			$mes_maximoEnLetras = $this->mesesALetras($mes_maximo); 
 			
-		}
+		/*}*/
 		//var_dump($mes_maximoEnLetras);exit;
 		
 
@@ -742,8 +743,7 @@ class CertificadoController extends Controller
 		return $pdf->stream();
     	//return $pdf->download('invoice.pdf');
 		//return view('frontend.certificado.certificado_pdf');
-
-	}
+}
 
 	function numeroALetras($numero) { 
 		$unidades = array('', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'); 
@@ -836,16 +836,20 @@ class CertificadoController extends Controller
 		$mes_minimo_=$datos_model->getMinMes($agremiado_->id,$año);
 		$mes_maximo_=$datos_model->getMaxMes($agremiado_->id,$año);
 		
-		if($mes_minimo_==null)
+		$mes_min = $mes_minimo_[0]->min;
+		$mes_max = $mes_maximo_[0]->max;
+		
+		if($mes_min==null)
 		{
 			$sw = false;
-		}if($mes_maximo_==null)
+		}if($mes_max==null)
 		{
 			$sw = false;
 		}
-		echo json_encode($tipo_certificado);
 		
+		echo json_encode($sw);
 	}
+
 }
 
 

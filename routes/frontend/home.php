@@ -664,7 +664,7 @@ Route::post('agremiado_rol/listar_agremiado_rol_ajax', [AgremiadoRolesController
 Route::get('coordinador_zonal/modal_informes/{id}', [CoordinadorZonalController::class, 'modal_informes'])->name('coordinador_zonal.modal_informes');
 Route::get('derecho_revision/modal_reintegro/{id}', [DerechoRevisionController::class, 'modal_reintegro'])->name('derecho_revision.modal_reintegro');
 Route::get('agremiado/exportar_listar_agremiado/{id_regional}/{numero_cap}/{numero_documento}/{agremiado}/{fecha_inicio}/{fecha_fin}/{id_situacion}/{id_categoria}', [AgremiadoController::class, 'exportar_listar_agremiado'])->name('agremiado.exportar_listar_agremiado');
-Route::get('certificado/validez_constancia/{id}/{sw}', [CertificadoController::class, 'validez_constancia'])->name('certificado.validez_constancia');
+Route::get('certificado/validez_constancia/{id}', [CertificadoController::class, 'validez_constancia'])->name('certificado.validez_constancia');
 
 Route::get('tabla_maestra/consulta_tabla_maestra', [TablaMaestraController::class, 'consulta_tabla_maestra'])->name('tabla_maestra.consulta_tabla_maestra');
 Route::post('tabla_maestra/listar_tablaMaestra_ajax', [TablaMaestraController::class, 'listar_tablaMaestra_ajax'])->name('tabla_maestra.listar_tablaMaestra_ajax');
@@ -677,4 +677,5 @@ Route::post('agremiado/listar_reporte_deudas_ajax', [AgremiadoController::class,
 Route::get('agremiado/exportar_lista_deudas/{anio}/{concepto}/{mes}', [AgremiadoController::class, 'exportar_lista_deudas'])->name('agremiado.exportar_lista_deudas');
 Route::get('revisorUrbano/eliminar_revisor_urbano/{id}/{estado}', [RevisorUrbanoController::class, 'eliminar_revisor_urbano'])->name('revisorUrbano.eliminar_revisor_urbano');
 Route::get('revisorUrbano/exportar_listar_revisor_urbano/{numero_cap}/{agremiado}/{codigo_itf}/{codigo_ru}/{situacion_pago}/{estado}', [RevisorUrbanoController::class, 'exportar_listar_revisor_urbano'])->name('revisorUrbano.exportar_listar_revisor_urbano');
+Route::get('derecho_revision/modal_reintegroRU/{id}', [DerechoRevisionController::class, 'modal_reintegroRU'])->name('derecho_revision.modal_reintegroRU');
 

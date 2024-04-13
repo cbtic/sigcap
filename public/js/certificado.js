@@ -643,7 +643,7 @@ function valida_certificado(id){
 			}else if(tipo_certificado=="4"){
 				certificado_pdf(id);
 			}else if(tipo_certificado=="5"){
-				constancia_pdf(id);
+				validez_constancia(id);
 			}
 		//}
 		}
@@ -671,17 +671,17 @@ function certificado_pdf(id){
 	window.open(href, '_blank');
 }
 
-function constancia_pdf(id){
+function validez_constancia(id){
 	$.ajax({
 		url: "/certificado/validez_constancia/"+id,
 		type: "GET",
 		success: function (result) {
-			
-			if(result.sw=true){
+			//alert(result);
+			if(result=="true"){
 				var href = '/certificado/constancia_pdf/'+id;
 				window.open(href, '_blank');
 			}else{
-				bootbox.alert('No tiene pagos realizados en el presente ejercicio')	
+				bootbox.alert('No tiene pagos realizados en el presente ejercicio');
 			}
 		
 		}

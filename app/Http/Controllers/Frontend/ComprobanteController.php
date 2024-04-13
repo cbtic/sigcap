@@ -931,8 +931,8 @@ class ComprobanteController extends Controller
         ])->get();
         //print_r($factura_detalles);
 
-        $model = new ComprobanteDetalle;
-        $comprobanteDetalle = $model->getMaestroByTipo(85);
+       // $model = new ComprobanteDetalle;
+       // $comprobanteDetalle = $model->getMaestroByTipo(85);
 
         return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia'));
     }

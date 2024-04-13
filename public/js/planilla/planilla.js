@@ -455,13 +455,22 @@ function datatablenew(){
 				},
 				{
 					"mRender": function (data, type, row) {
+						var numero_operacion = "";
+						if(row.numero_operacion!= null)numero_operacion = row.numero_operacion;
+						return numero_operacion;
+					},
+					"bSortable": false,
+					"aTargets": [9]
+				},
+				{
+					"mRender": function (data, type, row) {
 						var id_grupo = "";
 						if(row.id_grupo!= null)id_grupo = row.id_grupo;
 						return id_grupo;
 					},
 					"bSortable": false,
-					"aTargets": [9]
-				},				
+					"aTargets": [10]
+				},									
 				{
 					"mRender": function (data, type, row) {
 						var provision = "";
@@ -469,7 +478,7 @@ function datatablenew(){
 						return provision;
 					},
 					"bSortable": false,
-					"aTargets": [10]
+					"aTargets": [11]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -478,7 +487,7 @@ function datatablenew(){
 						return cancelacion;
 					},
 					"bSortable": false,
-					"aTargets": [11]
+					"aTargets": [12]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -503,7 +512,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [12],
+					"aTargets": [13],
 				},
 
             ]
@@ -556,6 +565,9 @@ function editarRecibo(id){
 					$('#fecha_comprobante').val(result[0].fecha_comprobante.split(' ')[0]);
 					$('#fecha_vencimiento').val(result[0].fecha_vencimiento.split(' ')[0]);
 					$('#numero_operacion').val(result[0].numero_operacion);
+					$('#id_grupo').val(result[0].id_grupo);
+
+					//alert($('#id_grupo').val());
 					
 					//var_dump(result[0].cancelado);exit;
 					if(result[0].cancelado == 1) {
@@ -576,6 +588,10 @@ function editarRecibo(id){
 }
 
 function save_recibo(){
+
+	var msg = "";
+	
+
     
 	var _token = $('#_token').val();
 	var id = $('#id_recibo').val();
@@ -585,27 +601,110 @@ function save_recibo(){
 	var fecha_vencimiento = $('#fecha_vencimiento').val();
 	var numero_operacion = $('#numero_operacion').val();
 	var cancelado = $('#chk_activar_numero_operacion').prop('checked') ? 1 : 0;
+	$('#cancelado').val(cancelado);
+
+	if(numero_comprobante == "")msg += "Debe ingresar el numero de comprobante <br>";
+	if(fecha_comprobante == "")msg += "Debe ingresar la fecha de comprobante del comprobante <br>";
+	if(fecha_vencimiento == "")msg += "Debe ingresar la fecha de vencimiento del comprobante <br>";
 	
-	$.ajax({
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+
+	var selTipo = '';
+	$('#selTipo').val(selTipo);
+
+	if(cancelado==1){
+
+	  const swalWithBootstrapButtons = Swal.mixin({
+		customClass: {
+		  confirmButton: "btn btn-success",
+		  cancelButton: "btn btn-warning"
+		},
+		buttonsStyling: false
+	  });
+	  swalWithBootstrapButtons.fire({
+		title: 'Cancelación',
+		text: "Seleccionar el tipo de cancelación!",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonText: "Solo Selccionado!",
+		cancelButtonText: "Todo el Grupo!",
+		reverseButtons: true
+	  }).then((result) => {
+		if (result.isConfirmed) {
+			selTipo = 'S';
+			$('#selTipo').val(selTipo);
+			send_recibo_honorario();
+/*
+			$.ajax({
+				url: "/planillaDelegado/send_recibo_honorario",
+				type: "POST",
+				data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion,cancelado:cancelado,sel:sel},
+				success: function (result) {
+
+					datatablenew();
+	
+					limpiar();					
+				}
+			});
+			*/
+		} else if 
+			(result.dismiss === Swal.DismissReason.cancel) 
+			  
+			{
+				selTipo = 'T';
+				$('#selTipo').val(selTipo);
+
+				send_recibo_honorario();
+				/*
+				$.ajax({
+					url: "/planillaDelegado/send_recibo_honorario",
+					type: "POST",
+					data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion,cancelado:cancelado,sel:sel},
+					success: function (result) {
+
+						datatablenew();
+		
+						limpiar();					
+					}
+				});
+				*/
+			}
+	  });
+
+	}else{
+		send_recibo_honorario();
+		/*
+		$.ajax({
 			url: "/planillaDelegado/send_recibo_honorario",
-            type: "POST",
-            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion,cancelado:cancelado},
+			type: "POST",
+			data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,numero_operacion:numero_operacion,cancelado:cancelado,sel:sel},
 			success: function (result) {
-				//$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
+
+				datatablenew();
+
+				limpiar();					
+			}
+		});
+		*/
+	}
+	//datatablenew();	
+	//limpiar();	
+
+}
+
+function send_recibo_honorario(){
+    $.ajax({
+			url:"/planillaDelegado/send_recibo_honorario",
+            type: "POST",
+            data : $("#frmPlanillaDetalle").serialize(),
+            success: function (result) {				
 				datatablenew();
 
 				limpiar();
-				/*$('#id_recibo').val('');
-				$('#numero_cap').val('');
-				$('#nombres').val('');
-				$('#numero_comprobante').val('');
-				$('#fecha_comprobante').val('');
-				$('#fecha_vencimiento').val('');
-				$('#numero_operacion').prop('disabled', true);
-				$('#numero_operacion').val('');
-				$('#chk_activar_numero_operacion').prop('checked', false);*/
-				
+					
             }
     });
 }

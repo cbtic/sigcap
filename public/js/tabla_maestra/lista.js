@@ -31,6 +31,8 @@ $(document).ready(function () {
 	$('#btnNuevo').click(function () {
 		modalTablaMaestra(0);
 	});
+
+	$("#tipo_nombre").select2({ width: '100%' });
 		
 	datatablenew();
 	/*	

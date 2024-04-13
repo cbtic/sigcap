@@ -227,7 +227,9 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	datatableTablaMaestraTipo()
+	datatableTablaMaestraTipo();
+
+	$("#tipo_nombre").select2({ width: '100%' });
 
 });
 
@@ -360,7 +362,7 @@ function datatableTablaMaestraTipo(){
 					
 					
 					<div class="row" style="padding-left:10px">
-						<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 							<label class="control-label form-control-sm">Tipo Nombre</label>
 							<select name="tipo_nombre" id="tipo_nombre" class="form-control form-control-sm" onChange="datatableTablaMaestraTipo()">
 								<option value="">--Selecionar--</option>

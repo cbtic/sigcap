@@ -41,4 +41,17 @@ class AgremiadoRole extends Model
 		$data = DB::select($cad);
         return $data;
     }
+	
+	function updatePuestoConcursoInscripcion($id_agremiado,$id_concurso,$puesto){
+
+        $cad = "update concurso_inscripciones ci 
+		set puesto=".$puesto."
+		where id_agremiado=".$id_agremiado." 
+		and id_concurso_puesto in(select id from concurso_puestos cp where id_concurso=".$id_concurso." and estado='1') ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	
 }
