@@ -32,7 +32,7 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado = $exonerado
+                and v.exonerado ilike '%".$exonerado."'
             order by v.fecha desc
              ".$filas."
 			";

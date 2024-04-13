@@ -32,6 +32,7 @@ foreach($pago as $row){?>
 	</td>
 
 	<td class="text-left"><?php echo $row->descripcion;
+	/*
 		if($row->descripcion=="OTPHID SERVICIO"){
 			echo '&nbsp;&nbsp;<span id="badge_empresa" class="badge badge-warning">PESAJE</span>';
 		}else{
@@ -39,6 +40,7 @@ foreach($pago as $row){?>
 			else if($row->tipo=="TK")echo '&nbsp;&nbsp;<span id="badge_empresa" class="badge badge-info">SERVICIOS</span>';
 			else echo '&nbsp;&nbsp;<span id="badge_empresa" class="badge badge-warning">SERVICIOS</span>';
 		}
+		*/
 	?>
 	</td>
 	<td class="text-left"><?php echo $row->total?></td>

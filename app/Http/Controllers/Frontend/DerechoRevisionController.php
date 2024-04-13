@@ -49,7 +49,7 @@ class DerechoRevisionController extends Controller
         $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
         
         $tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
-		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(25);
+		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(24);
 		$estado_proyecto = $tablaMaestra_model->getMaestroByTipo(118);
 		$distrito = $ubigeo_model->getDistritoLima();
 		
@@ -97,10 +97,11 @@ class DerechoRevisionController extends Controller
         $estado_solicitud = $tablaMaestra_model->getMaestroByTipo(118);
         $distrito = $ubigeo_model->getDistritoLima();
         $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
-		
+		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
+		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(24);
         
         
-        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud'));
+        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud'));
     }
 
 	public function listar_derecho_revision_ajax(Request $request){
@@ -870,6 +871,30 @@ class DerechoRevisionController extends Controller
 		//var_dump($parametro);exit;
 
         return view('frontend.derecho_revision.modal_reintegro',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro'));
+		
+    }
+
+	public function modal_reintegroRU($id){
+		 
+		//$derechoRevision = new DerechoRevision;
+		$derechoRevision_model = new DerechoRevision;
+		$tablaMaestra_model = new TablaMaestra;
+		$parametro_model = new Parametro;
+		$ubigeo_model=new Ubigeo;
+        $liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
+		$ubigeo = $liquidacion[0]->id_ubigeo;
+		$ubigeo_id = Ubigeo::where("id",$ubigeo)->where("estado","1")->first();
+		$departamento = $ubigeo_model->obtenerDepartamento($ubigeo_id->id_departamento);
+		$provincia = $ubigeo_model->obtenerProvincia($ubigeo_id->id_departamento,$ubigeo_id->id_provincia);
+		$distrito = $ubigeo_model->obtenerDistrito($ubigeo_id->id_departamento,$ubigeo_id->id_provincia,$ubigeo_id->id_distrito);
+		$tipo_liquidacion = $tablaMaestra_model->getMaestroByTipo(27);
+		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
+		$anio_actual = Carbon::now()->year;
+		$parametro = $parametro_model->getParametroAnio($anio_actual);
+
+		//var_dump($parametro);exit;
+
+        return view('frontend.derecho_revision.modal_reintegroRU',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro'));
 		
     }
 
