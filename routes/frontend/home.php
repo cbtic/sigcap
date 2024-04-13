@@ -409,6 +409,7 @@ Route::get('sesion/modal_asignar_delegado_sesion/{id}', [SesionController::class
 Route::get('sesion/modal_asignar_profesion_sesion/{id}', [SesionController::class, 'modal_asignar_profesion_sesion'])->name('sesion.modal_asignar_profesion_sesion');
 Route::post('sesion/send_profesion_otro', [SesionController::class, 'send_profesion_otro'])->name('sesion.send_profesion_otro');
 Route::post('sesion/send_delegado_sesion', [SesionController::class, 'send_delegado_sesion'])->name('sesion.send_delegado_sesion');
+Route::post('sesion/send_coordinador_delegado_sesion', [SesionController::class, 'send_coordinador_delegado_sesion'])->name('sesion.send_coordinador_delegado_sesion');
 
 Route::post('sesion/lista_computo_sesion_ajax', [SesionController::class, 'lista_computo_sesion_ajax'])->name('sesion.lista_computo_sesion_ajax');
 Route::post('sesion/lista_computo_cerrado_ajax', [SesionController::class, 'lista_computo_cerrado_ajax'])->name('sesion.lista_computo_cerrado_ajax');

@@ -1069,3 +1069,34 @@ function fn_eliminar_delegado_sesion(id){
     });
 }
 
+function guardar_coordinador(id,id_delegado){
+	
+	bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas cambiar de coordinador en todas las sesiones?", 
+        callback: function(result){
+            if (result==true) {
+                fn_guardar_coordinador(id,id_delegado);
+            }
+        }
+    });
+	
+}
+
+function fn_guardar_coordinador(id,id_delegado){
+    
+	var msg = "";
+	var _token = $('#_token').val();
+	
+    $.ajax({
+			url: "/sesion/send_coordinador_delegado_sesion",
+            type: "POST",
+            data : {_token:_token,id:id,id_delegado:id_delegado},
+            success: function (result) {
+				$('#openOverlayOpc').modal('hide');
+				//location.reload();
+            }
+    });
+}
+
+

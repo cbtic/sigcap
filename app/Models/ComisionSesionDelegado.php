@@ -103,7 +103,8 @@ inner join personas t3 on t2.id_persona=t3.id
 left join tabla_maestras t4 on t1.id_puesto::int = t4.codigo::int And t4.tipo ='94'
 left join tabla_maestras t5 on t2.id_situacion = t5.codigo::int And t5.tipo ='14'
 where t0.id_comision_sesion=".$id_comision_sesion."
-and t0.estado='1'";
+and t0.estado='1'
+order by t1.id_puesto::int asc";
 
 		
 		$data = DB::select($cad);
