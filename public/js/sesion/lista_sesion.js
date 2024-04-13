@@ -369,7 +369,8 @@ function obtenerComisionBus(){
 			$('#id_comision_bus').html("");
 			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				//option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision_bus').html(option);
 		}
