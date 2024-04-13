@@ -600,6 +600,38 @@ class SesionController extends Controller
 			
     }
 	
+	public function send_coordinador_delegado_sesion(Request $request){
+		
+		$comisionSesionDelegado_model = new ComisionSesionDelegado();
+		
+		$comisionSesionDelegado = ComisionSesionDelegado::find($request->id);
+		$comisionSesionDelegado->coordinador = 1;
+		$comisionSesionDelegado->save();
+		
+		$comisionSesion = ComisionSesione::find($comisionSesionDelegado->id_comision_sesion);
+		$comisionDelegadoActual = ComisionDelegado::find($comisionSesionDelegado->id_delegado);
+		
+		$comisionSesionDelegados = $comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndFecha($comisionDelegadoActual->id_agremiado,$comisionSesion->fecha_programado,"","");
+		
+		foreach($comisionSesionDelegados as $row){
+		
+			$comisionSesionDelegadoObj = ComisionSesionDelegado::find($row->id);
+			$comisionSesionDelegadoObj->coordinador = 1;
+			$comisionSesionDelegadoObj->save();
+			
+			$comisionSesionDelegados2 = ComisionSesionDelegado::where("id_comision_sesion",$comisionSesionDelegadoObj->id_comision_sesion)->where("id_delegado","!=",$comisionSesionDelegadoObj->id_delegado)->get();
+			
+			foreach($comisionSesionDelegados2 as $row2){
+			
+				$comisionSesionDelegadoObj2 = ComisionSesionDelegado::find($row2->id);
+				$comisionSesionDelegadoObj2->coordinador = 0;
+				$comisionSesionDelegadoObj2->save();
+			}
+			
+		}
+		
+    }
+	
 	public function modal_asignar_delegado_sesion($id){
 		
 		$id_user = Auth::user()->id;
