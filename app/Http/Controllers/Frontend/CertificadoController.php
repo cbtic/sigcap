@@ -197,8 +197,9 @@ class CertificadoController extends Controller
 		$propietario->id_usuario_inserta = $id_user;
 		$propietario->save();
 		
+		$ubigeo_id = Ubigeo::where("id_ubigeo",$request->distrito)->where("estado","1")->first();
 
-		$proyecto->id_ubigeo = $request->distrito;
+		$proyecto->id_ubigeo = $ubigeo_id->id;
 		$proyecto->id_tipo_sitio = $request->sitio;
 		$proyecto->nombre = $request->nombre_proyecto;
 		$proyecto->direccion = $request->direccion_tipo;
@@ -229,19 +230,24 @@ class CertificadoController extends Controller
 		$solicitud->id_usuario_inserta = $id_user;
 		$solicitud->save();
 		
-		foreach($numero_cap_asociado as $row){
-			$proyectista = new Proyectista;
-			$agremiado = Agremiado::where("numero_cap",$row)->where("estado","1")->first();
-			$proyectista->id_solicitud = $solicitud->id;
-			$proyectista->id_agremiado = $agremiado->id;
-			$proyectista->celular = $agremiado->celular1;
-			$proyectista->email = $agremiado->email1;
-			$proyectista->id_usuario_inserta = $id_user;
-			$proyectista->save();
-		}
 		
+		if ($numero_cap_asociado){
+			foreach($numero_cap_asociado as $row){
+				$proyectista = new Proyectista;
+				$agremiado = Agremiado::where("numero_cap",$row)->where("estado","1")->first();
+				$proyectista->id_solicitud = $solicitud->id;
+				$proyectista->id_agremiado = $agremiado->id;
+				$proyectista->celular = $agremiado->celular1;
+				$proyectista->email = $agremiado->email1;
+				$proyectista->id_usuario_inserta = $id_user;
+				$proyectista->save();
+			}
+		}
 		$proyectistaPrincipal->id_solicitud = $solicitud->id;
 		$proyectistaPrincipal->save();
+
+		$solicitud->id_proyectista = $proyectistaPrincipal->id;
+		$solicitud->save();
 		
 		$propietario->id_solicitud = $solicitud->id;
 		$propietario->save();
