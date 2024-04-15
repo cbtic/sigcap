@@ -257,8 +257,6 @@ function validarLiquidacion() {
 									<th>Fecha</th>
 									<th>Ruc</th>
 									<th>Raz&oacute;n Social</th>
-									<th>Placa</th>
-									<th>Afiliaci&oacute;n</th>
 									<th>SubTotal</th>
 									<th>IGV</th>
 									<th>Total</th>
@@ -272,30 +270,28 @@ function validarLiquidacion() {
 								<tbody>
 								<?php 
 								foreach($factura as $key=>$row):
-									$fac_cod_tributario=$row->fac_cod_tributario;
-									$fac_destinatario=$row->fac_destinatario;
-									if($fac_cod_tributario=="")$fac_cod_tributario=$row->ruc;
-									if($fac_destinatario=="")$fac_destinatario=$row->nombre_comercial;
+									$cod_tributario=$row->cod_tributario;
+									$destinatario=$row->destinatario;
+									if($cod_tributario=="")$cod_tributario=$row->ruc;
+									if($destinatario=="")$destinatario=$row->nombre_comercial;
 								?>
 								<tr style="font-size:13px">
-									<td class="text-left"><?php echo $row->fac_serie?></td>
-									<td class="text-left"><?php echo $row->fac_numero?></td>
-									<td class="text-left"><?php echo $row->fac_tipo?></td>
-									<td class="text-left"><?php echo $row->fac_fecha?></td>
-									<td class="text-left"><?php echo $fac_cod_tributario?></td>
-									<td class="text-left"><?php echo $fac_destinatario?></td>
-									<td class="text-left"><?php echo $row->placa?></td>
-									<td class="text-left"><?php echo $row->plan_denominacion?></td>
-									<td class="text-right"><?php echo number_format($row->fac_subtotal,2)?></td>
-									<td class="text-right"><?php echo number_format($row->fac_impuesto,2)?></td>
-									<td class="text-right"><?php echo number_format($row->fac_total,2)?></td>
-									<td class="text-center"><?php echo $row->fac_estado_pago?></td>
-									<td class="text-center"><?php echo $row->fac_anulado?></td>
+									<td class="text-left"><?php echo $row->serie?></td>
+									<td class="text-left"><?php echo $row->numero?></td>
+									<td class="text-left"><?php echo $row->tipo?></td>
+									<td class="text-left"><?php echo $row->fecha?></td>
+									<td class="text-left"><?php echo $cod_tributario?></td>
+									<td class="text-left"><?php echo $destinatario?></td>
+									<td class="text-right"><?php echo number_format($row->subtotal,2)?></td>
+									<td class="text-right"><?php echo number_format($row->impuesto,2)?></td>
+									<td class="text-right"><?php echo number_format($row->total,2)?></td>
+									<td class="text-center"><?php echo $row->estado_pago?></td>
+									<td class="text-center"><?php echo $row->anulado?></td>
 									<td class="text-left"><?php echo $row->caja?></td>
 									<td class="text-left"><?php echo $row->usuario?></td>
 									<td class="text-center">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-										<a href="/factura/<?php echo $row->id?>" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-search"></i></a>
+										<a href="/comprobante/<?php echo $row->id?>" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-search"></i></a>
 									</div>
 									</td>
 								</tr>
