@@ -583,7 +583,9 @@ class ComprobanteController extends Controller
                     //$factura_upd->detraccion = $request->tipo_cambio;
                     //$factura_upd->id_detra_cod_bos = $request->tipo_cambio;
                 }
-                
+
+                $factura_upd->estado_pago =  $request->estado_pago;
+
 				$factura_upd->save();
 
 

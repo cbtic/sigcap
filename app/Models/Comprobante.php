@@ -180,12 +180,20 @@ class Comprobante extends Model
         $cad ="select f.id, f.serie, f.numero, f.tipo, f.fecha, f.cod_tributario, f.destinatario, f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, m.denominacion caja,
         'plan A'plan_denominacion, 
         replace(replace(u.email, '@felmo.pe', ''), '@felmo.com', '') usuario
-        ,f.destinatario pac_nombre, per.id_tipo_documento tipo_documento,per.numero_documento,emp.ruc,emp.nombre_comercial, 1 val_aten_estab, 1 val_aten_codigo, '' placa     
-        FROM comprobantes f
+        ,f.destinatario pac_nombre, per.id_tipo_documento tipo_documento,per.numero_documento,emp.ruc,emp.nombre_comercial, 1 val_aten_estab, 1 val_aten_codigo, '' placa,
+        f.id_forma_pago,  fp.denominacion forma_pago, (case when f.estado_pago='P' then 'PENDIENTE' else 'CANCELADO'end) estado_pago, 
+        (select string_agg(DISTINCT coalesce(tm.denominacion||'->'||cp.monto), ', ')  
+		from comprobante_pagos cp 
+		inner join tabla_maestras tm on tm.codigo = cp.id_medio::varchar and tm.tipo = '19'
+		group by cp.id
+		having cp.id_comprobante = f.id
+order by cp.id) medio_pago
+ FROM comprobantes f
         inner join tabla_maestras m on m.codigo = f.id_caja::varchar and m.tipo = '91'
+        inner join tabla_maestras fp on fp.codigo = f.id_forma_pago::varchar and fp.tipo = '104'
         Inner Join users u On u.id = f.id_usuario_inserta        
         left join valorizaciones val on val.id_comprobante = f.id 
-        left join personas per on val.id_persona = per.id       
+        left join personas per on val.id_persona = per.id
         left join empresas emp on emp.id=val.id_empresa 
         where f.id_caja=".$id_caja."  
         And f.fecha >= '".$fecha_inicio."' 

@@ -259,10 +259,11 @@ function validarLiquidacion() {
 									<th>Raz&oacute;n Social</th>
 									<th>SubTotal</th>
 									<th>IGV</th>
-									<th>Total</th>
-									<th>Estado</th>
+									<th>Total</th>				
 									<th>Anulado</th>
-									<th>Caja</th>
+									<th>Forma Pago</th>
+                                    <th>Estado Pago</th>
+                                    <th>Medio Pago</th>
 									<th>Usuario</th>
 									<th class="text-right">Factura</th>
 								</tr>
@@ -284,10 +285,12 @@ function validarLiquidacion() {
 									<td class="text-left"><?php echo $destinatario?></td>
 									<td class="text-right"><?php echo number_format($row->subtotal,2)?></td>
 									<td class="text-right"><?php echo number_format($row->impuesto,2)?></td>
-									<td class="text-right"><?php echo number_format($row->total,2)?></td>
-									<td class="text-center"><?php echo $row->estado_pago?></td>
+									<td class="text-right"><?php echo number_format($row->total,2)?></td>									
 									<td class="text-center"><?php echo $row->anulado?></td>
-									<td class="text-left"><?php echo $row->caja?></td>
+									<td class="text-left"><?php echo $row->forma_pago?></td>
+                                    <td class="text-left"><?php echo $row->estado_pago?></td>
+                                    <td class="text-left"><?php echo $row->medio_pago?></td>
+
 									<td class="text-left"><?php echo $row->usuario?></td>
 									<td class="text-center">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
