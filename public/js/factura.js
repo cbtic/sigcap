@@ -713,7 +713,7 @@ function obtenerTitular(){
 				if(val_total!="")total += Number(val_total);
 			});
 
-			alert(total);
+			//alert(total);
 
 			
 			$("#totalMedioPago").val(total);
