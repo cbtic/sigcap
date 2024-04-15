@@ -343,8 +343,16 @@ $.mask.definitions['p'] = "[Mm]";
 					$('#situacion_').val(result.situacion);
 					$('#email_').val(result.email);
 					obtenerNombreProyecto();
-				}else{
+				}else if (result.situacion=='FALLECIDO'){
+					bootbox.alert("El Agremiado est&aacute; FALLECIDO");
+				}else if (result.situacion=='REGIONAL'){
+					bootbox.alert("El Agremiado pertenece a otra REGIONAL");
+				}else if (result.situacion=='INHABILITADO'){
 					bootbox.alert("El Agremiado est&aacute; INHABILITADO");
+				}else if (result.situacion=='PROVINCIA'){
+					bootbox.alert("El Agremiado est&aacute; en otra PROVINCIA");
+				}else if (result.situacion=='EXTRANJERO'){
+					bootbox.alert("El Agremiado est&aacute; en el EXTRANJERO");
 				}
 				
 			}

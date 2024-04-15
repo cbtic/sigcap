@@ -655,7 +655,7 @@ Route::get('derecho_revision/obtener_tipo_credipago/{id}', [DerechoRevisionContr
 
 Route::post('derecho_revision/listar_derecho_revision_hu_ajax', [DerechoRevisionController::class, 'listar_derecho_revision_hu_ajax'])->name('derecho_revision.listar_derecho_revision_hu_ajax');
 
-Route::get('certificado/record_proyectos_pdf/{numero_cap}', [CertificadoController::class, 'record_proyectos_pdf'])->name('certificado.record_proyectos_pdf');
+Route::get('certificado/record_proyectos_pdf/{id}', [CertificadoController::class, 'record_proyectos_pdf'])->name('certificado.record_proyectos_pdf');
 Route::get('coordinador_zonal/obtener_coordinador/{id}', [CoordinadorZonalController::class, 'obtener_coordinador'])->name('coordinador_zonal.obtener_coordinador');
 Route::get('coordinador_zonal/modal_coordinadorZonal_editarCoordinadorZonal/{id}', [CoordinadorZonalController::class, 'modal_coordinadorZonal_editarCoordinadorZonal'])->name('coordinador_zonal.modal_coordinadorZonal_editarCoordinadorZonal');
 Route::post('coordinador_zonal/send_coordinador_sesion_editar', [CoordinadorZonalController::class, 'send_coordinador_sesion_editar'])->name('coordinador_zonal.send_coordinador_sesion_editar');
@@ -678,4 +678,5 @@ Route::get('agremiado/exportar_lista_deudas/{anio}/{concepto}/{mes}', [Agremiado
 Route::get('revisorUrbano/eliminar_revisor_urbano/{id}/{estado}', [RevisorUrbanoController::class, 'eliminar_revisor_urbano'])->name('revisorUrbano.eliminar_revisor_urbano');
 Route::get('revisorUrbano/exportar_listar_revisor_urbano/{numero_cap}/{agremiado}/{codigo_itf}/{codigo_ru}/{situacion_pago}/{estado}', [RevisorUrbanoController::class, 'exportar_listar_revisor_urbano'])->name('revisorUrbano.exportar_listar_revisor_urbano');
 Route::get('derecho_revision/modal_reintegroRU/{id}', [DerechoRevisionController::class, 'modal_reintegroRU'])->name('derecho_revision.modal_reintegroRU');
+Route::post('derecho_revision/listar_solicitud_periodo', [DerechoRevisionController::class, 'listar_solicitud_periodo'])->name('derecho_revision.listar_solicitud_periodo');
 

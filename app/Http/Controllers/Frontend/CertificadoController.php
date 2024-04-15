@@ -787,10 +787,14 @@ class CertificadoController extends Controller
 		
 	}
 
-	public function record_proyectos_pdf($numero_cap){
-		
+	public function record_proyectos_pdf($id){
+
 		$certificado_model = new Certificado();
-		$proyectos = $certificado_model->getRecordProyecto($numero_cap);
+
+		$datos=$certificado_model->datos_agremiado_certificado($id);
+		$nombre=$datos[0]->numero_cap;
+		
+		$proyectos = $certificado_model->getRecordProyecto($nombre);
 		
 		$trato=$proyectos[0]->id_sexo;
 		$numero_cap=$proyectos[0]->numero_cap;

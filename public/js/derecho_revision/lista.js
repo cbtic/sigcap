@@ -67,8 +67,10 @@ $(document).ready(function () {
 	
 	$("#id_municipalidad_bus").select2();
 	
+	cargarPeriodo();
 	datatablenew();
 	datatablenew2();
+
 	$('#numero_cap_').hide();
 	$('#agremiado_').hide();
 	$('#situacion_').hide();
@@ -455,20 +457,29 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
+			var anio = $('#anio_bus').val();
 			var nombre_proyecto = $('#nombre_proyecto_bus').val();
-			var id_tipo_proyecto = $('#id_tipo_proyecto_bus').val();
-			var id_municipalidad = $('#id_municipalidad_bus').val();
-			var fecha_registro = $('#fecha_registro_bus').val();
-			var id_estado_proyecto = $('#id_estado_proyecto_bus').val();
+			var distrito = $('#id_distrito_domiciliario').val();
+			var numero_cap = $('#numero_cap').val();
+			var proyectista = $('#proyectista').val();
+			var numero_documento = $('#numero_documento').val();
+			var propietario = $('#propietario').val();
+			var tipo_proyecto = $('#tipo_proyecto_bus').val();
+			var tipo_solicitud = $('#id_tipo_proyecto_bus').val();
+			var credipago = $('#numero_liquidacion').val();
+			var municipalidad = $('#id_municipalidad_bus').val();
+			var direccion = $('#direccion_proyecto').val();
+			var estado_proyecto = $('#id_estado_proyecto_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						nombre_proyecto:nombre_proyecto,id_tipo_proyecto:id_tipo_proyecto,
-						id_municipalidad:id_municipalidad,fecha_registro:fecha_registro,
-						id_estado_proyecto:id_estado_proyecto,
+						anio:anio,nombre_proyecto:nombre_proyecto,distrito:distrito,numero_cap:numero_cap,
+						proyectista:proyectista,numero_documento:numero_documento,propietario:propietario,
+						tipo_proyecto:tipo_proyecto,tipo_solicitud:tipo_solicitud,credipago:credipago,
+						municipalidad:municipalidad,direccion:direccion,estado_proyecto:estado_proyecto,
 						_token:_token
                        },
                 "success": function (result) {
@@ -670,11 +681,11 @@ function datatablenew2(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var nombre_proyecto = $('#nombre_proyec	to_bus').val();
+			var nombre_proyecto = $('#nombre_proyecto_bus').val();
 			var id_tipo_proyecto = $('#id_tipo_proyecto_bus').val();
-			var id_municipalidad = $('#id_municipalidad_bus').val();
+			var id_municipalidad = $('#municipalidad_bus').val();
 			var fecha_registro = $('#fecha_registro_bus').val();
-			var id_estado_proyecto = $('#id_estado_proyecto_bus').val();
+			var id_estado_proyecto = $('#estado_solicitud_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -1170,5 +1181,28 @@ function guardar_solicitud_derecho_revision(){
 				}
 				*/
 			}
+	});
+}
+
+function cargarPeriodo(){    	
+
+	$.ajax({
+		url: "/derecho_revision/listar_solicitud_periodo",
+		type: "POST",
+		data : $("#frmExpediente").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>--Año--</option>";
+			var currentYear = new Date().getFullYear();
+			$('#anio_bus').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
+			});
+			$('#anio_bus').html(option);
+			$('#anio_bus').val(currentYear);
+			//$('#anio_bus').select2();
+			
+			//$('.loader').hide();			
+		}
+		
 	});
 }

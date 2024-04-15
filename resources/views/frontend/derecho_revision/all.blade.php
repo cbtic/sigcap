@@ -262,6 +262,13 @@
 				</div>
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
+                    
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group form-group-sm">
+                            <select name="anio_bus" id="anio_bus" class="form-control form-control-sm">
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 						<select name="id_estado_proyecto_bus" id="id_estado_proyecto_bus" class="form-control form-control-sm">
 							<option value="">--Estado Proyecto--</option>
@@ -273,7 +280,7 @@
 							?>
 						</select>
 					</div>
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">				
                         <input type="text" name="numero_liquidacion" id="numero_liquidacion" placeholder="Liquidaci&oacute;n" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div> 
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
