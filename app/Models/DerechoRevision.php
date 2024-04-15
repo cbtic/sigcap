@@ -188,5 +188,16 @@ where p.id_solicitud=".$id;
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getPeridoSolicitud(){
+
+        $cad = "select distinct DATE_PART('YEAR', s.fecha_registro)::varchar anio from solicitudes s 
+        where s.estado ='1'
+        order by  DATE_PART('YEAR', s.fecha_registro)::varchar";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
     
 }

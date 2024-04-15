@@ -264,6 +264,16 @@ function obtener_profesional(){
 	
 }
 
+function editarDetalle(){
+
+  var inputs = document.querySelectorAll('.adelanto-input');
+  inputs.forEach(function(input) {
+      input.disabled  = false;
+  });
+
+}
+
+
 function modal_personaNuevo(){
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
@@ -356,7 +366,7 @@ function modal_personaNuevo(){
 										<tr style='font-size:13px'>
 											<input type='hidden' name='id_adelanto_detalle[]' value='<?php echo $row->id?>'>
 											<td class='text-left'><?php echo 'cuota '.$row->numero_cuota?></td>
-											<td class='text-left'><?php echo $row->adelanto_pagar?></td>
+											<td class='text-left'><input type='text' name='adelanto_pagar[]' value='<?php echo number_format($row->adelanto_pagar, 2, '.', ',')?>' size="10" class="adelanto-input" disabled='disabled'></td>
 											<td class='text-left'><?php echo $row->fecha_pago?></td>
 											<td class='text-left'><?php echo $row->estado?></td>
 										<?php } ?>
@@ -366,6 +376,7 @@ function modal_personaNuevo(){
                   <div style="margin-top:15px" class="form-group">
                     <div class="col-sm-12 controls">
                       <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+                      <a href="javascript:void(0)" onClick="editarDetalle()" class="btn btn-sm btn-success" id="editarBtn">Editar</a>
                       </div>
                     </div>
                   </div>
