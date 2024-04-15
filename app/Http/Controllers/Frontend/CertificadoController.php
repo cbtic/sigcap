@@ -308,6 +308,7 @@ class CertificadoController extends Controller
 		$certificado->id_solicitud = $request->id_proyecto;
 		$certificado->dias_validez = $request->validez;
 		$certificado->especie_valorada = $request->ev;
+		$certificado->id_tipo_tramite_tipo3 = $request->tipo_tramite_tipo3;
 		//$certificado->codigo = getCodigoCertificado($request->tipo);//$request->codigo; 
 		$certificado->observaciones =$request->observaciones;
 		$certificado->estado =1;
@@ -316,6 +317,7 @@ class CertificadoController extends Controller
 			$certificado->id_solicitud = $request->nombre_proyecto;
 		}
 		$certificado->id_usuario_inserta = $id_user;
+		
 	
 		$certificado->save();
 		        
@@ -677,15 +679,17 @@ class CertificadoController extends Controller
 		//var_dump($agremiado_->id);exit;
 		$mes_minimo = $mes_minimo_[0]->min;
 		$mes_maximo = $mes_maximo_[0]->max;
-
+		//var_dump($mes_minimo);exit;
+		$mes_min = ltrim($mes_minimo,'0');
+		$mes_max = ltrim($mes_maximo,'0');
 		//var_dump($mes_minimo);exit;
 		/*if($mes_minimo == NULL)
 		{
 			return back()->with('mensaje', 'No hay datos disponibles');
 		}else {*/
-			$mes_minimoEnLetras = $this->mesesALetras($mes_minimo); 
+			$mes_minimoEnLetras = $this->mesesALetras($mes_min); 
 
-			$mes_maximoEnLetras = $this->mesesALetras($mes_maximo); 
+			$mes_maximoEnLetras = $this->mesesALetras($mes_max); 
 			
 		/*}*/
 		//var_dump($mes_maximoEnLetras);exit;

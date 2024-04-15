@@ -132,7 +132,7 @@ $(document).ready(function() {
                             <p></p>
             <p>Certificado para : <?php echo $datos[0]->tipo_tramite;?></p>
             
-            <p>Validez por <?php echo $datos[0]->dias_validez;?>  (<?php echo $numeroEnLetras;?> ) d&iacute;as.</p>
+            <p>Validez por <?php echo $datos[0]->dias_validez;?>  (<?php echo $numeroEnLetras;?>) d&iacute;as.</p>
             <p></p>
             <p></p>
             <p  style="text-align:right">Lima, <?php echo $fecha_detallada;?></p>

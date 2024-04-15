@@ -262,6 +262,7 @@ $.mask.definitions['p'] = "[Mm]";
 		var nombre_proyecto = $('#nombre_proyecto').val();
 		var id_proyecto = $('#id_proyecto').val();
 		var tipo_tramite = $('#tipo_tramite').val();
+		var tipo_tramite_tipo3 = $('#tipo_tramite_certificado3').val();
 
 		$.ajax({
 			url: "/certificado/send_certificado",
@@ -282,7 +283,8 @@ $.mask.definitions['p'] = "[Mm]";
 				tipo_tramite:tipo_tramite,
 				id_proyecto:id_proyecto,
 				nombre_proyecto:nombre_proyecto,
-				idagremiado: idagremiado
+				idagremiado: idagremiado,
+				tipo_tramite_tipo3:tipo_tramite_tipo3
 			},
 			//dataType: 'json',
 			success: function(result) {
