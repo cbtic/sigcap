@@ -177,7 +177,7 @@ class Comprobante extends Model
         And f.fac_fecha <= '".$fecha_fin."'
         Order By f.fac_fecha Desc";
 */
-        $cad ="select f.id, f.serie, f.numero, f.tipo, f.fecha, f.cod_tributario, f.destinatario, f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, m.denominacion caja,
+        $cad ="select distinct f.id, f.serie, f.numero, f.tipo, f.fecha, f.cod_tributario, f.destinatario, f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, m.denominacion caja,
         'plan A'plan_denominacion, 
         replace(replace(u.email, '@felmo.pe', ''), '@felmo.com', '') usuario
         ,f.destinatario pac_nombre, per.id_tipo_documento tipo_documento,per.numero_documento,emp.ruc,emp.nombre_comercial, 1 val_aten_estab, 1 val_aten_codigo, '' placa,
@@ -201,7 +201,7 @@ order by cp.id) medio_pago
         Order By f.fecha Desc";
 
 
-        echo( $cad); exit;
+        //echo( $cad); exit;
 
 		$data = DB::select($cad);
         return $data;
