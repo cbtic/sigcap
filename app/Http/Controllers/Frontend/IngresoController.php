@@ -573,6 +573,8 @@ class IngresoController extends Controller
 		$fecha_fin=$cajaIngreso->fecha_fin;
 		if($cajaIngreso->fecha_fin=="")$fecha_fin=$factura_model->fecha_hora_actual();
 		$factura = $factura_model->getFacturaByCaja($cajaIngreso->id_caja,$cajaIngreso->fecha_inicio,$fecha_fin);
+
+        //echo($cajaIngreso->fecha_inicio); exit();
 		return view('frontend.ingreso.modal_detalle_factura',compact('factura'));
 	
 	}
