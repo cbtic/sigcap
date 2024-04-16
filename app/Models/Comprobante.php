@@ -201,7 +201,7 @@ order by cp.id) medio_pago
         Order By f.fecha Desc";
 
 
-      //  echo( $cad); exit;
+        echo( $cad); exit;
 
 		$data = DB::select($cad);
         return $data;
