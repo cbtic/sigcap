@@ -267,10 +267,74 @@ function obtener_profesional(){
 function editarDetalle(){
 
   var inputs = document.querySelectorAll('.adelanto-input');
+
   inputs.forEach(function(input) {
+    
+    input.disabled  = false;
+
+    var fila = input.closest('tr');
+ 
+    var fechaPagoCell = fila.querySelector('.fecha-pago');
+    var fechaPagoString = fechaPagoCell.innerText;
+    var fechaPago = new Date(fechaPagoString);
+    
+    var fechaActual = new Date();
+    if (fechaPago < fechaActual) {
+      input.disabled = true;
+    }else{
       input.disabled  = false;
+    }
+  });
+}
+
+function fn_save_detalle(){
+
+  var totalPago = 0;
+  var adelantoPagar = [];
+  var idAdelantoDetalle = [];
+
+  $("input[name='adelanto_pagar[]']").each(function(){
+    var monto_detalle = parseFloat($(this).val().replace(',',''))
+
+    totalPago += monto_detalle;
+    adelantoPagar.push(monto_detalle);
+    
   });
 
+  $("input[name='id_adelanto_detalle[]']").each(function(){
+    var id_detalle = $(this).val();
+
+    idAdelantoDetalle.push(id_detalle);
+  });
+  //alert(idAdelantoDetalle);
+  var totalAdelanto = ("<?php echo $adelanto_detalle[0]->total_adelanto; ?>");
+  var id = "<?php echo $id; ?>";
+  var _token = "{{ csrf_token() }}";
+
+  if(totalPago==totalAdelanto){
+    //alert('El total es igual');
+    $.ajax({
+      url: "/adelanto/send_detalle_adelanto",
+      type: "POST",
+      data: {
+        _token:_token,
+        id: id,
+        adelanto_pagar: JSON.stringify(adelantoPagar),
+        id_adelanto_detalle: JSON.stringify(idAdelantoDetalle)
+        
+      },
+      //dataType: 'json',
+      success: function(result) {
+        $('#openOverlayOpc').modal('hide');
+        //window.location.reload();
+        datatablenew();
+
+      }
+    });
+    
+  }else{
+    bootbox.alert("El total no coincide con las cuotas");
+  }
 }
 
 
@@ -349,7 +413,10 @@ function modal_personaNuevo(){
             <!--aaaa-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 
-              <div class="card-body">				
+              <div class="card-body">	
+                <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="id" id="id" value="<?php echo $id ?>">	
+                <!--<input type='hidden' name='total_adelanto' value='<?php //echo $adelanto_detalle->total_adelanto?>'>-->
 
                 <div class="table-responsive">
                 <table id="tblPuesto" class="table table-hover table-sm">
@@ -365,18 +432,24 @@ function modal_personaNuevo(){
                     <?php foreach ($adelanto_detalle as $row) {?>
 										<tr style='font-size:13px'>
 											<input type='hidden' name='id_adelanto_detalle[]' value='<?php echo $row->id?>'>
-											<td class='text-left'><?php echo 'cuota '.$row->numero_cuota?></td>
-											<td class='text-left'><input type='text' name='adelanto_pagar[]' value='<?php echo number_format($row->adelanto_pagar, 2, '.', ',')?>' size="10" class="adelanto-input" disabled='disabled'></td>
-											<td class='text-left'><?php echo $row->fecha_pago?></td>
+											<td class='text-left id_cuota'><?php echo 'cuota '.$row->numero_cuota?></td>
+											<td class='text-left'><input type='text' name='adelanto_pagar[]' value='<?php echo number_format($row->adelanto_pagar, 2, '.', ',')?>' size="10" class="adelanto-input" disabled='disabled' onchange=""></td>
+											<td class='text-left fecha-pago'><?php echo $row->fecha_pago?></td>
 											<td class='text-left'><?php echo $row->estado?></td>
 										<?php } ?>
+                    </tr>
+                    <tr style='border-top: 1px solid #000;'>
+                      <td class='text-left' style='border-top: 1px solid #000;'><?php echo 'Total Adelanto '?></td>
+                      <td class='text-left' style='border-top: 1px solid #000;'><?php echo number_format($adelanto_detalle[0]->total_adelanto, 2, '.', ',')?></td>
+                    </tr>
 										</tbody>
                 </table>
                 </div>
                   <div style="margin-top:15px" class="form-group">
                     <div class="col-sm-12 controls">
                       <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-                      <a href="javascript:void(0)" onClick="editarDetalle()" class="btn btn-sm btn-success" id="editarBtn">Editar</a>
+                        <a href="javascript:void(0)" onClick="editarDetalle()" class="btn btn-sm btn-success" id="editarBtn">Editar</a>
+                        <a href="javascript:void(0)" onClick="fn_save_detalle()" class="btn btn-sm btn-success" style="font-size:12px;margin-left:10px">Guardar</a>
                       </div>
                     </div>
                   </div>
