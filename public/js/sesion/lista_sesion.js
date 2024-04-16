@@ -369,7 +369,8 @@ function obtenerComisionBus(){
 			$('#id_comision_bus').html("");
 			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				//option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision_bus').html(option);
 		}
@@ -1067,4 +1068,35 @@ function fn_eliminar_delegado_sesion(id){
             }
     });
 }
+
+function guardar_coordinador(id,id_delegado){
+	
+	bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas cambiar de coordinador en todas las sesiones?", 
+        callback: function(result){
+            if (result==true) {
+                fn_guardar_coordinador(id,id_delegado);
+            }
+        }
+    });
+	
+}
+
+function fn_guardar_coordinador(id,id_delegado){
+    
+	var msg = "";
+	var _token = $('#_token').val();
+	
+    $.ajax({
+			url: "/sesion/send_coordinador_delegado_sesion",
+            type: "POST",
+            data : {_token:_token,id:id,id_delegado:id_delegado},
+            success: function (result) {
+				$('#openOverlayOpc').modal('hide');
+				//location.reload();
+            }
+    });
+}
+
 

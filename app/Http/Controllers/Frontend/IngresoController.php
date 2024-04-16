@@ -349,6 +349,7 @@ class IngresoController extends Controller
         $id_agremiado = $request->id_agremiado;
 
         $id_concepto = $request->id_concepto;
+        $Exonerado = $request->Exonerado;
 
         //print_r($id_concepto); exit();
 
@@ -459,7 +460,7 @@ class IngresoController extends Controller
         // print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas,$Exonerado);
        
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
@@ -570,8 +571,13 @@ class IngresoController extends Controller
 		$cajaIngreso = CajaIngreso::find($id);
 		$factura_model = new Comprobante;
 		$fecha_fin=$cajaIngreso->fecha_fin;
-		if($cajaIngreso->fecha_fin=="")$fecha_fin=$factura_model->fecha_hora_actual();
-		$factura = $factura_model->getFacturaByCaja($cajaIngreso->id_caja,$cajaIngreso->fecha_inicio,$fecha_fin);
+        $fecha_inicio = $cajaIngreso->fecha_inicio;
+        
+        //print_r($fecha_fin); exit();
+		if($cajaIngreso->fecha_fin=="")$fecha_fin=$factura_model->fecha_hora_actual(); 
+
+		$factura = $factura_model->getFacturaByCaja($cajaIngreso->id_caja, $fecha_inicio, $fecha_fin);
+
 		return view('frontend.ingreso.modal_detalle_factura',compact('factura'));
 	
 	}

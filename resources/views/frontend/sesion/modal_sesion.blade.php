@@ -792,7 +792,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 											<td class='text-left'><?php echo $row->numero_cap?></td>
 											<td class='text-left'><?php echo $row->situacion?></td>
 											<td class='text-center'>
-											<input type="radio" name="coordinador" value="<?php echo $id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> />
+											<input type="radio" name="coordinador" value="<?php echo $id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> onChange="guardar_coordinador(<?php echo $row->id?>,<?php echo $id_delegado?>)" />
 											</td>
 											<td class='text-center'>
 											<input type="checkbox" class="<?php if($row->situacion!="INHABILITADO" && $row->situacion!="FALLECIDO")echo "id_aprobar_pago"?>" name="id_aprobar_pago[<?php echo $id_delegado?>]" value="<?php echo $id_delegado?>" 

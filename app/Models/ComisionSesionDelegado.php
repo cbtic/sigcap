@@ -103,7 +103,8 @@ inner join personas t3 on t2.id_persona=t3.id
 left join tabla_maestras t4 on t1.id_puesto::int = t4.codigo::int And t4.tipo ='94'
 left join tabla_maestras t5 on t2.id_situacion = t5.codigo::int And t5.tipo ='14'
 where t0.id_comision_sesion=".$id_comision_sesion."
-and t0.estado='1'";
+and t0.estado='1'
+order by t1.id_puesto::int asc";
 
 		
 		$data = DB::select($cad);
@@ -152,4 +153,18 @@ and t1.id_periodo_comisione=".$id_periodo ;
         return $data;
     }
 	
+	function getPuestoComisionSesionDelegadoByIdComisionSesion($id_comision_sesion){ 
+		
+		$cad = "select case when t1.id_puesto=1 then 2 when t1.id_puesto=2 then 1 end id_puesto
+from comision_sesion_delegados t0 
+left join comision_delegados t1 on t0.id_delegado=t1.id
+where t0.id_comision_sesion=".$id_comision_sesion."
+and t0.estado='1'
+and id_puesto!=12
+limit 1";
+		
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
+		
 }

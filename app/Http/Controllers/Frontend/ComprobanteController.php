@@ -583,7 +583,9 @@ class ComprobanteController extends Controller
                     //$factura_upd->detraccion = $request->tipo_cambio;
                     //$factura_upd->id_detra_cod_bos = $request->tipo_cambio;
                 }
-                
+
+                $factura_upd->estado_pago =  $request->estado_pago;
+
 				$factura_upd->save();
 
 
@@ -931,8 +933,8 @@ class ComprobanteController extends Controller
         ])->get();
         //print_r($factura_detalles);
 
-        $model = new ComprobanteDetalle;
-        $comprobanteDetalle = $model->getMaestroByTipo(85);
+       // $model = new ComprobanteDetalle;
+       // $comprobanteDetalle = $model->getMaestroByTipo(85);
 
         return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia'));
     }

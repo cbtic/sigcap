@@ -697,7 +697,11 @@ function fn_calcular(){
 	p.mes = $('#mes').val();
 	p.periodo  = $('#id_periodo').val();
 
-
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
 	//alert(mes);
     $.ajax({
             url: "/fondoComun/calcula_fondo_comun",
@@ -706,7 +710,9 @@ function fn_calcular(){
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
 				cargarFondoComun();
+				$('.loader').hide();	
             }
+			
     });
 }
 

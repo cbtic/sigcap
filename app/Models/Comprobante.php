@@ -153,29 +153,57 @@ class Comprobante extends Model
     }
     
     function getFacturaByCaja($id_caja,$fecha_inicio,$fecha_fin){
-
+/*
         $cad = "select f.id, f.fac_serie, f.fac_numero, f.fac_tipo, f.fac_fecha, f.fac_cod_tributario, f.fac_destinatario, f.fac_subtotal, f.fac_impuesto, f.fac_total, f.fac_estado_pago, f.fac_anulado, m.denominacion caja,
-(select string_agg(DISTINCT t2_.plan_denominacion, ',') from afiliaciones t1_ inner join plan_atenciones t2_ on t1_.plan_id=t2_.id left join personas t3_ on t3_.id=t1_.persona_id
-where t3_.numero_documento=f.fac_cod_tributario And t1_.estado='1' And t2_.plan_estado='A')plan_denominacion, 
-replace(replace(u.email, '@felmo.pe', ''), '@felmo.com', '') usuario
-,val.val_pac_nombre,per.tipo_documento,per.numero_documento,emp.ruc,emp.nombre_comercial,val.val_aten_estab,val.val_aten_codigo,alb.placa
-FROM facturas f
-Inner Join tabla_maestras m On m.id = f.fac_caja_id
-Inner Join users u On u.id = f.id_usuario 
-left join(
-select vsm_fac_tipo,vsm_fac_serie,vsm_fac_numero,max(vsm_vestab)vsm_vestab,max(vsm_vnumero)vsm_vnumero
-from val_atencion_smodulos
-group by vsm_fac_tipo,vsm_fac_serie,vsm_fac_numero
-) vas on vas.vsm_fac_tipo=f.fac_tipo and vas.vsm_fac_serie=f.fac_serie And vas.vsm_fac_numero=f.fac_numero
-left join valorizaciones val on val.val_estab = vas.vsm_vestab And val.val_codigo = vas.vsm_vnumero
-left join personas per on val.val_persona=per.id
-left join ubicacion_trabajos ut on val.val_ubicacion=ut.id
-left join empresas emp on emp.id=ut.ubicacion_empresa_id
-left join alquiler_balanzas alb on val.val_estab = alb.aten_establecimiento And val.val_aten_codigo = alb.aten_numero
-where f.fac_caja_id=".$id_caja." 
-And f.fac_fecha >= '".$fecha_inicio."' 
-And f.fac_fecha <= '".$fecha_fin."'
-Order By f.fac_fecha Desc";
+        (select string_agg(DISTINCT t2_.plan_denominacion, ',') from afiliaciones t1_ inner join plan_atenciones t2_ on t1_.plan_id=t2_.id left join personas t3_ on t3_.id=t1_.persona_id
+        where t3_.numero_documento=f.fac_cod_tributario And t1_.estado='1' And t2_.plan_estado='A')plan_denominacion, 
+        replace(replace(u.email, '@felmo.pe', ''), '@felmo.com', '') usuario
+        ,val.val_pac_nombre,per.tipo_documento,per.numero_documento,emp.ruc,emp.nombre_comercial,val.val_aten_estab,val.val_aten_codigo,alb.placa
+        FROM facturas f
+        Inner Join tabla_maestras m On m.id = f.fac_caja_id
+        Inner Join users u On u.id = f.id_usuario 
+        left join(
+        select vsm_fac_tipo,vsm_fac_serie,vsm_fac_numero,max(vsm_vestab)vsm_vestab,max(vsm_vnumero)vsm_vnumero
+        from val_atencion_smodulos
+        group by vsm_fac_tipo,vsm_fac_serie,vsm_fac_numero
+        ) vas on vas.vsm_fac_tipo=f.fac_tipo and vas.vsm_fac_serie=f.fac_serie And vas.vsm_fac_numero=f.fac_numero
+        left join valorizaciones val on val.val_estab = vas.vsm_vestab And val.val_codigo = vas.vsm_vnumero
+        left join personas per on val.val_persona=per.id
+        left join ubicacion_trabajos ut on val.val_ubicacion=ut.id
+        left join empresas emp on emp.id=ut.ubicacion_empresa_id
+        left join alquiler_balanzas alb on val.val_estab = alb.aten_establecimiento And val.val_aten_codigo = alb.aten_numero
+        where f.fac_caja_id=".$id_caja." 
+        And f.fac_fecha >= '".$fecha_inicio."' 
+        And f.fac_fecha <= '".$fecha_fin."'
+        Order By f.fac_fecha Desc";
+*/
+        $cad ="select distinct f.id, f.serie, f.numero, f.tipo, f.fecha, f.cod_tributario, f.destinatario, f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, m.denominacion caja,
+        'plan A'plan_denominacion, 
+        replace(replace(u.email, '@felmo.pe', ''), '@felmo.com', '') usuario
+        ,f.destinatario pac_nombre, per.id_tipo_documento tipo_documento,per.numero_documento,emp.ruc,emp.nombre_comercial, 1 val_aten_estab, 1 val_aten_codigo, '' placa,
+        f.id_forma_pago,  fp.denominacion forma_pago, (case when f.estado_pago='P' then 'PENDIENTE' else 'CANCELADO'end) estado_pago, 
+        (select string_agg(DISTINCT coalesce(tm.denominacion||'->'||cp.monto), ', ')  
+		from comprobante_pagos cp 
+		inner join tabla_maestras tm on tm.codigo = cp.id_medio::varchar and tm.tipo = '19'
+		--group by cp.id
+		--having cp.id_comprobante = f.id
+        where cp.id_comprobante = f.id
+        --order by cp.id
+) medio_pago
+ FROM comprobantes f
+        inner join tabla_maestras m on m.codigo = f.id_caja::varchar and m.tipo = '91'
+        inner join tabla_maestras fp on fp.codigo = f.id_forma_pago::varchar and fp.tipo = '104'
+        Inner Join users u On u.id = f.id_usuario_inserta        
+        left join valorizaciones val on val.id_comprobante = f.id 
+        left join personas per on val.id_persona = per.id
+        left join empresas emp on emp.id=val.id_empresa 
+        where f.id_caja=".$id_caja."  
+        And f.fecha >= '".$fecha_inicio."' 
+        And f.fecha <= '".$fecha_fin."' 
+        Order By f.fecha Desc";
+
+
+        //echo( $cad); exit;
 
 		$data = DB::select($cad);
         return $data;
