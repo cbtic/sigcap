@@ -571,10 +571,20 @@ class IngresoController extends Controller
 		$cajaIngreso = CajaIngreso::find($id);
 		$factura_model = new Comprobante;
 		$fecha_fin=$cajaIngreso->fecha_fin;
+        $fecha_inicio = $cajaIngreso->fecha_inicio;
+        
+        print_r($fecha_fin); exit();
 		if($cajaIngreso->fecha_fin=="")$fecha_fin=$factura_model->fecha_hora_actual();
-		$factura = $factura_model->getFacturaByCaja($cajaIngreso->id_caja,$cajaIngreso->fecha_inicio,$fecha_fin);
 
-        //echo($cajaIngreso->fecha_inicio); exit();
+        
+
+        $fecha_fin=$factura_model->fecha_hora_actual();
+        
+
+		$factura = $factura_model->getFacturaByCaja($cajaIngreso->id_caja, $fecha_inicio, $fecha_fin);
+
+        
+
 		return view('frontend.ingreso.modal_detalle_factura',compact('factura'));
 	
 	}
