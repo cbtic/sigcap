@@ -137,7 +137,7 @@
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<div class="form-group">
                             <label class="form-control-sm">Fecha Inicio Desde</label>
-							<input class="form-control form-control-sm" id="fecha_inicio_desde" name="fecha_inicio_desde" value="" placeholder="Fecha Inicio Desde">
+							<input class="form-control form-control-sm" id="fecha_inicio_desde" name="fecha_inicio_desde" value="<?php echo date("d-m-Y")?>" placeholder="Fecha Inicio Desde">
 						</div>
 					</div>
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -150,7 +150,7 @@
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<div class="form-group">
                             <label class="form-control-sm">Fecha Cierre Desde</label>
-							<input class="form-control form-control-sm" id="fecha_ini" name="fecha_ini" value="<?php echo date("d-m-Y")?>" placeholder="Fecha Cierre Desde">
+							<input class="form-control form-control-sm" id="fecha_ini" name="fecha_ini" value="" placeholder="Fecha Cierre Desde">
 						</div>
 					</div>
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
