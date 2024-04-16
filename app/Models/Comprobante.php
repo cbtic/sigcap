@@ -185,9 +185,11 @@ class Comprobante extends Model
         (select string_agg(DISTINCT coalesce(tm.denominacion||'->'||cp.monto), ', ')  
 		from comprobante_pagos cp 
 		inner join tabla_maestras tm on tm.codigo = cp.id_medio::varchar and tm.tipo = '19'
-		group by cp.id
-		having cp.id_comprobante = f.id
-order by cp.id) medio_pago
+		--group by cp.id
+		--having cp.id_comprobante = f.id
+        where cp.id_comprobante = f.id
+        --order by cp.id
+) medio_pago
  FROM comprobantes f
         inner join tabla_maestras m on m.codigo = f.id_caja::varchar and m.tipo = '91'
         inner join tabla_maestras fp on fp.codigo = f.id_forma_pago::varchar and fp.tipo = '104'
