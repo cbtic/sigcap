@@ -189,6 +189,12 @@ $(document).ready(function() {
 	$('#area_intervenida_edificaciones_').hide();
 	$('#area_bruta_hu_').hide();
 	$('#zonificacion_hu_').hide();
+	$('#n_pisos_').hide();
+	$('#sotanos_').hide();
+	$('#semisotanos_').hide();
+	$('#piso_nivel_').hide();
+	$('#otro_piso_nivel_').hide();
+	$('#total_area_techada_').hide();
 	
 });
 
@@ -204,6 +210,12 @@ function obtener_tipo_proyecto(){
 		$('#area_intervenida_edificaciones_').show();
 		$('#area_bruta_hu_').hide();
 		$('#zonificacion_hu_').hide();
+		$('#n_pisos_').show();
+		$('#sotanos_').show();
+		$('#semisotanos_').show();
+		$('#piso_nivel_').show();
+		$('#otro_piso_nivel_').show();
+		$('#total_area_techada_').show();
 	}else if($('#tipo_proyecto').val()==124){
 		$('#tipo_obra_hu_').show();
 		$('#tipo_uso_hu_').show();
@@ -214,6 +226,12 @@ function obtener_tipo_proyecto(){
 		$('#area_intervenida_edificaciones_').hide();
 		$('#area_bruta_hu_').show();
 		$('#zonificacion_hu_').show();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
 	}
 }
 
@@ -1115,6 +1133,44 @@ function valida_pago() {
 								<div class="col-lg-12">
 									<label class="control-label form-control-sm">Zonificaci&oacute;n</label>
 									<input id="zonificacion_hu" name="zonificacion_hu" on class="form-control form-control-sm" value="<?php //echo $proyecto->area_intervenida?>" type="text" onChange="" >
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-2">
+								<div class="form-group" id="n_pisos_">
+									<label class="control-label">N° de pisos o niveles</label>
+									<input id="n_pisos" name="n_pisos" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="sotanos_">
+									<label class="control-label">S&oacute;tano(s)(m2)</label>
+									<input id="sotanos" name="sotanos" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="semisotanos_">
+									<label class="control-label">Semis&oacute;tano(m2)</label>
+									<input id="semisotanos" name="semisotanos" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="piso_nivel_">
+									<label class="control-label">1er. Piso o Nivel(m2)</label>
+									<input id="piso_nivel" name="piso_nivel" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="otro_piso_nivel_">
+									<label class="control-label">Otros Pisos o Nivel(m2)</label>
+									<input id="otro_piso_nivel" name="otro_piso_nivel" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="total_area_techada_">
+									<label class="control-label">Total &Aacute;rea Techada(m2)</label>
+									<input id="total_area_techada" name="total_area_techada" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
 								</div>
 							</div>
 						</div>

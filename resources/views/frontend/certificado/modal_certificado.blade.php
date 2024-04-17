@@ -185,13 +185,23 @@ $.mask.definitions['p'] = "[Mm]";
 	$('#nombre_proyecto_').hide();
 	$('#tipo_tramite_').hide();
 	$('#tipo_tramite_certificado3_').hide();
-	
+	$('#n_pisos_').hide();
+	$('#sotanos_').hide();
+	$('#semisotanos_').hide();
+	$('#piso_nivel_').hide();
+	$('#total_area_techada_').hide();
 	
 	if (id_tipo == "0")//SELECCIONAR
 	{
 		$('#nombre_proyecto_').hide();
 		$('#tipo_tramite_').hide();
 		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
 	}else if (id_tipo == "1")//CERTIFICADO TIPO 1
 	{
 		$('#nombre_proyecto_').show();
@@ -199,6 +209,12 @@ $.mask.definitions['p'] = "[Mm]";
 		//$('#nombre_proyecto_').show();
 		$('#tipo_tramite').val('0');
 		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').show();
+		$('#sotanos_').show();
+		$('#semisotanos_').show();
+		$('#piso_nivel_').show();
+		$('#otro_piso_nivel_').show();
+		$('#total_area_techada_').show();
 
 	}else if (id_tipo == "2") //CERTIFICADO TIPO 2
 	{
@@ -207,6 +223,12 @@ $.mask.definitions['p'] = "[Mm]";
 		//$('#nombre_proyecto_').show();
 		$('#tipo_tramite').val('0');
 		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
 	}else if (id_tipo == "3") //CERTIFICADO TIPO 3
 	{
 		$('#nombre_proyecto_').show();
@@ -214,12 +236,24 @@ $.mask.definitions['p'] = "[Mm]";
 		//$('#nombre_proyecto_').show();
 		$('#tipo_tramite').val('0');
 		$('#tipo_tramite_certificado3_').show();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
 	}else if (id_tipo == "4") { //CERTIFICADO TIPO 4
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').show();
 		$('#vigencia_group').show();
 		$('#nombre_proyecto').val('0');
 		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
 		//$('#tipo_tramite_').val('');
 	}else if (id_tipo == "5") { //CONSTANCIA
 		$('#nombre_proyecto_').hide(); 
@@ -228,6 +262,12 @@ $.mask.definitions['p'] = "[Mm]";
 		$('#nombre_proyecto').val('0');
 		$('#tipo_tramite').val('');
 		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
 	}else if (id_tipo == "6"){ //RECORD DE PROYECTOS
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
@@ -235,12 +275,24 @@ $.mask.definitions['p'] = "[Mm]";
 		$('#tipo_tramite').val('0');
 		$('#vigencia_group').hide();
 		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
 	}else{ //seleccionar
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
 		$('#nombre_proyecto').val('0');
 		$('#tipo_tramite').val('0');
 		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
 	}
 }
 
@@ -263,6 +315,12 @@ $.mask.definitions['p'] = "[Mm]";
 		var id_proyecto = $('#id_proyecto').val();
 		var tipo_tramite = $('#tipo_tramite').val();
 		var tipo_tramite_tipo3 = $('#tipo_tramite_certificado3').val();
+		var n_pisos = $('#n_pisos_').val();
+		var sotanos_m2 = $('#sotanos_').val();
+		var semisotano_m2 = $('#semisotanos_').val();
+		var piso_nivel_m2 = $('#piso_nivel_').val();
+		var otro_piso_nivel_m2 = $('#otro_piso_nivel_').val();
+		var total_area_techada_m2 = $('#total_area_techada_').val();
 
 		$.ajax({
 			url: "/certificado/send_certificado",
@@ -284,7 +342,13 @@ $.mask.definitions['p'] = "[Mm]";
 				id_proyecto:id_proyecto,
 				nombre_proyecto:nombre_proyecto,
 				idagremiado: idagremiado,
-				tipo_tramite_tipo3:tipo_tramite_tipo3
+				tipo_tramite_tipo3:tipo_tramite_tipo3,
+				n_pisos:n_pisos,
+				sotanos_m2:sotanos_m2,
+				semisotano_m2:semisotano_m2,
+				piso_nivel_m2:piso_nivel_m2,
+				otro_piso_nivel_m2:otro_piso_nivel_m2,
+				total_area_techada_m2:total_area_techada_m2
 			},
 			//dataType: 'json',
 			success: function(result) {
@@ -485,6 +549,45 @@ $.mask.definitions['p'] = "[Mm]";
 								</div>
 							</div>
 
+						</div>
+
+						<div class="row">
+							<div class="col-lg-2">
+								<div class="form-group" id="n_pisos_">
+									<label class="control-label">N° de pisos o niveles</label>
+									<input id="n_pisos" name="n_pisos" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="sotanos_">
+									<label class="control-label">S&oacute;tano(s)(m2)</label>
+									<input id="sotanos" name="sotanos" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="semisotanos_">
+									<label class="control-label">Semis&oacute;tano(m2)</label>
+									<input id="semisotanos" name="semisotanos" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="piso_nivel_">
+									<label class="control-label">1er. Piso o Nivel(m2)</label>
+									<input id="piso_nivel" name="piso_nivel" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="otro_piso_nivel_">
+									<label class="control-label">Otros Pisos o Nivel(m2)</label>
+									<input id="otro_piso_nivel" name="otro_piso_nivel" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="total_area_techada_">
+									<label class="control-label">Total &Aacute;rea Techada(m2)</label>
+									<input id="total_area_techada" name="total_area_techada" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
 						</div>
 
 						<!--<div class="row">
