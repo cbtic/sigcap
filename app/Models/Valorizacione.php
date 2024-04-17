@@ -108,7 +108,7 @@ class Valorizacione extends Model
                 --and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
                 --and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
                 --and c.id in (26411, 26412)
-                and ((c.id = 26411 and  (case when v.fecha < now() then '1' else '0' end) = '0') or (c.id = 26412))
+                and ((c.id = 26411 and  (case when v.fecha < now() then '1' else '0' end) = '1') or (c.id = 26412))
                 and v.estado = '1'            
                 and v.pagado = '0'                
             order by v.fecha desc
