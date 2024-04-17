@@ -470,7 +470,7 @@
                                                     <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" onchange="cargarValorizacion()"><br />
 
                                                     <input type="checkbox" id="cbox2" value="1" style="display:none" onchange="cargarValorizacion()"/>
-                                                    <label for="cbox2" id="lblFrac" style="display:none">Incluir solo Fraccionamiento y Cuota Gremial</label>
+                                                    <label for="cbox2" id="lblFrac" style="display:none">Incluir Fraccionamiento y Cuota Gremial Vencido</label>
 
                                                     
                                                     
