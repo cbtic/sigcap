@@ -1022,7 +1022,8 @@ function cargarValorizacion(){
 
 			}
 
-			if (cboTipoCuota_b==1 &&  cboTipoConcepto_b=="") {
+			//if (cboTipoCuota_b==1 &&  cboTipoConcepto_b=="") {
+			if (cboTipoConcepto_b=="26412" || cboTipoConcepto_b=="26411") {				
 				$('#cbox2').show();
 				$('#lblFrac').show();
 				
