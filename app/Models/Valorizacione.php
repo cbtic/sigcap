@@ -84,9 +84,10 @@ class Valorizacione extends Model
                 --inner join agremiado_cuotas a  on a.id = v.pk_registro
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
                 where v.id_empresa = ".$id_persona."            
-                and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
-                and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
-                and c.id in (26411, 26412)
+                --and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
+                --and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
+                --and c.id in (26411, 26412)
+                and ((c.id = 26411 and  (case when v.fecha < now() then '1' else '0' end) = '0') or (c.id = 26412))
                 and v.estado = '1'            
                 and v.pagado = '0'
                 --and v.exonerado = '0'
@@ -94,6 +95,26 @@ class Valorizacione extends Model
              ".$filas."
 			";
         }else{
+            $cad = "            
+            select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
+                (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
+                (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
+                coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto,
+                codigo_fraccionamiento, v.exonerado            
+            from valorizaciones v
+                inner join conceptos c  on c.id = v.id_concepto                
+                inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
+                where v.id_persona = ".$id_persona."            
+                --and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
+                --and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
+                --and c.id in (26411, 26412)
+                and ((c.id = 26411 and  (case when v.fecha < now() then '1' else '0' end) = '0') or (c.id = 26412))
+                and v.estado = '1'            
+                and v.pagado = '0'                
+            order by v.fecha desc
+             ".$filas."
+			";
+            /*            
             $cad = "
             --select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
@@ -116,6 +137,7 @@ class Valorizacione extends Model
             order by v.fecha desc
              ".$filas."
 			";
+*/
         }
 
 
