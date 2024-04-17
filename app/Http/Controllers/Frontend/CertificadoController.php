@@ -244,6 +244,12 @@ class CertificadoController extends Controller
 		$solicitud->valor_obra = $request->valor_obra_edificaciones;
 		if($request->tipo_proyecto==123){
 			$solicitud->area_total = $request->area_techada;
+			$solicitud->numero_piso = $request->n_pisos;
+			$solicitud->sotanos_m2 = $request->sotanos;
+			$solicitud->semisotano_m2 = $request->semisotanos;
+			$solicitud->piso_nivel_m2 = $request->piso_nivel;
+			$solicitud->otro_piso_nivel_m2 = $request->otro_piso_nivel;
+			$solicitud->total_area_techada_m2 = $request->total_area_techada;
 		}else if($request->tipo_proyecto==124){
 			$solicitud->area_total = $request->area_bruta_hu;
 		}
@@ -344,6 +350,13 @@ class CertificadoController extends Controller
 		$certificado->id_tipo =$request->tipo;
 		if($request->tipo==1 || $request->tipo==2 || $request->tipo==3){
 			$certificado->id_solicitud = $request->nombre_proyecto;
+			$solicitud = Solicitude::find($certificado->id_solicitud);
+			$solicitud->numero_piso = $request->n_pisos;
+			$solicitud->sotanos_m2 = $request->sotanos;
+			$solicitud->semisotano_m2 = $request->semisotanos;
+			$solicitud->piso_nivel_m2 = $request->piso_nivel;
+			$solicitud->otro_piso_nivel_m2 = $request->otro_piso_nivel;
+			$solicitud->total_area_techada_m2 = $request->total_area_techada;
 		}
 		$certificado->id_usuario_inserta = $id_user;
 		
