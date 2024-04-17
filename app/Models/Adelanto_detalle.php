@@ -33,10 +33,11 @@ class Adelanto_detalle extends Model
 
     function getAdelantoDetalleId($id){ 
 
-        $cad = "select ad.id, ad.numero_cuota, ad.adelanto_pagar, ad.fecha_pago, ad.estado
+        $cad = "select ad.id, ad.numero_cuota, ad.adelanto_pagar, ad.fecha_pago, ad.estado, a.total_adelanto
         from adelanto_detalles ad
         inner join adelantos a on ad.id_adelento = a.id
-        where a.id=".$id;
+        where a.id='".$id."'
+        order by ad.id asc";
 
         $data = DB::select($cad);
         return $data;

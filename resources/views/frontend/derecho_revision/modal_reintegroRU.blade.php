@@ -553,13 +553,14 @@ function fn_save_requisito(){
                                 
                                 $valor_minimo_hu = $parametro[0]->valor_metro_cuadrado_habilitacion_urbana;
                                 $uit_hu = $parametro[0]->valor_uit;
+                                $liquidacion[0]->area_total;
                                 $sub_total_minimo = $valor_minimo_hu * $uit_hu;
                                 $igv_valor = $parametro[0]->igv;
                                 $igv_minimo	= $igv_valor * $sub_total_minimo;
                                 $total_minimo = $sub_total_minimo + $igv_minimo;
                                 //var_dump($total_minimo);exit;
                                 ?>
-                                <input id="minimo" name="minimo" on class="form-control form-control-sm"  value="<?php echo $parametro[0]->valor_minimo_hu?>" type="text" readonly='readonly'>
+                                <input id="minimo" name="minimo" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado = number_format($parametro[0]->valor_minimo_hu, 2, '.', ','); ?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
@@ -572,13 +573,13 @@ function fn_save_requisito(){
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">M&aacute;ximo</label>
-                                <input id="maximo" name="maximo" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                                <input id="maximo" name="maximo" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado = number_format($parametro[0]->valor_maximo_hu, 2, '.', ','); ?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-12">
                                 <label class="control-label form-control-sm">Observaci&oacute;n</label>
-                                <input id="observacion" name="observacion" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                                <input id="observacion" name="observacion" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->valor_maximo_hu?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                     </div>
@@ -597,7 +598,25 @@ function fn_save_requisito(){
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Sub Total</label>
-                                <input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado?>" type="text" readonly='readonly'>
+                                <?php
+                                if($sub_total_formateado<$parametro[0]->valor_minimo_hu){
+                                    $total_minimo_hu = $parametro[0]->valor_minimo_hu;
+                                    $subtotal_minimo_hu = $total_minimo_hu/(1+($igv_valor/100));
+                                    $igv_minimo_hu = $subtotal_minimo_hu*($igv_valor/100);
+                                    $total_minimo_hu_formateado = number_format($total_minimo_hu, 2, '.', ',');
+                                    $subtotal_minimo_hu_formateado = number_format($subtotal_minimo_hu, 2, '.', ',');
+                                    $igv_minimo_hu_formateado = number_format($igv_minimo_hu, 2, '.', ',');
+                                }else{
+                                    $total_minimo_hu = $sub_total_formateado;
+                                    $igv_minimo_hu = $sub_total_formateado*(1+($parametro[0]->igv));
+                                    $subtotal_minimo_hu = $total_minimo_hu-$igv_minimo_hu;
+                                    $total_minimo_hu_formateado = number_format($total_minimo_hu, 2, '.', ',');
+                                    $subtotal_minimo_hu_formateado = number_format($subtotal_minimo_hu, 2, '.', ',');
+                                    $igv_minimo_hu_formateado = number_format($igv_minimo_hu, 2, '.', ',');
+                                }
+                                //var_dump($total_minimo);exit;
+                                ?>
+                                <input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php echo $subtotal_minimo_hu_formateado?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
@@ -614,7 +633,7 @@ function fn_save_requisito(){
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">IGV</label>
-                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php echo $igv_total_formateado?>" type="text" readonly='readonly'>
+                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php echo $igv_minimo_hu_formateado?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
@@ -628,7 +647,7 @@ function fn_save_requisito(){
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Total a Pagar Soles</label>
-                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $total_formateado?>" type="text" onchange="cambioPlantaTipica()">
+                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $total_minimo_hu_formateado?>" type="text" onchange="cambioPlantaTipica()">
                             </div>
                         </div>
                     </div>

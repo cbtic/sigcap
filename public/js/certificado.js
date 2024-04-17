@@ -644,6 +644,8 @@ function valida_certificado(id){
 				certificado_pdf(id);
 			}else if(tipo_certificado=="5"){
 				validez_constancia(id);
+			}else if(tipo_certificado=="6"){
+				record_proyecto(id);
 			}
 		//}
 		}
@@ -686,6 +688,11 @@ function validez_constancia(id){
 		
 		}
 	});
+}
+
+function record_proyecto(id){
+	var href = '/certificado/record_proyectos_pdf/'+id;
+	window.open(href, '_blank');
 }
 
 

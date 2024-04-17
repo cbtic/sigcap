@@ -198,6 +198,40 @@ class AdelantoController extends Controller
 		}
     }
 
+	public function send_detalle_adelanto(Request $request){
+
+		$id_user = Auth::user()->id;
+
+		//var_dump($request);exit();
+		if($request->id == 0){
+			$adelanto = new Adelanto;
+			$adelanto_detalle = new Adelanto_detalle;
+		}else{
+			$adelanto = Adelanto::find($request->id);
+			if(!$adelanto){
+				// Maneja el caso donde no se encuentra el Adelanto
+				return response()->json(['error' => 'Adelanto no encontrado'], 404);
+			}
+			$adelanto_detalle = Adelanto_detalle::where('id_adelento', $adelanto->id)->get();
+			
+		}
+
+		$adelantoPagar = json_decode($request->input('adelanto_pagar'));
+		$idAdelantoDetalle = json_decode($request->input('id_adelanto_detalle'));
+		//var_dump($idAdelantoDetalle);exit;
+		
+		foreach($adelantoPagar as $key => $monto){
+			$adelanto_detalle = Adelanto_detalle::where('id', $idAdelantoDetalle[$key])->first();
+			
+			$nuevoDetalle = Adelanto_detalle::find($adelanto_detalle->id);
+			
+			$nuevoDetalle->adelanto_pagar = $monto;
+			$nuevoDetalle->id_adelento = $adelanto->id;
+			//$nuevoDetalle->numero_cuota = $idAdelantoDetalle[$key];
+			$nuevoDetalle->save();
+		}
+    }
+
 	public function eliminar_adelanto($id,$estado)
     {
 		$adelanto = Adelanto::find($id);

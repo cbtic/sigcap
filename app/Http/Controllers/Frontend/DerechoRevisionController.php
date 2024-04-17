@@ -107,17 +107,19 @@ class DerechoRevisionController extends Controller
 	public function listar_derecho_revision_ajax(Request $request){
 	
 		$derecho_revision_model = new DerechoRevision;
+		$p[]=$request->anio;
 		$p[]=$request->nombre_proyecto;
-        $p[]=$request->id_tipo_proyecto;
-        $p[]="";
-        $p[]="";
-        $p[]=$request->id_municipalidad;
-        $p[]="";
-        $p[]="";
-        $p[]="";
-        $p[]="";
-        $p[]=$request->fecha_registro;
-		$p[]=$request->id_estado_proyecto;
+        $p[]=$request->distrito;
+        $p[]=$request->numero_cap;
+        $p[]=$request->proyectista;
+        $p[]=$request->numero_documento;
+        $p[]=$request->propietario;
+        $p[]=$request->tipo_proyecto;
+        $p[]=$request->tipo_solicitud;
+        $p[]=$request->credipago;
+		$p[]=$request->municipalidad;
+        $p[]=$request->direccion;
+		$p[]=$request->estado_proyecto;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_ajax($p);
@@ -896,6 +898,16 @@ class DerechoRevisionController extends Controller
 
         return view('frontend.derecho_revision.modal_reintegroRU',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro'));
 		
+    }
+
+	public function listar_solicitud_periodo(Request $request){
+        
+        $derechoRevision_model = new DerechoRevision;
+        $resultado = $derechoRevision_model->getPeridoSolicitud();
+
+        //print_r($resultado);exit();
+		return $resultado;
+
     }
 
 }

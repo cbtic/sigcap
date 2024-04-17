@@ -179,7 +179,43 @@ $(document).ready(function() {
 	$('#telefono_ruc_comprobante_').hide();
 	$('#email_ruc_comprobante_').hide();
 
+	$('#tipo_obra_hu_').hide();
+	$('#tipo_uso_hu_').hide();
+	$('#tipo_obra_edificaciones_').hide();
+	$('#tipo_uso_edificaciones_').hide();
+
+	$('#valor_obra_edificaciones_').hide();
+	$('#area_techada_edificaciones_').hide();
+	$('#area_intervenida_edificaciones_').hide();
+	$('#area_bruta_hu_').hide();
+	$('#zonificacion_hu_').hide();
+	
 });
+
+function obtener_tipo_proyecto(){
+
+	if($('#tipo_proyecto').val()==123){
+		$('#tipo_obra_hu_').hide();
+		$('#tipo_uso_hu_').hide();
+		$('#tipo_obra_edificaciones_').show();
+		$('#tipo_uso_edificaciones_').show();
+		$('#valor_obra_edificaciones_').show();
+		$('#area_techada_edificaciones_').show();
+		$('#area_intervenida_edificaciones_').show();
+		$('#area_bruta_hu_').hide();
+		$('#zonificacion_hu_').hide();
+	}else if($('#tipo_proyecto').val()==124){
+		$('#tipo_obra_hu_').show();
+		$('#tipo_uso_hu_').show();
+		$('#tipo_obra_edificaciones_').hide();
+		$('#tipo_uso_edificaciones_').hide();
+		$('#valor_obra_edificaciones_').hide();
+		$('#area_techada_edificaciones_').hide();
+		$('#area_intervenida_edificaciones_').hide();
+		$('#area_bruta_hu_').show();
+		$('#zonificacion_hu_').show();
+	}
+}
 
 function validacion() {
 
@@ -527,8 +563,8 @@ function fn_save() {
 	var email_ruc = $('#email_ruc').val();
 	var nombre_proyecto = $('#nombre_proyecto').val();
 	var tipo_proyecto = $('#tipo_proyecto').val();
-	var tipo_obra = $('#tipo_obra').val();
-	var tipo_uso = $('#tipo_uso').val();
+	var tipo_obra = $('#tipo_obra_edificaciones').val();
+	var tipo_uso = $('#tipo_uso_edificaciones').val();
 	var valor_obra = $('#valor_obra').val();
 	var area_techada = $('#area_techada').val();
 	var area_intervenida = $('#area_intervenida').val();
@@ -539,6 +575,9 @@ function fn_save() {
 	var direccion_sitio = $('#direccion_sitio').val();
 	var tipo_direccion = $('#tipo_direccion').val();
 	var direccion_tipo = $('#direccion_tipo').val();
+	var tipo_obra_hu = $('#tipo_obra_hu').val();
+	var tipo_uso_hu = $('#tipo_uso_hu').val();
+	
 
 	$.ajax({
 		url: "/certificado/send_proyecto_tipo3",
@@ -969,13 +1008,12 @@ function valida_pago() {
 							</div>
 							<div class="col-lg-4">
 								<label class="control-label form-control-sm">Tipo Proyecto</label>
-								<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="">
+								<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="obtener_tipo_proyecto()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_proyecto as $row){
 									if ($row->codigo == 123 || $row->codigo == 124 || $row->codigo == 241){
 									?>
-									
 										<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$proyecto->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php
 										}
@@ -985,51 +1023,98 @@ function valida_pago() {
 							</div>
 						</div>
 						<div class="row">
-
-							<div class="col-lg-3">
-								<label class="control-label form-control-sm">Tipo Obra</label>
-								<select name="tipo_obra" id="tipo_obra" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($tipo_obra as $row){
-									?>
-										<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$proyecto->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
+							<div class="col-lg-3 form-group" style="padding: 0px 0px 0px 0px" id="tipo_obra_edificaciones_">
+								<div class="col-lg-12">
+									<label class="control-label form-control-sm">Tipo Obra</label>
+									<select name="tipo_obra_edificaciones" id="tipo_obra_edificaciones" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($tipo_obra as $row){
+										?>
+											<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$proyecto->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
 							</div>
 
-							<div class="col-lg-3">
-								<label class="control-label form-control-sm">Tipo Uso</label>
-								<select name="tipo_uso" id="tipo_uso" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($tipo_uso as $row){
-									?>
-										<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$proyecto->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
+							<div class="col-lg-3 form-group" style="padding: 0px 0px 0px 0px" id="tipo_uso_edificaciones_">
+								<div class="col-lg-12">
+									<label class="control-label form-control-sm">Tipo Uso</label>
+									<select name="tipo_uso_edificaciones" id="tipo_uso_edificaciones" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($tipo_uso as $row){
+										?>
+											<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$proyecto->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
 							</div>
 
-							<div class="col-lg-2" >
-								<div class="form-group">
+							<div class="col-lg-3 form-group" style="padding: 0px 0px 0px 0px" id="tipo_obra_hu_">
+								<div class="col-lg-12">
+									<label class="control-label form-control-sm">Tipo Obra</label>
+									<select name="tipo_obra_hu" id="tipo_obra_hu" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($tipo_obra_hu as $row){
+										?>
+											<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$proyecto->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-lg-3 form-group" style="padding: 0px 0px 0px 0px" id="tipo_uso_hu_">
+								<div class="col-lg-12">
+									<label class="control-label form-control-sm">Tipo Uso</label>
+									<select name="tipo_uso_hu" id="tipo_uso_hu" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($tipo_uso_hu as $row){
+										?>
+											<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$proyecto->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-lg-2 form-group" style="padding: 0px 0px 0px 0px" id="valor_obra_edificaciones_">
+								<div class="col-lg-12">
 									<label class="control-label form-control-sm">Valor Total de Obra</label>
-									<input id="valor_obra" name="valor_obra" on class="form-control form-control-sm"  value="<?php //echo $proyecto->valor_obra?>" type="text" onChange="" >
+									<input id="valor_obra_edificaciones" name="valor_obra_edificaciones" on class="form-control form-control-sm"  value="<?php //echo $proyecto->valor_obra?>" type="text" onChange="" >
 								</div>
 							</div>
-							<div class="col-lg-2" >
-								<div class="form-group">
+							<div class="col-lg-2 form-group" style="padding: 0px 0px 0px 0px" id="area_techada_edificaciones_">
+								<div class="col-lg-12">
 									<label class="control-label form-control-sm">&Aacute;rea Techada M2</label>
-									<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php //echo $proyecto->area_techada?>" type="text" onChange="" >
+									<input id="area_techada_edificaciones" name="area_techada_edificaciones" on class="form-control form-control-sm"  value="<?php //echo $proyecto->area_techada?>" type="text" onChange="" >
 								</div>
 							</div>
-							<div class="col-lg-2" >
-								<div class="form-group">
+							<div class="col-lg-2 form-group" style="padding: 0px 0px 0px 0px" id="area_intervenida_edificaciones_">
+								<div class="col-lg-12">
 									<label class="control-label form-control-sm">&Aacute;rea Intervenida M2</label>
-									<input id="area_intervenida" name="area_intervenida" on class="form-control form-control-sm"  value="<?php //echo $proyecto->area_intervenida?>" type="text" onChange="" >
+									<input id="area_intervenida_edificaciones" name="area_intervenida_edificaciones" on class="form-control form-control-sm"  value="<?php //echo $proyecto->area_intervenida?>" type="text" onChange="" >
+								</div>
+							</div>
+							<div class="col-lg-2 form-group" style="padding: 0px 0px 0px 0px" id="area_bruta_hu_">
+								<div class="col-lg-12">
+									<label class="control-label form-control-sm">&Aacute;rea Bruta de Terreno (m2)</label>
+									<input id="area_bruta_hu" name="area_bruta_hu" on class="form-control form-control-sm" value="<?php //echo $proyecto->area_intervenida?>" type="text" onChange="" >
+								</div>
+							</div>
+							<div class="col-lg-2 form-group" style="padding: 0px 0px 0px 0px" id="zonificacion_hu_">
+								<div class="col-lg-12">
+									<label class="control-label form-control-sm">Zonificaci&oacute;n</label>
+									<input id="zonificacion_hu" name="zonificacion_hu" on class="form-control form-control-sm" value="<?php //echo $proyecto->area_intervenida?>" type="text" onChange="" >
 								</div>
 							</div>
 						</div>

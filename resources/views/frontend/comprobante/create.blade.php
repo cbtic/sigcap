@@ -1002,11 +1002,11 @@
                                             <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Estado de Pago</label>
-                                                    <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="validaTipoDocumento()">
-                                                        <option value="P">
-                                                            <?php echo "Pendiente" ?></option>
+                                                    <select name="estado_pago" id="estado_pago" class="form-control form-control-sm" >
                                                         <option value="C">
                                                             <?php echo "Cancelado" ?></option>
+                                                        <option value="P">
+                                                            <?php echo "Pendiente" ?></option>                                                            
                                                     </select>
                                                 </div>
                                             </div>

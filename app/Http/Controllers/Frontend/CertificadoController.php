@@ -151,9 +151,11 @@ class CertificadoController extends Controller
 		$tipo_proyectista = $tablaMaestra_model->getMaestroByTipo(41);
 		$tipo_uso = $tablaMaestra_model->getMaestroByTipo(111);
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(24);
+		$tipo_obra_hu = $tablaMaestra_model->getMaestroByTipo(123);
+		$tipo_uso_hu = $tablaMaestra_model->getMaestroByTipo(124);
 		
 
-		return view('frontend.certificado.modal_certificado_tipo3',compact('id','empresa','tipo_proyecto','tipo_uso','tipo_proyectista','tipo_obra','certificado','tipo_documento','tipo_tramite','departamento','sitio','tipo_direccion','propietario','agremiado','persona','proyecto'));
+		return view('frontend.certificado.modal_certificado_tipo3',compact('id','empresa','tipo_proyecto','tipo_uso','tipo_proyectista','tipo_obra','certificado','tipo_documento','tipo_tramite','departamento','sitio','tipo_direccion','propietario','agremiado','persona','proyecto','tipo_obra_hu','tipo_uso_hu'));
 
     }
 
@@ -197,51 +199,78 @@ class CertificadoController extends Controller
 		$propietario->id_usuario_inserta = $id_user;
 		$propietario->save();
 		
+		$ubigeo_id = Ubigeo::where("id_ubigeo",$request->distrito)->where("estado","1")->first();
 
-		$proyecto->id_ubigeo = $request->distrito;
+		$proyecto->id_ubigeo = $ubigeo_id->id;
 		$proyecto->id_tipo_sitio = $request->sitio;
 		$proyecto->nombre = $request->nombre_proyecto;
 		$proyecto->direccion = $request->direccion_tipo;
 		$proyecto->id_tipo_proyecto = $request->tipo_proyecto;
+		$proyecto->zonificacion = $request->zonificacion_hu;
 		$proyecto->id_usuario_inserta = $id_user;
 		$proyecto->save();
 
-		$presupuesto->id_tipo_obra = $request->tipo_obra;
-		$presupuesto->area_techada = $request->area_techada;
-		$presupuesto->total_presupuesto = $request->valor_obra;
-		$presupuesto->id_usuario_inserta = $id_user;
-		$presupuesto->save();
+		if($request->tipo_proyecto==123){
+			$presupuesto->id_tipo_obra = $request->tipo_obra_edificaciones;
+			$presupuesto->area_techada = $request->area_techada_edificaciones;
+			$presupuesto->total_presupuesto = $request->valor_obra_edificaciones;
+			$presupuesto->id_usuario_inserta = $id_user;
+			$presupuesto->save();
+		} else if($request->tipo_proyecto==124){
+			$presupuesto->id_tipo_obra = $request->tipo_obra_hu;
+			$presupuesto->area_techada = $request->area_bruta_hu;
+			//$presupuesto->total_presupuesto = $request->valor_obra;
+			$presupuesto->id_usuario_inserta = $id_user;
+			$presupuesto->save();
+		}
 
-		$usoEdificacione->id_tipo_uso = $request->tipo_uso;
-		$usoEdificacione->area_techada = $request->area_techada;
-		$usoEdificacione->id_usuario_inserta = $id_user;
-		$usoEdificacione->save();
+		if($request->tipo_proyecto==123){
+			$usoEdificacione->id_tipo_uso = $request->tipo_uso_edificaciones;
+			$usoEdificacione->area_techada = $request->area_techada_edificaciones;
+			$usoEdificacione->id_usuario_inserta = $id_user;
+			$usoEdificacione->save();
+		}else if($request->tipo_proyecto==124){
+			$usoEdificacione->id_tipo_uso = $request->tipo_uso_hu;
+			$usoEdificacione->area_techada = $request->area_bruta_hu;
+			$usoEdificacione->id_usuario_inserta = $id_user;
+			$usoEdificacione->save();
+		}
 		
 		$solicitud->id_regional = 5;
 		$solicitud->fecha_registro = Carbon::now()->format('Y-m-d');
 		$solicitud->direccion = $request->direccion_tipo;
 		$solicitud->id_ubigeo = $request->distrito;
 		$solicitud->tipo_proyecto = $request->tipo_proyecto;
-		$solicitud->valor_obra = $request->valor_obra;
-		$solicitud->area_total = $request->area_techada;
+		$solicitud->valor_obra = $request->valor_obra_edificaciones;
+		if($request->tipo_proyecto==123){
+			$solicitud->area_total = $request->area_techada;
+		}else if($request->tipo_proyecto==124){
+			$solicitud->area_total = $request->area_bruta_hu;
+		}
+		
 		$solicitud->id_proyecto = $proyecto->id;
 		$solicitud->id_proyectista = $proyectistaPrincipal->id;
 		$solicitud->id_usuario_inserta = $id_user;
 		$solicitud->save();
 		
-		foreach($numero_cap_asociado as $row){
-			$proyectista = new Proyectista;
-			$agremiado = Agremiado::where("numero_cap",$row)->where("estado","1")->first();
-			$proyectista->id_solicitud = $solicitud->id;
-			$proyectista->id_agremiado = $agremiado->id;
-			$proyectista->celular = $agremiado->celular1;
-			$proyectista->email = $agremiado->email1;
-			$proyectista->id_usuario_inserta = $id_user;
-			$proyectista->save();
-		}
 		
+		if ($numero_cap_asociado){
+			foreach($numero_cap_asociado as $row){
+				$proyectista = new Proyectista;
+				$agremiado = Agremiado::where("numero_cap",$row)->where("estado","1")->first();
+				$proyectista->id_solicitud = $solicitud->id;
+				$proyectista->id_agremiado = $agremiado->id;
+				$proyectista->celular = $agremiado->celular1;
+				$proyectista->email = $agremiado->email1;
+				$proyectista->id_usuario_inserta = $id_user;
+				$proyectista->save();
+			}
+		}
 		$proyectistaPrincipal->id_solicitud = $solicitud->id;
 		$proyectistaPrincipal->save();
+
+		$solicitud->id_proyectista = $proyectistaPrincipal->id;
+		$solicitud->save();
 		
 		$propietario->id_solicitud = $solicitud->id;
 		$propietario->save();
@@ -308,6 +337,7 @@ class CertificadoController extends Controller
 		$certificado->id_solicitud = $request->id_proyecto;
 		$certificado->dias_validez = $request->validez;
 		$certificado->especie_valorada = $request->ev;
+		$certificado->id_tipo_tramite_tipo3 = $request->tipo_tramite_tipo3;
 		//$certificado->codigo = getCodigoCertificado($request->tipo);//$request->codigo; 
 		$certificado->observaciones =$request->observaciones;
 		$certificado->estado =1;
@@ -316,6 +346,7 @@ class CertificadoController extends Controller
 			$certificado->id_solicitud = $request->nombre_proyecto;
 		}
 		$certificado->id_usuario_inserta = $id_user;
+		
 	
 		$certificado->save();
 		        
@@ -677,15 +708,17 @@ class CertificadoController extends Controller
 		//var_dump($agremiado_->id);exit;
 		$mes_minimo = $mes_minimo_[0]->min;
 		$mes_maximo = $mes_maximo_[0]->max;
-
+		//var_dump($mes_minimo);exit;
+		$mes_min = ltrim($mes_minimo,'0');
+		$mes_max = ltrim($mes_maximo,'0');
 		//var_dump($mes_minimo);exit;
 		/*if($mes_minimo == NULL)
 		{
 			return back()->with('mensaje', 'No hay datos disponibles');
 		}else {*/
-			$mes_minimoEnLetras = $this->mesesALetras($mes_minimo); 
+			$mes_minimoEnLetras = $this->mesesALetras($mes_min); 
 
-			$mes_maximoEnLetras = $this->mesesALetras($mes_maximo); 
+			$mes_maximoEnLetras = $this->mesesALetras($mes_max); 
 			
 		/*}*/
 		//var_dump($mes_maximoEnLetras);exit;
@@ -787,10 +820,14 @@ class CertificadoController extends Controller
 		
 	}
 
-	public function record_proyectos_pdf($numero_cap){
-		
+	public function record_proyectos_pdf($id){
+
 		$certificado_model = new Certificado();
-		$proyectos = $certificado_model->getRecordProyecto($numero_cap);
+
+		$datos=$certificado_model->datos_agremiado_certificado($id);
+		$nombre=$datos[0]->numero_cap;
+		
+		$proyectos = $certificado_model->getRecordProyecto($nombre);
 		
 		$trato=$proyectos[0]->id_sexo;
 		$numero_cap=$proyectos[0]->numero_cap;
