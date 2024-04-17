@@ -133,5 +133,17 @@ class TablaMaestra extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getMaestroByTipoBySubcogioNull($tipo){
+
+        $cad = "select * from tabla_maestras tm 
+                where tm.tipo='".$tipo."' 
+                and tm.sub_codigo is null
+				and estado='1' 
+                order by orden ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 	
 }
