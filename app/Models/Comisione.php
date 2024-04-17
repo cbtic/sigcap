@@ -124,6 +124,8 @@ class Comisione extends Model
 			$cad .= " and c.id_tipo_comision='".$tipo_comision."'";
 		}
 
+		$cad .= " order by c.denominacion asc,c.comision asc ";
+		//echo $cad;
 		$data = DB::select($cad);
         return $data;
     }

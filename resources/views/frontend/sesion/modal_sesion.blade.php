@@ -510,7 +510,7 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 			$(result).each(function (ii, oo) {
 				sel = "";
 				if(id_comision==oo.id)sel = "selected='selected'";
-				option += "<option value='"+oo.id+"' "+sel+">"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"' "+sel+">"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision').html(option);
 		}

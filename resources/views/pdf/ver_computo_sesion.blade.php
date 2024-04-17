@@ -121,7 +121,7 @@
         </header>
         
     	
-		<table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;">
+		<table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
 			<tbody>
 				<tr>
 					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">N°</td>
@@ -144,9 +144,18 @@
 				$suma_computada_ = 0;
 				$suma_adicional_ = 0;
 				$suma_total_ = 0; 
+				$total_sesion_delegado = 0;
+				$total_sesion_coordinador_zonal = 0;
+				$total_sesion = 0;
 				
 				foreach($comisionSesion as $key=>$r){
-					if($key==0)$municipalidad_old = $r->municipalidad;
+					if($key==0){
+						$municipalidad_old = $r->municipalidad;
+						$total_sesion_delegado = $r->total_sesion_delegado;
+						$total_sesion_coordinador_zonal = $r->total_sesion_coordinador_zonal;
+						$total_sesion = $total_sesion_delegado + $total_sesion_coordinador_zonal;
+					}
+					
 					$n++;
 				
 					if($municipalidad_old!=$r->municipalidad){
@@ -216,6 +225,25 @@
 					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total?></th>
 				</tr>
 			</tfoot>
+		</table>
+		
+		<table class="table table-hover table-sm" style="width:35%!important;padding-top:15px" align="right">
+			<thead>
+			<tr style="font-size:13px">
+				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Sesiones delegados</th>
+				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo $total_sesion_delegado?></span></th>
+			</tr>
+			<tr style="font-size:13px">
+				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">Sesiones coordinador zonal</th>
+				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_coordinador_zonal"><?php echo $total_sesion_coordinador_zonal?></span></th>
+			</tr>
+			<tr style="font-size:13px">
+				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">Total de sesiones</th>
+				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_total"><?php echo $total_sesion?></span></th>
+			</tr>
+			</thead>
+			<tbody>
+			</tbody>
 		</table>
 		
 		<!--<table style="margin-top: 10px">

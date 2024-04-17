@@ -479,7 +479,7 @@ container: '#myModal modal-body'
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($concurso_inscripcion as $row) {?>
-									<option value="<?php echo $row->id_agremiado?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto." - ".$row->puesto_asignado?></option>
+									<option value="<?php echo $row->id_agremiado?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - (Concurso) ".$row->puesto." - (Plaza) ".$row->puesto_asignado?></option>
 									<?php 
 									}
 									?>

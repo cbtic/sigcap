@@ -656,12 +656,12 @@ function datatablenew(){
                        },
                 "success": function (result) {
                     fnCallback(result);
-					/*		
-					var rowIndex = oTable.fnGetData().length - 1;
-                       var strNameIdImg = 'ima_1_' + rowIndex;
-                       var strHtml = "<img id='" + strNameIdImg + "' src='/img/details_open.png' style='cursor:pointer;' title='Editar' onclick=fn_AbrirDetalle(" + rowIndex + ",'" + row.id +"') />";
-                       return strHtml;
-					*/
+					var total_sesion_delegado = result.aaData[0].total_sesion_delegado;
+					var total_sesion_coordinador_zonal = result.aaData[0].total_sesion_coordinador_zonal;
+					var total_sesion = Number(total_sesion_delegado) + Number(total_sesion_coordinador_zonal);
+					$('#sesion_delegados').html(total_sesion_delegado);
+					$('#sesion_coordinador_zonal').html(total_sesion_coordinador_zonal);
+					$('#sesion_total').html(total_sesion);
                 },
                 "error": function (msg, textStatus, errorThrown) {
                     //location.href="login";

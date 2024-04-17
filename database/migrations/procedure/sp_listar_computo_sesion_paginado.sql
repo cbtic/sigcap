@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(p_id_periodo_comisiones character varying, p_id_comision character varying, p_anio character varying, p_mes character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -15,6 +14,9 @@ v_count varchar;
 v_col_count varchar;
 --v_perfil varchar;
 
+v_sesion_delegado varchar;
+v_sesion_coordinador_zonal varchar;
+
 begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
@@ -27,6 +29,8 @@ p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres delegado,a.numer
 t5.descripcion periodo,
 (case when t0.coordinador=''1'' then ''COORDINADOR'' else '''' end) coordinador,
 sum(case when tmts.denominacion=''ORDINARIA'' then 1 else 0 end) computada,
+sum(case when tmts.denominacion=''ORDINARIA'' and mi.denominacion ilike ''COORDINADOR ZONAL%'' then 1 else 0 end) sesion_coordinado_zonal,
+sum(case when tmts.denominacion=''ORDINARIA'' and mi.denominacion not ilike ''COORDINADOR ZONAL%'' then 1 else 0 end) sesion_delegado,
 sum(case when tmts.denominacion=''EXTRAORDINARIA'' then 1 else 0 end) adicional,
 count(*) total
 from comision_sesiones t1 
@@ -96,7 +100,13 @@ where t0.id_aprobar_pago=2 ';
 	*/
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
+
+	EXECUTE ('SELECT coalesce(sum(sesion_coordinado_zonal),0) From (SELECT '||v_campos||v_tabla||v_where||')R') INTO v_sesion_coordinador_zonal;
+	EXECUTE ('SELECT coalesce(sum(sesion_delegado),0) From (SELECT '||v_campos||v_tabla||v_where||')R') INTO v_sesion_delegado;
+
 	v_col_count:=' ,'||v_count||' as TotalRows ';
+	v_col_count:=v_col_count||' ,'||v_sesion_coordinador_zonal||' as total_sesion_coordinador_zonal ';
+	v_col_count:=v_col_count||' ,'||v_sesion_delegado||' as total_sesion_delegado ';
 
 	If v_count::Integer > p_limit::Integer then
 		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By municipalidad asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
@@ -111,4 +121,3 @@ End
 
 $function$
 ;
-
