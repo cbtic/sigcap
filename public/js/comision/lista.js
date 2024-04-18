@@ -885,6 +885,12 @@ function fn_guardar(){
             data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
 			dataType: 'json',
             success: function (result) {
+				
+					if(result.obs!=""){
+						bootbox.alert("Las Municipalidad "+result.obs+" ya tiene una comisi&oacute;n registrada");
+						return false;
+					}
+				
 					//datatablenew();
 					cargarMunicipalidades();
 					cargarMunicipalidadesIntegradas();
