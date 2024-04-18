@@ -27,7 +27,7 @@ class DerechoRevision extends Model
 	function getCodigoSolicitud($id_tipo_solicitud){
 		
 		if($id_tipo_solicitud==123){
-			$cad = "select '1'||lpad(max(numero+1)::varchar,7,'0') codigo from numeracion_documentos nd where id_tipo_documento='20'";
+			$cad = "select '1'||lpad(max(numero+1)::varchar,7,'0')codigo,max(numero+1)numero from numeracion_documentos nd where id_tipo_documento='20'";
 		}
 		
 		if($id_tipo_solicitud==124){
@@ -36,7 +36,7 @@ class DerechoRevision extends Model
 		
         
 		$data = DB::select($cad);
-        return $data[0]->codigo;
+        return $data[0];
     }
 	
 	function getCountProyectoTipoSolicitud($id_proyecto,$id_tipo_solicitud){
