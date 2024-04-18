@@ -330,6 +330,25 @@ function fn_save_requisito(){
     });
 }
 
+function fn_save_credipago(){
+    
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var id_comision = $('#id_comision').val();
+	var id_regional = $('#id_regional').val();
+	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var observaciones = $('#observaciones').val();
+	
+    $.ajax({
+			url: "/derecho_revision/send_credipago_liquidacion",
+            type: "POST",
+			data : $('#frmReintegroSolicitud').serialize(),
+            success: function (result) {
+				$('#openOverlayOpc').modal('hide');
+				//datatablenew();
+            }
+    });
+}
 
 
 </script>
@@ -493,7 +512,7 @@ function fn_save_requisito(){
                     <div class="col-lg-5">
                         <div class="form-group">
                             <label class="control-label form-control-sm">Instancia</label>
-                            <select name="instancia" id="instancia" class="form-control form-control-sm" onchange="habilitar_reintegro()">
+                            <select name="instancia" id="instancia" class="form-control form-control-sm" onChange="habilitar_reintegro()">
                                 <option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($instancia as $row) {?>
@@ -536,7 +555,7 @@ function fn_save_requisito(){
                     <div class="col-lg-3">
                         <div id="valor_reintegro_" name="valor_reintegro_">
                             <label class="control-label form-control-sm">Valor Reintegro S/.</label>
-                            <input id="valor_reintegro" name="valor_reintegro" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" onchange="calcularReintegro()">
+                            <input id="valor_reintegro" name="valor_reintegro" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" onChange="calcularReintegro()">
                         </div>
                     </div>
                 </div>
@@ -644,6 +663,19 @@ function fn_save_requisito(){
                                 <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $total_formateado_?>" type="text" onchange="cambioPlantaTipica()">
                             </div>
                         </div>
+						
+						<div style="margin-top:15px" class="form-group">
+							<div class="col-sm-12 controls">
+								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+									
+									<a href="javascript:void(0)" onClick="fn_save_credipago()" class="btn btn-sm btn-success">Generar Credipago</a>
+									
+								</div>
+													
+							</div>
+						</div>
+						
+					
                     </div>
                 </div>
           </div>

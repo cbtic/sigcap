@@ -299,6 +299,26 @@
                         <tbody>
                         </tbody>
                     </table>
+					
+					<table class="table table-hover table-sm" style="width:50%!important" align="right">
+                        <thead>
+                        <tr style="font-size:13px">
+							<th>Sesiones delegados</th>
+							<th><span id="sesion_delegados"></span></th>
+                        </tr>
+						<tr style="font-size:13px">
+							<th>Sesiones coordinador zonal</th>
+							<th><span id="sesion_coordinador_zonal"></span></th>
+                        </tr>
+						<tr style="font-size:13px">
+							<th>Total de sesiones</th>
+							<th><span id="sesion_total"></span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+					
                 </div><!--table-responsive-->
                 </form>
 

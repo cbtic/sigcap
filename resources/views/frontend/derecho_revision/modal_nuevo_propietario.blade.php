@@ -483,7 +483,7 @@ function fn_save_propietario(){
             data : {_token:_token,id:id,ruc_propietario:ruc_propietario,razon_social_propietario:razon_social_propietario,direccion_ruc:direccion_ruc,telefono_ruc:telefono_ruc,email_ruc:email_ruc,dni_propietario:dni_propietario,nombre_propietario:nombre_propietario,direccion_dni:direccion_dni,celular_dni:celular_dni,email_dni:email_dni,id_solicitud:id_solicitud},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
+				window.location.reload();
 								
             }
     });

@@ -164,7 +164,7 @@
 							</div>
 							<div class="form-group" id="dni_">
 								<label class="control-label form-control-sm">DNI</label>
-								<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onchange="obtenerPropietario()">
+								<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_documento?>" type="text" onchange="obtenerPropietario()">
 							</div>
 						</div>
 
@@ -175,7 +175,7 @@
 							</div>
 							<div class="form-group" id="persona_">
 								<label class="control-label form-control-sm">Nombre/Raz&oacute;n Social</label>
-								<input id="persona" name="persona" on class="form-control form-control-sm"  value="<?php echo $persona->nombres?>" type="text" readonly='readonly'>
+								<input id="persona" name="persona" on class="form-control form-control-sm"  value="<?php //echo $persona->nombres?>" type="text" readonly='readonly'>
 							</div>
 						</div>
 
@@ -222,7 +222,7 @@
 							</div>
 							<div class="form-group" id="email_">
 								<label class="control-label form-control-sm">Email</label>
-								<input id="email" name="email" on class="form-control form-control-sm"  value="<?php echo $persona->correo?>" type="text" readonly='readonly'>
+								<input id="email" name="email" on class="form-control form-control-sm"  value="<?php //echo $persona->correo?>" type="text" readonly='readonly'>
 							</div>
 						</div>
 					</div>

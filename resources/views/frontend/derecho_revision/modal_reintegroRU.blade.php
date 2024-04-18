@@ -657,6 +657,17 @@ function fn_save_requisito(){
                                 <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $total_minimo_hu_formateado?>" type="text" onchange="cambioPlantaTipica()">
                             </div>
                         </div>
+
+                        <div style="margin-top:15px" class="form-group">
+							<div class="col-sm-12 controls">
+								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+									
+									<a href="javascript:void(0)" onClick="fn_save_credipago()" class="btn btn-sm btn-success">Generar Credipago</a>
+									
+								</div>
+													
+							</div>
+						</div>
                     </div>
                 </div>
           </div>

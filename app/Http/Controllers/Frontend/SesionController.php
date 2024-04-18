@@ -334,7 +334,9 @@ class SesionController extends Controller
 			//$dias = array('LUNES','MARTES','MI�RCOLES','JUEVES','VIERNES','S�BADO','DOMINGO');
 			$dias = array('LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO');
 			
-			if($request->id_dia_semana=="398" || $request->id_tipo_sesion=="402"){
+			if($request->id_dia_semana=="398" || $request->id_tipo_sesion=="402"){//variable o extraordinaria
+				
+			//if($request->id_dia_semana=="398"){//variable
 				
 				$comisionSesion = new ComisionSesione;
 				$comisionSesion->id_regional = $id_regional;
@@ -646,7 +648,7 @@ class SesionController extends Controller
 		$comisionSesion = ComisionSesione::find($comisionSesionDelegado->id_comision_sesion);
 		$id_comision = $comisionSesion->id_comision;
 		$comision_=Comisione::find($id_comision);
-		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll($comision_->id_periodo_comisiones,$comision_->id_tipo_comision);
+		$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAllNuevo($comision_->id_periodo_comisiones,$comision_->id_tipo_comision);
 		
 		//print_r($concurso_inscripcion);
 		
@@ -803,7 +805,12 @@ class SesionController extends Controller
 		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
 		$coordinador = $comisionSesionDelegado_model->getComisionSesionDelegadoCoordinadorByIdPeriodo($id_periodo,$anio,$mes);
 		
-		$pdf = Pdf::loadView('pdf.ver_delegado_coordinador',compact('coordinador'));
+		$dias = array('L','M','M','J','V','S','D');
+
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+		
+		$pdf = Pdf::loadView('pdf.ver_delegado_coordinador',compact('coordinador','anio','mesEnLetras'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
@@ -814,6 +821,11 @@ class SesionController extends Controller
 
 		return $pdf->stream('ver_delegado_coordinador.pdf');
 	
+	}
+	
+	function mesesALetras($mes) { 
+		$meses = array('','ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SETIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'); 
+		return $meses[$mes];
 	}
 	
 	public function calendario_sesion_pdf($id){

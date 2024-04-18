@@ -743,7 +743,11 @@ function datatablenew(){
 					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarSolicitud('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 					
 					html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerCredipago('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Credipago</button>';
-					html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitud('+row.id+')" ><i class="fa fa-edit"></i> Vista Previa</button>';
+					if (row.id_resultado == 2) {
+						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitud('+row.id+')" ><i class="fa fa-edit"></i> Vista Previa</button>';
+					}else{
+						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitud('+row.id+')" disabled><i class="fa fa-edit"></i> Vista Previa</button>';
+					}
 					html += '<a href="javascript:void(0)" onclick=eliminarProfesion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
@@ -970,7 +974,7 @@ function datatablenew2(){
 					
 					html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerCredipago('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Credipago</button>';
 					html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitudRU('+row.id+')" ><i class="fa fa-edit"></i> Vista Previa</button>';
-					html += '<a href="/derecho_revision/editar_derecho_revision_nuevo/'+row.id+'" style="font-size:12px" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
+					html += '<a href="/derecho_revision/editar_derecho_revision_nuevo/'+row.id+'" style="font-size: 12px; margin-left: 10px;" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
 					html += '<a href="javascript:void(0)" onclick=eliminarProfesion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
@@ -1266,6 +1270,7 @@ function guardar_solicitud_derecho_revision(){
 	var msg = "";
 	var _token = $('#_token').val();
 	var id = "0";
+	var id_solicitud = $('#id_solicitud').val();
 	var numero_cap = $('#numero_cap').val();
 	var n_revision = $('#n_revision').val();
 	var direccion_proyecto = $('#direccion_proyecto').val();
@@ -1289,7 +1294,8 @@ function guardar_solicitud_derecho_revision(){
 			type: "POST",
 			data : {_token:_token,id:id,numero_cap:numero_cap,n_revision:n_revision,direccion_proyecto:direccion_proyecto,
 				departamento:departamento,provincia:provincia,distrito:distrito,municipalidad:municipalidad,nombre_proyecto:nombre_proyecto,
-				parcela:parcela,superManzana:superManzana,lote:lote,fila:fila,sitio:sitio,zona:zona,tipo:tipo,sublote:sublote,zonificacion:zonificacion},
+				parcela:parcela,superManzana:superManzana,lote:lote,fila:fila,sitio:sitio,zona:zona,tipo:tipo,sublote:sublote,zonificacion:zonificacion,
+				id_solicitud:id_solicitud},
 			success: function (result) {
 				
 				//$('#openOverlayOpc').modal('hide');

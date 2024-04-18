@@ -287,7 +287,7 @@ function obtenerComision(){
 			$('#id_comision').html("");
 			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision').html(option);
 		}
@@ -296,6 +296,13 @@ function obtenerComision(){
 	
 	$("#divFechaProgramado").hide();
 	
+	var id_dia_semana = $("#id_dia_semana").val();
+	
+	if(id_dia_semana==398 || id_tipo_sesion==402){
+		$("#divFechaProgramado").show();
+	}
+	
+	/*
 	if(tipo_comision==2){
 		$("#divFechaProgramado").show();
 	}
@@ -303,6 +310,7 @@ function obtenerComision(){
 	if(tipo_comision!=2 && id_tipo_sesion==402){
 		$("#divFechaProgramado").show();
 	}
+	*/
 	
 }
 
@@ -310,9 +318,15 @@ function habilitarProgramacion(){
 	
 	var id_tipo_sesion = $('#id_tipo_sesion').val();
 	var tipo_comision = $("#tipo_comision").val();
+	var id_dia_semana = $("#id_dia_semana").val();
 	
 	$("#divFechaProgramado").hide();
 	
+	if(id_dia_semana==398 || id_tipo_sesion==402){
+		$("#divFechaProgramado").show();
+	}
+	
+	/*
 	if(tipo_comision==2){
 		$("#divFechaProgramado").show();
 	}
@@ -320,6 +334,7 @@ function habilitarProgramacion(){
 	if(tipo_comision!=2 && id_tipo_sesion==402){
 		$("#divFechaProgramado").show();
 	}
+	*/
 	
 }
 
@@ -1100,3 +1115,18 @@ function fn_guardar_coordinador(id,id_delegado){
 }
 
 
+function modalVerProyectista(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_proyectista/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
