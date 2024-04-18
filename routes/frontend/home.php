@@ -681,4 +681,5 @@ Route::get('revisorUrbano/exportar_listar_revisor_urbano/{numero_cap}/{agremiado
 Route::get('derecho_revision/modal_reintegroRU/{id}', [DerechoRevisionController::class, 'modal_reintegroRU'])->name('derecho_revision.modal_reintegroRU');
 Route::post('derecho_revision/listar_solicitud_periodo', [DerechoRevisionController::class, 'listar_solicitud_periodo'])->name('derecho_revision.listar_solicitud_periodo');
 Route::post('adelanto/send_detalle_adelanto', [AdelantoController::class, 'send_detalle_adelanto'])->name('adelanto.send_detalle_adelanto');
+Route::post('derecho_revision/listar_solicitud_periodo_hu', [DerechoRevisionController::class, 'listar_solicitud_periodo_hu'])->name('derecho_revision.listar_solicitud_periodo_hu');
 

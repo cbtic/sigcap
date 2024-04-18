@@ -61,11 +61,21 @@ from certificados c where id_tipo=".$id_tipo;
 
     public function datos_agremiado_certificado1($id){
 
-        $cad = "select c.id , a.numero_cap ,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado ,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez,t3.denominacion situacion,a.email1, t4.denominacion tipo_proyectista, u.id_departamento, u.id_provincia, u.id_distrito, pro.direccion direccion, pro.lugar lugar, p2.desc_cliente_sunat propietario, pre.valor_unitario, pre.area_techada,t5.denominacion tipo_obra, t6.denominacion tipo_uso, t7.denominacion sub_tipo_uso, c.id_solicitud id_solicitud, pro.nombre nombre_proyecto, s.valor_obra, pre.area_techada, s.id_ubigeo, c.expediente, t8.denominacion tipo_tramite_tipo3
+        $cad = "select c.id, a.numero_cap, p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado, tm.denominacion Tipo_certificado, c.codigo, c.estado, a.desc_cliente, 
+        a.id_situacion, tms.denominacion situacion, a.fecha_colegiado, a.numero_regional, fecha_emision, p.id_sexo, c.dias_validez, t3.denominacion situacion, a.email1, t4.denominacion tipo_proyectista, 
+        u.id_departamento, u.id_provincia, u.id_distrito, pro.direccion direccion, pro.lugar lugar, p2.desc_cliente_sunat propietario, pre.valor_unitario, pre.area_techada, t5.denominacion tipo_obra, 
+        (select t6.denominacion tipo_uso from uso_edificaciones ue 
+        left join tabla_maestras t6 on ue.id_tipo_uso = t6.codigo::int And t6.tipo ='111' and t6.sub_codigo is null
+        where ue.id_solicitud = c.id_solicitud 
+        limit 1), 
+        --(select t7.denominacion sub_tipo_uso from uso_edificaciones ue left join tabla_maestras t7 on ue.id_sub_tipo_uso = t7.codigo::int And t7.tipo ='111' where ue.id_solicitud = s.id limit 1), 
+        --t7.denominacion sub_tipo_uso, 
+        c.id_solicitud id_solicitud, pro.nombre nombre_proyecto, s.valor_obra, pre.area_techada, s.id_ubigeo, c.expediente, 
+        t8.denominacion tipo_tramite_tipo3, s.numero_piso ,s.sotanos_m2, s.semisotano_m2, s.piso_nivel_m2, s.otro_piso_nivel_m2, s.total_area_techada_m2, pro.zonificacion 
         from certificados c 
         inner join agremiados a on c.id_agremiado =a.id 
         inner join tabla_maestras tm on c.id_tipo =tm.codigo::int and tm.tipo ='100' 
-        inner join tabla_maestras tms on a.id_situacion= tms.codigo::int and  tms.tipo ='14' 
+        inner join tabla_maestras tms on a.id_situacion= tms.codigo::int and  tms.tipo ='14'
         left join personas p on p.id =a.id_persona
         left join solicitudes s on c.id_solicitud =s.id
         left join proyectistas pr on s.id_proyectista = pr.id
@@ -74,12 +84,12 @@ from certificados c where id_tipo=".$id_tipo;
         left join propietarios prop on prop.id_solicitud = s.id 
         left join personas p2 on prop.id_persona = p2.id
         left join presupuestos pre on pre.id_solicitud = s.id 
-        left join uso_edificaciones ue on ue.id_solicitud = s.id
+        --left join uso_edificaciones ue on ue.id_solicitud = s.id
         left join tabla_maestras t3 on a.id_situacion = t3.codigo::int And t3.tipo ='14'
         left join tabla_maestras t4 on pr.id_tipo_profesional = t4.codigo::int And t4.tipo ='41'
         left join tabla_maestras t5 on pre.id_tipo_obra = t5.codigo::int And t5.tipo ='29'
-        left join tabla_maestras t6 on ue.id_tipo_uso = t6.codigo::int And t6.tipo ='30' 
-        left join tabla_maestras t7 on ue.id_sub_tipo_uso = t7.codigo::int And t7.tipo ='111' and t7.sub_codigo ='1'
+        --left join tabla_maestras t6 on ue.id_tipo_uso = t6.codigo::int And t6.tipo ='30'
+        --left join tabla_maestras t7 on ue.id_sub_tipo_uso = t7.codigo::int And t7.tipo ='111' and t7.sub_codigo ='1'
         left join tabla_maestras t8 on c.id_tipo_tramite_tipo3 = t8.codigo::int And t8.tipo ='38' 
         where c.id='". $id ."'";
     

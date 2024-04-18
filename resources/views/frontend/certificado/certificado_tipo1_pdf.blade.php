@@ -2,8 +2,8 @@
 
 <style>
     @page {
-		margin-left: 2.5cm;
-		margin-right: 2.5cm;
+		margin-left: 2cm;
+		margin-right: 2cm;
 	}
 /*
 .datepicker {
@@ -16,6 +16,10 @@
 .table-condensed {
   width: 250px;
   height:250px;
+}
+
+.td{
+    font-size: 15px;
 }
 
 
@@ -126,32 +130,144 @@ $(document).ready(function() {
                 <span style="float: right; font_size: 11">INSCRIPCI&Oacute;N&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <?php echo $datos[0]->numero_regional;?></span>
             </div>
             
-           <p style="margin-top: 50px; font_size: 11">SE ENCUENTRA <?php echo $habilita;?> PARA EL EJERCICIO PROFESIONAL EN CALIDAD DE PROYECTISTA</p>
+            
+            <p style="margin-top: 50px; font_size: 11">SE ENCUENTRA <?php echo $habilita;?> PARA EL EJERCICIO PROFESIONAL EN CALIDAD DE PROYECTISTA</p>
             <p style="font_size: 11">I. INFORMACI&Oacute;N GENERAL DEL PROYECTO</p>
-            <p style="text-align: justify; font_size: 11" > 1. PROYECTISTA(S) ASOCIADOS: <?php echo $nombre_proyectista //$tipo_proyectistas[0]->tipo_proyectista;?> </p>
-            <p style="text-align: justify; font_size: 11" > 2. NOMBRE DEL PROPIETARIO: <?php echo $nombre_propietario;?> </p>
-            <p style="text-align: justify; font_size: 11" > 3. DENOMINACI&Oacute;N DEL PROYECTO: <?php echo $nombre_proyecto;?> </p>
-            <p style="text-align: justify; font_size: 11" > 4. UBICACI&Oacute;N:</p>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 95%; margin: 0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; height: 35px;" >1. PROYECTISTA(S) ASOCIADOS:</td>
+                        <td class="td" style ="text-align: left; height: 35px;"><?php echo $nombre_proyectista;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; height: 35px;">2. NOMBRE DEL PROPIETARIO:</td>
+                        <td class="td" style ="text-align: left; height: 35px;"><?php echo $nombre_propietario;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; height: 35px;">3. DENOMINACI&Oacute;N DEL PROYECTO:</td>
+                        <td class="td" style ="text-align: left; height: 35px;"><?php echo $nombre_proyecto;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; height: 35px;">4. UBICACI&Oacute;N:</td>
+                        <td class="td" style ="text-align: left; height: 35px;"></td>
+                    </tr>
+                </tbody>
+            </table>
             
-            <p></p>
-            <p style="text-align: justify; font_size: 11" >Departamento: <?php echo $departamento;?> Provincia: <?php echo $provincia;?> Distrito: <?php echo $distrito;?></p>
-            <p style="text-align: justify; font_size: 11" >Direcci&oacute;n: <?php echo $direccion_proyecto;?> </p>
-            <p style="text-align: justify; font_size: 11" >Lugar: <?php echo $lugar_proyecto;?> </p>
-            <p></p>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 95%; margin: 0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; height: 30px;">Departamento: <?php echo $departamento;?></td>
+                        <td class="td" style ="text-align: left; height: 30px;">Provincia: <?php echo $provincia;?></td>
+                        <td class="td" style ="text-align: left; height: 30px;">Distrito: <?php echo $distrito;?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 95%; margin: 0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 15%; height: 30px;">Direcci&oacute;n:</td>
+                        <td class="td" style ="text-align: left; width: 75%; height: 30px;"><?php echo $direccion_proyecto;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 15%; height: 30px;">Lugar:</td>
+                        <td class="td" style ="text-align: left; width: 75%; height: 30px;"><?php echo $lugar_proyecto;?></td>
+                    </tr>
+                </tbody>
+            </table>
             <p style="font_size: 11">II. DATOS T&Eacute;CNICOS DEL ANTEPROYECTO</p>
-            <p style="text-align: justify; font_size: 11" >Valor Unitario M2: <?php echo $valor_unit;?> </p>
-            <p style="text-align: justify; font_size: 11" >Tipo Obra: <?php echo $tipo_obra;?> </p>
-            <p style="text-align: justify; font_size: 11" >Uso Edificaci&oacute;n: <?php echo $tipo_uso_;?> </p>
-            <p style="text-align: justify; font_size: 11" >&Aacute;rea Techada: <?php echo $area_techada;?> </p>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 25%;">1. Valor Unitario M2:</td>
+                        <td class="td" style ="text-align: left; width: 25%;"><?php echo $valor_unit;?> </td>
+                        <td class="td" style ="text-align: left; width: 25%;">&Aacute;rea de Terreno:</td>
+                        <td class="td" style ="text-align: right; width: 3%;"></td>
+                        <td class="td" style ="text-align: right; width: 21%;"><?php echo $valor_unit;?></td>
+                        <td class="td" style ="text-align: right; width: 3%;">M2</td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 25%;"></td>
+                        <td class="td" style ="text-align: left; width: 25%;"></td>
+                        <td class="td" style ="text-align: left; width: 25%;">Valor Total de la Obra:</td>
+                        <td class="td" style ="text-align: right; width: 3%;">S/.</td>
+                        <td class="td" style ="text-align: right; width: 21%;"><?php echo $valor_unit;?></td>
+                        <td class="td" style ="text-align: right; width: 3%;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 25%;">2. Tipo Obra:</td>
+                        <td class="td" style ="text-align: left; width: 25%;"><?php echo $tipo_obra;?></td>
+                        <td class="td" style ="text-align: left; width: 12.5%;"></td>
+                        <td class="td" style ="text-align: left; width: 12.5%;"></td>
+                        <td class="td" style ="text-align: left; width: 15%;">Zonif.</td>
+                        <td class="td" style ="text-align: left; width: 10%;"><?php echo $zonificacion;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 25%;">3. Uso Edificaci&oacute;n:</td>
+                        <td class="td" style ="text-align: left; width: 25%;"><?php echo $tipo_uso_;?></td>
+                        <td class="td" style ="text-align: left; width: 12.5%;"></td>
+                        <td class="td" style ="text-align: left; width: 12.5%;"></td>
+                        <td class="td" style ="text-align: left; width: 15%;">Num.Vivienda:</td>
+                        <td class="td" style ="text-align: right; width: 10%;"><?php //echo $valor_unit;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 25%;">4. &Aacute;rea Techada:</td>
+                        <td class="td" style ="text-align: left; width: 25%;"></td>
+                        <td class="td" style ="text-align: left; width: 12.5%;"></td>
+                        <td class="td" style ="text-align: left; width: 12.5%;"></td>
+                        <td class="td" style ="text-align: left; width: 15%;">Num.Pisos:</td>
+                        <td class="td" style ="text-align: right; width: 10%;"><?php //echo $valor_unit;?></td>
+                    </tr>
+                </tbody>
+            </table>
             <p></p>
             
-            <p style="text-align: center; font_size: 11" >Sotano(s): <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  
-            <p style="text-align: center; font_size: 11" >Semi sotano(s): <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  
-            <p style="text-align: center; font_size: 11" >Primer Piso o nivel: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  
-            <p style="text-align: center; font_size: 11" >Otros Pisos o nivel: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  
+            <!--<p style="text-align: center; font_size: 11" >Sotano(s): <?php //echo $sotanos_m2;?> </p>  
+            <p style="text-align: center; font_size: 11" >Semi sotano(s): <?php //echo $semisotano_m2;?> </p>  
+            <p style="text-align: center; font_size: 11" >Primer Piso o nivel: <?php //echo $piso_nivel_m2;?> </p>  
+            <p style="text-align: center; font_size: 11" >Otros Pisos o nivel: <?php //echo $otro_piso_nivel_m2;?> </p>  
             <hr style="width:50%">
-            <p style="text-align: center; font_size: 11" >Total Area Techada: <?php //echo $tipo_proyectista->tipo_proyectista;?> </p>  
+            <p style="text-align: center; font_size: 11" >Total Area Techada: <?php //echo $total_area_techada_m2;?> </p>-->
 
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 50%; margin: 0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; height: 20px;">Sotano(s):</td>
+                        <td class="td" style ="text-align: right; height: 20px;"><?php echo $sotanos_m2;?> M2</td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; height: 20px;">Semi sotano(s):</td>
+                        <td class="td" style ="text-align: right; height: 20px;"><?php echo $semisotano_m2;?> M2</td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; height: 20px;">Primer Piso o nivel:</td>
+                        <td class="td" style ="text-align: right; height: 20px;"><?php echo $piso_nivel_m2;?> M2</td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; height: 20px;">Otros Pisos o nivel:</td>
+                        <td class="td" style ="text-align: right; height: 20px;"><?php echo $otro_piso_nivel_m2;?> M2</td>
+                    </tr>
+                    <tr style="border-top: 1px solid black;">
+                        <td class="td" style="text-align: left; height: 20px;">Total Area Techada:</td>
+                        <td class="td" style="text-align: right; height: 20px;"><?php echo $total_area_techada_m2;?> M2</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p></p>
+            <p></p>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 96%; margin: 0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: center; width: 32%; border-top: 1px solid black;">Gerencia Regional</td>
+                        <td class="td" style ="text-align: center; width: 32%;"></td>
+                        <td class="td" style ="text-align: center; width: 32%; border-top: 1px solid black;">Arquitecto Proyectista</td>
+                    </tr>
+                </tbody>
+            </table>
 
 
            <!--  <p>Certificado para : Acreditar Habilitaci&oacute;n Profesional</p>

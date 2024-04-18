@@ -140,17 +140,19 @@ class DerechoRevisionController extends Controller
     public function listar_derecho_revision_HU_ajax(Request $request){
 	
 		$derecho_revision_model = new DerechoRevision;
+		$p[]=$request->anio;
 		$p[]=$request->nombre_proyecto;
-        $p[]=$request->id_tipo_proyecto;
-        $p[]="";
-        $p[]="";
-        $p[]=$request->id_municipalidad;
-        $p[]="";
-        $p[]="";
-        $p[]="";
-        $p[]="";
-        $p[]=$request->fecha_registro;
-		$p[]=$request->id_estado_proyecto;
+        $p[]=$request->distrito;
+        $p[]=$request->numero_cap;
+        $p[]=$request->proyectista;
+        $p[]=$request->numero_documento;
+        $p[]=$request->propietario;
+        $p[]=$request->tipo_proyecto;
+        $p[]=$request->tipo_solicitud;
+        $p[]=$request->credipago;
+		$p[]=$request->municipalidad;
+        $p[]=$request->direccion;
+		$p[]=$request->estado_proyecto;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_HU_ajax($p);
@@ -356,16 +358,30 @@ class DerechoRevisionController extends Controller
         $zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
 		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
-		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud($id);
+		$proyectista_solicitud = $proyectista_model->getProyectista($id);
 		
         return view('frontend.derecho_revision.all_nuevoDerecho',compact('derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud'));
     }
 
 	function editar_derecho_revision_nuevo($id){
 
-		$proyectista = Proyectista::find($id);
+		$agremiado_model = new Agremiado;
+		$persona_model = new Persona;
+		$derechoRevision_ = DerechoRevision::find($id);
+		$proyecto_ = Proyecto::where("id",$derechoRevision_->id_proyecto)->where("estado","1")->first();
+		$proyecto2 = Proyecto::find($proyecto_->id);
+		//var_dump($proyecto2->id_tipo_sitio);exit();
+		$proyectista_ = Proyectista::where("id_solicitud",$id)->where("estado","1")->first();
+		$proyectista = Proyectista::find($proyectista_->id);
+		$agremiado_ = Agremiado::find($proyectista_->id_agremiado);
+		$datos_agremiado= $agremiado_model->getAgremiado(85,$agremiado_->numero_cap);
+		$persona_ = Persona::where("id",$agremiado_->id_persona)->where("estado","1")->first();
+		$datos_persona= $persona_model->getPersona(78,$persona_->numero_documento);
+		//var_dump($proyectista_->id_agremiado);exit();
+		$tipo_solicitante = 1;
 		
 		$proyectista_model = new Proyectista;
+		$propietario_model = new Propietario;
 		$derechoRevision = new DerechoRevision;
 		$agremiado = new Agremiado;
 		$persona = new Persona;
@@ -380,8 +396,9 @@ class DerechoRevisionController extends Controller
 		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
 		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
 		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud($id);
+		$propietario_solicitud = $propietario_model->getPropietarioSolicitud($id);
 		
-        return view('frontend.derecho_revision.all_nuevoDerecho',compact('derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud'));
+        return view('frontend.derecho_revision.all_nuevoDerecho',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona'));
     }
 
 	public function send_nuevo_registro_solicitud(Request $request){
@@ -409,7 +426,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->id_municipalidad = $request->municipalidad;
 		$derecho_revision->id_ubigeo = $id_ubi->id;
 		$derecho_revision->id_tipo_solicitud = 124;
-		$derecho_revision->id_proyectista = $agremiado->id;
+		//$derecho_revision->id_proyectista = $agremiado->id;
 		
 		$derecho_revision->id_usuario_inserta = $id_user;
 		
@@ -433,15 +450,15 @@ class DerechoRevisionController extends Controller
 		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 
 		$proyectista->id_agremiado = $agremiado->id;
-		$proyectista->celular = $request->celular;
-		$proyectista->email = $request->email;
+		$proyectista->celular = $agremiado->celular1;
+		$proyectista->email = $agremiado->email1;
 		
 		//$proyectista->firma = $request->nombre;
 		//$profesion->estado = 1;
 		$proyectista->id_usuario_inserta = $id_user;
 		$proyectista->save();
 		$derecho_revision->id_proyecto = $proyecto->id;
-		$derecho_revision->id_proyecto = $proyectista->id;
+		$derecho_revision->id_proyectista = $proyectista->id;
 		$derecho_revision->save();
 		$proyectista->id_solicitud = $derecho_revision->id;
 		$proyectista->save();
@@ -472,6 +489,7 @@ class DerechoRevisionController extends Controller
 		$proyectista->id_agremiado = $agremiado->id;
 		$proyectista->celular = $request->celular;
 		$proyectista->email = $request->email;
+		$proyectista->id_solicitud = $request->id_solicitud;
 		//$proyectista->firma = $request->nombre;
 		//$profesion->estado = 1;
 		$proyectista->id_usuario_inserta = $id_user;
@@ -498,7 +516,7 @@ class DerechoRevisionController extends Controller
 		$id_user = Auth::user()->id;
 		$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
 		$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();
-
+		
 		if($request->id == 0){
 			$propietario = new Propietario;
 		}else{
@@ -506,16 +524,19 @@ class DerechoRevisionController extends Controller
 		}
 
 		if($persona){
-
+			//var_dump($persona);exit();
+			$propietario->id_tipo_propietario = 78;
 			$propietario->id_persona = $persona->id;
 			$propietario->celular = $request->celular_dni;
 			$propietario->email = $request->email_dni;
+			$propietario->id_solicitud = $request->id_solicitud;
 			//$proyectista->firma = $request->nombre;
 			//$profesion->estado = 1;
 			$propietario->id_usuario_inserta = $id_user;
 			$propietario->save();
-		}else if($empresa){
 
+		}else if($empresa){
+			$propietario->id_tipo_propietario = 79;
 			$propietario->id_empresa = $empresa->id;
 			$propietario->celular = $request->telefono_ruc;
 			$propietario->email = $request->email_ruc;
@@ -910,4 +931,12 @@ class DerechoRevisionController extends Controller
 
     }
 
+	public function listar_solicitud_periodo_hu(Request $request){
+        
+        $derechoRevision_model = new DerechoRevision;
+        $resultado = $derechoRevision_model->getPeridoSolicitudHu();
+
+        //print_r($resultado);exit();
+		return $resultado;
+    }
 }

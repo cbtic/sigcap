@@ -149,7 +149,7 @@ class CertificadoController extends Controller
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(29);
 		$tipo_proyectista = $tablaMaestra_model->getMaestroByTipo(41);
-		$tipo_uso = $tablaMaestra_model->getMaestroByTipo(111);
+		$tipo_uso = $tablaMaestra_model->getMaestroByTipoBySubcogioNull(111);
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(24);
 		$tipo_obra_hu = $tablaMaestra_model->getMaestroByTipo(123);
 		$tipo_uso_hu = $tablaMaestra_model->getMaestroByTipo(124);
@@ -182,6 +182,7 @@ class CertificadoController extends Controller
 		$proyectistaPrincipal->id_agremiado = $agremiado->id;
 		$proyectistaPrincipal->celular = $agremiado->celular1;
 		$proyectistaPrincipal->email = $agremiado->email1;
+		$proyectistaPrincipal->id_tipo_profesional = $request->tipo_proyectista;
 		$proyectistaPrincipal->id_usuario_inserta = $id_user;
 		
 		
@@ -214,6 +215,7 @@ class CertificadoController extends Controller
 			$presupuesto->id_tipo_obra = $request->tipo_obra_edificaciones;
 			$presupuesto->area_techada = $request->area_techada_edificaciones;
 			$presupuesto->total_presupuesto = $request->valor_obra_edificaciones;
+			$presupuesto->valor_unitario = $request->costo_unitario;
 			$presupuesto->id_usuario_inserta = $id_user;
 			$presupuesto->save();
 		} else if($request->tipo_proyecto==124){
@@ -240,7 +242,7 @@ class CertificadoController extends Controller
 		$solicitud->fecha_registro = Carbon::now()->format('Y-m-d');
 		$solicitud->direccion = $request->direccion_tipo;
 		$solicitud->id_ubigeo = $request->distrito;
-		$solicitud->tipo_proyecto = $request->tipo_proyecto;
+		$solicitud->id_tipo_solicitud = $request->tipo_proyecto;
 		$solicitud->valor_obra = $request->valor_obra_edificaciones;
 		if($request->tipo_proyecto==123){
 			$solicitud->area_total = $request->area_techada;
@@ -249,7 +251,9 @@ class CertificadoController extends Controller
 			$solicitud->semisotano_m2 = $request->semisotanos;
 			$solicitud->piso_nivel_m2 = $request->piso_nivel;
 			$solicitud->otro_piso_nivel_m2 = $request->otro_piso_nivel;
+			$solicitud->valor_unitario = $request->costo_unitario;
 			$solicitud->total_area_techada_m2 = $request->total_area_techada;
+			$solicitud->area_total = $request->area_terreno;
 		}else if($request->tipo_proyecto==124){
 			$solicitud->area_total = $request->area_bruta_hu;
 		}
@@ -350,19 +354,21 @@ class CertificadoController extends Controller
 		$certificado->id_tipo =$request->tipo;
 		if($request->tipo==1 || $request->tipo==2 || $request->tipo==3){
 			$certificado->id_solicitud = $request->nombre_proyecto;
+			
 			$solicitud = Solicitude::find($certificado->id_solicitud);
+			
 			$solicitud->numero_piso = $request->n_pisos;
-			$solicitud->sotanos_m2 = $request->sotanos;
-			$solicitud->semisotano_m2 = $request->semisotanos;
-			$solicitud->piso_nivel_m2 = $request->piso_nivel;
-			$solicitud->otro_piso_nivel_m2 = $request->otro_piso_nivel;
-			$solicitud->total_area_techada_m2 = $request->total_area_techada;
+			//var_dump($solicitud->numero_piso);exit();
+			$solicitud->sotanos_m2 = $request->sotanos_m2;
+			$solicitud->semisotano_m2 = $request->semisotano_m2;
+			$solicitud->piso_nivel_m2 = $request->piso_nivel_m2;
+			$solicitud->otro_piso_nivel_m2 = $request->otro_piso_nivel_m2;
+			$solicitud->total_area_techada_m2 = $request->total_area_techada_m2;
+			$solicitud->save();
 		}
 		$certificado->id_usuario_inserta = $id_user;
 		
-	
 		$certificado->save();
-		        
     }
 	
 	public function eliminar_certificado($id){
@@ -487,7 +493,13 @@ class CertificadoController extends Controller
 		$id_departamento=$tipo_proyectistas[0]->id_departamento;
 		$id_provincia=$tipo_proyectistas[0]->id_provincia;
 		$id_distrito=$tipo_proyectistas[0]->id_distrito;
-
+		$numero_piso=$tipo_proyectistas[0]->numero_piso;
+		$sotanos_m2=$tipo_proyectistas[0]->sotanos_m2;
+		$semisotano_m2=$tipo_proyectistas[0]->semisotano_m2;
+		$piso_nivel_m2=$tipo_proyectistas[0]->piso_nivel_m2;
+		$otro_piso_nivel_m2=$tipo_proyectistas[0]->otro_piso_nivel_m2;
+		$total_area_techada_m2=$tipo_proyectistas[0]->total_area_techada_m2;
+		$zonificacion=$tipo_proyectistas[0]->zonificacion;
 
 		$departamento = $ubigeo_model->obtenerDepartamento($id_departamento);
 		$provincia = $ubigeo_model->obtenerProvincia($id_departamento,$id_provincia);
@@ -508,7 +520,10 @@ class CertificadoController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','nombre_proyecto','formattedDate','departamento','provincia','distrito','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista','direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_obra','tipo_uso_','area_techada'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo1_pdf',compact('datos','nombre','nombre_proyecto','formattedDate',
+		'departamento','provincia','distrito','tratodesc','faculta','numeroEnLetras','habilita','tipo_proyectistas','nombre_proyectista',
+		'direccion_proyecto','lugar_proyecto','nombre_propietario','valor_unit','tipo_obra','tipo_uso_','area_techada',
+		'numero_piso','sotanos_m2','semisotano_m2','piso_nivel_m2','otro_piso_nivel_m2','total_area_techada_m2','zonificacion'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -656,7 +671,6 @@ class CertificadoController extends Controller
 		$area_techada=$tipo_proyectistas[0]->area_techada;
 		$direccion=$tipo_proyectistas[0]->direccion;
 		$ubigeo=$tipo_proyectistas[0]->id_ubigeo;
-		
 
 		$departamento_ = substr($ubigeo, 0, 2);
 		$provincia_ = substr($ubigeo, 2, 2);
