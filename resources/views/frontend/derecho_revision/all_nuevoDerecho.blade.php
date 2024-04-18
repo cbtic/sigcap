@@ -133,19 +133,20 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-					<!--<input type="hidden" name="id" id="id" value="<?php //echo $id?>">-->
-					
+					<!--<input type="hidden" name="id" id="id" value="<?php //echo $derecho_revision->id?>">-->
+					<input type="hidden" name="id_solicitud" id="id_solicitud" value="<?php echo $id?>">
+
 					<div class="row" style="padding-left:10px">
 
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Solicitante</label>
 								<select name="tipo_solicitante" id="tipo_solicitante" class="form-control form-control-sm" onchange="obtenerSolicitante()">
-									<option value="" selected="selected">--Seleccionar--</option>
-									<option value="1">Proyectista</option>
-									<option value="2">Responsable de Tramite</option>
-									<option value="3">Administrado / Propietario</option>
-									<!--<option value="">--Selecionar--</option>
+								<option value="" selected="selected">--Seleccionar--</option>
+								<option value="1" <?php if ($tipo_solicitante == 1) echo "selected='selected'" ?>>Proyectista</option>
+								<option value="2" <?php if ($tipo_solicitante == 2) echo "selected='selected'" ?>>Responsable de Tramite</option>
+								<option value="3" <?php if ($tipo_solicitante == 3) echo "selected='selected'" ?>>Administrado / Propietario</option>
+								<!--<option value="">--Selecionar--</option>
 									<?/*php
 										foreach ($tipo_solicitante as $row) {*/?>
 									<option value="<?php /*echo $row->id*/?>" <?php/* if($row->id==$derecho_revision->id_solicitante)echo "selected='selected'"*/?>><?php /*echo $row->denominacion*/?></option>
@@ -159,18 +160,18 @@
 						<div class="col-lg-1">
 							<div class="form-group" id="numero_cap_">
 								<label class="control-label form-control-sm">N° CAP</label>
-								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $agremiado->numero_cap?>" type="text" onchange="obtenerProyectista()">
+								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_cap?>" type="text" onchange="obtenerProyectista()">
 							</div>
 							<div class="form-group" id="dni_">
 								<label class="control-label form-control-sm">DNI</label>
-								<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onchange="obtenerProyectista()">
+								<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onchange="obtenerPropietario()">
 							</div>
 						</div>
 
 						<div class="col-lg-3" >
 							<div class="form-group "id="agremiado_">
 								<label class="control-label form-control-sm">Nombre</label>
-								<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $persona->nombre?>" type="text" readonly='readonly'>
+								<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->nombres?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="persona_">
 								<label class="control-label form-control-sm">Nombre/Raz&oacute;n Social</label>
@@ -181,33 +182,33 @@
 						<div class="col-lg-1">
 							<div class="form-group" id="situacion_">
 								<label class="control-label form-control-sm">Situaci&oacute;n</label>
-								<input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $agremiado->id_situacion?>" type="text" readonly='readonly'>
+								<input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->situacion?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="fecha_nacimiento_">
 								<label class="control-label form-control-sm">Fecha de Nacimiento</label>
-								<input id="fecha_nacimiento" name="fecha_nacimiento" on class="form-control form-control-sm"  value="<?php echo $persona->fecha_nacimiento?>" type="text" readonly='readonly'>
+								<input id="fecha_nacimiento" name="fecha_nacimiento" on class="form-control form-control-sm"  value="<?php echo $datos_persona->fecha_nacimiento?>" type="text" readonly='readonly'>
 							</div>
 						</div>
 
 						<div class="col-lg-3">
 							<div class="form-group" id="direccion_agremiado_">
 								<label class="control-label form-control-sm">Direcci&oacute;n</label>
-								<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $persona->direccion?>" type="text" readonly='readonly'>
+								<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->direccion?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="direccion_persona_">
 								<label class="control-label form-control-sm">Direcci&oacute;n</label>
-								<input id="direccion_persona" name="direccion_persona" on class="form-control form-control-sm"  value="<?php echo $persona->direccion?>" type="text" readonly='readonly'>
+								<input id="direccion_persona" name="direccion_persona" on class="form-control form-control-sm"  value="<?php echo $datos_persona->direccion?>" type="text" readonly='readonly'>
 							</div>
 						</div>
 
 						<div class="col-lg-1-5">
 							<div class="form-group" id="n_regional_">
 								<label class="control-label form-control-sm">N° Regional</label>
-								<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $agremiado->numero_regional?>" type="text" readonly='readonly'>
+								<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_regional?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="celular_">
 								<label class="control-label form-control-sm">Celular</label>
-								<input id="celular" name="celular" on class="form-control form-control-sm"  value="<?php echo $persona->numero_celular?>" type="text" readonly='readonly'>
+								<input id="celular" name="celular" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->numero_celular?>" type="text" readonly='readonly'>
 							</div>
 						</div>
 
@@ -217,7 +218,7 @@
 						<div class="col-lg-2">
 							<div class="form-group" id="act_gremial_">
 								<label class="control-label form-control-sm">Actividad Gremial</label>
-								<input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php echo $agremiado->id_actividad_gremial?>" type="text" readonly='readonly'>
+								<input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->actividad?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="email_">
 								<label class="control-label form-control-sm">Email</label>
@@ -233,27 +234,33 @@
 
 						<div class="col-lg-3">
 								<label class="control-label form-control-sm">Nombre del Proyecto</label>
-								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto->nombre?>" type="text">
+								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->nombre?>" type="text">
 						</div>
 
 						<div class="col-lg-2">
 								<label class="control-label form-control-sm">Municipalidad</label>
 								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange=""> 
+									<?php
+									$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
+									?>
 									<option value="">--Selecionar--</option>
 									<?php
 										foreach ($municipalidad as $row) {
 									?>
-									<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?>
+									<option value="<?php echo $row->id ?>" <?php echo ($valorSeleccionado == $row->id) ? 'selected="selected"' : ''; ?>><?php echo $row->denominacion ?></option> <?php } ?>
 								</select>
 						</div>
 
 						<div class="col-lg-1">
                             <label class="control-label form-control-sm">N° de Revisi&oacute;n</label>
-                            <select name="n_revision" id="n_revision" class="form-control form-control-sm">
-                                <option value="" selected="selected">--Seleccionar--</option>
-								<option value="1">1</option>
-                                <option value="3">3</option>
-								<option value="5">5</option>
+                            <select name="n_revision" id="n_revision" class="form-control form-control-sm" value="<?php echo $derechoRevision_->numero_revision?>">
+							<?php
+							$valorSeleccionado = isset($derechoRevision_->numero_revision) ? $derechoRevision_->numero_revision : '';
+							?>
+							<option value="" <?php echo ($valorSeleccionado == '') ? 'selected="selected"' : ''; ?>>--Seleccionar--</option>
+							<option value="1" <?php echo ($valorSeleccionado == '1') ? 'selected="selected"' : ''; ?>>1</option>
+							<option value="3" <?php echo ($valorSeleccionado == '3') ? 'selected="selected"' : ''; ?>>3</option>
+							<option value="5" <?php echo ($valorSeleccionado == '5') ? 'selected="selected"' : ''; ?>>5</option>
 							</select>
 						</div>
 
@@ -292,7 +299,7 @@
                                 <option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($sitio as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto->id_tipo_sitio)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_tipo_sitio)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
                                 }
                                 ?>
@@ -305,7 +312,7 @@
                                 <option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($zona as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto->manzana)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->manzana)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
                                 }
                                 ?>
@@ -314,12 +321,12 @@
 
 						<div class="col-lg-1">
                             <label class="control-label form-control-sm">Parcela</label>
-                            <input id="parcela" name="parcela" on class="form-control form-control-sm"  value="<?php echo $agremiado->id_actividad_gremial?>" type="text">
+                            <input id="parcela" name="parcela" on class="form-control form-control-sm"  value="<?php echo $proyecto2->parcela?>" type="text">
 						</div>
 
 						<div class="col-lg-1">
                             <label class="control-label form-control-sm">SuperManzana</label>
-                            <input id="superManzana" name="superManzana" on class="form-control form-control-sm"  value="<?php echo $agremiado->id_actividad_gremial?>" type="text">
+                            <input id="superManzana" name="superManzana" on class="form-control form-control-sm"  value="<?php echo $proyecto2->super_manzana?>" type="text">
 						</div>
 					
 						<div class="col-lg-1">
@@ -328,7 +335,7 @@
                                 <option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($tipo as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto->numero)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_tipo_direccion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
                                 }
                                 ?>
@@ -337,27 +344,27 @@
 					
 						<div class="col-lg-3">
                             <label class="control-label form-control-sm">Direccion</label>
-                            <input id="direccion_proyecto" name="direccion_proyecto" on class="form-control form-control-sm"  value="<?php echo $agremiado->id_actividad_gremial?>" type="text">
+                            <input id="direccion_proyecto" name="direccion_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->direccion?>" type="text">
 						</div>
 
 						<div class="col-lg-1">
                             <label class="control-label form-control-sm">Lote</label>
-                            <input id="lote" name="lote" on class="form-control form-control-sm"  value="<?php echo $agremiado->id_actividad_gremial?>" type="text">
+                            <input id="lote" name="lote" on class="form-control form-control-sm"  value="<?php echo $proyecto2->lote?>" type="text">
 						</div>
 
 						<div class="col-lg-1">
                             <label class="control-label form-control-sm">SubLote</label>
-                            <input id="sublote" name="sublote" on class="form-control form-control-sm"  value="<?php echo $agremiado->id_actividad_gremial?>" type="text">
+                            <input id="sublote" name="sublote" on class="form-control form-control-sm"  value="<?php echo $proyecto2->sub_lote?>" type="text">
 						</div>
                        
 						<div class="col-lg-1">
                             <label class="control-label form-control-sm">Fila</label>
-                            <input id="fila" name="fila" on class="form-control form-control-sm"  value="<?php echo $agremiado->id_actividad_gremial?>" type="text">
+                            <input id="fila" name="fila" on class="form-control form-control-sm"  value="<?php echo $proyecto2->fila?>" type="text">
 						</div>
 
 						<div class="col-lg-1">
                             <label class="control-label form-control-sm">Zonificaci&oacute;n</label>
-                            <input id="zonificacion" name="zonificacion" on class="form-control form-control-sm"  value="<?php //echo $agremiado->id_actividad_gremial?>" type="text">
+                            <input id="zonificacion" name="zonificacion" on class="form-control form-control-sm"  value="<?php echo $proyecto2->zonificacion?>" type="text">
 						</div>
 
 					</div>
@@ -441,15 +448,15 @@
 														<div class="card-body">
 										
 															<div class="table-responsive">
-															<table id="tblSolicitud" class="table table-hover table-sm">
+															<table id="tblProyectista" class="table table-hover table-sm">
 															<thead>
 																<tr style="font-size:13px">
 																	<th>N° CAP</th>
 																	<th>Nombres</th>
 																	<th>Celular</th>
 																	<th>Email</th>
-																	<!--<th>Firma</th> agregar despues-->
-																	<th>Opciones</th>
+																	<!--<th>Firma</th> agregar despues
+																	<th>Opciones</th>-->
 																</tr>
 															</thead>
 															<tbody style="font-size:13px">
@@ -461,8 +468,8 @@
 																	<th><?php echo $row->email1?></th>
 																	<th>
 																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
+																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
+																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
 																	</div>
 																	</th>
 																</tr>											
@@ -499,7 +506,7 @@
 														<div class="card-body">
 										
 															<div class="table-responsive">
-															<table id="tblSolicitud" class="table table-hover table-sm">
+															<table id="tblPropietario" class="table table-hover table-sm">
 															<thead>
 																<tr style="font-size:13px">
 																	<th>Tipo Persona</th>
@@ -507,22 +514,25 @@
 																	<th>Nombres</th>
 																	<th>celular</th>
 																	<th>Email</th>
-																	<th>Opciones</th>
+																	<!--<th>Opciones</th>-->
 																</tr>
 															</thead>
 															<tbody style="font-size:13px">
-																<?php //foreach($agremiado_idioma as $row){?>
-																<!--<tr>
-																	<th><?php //echo $row->idioma?></th>
-																	<th><?php //echo $row->grado?></th>
+																<?php foreach($propietario_solicitud as $row){?>
+																<tr>
+																	<th><?php echo $row->tipo_propietario?></th>
+																	<th><?php echo $row->numero_documento?></th>
+																	<th><?php echo $row->nombres?></th>
+																	<th><?php echo $row->numero_celular?></th>
+																	<th><?php echo $row->correo?></th>
 																	<th>
 																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalIdioma(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarIdioma(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
+																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalIdioma(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
+																	<a href="javascript:void(0)" onclick="eliminarIdioma(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
 																	</div>
 																	</th>
-																</tr>	-->					
-																<?php //}?>
+																</tr>					
+																<?php }?>
 															</tbody>							
 															</table>
 															
@@ -574,7 +584,7 @@
 														<div class="card-body">
 										
 															<div class="table-responsive">
-															<table id="tblSolicitud" class="table table-hover table-sm">
+															<table id="tblInfoProyecto" class="table table-hover table-sm">
 															<thead>
 																<tr style="font-size:13px">
 																	<th>Tipo Tramite</th>
@@ -643,7 +653,7 @@
 														<div class="card-body">
 										
 															<div class="table-responsive">
-															<table id="tblSolicitud" class="table table-hover table-sm">
+															<table id="tblComprobante" class="table table-hover table-sm">
 															<thead>
 																<tr style="font-size:13px">
 																	<th>Tipo Persona</th>

@@ -461,7 +461,7 @@ function fn_save_requisito(){
     });
 }
 
-function fn_save_propietario(){
+function fn_save_comprobante(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
@@ -598,7 +598,7 @@ function fn_save_propietario(){
                             <div style="margin-top:10px" class="form-group">
                                 <div class="col-sm-12 controls">
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions" style="float:right">
-                                        <a href="javascript:void(0)" onClick="fn_save_propietario()" class="btn btn-sm btn-success">Guardar</a>
+                                        <a href="javascript:void(0)" onClick="fn_save_comprobante()" class="btn btn-sm btn-success">Guardar</a>
                                     </div>
                                 </div>
                             </div>

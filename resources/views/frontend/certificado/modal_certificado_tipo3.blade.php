@@ -189,6 +189,8 @@ $(document).ready(function() {
 	$('#area_intervenida_edificaciones_').hide();
 	$('#area_bruta_hu_').hide();
 	$('#zonificacion_hu_').hide();
+	$('#costo_unitario_').hide();
+	$('#area_terreno_').hide();
 	$('#n_pisos_').hide();
 	$('#sotanos_').hide();
 	$('#semisotanos_').hide();
@@ -209,7 +211,9 @@ function obtener_tipo_proyecto(){
 		$('#area_techada_edificaciones_').show();
 		$('#area_intervenida_edificaciones_').show();
 		$('#area_bruta_hu_').hide();
-		$('#zonificacion_hu_').hide();
+		$('#zonificacion_hu_').show();
+		$('#costo_unitario_').show();
+		$('#area_terreno_').show();
 		$('#n_pisos_').show();
 		$('#sotanos_').show();
 		$('#semisotanos_').show();
@@ -226,6 +230,8 @@ function obtener_tipo_proyecto(){
 		$('#area_intervenida_edificaciones_').hide();
 		$('#area_bruta_hu_').show();
 		$('#zonificacion_hu_').show();
+		$('#costo_unitario_').hide();
+		$('#area_terreno_').hide();
 		$('#n_pisos_').hide();
 		$('#sotanos_').hide();
 		$('#semisotanos_').hide();
@@ -1135,8 +1141,20 @@ function valida_pago() {
 									<input id="zonificacion_hu" name="zonificacion_hu" on class="form-control form-control-sm" value="<?php //echo $proyecto->area_intervenida?>" type="text" onChange="" >
 								</div>
 							</div>
+							<div class="col-lg-2 form-group" style="padding: 0px 0px 0px 0px" id="costo_unitario_">
+								<div class="col-lg-12">
+									<label class="control-label form-control-sm">Costo Unitario</label>
+									<input id="costo_unitario" name="costo_unitario" on class="form-control form-control-sm" value="<?php //echo $proyecto->area_intervenida?>" type="text" onChange="" >
+								</div>
+							</div>
+							<div class="col-lg-2 form-group" style="padding: 0px 0px 0px 0px" id="area_terreno_">
+								<div class="col-lg-12">
+									<label class="control-label form-control-sm">&Aacute;rea del Terreno</label>
+									<input id="area_terreno" name="area_terreno" on class="form-control form-control-sm" value="<?php //echo $proyecto->area_intervenida?>" type="text" onChange="" >
+								</div>
+							</div>
 						</div>
-						<div class="row">
+						<!--<div class="row">
 							<div class="col-lg-2">
 								<div class="form-group" id="n_pisos_">
 									<label class="control-label">N° de pisos o niveles</label>
@@ -1173,7 +1191,7 @@ function valida_pago() {
 									<input id="total_area_techada" name="total_area_techada" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
 								</div>
 							</div>
-						</div>
+						</div>-->
 						<div class="row">
 							<div style="margin-bottom:10px">
 								<strong>

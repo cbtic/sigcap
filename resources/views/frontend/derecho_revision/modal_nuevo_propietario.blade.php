@@ -465,6 +465,7 @@ function fn_save_propietario(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
+    var id_solicitud = $('#id_solicitud').val();
     var ruc_propietario = $('#ruc_propietario').val();
 	var razon_social_propietario = $('#razon_social_propietario').val();
     var direccion_ruc = $('#direccion_ruc').val();
@@ -479,10 +480,10 @@ function fn_save_propietario(){
 	$.ajax({
 			url: "/derecho_revision/send_nueno_propietario",
             type: "POST",
-            data : {_token:_token,id:id,ruc_propietario:ruc_propietario,razon_social_propietario:razon_social_propietario,direccion_ruc:direccion_ruc,telefono_ruc:telefono_ruc,email_ruc:email_ruc,dni_propietario:dni_propietario,nombre_propietario:nombre_propietario,direccion_dni:direccion_dni,celular_dni:celular_dni,email_dni:email_dni},
+            data : {_token:_token,id:id,ruc_propietario:ruc_propietario,razon_social_propietario:razon_social_propietario,direccion_ruc:direccion_ruc,telefono_ruc:telefono_ruc,email_ruc:email_ruc,dni_propietario:dni_propietario,nombre_propietario:nombre_propietario,direccion_dni:direccion_dni,celular_dni:celular_dni,email_dni:email_dni,id_solicitud:id_solicitud},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//window.location.reload();
 								
             }
     });

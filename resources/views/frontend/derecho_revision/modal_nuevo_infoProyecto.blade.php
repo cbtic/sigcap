@@ -329,7 +329,7 @@ function fn_save_requisito(){
     });
 }
 
-function fn_save_proyectista(){
+function fn_save_infoProyeto(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
@@ -345,7 +345,7 @@ function fn_save_proyectista(){
             data : {_token:_token,id:id,numero_cap:numero_cap,agremiado:agremiado,situacion:situacion,celular:celular,email:email},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//window.location.reload();
 								
             }
     });
@@ -578,7 +578,7 @@ function fn_save_proyectista(){
                     <div style="margin-top:10px" class="form-group">
                         <div class="col-sm-12 controls">
                             <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions" style="float:right">
-                                <a href="javascript:void(0)" onClick="fn_save_proyectista()" class="btn btn-sm btn-success">Guardar</a>
+                                <a href="javascript:void(0)" onClick="fn_save_infoProyeto()" class="btn btn-sm btn-success">Guardar</a>
                             </div>
                         </div>
                     </div>

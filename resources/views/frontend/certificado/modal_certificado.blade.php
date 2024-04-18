@@ -315,12 +315,12 @@ $.mask.definitions['p'] = "[Mm]";
 		var id_proyecto = $('#id_proyecto').val();
 		var tipo_tramite = $('#tipo_tramite').val();
 		var tipo_tramite_tipo3 = $('#tipo_tramite_certificado3').val();
-		var n_pisos = $('#n_pisos_').val();
-		var sotanos_m2 = $('#sotanos_').val();
-		var semisotano_m2 = $('#semisotanos_').val();
-		var piso_nivel_m2 = $('#piso_nivel_').val();
-		var otro_piso_nivel_m2 = $('#otro_piso_nivel_').val();
-		var total_area_techada_m2 = $('#total_area_techada_').val();
+		var n_pisos = $('#n_pisos').val();
+		var sotanos_m2 = $('#sotanos').val();
+		var semisotano_m2 = $('#semisotanos').val();
+		var piso_nivel_m2 = $('#piso_nivel').val();
+		var otro_piso_nivel_m2 = $('#otro_piso_nivel').val();
+		var total_area_techada_m2 = $('#total_area_techada').val();
 
 		$.ajax({
 			url: "/certificado/send_certificado",
