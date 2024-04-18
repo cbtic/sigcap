@@ -592,7 +592,7 @@ function fn_save_requisito(){
                                 $valor_metro_cuadrado_habilitacion_urbana_ = $parametro[0]->valor_metro_cuadrado_habilitacion_urbana;
                                 $sub_total=$area_total_*$valor_metro_cuadrado_habilitacion_urbana_;
                                 $sub_total_formateado = number_format($sub_total, 2, '.', ',');
-                                //var_dump($total_minimo);exit;
+                                
                                 ?>
                                 <input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado?>" type="text" readonly='readonly'>
                             </div>
@@ -608,6 +608,7 @@ function fn_save_requisito(){
                                     $igv_minimo_hu_formateado = number_format($igv_minimo_hu, 2, '.', ',');
                                 }else{
                                     $total_minimo_hu = $sub_total_formateado;
+                                    var_dump((float)$sub_total_formateado*1.18);exit;
                                     $igv_minimo_hu = $sub_total_formateado*(1+($parametro[0]->igv));
                                     $subtotal_minimo_hu = $total_minimo_hu-$igv_minimo_hu;
                                     $total_minimo_hu_formateado = number_format($total_minimo_hu, 2, '.', ',');

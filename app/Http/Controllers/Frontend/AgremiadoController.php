@@ -1858,6 +1858,16 @@ class AgremiadoController extends Controller
 		return Excel::download($export, 'lista_deudas.xlsx');
 		
     }
+
+	public function obtener_proyectista($id_agremiado){
+
+        $derechoRevision_model = new DerechoRevision;
+        $sw = true;
+        $suspension_lista = $suspension_model->listar_suspension_agremiado($id_agremiado);
+        //print_r($parentesco_lista);exit();
+        return view('frontend.agremiado.lista_suspension',compact('suspension_lista'));
+
+    }
 			
 }
 

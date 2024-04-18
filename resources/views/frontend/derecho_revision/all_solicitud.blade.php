@@ -245,8 +245,6 @@
                         <input type="text" name="valor_obra" id="valor_obra" value="<?php echo $derecho_revision->valor_obra?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>-->
                     
-
-                    
                     <!--
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
@@ -264,8 +262,14 @@
 				</div>
 
 				<div class="row" style="padding:20px 20px 0px 20px;">
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group form-group-sm">
+                            <select name="anio_hu_bus" id="anio_hu_bus" class="form-control form-control-sm">
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <select name="estado_solicitud_bus" id="estado_solicitud_bus" class="form-control form-control-sm" onChange="">
+                        <select name="estado_solicitud_bus_hu" id="estado_solicitud_bus_hu" class="form-control form-control-sm" onChange="">
                             <option value="">--Selecionar Estado Solicitud--</option>
                                 <?php
                                 foreach ($estado_solicitud as $row) {?>
@@ -274,14 +278,14 @@
                                 }
                                 ?>
                         </select>
-                    </div> 
+                    </div>
 
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
-                        <input type="text" name="numero_liquidacion" id="numero_liquidacion" placeholder="Liquidaci&oacute;n" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                    </div>    
+                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" name="numero_liquidacion_hu" id="numero_liquidacion_hu" placeholder="Liquidaci&oacute;n" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                    </div>
 
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
-                        <select name="municipalidad_bus" id="municipalidad_bus" class="form-control form-control-sm" onChange="">
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                        <select name="municipalidad_bus_hu" id="municipalidad_bus_hu" class="form-control form-control-sm" onChange="">
                             <option value="">--Selecionar Municipalidad--</option>
                                 <?php
                                 foreach ($municipalidad as $row) {?>
@@ -293,11 +297,11 @@
                     </div>
 
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="nombre_proyecto_bus" id="nombre_proyecto_bus" placeholder="Nombre Proyecto" value="<?php echo $derecho_revision->nombre_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="nombre_proyecto_bus_hu" id="nombre_proyecto_bus_hu" placeholder="Nombre Proyecto" value="<?php echo $derecho_revision->nombre_proyecto?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
 
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <select name="id_distrito_domiciliario" id="id_distrito_domiciliario" class="form-control form-control-sm" onchange="">
+                        <select name="id_distrito_domiciliario_hu" id="id_distrito_domiciliario_hu" class="form-control form-control-sm" onchange="">
                         <option value="">--Selecionar Distrito--</option>
                             <?php
                             foreach ($distrito as $row) {?>
@@ -309,24 +313,24 @@
                     </div>
 
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="numero_cap" id="numero_cap" placeholder="N° CAP" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="numero_cap_hu" id="numero_cap_hu" placeholder="N° CAP" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
                 </div>
                 <div class="row" style="padding:15px 20px 15px 20px;">
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="proyectista" id="proyectista" placeholder="Proyectista" value="<?php echo $agremiado->desc_cliente?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="proyectista_hu" id="proyectista_hu" placeholder="Proyectista" value="<?php echo $agremiado->desc_cliente?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
 
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="numero_documento" id="numero_documento" placeholder="N° Documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="numero_documento_hu" id="numero_documento_hu" placeholder="N° Documento" value="<?php echo $persona->numero_documento?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
 
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="propietario" id="propietario" placeholder="Propietario" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="propietario_hu" id="propietario_hu" placeholder="Propietario" value="<?php echo $persona->nombres?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>
 
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="id_tipo_proyecto_bus" id="id_tipo_proyecto_bus" class="form-control form-control-sm" >
+						<select name="id_tipo_proyecto_bus_hu" id="id_tipo_proyecto_bus_hu" class="form-control form-control-sm" >
 							<option value="">--Tipo Solicitud--</option>
 							<?php
 							foreach ($tipo_solicitud as $row) {?>
@@ -337,7 +341,7 @@
 						</select>
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="tipo_proyecto_bus" id="tipo_proyecto_bus" class="form-control form-control-sm" >
+						<select name="tipo_proyecto_bus_hu" id="tipo_proyecto_bus_hu" class="form-control form-control-sm" >
 							<option value="">--Tipo Tipo Proyecto--</option>
 							<?php
 							foreach ($tipo_proyecto as $row) {?>
@@ -348,7 +352,7 @@
 						</select>
 					</div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
-                        <input type="text" name="direccion_proyecto" id="direccion_proyecto" placeholder="Direcci&oacute;n Proyecto" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
+                        <input type="text" name="direccion_proyecto_hu" id="direccion_proyecto_hu" placeholder="Direcci&oacute;n Proyecto" value="<?php echo $liquidacion->credipago?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div>   
                 </div>
                 <div class="row" style="padding:0px 20px 0px 20px;">

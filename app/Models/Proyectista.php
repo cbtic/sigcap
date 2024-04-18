@@ -32,5 +32,18 @@ class Proyectista extends Model
         return $data;
     }
 
+    function getProyectista($id_solicitud){
+
+        $cad = "select a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, a.celular1, a.email1
+        from proyectistas p
+        inner join agremiados a on p.id_agremiado = a.id
+        inner join personas p2 on a.id_persona = p2.id
+        inner join solicitudes s on p.id_solicitud = s.id
+        where s.id='".$id_solicitud."'
+        and p.estado='1'";
+        
+		$data = DB::select($cad);
+        return $data;
+    }
 
 }

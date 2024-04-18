@@ -80,7 +80,7 @@ class Persona extends Model
 
     function getPersona($tipo_documento,$numero_documento){
 
-        $cad = "select id, id_tipo_documento, numero_documento, apellido_paterno, apellido_materno, nombres, fecha_nacimiento, id_sexo
+        $cad = "select id, id_tipo_documento, numero_documento, apellido_paterno, apellido_materno, nombres, fecha_nacimiento, id_sexo, direccion
 		from personas 
 		Where id_tipo_documento='".$tipo_documento."' And numero_documento='".$numero_documento."'";
 		
@@ -170,7 +170,7 @@ class Persona extends Model
 
     function getPersonaDniPropietario($numero_documento){
 
-        $cad = "select p.id, p.apellido_paterno|| ' ' ||p.apellido_materno || ', ' || p.nombres nombres, p.direccion, p.numero_celular, p.correo 
+        $cad = "select p.id, p.apellido_paterno|| ' ' ||p.apellido_materno || ', ' || p.nombres nombres, p.direccion, p.numero_celular, p.correo, p.correo, p.fecha_nacimiento 
         from personas p
         Where p.numero_documento='".$numero_documento."'";
 		//echo $cad;

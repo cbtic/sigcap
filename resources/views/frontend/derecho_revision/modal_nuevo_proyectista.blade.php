@@ -285,6 +285,7 @@ function fn_save_proyectista(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
+    var id_solicitud = $('#id_solicitud').val();
     var numero_cap = $('#numero_cap').val();
 	var agremiado = $('#agremiado').val();
     var situacion = $('#situacion').val();
@@ -294,10 +295,10 @@ function fn_save_proyectista(){
 	$.ajax({
 			url: "/derecho_revision/send_nueno_proyectista",
             type: "POST",
-            data : {_token:_token,id:id,numero_cap:numero_cap,agremiado:agremiado,situacion:situacion,celular:celular,email:email},
+            data : {_token:_token,id:id,numero_cap:numero_cap,agremiado:agremiado,situacion:situacion,celular:celular,email:email,id_solicitud:id_solicitud},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//window.location.reload();
 								
             }
     });
