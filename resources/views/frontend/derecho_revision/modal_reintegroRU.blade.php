@@ -608,7 +608,7 @@ function fn_save_requisito(){
                                     $igv_minimo_hu_formateado = number_format($igv_minimo_hu, 2, '.', ',');
                                 }else{
                                     $total_minimo_hu = $sub_total_formateado;
-                                    var_dump((float)$sub_total_formateado*1.18);exit;
+                                    var_dump((float)$sub_total);exit;
                                     $igv_minimo_hu = $sub_total_formateado*(1+($parametro[0]->igv));
                                     $subtotal_minimo_hu = $total_minimo_hu-$igv_minimo_hu;
                                     $total_minimo_hu_formateado = number_format($total_minimo_hu, 2, '.', ',');

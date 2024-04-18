@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_derecho_revision_paginado(p_anio character varying, p_nombre_proyecto character varying, p_distrito character varying,  p_numero_cap character varying, p_proyectista character varying, p_numero_documento character varying, p_propietario character varying, p_tipo_proyecto character varying, p_tipo_solicitud character varying, p_credipago character varying, p_municipalidad character varying, p_direccion character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_derecho_revision_paginado(p_anio character varying, p_nombre_proyecto character varying, p_distrito character varying, p_numero_cap character varying, p_proyectista character varying, p_numero_documento character varying, p_propietario character varying, p_tipo_proyecto character varying, p_tipo_solicitud character varying, p_credipago character varying, p_municipalidad character varying, p_direccion character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -31,14 +31,14 @@ begin
 	(select case WHEN pro2.id_empresa IS NOT NULL THEN e2.ruc ELSE pe2.numero_documento END 
 	from propietarios pro2
 	left join personas pe2 on pro2.id_persona = pe2.id 
-	left join empresas e2 on pro2.id_empresa = e2.id where pro2.id_solicitud = s.id limit 1) numero_documento, p2.direccion direccion, s.id_tipo_solicitud, DATE_PART(''YEAR'', s.fecha_registro) anio
+	left join empresas e2 on pro2.id_empresa = e2.id where pro2.id_solicitud = s.id limit 1) numero_documento, p2.direccion direccion, s.id_tipo_solicitud, DATE_PART(''YEAR'', s.fecha_registro) anio, s.id_resultado
 	from solicitudes s
 	left join municipalidades m on s.id_municipalidad = m.id
 	left join proyectos p2 on s.id_proyecto = p2.id
 	left join tabla_maestras tm on s.id_tipo_solicitud=tm.codigo::int and tm.tipo=''24'' 
 	left join tabla_maestras tmr on s.id_resultado=tmr.codigo::int and tmr.tipo=''118''
 	left join ubigeos u on s.id_ubigeo = u.id_ubigeo 
-	where s.id_tipo_solicitud=''123'') R';
+	where s.id_tipo_solicitud=''123'' ) R';
 	
 	v_where = ' Where 1=1 ';
 
@@ -91,7 +91,7 @@ begin
 	End If;*/
 
 	If p_estado<>'' Then
-	 v_where:=v_where||'And R.estado_proyecto = '''||p_estado||''' ';
+	 v_where:=v_where||'And R.id_resultado = '''||p_estado||''' ';
 	End If;
 
 	If p_direccion<>'' Then
@@ -102,9 +102,9 @@ begin
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By R.id desc  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' order by case when R.id_resultado = 0 then 9 else R.id_resultado end asc, R.fecha_registro asc  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By R.id desc ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' order by case when R.id_resultado = 0 then 9 else R.id_resultado end asc, R.fecha_registro asc ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;
