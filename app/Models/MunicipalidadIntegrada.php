@@ -62,6 +62,19 @@ and mi.estado='1'";
 		$data = DB::select($cad);
         return $data;
     }
+	
+	function getMunicipalidadDetalleById($id){
+
+        $cad = "select m.* 
+from mucipalidad_detalles md
+inner join municipalidad_integradas mi on md.id_municipalidad_integrada=mi.id  
+inner join municipalidades m on md.id_municipalidad=m.id
+where mi.id='".$id."'  
+and mi.estado='1'";
+
+		$data = DB::select($cad);
+        return $data;
+    }
 
     function getMuniIntegradaAll(){
 

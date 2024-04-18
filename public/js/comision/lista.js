@@ -230,6 +230,22 @@ function cargarMunicipalidadesIntegradas(){
 	
 }
 
+function modalMunicipalidadIntegrada(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/comision/modal_municipalidadesIntegrada/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
 function cargarComisiones(){
 	
 	var periodo = $("#frmAfiliacion #periodo").val();

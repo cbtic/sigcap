@@ -436,7 +436,25 @@ class ComisionController extends Controller
 		$municipalidad_integradas = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll($periodo,$tipo_agrupacion,$tipo_comision);
         return view('frontend.comision.lista_municipalidadIntegrada',compact('municipalidad_integradas'));
     }
+	
+	public function modal_municipalidadesIntegrada($id){
+		
+		$id_user = Auth::user()->id;
+		
+		$municipalidade_model = new Municipalidade;
+		$municipalidad = $municipalidade_model->getMunicipalidadAll();
+		
+		return view('frontend.comision.modal_municipalidadIntegrada',compact('id','municipalidad'));
 
+    }
+	
+	function obtener_municipalidadesIntegradaDetalle($id){
+
+        $municipalidadIntegrada_model = new MunicipalidadIntegrada;
+		$mucipalidad_detalles = $municipalidadIntegrada_model->getMunicipalidadDetalleById($id);
+        return view('frontend.comision.lista_municipalidad_detalle',compact('mucipalidad_detalles'));
+    }
+	
 	function obtener_comision($periodo,$tipo_comision,$cad_id,$estado){
 
 		if ($estado == "-9")$estado ="";
