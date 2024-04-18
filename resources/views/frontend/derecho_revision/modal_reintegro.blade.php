@@ -591,13 +591,30 @@ function fn_save_requisito(){
                                 $porcentaje_calculo_edificacion = $parametro[0]->porcentaje_calculo_edificacion;
                                 $sub_total=$valor_obra_*$porcentaje_calculo_edificacion;
                                 $sub_total_formateado = number_format($sub_total, 2, '.', ',');
+                                $igv_ = $parametro[0]->igv;
+                                $igv_total=$sub_total*$igv_;
+                                $igv_total_formateado = number_format($igv_total, 2, '.', ',');
+                                //var_dump($total_minimo);exit;
+                                $total=$sub_total+$igv_total;
+                                $total_formateado = number_format($total, 2, '.', ',');
+
+                                if($total<$total_minimo){
+                                    $total=$total_minimo;
+                                    $valor_minimo_edificaciones= $parametro[0]->valor_minimo_edificaciones;
+                                    $uit_minimo= $parametro[0]->valor_uit;
+                                    $sub_total_minimo=$valor_minimo_edificaciones*$uit_minimo;
+                                    $igv_minimo=$sub_total_minimo*$igv_;
+                                    $sub_total_formateado_ = number_format($sub_total_minimo, 2, '.', ',');
+                                    $igv_total_formateado_ = number_format($igv_minimo, 2, '.', ',');
+                                    $total_formateado_ = number_format($total_minimo, 2, '.', ',');
+                                }else{}
                                 //var_dump($total_minimo);exit;
                                 ?>
                                 <input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Sub Total</label>
-                                <input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado?>" type="text" readonly='readonly'>
+                                <input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado_?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
@@ -605,30 +622,26 @@ function fn_save_requisito(){
                                 <label class="control-label form-control-sm">IGV</label>
                                 <?php
                                 
-                                $igv_ = $parametro[0]->igv;
-                                $igv_total=$sub_total*$igv_;
-                                $igv_total_formateado = number_format($igv_total, 2, '.', ',');
-                                //var_dump($total_minimo);exit;
+                                
                                 ?>
                                 <input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php echo $igv_total_formateado?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">IGV</label>
-                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php echo $igv_total_formateado?>" type="text" readonly='readonly'>
+                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php echo $igv_total_formateado_?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Total</label>
                                 <?php
-                                $total=$sub_total+$igv_total;
-                                $total_formateado = number_format($total, 2, '.', ',');
+                                
                                 ?>
                                 <input id="total" name="total" on class="form-control form-control-sm"  value="<?php echo $total_formateado?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Total a Pagar Soles</label>
-                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $total_formateado?>" type="text" onchange="cambioPlantaTipica()">
+                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $total_formateado_?>" type="text" onchange="cambioPlantaTipica()">
                             </div>
                         </div>
                     </div>

@@ -592,6 +592,11 @@ function fn_save_requisito(){
                                 $valor_metro_cuadrado_habilitacion_urbana_ = $parametro[0]->valor_metro_cuadrado_habilitacion_urbana;
                                 $sub_total=$area_total_*$valor_metro_cuadrado_habilitacion_urbana_;
                                 $sub_total_formateado = number_format($sub_total, 2, '.', ',');
+                                $igv_ = $parametro[0]->igv;
+                                $igv_total=$sub_total*$igv_;
+                                $igv_total_formateado = number_format($igv_total, 2, '.', ',');
+                                $total=$sub_total+$igv_total;
+                                $total_formateado = number_format($total, 2, '.', ',');
                                 
                                 ?>
                                 <input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado?>" type="text" readonly='readonly'>
@@ -599,7 +604,7 @@ function fn_save_requisito(){
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Sub Total</label>
                                 <?php
-                                if($sub_total_formateado<$parametro[0]->valor_minimo_hu){
+                                if($total<$parametro[0]->valor_minimo_hu){
                                     $total_minimo_hu = $parametro[0]->valor_minimo_hu;
                                     $subtotal_minimo_hu = $total_minimo_hu/(1+($igv_valor/100));
                                     $igv_minimo_hu = $subtotal_minimo_hu*($igv_valor/100);
@@ -607,10 +612,11 @@ function fn_save_requisito(){
                                     $subtotal_minimo_hu_formateado = number_format($subtotal_minimo_hu, 2, '.', ',');
                                     $igv_minimo_hu_formateado = number_format($igv_minimo_hu, 2, '.', ',');
                                 }else{
-                                    $total_minimo_hu = $sub_total_formateado;
-                                    var_dump((float)$sub_total);exit;
-                                    $igv_minimo_hu = $sub_total_formateado*(1+($parametro[0]->igv));
-                                    $subtotal_minimo_hu = $total_minimo_hu-$igv_minimo_hu;
+                                    $total_minimo_hu = $total;
+                                    //var_dump((float)$sub_total*(1+($parametro[0]->igv)));exit;
+                                    $subtotal_minimo_hu = $total_minimo_hu/(1+($parametro[0]->igv));
+                                    //var_dump($subtotal_minimo_hu);exit;
+                                    $igv_minimo_hu = $total_minimo_hu-$subtotal_minimo_hu;
                                     $total_minimo_hu_formateado = number_format($total_minimo_hu, 2, '.', ',');
                                     $subtotal_minimo_hu_formateado = number_format($subtotal_minimo_hu, 2, '.', ',');
                                     $igv_minimo_hu_formateado = number_format($igv_minimo_hu, 2, '.', ',');
