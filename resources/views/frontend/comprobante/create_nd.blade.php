@@ -557,6 +557,7 @@
                                                                                         </td>
                                                                     
                                                                 </tr>
+                                                                
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
                                                             <?php } ?>
                                                         <?php } ?>
