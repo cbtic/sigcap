@@ -1067,11 +1067,22 @@ class ComprobanteController extends Controller
         if ($comprobante->tipo=="FT"){
             $empresa_model= new Comprobante;
             $empresa=  $empresa_model->getEmpresaRuc($comprobante->cod_tributario);
-            $idcliente=$empresa->id;
-            $direccion=$empresa->direccion;
-            $correo=$empresa->email;
-            
+
+            if($comprobante){
+                $persona_model= new Comprobante;
+                $persona=  $persona_model->getPersonaRuc($comprobante->cod_tributario);
+                $idcliente=$persona->id;                 
+                $direccion=$persona->direccion;
+                $correo=$persona->email;
+            }else{
+                 $idcliente=$empresa->id;
+                 $direccion=$empresa->direccion;
+                 $correo=$empresa->email;
+            }
+           
         }
+
+ 
         
         $empresa_model = new Empresa;
         $serie_model = new TablaMaestra;
@@ -1152,7 +1163,7 @@ class ComprobanteController extends Controller
             $correo=$persona->correo;
             
         }
-
+/*
         if ($comprobante->tipo=="FT"){
             $empresa_model= new Comprobante;
             $empresa=  $empresa_model->getEmpresaRuc($comprobante->cod_tributario);
@@ -1160,6 +1171,24 @@ class ComprobanteController extends Controller
             $direccion=$empresa->direccion;
             $correo=$empresa->email;
             
+        }
+        */
+        if ($comprobante->tipo=="FT"){
+            $empresa_model= new Comprobante;
+            $empresa=  $empresa_model->getEmpresaRuc($comprobante->cod_tributario);
+
+            if($comprobante){
+                $persona_model= new Comprobante;
+                $persona=  $persona_model->getPersonaRuc($comprobante->cod_tributario);
+                $idcliente=$persona->id;                 
+                $direccion=$persona->direccion;
+                $correo=$persona->email;
+            }else{
+                 $idcliente=$empresa->id;
+                 $direccion=$empresa->direccion;
+                 $correo=$empresa->email;
+            }
+           
         }
 
       
