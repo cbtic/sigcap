@@ -700,6 +700,8 @@ class ComprobanteController extends Controller
                 $agremiado->save();
             }
 
+
+
             if ($id_concepto == 26411) {
 
                 $id_persona = $request->persona;
