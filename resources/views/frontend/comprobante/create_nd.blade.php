@@ -546,10 +546,15 @@
                                                                     
                                                                     </td>
 
-                                                                    <td class="text-right">                                                                        
-                                                                        <input type="text" readonly name="totald[]"  id="totald<?php echo $key?>" value="<?php echo number_format(0,2)?>" placeholder="" class="form-control form-control-sm text-center"  >
-                                                                    
-                                                                    </td>
+                                                                    <td>
+                                                                    <input type="text" name="totald[]"  id="totald<?php echo $key?>" onkeyup="calcular_total_2(<?php echo $key?>)" value="<?php if ($trans == 'FN') {
+                                                                                                                            echo 0;
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                                echo number_format($fac['importe'], 2);
+                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                                        
+                                                                                        </td>
                                                                     
                                                                 </tr>
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
