@@ -694,6 +694,12 @@ class ComprobanteController extends Controller
 */
 
 
+            if ($id_concepto == 26527 || $id_concepto == 26412 ) {
+                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                $agremiado->id_situacion = "73";
+                $agremiado->save();
+            }
+
             if ($id_concepto == 26411) {
 
                 $id_persona = $request->persona;
@@ -701,12 +707,20 @@ class ComprobanteController extends Controller
                 $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
                 $total_ = $totalDeuda->total;
 
-                if ($total_ == "0") {
+                if ($total_ <= 2) {
                     $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
                     $agremiado->id_situacion = "73";
                     $agremiado->save();
                 }
+                else{
+                    $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                    $agremiado->id_situacion = "74";
+                    $agremiado->save();
+                }
+
             }
+
+
 
             if(isset($request->idMedio)):
                 foreach ($request->idMedio as $key => $value):
