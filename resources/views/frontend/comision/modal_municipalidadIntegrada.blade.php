@@ -358,27 +358,27 @@ function validacion(){
 
 function limpiar(){
 	$('#id').val("0");
-	$('#id_tipo_plaza').val("");
-	$('#numero_plazas').val("");
+	$('#id_municipalidad_modal').val("");
 }
 
-function fn_save_puesto(){
+function fn_save_municipalidad_detalle(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var id_concurso = $('#id_concurso').val();
-	var id_tipo_plaza = $('#id_tipo_plaza').val();
-	var numero_plazas = $('#numero_plazas').val();
+	var id_municipalidad_integrada = $('#id_municipalidad_integrada').val();
+	var id_municipalidad = $('#id_municipalidad_modal').val();
 	
 	$.ajax({
-			url: "/concurso/send_puesto",
+			url: "/comision/send_municipalidad_detalle",
             type: "POST",
-            data : {_token:_token,id:id,id_concurso:id_concurso,id_tipo_plaza:id_tipo_plaza,numero_plazas:numero_plazas},
+            data : {_token:_token,id:id,id_municipalidad_integrada:id_municipalidad_integrada,id_municipalidad:id_municipalidad},
 			success: function (result) {
-				//$('#openOverlayOpc').modal('hide');
-				datatablenewPuesto();
+				cargarMunicipalidadDetalle();
 				limpiar();
-								
+				
+				obtenerPeriodo();
+				obtenerTipoComision();
+				
             }
     });
 }
@@ -445,7 +445,7 @@ function fn_save_puesto(){
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_puesto()" class="btn btn-sm btn-primary">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_municipalidad_detalle()" class="btn btn-sm btn-primary">Guardar</a>
 								<!--<a href="javascript:void(0)" onClick="limpiar()" class="btn btn-sm btn-warning" style="margin-left:10px">Limpiar</a>-->
 							</div>
 												

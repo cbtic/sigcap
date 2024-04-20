@@ -347,6 +347,7 @@ Route::post('comision/listar_municipalidad_ajax', [ComisionController::class, 'l
 Route::post('comision/send_comision_fila', [ComisionController::class, 'send_comision_fila'])->name('tipoConcepto.send_comision_fila');
 
 Route::post('comision/send_comision', [ComisionController::class, 'send_comision'])->name('comision.send_comision');
+Route::post('comision/send_municipalidad_detalle', [ComisionController::class, 'send_municipalidad_detalle'])->name('comision.send_municipalidad_detalle');
 Route::get('comision/obtener_municipalidades', [ComisionController::class, 'obtener_municipalidades'])->name('comision.obtener_municipalidades');
 Route::get('comision/obtener_municipalidadesIntegradas/{periodo}/{tipo_agrupacion}/{tipo_comision}', [ComisionController::class, 'obtener_municipalidadesIntegradas'])->name('comision.obtener_municipalidadesIntegradas');
 Route::post('comision/listar_municipalidad_integrada_ajax', [ComisionController::class, 'listar_municipalidad_integrada_ajax'])->name('comision.listar_municipalidad_integrada_ajax');
@@ -512,6 +513,7 @@ Route::post('adelanto/send_adelanto_nuevoAdelanto', [AdelantoController::class, 
 Route::get('adelanto/eliminar_adelanto/{id}/{estado}', [AdelantoController::class, 'eliminar_adelanto'])->name('adelanto.eliminar_adelanto');
 
 Route::get('comision/eliminar_muniIntegrada/{id}/{estado}', [ComisionController::class, 'eliminar_muniIntegrada'])->name('comision.eliminar_muniIntegrada');
+Route::get('comision/eliminar_municipalidad_detalle/{id}', [ComisionController::class, 'eliminar_municipalidad_detalle'])->name('comision.eliminar_municipalidad_detalle');
 Route::get('comision/eliminarComision/{id}/{estado}', [ComisionController::class, 'eliminarComision'])->name('comision.eliminarComision');
 
 Route::get('afiliacion_seguro/eliminar_afiliacion/{id}/{estado}', [AfiliacionSeguroController::class, 'eliminar_afiliacion'])->name('afiliacion_seguro.eliminar_afiliacion');

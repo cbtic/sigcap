@@ -465,6 +465,64 @@ class ComisionController extends Controller
         return view('frontend.comision.lista_comision',compact('comision'));
     }
 	
+	public function send_municipalidad_detalle(Request $request){
+	
+		$id_user = Auth::user()->id;
+		$denominacion = "";
+		
+		$mucipalidadDetalle = new MucipalidadDetalle();
+		$mucipalidadDetalle->id_municipalidad = $request->id_municipalidad;
+		$mucipalidadDetalle->id_municipalidad_integrada = $request->id_municipalidad_integrada;
+		$mucipalidadDetalle->id_usuario_inserta = $id_user;
+		$mucipalidadDetalle->save();
+		
+		$municipalidadIntegrada = MunicipalidadIntegrada::find($request->id_municipalidad_integrada);
+		
+		$mucipalidadDetalle = MucipalidadDetalle::where("id_municipalidad_integrada",$request->id_municipalidad_integrada)->where("estado","1")->orderBy("id","asc")->get();
+		
+		foreach($mucipalidadDetalle as $row){		
+			$municipalidad = Municipalidade::find($row->id_municipalidad);
+			$denominacion .= $municipalidad->denominacion." - ";
+		}
+		
+		$denominacion = substr($denominacion,0,strlen($denominacion)-3);
+		$municipalidadIntegrada->denominacion=$denominacion; 
+		$municipalidadIntegrada->save();
+		
+		$comision = Comisione::where("id_municipalidad_integrada",$request->id_municipalidad_integrada)->where("estado","1")->first();
+		$comision->denominacion=$denominacion; 
+		$comision->save();
+		
+	}
+	
+	public function eliminar_municipalidad_detalle($id)
+    {
+		$mucipalidadDetalle = MucipalidadDetalle::find($id);
+		$mucipalidadDetalle->estado = 0;
+		$mucipalidadDetalle->save();
+		
+		$mucipalidadDetalles = MucipalidadDetalle::where("id_municipalidad_integrada",$mucipalidadDetalle->id_municipalidad_integrada)->where("estado","1")->orderBy("id","asc")->get();
+		
+		$denominacion = "";
+		
+		foreach($mucipalidadDetalles as $row){		
+			$municipalidad = Municipalidade::find($row->id_municipalidad);
+			$denominacion .= $municipalidad->denominacion." - ";
+		}
+		
+		$denominacion = substr($denominacion,0,strlen($denominacion)-3);
+		
+		$municipalidadIntegrada = MunicipalidadIntegrada::find($mucipalidadDetalle->id_municipalidad_integrada);
+		$municipalidadIntegrada->denominacion=$denominacion; 
+		$municipalidadIntegrada->save();
+		
+		$comision = Comisione::where("id_municipalidad_integrada",$mucipalidadDetalle->id_municipalidad_integrada)->where("estado","1")->first();
+		$comision->denominacion=$denominacion; 
+		$comision->save();
+		
+		echo $mucipalidadDetalle->id;
+    }
+	
 	public function send_comision(Request $request){
 		
 		//print_r($request->periodo).exit();

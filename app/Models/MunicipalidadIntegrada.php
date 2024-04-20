@@ -65,11 +65,12 @@ and mi.estado='1'";
 	
 	function getMunicipalidadDetalleById($id){
 
-        $cad = "select m.* 
+        $cad = "select md.id,m.denominacion 
 from mucipalidad_detalles md
 inner join municipalidad_integradas mi on md.id_municipalidad_integrada=mi.id  
 inner join municipalidades m on md.id_municipalidad=m.id
 where mi.id='".$id."'  
+and md.estado='1'
 and mi.estado='1'";
 
 		$data = DB::select($cad);
