@@ -20,6 +20,7 @@ use App\Models\Valorizacione;
 use App\Models\Concepto;
 use App\Models\Parametro;
 use App\Models\NumeracionDocumento;
+use App\Models\UsoEdificacione;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
@@ -336,6 +337,8 @@ class DerechoRevisionController extends Controller
 		$valor_obra = $solicitud->valor_obra;
 		$area_total = $solicitud->area_total;
 		$id_tipo_solicitud = $solicitud->id_tipo_solicitud;
+
+		if($request->tipo_liquidacion1==136)$valor_obra = $request->total2;
 		
 		if($request->instancia==250)$valor_obra = $request->valor_reintegro;
 
@@ -724,18 +727,22 @@ class DerechoRevisionController extends Controller
 		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 
 		if($request->id == 0){
-			$proyectista = new Proyectista;
+			$usoEdificacion = new UsoEdificacione;
 		}else{
-			$proyectista = Proyectista::find($request->id);
+			$usoEdificacion = UsoEdificacione::find($request->id);
 		}
+
+		$procedimientos_complementarios = $request->input('procedimientos_complementarios');
+		$procedimientos_complementarios2 = $request->input('procedimientos_complementarios2');
 		
-		$proyectista->id_agremiado = $agremiado->id;
-		$proyectista->celular = $request->celular;
-		$proyectista->email = $request->email;
+		$usoEdificacion->id_tipo_uso = $procedimientos_complementarios;
+		$usoEdificacion->id_sub_tipo_uso = $procedimientos_complementarios2;
+		$usoEdificacion->id_solicitud = $request->id;
+		$usoEdificacion->area_techada = $request->areaBruta;
 		//$proyectista->firma = $request->nombre;
 		//$profesion->estado = 1;
-		$proyectista->id_usuario_inserta = $id_user;
-		$proyectista->save();
+		$usoEdificacion->id_usuario_inserta = $id_user;
+		$usoEdificacion->save();
     }
 
 	public function upload_solicitud(Request $request){

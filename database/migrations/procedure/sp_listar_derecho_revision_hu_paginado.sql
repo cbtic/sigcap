@@ -31,7 +31,7 @@ begin
 	(select case WHEN pro2.id_empresa IS NOT NULL THEN e2.ruc ELSE pe2.numero_documento END 
 	from propietarios pro2
 	left join personas pe2 on pro2.id_persona = pe2.id 
-	left join empresas e2 on pro2.id_empresa = e2.id where pro2.id_solicitud = s.id limit 1) numero_documento, p2.direccion direccion, s.id_tipo_solicitud, DATE_PART(''YEAR'', s.fecha_registro) anio, s.id_resultado
+	left join empresas e2 on pro2.id_empresa = e2.id where pro2.id_solicitud = s.id limit 1) numero_documento, p2.direccion direccion, s.id_tipo_solicitud, DATE_PART(''YEAR'', s.fecha_registro) anio, s.id_resultado, s.id_municipalidad 
 	from solicitudes s
 	left join municipalidades m on s.id_municipalidad = m.id
 	left join proyectos p2 on s.id_proyecto = p2.id
@@ -83,7 +83,7 @@ begin
 	End If;
 	
 	If p_municipalidad<>'' Then
-	 v_where:=v_where||'And R.municipalidad = '''||p_municipalidad||''' ';
+	 v_where:=v_where||'And R.id_municipalidad = '''||p_municipalidad||''' ';
 	End If;
 
 	/*If p_fecha_registro<>'' Then

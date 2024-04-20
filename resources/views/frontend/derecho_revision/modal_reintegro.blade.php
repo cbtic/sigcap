@@ -173,44 +173,46 @@ function habilitar_reintegro(){
 
 function calcularReintegro(){
 
-    if($('#valor_reintegro').val()!=''){
-        var reintegro=parseFloat($('#valor_reintegro').val());
-        var igv_=parseFloat($('#igv').val());
-        var valor_edificaciones=parseFloat($('#factor').val());
-
-        var sub_totalR=reintegro*valor_edificaciones;
-        var igv_totalR=sub_totalR*igv_/100;
-        var totalR=sub_totalR+igv_totalR;
-        
-        if(totalR<parseFloat($('#minimo').val())){
-            
-            var total_minimo = parseFloat($('#minimo').val());
-            var igv_minimo = total_minimo*igv_/100;
-            var sub_total_minimo = total_minimo - igv_minimo;
+    if($('#instancia').val()==250){
+        if($('#valor_reintegro').val()!=''){
+            var reintegro=parseFloat($('#valor_reintegro').val());
+            var igv_=parseFloat($('#igv').val());
+            var valor_edificaciones=parseFloat($('#factor').val());
 
             var sub_totalR=reintegro*valor_edificaciones;
             var igv_totalR=sub_totalR*igv_/100;
             var totalR=sub_totalR+igv_totalR;
+            
+            if(totalR<parseFloat($('#minimo').val())){
+                
+                var total_minimo = parseFloat($('#minimo').val());
+                var igv_minimo = total_minimo*igv_/100;
+                var sub_total_minimo = total_minimo - igv_minimo;
 
-            $('#total2').val(total_minimo.toFixed(2));
-            $('#igv2').val(igv_minimo.toFixed(2));
-            $('#sub_total2').val(sub_total_minimo.toFixed(2));
-            $('#total').val(totalR.toFixed(2));
-            $('#igv_').val(igv_totalR.toFixed(2));
-            $('#sub_total').val(sub_totalR.toFixed(2));
-        }else{
+                var sub_totalR=reintegro*valor_edificaciones;
+                var igv_totalR=sub_totalR*igv_/100;
+                var totalR=sub_totalR+igv_totalR;
 
-            //var sub_totalR_formateado = number_format(sub_totalR, 2, '.', ',');
-            //var igv_totalR_formateado = number_format(igv_totalR, 2, '.', ',');
-            //var totalR_formateado = number_format(totalR, 2, '.', ',');
-            $('#total2').val(totalR.toFixed(2));
-            $('#igv2').val(igv_totalR.toFixed(2));
-            $('#sub_total2').val(sub_totalR.toFixed(2));
-            $('#total').val(totalR.toFixed(2));
-            $('#igv_').val(igv_totalR.toFixed(2));
-            $('#sub_total').val(sub_totalR.toFixed(2));
+                $('#total2').val(total_minimo.toFixed(2));
+                $('#igv2').val(igv_minimo.toFixed(2));
+                $('#sub_total2').val(sub_total_minimo.toFixed(2));
+                $('#total').val(totalR.toFixed(2));
+                $('#igv_').val(igv_totalR.toFixed(2));
+                $('#sub_total').val(sub_totalR.toFixed(2));
+            }else{
+
+                //var sub_totalR_formateado = number_format(sub_totalR, 2, '.', ',');
+                //var igv_totalR_formateado = number_format(igv_totalR, 2, '.', ',');
+                //var totalR_formateado = number_format(totalR, 2, '.', ',');
+                $('#total2').val(totalR.toFixed(2));
+                $('#igv2').val(igv_totalR.toFixed(2));
+                $('#sub_total2').val(sub_totalR.toFixed(2));
+                $('#total').val(totalR.toFixed(2));
+                $('#igv_').val(igv_totalR.toFixed(2));
+                $('#sub_total').val(sub_totalR.toFixed(2));
+            }
+            
         }
-        
     }
 }
 
@@ -241,6 +243,7 @@ function cambioPlantaTipica(){
             $('#total').val(valor_planta_tipica.toFixed(2));
             $('#igv_').val(igv_totalPT.toFixed(2));
             $('#sub_total').val(sub_totalPT.toFixed(2));
+            $('#total2').val(valor_planta_tipica.toFixed(2));
         }
     }
 }
@@ -403,10 +406,10 @@ function fn_save_credipago(){
                         ?>
                         <input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo $valor_obra_formateado?>" type="text" readonly='readonly'>
                     </div>
-                    <div class="col-lg-3">
+                    <!--<div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea del Terreno</label>
                         <input id="area_terreno" name="area_terreno" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_total?>" type="text" readonly='readonly'>
-                    </div>
+                    </div>-->
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea Techada</label>
                         <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_techada?>" type="text" readonly='readonly'>

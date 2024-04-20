@@ -333,16 +333,27 @@ function fn_save_infoProyeto(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-    var numero_cap = $('#numero_cap').val();
-	var agremiado = $('#agremiado').val();
-    var situacion = $('#situacion').val();
-	var celular = $('#celular').val();
-	var email = $('#email').val();
+    var areaBruta = $('#areaBruta').val();
 	
+    var selectedProcedures = [];
+    $('input[name="grupo_tramite1"]:checked').each(function() {
+        selectedProcedures.push($(this).val());
+    });
+
+    var selectedProcedures2 = [];
+    $('input[name="grupo_tramite2"]:checked').each(function() {
+        selectedProcedures2.push($(this).val());
+    });
+
+    var selectedProceduresStr = selectedProcedures.join(', ');
+
+    var selectedProceduresStr2 = selectedProcedures2.join(', ');
+
 	$.ajax({
-			url: "/derecho_revision/send_nueno_proyectista",
+			url: "/derecho_revision/send_nueno_infoProyecto",
             type: "POST",
-            data : {_token:_token,id:id,numero_cap:numero_cap,agremiado:agremiado,situacion:situacion,celular:celular,email:email},
+            data : {_token:_token,id:id,procedimientos_complementarios: selectedProceduresStr,
+                    procedimientos_complementarios2: selectedProceduresStr2,areaBruta:areaBruta},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
@@ -394,21 +405,21 @@ function fn_save_infoProyeto(){
                     <div class="row" style="padding-left:10px">
                         <div class="col-lg-6" >
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="check_opc1" id="check_opc1" name="grupo_tramite1">
+                                <input class="form-check-input" type="checkbox" value="1" id="check_opc1" name="grupo_tramite1">
                                 <label class="form-check-label" for="check_opc1">
                                     Habilitaci&oacute;n Urbana
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="check_opc2" id="check_opc2" name="grupo_tramite1">
+                                <input class="form-check-input" type="checkbox" value="2" id="check_opc2" name="grupo_tramite1">
                                 <label class="form-check-label" for="check_opc2">
                                     Regularizaci&oacute;n de habilitaci&oacute;n urbana
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="check_opc3" id="check_opc3" name="grupo_tramite1">
+                                <input class="form-check-input" type="checkbox" value="3" id="check_opc3" name="grupo_tramite1">
                                 <label class="form-check-label" for="check_opc3">
                                     Modificaci&oacute;n de proyecto aprobado de habilitaci&oacute;n urbana
                                 </label>
@@ -416,7 +427,7 @@ function fn_save_infoProyeto(){
                             <div class="row">
                                 <div class="col-lg-3" >
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="check_opc4" id="check_opc4" name="grupo_tramite1">
+                                        <input class="form-check-input" type="checkbox" value="7" id="check_opc4" name="grupo_tramite1">
                                         <label class="form-check-label" for="check_opc4">
                                             Otros
                                         </label>
@@ -432,21 +443,21 @@ function fn_save_infoProyeto(){
                                 Procedimientos Complementarios
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc5" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="4" id="check_opc5" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc5">
                                     Independizaci&oacute;n o parcelaci&oacute;n de terrenos rusticos
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc6" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="5" id="check_opc6" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc6">
                                     Subdivisi&oacute;n de lote urbano
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc7" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="6" id="check_opc7" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc7">
                                     Revalidaci&oacute;n de Licencia
                                 </label>
@@ -461,42 +472,42 @@ function fn_save_infoProyeto(){
                     <div class="row" style="padding-left:10px">
                         <div class="col-lg-6" >
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc8">
+                                <input class="form-check-input" type="checkbox" value="1" id="check_opc8">
                                 <label class="form-check-label" for="check_opc8">
                                     Uso de Vivienda o urbanizaci&oacute;n
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc9">
+                                <input class="form-check-input" type="checkbox" value="2" id="check_opc9">
                                 <label class="form-check-label" for="check_opc9">
                                     Tipo Convecional
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc10">
+                                <input class="form-check-input" type="checkbox" value="3" id="check_opc10">
                                 <label class="form-check-label" for="check_opc10">
                                     Con Construcci&oacute;n simultanea
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc11">
+                                <input class="form-check-input" type="checkbox" value="4" id="check_opc11">
                                 <label class="form-check-label" for="check_opc11">
                                     Con Venta de Viviendas edificadas
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc12">
+                                <input class="form-check-input" type="checkbox" value="5" id="check_opc12">
                                 <label class="form-check-label" for="check_opc12">
                                     De tipo Progresivo
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc13">
+                                <input class="form-check-input" type="checkbox" value="12" id="check_opc13">
                                 <label class="form-check-label" for="check_opc13">
                                     Otros
                                 </label>
@@ -504,42 +515,42 @@ function fn_save_infoProyeto(){
                         </div>
                         <div class="col-lg-6" >  
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc14">
+                                <input class="form-check-input" type="checkbox" value="6" id="check_opc14">
                                 <label class="form-check-label" for="check_opc14">
                                     Uso Industrial
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc15">
+                                <input class="form-check-input" type="checkbox" value="7" id="check_opc15">
                                 <label class="form-check-label" for="check_opc15">
                                     Convencional
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc16">
+                                <input class="form-check-input" type="checkbox" value="8" id="check_opc16">
                                 <label class="form-check-label" for="check_opc16">
                                     Con Construcci&oacute;n simultanea
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc17">
+                                <input class="form-check-input" type="checkbox" value="9" id="check_opc17">
                                 <label class="form-check-label" for="check_opc17">
                                     Usos Especiales
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc18">
+                                <input class="form-check-input" type="checkbox" value="10" id="check_opc18">
                                 <label class="form-check-label" for="check_opc18">
                                     En riberos y laderas
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="check_opc19">
+                                <input class="form-check-input" type="checkbox" value="11" id="check_opc19">
                                 <label class="form-check-label" for="check_opc19">
                                     Reurbanizaci&oacute;n
                                 </label>

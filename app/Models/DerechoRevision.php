@@ -31,7 +31,7 @@ class DerechoRevision extends Model
 		}
 		
 		if($id_tipo_solicitud==124){
-			$cad = "select '2'||lpad(max(numero+1)::varchar,7,'0') codigo from numeracion_documentos nd where id_tipo_documento='22'";
+			$cad = "select '2'||lpad(max(numero+1)::varchar,7,'0') codigo,max(numero+1)numero from numeracion_documentos nd where id_tipo_documento='22'";
 		}
 		
         
@@ -57,7 +57,7 @@ from solicitudes s
 left join municipalidades m on s.id_municipalidad = m.id
 left join proyectos p2 on s.id_proyecto = p2.id
 left join tabla_maestras tp on p2.id_tipo_proyecto=tp.codigo::int and tp.tipo='113'
-left join tabla_maestras tm on s.id_tipo_solicitud=tm.codigo::int and tm.tipo='24' 
+left join tabla_maestras tm on s.id_tipo_tramite=tm.codigo::int and tm.tipo='25' 
 left join ubigeos u on s.id_ubigeo=u.id_ubigeo
 left join ubigeos ud on ud.id_departamento=substring(u.id_ubigeo,1,2) and ud.id_provincia='00' and ud.id_distrito='00' and ud.estado='1'
 left join ubigeos up on up.id_departamento=substring(u.id_ubigeo,1,2) and up.id_provincia=substring(u.id_ubigeo,3,2) and up.id_distrito='00' and up.estado='1'
