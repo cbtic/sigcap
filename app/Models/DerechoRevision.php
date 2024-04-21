@@ -31,7 +31,7 @@ class DerechoRevision extends Model
 		}
 		
 		if($id_tipo_solicitud==124){
-			$cad = "select '2'||lpad(max(numero+1)::varchar,7,'0') codigo from numeracion_documentos nd where id_tipo_documento='22'";
+			$cad = "select '2'||lpad(max(numero+1)::varchar,7,'0') codigo,max(numero+1)numero from numeracion_documentos nd where id_tipo_documento='22'";
 		}
 		
         
@@ -57,7 +57,7 @@ from solicitudes s
 left join municipalidades m on s.id_municipalidad = m.id
 left join proyectos p2 on s.id_proyecto = p2.id
 left join tabla_maestras tp on p2.id_tipo_proyecto=tp.codigo::int and tp.tipo='113'
-left join tabla_maestras tm on s.id_tipo_solicitud=tm.codigo::int and tm.tipo='24' 
+left join tabla_maestras tm on s.id_tipo_tramite=tm.codigo::int and tm.tipo='25' 
 left join ubigeos u on s.id_ubigeo=u.id_ubigeo
 left join ubigeos ud on ud.id_departamento=substring(u.id_ubigeo,1,2) and ud.id_provincia='00' and ud.id_distrito='00' and ud.estado='1'
 left join ubigeos up on up.id_departamento=substring(u.id_ubigeo,1,2) and up.id_provincia=substring(u.id_ubigeo,3,2) and up.id_distrito='00' and up.estado='1'
@@ -135,19 +135,23 @@ where p.id_solicitud=".$id;
 
     public function getSolicitudPdf($id){
 
-        $cad = "select l.credipago, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres proyectista, a.numero_cap, e.razon_social, pro.nombre, u.id_departamento departamento, u.id_provincia provincia,
+        $cad = "select l.credipago, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres proyectista, a.numero_cap,CASE 
+        WHEN pr.id_empresa is not null THEN (select e2.razon_social from empresas e2 where e2.id = pr.id_empresa)
+        WHEN pr.id_persona is not null THEN (select p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres from personas p2 where p2.id = pr.id_persona)
+        end as razon_social, pro.nombre, u.id_departamento departamento, u.id_provincia provincia,
         u.id_distrito distrito, pro.direccion, s.numero_revision, m.denominacion municipalidad, s.area_total total_area_techada, s.valor_obra, l.sub_total, l.igv, l.total, tm.denominacion tipo_proyectista
         from solicitudes s 
         inner join liquidaciones l on l.id_solicitud = s.id
-        inner join proyectistas p on s.id_proyectista = p.id
-        inner join agremiados a on p.id_agremiado = a.id
-        inner join personas pe on a.id_persona = pe.id
-        inner join propietarios pr on pr.id_solicitud = s.id
-        inner join empresas e on pr.id_empresa = e.id
-        inner join proyectos pro on s.id_proyecto = pro.id
-        inner join ubigeos u on pro.id_ubigeo = u.id
-        inner join municipalidades m on s.id_municipalidad = m.id
-        inner join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41' 
+        left join proyectistas p on p.id_solicitud = s.id
+        left join agremiados a on p.id_agremiado = a.id
+        left join personas pe on a.id_persona = pe.id
+        left join propietarios pr on pr.id_solicitud = s.id
+        left join empresas e on pr.id_empresa = e.id
+        left join personas pe2 on pr.id_persona = pe2.id
+        left join proyectos pro on s.id_proyecto = pro.id
+        left join ubigeos u on pro.id_ubigeo = u.id
+        left join municipalidades m on s.id_municipalidad = m.id
+        left join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41'
         where l.id='".$id."'";
 
 		//echo $cad;

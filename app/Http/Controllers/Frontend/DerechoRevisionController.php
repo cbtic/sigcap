@@ -20,6 +20,7 @@ use App\Models\Valorizacione;
 use App\Models\Concepto;
 use App\Models\Parametro;
 use App\Models\NumeracionDocumento;
+use App\Models\UsoEdificacione;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
@@ -100,7 +101,6 @@ class DerechoRevisionController extends Controller
         $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(24);
-        
         
         return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud'));
     }
@@ -336,6 +336,8 @@ class DerechoRevisionController extends Controller
 		$valor_obra = $solicitud->valor_obra;
 		$area_total = $solicitud->area_total;
 		$id_tipo_solicitud = $solicitud->id_tipo_solicitud;
+
+		//if($request->tipo_liquidacion1==136)$valor_obra = $request->total2;
 		
 		if($request->instancia==250)$valor_obra = $request->valor_reintegro;
 
@@ -361,22 +363,28 @@ class DerechoRevisionController extends Controller
 			/*****Edificaciones*********/
 			if($id_tipo_solicitud == 123){
 				
-				$sub_total 	= ($parametro->porcentaje_calculo_edificacion*$valor_obra);//(0.0005*$valor_obra);
-				$igv		= ($parametro->igv*$sub_total);
-				$total		= $sub_total + $igv;
-				
-				$sub_total_minimo 	= ($parametro->valor_minimo_edificaciones*$uit);//123.75
-				$igv_minimo			= ($parametro->igv*$sub_total_minimo);//22.275
-				$total_minimo		= $sub_total_minimo + $igv_minimo;//146.025
-				
-				if($total<$total_minimo){
-					$sub_total 	= $sub_total_minimo;
-					$igv		= $igv_minimo;
-					$total		= $total_minimo;
-				}
+				if($request->tipo_liquidacion1==136){
+					//$valor_obra = $request->total2;
+					$sub_total 	= $request->sub_total2;
+					$igv		= $request->igv2;
+					$total		= $request->total2;
 
+				}else{
+					$sub_total 	= ($parametro->porcentaje_calculo_edificacion*$valor_obra);//(0.0005*$valor_obra);
+					$igv		= ($parametro->igv*$sub_total);
+					$total		= $sub_total + $igv;
+					
+					$sub_total_minimo 	= ($parametro->valor_minimo_edificaciones*$uit);//123.75
+					$igv_minimo			= ($parametro->igv*$sub_total_minimo);//22.275
+					$total_minimo		= $sub_total_minimo + $igv_minimo;//146.025
+					
+					if($total<$total_minimo){
+						$sub_total 	= $sub_total_minimo;
+						$igv		= $igv_minimo;
+						$total		= $total_minimo;
+					}
+				}
 				$concepto = Concepto::where("id",26474)->where("estado","1")->first();
-				
 			}
 			
 			/*****Habilitaciones urbanas*********/
@@ -724,18 +732,22 @@ class DerechoRevisionController extends Controller
 		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 
 		if($request->id == 0){
-			$proyectista = new Proyectista;
+			$usoEdificacion = new UsoEdificacione;
 		}else{
-			$proyectista = Proyectista::find($request->id);
+			$usoEdificacion = UsoEdificacione::find($request->id);
 		}
+
+		$procedimientos_complementarios = $request->input('procedimientos_complementarios');
+		$procedimientos_complementarios2 = $request->input('procedimientos_complementarios2');
 		
-		$proyectista->id_agremiado = $agremiado->id;
-		$proyectista->celular = $request->celular;
-		$proyectista->email = $request->email;
+		$usoEdificacion->id_tipo_uso = $procedimientos_complementarios;
+		$usoEdificacion->id_sub_tipo_uso = $procedimientos_complementarios2;
+		$usoEdificacion->id_solicitud = $request->id;
+		$usoEdificacion->area_techada = $request->areaBruta;
 		//$proyectista->firma = $request->nombre;
 		//$profesion->estado = 1;
-		$proyectista->id_usuario_inserta = $id_user;
-		$proyectista->save();
+		$usoEdificacion->id_usuario_inserta = $id_user;
+		$usoEdificacion->save();
     }
 
 	public function upload_solicitud(Request $request){

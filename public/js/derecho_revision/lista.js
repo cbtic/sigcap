@@ -66,6 +66,7 @@ $(document).ready(function () {
 	});
 	
 	$("#id_municipalidad_bus").select2();
+	$("#municipalidad_bus_hu").select2();
 	
 	cargarPeriodo();
 	cargarPeriodoHu();
@@ -608,9 +609,9 @@ function datatablenew(){
                 },
 				{
 				"mRender": function (data, type, row) {
-					var tipo_proyecto = "";
-					if(row.tipo_proyecto!= null)tipo_proyecto = row.tipo_proyecto;
-					return tipo_proyecto;
+					var tipo_solicitud = "";
+					if(row.tipo_solicitud!= null)tipo_solicitud = row.tipo_solicitud;
+					return tipo_solicitud;
 				},
 				"bSortable": false,
 				"aTargets": [1],
@@ -639,10 +640,13 @@ function datatablenew(){
 				
 				{
 				"mRender": function (data, type, row) {
-					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					/*var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 					html += '<button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerProyectista('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i>Proyectista</button>';
 					html += '</div>';
-					return html;
+					return html;*/
+					var proyectista = "";
+					if(row.proyectista!= null)proyectista = row.proyectista;
+					return proyectista;
 				},
 				"bSortable": false,
 				"aTargets": [4],
@@ -651,10 +655,13 @@ function datatablenew(){
 				
 				{
 				"mRender": function (data, type, row) {
-					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					/*var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 					html += '<button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerPropietario('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i>Propietario</button>';
 					html += '</div>';
-					return html;
+					return html;*/
+					var propietario = "";
+					if(row.propietario!= null)propietario = row.propietario;
+					return propietario;
 				},
 				"bSortable": false,
 				"aTargets": [5],
@@ -743,7 +750,7 @@ function datatablenew(){
 					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarSolicitud('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 					
 					html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerCredipago('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Credipago</button>';
-					if (row.id_resultado == 2) {
+					if (row.id_resultado == 1) {
 						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitud('+row.id+')" ><i class="fa fa-edit"></i> Vista Previa</button>';
 					}else{
 						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitud('+row.id+')" disabled><i class="fa fa-edit"></i> Vista Previa</button>';
@@ -869,10 +876,13 @@ function datatablenew2(){
 				
 				{
 				"mRender": function (data, type, row) {
-					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					/*var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 					html += '<button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerProyectista('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i>Proyectista</button>';
 					html += '</div>';
-					return html;
+					return html;*/
+					var proyectista = "";
+					if(row.proyectista!= null)proyectista = row.proyectista;
+					return proyectista;
 				},
 				"bSortable": false,
 				"aTargets": [4],
@@ -881,10 +891,13 @@ function datatablenew2(){
 				
 				{
 				"mRender": function (data, type, row) {
-					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					/*var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 					html += '<button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerPropietario('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i>Propietario</button>';
 					html += '</div>';
-					return html;
+					return html;*/
+					var propietario = "";
+					if(row.propietario!= null)propietario = row.propietario;
+					return propietario;
 				},
 				"bSortable": false,
 				"aTargets": [5],

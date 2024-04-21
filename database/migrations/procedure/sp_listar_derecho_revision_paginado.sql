@@ -20,7 +20,7 @@ begin
 	
 	v_campos=' * ';
 
-	v_tabla=' from (select s.id,p2.nombre nombre_proyecto, tm.denominacion tipo_proyecto, s.numero_revision, m.denominacion municipalidad, 
+	v_tabla=' from (select s.id,p2.nombre nombre_proyecto, tm.denominacion tipo_solicitud, s.numero_revision, m.denominacion municipalidad, 
 	to_char(s.fecha_registro,''dd-mm-yyyy'')fecha_registro,s.estado,tmr.denominacion estado_proyecto,(select l2.credipago from liquidaciones l2 where l2.id_solicitud = s.id limit 1) credipago,
 	u.id_ubigeo distrito, (select a.numero_cap from proyectistas p3 inner join agremiados a on p3.id_agremiado = a.id where p3.id_solicitud = s.id limit 1) numero_cap,
 	(select p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres from proyectistas p4 inner join agremiados a2 on p4.id_agremiado = a2.id inner join personas p on a2.id_persona = p.id where p4.id_solicitud = s.id limit 1) proyectista,
@@ -31,11 +31,11 @@ begin
 	(select case WHEN pro2.id_empresa IS NOT NULL THEN e2.ruc ELSE pe2.numero_documento END 
 	from propietarios pro2
 	left join personas pe2 on pro2.id_persona = pe2.id 
-	left join empresas e2 on pro2.id_empresa = e2.id where pro2.id_solicitud = s.id limit 1) numero_documento, p2.direccion direccion, s.id_tipo_solicitud, DATE_PART(''YEAR'', s.fecha_registro) anio, s.id_resultado
+	left join empresas e2 on pro2.id_empresa = e2.id where pro2.id_solicitud = s.id limit 1) numero_documento, p2.direccion direccion, s.id_tipo_solicitud, DATE_PART(''YEAR'', s.fecha_registro) anio, s.id_resultado, s.id_municipalidad 
 	from solicitudes s
 	left join municipalidades m on s.id_municipalidad = m.id
 	left join proyectos p2 on s.id_proyecto = p2.id
-	left join tabla_maestras tm on s.id_tipo_solicitud=tm.codigo::int and tm.tipo=''24'' 
+	left join tabla_maestras tm on s.tipo_proyecto=tm.codigo::int and tm.tipo=''25'' 
 	left join tabla_maestras tmr on s.id_resultado=tmr.codigo::int and tmr.tipo=''118''
 	left join ubigeos u on s.id_ubigeo = u.id_ubigeo 
 	where s.id_tipo_solicitud=''123'' ) R';
@@ -83,7 +83,7 @@ begin
 	End If;
 	
 	If p_municipalidad<>'' Then
-	 v_where:=v_where||'And R.municipalidad = '''||p_municipalidad||''' ';
+	 v_where:=v_where||'And R.id_municipalidad  = '''||p_municipalidad||''' ';
 	End If;
 
 	/*If p_fecha_registro<>'' Then

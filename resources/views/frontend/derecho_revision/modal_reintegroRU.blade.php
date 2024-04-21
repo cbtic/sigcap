@@ -308,6 +308,26 @@ function limpiar(){
 	$('#img_foto').val("");
 }
 
+function fn_save_credipago(){
+    
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var id_comision = $('#id_comision').val();
+	var id_regional = $('#id_regional').val();
+	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var observaciones = $('#observaciones').val();
+	
+    $.ajax({
+			url: "/derecho_revision/send_credipago_liquidacion",
+            type: "POST",
+			data : $('#frmReintegroSolicitud').serialize(),
+            success: function (result) {
+				$('#openOverlayOpc').modal('hide');
+				//datatablenew();
+            }
+    });
+}
+
 function fn_save_requisito(){
     
 	var _token = $('#_token').val();
@@ -388,10 +408,10 @@ function fn_save_requisito(){
                         <label class="control-label form-control-sm">&Aacute;rea del Terreno</label>
                         <input id="area_terreno" name="area_terreno" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_total?>" type="text" readonly='readonly'>
                     </div>
-                    <div class="col-lg-3">
+                    <!--<div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea Techada</label>
                         <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_techada?>" type="text" readonly='readonly'>
-                    </div>
+                    </div>-->
                 </div>
                 <div style="padding: 15px 0px 15px 10px; font-weight: bold">
                     Ubicaci&oacute;n

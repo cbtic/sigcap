@@ -661,8 +661,16 @@ $.mask.definitions['p'] = "[Mm]";
 							</div>
 							<div class="form-group" id="vigencia_group">
 								<div class="col-lg-12">
-									<label class="control-label">Dias Vigencia</label>
-									<input id="vigencia_" name="vigencia_" class="form-control form-control-sm" value="<?php echo $certificado->dias_validez ?>" type="text">
+									<label class="control-label">D&iacute;as Vigencia</label>
+									<select name="vigencia_" id="vigencia_" class="form-control form-control-sm">
+										<?php
+										$valorSeleccionado = isset($certificado->dias_validez) ? $certificado->dias_validez : '30';
+										?>
+									<option value="" <?php echo ($valorSeleccionado == '') ? 'selected="selected"' : ''; ?>>--Dias Vigencia--</option>
+									<option value="30" <?php echo ($valorSeleccionado == '30') ? 'selected="selected"' : ''; ?>>30 D&iacute;as</option>
+									<option value="60" <?php echo ($valorSeleccionado == '60') ? 'selected="selected"' : ''; ?>>60 D&iacute;as</option>
+									<option value="90" <?php echo ($valorSeleccionado == '90') ? 'selected="selected"' : ''; ?>>90 D&iacute;as</option>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
