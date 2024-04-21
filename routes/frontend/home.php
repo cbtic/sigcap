@@ -347,11 +347,14 @@ Route::post('comision/listar_municipalidad_ajax', [ComisionController::class, 'l
 Route::post('comision/send_comision_fila', [ComisionController::class, 'send_comision_fila'])->name('tipoConcepto.send_comision_fila');
 
 Route::post('comision/send_comision', [ComisionController::class, 'send_comision'])->name('comision.send_comision');
+Route::post('comision/send_municipalidad_detalle', [ComisionController::class, 'send_municipalidad_detalle'])->name('comision.send_municipalidad_detalle');
 Route::get('comision/obtener_municipalidades', [ComisionController::class, 'obtener_municipalidades'])->name('comision.obtener_municipalidades');
 Route::get('comision/obtener_municipalidadesIntegradas/{periodo}/{tipo_agrupacion}/{tipo_comision}', [ComisionController::class, 'obtener_municipalidadesIntegradas'])->name('comision.obtener_municipalidadesIntegradas');
 Route::post('comision/listar_municipalidad_integrada_ajax', [ComisionController::class, 'listar_municipalidad_integrada_ajax'])->name('comision.listar_municipalidad_integrada_ajax');
 Route::get('comision/consulta_municipalidadIntegrada', [ComisionController::class, 'consulta_municipalidadIntegrada'])->name('comision.consulta_municipalidadIntegrada');
 Route::post('comision/send_asignar_agremiado_rol', [ComisionController::class, 'send_asignar_agremiado_rol'])->name('comision.send_asignar_agremiado_rol');
+
+Route::get('comision/modal_municipalidadesIntegrada/{id}', [ComisionController::class, 'modal_municipalidadesIntegrada'])->name('comision.modal_municipalidadesIntegrada');
 
 Route::get('concurso/consulta_resultado', [ConcursoController::class, 'consulta_resultado'])->name('concurso.consulta_resultado');
 Route::post('concurso/listar_resultado_ajax', [ConcursoController::class, 'listar_resultado_ajax'])->name('concurso.listar_resultado_ajax');
@@ -394,6 +397,7 @@ Route::get('movilidad/eliminar_movilidad/{id}/{estado}', [MovilidadController::c
 
 Route::post('comision/send_municipalidad_integrada', [ComisionController::class, 'send_municipalidad_integrada'])->name('comision.send_municipalidad_integrada');
 Route::get('comision/obtener_comision/{periodo}/{tipo_comision}/{cad_id}/{estado}', [ComisionController::class, 'obtener_comision'])->name('comision.obtener_comision');
+Route::get('comision/obtener_municipalidadesIntegradaDetalle/{id}', [ComisionController::class, 'obtener_municipalidadesIntegradaDetalle'])->name('comision.obtener_municipalidadesIntegradaDetalle');
 Route::post('comision/send_comisiones_integradas', [ComisionController::class, 'send_comisiones_integradas'])->name('comision.send_comisiones_integradas');
 Route::post('comision/listar_comision_integrada_ajax', [ComisionController::class, 'listar_comision_integrada_ajax'])->name('comision.listar_comision_integrada_ajax');
 Route::get('comision/consulta_comision_integrada', [ComisionController::class, 'consulta_comision_integrada'])->name('comision.consulta_comision_integrada');
@@ -509,6 +513,7 @@ Route::post('adelanto/send_adelanto_nuevoAdelanto', [AdelantoController::class, 
 Route::get('adelanto/eliminar_adelanto/{id}/{estado}', [AdelantoController::class, 'eliminar_adelanto'])->name('adelanto.eliminar_adelanto');
 
 Route::get('comision/eliminar_muniIntegrada/{id}/{estado}', [ComisionController::class, 'eliminar_muniIntegrada'])->name('comision.eliminar_muniIntegrada');
+Route::get('comision/eliminar_municipalidad_detalle/{id}', [ComisionController::class, 'eliminar_municipalidad_detalle'])->name('comision.eliminar_municipalidad_detalle');
 Route::get('comision/eliminarComision/{id}/{estado}', [ComisionController::class, 'eliminarComision'])->name('comision.eliminarComision');
 
 Route::get('afiliacion_seguro/eliminar_afiliacion/{id}/{estado}', [AfiliacionSeguroController::class, 'eliminar_afiliacion'])->name('afiliacion_seguro.eliminar_afiliacion');

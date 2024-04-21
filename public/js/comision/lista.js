@@ -230,6 +230,22 @@ function cargarMunicipalidadesIntegradas(){
 	
 }
 
+function modalMunicipalidadIntegrada(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/comision/modal_municipalidadesIntegrada/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
 function cargarComisiones(){
 	
 	var periodo = $("#frmAfiliacion #periodo").val();
@@ -966,6 +982,38 @@ function fn_cerrar_comision(){
 				$('#openOverlayOpc').modal('hide');
 				$('.loader').hide();
 				return false;
+            }
+    });
+}
+
+function eliminarMunicipalidadDetalle(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas Eliminar la Municipalidad del detalle?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_municipalidad_detalle(id);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_municipalidad_detalle(id){
+	
+    $.ajax({
+            url: "/comision/eliminar_municipalidad_detalle/"+id,
+            type: "GET",
+            success: function (result) {
+				cargarMunicipalidadDetalle();
+				limpiar();
+				
+				obtenerPeriodo();
+				obtenerTipoComision();
+                
+				//datatablenew();
+				//cargarMunicipalidadesIntegradas();
             }
     });
 }
