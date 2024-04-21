@@ -178,18 +178,42 @@ $(document).ready(function() {
             <span style="font_size: 8.5;"><b>TOTAL AREA TECHADA (Intervenida) (M2):</b> <?php echo $total_area_techada;?></span>
             <span style="float: right; font_size: 8.5"><b>N° de Revision:</b> <?php echo $numero_revision;?></span>
             <p class="p"><b>VALOR DE LA OBRA DECLARADO EN EL FUE: S/.</b> <?php echo $valor_obra;?></p>
-            <p class="p" style="text-align : right"><b>PORCENTAJE A APLICAR SOBRE VALOR DE OBRA <?php echo $porcentaje;?>%:</b> <?php echo $sub_total;?></p>   
-            <p class="p" style="text-align : right"><b>+IGV:</b> <?php echo $igv;?></p>
+            <!--<p class="p" style="text-align : right"><b>PORCENTAJE A APLICAR SOBRE VALOR DE OBRA <?php //echo $porcentaje;?>%:</b> <?php //echo $sub_total;?></p>   
+            <p class="p" style="text-align : right"><b>+IGV:</b> <?php //echo $igv;?></p>
             <hr style="width:10%; margin-right: 1px;">
-            <p class="p" style="text-align : right"><b>TOTAL:</b> <?php echo $total;?></p>
-            <p style="text-align : right; font-size : 10"><b>TOTAL A PAGAR:</b> <?php echo $total;?></p>
-           
+            <p class="p" style="text-align : right"><b>TOTAL:</b> <?php //echo $total;?></p>
+            <p style="text-align : right; font-size : 10"><b>TOTAL A PAGAR:</b> <?php //echo $total;?></p>-->
+            
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: right; width: 20%;"></td>
+                        <td class="td" style ="text-align: right; width: 60%;"><b>PORCENTAJE A APLICAR SOBRE VALOR DE OBRA<?php echo $porcentaje;?>%:</b></td>
+                        <td class="td" style ="text-align: left; width: 5%;">S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%;"><?php echo $sub_total;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: right; width: 20%;"></td>
+                        <td class="td" style ="text-align: right; width: 60%;"><b>+IGV:</b></td>
+                        <td class="td" style ="text-align: left; width: 5%;">S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%;"><?php echo $igv;?></td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: right; width: 20%;"></td>
+                        <td class="td" style ="text-align: right; width: 60%; font-size:14px"><b>TOTAL A PAGAR:</b></td>
+                        <td class="td" style ="text-align: left; width: 5%; border-top: 1px solid black;">S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%; border-top: 1px solid black;"><?php echo $total;?></td>
+                    </tr>
+                </tbody>
+            </table>
+
             <hr>
             <span style="font_size: 8.5;"><b>V.B</b></span>
-            <span style="float: right; font_size: 8.5"><b>Recibido por:</b></span> 
+            <span style="float: right; font_size: 8.5"><b>Recibido por:...................................................</b></span> 
             <br>
             <span style="font_size: 8.5;"><b>Fecha de Emisi&oacute;n: <?php echo $carbonDate;?> &nbsp; &nbsp; &nbsp; <?php echo $currentHour;?></b></span>
-            <span style="float: right; font_size: 8.5"><b>N° DNI:</b></span>   
+            <span style="float: right; font_size: 8.5"><b>N° DNI:.................................................</b></span>   
             <hr>
             <p class="p">Costo por devoluci&oacute;n: S/. 50.00 + 12% del valor del Derecho de Revisi&oacute;n por conceptos administrativos.</p>
             <p></p>

@@ -102,7 +102,6 @@ class DerechoRevisionController extends Controller
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(24);
         
-        
         return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud'));
     }
 
@@ -338,7 +337,7 @@ class DerechoRevisionController extends Controller
 		$area_total = $solicitud->area_total;
 		$id_tipo_solicitud = $solicitud->id_tipo_solicitud;
 
-		if($request->tipo_liquidacion1==136)$valor_obra = $request->total2;
+		//if($request->tipo_liquidacion1==136)$valor_obra = $request->total2;
 		
 		if($request->instancia==250)$valor_obra = $request->valor_reintegro;
 
@@ -364,22 +363,28 @@ class DerechoRevisionController extends Controller
 			/*****Edificaciones*********/
 			if($id_tipo_solicitud == 123){
 				
-				$sub_total 	= ($parametro->porcentaje_calculo_edificacion*$valor_obra);//(0.0005*$valor_obra);
-				$igv		= ($parametro->igv*$sub_total);
-				$total		= $sub_total + $igv;
-				
-				$sub_total_minimo 	= ($parametro->valor_minimo_edificaciones*$uit);//123.75
-				$igv_minimo			= ($parametro->igv*$sub_total_minimo);//22.275
-				$total_minimo		= $sub_total_minimo + $igv_minimo;//146.025
-				
-				if($total<$total_minimo){
-					$sub_total 	= $sub_total_minimo;
-					$igv		= $igv_minimo;
-					$total		= $total_minimo;
-				}
+				if($request->tipo_liquidacion1==136){
+					//$valor_obra = $request->total2;
+					$sub_total 	= $request->sub_total2;
+					$igv		= $request->igv2;
+					$total		= $request->total2;
 
+				}else{
+					$sub_total 	= ($parametro->porcentaje_calculo_edificacion*$valor_obra);//(0.0005*$valor_obra);
+					$igv		= ($parametro->igv*$sub_total);
+					$total		= $sub_total + $igv;
+					
+					$sub_total_minimo 	= ($parametro->valor_minimo_edificaciones*$uit);//123.75
+					$igv_minimo			= ($parametro->igv*$sub_total_minimo);//22.275
+					$total_minimo		= $sub_total_minimo + $igv_minimo;//146.025
+					
+					if($total<$total_minimo){
+						$sub_total 	= $sub_total_minimo;
+						$igv		= $igv_minimo;
+						$total		= $total_minimo;
+					}
+				}
 				$concepto = Concepto::where("id",26474)->where("estado","1")->first();
-				
 			}
 			
 			/*****Habilitaciones urbanas*********/

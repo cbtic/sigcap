@@ -155,10 +155,59 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	
+	calculoVistaPrevia();
 	
 
 });
+
+function formatoMoneda(num) {
+    return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+}
+
+function calculoVistaPrevia(){
+    var igv_valor_ = {{$parametro[0]->igv}} * 100;
+    var valor_minimo_edificaciones = {{$parametro[0]->valor_minimo_edificaciones}};
+    var uit_edificaciones = {{$parametro[0]->valor_uit}};
+    var sub_total_minimo = valor_minimo_edificaciones * uit_edificaciones;
+    var igv_valor = {{$parametro[0]->igv}};
+    var igv_minimo	= igv_valor * sub_total_minimo;
+    var total_minimo = sub_total_minimo + igv_minimo;
+    $('#minimo').val(total_minimo);
+    $('#igv').val(igv_valor_+"%");
+    //var_dump($total_minimo);exit;
+    
+    var valor_obra_= {{$liquidacion[0]->valor_obra}};
+    var porcentaje_calculo_edificacion = {{$parametro[0]->porcentaje_calculo_edificacion}};
+    var sub_total= valor_obra_* porcentaje_calculo_edificacion;
+    //var sub_total_formateado = number_format(sub_total, 2, '.', ',');
+    var igv_total=sub_total*igv_valor;
+    //var igv_total_formateado = number_format(igv_total, 2, '.', ',');
+    //var_dump($total_minimo);exit;
+    var total=sub_total+igv_total;
+    //var total_formateado = number_format(total, 2, '.', ',');
+    $('#sub_total').val(sub_total);
+    $('#igv_').val(igv_total);
+    $('#total').val(formatoMoneda(total));
+    
+    if(total<total_minimo){
+        var total_ = total_minimo;
+        var valor_minimo_edificaciones= {{$parametro[0]->valor_minimo_edificaciones}};
+        var uit_minimo= {{$parametro[0]->valor_uit}};
+        var sub_total_minimo=valor_minimo_edificaciones*uit_minimo;
+        var igv_minimo=sub_total_minimo*igv_valor;
+        //$sub_total_formateado_ = number_format($sub_total_minimo, 2, '.', ',');
+        //$igv_total_formateado_ = number_format($igv_minimo, 2, '.', ',');
+        //$total_formateado_ = number_format($total_minimo, 2, '.', ',');
+        $('#sub_total').val(formatoMoneda(sub_total));
+        $('#igv_').val(formatoMoneda(igv_total));
+        $('#total').val(formatoMoneda(total));
+        $('#sub_total2').val(formatoMoneda(sub_total_minimo));
+        $('#igv2').val(formatoMoneda(igv_minimo));
+        $('#total2').val(formatoMoneda(total_minimo));
+    }else{}
+    //var_dump($total_minimo);exit;
+}
+
 
 
 function habilitar_reintegro(){
@@ -193,23 +242,23 @@ function calcularReintegro(){
                 var igv_totalR=sub_totalR*igv_/100;
                 var totalR=sub_totalR+igv_totalR;
 
-                $('#total2').val(total_minimo.toFixed(2));
-                $('#igv2').val(igv_minimo.toFixed(2));
-                $('#sub_total2').val(sub_total_minimo.toFixed(2));
-                $('#total').val(totalR.toFixed(2));
-                $('#igv_').val(igv_totalR.toFixed(2));
-                $('#sub_total').val(sub_totalR.toFixed(2));
+                $('#total2').val(formatoMoneda(total_minimo));
+                $('#igv2').val(formatoMoneda(igv_minimo));
+                $('#sub_total2').val(formatoMoneda(sub_total_minimo));
+                $('#total').val(formatoMoneda(totalR));
+                $('#igv_').val(formatoMoneda(igv_totalR));
+                $('#sub_total').val(formatoMoneda(sub_totalR));
             }else{
 
                 //var sub_totalR_formateado = number_format(sub_totalR, 2, '.', ',');
                 //var igv_totalR_formateado = number_format(igv_totalR, 2, '.', ',');
                 //var totalR_formateado = number_format(totalR, 2, '.', ',');
-                $('#total2').val(totalR.toFixed(2));
-                $('#igv2').val(igv_totalR.toFixed(2));
-                $('#sub_total2').val(sub_totalR.toFixed(2));
-                $('#total').val(totalR.toFixed(2));
-                $('#igv_').val(igv_totalR.toFixed(2));
-                $('#sub_total').val(sub_totalR.toFixed(2));
+                $('#total2').val(formatoMoneda(totalR));
+                $('#igv2').val(formatoMoneda(igv_totalR));
+                $('#sub_total2').val(formatoMoneda(sub_totalR));
+                $('#total').val(formatoMoneda(totalR));
+                $('#igv_').val(formatoMoneda(igv_totalR));
+                $('#sub_total').val(formatoMoneda(sub_totalR));
             }
             
         }
@@ -231,19 +280,19 @@ function cambioPlantaTipica(){
             var igv_minimoPT = total_minimoPT*igv_PT/100;
             var sub_total_minimoPT = total_minimoPT - igv_minimoPT;
 
-            $('#total2').val(total_minimoPT.toFixed(2));
-            $('#igv2').val(igv_minimoPT.toFixed(2));
-            $('#sub_total2').val(sub_total_minimoPT.toFixed(2));
-            $('#total').val(valor_planta_tipica.toFixed(2));
-            $('#igv_').val(igv_totalPT.toFixed(2));
-            $('#sub_total').val(sub_totalPT.toFixed(2));
+            $('#total2').val(formatoMoneda(total_minimoPT));
+            $('#igv2').val(formatoMoneda(igv_minimoPT));
+            $('#sub_total2').val(formatoMoneda(sub_total_minimoPT));
+            $('#total').val(formatoMoneda(valor_planta_tipica));
+            $('#igv_').val(formatoMoneda(igv_totalPT));
+            $('#sub_total').val(formatoMoneda(sub_totalPT));
         }else{
-            $('#igv2').val(igv_totalPT.toFixed(2));
-            $('#sub_total2').val(sub_totalPT.toFixed(2));
-            $('#total').val(valor_planta_tipica.toFixed(2));
-            $('#igv_').val(igv_totalPT.toFixed(2));
-            $('#sub_total').val(sub_totalPT.toFixed(2));
-            $('#total2').val(valor_planta_tipica.toFixed(2));
+            $('#igv2').val(formatoMoneda(igv_totalPT));
+            $('#sub_total2').val(formatoMoneda(sub_totalPT));
+            $('#total').val(formatoMoneda(valor_planta_tipica));
+            $('#igv_').val(formatoMoneda(igv_totalPT));
+            $('#sub_total').val(formatoMoneda(sub_totalPT));
+            $('#total2').val(formatoMoneda(valor_planta_tipica));
         }
     }
 }
@@ -571,26 +620,15 @@ function fn_save_credipago(){
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">M&iacute;mino</label>
-                                <?php
                                 
-                                $valor_minimo_edificaciones = $parametro[0]->valor_minimo_edificaciones;
-                                $uit_edificaciones = $parametro[0]->valor_uit;
-                                $sub_total_minimo = $valor_minimo_edificaciones * $uit_edificaciones;
-                                $igv_valor = $parametro[0]->igv;
-                                $igv_minimo	= $igv_valor * $sub_total_minimo;
-                                $total_minimo = $sub_total_minimo + $igv_minimo;
-                                //var_dump($total_minimo);exit;
-                                ?>
-                                <input id="minimo" name="minimo" on class="form-control form-control-sm"  value="<?php echo $total_minimo?>" type="text" readonly='readonly'>
+                                <input id="minimo" name="minimo" on class="form-control form-control-sm"  value="<?php //echo $total_minimo?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">% IGV</label>
-                                <?php
-                                $igv_valor = $parametro[0]->igv * 100;
-                                ?>
-                                <input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php echo $igv_valor . '%'?>" type="text" readonly='readonly'>
+                                
+                                <input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php //echo $igv_valor . '%'?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">M&aacute;ximo</label>
@@ -608,35 +646,12 @@ function fn_save_credipago(){
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Sub Total</label>
-                                <?php
-                                $valor_obra_=$liquidacion[0]->valor_obra;
-                                $porcentaje_calculo_edificacion = $parametro[0]->porcentaje_calculo_edificacion;
-                                $sub_total=$valor_obra_*$porcentaje_calculo_edificacion;
-                                $sub_total_formateado = number_format($sub_total, 2, '.', ',');
-                                $igv_ = $parametro[0]->igv;
-                                $igv_total=$sub_total*$igv_;
-                                $igv_total_formateado = number_format($igv_total, 2, '.', ',');
-                                //var_dump($total_minimo);exit;
-                                $total=$sub_total+$igv_total;
-                                $total_formateado = number_format($total, 2, '.', ',');
-
-                                if($total<$total_minimo){
-                                    $total=$total_minimo;
-                                    $valor_minimo_edificaciones= $parametro[0]->valor_minimo_edificaciones;
-                                    $uit_minimo= $parametro[0]->valor_uit;
-                                    $sub_total_minimo=$valor_minimo_edificaciones*$uit_minimo;
-                                    $igv_minimo=$sub_total_minimo*$igv_;
-                                    $sub_total_formateado_ = number_format($sub_total_minimo, 2, '.', ',');
-                                    $igv_total_formateado_ = number_format($igv_minimo, 2, '.', ',');
-                                    $total_formateado_ = number_format($total_minimo, 2, '.', ',');
-                                }else{}
-                                //var_dump($total_minimo);exit;
-                                ?>
-                                <input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado?>" type="text" readonly='readonly'>
+                                
+                                <input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php //echo $sub_total_formateado?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Sub Total</label>
-                                <input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado_?>" type="text" readonly='readonly'>
+                                <input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php //echo $sub_total_formateado_?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
@@ -646,11 +661,11 @@ function fn_save_credipago(){
                                 
                                 
                                 ?>
-                                <input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php echo $igv_total_formateado?>" type="text" readonly='readonly'>
+                                <input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php //echo $igv_total_formateado?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">IGV</label>
-                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php echo $igv_total_formateado_?>" type="text" readonly='readonly'>
+                                <input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php //echo $igv_total_formateado_?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
@@ -659,11 +674,11 @@ function fn_save_credipago(){
                                 <?php
                                 
                                 ?>
-                                <input id="total" name="total" on class="form-control form-control-sm"  value="<?php echo $total_formateado?>" type="text" readonly='readonly'>
+                                <input id="total" name="total" on class="form-control form-control-sm"  value="<?php //echo $total_formateado?>" type="text" readonly='readonly'>
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Total a Pagar Soles</label>
-                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $total_formateado_?>" type="text" onchange="cambioPlantaTipica()">
+                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php //echo $total_formateado_?>" type="text" onchange="cambioPlantaTipica()">
                             </div>
                         </div>
 						
