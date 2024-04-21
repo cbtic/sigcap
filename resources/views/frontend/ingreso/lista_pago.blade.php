@@ -67,7 +67,7 @@ foreach($pago as $row){?>
 		<input type='hidden' name="id_comprobante_origen" id="id_comprobante_origen" value="<?php echo $row->id_comprobante?>">	
 
 		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">		
-		<input class="btn btn-info pull-rigth" value="NC" type="button" id="btnBoleta" onclick="nc(<?php echo $row->id_comprobante?> )">
+		<input class="btn btn-info pull-rigth" value="NC" type="button" id="btnBoleta" onclick="nc(<?php echo $row->id_comprobante?>,<?php echo $row->tiene_nc?>)">
 		
 		</form>
 		@endhasanyrole
@@ -77,10 +77,10 @@ foreach($pago as $row){?>
 		@hasanyrole('Administrator|Caja|Caja Jefe')
 	    <form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nd_edita')}}" id="frmPagos_nd" name="frmPagos_nd" autocomplete="off">		
 		<input type='hidden' name="id_comprobante" id="id_comprobante" value="">		
-		<input type='hidden' name="id_comprobante_origen" id="id_comprobante_origen" value="<?php echo $row->id_comprobante?>">	
+		<input type='hidden' name="id_comprobante_origen_nd" id="id_comprobante_origen_nd" value="<?php echo $row->id_comprobante?>">	
 		
 		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">		
-		<input class="btn btn-info pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>)">
+		<input class="btn btn-info pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>,<?php echo $row->tiene_nd?>)">
 		
 		</form>
 		@endhasanyrole

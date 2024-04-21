@@ -1670,14 +1670,20 @@ function guardar_fracciona_deuda(){
     });
 }
 
-function nc(id){
-	$('#id_comprobante_nc').val(id);
+function nc(id,id_ncnd){
+	//$('#id_comprobante_nc').val(id);
+	$('#id_comprobante_origen').val(id);
+	$('#id_comprobante').val(id_ncnd);
+	
 	document.forms["frmPagos"].submit();
 	return false;
 };
 
-function nd(id){
-	$('#id_comprobante_nd').val(id);	
+function nd(id,id_ncnd){
+	//$('#id_comprobante_nd').val(id);
+	$('#id_comprobante_origen_nd').val(id);
+	$('#id_comprobante').val(id_ncnd);
+
 	document.forms["frmPagos_nd"].submit();
 	return false;
 };

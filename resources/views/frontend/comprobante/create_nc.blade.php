@@ -264,7 +264,7 @@
                                                                         echo $adelanto;
                                                                     } ?>">
                         <input type="hidden" name="id_factura" value="<?php if ($trans == 'FE') {
-                                                                            echo $facturas->id;
+                                                                            echo $comprobante->id;
                                                                         } ?>">
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

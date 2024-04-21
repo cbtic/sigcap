@@ -57,10 +57,13 @@
             if ($(this).val() == 1) {
 
                 OcultarTarjeta();
+                MostrarMedioPago();
             }
 
             if ($(this).val() == 2) {
                 MostrarTarjeta();
+                OcultarMedioPago();
+                
 
                 $('#numcuota_').val("1");
                 var $total = $('#total_fac').val();
@@ -101,9 +104,19 @@
         tarjeta.style.display = 'inline';
     }
 
+    function MostrarMedioPago() {
+        var MedioPago = document.getElementById('card_MedioPago');
+        MedioPago.style.display = 'inline';
+    }
+
     function OcultarTarjeta() {
         var tarjeta = document.getElementById('card_cuotas');
         tarjeta.style.display = 'none';
+    }
+
+    function OcultarMedioPago() {
+        var MedioPago = document.getElementById('card_MedioPago');
+        MedioPago.style.display = 'none';
     }
 
     var cuentaproductos = 0;
@@ -1110,9 +1123,9 @@
                             
                             <!--card-->
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                <div class="card">
+                                <div class="card" id="card_MedioPago">
                                     <div class="card-header">
-                                        <div id="" class="row">
+                                        <div  class="row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <strong>
                                                     Impuestos
