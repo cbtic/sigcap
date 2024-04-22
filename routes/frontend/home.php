@@ -650,6 +650,7 @@ Route::get('sesion/obtener_anio_periodo/{id_periodo}', [SesionController::class,
 Route::post('planillaDelegado/listar_recibo_honorario_ajax', [PlanillaDelegadoController::class, 'listar_recibo_honorario_ajax'])->name('planillaDelegado.listar_recibo_honorario_ajax');
 Route::get('planillaDelegado/obtener_datos_recibo/{id}', [PlanillaDelegadoController::class, 'obtener_datos_recibo'])->name('planillaDelegado.obtener_datos_recibo');
 Route::post('planillaDelegado/send_recibo_honorario', [PlanillaDelegadoController::class, 'send_recibo_honorario'])->name('planillaDelegado.send_recibo_honorario');
+Route::get('planillaDelegado/modal_recibo/{id}', [PlanillaDelegadoController::class, 'modal_recibo'])->name('planillaDelegado.modal_recibo');
 
 Route::get('derecho_revision/credipago_pdf/{id}', [DerechoRevisionController::class, 'credipago_pdf'])->name('derecho_revision.credipago_pdf');
 Route::get('derecho_revision/credipago_pdf_eficicaciones/{id}', [DerechoRevisionController::class, 'credipago_pdf_eficicaciones'])->name('derecho_revision.credipago_pdf_eficicaciones');
