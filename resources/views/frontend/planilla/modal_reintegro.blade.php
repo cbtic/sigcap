@@ -357,6 +357,7 @@ function fn_save(){
 								<option value="" selected="selected">--Seleccionar--</option>
 								<option value="1">Movilidad</option>
 								<option value="2">Sesi&oacute;n</option>
+								<option value="3">Coordinaci&oacute;n</option>
 							</select>
 						</div>
 						<div class="col-lg-2">

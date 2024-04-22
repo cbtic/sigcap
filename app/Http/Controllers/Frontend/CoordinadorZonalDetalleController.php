@@ -48,7 +48,7 @@ class CoordinadorZonalDetalleController extends Controller
 		echo json_encode($result);
 	}
 
-    public function modal_Zonal_nuevoZonalDetalle($id){
+    public function modal_zonal_nuevoZonalDetalle($id){
 		
 		$coordinadorZonalDetalle = new CoordinadorZonalDetalle;
         $tablaMaestra_model = new TablaMaestra;
@@ -68,7 +68,7 @@ class CoordinadorZonalDetalleController extends Controller
 		
 		//$concepto = $concepto_model->getConceptoAll();
 		
-		return view('frontend.coordinador_zonal.modal_Zonal_nuevoZonalDetalle',compact('id','coordinadorZonalDetalle','periodo','municipalidad','tipo_coordinador','periodo_ultimo'));
+		return view('frontend.coordinador_zonal.modal_zonal_nuevoZonalDetalle',compact('id','coordinadorZonalDetalle','periodo','municipalidad','tipo_coordinador','periodo_ultimo'));
 	
 	}
 
