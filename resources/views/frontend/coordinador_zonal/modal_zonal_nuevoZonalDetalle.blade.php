@@ -231,6 +231,8 @@ $(document).ready(function() {
 
 	$("#tipo_nombre").select2({ width: '100%' });
 
+	$("#municipalidad").select2({ width: '100%' });
+
 });
 
 function validacion(){
