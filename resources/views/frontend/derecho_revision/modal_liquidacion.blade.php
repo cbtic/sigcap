@@ -292,7 +292,7 @@ function fn_save_requisito(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Ver Documentos
+				Ver Credipagos
 			</div>
 			
             <div class="card-body">
@@ -327,7 +327,7 @@ function fn_save_requisito(){
 							<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->igv, 2, '.', ',');?></td>
 							<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->total, 2, '.', ',');?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
-                            <td class="text-left" style="vertical-align:middle"><button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="credipago_pdf_('<?php echo $row->id?>')" ><i class="fa fa-edit"></i> Ver Certificado</button></td>
+                            <td class="text-left" style="vertical-align:middle"><button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="credipago_pdf_('<?php echo $row->id?>')" ><i class="fa fa-edit"></i> Ver Credipago</button></td>
 						</tr>
 						<?php 
 							}	
