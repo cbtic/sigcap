@@ -464,12 +464,24 @@ function datatablenew(){
 				},
 				{
 					"mRender": function (data, type, row) {
+						var fecha_operacion= "";
+						if(row.fecha_operacion!= null){
+							var dateParts = row.fecha_operacion.split(' ');
+							fecha_operacion = dateParts[0];
+						}
+						return fecha_operacion;
+					},
+					"bSortable": false,
+					"aTargets": [10]
+				},
+				{
+					"mRender": function (data, type, row) {
 						var id_grupo = "";
 						if(row.id_grupo!= null)id_grupo = row.id_grupo;
 						return id_grupo;
 					},
 					"bSortable": false,
-					"aTargets": [10]
+					"aTargets": [11]
 				},									
 				{
 					"mRender": function (data, type, row) {
@@ -478,7 +490,7 @@ function datatablenew(){
 						return provision;
 					},
 					"bSortable": false,
-					"aTargets": [11]
+					"aTargets": [12]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -487,8 +499,9 @@ function datatablenew(){
 						return cancelacion;
 					},
 					"bSortable": false,
-					"aTargets": [12]
+					"aTargets": [13]
 				},
+
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -514,7 +527,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [13],
+					"aTargets": [14],
 				},
 
             ]
