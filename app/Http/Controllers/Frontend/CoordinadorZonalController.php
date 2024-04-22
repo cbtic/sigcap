@@ -143,7 +143,7 @@ class CoordinadorZonalController extends Controller
         $periodo = $periodo_model->getPeriodoVigenteAll();
         $mes = $tablaMaestra_model->getMaestroByTipo(116);
         $estado_sesion = $tablaMaestra_model->getMaestroByTipo(109);
-        $municipalidad = $municipalidad_model->getMunicipalidadOrden();
+        $municipalidad = $municipalidad_model->getMunicipalidadCoordinador($id);
 		
 		//$concepto = $concepto_model->getConceptoAll();
 		
@@ -166,7 +166,8 @@ class CoordinadorZonalController extends Controller
 
 		/**********Comision**************/
 
-		$denominacion = "COORDINADOR ZONAL ".$request->zonal;
+		//var_dump($request->zonal_texto);exit();
+		$denominacion = $request->zonal_texto;
 		$comisionExiste = Comisione::where("denominacion",$denominacion)->first();
 		
 		if($comisionExiste){
@@ -409,5 +410,4 @@ class CoordinadorZonalController extends Controller
         return view('frontend.coordinador_zonal.modal_informes',compact('informe'));
 		
     }
-    
 }

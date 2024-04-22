@@ -248,6 +248,9 @@
 								@can('Tabla Maestra')
                                 <a href="/tabla_maestra/consulta_tabla_maestra" class="dropdown-item">Tabla Maestra</a>
 								@endcan
+								@can('Tabla Maestra')
+                                <a href="/coordinador_zonal/consulta_coordinador_detalle" class="dropdown-item">Zonales</a>
+								@endcan
 								<!--@can('Profesion')
 								<a href="/profesion/consulta_profesion" class="dropdown-item">Profesi&oacute;n</a>
 								@endcan

@@ -87,7 +87,8 @@ class PlanillaDelegadoController extends Controller
 		$regione_model = new Regione;
 		$comisionSesionDelegado_model = new ComisionSesionDelegado;
 		
-		$periodo = $periodoComision_model->getPeriodoComisionAll();
+		$periodo = $periodoComision_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("activo",1)->orderBy("id","desc")->first();
 		$region = $regione_model->getRegionAll();
 		$id_regional="5";
 		
@@ -109,7 +110,7 @@ class PlanillaDelegadoController extends Controller
 			$delegadoReintegro = new DelegadoReintegro;
 		}
 		
-		return view('frontend.planilla.modal_reintegro',compact('id','delegadoReintegro','region','id_regional','periodo','mes','comisionDelegado'/*,'delegados'*/));
+		return view('frontend.planilla.modal_reintegro',compact('id','delegadoReintegro','region','id_regional','periodo','mes','comisionDelegado','periodo_ultimo'/*,'delegados'*/));
 
     }
 	

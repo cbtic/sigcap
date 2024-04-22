@@ -39,7 +39,7 @@ class PeriodoComisione extends Model
 	public function getAnioByFecha($fecha_inicio,$fecha_fin){
 		
 		$cad = "select to_char(anio::date,'yyyy')anio 
-from generate_series(('01-01-'||to_char('".$fecha_inicio."'::date,'yyyy'))::date,('01-01-'||to_char('".$fecha_fin."'::date,'yyyy'))::date, '1 years'::interval) anio";
+        from generate_series(('01-01-'||to_char('".$fecha_inicio."'::date,'yyyy'))::date,('01-01-'||to_char('".$fecha_fin."'::date,'yyyy'))::date, '1 years'::interval) anio";
 
 		$data = DB::select($cad);
         return $data;
