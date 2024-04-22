@@ -18,7 +18,7 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 
-	v_campos=' pdd.id, pc.descripcion periodo, pd.periodo anio, pd.mes , a.numero_cap, tm.denominacion situacion, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres agremiado, p.numero_ruc ruc, c.denominacion municipalidad, pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado, pd.estado,pdd.id_grupo, 
+	v_campos=' pdd.id, pc.descripcion periodo, pd.periodo anio, pd.mes , a.numero_cap, tm.denominacion situacion, p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres agremiado, p.numero_ruc ruc, c.denominacion municipalidad, pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado, pd.estado,pdd.id_grupo, pdd.fecha_operacion,
 	(case when (select count(*) from asiento_planillas ap where ap.id_planilla_delegado_detalle = pdd.id and ap.id_tipo = 1 )>0 then ''Si'' else ''No'' end) provision,
 	(case when (select count(*) from asiento_planillas ap where ap.id_planilla_delegado_detalle = pdd.id and ap.id_tipo = 2 )>0 then ''Si'' else ''No'' end) cancelacion ';
 
