@@ -35,14 +35,14 @@ begin
 	left join tabla_maestras tm3 on c.id_tipo_comision = tm3.codigo::int And tm3.tipo =''102'' 
 	left join tabla_maestras tm4 on cs.id_tipo_sesion = tm4.codigo::int And tm4.tipo =''71''';
 	
-	v_where = ' Where 1=1  and c.denominacion ilike ''%coordinador%''';
+	v_where = ' Where 1=1 ';
 	
 	If p_agremiado<>'' Then
 	 v_where:=v_where||'And t3.apellido_paterno||'' ''||t3.apellido_materno||'' ''||t3.nombres ilike ''%'||p_agremiado||'%'' ';
 	End If;
 
 	if p_periodo<>'' Then
-	 v_where:=v_where||'And cz.id_periodo = '''||p_periodo||''' ';
+	 v_where:=v_where||'And pc.id = '''||p_periodo||''' ';
 	End If;
 
 	IF p_mes <> '' THEN

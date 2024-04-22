@@ -255,7 +255,7 @@ function fn_save(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Edici&oacute;n Seguros
+				Registro Reintegro
 			</div>
 			
             <div class="card-body">
@@ -275,7 +275,7 @@ function fn_save(){
 							$readonly_=$id>0?'':"readonly='readonly'";
 						?>
 						
-						<div class="col-lg-12">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
 								<select name="id_regional" readonly id="id_regional" class="form-control form-control-sm" onChange="">
@@ -290,13 +290,17 @@ function fn_save(){
 							</div>
 						</div>
 						
-						<div class="col-lg-6">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label">Periodo</label>
-								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerDelegadoPerido()">
+								<input type="hidden" name="id_periodo_" id="id_periodo_" value="" />
+								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerDelegadoPerido()" disabled='disabled'>
 									<?php
 									foreach ($periodo as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if($row->id==$delegadoReintegro->id_periodo)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<option value="<?php echo $row->id?>" 
+										<?php if($id>0 && $row->id==$delegadoReintegro->id_periodo)echo "selected='selected'"?>
+										<?php if($id==0 && $row->id==$periodo_ultimo->id)echo "selected='selected'"?>
+										><?php echo $row->descripcion?></option>
 									<?php 
 									}
 									?>
@@ -304,7 +308,7 @@ function fn_save(){
 							</div>
 						</div>
 
-						<div class="col-lg-6">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label">Mes</label>
 								<select name="mes" id="mes" class="form-control form-control-sm">
@@ -347,7 +351,21 @@ function fn_save(){
 							</div>
 						</div>
 						
-						<div class="col-lg-4">
+						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+							<label class="control-label form-control-sm">Tipo Reintegro</label>
+							<select name="estado" id="estado" class="form-control form-control-sm">
+								<option value="" selected="selected">--Seleccionar--</option>
+								<option value="1">Movilidad</option>
+								<option value="2">Sesi&oacute;n</option>
+							</select>
+						</div>
+						<div class="col-lg-2">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Cantidad</label>
+								<input id="cantidad" name="cantidad" class="form-control form-control-sm" value="<?php echo $delegadoReintegro->importe?>" type="text"/>
+							</div>
+						</div>
+						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Importe</label>
 								<input id="importe" name="importe" class="form-control form-control-sm" value="<?php echo $delegadoReintegro->importe?>" type="text"/>

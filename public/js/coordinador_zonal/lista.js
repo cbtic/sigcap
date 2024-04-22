@@ -1072,6 +1072,7 @@ function GuardarCoordinadorZonal(){
 	var nombre = $('#nombre').val();
 	var zonal = $('#zonal').val();
 	var estado_coordinador = $('#estado_coordinador').val();
+	var zonal_texto = $('#zonal option:selected').text();
 	//var moneda = $('#moneda').val();
 	//var importe = $('#importe').val();
 	//var estado = $('#estado').val();
@@ -1081,7 +1082,7 @@ function GuardarCoordinadorZonal(){
     $.ajax({
 			url: "/coordinador_zonal/send_coordinador_zonal_nuevoCoordinadorZonal",
             type: "POST",
-            data : {_token:_token,id:id,numero_cap:numero_cap,periodo:periodo,regional:regional,dni:dni,apellido_paterno:apellido_paterno,apellido_materno:apellido_materno,nombre:nombre,zonal:zonal,estado_coordinador:estado_coordinador},
+            data : {_token:_token,id:id,numero_cap:numero_cap,periodo:periodo,regional:regional,dni:dni,apellido_paterno:apellido_paterno,apellido_materno:apellido_materno,nombre:nombre,zonal:zonal,estado_coordinador:estado_coordinador,zonal_texto:zonal_texto},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');

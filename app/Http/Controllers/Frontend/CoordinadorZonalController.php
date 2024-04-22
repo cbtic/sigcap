@@ -166,7 +166,8 @@ class CoordinadorZonalController extends Controller
 
 		/**********Comision**************/
 
-		$denominacion = "COORDINADOR ZONAL ".$request->zonal;
+		//var_dump($request->zonal_texto);exit();
+		$denominacion = $request->zonal_texto;
 		$comisionExiste = Comisione::where("denominacion",$denominacion)->first();
 		
 		if($comisionExiste){
@@ -408,6 +409,12 @@ class CoordinadorZonalController extends Controller
 		
         return view('frontend.coordinador_zonal.modal_informes',compact('informe'));
 		
+    }
+
+	public function consulta_coordinador_detalle(){
+        
+        return view('frontend.coordinador_zonal.all_coordinador_detalle');
+
     }
     
 }
