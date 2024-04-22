@@ -143,7 +143,7 @@ class CoordinadorZonalController extends Controller
         $periodo = $periodo_model->getPeriodoVigenteAll();
         $mes = $tablaMaestra_model->getMaestroByTipo(116);
         $estado_sesion = $tablaMaestra_model->getMaestroByTipo(109);
-        $municipalidad = $municipalidad_model->getMunicipalidadOrden();
+        $municipalidad = $municipalidad_model->getMunicipalidadCoordinador($id);
 		
 		//$concepto = $concepto_model->getConceptoAll();
 		
@@ -410,11 +410,4 @@ class CoordinadorZonalController extends Controller
         return view('frontend.coordinador_zonal.modal_informes',compact('informe'));
 		
     }
-
-	public function consulta_coordinador_detalle(){
-        
-        return view('frontend.coordinador_zonal.all_coordinador_detalle');
-
-    }
-    
 }

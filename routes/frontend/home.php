@@ -54,6 +54,7 @@ use App\Http\Controllers\Frontend\ProyectoController;
 use App\Http\Controllers\Frontend\BeneficiarioController;
 use App\Http\Controllers\Frontend\AgremiadoRolesController;
 use App\Http\Controllers\Frontend\TablaMaestraController;
+use App\Http\Controllers\Frontend\CoordinadorZonalDetalleController;
 
 /*
  * Frontend Controllers
@@ -690,5 +691,10 @@ Route::get('derecho_revision/modal_reintegroRU/{id}', [DerechoRevisionController
 Route::post('derecho_revision/listar_solicitud_periodo', [DerechoRevisionController::class, 'listar_solicitud_periodo'])->name('derecho_revision.listar_solicitud_periodo');
 Route::post('adelanto/send_detalle_adelanto', [AdelantoController::class, 'send_detalle_adelanto'])->name('adelanto.send_detalle_adelanto');
 Route::post('derecho_revision/listar_solicitud_periodo_hu', [DerechoRevisionController::class, 'listar_solicitud_periodo_hu'])->name('derecho_revision.listar_solicitud_periodo_hu');
-Route::get('coordinador_zonal/consulta_coordinador_detalle', [CoordinadorZonalController::class, 'consulta_coordinador_detalle'])->name('coordinador_zonal.consulta_coordinador_detalle');
+Route::get('coordinador_zonal/consulta_coordinador_detalle', [CoordinadorZonalDetalleController::class, 'consulta_coordinador_detalle'])->name('coordinador_zonal.consulta_coordinador_detalle');
+Route::post('coordinador_zonal/listar_coordinadorZonal_detalle_ajax', [CoordinadorZonalDetalleController::class, 'listar_coordinadorZonal_detalle_ajax'])->name('coordinador_zonal.listar_coordinadorZonal_detalle_ajax');
+Route::get('coordinador_zonal/modal_Zonal_nuevoZonalDetalle/{id}', [CoordinadorZonalDetalleController::class, 'modal_Zonal_nuevoZonalDetalle'])->name('coordinador_zonal.modal_Zonal_nuevoZonalDetalle');
+Route::post('coordinador_zonal/send_zonal_nuevoZonal', [CoordinadorZonalDetalleController::class, 'send_zonal_nuevoZonal'])->name('coordinador_zonal.send_zonal_nuevoZonal');
+Route::get('coordinador_zonal/obtener_datos_zonal_detalle/{zonal}', [CoordinadorZonalDetalleController::class, 'obtener_datos_zonal_detalle'])->name('coordinador_zonal.obtener_datos_zonal_detalle');
+Route::get('coordinador_zonal/eliminar_zonal_detalle/{id}/{estado}', [CoordinadorZonalDetalleController::class, 'eliminar_zonal_detalle'])->name('coordinador_zonal.eliminar_zonal_detalle');
 

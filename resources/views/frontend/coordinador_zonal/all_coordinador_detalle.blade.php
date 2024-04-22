@@ -149,10 +149,47 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-				
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="zonal" name="zonal" placeholder="Denominacion">
-					</div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+				    <?php 
+                    if($periodo_activo){
+                    ?>
+                    <input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+                    <select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="" disabled="disabled">
+                        <option value="0">--Periodo--</option>
+                        <?php
+                        foreach ($periodo as $row) {?>
+                        <option value="<?php echo $row->id?>" <?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+                        <?php 
+                        }
+                        ?>
+                    </select>
+                    <?php
+                    }else{
+                    ?>
+                    <select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()" disabled="disabled">
+                        <option value="0">--Periodo--</option>
+                        <?php
+                        foreach ($periodo as $row) {?>
+                        <option value="<?php echo $row->id?>" <?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
+                        <?php 
+                        }
+                        ?>
+                    </select>
+                    <?php } ?>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                            <select name="zonal" id="zonal" class="form-control form-control-sm" onChange="">
+                                <option value="">--Selecionar Zonal--</option>
+                                <?php
+                                foreach ($tipo_coordinador as $row) {?>
+                                <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
 					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
@@ -163,25 +200,21 @@
 					</div>
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success" value="Nuevo" type="button" id="btnNuevo" style="margin-left:15px" />
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscarZonal" />
+						<input class="btn btn-success" value="Nuevo" type="button" id="btnNuevoZonal" style="margin-left:15px" />
 					</div>
 				</div>
 				
                 <div class="card-body">
 
                     <div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
+                    <table id="tblZonal" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
                             <th>Id</th>
-                            <th>Regional</th>
                             <th>Periodo</th>
-							<th>Cap</th>
-                            <th>Agremiado</th>
-							<th>Comisi&oacute;n</th>
-							<th>Mes</th>
-							<th>Importe</th>
+                            <th>Zonal</th>
+                            <th>Municipalidad</th>
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -220,6 +253,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/planilla/reintegro.js') }}"></script>
+<script src="{{ asset('js/coordinador_zonal/lista.js') }}"></script>
 
 @endpush
