@@ -292,38 +292,30 @@ class PlanillaDelegadoController extends Controller
 		
 		$id_user = Auth::user()->id;
 
-		$id = $request->id_recibo;
+		//$id = $request->id_recibo;
+		$id = $request->id;
 
-		if ($request->selTipo=='S' or $request->selTipo==''){
-			$planillaDelegadoDetalle = PlanillaDelegadoDetalle::find($id);
+		$planillaDelegadoDetalle = PlanillaDelegadoDetalle::find($id);
 			
-			$planillaDelegadoDetalle->tipo_comprobante = $request->tipo_comprobante;
-			$planillaDelegadoDetalle->numero_comprobante = $request->numero_comprobante;
-			$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
-			$planillaDelegadoDetalle->fecha_vencimiento = $request->fecha_vencimiento;
+		$planillaDelegadoDetalle->tipo_comprobante = $request->tipo_comprobante;
+		$planillaDelegadoDetalle->numero_comprobante = $request->numero_comprobante;
+		$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
+		$planillaDelegadoDetalle->fecha_vencimiento = $request->fecha_vencimiento;			
+		$planillaDelegadoDetalle->cancelado = $request->cancelado;
+		$planillaDelegadoDetalle->save();
+
+		if ($request->selTipo=='S'){
+
+			$planillaDelegadoDetalle = PlanillaDelegadoDetalle::find($id);
 			$planillaDelegadoDetalle->numero_operacion = $request->numero_operacion;
-			$planillaDelegadoDetalle->cancelado = $request->cancelado;
+			$planillaDelegadoDetalle->fecha_operacion= $request->fecha_operacion;
 			$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
 			$planillaDelegadoDetalle->save();
-
-
-
-			/*
-			$planillaDelegadoDetalle->tipo_comprobante = $request->tipo_comprobante;
-			$planillaDelegadoDetalle->numero_comprobante = $request->numero_comprobante;
-			$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
-			$planillaDelegadoDetalle->fecha_vencimiento = $request->fecha_vencimiento;
-			$planillaDelegadoDetalle->numero_operacion = $request->numero_operacion;
-			$planillaDelegadoDetalle->cancelado = $request->cancelado;
-			$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
-			$planillaDelegadoDetalle->save();
-			*/
 
 		}else if ($request->selTipo=='T'){
 			$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle();
 			$data = $planillaDelegadoDetalle_model->actualizarReciboHonorario($request->id_periodo_bus, $request->anio, $request->mes,
-			$request->id_grupo, $request->tipo_comprobante, $request->numero_comprobante, $request->fecha_comprobante, $request->fecha_vencimiento,
-			$request->numero_operacion, $request->cancelado, $id_user);	
+			$request->id_grupo, $request->cancelado,$request->numero_operacion,$request->fecha_operacion, $id_user);	
 		}
 
 
