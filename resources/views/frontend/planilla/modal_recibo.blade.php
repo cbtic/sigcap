@@ -121,10 +121,18 @@ $.mask.definitions['p'] = "[Mm]";
 });
 */
 $(document).ready(function() {
-	//$("#concepto").select2({ width: '100%' });
-	//$('#hora_solicitud').focus();
-	//$('#hora_solicitud').mask('00:00');
-	//$("#id_empresa").select2({ width: '100%' });
+	$('#fecha_comprobante').datepicker({
+	   format: "dd-mm-yyyy",
+	   autoclose: true,
+	});
+	$('#fecha_vencimiento').datepicker({
+	   format: "dd-mm-yyyy",
+	   autoclose: true,
+	});
+	$('#fecha_operacion').datepicker({
+	   format: "dd-mm-yyyy",
+	   autoclose: true,
+	});
 
 	$('#chk_activar_numero_operacion').change(function(){
         if($(this).is(':checked')){
@@ -268,17 +276,18 @@ function send_recibo_honorario(){
 	var cancelado = $('#chk_activar_numero_operacion').prop('checked') ? 1 : 0;
 	var numero_operacion = $('#numero_operacion').val();
 	var fecha_operacion = $('#fecha_operacion').val();
+	var selTipo = $('#selTipo').val();
 
-	alert(id); exit();
+	//alert(cancelado); exit();
 	
     $.ajax({
 			url:"/planillaDelegado/send_recibo_honorario",
             type: "POST",
-            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,cancelado:cancelado,numero_operacion:numero_operacion,fecha_operacion:fecha_operacion},
+            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,cancelado:cancelado,numero_operacion:numero_operacion,fecha_operacion:fecha_operacion,selTipo:selTipo},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				//datatablenew();
+				//window.location.reload();
+				datatablenew();
 								
             }
     });
@@ -360,7 +369,7 @@ function send_recibo_honorario(){
 					<div class="col-lg-4">
 						<div class="form-group">
 							<label class="control-label form-control-sm">Fecha Comprobante</label>
-							<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php echo $datosRecibo[0]->fecha_comprobante?>" type="text"  >
+							<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php echo $datosRecibo[0]->fecha_comprobante?>" type="text"  >							
 						</div>
 					</div>
 
