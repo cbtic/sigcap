@@ -483,23 +483,25 @@ label.form-control-sm{
 												</div>
 											</div>
 											<hr>
+<!--
+
 											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
 											
 												<div style="clear:both"></div>
 												
 												<div class="row">
-													<input type="hidden" name="id_recibo" id="id_recibo" value="<?php echo $planillaDelegadoDetalle->id?>">
+													<input type="hidden" name="id_recibo" id="id_recibo" value="<?php //echo $planillaDelegadoDetalle->id?>">
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														N&deg; CAP
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-														<input type="text" name="numero_cap" id="numero_cap" value="<?php echo $planillaDelegadoDetalle->numero_Cap?>" class="form-control form-control-sm" readonly="readonly">
+														<input type="text" name="numero_cap" id="numero_cap" value="<?php //echo $planillaDelegadoDetalle->numero_Cap?>" class="form-control form-control-sm" readonly="readonly">
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														Nombre
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-														<input type="text" name="nombres" id="nombres" value="<?php echo $planillaDelegadoDetalle->agremiado?>" class="form-control form-control-sm" readonly="readonly">
+														<input type="text" name="nombres" id="nombres" value="<?php //echo $planillaDelegadoDetalle->agremiado?>" class="form-control form-control-sm" readonly="readonly">
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														Tipo Comprobante
@@ -508,11 +510,11 @@ label.form-control-sm{
 														<div class="form-group">
 															<select name="tipo_comprobante" id="tipo_comprobante" class="form-control form-control-sm" onchange="">
 																<option value="">--Selecionar--</option>
+																<?php 
+																//foreach ($tipo_comprobante as $row) {?>
+																<option value="<?php //echo $row->codigo?>" <?php //if($row->codigo=='13') echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
 																<?php
-																foreach ($tipo_comprobante as $row) {?>
-																<option value="<?php echo $row->codigo?>" <?php if($row->codigo=='13') echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-																<?php
-																}
+																//}
 																?>
 															</select>
 														</div>
@@ -549,16 +551,17 @@ label.form-control-sm{
 														N&uacute;mero Operaci&oacute;n
 													</div>
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-														<input type="text" name="numero_operacion" id="numero_operacion" value="<?php //echo $planillaDelegadoDetalle->numero_comprobante ?>" class="form-control form-control-sm">
+														<input type="text" name="numero_operacion" id="numero_operacion" value="" class="form-control form-control-sm">
 													</div>
 												
 													<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 														<input class="btn btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnGuardar" style="padding-left:25px;padding-right:25px;" />
 														<a href="javascript:void(0)" onClick="limpiar()" class="btn btn-warning btn-warning" style="margin-left:10px">Limpiar</a>
 													</div>
-												</div>
-												<!--****-->
+												</div>												
 											</div>
+
+															-->
 											
 											<div class="card">
 												<div class="card-header">

@@ -254,6 +254,28 @@ class PlanillaDelegadoController extends Controller
 
 	}
 
+	public function modal_recibo($id){
+		
+		$id_user = Auth::user()->id;
+		
+		$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle;
+		$datosRecibo = $planillaDelegadoDetalle_model->getDatosRecibo($id);
+
+		//if($id>0) $datosRecibo = PlanillaDelegadoDetalle::find($id);else $datosRecibo = new PlanillaDelegadoDetalle;
+
+		//print_r($datosRecibo); exit();
+
+		//print_r($datosRecibo[0]->id_agremiado); exit();
+
+		//$id_agremiado = $datosRecibo[0]->id_agremiado;
+
+		//$agremiado = new Agremiado;
+		//$agremiado = Agremiado::find($id_agremiado);
+
+
+		return view('frontend.planilla.modal_recibo',compact('id','datosRecibo', 'id_user'));
+	}		
+
 	public function send_recibo_honorario(Request $request){
 
 /*
