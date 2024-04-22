@@ -204,7 +204,7 @@
 					</li>
 					@endif
 
-					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales') || Gate::check('Plan contable') || Gate::check('Partida Presupuestal') || Gate::check('Centro de costos') || Gate::check('Multas Mantenimiento') || Gate::check('Tabla Maestra'))
+					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales') || Gate::check('Plan contable') || Gate::check('Partida Presupuestal') || Gate::check('Centro de costos') || Gate::check('Multas Mantenimiento') || Gate::check('Tabla Maestra') || Gate::check('Zonales'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
@@ -248,7 +248,7 @@
 								@can('Tabla Maestra')
                                 <a href="/tabla_maestra/consulta_tabla_maestra" class="dropdown-item">Tabla Maestra</a>
 								@endcan
-								@can('Tabla Maestra')
+								@can('Zonales')
                                 <a href="/coordinador_zonal/consulta_coordinador_detalle" class="dropdown-item">Zonales</a>
 								@endcan
 								<!--@can('Profesion')

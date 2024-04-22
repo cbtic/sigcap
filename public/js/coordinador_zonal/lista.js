@@ -1196,7 +1196,7 @@ function editarZonal(id){
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
 
 	$.ajax({
-			url: "/coordinador_zonal/modal_Zonal_nuevoZonalDetalle/"+id,
+			url: "/coordinador_zonal/modal_zonal_nuevoZonalDetalle/"+id,
 			type: "GET",
 			success: function (result) {
 					$("#diveditpregOpc").html(result);
