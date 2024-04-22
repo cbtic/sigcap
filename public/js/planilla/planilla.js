@@ -503,7 +503,9 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarRecibo('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalRecibo('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarRecibo('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						//html += '<a href="javascript:void(0)" onclick=eliminarPrestamo('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
@@ -533,6 +535,22 @@ function limpiar(){
 	$("#numero_operacion").val("");
 	$('#chk_activar_numero_operacion').prop('checked', false);
 	$('#numero_operacion').prop('readonly', true);
+}
+
+function modalRecibo(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/planillaDelegado/modal_recibo/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
 }
 
 function editarRecibo(id){
@@ -708,4 +726,6 @@ function send_recibo_honorario(){
             }
     });
 }
+
+
 

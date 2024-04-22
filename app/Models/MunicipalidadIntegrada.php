@@ -48,6 +48,34 @@ class MunicipalidadIntegrada extends Model
 		$data = DB::select($cad);
         return $data;
     }
+	
+	function getMunicipalidadDetalle($id_periodo_comision,$id_tipo_comision,$municipalidad){
+
+        $cad = "select distinct m.denominacion from mucipalidad_detalles md
+inner join municipalidad_integradas mi on md.id_municipalidad_integrada=mi.id  
+inner join municipalidades m on md.id_municipalidad=m.id
+where mi.id_periodo_comision='".$id_periodo_comision."' 
+and mi.id_tipo_comision = ".$id_tipo_comision."
+and m.denominacion='".$municipalidad."' 
+and mi.estado='1'";
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	function getMunicipalidadDetalleById($id){
+
+        $cad = "select md.id,m.denominacion 
+from mucipalidad_detalles md
+inner join municipalidad_integradas mi on md.id_municipalidad_integrada=mi.id  
+inner join municipalidades m on md.id_municipalidad=m.id
+where mi.id='".$id."'  
+and md.estado='1'
+and mi.estado='1'";
+
+		$data = DB::select($cad);
+        return $data;
+    }
 
     function getMuniIntegradaAll(){
 

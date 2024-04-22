@@ -154,13 +154,17 @@ function guardarFactura(){
 
 	var id_formapago_ = $('#id_formapago_').val();
 
-	//alert(id_formapago_);
+	//alert(total_fac_);
 
 	
 	
 	if(totalMedioPago!=total_fac_ && id_formapago_==1){
 		msg+="El total de medio de pago no coincide al total del comprobante..<br>";
 	}
+
+	
+
+	if (id_formapago_==2)
 
 
 	//alert(msg); exit();

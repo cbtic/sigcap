@@ -34,7 +34,7 @@ class PlanillaDelegadoDetalle extends Model
     function getDatosRecibo($id){     
         
         $cad = "select pdd.id, a.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.numero_ruc ruc, 
-        pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado,pdd.id_grupo
+        pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado,pdd.id_grupo, pdd.fecha_operacion, pdd.tipo_comprobante
         from planilla_delegado_detalles pdd 
         inner join agremiados a on pdd.id_agremiado = a.id
         inner join personas p on a.id_persona = p.id
@@ -45,10 +45,10 @@ class PlanillaDelegadoDetalle extends Model
         return $data;
     }
 
-    function actualizarReciboHonorario($id_periodo,$anio,$mes,$grupo,$tipo_comprobante,$numero_comprobante,$fecha_comprobante,$fecha_vencimiento,$numero_operacion,$cancelado,$id_usuario){
+    function actualizarReciboHonorario($id_periodo,$anio,$mes,$grupo,$cancelado,$numero_operacion,$fecha_operacion,$id_usuario){
   
         $cad = "
-            update planilla_delegado_detalles set numero_operacion= '".$numero_operacion."', cancelado= '".$cancelado."', id_usuario_actualiza= '".$id_usuario."'
+            update planilla_delegado_detalles set numero_operacion= '".$numero_operacion."', cancelado= '".$cancelado."',fecha_operacion= '".$fecha_operacion."', id_usuario_actualiza= '".$id_usuario."'
             where id in (
                 select pdd.id
                 from planilla_delegados pd 
@@ -57,7 +57,8 @@ class PlanillaDelegadoDetalle extends Model
                     and pd.periodo = '".$anio."' 
                     and pd.mes = '".$mes."' 
                     and pdd.estado = '1'
-                    and pdd.id_grupo = '".$grupo."' 
+                    and pdd.id_grupo = '".$grupo."'
+                    and pdd.id_grupo <> '' 
                 )
         ";
 /*

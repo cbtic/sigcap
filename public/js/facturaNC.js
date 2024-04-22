@@ -1,4 +1,4 @@
-//alert("ok");
+ //alert("ok");
 //jQuery.noConflict(true);
 
 $(document).ready(function () {
@@ -737,6 +737,70 @@ function obtenerTitular(){
 
 			
 		});
+
+		$("#totalP").val(total.toFixed(2));
+
+		//$("#igvd"+fila).val(igv);       
+        
+    }
+
+
+	function calcular_total_2(fila){
+
+        var totald=0;    
+		totald = $('#totald'+fila).val();
+
+		var imported =totald/1.18;  
+		var igv =  Number(totaldd) - Number(imported);
+
+
+		
+
+		alert(totald);
+
+		$("#igvd"+fila).val(igv.toFixed(2));
+
+		$("#imported"+fila).val(imported.toFixed(2));
+
+		
+		var gravadas=0;
+		igv=0;
+		var total=0;
+
+
+		$("input[name^='imported']").each(function(i, obj) {			
+			$(this).parent().parent().parent().find('#facturad_pu').val(Number(obj.value));
+		});
+
+		
+
+		$("input[name^='imported']").each(function(i, obj) {
+			//alert(obj.value);
+			gravadas = Number(obj.value) + Number(gravadas);
+
+			//contador += parseInt(obj.value);
+		});
+
+		$("#gravadas").val(gravadas.toFixed(2));
+
+		$("input[name^='igvd']").each(function(i, obj) {
+			//alert(obj.value);
+			igv = Number(obj.value) + Number(igv);
+
+			//contador += parseInt(obj.value);
+		});
+
+		$("#igv").val(igv.toFixed(2));
+
+		
+		$("input[name^='totald']").each(function(i, obj) {
+			//alert(obj.value);
+			total = Number(obj.value) + Number(total);
+
+			
+		});
+
+		
 
 		$("#totalP").val(total.toFixed(2));
 

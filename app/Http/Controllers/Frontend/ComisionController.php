@@ -436,7 +436,25 @@ class ComisionController extends Controller
 		$municipalidad_integradas = $municipalidadIntegrada_model->getMunicipalidadIntegradaAll($periodo,$tipo_agrupacion,$tipo_comision);
         return view('frontend.comision.lista_municipalidadIntegrada',compact('municipalidad_integradas'));
     }
+	
+	public function modal_municipalidadesIntegrada($id){
+		
+		$id_user = Auth::user()->id;
+		
+		$municipalidade_model = new Municipalidade;
+		$municipalidad = $municipalidade_model->getMunicipalidadAll();
+		
+		return view('frontend.comision.modal_municipalidadIntegrada',compact('id','municipalidad'));
 
+    }
+	
+	function obtener_municipalidadesIntegradaDetalle($id){
+
+        $municipalidadIntegrada_model = new MunicipalidadIntegrada;
+		$mucipalidad_detalles = $municipalidadIntegrada_model->getMunicipalidadDetalleById($id);
+        return view('frontend.comision.lista_municipalidad_detalle',compact('mucipalidad_detalles'));
+    }
+	
 	function obtener_comision($periodo,$tipo_comision,$cad_id,$estado){
 
 		if ($estado == "-9")$estado ="";
@@ -447,8 +465,66 @@ class ComisionController extends Controller
         return view('frontend.comision.lista_comision',compact('comision'));
     }
 	
+	public function send_municipalidad_detalle(Request $request){
+	
+		$id_user = Auth::user()->id;
+		$denominacion = "";
+		
+		$mucipalidadDetalle = new MucipalidadDetalle();
+		$mucipalidadDetalle->id_municipalidad = $request->id_municipalidad;
+		$mucipalidadDetalle->id_municipalidad_integrada = $request->id_municipalidad_integrada;
+		$mucipalidadDetalle->id_usuario_inserta = $id_user;
+		$mucipalidadDetalle->save();
+		
+		$municipalidadIntegrada = MunicipalidadIntegrada::find($request->id_municipalidad_integrada);
+		
+		$mucipalidadDetalle = MucipalidadDetalle::where("id_municipalidad_integrada",$request->id_municipalidad_integrada)->where("estado","1")->orderBy("id","asc")->get();
+		
+		foreach($mucipalidadDetalle as $row){		
+			$municipalidad = Municipalidade::find($row->id_municipalidad);
+			$denominacion .= $municipalidad->denominacion." - ";
+		}
+		
+		$denominacion = substr($denominacion,0,strlen($denominacion)-3);
+		$municipalidadIntegrada->denominacion=$denominacion; 
+		$municipalidadIntegrada->save();
+		
+		$comision = Comisione::where("id_municipalidad_integrada",$request->id_municipalidad_integrada)->where("estado","1")->first();
+		$comision->denominacion=$denominacion; 
+		$comision->save();
+		
+	}
+	
+	public function eliminar_municipalidad_detalle($id)
+    {
+		$mucipalidadDetalle = MucipalidadDetalle::find($id);
+		$mucipalidadDetalle->estado = 0;
+		$mucipalidadDetalle->save();
+		
+		$mucipalidadDetalles = MucipalidadDetalle::where("id_municipalidad_integrada",$mucipalidadDetalle->id_municipalidad_integrada)->where("estado","1")->orderBy("id","asc")->get();
+		
+		$denominacion = "";
+		
+		foreach($mucipalidadDetalles as $row){		
+			$municipalidad = Municipalidade::find($row->id_municipalidad);
+			$denominacion .= $municipalidad->denominacion." - ";
+		}
+		
+		$denominacion = substr($denominacion,0,strlen($denominacion)-3);
+		
+		$municipalidadIntegrada = MunicipalidadIntegrada::find($mucipalidadDetalle->id_municipalidad_integrada);
+		$municipalidadIntegrada->denominacion=$denominacion; 
+		$municipalidadIntegrada->save();
+		
+		$comision = Comisione::where("id_municipalidad_integrada",$mucipalidadDetalle->id_municipalidad_integrada)->where("estado","1")->first();
+		$comision->denominacion=$denominacion; 
+		$comision->save();
+		
+		echo $mucipalidadDetalle->id;
+    }
+	
 	public function send_comision(Request $request){
-
+		
 		//print_r($request->periodo).exit();
 		$id_user = Auth::user()->id;
 		$sw = true;
@@ -456,51 +532,84 @@ class ComisionController extends Controller
 
 		$municipalidades = $request->check_;
 		$denominacion = "";
+		
+		/*******************/
+		$obs = "";
+		$arrayMunicipalidad = array();
+		$municipalidadIntegrada_model = new MunicipalidadIntegrada();
 		foreach($municipalidades as $row){	
 			$municipalidad = Municipalidade::find($row);
-			$denominacion .= $municipalidad->denominacion." - ";
-		}
-
-		if($denominacion!=""){
-
-			if($request->periodo!="")
-			{
-				$denominacion = substr($denominacion,0,strlen($denominacion)-3);
-		
-				$municipalidadIntegrada = new MunicipalidadIntegrada();
-				$municipalidadIntegrada->denominacion = $denominacion;
-				$municipalidadIntegrada->id_vigencia = 374;
-				if(count($municipalidades)>1){
-					$municipalidadIntegrada->id_tipo_agrupacion = 1;
-				}else{
-					$municipalidadIntegrada->id_tipo_agrupacion = 2;}
-				/*}*/
-				$municipalidadIntegrada->id_tipo_comision = $request->tipo_comision;
-				$municipalidadIntegrada->id_regional = 5;
-				$municipalidadIntegrada->id_periodo_comision = $request->periodo;
-				//$municipalidadIntegrada->id_coodinador = 1;
-				$municipalidadIntegrada->id_usuario_inserta = $id_user;
-
-				$municipalidadIntegrada->save();
-				$id_municipalidad_integrada = $municipalidadIntegrada->id;
-	
-				foreach($municipalidades as $row){	
-					$mucipalidadDetalle = new MucipalidadDetalle();
-					$mucipalidadDetalle->id_municipalidad = $row;
-					$mucipalidadDetalle->id_municipalidad_integrada = $id_municipalidad_integrada;
-					$mucipalidadDetalle->id_usuario_inserta = $id_user;
-					//$mucipalidadDetalle->estado = "1";
-					$mucipalidadDetalle->save();
+			//$denominacion .= $municipalidad->denominacion." - ";
+			$municipalidadIntegrada = MunicipalidadIntegrada::where("id_periodo_comision",$request->periodo)->where("id_tipo_comision",$request->tipo_comision)->where("denominacion",$municipalidad->denominacion)->where("estado","1")->first();
+			if($municipalidadIntegrada){
+				$obs .= $municipalidad->denominacion.",";
+				$arrayMunicipalidad[] = $municipalidad->denominacion;
+			}
+			
+			$municipalidadIntegrada2 = $municipalidadIntegrada_model->getMunicipalidadDetalle($request->periodo,$request->tipo_comision,$municipalidad->denominacion);
+			if($municipalidadIntegrada2){
+				if(!in_array($municipalidad->denominacion, $arrayMunicipalidad)){
+					$obs .= $municipalidad->denominacion.",";
 				}
 			}
-			else {
-				$sw = false;
-				//$msg = "Debe ingresar el periodo !!!";
-			}
+			
 		}
+		
+		if(strlen($obs)>1)$obs=substr($obs,0,-1);	
+		
+		/*******************/
+		
+		if($obs==""){
+		
+			foreach($municipalidades as $row){	
+				$municipalidad = Municipalidade::find($row);
+				$denominacion .= $municipalidad->denominacion." - ";
+			}
+	
+			if($denominacion!=""){
+	
+				if($request->periodo!="")
+				{
+					$denominacion = substr($denominacion,0,strlen($denominacion)-3);
+			
+					$municipalidadIntegrada = new MunicipalidadIntegrada();
+					$municipalidadIntegrada->denominacion = $denominacion;
+					$municipalidadIntegrada->id_vigencia = 374;
+					if(count($municipalidades)>1){
+						$municipalidadIntegrada->id_tipo_agrupacion = 1;
+					}else{
+						$municipalidadIntegrada->id_tipo_agrupacion = 2;}
+					/*}*/
+					$municipalidadIntegrada->id_tipo_comision = $request->tipo_comision;
+					$municipalidadIntegrada->id_regional = 5;
+					$municipalidadIntegrada->id_periodo_comision = $request->periodo;
+					//$municipalidadIntegrada->id_coodinador = 1;
+					$municipalidadIntegrada->id_usuario_inserta = $id_user;
+	
+					$municipalidadIntegrada->save();
+					$id_municipalidad_integrada = $municipalidadIntegrada->id;
+		
+					foreach($municipalidades as $row){	
+						$mucipalidadDetalle = new MucipalidadDetalle();
+						$mucipalidadDetalle->id_municipalidad = $row;
+						$mucipalidadDetalle->id_municipalidad_integrada = $id_municipalidad_integrada;
+						$mucipalidadDetalle->id_usuario_inserta = $id_user;
+						//$mucipalidadDetalle->estado = "1";
+						$mucipalidadDetalle->save();
+					}
+				}
+				else {
+					$sw = false;
+					//$msg = "Debe ingresar el periodo !!!";
+				}
+			}
+		
+		}
+		
+		$array["obs"] = $obs;
 		$array["sw"] = $sw;
 			//$array["msg"] = $msg;
-			echo json_encode($array);
+		echo json_encode($array);
 
     }
 

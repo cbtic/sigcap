@@ -694,6 +694,14 @@ class ComprobanteController extends Controller
 */
 
 
+            if ($id_concepto == 26527 || $id_concepto == 26412 ) {
+                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                $agremiado->id_situacion = "73";
+                $agremiado->save();
+            }
+
+
+
             if ($id_concepto == 26411) {
 
                 $id_persona = $request->persona;
@@ -701,12 +709,20 @@ class ComprobanteController extends Controller
                 $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
                 $total_ = $totalDeuda->total;
 
-                if ($total_ == "0") {
+                if ($total_ <= 2) {
                     $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
                     $agremiado->id_situacion = "73";
                     $agremiado->save();
                 }
+                else{
+                    $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                    $agremiado->id_situacion = "74";
+                    $agremiado->save();
+                }
+
             }
+
+
 
             if(isset($request->idMedio)):
                 foreach ($request->idMedio as $key => $value):
@@ -988,11 +1004,13 @@ class ComprobanteController extends Controller
     public function nc_edita(Request $request){
 
         $id_caja = $request->id_caja_;
-
         
         $id = $request->id_comprobante;
+        echo($id);
+        echo("-");
 
         $id_origen= $request->id_comprobante_origen;
+        echo($id_origen);
 
         
         if ($id=="" ){
@@ -1012,7 +1030,10 @@ class ComprobanteController extends Controller
 			$id_caja = (isset($caja_usuario->id_caja))?$caja_usuario->id_caja:0;
 		}
        
-      
+      print_r($trans); 
+      echo($id);
+     // exit();
+
         if ( $trans == "FN"){
 
             $comprobante_model=new Comprobante;
@@ -1036,6 +1057,7 @@ class ComprobanteController extends Controller
                 'tipo' => $comprobante->tipo
             ])->get();
         }
+       // print_r($comprobante); exit();
 
         if ($comprobante->tipo=="BV"){
             $persona_model= new Comprobante;
@@ -1051,11 +1073,53 @@ class ComprobanteController extends Controller
         if ($comprobante->tipo=="FT"){
             $empresa_model= new Comprobante;
             $empresa=  $empresa_model->getEmpresaRuc($comprobante->cod_tributario);
-            $idcliente=$empresa->id;
-            $direccion=$empresa->direccion;
-            $correo=$empresa->email;
-            
+
+            if($comprobante){
+                $persona_model= new Comprobante;
+                $persona=  $persona_model->getPersonaRuc($comprobante->cod_tributario);
+                if($persona){
+                    $idcliente=$persona->id;                 
+                    $direccion=$persona->direccion;
+                    $correo=$persona->email;
+                }else{
+                    $idcliente=$empresa->id;
+                    $direccion=$empresa->direccion;
+                    $correo=$empresa->email;
+                }
+
+            }else{
+                 $idcliente=$empresa->id;
+                 $direccion=$empresa->direccion;
+                 $correo=$empresa->email;
+            }
+           
         }
+
+        if ($comprobante->tipo=="NC"||$comprobante->tipo=="ND"){
+            $empresa_model= new Comprobante;
+            $empresa=  $empresa_model->getEmpresaRuc($comprobante->cod_tributario);
+
+            if($comprobante){
+                $persona_model= new Comprobante;
+                $persona=  $persona_model->getPersonaRuc($comprobante->cod_tributario);
+                if($persona){
+                    $idcliente=$persona->id;                 
+                    $direccion=$persona->direccion;
+                    $correo=$persona->email;
+                }else{
+                    $idcliente=$empresa->id;
+                    $direccion=$empresa->direccion;
+                    $correo=$empresa->email;
+                }
+
+            }else{
+                 $idcliente=$empresa->id;
+                 $direccion=$empresa->direccion;
+                 $correo=$empresa->email;
+            }
+           
+        }
+ 
         
         $empresa_model = new Empresa;
         $serie_model = new TablaMaestra;
@@ -1078,11 +1142,12 @@ class ComprobanteController extends Controller
 
         $id_caja = $request->id_caja_;
 
-        
         $id = $request->id_comprobante;
+        echo($id);
+        echo("-");
 
-        $id_origen= $request->id_comprobante_origen;
-
+        $id_origen= $request->id_comprobante_origen_nd;
+        echo($id_origen);
         
         if ($id=="" ){
             $trans = "FN";
@@ -1136,7 +1201,7 @@ class ComprobanteController extends Controller
             $correo=$persona->correo;
             
         }
-
+/*
         if ($comprobante->tipo=="FT"){
             $empresa_model= new Comprobante;
             $empresa=  $empresa_model->getEmpresaRuc($comprobante->cod_tributario);
@@ -1144,6 +1209,30 @@ class ComprobanteController extends Controller
             $direccion=$empresa->direccion;
             $correo=$empresa->email;
             
+        }
+        */
+        if ($comprobante->tipo=="FT"){
+            $empresa_model= new Comprobante;
+            $empresa=  $empresa_model->getEmpresaRuc($comprobante->cod_tributario);
+
+            if($comprobante){
+                $persona_model= new Comprobante;
+                $persona=  $persona_model->getPersonaRuc($comprobante->cod_tributario);
+                if($persona){
+                    $idcliente=$persona->id;                 
+                    $direccion=$persona->direccion;
+                    $correo=$persona->email;
+                }else{
+                    $idcliente=$empresa->id;
+                    $direccion=$empresa->direccion;
+                    $correo=$empresa->email;
+                }
+            }else{
+                 $idcliente=$empresa->id;
+                 $direccion=$empresa->direccion;
+                 $correo=$empresa->email;
+            }
+           
         }
 
       

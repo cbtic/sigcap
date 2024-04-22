@@ -117,6 +117,15 @@ class Comprobante extends Model
         return $data[0];
     }
 
+    function getPersonaRuc($numero_documento){
+
+        $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres,direccion_sunat direccion,correo email
+		from personas p
+		Where p.numero_ruc='".$numero_documento."'";
+		echo $cad;
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
     
 
     function getEmpresaRuc($numero_documento){
@@ -126,7 +135,7 @@ class Comprobante extends Model
 		        Where ruc='".$numero_documento."'";
 		//echo $cad;
 		$data = DB::select($cad);
-        return $data[0];
+        if(isset($data[0]))return $data[0];
     }
 
     function getExisteNotaById($numero_comprobante){
