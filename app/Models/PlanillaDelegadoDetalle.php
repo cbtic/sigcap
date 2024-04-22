@@ -58,7 +58,7 @@ class PlanillaDelegadoDetalle extends Model
                     and pd.mes = '".$mes."' 
                     and pdd.estado = '1'
                     and pdd.id_grupo = '".$grupo."'
-                    and pdd.id_grupo <> '' 
+                    and pdd.numero_comprobante <> '' 
                 )
         ";
 /*
