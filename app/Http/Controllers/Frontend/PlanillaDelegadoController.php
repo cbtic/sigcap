@@ -310,11 +310,13 @@ class PlanillaDelegadoController extends Controller
 			$planillaDelegadoDetalle->numero_operacion = $request->numero_operacion;
 			$planillaDelegadoDetalle->fecha_operacion= $request->fecha_operacion;
 			$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
+
+
 			$planillaDelegadoDetalle->save();
 
 		}else if ($request->selTipo=='T'){
 			$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle();
-			$data = $planillaDelegadoDetalle_model->actualizarReciboHonorario($request->id_periodo_bus, $request->anio, $request->mes,
+			$data = $planillaDelegadoDetalle_model->actualizarReciboHonorario($request->id_periodo_comision, $request->periodo, $request->mes,
 			$request->id_grupo, $request->cancelado,$request->numero_operacion,$request->fecha_operacion, $id_user);	
 		}
 

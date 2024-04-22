@@ -278,12 +278,18 @@ function send_recibo_honorario(){
 	var fecha_operacion = $('#fecha_operacion').val();
 	var selTipo = $('#selTipo').val();
 
-	//alert(cancelado); exit();
+	var periodo = $('#periodo').val();
+	var mes = $('#mes').val();
+	var id_periodo_comision = $('#id_periodo_comision').val();
+	var id_grupo = $('#id_grupo').val();
+
+	//alert(periodo); exit();
 	
+
     $.ajax({
 			url:"/planillaDelegado/send_recibo_honorario",
             type: "POST",
-            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,cancelado:cancelado,numero_operacion:numero_operacion,fecha_operacion:fecha_operacion,selTipo:selTipo},
+            data : {_token:_token,id:id,tipo_comprobante:tipo_comprobante,numero_comprobante:numero_comprobante,fecha_comprobante:fecha_comprobante,fecha_vencimiento:fecha_vencimiento,cancelado:cancelado,numero_operacion:numero_operacion,fecha_operacion:fecha_operacion,selTipo:selTipo,periodo:periodo,mes:mes,id_periodo_comision:id_periodo_comision,id_grupo:id_grupo},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
@@ -326,6 +332,11 @@ function send_recibo_honorario(){
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 				<input type="hidden" name="selTipo" id="selTipo" value="">
+
+				<input type="hidden" name="periodo" id="periodo" value="<?php echo $datosRecibo[0]->periodo?>">
+				<input type="hidden" name="mes" id="mes" value="<?php echo $datosRecibo[0]->mes?>">
+				<input type="hidden" name="id_periodo_comision" id="id_periodo_comision" value="<?php echo $datosRecibo[0]->id_periodo_comision?>">
+				<input type="hidden" name="id_grupo" id="id_grupo" value="<?php echo $datosRecibo[0]->id_grupo?>">
 												
 				<div class="row">
 					

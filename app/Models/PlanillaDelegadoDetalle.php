@@ -34,8 +34,10 @@ class PlanillaDelegadoDetalle extends Model
     function getDatosRecibo($id){     
         
         $cad = "select pdd.id, a.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.numero_ruc ruc, 
-        pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado,pdd.id_grupo, pdd.fecha_operacion, pdd.tipo_comprobante
+        pdd.numero_comprobante, pdd.fecha_comprobante, pdd.fecha_vencimiento, pdd.numero_operacion, pdd.cancelado,pdd.id_grupo, pdd.fecha_operacion, pdd.tipo_comprobante,
+        pd.periodo, pd.mes, pd.id_periodo_comision, pdd.id_grupo
         from planilla_delegado_detalles pdd 
+        inner join planilla_delegados pd on pdd.id_planilla = pd.id
         inner join agremiados a on pdd.id_agremiado = a.id
         inner join personas p on a.id_persona = p.id
         where pdd.id ='".$id."' ";
@@ -58,7 +60,7 @@ class PlanillaDelegadoDetalle extends Model
                     and pd.mes = '".$mes."' 
                     and pdd.estado = '1'
                     and pdd.id_grupo = '".$grupo."'
-                    and pdd.numero_comprobante <> '' 
+                    --and pdd.numero_comprobante <> '' 
                 )
         ";
 /*
@@ -80,7 +82,7 @@ class PlanillaDelegadoDetalle extends Model
             and pdd.id_grupo = '".$grupo."' 
     ";
     */
-       // echo $cad; exit();
+      //  echo $cad; exit();
         $data = DB::select($cad);
         return $data;
     }
