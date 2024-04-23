@@ -223,6 +223,41 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
         return $data[0];
     }
 	
+	public function anularComisionSesion($id,$id_regional,$id_periodo_comisione,$id_tipo_sesion,$id_comision){
+
+        $cad = "update comision_sesiones set
+				estado='0'
+				where id>=".$id."
+				and id_regional=".$id_regional."
+				and id_periodo_comisione=".$id_periodo_comisione."
+				and id_tipo_sesion=".$id_tipo_sesion."
+				and id_comision=".$id_comision."
+				and id_estado_sesion=288
+				and estado='1'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	public function anularComisionSesionDelegado($id,$id_regional,$id_periodo_comisione,$id_tipo_sesion,$id_comision){
+
+        $cad = "update comision_sesion_delegados set
+				estado='0'
+				where id_comision_sesion in (
+					select id 
+					from comision_sesiones cs
+					where id>=".$id."
+					and id_regional=".$id_regional."
+					and id_periodo_comisione=".$id_periodo_comisione."
+					and id_tipo_sesion=".$id_tipo_sesion."
+					and id_comision=".$id_comision."
+					and id_estado_sesion=288
+				)";
+				
+		$data = DB::select($cad);
+        return $data;
+    }
+	
     public function lista_programacion_sesion_ajax($p){
 
         return $this->readFunctionPostgres('sp_listar_programacion_sesion_paginado',$p);

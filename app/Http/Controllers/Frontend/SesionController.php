@@ -181,7 +181,9 @@ class SesionController extends Controller
 		
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		
-		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','delegados','region','tipo_programacion','estado_sesion','periodo','comision','dia_semana','estado_sesion_aprobado','tipo_comision','periodo_ultimo'));
+		$dia_semanas = $tablaMaestra_model->getMaestroByTipo(70);
+		
+		return view('frontend.sesion.modal_sesion',compact('id','comisionSesion','delegados','region','tipo_programacion','estado_sesion','periodo','comision','dia_semana','estado_sesion_aprobado','tipo_comision','periodo_ultimo','dia_semanas'));
 
     }
 	
@@ -457,12 +459,90 @@ class SesionController extends Controller
 			
     }
 	
+	public function update_sesion_dia_semana(Request $request){
+		
+		$id_user = Auth::user()->id;
+		$tablaMaestra_model = new TablaMaestra;
+		
+		$comisionSesionUpd = ComisionSesione::find($request->id);
+		$id_regional = $comisionSesionUpd->id_regional;
+		$id_periodo = $comisionSesionUpd->id_periodo_comisione;
+		$id_tipo_sesion = $comisionSesionUpd->id_tipo_sesion;
+		$id_comision = $comisionSesionUpd->id_comision;
+		$observaciones = $comisionSesionUpd->observaciones;
+		$id_delegado = $request->id_delegado;
+		
+		$periodoComision = PeriodoComisione::find($id_periodo);
+		$fecha_inicio = $comisionSesionUpd->fecha_programado;
+		$fecha_fin = $periodoComision->fecha_fin;
+		$fechaInicio=strtotime($fecha_inicio);
+		$fechaFin=strtotime($fecha_fin);
+		
+		$id_dia_semana = $request->dia_semana_nuevo;
+		$dia_semana_maestro = $tablaMaestra_model->getMaestroC("70", $id_dia_semana);
+		$dia_semana = $dia_semana_maestro[0]->denominacion;
+		
+		$comision = Comisione::find($id_comision);
+		$comision->id_dia_semana = $id_dia_semana;
+		$comision->save();
+		
+		$comisionSesion_model = new ComisionSesione;
+		$comisionSesion_model->anularComisionSesion($comisionSesionUpd->id,$comisionSesionUpd->id_regional,$comisionSesionUpd->id_periodo_comisione,$comisionSesionUpd->id_tipo_sesion,$comisionSesionUpd->id_comision);
+		$comisionSesion_model->anularComisionSesionDelegado($comisionSesionUpd->id,$comisionSesionUpd->id_regional,$comisionSesionUpd->id_periodo_comisione,$comisionSesionUpd->id_tipo_sesion,$comisionSesionUpd->id_comision);
+		
+		//echo $fecha_inicio."#".$fecha_fin."#".$dia_semana;
+		$dias = array('LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO');
+				
+		for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
+			
+			$fechaInicioTemp = date("d-m-Y", $i);
+			$dia = $dias[(date('N', strtotime($fechaInicioTemp))) - 1];
+			
+			if($dia_semana == $dia){
+				//echo $dia_semana."#".$dia;
+				$comisionSesion = new ComisionSesione;
+				$comisionSesion->id_regional = $id_regional;
+				$comisionSesion->id_periodo_comisione = $id_periodo;
+				$comisionSesion->id_tipo_sesion = $id_tipo_sesion;
+				$comisionSesion->fecha_programado = $fechaInicioTemp;
+				$comisionSesion->observaciones = $observaciones;
+				$comisionSesion->id_comision = $id_comision;
+				$comisionSesion->id_estado_sesion = 288;
+				$comisionSesion->estado = 1;
+				$comisionSesion->id_usuario_inserta = $id_user;
+				$comisionSesion->save();
+				$id_comision_sesion = $comisionSesion->id;
+				
+				if(isset($request->id_delegado)){
+					foreach($id_delegado as $row){
+						
+						$coordinador = 0;
+						if($request->coordinador == $row)$coordinador = 1;
+						$comisionSesionDelegado = new ComisionSesionDelegado();
+						$comisionSesionDelegado->id_comision_sesion = $id_comision_sesion;
+						$comisionSesionDelegado->id_delegado = $row;
+						$comisionSesionDelegado->coordinador = $coordinador;
+						$comisionSesionDelegado->id_profesion_otro = NULL;
+						$comisionSesionDelegado->id_aprobar_pago = NULL;
+						$comisionSesionDelegado->observaciones = NULL;
+						$comisionSesionDelegado->estado = 1;
+						$comisionSesionDelegado->id_usuario_inserta = $id_user;
+						$comisionSesionDelegado->save();
+					}
+				}
+				
+			}
+		}
+		
+		
+    }
+	
 	public function send_computo_sesion(Request $request){
 		
 		$id_user = Auth::user()->id;
 		$msg = "";
 		
-		$computoSesioneExiste = ComputoSesione::where("anio",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
+		$computoSesioneExiste = ComputoSesione::where("id_periodo_comision",$request->id_periodo_bus)->where("anio",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
 		
 		if($computoSesioneExiste){
 			$msg = false;

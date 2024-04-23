@@ -407,6 +407,7 @@ Route::get('sesion/lista_programacion_sesion', [SesionController::class, 'lista_
 Route::post('sesion/lista_programacion_sesion_ajax', [SesionController::class, 'lista_programacion_sesion_ajax'])->name('sesion.lista_programacion_sesion_ajax');
 Route::get('sesion/modal_sesion/{id}', [SesionController::class, 'modal_sesion'])->name('sesion.modal_sesion');
 Route::post('sesion/send_sesion', [SesionController::class, 'send_sesion'])->name('sesion.send_sesion');
+Route::post('sesion/update_sesion_dia_semana', [SesionController::class, 'update_sesion_dia_semana'])->name('sesion.update_sesion_dia_semana');
 Route::post('sesion/send_sesion_bloque', [SesionController::class, 'send_sesion_bloque'])->name('sesion.send_sesion_bloque');
 Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
 Route::get('sesion/obtener_comision/{id_periodo}/{tipo_comision}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');

@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE FUNCTION public.sp_listar_programacion_sesion_paginado(p_id_regional character varying, p_id_periodo_comisiones character varying, p_tipo_comision character varying, p_id_comision character varying, p_fecha_programado_desde character varying, p_fecha_programado_hasta character varying, p_id_tipo_sesion character varying, p_id_tipo_agrupacion character varying, p_id_estado_sesion character varying, p_id_estado_aprobacion character varying, p_cantidad_delegado character varying, p_id_situacion character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -41,7 +42,7 @@ inner join tabla_maestras t8 on t4.id_tipo_comision::int = t8.codigo::int And t8
 inner join periodo_comisiones t5 on t1.id_periodo_comisione=t5.id
 inner join regiones t6 on t1.id_regional=t6.id ';
 	
-	v_where = ' Where 1=1  ';
+	v_where = ' Where 1=1 and t1.estado=''1'' ';
 	
 	/*
 	If p_denominacion<>'' Then
@@ -109,4 +110,3 @@ End
 
 $function$
 ;
-
