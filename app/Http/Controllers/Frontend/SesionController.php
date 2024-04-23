@@ -890,7 +890,7 @@ class SesionController extends Controller
 		$mes_ = ltrim($mes, '0');
 		$mesEnLetras = $this->mesesALetras($mes_);
 		
-		$pdf = Pdf::loadView('pdf.ver_delegado_coordinador',compact('coordinador','anio','mesEnLetras'));
+		$pdf = Pdf::loadView('pdf.ver_delegado_coordinador',compact('coordinador','anio','mesEnLetras','mes'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
