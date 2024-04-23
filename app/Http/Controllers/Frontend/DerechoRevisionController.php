@@ -120,6 +120,8 @@ class DerechoRevisionController extends Controller
         $p[]=$request->credipago;
 		$p[]=$request->municipalidad;
         $p[]=$request->direccion;
+		$p[]=$request->n_solicitud;
+		$p[]=$request->codigo;
 		$p[]=$request->estado_proyecto;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;

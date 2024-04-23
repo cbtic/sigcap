@@ -31,7 +31,7 @@ begin
 	if p_periodo<>'' Then
 	 v_where:=v_where||'And pc.id = '''||p_periodo||''' ';
 	End If;
-    
+
 	If p_zonal<>'' Then
 	 v_where:=v_where||'And czd.id_tipo_coordinador = '''||p_zonal||''' ';
 	End If;

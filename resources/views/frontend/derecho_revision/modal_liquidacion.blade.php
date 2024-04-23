@@ -317,7 +317,7 @@ function fn_save_requisito(){
                         </tr>
                         </thead>
                         <tbody style="font-size:13px">
-						<?php  
+						<?php
 						foreach($liquidacion as $row){
 						?>
 						<tr>

@@ -17,6 +17,8 @@ use App\Models\Solicitude;
 use App\Models\Proyectista;
 use App\Models\UsoEdificacione;
 use App\Models\Propietario;
+use App\Models\Valorizacione;
+use App\Models\Concepto;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Auth;
@@ -369,6 +371,68 @@ class CertificadoController extends Controller
 		$certificado->id_usuario_inserta = $id_user;
 		
 		$certificado->save();
+
+		if($request->tipo==1){
+			$concepto = Concepto::find(26471);
+			$monto_certificado=$request->total_area_techada_m2*0.1;
+			if($monto_certificado<350 && $monto_certificado>30){
+				$monto_certificado=$monto_certificado;
+			}else if($monto_certificado>350){
+				$monto_certificado=350;
+			}else if($monto_certificado<30){
+				$monto_certificado=30;
+			}
+		}else if($request->tipo==2){
+			$concepto = Concepto::find(26473);
+			$solicitud_ = Solicitude::find($certificado->id_solicitud);
+			$presupuesto = Presupuesto::where("id_solicitud",$solicitud_->id)->where("estado","1")->first();
+			//var_dump($presupuesto->id_tipo_obra);exit();
+			$monto_certificado=$solicitud->area_total*0.05;
+			if($monto_certificado<350 && $monto_certificado>60){
+				$monto_certificado=$monto_certificado;
+			}else if($monto_certificado>350){
+				$monto_certificado=350;
+			}else if($monto_certificado<60){
+				$monto_certificado=60;
+			}
+			if($presupuesto->id_tipo_obra==4){
+				$monto_certificado=60;
+			}
+			if($presupuesto->id_tipo_obra==5){
+				$monto_certificado=30;
+			}
+		}else if($request->tipo==3){
+			$concepto = Concepto::find(26470);
+			$metraje=$solicitud->area_total;
+			if($metraje<=10500 && $metraje>1){
+				$monto_certificado=100;
+			}else if($metraje>=10501 && $metraje<=50000){
+				$monto_certificado=150;
+			}else if($metraje>50000){
+				$monto_certificado=200;
+			}
+		}else if($request->tipo==4){
+			$concepto = Concepto::find(26472);
+			$monto_certificado=50;
+		}
+
+		$agremiado = Agremiado::where("id",$request->idagremiado)->where("estado","1")->first();
+
+		$valorizacion = new Valorizacione;
+		$valorizacion->id_modulo = 10;
+		$valorizacion->pk_registro = $certificado->id;
+		$valorizacion->id_concepto = $concepto->id;
+		$valorizacion->id_agremido = $request->idagremiado;
+		$valorizacion->id_persona = $agremiado->id_persona;
+		$valorizacion->monto = $monto_certificado;
+		$valorizacion->id_moneda = $concepto->id_moneda;
+		$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+		$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+		$valorizacion->descripcion = $concepto->denominacion;
+		//$valorizacion->estado = 1;
+		//print_r($valorizacion->descripcion).exit();
+		$valorizacion->id_usuario_inserta = $id_user;
+		$valorizacion->save();
     }
 	
 	public function eliminar_certificado($id){
