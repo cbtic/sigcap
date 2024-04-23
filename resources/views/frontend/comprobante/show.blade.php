@@ -358,7 +358,7 @@ br {
                                                                     {{ $factura_detalle->descripcion }}
                                                                 </td>
 
-                                                                <td class="text-right">{{ number_format($factura_detalle->pu+$factura_detalle->igv_total,2)  }}
+                                                                <td class="text-right">{{ number_format(($factura_detalle->pu+$factura_detalle->igv_total)/$factura_detalle->cantidad,2)  }}
                                                                 </td>
 
                                                                 <td class="text-right">{{ $factura_detalle->descuento }}
