@@ -413,7 +413,7 @@ class CertificadoController extends Controller
 			}
 		}else if($request->tipo==4){
 			$concepto = Concepto::find(26472);
-			$monto_certificado=50;
+			$monto_certificado=50; 
 		}
 
 		$agremiado = Agremiado::where("id",$request->idagremiado)->where("estado","1")->first();

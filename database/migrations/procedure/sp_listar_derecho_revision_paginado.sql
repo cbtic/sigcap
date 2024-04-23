@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_derecho_revision_paginado(p_anio character varying, p_nombre_proyecto character varying, p_distrito character varying, p_numero_cap character varying, p_proyectista character varying, p_numero_documento character varying, p_propietario character varying, p_tipo_proyecto character varying, p_tipo_solicitud character varying, p_credipago character varying, p_municipalidad character varying, p_direccion character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_derecho_revision_paginado(p_anio character varying, p_nombre_proyecto character varying, p_distrito character varying, p_numero_cap character varying, p_proyectista character varying, p_numero_documento character varying, p_propietario character varying, p_tipo_proyecto character varying, p_tipo_solicitud character varying, p_credipago character varying, p_municipalidad character varying, p_direccion character varying, p_n_solicitud character varying, p_codigo character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -80,6 +80,10 @@ begin
 
 	If p_credipago<>'' Then
 	 v_where:=v_where||'And R.credipago = '''||p_credipago||''' ';
+	End If;
+
+	If p_codigo<>'' Then
+	 v_where:=v_where||'And R.codigo = '''||p_codigo||''' ';
 	End If;
 	
 	If p_municipalidad<>'' Then
