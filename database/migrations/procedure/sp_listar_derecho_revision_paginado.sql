@@ -31,11 +31,11 @@ begin
 	(select case WHEN pro2.id_empresa IS NOT NULL THEN e2.ruc ELSE pe2.numero_documento END 
 	from propietarios pro2
 	left join personas pe2 on pro2.id_persona = pe2.id 
-	left join empresas e2 on pro2.id_empresa = e2.id where pro2.id_solicitud = s.id limit 1) numero_documento, p2.direccion direccion, s.id_tipo_solicitud, DATE_PART(''YEAR'', s.fecha_registro) anio, s.id_resultado, s.id_municipalidad 
+	left join empresas e2 on pro2.id_empresa = e2.id where pro2.id_solicitud = s.id limit 1) numero_documento, p2.direccion direccion, s.id_tipo_solicitud, DATE_PART(''YEAR'', s.fecha_registro) anio, s.id_resultado, s.id_municipalidad, s.id_tipo_tramite, p2.codigo
 	from solicitudes s
 	left join municipalidades m on s.id_municipalidad = m.id
 	left join proyectos p2 on s.id_proyecto = p2.id
-	left join tabla_maestras tm on s.tipo_proyecto=tm.codigo::int and tm.tipo=''25'' 
+	left join tabla_maestras tm on s.id_tipo_tramite=tm.codigo::int and tm.tipo=''25'' 
 	left join tabla_maestras tmr on s.id_resultado=tmr.codigo::int and tmr.tipo=''118''
 	left join ubigeos u on s.id_ubigeo = u.id_ubigeo 
 	where s.id_tipo_solicitud=''123'' ) R';
@@ -75,7 +75,7 @@ begin
 	End If;
 
 	If p_tipo_solicitud<>'' Then
-	 v_where:=v_where||'And R.tipo_solicitud = '''||p_tipo_solicitud||''' ';
+	 v_where:=v_where||'And R.id_tipo_tramite = '''||p_tipo_solicitud||''' ';
 	End If;
 
 	If p_credipago<>'' Then
