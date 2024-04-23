@@ -573,6 +573,8 @@ function datatablenew(){
 			var credipago = $('#numero_liquidacion').val();
 			var municipalidad = $('#id_municipalidad_bus').val();
 			var direccion = $('#direccion_proyecto').val();
+			var n_solicitud = $('#n_solicitud').val();
+			var codigo = $('#codigo_proyecto').val();
 			var estado_proyecto = $('#id_estado_proyecto_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -583,7 +585,8 @@ function datatablenew(){
 						anio:anio,nombre_proyecto:nombre_proyecto,distrito:distrito,numero_cap:numero_cap,
 						proyectista:proyectista,numero_documento:numero_documento,propietario:propietario,
 						tipo_proyecto:tipo_proyecto,tipo_solicitud:tipo_solicitud,credipago:credipago,
-						municipalidad:municipalidad,direccion:direccion,estado_proyecto:estado_proyecto,
+						municipalidad:municipalidad,direccion:direccion,n_solicitud:n_solicitud,
+						codigo:codigo,estado_proyecto:estado_proyecto,
 						_token:_token
                        },
                 "success": function (result) {
