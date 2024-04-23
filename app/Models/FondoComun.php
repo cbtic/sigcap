@@ -41,7 +41,8 @@ class FondoComun extends Model
                 inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle 
             Where EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
             And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'
-            And t1.id_periodo_comision = '".$periodo."' ";
+            --And t1.id_periodo_comision = '".$periodo."' 
+            ";
 
 		//echo $cad;
 		$data = DB::select($cad);
