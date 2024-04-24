@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	
+	actualizarBoton();
 	$('#fecha_registro_bus').datepicker({
         autoclose: true,
 		format: 'dd/mm/yyyy',
@@ -640,7 +640,16 @@ function datatablenew(){
 				"aTargets": [3],
 				"className": "dt-center",
 				},
-				
+				{
+				"mRender": function (data, type, row) {
+					var numero_cap = "";
+					if(row.numero_cap!= null)numero_cap = row.numero_cap;
+					return numero_cap;
+				},
+				"bSortable": false,
+				"aTargets": [4],
+				"className": "dt-center",
+				},
 				{
 				"mRender": function (data, type, row) {
 					/*var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
@@ -652,7 +661,7 @@ function datatablenew(){
 					return proyectista;
 				},
 				"bSortable": false,
-				"aTargets": [4],
+				"aTargets": [5],
 				"className": "dt-center",
 				},
 				
@@ -667,7 +676,7 @@ function datatablenew(){
 					return propietario;
 				},
 				"bSortable": false,
-				"aTargets": [5],
+				"aTargets": [6],
 				"className": "dt-center",
 				},
 				/*
@@ -704,12 +713,22 @@ function datatablenew(){
 				*/
 				{
 				"mRender": function (data, type, row) {
+					var credipago = "";
+					if(row.credipago!= null)credipago = row.credipago;
+					return credipago;
+				},
+				"bSortable": false,
+				"aTargets": [7],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
 					var fecha_registro = "";
 					if(row.fecha_registro!= null)fecha_registro = row.fecha_registro;
 					return fecha_registro;
 				},
 				"bSortable": false,
-				"aTargets": [6],
+				"aTargets": [8],
 				"className": "dt-center",
 				},
 				{
@@ -719,7 +738,7 @@ function datatablenew(){
 					return estado_proyecto;
 				},
 				"bSortable": false,
-				"aTargets": [7],
+				"aTargets": [9],
 				"className": "dt-center",
 				},
 				{
@@ -734,7 +753,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [8]
+				"aTargets": [10]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -764,7 +783,7 @@ function datatablenew(){
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [11],
 				},
             ]
     });
@@ -1009,7 +1028,7 @@ function datatablenew2(){
 					
 					html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerCredipago('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Credipago</button>';
 					html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitudRU('+row.id+')" ><i class="fa fa-edit"></i> Generar Liquidaci&oacute;n</button>';
-					html += '<a href="/derecho_revision/editar_derecho_revision_nuevo/'+row.id+'" style="font-size: 12px; margin-left: 10px;" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
+					//html += '<a href="/derecho_revision/editar_derecho_revision_nuevo/'+row.id+'" style="font-size: 12px; margin-left: 10px;" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
 					html += '<a href="javascript:void(0)" onclick=eliminarProfesion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
@@ -1168,11 +1187,23 @@ function editarSolicitudHU(id){
 			$('#numero_revision').val(result.numero_revision);
 			$('#area_techada').val(result.area_total);
 			$('#valor_obra').val(result.valor_obra);
-			
+			$('#id_editar').val(result.id);
+			actualizarBoton();
 		}
 		
 	});
 
+}
+
+function actualizarBoton() {
+    //alert($('#id_editar').val());
+    var id = $('#id_editar').val();
+    if (id == "0") {
+        $('#btnEditar').addClass('disabled').attr('onclick','return false;');
+    } else {
+		$('#btnEditar').removeClass('disabled').removeAttr('onclick');
+        $('a.btn-success').attr('href', '/derecho_revision/editar_derecho_revision_nuevo/' + id);
+    }
 }
 
 function modalVerCredipago(id){

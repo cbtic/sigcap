@@ -130,6 +130,7 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
                 <!--<meta name="_token" id="_token" content="{{ csrf_token() }}">-->
                 <input type="hidden" name="id" id="id" value="0">
+                <input type="hidden" name="id_editar" id="id_editar" value="0">
 				
                 <div class="row" style="padding:15px 20px 0px 20px;">
 				
@@ -244,7 +245,7 @@
                     Valor de Obra
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="valor_obra" id="valor_obra" value="<?php echo $derecho_revision->valor_obra?>" class="form-control form-control-sm" readonly='readonly' >
+                        <input type="text" name="valor_obra" id="valor_obra" value="<?php //echo $derecho_revision->valor_obra?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>-->
                     
                     <!--
@@ -257,9 +258,12 @@
 					</div>
                     -->
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+                        <a href="/derecho_revision/editar_derecho_revision_nuevo/" onclick="" style="font-size: 12px; margin-left: 10px;" class="btn btn-sm btn-success" id="btnEditar"><i class="fa fa-edit"></i> Editar</a>
 						<!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-success" value="Generar Credipago" type="button" id="btnNuevo_solicitud" style="margin-left:15px"/>-->
-
+                        <script>
+                             
+                        </script>
 					</div>
 				</div>
 

@@ -698,4 +698,5 @@ Route::get('coordinador_zonal/modal_zonal_nuevoZonalDetalle/{id}', [CoordinadorZ
 Route::post('coordinador_zonal/send_zonal_nuevoZonal', [CoordinadorZonalDetalleController::class, 'send_zonal_nuevoZonal'])->name('coordinador_zonal.send_zonal_nuevoZonal');
 Route::get('coordinador_zonal/obtener_datos_zonal_detalle/{zonal}', [CoordinadorZonalDetalleController::class, 'obtener_datos_zonal_detalle'])->name('coordinador_zonal.obtener_datos_zonal_detalle');
 Route::get('coordinador_zonal/eliminar_zonal_detalle/{id}/{estado}', [CoordinadorZonalDetalleController::class, 'eliminar_zonal_detalle'])->name('coordinador_zonal.eliminar_zonal_detalle');
+Route::get('derecho_revision/eliminar_credipago/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_credipago'])->name('derecho_revision.eliminar_credipago');
 

@@ -70,9 +70,11 @@ class DerechoRevision extends Model
 	
 	public function getLiquidacionByIdSolicitud($id){
 
-        $cad = "select l.id, to_char(fecha,'dd-mm-yyyy')fecha,credipago,sub_total,igv,total,observacion  
+        $cad = "select l.id, to_char(fecha,'dd-mm-yyyy')fecha,credipago,sub_total,igv,total,observacion, l.estado,
+        (select v.pagado from valorizaciones v where pk_registro = l.id limit 1) pagado 
         from liquidaciones l 
-        where id_solicitud=".$id;
+        where id_solicitud='".$id."'
+        and l.estado = '1'";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
