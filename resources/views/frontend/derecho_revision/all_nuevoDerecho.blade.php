@@ -589,29 +589,36 @@
 																<tr style="font-size:13px">
 																	<th>Tipo Tramite</th>
 																	<th>Tipo de Habilitacion Urbana</th>
-																	<th>Etapas</th>
-																	<th>Modalidad de Aprobaci&oacute;n</th>
-																	<th>Opciones</th>
+																	<!--<th>Etapas</th>-->
+																	<th>&Aacute;rea Bruta del Terreno Declarado (m2)</th>
+																	<th>Formato de Registro</th>
+																	<th>Plano de Ubicaci&oacute;n</th>
+																	<th>FUHU</th>
+																	<!--<th>Opciones</th>-->
 																</tr>
 															</thead>
 															<tbody style="font-size:13px">
-																<?php //foreach($agremiado_estudio as $row){?>
-																<!--<tr>
-																	<th><?php //echo $row->universidad?></th>
-																	<th><?php //echo $row->especialidad?></th>
-																	<th><?php //echo $row->tesis?></th>
-																	<th><?php //echo $row->fecha_egresado?></th>
+																<?php foreach($info_uso_solicitud as $row){?>
+																<tr>
+																	<th><?php echo $row->tipo_tramite?></th>
+																	<th><?php echo $row->tipo_uso?></th>
+																	<th><?php echo $row->area_techada?></th>
+																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFormato(<?php echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Formato</button></th>
+																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerPlano(<?php echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Plano</button></th>
+																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFUHU(<?php echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>FUHU</button></th>
+																	
+																	<!--<th><?php //echo $row->fecha_egresado?></th>
 																	<th><?php //echo $row->fecha_graduado?></th>
 																	<th><?php //echo $row->libro?></th>
-																	<th><?php //echo $row->folio?></th>
+																	<th><?php //echo $row->folio?></th>-->
 																	<th>
-																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+																	<!--<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
 																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
+																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
 																	</div>
 																	</th>
-																</tr>	-->													
-																<?php //}?>
+																</tr>													
+																<?php }?>
 															</tbody>							
 															</table>
 															</div>

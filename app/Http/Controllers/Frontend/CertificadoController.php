@@ -204,7 +204,7 @@ class CertificadoController extends Controller
 		
 		$ubigeo_id = Ubigeo::where("id_ubigeo",$request->distrito)->where("estado","1")->first();
 
-		$proyecto->id_ubigeo = $ubigeo_id->id;
+		$proyecto->id_ubigeo = $ubigeo_id->id_ubigeo;
 		$proyecto->id_tipo_sitio = $request->sitio;
 		$proyecto->nombre = $request->nombre_proyecto;
 		$proyecto->direccion = $request->direccion_tipo;
@@ -375,11 +375,19 @@ class CertificadoController extends Controller
 		if($request->tipo==1){
 			$concepto = Concepto::find(26471);
 			$monto_certificado=$request->total_area_techada_m2*0.1;
+			$solicitud_ = Solicitude::find($certificado->id_solicitud);
+			$presupuesto = Presupuesto::where("id_solicitud",$solicitud_->id)->where("estado","1")->first();
+
+			//var_dump($presupuesto->id_tipo_obra);exit();
 			if($monto_certificado<350 && $monto_certificado>30){
 				$monto_certificado=$monto_certificado;
 			}else if($monto_certificado>350){
 				$monto_certificado=350;
 			}else if($monto_certificado<30){
+				$monto_certificado=30;
+			}
+
+			if($presupuesto->id_tipo_obra==151){
 				$monto_certificado=30;
 			}
 		}else if($request->tipo==2){

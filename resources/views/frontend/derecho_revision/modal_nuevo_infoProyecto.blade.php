@@ -333,6 +333,7 @@ function fn_save_infoProyeto(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
+    var id_solicitud = $('#id_solicitud').val();
     var areaBruta = $('#areaBruta').val();
 	
     var selectedProcedures = [];
@@ -353,7 +354,8 @@ function fn_save_infoProyeto(){
 			url: "/derecho_revision/send_nueno_infoProyecto",
             type: "POST",
             data : {_token:_token,id:id,procedimientos_complementarios: selectedProceduresStr,
-                    procedimientos_complementarios2: selectedProceduresStr2,areaBruta:areaBruta},
+                    procedimientos_complementarios2: selectedProceduresStr2,areaBruta:areaBruta,
+                    id_solicitud:id_solicitud},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
@@ -443,21 +445,21 @@ function fn_save_infoProyeto(){
                                 Procedimientos Complementarios
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="4" id="check_opc5" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="4" id="check_opc5" name="grupo_tramite1">
                                 <label class="form-check-label" for="check_opc5">
                                     Independizaci&oacute;n o parcelaci&oacute;n de terrenos rusticos
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="5" id="check_opc6" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="5" id="check_opc6" name="grupo_tramite1">
                                 <label class="form-check-label" for="check_opc6">
                                     Subdivisi&oacute;n de lote urbano
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="6" id="check_opc7" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="6" id="check_opc7" name="grupo_tramite1">
                                 <label class="form-check-label" for="check_opc7">
                                     Revalidaci&oacute;n de Licencia
                                 </label>
@@ -472,42 +474,42 @@ function fn_save_infoProyeto(){
                     <div class="row" style="padding-left:10px">
                         <div class="col-lg-6" >
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="check_opc8">
+                                <input class="form-check-input" type="checkbox" value="1" id="check_opc8" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc8">
                                     Uso de Vivienda o urbanizaci&oacute;n
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="2" id="check_opc9">
+                                <input class="form-check-input" type="checkbox" value="2" id="check_opc9" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc9">
                                     Tipo Convecional
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="3" id="check_opc10">
+                                <input class="form-check-input" type="checkbox" value="3" id="check_opc10" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc10">
                                     Con Construcci&oacute;n simultanea
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="4" id="check_opc11">
+                                <input class="form-check-input" type="checkbox" value="4" id="check_opc11" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc11">
                                     Con Venta de Viviendas edificadas
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="5" id="check_opc12">
+                                <input class="form-check-input" type="checkbox" value="5" id="check_opc12" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc12">
                                     De tipo Progresivo
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="12" id="check_opc13">
+                                <input class="form-check-input" type="checkbox" value="12" id="check_opc13" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc13">
                                     Otros
                                 </label>
@@ -515,42 +517,42 @@ function fn_save_infoProyeto(){
                         </div>
                         <div class="col-lg-6" >  
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="6" id="check_opc14">
+                                <input class="form-check-input" type="checkbox" value="6" id="check_opc14" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc14">
                                     Uso Industrial
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="7" id="check_opc15">
+                                <input class="form-check-input" type="checkbox" value="7" id="check_opc15" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc15">
                                     Convencional
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="8" id="check_opc16">
+                                <input class="form-check-input" type="checkbox" value="8" id="check_opc16" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc16">
                                     Con Construcci&oacute;n simultanea
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="9" id="check_opc17">
+                                <input class="form-check-input" type="checkbox" value="9" id="check_opc17" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc17">
                                     Usos Especiales
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="10" id="check_opc18">
+                                <input class="form-check-input" type="checkbox" value="10" id="check_opc18" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc18">
                                     En riberos y laderas
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="11" id="check_opc19">
+                                <input class="form-check-input" type="checkbox" value="11" id="check_opc19" name="grupo_tramite2">
                                 <label class="form-check-label" for="check_opc19">
                                     Reurbanizaci&oacute;n
                                 </label>
@@ -569,21 +571,57 @@ function fn_save_infoProyeto(){
                     </div>
 
                     <div class="row" style="padding-left:0px;padding-top:20px">
-                            <div class="col-lg-1-5">
-                                <label class="control-label form-control-sm">Solicitud</label>
-                            </div>
-                            <div class="col-lg-1-5">
-                                <span class="btn btn-sm btn-warning btn-file" style="float:left">
-                                    Examinar <input id="image" name="image" type="file" />
-                                </span>
-                            </div>
-                            <div class="col-lg-1">
-                            <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
-                            -->
-                            <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
-                            
-                            <input type="hidden" id="img_foto" name="img_foto" value="" />
-                            </div>
+                        <div class="col-lg-3">
+                            <label class="control-label form-control-sm">Formato de Registro</label>
+                        </div>
+                        <div class="col-lg-1-5">
+                            <span class="btn btn-sm btn-warning btn-file" style="float:left">
+                                Examinar <input id="image" name="image" type="file" />
+                            </span>
+                        </div>
+                        <div class="col-lg-1">
+                        <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
+                        -->
+                        <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left;">
+                        
+                        <input type="hidden" id="img_foto" name="img_foto" value="" style="padding-left:10px" />
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-left:0px;padding-top:20px">
+                        <div class="col-lg-3">
+                            <label class="control-label form-control-sm">Plano de Ubicaci&oacute;n</label>
+                        </div>
+                        <div class="col-lg-1-5">
+                            <span class="btn btn-sm btn-warning btn-file" style="float:left">
+                                Examinar <input id="image" name="image" type="file" />
+                            </span>
+                        </div>
+                        <div class="col-lg-1">
+                        <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
+                        -->
+                        <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
+                        
+                        <input type="hidden" id="img_foto" name="img_foto" value="" />
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-left:0px;padding-top:20px">
+                        <div class="col-lg-3">
+                            <label class="control-label form-control-sm">FUHU</label>
+                        </div>
+                        <div class="col-lg-1-5">
+                            <span class="btn btn-sm btn-warning btn-file" style="float:left">
+                                Examinar <input id="image" name="image" type="file" />
+                            </span>
+                        </div>
+                        <div class="col-lg-1">
+                        <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
+                        -->
+                        <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
+                        
+                        <input type="hidden" id="img_foto" name="img_foto" value="" />
+                        </div>
                     </div>
 
                     <div style="margin-top:10px" class="form-group">
