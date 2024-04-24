@@ -876,7 +876,16 @@ function datatablenew2(){
 				"aTargets": [3],
 				"className": "dt-center",
 				},
-				
+				{
+				"mRender": function (data, type, row) {
+					var numero_cap = "";
+					if(row.numero_cap!= null)numero_cap = row.numero_cap;
+					return numero_cap;
+				},
+				"bSortable": false,
+				"aTargets": [4],
+				"className": "dt-center",
+				},
 				{
 				"mRender": function (data, type, row) {
 					/*var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
@@ -888,7 +897,7 @@ function datatablenew2(){
 					return proyectista;
 				},
 				"bSortable": false,
-				"aTargets": [4],
+				"aTargets": [5],
 				"className": "dt-center",
 				},
 				
@@ -903,7 +912,7 @@ function datatablenew2(){
 					return propietario;
 				},
 				"bSortable": false,
-				"aTargets": [5],
+				"aTargets": [6],
 				"className": "dt-center",
 				},
 				/*
@@ -940,12 +949,22 @@ function datatablenew2(){
 				*/
 				{
 				"mRender": function (data, type, row) {
+					var credipago = "";
+					if(row.credipago!= null)credipago = row.credipago;
+					return credipago;
+				},
+				"bSortable": false,
+				"aTargets": [7],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
 					var fecha_registro = "";
 					if(row.fecha_registro!= null)fecha_registro = row.fecha_registro;
 					return fecha_registro;
 				},
 				"bSortable": false,
-				"aTargets": [6],
+				"aTargets": [8],
 				"className": "dt-center",
 				},
 				{
@@ -955,7 +974,7 @@ function datatablenew2(){
 					return estado_proyecto;
 				},
 				"bSortable": false,
-				"aTargets": [7],
+				"aTargets": [9],
 				"className": "dt-center",
 				},
 				{
@@ -970,7 +989,7 @@ function datatablenew2(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [8]
+				"aTargets": [10]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -989,7 +1008,7 @@ function datatablenew2(){
 					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarSolicitudHU('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 					
 					html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerCredipago('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Credipago</button>';
-					html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitudRU('+row.id+')" ><i class="fa fa-edit"></i> Vista Previa</button>';
+					html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitudRU('+row.id+')" ><i class="fa fa-edit"></i> Generar Liquidaci&oacute;n</button>';
 					html += '<a href="/derecho_revision/editar_derecho_revision_nuevo/'+row.id+'" style="font-size: 12px; margin-left: 10px;" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
 					html += '<a href="javascript:void(0)" onclick=eliminarProfesion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
@@ -997,7 +1016,7 @@ function datatablenew2(){
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [11],
 				},
             ]
     });

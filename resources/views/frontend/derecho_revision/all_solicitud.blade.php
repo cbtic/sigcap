@@ -275,7 +275,7 @@
                             <option value="">--Seleccionar Estado Solicitud--</option>
                                 <?php
                                 foreach ($estado_solicitud as $row) {?>
-                                    <option value="<?php echo $row->codigo?>"<?php if($row->codigo==$derecho_revision->id_resultado)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                    <option value="<?php echo $row->codigo?>"<?php if($row->codigo==1)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php 
                                 }
                                 ?>
@@ -381,8 +381,10 @@
                             <th>Tipo Proyecto</th>
                             <th>N° Rev.</th>
                             <th>Municipalidad</th>
+                            <th>N° CAP</th>
                             <th>Proyectista</th>
                             <th>Propietario</th>
+                            <th>Credipago</th>
                             <th>Fecha Registro</th>
                             <th>Estado Proyecto</th>
                             <th>Estado</th>

@@ -333,6 +333,7 @@ function fn_save_infoProyeto(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
+    var id_solicitud = $('#id_solicitud').val();
     var areaBruta = $('#areaBruta').val();
 	
     var selectedProcedures = [];
@@ -353,7 +354,8 @@ function fn_save_infoProyeto(){
 			url: "/derecho_revision/send_nueno_infoProyecto",
             type: "POST",
             data : {_token:_token,id:id,procedimientos_complementarios: selectedProceduresStr,
-                    procedimientos_complementarios2: selectedProceduresStr2,areaBruta:areaBruta},
+                    procedimientos_complementarios2: selectedProceduresStr2,areaBruta:areaBruta,
+                    id_solicitud:id_solicitud},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
@@ -569,21 +571,57 @@ function fn_save_infoProyeto(){
                     </div>
 
                     <div class="row" style="padding-left:0px;padding-top:20px">
-                            <div class="col-lg-1-5">
-                                <label class="control-label form-control-sm">Solicitud</label>
-                            </div>
-                            <div class="col-lg-1-5">
-                                <span class="btn btn-sm btn-warning btn-file" style="float:left">
-                                    Examinar <input id="image" name="image" type="file" />
-                                </span>
-                            </div>
-                            <div class="col-lg-1">
-                            <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
-                            -->
-                            <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
-                            
-                            <input type="hidden" id="img_foto" name="img_foto" value="" />
-                            </div>
+                        <div class="col-lg-3">
+                            <label class="control-label form-control-sm">Formato de Registro</label>
+                        </div>
+                        <div class="col-lg-1-5">
+                            <span class="btn btn-sm btn-warning btn-file" style="float:left">
+                                Examinar <input id="image" name="image" type="file" />
+                            </span>
+                        </div>
+                        <div class="col-lg-1">
+                        <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
+                        -->
+                        <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left;">
+                        
+                        <input type="hidden" id="img_foto" name="img_foto" value="" style="padding-left:10px" />
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-left:0px;padding-top:20px">
+                        <div class="col-lg-3">
+                            <label class="control-label form-control-sm">Plano de Ubicaci&oacute;n</label>
+                        </div>
+                        <div class="col-lg-1-5">
+                            <span class="btn btn-sm btn-warning btn-file" style="float:left">
+                                Examinar <input id="image" name="image" type="file" />
+                            </span>
+                        </div>
+                        <div class="col-lg-1">
+                        <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
+                        -->
+                        <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
+                        
+                        <input type="hidden" id="img_foto" name="img_foto" value="" />
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-left:0px;padding-top:20px">
+                        <div class="col-lg-3">
+                            <label class="control-label form-control-sm">FUHU</label>
+                        </div>
+                        <div class="col-lg-1-5">
+                            <span class="btn btn-sm btn-warning btn-file" style="float:left">
+                                Examinar <input id="image" name="image" type="file" />
+                            </span>
+                        </div>
+                        <div class="col-lg-1">
+                        <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
+                        -->
+                        <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
+                        
+                        <input type="hidden" id="img_foto" name="img_foto" value="" />
+                        </div>
                     </div>
 
                     <div style="margin-top:10px" class="form-group">

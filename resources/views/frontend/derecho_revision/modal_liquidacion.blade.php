@@ -327,7 +327,10 @@ function fn_save_requisito(){
 							<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->igv, 2, '.', ',');?></td>
 							<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->total, 2, '.', ',');?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
-                            <td class="text-left" style="vertical-align:middle"><button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="credipago_pdf_('<?php echo $row->id?>')" ><i class="fa fa-edit"></i> Ver Credipago</button></td>
+                            <td class="text-left" style="vertical-align:middle">
+                                <button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="credipago_pdf_('<?php echo $row->id?>')" ><i class="fa fa-edit"></i> Ver Credipago</button>
+                                <a href="javascript:void(0)" onclick="eliminarCredipago(<?php echo $row->id?>,<?php echo $row->estado?>)" class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>
+                            </td>
 						</tr>
 						<?php 
 							}	
