@@ -120,12 +120,14 @@ class PeriodoComisionController extends Controller
 		
 
 		$fecha_ini = Carbon::parse($request->fecha_inicio);
+		$periodo_dia_ini = $fecha_ini->day;
 		$periodo_mes_ini = $fecha_ini->month;
 		$periodo_año_ini = $fecha_ini->year;
 		$fecha_fi = Carbon::parse($request->fecha_fin);
+		$periodo_dia_fin = $fecha_fi->day;
 		$periodo_mes_fin = $fecha_fi->month;
 		$periodo_año_fin= $fecha_fi->year;
-		$periodoComision->descripcion = $periodo_mes_ini.'/'.$periodo_año_ini.' - '.$periodo_mes_fin.'/'.$periodo_año_fin;
+		$periodoComision->descripcion = $periodo_dia_ini.'/'.$periodo_mes_ini.'/'.$periodo_año_ini.' - '.$periodo_dia_fin.'/'.$periodo_mes_fin.'/'.$periodo_año_fin;
         $periodoComision->fecha_inicio = $request->fecha_inicio;
         $periodoComision->fecha_fin = $request->fecha_fin;
 		$periodoComision->activo = $request->fijar_periodo;

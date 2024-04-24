@@ -602,11 +602,9 @@ function modal_personaNuevo(){
                         <label class="control-label form-control-sm">N° sesi&oacute;n</label>
                           <select name="numero_sesion" id="numero_sesion" class="form-control form-control-sm">
                             <option value="" selected="selected">--Seleccionar N°--</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <?php for($i = 1; $i <= 10; $i++): ?>
+                              <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php endfor; ?>
                         </select>
                       </div>
                     </div>

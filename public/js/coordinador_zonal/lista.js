@@ -1020,6 +1020,7 @@ function datatablenew3(){
 			var id = $('#id').val();
 			var zonal = $('#zonal').val();
 			var estado = $('#estado').val();
+			var periodo = $('#id_periodo_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -1027,7 +1028,7 @@ function datatablenew3(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,zonal:zonal,estado:estado,
+						id:id,zonal:zonal,periodo:periodo,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {

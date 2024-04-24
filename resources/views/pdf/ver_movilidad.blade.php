@@ -97,9 +97,19 @@
 							<table style="margin:0px!important;padding:0px!important;">
 								<tbody style="padding:0px!important;margin:0px!important">
 									<tr style="padding:0px!important;margin:0px!important">
-										<td style="padding:0px!important;margin:0px!important" align="center" class="titulo_principal">
-											<h2>REPORTE DE MOVILIDAD - <?php echo $mesEnLetras?> <?php echo $anio?> </h2>
+										<td style="padding:0px!important;margin:0px!important" align="center" colspan="11" class="titulo_principal">
+											<h2>REPORTE DE MOVILIDAD <?php //echo $mesEnLetras?> <?php //echo $anio?> </h2>
 										</td>
+									</tr>
+									<tr style="padding:0px!important;margin:0px!important">
+										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Año:</td>
+										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $anio?></td>
+										<td style="padding:0px!important;margin:0px!important;text-align:right"></td>
+										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Mes:</td>
+										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $mes?></td>
+										<td style="padding:0px!important;margin:0px!important;text-align:right"></td>
+										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Fecha Computo:</td>
+										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo date("d-m-Y")?></td>
 									</tr>
 								</tbody>
 							</table>
