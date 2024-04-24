@@ -307,9 +307,41 @@ br {
 														}
 													?>
 													
+                                                  
+                                                    
+                                                    <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV'){?>
+                                            
+                                                        <table>
+                                                        <tbody>
+                                                        <tr>
+                                                        <td>RUC/DNI:</td>
+                                                        <td style="text-align: right;"><span  class="resaltado">{{ $factura->cod_tributario }}</span></td>
+                                                        </tr>
+                                                        <div class="separador">&nbsp;</div>
+                                                        <tr>
+                                                        <td>ADQUIRIENTE:</td>
+                                                        <td style="text-align: right;"> <span class="resaltado">{{ $factura->destinatario }}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td>DIRECCION:</td>
+                                                        <td style="text-align: right;"><span class="resaltado">{{ $factura->direccion }}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td>FECHA DE EMISIÓN :</td>
+                                                        <td style="text-align: right;"><span class="resaltado">{{ $factura->fecha }}</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td>CAP :</td>
+                                                        <td style="text-align: right;"><span class="resaltado"></span></td>
+                                                        </tr>
+                                                        </tbody>
+                                                        </table>
+                                                               
+                                                    
                                                     <div class="separador">&nbsp;</div>
+
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <p>Fecha de expedición: {{ $factura->fecha }}</p>
+                                                        <p> </p>
                                                     </div>
                                                     <div class="separador">&nbsp;</div>
                                                 </div>
@@ -395,20 +427,12 @@ br {
                                         </div>
                                         <!--card-->
                                     </div>
+                                    
                                     <div class="separador">&nbsp;</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
-                                    </div>
-                                    <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV'){?>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="separador">&nbsp;</div>
-                                        <p>RUC/DNI: <span class="resaltado">{{ $factura->cod_tributario }}</span></p>
-                                        <div class="separador">&nbsp;</div>
-                                        <p>RAZON SOCIAL/NOMBRE: <span class="resaltado">{{ $factura->destinatario }}</span></p>
-                                        <div class="separador">&nbsp;</div>
-                                        <p>DIRECCION: <span class="resaltado">{{ $factura->direccion }}</span></p>
-                                    </div>
-                                    <div class="separador">&nbsp;</div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
+                                                    </div>
+
                                     <hr style="width:90%", size="3", color=black>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <p>Representación impresa generada en el sisteman de SUNAT, puede verificarla
