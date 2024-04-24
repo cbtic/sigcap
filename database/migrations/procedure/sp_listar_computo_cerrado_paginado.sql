@@ -25,11 +25,11 @@ begin
 		
 	v_where = ' Where estado=''1''  ';
 	
-	/*
+	
 	If p_id_periodo_comisiones<>'' Then
-	 v_tabla:=v_tabla||'And t1.id_periodo_comisione = '''||p_id_periodo_comisiones||''' ';
+	 v_where:=v_where||'And t1.id_periodo_comision = '''||p_id_periodo_comisiones||''' ';
 	End If;
-	*/
+	
 
 	If p_anio<>'' Then
 	 v_where:=v_where||'And t1.anio = '''||p_anio||''' ';
@@ -89,4 +89,3 @@ End
 
 $function$
 ;
-

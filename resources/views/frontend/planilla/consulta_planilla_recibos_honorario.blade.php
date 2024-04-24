@@ -631,19 +631,20 @@ label.form-control-sm{
 													<table id="tblReciboHonorario" class="table table-hover table-sm">
 														<thead>
 														<tr style="font-size:13px">
-															<th>N&uacute;mero CAP</th>
+															<th>Nro. CAP</th>
 															<th>Nombre</th>
 															<th>RUC</th>
 															<th>Municipalidad</th>
 															<th>Situaci&oacute;n</th>
-															<th>N&uacute;mero Comprobante</th>
-															<th>Fecha Comprobante</th>
-															<th>Fecha Vencimiento</th>															
+															<th>N&uacute;mero <br/>Comprobante</th>
+															<th>Fecha <br/>Comprobante</th>
+															<th>Fecha <br/>Vencimiento</th>															
 															<th>Abonado</th>
-															<th>Nro. Operación</th>
+															<th>Nro. <br/>Operación</th>
+															<th>Fecha <br/>Operación</th>
 															<th>Grupo</th>
 															<th>Asiento <br/>Provisión</th>
-															<th>Asiento <br/>Cancelación</th>
+															<th>Asiento <br/>Cancelación</th>															
 															<th class="text-center">Acciones</th>
 														</tr>
 														</thead>

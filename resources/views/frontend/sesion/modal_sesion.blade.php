@@ -337,6 +337,26 @@ function fn_save(){
     });
 }
 
+function fn_save_dia(){
+    
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var id_comision = $('#id_comision').val();
+	var id_regional = $('#id_regional').val();
+	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var observaciones = $('#observaciones').val();
+	
+	$.ajax({
+			url: "/sesion/update_sesion_dia_semana",
+            type: "POST",
+			data : $('#frmSesion').serialize(),
+            success: function (result) {
+				$('#openOverlayOpc').modal('hide');
+				datatablenew();
+            }
+    });
+}
+
 function fn_liberar(id){
     
 	//var id_estacionamiento = $('#id_estacionamiento').val();
@@ -519,6 +539,25 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 	
 }
 
+function fn_validar_dia(opc){
+	
+	if(opc==1){
+		$("#semana1").hide();
+		$("#semana2").show();
+		$("#btnActualizarSemana").hide();
+		$("#btnGuardarSemana").show();
+		$("#btnCancelarSemana").show();
+	}
+	
+	if(opc==2){
+		$("#semana1").show();
+		$("#semana2").hide();
+		$("#btnActualizarSemana").show();
+		$("#btnGuardarSemana").hide();
+		$("#btnCancelarSemana").hide();
+	}
+}
+
 </script>
 
 
@@ -620,10 +659,39 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 						<div class="col-lg-4">
 						
 							<div class="form-group">
-							
+								
+								<div class="row">
+								<div class="col-lg-7">
 								<label class="control-label form-control-sm">Dia Semana</label>
+								
+								<div id="semana1">
 								<input type="text" id="dia_semana" name="dia_semana" class="form-control form-control-sm" value="<?php if($dia_semana!=null){echo $dia_semana[0]->denominacion;}?>" readonly="readonly">
 								<input type="hidden" id="id_dia_semana" name="id_dia_semana" class="form-control form-control-sm" value="<?php if($dia_semana!=null){echo $dia_semana[0]->codigo;}?>">
+								</div>
+								<div id="semana2" style="display:none">
+								<select name="dia_semana_nuevo" id="dia_semana_nuevo" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($dia_semanas as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comision->id_dia_semana)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+								</div>
+								
+								</div>
+								<div class="col-lg-5">
+								<label class="control-label form-control-sm"></label>
+								
+								<a href="javascript:void(0)" id="btnActualizarSemana" style="margin-top:20px" onClick="fn_validar_dia(1)" class="btn btn-sm btn-warning">Actualizar</a>
+								<a href="javascript:void(0)" style="display:none;float:left" id="btnGuardarSemana" onClick="fn_save_dia()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" style="display:none;float:left" id="btnCancelarSemana" onClick="fn_validar_dia(2)" class="btn btn-sm btn-danger">Cancelar</a>
+								
+								</div>
+								
+								</div>
+								
 							</div>
 							
 							
@@ -785,14 +853,17 @@ function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
 											<td class='text-left'>
 											<?php
 											$puesto = $row->puesto;
+											$disabled = "";
 											if($puesto=="")$puesto="ASESOR / ESPECIALISTA";
 											echo $puesto; 
+											
+											if($puesto=="ASESOR / ESPECIALISTA" || $puesto=="SUPLENTE")$disabled = "disabled='disabled'";
 											?></td>
 											<td class='text-left'><?php echo $row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></td>
 											<td class='text-left'><?php echo $row->numero_cap?></td>
 											<td class='text-left'><?php echo $row->situacion?></td>
 											<td class='text-center'>
-											<input type="radio" name="coordinador" value="<?php echo $id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> onChange="guardar_coordinador(<?php echo $row->id?>,<?php echo $id_delegado?>)" />
+											<input type="radio" <?php echo $disabled?> name="coordinador" value="<?php echo $id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> onChange="guardar_coordinador(<?php echo $row->id?>,<?php echo $id_delegado?>)" />
 											</td>
 											<td class='text-center'>
 											<input type="checkbox" class="<?php if($row->situacion!="INHABILITADO" && $row->situacion!="FALLECIDO")echo "id_aprobar_pago"?>" name="id_aprobar_pago[<?php echo $id_delegado?>]" value="<?php echo $id_delegado?>" 

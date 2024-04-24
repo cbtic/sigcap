@@ -98,7 +98,7 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button class="btn btn-primary" type="submit">@lang('Register')</button>
+                                    <button class="btn btn-primary" type="submit" id="btnRegister">@lang('Register')</button>
                                 </div>
                             </div><!--form-group-->
                         </x-forms.post>
@@ -127,6 +127,13 @@ function obtenerPersona(){
 		url: '/persona/obtener_persona_login/' + tipo_documento + '/' + numero_documento,
 		dataType: "json",
 		success: function(result){
+			
+			if(result.persona.id_situacion==83){
+				bootbox.alert("No se puede registrar a un fallecido");
+				$("#btnRegister").attr("disabled",true);
+				return false;
+			}
+		
 			var nombre_persona= result.persona.apellido_paterno+" "+result.persona.apellido_materno+", "+result.persona.nombres;
 			$('#name').val(nombre_persona);
 		},
