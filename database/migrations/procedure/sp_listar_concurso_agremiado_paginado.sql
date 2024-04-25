@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_concurso_agremiado_paginado(p_id_concurso character varying, p_numero_documento character varying, p_id_agremiado character varying, p_agremiado character varying, p_numero_cap character varying, p_id_regional character varying, p_id_situacion character varying, p_id_estado character varying, p_campo character varying, p_orden character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_concurso_agremiado_paginado(p_id_concurso character varying, p_numero_documento character varying, p_id_agremiado character varying, p_agremiado character varying, p_numero_cap character varying, p_id_regional character varying, p_id_situacion character varying, p_id_estado character varying, p_campo character varying, p_orden character varying, p_flag_concurso character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -73,6 +73,11 @@ And t1.estado=''1'' ';
 	If p_id_estado<>'' Then
 	 v_where:=v_where||'And t1.resultado = '''||p_id_estado||''' ';
 	End If;
+	
+	if p_flag_concurso<>'' Then
+	 v_where:=v_where||'And (case when now() > t5.fecha_inscripcion_fin then 2 else 1 end) = '''||p_flag_concurso||''' ';
+	End If;
+
 	/*
 	If p_campo='' Then
 		p_campo='t1.id';
@@ -98,4 +103,3 @@ End
 
 $function$
 ;
-
