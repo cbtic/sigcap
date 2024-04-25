@@ -19,9 +19,9 @@ class RevisorUrbano extends Model
 	function getCodigoRU(){
 
         $cad = "select 'RU-'||to_char(now(),'yyyy')||'-'||lpad((coalesce(max(split_part(codigo_ru::varchar, '-', 3)::int),0)+1)::varchar,7,'0') codigo  
-from revisor_urbanos 
-where coalesce(split_part(codigo_ru::varchar, '-', 3),'')!=''
-and split_part(codigo_ru::varchar, '-', 2) = to_char(now(),'yyyy')";
+                from revisor_urbanos 
+                where coalesce(split_part(codigo_ru::varchar, '-', 3),'')!=''
+                and split_part(codigo_ru::varchar, '-', 2) = to_char(now(),'yyyy')";
         
 		$data = DB::select($cad);
         return $data[0]->codigo;

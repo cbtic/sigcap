@@ -526,6 +526,7 @@ Route::get('planillaDelegado/consulta_planilla_delegado', [PlanillaDelegadoContr
 Route::get('planillaDelegado/consulta_reintegro', [PlanillaDelegadoController::class, 'consulta_reintegro'])->name('planillaDelegado.consulta_reintegro');
 Route::post('planillaDelegado/obtener_planilla_delegado', [PlanillaDelegadoController::class, 'obtener_planilla_delegado'])->name('planillaDelegado.obtener_planilla_delegado');
 Route::post('planilla/send_planilla_delegado', [PlanillaDelegadoController::class, 'send_planilla_delegado'])->name('sesion.send_planilla_delegado');
+Route::get('planilla/obtener_monto/{id_tipo_reintegro}/{id_comision}/{id_periodo}/{mes}', [PlanillaDelegadoController::class, 'obtener_monto'])->name('planillaDelegado.obtener_monto');
 
 Route::post('planilla/listar_reintegro_ajax', [PlanillaDelegadoController::class, 'listar_reintegro_ajax'])->name('planilla.listar_reintegro_ajax');
 Route::get('planilla/modal_reintegro/{id}', [PlanillaDelegadoController::class, 'modal_reintegro'])->name('planilla.modal_reintegro');

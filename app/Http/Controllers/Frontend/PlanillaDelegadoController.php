@@ -142,8 +142,11 @@ class PlanillaDelegadoController extends Controller
 		$delegadoReintegro->id_regional = $request->id_regional;
 		$delegadoReintegro->id_periodo = $request->id_periodo;
 		$delegadoReintegro->id_mes = $request->id_mes;
+		$delegadoReintegro->id_mes_ejecuta_reintegro = $request->id_mes_ejecuta_reintegro;
 		$delegadoReintegro->id_comision = $request->id_comision;
 		$delegadoReintegro->id_delegado = $request->id_delegado;
+		$delegadoReintegro->id_tipo_reintegro = $request->id_tipo_reintegro;
+		$delegadoReintegro->cantidad = $request->cantidad;
 		$delegadoReintegro->importe = $request->importe;
 		$delegadoReintegro->observacion = $request->observacion;
 		$delegadoReintegro->estado = 1;
@@ -152,9 +155,17 @@ class PlanillaDelegadoController extends Controller
 			
     }
 	
+	public function obtener_monto($id_tipo_reintegro,$id_comision,$id_periodo,$mes){
+		
+		$planillaDelegado_model = new PlanillaDelegado;
+		$monto = $planillaDelegado_model->getMonto($id_tipo_reintegro,$id_comision,$id_periodo,$mes);
+		
+		echo json_encode($monto);
+	}
+	
 	public function obtener_planilla_delegado(Request $request){
 		
-		$planillaDelegado = PlanillaDelegado::where("id_periodo_comision",$request->id_periodo_bus)->where("periodo",$request->anio)->where("mes",$request->mes)->first();
+		$planillaDelegado = PlanillaDelegado::where("id_periodo_comision",$request->id_periodo_bus)->where("periodo",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
 		
         $planillaDelegado_model = new PlanillaDelegado;
 		
@@ -172,7 +183,7 @@ class PlanillaDelegadoController extends Controller
 	public function send_planilla_delegado(Request $request){
 		//exit();
 		$msg = "";
-		$planillaDelegadoExiste = PlanillaDelegado::where("periodo",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
+		$planillaDelegadoExiste = PlanillaDelegado::where("id_periodo_comision",$request->id_periodo_bus)->where("periodo",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
 		
 		if($planillaDelegadoExiste){
 			$msg = false;
