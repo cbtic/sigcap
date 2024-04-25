@@ -765,7 +765,16 @@ class ConcursoController extends Controller
 		$inscripcionDocumento->estado = 1;
 		$inscripcionDocumento->id_usuario_inserta = $id_user;
 		$inscripcionDocumento->save();
-			
+		
+		$inscripcionDocumento_model = new InscripcionDocumento;
+		$concurso_model = new Concurso;
+        $inscripcionDocumento = $inscripcionDocumento_model->getConcursoInscripcionDocumentoById($request->id_concurso_inscripcion);
+        $concursoRequisito = $concurso_model->getConcursoRequisitoByIdConcurso($concursoPuesto->id_concurso);
+		
+		$data["inscripcionDocumento"] = count($inscripcionDocumento);
+		$data["concursoRequisito"] = count($concursoRequisito);
+		echo json_encode($data);
+		
     }
 	
 	public function upload_documento(Request $request){
