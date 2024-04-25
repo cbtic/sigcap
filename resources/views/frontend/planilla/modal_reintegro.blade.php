@@ -216,15 +216,18 @@ function fn_save(){
 	var id_regional = $('#id_regional').val();
 	var id_periodo = $('#id_periodo').val();
 	var id_mes = $('#mes').val();
+	var id_mes_ejecuta_reintegro = $('#id_mes_ejecuta_reintegro').val();
 	var id_comision = $('#id_comision').val();
 	var id_delegado = $('#id_comision option:selected').attr("id_delegado");
-	var importe = $('#importe').val();	
-	var observacion = $('#observacion').val();	
+	var importe = $('#importe').val();
+	var cantidad = $('#cantidad').val();
+	var id_tipo_reintegro = $('#id_tipo_reintegro').val();
+	var observacion = $('#observacion').val();
 	
     $.ajax({
 			url: "/planilla/send_reintegro",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,id_periodo:id_periodo,id_mes:id_mes,id_comision:id_comision,id_delegado:id_delegado,importe:importe,observacion:observacion},
+            data : {_token:_token,id:id,id_regional:id_regional,id_periodo:id_periodo,id_mes:id_mes,id_mes_ejecuta_reintegro:id_mes_ejecuta_reintegro,id_comision:id_comision,id_delegado:id_delegado,importe:importe,cantidad:cantidad,id_tipo_reintegro:id_tipo_reintegro,observacion:observacion},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				window.location.reload();
@@ -235,7 +238,46 @@ function fn_save(){
 
 }
 
+function obtener_monto(){
 
+	//var _id = $("#id").val();	
+	var msg = "";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+	$('#monto').val("");
+	
+	var id_tipo_reintegro = $("#id_tipo_reintegro").val();
+	var id_comision = $("#id_comision").val();
+	var id_periodo = $('#id_periodo').val();
+	var mes = $('#mes').val();
+	
+	$.ajax({
+		url: '/planilla/obtener_monto/' + id_tipo_reintegro + '/' + id_comision + '/' + id_periodo + '/' + mes,
+		dataType: "json",
+		success: function(result){
+			console.log(result);
+			$('#monto').val(Number(result).toFixed(2));
+
+		},
+		error: function(data) {
+		}
+		
+	});
+
+}
+
+function calcular_importe(){
+	
+	var monto = $('#monto').val();
+	var cantidad = $('#cantidad').val();
+	var importe = cantidad * monto;
+	$('#importe').val(importe);
+	
+}
 
 </script>
 
@@ -310,7 +352,7 @@ function fn_save(){
 
 						<div class="col-lg-3">
 							<div class="form-group">
-								<label class="control-label">Mes</label>
+								<label class="control-label">Mes a Reintegrar</label>
 								<select name="mes" id="mes" class="form-control form-control-sm">
 								<?php
 									foreach ($mes as $key=>$row) {?>
@@ -353,23 +395,39 @@ function fn_save(){
 						
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 							<label class="control-label form-control-sm">Tipo Reintegro</label>
-							<select name="estado" id="estado" class="form-control form-control-sm">
+							<select name="id_tipo_reintegro" id="id_tipo_reintegro" class="form-control form-control-sm" onChange="obtener_monto()">
 								<option value="" selected="selected">--Seleccionar--</option>
 								<option value="1">Movilidad</option>
 								<option value="2">Sesi&oacute;n</option>
 								<option value="3">Coordinaci&oacute;n</option>
 							</select>
 						</div>
+						
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="control-label">Mes Ejecuta Reintegro</label>
+								<select name="id_mes_ejecuta_reintegro" id="id_mes_ejecuta_reintegro" class="form-control form-control-sm" onChange="obtener_monto()">
+								<?php
+									foreach ($mes as $key=>$row) {?>
+									<option value="<?php echo $key?>" <?php if($key==$delegadoReintegro->id_mes_ejecuta_reintegro)echo "selected='selected'"?>><?php echo $row?></option>
+								<?php 
+									}
+								?>
+							</select>
+							<input type="hidden" name="monto" id="monto" value="0" />
+							</div>
+						</div>
+						
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Cantidad</label>
-								<input id="cantidad" name="cantidad" class="form-control form-control-sm" value="<?php echo $delegadoReintegro->importe?>" type="text"/>
+								<input id="cantidad" name="cantidad" class="form-control form-control-sm" value="<?php echo $delegadoReintegro->importe?>" type="text" onKeyUp="calcular_importe()"/>
 							</div>
 						</div>
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Importe</label>
-								<input id="importe" name="importe" class="form-control form-control-sm" value="<?php echo $delegadoReintegro->importe?>" type="text"/>
+								<input id="importe" name="importe" class="form-control form-control-sm" value="<?php echo $delegadoReintegro->importe?>" type="text" readonly="readonly"/>
 							</div>
 						</div>
 						

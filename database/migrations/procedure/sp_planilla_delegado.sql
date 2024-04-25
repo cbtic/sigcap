@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION public.sp_planilla_delegado(p_id_periodo_comision character varying,p_anio character varying, p_mes character varying)
+CREATE OR REPLACE FUNCTION public.sp_planilla_delegado(p_id_periodo_comision character varying, p_anio character varying, p_mes character varying)
  RETURNS character varying
  LANGUAGE plpgsql
 AS $function$
@@ -40,10 +40,10 @@ begin
 	select to_char(((date_trunc('month', ('01-'||p_mes||'-'||p_anio)::date) + interval '1 month') - interval '1 day'),'dd')::varchar into v_dia;
 	
 	/*********OBTIENE EL 10% DEL VALOR DE LA UIT DEL AÑO DE LA PLANILLA*****************/
-	select ((0.10)*valor_uit::decimal) into v_adicional_coordinador from parametros p where anio=p_anio;
+	select ((0.10)*valor_uit::decimal) into v_adicional_coordinador from parametros p where anio=p_anio and estado='1';
 	
 	/*********OBTIENE EL ID DEL COMPUTO DE SESION DEL AÑO Y MES DE LA PLANILLA*****************/
-	select id into p_id_computo_sesion from computo_sesiones cs where anio=p_anio and mes=p_mes and estado='1';
+	select id into p_id_computo_sesion from computo_sesiones cs where anio=p_anio and mes=p_mes and id_periodo_comision=p_id_periodo_comision::int and estado='1';
 	
 	/*********OBTIENE EL SALDO DE LOS DELEGADOS DEL FONDO COMUN*****************/
 	/*
@@ -59,8 +59,8 @@ begin
 	inner join ubigeos t3 on t3.id_ubigeo = t1.id_ubigeo
 	inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle 
 	Where EXTRACT(YEAR FROM t4.fecha)::varchar = p_anio
-	And EXTRACT(MONTH FROM t4.fecha)::varchar = p_mes::int::varchar
-	And t1.id_periodo_comision = p_id_periodo_comision::int;
+	And EXTRACT(MONTH FROM t4.fecha)::varchar = p_mes::int::varchar;
+	--And t1.id_periodo_comision = p_id_periodo_comision::int;
 
 	/*********OBTIENE LA SUMA DEL TOTAL DE MOVILIDAD Y LA SUMA DEL PAGO FIJO A COORDINADORES*****************/
 	select 
@@ -79,8 +79,9 @@ begin
 	--sum(case when to_char(cs.fecha_programado,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
-	coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,
-	coalesce((select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and estado='1'),0)movilidad_sesion
+	--coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,
+	coalesce((select sum(importe)importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
+	coalesce((select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and cm.id_periodo_comisiones=p_id_periodo_comision::int and estado='1'),0)movilidad_sesion
 	from comision_sesiones cs 
 	inner join comision_sesion_delegados csd on cs.id=csd.id_comision_sesion
 	left join comision_delegados cd on csd.id_delegado=cd.id
@@ -136,8 +137,9 @@ begin
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
 	coalesce((select sum(total_adelanto) from adelantos a where id_agremiado=cd.id_agremiado and fecha between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)adelanto,
-	coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,
-	coalesce((select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and estado='1'),0)movilidad_sesion,
+	--coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,	
+	coalesce((select sum(importe)importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
+	coalesce((select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and cm.id_periodo_comisiones=p_id_periodo_comision::int and estado='1'),0)movilidad_sesion,
 	coalesce((select sum(adelanto_pagar) from adelanto_detalles ad inner join adelantos a on ad.id_adelento=a.id where a.id_agremiado=cd.id_agremiado and fecha_pago between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)descuento
 	from comision_sesiones cs 
 	inner join comision_sesion_delegados csd on cs.id=csd.id_comision_sesion
@@ -176,4 +178,5 @@ begin
 end;
 $function$
 ;
+
 
