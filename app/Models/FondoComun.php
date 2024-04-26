@@ -34,16 +34,25 @@ class FondoComun extends Model
 
         $mes= intval($mes);
 
+        $cad = "select t3.desc_ubigeo municipalidad,sum(round(t1.importe_bruto::numeric,2))importe_bruto, sum(round(t1.importe_igv::numeric,2))importe_igv, sum(round(t1.importe_comision_cap::numeric,2))importe_comision_cap, sum(round(t1.importe_fondo_asistencia::numeric,2))importe_fondo_asistencia, sum(round(t1.saldo::numeric,2))saldo
+        from delegado_fondo_comuns t1
+        --inner join municipalidades t3 on t3.id = t1.id_municipalidad
+        inner join ubigeos t3 on t3.id_ubigeo = t1.id_ubigeo
+        inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle
+        group by  fecha, desc_ubigeo 
+        having EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
+        And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'           
+    ";
+    /*
         $cad = "select t3.desc_ubigeo municipalidad,round(t1.importe_bruto::numeric,2)importe_bruto, round(t1.importe_igv::numeric,2)importe_igv, round(t1.importe_comision_cap::numeric,2)importe_comision_cap, round(t1.importe_fondo_asistencia::numeric,2)importe_fondo_asistencia, round(t1.saldo::numeric,2)saldo
                 from delegado_fondo_comuns t1
                 --inner join municipalidades t3 on t3.id = t1.id_municipalidad
                 inner join ubigeos t3 on t3.id_ubigeo = t1.id_ubigeo
                 inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle 
             Where EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
-            And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'
-           
+            And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'           
             ";
-
+*/
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;

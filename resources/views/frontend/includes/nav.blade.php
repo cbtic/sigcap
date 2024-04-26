@@ -142,7 +142,7 @@
 					</li>
 					@endif
 
-					@if(Gate::check('Estado de Cuenta') || Gate::check('Certificado Tipo 4') || Gate::check('Certificado Tipo 3') || Gate::check('Consulta de Facturas') || Gate::check('Concepto Beneficiario'))
+					@if(Gate::check('Estado de Cuenta') || Gate::check('Certificado Tipo 4') || Gate::check('Certificado Tipo 3') || Gate::check('Consulta de Facturas') || Gate::check('Liquidacion de Caja') || Gate::check('Concepto Beneficiario'))
                     <li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Caja</a>
@@ -172,7 +172,7 @@
 					</li>
 					@endif
 
-					@if(Gate::check('Fondo Comun Planilla') || Gate::check('Adelantos y Descuentos Delegados') || Gate::check('Planilla Delegados'))
+					@if(Gate::check('Fondo Comun Planilla') || Gate::check('Adelantos y Descuentos Delegados') || Gate::check('Consulta Reintegro') || Gate::check('Asignacion de Cuentas') || Gate::check('Planilla Delegados') || Gate::check('Registro Recibos por Honorarios') || Gate::check('Asiento Planilla Delegados'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Contabilidad</a>
@@ -183,8 +183,9 @@
 							@can('Adelantos y Descuentos Delegados')
 							<a href="/adelanto/consulta_adelanto" class="dropdown-item">Adelantos y Descuentos Delegado</a>
 							@endcan
+							@can('Consulta Reintegro')
 						   	<a href="/planillaDelegado/consulta_reintegro" class="dropdown-item">Delegado Reintegro</a>
-
+							@endcan
 							@can('Asignacion de Cuentas')
 							<a href="/asignacion" class="dropdown-item">Asignacion de Cuentas</a>
 							@endcan
@@ -192,7 +193,7 @@
 							@can('Planilla Delegados')
 						   	<a href="/planillaDelegado/consulta_planilla_delegado" class="dropdown-item">Planilla Delegados</a>
 							@endcan
-							@can('Planilla Delegados')
+							@can('Registro Recibos por Honorarios')
 						   	<a href="/planillaDelegado/consulta_planilla_recibos_honorario" class="dropdown-item">Registro Recibos por Honorarios</a>
 							@endcan
 
@@ -204,7 +205,7 @@
 					</li>
 					@endif
 
-					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Profesion') || Gate::check('Otros Profesionales') || Gate::check('Plan contable') || Gate::check('Partida Presupuestal') || Gate::check('Centro de costos') || Gate::check('Multas Mantenimiento') || Gate::check('Tabla Maestra') || Gate::check('Zonales'))
+					@if(Gate::check('Empresas') || Gate::check('Municipalidades') || Gate::check('Conceptos') || Gate::check('Tipo de Conceptos') || Gate::check('Seguros') || Gate::check('Periodo Comision') || Gate::check('Movilidad') || Gate::check('Persona') || Gate::check('Plan contable') || Gate::check('Partida Presupuestal') || Gate::check('Centro de costos') || Gate::check('Multas Mantenimiento') || Gate::check('Tabla Maestra') || Gate::check('Zonales'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Mantenimiento</a>

@@ -521,6 +521,7 @@ class DerechoRevisionController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
 		$ubigeo_model = new Ubigeo;
 		$municipalidad_model = new Municipalidade;
+		$usoEdificacione_model = new UsoEdificacione;
 
 		$departamento = $ubigeo_model->getDepartamento();
         $sitio = $tablaMaestra_model->getMaestroByTipo(33);
@@ -530,8 +531,9 @@ class DerechoRevisionController extends Controller
 		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud($id);
 		$propietario_solicitud = $propietario_model->getPropietarioSolicitud($id);
 		$info_solicitud = $presupuesto_model->getInfoSolicitud($id);
+		$info_uso_solicitud = $usoEdificacione_model->getInfoSolicitudUso($id);
 		
-        return view('frontend.derecho_revision.all_nuevoDerecho',compact('id','derechoRevision_','proyectista','datos_agremiado','datos_persona','proyecto2','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','tipo_solicitante','propietario_solicitud','persona','info_solicitud'));
+        return view('frontend.derecho_revision.all_nuevoDerecho',compact('id','derechoRevision_','proyectista','datos_agremiado','datos_persona','proyecto2','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','tipo_solicitante','propietario_solicitud','persona','info_solicitud','info_uso_solicitud'));
     }
 
 	public function editar_derecho_revision_nuevo($id){
