@@ -135,59 +135,29 @@ class ConcursoController extends Controller
     }
 	
 	public function descargar_comprimido(){
-		/*
-		ini_set("memory_limit","-1");
-		error_reporting(0);
-		$this->load->library('zipfile');
-		$zipfile = new zipfile();
-		
-		$zipfile->add_dir($fileConvocatoria."/");
-		$zipfile->add_dir($fileConvocatoria."/".$filePostulante."/");
-		$zipfile->add_file(implode("",file(base_url().'documentos/declaracion/'.$documentos12->documento)), $fileConvocatoria."/".$filePostulante."/".$documentos12->documento);
-		
-		header("Content-type: application/octet-stream");
-		header("Content-disposition: attachment; filename=documentacion.zip");
-		echo $zipfile->file();
-		*/
-		
-		//$zip = new ZipArchive();
-		//$zip->add_dir("img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/");
-		//$zip->addFile(implode("",file('http://127.0.0.1:8000/img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png')), "/img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png");
-		//file:///E:/proyectos%20laravel/sigcap/public/img/documento/2-2024%20-%204-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png
-		/*
-		$file = "http://127.0.0.1:8000/img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png";
-		if (!$zip->addFile($file, basename($file))) {
-            echo 'Could not add file to ZIP: ' . $file;
-        }
-		
-		$zip->close();
-		*/
-		//$zip_path = 'downloadSelected/download.zip';
-		$zip_path = 'download.zip';
+				
+		$zip_path = '60.zip';
   		$zip = new ZipArchive();
+		
 		if ($zip->open($zip_path, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) !== TRUE) {
 			die ("An error occurred creating your ZIP file.");
 		}
 
-		  //foreach ($_POST['items'] as $path) {
-		
-			// generate filename to add to zip
-			//$filepath = 'downloads/' . $path . '.zip';
-			$filepath = 'http://127.0.0.1:8000/img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png';
-		
-			if (file_exists($filepath)) {
-			  $zip->addFile($filepath, $path . '.zip') or die ("ERROR: Could not add the file $filename");
-			} else {
-			  die("File $filepath doesnt exit");
-			}
+		$filepath = public_path('img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png');	
+		if (file_exists($filepath)) {
+		  $file="img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png";
+		  $zip->addFile($file, basename($file));
+		  
+		  $file="img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240313184707.64469.png";
+		  $zip->addFile($file, basename($file));
+		  
+		} else {
+		  die("File $filepath doesnt exit");
+		}
 	 	$zip->close();
 		
-		/*
-		$zip = new ZipArchive();
-		//$zip->add_dir("img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/");
-		$filepath_tmp = public_path('/img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png');
-		$zip->addFile(implode("",file($filepath_tmp)), "/img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png");
-		*/
+		return response()->download(public_path($zip_path))->deleteFileAfterSend(true);
+		
 	}
 	public function editar_inscripcion($id){
 		
