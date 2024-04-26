@@ -40,7 +40,7 @@ class FondoComun extends Model
         inner join ubigeos t3 on t3.id_ubigeo = t1.id_ubigeo
         inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle
         group by  fecha, desc_ubigeo 
-        Where EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
+        having EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
         And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'           
     ";
     /*
