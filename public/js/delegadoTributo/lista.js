@@ -13,6 +13,8 @@ $(document).ready(function () {
 		}
 	});
 
+	obtenerAnioPerido();
+
 	$('#numero_documento').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -502,6 +504,11 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			//var id = $('#id').val();
+			var periodo = $('#id_periodoBus').val();
+			var anio = $('#anioBus').val();
+			var delegado = $('#delegadoBus').val();
+			var tributo = $('#tipo_tributoBus').val();
+			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -509,6 +516,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
+						periodo:periodo,anio:anio,delegado:delegado,tributo:tributo,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -635,7 +643,7 @@ function datatablenew(){
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalDelegadoTributo('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<a href="javascript:void(0)" onclick=eliminarMovilidad('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						html += '<a href="javascript:void(0)" onclick=eliminarDelegadoTributo('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -673,6 +681,27 @@ function modalDelegadoTributo(id){
 	});
 }
 
+function obtenerAnioPerido(){
+	
+	var id_periodo = $('#id_periodoBus').val();
+	
+	$.ajax({
+		url: '/planilla/obtener_anio_periodo/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#anioBus').html("");
+			//option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
+			});
+			$('#anioBus').html(option);
+		}
+		
+	});
+	
+}
+
 function modalHistorialMulta(id){
 	
 	$(".modal-dialog").css("width","85%");
@@ -705,7 +734,7 @@ function modalResponsable(id){
 
 }
 
-function eliminarMovilidad(id,estado){
+function eliminarDelegadoTributo(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -717,20 +746,20 @@ function eliminarMovilidad(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Movilidad?", 
+        message: "&iquest;Deseas "+act_estado+" el registro?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_movilidad(id,estado_);
+                fn_eliminar_delegado_tributo(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_movilidad(id,estado){
+function fn_eliminar_delegado_tributo(id,estado){
 	
     $.ajax({
-            url: "/movilidad/eliminar_movilidad/"+id+"/"+estado,
+            url: "/delegadoTributo/eliminar_delegadoTributo/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

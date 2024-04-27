@@ -26,6 +26,20 @@ class PeriodoComisione extends Model
 		
 	}
 
+    public function getPeriodoAllByFecha(){
+		
+		$cad = "select pc.id,pc.descripcion,pc.activo  
+        from periodo_comisiones pc 
+        where pc.estado='1'
+        order by 
+        case when pc.created_at is null then 1 else 0 end,
+        pc.created_at desc";
+
+		$data = DB::select($cad);
+        return $data;
+		
+	}
+
     public function getPeriodoDetAll(){
 		
 		$cad = "select id, denominacion, activo  

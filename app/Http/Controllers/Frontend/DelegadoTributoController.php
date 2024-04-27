@@ -25,16 +25,22 @@ class DelegadoTributoController extends Controller
 
     function consulta_delegadoTributo(){
 
-        return view('frontend.delegadoTributo.all');
+        $periodoComisione_model = new PeriodoComisione;
+        $tablaMaestra_model = new TablaMaestra;
+
+        $periodo = $periodoComisione_model->getPeriodoAllByFecha();
+        $tipo_tributo = $tablaMaestra_model->getMaestroByTipo(77);
+
+        return view('frontend.delegadoTributo.all',compact('periodo','tipo_tributo'));
     }
 
     public function listar_delegadoTributo_ajax(Request $request){
 	
 		$delegadoTributo_model = new DelegadoTributo;
-		$p[]="";
-		$p[]="";
-		$p[]="";
-		$p[]="";
+		$p[]=$request->periodo;
+		$p[]=$request->anio;
+		$p[]=$request->delegado;
+		$p[]=$request->tributo;
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -63,7 +69,7 @@ class DelegadoTributoController extends Controller
 		
 		if($id>0){
 			$delegadoTributo = DelegadoTributo::find($id);
-            $periodo_ = PeriodoComisione::find($delegadoTributo->id_periodo);
+            $periodo_ = PeriodoComisione::find($delegadoTributo->id_periodo_comision);
 		}else{
 			$delegadoTributo = new DelegadoTributo;
             $periodo_ = NULL;
@@ -73,7 +79,7 @@ class DelegadoTributoController extends Controller
         $tipo_tributo = $tablaMaestra_model->getMaestroByTipo(77);
         $bancos = $tablaMaestra_model->getMaestroByTipo(49);
         $emite = $tablaMaestra_model->getMaestroByTipo(103);
-        $periodo = $periodoComisione_model->getPeriodoVigenteAll();
+        $periodo = $periodoComisione_model->getPeriodoAllByFecha();
         $periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
         
@@ -115,6 +121,8 @@ class DelegadoTributoController extends Controller
 			$delegadoTributo = DelegadoTributo::find($request->id);
 		}
 		
+        $delegadoTributo->id_periodo_comision = $request->id_periodo;
+        $delegadoTributo->anio = $request->anio;
 		$delegadoTributo->id_agremiado = $request->delegado;
 		$delegadoTributo->id_tipo_tributo = $request->tipo_tributo;
 		$delegadoTributo->id_tipo_operacion = $request->emite;

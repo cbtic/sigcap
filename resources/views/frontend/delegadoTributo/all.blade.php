@@ -151,12 +151,42 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="anioBus" name="anioBus" placeholder="Año">
-					</div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select name="id_periodoBus" id="id_periodoBus" class="form-control form-control-sm" onchange="obtenerAnioPerido()">
+                                <!--<option value="">--Seleccionar--</option>-->
+                                <?php
+                                foreach ($periodo as $row) {?>
+                                <option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+                                <?php 
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="anioBus" id="anioBus" class="form-control form-control-sm" placeholder="Año">
+                        <option value="">--Selecionar--</option>
+                        </select>
+                    </div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="delegadoBus" name="delegadoBus" placeholder="Delegado">
 					</div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select name="tipo_tributoBus" id="tipo_tributoBus" class="form-control form-control-sm" onChange="">
+                                <option value="">--Selecionar Tipo--</option>
+                                <?php
+                                foreach ($tipo_tributo as $row) {?>
+                                <?php if($row->codigo!=459){?>
+                                <option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$tipo_tributo->id_tipo_tributo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
@@ -164,6 +194,7 @@
 							<option value="0">Eliminado</option>
 						</select>
 					</div>
+                    
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />

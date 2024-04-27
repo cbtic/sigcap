@@ -413,43 +413,22 @@ container: '#myModal modal-body'
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
-								<?php if($id>0){?>
-								<input type="text" id="periodo" name="periodo" class="form-control form-control-sm" value="<?php echo $periodo_->descripcion?>" readonly="readonly">
-								<?php }else{?>
-									<?php 
-									if($periodo_activo){
-									?>
-									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerDelegado();obtenerAnioPerido()">
-										<!--<option value="">--Seleccionar--</option>-->
-										<?php
-										foreach ($periodo as $row) {?>
-										<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
-										<?php 
-										}
-										?>
-									</select>
+								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerDelegado();obtenerAnioPerido()">
+									<!--<option value="">--Seleccionar--</option>-->
 									<?php
-									}else{
+									foreach ($periodo as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$delegadoTributo->id_periodo_comision)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<?php 
+									}
 									?>
-									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="">
-										<!--<option value="">--Seleccionar--</option>-->
-										<?php
-										foreach ($periodo as $row) {?>
-										<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
-										<?php 
-										}
-										?>
-									</select>
-									<?php } ?>
-								<?php } ?>
+								</select>
 							</div>
 						</div>
 
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 							<label class="control-label required-field form-control-sm">Año</label>
 							<select name="anio" id="anio" class="form-control form-control-sm">
-							<option value="">--Selecionar--</option>
-
+								<option value="">--Selecionar--</option>
 							</select>
 						</div>
 
@@ -518,7 +497,7 @@ container: '#myModal modal-body'
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($bancos as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$tipo_tributo->id_tipo_tributo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$delegadoTributo->id_banco)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php
 									}
 									?>
@@ -529,21 +508,21 @@ container: '#myModal modal-body'
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">N&uacute;mero de Cuenta</label>
-								<input id="numero_cuenta" name="numero_cuenta" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->numero_cuenta?>" type="text">																				
+								<input id="numero_cuenta" name="numero_cuenta" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->numero_cuenta?>" type="text">																				
 							</div>
 						</div>
 
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">CCI</label>
-								<input id="cci" name="cci" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->cci?>" type="text">																				
+								<input id="cci" name="cci" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->cci?>" type="text">																				
 							</div>
 						</div>
 
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Aplica Tributo Mayor a</label>
-								<input id="monto_minimo" name="monto_minimo" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->cci?>" type="text">																				
+								<input id="monto_minimo" name="monto_minimo" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->cci?>" type="text">																				
 							</div>
 						</div>
 
@@ -555,7 +534,7 @@ container: '#myModal modal-body'
 									<?php
 									foreach ($tipo_tributo as $row) {?>
 									<?php if($row->codigo!=459){?>
-									<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$tipo_tributo->id_tipo_tributo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$delegadoTributo->id_tipo_tributo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php
 									}
 									}
@@ -567,21 +546,21 @@ container: '#myModal modal-body'
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha de Solicitud</label>
-								<input id="fecha_solicitud" name="fecha_solicitud" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->fecha_solicitud?>" type="text">																				
+								<input id="fecha_solicitud" name="fecha_solicitud" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->fecha_solicitud?>" type="text">																				
 							</div>
 						</div>
 
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha Inicio</label>
-								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->fecha_inicio?>" type="text">																				
+								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->fecha_inicio?>" type="text">																				
 							</div>
 						</div>
 
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha de Fin</label>
-								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->fecha_fin?>" type="text">																				
+								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->fecha_fin?>" type="text">																				
 							</div>
 						</div>
 						
