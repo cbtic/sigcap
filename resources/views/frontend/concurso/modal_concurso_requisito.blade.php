@@ -329,10 +329,10 @@ function fn_save_documento(){
 								<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:10px">
 								<?php
 								$img = "/img/logo-sin-fondo2.png";
-								if($inscripcionDocumento->ruta_archivo!="")$img="/img/documento/".$inscripcionDocumento->ruta_archivo;
+								if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
 								?>
 								<img src="<?php echo $img?>" id="img_ruta" width="240px" height="150px" alt="" style="margin-top:10px" />
-								<input type="hidden" id="img_foto" name="img_foto" value="" />
+								<input type="hidden" id="img_foto" name="img_foto" value="<?php echo $inscripcionDocumento->ruta_archivo?>" />
 							</div>	
 						</div>
 						

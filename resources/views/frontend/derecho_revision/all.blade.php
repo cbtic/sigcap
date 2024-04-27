@@ -379,10 +379,11 @@
                             <th>Tipo Solicitud</th>
                             <th>N° Rev.</th>
                             <th>Municipalidad</th>
-                            <!--<th>N&uacute;mero CAP</th>-->
+                            <th>N° CAP</th>
                             <th>Proyectista</th>
                             <!--<th>N&uacute;mero Doc</th>-->
                             <th>Propietario</th>
+                            <th>Credipago</th>
                             <th>Fecha Registro</th>
                             <th>Estado Proyecto</th>
 							<th>Estado</th>

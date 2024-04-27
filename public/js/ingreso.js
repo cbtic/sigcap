@@ -772,6 +772,7 @@ function obtenerBeneficiario(){
 					var agremiado = result.agremiado.apellido_paterno + " " + result.agremiado.apellido_materno + ", " + result.agremiado.nombres;
 					$('#nombre_').val(agremiado);
 					$('#situacion_').val(result.agremiado.situacion);
+					$('#categoria').val(result.agremiado.categoria);
 					$('#fecha_colegiatura').val(result.agremiado.actividad);
 					$('#fecha_').val(result.agremiado.fecha_colegiado);
 					$('#id_persona').val(result.agremiado.id_p);

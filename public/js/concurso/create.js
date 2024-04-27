@@ -1701,6 +1701,7 @@ function datatablenew(){
 			var agremiado = $('#agremiado_bus').val();
 			var id_situacion = $('#id_situacion_bus').val();
 			var id_concurso = $('#id_concurso_bus').val();
+			var flag_concurso = $('#flag_concurso').val();
 			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -1710,7 +1711,7 @@ function datatablenew(){
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
 						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
-						id_agremiado:id_agremiado,
+						id_agremiado:id_agremiado,flag_concurso:flag_concurso,
 						_token:_token
                        },
                 "success": function (result) {

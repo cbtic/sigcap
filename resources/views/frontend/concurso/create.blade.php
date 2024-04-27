@@ -564,6 +564,15 @@ label.form-control-sm{
 															?>
 														</select>
 													</div>
+													
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+														<select name="flag_concurso" id="flag_concurso" class="form-control form-control-sm" >
+															<option value="">--Todos los Concursos--</option>
+															<option value="1" selected="selected">Concursos Vigentes</option>
+															<option value="2">Concursos Pasados</option>
+														</select>
+													</div>
+													
 													<!--
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="id_regional_bus" id="id_regional_bus" class="form-control form-control-sm" >
@@ -577,6 +586,8 @@ label.form-control-sm{
 														</select>
 													</div>
 													-->
+													
+													<!--
 													<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="Numero Cap">
 													</div>
@@ -590,13 +601,14 @@ label.form-control-sm{
 														<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm" >
 															<option value="">--Situaci&oacute;n--</option>
 															<?php
-															foreach ($situacion_cliente as $row) {?>
-															<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+															//foreach ($situacion_cliente as $row) {?>
+															<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>
 															<?php 
-															}
+															//}
 															?>
 														</select>
 													</div>
+													-->
 													
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 														<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />

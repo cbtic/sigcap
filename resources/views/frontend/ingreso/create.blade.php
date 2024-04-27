@@ -373,6 +373,15 @@
                                             </div>
                                         </div>
 
+                                        <div class="row" id="divCategoria">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Categoría</label>
+                                                    <input type="text" readonly name="categoria" id="categoria" value="{{old('clinom')}}" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="row" id="divRucP">
                                             <div class="col">
                                                 <div class="form-group">
