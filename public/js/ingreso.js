@@ -635,6 +635,10 @@ function validaTipoDocumento(){
 	$('#numero_documento').val("");
 	$('#empresa_razon_social').val("");
 	$('#nombre_').val("");
+
+	$('#categoria').val("");
+
+	
 	
 
 	//$("#btnBoleta").prop('disabled', false);
@@ -646,21 +650,23 @@ function validaTipoDocumento(){
 		$('#divNombreApellido').hide();
 		$('#divCodigoAfliado').hide();
 		$('#divFechaAfliado').hide();
-		$('#divRucP').hide();		
+		$('#divRucP').hide();
+		$('#divCategoria').hide();
+
 		$('#divDireccionEmpresa').show();
 		$('#divRepresentanteEmpresa').show();
 		$('#divEmpresaRazonSocial').show();
-		$('#divBeneficiarioRuc').show();		
-
+		$('#divBeneficiarioRuc').show();
 		//$("#btnBoleta").prop('disabled', false);
 		//$("#btnFactura").prop('disabled', true);
 	
-
 	}else{
 		$('#divNombreApellido').show();
 		$('#divCodigoAfliado').show();
 		$('#divFechaAfliado').show();
 		$('#divRucP').show();
+		$('#divCategoria').show();
+
 		$('#divDireccionEmpresa').hide();
 		$('#divRepresentanteEmpresa').hide();
 		$('#divEmpresaRazonSocial').hide();
