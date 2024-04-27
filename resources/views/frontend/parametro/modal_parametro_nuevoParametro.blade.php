@@ -160,13 +160,15 @@ function fn_save_parametro(){
   var valor_maximo_hu = $('#valor_maximo_hu').val();
   var valor_uit = $('#valor_uit').val();
   var igv = $('#igv').val();
+  var valor_rh = $('#valor_rh').val();
+  
 	
     $.ajax({
 			url: "/parametro/send_parametro_nuevoParametro",
             type: "POST",
             data : {_token:_token,id:id,anio:anio,porcentaje_calculo_edificacion:porcentaje_calculo_edificacion,
             valor_metro_cuadrado_habilitacion_urbana:valor_metro_cuadrado_habilitacion_urbana,valor_minimo_edificaciones:valor_minimo_edificaciones,
-            valor_minimo_hu:valor_minimo_hu,valor_maximo_hu:valor_maximo_hu,valor_uit:valor_uit,igv:igv},
+            valor_minimo_hu:valor_minimo_hu,valor_maximo_hu:valor_maximo_hu,valor_uit:valor_uit,igv:igv,valor_rh:valor_rh},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -246,13 +248,13 @@ function fn_save_parametro(){
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="control-label form-control-sm">Costo M&iacute;nimo - HU</label>
-                            <input id="valor_minimo_hu" name="valor_minimo_hu" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_metro_cuadrado_habilitacion_urbana?>" type="text" >
+                            <input id="valor_minimo_hu" name="valor_minimo_hu" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_minimo_hu?>" type="text" >
                           </div>
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
                             <label class="control-label form-control-sm">Valor M&aacute;ximo Ha (m2) - HU</label>
-                            <input id="valor_maximo_hu" name="valor_maximo_hu" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_metro_cuadrado_habilitacion_urbana?>" type="text" >
+                            <input id="valor_maximo_hu" name="valor_maximo_hu" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_maximo_hu?>" type="text" >
                           </div>
                         </div>
                       </div>
@@ -269,6 +271,13 @@ function fn_save_parametro(){
                         <div class="form-group">
                           <label class="control-label form-control-sm">IGV</label>
                           <input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php echo $parametro->igv?>" type="text" >
+                          </div>
+                        </div>
+                     
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="control-label form-control-sm">Aplica Tributo Mayor a (RH)</label>
+                          <input id="valor_rh" name="valor_rh" on class="form-control form-control-sm"  value="<?php echo $parametro->monto_minimo_rh?>" type="text" >
                           </div>
                         </div>
                       </div>

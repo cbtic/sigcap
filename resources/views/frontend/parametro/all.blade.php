@@ -150,6 +150,7 @@
                             <th>Valor M&aacute;ximo Ha (m2) - HU</th>
                             <th>Valor UIT</th>
                             <th>IGV</th>
+                            <th>Aplica Tributo Mayor a (RH)</th>
                             <th>Estado</th>
 							<th>Acciones</th>
                         </tr>

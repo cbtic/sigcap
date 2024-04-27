@@ -437,6 +437,15 @@ function fn_save_periodoComision(){
 								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php /*echo $periodoComision->fecha_inicio*/?>" type="text">						
 							</div>
 						</div>-->
+						
+						
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Descripci&oacute;n</label>
+								<input id="descripcion" name="descripcion" class="form-control form-control-sm"  value="<?php echo $periodoComision->descripcion?>" type="text" readonly="readonly" >
+							
+							</div>
+						</div>
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tipo</label>
@@ -449,14 +458,6 @@ function fn_save_periodoComision(){
 									}
 									?>
 								</select>
-							</div>
-						</div>
-						
-						<div class="col-lg-3">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Descripci&oacute;n</label>
-								<input id="descripcion" name="descripcion" class="form-control form-control-sm"  value="<?php echo $periodoComision->descripcion?>" type="text" readonly="readonly" >
-							
 							</div>
 						</div>
 						<div class="col-lg-3" style="padding-top:40px">

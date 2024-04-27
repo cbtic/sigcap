@@ -172,6 +172,16 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
+					var monto_minimo_rh = "";
+					if(row.monto_minimo_rh!= null)monto_minimo_rh = row.monto_minimo_rh;
+					return monto_minimo_rh;
+				},
+				"bSortable": false,
+				"aTargets": [8],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
 					var estado = "";
 					if(row.estado == 1){
 						estado = "Activo";
@@ -182,7 +192,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [8]
+				"aTargets": [9]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -205,7 +215,7 @@ function datatablenew(){
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [10],
 				},
             ]
     });
