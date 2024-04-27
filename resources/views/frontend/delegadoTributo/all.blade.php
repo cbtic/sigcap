@@ -174,16 +174,15 @@
 					</div>
 				</div>
 				
-                <div class="card-body">				
+                <div class="card-body">
 
                     <div class="table-responsive">
-                    <table id="tblAfiliado" class="table table-hover table-sm">
+                    <table id="tblDelegadoTributo" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
                             <th>Delegado</th>
                             <!--<th>Nombre Comercial</th>-->
-                            <th>N° CAP</th>
-							<th>Documento</th>
+                            <th>Emite</th>
                             <th>Entidad Financiera</th>
                             <th>N&uacute;mero Cuenta</th>
                             <th>CCI</th>

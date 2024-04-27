@@ -212,6 +212,16 @@ where id=".$id_agremiado;
         if(isset($data[0]))return $data[0]->id_tipo_plaza;
 		
 	}
+
+	function getAgremiadoDatosById($id){
+		$cad = "
+		select p.id, p.apellido_paterno, p.apellido_materno, p.nombres, a.numero_cap from agremiados a 
+		inner join personas p on a.id_persona = p.id
+		where a.id='".$id."'";
+		$data = DB::select($cad);
+		
+        return $data;
+	}
 	
 	public function readFunctionPostgres($function, $parameters = null){
 

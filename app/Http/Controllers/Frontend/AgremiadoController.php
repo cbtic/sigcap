@@ -1662,6 +1662,18 @@ class AgremiadoController extends Controller
 
     }
 
+	public function obtener_datos_agremiado_id($id){
+
+        $agremiado_model = new Agremiado;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $agremiado = $agremiado_model->getAgremiadoDatosById($id);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
 	public function obtener_datos_agremiado_coordinador_zonal($numero_cap){
 
         $agremiado_model = new Agremiado;

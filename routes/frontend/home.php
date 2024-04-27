@@ -707,3 +707,5 @@ Route::post('delegadoTributo/listar_delegadoTributo_ajax', [DelegadoTributoContr
 Route::get('delegadoTributo/modal_nuevoDelegadoTributo/{id}', [DelegadoTributoController::class, 'modal_nuevoDelegadoTributo'])->name('delegadoTributo.modal_nuevoDelegadoTributo');
 Route::post('delegadoTributo/send_delegadoTributo', [DelegadoTributoController::class, 'send_delegadoTributo'])->name('delegadoTributo.send_delegadoTributo');
 Route::get('delegadoTributo/eliminar_delegadoTributo/{id}/{estado}', [DelegadoTributoController::class, 'eliminar_delegadoTributo'])->name('delegadoTributo.eliminar_delegadoTributo');
+Route::get('delegadoTributo/obtener_datos_delegado/{periodo}', [DelegadoTributoController::class, 'obtener_datos_delegado'])->name('delegadoTributo.obtener_datos_delegado');
+Route::get('agremiado/obtener_datos_agremiado_id/{id}', [AgremiadoController::class, 'obtener_datos_agremiado_id'])->name('agremiado.obtener_datos_agremiado_id');

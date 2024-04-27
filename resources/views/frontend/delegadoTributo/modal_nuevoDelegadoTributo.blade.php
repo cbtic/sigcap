@@ -237,51 +237,104 @@ $(document).ready(function() {
 	 
 	$("#delegado").select2({ width: '100%' });
 	
+	
 
 });
 
-function obtener_datos_delegado(){
+function obtenerDelegado(){
 
-	/*var selectElement = document.getElementById("delegado");
-    var selectedOption = selectElement.options[selectElement.selectedIndex];
-	var numero_cap = selectedOption.getAttribute("data-numero-cap");
+	var periodo = $("#id_periodo").val();
+		
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
 	
-	document.getElementById("numero_cap").value = numero_cap;*/
+	$.ajax({
+		url: '/delegadoTributo/obtener_datos_delegado/' + periodo,
+		dataType: "json",
+		success: function(result){
+			
+			var agremiado = result.agremiado;
+			var option = "";
+			$('#delegado').html("");
+			$(agremiado).each(function (ii, oo) {
+				
+				option += "<option value='" + oo.id_agremiado + "'>" + oo.apellido_paterno + " " + oo.apellido_materno + " " + oo.nombres +  "</option>";
+			});
+			$('#delegado').html(option);
+
+			$('.loader').hide();
+
+		}
+		
+	});
 
 }
 
-function fn_save_empresa(){
-    
-	var msg = "";
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var ruc = $('#ruc').val();
-	var nombre_comercial = $('#nombre_comercial').val();
-	var razon_social = $('#razon_social').val();
-	var direccion = $('#direccion').val();
-	var email = $('#email').val();
-	var telefono = $('#telefono').val();
-	var representante = $('#representante').val();
+function obtenerAnioPerido(){
+	
+	var id_periodo = $('#id_periodo').val();
+	
+	$.ajax({
+		url: '/planilla/obtener_anio_periodo/'+id_periodo,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#anio').html("");
+			//option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
+			});
+			$('#anio').html(option);
+		}
+		
+	});
+	
+}
+
+function obtener_datos_delegado_(){
+
+	var id_agremiado = $('#delegado').val();
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_datos_agremiado_id/' + id_agremiado,
+		dataType: "json",
+		success: function(result){
+			
+			var agremiado = result.agremiado[0];
+			
+			$('#numero_cap').val(agremiado.numero_cap);
+			$('#apellido_paterno').val(agremiado.apellido_paterno);
+			$('#apellido_materno').val(agremiado.apellido_materno);
+			$('#nombres').val(agremiado.nombres);
+
+			$('.loader').hide();
+
+		}
+		
+	});
+	
+}
+
+function fn_save_(){
 	
     $.ajax({
-			url: "/empresa/send_empresa_nuevoEmpresa",
+			url: "/delegadoTributo/send_delegadoTributo",
             type: "POST",
-            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,email:email,telefono:telefono,representante:representante},
-            dataType: 'json',
+            data : $("#frmTributo").serialize(),
 			success: function (result) {
     
-				//alert("El RUC ingresado ya existe !!!");
-				if(result.sw==false){
-					Swal.fire("El RUC ingresado ya existe !!!");
-					
-					$('#openOverlayOpc').modal('hide');
-					//window.location.reload();
-           
-            	}else{
-					$('#openOverlayOpc').modal('hide');
-					window.location.reload();
-				}
-			
+				$('#openOverlayOpc').modal('hide');
+				window.location.reload();
+		
 		}
 			
     });
@@ -345,7 +398,8 @@ container: '#myModal modal-body'
 			</div>
 			
             <div class="card-body">
-				
+
+			<form method="post" action="#" id="frmTributo" name="frmTributo" enctype="multipart/form-data">
 
 			<div class="row">
 
@@ -356,26 +410,56 @@ container: '#myModal modal-body'
 					
 					<div class="row"  style="padding-left:10px">
 
-						<div class="col-lg-2">
+						<div class="col-lg-4">
 							<div class="form-group">
-								<label class="control-label required-field form-control-sm">Periodo</label>
-								<input id="anio" name="anio" class="form-control form-control-sm" value="<?php //echo $delegadoTributo->anio?>" type="text" >
+								<label class="control-label form-control-sm">Periodo</label>
+								<?php if($id>0){?>
+								<input type="text" id="periodo" name="periodo" class="form-control form-control-sm" value="<?php echo $periodo_->descripcion?>" readonly="readonly">
+								<?php }else{?>
+									<?php 
+									if($periodo_activo){
+									?>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerDelegado();obtenerAnioPerido()">
+										<!--<option value="">--Seleccionar--</option>-->
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									<?php
+									}else{
+									?>
+									<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="">
+										<!--<option value="">--Seleccionar--</option>-->
+										<?php
+										foreach ($periodo as $row) {?>
+										<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+										<?php 
+										}
+										?>
+									</select>
+									<?php } ?>
+								<?php } ?>
 							</div>
+						</div>
+
+						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+							<label class="control-label required-field form-control-sm">Año</label>
+							<select name="anio" id="anio" class="form-control form-control-sm">
+							<option value="">--Selecionar--</option>
+
+							</select>
 						</div>
 
 						<div class="col-lg-10">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado</label>
 								
-								<select name="delegado" id="delegado" class="form-control form-control-sm" onchange="obtener_datos_delegado()">
+								<select name="delegado" id="delegado" class="form-control form-control-sm" onchange="obtener_datos_delegado_()">
 									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($agremiado as $row) {?>
-									<option value="<?php echo $row->id?>" <?php //if($row->codigo==$tipo_tributo->id_tipo_tributo)echo "selected='selected'"?>><?php echo $row->apellido_paterno .' '. $row->apellido_materno .' '. $row->nombres  ?></option>
-									<!--<option data-numero-cap="<?php //echo $row->numero_cap ?>"></option>-->
-									<?php
-									}
-									?>
+									
 								</select>
 							</div>
 						</div>
@@ -411,11 +495,20 @@ container: '#myModal modal-body'
 
 					</div>
 					<div class="row"  style="padding-left:10px">
-
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Emite</label>
-								<input id="emite" name="emite" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->emite?>" type="text">																				
+								<select name="emite" id="emite" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($emite as $row) {?>
+									<?php if($row->codigo==9 || $row->codigo==13){?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==13)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									}
+									?>
+								</select>
 							</div>
 						</div>
 						<div class="col-lg-8">
@@ -461,8 +554,10 @@ container: '#myModal modal-body'
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_tributo as $row) {?>
+									<?php if($row->codigo!=459){?>
 									<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$tipo_tributo->id_tipo_tributo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php
+									}
 									}
 									?>
 								</select>
@@ -496,7 +591,7 @@ container: '#myModal modal-body'
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 							
-								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_()" class="btn btn-sm btn-success">Guardar</a>
 								
 							</div>
 												
@@ -515,6 +610,7 @@ container: '#myModal modal-body'
             
      
           </div>
+		</form>
           <!-- /.row -->
         </section>
         <!-- /.content -->

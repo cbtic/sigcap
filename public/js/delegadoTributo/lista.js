@@ -472,9 +472,9 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
 
 
 function datatablenew(){
-    var oTable1 = $('#tblAfiliado').dataTable({
+    var oTable1 = $('#tblDelegadoTributo').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/movilidad/listar_movilidad_ajax",
+        "sAjaxSource": "/delegadoTributo/listar_delegadoTributo_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -502,12 +502,6 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			//var id = $('#id').val();
-			var comision = $('#frmAfiliacion #municipalidad_integrada').val();
-			var periodo = $('#frmAfiliacion #periodo').val();
-			var regional = $('#frmAfiliacion #regional').val();
-			var monto = $('#frmAfiliacion #monto').val();
-			var estado = $('#frmAfiliacion #estado').val();
-			var tipo_comision = $('#frmAfiliacion #tipo_comision').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -515,8 +509,6 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						comision:comision,periodo:periodo,regional:regional,monto:monto,estado:estado,
-						tipo_comision:tipo_comision,
 						_token:_token
                        },
                 "success": function (result) {
@@ -532,29 +524,20 @@ function datatablenew(){
             [	
 				{
                 "mRender": function (data, type, row) {
-                	var comision = "";
-					if(row.comision!= null)comision = row.comision;
-					return comision;
+                	var agremiado = "";
+					if(row.agremiado!= null)agremiado = row.agremiado;
+					return agremiado;
                 },
                 "bSortable": false,
                 "aTargets": [0],
 				"className": "dt-center",
 				//"className": 'control'
                 },
-				/*{
-                "mRender": function (data, type, row) {
-                    var nombre_comercial = "";
-					if(row.nombre_comercial!= null)nombre_comercial = row.nombre_comercial;
-					return nombre_comercial;
-                },
-                "bSortable": false,
-                "aTargets": [1]
-                },*/
                 {
                 "mRender": function (data, type, row) {
-                	var periodo = "";
-					if(row.periodo!= null)periodo = row.periodo;
-					return periodo;
+                	var emite = "";
+					if(row.emite!= null)emite = row.emite;
+					return emite;
                 },
                 "bSortable": false,
                 "aTargets": [1],
@@ -562,21 +545,66 @@ function datatablenew(){
                 },
 				{
 				"mRender": function (data, type, row) {
-					var regional = "";
-					if(row.regional!= null)regional = row.regional;
-					return regional;
+					var entidad_financiera = "";
+					if(row.entidad_financiera!= null)entidad_financiera = row.entidad_financiera;
+					return entidad_financiera;
 				},
 				"bSortable": false,
 				"aTargets": [2]
 				},
 				{
 				"mRender": function (data, type, row) {
-					var monto = "";
-					if(row.monto!= null)monto = row.monto;
-					return monto;
+					var numero_cuenta = "";
+					if(row.numero_cuenta!= null)numero_cuenta = row.numero_cuenta;
+					return numero_cuenta;
 				},
 				"bSortable": false,
 				"aTargets": [3]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var cci = "";
+					if(row.cci!= null)cci = row.cci;
+					return cci;
+				},
+				"bSortable": false,
+				"aTargets": [4]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var tipo_tributo = "";
+					if(row.tipo_tributo!= null)tipo_tributo = row.tipo_tributo;
+					return tipo_tributo;
+				},
+				"bSortable": false,
+				"aTargets": [5]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var fecha_solicitud = "";
+					if(row.fecha_solicitud!= null)fecha_solicitud = row.fecha_solicitud;
+					return fecha_solicitud;
+				},
+				"bSortable": false,
+				"aTargets": [6]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var fecha_inicio = "";
+					if(row.fecha_inicio!= null)fecha_inicio = row.fecha_inicio;
+					return fecha_inicio;
+				},
+				"bSortable": false,
+				"aTargets": [7]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var fecha_fin = "";
+					if(row.fecha_fin!= null)fecha_fin = row.fecha_fin;
+					return fecha_fin;
+				},
+				"bSortable": false,
+				"aTargets": [8]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -590,7 +618,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [4]
+				"aTargets": [9]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -615,7 +643,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [10],
 					},
 
             ]
