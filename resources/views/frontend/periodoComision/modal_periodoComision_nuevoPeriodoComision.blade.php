@@ -361,6 +361,7 @@ function fn_save_periodoComision(){
 	var id = $('#id').val();
 	var descripcion = $('#descripcion').val();
 	var fecha_inicio = $('#fecha_inicio').val();
+	var tipo = $('#id_tipo').val();
 	
 	var fijar_periodo;
 	if ($('#fijar_periodo').is(':checked')) {
@@ -374,7 +375,8 @@ function fn_save_periodoComision(){
     $.ajax({
 			url: "/periodoComision/send_periodoComision_nuevoPeriodoComision",
             type: "POST",
-            data : {_token:_token,id:id,descripcion:descripcion,fijar_periodo:fijar_periodo,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin},
+            data : {_token:_token,id:id,
+				descripcion:descripcion,fijar_periodo:fijar_periodo,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,tipo:tipo},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -453,7 +455,7 @@ function fn_save_periodoComision(){
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_concurso as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$periodoComision->id_tipo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$periodoComision->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php
 									}
 									?>

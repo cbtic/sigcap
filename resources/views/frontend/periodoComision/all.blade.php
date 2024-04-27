@@ -152,6 +152,19 @@
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripci&oacute;n de Periodo">
 					</div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select name="tipoBus" id="tipoBus" class="form-control form-control-sm" onChange="">
+                                <option value="">--Selecionar Tipo--</option>
+                                <?php
+                                foreach ($tipo as $row) {?>
+                                <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
                     <!--<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio">
 					</div>
@@ -207,6 +220,7 @@
                         <thead>
                         <tr style="font-size:13px">
                             <th>Descripci&oacute;n de Periodo</th>
+                            <th>Tipo</th>
                             <th>Activo</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
