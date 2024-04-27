@@ -553,17 +553,17 @@ label.form-control-sm{
 												
 												
 												<div class="row" style="padding:20px 20px 0px 20px;">
-													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													<!--<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="id_concurso_bus" id="id_concurso_bus" class="form-control form-control-sm" >
 															<option value="">--Concurso--</option>
 															<?php
-															foreach ($concursoTotal as $row) {?>
-															<option <?php //if($row->id==$concurso_ultimo->id)echo "selected='selected'"?> value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
+															//foreach ($concursoTotal as $row) {?>
+															<option <?php //if($row->id==$concurso_ultimo->id)echo "selected='selected'"?> value="<?php //echo $row->id?>"><?php //echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 															<?php 
-															}
+															//}
 															?>
 														</select>
-													</div>
+													</div>-->
 													
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="flag_concurso" id="flag_concurso" class="form-control form-control-sm" >

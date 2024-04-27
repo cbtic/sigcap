@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Periodos</li>
+            <li class="breadcrumb-item active">Consulta de Delegados</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consultar Periodos<!--<small class="text-muted">Usuarios activos</small>-->
+                        Datos del Delegado <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,58 +140,32 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Periodos
+                        Lista de Delegados
                     </strong>
                 </div><!--card-header-->
 				
-				<form class="form-horizontal" method="post" action="" id="frmAfiliacion" autocomplete="off">
+				<form class="form-horizontal" method="post" action="" id="frmTributo" autocomplete="off">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                <!--<input type="hidden" name="id_municipalidad" id="id_municipalidad" value="<?php /*echo $id*/?>">-->
+                <input type="hidden" name="id" id="id" value="0">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripci&oacute;n de Periodo">
-					</div>
-                    <!--<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio">
+						<input class="form-control form-control-sm" id="anioBus" name="anioBus" placeholder="Año">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_fin" name="fecha_fin" placeholder="Fecha Fin">
-					</div>-->
-                    <!--<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-                        <div style="float:left;padding-top:7px">Fecha Inicio</div>
-                        <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
-                            <input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control" placeholder="Fecha Inicio">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Fecha Inicio</label>
-                            <input id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio" class="form-control form-control-sm"  value="<?php if($periodoComision->fecha_inicio!="")echo date('d-m-Y',strtotime($periodoComision->fecha_inicio))?>" type="text"  >
-                        </div>
-					</div>-->
-
-                    <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio">
+						<input class="form-control form-control-sm" id="delegadoBus" name="delegadoBus" placeholder="Delegado">
 					</div>
-							
-						
-                    <!--
-                    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-                        <div style="float:left;padding-top:7px">Fecha Fin</div>
-                        <div style="float:left" class="col-lg-8 md-form md-outline input-with-post-icon">
-                            <input placeholder="Fecha" type="date" id="fecha_fin" class="form-control" placeholder="Fecha Fin">
-                            
-                        </div>
-					</div>-->
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
 							<option value="0">Eliminado</option>
-                            <option value="2">Inactivo</option>
 						</select>
 					</div>
                     
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 						
                         <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
@@ -200,18 +174,26 @@
 					</div>
 				</div>
 				
-                <div class="card-body">
+                <div class="card-body">				
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Descripci&oacute;n de Periodo</th>
-                            <th>Activo</th>
+                            <th>Delegado</th>
+                            <!--<th>Nombre Comercial</th>-->
+                            <th>N° CAP</th>
+							<th>Documento</th>
+                            <th>Entidad Financiera</th>
+                            <th>N&uacute;mero Cuenta</th>
+                            <th>CCI</th>
+                            <th>Tipo</th>
+                            <th>Fecha Solicitud</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
+                            <!--<th>Representante</th>-->
                             <th>Estado</th>
-                            <th>Acciones</th>
+							<th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -248,6 +230,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/periodoComision/lista.js') }}"></script>
+<script src="{{ asset('js/delegadoTributo/lista.js') }}"></script>
 
 @endpush

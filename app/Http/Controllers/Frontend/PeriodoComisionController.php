@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PeriodoComisione;
 use Carbon\Carbon;
+use App\Models\TablaMaestra;
 use Auth;
 
 class PeriodoComisionController extends Controller
@@ -73,6 +74,7 @@ class PeriodoComisionController extends Controller
     public function modal_periodoComision_nuevoPeriodoComision($id){
 		
 		$periodoComision = new PeriodoComisione;
+		$tablaMaestra_model = new TablaMaestra;
 		//$regione_model = new Regione;
 		//$tablaMaestra_model = new TablaMaestra;
 		//$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
@@ -84,9 +86,10 @@ class PeriodoComisionController extends Controller
 			$periodoComision = new PeriodoComisione;
 		}
 		
+		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
 		//$region = $regione_model->getRegionAll();
 		
-		return view('frontend.periodoComision.modal_periodoComision_nuevoPeriodoComision',compact('id','periodoComision'));
+		return view('frontend.periodoComision.modal_periodoComision_nuevoPeriodoComision',compact('id','periodoComision','tipo_concurso'));
 	
 	}
 

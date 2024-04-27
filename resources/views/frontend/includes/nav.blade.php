@@ -201,6 +201,10 @@
 							<a href="/asiento" class="dropdown-item">Asiento Planilla Delegados</a>
 							@endcan
 
+							@can('Delegado Tributo')
+							<a href="/delegadoTributo/consulta_delegadoTributo" class="dropdown-item">Delegado Tributo</a>
+							@endcan
+
 						   </div>
 					</li>
 					@endif

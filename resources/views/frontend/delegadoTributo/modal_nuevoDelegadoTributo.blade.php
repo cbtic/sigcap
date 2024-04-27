@@ -1,10 +1,11 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <title>Sistema SIGCAP</title>
 
 <style>
 /*
 .datepicker {
-  z-index: 1600 !important;
+  z-index: 1600 !important; 
 }
 */
 /*.datepicker{ z-index:99999 !important; }*/
@@ -20,7 +21,7 @@
 	width: 100%;
 	max-width:40%!important
   }
-
+  
 #tablemodal{
     border-spacing: 0;
     display: flex;/*Se ajuste dinamicamente al tamano del dispositivo**/
@@ -192,12 +193,29 @@ $.mask.definitions['p'] = "[Mm]";
 */
 $(document).ready(function() {
 	//$('#hora_solicitud').focus();
-	$('#hora_solicitud').mask('00:00');
+	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
+
+	$('#ruc').blur(function () {
+		var id = $('#id').val();
+			if(id==0) {
+				validaRuc(this.value);
+			}
+		//validaRuc(this.value);
+	});
+
 });
 </script>
 
 <script type="text/javascript">
+
+$('#openOverlayOpc').on('shown.bs.modal', function() {
+	$('#fecha_solicitud').datepicker({
+		format: "dd-mm-yyyy",
+		autoclose: true,
+		container: '#openOverlayOpc modal-body'
+	});
+});
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
 	$('#fecha_inicio').datepicker({
@@ -217,183 +235,90 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	 
+	$("#delegado").select2({ width: '100%' });
+	
 
 });
 
-function validacion(){
-    
-    var msg = "";
-    var cobservaciones=$("#frmComentar #cobservaciones").val();
-    
-    if(cobservaciones==""){msg+="Debe ingresar una Observacion <br>";}
-    
-    if(msg!=""){
-        bootbox.alert(msg); 
-        return false;
-    }
-}
+function obtener_datos_delegado(){
 
-function guardarCita__(){
-	alert("fdssf");
-}
-
-function guardarCita(id_medico,fecha_cita){
-    
-    var msg = "";
-    var id_ipress = $('#id_ipress').val();
-    var id_consultorio = $('#id_consultorio').val();
-    var fecha_atencion = $('#fecha_atencion').val();
-    var dni_beneficiario = $("#dni_beneficiario").val();
-	//alert(id_ipress);
-	if(dni_beneficiario == "")msg += "Debe ingresar el numero de documento <br>";
-    if(id_ipress==""){msg+="Debe ingresar una Ipress<br>";}
-    if(id_consultorio==""){msg+="Debe ingresar un Consultorio<br>";}
-    if(fecha_atencion==""){msg+="Debe ingresar una fecha de atencion<br>";}
-   
-    if(msg!=""){
-        bootbox.alert(msg); 
-        return false;
-    }
-    else{
-        fn_save_cita(id_medico,fecha_cita);
-    }
-}
-
-function fn_save_estudio(){
-    
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var id_agremiado = $('#id_agremiado').val();
-	var id_universidad = $('#id_universidad').val();
-	var id_especialidad = $('#id_especialidad').val();
-	var tesis = $('#tesis').val();
-	var fecha_egresado = $('#fecha_egresado').val();
-	var fecha_graduado = $('#fecha_graduado').val();
-	var libro = $('#libro').val();
-	var folio = $('#folio').val();
+	/*var selectElement = document.getElementById("delegado");
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+	var numero_cap = selectedOption.getAttribute("data-numero-cap");
 	
-	//alert(id_agremiado);
-	//return false;
-	
-    $.ajax({
-			url: "/agremiado/send_agremiado_estudio",
-            type: "POST",
-            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_universidad:id_universidad,id_especialidad:id_especialidad,tesis:tesis,fecha_egresado:fecha_egresado,fecha_graduado:fecha_graduado,libro:libro,folio:folio},
-            success: function (result) {
-				
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
-            }
-    });
+	document.getElementById("numero_cap").value = numero_cap;*/
+
 }
 
 function fn_save_empresa(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var ruc = $('#ruc').val();
 	var nombre_comercial = $('#nombre_comercial').val();
 	var razon_social = $('#razon_social').val();
 	var direccion = $('#direccion').val();
+	var email = $('#email').val();
+	var telefono = $('#telefono').val();
 	var representante = $('#representante').val();
-	//var estado = $('#estado').val();
-	
-	//alert(id_agremiado);
-	//return false;
 	
     $.ajax({
 			url: "/empresa/send_empresa_nuevoEmpresa",
             type: "POST",
-            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,representante:representante},
-            success: function (result) {
-				
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
-            }
-    });
-}
-
-function valida(){
-	var msg = "0";
-
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var fecha_inicio = $('#fecha_inicio').val();
-	var fecha_fin = $('#fecha_fin').val();
-
-	if (fecha_inicio==""){
-		msg= "Falta ingresar una Fecha Inicio";
-	}else if (fecha_fin==""){
-		msg= "Falta ingresar una Fecha Fin";
-	}
-
-	if (msg=="0"){
-		fn_save_periodoComision()		
-	}
-	else {
-		Swal.fire(msg);
-	}
-
-}
-
-function fn_save_periodoComision(){
+            data : {_token:_token,id:id,ruc:ruc,nombre_comercial:nombre_comercial,razon_social:razon_social,direccion:direccion,email:email,telefono:telefono,representante:representante},
+            dataType: 'json',
+			success: function (result) {
     
-	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var descripcion = $('#descripcion').val();
-	var fecha_inicio = $('#fecha_inicio').val();
-	
-	var fijar_periodo;
-	if ($('#fijar_periodo').is(':checked')) {
-		fijar_periodo = $('#fijar_periodo').val();
-	} else {
-		fijar_periodo = 0;
-	}
-	
-	var fecha_fin = $('#fecha_fin').val();
-	
-    $.ajax({
-			url: "/periodoComision/send_periodoComision_nuevoPeriodoComision",
-            type: "POST",
-            data : {_token:_token,id:id,descripcion:descripcion,fijar_periodo:fijar_periodo,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin},
-            success: function (result) {
-				
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-				datatablenew();
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
+				//alert("El RUC ingresado ya existe !!!");
+				if(result.sw==false){
+					Swal.fire("El RUC ingresado ya existe !!!");
+					
+					$('#openOverlayOpc').modal('hide');
+					//window.location.reload();
+           
+            	}else{
+					$('#openOverlayOpc').modal('hide');
 					window.location.reload();
 				}
-				*/
-            }
+			
+		}
+			
     });
 }
 
 
+
+/*
+$('#fecha_solicitud').datepicker({
+	autoclose: true,
+	dateFormat: 'dd-mm-yy',
+	changeMonth: true,
+	changeYear: true,
+	container: '#openOverlayOpc modal-body'
+});
+*/
+/*
+$('#fecha_solicitud').datepicker({
+	format: "dd/mm/yyyy",
+	startDate: "01-01-2015",
+	endDate: "01-01-2020",
+	todayBtn: "linked",
+	autoclose: true,
+	todayHighlight: true,
+	container: '#openOverlayOpc modal-body'
+});
+*/
+
+/*				
+format: "dd/mm/yyyy",
+startDate: "01-01-2015",
+endDate: "01-01-2020",
+todayBtn: "linked",
+autoclose: true,
+todayHighlight: true,
+container: '#myModal modal-body'
+*/	
 </script>
 
 
@@ -414,37 +339,40 @@ function fn_save_periodoComision(){
 		<div class="justify-content-center">		
 
 		<div class="card">
-			
+		
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro de Periodo
+				Datos del Delegado
 			</div>
 			
             <div class="card-body">
+				
 
 			<div class="row">
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
-					
+			
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
-					
-					<div class="row" style="padding-left:10px">
-						
-						<!--<div class="col-lg-4">
+					<div class="row"  style="padding-left:10px">
+
+						<div class="col-lg-2">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha Inicio</label>
-								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php /*echo $periodoComision->fecha_inicio*/?>" type="text">						
+								<label class="control-label required-field form-control-sm">Periodo</label>
+								<input id="anio" name="anio" class="form-control form-control-sm" value="<?php //echo $delegadoTributo->anio?>" type="text" >
 							</div>
-						</div>-->
-						<div class="col-lg-4">
+						</div>
+
+						<div class="col-lg-10">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Tipo</label>
-								<select name="id_tipo" id="id_tipo" class="form-control form-control-sm" onChange="">
+								<label class="control-label form-control-sm">Delegado</label>
+								
+								<select name="delegado" id="delegado" class="form-control form-control-sm" onchange="obtener_datos_delegado()">
 									<option value="">--Selecionar--</option>
 									<?php
-									foreach ($tipo_concurso as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$periodoComision->id_tipo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									foreach ($agremiado as $row) {?>
+									<option value="<?php echo $row->id?>" <?php //if($row->codigo==$tipo_tributo->id_tipo_tributo)echo "selected='selected'"?>><?php echo $row->apellido_paterno .' '. $row->apellido_materno .' '. $row->nombres  ?></option>
+									<!--<option data-numero-cap="<?php //echo $row->numero_cap ?>"></option>-->
 									<?php
 									}
 									?>
@@ -452,67 +380,124 @@ function fn_save_periodoComision(){
 							</div>
 						</div>
 						
-						<div class="col-lg-3">
+						<div class="col-lg-2">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Descripci&oacute;n</label>
-								<input id="descripcion" name="descripcion" class="form-control form-control-sm"  value="<?php echo $periodoComision->descripcion?>" type="text" readonly="readonly" >
-							
-							</div>
-						</div>
-						<div class="col-lg-3" style="padding-top:40px">
-							<div class="form-group">
-
-							<input type="hidden" name="fijar_periodo" value="0"> <!-- Valor predeterminado -->
-							<input type="checkbox" name="fijar_periodo" value="1" id="fijar_periodo" <?php echo $periodoComision->activo ? 'checked' : '' ?>>
-
-							<!--<input type="checkbox" name="fijar_periodo" value="1" id="fijar_periodo" <?php echo $periodoComision->activo ? 'checked' :'' ?>>
-							<input type="checkbox" class="fijar_periodo" id="fijar_periodo" name="fijar_periodo" value="" <?php //if($row->id_aprobar_pago==2)echo "checked='checked'"?> />-->
-							<label class="control-label form-control-sm">Fijar Periodo</label>
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:10px">
-						<!--<div class="col-lg-6">
-							<label class="control-label form-control-sm">Fecha Inicio</label>
-							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_inicio" class="form-control form-control-sm" value="<?php echo $periodoComision->fecha_inicio?>" type="text">
-							</div>
-						</div>-->
-
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha Inicio</label>
-								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php if($periodoComision->fecha_inicio!="")echo date('d-m-Y',strtotime($periodoComision->fecha_inicio))?>" type="text"  >
-							</div>
-						</div>
-
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha Fin</label>
-								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php if($periodoComision->fecha_fin!="")echo date('d-m-Y',strtotime($periodoComision->fecha_fin))?>" type="text"  >
+								<label class="control-label form-control-sm">N° CAP</label>
+								<input id="numero_cap" name="numero_cap" class="form-control form-control-sm"  value="<?php //echo $agremiado->numero_cap?>" type="text" readonly="readonly">													
 							</div>
 						</div>
 						
-						<!--<div class="col-lg-6">
-							<label class="control-label form-control-sm">Fecha Fin</label>
-							<div style="float:left" class="col-lg-10 md-form md-outline input-with-post-icon">
-								<input placeholder="Fecha" type="date" id="fecha_fin" class="form-control form-control-sm" value="<?php echo $periodoComision->fecha_fin?>" type="text">
-								
-							</div>
-						</div>-->
-					</div>
-						<!--
-						<div class="col-lg-4">
+						<div class="col-lg-5">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha Fin</label>
-								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php /*echo $periodoComision->fecha_fin*/?>" type="text">						
+								<label class="control-label form-control-sm">Apellido Paterno</label>
+								<input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm"  value="<?php //echo $agremiado->apellido_paterno?>" type="text" readonly="readonly">																				
 							</div>
 						</div>
-						</div>-->
-					<div style="margin-top:15px" class="form-group ">
+
+						<div class="col-lg-5">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Apellido Materno</label>
+								<input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm "  value="<?php //echo $agremiado->apellido_materno?>" type="text" readonly="readonly">																				
+								
+							</div>
+						</div>
+
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Nombres</label>
+								<input id="nombres" name="nombres" class="form-control form-control-sm"  value="<?php //echo $agremiado->nombres?>" type="text" readonly="readonly">																				
+							</div>
+						</div>
+
+					</div>
+					<div class="row"  style="padding-left:10px">
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Emite</label>
+								<input id="emite" name="emite" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->emite?>" type="text">																				
+							</div>
+						</div>
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Entidad Financiera</label>
+								<select name="entidad_financiera" id="entidad_financiera" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($bancos as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$tipo_tributo->id_tipo_tributo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">N&uacute;mero de Cuenta</label>
+								<input id="numero_cuenta" name="numero_cuenta" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->numero_cuenta?>" type="text">																				
+							</div>
+						</div>
+
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label form-control-sm">CCI</label>
+								<input id="cci" name="cci" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->cci?>" type="text">																				
+							</div>
+						</div>
+
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Aplica Tributo Mayor a</label>
+								<input id="monto_minimo" name="monto_minimo" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->cci?>" type="text">																				
+							</div>
+						</div>
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Tipo</label>
+								<select name="tipo_tributo" id="tipo_tributo" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_tributo as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$tipo_tributo->id_tipo_tributo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-lg-2">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha de Solicitud</label>
+								<input id="fecha_solicitud" name="fecha_solicitud" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->fecha_solicitud?>" type="text">																				
+							</div>
+						</div>
+
+						<div class="col-lg-2">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Inicio</label>
+								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->fecha_inicio?>" type="text">																				
+							</div>
+						</div>
+
+						<div class="col-lg-2">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha de Fin</label>
+								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php //echo $delegadoTributo->fecha_fin?>" type="text">																				
+							</div>
+						</div>
+						
+					</div>
+
+					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+							
 								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
+								
 							</div>
 												
 						</div>
