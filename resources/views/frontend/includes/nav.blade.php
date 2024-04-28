@@ -202,7 +202,7 @@
 							@endcan
 
 							@can('Delegado Tributo')
-							<a href="/delegadoTributo/consulta_delegadoTributo" class="dropdown-item">Delegado Tributo</a>
+							<a href="/delegadoTributo/consulta_delegadoTributo" class="dropdown-item">Delegado Tributo RH</a>
 							@endcan
 
 						   </div>

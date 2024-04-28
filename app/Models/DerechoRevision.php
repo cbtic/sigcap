@@ -216,5 +216,18 @@ class DerechoRevision extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    public function importar_datos_dataLicencia(){
+
+        return $this->readFuntionPostgres_('copia_datalicencia_proyecto()');
+
+    }
+
+    public function readFuntionPostgres_($function = null){
+
+        $cad = "select " . $function;
+        $data = DB::select($cad);
+        return $data;
+    }
     
 }

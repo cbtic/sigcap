@@ -9,6 +9,8 @@ use App\Models\TablaMaestra;
 use App\Models\Agremiado;
 use App\Models\ComisionDelegado;
 use App\Models\PeriodoComisione;
+use App\Models\Persona;
+use App\Models\Parametro;
 use Auth;
 
 class DelegadoTributoController extends Controller
@@ -66,13 +68,18 @@ class DelegadoTributoController extends Controller
         $tablaMaestra_model = new TablaMaestra;
         $agremiado_model = new Agremiado;
         $periodoComisione_model = new PeriodoComisione;
+        $parametro_model = new Parametro;
 		
 		if($id>0){
 			$delegadoTributo = DelegadoTributo::find($id);
             $periodo_ = PeriodoComisione::find($delegadoTributo->id_periodo_comision);
+            $agremiado_ = Agremiado::find($delegadoTributo->id_agremiado);
+            $persona_ = Persona::find($agremiado_->id_persona);
 		}else{
 			$delegadoTributo = new DelegadoTributo;
             $periodo_ = NULL;
+            $agremiado_ = NULL;
+            $persona_ = NULL;
 		}
 		
         $agremiado = $agremiado_model->getAgremiadoRLAll();
@@ -82,6 +89,8 @@ class DelegadoTributoController extends Controller
         $periodo = $periodoComisione_model->getPeriodoAllByFecha();
         $periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+        $anio_actual = date('Y');
+        $parametro = $parametro_model->getParametroAnio($anio_actual);
         
         //$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionDelegadoTributo($id_periodo);
         
@@ -89,7 +98,7 @@ class DelegadoTributoController extends Controller
 		//$universidad = $tablaMaestra_model->getMaestroByTipo(85);
 		//$especialidad = $tablaMaestra_model->getMaestroByTipo(86);
 		
-		return view('frontend.delegadoTributo.modal_nuevoDelegadoTributo',compact('id','delegadoTributo','tipo_tributo','bancos','agremiado','periodo','periodo_ultimo','periodo_activo','periodo_','emite'));
+		return view('frontend.delegadoTributo.modal_nuevoDelegadoTributo',compact('id','delegadoTributo','tipo_tributo','bancos','agremiado','periodo','periodo_ultimo','periodo_activo','periodo_','emite','agremiado_','persona_','parametro'));
 	
 	}
 
@@ -144,5 +153,12 @@ class DelegadoTributoController extends Controller
 		$delegadoTributo->save();
 
 		echo $delegadoTributo->id;
+    }
+
+    public function validar_delegado($id_delegado){
+
+        $delegado_cantidad = DelegadoTributo::where("id_agremiado",$id_delegado)->where("estado","1")->count();
+
+       return $delegado_cantidad;
     }
 }

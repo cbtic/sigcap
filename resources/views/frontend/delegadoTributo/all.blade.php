@@ -9,7 +9,7 @@
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
 <style>
-	#tblAfiliado tbody tr{
+	#tblDelegadoTributo tbody tr{
 		font-size:13px
 	}
     .table-sortable tbody tr {
@@ -151,24 +151,24 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-2">
+                    <!--<div class="col-lg-2">
                         <div class="form-group">
-                            <select name="id_periodoBus" id="id_periodoBus" class="form-control form-control-sm" onchange="obtenerAnioPerido()">
+                            <select name="id_periodoBus" id="id_periodoBus" class="form-control form-control-sm" onchange="obtenerAnioPerido()">-->
                                 <!--<option value="">--Seleccionar--</option>-->
                                 <?php
-                                foreach ($periodo as $row) {?>
+                                /*foreach ($periodo as $row) {?>
                                 <option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
                                 <?php 
-                                }
+                                }*/
                                 ?>
-                            </select>
+                            <!--</select>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <select name="anioBus" id="anioBus" class="form-control form-control-sm" placeholder="Año">
                         <option value="">--Selecionar--</option>
                         </select>
-                    </div>
+                    </div>-->
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="delegadoBus" name="delegadoBus" placeholder="Delegado">
 					</div>

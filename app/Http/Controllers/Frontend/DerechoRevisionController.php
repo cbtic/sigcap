@@ -1146,4 +1146,19 @@ class DerechoRevisionController extends Controller
 
 		echo $liquidacion->id;
     }
+
+	function importar_dataLicencia(){
+	
+		
+		$derecho_revision_model = new DerechoRevision;
+		
+		$data = $derecho_revision_model->importar_datos_dataLicencia();
+		
+		$result["aaData"] = $data;
+
+		//var_dump($data);exit;
+
+		echo json_encode($result);
+	
+	}
 }

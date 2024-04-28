@@ -273,6 +273,38 @@ function obtenerDelegado(){
 
 }
 
+function validar_delegado(){
+
+	var id_delegado = $('#delegado').val();
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/delegadoTributo/validar_delegado/' + id_delegado,
+		dataType: "json",
+		success: function(result){
+			
+			//var_dump(result);exit();
+			if(result>0){
+				bootbox.alert({
+					
+					message: "Ya existe un registro de este delegado en la Base de Datos.",
+					
+				});
+			}else{
+				obtener_datos_delegado_();
+			}
+			$('.loader').hide();
+		}
+		
+	});
+
+}
+
 function obtenerAnioPerido(){
 	
 	var id_periodo = $('#id_periodo').val();
@@ -427,48 +459,55 @@ container: '#myModal modal-body'
 
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 							<label class="control-label required-field form-control-sm">Año</label>
-							<select name="anio" id="anio" class="form-control form-control-sm">
-								<option value="">--Selecionar--</option>
-							</select>
+							<?php if($id>0){?>
+								<input id="anio_" name="anio_" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->anio?>" type="text" readonly="readonly">										
+								<?php }else{?>
+								<select name="anio" id="anio" class="form-control form-control-sm">
+									<option value="">--Selecionar--</option>
+								</select>
+							<?php }?>
 						</div>
 
-						<div class="col-lg-10">
+						<div class="col-lg-9">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado</label>
-								
-								<select name="delegado" id="delegado" class="form-control form-control-sm" onchange="obtener_datos_delegado_()">
+								<?php if($id>0){?>
+								<input id="delegado_" name="delegado_" class="form-control form-control-sm"  value="<?php echo $persona_->apellido_paterno ." ". $persona_->apellido_materno ." ". $persona_->nombres ?>" type="text" readonly="readonly">										
+								<?php }else{?>
+								<select name="delegado" id="delegado" class="form-control form-control-sm" onchange="validar_delegado()">
 									<option value="">--Selecionar--</option>
 									
 								</select>
+								<?php }?>
 							</div>
 						</div>
 						
-						<div class="col-lg-2">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">N° CAP</label>
-								<input id="numero_cap" name="numero_cap" class="form-control form-control-sm"  value="<?php //echo $agremiado->numero_cap?>" type="text" readonly="readonly">													
+								<input id="numero_cap" name="numero_cap" class="form-control form-control-sm"  value="<?php if($id>0) echo $agremiado_->numero_cap?>" type="text" readonly="readonly">													
 							</div>
 						</div>
 						
-						<div class="col-lg-5">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Apellido Paterno</label>
-								<input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm"  value="<?php //echo $agremiado->apellido_paterno?>" type="text" readonly="readonly">																				
+								<input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm"  value="<?php if($id>0) echo $persona_->apellido_paterno?>" type="text" readonly="readonly">																				
 							</div>
 						</div>
 
-						<div class="col-lg-5">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Apellido Materno</label>
-								<input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm "  value="<?php //echo $agremiado->apellido_materno?>" type="text" readonly="readonly">																				
+								<input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm "  value="<?php if($id>0) echo $persona_->apellido_materno?>" type="text" readonly="readonly">																				
 								
 							</div>
 						</div>
 
-						<div class="col-lg-8">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Nombres</label>
-								<input id="nombres" name="nombres" class="form-control form-control-sm"  value="<?php //echo $agremiado->nombres?>" type="text" readonly="readonly">																				
+								<input id="nombres" name="nombres" class="form-control form-control-sm"  value="<?php if($id>0) echo $persona_->nombres?>" type="text" readonly="readonly">																				
 							</div>
 						</div>
 
@@ -512,7 +551,7 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 
-						<div class="col-lg-6">
+						<div class="col-lg-5">
 							<div class="form-group">
 								<label class="control-label form-control-sm">CCI</label>
 								<input id="cci" name="cci" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->cci?>" type="text">																				
@@ -522,7 +561,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Aplica Tributo Mayor a</label>
-								<input id="monto_minimo" name="monto_minimo" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->cci?>" type="text">																				
+								<input id="monto_minimo" name="monto_minimo" class="form-control form-control-sm"  value="<?php echo $parametro[0]->monto_minimo_rh?>" type="text" readonly='readonly'>																				
 							</div>
 						</div>
 
