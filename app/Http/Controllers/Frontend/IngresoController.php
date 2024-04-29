@@ -698,6 +698,28 @@ class IngresoController extends Controller
 		*/
     }
 
+    public function anular_valorizacion(Request $request)
+    {
+        $id_user = Auth::user()->id;
+        $factura_detalle = $request->comprobante_detalle;
+        $ind = 0;
+        foreach($request->comprobante_detalles as $key=>$det){
+            $valorizad[$ind] = $factura_detalle[$key];
+            
+            //print_r($det['id']);
+            $id = $det['id'];
+            $valorizacion = Valorizacione::find($id);            
+            $valorizacion-> estado = "0";
+            $valorizacion-> id_usuario_actualiza = $id_user;
+            $valorizacion->updated_at = Carbon::now()->format('Y-m-d');
+
+            $valorizacion->save();  
+
+            $ind++;
+        }
+
+
+    }
     public function exonerar_valorizacion(Request $request){
         $msg = "";
         $id_user = Auth::user()->id;

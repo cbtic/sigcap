@@ -323,7 +323,16 @@
                                         </div>
 
                                         <div id="divTarjeta" class="alert alert-danger" style="padding:6px 5px;display:none">
-                                            Tarjeta: <span id="numero_tarjeta" class="alert-link"></span>
+                                            Tarjeta: <span id="numero_tarjeta" class="alert-link"></span>                                            
+                                        </div>
+
+                                        <div class="row" id="divCategoria">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Categoría</label>
+                                                    <input type="text" readonly name="categoria" id="categoria" value="{{old('clinom')}}" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row" id="divCodigoAfliado">
@@ -373,14 +382,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="row" id="divCategoria">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label class="form-control-sm">Categoría</label>
-                                                    <input type="text" readonly name="categoria" id="categoria" value="{{old('clinom')}}" class="form-control form-control-sm">
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="row" id="divRucP">
                                             <div class="col">
@@ -597,8 +598,9 @@
                                                     <input type="hidden" name="Trans" id="Trans" value="FA" />
                                                     <input class="btn btn-success pull-rigth" value="FACTURA" type="button" id="btnFactura" disabled="disabled" onclick="enviarTipo(1)" />
                                                     <input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnBoleta" disabled="disabled" onclick="enviarTipo(2)" />
-
                                                     <input class="btn btn-info pull-rigth" value="BOLETA" type="button" id="btnTicket" disabled="disabled" onclick="enviarTipo(3)" style="display:none" />
+                                                    
+                                                    <input class="btn btn-danger pull-rigth" value="ANULAR VAL" type="button" id="btnAnulaVal" disabled="disabled" onclick="anular_valorizacion()" />
                                                 
                                                     <input class="btn btn-warning pull-right" value="PRONTO PAGO" type="button" id="btnDescuento" disabled="disabled" onclick="AplicarDescuento()" />
 

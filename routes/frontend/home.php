@@ -235,6 +235,8 @@ Route::post('ingreso/listar_empresa_beneficiario_ajax', [IngresoController::clas
 Route::post('ingreso/anula_fraccionamiento', [IngresoController::class, 'anula_fraccionamiento'])->name('ingreso.anula_fraccionamiento');
 Route::post('ingreso/exonerar_valorizacion', [IngresoController::class, 'exonerar_valorizacion'])->name('ingreso.exonerar_valorizacion');
 
+Route::post('ingreso/anular_valorizacion', [IngresoController::class, 'anular_valorizacion'])->name('ingreso.anular_valorizacion');
+
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
 Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
@@ -333,6 +335,8 @@ Route::get('comision/consulta_comision', [ComisionController::class, 'consulta_c
 Route::post('comision/listar_comision_ajax', [ComisionController::class, 'listar_comision_ajax'])->name('comision.listar_comision_ajax');
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');
 Route::post('concurso/upload_documento_requisito', [ConcursoController::class, 'upload_documento_requisito'])->name('concurso.upload_documento_requisito');
+
+Route::get('concurso/descargar_comprimido', [ConcursoController::class, 'descargar_comprimido'])->name('concurso.descargar_comprimido');
 
 Route::get('comision/lista_comision', [ComisionController::class, 'lista_comision'])->name('comision.lista_comision');
 Route::post('comision/lista_comision_ajax', [ComisionController::class, 'lista_comision_ajax'])->name('comision.lista_comision_ajax');
