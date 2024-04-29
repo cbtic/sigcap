@@ -390,7 +390,7 @@ class DerechoRevisionController extends Controller
 				$concepto = Concepto::where("id",26474)->where("estado","1")->first();
 
 				$solicitud->id_instancia=$request->instancia;
-				$solicitud->id_tipo_liquidación1=$request->tipo_liquidacion1;
+				$solicitud->id_tipo_liquidacion1=$request->tipo_liquidacion1;
 				$solicitud->save();
 
 			}
@@ -859,6 +859,8 @@ class DerechoRevisionController extends Controller
 		$igv = $datos[0]->igv;
 		$total = $datos[0]->total;
 		$tipo_proyectista = $datos[0]->tipo_proyectista;
+		$tipo_liquidacion = $datos[0]->tipo_liquidacion;
+		$instancia = $datos[0]->instancia;
 
 		$year = Carbon::now()->year;
 
@@ -910,7 +912,7 @@ class DerechoRevisionController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		*/
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia'));
 		
 
 

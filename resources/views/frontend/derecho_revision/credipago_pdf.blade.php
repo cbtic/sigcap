@@ -199,17 +199,23 @@ $(document).ready(function() {
                         <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($igv,2,'.',',');?></td>
                         
                     </tr>
+                </tbody>
+            </table>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
                     <tr>
-                        <td class="td" style ="text-align: right; width: 20%;"><?php echo $tipo_liquidacion1;?></td>
-                        <td class="td" style ="text-align: right; width: 60%;"><b>TOTAL:</b></td>
+                        <!--<td class="td" style ="text-align: left; width: 20%;"><?php //echo $tipo_liquidacion;?></td>-->
+                        
+                        <td class="td" style ="text-align: left; width: 55%;"><?php echo $tipo_liquidacion;?></td>
+                        <td class="td" style ="text-align: right; width: 25%;"><b>TOTAL:</b></td>
                         <td class="td" style ="text-align: left; width: 5%; border-top: 1px solid black;">S/.</td>
                         <td class="td" style ="text-align: right; width: 15%; border-top: 1px solid black;"><?php echo number_format($total,2,'.',',');?></td>
                     </tr>
                     <tr>
-                        <td class="td" style ="text-align: right; width: 20%;"></td>
-                        <td class="td" style ="text-align: right; width: 60%; font-size:14px"><b>TOTAL A PAGAR:</b></td>
-                        <td class="td" style ="text-align: left; width: 5%; border-top: 1px solid black;">S/.</td>
-                        <td class="td" style ="text-align: right; width: 15%; border-top: 1px solid black;"><?php echo number_format($total,2,'.',',');?></td>
+                        <td class="td" style ="text-align: right; width: 55%;"></td>
+                        <td class="td" style ="text-align: right; width: 25%; font-size:14px"><b>TOTAL A PAGAR:</b></td>
+                        <td class="td" style ="text-align: left; width: 5%;">S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($total,2,'.',',');?></td>
                     </tr>
                 </tbody>
             </table>
