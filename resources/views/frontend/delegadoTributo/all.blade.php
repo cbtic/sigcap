@@ -6,11 +6,10 @@
 <link rel="stylesheet" href="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 <!--<link rel="stylesheet" type="text/css" href="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.css">-->
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
 <style>
-	#tblZonal tbody tr{
+	#tblDelegadoTributo tbody tr{
 		font-size:13px
 	}
     .table-sortable tbody tr {
@@ -104,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Empresas</li>
+            <li class="breadcrumb-item active">Consulta de Delegados</li>
         </li>
     </ol>
 @endsection
@@ -129,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consulta de Zonales <!--<small class="text-muted">Usuarios activos</small>-->
+                        Datos del Delegado <!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -141,56 +140,53 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Zonales
+                        Lista de Delegados
                     </strong>
                 </div><!--card-header-->
-                <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.create')}}" id="frmValorizacion" name="frmValorizacion" autocomplete="off" >
 				
+				<form class="form-horizontal" method="post" action="" id="frmTributo" autocomplete="off">
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+                <!--<input type="hidden" name="id_municipalidad" id="id_municipalidad" value="<?php /*echo $id*/?>">-->
+                <input type="hidden" name="id" id="id" value="0">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
+				
+                    <!--<div class="col-lg-2">
+                        <div class="form-group">
+                            <select name="id_periodoBus" id="id_periodoBus" class="form-control form-control-sm" onchange="obtenerAnioPerido()">-->
+                                <!--<option value="">--Seleccionar--</option>-->
+                                <?php
+                                /*foreach ($periodo as $row) {?>
+                                <option value="<?php echo $row->id?>"><?php echo $row->descripcion?></option>
+                                <?php 
+                                }*/
+                                ?>
+                            <!--</select>
+                        </div>
+                    </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-				    <?php 
-                    if($periodo_activo){
-                    ?>
-                    <input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
-                    <select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="" disabled="disabled">
-                        <option value="0">--Periodo--</option>
-                        <?php
-                        foreach ($periodo as $row) {?>
-                        <option value="<?php echo $row->id?>" <?php if($row->id == $periodo_activo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
-                        <?php 
-                        }
-                        ?>
-                    </select>
-                    <?php
-                    }else{
-                    ?>
-                    <select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus()" disabled="disabled">
-                        <option value="0">--Periodo--</option>
-                        <?php
-                        foreach ($periodo as $row) {?>
-                        <option value="<?php echo $row->id?>" <?php if($row->id == $periodo_ultimo->id)echo "selected='selected'";?> ><?php echo $row->descripcion?></option>
-                        <?php 
-                        }
-                        ?>
-                    </select>
-                    <?php } ?>
-                </div>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                            <select name="zonal" id="zonal" class="form-control form-control-sm" onChange="">
-                                <option value="">--Selecionar Zonal--</option>
+                        <select name="anioBus" id="anioBus" class="form-control form-control-sm" placeholder="Año">
+                        <option value="">--Selecionar--</option>
+                        </select>
+                    </div>-->
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="delegadoBus" name="delegadoBus" placeholder="Delegado">
+					</div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select name="tipo_tributoBus" id="tipo_tributoBus" class="form-control form-control-sm" onChange="">
+                                <option value="">--Selecionar Tipo--</option>
                                 <?php
-                                foreach ($tipo_coordinador as $row) {?>
-                                <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                                foreach ($tipo_tributo as $row) {?>
+                                <?php if($row->codigo!=459){?>
+                                <option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$tipo_tributo->id_tipo_tributo)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
+                                }
                                 }
                                 ?>
                             </select>
                         </div>
                     </div>
-					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
@@ -199,24 +195,35 @@
 						</select>
 					</div>
                     
+                    
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscarZonal" />
-						<input class="btn btn-success" value="Nuevo" type="button" id="btnNuevoZonal" style="margin-left:15px" />
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						
+                        <!--<a href="/empresa" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
+                        <input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
+
 					</div>
 				</div>
 				
                 <div class="card-body">
 
                     <div class="table-responsive">
-                    <table id="tblZonal" class="table table-hover table-sm">
+                    <table id="tblDelegadoTributo" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Id</th>
-                            <th>Periodo</th>
-                            <th>Zonal</th>
-                            <th>Municipalidad</th>
-							<th>Estado</th>
-                            <th>Acciones</th>
+                            <th>Delegado</th>
+                            <!--<th>Nombre Comercial</th>-->
+                            <th>Emite</th>
+                            <th>Entidad Financiera</th>
+                            <th>N&uacute;mero Cuenta</th>
+                            <th>CCI</th>
+                            <th>Tipo</th>
+                            <th>Fecha Solicitud</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <!--<th>Representante</th>-->
+                            <th>Estado</th>
+							<th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -253,6 +260,6 @@
 
 @push('after-scripts')
 
-<script src="{{ asset('js/coordinador_zonal/lista.js') }}"></script>
+<script src="{{ asset('js/delegadoTributo/lista.js') }}"></script>
 
 @endpush

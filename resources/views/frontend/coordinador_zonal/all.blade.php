@@ -9,13 +9,10 @@
 <!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
 
 <style>
-	#tblAfiliado tbody tr{
+	#tblCoordinadorSesion tbody tr{
 		font-size:13px
 	}
 
-    #tblCoordinadorSesion tbody tr{
-		font-size:13px
-	}
     .table-sortable tbody tr {
         cursor: move;
     }

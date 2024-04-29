@@ -346,6 +346,9 @@ function fn_save_requisito(){
 							<th class="text-right">SubTotal</th>
 							<th class="text-right">IGV</th>
 							<th class="text-right">Total</th>
+                            <th>Situaci&oacute;n</th>
+                            <th>Fecha Pago</th>
+                            <th>N&uacute;mero Comprobante</th>
 							<th>Observaci&oacute;n</th>
                             <th>Acciones</th>
                         </tr>
@@ -355,12 +358,15 @@ function fn_save_requisito(){
 						foreach($liquidacion as $row){
 						?>
 						<tr>
-							<td class="text-left" style="vertical-align:middle"><?php echo $row->fecha?></td>
+							<td class="text-left" style="vertical-align:middle"><?php echo date('Y-m-d', strtotime($row->fecha))?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->credipago?></td>
 							<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->sub_total, 2, '.', ',');?></td>
 							<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->igv, 2, '.', ',');?></td>
 							<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->total, 2, '.', ',');?></td>
-							<td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
+							<td class="text-left" style="vertical-align:middle"><?php echo $row->situacion?></td>
+                            <td class="text-left" style="vertical-align:middle"><?php if($row->fecha_pago!=null) {echo date('Y-m-d', strtotime($row->fecha_pago));}else{ echo'';}  ?></td>
+                            <td class="text-left" style="vertical-align:middle"><?php echo $row->numero_comprobante?></td>
+                            <td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
                             <td class="text-left" style="vertical-align:middle">
                                 <button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="credipago_pdf_('<?php echo $row->id?>')" ><i class="fa fa-edit"></i> Ver Credipago</button>
                                 <?php if($row->pagado==0) {?>

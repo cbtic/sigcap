@@ -259,9 +259,10 @@
 					</div>
                     -->
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<!--<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success" value="Generar Credipago" type="button" id="btnNuevo" style="margin-left:15px"/>-->
-
+                        <form action="{{ url('/derecho_revision/importar_dataLicencia') }}" method="GET">
+                        @csrf
+                        <input class="btn btn-danger pull-rigth" value="Importar Datos Datalicencia" id="btnImportar" style="margin-left:10px"/>
+                        </form>
 					</div>
 				</div>
 				

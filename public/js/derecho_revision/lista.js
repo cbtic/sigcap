@@ -11,6 +11,11 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
+	$('#btnImportar').click(function () {
+		//modalProfesion(0);
+		importarDatalicencia();
+	});
+
 	$('#btnBuscar_solicitud').click(function () {
 		fn_ListarBusqueda2();
 	});
@@ -1427,5 +1432,18 @@ function cargarPeriodoHu(){
 			//$('.loader').hide();			
 		}
 		
+	});
+}
+
+function importarDatalicencia(){
+
+	$.ajax({
+		url: "/derecho_revision/importar_dataLicencia",
+		type: "GET",
+		success: function(result){
+
+			bootbox.alert("Se import&oacute; exitosamente los datos"); 
+			datatablenew();
+		}
 	});
 }

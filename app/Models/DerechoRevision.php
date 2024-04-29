@@ -71,7 +71,10 @@ class DerechoRevision extends Model
 	public function getLiquidacionByIdSolicitud($id){
 
         $cad = "select l.id, to_char(fecha,'dd-mm-yyyy')fecha,credipago,sub_total,igv,total,observacion, l.estado,
-        (select v.pagado from valorizaciones v where pk_registro = l.id limit 1) pagado 
+        (select v.pagado from valorizaciones v where pk_registro = l.id and v.id_modulo ='7' limit 1) pagado,
+        (select case when v.pagado = '1' then 'PAGADO' else 'PENDIENTE' end from valorizaciones v where pk_registro = l.id and v.id_modulo ='7' limit 1) situacion,
+        (select c.fecha_pago from valorizaciones v inner join comprobantes c on v.id_comprobante = c.id where pk_registro = l.id and v.id_modulo ='7' limit 1) fecha_pago,
+        (select concat(c.serie,'-', c.numero) numero_comprobante from valorizaciones v inner join comprobantes c on v.id_comprobante = c.id where pk_registro = l.id and v.id_modulo ='7' limit 1) numero_comprobante
         from liquidaciones l 
         where id_solicitud='".$id."'
         and l.estado = '1'";
@@ -214,6 +217,37 @@ class DerechoRevision extends Model
 
         //echo $cad;
 		$data = DB::select($cad);
+        return $data;
+    }
+
+    public function importar_proyectos_dataLicencia(){
+
+        return $this->readFuntionPostgres_('copia_datalicencia_proyecto()');
+
+    }
+
+    public function importar_solicitudes_dataLicencia(){
+
+        return $this->readFuntionPostgres_('copia_datalicencia_solicitud()');
+
+    }
+
+    public function importar_empresas_dataLicencia(){
+
+        return $this->readFuntionPostgres_('copia_datalicencia_empresa()');
+
+    }
+
+    public function importar_personas_dataLicencia(){
+
+        return $this->readFuntionPostgres_('copia_datalicencia_persona()');
+
+    }
+
+    public function readFuntionPostgres_($function = null){
+
+        $cad = "select " . $function;
+        $data = DB::select($cad);
         return $data;
     }
     
