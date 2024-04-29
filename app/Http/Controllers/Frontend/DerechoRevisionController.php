@@ -91,6 +91,7 @@ class DerechoRevisionController extends Controller
 
         //$tablaMaestra_model = new TablaMaestra;
 		$derecho_revision = new DerechoRevision;
+		$proyecto = new Proyecto;
         $agremiado = new Agremiado;
         $persona = new Persona;
         $liquidacion = new Liquidacione;
@@ -104,7 +105,7 @@ class DerechoRevisionController extends Controller
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(24);
         
-        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud'));
+        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud','proyecto'));
     }
 
 	public function listar_derecho_revision_ajax(Request $request){

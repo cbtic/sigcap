@@ -155,7 +155,7 @@ class DerechoRevision extends Model
         left join empresas e on pr.id_empresa = e.id
         left join personas pe2 on pr.id_persona = pe2.id
         left join proyectos pro on s.id_proyecto = pro.id
-        left join ubigeos u on pro.id_ubigeo = u.id
+        left join ubigeos u on pro.id_ubigeo::varchar = u.id_ubigeo
         left join municipalidades m on s.id_municipalidad = m.id
         left join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41'
         left join tabla_maestras tm2 on s.id_tipo_liquidacion1 = tm2.codigo::int and  tm2.tipo ='27'

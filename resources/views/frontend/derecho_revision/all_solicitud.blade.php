@@ -138,7 +138,7 @@
                     Nombre Proyecto
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="nombre_proyecto" id="nombre_proyecto" value="<?php echo $derecho_revision->nombre_proyecto?>" class="form-control form-control-sm celeste" readonly='readonly'>
+                        <input type="text" name="nombre_proyecto" id="nombre_proyecto" value="<?php echo $proyecto->nombre_proyecto?>" class="form-control form-control-sm celeste" readonly='readonly'>
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
@@ -208,7 +208,7 @@
                     Tipo Solicitud
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                        <input type="text" name="tipo_solicitud" id="tipo_solicitud" value="<?php echo $derecho_revision->id_tipo_solicitud?>" class="form-control form-control-sm" readonly='readonly' >
+                        <input type="text" name="tipo_solicitud" id="tipo_solicitud" value="<?php echo $derecho_revision->id_tipo_tramite?>" class="form-control form-control-sm" readonly='readonly' >
                     </div>
 
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
