@@ -22,6 +22,7 @@ use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
 use stdClass;
+use ZipArchive;
 
 class ConcursoController extends Controller
 {
@@ -133,6 +134,71 @@ class ConcursoController extends Controller
         return view('frontend.concurso.create_resultado',compact('concurso',/*'agremiado',*//*'region',*/'situacion_cliente','concurso_ultimo'));
     }
 	
+	public function descargar_comprimido(){
+		
+		//getAgremiadoConcursoInscripcionZip
+		//getConcursoInscripcionZip
+		//getConcursoInscripcionDocumentoZip
+		
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$concursoAgremiado = $concursoInscripcione_model->getAgremiadoConcursoInscripcionZip();
+		
+		$zip_path = 'agremiado.zip';
+		$zip = new ZipArchive();
+		
+		if ($zip->open($zip_path, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) !== TRUE) {
+			die ("An error occurred creating your ZIP file.");
+		}
+		
+		foreach($concursoAgremiado as $row1){
+			$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionZip($row1->id_agremiado);
+			
+			$zip_path2 = ($row1->id_agremiado).'.zip';//
+  			$zip2 = new ZipArchive();//
+			
+			foreach($concursoInscripcion as $row2){
+				$concursoInscripcionDocumento = $concursoInscripcione_model->getConcursoInscripcionDocumentoZip($row2->id);
+				foreach($concursoInscripcionDocumento as $row3){
+					//echo $row3->ruta_archivo;
+					//img/documento/2-2024 - 5-2024/DELEGADO/EDIFICACIONES/60/20240313225140.37926.jpg
+					$file=$row3->ruta_archivo;
+					//echo $file;
+					if (file_exists(public_path($file))){
+						$zip->addFile($file, basename($file));
+					}
+				}
+			}
+		}
+		
+		$zip->close();
+		
+		return response()->download(public_path($zip_path))->deleteFileAfterSend(true);
+				
+		exit();
+		
+		$zip_path = '60.zip';
+  		$zip = new ZipArchive();
+		
+		if ($zip->open($zip_path, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) !== TRUE) {
+			die ("An error occurred creating your ZIP file.");
+		}
+
+		$filepath = public_path('img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png');	
+		if (file_exists($filepath)) {
+		  $file="img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png";
+		  $zip->addFile($file, basename($file));
+		  
+		  $file="img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240313184707.64469.png";
+		  $zip->addFile($file, basename($file));
+		  
+		} else {
+		  die("File $filepath doesnt exit");
+		}
+	 	$zip->close();
+		
+		return response()->download(public_path($zip_path))->deleteFileAfterSend(true);
+		
+	}
 	public function editar_inscripcion($id){
 		
 		//$agremiado_model = new Agremiado();
@@ -765,7 +831,16 @@ class ConcursoController extends Controller
 		$inscripcionDocumento->estado = 1;
 		$inscripcionDocumento->id_usuario_inserta = $id_user;
 		$inscripcionDocumento->save();
-			
+		
+		$inscripcionDocumento_model = new InscripcionDocumento;
+		$concurso_model = new Concurso;
+        $inscripcionDocumento = $inscripcionDocumento_model->getConcursoInscripcionDocumentoById($request->id_concurso_inscripcion);
+        $concursoRequisito = $concurso_model->getConcursoRequisitoByIdConcurso($concursoPuesto->id_concurso);
+		
+		$data["inscripcionDocumento"] = count($inscripcionDocumento);
+		$data["concursoRequisito"] = count($concursoRequisito);
+		echo json_encode($data);
+		
     }
 	
 	public function upload_documento(Request $request){

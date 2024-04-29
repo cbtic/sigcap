@@ -336,6 +336,8 @@ Route::post('comision/listar_comision_ajax', [ComisionController::class, 'listar
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');
 Route::post('concurso/upload_documento_requisito', [ConcursoController::class, 'upload_documento_requisito'])->name('concurso.upload_documento_requisito');
 
+Route::get('concurso/descargar_comprimido', [ConcursoController::class, 'descargar_comprimido'])->name('concurso.descargar_comprimido');
+
 Route::get('comision/lista_comision', [ComisionController::class, 'lista_comision'])->name('comision.lista_comision');
 Route::post('comision/lista_comision_ajax', [ComisionController::class, 'lista_comision_ajax'])->name('comision.lista_comision_ajax');
 Route::get('comision/modal_asignar_delegado/{id}', [ComisionController::class, 'modal_asignar_delegado'])->name('comision.modal_asignar_delegado');

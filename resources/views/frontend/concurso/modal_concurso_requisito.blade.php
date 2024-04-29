@@ -236,17 +236,27 @@ function fn_save_documento(){
 			url: "/concurso/send_concurso_documento",
             type: "POST",
             data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,observacion:observacion,img_foto:img_foto,fecha_documento:fecha_documento},
-			//dataType: 'json',
-            success: function (result) {
+			dataType: 'json',
+            success: function (result) { 
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
 				datatablenew();
 				cargarRequisitos(id_concurso_inscripcion);
 				$("#divAlertaDocumento").hide();
 				
+				var msg_alerta = "";
+				if(result.inscripcionDocumento>=result.concursoRequisito){
+					msg_alerta = "&iquest;Se registro correctamente "+result.inscripcionDocumento+" de "+result.concursoRequisito+" requisitos, ha culminado con adjuntar los requsitos, deseas registrar otro documento?";
+				}
+				
+				if(result.inscripcionDocumento<result.concursoRequisito){
+					msg_alerta = "&iquest;Se registro correctamente "+result.inscripcionDocumento+" de "+result.concursoRequisito+" requisitos, deseas registrar otro documento?, caso contrario ya culmino su postulaci&oacute;n";
+				}
+
 				bootbox.confirm({ 
 					size: "small",
-					message: "&iquest;Se registro correctamente, deseas registrar otro documento?, caso contrario ya culmino su postulaci&oacute;n", 
+					//message: "&iquest;Se registro correctamente, deseas registrar otro documento?, caso contrario ya culmino su postulaci&oacute;n", 
+					message: msg_alerta,
 					callback: function(result){
 						if (result==true) {
 							modalRequisito(0);

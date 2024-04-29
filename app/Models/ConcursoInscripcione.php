@@ -91,6 +91,39 @@ where id_concurso_inscripcion=".$id;
         return $data;
     }
 	
+	function getAgremiadoConcursoInscripcionZip(){
+
+        $cad = "select distinct id_agremiado 
+from concurso_inscripciones ci 
+where ci.estado='1'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	function getConcursoInscripcionZip($id_agremiado){
+
+        $cad = "select ci.id,replace(pc.descripcion,'/','-') periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso 
+from concurso_inscripciones ci
+inner join concurso_puestos cp on ci.id_concurso_puesto=cp.id
+inner join concursos c on cp.id_concurso=c.id
+inner join periodo_comisiones pc on c.id_periodo=pc.id 
+inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
+left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
+where id_agremiado=".$id_agremiado." and ci.estado='1'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	function getConcursoInscripcionDocumentoZip($id_concurso_inscripcion){
+
+        $cad = "select ruta_archivo from inscripcion_documentos id where id_concurso_inscripcion=".$id_concurso_inscripcion;
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+	
 	public function listar_concurso_agremiado($p){
 
         return $this->readFuntionPostgres('sp_listar_concurso_agremiado_paginado',$p);
