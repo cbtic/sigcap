@@ -41,6 +41,10 @@ $(document).ready(function () {
 		DescargarArchivos()
 
 	});
+	
+	$('#btnDescargarComprimido').on('click', function () {
+		location.href = '/concurso/descargar_comprimido';
+	});
 
 
 	
