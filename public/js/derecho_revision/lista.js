@@ -1373,7 +1373,7 @@ function guardar_solicitud_derecho_revision(){
 				//modalSituacion(id_agremiado);
 				//datatableSuspension();
 
-				//window.location.reload();
+				window.location.reload();
 				
 				//$('#openOverlayOpc').modal('hide');
 				

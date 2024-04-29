@@ -85,6 +85,14 @@
 
 </style>
 
+<script>
+
+function modalVerFormato(){
+	
+}
+</script>
+
+
 @extends('frontend.layouts.app')
 
 @section('title', ' | ' . __('labels.frontend.contact.box_title'))

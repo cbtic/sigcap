@@ -35,7 +35,7 @@ begin
 	from solicitudes s
 	left join municipalidades m on s.id_municipalidad = m.id
 	left join proyectos p2 on s.id_proyecto = p2.id
-	left join tabla_maestras tm on s.id_tipo_solicitud=tm.codigo::int and tm.tipo=''24'' 
+	left join tabla_maestras tm on s.id_tipo_tramite=tm.codigo::int and tm.tipo=''123'' 
 	left join tabla_maestras tmr on s.id_resultado=tmr.codigo::int and tmr.tipo=''118''
 	left join ubigeos u on s.id_ubigeo = u.id_ubigeo 
 	where s.id_tipo_solicitud=''124'' ) R';
@@ -102,9 +102,9 @@ begin
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' order by case when R.id_resultado = 0 then 9 else R.id_resultado end asc, R.fecha_registro asc  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' order by R.id desc  LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' order by case when R.id_resultado = 0 then 9 else R.id_resultado end asc, R.fecha_registro asc ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' order by R.id desc ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;

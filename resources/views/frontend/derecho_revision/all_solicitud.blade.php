@@ -382,7 +382,7 @@
                         <thead>
                         <tr style="font-size:13px">
                             <th class="nombre_proy">Nombre Proyecto</th>
-                            <th>Tipo Proyecto</th>
+                            <th>Tipo Solicitud</th>
                             <th>N° Rev.</th>
                             <th>Municipalidad</th>
                             <th>N° CAP</th>

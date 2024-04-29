@@ -391,7 +391,7 @@ function fn_save_requisito(){
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-12">
                         <label class="control-label form-control-sm">Propietario</label>
-                        <input id="propietario" name="propietario" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->razon_social?>" type="text" readonly='readonly'>
+                        <input id="propietario" name="propietario" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->propietario?>" type="text" readonly='readonly'>
                     </div>
                 </div>
 
@@ -406,11 +406,11 @@ function fn_save_requisito(){
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea del Terreno</label>
-                        <input id="area_terreno" name="area_terreno" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_techada?>" type="text" readonly='readonly'>
+                        <input id="area_terreno" name="area_terreno" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_total?>" type="text" readonly='readonly'>
                     </div>
                     <!--<div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea Techada</label>
-                        <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_techada?>" type="text" readonly='readonly'>
+                        <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->area_techada?>" type="text" readonly='readonly'>
                     </div>-->
                 </div>
                 <div style="padding: 15px 0px 15px 10px; font-weight: bold">

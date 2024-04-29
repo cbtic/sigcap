@@ -357,8 +357,8 @@ function fn_save_infoProyeto(){
                     id_solicitud:id_solicitud,img_foto1:img_foto1,img_foto2:img_foto2,img_foto3:img_foto3},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
-								
+				window.location.reload();
+			
             }
     });
 }
