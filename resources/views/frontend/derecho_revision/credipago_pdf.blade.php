@@ -173,7 +173,7 @@ $(document).ready(function() {
             <p></p>
             <p class="p"><b>TIPO DE OBRA:</b></p>
             <p class="p"><b>USO DE EDIFICACION:</b></p>
-            <p class="p"><b>INSTANCIA:</b> <?php echo $numero_revision;?></p>
+            <p class="p"><b>INSTANCIA:</b> <?php echo $instancia;?></p>
             <p class="p"><b>COMISION TECNICA:</b> <?php echo $municipalidad;?></p>
             <span style="font_size: 8.5;"><b>TOTAL AREA TECHADA (Intervenida) (M2):</b> <?php echo $total_area_techada;?></span>
             <span style="float: right; font_size: 8.5"><b>N° de Revision:</b> <?php echo $numero_revision;?></span>
@@ -190,20 +190,26 @@ $(document).ready(function() {
                         <td class="td" style ="text-align: right; width: 20%;"></td>
                         <td class="td" style ="text-align: right; width: 60%;"><b>PORCENTAJE A APLICAR SOBRE VALOR DE OBRA<?php echo $porcentaje;?>%:</b></td>
                         <td class="td" style ="text-align: left; width: 5%;">S/.</td>
-                        <td class="td" style ="text-align: right; width: 15%;"><?php echo $sub_total;?></td>
+                        <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($sub_total,2,'.',',');?></td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: right; width: 20%;"></td>
                         <td class="td" style ="text-align: right; width: 60%;"><b>+IGV:</b></td>
                         <td class="td" style ="text-align: left; width: 5%;">S/.</td>
-                        <td class="td" style ="text-align: right; width: 15%;"><?php echo $igv;?></td>
+                        <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($igv,2,'.',',');?></td>
                         
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: right; width: 20%;"><?php echo $tipo_liquidacion1;?></td>
+                        <td class="td" style ="text-align: right; width: 60%;"><b>TOTAL:</b></td>
+                        <td class="td" style ="text-align: left; width: 5%; border-top: 1px solid black;">S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%; border-top: 1px solid black;"><?php echo number_format($total,2,'.',',');?></td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: right; width: 20%;"></td>
                         <td class="td" style ="text-align: right; width: 60%; font-size:14px"><b>TOTAL A PAGAR:</b></td>
                         <td class="td" style ="text-align: left; width: 5%; border-top: 1px solid black;">S/.</td>
-                        <td class="td" style ="text-align: right; width: 15%; border-top: 1px solid black;"><?php echo $total;?></td>
+                        <td class="td" style ="text-align: right; width: 15%; border-top: 1px solid black;"><?php echo number_format($total,2,'.',',');?></td>
                     </tr>
                 </tbody>
             </table>

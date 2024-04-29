@@ -388,6 +388,11 @@ class DerechoRevisionController extends Controller
 					}
 				}
 				$concepto = Concepto::where("id",26474)->where("estado","1")->first();
+
+				$solicitud->id_instancia=$request->instancia;
+				$solicitud->id_tipo_liquidación1=$request->tipo_liquidacion1;
+				$solicitud->save();
+
 			}
 			
 			/*****Habilitaciones urbanas*********/
