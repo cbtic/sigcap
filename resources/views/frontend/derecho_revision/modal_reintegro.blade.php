@@ -396,8 +396,22 @@ function fn_save_credipago(){
             type: "POST",
 			data : $('#frmReintegroSolicitud').serialize(),
             success: function (result) {
-				$('#openOverlayOpc').modal('hide');
+
+				//alert(result[0].sw);
 				//datatablenew();
+                if(result[0].sw==true){
+					//datatablenew();
+                    $('#openOverlayOpc').modal('hide');
+				}else{
+					//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
+					bootbox.alert({
+						message: "Existe más de un registro de propietario con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.",
+						//className: "alert_style"
+                   
+					});
+                    $('#openOverlayOpc').modal('hide');
+					//datatablenew();
+				}
             }
     });
 }

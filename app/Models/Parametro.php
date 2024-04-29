@@ -48,7 +48,7 @@ class Parametro extends Model
         $cad = "select *
                 from parametros p
                 where p.estado='1' and anio = '".$anio."'
-                order by p.id ";
+                order by p.id desc";
     
 		$data = DB::select($cad);
         return $data;

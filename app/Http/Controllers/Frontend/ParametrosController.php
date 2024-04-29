@@ -101,6 +101,7 @@ class ParametrosController extends Controller
 		$parametro->valor_minimo_hu = $request->valor_minimo_hu;
 		$parametro->valor_maximo_hu = $request->valor_maximo_hu;
         $parametro->igv = $request->igv;
+		$parametro->monto_minimo_rh = $request->valor_rh;
 		$parametro->id_usuario_inserta = $id_user;
 		$parametro->save();
     }

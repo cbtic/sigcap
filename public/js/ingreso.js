@@ -365,7 +365,7 @@ function calcular_total(obj){
 			$("#btnExonerarN").prop('disabled', false);			
 		}
 
-
+		$("#btnAnulaVal").prop('disabled', false);
 	}
 	
 
@@ -635,6 +635,10 @@ function validaTipoDocumento(){
 	$('#numero_documento').val("");
 	$('#empresa_razon_social').val("");
 	$('#nombre_').val("");
+
+	$('#categoria').val("");
+
+	
 	
 
 	//$("#btnBoleta").prop('disabled', false);
@@ -646,21 +650,23 @@ function validaTipoDocumento(){
 		$('#divNombreApellido').hide();
 		$('#divCodigoAfliado').hide();
 		$('#divFechaAfliado').hide();
-		$('#divRucP').hide();		
+		$('#divRucP').hide();
+		$('#divCategoria').hide();
+
 		$('#divDireccionEmpresa').show();
 		$('#divRepresentanteEmpresa').show();
 		$('#divEmpresaRazonSocial').show();
-		$('#divBeneficiarioRuc').show();		
-
+		$('#divBeneficiarioRuc').show();
 		//$("#btnBoleta").prop('disabled', false);
 		//$("#btnFactura").prop('disabled', true);
 	
-
 	}else{
 		$('#divNombreApellido').show();
 		$('#divCodigoAfliado').show();
 		$('#divFechaAfliado').show();
 		$('#divRucP').show();
+		$('#divCategoria').show();
+
 		$('#divDireccionEmpresa').hide();
 		$('#divRepresentanteEmpresa').hide();
 		$('#divEmpresaRazonSocial').hide();
@@ -711,7 +717,8 @@ function obtenerBeneficiario(){
 	$("#btnFactura").prop('disabled', true);
 
 	$("#btnDescuento").prop('disabled', true);
-	$("#btnFracciona").prop('disabled', true);
+	//$("#btnFracciona").prop('disabled', true);
+	$("#btnAnulaVal").prop('disabled', true);
 
 	$('#cboTipoConcepto_b').val("");
 	$('#cboTipoCuota_b').val("");
@@ -762,10 +769,7 @@ function obtenerBeneficiario(){
 					$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
-
-					
-
-					
+					$('#btnAnulaVal').attr("disabled", false);
 
 				} else if (tipo_documento == "85") //CAP
 				{
@@ -792,7 +796,7 @@ function obtenerBeneficiario(){
 					$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
-					 
+					$('#btnAnulaVal').attr("disabled", false);
 
 				} else {
 					var agremiado = result.agremiado.apellido_paterno + " " + result.agremiado.apellido_materno + ", " + result.agremiado.nombres;
@@ -812,9 +816,8 @@ function obtenerBeneficiario(){
 					$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
+					$('#btnAnulaVal').attr("disabled", false);
 					
-					
-
 				}
 
 				if (result.agremiado.foto != null && result.agremiado.foto != "") {
@@ -978,10 +981,10 @@ function cargarValorizacion(){
 	var periodo_pp = $('#periodo_pp').val();
 	var id_concepto_pp = $('#id_concepto_pp').val();
 
-
-	
 	$("#btnFracciona").prop('disabled', true);
 	$("#btnDescuento").prop('disabled', true);
+
+	$("#btnAnulaVal").prop('disabled', true);
 
 	//$('#tblValorizacion').dataTable().fnDestroy();
     //$("#tblValorizacion tbody").html("");
@@ -2079,3 +2082,36 @@ function fn_exonerar_valorizacion(){
     
 
 }
+
+function anular_valorizacion(){
+	var mensaje = "¿Esta seguro de Eliminar la Valorización seleccionada?";
+/*
+	var tipo_documento = $('#tipo_documento').val();
+	var id_persona = $('#id_persona').val();
+	var empresa_id = $('#empresa_id').val();
+	var _token = $('#_token').val();
+*/
+	Swal.fire({
+		title: 'Mensaje',
+		text: mensaje,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Si'
+	  }).then((result) => {
+			if (result.value) {
+				$.ajax({
+					url: "/ingreso/anular_valorizacion",
+					type: "POST",
+					//data : {tipo_documento:tipo_documento,codigo_fraccionamiento:codigo_fraccionamiento, id_persona:id_persona, empresa_id:empresa_id,_token:_token},
+					data : $("#frmValorizacion").serialize(),
+					success: function (result) {  
+							cargarValorizacion();
+					}
+				});
+			}
+	  });
+
+}
+

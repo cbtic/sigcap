@@ -55,6 +55,7 @@ use App\Http\Controllers\Frontend\BeneficiarioController;
 use App\Http\Controllers\Frontend\AgremiadoRolesController;
 use App\Http\Controllers\Frontend\TablaMaestraController;
 use App\Http\Controllers\Frontend\CoordinadorZonalDetalleController;
+use App\Http\Controllers\Frontend\DelegadoTributoController;
 
 /*
  * Frontend Controllers
@@ -233,6 +234,8 @@ Route::post('ingreso/listar_empresa_beneficiario_ajax', [IngresoController::clas
 
 Route::post('ingreso/anula_fraccionamiento', [IngresoController::class, 'anula_fraccionamiento'])->name('ingreso.anula_fraccionamiento');
 Route::post('ingreso/exonerar_valorizacion', [IngresoController::class, 'exonerar_valorizacion'])->name('ingreso.exonerar_valorizacion');
+
+Route::post('ingreso/anular_valorizacion', [IngresoController::class, 'anular_valorizacion'])->name('ingreso.anular_valorizacion');
 
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
@@ -703,3 +706,12 @@ Route::get('coordinador_zonal/obtener_datos_zonal_detalle/{zonal}', [Coordinador
 Route::get('coordinador_zonal/eliminar_zonal_detalle/{id}/{estado}', [CoordinadorZonalDetalleController::class, 'eliminar_zonal_detalle'])->name('coordinador_zonal.eliminar_zonal_detalle');
 Route::get('derecho_revision/eliminar_credipago/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_credipago'])->name('derecho_revision.eliminar_credipago');
 
+Route::get('delegadoTributo/consulta_delegadoTributo', [DelegadoTributoController::class, 'consulta_delegadoTributo'])->name('delegadoTributo.consulta_delegadoTributo');
+Route::post('delegadoTributo/listar_delegadoTributo_ajax', [DelegadoTributoController::class, 'listar_delegadoTributo_ajax'])->name('delegadoTributo.listar_delegadoTributo_ajax');
+Route::get('delegadoTributo/modal_nuevoDelegadoTributo/{id}', [DelegadoTributoController::class, 'modal_nuevoDelegadoTributo'])->name('delegadoTributo.modal_nuevoDelegadoTributo');
+Route::post('delegadoTributo/send_delegadoTributo', [DelegadoTributoController::class, 'send_delegadoTributo'])->name('delegadoTributo.send_delegadoTributo');
+Route::get('delegadoTributo/eliminar_delegadoTributo/{id}/{estado}', [DelegadoTributoController::class, 'eliminar_delegadoTributo'])->name('delegadoTributo.eliminar_delegadoTributo');
+Route::get('delegadoTributo/obtener_datos_delegado/{periodo}', [DelegadoTributoController::class, 'obtener_datos_delegado'])->name('delegadoTributo.obtener_datos_delegado');
+Route::get('agremiado/obtener_datos_agremiado_id/{id}', [AgremiadoController::class, 'obtener_datos_agremiado_id'])->name('agremiado.obtener_datos_agremiado_id');
+Route::get('delegadoTributo/validar_delegado/{id_delegado}', [DelegadoTributoController::class, 'validar_delegado'])->name('delegadoTributo.validar_delegado');
+Route::get('derecho_revision/importar_dataLicencia', [DerechoRevisionController::class, 'importar_dataLicencia'])->name('derecho_revision.importar_dataLicencia');

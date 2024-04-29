@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PeriodoComisione;
 use Carbon\Carbon;
+use App\Models\TablaMaestra;
 use Auth;
 
 class PeriodoComisionController extends Controller
@@ -23,9 +24,11 @@ class PeriodoComisionController extends Controller
     function consulta_periodoComision(){
 
 		//$tablaMaestra_model = new TablaMaestra;
+		$tablaMaestra_model = new TablaMaestra;
 		$periodoComision = new PeriodoComisione;
-        //$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
-        return view('frontend.periodoComision.all',compact('periodoComision'));
+		
+        $tipo = $tablaMaestra_model->getMaestroByTipo(101);
+        return view('frontend.periodoComision.all',compact('periodoComision','tipo'));
 
     }
 
@@ -33,6 +36,7 @@ class PeriodoComisionController extends Controller
 	
 		$periodoComision_model = new PeriodoComisione;
 		$p[]=$request->descripcion;
+		$p[]=$request->tipo;
 		$p[]=$request->fecha_inicio;//$request->nombre;
 		$p[]=$request->fecha_fin;
         $p[]=$request->estado;
@@ -73,6 +77,7 @@ class PeriodoComisionController extends Controller
     public function modal_periodoComision_nuevoPeriodoComision($id){
 		
 		$periodoComision = new PeriodoComisione;
+		$tablaMaestra_model = new TablaMaestra;
 		//$regione_model = new Regione;
 		//$tablaMaestra_model = new TablaMaestra;
 		//$tipo_afectacion = $tablaMaestra_model->getMaestroByTipo(53);
@@ -84,9 +89,10 @@ class PeriodoComisionController extends Controller
 			$periodoComision = new PeriodoComisione;
 		}
 		
+		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
 		//$region = $regione_model->getRegionAll();
 		
-		return view('frontend.periodoComision.modal_periodoComision_nuevoPeriodoComision',compact('id','periodoComision'));
+		return view('frontend.periodoComision.modal_periodoComision_nuevoPeriodoComision',compact('id','periodoComision','tipo_concurso'));
 	
 	}
 
@@ -131,7 +137,7 @@ class PeriodoComisionController extends Controller
         $periodoComision->fecha_inicio = $request->fecha_inicio;
         $periodoComision->fecha_fin = $request->fecha_fin;
 		$periodoComision->activo = $request->fijar_periodo;
-		
+		$periodoComision->id_tipo_concurso = $request->tipo;
 		$fecha_actual = Carbon::now()->format('Y-m-d');
 		
 		/*if(($fecha_actual >= $request->fecha_inicio) && ($fecha_actual <= $request->fecha_fin)) {
