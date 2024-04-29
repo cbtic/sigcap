@@ -22,6 +22,7 @@ use App\Models\Parametro;
 use App\Models\NumeracionDocumento;
 use App\Models\UsoEdificacione;
 use App\Models\Presupuesto;
+use App\Models\SolicitudDocumento;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
@@ -741,6 +742,11 @@ class DerechoRevisionController extends Controller
 
 	public function send_nueno_infoProyecto(Request $request){
 
+		$path = "img/derecho_revision";
+		if (!is_dir($path)) {
+			mkdir($path);
+		}
+
 		$id_user = Auth::user()->id;
 		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 
@@ -774,26 +780,80 @@ class DerechoRevisionController extends Controller
 		//$profesion->estado = 1;
 		$usoEdificacion->id_usuario_inserta = $id_user;
 		$usoEdificacion->save();
+		
+		
+		$solicitudDocumento1 = new SolicitudDocumento;
+		$solicitudDocumento1->id_tipo_documento = 1;
+		if($request->img_foto1!=""){
+			$filepath_tmp = public_path('img/frontend/tmp_derecho_revision/');
+			$filepath_nuevo = public_path('img/derecho_revision/');
+			if (file_exists($filepath_tmp.$request->img_foto1)) {
+				copy($filepath_tmp.$request->img_foto1, $filepath_nuevo.$request->img_foto1);
+			}
+			
+			$solicitudDocumento1->ruta_archivo = $request->img_foto1;
+		}
+		$solicitudDocumento1->estado = 1;
+		$solicitudDocumento1->id_solicitud = $request->id_solicitud;
+		$solicitudDocumento1->id_usuario_inserta = $id_user;
+		$solicitudDocumento1->save();
+		
+		$solicitudDocumento2 = new SolicitudDocumento;
+		$solicitudDocumento2->id_tipo_documento = 2;
+		if($request->img_foto2!=""){
+			$filepath_tmp = public_path('img/frontend/tmp_derecho_revision/');
+			$filepath_nuevo = public_path('img/derecho_revision/');
+			if (file_exists($filepath_tmp.$request->img_foto2)) {
+				copy($filepath_tmp.$request->img_foto2, $filepath_nuevo.$request->img_foto2);
+			}
+			
+			$solicitudDocumento2->ruta_archivo = $request->img_foto2;
+		}
+		$solicitudDocumento2->estado = 1;
+		$solicitudDocumento2->id_solicitud = $request->id_solicitud;
+		$solicitudDocumento2->id_usuario_inserta = $id_user;
+		$solicitudDocumento2->save();
+		
+		$solicitudDocumento3 = new SolicitudDocumento;
+		$solicitudDocumento3->id_tipo_documento = 3;
+		if($request->img_foto3!=""){
+			$filepath_tmp = public_path('img/frontend/tmp_derecho_revision/');
+			$filepath_nuevo = public_path('img/derecho_revision/');
+			if (file_exists($filepath_tmp.$request->img_foto3)) {
+				copy($filepath_tmp.$request->img_foto3, $filepath_nuevo.$request->img_foto3);
+			}
+			
+			$solicitudDocumento3->ruta_archivo = $request->img_foto3;
+		}
+		$solicitudDocumento3->estado = 1;
+		$solicitudDocumento3->id_solicitud = $request->id_solicitud;
+		$solicitudDocumento3->id_usuario_inserta = $id_user;
+		$solicitudDocumento3->save();
+		
     }
 
 	public function upload_solicitud(Request $request){
 		
+		$path = "img/frontend/tmp_derecho_revision";
+		if (!is_dir($path)) {
+			mkdir($path);
+		}
+		
 		$filename = date("YmdHis") . substr((string)microtime(), 1, 6);
 		$type="";
-		$filepath = public_path('img/derecho_revision/');
+		
+		$filepath = public_path('img/frontend/tmp_derecho_revision/');
 		
 		$type=$this->extension($_FILES["file"]["name"]);
 		move_uploaded_file($_FILES["file"]["tmp_name"], $filepath . $filename.".".$type);
 		
-		$archivo = $filename.".".$type;
-		
-		$this->importar_solicitud($archivo);
+		//$archivo = $filename.".".$type;
+		//$this->importar_solicitud($archivo);
+		echo $filename.".".$type;
 		
 	}
 
-	public function importar_solicitud($archivo){
-
-	}
+	function extension($filename){$file = explode(".",$filename); return strtolower(end($file));}
 
 	public function modal_nuevo_comprobante($id){
 		 
