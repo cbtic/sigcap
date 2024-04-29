@@ -149,31 +149,45 @@ class ConcursoController extends Controller
 		if ($zip->open($zip_path, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) !== TRUE) {
 			die ("An error occurred creating your ZIP file.");
 		}
+		/*
+		$filepath = public_path('img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png');	
+		if (file_exists($filepath)) {
+		  $file="img/documento/2-2024 - 4-2024/DELEGADO/EDIFICACIONES/60/20240307230704.80868.png";
+		  $zip->addFile($file, basename($file));
+		} else {
+		  die("File $filepath doesnt exit");
+		}
+		*/
 		
 		foreach($concursoAgremiado as $row1){
 			$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionZip($row1->id_agremiado);
-			
+			/*
 			$zip_path2 = ($row1->id_agremiado).'.zip';//
   			$zip2 = new ZipArchive();//
 			
+			if ($zip2->open($zip_path2, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) !== TRUE) {
+				die ("An error occurred creating your ZIP file.");
+			}
+			*/
 			foreach($concursoInscripcion as $row2){
 				$concursoInscripcionDocumento = $concursoInscripcione_model->getConcursoInscripcionDocumentoZip($row2->id);
 				foreach($concursoInscripcionDocumento as $row3){
-					//echo $row3->ruta_archivo;
-					//img/documento/2-2024 - 5-2024/DELEGADO/EDIFICACIONES/60/20240313225140.37926.jpg
 					$file=$row3->ruta_archivo;
-					//echo $file;
 					if (file_exists(public_path($file))){
 						$zip->addFile($file, basename($file));
 					}
 				}
 			}
+			
+			//$zip2->close();
+			
 		}
 		
 		$zip->close();
-		
+		//exit();
 		return response()->download(public_path($zip_path))->deleteFileAfterSend(true);
-				
+		//return response()->download(public_path($zip_path));
+		
 		exit();
 		
 		$zip_path = '60.zip';
