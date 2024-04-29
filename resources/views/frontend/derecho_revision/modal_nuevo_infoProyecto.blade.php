@@ -146,8 +146,10 @@ $.mask.definitions['p'] = "[Mm]";
 */
 $(document).ready(function() {
 	$(".upload").on('click', function() {
+		var id = $(this).attr("id");
+		//alert(id);return false;
         var formData = new FormData();
-        var files = $('#image')[0].files[0];
+        var files = $('#image'+id)[0].files[0];
         formData.append('file',files);
         $.ajax({
 			headers: {
@@ -159,17 +161,10 @@ $(document).ready(function() {
             contentType: false,
             processData: false,
             success: function(response) {
-				datatablenew();
-				/*
-                if (response != 0) {
-					
-					var extension = "";
-					extension = response.substring(response.lastIndexOf('.') + 1);
-					$("#fileExcel").val(response);
-                } else {
-                    alert('Formato de imagen incorrecto.');
-                }
-				*/
+				
+				$("#img_foto"+id).val(response);
+				$("#img_ruta"+id).attr("src", "/img/frontend/tmp_derecho_revision/"+response);
+				
             }
         });
 		return false;
@@ -349,13 +344,17 @@ function fn_save_infoProyeto(){
     var selectedProceduresStr = selectedProcedures.join(', ');
 
     var selectedProceduresStr2 = selectedProcedures2.join(', ');
-
+	
+	var img_foto1 = $('#img_foto1').val();
+	var img_foto2 = $('#img_foto2').val();
+	var img_foto3 = $('#img_foto3').val();
+	
 	$.ajax({
 			url: "/derecho_revision/send_nueno_infoProyecto",
             type: "POST",
             data : {_token:_token,id:id,procedimientos_complementarios: selectedProceduresStr,
                     procedimientos_complementarios2: selectedProceduresStr2,areaBruta:areaBruta,
-                    id_solicitud:id_solicitud},
+                    id_solicitud:id_solicitud,img_foto1:img_foto1,img_foto2:img_foto2,img_foto3:img_foto3},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
@@ -436,7 +435,7 @@ function fn_save_infoProyeto(){
                                     </div>
                                 </div>
                                 <div class="col-lg-9" >
-                                    <input id="otro" name="otro" on class="form-control form-control-sm"  value="" type="text" onchange="">
+                                    <input id="otro" name="otro" on class="form-control form-control-sm"  value="" type="text" onChange="">
                                 </div>
                             </div>
                         </div>   
@@ -566,7 +565,7 @@ function fn_save_infoProyeto(){
                             <label class="control-label form-control-sm">&Aacute;rea Bruta del Terreno Declarado (m2)</label>
                         </div>
                         <div class="col-lg-3">
-                            <input id="areaBruta" name="areaBruta" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onchange="">
+                            <input id="areaBruta" name="areaBruta" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onChange="">
                         </div>
                     </div>
 
@@ -576,15 +575,19 @@ function fn_save_infoProyeto(){
                         </div>
                         <div class="col-lg-1-5">
                             <span class="btn btn-sm btn-warning btn-file" style="float:left">
-                                Examinar <input id="image" name="image" type="file" />
+                                Examinar <input id="image1" name="image1" type="file" />
                             </span>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-6">
                         <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
                         -->
-                        <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left;">
-                        
-                        <input type="hidden" id="img_foto" name="img_foto" value="" style="padding-left:10px" />
+                        <input type="button" class="btn btn-primary upload" id="1" value="Subir" style="margin-left:10px;float:left;">
+                        <?php 
+						$img = "/img/logo-sin-fondo2.png";
+						//if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
+						?>
+						<img src="<?php echo $img?>" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
+                        <input type="hidden" id="img_foto1" name="img_foto1" value="" style="padding-left:10px" />
                         </div>
                     </div>
 
@@ -594,15 +597,19 @@ function fn_save_infoProyeto(){
                         </div>
                         <div class="col-lg-1-5">
                             <span class="btn btn-sm btn-warning btn-file" style="float:left">
-                                Examinar <input id="image" name="image" type="file" />
+                                Examinar <input id="image2" name="image2" type="file" />
                             </span>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-6">
                         <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
                         -->
-                        <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
-                        
-                        <input type="hidden" id="img_foto" name="img_foto" value="" />
+                        <input type="button" class="btn btn-primary upload" id="2" value="Subir" style="margin-left:10px;float:left">
+                        <?php 
+						$img = "/img/logo-sin-fondo2.png";
+						//if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
+						?>
+						<img src="<?php echo $img?>" id="img_ruta2" width="140px" height="50px" alt="" style="margin-left:10px" />
+                        <input type="hidden" id="img_foto2" name="img_foto2" value="" />
                         </div>
                     </div>
 
@@ -612,15 +619,20 @@ function fn_save_infoProyeto(){
                         </div>
                         <div class="col-lg-1-5">
                             <span class="btn btn-sm btn-warning btn-file" style="float:left">
-                                Examinar <input id="image" name="image" type="file" />
+                                Examinar <input id="image3" name="image3" type="file" />
                             </span>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-6">
                         <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
                         -->
-                        <input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
-                        
-                        <input type="hidden" id="img_foto" name="img_foto" value="" />
+                        <input type="button" class="btn btn-primary upload" id="3" value="Subir" style="margin-left:10px;float:left">
+                        <?php 
+						$img = "/img/logo-sin-fondo2.png";
+						//if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
+						?>
+						<img src="<?php echo $img?>" id="img_ruta3" width="140px" height="50px" alt="" style="margin-left:10px" />
+								
+                        <input type="hidden" id="img_foto3" name="img_foto3" value="" />
                         </div>
                     </div>
 

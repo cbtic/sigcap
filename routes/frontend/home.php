@@ -488,6 +488,7 @@ Route::post('derecho_revision/send_credipago_liquidacion', [DerechoRevisionContr
 
 Route::get('derecho_revision/modal_proyectista/{id}', [DerechoRevisionController::class, 'modal_proyectista'])->name('derecho_revision.modal_proyectista');
 Route::get('derecho_revision/modal_propietario/{id}', [DerechoRevisionController::class, 'modal_propietario'])->name('derecho_revision.modal_propietario');
+Route::post('derecho_revision/upload_solicitud', [DerechoRevisionController::class, 'upload_solicitud'])->name('derecho_revision.upload_solicitud');
 
 //Route::get('derecho_revision/editar_revisorUrbano/{id}', [DerechoRevisionController::class, 'editar_revisorUrbano'])->name('derecho_revision.editar_revisorUrbano');
 //Route::get('derecho_revision/modal_revisorUrbano_nuevoRevisorUrbano/{id}', [DerechoRevisionController::class, 'modal_revisorUrbano_nuevoRevisorUrbano'])->name('derecho_revision.modal_revisorUrbano_nuevoRevisorUrbano');
