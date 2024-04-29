@@ -1151,8 +1151,16 @@ class DerechoRevisionController extends Controller
 	
 		
 		$derecho_revision_model = new DerechoRevision;
+
+		$data = [];
 		
-		$data = $derecho_revision_model->importar_datos_dataLicencia();
+		$data['proyectos'] = $derecho_revision_model->importar_proyectos_dataLicencia();
+		
+		$data['solicitudes'] = $derecho_revision_model->importar_solicitudes_dataLicencia();
+
+		$data['empresas'] = $derecho_revision_model->importar_empresas_dataLicencia();
+
+		$data['personas'] = $derecho_revision_model->importar_personas_dataLicencia();
 		
 		$result["aaData"] = $data;
 

@@ -1441,6 +1441,8 @@ function importarDatalicencia(){
 		url: "/derecho_revision/importar_dataLicencia",
 		type: "GET",
 		success: function(result){
+
+			bootbox.alert("Se import&oacute; exitosamente los datos"); 
 			datatablenew();
 		}
 	});
