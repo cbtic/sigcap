@@ -603,9 +603,21 @@
 																	<th><?php echo $row->tipo_tramite?></th>
 																	<th><?php echo $row->tipo_uso?></th>
 																	<th><?php echo $row->area_techada?></th>
-																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFormato(<?php echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Formato</button></th>
-																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerPlano(<?php echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Plano</button></th>
-																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFUHU(<?php echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>FUHU</button></th>
+																	<!--
+																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFormato(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Formato</button></th>
+																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerPlano(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Plano</button></th>
+																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFUHU(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>FUHU</button></th>
+																	-->
+																	
+																	<td class="text-left" style="vertical-align:middle">
+																		<a href="/img/derecho_revision/<?php echo $row->ruta_archivo1?>" target="_blank" class="btn btn-sm btn-warning">Ver Imagen</a>
+																	</td>
+																	<td class="text-left" style="vertical-align:middle">
+																		<a href="/img/derecho_revision/<?php echo $row->ruta_archivo2?>" target="_blank" class="btn btn-sm btn-warning">Ver Imagen</a>
+																	</td>
+																	<td class="text-left" style="vertical-align:middle">
+																		<a href="/img/derecho_revision/<?php echo $row->ruta_archivo3?>" target="_blank" class="btn btn-sm btn-warning">Ver Imagen</a>
+																	</td>
 																	
 																	<!--<th><?php //echo $row->fecha_egresado?></th>
 																	<th><?php //echo $row->fecha_graduado?></th>
