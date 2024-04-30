@@ -134,14 +134,16 @@ class ConcursoController extends Controller
         return view('frontend.concurso.create_resultado',compact('concurso',/*'agremiado',*//*'region',*/'situacion_cliente','concurso_ultimo'));
     }
 	
-	public function descargar_comprimido(){
+	public function descargar_comprimido($numero_cap,$id_concurso){
 		
 		//getAgremiadoConcursoInscripcionZip
 		//getConcursoInscripcionZip
 		//getConcursoInscripcionDocumentoZip
+		if($numero_cap==0)$numero_cap="";
+		if($id_concurso==0)$id_concurso="";
 		
 		$concursoInscripcione_model = new ConcursoInscripcione();
-		$concursoAgremiado = $concursoInscripcione_model->getAgremiadoConcursoInscripcionZip();
+		$concursoAgremiado = $concursoInscripcione_model->getAgremiadoConcursoInscripcionZip($numero_cap);
 		
 		$zip_path = 'agremiados.zip';
 		$zip = new ZipArchive();
@@ -151,10 +153,10 @@ class ConcursoController extends Controller
 		}
 		
 		foreach($concursoAgremiado as $row1){
-			$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionZip($row1->id_agremiado);
+			$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionZip($row1->id_agremiado,$id_concurso);
 			
 			/**************ZIP2****************************/
-			$zip_path2 = ($row1->id_agremiado).'.zip';
+			$zip_path2 = ($row1->numero_cap).'.zip';
   			$zip2 = new ZipArchive();
 			//echo $zip_path2;
 			if ($zip2->open($zip_path2, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) !== TRUE) {
