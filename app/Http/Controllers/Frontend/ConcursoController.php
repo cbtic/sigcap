@@ -343,10 +343,13 @@ class ConcursoController extends Controller
 		
 		$tablaMaestra_model = new TablaMaestra;
 		$concursoPuesto_model = new ConcursoPuesto;
+		$concurso = Concurso::find($id);
 		$concurso_puesto = $concursoPuesto_model->getConcursoPuestoByIdConcurso($id);
 		$tipo_plaza = $tablaMaestra_model->getMaestroByTipo(94);
+		$sub_tipo_concurso = $concurso->id_sub_tipo_concurso;
+		//var_dump($sub_tipo_concurso);exit;
 		
-		return view('frontend.concurso.modal_puesto',compact('id','concurso_puesto','tipo_plaza'));
+		return view('frontend.concurso.modal_puesto',compact('id','concurso_puesto','tipo_plaza','sub_tipo_concurso'));
 
     }
 	

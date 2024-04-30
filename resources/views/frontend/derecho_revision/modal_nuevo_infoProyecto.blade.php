@@ -457,12 +457,6 @@ function fn_save_infoProyeto(){
                                 </label>
                             </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="6" id="check_opc7" name="grupo_tramite1">
-                                <label class="form-check-label" for="check_opc7">
-                                    Revalidaci&oacute;n de Licencia
-                                </label>
-                            </div>
                         </div>                   
                     </div>
 
