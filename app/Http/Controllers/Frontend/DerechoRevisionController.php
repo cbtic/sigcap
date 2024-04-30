@@ -91,6 +91,7 @@ class DerechoRevisionController extends Controller
 
         //$tablaMaestra_model = new TablaMaestra;
 		$derecho_revision = new DerechoRevision;
+		$proyecto = new Proyecto;
         $agremiado = new Agremiado;
         $persona = new Persona;
         $liquidacion = new Liquidacione;
@@ -104,7 +105,7 @@ class DerechoRevisionController extends Controller
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(24);
         
-        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud'));
+        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud','proyecto'));
     }
 
 	public function listar_derecho_revision_ajax(Request $request){
@@ -610,7 +611,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->numero_revision = $request->n_revision;
 		$derecho_revision->direccion = $request->direccion_proyecto;
 		$derecho_revision->id_municipalidad = $request->municipalidad;
-		$derecho_revision->id_ubigeo = $id_ubi->id;
+		$derecho_revision->id_ubigeo = $ubigeo;
 		$derecho_revision->id_resultado = 1;
 		$derecho_revision->id_tipo_solicitud = 124;
 		//$derecho_revision->id_proyectista = $agremiado->id;
@@ -618,7 +619,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->id_usuario_inserta = $id_user;
 		
 
-		$proyecto->id_ubigeo = $id_ubi->id_ubigeo;
+		$proyecto->id_ubigeo = $ubigeo;
 		$proyecto->nombre = $request->nombre_proyecto;
 		$proyecto->parcela = $request->parcela;
 		$proyecto->super_manzana = $request->superManzana;
@@ -768,6 +769,7 @@ class DerechoRevisionController extends Controller
 
 		$solicitud = Solicitude::find($request->id_solicitud);
 		$solicitud->id_tipo_tramite = $procedimientos_complementarios;
+		$solicitud->area_total = $request->areaBruta;
 		$solicitud->id_usuario_inserta = $id_user;
 		//var_dump($procedimientos_complementarios2);exit();
 		$solicitud->save();
@@ -1147,7 +1149,7 @@ class DerechoRevisionController extends Controller
 		$ubigeo_model=new Ubigeo;
         $liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
 		$ubigeo = $liquidacion[0]->id_ubigeo;
-		$ubigeo_id = Ubigeo::where("id",$ubigeo)->where("estado","1")->first();
+		$ubigeo_id = Ubigeo::where("id_ubigeo",$ubigeo)->where("estado","1")->first();
 		$departamento = $ubigeo_model->obtenerDepartamento($ubigeo_id->id_departamento);
 		$provincia = $ubigeo_model->obtenerProvincia($ubigeo_id->id_departamento,$ubigeo_id->id_provincia);
 		$distrito = $ubigeo_model->obtenerDistrito($ubigeo_id->id_departamento,$ubigeo_id->id_provincia,$ubigeo_id->id_distrito);
@@ -1171,7 +1173,7 @@ class DerechoRevisionController extends Controller
 		$ubigeo_model=new Ubigeo;
         $liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
 		$ubigeo = $liquidacion[0]->id_ubigeo;
-		$ubigeo_id = Ubigeo::where("id",$ubigeo)->where("estado","1")->first();
+		$ubigeo_id = Ubigeo::where("id_ubigeo",$ubigeo)->where("estado","1")->first();
 		$departamento = $ubigeo_model->obtenerDepartamento($ubigeo_id->id_departamento);
 		$provincia = $ubigeo_model->obtenerProvincia($ubigeo_id->id_departamento,$ubigeo_id->id_provincia);
 		$distrito = $ubigeo_model->obtenerDistrito($ubigeo_id->id_departamento,$ubigeo_id->id_provincia,$ubigeo_id->id_distrito);

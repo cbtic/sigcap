@@ -155,7 +155,7 @@ class DerechoRevision extends Model
         left join empresas e on pr.id_empresa = e.id
         left join personas pe2 on pr.id_persona = pe2.id
         left join proyectos pro on s.id_proyecto = pro.id
-        left join ubigeos u on pro.id_ubigeo = u.id
+        left join ubigeos u on pro.id_ubigeo::varchar = u.id_ubigeo
         left join municipalidades m on s.id_municipalidad = m.id
         left join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41'
         left join tabla_maestras tm2 on s.id_tipo_liquidacion1 = tm2.codigo::int and  tm2.tipo ='27'
@@ -179,7 +179,13 @@ class DerechoRevision extends Model
 
     public function getReintegroByIdSolicitud($id){
 
-        $cad = "select p.nombre, e.razon_social, s.valor_obra, s.area_total, pre.area_techada, p.id_ubigeo, tm.denominacion tipo, p.direccion direccion_proyecto, a.numero_cap, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres agremiado, tm2.denominacion ubicacion, a.numero_regional, a.direccion, l.denominacion as local, r.denominacion regional, tm3.denominacion autoriza, tm4.denominacion actividad_gremial, tm5.denominacion situacion, m.denominacion municipalidad, s.valor_obra from solicitudes s 
+        $cad = "select p.nombre, 
+        CASE 
+              WHEN pr.id_tipo_propietario = '78' THEN (select p2.apellido_paterno||' '||p2.apellido_materno||' '||p2.nombres agremiado from personas p2 where p2.id = pr.id_persona)
+              WHEN pr.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = pr.id_empresa)
+        end as propietario,
+        s.valor_obra, s.area_total, pre.area_techada, p.id_ubigeo, tm.denominacion tipo, p.direccion direccion_proyecto, a.numero_cap, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres agremiado, tm2.denominacion ubicacion, a.numero_regional, a.direccion, l.denominacion as local, r.denominacion regional, tm3.denominacion autoriza, tm4.denominacion actividad_gremial, tm5.denominacion situacion, m.denominacion municipalidad, s.valor_obra 
+        from solicitudes s 
         left join proyectos p on s.id_proyecto = p.id
         left join propietarios pr on pr.id_solicitud = s.id
         left join empresas e on pr.id_empresa = e.id

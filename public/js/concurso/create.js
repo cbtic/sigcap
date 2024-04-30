@@ -1,3 +1,4 @@
+//const { message } = require("laravel-mix/src/Log");
 
 $(document).ready(function () {
 	
@@ -8,8 +9,12 @@ $(document).ready(function () {
 		//nombre_concurso += c_periodo+' '+c_tipo_concurso;
 		//if(c_sub_tipo_concurso!="")nombre_concurso += " - "+c_sub_tipo_concurso;
 		
-		bootbox.alert("El concurso "+nombre_concurso+" esta pendiente de presentar documentos, haga click en el boton azul Registrar Doc para adjuntar");
+		bootbox.alert("La postulaci&oacute;n al concurso "+nombre_concurso+" esta pendiente de presentar documentos, haga click en el boton azul <u><b>(Registrar Doc)</b></u> para adjuntar");
 		//return false;
+	}
+
+	if($("#situacion").val()=='FALLECIDO'){
+		$("#btnGuardar").prop("disabled",true);
 	}
 	
 	$('#btnNuevoTrabajo').on('click', function () {
@@ -102,8 +107,16 @@ function aperturar(accion){
 function guardar_inscripcion(){
     //alert("cvvfv");
     var msg = "";
+
+	if($("#situacion").val()=='INHABILITADO'){
+		bootbox.alert("Usted se encuentra INHABILITADO, debe estar al d&iacute;a en sus cuotas para continuar con el proceso de concurso",function(){
+			fn_save();
+		});
+			
+	}else{
+		fn_save();
+	}
     
-	fn_save();
 }
 
 
