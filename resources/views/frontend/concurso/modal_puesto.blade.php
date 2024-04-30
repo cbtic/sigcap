@@ -126,6 +126,7 @@ $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
+	obtenerSubTipoPlaza();
 });
 </script>
 
@@ -261,6 +262,26 @@ function datatablenewPuesto(){
 
 }
 
+function obtenerSubTipoPlaza(){
+	
+	var id_sub_tipo_concurso = $('#id_sub_tipo_concurso').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/94/'+id_sub_tipo_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_tipo_plaza").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_tipo_plaza").html(option);
+		}
+		
+	});
+	
+}
+
 function editarPuesto(id){
 
 	$.ajax({
@@ -376,6 +397,7 @@ function fn_save_puesto(){
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id_concurso" id="id_concurso" value="<?php echo $id?>">
 					<input type="hidden" name="id" id="id" value="0">
+					<input type="hidden" name="id_sub_tipo_concurso" id="id_sub_tipo_concurso" value="<?php echo $sub_tipo_concurso?>">
 					
 					<div class="row">
 						<!--

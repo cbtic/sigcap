@@ -250,7 +250,7 @@ function fn_save_documento(){
 				}
 				
 				if(result.inscripcionDocumento<result.concursoRequisito){
-					msg_alerta = "&iquest;Se registro correctamente "+result.inscripcionDocumento+" de "+result.concursoRequisito+" requisitos, deseas registrar otro documento?, caso contrario ya culmino su postulaci&oacute;n";
+					msg_alerta = "&iquest;Se registro correctamente "+result.inscripcionDocumento+" de "+result.concursoRequisito+" requisitos, deseas registrar otro documento?";
 				}
 
 				bootbox.confirm({ 
