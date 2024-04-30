@@ -91,17 +91,24 @@ where id_concurso_inscripcion=".$id;
         return $data;
     }
 	
-	function getAgremiadoConcursoInscripcionZip(){
+	function getAgremiadoConcursoInscripcionZip($numero_cap){
 
-        $cad = "select distinct id_agremiado 
+        $cad = "select distinct id_agremiado,a.numero_cap 
 from concurso_inscripciones ci 
-where ci.estado='1'";
+inner join agremiados a on ci.id_agremiado=a.id 
+where ci.estado='1' ";
+
+		if($numero_cap!=""){
+			$cad .= "and a.numero_cap='".$numero_cap."'";
+		}
+		
+		
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
     }
 	
-	function getConcursoInscripcionZip($id_agremiado){
+	function getConcursoInscripcionZip($id_agremiado,$id_concurso){
 
         $cad = "select ci.id,replace(pc.descripcion,'/','-') periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso 
 from concurso_inscripciones ci
@@ -111,6 +118,11 @@ inner join periodo_comisiones pc on c.id_periodo=pc.id
 inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
 left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
 where id_agremiado=".$id_agremiado." and ci.estado='1'";
+		
+		if($id_concurso!=""){
+			$cad .= "and cp.id_concurso='".$id_concurso."'";
+		}
+
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
