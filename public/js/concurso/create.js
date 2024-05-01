@@ -109,7 +109,7 @@ function guardar_inscripcion(){
     var msg = "";
 
 	if($("#situacion").val()=='INHABILITADO'){
-		bootbox.alert("Usted se encuentra INHABILITADO, debe estar al d&iacute;a en sus cuotas para continuar con el proceso de concurso",function(){
+		bootbox.alert("Usted se encuentra INHABILITADO, debe estar HABILITADO para continuar con el proceso de concurso",function(){
 			fn_save();
 		});
 			
@@ -134,7 +134,8 @@ function fn_save(){
 						return false;	
 					}
 					
-					location.reload();
+					//location.reload();
+					datatablenew();
 					
             }
     });
@@ -3573,3 +3574,44 @@ function duplicar_concurso(){
             }
     });
 }
+
+function obtenerTipoSubTipo(){
+
+	var select = document.getElementById("id_concurso");
+    var selectedOption = select.options[select.selectedIndex];
+    var tipo_concurso = selectedOption.getAttribute("data_tipo_concurso");
+    var sub_tipo_concurso = selectedOption.getAttribute("data_sub_tipo_concurso");
+
+	if(tipo_concurso=='DELEGADO'){
+		$("#id_tipo_concurso").val(3);
+		obtenerSubTipoConcurso(function(){
+			
+			if(sub_tipo_concurso=='EDIFICACIONES'){
+				$("#id_sub_tipo").val(1);
+			}else if(sub_tipo_concurso=='HABILITACIONES URBANAS'){
+				$("#id_sub_tipo").val(2);
+			}
+			fn_ListarBusqueda();
+		});
+		
+	}else if(tipo_concurso=='IMO'){
+		$("#id_tipo_concurso").val(1);
+		obtenerSubTipoConcurso(function(){
+		if(sub_tipo_concurso=='EDIFICACIONES'){
+			$("#id_sub_tipo").val(3);
+		}else if(sub_tipo_concurso=='HABILITACIONES URBANAS'){
+			$("#id_sub_tipo").val(4);
+		}
+		fn_ListarBusqueda();
+		});
+
+	}else if(tipo_concurso=='ESPECIALISTA'){
+		$("#id_tipo_concurso").val(2);
+		obtenerSubTipoConcurso(function(){
+		$("#id_sub_tipo").val(5);
+		});
+		fn_ListarBusqueda();
+	}
+}
+
+

@@ -299,7 +299,32 @@ label.form-control-sm{
 
 </style>
 
+<script>
 
+function obtenerSubTipoConcurso(callback){
+	
+	var id_tipo_concurso = $('#id_tipo_concurso').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/93/'+id_tipo_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_sub_tipo").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_sub_tipo").html(option);
+
+			callback();
+		}
+		
+	});
+	
+	
+}
+
+</script>
 
 @stack('before-scripts')
 @stack('after-scripts')
@@ -388,13 +413,15 @@ label.form-control-sm{
 															Tipo concurso
 															</div>
 															<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-															<select name="id_concurso" id="id_concurso" class="form-control form-control-sm" onchange="obtener_datos_concurso()">
+															<select name="id_concurso" id="id_concurso" class="form-control form-control-sm" onchange="obtener_datos_concurso();obtenerTipoSubTipo();">
 																<option value="">--Selecionar--</option>
 																<?php
 																foreach ($concurso as $row) {?>
 																<option 
 																fecha_acreditacion_inicio="<?php echo $row->fecha_acreditacion_inicio?>"
 																fecha_acreditacion_fin="<?php echo $row->fecha_acreditacion_fin?>"
+																data_tipo_concurso="<?php echo $row->tipo_concurso?>"
+																data_sub_tipo_concurso="<?php echo $row->sub_tipo_concurso?>"
 																value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 																<?php 
 																}
@@ -499,7 +526,7 @@ label.form-control-sm{
 											
 												<div class="row" style="padding:15px 0px 10px 0px">
 													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:6px">
-														<strong>Historico de Concursos Participados</strong>
+														<strong</strong>
 													</div>
 													
 												</div>
@@ -570,6 +597,23 @@ label.form-control-sm{
 															<option value="">--Todos los Concursos--</option>
 															<option value="1" selected="selected">Concursos Vigentes</option>
 															<option value="2">Concursos Pasados</option>
+														</select>
+													</div>
+
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+														<select name="id_tipo_concurso" id="id_tipo_concurso" class="form-control form-control-sm" onchange="" >
+															<option value="" selected="selected">--Seleccionar Tipo--</option>
+															<?php
+															foreach ($tipo_concurso as $row) {?>
+															<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+															<?php 
+															}?>
+														</select>
+													</div>
+
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+														<select name="id_sub_tipo" id="id_sub_tipo" class="form-control form-control-sm" onChange="">
+															<option value="">--Selecionar Sub Tipo--</option>
 														</select>
 													</div>
 													
