@@ -180,37 +180,44 @@ class AfiliacionSeguroController extends Controller
     }
 
     public function send_afiliacion(Request $request){
+		
 		$id_user = Auth::user()->id;
-
-        //print_r ($id_user);exit();
-        
+		
+		$seguroplan_model = new SegurosPlane();
+		$seguroplan = $seguroplan_model->getSeguroByIdAgramieadoAndIdSeguro($request->id_agremiado,$request->id_plan);
+		$id_plan = $seguroplan->id_plan;
+		$edad = $seguroplan->edad;
+		$id_sexo = $seguroplan->id_sexo;
+		
 		if($request->id == 0){
 			$afiliacion = new Seguro_afiliado();
 			$afiliacion->id_usuario_inserta = $id_user;
-			//$afiliacion->fecha = Carbon::now()->format('Y-m-d');
-			//$seguroPlan = new SegurosPlane();
 		}else{
 			$afiliacion =Seguro_afiliado::find($request->id);
 			$afiliacion->id_usuario_actualiza = $id_user;
-			//$afiliacion->fecha = $request->fecha;
 		}
-		//id|id_regional|||     ||estado
-		
-		//$id_planes = $seguroPlan->getPlanIdBySeguro($request->id_plan);
 
-		
 		$afiliacion->id_regional = $request->id_regional;
         $afiliacion->id_seguro = $request->id_plan;
 		$afiliacion->id_agremiado = $request->id_agremiado;
 		$afiliacion->fecha = $request->fecha;
 		$afiliacion->observaciones = $request->observaciones;
-
-		
-        //print_r($afiliacion); exit();
-        
-
 		$afiliacion->save();
-			
+		$id_afilicacion = $afiliacion->id;
+		
+		$seguro_afiliado_parentesco = new seguro_afiliado_parentesco;
+		$seguro_afiliado_parentesco->id_afiliacion = $id_afilicacion;
+		$seguro_afiliado_parentesco->id_agremiado = $request->id_agremiado;
+		$seguro_afiliado_parentesco->id_familia = 0;
+		$seguro_afiliado_parentesco->edad = $edad;
+		$seguro_afiliado_parentesco->sexo = $id_sexo;
+		$seguro_afiliado_parentesco->id_plan = $id_plan;
+		$seguro_afiliado_parentesco->id_usuario_inserta = $id_user;
+		$seguro_afiliado_parentesco->save();
+		
+		$seguro_afiliado_parentesco_model = new seguro_afiliado_parentesco;
+		$seguro_afiliado_parentesco_model->seguro_agremiado_cuota($id_afilicacion);
+		
     }
     
     public function eliminar_afiliacion($id,$estado)

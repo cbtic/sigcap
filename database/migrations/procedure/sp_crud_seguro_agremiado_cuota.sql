@@ -32,37 +32,23 @@ begin
 	idp:=0;
 
 	For entradas_mes in
-	select a.id_persona,R.id_agremiado,id_familia,
-	(select sp2.id from seguros_planes sp2 where sp2.id_seguro = s.id limit 1) id_plan,1 id_moneda,
-	(select sp5.monto from seguros_planes sp5 where sp5.id_seguro = s.id limit 1) monto,id_concepto, s.nombre nombre_seguro,
-	(select sp3.fecha_inicio from seguros_planes sp3 where sp3.id_seguro = s.id limit 1) fecha_inicio,
-	(select sp4.fecha_fin from seguros_planes sp4 where sp4.id_seguro = s.id limit 1) fecha_fin,nombres, R.familia
-	
-	from(
-	select sa.id_agremiado, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres nombres,0 id_familia,id_seguro, 'TITULAR' familia 
-	from seguro_afiliados sa 
-	inner join agremiados a on sa.id_agremiado = a.id
-	inner join personas p on a.id_persona = p.id
-	where sa.id = p_afiliacion
-	union all 
-	select sap.id_agremiado,
-	(select ap.apellido_nombre from agremiado_parentecos ap where ap.id_agremiado = a.id and sap.id_familia = ap.id limit 1),sap.id_familia,sp.id_seguro, tm2.denominacion familia
+	select a.id_persona,sap.id_agremiado,sap.id_plan,1 id_moneda,sp.monto,sp.fecha_inicio,sp.fecha_fin,
+	coalesce(ap.apellido_nombre,apellido_paterno||' '||apellido_materno||' '||nombres) nombres,
+	sap.id_familia,sp.id_seguro, coalesce(tm2.denominacion,'TITULAR') familia,s.id_concepto,s.nombre nombre_seguro
 	from seguro_afiliado_parentescos sap 
 	inner join seguros_planes sp on sap.id_plan = sp.id 
 	inner join agremiados a on sap.id_agremiado = a.id
 	inner join personas p on a.id_persona = p.id
-	inner join agremiado_parentecos ap on sap.id_familia = ap.id
-	inner join tabla_maestras tm2 on ap.id_parentesco = tm2.codigo::int and  tm2.tipo ='12'
-	where sap.id_afiliacion= p_afiliacion
-	)R 
-	inner join seguros s on R.id_seguro=s.id 
+	left join agremiado_parentecos ap on sap.id_familia = ap.id
+	left join tabla_maestras tm2 on ap.id_parentesco = tm2.codigo::int and  tm2.tipo ='12'
+	inner join seguros s on sp.id_seguro=s.id
 	inner join conceptos c on s.id_concepto::int = c.id
-	--inner join seguros_planes sp on s.id=sp.id_seguro 
-	inner join agremiados a on R.id_agremiado=a.id 
+	where sap.id_afiliacion= p_afiliacion
+	and sap.estado='1'
 	
 	loop
 		
-		if (select count(*) from agremiado_cuotas where id_agremiado=entradas_mes.id_agremiado and id_familia=entradas_mes.id_familia and id_seguro_plan=entradas_mes.id_plan) = 0 then 
+		if (select count(*) from agremiado_cuotas where id_agremiado=entradas_mes.id_agremiado and id_familia=entradas_mes.id_familia and id_seguro_plan=entradas_mes.id_plan and estado='1') = 0 then 
 		
 		v_fecha_desde=entradas_mes.fecha_inicio;
 		v_fecha_hasta=entradas_mes.fecha_fin;
@@ -102,4 +88,4 @@ begin
 end;
 $function$
 ;
-;
+
