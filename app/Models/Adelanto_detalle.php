@@ -37,7 +37,21 @@ class Adelanto_detalle extends Model
         from adelanto_detalles ad
         inner join adelantos a on ad.id_adelento = a.id
         where a.id='".$id."'
+        and ad.estado='1'
         order by ad.id asc";
+
+        $data = DB::select($cad);
+        return $data;
+
+    }
+
+    function getAdelantoFechaPagoId($id){ 
+
+        $cad = "select a.id, ad.fecha_pago from adelanto_detalles ad
+        inner join adelantos a on ad.id_adelento = a.id
+        where a.id='".$id."'
+        and ad.estado='1'
+        limit 1";
 
         $data = DB::select($cad);
         return $data;

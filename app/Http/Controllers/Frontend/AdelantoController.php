@@ -78,6 +78,11 @@ class AdelantoController extends Controller
 			$agremiado = Agremiado::find($id_agremiado);
 			$id_persona = $agremiado->id_persona;
 			$persona = Persona::find($id_persona);
+			$adelanto_detalle_model = new Adelanto_detalle;
+			$adelanto_fecha = $adelanto_detalle_model->getAdelantoFechaPagoId($id);
+			$fecha_pago=$adelanto_fecha[0]->fecha_pago;
+			//var_dump($adelanto_fecha[0]->fecha_pago);exit();
+
 			
 		}else{
 			$adelanto = new Adelanto;
@@ -90,7 +95,7 @@ class AdelantoController extends Controller
 		$tipo_documento = $tablaMaestra_model->getMaestroC(16,85);
 		$tiene_recibo = $tablaMaestra_model->getMaestroByTipo(121);
 		
-		return view('frontend.adelanto.modal_adelanto_nuevoAdelanto',compact('id','agremiado','persona','adelanto','tipo_documento','tiene_recibo'));
+		return view('frontend.adelanto.modal_adelanto_nuevoAdelanto',compact('id','agremiado','persona','adelanto','tipo_documento','tiene_recibo','fecha_pago'));
 	
 	}
 
@@ -162,6 +167,7 @@ class AdelantoController extends Controller
 			$adelanto_detalle = new Adelanto_detalle;
 		}else{
 			$adelanto = Adelanto::find($request->id);
+			
 		}
 		
         //$id_agremiado = buscar_numero_cap($numero_cap);
@@ -181,21 +187,43 @@ class AdelantoController extends Controller
 		
 		$fechaActual = Carbon::now();
 
-		for ($i = 1; $i <= $request->numero_cuota; $i++) {
+		
 			
-			$adelanto_detalle = new Adelanto_detalle;
-			$adelanto_detalle->id_adelento=$adelanto->id;
-			//$adelanto_detalle->id_periodo_delegado='1';
-			$adelanto_detalle->numero_cuota=$i;
-			$adelanto_detalle->adelanto_pagar=$pago_mes;
+			if($request->id == 0){
+				for ($i = 1; $i <= $request->numero_cuota; $i++) {
+				$adelanto_detalle = new Adelanto_detalle;
 
-			$ultimoDiaMes = $fechaActual->copy()->addMonths($i)->endOfMonth();
-			$adelanto_detalle->fecha_pago=$ultimoDiaMes;
-			
-			$adelanto_detalle->id_usuario_inserta=$id_user;
-			$adelanto_detalle->save();
-			
-		}
+				$adelanto_detalle->id_adelento=$adelanto->id;
+				//$adelanto_detalle->id_periodo_delegado='1';
+				$adelanto_detalle->numero_cuota=$i;
+				$adelanto_detalle->adelanto_pagar=$pago_mes;
+
+				$ultimoDiaMes = $fechaActual->copy()->addMonths($i)->endOfMonth();
+				$adelanto_detalle->fecha_pago=$ultimoDiaMes;
+				
+				$adelanto_detalle->id_usuario_inserta=$id_user;
+				$adelanto_detalle->save();
+			}
+			}else{
+
+				$adelanto_detalle = Adelanto_detalle::where("id_adelento",$adelanto->id)->update(['estado'=>0]);
+
+				for ($i = 1; $i <= $request->numero_cuota; $i++) {
+
+					$adelanto_detalle = new Adelanto_detalle;
+					$adelanto_detalle->id_adelento=$adelanto->id;
+					//$adelanto_detalle->id_periodo_delegado='1';
+					$adelanto_detalle->numero_cuota=$i;
+					$adelanto_detalle->adelanto_pagar=$pago_mes;
+		
+					$ultimoDiaMes = $fechaActual->copy()->addMonths($i)->endOfMonth();
+					$adelanto_detalle->fecha_pago=$ultimoDiaMes;
+					
+					$adelanto_detalle->id_usuario_inserta=$id_user;
+					$adelanto_detalle->save();
+				}
+			}
+				
     }
 
 	public function send_detalle_adelanto(Request $request){
