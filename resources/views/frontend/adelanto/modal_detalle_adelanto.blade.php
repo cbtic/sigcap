@@ -425,7 +425,7 @@ function modal_personaNuevo(){
                         <th>Detalle Cuota</th>
                         <th>Monto</th>
                         <th>Fecha Vencimiento</th>
-                        <th>Estado</th>
+                        <!--<th>Estado</th>-->
                     </tr>
                     </thead>
                     <tbody style="font-size:13px">
@@ -435,7 +435,7 @@ function modal_personaNuevo(){
 											<td class='text-left id_cuota'><?php echo 'cuota '.$row->numero_cuota?></td>
 											<td class='text-left'><input type='text' name='adelanto_pagar[]' value='<?php echo number_format($row->adelanto_pagar, 2, '.', ',')?>' size="10" class="adelanto-input" disabled='disabled' onchange=""></td>
 											<td class='text-left fecha-pago'><?php echo $row->fecha_pago?></td>
-											<td class='text-left'><?php echo $row->estado?></td>
+											<!--<td class='text-left'><?php //echo $row->estado?></td>-->
 										<?php } ?>
                     </tr>
                     <tr style='border-top: 1px solid #000;'>

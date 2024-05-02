@@ -246,7 +246,7 @@ function fn_save_documento(){
 				
 				var msg_alerta = "";
 				if(result.inscripcionDocumento>=result.concursoRequisito){
-					msg_alerta = "&iquest;Se registro correctamente "+result.inscripcionDocumento+" de "+result.concursoRequisito+" requisitos, ha culminado con adjuntar los requsitos, deseas registrar otro documento?";
+					msg_alerta = "&iquest;Se registro correctamente "+result.inscripcionDocumento+" de "+result.concursoRequisito+" requisitos, <b style='font-size: 20px;'>ha culminado con adjuntar los requisitos</b>.";
 				}
 				
 				if(result.inscripcionDocumento<result.concursoRequisito){

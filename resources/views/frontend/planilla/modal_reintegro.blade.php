@@ -396,10 +396,14 @@ function calcular_importe(){
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 							<label class="control-label form-control-sm">Tipo Reintegro</label>
 							<select name="id_tipo_reintegro" id="id_tipo_reintegro" class="form-control form-control-sm" onChange="obtener_monto()">
-								<option value="" selected="selected">--Seleccionar--</option>
-								<option value="1">Movilidad</option>
-								<option value="2">Sesi&oacute;n</option>
-								<option value="3">Coordinaci&oacute;n</option>
+								<option value="">--Selecionar--</option>
+                                <?php
+                                foreach ($tipo_reintegro as $row) {
+                                ?>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$delegadoReintegro->id_tipo_reintegro)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
 							</select>
 						</div>
 						

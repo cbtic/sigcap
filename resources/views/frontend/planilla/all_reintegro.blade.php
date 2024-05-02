@@ -150,8 +150,11 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominacion">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="numero_cap" name="numero_cap" placeholder="N&uacute;mero CAP">
+					</div>
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
 					</div>
 					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -182,6 +185,7 @@
                             <th>Agremiado</th>
 							<th>Comisi&oacute;n</th>
 							<th>Mes</th>
+                            <th>Tipo Reintegro</th>
 							<th>Importe</th>
 							<th>Estado</th>
                             <th>Acciones</th>

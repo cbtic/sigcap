@@ -109,8 +109,9 @@ class ConcursoController extends Controller
 		$documento_pendiente = $concurso_model->getInscripcionDocumentoPendienteByAgremiado($agremiado->id);
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
 		
-        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente','documento_pendiente','concursoTotal'));
+        return view('frontend.concurso.create',compact('concurso','agremiado','region','situacion_cliente','documento_pendiente','concursoTotal','tipo_concurso'));
     }
 	
 	
