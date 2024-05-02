@@ -39,7 +39,7 @@ class Empresa extends Model
 
     function getPersonaId_BV($id){
 
-        $cad = "select numero_documento ruc, apellido_paterno||' '||apellido_materno||' '||nombres nombre_comercial, apellido_paterno||' '||apellido_materno||' '||nombres razon_social, '' direccion, '' email
+        $cad = "select numero_documento ruc, apellido_paterno||' '||apellido_materno||' '||nombres nombre_comercial, apellido_paterno||' '||apellido_materno||' '||nombres razon_social,  direccion, correo email
         from personas
         Where id='".$id."' ";
     
