@@ -1880,7 +1880,7 @@ class AgremiadoController extends Controller
         return view('frontend.agremiado.lista_suspension',compact('suspension_lista'));
 
     }
-			
+		
 }
 
 class InvoicesExport implements FromArray
