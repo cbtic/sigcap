@@ -32,10 +32,11 @@ begin
 	idp:=0;
 
 	For entradas_mes in
-	select a.id_persona,sap.id_agremiado,sap.id_plan,1 id_moneda,sp.monto,sp.fecha_inicio,sp.fecha_fin,
+	select a.id_persona,sap.id_agremiado,sap.id_plan,1 id_moneda,sp.monto,sa.fecha fecha_inicio,sp.fecha_fin,
 	coalesce(ap.apellido_nombre,apellido_paterno||' '||apellido_materno||' '||nombres) nombres,
 	sap.id_familia,sp.id_seguro, coalesce(tm2.denominacion,'TITULAR') familia,s.id_concepto,s.nombre nombre_seguro
 	from seguro_afiliado_parentescos sap 
+	inner join seguro_afiliados sa on sa.id=sap.id_afiliacion 
 	inner join seguros_planes sp on sap.id_plan = sp.id 
 	inner join agremiados a on sap.id_agremiado = a.id
 	inner join personas p on a.id_persona = p.id
