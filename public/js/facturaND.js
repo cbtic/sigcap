@@ -816,64 +816,114 @@ function obtenerTitular(){
         
     }
 
-	function calcular_total_2(fila){
-
-        var totald=0;    
-		totald = $('#totald'+fila).val();
-
-		var imported =totald/1.18;  
-		var igv =  Number(totald) - Number(imported);
-
-
+	function actualizaimportes(){
+		var i=0;
 		
+	
+		if ($('#tiponota_').val()==270){	
+			i=0;
+			$("input[name^='importeantd']").each(function(i, obj) {
+				//alert(obj.value);
+				$("#totald"+i).val(obj.value);
+				calcular_total_2(i);
+				i++;
+				//total = Number(obj.value) + Number(total);
 
-		//alert(totald);
-
-		$("#igvd"+fila).val(igv.toFixed(2));
-
-		$("#imported"+fila).val(imported.toFixed(2));
-
-		
-		var gravadas=0;
-		igv=0;
-		var total=0;
-
-
-		$("input[name^='imported']").each(function(i, obj) {			
-			$(this).parent().parent().parent().find('#facturad_pu').val(Number(obj.value));
-		});
-
-		
-
-		$("input[name^='imported']").each(function(i, obj) {
-			//alert(obj.value);
-			gravadas = Number(obj.value) + Number(gravadas);
-
-			//contador += parseInt(obj.value);
-		});
-
-		$("#gravadas").val(gravadas.toFixed(2));
-
-		$("input[name^='igvd']").each(function(i, obj) {
-			//alert(obj.value);
-			igv = Number(obj.value) + Number(igv);
-
-			//contador += parseInt(obj.value);
-		});
-
-		$("#igv").val(igv.toFixed(2));
-
-		
-		$("input[name^='totald']").each(function(i, obj) {
-			//alert(obj.value);
-			total = Number(obj.value) + Number(total);
+				
+			});
 
 			
-		});
+			}
+		else {
+			i=0;
+			$("input[name^='totald']").each(function(i, obj) {
+				//alert(obj.value);
+				$("#totald"+i).val(0);
+				calcular_total_2(i);
+
+				//total = Number(obj.value) + Number(total);
+
+				
+			});
+						/*
+			for (i=0 ;i<('#totald').length;i++){
+				$("#totald"+i).val(0);
+				calcular_total_2(i);
+				
+			} */
+		}
+
+	}
+
+	function calcular_total_2(fila){
+		
+        var totald=0;    
+		totald = $('#totald'+fila).val();
+	
+		
+		if (totald <= $('#importeantd'+fila).val())  {
+			var imported =totald/1.18;  
+			var igv =  Number(totald) - Number(imported);
+
+
+			
+
+			//alert(totald);
+
+			$("#igvd"+fila).val(igv.toFixed(2));
+
+			$("#imported"+fila).val(imported.toFixed(2));
+
+			
+			var gravadas=0;
+			igv=0;
+			var total=0;
+
+
+			$("input[name^='imported']").each(function(i, obj) {			
+				$(this).parent().parent().parent().find('#facturad_pu').val(Number(obj.value));
+			});
+
+			
+
+			$("input[name^='imported']").each(function(i, obj) {
+				//alert(obj.value);
+				gravadas = Number(obj.value) + Number(gravadas);
+
+				//contador += parseInt(obj.value);
+			});
+
+			$("#gravadas").val(gravadas.toFixed(2));
+
+			$("input[name^='igvd']").each(function(i, obj) {
+				//alert(obj.value);
+				igv = Number(obj.value) + Number(igv);
+
+				//contador += parseInt(obj.value);
+			});
+
+			$("#igv").val(igv.toFixed(2));
+
+			
+			$("input[name^='totald']").each(function(i, obj) {
+				//alert(obj.value);
+				total = Number(obj.value) + Number(total);
+
+				
+			});
 
 		
 
-		$("#totalP").val(total.toFixed(2));
+			$("#totalP").val(total.toFixed(2));
+		} 
+		else {
+			$("#totald"+fila).val(0);
+			$("#igvd"+fila).val(0);
+
+			$("#imported"+fila).val(0);
+			alert("El valor no debe ser mayor al total de la factura")
+		}
+	
 
 		//$("#igvd"+fila).val(igv);       
         
