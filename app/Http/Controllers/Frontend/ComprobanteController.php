@@ -731,6 +731,7 @@ class ComprobanteController extends Controller
 
             if ($id_persona_act != 0 || $id_ubicacion_act != 0 ) {
 
+                /*
                 if ($tipoF = 'FT' and  $id_persona_act = 0 )
                 {
                     $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
@@ -770,6 +771,7 @@ class ComprobanteController extends Controller
                     $persona->correo = $correo;
                     $persona->save();
                 }
+                */
 
             }
 
