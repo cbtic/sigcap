@@ -1311,9 +1311,11 @@
                 <div class="form-group">
                     <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardar').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">GUARDAR COMPROBANTE</button>
                 </div>
+                <!--
                 <div class="form-group">
-                    <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardarX').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">CANCELAR</button>
+                    <button type="button" id="calcela" class="btn btn-primary btn-block" onclick="$('#guardarX').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">CANCELAR</button>
                 </div>
+                                                    -->
             </div>
             <!--   <a class='flotante' name="guardar" id="guardar" onclick="guardarFactura()" href='#' ><img src='/img/btn_save.png' border="0"/></a>--> <br>
             </form>

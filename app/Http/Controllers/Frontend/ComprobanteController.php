@@ -722,7 +722,12 @@ class ComprobanteController extends Controller
              
 
             $direccion=$request->direccion;
-            $correo=$request->correo;
+            $correo=$request->email;
+
+            if ($request->direccion2!=''){
+                $direccion=$request->direccion2;
+                $correo=$request->email2;
+            }
 
             if ($id_persona_act != 0 || $id_ubicacion_act != 0 ) {
 
@@ -736,7 +741,7 @@ class ComprobanteController extends Controller
 
                 if ($tipoF = 'FT' and  $id_persona_act > 0 )
                 {
-                    $persona = Persona::where('id', $id_ubicacion_act)->get()[0];
+                    $persona = Persona::where('id', $id_persona_act)->get()[0];
                     $persona->direccion = $direccion;
                     $persona->correo = $correo;
                     $persona->save();
@@ -744,32 +749,28 @@ class ComprobanteController extends Controller
 
                 if ($tipoF = 'BV' and  $id_persona_act > 0 )
                 {
-                    $persona = Persona::where('id', $id_ubicacion_act)->get()[0];
+                    $persona = Persona::where('id', $id_persona_act)->get()[0];
                     $persona->direccion = $direccion;
                     $persona->correo = $correo;
                     $persona->save();
                 }
-                if ($tipoF = 'FT' and  $id_ubicacion_act = 0 )
+
+                if ($tipoF = 'FT' and  $id_ubicacion_act > 0 )
                 {
                     $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
                     $empresa->direccion = $direccion;
                     $empresa->email = $correo;
                     $empresa->save();
-                }       
-                if ($tipoF = 'FT' and  $id_persona_act > 0 )
-                {
-                    $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
-                    $empresa->direccion = $direccion;
-                    $empresa->email = $correo;
-                    $empresa->save();
-                }
+                }    
+
                 if ($tipoF = 'BV' and  $id_persona_act > 0 )
                 {
-                    $persona = Persona::where('id', $id_ubicacion_act)->get()[0];
+                    $persona = Persona::where('id', $id_persona_act)->get()[0];
                     $persona->direccion = $direccion;
                     $persona->correo = $correo;
                     $persona->save();
                 }
+
             }
 
 

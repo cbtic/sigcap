@@ -1966,6 +1966,9 @@ function total_deuda(){
 	var valor_venta = 0;
 	var cantidad = $(".mov").length;
 
+	
+	$('#total').val(0.0);
+
 	$(".mov").each(function (){
 		
 		var val_total = $(this).parent().parent().parent().find('.val_total').html();
