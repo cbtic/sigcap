@@ -729,9 +729,19 @@ class ComprobanteController extends Controller
                 $correo=$request->email2;
             }
 
+            echo "direccion -> {$direccion}\n ";
+            echo "correo -> {$correo}\n ";
+
+            echo "id_persona_act -> {$id_persona_act})\n ";
+            echo "id_ubicacion_act -> {$id_ubicacion_act}\n ";
+
+            echo "tipoF -> {$tipoF}\n ";
+            
+            exit();
+
             if ($id_persona_act != 0 || $id_ubicacion_act != 0 ) {
 
-                /*
+                
                 if ($tipoF = 'FT' and  $id_persona_act = 0 )
                 {
                     $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
@@ -771,7 +781,7 @@ class ComprobanteController extends Controller
                     $persona->correo = $correo;
                     $persona->save();
                 }
-                */
+                
 
             }
 
