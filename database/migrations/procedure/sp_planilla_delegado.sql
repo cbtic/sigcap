@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_planilla_delegado(p_id_periodo_comision character varying, p_anio character varying, p_mes character varying)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -80,7 +79,7 @@ begin
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
 	--coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,
-	coalesce((select sum(importe)importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
+	coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
 	coalesce((select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and cm.id_periodo_comisiones=p_id_periodo_comision::int and estado='1'),0)movilidad_sesion
 	from comision_sesiones cs 
 	inner join comision_sesion_delegados csd on cs.id=csd.id_comision_sesion
@@ -138,7 +137,7 @@ begin
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
 	coalesce((select sum(total_adelanto) from adelantos a where id_agremiado=cd.id_agremiado and fecha between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)adelanto,
 	--coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,	
-	coalesce((select sum(importe)importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
+	coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
 	coalesce((select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and cm.id_periodo_comisiones=p_id_periodo_comision::int and estado='1'),0)movilidad_sesion,
 	coalesce((select sum(adelanto_pagar) from adelanto_detalles ad inner join adelantos a on ad.id_adelento=a.id where a.id_agremiado=cd.id_agremiado and fecha_pago between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)descuento
 	from comision_sesiones cs 
@@ -178,5 +177,4 @@ begin
 end;
 $function$
 ;
-
 
