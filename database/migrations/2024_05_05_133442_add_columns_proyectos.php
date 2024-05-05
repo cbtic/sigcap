@@ -13,7 +13,7 @@ class AddColumnsProyectos extends Migration
      */
     public function up()
     {
-        Schema::table('solicitudes', function (Blueprint $table) {
+        Schema::table('proyectos', function (Blueprint $table) {
             $table->string('sitio_descripcion',300)->nullable();
             $table->integer('id_zona')->nullable();
             $table->string('zona_descripcion',300)->nullable();
