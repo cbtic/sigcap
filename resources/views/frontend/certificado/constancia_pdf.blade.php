@@ -118,7 +118,7 @@ $(document).ready(function() {
         <div class="contenido">
             <h2 style="text-align:center"> <b> ARQ. <?php echo $datos[0]->desc_cliente;?> </b></h2>
             <h2 style="text-align:center"> CAP <?php echo $datos[0]->numero_cap;?> </h2>
-            <p style="text-align: justify; font_size: 14" >Se encuentra <?php echo $inscripcion;?> en nuestra Instituci&oacute;n desde el <?php echo $formattedDate_colegiado;?> como Miembro 
+            <p style="text-align: justify; font_size: 14" >Se encuentra <?php echo $inscripcion;?> en nuestra Instituci&oacute;n desde el <?php echo $fecha_inscripcion_detallada;?> como Miembro 
                              de la Orden con el n&uacute;mero de CAP <?php echo $datos[0]->numero_cap;?> y registro de inscripci&oacute;n en la Regional Lima
                              N° <?php echo $datos[0]->numero_regional;?>.</p>
 
