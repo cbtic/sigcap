@@ -325,8 +325,8 @@
                                                     </div>
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
-                                                            <label class="form-group">Tipo de Nota</label>
-                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" >
+                                                            <label class="form-group">Tipo de Nota</label>                               
+                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" onChange="actualizaimportes()" >
                                                                 <option value="">--Selecionar--</option>
                                                                 <?php
                                                                 foreach ($tipooperacion as $row) { ?>
@@ -521,18 +521,16 @@
                                                                             echo $fac['descripcion'];
                                                                         } ?>
                                                                     </td>
+                                                                    
+                                                                    <td class="text-right">                                                                        
+                                                                        <input type="text" readonly name="importeantd[]"  id="importeantd<?php echo $key?>" value="<?php echo number_format($fac['importe'], 2)?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                    
+                                                                    </td>
 
-                                                                    <td class="text-left"><?php if ($trans == 'FA') {
-                                                                                                echo $fac['importe'];
-                                                                                            }
-                                                                                            if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                echo number_format($fac['importe'], 2);
-                                                                                            } ?></td>
-
-                                                                  <!--  <td class="text-right"></td>
+                                                                                                                                      <!--  <td class="text-right"></td>
                                                                                             -->
                                                                     <td>
-                                                                    <input type="text" name="imported[]"  id="imported<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>)" value="<?php if ($trans == 'FN') {
+                                                                    <input type="text" name="imported[]"         id="imported<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>)" value="<?php if ($trans == 'FN') {
                                                                                                                             echo 0;
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {

@@ -666,7 +666,7 @@ function cargarFondoComun() {
 
 }
 
-obtenerAnioPerido();
+//obtenerAnioPerido();
 
 function obtenerAnioPerido(){
 	

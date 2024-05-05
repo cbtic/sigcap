@@ -1360,6 +1360,36 @@ function modal_otro_pago(){
 
 }
 
+function modal_persona(){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc').modal('show');
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+	var perido = "2023";
+	var idPersona = $('#id_persona').val();
+	var idAgremiado = $('#id_agremiado').val();
+
+	var tipo_documento = $('#tipo_documento').val();
+
+	if(tipo_documento == "79") {
+		idPersona = $('#empresa_id').val();
+		idAgremiado = 0;
+	}		
+	
+
+	$.ajax({
+			url: "/ingreso/modal_persona/"+perido+"/"+idPersona+"/"+idAgremiado+"/"+tipo_documento,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
+	//cargarConceptos();
+
+}
+
 function modal_beneficiario_(){
 
 	$(".modal-dialog").css("width","85%");
@@ -1965,6 +1995,9 @@ function total_deuda(){
 	var valor_venta_bruto = 0;
 	var valor_venta = 0;
 	var cantidad = $(".mov").length;
+
+	
+	$('#total').val(0.0);
 
 	$(".mov").each(function (){
 		

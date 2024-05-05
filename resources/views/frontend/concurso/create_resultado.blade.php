@@ -476,9 +476,9 @@ label.form-control-sm{
 														</select>
 													</div>
 													
-													<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12"></div>
+													<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12"></div>
 													
-													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12" style="padding-top:15px">
+													<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12" style="padding-top:15px"> 
 													
 														<div class="row">
 															
@@ -490,11 +490,13 @@ label.form-control-sm{
 														
 													</div>
 													
-													<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="padding-top:15px">
+													<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" style="padding-top:15px">
 													
 													<div class="row" style="margin-left:0px">
 
 														<input class="btn btn-sm btn-secondary float-rigth" value="Descargar Plantilla" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
+														
+														<input class="btn btn-sm btn-danger float-rigth" value="Descargar Documentos" name="descargar" type="button" id="btnDescargarComprimido" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
 														
 														<span class="btn btn-warning btn-file" style="float:left">
 															Examinar <input id="image" name="image" type="file" />

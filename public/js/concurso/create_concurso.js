@@ -41,6 +41,22 @@ $(document).ready(function () {
 		DescargarArchivos()
 
 	});
+	
+	$('#btnDescargarComprimido').on('click', function () {
+													   
+		var id_concurso= $('#id_concurso_bus').val();
+		var numero_cap = $('#numero_cap_bus').val();
+		var numero_documento = $('#numero_documento_bus').val();
+		var agremiado = $('#agremiado_bus').val();
+		var id_situacion = $('#id_situacion_bus').val();
+		var id_estado = $('#id_estado_bus').val();
+		var campo = $('#campo').val();
+		var orden = $('#orden').val();
+		
+		if(numero_cap=="")numero_cap="0";
+		if(id_concurso=="")id_concurso="0";
+		location.href = '/concurso/descargar_comprimido/'+numero_cap+"/"+id_concurso;
+	});
 
 
 	
