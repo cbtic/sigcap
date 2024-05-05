@@ -139,7 +139,8 @@ class Agremiado extends Model
 		//echo $cad;
 		$data = DB::select($cad);
 		
-        return $data[0];
+        //return $data[0];
+		if(isset($data[0]))return $data[0];
     }
 
 

@@ -1,34 +1,7 @@
 <title>Sistema de CAP - Lima</title>
 
 <style>
-	/*
-.table-fixed thead,
-.table-fixed tfoot{
-  width: 97%;
-}
 
-.table-fixed tbody {
-  height: 230px;
-  overflow-y: auto;
-  width: 100%;
-}
-
-.table-fixed thead,
-.table-fixed tbody,
-.table-fixed tfoot,
-.table-fixed tr,
-.table-fixed td,
-.table-fixed th {
-  display: block;
-}
-
-.table-fixed tbody td,
-.table-fixed thead > tr> th,
-.table-fixed tfoot > tr> td{
-  float: left;
-  border-bottom-width: 0;
-}
-*/
 	/*****************/
 	.modal-dialog {
 		min-width: 70%;
@@ -109,43 +82,7 @@
 
 	}
 
-	/*
-tr:nth-child(2n) {
-    background: none repeat scroll 0 0 #edebeb;
-}  
-*/
 
-	#tablemodalm {
-		/*
-	width: 30em;
-	overflow-x: auto;
-	white-space: nowrap;
-	*/
-
-		/*background-color: #fed9ff; 
-      width: 600px; 
-      height: 150px; 
-      overflow-x: hidden;
-      overflow-y: auto; 
-      text-align: center; 
-      padding: 20px;*/
-	}
-
-	/*
-fieldset.scheduler-border {
-    border: 1px groove #ddd !important;
-    padding: 0 1.4em 1.4em 1.4em !important;
-    margin: 0 0 1.5em 0 !important;
-    -webkit-box-shadow:  0px 0px 0px 0px #000;
-            box-shadow:  0px 0px 0px 0px #000;
-}
-
-legend.scheduler-border {
-    font-size: 1.2em !important;
-    font-weight: bold !important;
-    text-align: left !important;
-}
-*/
 	fieldset.scheduler-border {
 		border: solid 2px #c6c8ca !important;
 		padding: 0 10px 10px 10px;
@@ -251,11 +188,37 @@ legend.scheduler-border {
 <script type="text/javascript">
 	$(document).ready(function() {
 
+		$('#btnBuscar').click(function () {
+			fn_ListarBusqueda();
+		});
+
+		$('#agremiado').keypress(function(e){
+			if(e.which == 13) {
+				fn_ListarBusqueda();
+			}
+		});
+
+		$('#sexo').keypress(function(e){
+			if(e.which == 13) {
+				fn_ListarBusqueda();
+			}
+		});
+
+		$('#numero_documento').keypress(function(e){
+			if(e.which == 13) {
+				fn_ListarBusqueda();
+			}
+		});
+
+		$('#estado').keypress(function(e){
+			if(e.which == 13) {
+				fn_ListarBusqueda();
+				return false;
+			}
+		});
 
 
 	});
-
-
 
 
 </script>
@@ -320,11 +283,35 @@ legend.scheduler-border {
 													<div class="card-body">
 														<div class="row">
 
-															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-																<div class="form-group">
-																	<input class="form-control" id="system-search" name="q" placeholder="Buscar ...">
-																</div>
+														<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+															<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="Numero Documento">
+														</div>
+														<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+															<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
+														</div>
+
+														<div class="col-lg-2">
+															<div class="form-group">
+																<select name="sexo" id="sexo" class="form-control form-control-sm">
+																	<option value=""selected="selected">--Selecionar Sexo--</option>
+																	<option value="M">Masculino</option>
+																	<option value="F">Femenino</option>
+																</select>
+
 															</div>
+														</div>
+														
+														<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+															<select name="estado" id="estado" class="form-control form-control-sm">
+																<option value="">Todos</option>
+																<option value="1" selected="selected">Activo</option>
+																<option value="0">Eliminado</option>
+															</select>
+														</div>
+														<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+															<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+														</div>
+
 
 														</div>
 

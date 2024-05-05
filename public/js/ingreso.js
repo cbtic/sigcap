@@ -2160,6 +2160,7 @@ function modal_consulta_persona(){
 			type: "GET",
 			success: function (result) {  
 					$("#diveditpregOpc").html(result);
+					datatablenew();
 					//$('#openOverlayOpc').modal('show');
 					
 			}
@@ -2167,6 +2168,9 @@ function modal_consulta_persona(){
 	//cargarConceptos();
 
 }
+function fn_ListarBusqueda() {
+    datatablenew();
+};
 
 function datatablenew(){
     var oTable1 = $('#tblPersonas').dataTable({
@@ -2265,30 +2269,12 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					var grupo_sanguineo = "";
-					if(row.grupo_sanguineo!= null)grupo_sanguineo = row.grupo_sanguineo;
-					return grupo_sanguineo;
-				},
-				"bSortable": false,
-				"aTargets": [4]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var lugar_nacimiento = "";
-					if(row.lugar_nacimiento!= null)lugar_nacimiento = row.lugar_nacimiento;
-					return lugar_nacimiento;
-				},
-				"bSortable": false,
-				"aTargets": [5]
-				},
-				{
-				"mRender": function (data, type, row) {
 					var nacionalidad = "";
 					if(row.nacionalidad!= null)nacionalidad = row.nacionalidad;
 					return nacionalidad;
 				},
 				"bSortable": false,
-				"aTargets": [6]
+				"aTargets": [4]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -2297,7 +2283,7 @@ function datatablenew(){
 					return sexo;
 				},
 				"bSortable": false,
-				"aTargets": [7]
+				"aTargets": [5]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -2306,7 +2292,7 @@ function datatablenew(){
 					return numero_celular;
 				},
 				"bSortable": false,
-				"aTargets": [8]
+				"aTargets": [6]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -2315,7 +2301,7 @@ function datatablenew(){
 					return correo;
 				},
 				"bSortable": false,
-				"aTargets": [9]
+				"aTargets": [7]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -2324,18 +2310,8 @@ function datatablenew(){
 					return direccion;
 				},
 				"bSortable": false,
-				"aTargets": [10]
+				"aTargets": [8]
 				},
-				/*
-				{
-					"mRender": function (data, type, row) {
-						var representante = "";
-						if(row.representante!= null)representante = row.representante;
-						return representante;
-					},
-					"bSortable": false,
-					"aTargets": [4]
-				},*/
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -2348,32 +2324,19 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [11]
+					"aTargets": [9]
 				},
 				{
 					"mRender": function (data, type, row) {
-						var estado = "";
-						var clase = "";
-						if(row.estado == 1){
-							estado = "Eliminar";
-							clase = "btn-danger";
-						}
-						if(row.estado == 0){
-							estado = "Activar";
-							clase = "btn-success";
-						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalPersona('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						html += '<a href="javascript:void(0)" onclick=eliminarPersona('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
-						
-						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
-						
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalPersona('+row.id+')" ><i class="fa fa-view"></i> Ver</button>';
+												
 						html += '</div>';
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [12],
+					"aTargets": [10],
 				},
 
             ]
