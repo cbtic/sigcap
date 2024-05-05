@@ -304,6 +304,10 @@
                                                         <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerBeneficiario()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
                                                     </span>
 
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-info btn-sm" type="button" id="btnBusPer" onClick="BuscarPersona()" tabindex="0"><i class="glyphicon glyphicon-search"></i> ... </button>
+                                                    </span>
+
                                                 </div>
                                             </div>
 

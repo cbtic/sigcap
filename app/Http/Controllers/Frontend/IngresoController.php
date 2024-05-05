@@ -753,4 +753,15 @@ class IngresoController extends Controller
     
     }
 
+    public function modal_persona($periodo, $id_persona, $id_agremiado, $tipo_documento){
+
+        
+        $conceptos_model = new Concepto;        
+        $conceptos = $conceptos_model->getConceptoPeriodo($periodo);
+
+    
+		
+		return view('frontend.ingreso.modal_persona',compact('conceptos','periodo','id_persona','id_agremiado','tipo_documento' ));
+	}
+
 }

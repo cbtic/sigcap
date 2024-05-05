@@ -217,6 +217,8 @@ Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('i
 Route::get('ingreso/modal_otro_pago/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_otro_pago'])->name('ingreso.modal_otro_pago');
 Route::get('ingreso/modal_fraccionar/{idConcepto}/{idpersona}/{idagremiado}/{TotalFraccionar}', [IngresoController::class, 'modal_fraccionar'])->name('ingreso.modal_fraccionar');
 Route::post('ingreso/modal_fraccionamiento', [IngresoController::class, 'modal_fraccionamiento'])->name('ingreso.modal_fraccionamiento');
+Route::post('ingreso/modal_persona', [IngresoController::class, 'modal_persona'])->name('ingreso.modal_persona');
+
 Route::get('ingreso/obtener_conceptos/{periodo}', [IngresoController::class, 'obtener_conceptos'])->name('ingreso.obtener_conceptos')->where('periodo', '(.*)');
 Route::post('ingreso/send_concepto', [IngresoController::class, 'send_concepto'])->name('ingreso.send_concepto');
 Route::post('ingreso/send_fracciona_deuda', [IngresoController::class, 'send_fracciona_deuda'])->name('ingreso.send_fracciona_deuda');
