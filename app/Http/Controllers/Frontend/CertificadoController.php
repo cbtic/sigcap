@@ -842,7 +842,6 @@ class CertificadoController extends Controller
 
 		Carbon::setLocale('es');
 
-
 		// Crear una instancia de Carbon a partir de la fecha
 		$carbonDate = new Carbon($fecha_emision);
 
@@ -853,12 +852,11 @@ class CertificadoController extends Controller
 	
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
-		$formattedDate_colegiado = $carbonDate_colegiado->timezone('America/Lima')->formatLocalized(' %d de %B %Y');
+		$formattedDate_colegiado = $carbonDate_colegiado->timezone('America/Lima')->locale('es')->formatLocalized(' %d de %B %Y');
 		
 		$dia = $carbonDate->format('d');
 		$mes = ltrim($carbonDate->format('m'), '0');
 		$anio = $carbonDate->format('Y');
-
 		
 		$mesEnLetras = $this->mesesALetras($mes);
 

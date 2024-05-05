@@ -156,6 +156,18 @@
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
 					</div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="tipo_reintegro_bus" id="tipo_reintegro_bus" class="form-control form-control-sm" onChange="">
+                            <option value="">--Selecionar--</option>
+                            <?php
+                            foreach ($tipo_reintegro as $row) {
+                            ?>
+                            <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
 					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">

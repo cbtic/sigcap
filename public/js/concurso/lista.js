@@ -641,7 +641,7 @@ function eliminar(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Municipalidad?", 
+        message: "&iquest;Deseas "+act_estado+" el Concurso?", 
         callback: function(result){
             if (result==true) {
                 fn_eliminar(id,estado_);
