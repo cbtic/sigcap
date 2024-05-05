@@ -719,3 +719,4 @@ Route::get('delegadoTributo/obtener_datos_delegado/{periodo}', [DelegadoTributoC
 Route::get('agremiado/obtener_datos_agremiado_id/{id}', [AgremiadoController::class, 'obtener_datos_agremiado_id'])->name('agremiado.obtener_datos_agremiado_id');
 Route::get('delegadoTributo/validar_delegado/{id_delegado}', [DelegadoTributoController::class, 'validar_delegado'])->name('delegadoTributo.validar_delegado');
 Route::get('derecho_revision/importar_dataLicencia', [DerechoRevisionController::class, 'importar_dataLicencia'])->name('derecho_revision.importar_dataLicencia');
+Route::get('planilla/eliminar_reintegro/{id}/{estado}', [PlanillaDelegadoController::class, 'eliminar_reintegro'])->name('planilla.eliminar_reintegro');

@@ -1743,7 +1743,7 @@ class AgremiadoController extends Controller
 		
 		$suspension->id_agremiado = $request->id_agremiado;
 		$suspension->fecha_inicio = $request->fecha_inicio;
-		$suspension->fecha_fin = $request->fecha_inicio;
+		$suspension->fecha_fin = $request->fecha_fin;
 		$suspension->documento = $request->ruta_documento;
 		//$suspension->estado = 1;
 		$suspension->id_usuario_inserta = $id_user;

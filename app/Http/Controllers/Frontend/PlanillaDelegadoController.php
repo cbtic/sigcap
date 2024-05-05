@@ -48,15 +48,21 @@ class PlanillaDelegadoController extends Controller
 	}
 	
 	public function consulta_reintegro(){
+
+		$tablaMaestra_model = new TablaMaestra;
+
+		$tipo_reintegro = $tablaMaestra_model->getMaestroByTipo(74);
 		
-		return view('frontend.planilla.all_reintegro');
+		return view('frontend.planilla.all_reintegro',compact('tipo_reintegro'));
 		
     }
 	
 	public function listar_reintegro_ajax(Request $request){
 	
 		$delegadoReintegro_model = new DelegadoReintegro();
-		$p[]=$request->denominacion;
+		$p[]=$request->numero_cap;
+		$p[]=$request->agremiado;
+		$p[]=$request->tipo_reintegro;
 		$p[]="";
 		$p[]="";
 		$p[]=$request->estado;          
@@ -86,6 +92,7 @@ class PlanillaDelegadoController extends Controller
 		$periodoComision_model = new PeriodoComisione;
 		$regione_model = new Regione;
 		$comisionSesionDelegado_model = new ComisionSesionDelegado;
+		$tablaMaestra_model = new TablaMaestra;
 		
 		$periodo = $periodoComision_model->getPeriodoAll();
 		$periodo_ultimo = PeriodoComisione::where("activo",1)->orderBy("id","desc")->first();
@@ -109,8 +116,10 @@ class PlanillaDelegadoController extends Controller
 		}else{
 			$delegadoReintegro = new DelegadoReintegro;
 		}
-		
-		return view('frontend.planilla.modal_reintegro',compact('id','delegadoReintegro','region','id_regional','periodo','mes','comisionDelegado','periodo_ultimo'/*,'delegados'*/));
+
+		$tipo_reintegro = $tablaMaestra_model->getMaestroByTipo(74);
+
+		return view('frontend.planilla.modal_reintegro',compact('id','delegadoReintegro','region','id_regional','periodo','mes','comisionDelegado','periodo_ultimo','tipo_reintegro'/*,'delegados'*/));
 
     }
 	
@@ -153,6 +162,15 @@ class PlanillaDelegadoController extends Controller
 		$delegadoReintegro->id_usuario_inserta = $id_user;
 		$delegadoReintegro->save();
 			
+    }
+
+	public function eliminar_reintegro($id,$estado)
+    {
+		$delegadoReintegro = DelegadoReintegro::find($id);
+		$delegadoReintegro->estado = $estado;
+		$delegadoReintegro->save();
+
+		echo $delegadoReintegro->id;
     }
 	
 	public function obtener_monto($id_tipo_reintegro,$id_comision,$id_periodo,$mes){
