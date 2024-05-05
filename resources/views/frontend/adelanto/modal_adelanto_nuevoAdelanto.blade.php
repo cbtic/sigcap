@@ -327,7 +327,9 @@ function modal_personaNuevo(){
     var apellido_materno = $('#apellido_materno').val();
     var monto = $('#monto').val();
     var numero_cuota = $('#numero_cuota').val();
-	var id_tiene_recibo = $('#id_tiene_recibo').val();
+	  var id_tiene_recibo = $('#id_tiene_recibo').val();
+    var id_periodo = $('#id_periodo').val();
+    var delegado = $('#delegado').val();
 	
     $.ajax({
       url: "/adelanto/send_adelanto_nuevoAdelanto",
@@ -342,6 +344,8 @@ function modal_personaNuevo(){
         apellido_paterno:apellido_paterno,
         apellido_materno:apellido_materno,
         monto:monto,
+        id_periodo:id_periodo,
+        delegado:delegado,
         numero_cuota:numero_cuota,
 		id_tiene_recibo:id_tiene_recibo
       },
@@ -380,7 +384,7 @@ function modal_personaNuevo(){
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="control-label form-control-sm">Periodo</label>
-                    <select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerDelegado()">
+                    <select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerDelegado()" <?php if($id>0){?>disabled <?php }?> ?>>
                       <!--<option value="">--Seleccionar--</option>-->
                       <?php
                       foreach ($periodo as $row) {?>
@@ -395,7 +399,7 @@ function modal_personaNuevo(){
                   <div class="form-group">
                     <label class="control-label form-control-sm">Delegado</label>
                     <?php if($id>0){?>
-                    <input id="delegado_" name="delegado_" class="form-control form-control-sm"  value="<?php echo $persona_->apellido_paterno ." ". $persona_->apellido_materno ." ". $persona_->nombres ?>" type="text" readonly="readonly">										
+                    <input id="delegado_" name="delegado_" class="form-control form-control-sm"  value="<?php echo $persona->apellido_paterno ." ". $persona->apellido_materno ." ". $persona->nombres ?>" type="text" readonly="readonly">										
                     <?php }else{?>
                     <select name="delegado" id="delegado" class="form-control form-control-sm" onchange="validar_delegado()">
                       <option value="">--Selecionar--</option>
