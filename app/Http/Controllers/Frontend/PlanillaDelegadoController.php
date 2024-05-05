@@ -13,6 +13,7 @@ use App\Models\Regione;
 use App\Models\ComisionSesionDelegado;
 use App\Models\TablaMaestra;
 use App\Models\Agremiado;
+use App\Models\DelegadoReintegroDetalle;
 use Auth;
 
 class PlanillaDelegadoController extends Controller
@@ -52,8 +53,9 @@ class PlanillaDelegadoController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
 
 		$tipo_reintegro = $tablaMaestra_model->getMaestroByTipo(74);
+		$mes = $tablaMaestra_model->getMaestroByTipo(116);
 		
-		return view('frontend.planilla.all_reintegro',compact('tipo_reintegro'));
+		return view('frontend.planilla.all_reintegro',compact('tipo_reintegro','mes'));
 		
     }
 	
@@ -62,10 +64,9 @@ class PlanillaDelegadoController extends Controller
 		$delegadoReintegro_model = new DelegadoReintegro();
 		$p[]=$request->numero_cap;
 		$p[]=$request->agremiado;
-		$p[]=$request->tipo_reintegro;
 		$p[]="";
-		$p[]="";
-		$p[]=$request->estado;          
+		$p[]=$request->mes_reintegro;
+		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $delegadoReintegro_model->listar_reintegro_ajax($p);
@@ -144,24 +145,38 @@ class PlanillaDelegadoController extends Controller
 		
 		if($request->id == 0){
 			$delegadoReintegro = new DelegadoReintegro;
+			$reintegroDetalle = new DelegadoReintegroDetalle;
 		}else{
 			$delegadoReintegro = DelegadoReintegro::find($request->id);
+			$reintegroDetalle = new DelegadoReintegroDetalle;
+			//$reintegroDetalle = DelegadoReintegroDetalle::where("id_delegado_reintegro",$delegadoReintegro->id)->where("estado","1")->first();
 		}
 		
 		$delegadoReintegro->id_regional = $request->id_regional;
 		$delegadoReintegro->id_periodo = $request->id_periodo;
-		$delegadoReintegro->id_mes = $request->id_mes;
+		//$delegadoReintegro->id_mes = $request->id_mes;
 		$delegadoReintegro->id_mes_ejecuta_reintegro = $request->id_mes_ejecuta_reintegro;
 		$delegadoReintegro->id_comision = $request->id_comision;
 		$delegadoReintegro->id_delegado = $request->id_delegado;
-		$delegadoReintegro->id_tipo_reintegro = $request->id_tipo_reintegro;
-		$delegadoReintegro->cantidad = $request->cantidad;
-		$delegadoReintegro->importe = $request->importe;
+		//$delegadoReintegro->importe_total = $request->id_delegado;
+		//$delegadoReintegro->id_tipo_reintegro = $request->id_tipo_reintegro;
+		//$delegadoReintegro->cantidad = $request->cantidad;
+		//$delegadoReintegro->importe = $request->importe;
 		$delegadoReintegro->observacion = $request->observacion;
-		$delegadoReintegro->estado = 1;
 		$delegadoReintegro->id_usuario_inserta = $id_user;
 		$delegadoReintegro->save();
-			
+
+		$reintegroDetalle->id_delegado_reintegro=$delegadoReintegro->id;
+		$reintegroDetalle->id_mes = $request->id_mes;
+		$reintegroDetalle->id_tipo_reintegro = $request->id_tipo_reintegro;
+		$reintegroDetalle->cantidad = $request->cantidad;
+		$reintegroDetalle->importe = $request->importe;
+		$reintegroDetalle->id_usuario_inserta = $id_user;
+		$reintegroDetalle->save();
+
+		$delegadoReintegro->importe_total += $request->importe;
+    	$delegadoReintegro->save();
+
     }
 
 	public function eliminar_reintegro($id,$estado)
@@ -171,6 +186,16 @@ class PlanillaDelegadoController extends Controller
 		$delegadoReintegro->save();
 
 		echo $delegadoReintegro->id;
+    }
+
+	public function obtener_datos_reintegro_detalle($id_agremiado){
+
+        $reintegroDetalle_model = new DelegadoReintegroDetalle;
+        $sw = true;
+        $reintegro_detalle_lista = $reintegroDetalle_model->getReintegroDetalle($id_agremiado);
+        //print_r($parentesco_lista);exit();
+        return view('frontend.planilla.lista_datos_reintegro_detalle',compact('reintegro_detalle_lista'));
+
     }
 	
 	public function obtener_monto($id_tipo_reintegro,$id_comision,$id_periodo,$mes){

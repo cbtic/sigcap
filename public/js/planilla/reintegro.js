@@ -386,7 +386,7 @@ function datatablenew(){
 			
 			var agremiado = $('#agremiado').val();
 			var numero_cap = $('#numero_cap').val();
-			var tipo_reintegro = $('#tipo_reintegro_bus').val();
+			var mes_reintegro = $('#mes_reintegro_bus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -395,7 +395,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						agremiado:agremiado,numero_cap:numero_cap,tipo_reintegro:tipo_reintegro,estado:estado,
+						agremiado:agremiado,numero_cap:numero_cap,mes_reintegro:mes_reintegro,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -480,40 +480,30 @@ function datatablenew(){
 				"bSortable": true,
 				"aTargets": [6]
 				},
-
+				
 				{
 				"mRender": function (data, type, row) {
-					var tipo_reintegro = "";
-					if(row.tipo_reintegro!= null)tipo_reintegro = row.tipo_reintegro;
-					return tipo_reintegro;
+					var importe_total = "";
+					if(row.importe_total!= null)importe_total = row.importe_total;
+					return importe_total;
 				},
 				"bSortable": true,
 				"aTargets": [7]
 				},
-				
-				{
-				"mRender": function (data, type, row) {
-					var importe = "";
-					if(row.importe!= null)importe = row.importe;
-					return importe;
-				},
-				"bSortable": true,
-				"aTargets": [8]
-				},
 			
 				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Activo";
-						}
-						if(row.estado == 0){
-							estado = "Inactivo";
-						}
-						return estado;
-					},
-					"bSortable": false,
-					"aTargets": [9]
+				"mRender": function (data, type, row) {
+					var estado = "";
+					if(row.estado == 1){
+						estado = "Activo";
+					}
+					if(row.estado == 0){
+						estado = "Inactivo";
+					}
+					return estado;
+				},
+				"bSortable": false,
+				"aTargets": [8]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -542,7 +532,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [10],
+					"aTargets": [9],
 				},
 
             ]
@@ -551,6 +541,7 @@ function datatablenew(){
     });
 
 }
+
 
 function fn_ListarBusqueda() {
     datatablenew();

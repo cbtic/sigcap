@@ -157,10 +157,10 @@
 						<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <select name="tipo_reintegro_bus" id="tipo_reintegro_bus" class="form-control form-control-sm" onChange="">
-                            <option value="">--Selecionar--</option>
+                        <select name="mes_reintegro_bus" id="mes_reintegro_bus" class="form-control form-control-sm" onChange="">
+                            <option value="">--Selecionar Mes--</option>
                             <?php
-                            foreach ($tipo_reintegro as $row) {
+                            foreach ($mes as $row) {
                             ?>
                             <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
                             <?php
@@ -197,8 +197,7 @@
                             <th>Agremiado</th>
 							<th>Comisi&oacute;n</th>
 							<th>Mes</th>
-                            <th>Tipo Reintegro</th>
-							<th>Importe</th>
+							<th>Importe Total</th>
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>
