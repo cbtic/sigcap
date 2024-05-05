@@ -386,6 +386,7 @@ function datatablenew(){
 			
 			var agremiado = $('#agremiado').val();
 			var numero_cap = $('#numero_cap').val();
+			var tipo_reintegro = $('#tipo_reintegro_bus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -394,7 +395,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						agremiado:agremiado,numero_cap:numero_cap,estado:estado,
+						agremiado:agremiado,numero_cap:numero_cap,tipo_reintegro:tipo_reintegro,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {

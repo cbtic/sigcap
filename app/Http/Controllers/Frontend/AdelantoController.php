@@ -9,6 +9,7 @@ use App\Models\Persona;
 use App\Models\TablaMaestra;
 use App\Models\Agremiado;
 use App\Models\Adelanto_detalle;
+use App\Models\PeriodoComisione;
 use Carbon\Carbon;
 use Auth;
 
@@ -69,6 +70,7 @@ class AdelantoController extends Controller
 		$adelanto = new Adelanto;
         $persona = new Persona;
         $agremiado = new Agremiado;
+		$periodoComisione_model = new PeriodoComisione;
 
 		//$persona = new Persona;
 		
@@ -81,6 +83,7 @@ class AdelantoController extends Controller
 			$adelanto_detalle_model = new Adelanto_detalle;
 			$adelanto_fecha = $adelanto_detalle_model->getAdelantoFechaPagoId($id);
 			$fecha_pago=$adelanto_fecha[0]->fecha_pago;
+			$periodo_ = PeriodoComisione::find($adelanto->id_periodo_comision);
 			//var_dump($adelanto_fecha[0]->fecha_pago);exit();
 
 			
@@ -88,14 +91,17 @@ class AdelantoController extends Controller
 			$adelanto = new Adelanto;
 			$persona = new Persona;
 			$agremiado = new Agremiado;
+			$fecha_pago=null;
+			$periodo_ = NULL;
 		}
 		//echo($id); 
 		//print_r($persona); exit();
 
 		$tipo_documento = $tablaMaestra_model->getMaestroC(16,85);
 		$tiene_recibo = $tablaMaestra_model->getMaestroByTipo(121);
+		$periodo = $periodoComisione_model->getPeriodoAllByFecha();
 		
-		return view('frontend.adelanto.modal_adelanto_nuevoAdelanto',compact('id','agremiado','persona','adelanto','tipo_documento','tiene_recibo','fecha_pago'));
+		return view('frontend.adelanto.modal_adelanto_nuevoAdelanto',compact('id','agremiado','persona','adelanto','tipo_documento','tiene_recibo','fecha_pago','periodo_','periodo'));
 	
 	}
 
@@ -171,10 +177,10 @@ class AdelantoController extends Controller
 		}
 		
         //$id_agremiado = buscar_numero_cap($numero_cap);
-        $agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+        //$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 
-		$adelanto->id_agremiado = $agremiado->id;
-        //$adelanto->id_periodo_delegado = '1';
+		$adelanto->id_agremiado = $request->delegado;
+        $adelanto->id_periodo_comision = $request->id_periodo;
         $adelanto->fecha = Carbon::now()->format('Y-m-d');
         $adelanto->nro_total_cuotas = $request->numero_cuota;
         $adelanto->total_adelanto = $request->monto;

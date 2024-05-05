@@ -91,13 +91,13 @@ begin
 				end if;
 			
 				if tipo = 'FT' and  persona > 0  Then
-					select numero_ruc, apellido_paterno || ' '|| apellido_materno || ' '|| nombres, '' direccion, '' email into  _ruc, _razon_social, _direccion, _correo
+					select numero_ruc, apellido_paterno || ' '|| apellido_materno || ' '|| nombres,  direccion, correo email into  _ruc, _razon_social, _direccion, _correo
 						from personas
 						Where id=persona;
 				end if;
 
 				if tipo = 'BV' and  persona > 0  Then
-					select numero_documento, apellido_paterno || ' '|| apellido_materno || ' '|| nombres, '' direccion, '' email into  _ruc, _razon_social, _direccion, _correo
+					select numero_documento, apellido_paterno || ' '|| apellido_materno || ' '|| nombres,  direccion, correo email into  _ruc, _razon_social, _direccion, _correo
 						from personas
 						Where id=persona;
 				end if;
@@ -109,7 +109,7 @@ begin
 				end if;
 			
 				if tipo = 'BV' and  persona2 > 0  Then
-					select numero_documento, apellido_paterno || ' '|| apellido_materno || ' '|| nombres, '' direccion, '' email into  _ruc2, _razon_social2, _direccion2, _correo2
+					select numero_documento, apellido_paterno || ' '|| apellido_materno || ' '|| nombres,  direccion, correo email into  _ruc2, _razon_social2, _direccion2, _correo2
 						from personas
 						Where id=persona2;
 				end if;

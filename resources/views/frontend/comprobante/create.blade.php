@@ -589,7 +589,7 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Dirección</label>
-                                                            <input type="text" name="direccion" readonly id="direccion" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="direccion"  id="direccion" value="<?php if ($trans == 'FA') {
                                                                                                                                             echo $empresa->direccion;
                                                                                                                                         }
                                                                                                                                         if ($trans == 'FE') {
@@ -600,7 +600,7 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Email</label>
-                                                            <input type="text" name="email" readonly id="email" value="<?php if ($trans == 'FA') {
+                                                            <input type="text" name="email"  id="email" value="<?php if ($trans == 'FA') {
                                                                                                                                             echo $empresa->email;
                                                                                                                                         }
                                                                                                                                         if ($trans == 'FE') {
@@ -634,15 +634,18 @@
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Dirección</label>
-                                                            <input type="text" name="direccion2" readonly id="direccion2" value="" placeholder="" class="form-control form-control-sm">
+                                                            <input type="text" name="direccion2"  id="direccion2" value="" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-control-sm">Email</label>
-                                                            <input type="text" name="email2" readonly id="email2" value="" placeholder="" class="form-control form-control-sm">
+                                                            <input type="text" name="email2"  id="email2" value="" placeholder="" class="form-control form-control-sm">
                                                         </div>
                                                     </div>
+
+
+
                                                 </div>
 
 
@@ -1308,9 +1311,11 @@
                 <div class="form-group">
                     <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardar').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">GUARDAR COMPROBANTE</button>
                 </div>
+                <!--
                 <div class="form-group">
-                    <button type="button" id="guardar" class="btn btn-primary btn-block" onclick="$('#guardarX').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">CANCELAR</button>
+                    <button type="button" id="calcela" class="btn btn-primary btn-block" onclick="$('#guardarX').prop('disabled', true); setTimeout(function(){$('#guardar').prop('disabled', false);},5000); ;guardarFactura()">CANCELAR</button>
                 </div>
+                                                    -->
             </div>
             <!--   <a class='flotante' name="guardar" id="guardar" onclick="guardarFactura()" href='#' ><img src='/img/btn_save.png' border="0"/></a>--> <br>
             </form>
