@@ -425,7 +425,7 @@ function calcular_importe(){
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Cantidad</label>
-								<input id="cantidad" name="cantidad" class="form-control form-control-sm" value="<?php echo $delegadoReintegro->importe?>" type="text" onKeyUp="calcular_importe()"/>
+								<input id="cantidad" name="cantidad" class="form-control form-control-sm" value="<?php echo $delegadoReintegro->cantidad?>" type="text" onKeyUp="calcular_importe()"/>
 							</div>
 						</div>
 						<div class="col-lg-2">
