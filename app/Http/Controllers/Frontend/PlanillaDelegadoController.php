@@ -190,7 +190,12 @@ class PlanillaDelegadoController extends Controller
 		$delegadoReintegro = DelegadoReintegro::find($id);
 		$delegadoReintegro->estado = $estado;
 		$delegadoReintegro->save();
-
+		if($estado==0){
+			$reintegroDetalle = DelegadoReintegroDetalle::where("id_delegado_reintegro",$delegadoReintegro->id)->update(['estado'=>0]);
+		}else{
+			$reintegroDetalle = DelegadoReintegroDetalle::where("id_delegado_reintegro",$delegadoReintegro->id)->update(['estado'=>1]);
+		}
+		
 		echo $delegadoReintegro->id;
     }
 
