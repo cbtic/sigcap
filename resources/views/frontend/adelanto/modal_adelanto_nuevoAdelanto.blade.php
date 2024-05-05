@@ -349,11 +349,10 @@ function modal_personaNuevo(){
                 <div class="row">
                   
 				  <div class="col-lg-7">
-				  	
-					
+                      
                       <div class="form-group">
                         <label class="control-label form-control-sm">Tipo Documento</label>
-                        <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onChange="">
+                        <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onChange="" <?php if($id>0){?> disabled<?php }?>>
                           <option value="">--Selecionar--</option>
                           <?php
                           foreach ($tipo_documento as $row) { ?>
@@ -368,7 +367,7 @@ function modal_personaNuevo(){
 						<div class="col-lg-6">
 						  <div class="form-group">
 							<label class="control-label form-control-sm">N&uacute;mero CAP</label>
-							<input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="obtener_profesional()">
+							<input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="obtener_profesional()" <?php if($id>0){?> disabled<?php }?> >
 							  
 						  </div>
 						</div>
@@ -426,7 +425,7 @@ function modal_personaNuevo(){
                         <input id="nombres" name="nombres" class="form-control form-control-sm" value="<?php echo $persona->nombres ?>" type="text" readonly="readonly">
                       </div>
                     </div>
-                    <div class="col-lg-4">
+                    <!--<div class="col-lg-4">
                       <div class="form-group">
                         <label class="control-label form-control-sm">Apellido Paterno</label>
                         <input id="apellido_paterno" name="apellido_paterno" class="form-control form-control-sm" value="<?php echo $persona->apellido_paterno ?>" type="text" readonly="readonly">
@@ -437,17 +436,17 @@ function modal_personaNuevo(){
                         <label class="control-label form-control-sm">Apellido Materno</label>
                         <input id="apellido_materno" name="apellido_materno" class="form-control form-control-sm" value="<?php echo $persona->apellido_materno ?>" type="text" readonly="readonly">
                       </div>
-                    </div>
+                    </div>-->
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="control-label form-control-sm">Monto</label>
-                        <input id="monto" name="monto" class="form-control form-control-sm" value="<?php echo $adelanto->total_adelanto ?>" type="text">
+                        <input id="monto" name="monto" class="form-control form-control-sm" value="<?php echo $adelanto->total_adelanto ?>" type="text" <?php $fecha_actual = date('Y-m-d'); if($fecha_pago<$fecha_actual){?>disabled <?php }?>>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="control-label form-control-sm">N&uacute;mero Cuotas</label>
-                        <input id="numero_cuota" name="numero_cuota" class="form-control form-control-sm" value="<?php echo $adelanto->nro_total_cuotas ?>" type="text">
+                        <input id="numero_cuota" name="numero_cuota" class="form-control form-control-sm" value="<?php echo $adelanto->nro_total_cuotas ?>" type="text" <?php $fecha_actual = date('Y-m-d'); if($fecha_pago<$fecha_actual){?>disabled <?php }?>>
                       </div>
                     </div>
                   </div>
