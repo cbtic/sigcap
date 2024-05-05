@@ -840,4 +840,6 @@ class PersonaController extends Controller
 			echo json_encode($array);}
 
 	}
+
+
 }

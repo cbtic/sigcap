@@ -251,18 +251,7 @@ legend.scheduler-border {
 <script type="text/javascript">
 	$(document).ready(function() {
 
-	//$('#tblConceptos tbody').html("");			
-	$('#tblConceptos').DataTable({
-		//"sPaginationType": "full_numbers",
-		"paging":false,
-		"dom": '<"top">rt<"bottom"flpi><"clear">',
-		"language": {"url": "/js/Spanish.json"},
-	});
 
-	$("#system-search").keyup(function() {
-			var dataTable = $('#tblConceptos').dataTable();
-			dataTable.fnFilter(this.value);
-		});
 
 	});
 
@@ -272,32 +261,8 @@ legend.scheduler-border {
 </script>
 
 <script>
-	function myFunction() {
-		var input, filter, table, tr, td, i, txtValue;
-		input = document.getElementById("myInput");
-		filter = input.value.toUpperCase();
-		table = document.getElementById("tblConceptos");
-		tr = table.getElementsByTagName("tr");
 
-		
 
-		for (i = 0; i < tr.length; i++) {
-			td = tr[i].getElementsByTagName("td")[0];
-			
-			if (td) {
-				txtValue = td.textContent || td.innerText;
-
-		
-				if (txtValue.toUpperCase().indexOf(filter) > -1) {
-
-					tr[i].style.display = "";
-					//alert(tr);
-				} else {
-					tr[i].style.display = "none";
-				}
-			}
-		}
-	}
 </script>
 
 
@@ -325,7 +290,7 @@ legend.scheduler-border {
 							<div class="card">
 								<div class="card-header">
 									<strong>
-										Otros Pagos
+										Consulta de Personas
 									</strong>
 								</div>
 
@@ -340,10 +305,8 @@ legend.scheduler-border {
 												<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
 
-												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona ?>">
-												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado ?>">
-												<input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo ?>">
-												<input type="hidden" name="tipo_documento" id="tipo_documento" value="<?php echo $tipo_documento ?>">
+												<input type="hidden" name="id_persona" id="id_persona" value="<?//php echo $id_persona ?>">
+
 
 												<div class="row" style="padding-left:10px">
 													<!--
@@ -366,88 +329,30 @@ legend.scheduler-border {
 														</div>
 
 														<div class="table-responsive overflow-auto" style="max-height: 500px">
-															<table id="tblConceptos" class="table table-hover table-sm">
+															<table id="tblPersonas" class="table table-hover table-sm">
 																<thead>
-																	<tr style="font-size:13px ">
-																		<th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
-																		</th>
-																		<th>Código</th>
-																		<th>Denominación</th>
-																		<th>Moneda</th>
-																		<th>Importe</th>
-																	</tr>
+																<tr style="font-size:13px">
+																	<th>Tipo Documento</th>
+																	<th>N&uacute;mero Documento</th>
+																	<th>Nombre</th>
+																	<th>Fecha Nacimiento</th>
+																	<th>Nacionalidad</th>
+																	<th>Sexo</th>
+																	<th>N&uacute;mero Celular</th>
+																	<th>Correo</th>
+																	<th>Direcci&oacute;n</th>
+																	<th>Estado</th>
+																	<th>Acciones</th>
+																</tr>
 																</thead>
-																<tbody style="font-size:13px">
-																	<?php
-																	$total = 0;
-																	$descuento = 0;
-																	$valor_venta_bruto = 0;
-																	$valor_venta = 0;
-																	$igv = 0;
-
-																	foreach ($conceptos as $key => $row) :
-																		$monto = $row->importe;
-																		$stotal = str_replace(",", "", number_format($monto / 1.18, 1));
-																		$igv_   = str_replace(",", "", number_format($stotal * 0.18, 1));
-																	?>
-																		<tr style="font-size:13px">
-																			<td class="text-center">
-																				<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																					<input type="checkbox" class="mov_" name="concepto_detalles[<?php echo $key ?>][id]" value="<?php echo $row->id ?>" onchange="calcular_total_(this)" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][id]" value="<?php echo $row->id ?>" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][codigo]" value="<?php echo $row->codigo ?>" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][denominacion]" value="<?php echo $row->denominacion ?>" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][importe]" value="<?php echo $row->importe ?>" />
-
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][pu]" value="<?php echo $row->importe ?>" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][igv]" value="<?php echo $igv_ ?>" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][pv]" value="<?php echo $stotal ?>" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][total]" value="<?php echo $row->importe ?>" />
-
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][moneda]" value="<?php echo $row->moneda ?>" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][id_moneda]" value="<?php echo $row->id_moneda ?>" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][cantidad]" value="1" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][descuento]" value="" />
-																					<input type="hidden" name="concepto_detalle[<?php echo $key ?>][centro_costo]" value="centro_costo" />
-
-																				</div>
-																			</td>
-
-																			<td class="text-left"><?php echo $row->codigo ?></td>
-																			<td class="text-left"><?php echo $row->denominacion ?></td>
-																			<td class="text-left"><?php echo $row->moneda ?></td>
-																			<td class="text-right val_total_">
-																				<span class="val_total"><?php echo $row->importe ?></span>
-																			</td>
-
-
-																		</tr>
-																	<?php
-																	//$total += $row->importe;	
-																	endforeach;
-																	?>
-																	<!--
-																	<tr>
-																		<th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px"> Total</th>
-																		<td style="padding-bottom:0px;margin-bottom:0px">
-																			<input type="text" readonly name="total_concepto_" id="total_concepto_" value="" class="form-control form-control-sm text-right" />
-																		</td>
-																	</tr>
-																-->
+																<tbody>
 																</tbody>
 															</table>
 														</div>
 													</div>
 
 												</div>
-												<div style="margin-top:15px" class="form-group">
-													<div class="col-sm-12 controls">
-														<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-															<a href="javascript:void(0)" onClick="guardar_concepto_valorizacion()" class="btn btn-sm btn-success">Guardar</a>
-														</div>
 
-													</div>
-												</div>
 											</div>
 										</div>
 									</div>

@@ -753,15 +753,20 @@ class IngresoController extends Controller
     
     }
 
-    public function modal_persona($periodo, $id_persona, $id_agremiado, $tipo_documento){
 
-        
-        $conceptos_model = new Concepto;        
-        $conceptos = $conceptos_model->getConceptoPeriodo($periodo);
 
-    
+    public function modal_consulta_persona(Request $request){
 		
-		return view('frontend.ingreso.modal_persona',compact('conceptos','periodo','id_persona','id_agremiado','tipo_documento' ));
+		//$id_tipo_documento = $request->tipo_documento;
+		$id_tipo_documento = 78;
+//		$numero_documento = "";
+		
+
+		$tablaMaestra_model = new TablaMaestra;
+		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+
+		return view('frontend.ingreso.modal_consulta_persona',compact('sexo','tipo_documento', 'id_tipo_documento'));
 	}
 
 }
