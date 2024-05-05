@@ -720,3 +720,4 @@ Route::get('agremiado/obtener_datos_agremiado_id/{id}', [AgremiadoController::cl
 Route::get('delegadoTributo/validar_delegado/{id_delegado}', [DelegadoTributoController::class, 'validar_delegado'])->name('delegadoTributo.validar_delegado');
 Route::get('derecho_revision/importar_dataLicencia', [DerechoRevisionController::class, 'importar_dataLicencia'])->name('derecho_revision.importar_dataLicencia');
 Route::get('planilla/eliminar_reintegro/{id}/{estado}', [PlanillaDelegadoController::class, 'eliminar_reintegro'])->name('planilla.eliminar_reintegro');
+Route::get('planilla/obtener_datos_reintegro_detalle/{id_agremiado}', [PlanillaDelegadoController::class, 'obtener_datos_reintegro_detalle'])->name('planilla.obtener_datos_reintegro_detalle');

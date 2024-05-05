@@ -122,11 +122,13 @@ $.mask.definitions['p'] = "[Mm]";
 */
 $(document).ready(function() {
 	$("#concepto").select2({ width: '100%' });
+	datatableReintegroDetalle();
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
 });
 </script>
+
 
 <script type="text/javascript">
 
@@ -229,9 +231,16 @@ function fn_save(){
             type: "POST",
             data : {_token:_token,id:id,id_regional:id_regional,id_periodo:id_periodo,id_mes:id_mes,id_mes_ejecuta_reintegro:id_mes_ejecuta_reintegro,id_comision:id_comision,id_delegado:id_delegado,importe:importe,cantidad:cantidad,id_tipo_reintegro:id_tipo_reintegro,observacion:observacion},
             success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				//$('#openOverlayOpc').modal('hide');
+				//window.location.reload();
 				//datatablenew();
+				if($('#id').val()>0){
+					datatableReintegroDetalle();
+				}else{
+					$('#openOverlayOpc').modal('hide');
+					window.location.reload();
+				}
+				
 								
             }
     });
@@ -268,6 +277,20 @@ function obtener_monto(){
 		
 	});
 
+}
+
+function datatableReintegroDetalle(){
+	
+	var id_agremiado =  $('#id').val();
+	
+    $("#tblReintegroDetalle tbody").html("");
+	$.ajax({
+			url: "/planilla/obtener_datos_reintegro_detalle/"+id_agremiado,
+			type: "GET",
+			success: function (result) {  
+					$("#tblReintegroDetalle tbody").html(result);
+			}
+	});
 }
 
 function calcular_importe(){
@@ -320,7 +343,7 @@ function calcular_importe(){
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
-								<select name="id_regional" readonly id="id_regional" class="form-control form-control-sm" onChange="">
+								<select name="id_regional" readonly id="id_regional" class="form-control form-control-sm" onChange="" disabled>
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($region as $row) {?>
@@ -334,7 +357,7 @@ function calcular_importe(){
 						
 						<div class="col-lg-4">
 							<div class="form-group">
-								<label class="control-label">Periodo</label>
+								<label class="control-label form-control-sm">Periodo</label>
 								<input type="hidden" name="id_periodo_" id="id_periodo_" value="" />
 								<select name="id_periodo" id="id_periodo" class="form-control form-control-sm" onChange="obtenerDelegadoPerido()" disabled='disabled'>
 									<?php
@@ -352,7 +375,7 @@ function calcular_importe(){
 
 						<div class="col-lg-3">
 							<div class="form-group">
-								<label class="control-label">Mes a Reintegrar</label>
+								<label class="control-label form-control-sm">Mes a Reintegrar</label>
 								<select name="mes" id="mes" class="form-control form-control-sm">
 								<?php
 									foreach ($mes as $key=>$row) {?>
@@ -366,7 +389,7 @@ function calcular_importe(){
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado</label>
-								<select name="id_agremiado" id="id_agremiado" class="form-control form-control-sm" onChange="obtenerComisionDelegadoPerido()">
+								<select name="id_agremiado" id="id_agremiado" class="form-control form-control-sm" onChange="obtenerComisionDelegadoPerido()" <?php if($id>0) {?>disabled<?php } ?>>
 								<option value="">--Selecionar--</option>
 									<?php
 										/*foreach ($delegados as $row) {?>
@@ -381,7 +404,7 @@ function calcular_importe(){
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Comisi&oacute;n</label>
-								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
+								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="" <?php if($id>0) {?>disabled<?php } ?>>
 								<option value="">--Selecionar--</option>
 									<?php
 										/*foreach ($delegados as $row) {?>
@@ -409,8 +432,8 @@ function calcular_importe(){
 						
 						<div class="col-lg-3">
 							<div class="form-group">
-								<label class="control-label">Mes Ejecuta Reintegro</label>
-								<select name="id_mes_ejecuta_reintegro" id="id_mes_ejecuta_reintegro" class="form-control form-control-sm" onChange="obtener_monto()">
+								<label class="control-label form-control-sm">Mes Ejecuta Reintegro</label>
+								<select name="id_mes_ejecuta_reintegro" id="id_mes_ejecuta_reintegro" class="form-control form-control-sm" onChange="obtener_monto()" <?php if($id>0) {?>disabled<?php } ?>>
 								<?php
 									foreach ($mes as $key=>$row) {?>
 									<option value="<?php echo $key?>" <?php if($key==$delegadoReintegro->id_mes_ejecuta_reintegro)echo "selected='selected'"?>><?php echo $row?></option>
@@ -425,28 +448,24 @@ function calcular_importe(){
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Cantidad</label>
-								<input id="cantidad" name="cantidad" class="form-control form-control-sm" value="<?php echo $delegadoReintegro->cantidad?>" type="text" onKeyUp="calcular_importe()"/>
+								<input id="cantidad" name="cantidad" class="form-control form-control-sm" value="<?php //echo $delegadoReintegro->cantidad?>" type="text" onKeyUp="calcular_importe()"/>
 							</div>
 						</div>
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Importe</label>
-								<input id="importe" name="importe" class="form-control form-control-sm" value="<?php echo $delegadoReintegro->importe?>" type="text" readonly="readonly"/>
+								<input id="importe" name="importe" class="form-control form-control-sm" value="<?php //echo $delegadoReintegro->importe?>" type="text" readonly="readonly"/>
 							</div>
 						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Observaciones</label>
-								<textarea id="observacion" name="observacion" class="form-control form-control-sm"><?php echo $delegadoReintegro->observacion?></textarea>
+								<textarea id="observacion" name="observacion" class="form-control form-control-sm"><?php //echo $delegadoReintegro->observacion?></textarea>
 							</div>
 						</div>
-						
-						
 					</div>
-					
 			</form>
-					
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
@@ -458,6 +477,25 @@ function calcular_importe(){
 					</div> 
 					
               </div>
+			  <div class="card-body">	
+
+						<div class="table-responsive">
+						<table id="tblReintegroDetalle" class="table table-hover table-sm">
+							<thead>
+							<tr style="font-size:13px">
+								<th>Agremiado</th>
+								<th>Tipo Reintegro</th>
+								<th>Mes a Reintegrar</th>
+								<th>Mes Ejecuta Reintegro</th>
+								<th>Cantidad</th>
+								<th>Importe</th>
+							</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						</div>
+					</div>
 			  
               
           </div>
