@@ -237,10 +237,11 @@ function fn_save(){
 				if($('#id').val()>0){
 					datatableReintegroDetalle();
 				}else{
-					$('#openOverlayOpc').modal('hide');
-					window.location.reload();
+					//$('#openOverlayOpc').modal('hide');
+					//window.location.reload();
+					modalSeguro(result);
 				}
-				
+				datatablenew();
 								
             }
     });

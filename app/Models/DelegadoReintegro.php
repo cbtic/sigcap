@@ -16,6 +16,14 @@ class DelegadoReintegro extends Model
 
     }
 	
+	function actualizaImporteTotalReintegro($id_delegado_reintegro){
+
+        $cad = "update delegado_reintegros set importe_total=(select coalesce(sum(importe),0) from delegado_reintegro_detalles drd where id_delegado_reintegro=".$id_delegado_reintegro." and estado='1') where id=".$id_delegado_reintegro;
+    
+		$data = DB::select($cad);
+        return $data;
+    }
+	
 	public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';

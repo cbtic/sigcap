@@ -176,6 +176,12 @@ class PlanillaDelegadoController extends Controller
 
 		$delegadoReintegro->importe_total += $request->importe;
     	$delegadoReintegro->save();
+		
+		$delegadoReintegro_model = new DelegadoReintegro;
+		
+		$delegadoReintegro_model->actualizaImporteTotalReintegro($delegadoReintegro->id);
+		
+		echo $delegadoReintegro->id;
 
     }
 
