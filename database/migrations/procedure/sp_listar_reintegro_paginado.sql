@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_reintegro_paginado(p_numero_cap character varying, p_nombres character varying, p_periodo character varying, p_mes character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_reintegro_paginado(p_numero_cap character varying, p_nombres character varying, p_tipo_reintegro character varying, p_periodo character varying, p_mes character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -33,6 +33,11 @@ begin
 	
 	v_where = ' Where 1=1  ';
 	
+
+
+	If p_tipo_reintegro<>'' Then
+	 v_where:=v_where||'And dr.id_tipo_reintegro = '''||p_tipo_reintegro||''' ';
+	End If;
 
 	If p_numero_cap<>'' Then
 	 v_where:=v_where||'And a.numero_cap = '''||p_numero_cap||''' ';

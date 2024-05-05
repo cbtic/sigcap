@@ -48,8 +48,12 @@ class PlanillaDelegadoController extends Controller
 	}
 	
 	public function consulta_reintegro(){
+
+		$tablaMaestra_model = new TablaMaestra;
+
+		$tipo_reintegro = $tablaMaestra_model->getMaestroByTipo(74);
 		
-		return view('frontend.planilla.all_reintegro');
+		return view('frontend.planilla.all_reintegro',compact('tipo_reintegro'));
 		
     }
 	
@@ -58,6 +62,7 @@ class PlanillaDelegadoController extends Controller
 		$delegadoReintegro_model = new DelegadoReintegro();
 		$p[]=$request->numero_cap;
 		$p[]=$request->agremiado;
+		$p[]=$request->tipo_reintegro;
 		$p[]="";
 		$p[]="";
 		$p[]=$request->estado;          
@@ -111,7 +116,7 @@ class PlanillaDelegadoController extends Controller
 		}else{
 			$delegadoReintegro = new DelegadoReintegro;
 		}
-		
+
 		$tipo_reintegro = $tablaMaestra_model->getMaestroByTipo(74);
 
 		return view('frontend.planilla.modal_reintegro',compact('id','delegadoReintegro','region','id_regional','periodo','mes','comisionDelegado','periodo_ultimo','tipo_reintegro'/*,'delegados'*/));

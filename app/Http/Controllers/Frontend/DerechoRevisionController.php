@@ -408,12 +408,12 @@ class DerechoRevisionController extends Controller
 				$total		= $sub_total + $igv;
 				
 				$total_minimo		= $parametro->valor_minimo_hu;
-				$igv_minimo			= $total_minimo/(1+$parametro->igv);
-				$sub_total_minimo 	= $total_minimo - $igv_minimo;
+				$igv_minimo			= $total_minimo - $sub_total_minimo;
+				$sub_total_minimo 	= $total_minimo/(1+$parametro->igv);
 				
 				$total_maximo		= $parametro->valor_maximo_hu*$m2;
-				$igv_maximo			= $total_maximo/(1+$parametro->igv);
-				$sub_total_maximo 	= $total_maximo - $igv_maximo;
+				$igv_maximo			= $total_maximo - $sub_total_maximo;
+				$sub_total_maximo 	= $total_maximo/(1+$parametro->igv);
 				
 				if($total<$total_minimo){
 					$sub_total 	= $sub_total_minimo;
