@@ -842,7 +842,6 @@ class CertificadoController extends Controller
 
 		Carbon::setLocale('es');
 
-
 		// Crear una instancia de Carbon a partir de la fecha
 		$carbonDate = new Carbon($fecha_emision);
 
@@ -853,18 +852,25 @@ class CertificadoController extends Controller
 	
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
-		$formattedDate_colegiado = $carbonDate_colegiado->timezone('America/Lima')->formatLocalized(' %d de %B %Y');
+		$formattedDate_colegiado = $carbonDate_colegiado->timezone('America/Lima')->locale('es')->formatLocalized(' %d de %B %Y');
 		
 		$dia = $carbonDate->format('d');
 		$mes = ltrim($carbonDate->format('m'), '0');
 		$anio = $carbonDate->format('Y');
 
+		$dia_colegiado = $carbonDate_colegiado->format('d');
+		$mes_colegiado = ltrim($carbonDate_colegiado->format('m'), '0');
+		$anio_colegiado = $carbonDate_colegiado->format('Y');
 		
 		$mesEnLetras = $this->mesesALetras($mes);
 
+		$mesEnLetras_ = $this->mesesALetras($mes_colegiado);
+
+		$fecha_inscripcion_detallada = $dia_colegiado .' de '. $mesEnLetras_ .' del '.$anio_colegiado;
+
 		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
 
-		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita','mes_minimoEnLetras','mes_maximoEnLetras','año','fecha_detallada'));
+		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita','mes_minimoEnLetras','mes_maximoEnLetras','año','fecha_detallada','fecha_inscripcion_detallada'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros

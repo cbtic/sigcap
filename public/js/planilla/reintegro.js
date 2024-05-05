@@ -384,9 +384,10 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#nombre').val();
+			var agremiado = $('#agremiado').val();
+			var numero_cap = $('#numero_cap').val();
+			var mes_reintegro = $('#mes_reintegro_bus').val();
 			var estado = $('#estado').val();
-			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -394,7 +395,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						denominacion:denominacion,estado:estado,
+						agremiado:agremiado,numero_cap:numero_cap,mes_reintegro:mes_reintegro,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -472,9 +473,9 @@ function datatablenew(){
 				
 				{
 				"mRender": function (data, type, row) {
-					var id_mes = "";
-					if(row.id_mes!= null)id_mes = row.id_mes;
-					return id_mes;
+					var mes = "";
+					if(row.mes!= null)mes = row.mes;
+					return mes;
 				},
 				"bSortable": true,
 				"aTargets": [6]
@@ -482,27 +483,27 @@ function datatablenew(){
 				
 				{
 				"mRender": function (data, type, row) {
-					var importe = "";
-					if(row.importe!= null)importe = row.importe;
-					return importe;
+					var importe_total = "";
+					if(row.importe_total!= null){importe_total = parseFloat(row.importe_total).toFixed(2)};
+					return importe_total;
 				},
 				"bSortable": true,
 				"aTargets": [7]
 				},
 			
 				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Activo";
-						}
-						if(row.estado == 0){
-							estado = "Inactivo";
-						}
-						return estado;
-					},
-					"bSortable": false,
-					"aTargets": [8]
+				"mRender": function (data, type, row) {
+					var estado = "";
+					if(row.estado == 1){
+						estado = "Activo";
+					}
+					if(row.estado == 0){
+						estado = "Inactivo";
+					}
+					return estado;
+				},
+				"bSortable": false,
+				"aTargets": [8]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -523,7 +524,7 @@ function datatablenew(){
 						
 						//html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalPlanes('+row.id+')" ><i class="fa fa-edit"></i> Planes</button>';
 
-						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						html += '<a href="javascript:void(0)" onclick=eliminarReintegro('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
@@ -540,6 +541,7 @@ function datatablenew(){
     });
 
 }
+
 
 function fn_ListarBusqueda() {
     datatablenew();
@@ -577,7 +579,7 @@ function modalResponsable(id){
 
 }
 
-function eliminar(id,estado){
+function eliminarReintegro(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -589,20 +591,20 @@ function eliminar(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" el Seguro?", 
+        message: "&iquest;Deseas "+act_estado+" el Reintegro?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar(id,estado_);
+                fn_eliminarReintegro(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar(id,estado){
+function fn_eliminarReintegro(id,estado){
 	
     $.ajax({
-            url: "/seguro/eliminar_seguro/"+id+"/"+estado,
+            url: "/planilla/eliminar_reintegro/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

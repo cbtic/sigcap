@@ -13,4 +13,12 @@ class SuspensionController extends Controller
         return view('frontend.suspension.all');
 
     }
+	
+	public function actualizarSuspensionAgremiado()
+    {
+		$suspensione_model = new Suspensione;
+
+		$suspensione_model->actualizarSuspensionAgremiado();
+    }
+	
 }

@@ -15,7 +15,15 @@ class Suspensione extends Model
         return $this->readFuntionPostgres('sp_listar_suspension_paginado',$p);
 
     }
-
+	
+	function actualizarSuspensionAgremiado(){
+  
+        $cad = "update periodo_comisiones set estado = '0' where now() not between fecha_inicio and fecha_fin and estado = '1'";
+        //echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
+	
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';
