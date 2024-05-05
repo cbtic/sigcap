@@ -1114,7 +1114,7 @@ function eliminarProfesion(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Profesion?", 
+        message: "&iquest;Deseas "+act_estado+" la Solicitud?", 
         callback: function(result){
             if (result==true) {
                 fn_eliminar_profesion(id,estado_);

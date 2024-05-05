@@ -314,6 +314,11 @@ function modalVerFormato(){
                             </select>
 						</div>
 
+						<div class="col-lg-3">
+                            <label class="control-label form-control-sm">Detalle Sitio</label>
+                            <input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="<?php echo $proyecto2->direccion?>" type="text">
+						</div>
+
 						<div class="col-lg-1" style="padding-left:15px">
                             <label class="control-label form-control-sm">Zona</label>
                             <select name="zona" id="zona" class="form-control form-control-sm" onChange="">
@@ -325,6 +330,11 @@ function modalVerFormato(){
                                 }
                                 ?>
                             </select>
+						</div>
+
+						<div class="col-lg-3">
+                            <label class="control-label form-control-sm">Detalle Zona</label>
+                            <input id="direccion_zona" name="direccion_zona" on class="form-control form-control-sm"  value="<?php echo $proyecto2->direccion?>" type="text">
 						</div>
 
 						<div class="col-lg-1">
