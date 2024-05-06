@@ -455,7 +455,7 @@ class PlanillaDelegadoController extends Controller
 		$saldo=0;
 		
 		foreach($planilla as $r) {
-			array_push($variable, array($n++,$r->delegado,$r->municipalidad, $r->sesiones, number_format($r->sub_total,2),number_format($r->adelanto,2),number_format($r->reintegro,2), number_format($r->coordinador,2), number_format($r->total_bruto_sesiones,2), number_format($r->movilidad_sesion,2),number_format($r->total_movilidad,2),number_format($r->reintegro_asesor,2),number_format($r->total_bruto,2), number_format($r->ir_cuarta,2),number_format($r->total_honorario,2),number_format($r->descuento,2),number_format($r->saldo,2),$r->observaciones));
+			array_push($variable, array($n++,$r->delegado,$r->municipalidad, $r->sesiones, number_format($r->sub_total,2,".",""),number_format($r->adelanto,2,".",""),number_format($r->reintegro,2,".",""), number_format($r->coordinador,2,".",""), number_format($r->total_bruto_sesiones,2,".",""), number_format($r->movilidad_sesion,2,".",""),number_format($r->total_movilidad,2,".",""),number_format($r->reintegro_asesor,2),number_format($r->total_bruto,2,".",""), number_format($r->ir_cuarta,2,".",""),number_format($r->total_honorario,2,".",""),number_format($r->descuento,2,".",""),number_format($r->saldo,2,".",""),$r->observaciones));
 			
 			$sesiones+=$r->sesiones;
 			$sub_total+=$r->sub_total;
@@ -479,10 +479,25 @@ class PlanillaDelegadoController extends Controller
 			
 		}
 		
-		array_push($variable, array("","Totales Generales","", $sesiones, number_format($sub_total,2),number_format($adelanto,2),number_format($reintegro,2), number_format($coordinador,2), number_format($total_bruto_sesiones,2), number_format($movilidad_sesion,2),number_format($total_movilidad,2),number_format($reintegro_asesor,2),number_format($total_bruto,2), number_format($ir_cuarta,2),number_format($total_honorario,2),number_format($descuento,2),number_format($saldo,2),""));
+		array_push($variable, array("","Totales Generales","", $sesiones, number_format($sub_total,2,".",""),number_format($adelanto,2,".",""),number_format($reintegro,2,".",""), number_format($coordinador,2,".",""), number_format($total_bruto_sesiones,2,".",""), number_format($movilidad_sesion,2,".",""),number_format($total_movilidad,2,".",""),number_format($reintegro_asesor,2,".",""),number_format($total_bruto,2,".",""), number_format($ir_cuarta,2,".",""),number_format($total_honorario,2,".",""),number_format($descuento,2,".",""),number_format($saldo,2,".",""),""));
+		
+		$sesiones_asesor = 0.5 * $sesiones_asesor;
+		$fondo_comun_saldo = (isset($fondo_comun->saldo))?$fondo_comun->saldo:0;
+		$fondo_comun_neto = ($fondo_comun_saldo) - $reintegro - $total_movilidad - $coordinador;
+		$total_sesiones = $sesiones - $sesiones_asesor;
+		
+		$importe_por_sesion=0;
+		if($total_sesiones>0)$importe_por_sesion = $fondo_comun_neto / $total_sesiones;
+		
+		array_push($variable, array("","","", "", "","","", "", "", "","","","", "","","","",""));
+		array_push($variable, array("","Saldo a favor de los Delegados Pro Fondo Comun","", number_format($fondo_comun_saldo,2,".",""), "","","", "", "", "","","","", "","Fondo Comun","",number_format($fondo_comun_neto,2,".",""),""));
+		array_push($variable, array("","Menos Pagos a Destiempo de Meses pasados","", number_format($reintegro,2,".",""), "","","", "", "", "","","","", "","Total acumulado de Sesiones del Mes","",$sesiones,""));
+		array_push($variable, array("","Menos movilidad a Delegados","", number_format($total_movilidad,2,".",""), "","","", "", "", "","","","", "","Sesion de asesores a cargo del CAP RL","",$sesiones_asesor,""));
+		array_push($variable, array("","Menos Pago Fijo a Coordinadores","", number_format($coordinador,2,".",""), "","","", "", "", "","","","", "","SALDO FINAL DE SESIONES","",$total_sesiones,""));
+		array_push($variable, array("","Monto Neto = Fondo Comun","", number_format($fondo_comun_neto,2,".",""), "","","", "", "", "","","","", "","Importe por Sesion","",number_format($importe_por_sesion,2,".",""),""));
 		
 		$export = new InvoicesExport([$variable]);
-		return Excel::download($export, 'resultado_concurso.xlsx');
+		return Excel::download($export, 'planilla_delegado.xlsx');
 		
     }
 		    
