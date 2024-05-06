@@ -4,39 +4,39 @@
 	<tr style="font-size:13px">
 		<th>Delegado</th>
 		<th>Municipio</th>
-		<th>Sesiones</th>
-		<th>Sub Total</th>
-		<th>Adelanto  
+		<th class="text-center">Sesiones</th>
+		<th class="text-center">Sub Total</th>
+		<th class="text-center">Adelanto  
 			<br />Con Rec. 
 			<br />Hon.
 		</th>
-		<th>(+) 
+		<th class="text-center">(+) 
 			<br />Reintegro</th>
-		<th>(+) 
+		<th class="text-center">(+) 
 			<br />Adicional 
 			<br />por 
 			<br />Coordinador</th>
-		<th>Total 
+		<th class="text-center">Total 
 			<br />Honorario 
 			<br />Bruto por 
 			<br />Sesiones</th>
-		<th>Movilidad 
+		<th class="text-center">Movilidad 
 			<br />Por Sesion 
 			<br />Regular</th>
-		<th>Total 
+		<th class="text-center">Total 
 			<br />Honorario por 
 			<br />Movilidad</th>
-		<th>Reintegro
+		<th class="text-center">Reintegro
 			<br />por Pago a Asesores
 			<br />Asumido por el CAP RL</th>
-		<th>Total Honorario
+		<th class="text-center">Total Honorario
 			<br />Bruto</th>
-		<th>I.R. 4TA 
+		<th class="text-center">I.R. 4TA 
 			<br />8.00 %</th>
-		<th>Total Honorario
+		<th class="text-center">Total Honorario
 			<br />Neto</th>
-		<th>Dscto</th>
-		<th>Saldo</th>
+		<th class="text-center">Dscto</th>
+		<th class="text-center">Saldo</th>
 		<th>OBSERVACI&Oacute;N</th>
 	</tr>
 	</thead>
@@ -70,20 +70,20 @@
 		<tr style="font-size:13px">
 			<td class="text-left" style="vertical-align:middle"><?php echo $row->delegado?></td>
 			<td class="text-left" style="vertical-align:middle"><?php echo $row->municipalidad?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo $row->sesiones?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->sub_total,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->adelanto,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->reintegro,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->coordinador,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->total_bruto_sesiones,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->movilidad_sesion,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->total_movilidad,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->reintegro_asesor,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->total_bruto,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->ir_cuarta,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->total_honorario,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->descuento,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->saldo,2)?></td>
+			<td class="text-center" style="vertical-align:middle"><?php echo $row->sesiones?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->sub_total,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->adelanto,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->reintegro,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->coordinador,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->total_bruto_sesiones,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->movilidad_sesion,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->total_movilidad,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->reintegro_asesor,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->total_bruto,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->ir_cuarta,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->total_honorario,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->descuento,2)?></td>
+			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->saldo,2)?></td>
 			<td class="text-left" style="vertical-align:middle"><?php echo $row->observaciones?></td>	
 		</tr>
 		<?php 
@@ -115,21 +115,21 @@
 	<tfoot>
 		<tr style="font-size:13px">
 			<th class="text-left" style="vertical-align:middle" colspan="2">Totales Generales</th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo $sesiones?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($sub_total,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($adelanto,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($reintegro,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($coordinador,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($total_bruto_sesiones,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($movilidad_sesion,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($total_movilidad,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($reintegro_asesor,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($total_bruto,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($ir_cuarta,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($total_honorario,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($descuento,2)?></th>
-			<th class="text-left" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($saldo,2)?></th>
-			<th></th>
+			<th class="text-center" style="vertical-align:middle"><?php echo $sesiones?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($sub_total,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($adelanto,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($reintegro,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($coordinador,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($total_bruto_sesiones,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($movilidad_sesion,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($total_movilidad,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($reintegro_asesor,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($total_bruto,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($ir_cuarta,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($total_honorario,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($descuento,2)?></th>
+			<th class="text-right" style="vertical-align:middle"><?php echo number_format($saldo,2)?></th>
+			<th class="text-left"></th>
 		</tr>
 	</tfoot>
 </table>
