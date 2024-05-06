@@ -7,7 +7,7 @@ foreach($reintegro_detalle_lista as $key=>$row):?>
 	<td class="text-left"><?php echo $row->mes_reintegrar?></td>
 	<td class="text-left"><?php echo $row->mes_ejecuta_reintegro?></td>
 	<td class="text-left"><?php echo $row->cantidad?></td>
-	<td class="text-left"><?php echo $row->importe?></td>
+	<td class="text-left"><?php echo number_format($row->importe, 2); ?></td>
 </tr>
 <?php
 endforeach;

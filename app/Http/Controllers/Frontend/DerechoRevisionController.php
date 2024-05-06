@@ -624,9 +624,12 @@ class DerechoRevisionController extends Controller
 		$proyecto->parcela = $request->parcela;
 		$proyecto->super_manzana = $request->superManzana;
 		$proyecto->direccion = $request->direccion_proyecto;
+		$proyecto->sitio_descripcion = $request->direccion_sitio;
+		$proyecto->zona_descripcion = $request->direccion_zona;
 		$proyecto->lote = $request->lote;
 		$proyecto->fila = $request->fila;
 		$proyecto->id_tipo_sitio = $request->sitio;
+		$proyecto->id_zona = $request->zona;
 		$proyecto->id_tipo_direccion = $request->tipo;
 		$proyecto->id_tipo_proyecto = 124;
 		$proyecto->zonificacion = $request->zonificacion;
