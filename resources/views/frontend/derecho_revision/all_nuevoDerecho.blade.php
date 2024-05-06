@@ -314,9 +314,9 @@ function modalVerFormato(){
                             </select>
 						</div>
 
-						<div class="col-lg-3">
+						<div class="col-lg-2">
                             <label class="control-label form-control-sm">Detalle Sitio</label>
-                            <input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="<?php echo $proyecto2->direccion?>" type="text">
+                            <input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="<?php echo $proyecto2->sitio_descripcion?>" type="text">
 						</div>
 
 						<div class="col-lg-1" style="padding-left:15px">
@@ -325,16 +325,16 @@ function modalVerFormato(){
                                 <option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($zona as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->manzana)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_zona)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
                                 }
                                 ?>
                             </select>
 						</div>
 
-						<div class="col-lg-3">
+						<div class="col-lg-2">
                             <label class="control-label form-control-sm">Detalle Zona</label>
-                            <input id="direccion_zona" name="direccion_zona" on class="form-control form-control-sm"  value="<?php echo $proyecto2->direccion?>" type="text">
+                            <input id="direccion_zona" name="direccion_zona" on class="form-control form-control-sm"  value="<?php echo $proyecto2->zona_descripcion?>" type="text">
 						</div>
 
 						<div class="col-lg-1">

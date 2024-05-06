@@ -126,13 +126,15 @@ class DelegadoTributoController extends Controller
 
 		if($request->id == 0){
 			$delegadoTributo = new DelegadoTributo;
+            $delegadoTributo->id_agremiado = $request->delegado;
+            $delegadoTributo->anio = $request->anio;
 		}else{
 			$delegadoTributo = DelegadoTributo::find($request->id);
+            $delegadoTributo->id_agremiado = $request->id_delegado_;
+            $delegadoTributo->anio = $request->anio_;
 		}
-		
+        
         $delegadoTributo->id_periodo_comision = $request->id_periodo;
-        $delegadoTributo->anio = $request->anio;
-		$delegadoTributo->id_agremiado = $request->delegado;
 		$delegadoTributo->id_tipo_tributo = $request->tipo_tributo;
 		$delegadoTributo->id_tipo_operacion = $request->emite;
 		$delegadoTributo->id_banco = $request->entidad_financiera;

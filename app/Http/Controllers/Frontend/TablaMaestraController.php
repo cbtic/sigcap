@@ -70,22 +70,23 @@ class TablaMaestraController extends Controller
 		
 		$id_user = Auth::user()->id;
         $tablaMaestra_model = new TablaMaestra;
-
-		if($request->id == 0){
-			$tablaMaestra = new TablaMaestra;
-		}else{
-			$tablaMaestra = TablaMaestra::find($request->id);
-		}
-
-        $datos_tablaMaestra = TablaMaestra::where("tipo",$request->tipo_nombre)->where("estado","1")->orderBy('id','desc')->first();
-		//dd($datos_tablaMaestra);
-        $tipo_nombre = $datos_tablaMaestra->tipo_nombre;
+		$datos_tablaMaestra = TablaMaestra::where("tipo",$request->tipo_nombre)->where("estado","1")->orderBy('id','desc')->first();
+		$tipo_nombre = $datos_tablaMaestra->tipo_nombre;
         $codigo = $datos_tablaMaestra->codigo;
         $orden = $datos_tablaMaestra->orden;
         $id_ = $tablaMaestra_model->getIdTablaMaestra();
         $ultimo_id =  $id_[0]->id;
 
-        $tablaMaestra->id = intval($ultimo_id) + 1;
+		if($request->id == 0){
+			$tablaMaestra = new TablaMaestra;
+			$tablaMaestra->id = intval($ultimo_id) + 1;
+		}else{
+			$tablaMaestra = TablaMaestra::find($request->id);
+			$tablaMaestra->id = intval($ultimo_id);
+		}
+        
+		//dd($datos_tablaMaestra);
+
         $tablaMaestra->tipo = $request->tipo_nombre;
 		$tablaMaestra->denominacion = $request->denominacion;
 		$tablaMaestra->tipo_nombre = $tipo_nombre;

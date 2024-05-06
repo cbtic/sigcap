@@ -266,6 +266,31 @@ function obtener_profesional(){
 	
 }
 
+function obtener_datos_adelanto(){
+  var id_agremiado = $("#delegado").val();
+    
+  var msgLoader = "";
+  msgLoader = "Procesando, espere un momento por favor";
+  var heightBrowser = $(window).width()/2;
+  $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+
+  $.ajax({
+    url: '/adelanto/obtener_datos_adelanto/' + id_agremiado,
+    dataType: "json",
+    success: function(result){
+      alert(result);
+      var datos_adelanto = result[0].datos_adelanto;
+     
+
+      $("#municipalidad").val(datos_adelanto.comision);
+      $("#puesto").val(datos_adelanto.puesto);
+
+      $('.loader').hide();
+    }
+  });
+}
+
 function obtenerDelegado(){
 
   var periodo = $("#id_periodo").val();
@@ -401,11 +426,23 @@ function modal_personaNuevo(){
                     <?php if($id>0){?>
                     <input id="delegado_" name="delegado_" class="form-control form-control-sm"  value="<?php echo $persona->apellido_paterno ." ". $persona->apellido_materno ." ". $persona->nombres ?>" type="text" readonly="readonly">										
                     <?php }else{?>
-                    <select name="delegado" id="delegado" class="form-control form-control-sm" onchange="validar_delegado()">
+                    <select name="delegado" id="delegado" class="form-control form-control-sm" onchange="obtener_datos_adelanto()">
                       <option value="">--Selecionar--</option>
                       
                     </select>
                     <?php }?>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">Municipalidad</label>
+                    <input id="municipalidad" name="municipalidad" class="form-control form-control-sm" value="<?php //echo $adelanto->total_adelanto ?>" type="text" disabled='disabled'>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="control-label form-control-sm">Puesto</label>
+                    <input id="puesto" name="puesto" class="form-control form-control-sm" value="<?php //echo $adelanto->total_adelanto ?>" type="text" disabled='disabled'>
                   </div>
                 </div>
                 <div class="col-lg-3">

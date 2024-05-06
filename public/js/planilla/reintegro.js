@@ -485,10 +485,11 @@ function datatablenew(){
 				"mRender": function (data, type, row) {
 					var importe_total = "";
 					if(row.importe_total!= null){importe_total = parseFloat(row.importe_total).toFixed(2)};
-					return importe_total;
+					return '<div style="text-align: right;">' + importe_total + '</div>';
 				},
 				"bSortable": true,
-				"aTargets": [7]
+				"aTargets": [7],
+				"className": "text-right"
 				},
 			
 				{

@@ -472,7 +472,8 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado</label>
 								<?php if($id>0){?>
-								<input id="delegado_" name="delegado_" class="form-control form-control-sm"  value="<?php echo $persona_->apellido_paterno ." ". $persona_->apellido_materno ." ". $persona_->nombres ?>" type="text" readonly="readonly">										
+								<input id="delegado_" name="delegado_" class="form-control form-control-sm"  value="<?php echo $persona_->apellido_paterno ." ". $persona_->apellido_materno ." ". $persona_->nombres ?>" type="text" readonly="readonly">
+								<input type="hidden" name="id_delegado_" id="id_delegado_" value="<?php echo $delegadoTributo->id_agremiado?>">								
 								<?php }else{?>
 								<select name="delegado" id="delegado" class="form-control form-control-sm" onchange="validar_delegado()">
 									<option value="">--Selecionar--</option>
@@ -585,21 +586,21 @@ container: '#myModal modal-body'
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha de Solicitud</label>
-								<input id="fecha_solicitud" name="fecha_solicitud" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->fecha_solicitud?>" type="text">																				
+								<input id="fecha_solicitud" name="fecha_solicitud" class="form-control form-control-sm"  value="<?php if($delegadoTributo->fecha_solicitud!="")echo date("d-m-Y", strtotime($delegadoTributo->fecha_solicitud))?>" type="text">																				
 							</div>
 						</div>
 
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha Inicio</label>
-								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->fecha_inicio?>" type="text">																				
+								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php if($delegadoTributo->fecha_inicio!="")echo date("d-m-Y", strtotime($delegadoTributo->fecha_inicio))?>" type="text">																				
 							</div>
 						</div>
 
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Fecha de Fin</label>
-								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php echo $delegadoTributo->fecha_fin?>" type="text">																				
+								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php if($delegadoTributo->fecha_fin!="")echo date("d-m-Y", strtotime($delegadoTributo->fecha_fin))?>" type="text">																				
 							</div>
 						</div>
 						
