@@ -231,7 +231,7 @@ class PlanillaDelegadoController extends Controller
 	
 	public function send_planilla_delegado(Request $request){
 		//exit();
-		$msg = "";
+		$msg = true;
 		$planillaDelegadoExiste = PlanillaDelegado::where("id_periodo_comision",$request->id_periodo_bus)->where("periodo",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
 		
 		if($planillaDelegadoExiste){
@@ -242,6 +242,22 @@ class PlanillaDelegadoController extends Controller
 		}
 		
 		return $msg;
+		
+	}
+	
+	public function eliminar_planilla_delegado(Request $request){
+		/*
+		$msg = "";
+		$planillaDelegadoExiste = PlanillaDelegado::where("id_periodo_comision",$request->id_periodo_bus)->where("periodo",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
+		*/
+		//if($planillaDelegadoExiste){
+			//$msg = false;
+		//}else{
+			$planillaDelegado_model = new PlanillaDelegado;
+			$planillaDelegado_model->eliminar_planilla_delegado($request->id_periodo_bus,$request->anio,$request->mes);
+		//}
+		
+		//return $msg;
 		
 	}
 	

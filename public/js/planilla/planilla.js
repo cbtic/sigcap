@@ -236,6 +236,27 @@ function generarPlanilla(){
 	});
 	
 }
+
+function eliminarPlanilla(){
+	
+	$.ajax({
+			url: "/planilla/eliminar_planilla_delegado",
+			type: "POST",
+			data : $("#frmPlanilla").serialize(),
+			success: function (result) {
+					/*
+					if(result==false){
+						bootbox.alert("Planilla ya esta registrado"); 
+						return false;
+					}
+					*/
+					cargarPlanillaDelegado();
+					
+			}
+	});
+	
+}
+
 /*
 function generarAsientoPlanilla(){
 	
