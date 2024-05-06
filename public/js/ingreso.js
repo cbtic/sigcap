@@ -2224,18 +2224,20 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			var id = $('#id').val();
-			var numero_documento = $('#numero_documento').val();
-            var agremiado = $('#agremiado').val();
-			var sexo = $('#sexo').val();
-			var estado = $('#estado').val();
+			var numero_documento = $('#numero_documento_m').val();
+			var tipo_documento = $('#tipo_documento_m').val();
+            var agremiado = $('#agremiado_m').val();
+			var sexo = $('#sexo_m').val();
+			var estado = $('#estado_m').val();
 			var _token = $('#_token').val();
+			//alert(tipo_documento);
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 //"contentType": "application/json; charset=utf-8",
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,numero_documento:numero_documento,agremiado:agremiado,sexo:sexo,estado:estado,
+						id:id,numero_documento:numero_documento,agremiado:agremiado,sexo:sexo,estado:estado, tipo_documento:tipo_documento,
 						_token:_token
                        },
                 "success": function (result) {
@@ -2270,6 +2272,17 @@ function datatablenew(){
                 "aTargets": [1],
 				"className": "dt-center",
                 },
+                {
+					"mRender": function (data, type, row) {
+						var numero_cap = "";
+						if(row.numero_cap!= null)numero_cap = row.numero_cap;
+						return numero_cap;
+					},
+					"bSortable": false,
+					"aTargets": [2],
+					"className": "dt-center",
+				},
+
 				{
 				"mRender": function (data, type, row) {
 					var agremiado = "";
@@ -2277,7 +2290,7 @@ function datatablenew(){
 					return agremiado;
 				},
 				"bSortable": false,
-				"aTargets": [2]
+				"aTargets": [3]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -2286,7 +2299,7 @@ function datatablenew(){
 					return fecha_nacimiento;
 				},
 				"bSortable": false,
-				"aTargets": [3]
+				"aTargets": [4]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -2295,7 +2308,7 @@ function datatablenew(){
 					return nacionalidad;
 				},
 				"bSortable": false,
-				"aTargets": [4]
+				"aTargets": [5]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -2304,7 +2317,7 @@ function datatablenew(){
 					return sexo;
 				},
 				"bSortable": false,
-				"aTargets": [5]
+				"aTargets": [6]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -2313,7 +2326,7 @@ function datatablenew(){
 					return numero_celular;
 				},
 				"bSortable": false,
-				"aTargets": [6]
+				"aTargets": [7]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -2322,7 +2335,7 @@ function datatablenew(){
 					return correo;
 				},
 				"bSortable": false,
-				"aTargets": [7]
+				"aTargets": [8]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -2331,7 +2344,7 @@ function datatablenew(){
 					return direccion;
 				},
 				"bSortable": false,
-				"aTargets": [8]
+				"aTargets": [9]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -2345,22 +2358,30 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [9]
+					"aTargets": [10]
 				},
 				{
 					"mRender": function (data, type, row) {
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalPersona('+row.id+')" ><i class="fa fa-view"></i> Ver</button>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="selPerona('+row.numero_cap+')" ><i class="fa fa-view"></i> Ver</button>';
 												
 						html += '</div>';
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [10],
+					"aTargets": [11],
 				},
 
             ]
     });
+
+}
+
+function selPerona(cap){
+	
+	$('#numero_documento').val(cap);
+	$('#openOverlayOpc').modal('hide');
+	obtenerBeneficiario();
 
 }
