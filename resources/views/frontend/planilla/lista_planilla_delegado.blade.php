@@ -84,7 +84,7 @@
 			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->total_honorario,2)?></td>
 			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->descuento,2)?></td>
 			<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->saldo,2)?></td>
-			<td class="text-left" style="vertical-align:middle"><?php echo $row->observaciones?></td>	
+			<td class="text-left" style="vertical-align:middle"><?php echo $row->observaciones?></td>
 		</tr>
 		<?php 
 		

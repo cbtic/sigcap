@@ -28,7 +28,10 @@ $(document).ready(function () {
 		generarAsientoPlanilla();
 	});
 	
+	$('#btnDescargar').on('click', function () {
+		descargarExcel()
 
+	});
 	
 
 	$('#agremiado_bus').keypress(function(e){
@@ -761,5 +764,18 @@ function send_recibo_honorario(){
     });
 }
 
+function descargarExcel(){
+		
+	var periodo = $('#id_periodo_bus').val();
+	var anio = $('#anio').val();
+	var mes = $('#mes').val();
+	
+	if (periodo == "")periodo = 0;
+	if (anio == "")anio = 0;
+	if (mes == "")mes = 0;
+	
+	location.href = '/planilla/exportar_planilla_delegado/' + periodo + '/' + anio + '/' + mes;
+	
+}
 
 
