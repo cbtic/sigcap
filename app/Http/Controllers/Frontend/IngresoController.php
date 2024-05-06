@@ -785,7 +785,8 @@ class IngresoController extends Controller
 
 		$tablaMaestra_model = new TablaMaestra;
 		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
-		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(110);
+
 
 		return view('frontend.ingreso.modal_consulta_persona',compact('sexo','tipo_documento', 'id_tipo_documento'));
 	}
