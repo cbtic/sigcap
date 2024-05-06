@@ -2292,24 +2292,8 @@ function datatablenew(){
 				"bSortable": false,
 				"aTargets": [3]
 				},
-				{
-				"mRender": function (data, type, row) {
-					var fecha_nacimiento = "";
-					if(row.fecha_nacimiento!= null)fecha_nacimiento = row.fecha_nacimiento;
-					return fecha_nacimiento;
-				},
-				"bSortable": false,
-				"aTargets": [4]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var nacionalidad = "";
-					if(row.nacionalidad!= null)nacionalidad = row.nacionalidad;
-					return nacionalidad;
-				},
-				"bSortable": false,
-				"aTargets": [5]
-				},
+
+
 				{
 				"mRender": function (data, type, row) {
 					var sexo = "";
@@ -2317,35 +2301,10 @@ function datatablenew(){
 					return sexo;
 				},
 				"bSortable": false,
-				"aTargets": [6]
+				"aTargets": [4]
 				},
-				{
-				"mRender": function (data, type, row) {
-					var numero_celular = "";
-					if(row.numero_celular!= null)numero_celular = row.numero_celular;
-					return numero_celular;
-				},
-				"bSortable": false,
-				"aTargets": [7]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var correo = "";
-					if(row.correo!= null)correo = row.correo;
-					return correo;
-				},
-				"bSortable": false,
-				"aTargets": [8]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var direccion = "";
-					if(row.direccion!= null)direccion = row.direccion;
-					return direccion;
-				},
-				"bSortable": false,
-				"aTargets": [9]
-				},
+
+
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -2358,19 +2317,19 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [10]
+					"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="selPerona('+row.numero_cap+')" ><i class="fa fa-view"></i> Ver</button>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="selPerona('+row.numero_cap+','+row.numero_documento+')" ><i class="fa fa-view"></i> Ver</button>';
 												
 						html += '</div>';
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [11],
+					"aTargets": [6],
 				},
 
             ]
@@ -2378,9 +2337,20 @@ function datatablenew(){
 
 }
 
-function selPerona(cap){
+function selPerona(cap, numero_documento){
 	
-	$('#numero_documento').val(cap);
+	//alert(cap);
+	if(cap!=null){
+		$('#numero_documento').val(cap);
+	} else{
+		$('#numero_documento').val(numero_documento);
+		$('#tipo_documento').val(78);
+
+	}
+
+
+	
+
 	$('#openOverlayOpc').modal('hide');
 	obtenerBeneficiario();
 

@@ -341,13 +341,8 @@
 																	<th>Tipo Doc.</th>
 																	<th>N&uacute;mero Doc.</th>
 																	<th>N&uacute;mero CAP</th>
-																	<th>Nombre</th>
-																	<th>Fecha Nacimiento</th>
-																	<th>Nacionalidad</th>
-																	<th>Sexo</th>
-																	<th>N&uacute;mero Celular</th>
-																	<th>Correo</th>
-																	<th>Direcci&oacute;n</th>
+																	<th>Nombre</th>																																	
+																	<th>Sexo</th>																	
 																	<th>Estado</th>
 																	<th>Acciones</th>
 																</tr>
