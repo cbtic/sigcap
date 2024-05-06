@@ -274,4 +274,12 @@ class AdelantoController extends Controller
 
 		echo $adelanto->id;
     }
+
+	public function obtener_datos_adelanto($id_agremiado){
+		
+		$adelanto_model = new Adelanto;
+		$datos_adelanto = $adelanto_model->getDatosAdelanto($id_agremiado);
+		
+		echo json_encode($datos_adelanto);
+	}
 }

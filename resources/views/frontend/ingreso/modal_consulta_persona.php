@@ -221,6 +221,7 @@
 	});
 
 
+
 </script>
 
 <script>
@@ -283,17 +284,35 @@
 													<div class="card-body">
 														<div class="row">
 
-														<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-															<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="Numero Documento">
-														</div>
-														<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-															<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
-														</div>
-
 														<div class="col-lg-2">
 															<div class="form-group">
-																<select name="sexo" id="sexo" class="form-control form-control-sm">
-																	<option value=""selected="selected">--Selecionar Sexo--</option>
+
+																<select name="tipo_documento_m" id="tipo_documento_m" class="form-control form-control-sm" onchange="" >
+																	<option value="">-Tipo Documento-</option>
+																	<?php
+																	foreach ($tipo_documento as $row) { ?>
+																		<option value="<?php echo $row->codigo ?>"> <?php echo $row->denominacion ?></option>
+																	<?php
+																	}
+																	?>
+																</select>
+
+															</div>
+														</div>
+
+
+														<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+															<input class="form-control form-control-sm" id="numero_documento_m" name="numero_documento_m" placeholder="Numero Documento">
+														</div>
+
+														<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+															<input class="form-control form-control-sm" id="agremiado_m" name="agremiado_m" placeholder="Nombres">
+														</div>
+
+														<div class="col-lg-1">
+															<div class="form-group">
+																<select name="sexo_m" id="sexo_m" class="form-control form-control-sm">
+																	<option value=""selected="selected">-Sexo-</option>
 																	<option value="M">Masculino</option>
 																	<option value="F">Femenino</option>
 																</select>
@@ -301,8 +320,8 @@
 															</div>
 														</div>
 														
-														<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-															<select name="estado" id="estado" class="form-control form-control-sm">
+														<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+															<select name="estado_m" id="estado_m" class="form-control form-control-sm">
 																<option value="">Todos</option>
 																<option value="1" selected="selected">Activo</option>
 																<option value="0">Eliminado</option>
@@ -319,15 +338,11 @@
 															<table id="tblPersonas" class="table table-hover table-sm">
 																<thead>
 																<tr style="font-size:13px">
-																	<th>Tipo Documento</th>
-																	<th>N&uacute;mero Documento</th>
-																	<th>Nombre</th>
-																	<th>Fecha Nacimiento</th>
-																	<th>Nacionalidad</th>
-																	<th>Sexo</th>
-																	<th>N&uacute;mero Celular</th>
-																	<th>Correo</th>
-																	<th>Direcci&oacute;n</th>
+																	<th>Tipo Doc.</th>
+																	<th>N&uacute;mero Doc.</th>
+																	<th>N&uacute;mero CAP</th>
+																	<th>Nombre</th>																																	
+																	<th>Sexo</th>																	
 																	<th>Estado</th>
 																	<th>Acciones</th>
 																</tr>

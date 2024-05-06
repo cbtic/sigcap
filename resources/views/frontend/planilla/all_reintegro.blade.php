@@ -197,7 +197,7 @@
                             <th>Agremiado</th>
 							<th>Comisi&oacute;n</th>
 							<th>Mes</th>
-							<th>Importe Total</th>
+							<th style="text-align: right;">Importe Total</th>
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

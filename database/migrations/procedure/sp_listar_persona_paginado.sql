@@ -1,3 +1,5 @@
+-- DROP FUNCTION public.sp_listar_persona_paginado(varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, refcursor);
+
 CREATE OR REPLACE FUNCTION public.sp_listar_persona_paginado(p_tipo_documento character varying, p_numero_documento character varying, p_agremiado character varying, p_fecha_nacimiento character varying, p_tipo_persona character varying, p_grupo_sanguineo character varying, p_lugar_nacimiento character varying, p_nacionalidad character varying, p_sexo character varying, p_numero_celular character varying, p_correo character varying, p_direccion character varying, p_ruc character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -28,9 +30,14 @@ begin
 	
 	v_where = ' Where 1=1  ';
 	
+	If p_tipo_documento<>'' Then
+	 v_where:=v_where||'And p.id_tipo_documento ilike ''%'||p_tipo_documento||'%'' ';
+	End If;
+
 	If p_numero_documento<>'' Then
 	 v_where:=v_where||'And p.numero_documento ilike ''%'||p_numero_documento||'%'' ';
 	End If;
+
 	
 	If p_agremiado<>'' Then
 	 v_where:=v_where||'And p.nombres ||  p.apellido_paterno ||  p.apellido_materno ilike ''%'||p_agremiado||'%'' ';

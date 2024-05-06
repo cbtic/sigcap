@@ -1354,7 +1354,9 @@ function guardar_solicitud_derecho_revision(){
 	var superManzana = $('#superManzana').val();
 	var lote = $('#lote').val();
 	var sitio = $('#sitio').val();
+	var direccion_sitio = $('#direccion_sitio').val();
 	var zona = $('#zona').val();
+	var direccion_zona = $('#direccion_zona').val();
 	var tipo = $('#tipo').val();
 	var sublote = $('#sublote').val();
 	var fila = $('#fila').val();
@@ -1366,7 +1368,7 @@ function guardar_solicitud_derecho_revision(){
 			data : {_token:_token,id:id,numero_cap:numero_cap,n_revision:n_revision,direccion_proyecto:direccion_proyecto,
 				departamento:departamento,provincia:provincia,distrito:distrito,municipalidad:municipalidad,nombre_proyecto:nombre_proyecto,
 				parcela:parcela,superManzana:superManzana,lote:lote,fila:fila,sitio:sitio,zona:zona,tipo:tipo,sublote:sublote,zonificacion:zonificacion,
-				id_solicitud:id_solicitud},
+				direccion_sitio:direccion_sitio,direccion_zona:direccion_zona,id_solicitud:id_solicitud},
 			success: function (result) {
 				
 				//$('#openOverlayOpc').modal('hide');

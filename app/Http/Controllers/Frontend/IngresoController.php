@@ -474,6 +474,7 @@ class IngresoController extends Controller
         $id_persona = $request->id_persona;
         $tipo_documento = $request->id_tipo_documento_;
         $periodo = $request->cboPeriodo_b;
+        $mes = $request->cboMes_b;
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = $id_concepto;//26412;
         //$filas = $request->cboFilas;
@@ -481,7 +482,7 @@ class IngresoController extends Controller
         // print_r($concepto);exit();
         $valorizaciones_model = new Valorizacione;
         $sw = true;
-        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas,$Exonerado);
+        $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado);
        
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
@@ -785,7 +786,8 @@ class IngresoController extends Controller
 
 		$tablaMaestra_model = new TablaMaestra;
 		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
-		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(110);
+
 
 		return view('frontend.ingreso.modal_consulta_persona',compact('sexo','tipo_documento', 'id_tipo_documento'));
 	}
