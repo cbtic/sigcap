@@ -49,10 +49,17 @@ class IngresoController extends Controller
                 
         $concepto = Concepto::find(26411); //CUOTA GREMIAL
 
+        $mes = [
+            '' => 'Todos Meses','01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
+            '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
+            '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
+            '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
+        ];
+
         //$caja_usuario = $caja_model;
         //print_r($concepto);exit();
 
-        return view('frontend.ingreso.create',compact('persona','caja','caja_usuario','tipo_documento','pronto_pago', 'concepto'));
+        return view('frontend.ingreso.create',compact('persona','caja','caja_usuario','tipo_documento','pronto_pago', 'concepto','mes'));
 
     }
 
@@ -82,6 +89,8 @@ class IngresoController extends Controller
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
 
         $periodo = $request->cboPeriodo_b;
+        $mes = $request->cboMes_b;
+        //print_r($mes);exit();
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = $request->cboTipoConcepto_b;
         $filas = $request->cboFilas;
@@ -93,7 +102,7 @@ class IngresoController extends Controller
         if ($SelFracciona=="S"){
             $valorizacion = $valorizaciones_model->getValorizacionFrac($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
         }else{
-            $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas,$Exonerado);
+            $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado);
         }
         
        
@@ -130,6 +139,18 @@ class IngresoController extends Controller
 
     }
 
+    public function listar_valorizacion_mes(Request $request){
+        $id_persona = $request->id_persona;
+        $tipo_documento = $request->tipo_documento;
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+        
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getMesValorizacion($tipo_documento,$id_persona);
+
+        //print_r($resultado);exit();
+		return $resultado;
+
+    }
 
     public function obtener_pago($tipo_documento,$id_persona){       
         $valorizaciones_model = new Valorizacione;

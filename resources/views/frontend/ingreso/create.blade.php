@@ -466,7 +466,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                                                <div class="form-group form-group-sm">
+                                                    <select id="cboMes_b" name="cboMes_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     <select name="cboTipoCuota_b" id="cboTipoCuota_b" class="form-control form-control-sm" onchange="cargarValorizacion()">
                                                         <option value="" selected>Todas cuotas</option>
@@ -496,7 +503,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                                            <div class="col-lg-1 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     <input class="form-check-input" type="checkbox"  id="chkExonerado"  value="false" onchange="">
                                                     <label class="form-check-label">
