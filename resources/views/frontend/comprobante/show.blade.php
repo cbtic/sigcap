@@ -309,7 +309,7 @@ br {
 													
                                                   
                                                     
-                                                    <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV'){?>
+                                                    <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV' || $factura->tipo == 'NC' || $factura->tipo == 'ND'){?>
                                             
                                                         <table>
                                                         <tbody>

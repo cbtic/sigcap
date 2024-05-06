@@ -162,7 +162,21 @@ function guardarFactura(){
 		msg+="El total de medio de pago no coincide al total del comprobante..<br>";
 	}
 
-	
+
+	var direccion = $('#direccion').val();
+	var email = $('#email').val();
+	var direccion2 = $('#direccion2').val();
+	var email2 = $('#email2').val();
+	var razon_social2 = $('#razon_social2').val();
+
+	if(razon_social2!=''){
+		direccion = direccion2;
+		email= email2;
+	}
+
+	if(direccion=='')msg+="Debe ingresar la direcci&oacute;n del comprobante<br>";
+	if(email=='')msg+="Debe ingresar el Email del comprobante<br>";
+
 
 	if (id_formapago_==2)
 
