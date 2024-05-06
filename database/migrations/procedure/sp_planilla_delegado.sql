@@ -117,19 +117,19 @@ begin
 	,(case 
 		when id_tipo_tributo=460 or id_tipo_tributo=0 then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) 
 		when id_tipo_tributo=461 then 0 
-		when id_tipo_tributo=458 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1') then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08)
+		when id_tipo_tributo=458 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1') then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) else 0
 	end) ir_cuarta
 	
 	,(((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)-(case 
 		when id_tipo_tributo=460 or id_tipo_tributo=0 then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) 
 		when id_tipo_tributo=461 then 0 
-		when id_tipo_tributo=458 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1') then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08)
+		when id_tipo_tributo=458 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1') then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) else 0
 	end))total_honorario
 	,descuento
 	,((((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)-(case 
 		when id_tipo_tributo=460 or id_tipo_tributo=0 then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) 
 		when id_tipo_tributo=461 then 0 
-		when id_tipo_tributo=458 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1') then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08)
+		when id_tipo_tributo=458 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1') then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) else 0
 	end))-descuento)saldo
 	,1
 	from (
