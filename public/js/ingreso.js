@@ -2341,15 +2341,13 @@ function selPerona(cap, numero_documento){
 	
 	//alert(cap);
 	if(cap!=null){
+		$('#tipo_documento').val(85);
 		$('#numero_documento').val(cap);
 	} else{
 		$('#numero_documento').val(numero_documento);
 		$('#tipo_documento').val(78);
 
 	}
-
-
-	
 
 	$('#openOverlayOpc').modal('hide');
 	obtenerBeneficiario();
