@@ -699,10 +699,13 @@ function obtenerTitular(){
 				if($(this).val() == idMedio)flagx++;
 			});
 		
-			if(flagx > 1){
-				bootbox.alert("El Medio de Pago ya ha sido ingresado");
-				$("#idMedio"+ind).val("").trigger("change");
-				return false;			
+			if(flagx > 1 && idMedio!='254'){
+				//alert(idMedio);
+				//if (idMedio!='254'){
+					bootbox.alert("El Medio de Pago ya ha sido ingresado");
+					$("#idMedio"+ind).val("").trigger("change");
+					return false;				
+				//}
 			}
 			else{
 				
