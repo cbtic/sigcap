@@ -463,6 +463,8 @@ label.form-control-sm{
 														
 														<input class="btn btn-danger pull-rigth" onclick="eliminarPlanilla()" value="Eliminar Planilla" type="button" id="btnGenerar" style="margin-left:20px" />
 														
+														<input class="btn btn-primary pull-rigth" onclick="descargarPlanilla()" value="Descargar Excel" type="button" id="btnDescargar" style="margin-left:20px" />
+														
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 													</div>
 													
