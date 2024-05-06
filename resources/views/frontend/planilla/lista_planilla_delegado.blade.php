@@ -140,9 +140,12 @@
 			<?php
 			
 			$sesiones_asesor = 0.5 * $sesiones_asesor;
-			$fondo_comun_neto = ($fondo_comun->saldo) - $reintegro - $total_movilidad - $coordinador;
+			$fondo_comun_saldo = (isset($fondo_comun->saldo))?$fondo_comun->saldo:0;
+			$fondo_comun_neto = ($fondo_comun_saldo) - $reintegro - $total_movilidad - $coordinador;
 			$total_sesiones = $sesiones - $sesiones_asesor;
-			$importe_por_sesion = $fondo_comun_neto / $total_sesiones;
+			
+			$importe_por_sesion=0;
+			if($total_sesiones>0)$importe_por_sesion = $fondo_comun_neto / $total_sesiones;
 			
 			?>
 			<div class="row">
@@ -150,7 +153,7 @@
 				Saldo a favor de los Delegados Pro Fondo Comun
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<?php echo number_format($fondo_comun->saldo,2)?>
+				<?php echo number_format($fondo_comun_saldo,2)?>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				Menos Pagos a Destiempo de Meses pasados

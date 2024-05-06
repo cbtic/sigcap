@@ -24,6 +24,19 @@ where pd.id=".$id;
         return $data;
     }
 	
+	function eliminar_planilla_delegado($id_periodo,$anio,$mes){
+
+        $cad = "delete from planilla_delegado_detalles where id_planilla=(select id from planilla_delegados pd where id_periodo_comision=".$id_periodo." and periodo=".$anio." and mes=".$mes." and estado='1')";
+		
+		$data = DB::select($cad);
+		
+		$cad = "delete from planilla_delegados where id_periodo_comision=".$id_periodo." and periodo=".$anio." and mes=".$mes." and estado='1'";
+		
+		$data = DB::select($cad);
+		
+        return $data;
+    }
+	
 	function getMonto($id_tipo_reintegro,$id_comision,$id_periodo,$mes){
 
 		if($id_tipo_reintegro==438){

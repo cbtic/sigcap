@@ -212,6 +212,7 @@ Route::get('ingreso/obtener_valorizacion/{tipo_documento}/{id_persona}', [Ingres
 Route::post('ingreso/listar_valorizacion', [IngresoController::class, 'listar_valorizacion'])->name('ingreso.listar_valorizacion');
 Route::post('ingreso/listar_valorizacion_concepto', [IngresoController::class, 'listar_valorizacion_concepto'])->name('ingreso.listar_valorizacion_concepto');
 Route::post('ingreso/listar_valorizacion_periodo', [IngresoController::class, 'listar_valorizacion_periodo'])->name('ingreso.listar_valorizacion_periodo');
+Route::post('ingreso/listar_valorizacion_mes', [IngresoController::class, 'listar_valorizacion_mes'])->name('ingreso.listar_valorizacion_mes');
 Route::get('ingreso/obtener_pago/{tipo_documento}/{persona_id}', [IngresoController::class, 'obtener_pago'])->name('ingreso.obtener_pago')->where('tipo_documento', '(.*)');
 Route::post('ingreso/sendCaja', [IngresoController::class, 'sendCaja'])->name('ingreso.sendCaja');
 Route::get('ingreso/modal_otro_pago/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_otro_pago'])->name('ingreso.modal_otro_pago');
@@ -534,7 +535,8 @@ Route::get('municipalidad/obtener_distrito/{idDepartamento}/{idProvincia}', [Mun
 Route::get('planillaDelegado/consulta_planilla_delegado', [PlanillaDelegadoController::class, 'consulta_planilla_delegado'])->name('planillaDelegado.consulta_planilla_delegado');
 Route::get('planillaDelegado/consulta_reintegro', [PlanillaDelegadoController::class, 'consulta_reintegro'])->name('planillaDelegado.consulta_reintegro');
 Route::post('planillaDelegado/obtener_planilla_delegado', [PlanillaDelegadoController::class, 'obtener_planilla_delegado'])->name('planillaDelegado.obtener_planilla_delegado');
-Route::post('planilla/send_planilla_delegado', [PlanillaDelegadoController::class, 'send_planilla_delegado'])->name('sesion.send_planilla_delegado');
+Route::post('planilla/send_planilla_delegado', [PlanillaDelegadoController::class, 'send_planilla_delegado'])->name('planilla.send_planilla_delegado');
+Route::post('planilla/eliminar_planilla_delegado', [PlanillaDelegadoController::class, 'eliminar_planilla_delegado'])->name('planilla.eliminar_planilla_delegado');
 Route::get('planilla/obtener_monto/{id_tipo_reintegro}/{id_comision}/{id_periodo}/{mes}', [PlanillaDelegadoController::class, 'obtener_monto'])->name('planillaDelegado.obtener_monto');
 
 Route::post('planilla/listar_reintegro_ajax', [PlanillaDelegadoController::class, 'listar_reintegro_ajax'])->name('planilla.listar_reintegro_ajax');

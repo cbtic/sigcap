@@ -225,13 +225,34 @@ function cargarcboPeriodo(){
 		type: "POST",
 		data : $("#frmValorizacion").serialize(),
 		success: function(result){
-			var option = "<option value='' selected='selected'>Periodo</option>";
+			var option = "<option value='' selected='selected'>-Periodo-</option>";
 			$('#cboPeriodo_b').html("");
 			$(result).each(function (ii, oo) {
 				option += "<option value='"+oo.periodo+"'>"+oo.periodo+"</option>";
 			});
 			$('#cboPeriodo_b').html(option);
 			$('#cboPeriodo_b').select2();
+			
+			//$('.loader').hide();			
+		}
+		
+	});
+}
+
+function cargarcboMes(){    	
+
+	$.ajax({
+		url: "/ingreso/listar_valorizacion_mes",
+		type: "POST",
+		data : $("#frmValorizacion").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>-Mes-</option>";
+			$('#cboMes_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.mes+"</option>";
+			});
+			$('#cboMes_b').html(option);
+			$('#cboMes_b').select2();
 			
 			//$('.loader').hide();			
 		}
@@ -831,7 +852,7 @@ function obtenerBeneficiario(){
 				cargarPagos();
 				cargarcboTipoConcepto();
 				cargarcboPeriodo();
-				//cargarDudoso();
+				cargarcboMes();
 			}
 			else {
 
