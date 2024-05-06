@@ -12,6 +12,7 @@ class Comprobante extends Model
 		return $this->readFuntionPostgres('sp_listar_comprobante_paginado',$p);
     }
 
+
     function fecha_hora_actual(){
 		
 		$cad = "select now() as fecha_actual";
@@ -70,6 +71,7 @@ class Comprobante extends Model
        
     }
     
+
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';
@@ -87,6 +89,37 @@ class Comprobante extends Model
     }
     use HasFactory;
 	
+     
+    function getCronogramaPagos($id){
+
+        $cad = "select item ,monto,fecha_vencimiento  
+                from comprobante_cuotas cc 
+                where cc.id_comprobante='". $id . "'
+                order by cc.item" ;
+
+                //print_r($cad); exit();
+		$data = DB::select($cad);
+        //print_r($data); exit();
+        return $data;
+    }
+   
+
+    function getDatosByComprobante($id){
+
+        $cad = "select u.name as usuario,a.numero_cap ,p.id   
+                from comprobantes c 
+                inner join users u on c.id_usuario_inserta =u.id 
+                left join personas p on c.cod_tributario =p.numero_documento 
+                inner join agremiados a on a.id_persona =p.id 
+                where c.id='". $id . "'" ;
+
+		$data = DB::select($cad);
+
+        //print_r($data); exit();
+
+        return $data;
+    }
+
 	function getComprobanteByTipoSerieNumero($numero_comprobante){
 
         $cad = "select * 

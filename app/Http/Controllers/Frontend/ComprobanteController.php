@@ -1047,7 +1047,14 @@ class ComprobanteController extends Controller
 		//echo "facd_tipo=>".$facd_tipo."<br>";
 		
 		$id_guia = 0;
+        
+        $datos_model = new Comprobante;
 		
+        $datos=  $datos_model->getDatosByComprobante($id);
+        
+        $cronograma=  $datos_model->getCronogramaPagos($id);
+        //print_r($datos); exit();
+
 		if($factura->nro_guia!=""){
 			$fac_serie_guia = $factura->serie_guia;
 			$fac_nro_guia = $factura->nro_guia;
@@ -1069,7 +1076,7 @@ class ComprobanteController extends Controller
        // $model = new ComprobanteDetalle;
        // $comprobanteDetalle = $model->getMaestroByTipo(85);
 
-        return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia'));
+        return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia','datos','cronograma'));
     }
 
 	public function listar_comprobante(Request $request){
