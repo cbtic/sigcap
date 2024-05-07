@@ -708,15 +708,15 @@ class ComprobanteController extends Controller
             $id_persona2 = $request->persona2;
 
 /*
-            echo "ubicacion_id -> {$ubicacion_id}\n ";
-            echo "id_persona -> {$id_persona}\n ";
+            echo "ubicacion_id => {$ubicacion_id}\n ";
+            echo "id_persona => {$id_persona}\n ";
 
-            echo "ubicacion_id2 -> {$ubicacion_id2}\n ";
-            echo "id_persona2 -> {$id_persona2}\n ";
-            
-            exit();
+            echo "ubicacion_id2 => {$ubicacion_id2}\n ";
+            echo "id_persona2 => {$id_persona2}\n ";
+  */          
+  //          exit();
 
-*/
+
 
             $id_persona_act = 0;
             $id_ubicacion_act = 0;
@@ -762,15 +762,14 @@ class ComprobanteController extends Controller
 
             echo "ubicacion_id2 -> {$ubicacion_id2}\n ";
             echo "id_persona2 -> {$id_persona2}\n ";
-  */          
-           // exit();
+    */        
+          //  exit();
 
-            if ($id_persona_act != 0 || $id_ubicacion_act != 0 ) {
+          
+            if ($id_persona_act != '' || $id_ubicacion_act != '' ) {
 
-               // exit($id_persona_act);
-
-                
-                if ($tipoF == 'FT' &&  $ubicacion_id =='' )
+               // exit($id_persona_act);                
+                if ($tipoF == 'FT' &&  $ubicacion_id !='' )
                 {
                     $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
                     $empresa->direccion = $direccion;
@@ -813,6 +812,7 @@ class ComprobanteController extends Controller
                 
 
             }
+            
 
             $id_persona = $request->persona;
             $ubicacion_id = $request->ubicacion;
