@@ -2006,10 +2006,11 @@ class ComprobanteController extends Controller
  
                 $factura_upd = Comprobante::find($id_factura);
                 if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
-                
+                //print_r($tarifa); exit();
+
                 $factura_upd->save();
  
-                //print_r($tarifa); exit();
+               
                 foreach ($tarifa as $key => $value) {
                     //echo "denominacion=>".$value['denominacion']."<br>";
                     if ($adelanto == 'S'){
