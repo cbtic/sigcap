@@ -332,7 +332,7 @@ br {
                                                         </tr>
                                                         <tr>
                                                         <td>CAP :</td>
-                                                        <td style="text-align: right;"><span class="resaltado">{{ $datos[0]->numero_cap }}</span></td>
+                                                        <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
                                                         </tr>
                                                         </tbody>
                                                         </table>
@@ -467,7 +467,7 @@ br {
 
                                     <div class="separador">&nbsp;</div>
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <p>Usuario: <span class="resaltado">{{ $datos[0]->usuario }}</span></p>
+                                                        <p>Usuario: <span class="resaltado">{{ $datos->usuario }}</span></p>
                                                     </div>
 
                                     <hr style="width:90%", size="3", color=black>

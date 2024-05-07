@@ -1051,6 +1051,7 @@ class ComprobanteController extends Controller
         $datos_model = new Comprobante;
 		
         $datos=  $datos_model->getDatosByComprobante($id);
+        //print_r($id); exit();
         
         $cronograma=  $datos_model->getCronogramaPagos($id);
         //print_r($datos); exit();
