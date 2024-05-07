@@ -179,7 +179,7 @@ function modalVerFormato(){
 						<div class="col-lg-3" >
 							<div class="form-group "id="agremiado_">
 								<label class="control-label form-control-sm">Nombre</label>
-								<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->nombres?>" type="text" readonly='readonly'>
+								<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->apellido_paterno.' '. $datos_persona->apellido_materno.' '.$datos_persona->nombres?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="persona_">
 								<label class="control-label form-control-sm">Nombre/Raz&oacute;n Social</label>
@@ -274,14 +274,24 @@ function modalVerFormato(){
 
 						<div class="col-lg-2">
                             <label class="control-label form-control-sm">Departamento</label>
-                            <select name="departamento" id="departamento" class="form-control form-control-sm" onChange="obtenerProvincia()">
-                                <option value="">--Selecionar--</option>
+                            <select name="departamento" id="departamento" class="form-control form-control-sm" onChange="obtenerProvincia()" disabled='disabled'>
+                                <?php if($id>0){ ?>
+								<option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($departamento as $row) {?>
                                 <option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($derechoRevision_->id_ubigeo,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
                                 <?php 
-                                }
+									}
+								}else {?>
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($departamento as $row) {?>
+									<option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==15)echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
+									<?php 
+									}
+								}
                                 ?>
+
                             </select>
 						</div>
 					

@@ -723,3 +723,4 @@ Route::get('planilla/eliminar_reintegro/{id}/{estado}', [PlanillaDelegadoControl
 Route::get('planilla/obtener_datos_reintegro_detalle/{id_agremiado}', [PlanillaDelegadoController::class, 'obtener_datos_reintegro_detalle'])->name('planilla.obtener_datos_reintegro_detalle');
 Route::get('adelanto/obtener_datos_adelanto/{id_agremiado}', [AdelantoController::class, 'obtener_datos_adelanto'])->name('adelanto.obtener_datos_adelanto');
 Route::get('derecho_revision/eliminar_solicitud_edificaciones/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_edificaciones'])->name('derecho_revision.eliminar_solicitud_edificaciones');
+Route::get('derecho_revision/eliminar_solicitud_hu/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_hu'])->name('derecho_revision.eliminar_solicitud_hu');

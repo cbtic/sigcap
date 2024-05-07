@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	actualizarBoton();
+	obtenerProvincia();
 	$('#fecha_registro_bus').datepicker({
         autoclose: true,
 		format: 'dd/mm/yyyy',
@@ -1029,20 +1030,6 @@ function datatablenew2(){
 				{
 				"mRender": function (data, type, row) {
 					var estado = "";
-					if(row.estado == 1){
-						estado = "Activo";
-					}
-					if(row.estado == 0){
-						estado = "Inactivo";
-				}
-				return estado;
-				},
-				"bSortable": false,
-				"aTargets": [10]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var estado = "";
 					var clase = "";
 					if(row.estado == 1){
 						estado = "Eliminar";
@@ -1065,7 +1052,7 @@ function datatablenew2(){
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [11],
+					"aTargets": [10],
 				},
             ]
     });
@@ -1153,6 +1140,39 @@ function fn_eliminar_solicitud_edificaciones(id,estado){
 	
     $.ajax({
             url: "/derecho_revision/eliminar_solicitud_edificaciones/"+id+"/"+estado,
+            type: "GET",
+            success: function (result) {
+				datatablenew();
+            }
+    });
+}
+
+function eliminarSolicitudHU(id,estado){
+	var act_estado = "";
+	if(estado==1){
+		act_estado = "Eliminar";
+		estado_=0;
+	}
+	if(estado==0){
+		act_estado = "Activar";
+		estado_=1;
+	}
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas "+act_estado+" la Solicitud?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_solicitud_hu(id,estado_);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_solicitud_hu(id,estado){
+	
+    $.ajax({
+            url: "/derecho_revision/eliminar_solicitud_hu/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
 				datatablenew();

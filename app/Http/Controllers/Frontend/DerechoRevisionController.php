@@ -162,6 +162,7 @@ class DerechoRevisionController extends Controller
 		$p[]=$request->municipalidad;
         $p[]=$request->direccion;
 		$p[]=$request->estado_proyecto;
+		$p[]="1";
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_HU_ajax($p);
@@ -554,7 +555,7 @@ class DerechoRevisionController extends Controller
 		$proyecto_ = Proyecto::where("id",$derechoRevision_->id_proyecto)->where("estado","1")->first();
 		$proyecto2 = Proyecto::find($proyecto_->id);
 		//var_dump($proyecto2->id_tipo_sitio);exit();
-		$proyectista_ = Proyectista::where("id_solicitud",$id)->where("estado","1")->first();
+		$proyectista_ = Proyectista::where("id_solicitud",$id)->where("estado","1")->orderBy('id')->first();
 		$proyectista = Proyectista::find($proyectista_->id);
 		$agremiado_ = Agremiado::find($proyectista_->id_agremiado);
 		$datos_agremiado= $agremiado_model->getAgremiado(85,$agremiado_->numero_cap);
@@ -1246,6 +1247,15 @@ class DerechoRevisionController extends Controller
 	}
 
 	public function eliminar_solicitud_edificaciones($id,$estado)
+    {
+		$derecho_revision = DerechoRevision::find($id);
+		$derecho_revision->estado = $estado;
+		$derecho_revision->save();
+
+		echo $derecho_revision->id;
+    }
+
+	public function eliminar_solicitud_hu($id,$estado)
     {
 		$derecho_revision = DerechoRevision::find($id);
 		$derecho_revision->estado = $estado;

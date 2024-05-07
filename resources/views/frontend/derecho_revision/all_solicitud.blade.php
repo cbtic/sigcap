@@ -391,7 +391,6 @@
                             <th>Credipago</th>
                             <th>Fecha Registro</th>
                             <th>Estado Proyecto</th>
-                            <th>Estado</th>
 							<th>Acciones</th>
                         </tr>
                         </thead>
