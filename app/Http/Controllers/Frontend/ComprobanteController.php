@@ -708,15 +708,15 @@ class ComprobanteController extends Controller
             $id_persona2 = $request->persona2;
 
 /*
-            echo "ubicacion_id => {$ubicacion_id}\n ";
-            echo "id_persona => {$id_persona}\n ";
+            echo "ubicacion_id -> {$ubicacion_id}\n ";
+            echo "id_persona -> {$id_persona}\n ";
 
-            echo "ubicacion_id2 => {$ubicacion_id2}\n ";
-            echo "id_persona2 => {$id_persona2}\n ";
-  */          
-  //          exit();
+            echo "ubicacion_id2 -> {$ubicacion_id2}\n ";
+            echo "id_persona2 -> {$id_persona2}\n ";
+            
+            exit();
 
-
+*/
 
             $id_persona_act = 0;
             $id_ubicacion_act = 0;
@@ -762,14 +762,15 @@ class ComprobanteController extends Controller
 
             echo "ubicacion_id2 -> {$ubicacion_id2}\n ";
             echo "id_persona2 -> {$id_persona2}\n ";
-    */        
-          //  exit();
+  */          
+           // exit();
 
-          
-            if ($id_persona_act != '' || $id_ubicacion_act != '' ) {
+            if ($id_persona_act != 0 || $id_ubicacion_act != 0 ) {
 
-               // exit($id_persona_act);                
-                if ($tipoF == 'FT' &&  $ubicacion_id !='' )
+               // exit($id_persona_act);
+
+                
+                if ($tipoF == 'FT' &&  $ubicacion_id =='' )
                 {
                     $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
                     $empresa->direccion = $direccion;
@@ -812,7 +813,6 @@ class ComprobanteController extends Controller
                 
 
             }
-            
 
             $id_persona = $request->persona;
             $ubicacion_id = $request->ubicacion;
@@ -2006,7 +2006,7 @@ class ComprobanteController extends Controller
  
                 $factura_upd = Comprobante::find($id_factura);
                 if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
-                //print_r($tarifa); exit();
+                print_r($tarifa); exit();
 
                 $factura_upd->save();
  
