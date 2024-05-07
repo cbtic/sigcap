@@ -125,7 +125,10 @@ class DerechoRevisionController extends Controller
         $p[]=$request->direccion;
 		$p[]=$request->n_solicitud;
 		$p[]=$request->codigo;
+		$p[]=$request->fecha_inicio_bus;
+		$p[]=$request->fecha_fin_bus;
 		$p[]=$request->estado_proyecto;
+		$p[]="1";
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_ajax($p);
@@ -1225,14 +1228,14 @@ class DerechoRevisionController extends Controller
 		$derecho_revision_model = new DerechoRevision;
 
 		$data = [];
-		
-		$data['proyectos'] = $derecho_revision_model->importar_proyectos_dataLicencia();
-		
-		$data['solicitudes'] = $derecho_revision_model->importar_solicitudes_dataLicencia();
 
 		$data['empresas'] = $derecho_revision_model->importar_empresas_dataLicencia();
 
 		$data['personas'] = $derecho_revision_model->importar_personas_dataLicencia();
+		
+		$data['proyectos'] = $derecho_revision_model->importar_proyectos_dataLicencia();
+		
+		$data['solicitudes'] = $derecho_revision_model->importar_solicitudes_dataLicencia();
 		
 		$result["aaData"] = $data;
 
@@ -1241,4 +1244,13 @@ class DerechoRevisionController extends Controller
 		echo json_encode($result);
 	
 	}
+
+	public function eliminar_solicitud_edificaciones($id,$estado)
+    {
+		$derecho_revision = DerechoRevision::find($id);
+		$derecho_revision->estado = $estado;
+		$derecho_revision->save();
+
+		echo $derecho_revision->id;
+    }
 }

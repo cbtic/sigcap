@@ -275,11 +275,18 @@ function obtener_profesional(){
 
 function obtener_datos_adelanto(){
   if($("#delegado").val()!='' && $("#id_delegado_").val()!=''){
-    if($("#id_delegado_").val()!=''){
+
+    if($('input[name="id_delegado_"]').length && $('input[name="id_delegado_"]').val() !=''){
       var id_agremiado = $("#id_delegado_").val();
     }else{
       var id_agremiado = $("#delegado").val();
     }
+
+    /*if($("#delegado").val()!=''){
+      var id_agremiado = $("#delegado").val();
+    }else{
+      var id_agremiado = $("#id_delegado_").val();
+    }*/
     
     var msgLoader = "";
     msgLoader = "Procesando, espere un momento por favor";

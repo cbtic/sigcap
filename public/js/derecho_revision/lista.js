@@ -6,6 +6,20 @@ $(document).ready(function () {
 		changeMonth: true,
 		changeYear: true,
     });
+
+	$('#fecha_inicio_bus').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+
+	$('#fecha_fin_bus').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
@@ -580,6 +594,8 @@ function datatablenew(){
 			var direccion = $('#direccion_proyecto').val();
 			var n_solicitud = $('#n_solicitud').val();
 			var codigo = $('#codigo_proyecto').val();
+			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
+			var fecha_fin_bus = $('#fecha_fin_bus').val();
 			var estado_proyecto = $('#id_estado_proyecto_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -591,7 +607,8 @@ function datatablenew(){
 						proyectista:proyectista,numero_documento:numero_documento,propietario:propietario,
 						tipo_proyecto:tipo_proyecto,tipo_solicitud:tipo_solicitud,credipago:credipago,
 						municipalidad:municipalidad,direccion:direccion,n_solicitud:n_solicitud,
-						codigo:codigo,estado_proyecto:estado_proyecto,
+						codigo:codigo,estado_proyecto:estado_proyecto,fecha_inicio_bus:fecha_inicio_bus,
+						fecha_fin_bus:fecha_fin_bus,
 						_token:_token
                        },
                 "success": function (result) {
@@ -605,13 +622,35 @@ function datatablenew(){
         "aoColumnDefs":
             [	
 				{
+				"mRender": function (data, type, row) {
+					var codigo_solicitud = "";
+					if(row.codigo_solicitud!= null)codigo_solicitud = row.codigo_solicitud;
+					return codigo_solicitud;
+				},
+				"bSortable": false,
+				"aTargets": [0],
+				"sWidth": "500px",
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
+					var codigo = "";
+					if(row.codigo!= null)codigo = row.codigo;
+					return codigo;
+				},
+				"bSortable": false,
+				"aTargets": [1],
+				"sWidth": "500px",
+				"className": "dt-center",
+				},
+				{
                 "mRender": function (data, type, row) {
                 	var nombre_proyecto = "";
 					if(row.nombre_proyecto!= null)nombre_proyecto = row.nombre_proyecto;
 					return nombre_proyecto;
                 },
                 "bSortable": false,
-                "aTargets": [0],
+                "aTargets": [2],
 				"sWidth": "500px",
 				"className": "dt-center",
                 },
@@ -622,7 +661,7 @@ function datatablenew(){
 					return tipo_solicitud;
 				},
 				"bSortable": false,
-				"aTargets": [1],
+				"aTargets": [3],
 				"className": "dt-center",
 				},
 				{
@@ -632,7 +671,7 @@ function datatablenew(){
 					return numero_revision;
 				},
 				"bSortable": false,
-				"aTargets": [2],
+				"aTargets": [4],
 				"className": "dt-center",
 				},
 				{
@@ -642,7 +681,7 @@ function datatablenew(){
 					return municipalidad;
 				},
 				"bSortable": false,
-				"aTargets": [3],
+				"aTargets": [5],
 				"className": "dt-center",
 				},
 				{
@@ -652,7 +691,7 @@ function datatablenew(){
 					return numero_cap;
 				},
 				"bSortable": false,
-				"aTargets": [4],
+				"aTargets": [6],
 				"className": "dt-center",
 				},
 				{
@@ -666,7 +705,7 @@ function datatablenew(){
 					return proyectista;
 				},
 				"bSortable": false,
-				"aTargets": [5],
+				"aTargets": [7],
 				"className": "dt-center",
 				},
 				
@@ -681,7 +720,7 @@ function datatablenew(){
 					return propietario;
 				},
 				"bSortable": false,
-				"aTargets": [6],
+				"aTargets": [8],
 				"className": "dt-center",
 				},
 				/*
@@ -723,7 +762,7 @@ function datatablenew(){
 					return credipago;
 				},
 				"bSortable": false,
-				"aTargets": [7],
+				"aTargets": [9],
 				"className": "dt-center",
 				},
 				{
@@ -733,7 +772,7 @@ function datatablenew(){
 					return fecha_registro;
 				},
 				"bSortable": false,
-				"aTargets": [8],
+				"aTargets": [10],
 				"className": "dt-center",
 				},
 				{
@@ -743,22 +782,8 @@ function datatablenew(){
 					return estado_proyecto;
 				},
 				"bSortable": false,
-				"aTargets": [9],
+				"aTargets": [11],
 				"className": "dt-center",
-				},
-				{
-				"mRender": function (data, type, row) {
-					var estado = "";
-					if(row.estado == 1){
-						estado = "Activo";
-					}
-					if(row.estado == 0){
-						estado = "Inactivo";
-				}
-				return estado;
-				},
-				"bSortable": false,
-				"aTargets": [10]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -782,13 +807,13 @@ function datatablenew(){
 					}else{
 						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitud('+row.id+')" disabled><i class="fa fa-edit"></i>Generar Liquidaci&oacute;n</button>';
 					}
-					html += '<a href="javascript:void(0)" onclick=eliminarProfesion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '<a href="javascript:void(0)" onclick=eliminarSolicitudEdificaciones('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [11],
+					"aTargets": [12],
 				},
             ]
     });
@@ -1034,7 +1059,7 @@ function datatablenew2(){
 					html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerCredipago('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Credipago</button>';
 					html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitudRU('+row.id+')" ><i class="fa fa-edit"></i> Generar Liquidaci&oacute;n</button>';
 					//html += '<a href="/derecho_revision/editar_derecho_revision_nuevo/'+row.id+'" style="font-size: 12px; margin-left: 10px;" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
-					html += '<a href="javascript:void(0)" onclick=eliminarProfesion('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '<a href="javascript:void(0)" onclick=eliminarSolicitudHU('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
 					return html;
@@ -1102,7 +1127,7 @@ function modalReintegroSolicitudRU(id){
 
 }
 
-function eliminarProfesion(id,estado){
+function eliminarSolicitudEdificaciones(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -1117,17 +1142,17 @@ function eliminarProfesion(id,estado){
         message: "&iquest;Deseas "+act_estado+" la Solicitud?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_profesion(id,estado_);
+                fn_eliminar_solicitud_edificaciones(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_profesion(id,estado){
+function fn_eliminar_solicitud_edificaciones(id,estado){
 	
     $.ajax({
-            url: "/profesion/eliminar_profesion/"+id+"/"+estado,
+            url: "/derecho_revision/eliminar_solicitud_edificaciones/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
 				datatablenew();
