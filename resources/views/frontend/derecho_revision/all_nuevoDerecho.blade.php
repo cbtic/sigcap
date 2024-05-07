@@ -278,7 +278,7 @@ function modalVerFormato(){
                                 <option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($departamento as $row) {?>
-                                <option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($persona->id_ubigeo_nacimiento,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
+                                <option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($derechoRevision_->id_ubigeo,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
                                 <?php 
                                 }
                                 ?>

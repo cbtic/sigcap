@@ -28,7 +28,7 @@ class Valorizacione extends Model
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
                 where v.id_empresa = ".$id_persona."            
                 and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
-                and DATE_PART('MONTH', v.fecha)::varchar ilike '%".$mes."'                
+                and to_char(DATE_PART('MONTH', v.fecha),'00') ilike '%".$mes."'                
                 and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
@@ -50,7 +50,7 @@ class Valorizacione extends Model
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
                 where v.id_persona = ".$id_persona."            
                 and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
-                and DATE_PART('MONTH', v.fecha)::varchar ilike '%".$mes."'
+                and to_char(DATE_PART('MONTH', v.fecha),'00') ilike '%".$mes."'
                 and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
@@ -378,23 +378,23 @@ class Valorizacione extends Model
     function getMesValorizacion($tipo_documento,$id_persona){        
         if($tipo_documento=="79"){  //RUC
             $cad = "
-            select distinct  DATE_PART('MONTH', v.fecha) id, to_char(v.fecha, 'TMMonth') mes
+            select distinct  to_char(DATE_PART('MONTH', v.fecha),'00') id, to_char(v.fecha, 'TMMonth') mes
             from valorizaciones v
             group by v.fecha,v.id_empresa,v.estado,v.pagado
             having v.id_empresa = ".$id_persona."
             and v.estado = '1'            
             and v.pagado = '0'
-            order by  DATE_PART('MONTH', v.fecha)
+            order by to_char(DATE_PART('MONTH', v.fecha),'00')
 			";
         }else{
             $cad = "
-            select distinct DATE_PART('MONTH', v.fecha) id, to_char(v.fecha, 'TMMonth') mes
+            select distinct to_char(DATE_PART('MONTH', v.fecha),'00') id, to_char(v.fecha, 'TMMonth') mes
             from valorizaciones v
             group by v.fecha,v.id_persona,v.estado,v.pagado
             having v.id_persona = ".$id_persona."
             and v.estado = '1'            
             and v.pagado = '0'
-            order by  DATE_PART('MONTH', v.fecha)
+            order by  to_char(DATE_PART('MONTH', v.fecha),'00')
 			";
         }
 
