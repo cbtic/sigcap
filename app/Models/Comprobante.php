@@ -106,32 +106,18 @@ class Comprobante extends Model
 
     function getDatosByComprobante($id){
 
-        $cad = "select u.name as usuario,a.numero_cap ,p.id   
-                from comprobantes c 
-                inner join users u on c.id_usuario_inserta =u.id 
-                left join personas p on c.cod_tributario =p.numero_documento 
-                inner join agremiados a on a.id_persona =p.id 
+        $cad = "select distinct u.name as usuario,a.numero_cap,v.id_persona  
+        from comprobantes c
+        inner join valorizaciones v on v.id_comprobante = c.id
+        left join agremiados a on a.id_persona = v.id_agremido 
+        inner join users u on c.id_usuario_inserta =u.id 
                 where c.id='". $id . "'" ;
 
 		$data = DB::select($cad);
 
-        if (Empty($data)) {
-            $cad = "select u.name as usuario,a.numero_cap ,p.id   
-                    from comprobantes c 
-                    inner join users u on c.id_usuario_inserta =u.id 
-                    left join personas p on c.cod_tributario =p.numero_ruc  
-                    inner join agremiados a on a.id_persona =p.id
-                    where c.id='". $id . "'" ;
+        //print_r($cad); //exit();
 
-		    $data = DB::select($cad);
-
-           
-        }
-
-        
-        //print_r($data); exit();
-
-        return $data;
+        if(isset($data[0]))return $data[0];
     }
 
 	function getComprobanteByTipoSerieNumero($numero_comprobante){
