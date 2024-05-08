@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE FUNCTION public.sp_listar_derecho_revision_paginado(p_anio character varying, p_nombre_proyecto character varying, p_distrito character varying, p_numero_cap character varying, p_proyectista character varying, p_numero_documento character varying, p_propietario character varying, p_tipo_proyecto character varying, p_tipo_solicitud character varying, p_credipago character varying, p_municipalidad character varying, p_direccion character varying, p_n_solicitud character varying, p_codigo character varying, p_fecha_inicio_registro character varying, p_fecha_fin_registro character varying, p_estado_proyecto character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -38,14 +39,36 @@ begin
 	left join tabla_maestras tm on s.id_tipo_tramite=tm.codigo::int and tm.tipo=''25'' 
 	left join tabla_maestras tmr on s.id_resultado=tmr.codigo::int and tmr.tipo=''118''
 	left join ubigeos u on s.id_ubigeo = u.id_ubigeo 
-	where s.id_tipo_solicitud=''123'' ) R';
+	where s.id_tipo_solicitud=''123'' '; 
+	
+	If p_anio<>'' Then
+	 v_tabla:=v_tabla||'And DATE_PART(''YEAR'', s.fecha_registro) = '''||p_anio||''' ';
+	End If;
+
+	If p_fecha_inicio_registro<>'' Then
+	 v_tabla:=v_tabla|| 'And s.fecha_registro >= '''||p_fecha_inicio_registro||' :00:00'' ';
+	End If;
+
+	If p_fecha_fin_registro<>'' Then
+	 v_tabla:=v_tabla||'And s.fecha_registro <= '''||p_fecha_fin_registro||' :23:59'' ';
+	End If;
+	
+	If p_estado_proyecto<>'' Then
+	 v_tabla:=v_tabla||'And s.id_resultado = '''||p_estado_proyecto||''' ';
+	End If;
+
+	If p_estado<>'' Then
+	 v_tabla:=v_tabla||'And s.estado = '''||p_estado||''' ';
+	End If;
+
+	v_tabla:=v_tabla||') R';
 	
 	v_where = ' Where 1=1 ';
-
+	/*
 	If p_anio<>'' Then
 	 v_where:=v_where||'And R.anio = '''||p_anio||''' ';
 	End If;
-
+	*/
 	If p_nombre_proyecto<>'' Then
 	 v_where:=v_where||'And R.nombre_proyecto ilike ''%'||p_nombre_proyecto||'%'' ';
 	End If;
@@ -113,7 +136,8 @@ begin
     END IF;
     v_where := v_where || ')';
 	END IF;*/
-
+	
+	/*
 	If p_fecha_inicio_registro<>'' Then
 	 v_where:=v_where|| 'And R.fecha_registro >= '''||p_fecha_inicio_registro||' :00:00'' ';
 	End If;
@@ -121,7 +145,8 @@ begin
 	If p_fecha_fin_registro<>'' Then
 	 v_where:=v_where||'And R.fecha_registro <= '''||p_fecha_fin_registro||' :23:59'' ';
 	End If;
-
+	*/
+	/*
 	If p_estado_proyecto<>'' Then
 	 v_where:=v_where||'And R.id_resultado = '''||p_estado_proyecto||''' ';
 	End If;
@@ -129,7 +154,8 @@ begin
 	If p_estado<>'' Then
 	 v_where:=v_where||'And R.estado = '''||p_estado||''' ';
 	End If;
-
+	*/
+	
 	If p_direccion<>'' Then
 	 v_where:=v_where||'And R.direccion ilike ''%'||p_direccion||'%'' ';
 	End If;
@@ -150,3 +176,4 @@ End
 
 $function$
 ;
+
