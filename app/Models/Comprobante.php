@@ -115,6 +115,29 @@ class Comprobante extends Model
 
 		$data = DB::select($cad);
 
+        if ( empty($data)){
+            $cad = "select distinct u.name as usuario,a.numero_cap,a.id_persona  
+                    from comprobantes c
+                    inner join personas p on c.cod_tributario =p.numero_documento 
+                    inner join agremiados a on a.id_persona = p.id  
+                    inner join users u on c.id_usuario_inserta =u.id 
+                    where c.id='". $id . "'" ;
+
+            $data = DB::select($cad);
+            
+        }
+
+        if ( empty($data)){
+            $cad = "select distinct u.name as usuario,a.numero_cap,a.id_persona  
+                    from comprobantes c
+                    inner join personas p on c.cod_tributario =p.numero_ruc 
+                    inner join agremiados a on a.id_persona = p.id  
+                    inner join users u on c.id_usuario_inserta =u.id 
+                    where c.id='". $id . "'" ;
+
+            $data = DB::select($cad);
+            
+        }
         //print_r($cad); //exit();
 
         if(isset($data[0]))return $data[0];
