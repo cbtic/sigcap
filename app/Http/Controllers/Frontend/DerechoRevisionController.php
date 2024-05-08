@@ -372,6 +372,7 @@ class DerechoRevisionController extends Controller
 			/*****Edificaciones*********/
 			if($id_tipo_solicitud == 123){
 				
+				$id_tipo_documento = 20;
 				if($request->tipo_liquidacion1==136){
 					//$valor_obra = $request->total2;
 					$sub_total 	= $request->sub_total2;
@@ -405,6 +406,7 @@ class DerechoRevisionController extends Controller
 			
 			if($id_tipo_solicitud == 124){
 				
+				$id_tipo_documento = 22;
 				$m2 = $parametro->valor_metro_cuadrado_habilitacion_urbana;
 				
 				$sub_total 	= ($m2*$area_total);
@@ -475,7 +477,7 @@ class DerechoRevisionController extends Controller
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
 			
-			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",20)->where("estado",1)->first();			
+			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",$id_tipo_documento)->where("estado",1)->first();			
 			$numeracionDocumento->numero = $numero_correlativo;
 			$numeracionDocumento->save();
 			
