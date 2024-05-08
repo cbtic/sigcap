@@ -140,15 +140,16 @@ $(document).ready(function() {
         <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">
     </div>
     <div class="container">
-    <div class="vertical-text" style="position: absolute; top: 0; right: 0; writing-mode: vertical-lr;">
-    <div style="display: inline-block; white-space: nowrap; font-weight: bold;">IMPORTANTE.-</div>
-        <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n adjuntarla al certificado de habilitaci&oacute;</div>
-    </div>
+        <div class="vertical-text" style="position: absolute; top: 0; right: 65; writing-mode: vertical-lr;">
+            <div style="display: inline-block; white-space: nowrap; font-weight: bold;">IMPORTANTE.-</div>
+            <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n adjuntarla al certificado de habilitaci&oacute;</div>
+        </div>
     </div>
     <!--<div style="display: flex !important; width:100%">
         <span style="width: 50%; ">Div 1</span>
         <span style="width: 50%; float: right;">Div 2</span>
     </div>-->
+    
     <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
             <tr>
                 <td class="td" style ="text-align: right; width: 60%; font-size:16px"><b><?php echo $credipago;?></b></td>
@@ -165,8 +166,8 @@ $(document).ready(function() {
         </tbody>
     </table>
     <hr>
-
-    <p style="font_size: 8.5;text-align:justify"><b>LIQUIDACION DE DERECHOS POR REVISION Y CALIFICACION DE PROYECTOS DE HABILITACION URBANA</b></pack>
+   
+    <p style="font_size: 8.5;text-align:justify"><b>LIQUIDACION DE DERECHOS POR REVISION Y CALIFICACION DE PROYECTOS DE HABILITACION URBANA</b></p>
     
         <hr>
         <div class="contenido">
