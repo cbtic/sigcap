@@ -140,10 +140,10 @@ $(document).ready(function() {
         <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">
     </div>
     <div class="container">
-    <div class="vertical-text" style="position: absolute; top: 0; right: 0; writing-mode: vertical-lr;">
-    <div style="display: inline-block; white-space: nowrap; font-weight: bold;">IMPORTANTE.-</div>
-        <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n y su comprobante de pago adjuntarla al expediente</div>
-    </div>
+        <div class="vertical-text" style="position: absolute; top: 0; right: 0; writing-mode: vertical-lr;">
+            <div style="display: inline-block; white-space: nowrap; font-weight: bold;">IMPORTANTE.-</div>
+            <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n y su comprobante de pago adjuntarla al expediente</div>
+        </div>
     </div>
     <!--<div style="display: flex !important; width:100%">
         <span style="width: 50%; ">Div 1</span>
@@ -159,7 +159,7 @@ $(document).ready(function() {
     </div>
     <hr>
 
-    <p style="font_size: 8.5;text-align:justify"><b>LIQUIDACION DE DERECHOS POR REVISION DE ANTEPROYECTOS Y PROYECTOS DE ARQUITECTURA</b></pack>
+    <p style="font_size: 8.5;text-align:justify"><b>LIQUIDACION DE DERECHOS POR REVISION DE ANTEPROYECTOS Y PROYECTOS DE ARQUITECTURA</b></p>
     
         <hr>
         <div class="contenido">

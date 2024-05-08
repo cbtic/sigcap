@@ -162,6 +162,7 @@ class DerechoRevisionController extends Controller
 		$p[]=$request->municipalidad;
         $p[]=$request->direccion;
 		$p[]=$request->estado_proyecto;
+		$p[]="1";
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_HU_ajax($p);
@@ -415,8 +416,8 @@ class DerechoRevisionController extends Controller
 				$igv_minimo			= $total_minimo - $sub_total_minimo;
 				
 				$total_maximo		= $parametro->valor_maximo_hu*$m2;
-				$igv_maximo			= $total_maximo - $sub_total_maximo;
 				$sub_total_maximo 	= $total_maximo/(1+$parametro->igv);
+				$igv_maximo			= $total_maximo - $sub_total_maximo;
 				
 				if($total<$total_minimo){
 					$sub_total 	= $sub_total_minimo;
@@ -431,6 +432,8 @@ class DerechoRevisionController extends Controller
 				}
 
 				$concepto = Concepto::where("id",26483)->where("estado","1")->first();
+				$solicitud->id_resultado='2';
+				$solicitud->save();
 				
 			}
 			
@@ -554,7 +557,7 @@ class DerechoRevisionController extends Controller
 		$proyecto_ = Proyecto::where("id",$derechoRevision_->id_proyecto)->where("estado","1")->first();
 		$proyecto2 = Proyecto::find($proyecto_->id);
 		//var_dump($proyecto2->id_tipo_sitio);exit();
-		$proyectista_ = Proyectista::where("id_solicitud",$id)->where("estado","1")->first();
+		$proyectista_ = Proyectista::where("id_solicitud",$id)->where("estado","1")->orderBy('id')->first();
 		$proyectista = Proyectista::find($proyectista_->id);
 		$agremiado_ = Agremiado::find($proyectista_->id_agremiado);
 		$datos_agremiado= $agremiado_model->getAgremiado(85,$agremiado_->numero_cap);
@@ -616,6 +619,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->id_municipalidad = $request->municipalidad;
 		$derecho_revision->id_ubigeo = $ubigeo;
 		$derecho_revision->id_resultado = 1;
+		$derecho_revision->id_instancia = 246;
 		$derecho_revision->id_tipo_solicitud = 124;
 		//$derecho_revision->id_proyectista = $agremiado->id;
 		
@@ -1004,7 +1008,7 @@ class DerechoRevisionController extends Controller
 		$ubigeo_model = new Ubigeo;
 		$parametro_model = new Parametro;
 
-		$datos=$derecho_revision_model->getSolicitudPdf($id);
+		$datos=$derecho_revision_model->getSolicitudPdfHU($id);
 		$credipago=$datos[0]->credipago;
 		$proyectista=$datos[0]->proyectista;
 		$numero_cap=$datos[0]->numero_cap;
@@ -1022,14 +1026,19 @@ class DerechoRevisionController extends Controller
 		$igv = $datos[0]->igv;
 		$total = $datos[0]->total;
 		$tipo_proyectista = $datos[0]->tipo_proyectista;
+		$tipo_uso = $datos[0]->tipo_uso;
+		$instancia = $datos[0]->instancia;
 
 		$year = Carbon::now()->year;
 
 		$parametro = $parametro_model->getParametroAnio($year);
 
-		$porcentaje_ = $parametro[0]->porcentaje_calculo_edificacion;
+		$valor_metro_cuadrado = $parametro[0]->valor_metro_cuadrado_habilitacion_urbana;
+		$valor_minimo = $parametro[0]->valor_minimo_hu;
+		$valor_maximo_ = $parametro[0]->valor_maximo_hu;
+		$valor_maximo = $valor_maximo_*$valor_metro_cuadrado;
 
-		$porcentaje = floatval($porcentaje_) * 100;
+		//$porcentaje = floatval($porcentaje_) * 100;
 		
 		$departamento = $ubigeo_model->obtenerDepartamento($departamento_);
 		$provincia = $ubigeo_model->obtenerProvincia($departamento_,$provincia_);
@@ -1044,7 +1053,7 @@ class DerechoRevisionController extends Controller
 		 $currentHour = Carbon::now()->format('H:i:s');
 
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','tipo_uso','valor_minimo','valor_maximo','instancia'));
 		
 
 
@@ -1253,4 +1262,34 @@ class DerechoRevisionController extends Controller
 
 		echo $derecho_revision->id;
     }
+
+	public function eliminar_solicitud_hu($id,$estado)
+    {
+		$derecho_revision = DerechoRevision::find($id);
+		$derecho_revision->estado = $estado;
+		$derecho_revision->save();
+
+		echo $derecho_revision->id;
+    }
+
+	public function obtener_ubigeo($municipalidad){
+			
+		$municipalidad_model = new Municipalidade;
+		$IdUbigeo = $municipalidad_model->getIdUbigeoByMunicipalidad($municipalidad);
+		//print_r($tipo_solicitud);
+		//$array["id"] = $tipo_solicitud->id;
+		//echo json_encode($tipo_solicitud);
+
+		$datos_formateados = [];
+
+        foreach ($IdUbigeo as $ubigeo) {
+            $datos_formateados[] = [
+                'id_departamento' => $ubigeo->id_departamento,
+                'id_provincia' => $ubigeo->id_provincia,
+				'id_distrito' => $ubigeo->id_ubigeo,
+            ];
+        }
+        return response()->json($datos_formateados);
+		
+	}
 }
