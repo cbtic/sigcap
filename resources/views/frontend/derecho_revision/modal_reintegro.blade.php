@@ -128,9 +128,6 @@ $(document).ready(function() {
 	//$("#id_empresa").select2({ width: '100%' });
 
     $('#valor_reintegro_').hide();
-
-    
-    
     
 });
 </script>
@@ -172,7 +169,7 @@ function calculoVistaPrevia(){
     var igv_valor = {{$parametro[0]->igv}};
     var igv_minimo	= igv_valor * sub_total_minimo;
     var total_minimo = sub_total_minimo + igv_minimo;
-    $('#minimo').val(total_minimo);
+    $('#minimo').val(formatoMoneda(total_minimo));
     $('#igv').val(igv_valor_+"%");
     //var_dump($total_minimo);exit;
     
