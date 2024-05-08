@@ -247,7 +247,7 @@ function modalVerFormato(){
 
 						<div class="col-lg-2">
 								<label class="control-label form-control-sm">Municipalidad</label>
-								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange=""> 
+								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="obtenerUbigeo()"> 
 									<?php
 									$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
 									?>

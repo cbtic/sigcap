@@ -1,6 +1,12 @@
 $(document).ready(function () {
 	actualizarBoton();
+	
 	obtenerProvincia();
+	
+	if($('#id_solicitud').val()>0){
+		obtenerUbigeo();
+	}
+
 	$('#fecha_registro_bus').datepicker({
         autoclose: true,
 		format: 'dd/mm/yyyy',
@@ -170,6 +176,30 @@ function credipago_pdf(id){
 			}else if(tipo_solicitud=="124"){
 				credipago_pdf_HU(id);
 			}
+		}
+	});
+}
+
+function obtenerUbigeo(){
+
+	var municipalidad = $("#municipalidad").val();
+
+	$.ajax({
+		url: "/derecho_revision/obtener_ubigeo/"+municipalidad,
+		type: "GET",
+		success: function (result) {
+			
+			//var tipo_solicitud = result[0];
+			//var ubigeo = result.datos_formateados;
+			//var id = result.id;
+			//alert(result[0].id_distrito);
+
+			$("#provincia").val(result[0].id_provincia).promise().done(function(){
+				
+				});
+				obtenerDistrito_(function(){
+					$("#distrito").val(result[0].id_distrito);
+			});
 		}
 	});
 }
@@ -480,6 +510,40 @@ function obtenerDistrito(){
 		
 	});
 	
+}
+
+function obtenerDistrito_(callback){
+		
+	var departamento = $('#departamento').val();
+	var id = $('#provincia').val();
+	if(id=="")return false;
+	$('#distrito').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_distrito/'+departamento+'/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value=''>Seleccionar</option>";
+			$('#distrito').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_ubigeo+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#distrito').html(option);
+			
+			$('#distrito').attr("disabled",false);
+			$('.loader').hide();
+
+			callback();
+		
+		}
+		
+	});
 }
 
 function obtenerProvinciaDomiciliario(){
