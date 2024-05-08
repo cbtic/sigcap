@@ -725,3 +725,4 @@ Route::get('adelanto/obtener_datos_adelanto/{id_agremiado}', [AdelantoController
 Route::get('derecho_revision/eliminar_solicitud_edificaciones/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_edificaciones'])->name('derecho_revision.eliminar_solicitud_edificaciones');
 Route::get('derecho_revision/eliminar_solicitud_hu/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_hu'])->name('derecho_revision.eliminar_solicitud_hu');
 Route::get('derecho_revision/obtener_ubigeo/{municipalidad}', [DerechoRevisionController::class, 'obtener_ubigeo'])->name('derecho_revision.obtener_ubigeo');
+Route::get('derecho_revision/derecho_revision_reintegro/{id}', [DerechoRevisionController::class, 'derecho_revision_reintegro'])->name('derecho_revision.derecho_revision_reintegro');
