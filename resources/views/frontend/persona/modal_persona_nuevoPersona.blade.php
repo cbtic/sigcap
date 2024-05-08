@@ -456,7 +456,7 @@ $.mask.definitions['p'] = "[Mm]";
 			msg= "Falta ingresar un Apellido Paterno";
 		}else if (apellido_materno==""){
 			msg= "Falta ingresar un Apellido Materno";
-		}else if (fecha_nacimiento==""){
+		}/*else if (fecha_nacimiento==""){
 			msg= "Falta seleccionar una Fecha de Nacimiento";
 		}else if (lugar_nacimiento==""){
 			msg= "Falta ingresar un Lugar de Nacimiento";
@@ -464,7 +464,7 @@ $.mask.definitions['p'] = "[Mm]";
 			msg= "Falta seleccionar una Nacionalidad";
 		}else if (sexo==""){
 			msg= "Falta seleccionar un Sexo";
-		}else if (numero_celular==""){
+		}*/else if (numero_celular==""){
 			msg= "Falta ingresar un N&uacute;mero de Celular";
 		}else if (!validarCelular(numero_celular)) { 
 			msg = "Ingrese un Número de Celular V&aacute;lido";
