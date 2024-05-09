@@ -145,7 +145,9 @@ class DerechoRevision extends Model
         WHEN pr.id_persona is not null THEN (select p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres from personas p2 where p2.id = pr.id_persona)
         end as razon_social, pro.nombre, u.id_departamento departamento, u.id_provincia provincia,
         u.id_distrito distrito, pro.direccion, s.numero_revision, m.denominacion municipalidad, s.area_total total_area_techada, s.valor_obra, l.sub_total, l.igv, l.total, tm.denominacion tipo_proyectista, 
-        tm2.denominacion tipo_liquidacion, tm3.denominacion instancia
+        tm2.denominacion tipo_liquidacion, tm3.denominacion instancia,
+        (select tm4.denominacion from uso_edificaciones ue left join tabla_maestras tm4 on ue.id_tipo_uso = tm4.codigo::int and  tm4.tipo ='30' where ue.id_solicitud = s.id and ue.estado ='1' limit 1) tipo_uso,
+        (select tm5.denominacion from presupuestos p3 left join tabla_maestras tm5 on p3.id_tipo_obra = tm5.codigo::int and  tm5.tipo ='29' where p3.id_solicitud = s.id and p3.estado ='1' limit 1) tipo_obra
         from solicitudes s 
         inner join liquidaciones l on l.id_solicitud = s.id
         left join proyectistas p on p.id_solicitud = s.id

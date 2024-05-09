@@ -21,7 +21,7 @@ begin
 	v_campos=' * ';
 
 	v_tabla=' from (select s.id,p2.nombre nombre_proyecto, tm.denominacion tipo_solicitud, s.numero_revision, m.denominacion municipalidad, 
-	to_char(s.fecha_registro,''dd-mm-yyyy'')fecha_registro,s.estado,tmr.denominacion estado_proyecto,(select l2.credipago from liquidaciones l2 where l2.id_solicitud = s.id limit 1) credipago,
+	to_char(s.fecha_registro,''dd-mm-yyyy'')fecha_registro,s.estado,tmr.denominacion estado_proyecto,(select l2.credipago from liquidaciones l2 where l2.id_solicitud = s.id and l2.estado = ''1'' limit 1) credipago,
 	u.id_ubigeo distrito, (select a.numero_cap from proyectistas p3 inner join agremiados a on p3.id_agremiado = a.id where p3.id_solicitud = s.id limit 1) numero_cap,
 	(select p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres from proyectistas p4 inner join agremiados a2 on p4.id_agremiado = a2.id inner join personas p on a2.id_persona = p.id where p4.id_solicitud = s.id order by p4.id limit 1) proyectista,
 	(select case WHEN pro.id_empresa IS NOT NULL THEN e.razon_social ELSE pe.apellido_paterno ||'' ''|| pe.apellido_materno ||'' ''|| pe.nombres END 
@@ -38,14 +38,36 @@ begin
 	left join tabla_maestras tm on s.id_tipo_tramite=tm.codigo::int and tm.tipo=''25'' 
 	left join tabla_maestras tmr on s.id_resultado=tmr.codigo::int and tmr.tipo=''118''
 	left join ubigeos u on s.id_ubigeo = u.id_ubigeo 
-	where s.id_tipo_solicitud=''123'' ) R';
+	where s.id_tipo_solicitud=''123'' '; 
+	
+	If p_anio<>'' Then
+	 v_tabla:=v_tabla||'And DATE_PART(''YEAR'', s.fecha_registro) = '''||p_anio||''' ';
+	End If;
+
+	If p_fecha_inicio_registro<>'' Then
+	 v_tabla:=v_tabla|| 'And s.fecha_registro >= '''||p_fecha_inicio_registro||' :00:00'' ';
+	End If;
+
+	If p_fecha_fin_registro<>'' Then
+	 v_tabla:=v_tabla||'And s.fecha_registro <= '''||p_fecha_fin_registro||' :23:59'' ';
+	End If;
+	
+	If p_estado_proyecto<>'' Then
+	 v_tabla:=v_tabla||'And s.id_resultado = '''||p_estado_proyecto||''' ';
+	End If;
+
+	If p_estado<>'' Then
+	 v_tabla:=v_tabla||'And s.estado = '''||p_estado||''' ';
+	End If;
+
+	v_tabla:=v_tabla||') R';
 	
 	v_where = ' Where 1=1 ';
-
+	/*
 	If p_anio<>'' Then
 	 v_where:=v_where||'And R.anio = '''||p_anio||''' ';
 	End If;
-
+	*/
 	If p_nombre_proyecto<>'' Then
 	 v_where:=v_where||'And R.nombre_proyecto ilike ''%'||p_nombre_proyecto||'%'' ';
 	End If;
@@ -113,7 +135,8 @@ begin
     END IF;
     v_where := v_where || ')';
 	END IF;*/
-
+	
+	/*
 	If p_fecha_inicio_registro<>'' Then
 	 v_where:=v_where|| 'And R.fecha_registro >= '''||p_fecha_inicio_registro||' :00:00'' ';
 	End If;
@@ -121,7 +144,8 @@ begin
 	If p_fecha_fin_registro<>'' Then
 	 v_where:=v_where||'And R.fecha_registro <= '''||p_fecha_fin_registro||' :23:59'' ';
 	End If;
-
+	*/
+	/*
 	If p_estado_proyecto<>'' Then
 	 v_where:=v_where||'And R.id_resultado = '''||p_estado_proyecto||''' ';
 	End If;
@@ -129,7 +153,8 @@ begin
 	If p_estado<>'' Then
 	 v_where:=v_where||'And R.estado = '''||p_estado||''' ';
 	End If;
-
+	*/
+	
 	If p_direccion<>'' Then
 	 v_where:=v_where||'And R.direccion ilike ''%'||p_direccion||'%'' ';
 	End If;

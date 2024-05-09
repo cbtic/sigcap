@@ -200,7 +200,7 @@ function fn_eliminar_credipago(id,estado){
             url: "/derecho_revision/eliminar_credipago/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
-				//datatablenew();
+				datatablenew();
                 $('#openOverlayOpc').modal('hide');
             }
     });
