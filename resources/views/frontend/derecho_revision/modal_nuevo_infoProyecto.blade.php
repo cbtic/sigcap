@@ -349,6 +349,12 @@ function fn_save_infoProyeto(){
 	var img_foto2 = $('#img_foto2').val();
 	var img_foto3 = $('#img_foto3').val();
 	
+    if (selectedProcedures.length === 0 || selectedProcedures2.length === 0 || areaBruta === '') {
+        
+        bootbox.alert('Por favor complete todos los campos obligatorios.');
+        return;
+    }
+
 	$.ajax({
 			url: "/derecho_revision/send_nueno_infoProyecto",
             type: "POST",

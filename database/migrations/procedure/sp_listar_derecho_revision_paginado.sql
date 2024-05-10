@@ -22,7 +22,7 @@ begin
 	v_campos=' * ';
 
 	v_tabla=' from (select s.id,p2.nombre nombre_proyecto, tm.denominacion tipo_solicitud, s.numero_revision, m.denominacion municipalidad, 
-	to_char(s.fecha_registro,''dd-mm-yyyy'')fecha_registro,s.estado,tmr.denominacion estado_proyecto,(select l2.credipago from liquidaciones l2 where l2.id_solicitud = s.id limit 1) credipago,
+	to_char(s.fecha_registro,''dd-mm-yyyy'')fecha_registro,s.estado,tmr.denominacion estado_proyecto,(select l2.credipago from liquidaciones l2 where l2.id_solicitud = s.id and l2.estado = ''1'' limit 1) credipago,
 	u.id_ubigeo distrito, (select a.numero_cap from proyectistas p3 inner join agremiados a on p3.id_agremiado = a.id where p3.id_solicitud = s.id limit 1) numero_cap,
 	(select p.apellido_paterno ||'' ''|| p.apellido_materno ||'' ''|| p.nombres from proyectistas p4 inner join agremiados a2 on p4.id_agremiado = a2.id inner join personas p on a2.id_persona = p.id where p4.id_solicitud = s.id order by p4.id limit 1) proyectista,
 	(select case WHEN pro.id_empresa IS NOT NULL THEN e.razon_social ELSE pe.apellido_paterno ||'' ''|| pe.apellido_materno ||'' ''|| pe.nombres END 

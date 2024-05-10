@@ -375,6 +375,8 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-sm-12 controls">
 								<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
 									<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+									<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide');" class="btn btn-md btn-warning">Cerrar</a>
+
 								</div>
 
 							</div>
