@@ -87,9 +87,109 @@
 
 <script>
 
-function modalVerFormato(){
-	
+function formatoMoneda(num) {
+    return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
+
+function calculoVistaPrevia(){
+    var igv_valor_ = <?php echo $parametro[0]->igv?> * 100;
+    var valor_minimo_edificaciones = <?php echo $parametro[0]->valor_minimo_edificaciones?>;
+    var uit_edificaciones = <?php echo $parametro[0]->valor_uit?>;
+    var sub_total_minimo = valor_minimo_edificaciones * uit_edificaciones;
+    var igv_valor = <?php echo $parametro[0]->igv?>;
+    var igv_minimo	= igv_valor * sub_total_minimo;
+    var total_minimo = sub_total_minimo + igv_minimo;
+    $('#minimo').val(formatoMoneda(total_minimo));
+    $('#igv').val(igv_valor_+"%");
+    //var_dump($total_minimo);exit;
+    
+    var valor_obra_= <?php echo $liquidacion[0]->valor_obra?>;
+    var porcentaje_calculo_edificacion = <?php echo $parametro[0]->porcentaje_calculo_edificacion?>;
+    var sub_total= valor_obra_* porcentaje_calculo_edificacion;
+    //var sub_total_formateado = number_format(sub_total, 2, '.', ',');
+    var igv_total=sub_total*igv_valor;
+    //var igv_total_formateado = number_format(igv_total, 2, '.', ',');
+    //var_dump($total_minimo);exit;
+    var total=sub_total+igv_total;
+    //var total_formateado = number_format(total, 2, '.', ',');
+    $('#sub_total').val(sub_total);
+    $('#igv_').val(igv_total);
+    $('#total').val(formatoMoneda(total));
+    
+    if(total<total_minimo){
+        var total_ = total_minimo;
+        var valor_minimo_edificaciones= <?php echo $parametro[0]->valor_minimo_edificaciones?>;
+        var uit_minimo= <?php echo $parametro[0]->valor_uit?>;
+        var sub_total_minimo=valor_minimo_edificaciones*uit_minimo;
+        var igv_minimo=sub_total_minimo*igv_valor;
+        //$sub_total_formateado_ = number_format($sub_total_minimo, 2, '.', ',');
+        //$igv_total_formateado_ = number_format($igv_minimo, 2, '.', ',');
+        //$total_formateado_ = number_format($total_minimo, 2, '.', ',');
+        $('#sub_total').val(formatoMoneda(sub_total));
+        $('#igv_').val(formatoMoneda(igv_total));
+        $('#total').val(formatoMoneda(total));
+        $('#sub_total2').val(formatoMoneda(sub_total_minimo));
+        $('#igv2').val(formatoMoneda(igv_minimo));
+        $('#total2').val(formatoMoneda(total_minimo));
+    }else{
+		$('#sub_total').val(formatoMoneda(sub_total));
+        $('#igv_').val(formatoMoneda(igv_total));
+        $('#total').val(formatoMoneda(total));
+        $('#sub_total2').val(formatoMoneda(sub_total));
+        $('#igv2').val(formatoMoneda(igv_total));
+        $('#total2').val(formatoMoneda(total));
+	}
+    //var_dump($total_minimo);exit;
+}
+
+function calcularReintegro(){
+
+if($('#instancia').val()==250){
+	if($('#valor_reintegro').val()!=''){
+		var reintegro=parseFloat($('#valor_reintegro').val());
+		var igv_=parseFloat($('#igv').val());
+		var valor_edificaciones=parseFloat($('#factor').val());
+
+		var sub_totalR=reintegro*valor_edificaciones;
+		var igv_totalR=sub_totalR*igv_/100;
+		var totalR=sub_totalR+igv_totalR;
+		
+		
+		if(totalR<parseFloat($('#minimo').val())){
+			
+			var total_minimo = parseFloat($('#minimo').val());
+			var igv_minimo = total_minimo*igv_/100;
+			var sub_total_minimo = total_minimo - igv_minimo;
+
+			var sub_totalR=reintegro*valor_edificaciones;
+			var igv_totalR=sub_totalR*igv_/100;
+			var totalR=sub_totalR+igv_totalR;
+
+			$('#total2').val(formatoMoneda(total_minimo));
+			$('#igv2').val(formatoMoneda(igv_minimo));
+			$('#sub_total2').val(formatoMoneda(sub_total_minimo));
+			$('#total').val(formatoMoneda(totalR));
+			$('#igv_').val(formatoMoneda(igv_totalR));
+			$('#sub_total').val(formatoMoneda(sub_totalR));
+			
+		}else{
+
+			//var sub_totalR_formateado = number_format(sub_totalR, 2, '.', ',');
+			//var igv_totalR_formateado = number_format(igv_totalR, 2, '.', ',');
+			//var totalR_formateado = number_format(totalR, 2, '.', ',');
+			$('#total2').val(formatoMoneda(totalR));
+			$('#igv2').val(formatoMoneda(igv_totalR));
+			$('#sub_total2').val(formatoMoneda(sub_totalR));
+			$('#total').val(formatoMoneda(totalR));
+			$('#igv_').val(formatoMoneda(igv_totalR));
+			$('#sub_total').val(formatoMoneda(sub_totalR));
+		}
+		
+	}
+}
+}
+
+
 </script>
 
 
@@ -135,7 +235,7 @@ function modalVerFormato(){
                 </div>
 				
 				<div class="card-body">
-			<form method="post" action="#" id="frmSolicitudDerechoRevisionReintegro" name="frmSolicitudDerechoRevisionReintegro">
+			<form method="post" action="#" id="frmSolicitudDerechoRevisionReintegroall" name="frmSolicitudDerechoRevisionReintegroall">
 			<div class="row">
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
@@ -143,6 +243,7 @@ function modalVerFormato(){
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<!--<input type="hidden" name="id" id="id" value="<?php //echo $derecho_revision->id?>">-->
 					<input type="hidden" name="id_solicitud_reintegro" id="id_solicitud_reintegro" value="<?php echo $id?>">
+					<input type="hidden" name="codigo_proyecto" id="codigo_proyecto" value="<?php echo $proyecto2->codigo?>">
 
 					<div class="row" style="padding-left:10px">
 						<div class="row" style="padding-left:10px">
@@ -401,6 +502,137 @@ function modalVerFormato(){
 								<input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->valor_obra?>" type="text">
 							</div>
 						</div>
+						<div style="padding: 15px 0px 15px 10px; font-weight: bold">
+							C&aacute;lculo Liquidaci&oacute;n
+						</div>
+						<div class="row" style="padding-left:10px">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="control-label form-control-sm">Tipo Liquidaci&oacute;n 1</label>
+									<select name="tipo_liquidacion1" id="tipo_liquidacion1" class="form-control form-control-sm">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($tipo_liquidacion as $row) {
+											if (in_array($row->codigo, [135,142,136,138,306,137,143,258])){
+										?>
+										<option value="<?php echo $row->codigo?>" <?php if($row->codigo=='135')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+											}
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="control-label form-control-sm">Instancia</label>
+									<select name="instancia" id="instancia" class="form-control form-control-sm" onChange="habilitar_reintegro()">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($instancia as $row) {?>
+										<option value="<?php echo $row->codigo?>" <?php if($row->codigo=='250')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="control-label form-control-sm">Tipo Liquidaci&oacute;n 2</label>
+									<select name="tipo_liquidacion2" id="tipo_liquidacion2" class="form-control form-control-sm">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($tipo_liquidacion as $row) {
+											if (in_array($row->codigo, [143,258])){
+										?>
+										<option value="<?php echo $row->codigo?>" <?php if($row->codigo=='258')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+											}
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div id="valor_reintegro_" name="valor_reintegro_">
+									<label class="control-label form-control-sm">Valor Reintegro S/.</label>
+									<input id="valor_reintegro" name="valor_reintegro" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" onChange="calcularReintegro()">
+								</div>
+							</div>
+						</div>
+						<div class="row" style="padding-left:10px;padding-top:15px">
+							<div class="col-lg-6" style="padding:10px; border:1px solid #ccc;">
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">Factor</label>
+										<input id="factor" name="factor" on class="form-control form-control-sm"  value="<?php echo $parametro[0]->porcentaje_calculo_edificacion?>" type="text" readonly='readonly'>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">M&iacute;mino</label>
+										
+										<input id="minimo" name="minimo" on class="form-control form-control-sm"  value="<?php //echo $total_minimo?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">% IGV</label>
+										
+										<input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php //echo $igv_valor . '%'?>" type="text" readonly='readonly'>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">M&aacute;ximo</label>
+										<input id="maximo" name="maximo" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-12">
+										<label class="control-label form-control-sm">Observaci&oacute;n</label>
+										<input id="observacion" name="observacion" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6" style="padding:10px; border:1px solid #ccc;">
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">Sub Total</label>
+										
+										<input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php //echo $sub_total_formateado?>" type="text" readonly='readonly'>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">Sub Total</label>
+										<input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php //echo $sub_total_formateado_?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">IGV</label>
+										<?php
+										
+										
+										?>
+										<input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php //echo $igv_total_formateado?>" type="text" readonly='readonly'>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">IGV</label>
+										<input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php //echo $igv_total_formateado_?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">Total</label>
+										<?php
+										
+										?>
+										<input id="total" name="total" on class="form-control form-control-sm"  value="<?php //echo $total_formateado?>" type="text" readonly='readonly'>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">Total a Pagar Soles</label>
+										<input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php //echo $total_formateado_?>" type="text" onchange="cambioPlantaTipica()">
+									</div>
+								</div>
+							</div>
+						</div>
 						<!--<div class="row" style="padding-left:10px">
 							<div class="col-lg-1" style=";padding-right:15px">
 								<label class="control-label form-control-sm">Sitio</label>
@@ -486,7 +718,7 @@ function modalVerFormato(){
 							<div class="col-sm-12 controls">
 								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 									<!--<a href="javascript:void(0)" onClick="btnSolicitudDerechoRevision()" class="btn btn-sm btn-success">Registrar</a>-->
-									<input class="btn btn-sm btn-success float-rigth" value="REGISTRAR" name="guardar" type="button" id="btnSolicitudDerechoRevision" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
+									<input class="btn btn-sm btn-success float-rigth" value="REGISTRAR" name="guardar" type="button" id="btnSolicitudReintegro" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
 								</div>
 								
 							</div>

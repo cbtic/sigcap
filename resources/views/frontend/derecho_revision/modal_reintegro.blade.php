@@ -154,7 +154,6 @@ $(document).ready(function() {
 	 
 	calculoVistaPrevia();
 	
-
 });
 
 function formatoMoneda(num) {
@@ -204,8 +203,6 @@ function calculoVistaPrevia(){
     }else{}
     //var_dump($total_minimo);exit;
 }
-
-
 
 function habilitar_reintegro(){
 

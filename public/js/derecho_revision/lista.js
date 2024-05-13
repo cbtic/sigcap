@@ -2,6 +2,8 @@ $(document).ready(function () {
 	actualizarBoton();
 	
 	obtenerProvincia();
+
+	calculoVistaPrevia();
 	
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
@@ -90,6 +92,10 @@ $(document).ready(function () {
 		//Limpiar();
 		//window.location.reload();
 	});
+
+	$('#btnSolicitudReintegro').click(function () {
+		guardar_solicitud_reintegro()
+	});
 	
 	$("#id_municipalidad_bus").select2();
 	$("#municipalidad_bus_hu").select2();
@@ -117,24 +123,26 @@ $(document).ready(function () {
 function guardar_credipago(){
     
     $.ajax({
-			url: "/derecho_revision/send_credipago",
-            type: "POST",
-            data : $("#frmExpediente").serialize(),
-            success: function (result) {
-				if(result.sw==1){
-					datatablenew();
-				}else{
-					//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
-					bootbox.alert({
-						message: "Existe más de un registro de propietario con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.",
-						//className: "alert_style"
-					});
-					datatablenew();
-				}
-				
-            }
+		url: "/derecho_revision/send_credipago",
+		type: "POST",
+		data : $("#frmExpediente").serialize(),
+		success: function (result) {
+			if(result.sw==1){
+				datatablenew();
+			}else{
+				//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
+				bootbox.alert({
+					message: "Existe más de un registro de propietario con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.",
+					//className: "alert_style"
+				});
+				datatablenew();
+			}
+			
+		}
     });
 }
+
+
 
 function guardar_credipago_(){
     
@@ -1480,6 +1488,34 @@ function guardar_solicitud_derecho_revision(){
 				departamento:departamento,provincia:provincia,distrito:distrito,municipalidad:municipalidad,nombre_proyecto:nombre_proyecto,
 				parcela:parcela,superManzana:superManzana,lote:lote,fila:fila,sitio:sitio,zona:zona,tipo:tipo,sublote:sublote,zonificacion:zonificacion,
 				direccion_sitio:direccion_sitio,direccion_zona:direccion_zona,id_solicitud:id_solicitud},
+			success: function (result) {
+				
+				//$('#openOverlayOpc').modal('hide');
+				//modalSituacion(id_agremiado);
+				//datatableSuspension();
+
+				window.location.reload();
+				
+				//$('#openOverlayOpc').modal('hide');
+				
+				/*
+				$('#openOverlayOpc').modal('hide');
+				if(result==1){
+					bootbox.alert("La persona o empresa ya se encuentra registrado");
+				}else{
+					window.location.reload();
+				}
+				*/
+			}
+	});
+}
+
+function guardar_solicitud_reintegro(){
+	
+	$.ajax({
+			url: "/derecho_revision/send_nuevo_reintegro",
+			type: "POST",
+			data : $("#frmSolicitudDerechoRevisionReintegroall").serialize(),
 			success: function (result) {
 				
 				//$('#openOverlayOpc').modal('hide');
