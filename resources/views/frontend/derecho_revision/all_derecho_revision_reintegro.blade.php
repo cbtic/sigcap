@@ -160,7 +160,7 @@ function modalVerFormato(){
 								</select>
 							</div>
 					
-							<div class="col-lg-3">
+							<div class="col-lg-4">
 								<label class="control-label form-control-sm">N° de Revisi&oacute;n</label>
 								<select name="n_revision" id="n_revision" class="form-control form-control-sm" value="<?php echo $derechoRevision_->numero_revision?>">
 								<?php
@@ -225,37 +225,10 @@ function modalVerFormato(){
 								</select>
 							</div>
 						</div>
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Proyectista Principal
+						</div>	
 						<div class="row" style="padding-left:10px">
-							<div class="col-lg-2">
-								<div class="form-group">
-									<label class="control-label form-control-sm">Solicitante</label>
-									<select name="tipo_solicitante" id="tipo_solicitante" class="form-control form-control-sm" onchange="obtenerSolicitante()">
-									<option value="" selected="selected">--Seleccionar--</option>
-									<option value="1" <?php if ($tipo_solicitante == 1) echo "selected='selected'" ?>>Proyectista</option>
-									<option value="2" <?php if ($tipo_solicitante == 2) echo "selected='selected'" ?>>Responsable de Tramite</option>
-									<option value="3" <?php if ($tipo_solicitante == 3) echo "selected='selected'" ?>>Administrado / Propietario</option>
-									<!--<option value="">--Selecionar--</option>
-										<?/*php
-											foreach ($tipo_solicitante as $row) {*/?>
-										<option value="<?php /*echo $row->id*/?>" <?php/* if($row->id==$derecho_revision->id_solicitante)echo "selected='selected'"*/?>><?php /*echo $row->denominacion*/?></option>
-										<?php
-										/*}*/
-										?>-->
-									</select>
-								</div>
-							</div>
-					
-							<div class="col-lg-1">
-								<div class="form-group" id="numero_cap_">
-									<label class="control-label form-control-sm">N° CAP</label>
-									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_cap?>" type="text" onchange="obtenerProyectista()">
-								</div>
-								<div class="form-group" id="dni_">
-									<label class="control-label form-control-sm">DNI</label>
-									<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_documento?>" type="text" onchange="obtenerPropietario()">
-								</div>
-							</div>
-
 							<div class="col-lg-3" >
 								<div class="form-group "id="agremiado_">
 									<label class="control-label form-control-sm">Nombre</label>
@@ -266,7 +239,16 @@ function modalVerFormato(){
 									<input id="persona" name="persona" on class="form-control form-control-sm"  value="<?php //echo $persona->nombres?>" type="text" readonly='readonly'>
 								</div>
 							</div>
-
+							<div class="col-lg-1">
+								<div class="form-group" id="numero_cap_">
+									<label class="control-label form-control-sm">N° CAP</label>
+									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
+								</div>
+								<div class="form-group" id="dni_">
+									<label class="control-label form-control-sm">DNI</label>
+									<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_documento?>" type="text" onchange="obtenerPropietario()">
+								</div>
+							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="situacion_">
 									<label class="control-label form-control-sm">Situaci&oacute;n</label>
@@ -280,8 +262,8 @@ function modalVerFormato(){
 
 							<div class="col-lg-3">
 								<div class="form-group" id="direccion_agremiado_">
-									<label class="control-label form-control-sm">Direcci&oacute;n</label>
-									<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->direccion?>" type="text" readonly='readonly'>
+									<label class="control-label form-control-sm">T&eacute;lefono</label>
+									<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->celular1?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="direccion_persona_">
 									<label class="control-label form-control-sm">Direcci&oacute;n</label>
@@ -291,18 +273,14 @@ function modalVerFormato(){
 
 							<div class="col-lg-1-5">
 								<div class="form-group" id="n_regional_">
-									<label class="control-label form-control-sm">N° Regional</label>
-									<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_regional?>" type="text" readonly='readonly'>
+									<label class="control-label form-control-sm">Email</label>
+									<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->email?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="celular_">
 									<label class="control-label form-control-sm">Celular</label>
 									<input id="celular" name="celular" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->numero_celular?>" type="text" readonly='readonly'>
 								</div>
 							</div>
-
-						</div>
-						<div class="row" style="padding-left:10px">
-                    
 							<div class="col-lg-2">
 								<div class="form-group" id="act_gremial_">
 									<label class="control-label form-control-sm">Actividad Gremial</label>
@@ -318,23 +296,128 @@ function modalVerFormato(){
 						<div style="padding: 0px 0px 15px 10px; font-weight: bold">
 							Datos del Proyecto
 						</div>
+
+						<div class="col-lg-3" style=";padding-right:15px">
+							<label class="control-label form-control-sm">Datos T&eacute;cnicos del proyecto</label>
+							<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="">
+								<option value="">--Selecionar--</option>
+								<?php
+								foreach ($tipo_proyecto as $row) {?>
+								<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$derechoRevision_->id_tipo_tramite)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+								<?php
+							    }
+								?>
+							</select>
+						</div>
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Uso de la Edificaci&oacute;n
+						</div>
 						<div class="row" style="padding-left:10px">
+							<div class="col-lg-3" style=";padding-right:15px">
+								<label class="control-label form-control-sm">Tipo de Uso</label>
+								<select name="tipo_uso" id="tipo_uso" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_uso as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+							<div class="col-lg-3" style=";padding-right:15px">
+								<label class="control-label form-control-sm">Sub-Tipo de Uso</label>
+								<select name="sub_tipo_uso" id="sub_tipo_uso" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($sub_tipo_uso as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_sub_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">&Aacute;rea Techada</label>
+								<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo $datos_usoEdificaciones->area_techada?>" type="text">
+							</div>
+						</div>
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Presupuesto
+						</div>
+						<div class="row" style="padding-left:10px">
+							<div class="col-lg-3" style=";padding-right:15px">
+								<label class="control-label form-control-sm">Tipo de Obra</label>
+								<select name="tipo_obra" id="tipo_obra" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_obra as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_presupuesto->id_tipo_obra)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">&Aacute;rea Techada m2</label>
+								<input id="area_techada_presupuesto" name="area_techada_presupuesto" on class="form-control form-control-sm"  value="<?php echo $datos_presupuesto->area_techada?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Valor Unitario S/</label>
+								<input id="valor_unitario" name="valor_unitario" on class="form-control form-control-sm"  value="<?php echo $datos_presupuesto->valor_unitario?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Presupuesto</label>
+								<input id="presupuesto" name="presupuesto" on class="form-control form-control-sm"  value="<?php echo $datos_presupuesto->total_presupuesto?>" type="text">
+							</div>
+						</div>
+						<div class="row" style="padding-left:10px;padding-top:10px">
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">&Aacute;rea Techada Total</label>
+								<input id="area_techada_total" name="area_techada_total" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->area_total?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">N° S&oacute;tanos</label>
+								<input id="n_sotanos" name="n_sotanos" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->numero_sotano?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Azotea</label>
+								<input id="azotea" name="azotea" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->azotea?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Semis&oacute;tano</label>
+								<input id="semisotano" name="semisotano" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->semisotano?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">N° de Pisos</label>
+								<input id="n_pisos" name="n_pisos" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->numero_piso?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Fecha Registro</label>
+								<input id="fecha_registro" name="fecha_registro" on class="form-control form-control-sm"  value="<?php echo date('Y-m-d', strtotime($derechoRevision_->fecha_registro)); ?>" type="text" readonly='readonly'>
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Valor Total de Obra S/</label>
+								<input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->valor_obra?>" type="text">
+							</div>
+						</div>
+						<!--<div class="row" style="padding-left:10px">
 							<div class="col-lg-1" style=";padding-right:15px">
 								<label class="control-label form-control-sm">Sitio</label>
 								<select name="sitio" id="sitio" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
-									foreach ($sitio as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_tipo_sitio)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									//foreach ($sitio as $row) {?>
+									<option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$proyecto2->id_tipo_sitio)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
 									<?php
-									}
+									//}
 									?>
 								</select>
 							</div>
 
 							<div class="col-lg-2">
 								<label class="control-label form-control-sm">Detalle Sitio</label>
-								<input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="<?php echo $proyecto2->sitio_descripcion?>" type="text">
+								<input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->sitio_descripcion?>" type="text">
 							</div>
 
 							<div class="col-lg-1" style="padding-left:15px">
@@ -342,27 +425,27 @@ function modalVerFormato(){
 								<select name="zona" id="zona" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
-									foreach ($zona as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_zona)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									//foreach ($zona as $row) {?>
+									<option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$proyecto2->id_zona)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
 									<?php
-									}
+									//}
 									?>
 								</select>
 							</div>
 
 							<div class="col-lg-2">
 								<label class="control-label form-control-sm">Detalle Zona</label>
-								<input id="direccion_zona" name="direccion_zona" on class="form-control form-control-sm"  value="<?php echo $proyecto2->zona_descripcion?>" type="text">
+								<input id="direccion_zona" name="direccion_zona" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->zona_descripcion?>" type="text">
 							</div>
 
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Parcela</label>
-								<input id="parcela" name="parcela" on class="form-control form-control-sm"  value="<?php echo $proyecto2->parcela?>" type="text">
+								<input id="parcela" name="parcela" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->parcela?>" type="text">
 							</div>
 
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">SuperManzana</label>
-								<input id="superManzana" name="superManzana" on class="form-control form-control-sm"  value="<?php echo $proyecto2->super_manzana?>" type="text">
+								<input id="superManzana" name="superManzana" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->super_manzana?>" type="text">
 							</div>
 							
 							<div class="col-lg-1">
@@ -370,36 +453,35 @@ function modalVerFormato(){
 								<select name="tipo" id="tipo" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
-									foreach ($tipo as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_tipo_direccion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									//foreach ($tipo as $row) {?>
+									<option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$proyecto2->id_tipo_direccion)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
 									<?php
-									}
+									//}
 									?>
 								</select>
 							</div>
 
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Lote</label>
-								<input id="lote" name="lote" on class="form-control form-control-sm"  value="<?php echo $proyecto2->lote?>" type="text">
+								<input id="lote" name="lote" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->lote?>" type="text">
 							</div>
 
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">SubLote</label>
-								<input id="sublote" name="sublote" on class="form-control form-control-sm"  value="<?php echo $proyecto2->sub_lote?>" type="text">
+								<input id="sublote" name="sublote" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->sub_lote?>" type="text">
 							</div>
 						
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Fila</label>
-								<input id="fila" name="fila" on class="form-control form-control-sm"  value="<?php echo $proyecto2->fila?>" type="text">
+								<input id="fila" name="fila" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->fila?>" type="text">
 							</div>
 
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Zonificaci&oacute;n</label>
-								<input id="zonificacion" name="zonificacion" on class="form-control form-control-sm"  value="<?php echo $proyecto2->zonificacion?>" type="text">
+								<input id="zonificacion" name="zonificacion" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->zonificacion?>" type="text">
 							</div>
 
-						</div>
-					</div>
+						</div>-->
 						<div style="margin-top:15px" class="form-group">
 							<div class="col-sm-12 controls">
 								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">

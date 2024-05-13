@@ -1309,6 +1309,8 @@ class DerechoRevisionController extends Controller
 		$datos_agremiado= $agremiado_model->getAgremiado(85,$agremiado_->numero_cap);
 		$persona_ = Persona::where("id",$agremiado_->id_persona)->where("estado","1")->first();
 		$datos_persona= $persona_model->getPersona(78,$persona_->numero_documento);
+		$datos_usoEdificaciones = UsoEdificacione::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->first();
+		$datos_presupuesto = Presupuesto::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->first();
 		//var_dump($proyectista_->id_agremiado);exit();
 		$tipo_solicitante = 1;
 		
@@ -1328,12 +1330,16 @@ class DerechoRevisionController extends Controller
         $sitio = $tablaMaestra_model->getMaestroByTipo(33);
         $zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
+		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
+		$tipo_uso = $tablaMaestra_model->getMaestroByTipo(30);
+		$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipo(111);
+		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(29);
 		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
 		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud($id);
 		$propietario_solicitud = $propietario_model->getPropietarioSolicitud($id);
 		$info_solicitud = $presupuesto_model->getInfoSolicitud($id);
 		$info_uso_solicitud = $usoEdificacione_model->getInfoSolicitudUso($id);
 		
-        return view('frontend.derecho_revision.all_derecho_revision_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud'));
+        return view('frontend.derecho_revision.all_derecho_revision_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones','sub_tipo_uso','tipo_obra','datos_presupuesto'));
     }
 }
