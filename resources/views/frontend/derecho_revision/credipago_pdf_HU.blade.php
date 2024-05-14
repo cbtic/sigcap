@@ -140,58 +140,143 @@ $(document).ready(function() {
         <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">
     </div>
     <div class="container">
-    <div class="vertical-text" style="position: absolute; top: 0; right: 0; writing-mode: vertical-lr;">
-    <div style="display: inline-block; white-space: nowrap; font-weight: bold;">IMPORTANTE.-</div>
-        <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n y su comprobante de pago adjuntarla al expediente</div>
-    </div>
+        <div class="vertical-text" style="position: absolute; top: 0; right: 65; writing-mode: vertical-lr;">
+            <div style="display: inline-block; white-space: nowrap; font-weight: bold;">IMPORTANTE.-</div>
+            <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n adjuntarla al certificado de habilitaci&oacute;</div>
+        </div>
     </div>
     <!--<div style="display: flex !important; width:100%">
         <span style="width: 50%; ">Div 1</span>
         <span style="width: 50%; float: right;">Div 2</span>
     </div>-->
-    <div style="text-align: center;">
-        <span style="font_size: 12; margin-left: 3cm; font-weight: bold;"><?php echo $credipago;?></span>
-        <span style="float: right; font_size: 8.5">Cod. Proyecto:</span>
-    </div>
-    <div style="text-align: center;">
-        <span style="font_size: 8.5; margin-left: 3cm;">CREDIPAGO</span>
-        <span style="float: right; font_size: 8.5">N° Certificado:</span>
-    </div>
+    
+    <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+            <tr>
+                <td class="td" style ="text-align: right; width: 60%; font-size:16px"><b><?php echo $credipago;?></b></td>
+                <td class="td" style ="text-align: left; width: 15%;"></td>
+                <td class="td" style ="text-align: left; width: 20%;">Cod. Proyecto:</b></td>
+                <td class="td" style ="text-align: right; width: 5%;"><?php //echo $credipago;?></td>                
+            </tr>
+            <tr>
+                <td class="td" style ="text-align: right; width: 60%;">CREDIPAGO</td>
+                <td class="td" style ="text-align: left; width: 15%;"></td>
+                <td class="td" style ="text-align: left; width: 20%;">N° Certificado:</b></td>
+                <td class="td" style ="text-align: right; width: 5%;"><?php //echo $credipago;?></td>                
+            </tr>
+        </tbody>
+    </table>
     <hr>
-
-    <p style="font_size: 8.5;text-align:justify"><b>LIQUIDACION DE DERECHOS POR REVISION Y CALIFICACION DE PROYECTOS DE HABILITACION URBANA</b></pack>
+   
+    <p style="font_size: 8.5;text-align:justify"><b>LIQUIDACION DE DERECHOS POR REVISION Y CALIFICACION DE PROYECTOS DE HABILITACION URBANA</b></p>
     
         <hr>
         <div class="contenido">
-            <span style="font-size: 8.5;"><b>ARQUITECTO:</b><span style="padding-left: 96px;"> <?php echo $proyectista;?></span></span>
-            <span style="float: right; font-size: 8.5"><b>N° CAP:</b><span style="padding-left: 40px;"> <?php echo $numero_cap;?></span></span>
-            <p> <span style="font_size: 8.5; margin-left: 4.9cm;"><?php echo $tipo_proyectista;?></span></span></p>
-            <p class="p"><b>NOMBRE DEL PROPIETARIO:</b><span style="padding-left: 18px;"> <?php echo $razon_social;?></span></p>
-            <p class="p"><b>DENOMINACION DE H.U. NUEVA:</b><span style="padding-left: 10px;"> <?php echo $nombre;?></span></p>
-            <p class="p"><b>DEPARTAMENTO/PROVINCIA/DISTRITO:</b> <?php echo $departamento;?>/<?php echo $provincia;?>/<?php echo $distrito;?></p>
-            <p class="p"><b>UBICACION DEL INMUEBLE:</b> <span style="padding-left: 22px;"><?php echo $direccion;?></p>
-            <p></p>
-            <p class="p"><b>TIPO DE OBRA:</b></p>
-            <p class="p"><b>USO DE EDIFICACION:</b></p>
-            <p class="p"><b>INSTANCIA:</b> <?php echo $numero_revision;?></p>
-            <p class="p"><b>COMISION TECNICA:</b> <?php echo $municipalidad;?></p>
-            <span style="font_size: 8.5;"><b>TOTAL AREA TECHADA (Intervenida) (M2):</b> <?php echo $total_area_techada;?></span>
-            <span style="float: right; font_size: 8.5"><b>N° de Revision:</b> <?php echo $numero_revision;?></span>
-            <p class="p"><b>VALOR DE LA OBRA DECLARADO EN EL FUE: S/.</b> <?php echo $valor_obra;?></p>
-            <p class="p" style="text-align : right"><b>PORCENTAJE A APLICAR SOBRE VALOR DE OBRA <?php echo $porcentaje;?>%:</b> <?php echo $sub_total;?></p>   
-            <p class="p" style="text-align : right"><b>+IGV:</b> <?php echo $igv;?></p>
-            <hr style="width:10%; margin-right: 1px;">
-            <p class="p" style="text-align : right"><b>TOTAL:</b> <?php echo $total;?></p>
-            <p style="text-align : right; font-size : 10"><b>TOTAL A PAGAR:</b> <?php echo $total;?></p>
+            
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 35%;"><b>ARQUITECTO:</b></td>
+                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $proyectista;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 35%;"></td>
+                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $tipo_proyectista;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 35%; height:25px"><b>NOMBRE DEL PROPIETARIO:</b></td>
+                        <td class="td" style ="text-align: left; width: 45%; height:25px"><?php echo $razon_social;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 35%; height:25px"><b>DENOMINACION DE H.U. NUEVA:</b></td>
+                        <td class="td" style ="text-align: left; width: 45%; height:25px"><?php echo $nombre;?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="height:5px;"></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 35%;"><b>DEPARTAMENTO/PROVINCIA/DISTRITO:</b></td>
+                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $departamento;?>/<?php echo $provincia;?>/<?php echo $distrito;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 35%;"><b>INSTANCIA:</b></td>
+                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $instancia;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 35%;"><b>COMISION TECNICA:</b></td>
+                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $distrito;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 35%;"><b>DIRECCION:</b></td>
+                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $direccion;?></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="height:5px;"></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 44%; height:25px"><b>AREA BRUTA DEL TERRENO (m2):</b></td>
+                        <td class="td" style ="text-align: left; width: 36%; height:25px"><?php echo number_format($total_area_techada, 2, '.', ',');?></td>
+                        <td class="td" style ="text-align: left; width: 15%; height:25px"><b>N° de Revision:</b></td>
+                        <td class="td" style ="text-align: right; width: 5%; height:25px"><?php echo $numero_revision;?></td>
+                    </tr>
+                </tbody>
+            </table>
            
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: center; width: 80%;"><b>FACTOR A APLICAR SOBRE EL AREA DEL TERRENO ES <?php echo $valor_metro_cuadrado;?></b></td>
+                        <td class="td" style ="text-align: left; width: 5%;">S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($sub_total, 2, '.', ',');?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>   
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 25%;"><b>Monto Minimo (inc. IGV):</b></td>
+                        <td class="td" style ="text-align: left; width: 20%;">S/ <?php echo number_format($valor_minimo,2,'.',',');?></td>
+                        <td class="td" style ="text-align: right; width: 35%;"><b>+IGV:</b></td>
+                        <td class="td" style ="text-align: left; width: 5%;">S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($igv,2,'.',',');?></td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
+                    <tr>
+                        <!--<td class="td" style ="text-align: left; width: 20%;"><?php //echo $tipo_liquidacion;?></td>-->
+                        
+                        <td class="td" style ="text-align: left; width: 25%;"><b>Monto Maximo (inc. IGV):</b></td>
+                        <td class="td" style ="text-align: left; width: 20%;">S/ <?php echo number_format($valor_maximo,2,'.',',');?></td>
+                        <td class="td" style ="text-align: right; width: 35%;"><b>TOTAL:</b></td>
+                        <td class="td" style ="text-align: left; width: 5%; border-top: 1px solid black;">S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%; border-top: 1px solid black;"><?php echo number_format($total,2,'.',',');?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 25%; font-size:10px"><i>CALCULADO POR EL SISTEMA</i></td>
+                        <td class="td" style ="text-align: left; width: 20%;"></td>
+                        <td class="td" style ="text-align: right; width: 35%; font-size:14px"><b>TOTAL A PAGAR:</b></td>
+                        <td class="td" style ="text-align: left; width: 5%;">S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($total,2,'.',',');?></td>
+                    </tr>
+                </tbody>
+            </table>
+
             <hr>
-            <span style="font_size: 8.5;"><b>V.B</b></span>
-            <span style="float: right; font_size: 8.5"><b>Recibido por:</b></span> 
+            <span style="font_size: 8.5;">V.B</span>
+            <span style="float: right; font_size: 8.5"><b>Recibido por:...................................................</b></span> 
             <br>
-            <span style="font_size: 8.5;"><b>Fecha de Emisi&oacute;n: <?php echo $carbonDate;?> &nbsp; &nbsp; &nbsp; <?php echo $currentHour;?></b></span>
-            <span style="float: right; font_size: 8.5"><b>N° DNI:</b></span>   
+            <span style="font_size: 8.5;">Fecha de Emisi&oacute;n: <?php echo $carbonDate;?> &nbsp; &nbsp; &nbsp; <?php echo $currentHour;?></span>
+            <span style="float: right; font_size: 8.5"><b>N° DNI:...................................................</b></span>   
             <hr>
-            <p class="p">Costo por devoluci&oacute;n: S/. 50.00 + 12% del valor del Derecho de Revisi&oacute;n por conceptos administrativos.</p>
+            <p class="p">En caso de devolucion, se le deducir&aacute; gastos bancarios y administrativos, comisi&oacute;n Niubiz segun corresponda.</p>
+            <p class="p">Costo por devoluci&oacute;n: S/. 50.00 soles por conceptos administrativos.</p>
             <p></p>
         </div>
     </div>

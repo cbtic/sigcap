@@ -153,6 +153,10 @@
 						<input class="form-control form-control-sm" id="denominacion_b" name="denominacion_b" placeholder="Denominación">
 					</div>
 
+                    <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="origen_b" name="origen_b" placeholder="Origen">
+					</div>
+
                     <input type="hidden" name="cuenta_b" id="cuenta_b" value="">
                     <input type="hidden" name="tipo_cuenta_b" id="tipo_cuenta_b" value="">
                     <input type="hidden" name="centro_costo_b" id="centro_costo_b" value="">

@@ -25,7 +25,8 @@ class Proyectista extends Model
         $cad = "select a.numero_cap, pe.apellido_paterno||' '||pe.apellido_materno||' '||pe.nombres agremiado, a.celular1, a.email1 from proyectistas p 
         inner join agremiados a on p.id_agremiado = a.id 
         inner join personas pe on a.id_persona = pe.id
-        where p.id_solicitud = '".$id_solicitud."'";
+        where p.id_solicitud = '".$id_solicitud."'
+        order by p.id asc";
 
         //echo $cad;
 		$data = DB::select($cad);
