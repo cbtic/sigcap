@@ -572,6 +572,132 @@ class ComprobanteController extends Controller
 
 				}
 				
+                $ubicacion_id = $request->ubicacion;        
+            $ubicacion_id2 = $request->ubicacion2;
+			$id_persona = $request->persona;
+            $id_persona2 = $request->persona2;
+
+/*
+            echo "ubicacion_id -> {$ubicacion_id}\n ";
+            echo "id_persona -> {$id_persona}\n ";
+
+            echo "ubicacion_id2 -> {$ubicacion_id2}\n ";
+            echo "id_persona2 -> {$id_persona2}\n ";
+            
+            exit();
+
+*/
+
+            $id_persona_act = 0;
+            $id_ubicacion_act = 0;
+           
+            
+            if ($id_persona2!='') {
+                $id_persona_act = $id_persona2;
+                $id_persona='';
+                
+            }else{
+                $id_persona_act = $id_persona;
+            }
+            
+
+            if ($ubicacion_id2!=''){
+                $id_ubicacion_act = $ubicacion_id2;
+                $ubicacion_id='';
+
+            }else{
+                $id_ubicacion_act = $ubicacion_id;
+
+            }
+             
+
+            $direccion=$request->direccion;
+            $correo=$request->email;
+
+            if ($request->direccion2!=''){
+                $direccion=$request->direccion2;
+                $correo=$request->email2;
+            }
+/*
+            echo "direccion -> {$direccion}\n ";
+            echo "correo -> {$correo}\n ";
+
+            echo "id_persona_act -> {$id_persona_act}\n ";
+            echo "id_ubicacion_act -> {$id_ubicacion_act}\n ";
+
+            echo "tipoF -> {$tipoF}\n ";
+
+            echo "ubicacion_id -> {$ubicacion_id}\n ";
+            echo "id_persona -> {$id_persona}\n ";
+
+            echo "ubicacion_id2 -> {$ubicacion_id2}\n ";
+            echo "id_persona2 -> {$id_persona2}\n ";
+  */          
+           // exit();
+
+            if ($id_persona_act != 0 || $id_ubicacion_act != 0 ) {
+
+               // exit($id_persona_act);
+
+                
+                if ($tipoF == 'FT' &&  $ubicacion_id =='' )
+                {
+                    $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
+                    $empresa->direccion = $direccion;
+                    $empresa->email = $correo;
+                    $empresa->save();
+                }
+
+                if ($tipoF == 'FT' &&  $id_persona != '' )
+                {
+                    $persona = Persona::where('id', $id_persona_act)->get()[0];
+                    $persona->direccion = $direccion;
+                    $persona->correo = $correo;
+                    $persona->save();
+
+                    $persona2 = Agremiado::where('id_persona', $id_persona_act)->get()[0];
+                    $persona2->direccion = $direccion;
+                    $persona2->email1 = $correo;
+                    $persona2->save();
+                }
+
+                if ($tipoF == 'BV' &&  $id_persona != '' )
+                {
+                    //exit($id_persona);
+                    $persona = Persona::where('id', $id_persona_act)->get()[0];
+                    $persona->direccion = $direccion;
+                    $persona->correo = $correo;
+                    $persona->save();
+
+                    $persona2 = Agremiado::where('id_persona', $id_persona_act)->get()[0];
+                    $persona2->direccion = $direccion;
+                    $persona2->email1 = $correo;
+                    $persona2->save();
+                }
+
+                if ($tipoF == 'FT' &&  $ubicacion_id2 != '' )
+                {
+                    $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
+                    $empresa->direccion = $direccion;
+                    $empresa->email = $correo;
+                    $empresa->save();
+                }    
+
+                if ($tipoF == 'BV' &&  $id_persona2 != '') 
+                {
+                    $persona = Persona::where('id', $id_persona_act)->get()[0];
+                    $persona->direccion = $direccion;
+                    $persona->correo = $correo;
+                    $persona->save();
+
+                    $persona2 = Agremiado::where('id_persona', $id_persona_act)->get()[0];
+                    $persona2->direccion = $direccion;
+                    $persona2->email1 = $correo;
+                    $persona2->save();
+                }
+                
+
+            }
 				//$valoriza = Valorizacione::where('val_aten_estab', '=', $vestab)->where('val_codigo', '=', $vcodigo)->first();                
               
                 //$valoriza = Valorizacione::find($id_val);
@@ -738,117 +864,7 @@ class ComprobanteController extends Controller
             
 
 
-			$ubicacion_id = $request->ubicacion;        
-            $ubicacion_id2 = $request->ubicacion2;
-			$id_persona = $request->persona;
-            $id_persona2 = $request->persona2;
-
-/*
-            echo "ubicacion_id => {$ubicacion_id}\n ";
-            echo "id_persona => {$id_persona}\n ";
-
-            echo "ubicacion_id2 => {$ubicacion_id2}\n ";
-            echo "id_persona2 => {$id_persona2}\n ";
-  */          
-  //          exit();
-
-
-
-            $id_persona_act = 0;
-            $id_ubicacion_act = 0;
-           
-            
-            if ($id_persona2!='') {
-                $id_persona_act = $id_persona2;
-                $id_persona='';
-                
-            }else{
-                $id_persona_act = $id_persona;
-            }
-            
-
-            if ($ubicacion_id2!=''){
-                $id_ubicacion_act = $ubicacion_id2;
-                $ubicacion_id='';
-
-            }else{
-                $id_ubicacion_act = $ubicacion_id;
-
-            }
-             
-
-            $direccion=$request->direccion;
-            $correo=$request->email;
-
-            if ($request->direccion2!=''){
-                $direccion=$request->direccion2;
-                $correo=$request->email2;
-            }
-/*
-            echo "direccion -> {$direccion}\n ";
-            echo "correo -> {$correo}\n ";
-
-            echo "id_persona_act -> {$id_persona_act}\n ";
-            echo "id_ubicacion_act -> {$id_ubicacion_act}\n ";
-
-            echo "tipoF -> {$tipoF}\n ";
-
-            echo "ubicacion_id -> {$ubicacion_id}\n ";
-            echo "id_persona -> {$id_persona}\n ";
-
-            echo "ubicacion_id2 -> {$ubicacion_id2}\n ";
-            echo "id_persona2 -> {$id_persona2}\n ";
-    */        
-          //  exit();
-
-          
-            if ($id_persona_act != '' || $id_ubicacion_act != '' ) {
-
-               // exit($id_persona_act);                
-                if ($tipoF == 'FT' &&  $ubicacion_id !='' )
-                {
-                    $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
-                    $empresa->direccion = $direccion;
-                    $empresa->email = $correo;
-                    $empresa->save();
-                }
-
-                if ($tipoF == 'FT' &&  $id_persona != '' )
-                {
-                    $persona = Persona::where('id', $id_persona_act)->get()[0];
-                    $persona->direccion = $direccion;
-                    $persona->correo = $correo;
-                    $persona->save();
-                }
-
-                if ($tipoF == 'BV' &&  $id_persona != '' )
-                {
-                    //exit($id_persona);
-                    $persona = Persona::where('id', $id_persona_act)->get()[0];
-                    $persona->direccion = $direccion;
-                    $persona->correo = $correo;
-                    $persona->save();
-                }
-
-                if ($tipoF == 'FT' &&  $ubicacion_id2 != '' )
-                {
-                    $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
-                    $empresa->direccion = $direccion;
-                    $empresa->email = $correo;
-                    $empresa->save();
-                }    
-
-                if ($tipoF == 'BV' &&  $id_persona2 != '') 
-                {
-                    $persona = Persona::where('id', $id_persona_act)->get()[0];
-                    $persona->direccion = $direccion;
-                    $persona->correo = $correo;
-                    $persona->save();
-                }
-                
-
-            }
-            
+			
 
             $id_persona = $request->persona;
             $ubicacion_id = $request->ubicacion;
@@ -1132,7 +1148,6 @@ class ComprobanteController extends Controller
         $datos_model = new Comprobante;
 		
         $datos=  $datos_model->getDatosByComprobante($id);
-        //print_r($id); exit();
         
         $cronograma=  $datos_model->getCronogramaPagos($id);
         //print_r($datos); exit();
@@ -2088,10 +2103,11 @@ class ComprobanteController extends Controller
  
                 $factura_upd = Comprobante::find($id_factura);
                 if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
-                
+                //print_r($tarifa); exit();
+
                 $factura_upd->save();
  
-                //print_r($tarifa); exit();
+               
                 foreach ($tarifa as $key => $value) {
                     //echo "denominacion=>".$value['denominacion']."<br>";
                     if ($adelanto == 'S'){

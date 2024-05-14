@@ -125,6 +125,76 @@ class IngresoController extends Controller
 		return $resultado;
 
     }
+
+    public function valida_deuda_vencida(Request $request){
+
+        $factura_detalle = $request->comprobante_detalle;
+
+        $ind = 0;
+        foreach($request->comprobante_detalles as $key=>$det){
+            $valorizad[$ind] = $factura_detalle[$key];
+            $ind++;
+        }
+
+        //print_r($valorizad); exit();
+
+        $conceptos = "";
+        $ids = "";
+
+        foreach($valorizad as $value){
+
+            $conceptos =  $value["id_concepto"].','.$conceptos;
+
+            $ids=  $value["id"].','.$ids;
+
+            //echo $value["id_concepto"];
+            //echo "\n";
+        }
+
+        echo($conceptos);
+        echo "\n";
+        echo($ids);
+
+        exit();
+
+
+
+        $ind=0;
+
+        print_r($request->comprobante_detalles); exit();
+        foreach($request->comprobante_detalles as $key => $value){
+
+
+            echo $value["id_concepto"];
+            echo "\n";
+            //exit();
+
+            //$facturad[$ind] = $factura_detalle[$key];
+           
+            //print_r($factura_detalle['id_concepto']);
+            //$id_concepto_det = $facturad[$ind]['id_concepto'];
+            
+            //$stotal= $stotal + $facturad[$ind]['total'];
+            //$igv= $igv + $facturad[$ind]['igv'];
+
+            $ind++;
+        }
+
+/*
+        $id_persona = $request->id_persona;
+        $tipo_documento = $request->tipo_documento;
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getDeudaVencida($tipo_documento,$id_persona);
+*/
+
+
+        //print_r($valorizacion);exit();
+//		return $resultado;
+
+    }
+
+    
     
     public function listar_valorizacion_periodo(Request $request){
         $id_persona = $request->id_persona;

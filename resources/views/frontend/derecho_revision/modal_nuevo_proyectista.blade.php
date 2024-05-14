@@ -298,7 +298,7 @@ function fn_save_proyectista(){
             data : {_token:_token,id:id,numero_cap:numero_cap,agremiado:agremiado,situacion:situacion,celular:celular,email:email,id_solicitud:id_solicitud},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
+				window.location.reload();
 								
             }
     });

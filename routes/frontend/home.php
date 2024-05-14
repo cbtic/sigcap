@@ -241,6 +241,8 @@ Route::post('ingreso/exonerar_valorizacion', [IngresoController::class, 'exonera
 Route::post('ingreso/anular_valorizacion', [IngresoController::class, 'anular_valorizacion'])->name('ingreso.anular_valorizacion');
 Route::get('ingreso/modal_consulta_persona', [IngresoController::class, 'modal_consulta_persona'])->name('ingreso.modal_consulta_persona');
 
+Route::post('ingreso/valida_deuda_vencida', [IngresoController::class, 'valida_deuda_vencida'])->name('ingreso.valida_deuda_vencida');
+
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
 Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
@@ -726,3 +728,6 @@ Route::get('planilla/eliminar_reintegro/{id}/{estado}', [PlanillaDelegadoControl
 Route::get('planilla/obtener_datos_reintegro_detalle/{id_agremiado}', [PlanillaDelegadoController::class, 'obtener_datos_reintegro_detalle'])->name('planilla.obtener_datos_reintegro_detalle');
 Route::get('adelanto/obtener_datos_adelanto/{id_agremiado}', [AdelantoController::class, 'obtener_datos_adelanto'])->name('adelanto.obtener_datos_adelanto');
 Route::get('derecho_revision/eliminar_solicitud_edificaciones/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_edificaciones'])->name('derecho_revision.eliminar_solicitud_edificaciones');
+Route::get('derecho_revision/eliminar_solicitud_hu/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_hu'])->name('derecho_revision.eliminar_solicitud_hu');
+Route::get('derecho_revision/obtener_ubigeo/{municipalidad}', [DerechoRevisionController::class, 'obtener_ubigeo'])->name('derecho_revision.obtener_ubigeo');
+Route::get('derecho_revision/derecho_revision_reintegro/{id}', [DerechoRevisionController::class, 'derecho_revision_reintegro'])->name('derecho_revision.derecho_revision_reintegro');

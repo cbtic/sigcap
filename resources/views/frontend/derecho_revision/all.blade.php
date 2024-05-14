@@ -365,10 +365,10 @@
                 </div>
                 <div class="row" style="padding:15px 20px 15px 20px;">
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                        <input id="fecha_inicio_bus" name="fecha_inicio_bus" placeholder="Fecha Inicio" class="form-control form-control-sm"  value="" type="text"  > 
+                        <input id="fecha_inicio_bus" name="fecha_inicio_bus" placeholder="Fecha Inicio" class="form-control form-control-sm"> 
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                        <input id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Fin" class="form-control form-control-sm"  value="" type="text"  >
+                        <input id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Fin" class="form-control form-control-sm">
                     </div>
 				</div>
                 <div class="row" style="padding:0px 20px 0px 20px;">

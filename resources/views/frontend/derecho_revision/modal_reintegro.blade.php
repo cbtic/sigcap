@@ -128,9 +128,6 @@ $(document).ready(function() {
 	//$("#id_empresa").select2({ width: '100%' });
 
     $('#valor_reintegro_').hide();
-
-    
-    
     
 });
 </script>
@@ -172,7 +169,7 @@ function calculoVistaPrevia(){
     var igv_valor = {{$parametro[0]->igv}};
     var igv_minimo	= igv_valor * sub_total_minimo;
     var total_minimo = sub_total_minimo + igv_minimo;
-    $('#minimo').val(total_minimo);
+    $('#minimo').val(formatoMoneda(total_minimo));
     $('#igv').val(igv_valor_+"%");
     //var_dump($total_minimo);exit;
     
@@ -382,6 +379,23 @@ function fn_save_requisito(){
     });
 }
 
+function valida(){
+    
+    var msg="";
+    var situacion=$("#situacion").val();
+    
+    if(situacion=="FALLECIDO"){msg+="El agremiado est&aacute; FALLECIDO";}
+
+    if(situacion=="INHABILITADO"){msg+="El agremiado est&aacute; INHABILITADO";}
+    
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }else if(situacion=="HABILITADO"){
+        fn_save_credipago();
+    } 
+}
+
 function fn_save_credipago(){
     
 	var _token = $('#_token').val();
@@ -400,8 +414,8 @@ function fn_save_credipago(){
 				//alert(result[0].sw);
 				//datatablenew();
                 if(result[0].sw==true){
-					//datatablenew();
                     $('#openOverlayOpc').modal('hide');
+                    window.location.reload();
 				}else{
 					//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
 					bootbox.alert({
@@ -474,7 +488,7 @@ function fn_save_credipago(){
                         <input id="area_terreno" name="area_terreno" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->area_total?>" type="text" readonly='readonly'>
                     </div>-->
                     <div class="col-lg-3">
-                        <label class="control-label form-control-sm">&Aacute;rea Techada</label>
+                        <label class="control-label form-control-sm">&Aacute;rea Techada (m2)</label>
                         <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_total?>" type="text" readonly='readonly'>
                     </div>
                 </div>
@@ -700,7 +714,7 @@ function fn_save_credipago(){
 							<div class="col-sm-12 controls">
 								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 									
-									<a href="javascript:void(0)" onClick="fn_save_credipago()" class="btn btn-sm btn-success">Generar Credipago</a>
+									<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Generar Credipago</a>
 									
 								</div>
 													
