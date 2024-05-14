@@ -225,13 +225,34 @@ function cargarcboPeriodo(){
 		type: "POST",
 		data : $("#frmValorizacion").serialize(),
 		success: function(result){
-			var option = "<option value='' selected='selected'>Periodo</option>";
+			var option = "<option value='' selected='selected'>-Periodo-</option>";
 			$('#cboPeriodo_b').html("");
 			$(result).each(function (ii, oo) {
 				option += "<option value='"+oo.periodo+"'>"+oo.periodo+"</option>";
 			});
 			$('#cboPeriodo_b').html(option);
 			$('#cboPeriodo_b').select2();
+			
+			//$('.loader').hide();			
+		}
+		
+	});
+}
+
+function cargarcboMes(){    	
+
+	$.ajax({
+		url: "/ingreso/listar_valorizacion_mes",
+		type: "POST",
+		data : $("#frmValorizacion").serialize(),
+		success: function(result){
+			var option = "<option value='' selected='selected'>-Mes-</option>";
+			$('#cboMes_b').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.mes+"</option>";
+			});
+			$('#cboMes_b').html(option);
+			$('#cboMes_b').select2();
 			
 			//$('.loader').hide();			
 		}
@@ -831,7 +852,7 @@ function obtenerBeneficiario(){
 				cargarPagos();
 				cargarcboTipoConcepto();
 				cargarcboPeriodo();
-				//cargarDudoso();
+				cargarcboMes();
 			}
 			else {
 
@@ -2203,18 +2224,20 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			var id = $('#id').val();
-			var numero_documento = $('#numero_documento').val();
-            var agremiado = $('#agremiado').val();
-			var sexo = $('#sexo').val();
-			var estado = $('#estado').val();
+			var numero_documento = $('#numero_documento_m').val();
+			var tipo_documento = $('#tipo_documento_m').val();
+            var agremiado = $('#agremiado_m').val();
+			var sexo = $('#sexo_m').val();
+			var estado = $('#estado_m').val();
 			var _token = $('#_token').val();
+			//alert(tipo_documento);
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 //"contentType": "application/json; charset=utf-8",
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,numero_documento:numero_documento,agremiado:agremiado,sexo:sexo,estado:estado,
+						id:id,numero_documento:numero_documento,agremiado:agremiado,sexo:sexo,estado:estado, tipo_documento:tipo_documento,
 						_token:_token
                        },
                 "success": function (result) {
@@ -2249,6 +2272,17 @@ function datatablenew(){
                 "aTargets": [1],
 				"className": "dt-center",
                 },
+                {
+					"mRender": function (data, type, row) {
+						var numero_cap = "";
+						if(row.numero_cap!= null)numero_cap = row.numero_cap;
+						return numero_cap;
+					},
+					"bSortable": false,
+					"aTargets": [2],
+					"className": "dt-center",
+				},
+
 				{
 				"mRender": function (data, type, row) {
 					var agremiado = "";
@@ -2256,26 +2290,10 @@ function datatablenew(){
 					return agremiado;
 				},
 				"bSortable": false,
-				"aTargets": [2]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var fecha_nacimiento = "";
-					if(row.fecha_nacimiento!= null)fecha_nacimiento = row.fecha_nacimiento;
-					return fecha_nacimiento;
-				},
-				"bSortable": false,
 				"aTargets": [3]
 				},
-				{
-				"mRender": function (data, type, row) {
-					var nacionalidad = "";
-					if(row.nacionalidad!= null)nacionalidad = row.nacionalidad;
-					return nacionalidad;
-				},
-				"bSortable": false,
-				"aTargets": [4]
-				},
+
+
 				{
 				"mRender": function (data, type, row) {
 					var sexo = "";
@@ -2283,35 +2301,10 @@ function datatablenew(){
 					return sexo;
 				},
 				"bSortable": false,
-				"aTargets": [5]
+				"aTargets": [4]
 				},
-				{
-				"mRender": function (data, type, row) {
-					var numero_celular = "";
-					if(row.numero_celular!= null)numero_celular = row.numero_celular;
-					return numero_celular;
-				},
-				"bSortable": false,
-				"aTargets": [6]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var correo = "";
-					if(row.correo!= null)correo = row.correo;
-					return correo;
-				},
-				"bSortable": false,
-				"aTargets": [7]
-				},
-				{
-				"mRender": function (data, type, row) {
-					var direccion = "";
-					if(row.direccion!= null)direccion = row.direccion;
-					return direccion;
-				},
-				"bSortable": false,
-				"aTargets": [8]
-				},
+
+
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -2324,22 +2317,39 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [9]
+					"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalPersona('+row.id+')" ><i class="fa fa-view"></i> Ver</button>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="selPerona('+row.numero_cap+','+row.numero_documento+')" ><i class="fa fa-view"></i> Ver</button>';
 												
 						html += '</div>';
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [10],
+					"aTargets": [6],
 				},
 
             ]
     });
+
+}
+
+function selPerona(cap, numero_documento){
+	
+	//alert(cap);
+	if(cap!=null){
+		$('#tipo_documento').val(85);
+		$('#numero_documento').val(cap);
+	} else{
+		$('#numero_documento').val(numero_documento);
+		$('#tipo_documento').val(78);
+
+	}
+
+	$('#openOverlayOpc').modal('hide');
+	obtenerBeneficiario();
 
 }

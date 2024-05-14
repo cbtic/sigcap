@@ -332,7 +332,7 @@ br {
                                                         </tr>
                                                         <tr>
                                                         <td>CAP :</td>
-                                                        <td style="text-align: right;"><span class="resaltado"></span></td>
+                                                        <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
                                                         </tr>
                                                         </tbody>
                                                         </table>
@@ -431,6 +431,43 @@ br {
                                     <div class="separador">&nbsp;</div>
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
+                                                    </div>
+                                                    
+                                                    <div>
+                                                    
+                                                    <table id="tblcuotas" class="table table-hover" >
+                                                        <caption>Información del crédito</caption>
+                                                        <thead>
+                                                        
+                                                            <tr>
+                                                                <th class="text-center" width="8%">item</th>
+                                                                <th width="37%">Monto</th>
+                                                                <th width="37%">Fecha Venc.</th>
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                    @foreach ($cronograma as $cronograma_v)
+                                                            <tr id="fila{{ $loop->iteration }}">
+                                                                <td class="text-center">
+                                                                    {{ $cronograma_v->item }} 
+                                                                    
+                                                                
+                                                                </td>
+                                                                <td class="text-left">
+                                                                    {{ $cronograma_v->monto }} 
+                                                                </td>
+
+                                                                <td class="text-left">
+                                                                    {{ $cronograma_v->fecha_vencimiento }} 
+                                                                </td>
+                                                           </tr>
+                                                            @endforeach
+                                                    </div>
+
+                                    <div class="separador">&nbsp;</div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <p>Usuario: <span class="resaltado">{{ $datos->usuario }}</span></p>
                                                     </div>
 
                                     <hr style="width:90%", size="3", color=black>

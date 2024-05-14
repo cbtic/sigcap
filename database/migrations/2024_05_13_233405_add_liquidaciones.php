@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnsProyectos extends Migration
+class AddLiquidaciones extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,12 @@ class AddColumnsProyectos extends Migration
      */
     public function up()
     {
-        
+        Schema::table('liquidaciones', function (Blueprint $table) {
+            
+            $table->integer('id_situacion')->nullable();
+            
+            
+        });
     }
 
     /**

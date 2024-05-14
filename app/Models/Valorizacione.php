@@ -10,7 +10,7 @@ use DB;
 
 class Valorizacione extends Model
 {
-    function getValorizacion($tipo_documento,$id_persona,$periodo,$cuota,$concepto, $filas,$exonerado){  
+    function getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$cuota,$concepto, $filas,$exonerado){  
         
         if($filas!="")$filas="limit ".$filas;   
 
@@ -28,6 +28,7 @@ class Valorizacione extends Model
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
                 where v.id_empresa = ".$id_persona."            
                 and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
+                and to_char(DATE_PART('MONTH', v.fecha),'00') ilike '%".$mes."'                
                 and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
@@ -38,19 +39,18 @@ class Valorizacione extends Model
 			";
         }else{
             $cad = "
-            --select v.id, v.fecha, c.denominacion||' '||a.mes||' '||a.periodo  concepto, v.monto,t.denominacion moneda, v.id_moneda
+            
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto,
-                codigo_fraccionamiento, v.exonerado
-                --, v.id_tipo_concepto
+                codigo_fraccionamiento, v.exonerado               
             from valorizaciones v
-                inner join conceptos c  on c.id = v.id_concepto
-                --inner join agremiado_cuotas a  on a.id = v.pk_registro
+                inner join conceptos c  on c.id = v.id_concepto            
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
                 where v.id_persona = ".$id_persona."            
                 and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
+                and to_char(DATE_PART('MONTH', v.fecha),'00') ilike '%".$mes."'
                 and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
@@ -374,6 +374,35 @@ class Valorizacione extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getMesValorizacion($tipo_documento,$id_persona){        
+        if($tipo_documento=="79"){  //RUC
+            $cad = "
+            select distinct  to_char(DATE_PART('MONTH', v.fecha),'00') id, to_char(v.fecha, 'TMMonth') mes
+            from valorizaciones v
+            group by v.fecha,v.id_empresa,v.estado,v.pagado
+            having v.id_empresa = ".$id_persona."
+            and v.estado = '1'            
+            and v.pagado = '0'
+            order by to_char(DATE_PART('MONTH', v.fecha),'00')
+			";
+        }else{
+            $cad = "
+            select distinct to_char(DATE_PART('MONTH', v.fecha),'00') id, to_char(v.fecha, 'TMMonth') mes
+            from valorizaciones v
+            group by v.fecha,v.id_persona,v.estado,v.pagado
+            having v.id_persona = ".$id_persona."
+            and v.estado = '1'            
+            and v.pagado = '0'
+            order by  to_char(DATE_PART('MONTH', v.fecha),'00')
+			";
+        }
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
 
     function getAnulaFraccionamiento($tipo_documento,$id_persona, $codigo_fraccionamiento){        
         if($tipo_documento=="79"){  //RUC

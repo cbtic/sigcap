@@ -245,7 +245,7 @@
 
 								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
 									<input class="btn btn-warning pull-rigth" value="Buscar" type="button"  id="btnBuscar" />
-									<input class="btn btn-success pull-rigth" value="Calcular Fondo Común" type="button" id="btnCalcular" onclick="fn_calcular()" style="margin-left:15px" />
+									
 								</div>
 
 							</div>

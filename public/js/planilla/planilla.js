@@ -28,7 +28,10 @@ $(document).ready(function () {
 		generarAsientoPlanilla();
 	});
 	
+	$('#btnDescargar').on('click', function () {
+		descargarExcel()
 
+	});
 	
 
 	$('#agremiado_bus').keypress(function(e){
@@ -236,6 +239,27 @@ function generarPlanilla(){
 	});
 	
 }
+
+function eliminarPlanilla(){
+	
+	$.ajax({
+			url: "/planilla/eliminar_planilla_delegado",
+			type: "POST",
+			data : $("#frmPlanilla").serialize(),
+			success: function (result) {
+					/*
+					if(result==false){
+						bootbox.alert("Planilla ya esta registrado"); 
+						return false;
+					}
+					*/
+					cargarPlanillaDelegado();
+					
+			}
+	});
+	
+}
+
 /*
 function generarAsientoPlanilla(){
 	
@@ -740,5 +764,18 @@ function send_recibo_honorario(){
     });
 }
 
+function descargarExcel(){
+		
+	var periodo = $('#id_periodo_bus').val();
+	var anio = $('#anio').val();
+	var mes = $('#mes').val();
+	
+	if (periodo == "")periodo = 0;
+	if (anio == "")anio = 0;
+	if (mes == "")mes = 0;
+	
+	location.href = '/planilla/exportar_planilla_delegado/' + periodo + '/' + anio + '/' + mes;
+	
+}
 
 

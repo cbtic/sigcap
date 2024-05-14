@@ -15,6 +15,8 @@ use App\Models\TablaMaestra;
 use App\Models\Agremiado;
 use App\Models\DelegadoReintegroDetalle;
 use Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
 
 class PlanillaDelegadoController extends Controller
 {
@@ -236,7 +238,7 @@ class PlanillaDelegadoController extends Controller
 	
 	public function send_planilla_delegado(Request $request){
 		//exit();
-		$msg = "";
+		$msg = true;
 		$planillaDelegadoExiste = PlanillaDelegado::where("id_periodo_comision",$request->id_periodo_bus)->where("periodo",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
 		
 		if($planillaDelegadoExiste){
@@ -247,6 +249,22 @@ class PlanillaDelegadoController extends Controller
 		}
 		
 		return $msg;
+		
+	}
+	
+	public function eliminar_planilla_delegado(Request $request){
+		/*
+		$msg = "";
+		$planillaDelegadoExiste = PlanillaDelegado::where("id_periodo_comision",$request->id_periodo_bus)->where("periodo",$request->anio)->where("mes",$request->mes)->where("estado",1)->first();
+		*/
+		//if($planillaDelegadoExiste){
+			//$msg = false;
+		//}else{
+			$planillaDelegado_model = new PlanillaDelegado;
+			$planillaDelegado_model->eliminar_planilla_delegado($request->id_periodo_bus,$request->anio,$request->mes);
+		//}
+		
+		//return $msg;
 		
 	}
 	
@@ -402,5 +420,100 @@ class PlanillaDelegadoController extends Controller
 		$fondo_comun = $planillaDelegado_model->getGenerarAsientoPlanilla($asiento, $request->id_periodo_bus,$request->anio,$request->mes);
 
     }
-	    
+	
+	public function exportar_planilla_delegado($periodo,$anio,$mes) {
+		
+		if($periodo==0)$periodo = "";
+		if($anio==0)$anio = "";
+		if($mes==0)$mes = "";
+		
+		$planillaDelegado = PlanillaDelegado::where("id_periodo_comision",$periodo)->where("periodo",$anio)->where("mes",$mes)->where("estado",1)->first();
+		
+		$planillaDelegado_model = new PlanillaDelegado;
+		$planilla = $planillaDelegado_model->getPlanillaDelegadoDetalleByIdPlanilla($planillaDelegado->id);
+		$fondo_comun = $planillaDelegado_model->getSaldoDelegadoFondoComun($periodo,$anio,$mes);
+		
+		$variable = [];
+		$n = 1;
+		
+		array_push($variable, array("N","Delegado","Municipio","Sesiones", "Sub Total", "Adelanto \nCon Rec. \nHon.", "(+) \nReintegro", "(+) Adicional \npor \nCoordinador", "Total \nHonorario \nBruto por \nSesiones", "Movilidad \nPor Sesion \nRegular", "Total \nHonorario por \nMovilidad","Reintegro \npor Pago a Asesores \nAsumido por el CAP RL","Total Honorario \nBruto","I.R. 4TA \n8.00 %","Total Honorario \nNeto","Dscto","Saldo",utf8_encode("OBSERVACIÓN")));
+		
+		$sesiones=0;
+		$sesiones_asesor=0;
+		$sub_total=0;
+		$adelanto=0;
+		$reintegro=0;
+		$coordinador=0;
+		$total_bruto_sesiones=0;
+		$movilidad_sesion=0;
+		$total_movilidad=0;
+		$reintegro_asesor=0;
+		$total_bruto=0;
+		$ir_cuarta=0;
+		$total_honorario=0;
+		$descuento=0;
+		$saldo=0;
+		
+		foreach($planilla as $r) {
+			array_push($variable, array($n++,$r->delegado,$r->municipalidad, $r->sesiones, number_format($r->sub_total,2,".",""),number_format($r->adelanto,2,".",""),number_format($r->reintegro,2,".",""), number_format($r->coordinador,2,".",""), number_format($r->total_bruto_sesiones,2,".",""), number_format($r->movilidad_sesion,2,".",""),number_format($r->total_movilidad,2,".",""),number_format($r->reintegro_asesor,2),number_format($r->total_bruto,2,".",""), number_format($r->ir_cuarta,2,".",""),number_format($r->total_honorario,2,".",""),number_format($r->descuento,2,".",""),number_format($r->saldo,2,".",""),$r->observaciones));
+			
+			$sesiones+=$r->sesiones;
+			$sub_total+=$r->sub_total;
+			$adelanto+=$r->adelanto;
+			$reintegro+=$r->reintegro;
+			$coordinador+=$r->coordinador;
+			$total_bruto_sesiones+=$r->total_bruto_sesiones;
+			$movilidad_sesion+=$r->movilidad_sesion;
+			
+			$total_movilidad+=$r->total_movilidad;
+			$reintegro_asesor+=$r->reintegro_asesor;
+			$total_bruto+=$r->total_bruto;
+			$ir_cuarta+=$r->ir_cuarta;
+			$total_honorario+=$r->total_honorario;
+			$descuento+=$r->descuento;
+			$saldo+=$r->saldo;
+			
+			if($r->reintegro_asesor>0){
+				$sesiones_asesor++;
+			}
+			
+		}
+		
+		array_push($variable, array("","Totales Generales","", $sesiones, number_format($sub_total,2,".",""),number_format($adelanto,2,".",""),number_format($reintegro,2,".",""), number_format($coordinador,2,".",""), number_format($total_bruto_sesiones,2,".",""), number_format($movilidad_sesion,2,".",""),number_format($total_movilidad,2,".",""),number_format($reintegro_asesor,2,".",""),number_format($total_bruto,2,".",""), number_format($ir_cuarta,2,".",""),number_format($total_honorario,2,".",""),number_format($descuento,2,".",""),number_format($saldo,2,".",""),""));
+		
+		$sesiones_asesor = 0.5 * $sesiones_asesor;
+		$fondo_comun_saldo = (isset($fondo_comun->saldo))?$fondo_comun->saldo:0;
+		$fondo_comun_neto = ($fondo_comun_saldo) - $reintegro - $total_movilidad - $coordinador;
+		$total_sesiones = $sesiones - $sesiones_asesor;
+		
+		$importe_por_sesion=0;
+		if($total_sesiones>0)$importe_por_sesion = $fondo_comun_neto / $total_sesiones;
+		
+		array_push($variable, array("","","", "", "","","", "", "", "","","","", "","","","",""));
+		array_push($variable, array("","Saldo a favor de los Delegados Pro Fondo Comun","", number_format($fondo_comun_saldo,2,".",""), "","","", "", "", "","","","", "","Fondo Comun","",number_format($fondo_comun_neto,2,".",""),""));
+		array_push($variable, array("","Menos Pagos a Destiempo de Meses pasados","", number_format($reintegro,2,".",""), "","","", "", "", "","","","", "","Total acumulado de Sesiones del Mes","",$sesiones,""));
+		array_push($variable, array("","Menos movilidad a Delegados","", number_format($total_movilidad,2,".",""), "","","", "", "", "","","","", "","Sesion de asesores a cargo del CAP RL","",$sesiones_asesor,""));
+		array_push($variable, array("","Menos Pago Fijo a Coordinadores","", number_format($coordinador,2,".",""), "","","", "", "", "","","","", "","SALDO FINAL DE SESIONES","",$total_sesiones,""));
+		array_push($variable, array("","Monto Neto = Fondo Comun","", number_format($fondo_comun_neto,2,".",""), "","","", "", "", "","","","", "","Importe por Sesion","",number_format($importe_por_sesion,2,".",""),""));
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'planilla_delegado.xlsx');
+		
+    }
+		    
+}
+
+class InvoicesExport implements FromArray
+	{
+    	protected $invoices;
+
+    	public function __construct(array $invoices)
+    	{
+        	$this->invoices = $invoices;
+    	}
+
+    	public function array(): array
+    	{
+        	return $this->invoices;
+    	}
 }

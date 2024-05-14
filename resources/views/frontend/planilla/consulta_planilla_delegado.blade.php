@@ -455,11 +455,15 @@ label.form-control-sm{
 														</select>
 													</div>
 													
-													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+													<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="padding-right:0px">
 														
 														<input class="btn btn-warning pull-rigth" onclick="cargarPlanillaDelegado()" value="Buscar" type="button" id="btnBuscar" />
 														
 														<input class="btn btn-success pull-rigth" onclick="generarPlanilla()" value="Generar Planilla" type="button" id="btnGenerar" style="margin-left:20px" />
+														
+														<input class="btn btn-danger pull-rigth" onclick="eliminarPlanilla()" value="Eliminar Planilla" type="button" id="btnGenerar" style="margin-left:20px" />
+														
+														<input class="btn btn-primary pull-rigth" onclick="descargarPlanilla()" value="Descargar Excel" type="button" id="btnDescargar" style="margin-left:20px" />
 														
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 													</div>

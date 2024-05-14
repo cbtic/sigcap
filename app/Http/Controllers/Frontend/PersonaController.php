@@ -421,7 +421,7 @@ class PersonaController extends Controller
 	public function listar_persona2_ajax(Request $request){
 	
 		$persona_model = new Persona;
-		$p[]="";
+		$p[]=$request->tipo_documento;
 		$p[]=$request->numero_documento;
 		$p[]=$request->agremiado;
 		$p[]="";
