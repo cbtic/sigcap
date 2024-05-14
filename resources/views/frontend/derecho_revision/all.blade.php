@@ -45,6 +45,10 @@
     width:15% !important;
 }
 
+.id_solicitud{
+    width:5% !important;
+}
+
 .loader {
 	width: 100%;
 	height: 100%;
@@ -279,7 +283,7 @@
 							<option value="">--Estado Proyecto--</option>
 							<?php
 							foreach ($estado_proyecto as $row) {?>
-							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<option value="<?php echo $row->codigo?>" <?php if($row->codigo=='1')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 							<?php 
 							}
 							?>
@@ -358,6 +362,14 @@
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
                         <input type="text" name="codigo_proyecto" id="codigo_proyecto" placeholder="C&oacute;digo Proyecto" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div> 
+                </div>
+                <div class="row" style="padding:15px 20px 15px 20px;">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                        <input id="fecha_inicio_bus" name="fecha_inicio_bus" placeholder="Fecha Inicio" class="form-control form-control-sm"> 
+					</div>
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                        <input id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Fin" class="form-control form-control-sm">
+                    </div>
 				</div>
                 <div class="row" style="padding:0px 20px 0px 20px;">
 					<!--<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -376,6 +388,8 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
+                            <th class="id_solicitud">N° Solicitud</th>
+                            <th>C&oacute;digo Proyecto</th>
                             <th class="nombre_proy">Nombre Proyecto</th>
                             <th>Tipo Solicitud</th>
                             <th>N° Rev.</th>
@@ -387,7 +401,6 @@
                             <th>Credipago</th>
                             <th>Fecha Registro</th>
                             <th>Estado Proyecto</th>
-							<th>Estado</th>
 							<th>Acciones</th>
                         </tr>
                         </thead>

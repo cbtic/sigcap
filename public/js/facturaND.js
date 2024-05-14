@@ -857,11 +857,13 @@ function obtenerTitular(){
 
 	function calcular_total_2(fila){
 		
-        var totald=0;    
+        var totald=0;
+		var importeantd=0;
+
 		totald = $('#totald'+fila).val();
-	
+		importeantd=$('#importeantd'+fila).val()
 		
-		if (totald <= $('#importeantd'+fila).val())  {
+		if (parseInt(totald) <=parseInt(importeantd) )  {
 			var imported =totald/1.18;  
 			var igv =  Number(totald) - Number(imported);
 

@@ -210,9 +210,16 @@
 <script type="text/javascript">
 
 
+$(document).ready(function() {
+
+  obtener_datos_adelanto();
+
+});
+
 $("#profesion").select2();
 
 $("#delegado").select2({ width: '100%' });
+
 
 function obtener_profesional(){
 	
@@ -267,28 +274,43 @@ function obtener_profesional(){
 }
 
 function obtener_datos_adelanto(){
-  var id_agremiado = $("#delegado").val();
-    
-  var msgLoader = "";
-  msgLoader = "Procesando, espere un momento por favor";
-  var heightBrowser = $(window).width()/2;
-  $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-    $('.loader').show();
+  if($("#delegado").val()!='' && $("#id_delegado_").val()!=''){
 
-  $.ajax({
-    url: '/adelanto/obtener_datos_adelanto/' + id_agremiado,
-    dataType: "json",
-    success: function(result){
-      alert(result);
-      var datos_adelanto = result[0].datos_adelanto;
-     
-
-      $("#municipalidad").val(datos_adelanto.comision);
-      $("#puesto").val(datos_adelanto.puesto);
-
-      $('.loader').hide();
+    if($('input[name="id_delegado_"]').length && $('input[name="id_delegado_"]').val() !=''){
+      var id_agremiado = $("#id_delegado_").val();
+    }else{
+      var id_agremiado = $("#delegado").val();
     }
-  });
+
+    /*if($("#delegado").val()!=''){
+      var id_agremiado = $("#delegado").val();
+    }else{
+      var id_agremiado = $("#id_delegado_").val();
+    }*/
+    
+    var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+      $('.loader').show();
+  
+    $.ajax({
+      url: '/adelanto/obtener_datos_adelanto/' + id_agremiado,
+      dataType: "json",
+      success: function(result){
+        
+  
+        var datos_adelanto = result[0];
+       
+        //console.log(datos_adelanto)
+        $("#municipalidad").val(datos_adelanto.comision);
+        $("#puesto").val(datos_adelanto.puesto);
+  
+        $('.loader').hide();
+      }
+    });
+  }
+  
 }
 
 function obtenerDelegado(){
@@ -355,6 +377,8 @@ function modal_personaNuevo(){
 	  var id_tiene_recibo = $('#id_tiene_recibo').val();
     var id_periodo = $('#id_periodo').val();
     var delegado = $('#delegado').val();
+    var id_delegado_ = $('#id_delegado_').val();
+    
 	
     $.ajax({
       url: "/adelanto/send_adelanto_nuevoAdelanto",
@@ -372,7 +396,8 @@ function modal_personaNuevo(){
         id_periodo:id_periodo,
         delegado:delegado,
         numero_cuota:numero_cuota,
-		id_tiene_recibo:id_tiene_recibo
+        id_tiene_recibo:id_tiene_recibo,
+        id_delegado_:id_delegado_
       },
       success: function(result) {
 
@@ -425,6 +450,7 @@ function modal_personaNuevo(){
                     <label class="control-label form-control-sm">Delegado</label>
                     <?php if($id>0){?>
                     <input id="delegado_" name="delegado_" class="form-control form-control-sm"  value="<?php echo $persona->apellido_paterno ." ". $persona->apellido_materno ." ". $persona->nombres ?>" type="text" readonly="readonly">										
+                    <input type="hidden" name="id_delegado_" id="id_delegado_" value="<?php echo $adelanto->id_agremiado?>">
                     <?php }else{?>
                     <select name="delegado" id="delegado" class="form-control form-control-sm" onchange="obtener_datos_adelanto()">
                       <option value="">--Selecionar--</option>

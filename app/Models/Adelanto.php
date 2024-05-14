@@ -45,7 +45,7 @@ class Adelanto extends Model
 		
 		$cad = "select (select tm.denominacion from comision_delegados cd 
         left join tabla_maestras tm on cd.id_puesto = tm.codigo::int And tm.tipo ='94' 
-        where cd.id_agremiado = a.id_agremiado order by cd.id desc limit 1) puesto,
+        where cd.id_agremiado = ".$id_agremiado." order by cd.id desc limit 1) puesto,
         (select c.denominacion from comision_delegados cd 
         left join comisiones c on cd.id_comision = c.id 
         where cd.id_agremiado = '".$id_agremiado."' order by cd.id desc limit 1) comision

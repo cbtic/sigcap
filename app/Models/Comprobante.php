@@ -106,18 +106,41 @@ class Comprobante extends Model
 
     function getDatosByComprobante($id){
 
-        $cad = "select u.name as usuario,a.numero_cap ,p.id   
-                from comprobantes c 
-                inner join users u on c.id_usuario_inserta =u.id 
-                left join personas p on c.cod_tributario =p.numero_documento 
-                inner join agremiados a on a.id_persona =p.id 
+        $cad = "select distinct u.name as usuario,a.numero_cap,v.id_persona  
+        from comprobantes c
+        inner join valorizaciones v on v.id_comprobante = c.id
+        left join agremiados a on a.id_persona = v.id_agremido 
+        inner join users u on c.id_usuario_inserta =u.id 
                 where c.id='". $id . "'" ;
 
 		$data = DB::select($cad);
 
-        //print_r($data); exit();
+        if ( empty($data)){
+            $cad = "select distinct u.name as usuario,a.numero_cap,a.id_persona  
+                    from comprobantes c
+                    inner join personas p on c.cod_tributario =p.numero_documento 
+                    inner join agremiados a on a.id_persona = p.id  
+                    inner join users u on c.id_usuario_inserta =u.id 
+                    where c.id='". $id . "'" ;
 
-        return $data;
+            $data = DB::select($cad);
+            
+        }
+
+        if ( empty($data)){
+            $cad = "select distinct u.name as usuario,a.numero_cap,a.id_persona  
+                    from comprobantes c
+                    inner join personas p on c.cod_tributario =p.numero_ruc 
+                    inner join agremiados a on a.id_persona = p.id  
+                    inner join users u on c.id_usuario_inserta =u.id 
+                    where c.id='". $id . "'" ;
+
+            $data = DB::select($cad);
+            
+        }
+        //print_r($cad); //exit();
+
+        if(isset($data[0]))return $data[0];
     }
 
 	function getComprobanteByTipoSerieNumero($numero_comprobante){
@@ -154,7 +177,7 @@ class Comprobante extends Model
 
         $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres,direccion_sunat direccion,correo email
 		from personas p
-		Where p.numero_ruc='".$numero_documento."'";
+		Where p.numero_ruc='".$numero_documento."' or  p.numero_documento='".$numero_documento."'";
 		echo $cad;
 		$data = DB::select($cad);
         if(isset($data[0]))return $data[0];

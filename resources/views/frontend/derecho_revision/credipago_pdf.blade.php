@@ -140,10 +140,10 @@ $(document).ready(function() {
         <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">
     </div>
     <div class="container">
-    <div class="vertical-text" style="position: absolute; top: 0; right: 0; writing-mode: vertical-lr;">
-    <div style="display: inline-block; white-space: nowrap; font-weight: bold;">IMPORTANTE.-</div>
-        <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n y su comprobante de pago adjuntarla al expediente</div>
-    </div>
+        <div class="vertical-text" style="position: absolute; top: 0; right: 0; writing-mode: vertical-lr;">
+            <div style="display: inline-block; white-space: nowrap; font-weight: bold;">IMPORTANTE.-</div>
+            <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n y su comprobante de pago adjuntarla al expediente</div>
+        </div>
     </div>
     <!--<div style="display: flex !important; width:100%">
         <span style="width: 50%; ">Div 1</span>
@@ -159,25 +159,82 @@ $(document).ready(function() {
     </div>
     <hr>
 
-    <p style="font_size: 8.5;text-align:justify"><b>LIQUIDACION DE DERECHOS POR REVISION DE ANTEPROYECTOS Y PROYECTOS DE ARQUITECTURA</b></pack>
+    <p style="font_size: 8.5;text-align:justify"><b>LIQUIDACION DE DERECHOS POR REVISION DE ANTEPROYECTOS Y PROYECTOS DE ARQUITECTURA</b></p>
     
         <hr>
         <div class="contenido">
-            <span style="font-size: 8.5;"><b>PROFESIONAL:</b><span style="padding-left: 96px;"> <?php echo $proyectista;?></span></span>
-            <span style="float: right; font-size: 8.5"><b>N° CAP:</b><span style="padding-left: 40px;"> <?php echo $numero_cap;?></span></span>
-            <p> <span style="font_size: 8.5; margin-left: 4.9cm;"><?php echo $tipo_proyectista;?></span></span></p>
-            <p class="p"><b>NOMBRE DEL PROPIETARIO:</b><span style="padding-left: 18px;"> <?php echo $razon_social;?></span></p>
-            <p class="p"><b>NOMBRE DE ANTEPROYECTO:</b><span style="padding-left: 10px;"> <?php echo $nombre;?></span></p>
-            <p class="p"><b>DEPARTAMENTO/PROVINCIA/DISTRITO:</b> <?php echo $departamento;?>/<?php echo $provincia;?>/<?php echo $distrito;?></p>
-            <p class="p"><b>UBICACION DEL INMUEBLE:</b> <span style="padding-left: 22px;"><?php echo $direccion;?></p>
-            <p></p>
-            <p class="p"><b>TIPO DE OBRA:</b></p>
-            <p class="p"><b>USO DE EDIFICACION:</b></p>
-            <p class="p"><b>INSTANCIA:</b> <?php echo $instancia;?></p>
-            <p class="p"><b>COMISION TECNICA:</b> <?php echo $municipalidad;?></p>
-            <span style="font_size: 8.5;"><b>TOTAL AREA TECHADA (Intervenida) (M2):</b> <?php echo $total_area_techada;?></span>
-            <span style="float: right; font_size: 8.5"><b>N° de Revision:</b> <?php echo $numero_revision;?></span>
-            <p class="p"><b>VALOR DE LA OBRA DECLARADO EN EL FUE: S/.</b> <?php echo $valor_obra;?></p>
+            
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px"><b>PROFESIONAL:</b></td>
+                        <td class="td" style ="text-align: left; width: 37%; font-size:11px; height:25px"><?php echo $proyectista;?></td>
+                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px"><b>N° CAP:</b></td>
+                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px"><?php echo $numero_cap;?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px"></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px; height:25px"><?php echo $tipo_proyectista;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px"><b>NOMBRE DEL PROPIETARIO:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px; height:25px"><?php echo $razon_social;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px"><b>NOMBRE DE ANTEPROYECTO:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px; height:25px"><?php echo $nombre;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px"><b>DEPARTAMENTO/PROVINCIA/DISTRITO:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px; height:25px"><?php echo $departamento;?>/<?php echo $provincia;?>/<?php echo $distrito;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px"><b>UBICACION DEL INMUEBLE:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px; height:25px"><?php echo $direccion;?></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px;"><b>TIPO DE OBRA:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px"><?php echo $tipo_obra;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px"><b>USO DE EDIFICACION:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px"><?php echo $tipo_uso;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px"><b>INSTANCIA:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px"><?php echo $instancia;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px"><b>COMISION TECNICA:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px"><?php echo $municipalidad;?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px"><b>TOTAL AREA TECHADA (Intervenida) (M2):</b></td>
+                        <td class="td" style ="text-align: left; width: 38%; font-size:11px"><?php echo number_format($total_area_techada,2,'.',',');?></td>
+                        <td class="td" style ="text-align: left; width: 15%; font-size:11px"><b>N° de Revision:</b></td>
+                        <td class="td" style ="text-align: right; width: 4%; font-size:11px"><?php echo $numero_revision;?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px"><b>VALOR DE LA OBRA DECLARADO EN EL FUE:</b></td>
+                        <td class="td" style ="text-align: left; width: 38%; font-size:11px"> S/. <?php echo number_format($valor_obra,2,'.',',');?></td>
+                        <td class="td" style ="text-align: left; width: 15%; font-size:11px"></td>
+                        <td class="td" style ="text-align: right; width: 4%; font-size:11px"></td>
+                    </tr>
+                </tbody>
+            </table>
             <!--<p class="p" style="text-align : right"><b>PORCENTAJE A APLICAR SOBRE VALOR DE OBRA <?php //echo $porcentaje;?>%:</b> <?php //echo $sub_total;?></p>   
             <p class="p" style="text-align : right"><b>+IGV:</b> <?php //echo $igv;?></p>
             <hr style="width:10%; margin-right: 1px;">
@@ -187,16 +244,16 @@ $(document).ready(function() {
             <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
                 <tbody>
                     <tr>
-                        <td class="td" style ="text-align: right; width: 20%;"></td>
-                        <td class="td" style ="text-align: right; width: 60%;"><b>PORCENTAJE A APLICAR SOBRE VALOR DE OBRA<?php echo $porcentaje;?>%:</b></td>
-                        <td class="td" style ="text-align: left; width: 5%;">S/.</td>
-                        <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($sub_total,2,'.',',');?></td>
+                        <td class="td" style ="text-align: right; width: 20%; font-size:11px"></td>
+                        <td class="td" style ="text-align: right; width: 60%; font-size:11px"><b>PORCENTAJE A APLICAR SOBRE VALOR DE OBRA <?php echo $porcentaje;?>%:</b></td>
+                        <td class="td" style ="text-align: left; width: 5%; font-size:11px">&nbsp;&nbsp;S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%; font-size:11px"><?php echo number_format($sub_total,2,'.',',');?></td>
                     </tr>
                     <tr>
-                        <td class="td" style ="text-align: right; width: 20%;"></td>
-                        <td class="td" style ="text-align: right; width: 60%;"><b>+IGV:</b></td>
-                        <td class="td" style ="text-align: left; width: 5%;">S/.</td>
-                        <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($igv,2,'.',',');?></td>
+                        <td class="td" style ="text-align: right; width: 20%; font-size:11px"></td>
+                        <td class="td" style ="text-align: right; width: 60%; font-size:11px"><b>+IGV:</b></td>
+                        <td class="td" style ="text-align: left; width: 5%; font-size:11px">&nbsp;&nbsp;S/.</td>
+                        <td class="td" style ="text-align: right; width: 15%; font-size:11px"><?php echo number_format($igv,2,'.',',');?></td>
                         
                     </tr>
                 </tbody>
@@ -208,13 +265,13 @@ $(document).ready(function() {
                         
                         <td class="td" style ="text-align: left; width: 55%;"><?php echo $tipo_liquidacion;?></td>
                         <td class="td" style ="text-align: right; width: 25%;"><b>TOTAL:</b></td>
-                        <td class="td" style ="text-align: left; width: 5%; border-top: 1px solid black;">S/.</td>
+                        <td class="td" style ="text-align: left; width: 5%; border-top: 1px solid black;">&nbsp;&nbsp;S/.</td>
                         <td class="td" style ="text-align: right; width: 15%; border-top: 1px solid black;"><?php echo number_format($total,2,'.',',');?></td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: right; width: 55%;"></td>
                         <td class="td" style ="text-align: right; width: 25%; font-size:14px"><b>TOTAL A PAGAR:</b></td>
-                        <td class="td" style ="text-align: left; width: 5%;">S/.</td>
+                        <td class="td" style ="text-align: left; width: 5%;">&nbsp;&nbsp;S/.</td>
                         <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($total,2,'.',',');?></td>
                     </tr>
                 </tbody>
