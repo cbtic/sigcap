@@ -362,10 +362,19 @@ function calcular_total(obj){
 
 		var tipo_documento = $('#tipo_documento').val();
 
+		var cboPeriodo_b = $('#cboPeriodo_b').val();
+
+		var cboMes_b = $('#cboMes_b').val();
+
 		if(tipo_documento == "79"){//RUC
 			
 			$("#btnBoleta").prop('disabled', true);
 			$("#btnFactura").prop('disabled', false);
+
+			if(cboPeriodo_b!="" || cboMes_b!=""){
+				$("#btnBoleta").prop('disabled', true);
+				$("#btnFactura").prop('disabled', true);
+			}
 		}else
 		{
 			$("#btnBoleta").prop('disabled', false);
@@ -373,6 +382,10 @@ function calcular_total(obj){
 			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
 
 			$("#btnFactura").prop('disabled', false);
+			if(cboPeriodo_b!="" || cboMes_b!=""){
+				$("#btnBoleta").prop('disabled', true);
+				$("#btnFactura").prop('disabled', true);
+			}
 		}
 
 
@@ -387,6 +400,20 @@ function calcular_total(obj){
 		}
 
 		$("#btnAnulaVal").prop('disabled', false);
+
+
+
+		//alert(cboPeriodo_b);
+
+
+
+
+		
+
+		
+
+
+
 	}
 	
 
@@ -1177,8 +1204,8 @@ function ValidarDeudasVencidas(){
 
 function enviarTipo(tipo){
 
-	ValidarDeudasVencidas();
-	exit();
+	//ValidarDeudasVencidas();
+	//exit();
 
 
 	var exonerado = $('#Exonerado').val();
