@@ -603,7 +603,7 @@ class ComprobanteController extends Controller
                // exit($id_persona_act);
 
                 
-                if ($tipoF == 'FT' &&  $ubicacion_id =='' )
+                if ($tipoF == 'FT' &&  $ubicacion_id !='' )
                 {
                     $empresa = Empresa::where('id', $id_ubicacion_act)->get()[0];
                     $empresa->direccion = $direccion;
