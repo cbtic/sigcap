@@ -172,8 +172,8 @@
                 n = 1
                 newRow += '<tr>';
                 newRow += '<td width="5%">' + n + '</td>  ';
-                newRow += '<td> <input  name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '" > </td>';
-                newRow += '<td> <input  name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker "> </td>';
+                newRow += '<td> <input  name="credito[' + n + '][total_frac]" value="' + total_frac + '" > </td>';
+                newRow += '<td> <input  name="credito[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker "> </td>';
 
 
                 newRow += '</tr>';
@@ -181,8 +181,8 @@
                 n++;
                 newRow += '<tr>';
                 newRow += '<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> ';
-                newRow += '<td> <input  name="fraccionamiento[' + n + '][total_frac]" value="' + total_frac + '"> </td>';
-                newRow += '<td> <input  name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker  "> </td>';
+                newRow += '<td> <input  name="credito[' + n + '][total_frac]" value="' + total_frac + '"> </td>';
+                newRow += '<td> <input  name="credito[' + n + '][fecha_cuota]" value="' + fecha_cuota + '" class="form-control form-control-sm datepicker  "> </td>';
 
 
                 newRow += '</tr>';

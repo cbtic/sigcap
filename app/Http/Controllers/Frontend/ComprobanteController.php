@@ -469,10 +469,46 @@ class ComprobanteController extends Controller
 			/**********RUC***********/
 
 			$tarifa = $request->facturad;
-           
+
+            $credito = $request->credito;
+
+            $id_formapago = $request->id_formapago_;
+            
+            //print_r($id_formapago);
+            //$credito = $request->credito;           
            
 
-		   //print_r($valorizad); exit();
+            if ($id_formapago==2){
+                print_r($credito); exit();
+
+                foreach ($credito as $key => $value){                
+                   // if($request->total_frac[$key]!=""){
+                        //$idMedio = $request->idMedio[$key];
+
+                      //  $id_comprobante = $id_factura;
+                        //$monto = (isset($request->monto[$key]) && $request->monto[$key] > 0)?$request->monto[$key]:"0";
+                        
+                        $total_frac = $value['total_frac'];
+                        print_r($total_frac);                 
+                   // }
+                   }
+
+            }
+
+            foreach ($tarifa as $key => $value) {
+                //$vestab = $value['vestab'];
+                //$vcodigo = $value['vcodigo'];
+                $id_val = $value['id'];
+                $id_concepto = $value['id_concepto'];
+
+                $id_moneda = $value['id_moneda'];
+
+            }
+
+
+            exit();
+
+
 
 			//echo "serieF=>".$request->serieF."<br>";
 			//echo "TipoF=>".$request->TipoF."<br>";
@@ -874,6 +910,51 @@ class ComprobanteController extends Controller
                     }
                 endforeach;
             endif;
+
+            $id_formapago = $request->id_formapago_;
+
+            if ($id_formapago==2){
+
+                //$credito = $request->credito;
+
+                foreach ($request->credito as $key => $value):
+                    if($request->idMedio[$key]!=""){
+                        $idMedio = $request->idMedio[$key];
+
+                        $id_comprobante = $id_factura;
+                        $monto = (isset($request->monto[$key]) && $request->monto[$key] > 0)?$request->monto[$key]:"0";
+                        $nro_operacion = (isset($request->nroOperacion[$key]))?$request->nroOperacion[$key]:"";
+                        $descripcion = (isset($request->descripcion[$key]))?$request->descripcion[$key]:"";                        
+                        $fecha_vencimiento = $request->fecha[$key];
+
+                        $item=1;
+                        $fecha = date('d/m/Y');
+
+                        if($monto!="0"){
+
+                            $comprobantePago = new ComprobantePago;                        
+                            $comprobantePago->id_medio = $idMedio;
+                            $comprobantePago->fecha = $fecha;
+                            $comprobantePago->item = $item;
+                            $comprobantePago->nro_operacion = $nro_operacion;
+                            $comprobantePago->id_comprobante = $id_comprobante;
+                            $comprobantePago->descripcion = $descripcion;
+                            $comprobantePago->monto = $monto;
+                            $comprobantePago->fecha_vencimiento = date("Y-m-d",strtotime($fecha_vencimiento));
+                            $comprobantePago->id_usuario_inserta = $id_user;
+                        
+                            $comprobantePago->save();    
+
+                        }                    
+                    }
+                endforeach;
+
+
+            }
+
+
+            
+
 
 
             $estado_ws = $ws_model->getMaestroByTipo('96');
