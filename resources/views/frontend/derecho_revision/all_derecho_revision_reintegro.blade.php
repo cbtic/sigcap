@@ -189,7 +189,6 @@ if($('#instancia').val()==250){
 }
 }
 
-
 </script>
 
 
@@ -241,8 +240,8 @@ if($('#instancia').val()==250){
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-					<!--<input type="hidden" name="id" id="id" value="<?php //echo $derecho_revision->id?>">-->
-					<input type="hidden" name="id_solicitud_reintegro" id="id_solicitud_reintegro" value="<?php echo $id?>">
+					<input type="hidden" name="id_solicitud_reintegro" id="id_solicitud_reintegro" value="0">
+					<input type="hidden" name="id_solicitud" id="id_solicitud" value="<?php echo $id?>">
 					<input type="hidden" name="codigo_proyecto" id="codigo_proyecto" value="<?php echo $proyecto2->codigo?>">
 
 					<div class="row" style="padding-left:10px">
@@ -282,6 +281,18 @@ if($('#instancia').val()==250){
 								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->nombre?>" type="text">
 							</div>
 
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Tipo</label>
+								<select name="tipo_direccion" id="tipo_direccion" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_tipo_direccion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
 						
 							<div class="col-lg-5">
 								<label class="control-label form-control-sm">Direccion</label>
@@ -361,7 +372,7 @@ if($('#instancia').val()==250){
 								</div>
 							</div>
 
-							<div class="col-lg-3">
+							<div class="col-lg-1">
 								<div class="form-group" id="direccion_agremiado_">
 									<label class="control-label form-control-sm">T&eacute;lefono</label>
 									<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->celular1?>" type="text" readonly='readonly'>
@@ -372,7 +383,7 @@ if($('#instancia').val()==250){
 								</div>
 							</div>
 
-							<div class="col-lg-1-5">
+							<div class="col-lg-3">
 								<div class="form-group" id="n_regional_">
 									<label class="control-label form-control-sm">Email</label>
 									<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->email?>" type="text" readonly='readonly'>
@@ -561,8 +572,8 @@ if($('#instancia').val()==250){
 								</div>
 							</div>
 						</div>
-						<div class="row" style="padding-left:10px;padding-top:15px">
-							<div class="col-lg-6" style="padding:10px; border:1px solid #ccc;">
+						<div class="row justify-content-center" style="padding-left:10px;padding-top:15px">
+							<div class="col-lg-4" style="padding:10px; border:1px solid #ccc;">
 								<div class="row" style="padding-left:10px;">
 									<div class="col-lg-6">
 										<label class="control-label form-control-sm">Factor</label>
@@ -592,7 +603,7 @@ if($('#instancia').val()==250){
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-6" style="padding:10px; border:1px solid #ccc;">
+							<div class="col-lg-4" style="padding:10px; border:1px solid #ccc;">
 								<div class="row" style="padding-left:10px;">
 									<div class="col-lg-6">
 										<label class="control-label form-control-sm">Sub Total</label>

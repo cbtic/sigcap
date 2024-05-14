@@ -1347,14 +1347,95 @@ class DerechoRevisionController extends Controller
 		$parametro = $parametro_model->getParametroAnio($anio_actual);
 		$liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
 		//dd($liquidacion);
-        return view('frontend.derecho_revision.all_derecho_revision_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones','sub_tipo_uso','tipo_obra','datos_presupuesto','tipo_liquidacion','instancia','parametro','liquidacion'));
+        return view('frontend.derecho_revision.all_derecho_revision_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones','sub_tipo_uso','tipo_obra','datos_presupuesto','tipo_liquidacion','instancia','parametro','liquidacion','tipo'));
     }
 
 	public function send_nuevo_reintegro(Request $request){
+
+		$id_user = Auth::user()->id;
+		$id_solicitud = $request->id_solicitud_reintegro;
+		//dd($id_solicitud).exit();
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+		$ubigeo = $request->distrito;
+		$id_ubi = Ubigeo::where("id_ubigeo",$ubigeo)->where("estado","1")->first();
+		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+		$solicitud_matriz = Solicitude::find($request->id_solicitud);
+
+		if($id_solicitud == 0){
+			$derecho_revision = new DerechoRevision;
+			$proyecto = new Proyecto;
+			$proyectista = new Proyectista;
+			$uso_edificacion = new UsoEdificacione;
+			$presupuesto = new Presupuesto;
+		}else{
+			$derecho_revision = DerechoRevision::find($request->id_solicitud);
+			$proyecto = Proyecto::find($derecho_revision->id_proyecto);
+			$proyectista = Proyectista::find($derecho_revision->id_proyectista);
+		}
 		
-		//exit();
+		//$id_tipo_solicitud = $solicitud->id_tipo_solicitud;
+
+		$derecho_revision->id_regional = 5;
+		$derecho_revision->fecha_registro = Carbon::now()->format('Y-m-d');
+		$derecho_revision->numero_revision = $request->n_revision;
+		$derecho_revision->direccion = $request->direccion_proyecto;
+		$derecho_revision->id_municipalidad = $request->municipalidad;
+		$derecho_revision->id_ubigeo = $ubigeo;
+		$derecho_revision->id_resultado = 1;
+		$derecho_revision->id_instancia = $request->instancia;
+		$derecho_revision->id_tipo_solicitud = $solicitud_matriz->id_tipo_solicitud;
+		$derecho_revision->id_tipo_tramite = $request->tipo_proyecto;
+		$derecho_revision->numero_sotano = $request->n_sotanos;
+		$derecho_revision->azotea = $request->azotea;
+		$derecho_revision->semisotano = $request->semisotano;
+		$derecho_revision->numero_piso = $request->n_pisos;
+		$derecho_revision->valor_obra = $request->valor_total_obra;
+		$derecho_revision->area_total = $request->area_techada_total;
+		$derecho_revision->id_tipo_liquidacion1 = $request->tipo_proyecto;
 		
-		$derechoRevision_model = new DerechoRevision;
+		$derecho_revision->id_usuario_inserta = $id_user;
+		
+		$proyecto->id_ubigeo = $ubigeo;
+		$proyecto->nombre = $request->nombre_proyecto;
+		$proyecto->direccion = $request->direccion_proyecto;
+		$proyecto->id_tipo_direccion = $request->tipo_direccion;
+		$proyecto->id_tipo_proyecto = $solicitud_matriz->id_tipo_solicitud;
+		$proyecto->codigo = $request->codigo_proyecto;
+		$proyecto->id_usuario_inserta = $id_user;
+		$proyecto->save();
+
+		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+
+		$proyectista->id_agremiado = $agremiado->id;
+		$proyectista->celular = $agremiado->celular1;
+		$proyectista->email = $agremiado->email1;
+		
+		//$proyectista->firma = $request->nombre;
+		//$profesion->estado = 1;
+		$proyectista->id_usuario_inserta = $id_user;
+		$proyectista->save();
+		$derecho_revision->id_proyecto = $proyecto->id;
+		$derecho_revision->id_proyectista = $proyectista->id;
+		$derecho_revision->save();
+		$proyectista->id_solicitud = $derecho_revision->id;
+		$proyectista->save();
+
+		$uso_edificacion->id_tipo_uso = $request->tipo_uso;
+		$uso_edificacion->id_sub_tipo_uso = $request->sub_tipo_uso;
+		$uso_edificacion->area_techada = $request->area_techada;
+		$uso_edificacion->id_solicitud = $derecho_revision->id;
+		$uso_edificacion->id_usuario_inserta = $id_user;
+		$uso_edificacion->save();
+
+		$presupuesto->id_tipo_obra = $request->tipo_obra;
+		$presupuesto->area_techada = $request->area_techada_presupuesto;
+		$presupuesto->valor_unitario = $request->valor_unitario;
+		$presupuesto->total_presupuesto = $request->presupuesto;
+		$presupuesto->id_solicitud = $derecho_revision->id;
+		$presupuesto->id_usuario_inserta = $id_user;
+		$presupuesto->save();
+
+		/*$derechoRevision_model = new DerechoRevision;
 		$propietario_model = new Propietario;
 
 		$sw = true;
@@ -1385,10 +1466,10 @@ class DerechoRevisionController extends Controller
 			$anio = Carbon::now()->year;
 			$parametro = Parametro::where("anio",$anio)->where("estado",1)->orderBy("id","desc")->first();
 			
-			$uit = $parametro->valor_uit;
+			$uit = $parametro->valor_uit;*/
 		
 			/*****Edificaciones*********/
-			if($id_tipo_solicitud == 123){
+			/*if($id_tipo_solicitud == 123){
 				
 				if($request->tipo_liquidacion1==136){
 					//$valor_obra = $request->total2;
@@ -1412,16 +1493,16 @@ class DerechoRevisionController extends Controller
 					}
 				}
 				$concepto = Concepto::where("id",26474)->where("estado","1")->first();
-
+				$solicitud = new Solicitude;
 				$solicitud->id_instancia=$request->instancia;
 				$solicitud->id_tipo_liquidacion1=$request->tipo_liquidacion1;
 				$solicitud->save();
 
-			}
+			}*/
 			
 			/*****Habilitaciones urbanas*********/
 			
-			if($id_tipo_solicitud == 124){
+			/*if($id_tipo_solicitud == 124){
 				
 				$m2 = $parametro->valor_metro_cuadrado_habilitacion_urbana;
 				
@@ -1448,7 +1529,7 @@ class DerechoRevisionController extends Controller
 					$igv		= $igv_maximo;
 					$total		= $total_maximo;
 				}
-
+				$solicitud = new Solicitude;
 				$concepto = Concepto::where("id",26483)->where("estado","1")->first();
 				$solicitud->id_resultado='2';
 				$solicitud->save();
@@ -1500,19 +1581,19 @@ class DerechoRevisionController extends Controller
 			$sw = true;
 		}else{
 			$sw = false;
-		}
+		}*/
 		
 		/*$array["sw"] = $sw;
 		echo json_encode($array);*/
 
-		$datos_formateados = [];
+		/*$datos_formateados = [];
 
         
 		$datos_formateados[] = [
 			'sw' => $sw,
 		];
         
-        return response()->json($datos_formateados);
+        return response()->json($datos_formateados);*/
 	
 	}
 

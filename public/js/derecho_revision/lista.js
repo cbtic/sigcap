@@ -3,7 +3,7 @@ $(document).ready(function () {
 	
 	obtenerProvincia();
 
-	calculoVistaPrevia();
+	//calculoVistaPrevia();
 	
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
@@ -104,7 +104,7 @@ $(document).ready(function () {
 	cargarPeriodoHu();
 	datatablenew();
 	datatablenew2();
-
+	calculoVistaPrevia();
 	/*$('#numero_cap_').hide();
 	$('#agremiado_').hide();
 	$('#situacion_').hide();
@@ -748,13 +748,23 @@ function datatablenew(){
 				"className": "dt-center",
 				},
 				{
+					"mRender": function (data, type, row) {
+						var instancia = "";
+						if(row.instancia!= null)instancia = row.instancia;
+						return instancia;
+					},
+					"bSortable": false,
+					"aTargets": [5],
+					"className": "dt-center",
+					},
+				{
 				"mRender": function (data, type, row) {
 					var municipalidad = "";
 					if(row.municipalidad!= null)municipalidad = row.municipalidad;
 					return municipalidad;
 				},
 				"bSortable": false,
-				"aTargets": [5],
+				"aTargets": [6],
 				"className": "dt-center",
 				},
 				{
@@ -764,7 +774,7 @@ function datatablenew(){
 					return numero_cap;
 				},
 				"bSortable": false,
-				"aTargets": [6],
+				"aTargets": [7],
 				"className": "dt-center",
 				},
 				{
@@ -778,7 +788,7 @@ function datatablenew(){
 					return proyectista;
 				},
 				"bSortable": false,
-				"aTargets": [7],
+				"aTargets": [8],
 				"className": "dt-center",
 				},
 				
@@ -793,7 +803,7 @@ function datatablenew(){
 					return propietario;
 				},
 				"bSortable": false,
-				"aTargets": [8],
+				"aTargets": [9],
 				"className": "dt-center",
 				},
 				/*
@@ -835,7 +845,7 @@ function datatablenew(){
 					return credipago;
 				},
 				"bSortable": false,
-				"aTargets": [9],
+				"aTargets": [10],
 				"className": "dt-center",
 				},
 				{
@@ -845,7 +855,7 @@ function datatablenew(){
 					return fecha_registro;
 				},
 				"bSortable": false,
-				"aTargets": [10],
+				"aTargets": [11],
 				"className": "dt-center",
 				},
 				{
@@ -855,7 +865,7 @@ function datatablenew(){
 					return estado_proyecto;
 				},
 				"bSortable": false,
-				"aTargets": [11],
+				"aTargets": [12],
 				"className": "dt-center",
 				},
 				{
@@ -888,7 +898,7 @@ function datatablenew(){
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [12],
+					"aTargets": [13],
 				},
             ]
     });

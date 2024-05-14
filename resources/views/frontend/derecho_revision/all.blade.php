@@ -393,6 +393,7 @@
                             <th class="nombre_proy">Nombre Proyecto</th>
                             <th>Tipo Solicitud</th>
                             <th>N° Rev.</th>
+                            <th>Instancia</th>
                             <th>Municipalidad</th>
                             <th>N° CAP</th>
                             <th>Proyectista</th>
