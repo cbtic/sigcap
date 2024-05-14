@@ -1146,9 +1146,40 @@ function cargarDudoso(){
 
 }
 
+function ValidarDeudasVencidas(){
+    
+	$.ajax({
+		//url: "/ingreso/listar_valorizacion_concepto",
+		url: "/ingreso/valida_deuda_vencida",
+		type: "POST",
+		data : $("#frmValorizacion").serialize(),
+		success: function(result){
+/*			
+			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
+			var option;
+			$('#cboTipoConcepto_b').html("");
+			
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			$('#cboTipoConcepto_b').html(option);
+			$('#cboTipoConcepto_b').select2();
+*/			
+			//$('.loader').hide();			
+		}
+		
+	});
+
+
+}
+
 
 
 function enviarTipo(tipo){
+
+	ValidarDeudasVencidas();
+	exit();
+
 
 	var exonerado = $('#Exonerado').val();
 
