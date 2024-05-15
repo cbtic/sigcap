@@ -302,6 +302,18 @@ class DerechoRevision extends Model
 
     }
 
+    public function importar_uso_edificacion_dataLicencia(){
+
+        return $this->readFuntionPostgres_('copia_datalicencia_eduso()');
+
+    }
+
+    public function importar_presupuesto_dataLicencia(){
+
+        return $this->readFuntionPostgres_('copia_datalicencia_presupuesto()');
+
+    }
+
     public function readFuntionPostgres_($function = null){
 
         $cad = "select " . $function;

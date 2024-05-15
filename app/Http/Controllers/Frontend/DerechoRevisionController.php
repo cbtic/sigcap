@@ -1253,6 +1253,10 @@ class DerechoRevisionController extends Controller
 		$data['proyectos'] = $derecho_revision_model->importar_proyectos_dataLicencia();
 		
 		$data['solicitudes'] = $derecho_revision_model->importar_solicitudes_dataLicencia();
+
+		$data['solicitudes'] = $derecho_revision_model->importar_uso_edificacion_dataLicencia();
+
+		$data['solicitudes'] = $derecho_revision_model->importar_presupuesto_dataLicencia();
 		
 		$result["aaData"] = $data;
 
