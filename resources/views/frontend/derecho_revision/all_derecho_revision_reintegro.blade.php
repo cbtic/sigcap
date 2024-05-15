@@ -414,7 +414,7 @@ if($('#instancia').val()==250){
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_documento as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_persona->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 									<?php
 									}
 									?>
@@ -424,7 +424,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-1">
 								<div class="form-group" id="dni_propietario_">
 								<label class="control-label form-control-sm">DNI</label>
-								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onchange="obtenerDatosDni()">
+								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm"  value="<?php echo $datos_persona->numero_documento?>" type="text" onchange="obtenerDatosDni()">
 								</div>
 								<div class="form-group" id="ruc_propietario_">
 									<label class="control-label form-control-sm">RUC</label>
@@ -435,7 +435,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-3" >
 							<div class="form-group" id="nombre_propietario_">
 								<label class="control-label form-control-sm">Nombre</label>
-								<input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->desc_cliente_sunat?>" type="text" onchange="" readonly='readonly'>
+								<input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $datos_persona->apellido_paterno.' '. $datos_persona->apellido_materno.' '.$datos_persona->nombres?>" type="text" onchange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="razon_social_propietario_">
 									<label class="control-label form-control-sm">Raz&oacute;n Social</label>
@@ -445,7 +445,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-3" >
 								<div class="form-group" id="direccion_dni_">
 									<label class="control-label form-control-sm">Direcci&oacute;n</label>
-									<input id="direccion_dni" name="direccion_dni" on class="form-control form-control-sm"  value="<?php echo $persona->direccion?>" type="text" onchange="" readonly='readonly'>
+									<input id="direccion_dni" name="direccion_dni" on class="form-control form-control-sm"  value="<?php echo $datos_persona->direccion?>" type="text" onchange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="direccion_ruc_">
 									<label class="control-label form-control-sm">Direcci&oacute;n</label>
@@ -456,7 +456,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-1" >
 								<div class="form-group" id="celular_dni_">
 									<label class="control-label form-control-sm">Celular</label>
-									<input id="celular_dni" name="celular_dni" on class="form-control form-control-sm"  value="<?php echo $persona->numero_celular?>" type="text" onchange="" readonly='readonly'>
+									<input id="celular_dni" name="celular_dni" on class="form-control form-control-sm"  value="<?php echo $datos_persona->numero_celular?>" type="text" onchange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="telefono_ruc_">
 									<label class="control-label form-control-sm">Tel&eacute;fono</label>
@@ -467,7 +467,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-2" >
 								<div class="form-group" id="email_dni_">
 									<label class="control-label form-control-sm">Email</label>
-									<input id="email_dni" name="email_dni" on class="form-control form-control-sm"  value="<?php echo $persona->correo?>" type="text" onchange="" readonly='readonly'>
+									<input id="email_dni" name="email_dni" on class="form-control form-control-sm"  value="<?php echo $datos_persona->correo?>" type="text" onchange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="email_ruc_">
 									<label class="control-label form-control-sm">Email</label>
@@ -715,87 +715,7 @@ if($('#instancia').val()==250){
 								</div>
 							</div>
 						</div>
-						<!--<div class="row" style="padding-left:10px">
-							<div class="col-lg-1" style=";padding-right:15px">
-								<label class="control-label form-control-sm">Sitio</label>
-								<select name="sitio" id="sitio" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									//foreach ($sitio as $row) {?>
-									<option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$proyecto2->id_tipo_sitio)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
-									<?php
-									//}
-									?>
-								</select>
-							</div>
-
-							<div class="col-lg-2">
-								<label class="control-label form-control-sm">Detalle Sitio</label>
-								<input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->sitio_descripcion?>" type="text">
-							</div>
-
-							<div class="col-lg-1" style="padding-left:15px">
-								<label class="control-label form-control-sm">Zona</label>
-								<select name="zona" id="zona" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									//foreach ($zona as $row) {?>
-									<option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$proyecto2->id_zona)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
-									<?php
-									//}
-									?>
-								</select>
-							</div>
-
-							<div class="col-lg-2">
-								<label class="control-label form-control-sm">Detalle Zona</label>
-								<input id="direccion_zona" name="direccion_zona" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->zona_descripcion?>" type="text">
-							</div>
-
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Parcela</label>
-								<input id="parcela" name="parcela" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->parcela?>" type="text">
-							</div>
-
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">SuperManzana</label>
-								<input id="superManzana" name="superManzana" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->super_manzana?>" type="text">
-							</div>
-							
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Tipo</label>
-								<select name="tipo" id="tipo" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									//foreach ($tipo as $row) {?>
-									<option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$proyecto2->id_tipo_direccion)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
-									<?php
-									//}
-									?>
-								</select>
-							</div>
-
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Lote</label>
-								<input id="lote" name="lote" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->lote?>" type="text">
-							</div>
-
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">SubLote</label>
-								<input id="sublote" name="sublote" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->sub_lote?>" type="text">
-							</div>
 						
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Fila</label>
-								<input id="fila" name="fila" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->fila?>" type="text">
-							</div>
-
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Zonificaci&oacute;n</label>
-								<input id="zonificacion" name="zonificacion" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->zonificacion?>" type="text">
-							</div>
-
-						</div>-->
 						<div style="margin-top:15px" class="form-group">
 							<div class="col-sm-12 controls">
 								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
@@ -805,345 +725,6 @@ if($('#instancia').val()==250){
 								
 							</div>
 						</div>
-
-						<div style="clear:both;padding-top:15px"></div>
-					
-						<div class="card">
-						
-						<nav>
-							<div class="nav nav-pills" id="nav-tab" role="tablist">
-								<a
-									class="nav-link active"
-									id="proyectista_propietario-tab"
-									data-toggle="pill"
-									href="#proyectista_propietario"
-									role="tab"
-									aria-controls="proyectista_propietario"
-									aria-selected="true">Proyectistas y Propietario</a>
-								
-								<a
-									class="nav-link"
-									id="informacion_proyecto-tab"
-									data-toggle="pill"
-									href="#informacion_proyecto"
-									role="tab"
-									aria-controls="informacion_proyecto"
-									aria-selected="false"
-									>Informaci&oacute;n del proyecto</a>
-								
-								<a
-									class="nav-link"
-									id="datos_comprobante-tab"
-									data-toggle="pill"
-									href="#datos_comprobante"
-									role="tab"
-									aria-controls="datos_comprobante"
-									aria-selected="false"
-									>Datos del Comprobante</a>
-								
-							</div>
-						</nav>
-						<div class="tab-content" id="my-profile-tabsContent">
-							<div class="tab-pane fade pt-3 show active" id="proyectista_propietario" role="tabpanel" aria-labelledby="proyectista_propietario-tab">
-								
-								<div class="row" style="padding-top:0px">
-
-									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										
-										<div class="card">
-											<div class="card-header">
-												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<strong>
-															Proyectistas
-														</strong>
-														
-													</div>
-												</div>
-											</div>
-
-											<!--<div class="card-body" style="margin-top:15px;margin-bottom:15px">-->
-											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-												
-												<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoProyectista" style="width:120px;margin-right:15px"/>
-												
-												<div style="clear:both"></div>
-												
-												<div class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													
-														<div class="card-body">
-										
-															<div class="table-responsive">
-															<table id="tblProyectista" class="table table-hover table-sm">
-															<thead>
-																<tr style="font-size:13px">
-																	<th>N° CAP</th>
-																	<th>Nombres</th>
-																	<th>Celular</th>
-																	<th>Email</th>
-																	<!--<th>Firma</th> agregar despues
-																	<th>Opciones</th>-->
-																</tr>
-															</thead>
-															<tbody style="font-size:13px">
-																<?php foreach($proyectista_solicitud as $row){?>
-																<tr>
-																	<th><?php echo $row->numero_cap?></th>
-																	<th><?php echo $row->agremiado?></th>
-																	<th><?php echo $row->celular1?></th>
-																	<th><?php echo $row->email1?></th>
-																	<th>
-																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
-																	</div>
-																	</th>
-																</tr>											
-																<?php }?>
-															</tbody>							
-															</table>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>		
-										<div class="card">
-											<div class="card-header">
-												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<strong>
-															Propietario
-														</strong>
-														
-													</div>
-												</div>
-											</div>
-
-											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-											
-												<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoPropietario" style="width:120px;margin-right:15px"/>
-												
-												<div style="clear:both"></div>
-												
-												<div class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													
-														<div class="card-body">
-										
-															<div class="table-responsive">
-															<table id="tblPropietario" class="table table-hover table-sm">
-															<thead>
-																<tr style="font-size:13px">
-																	<th>Tipo Persona</th>
-																	<th>N&uacute;mero Documento</th>
-																	<th>Nombres</th>
-																	<th>celular</th>
-																	<th>Email</th>
-																	<!--<th>Opciones</th>-->
-																</tr>
-															</thead>
-															<tbody style="font-size:13px">
-																<?php foreach($propietario_solicitud as $row){?>
-																<tr>
-																	<th><?php echo $row->tipo_propietario?></th>
-																	<th><?php echo $row->numero_documento?></th>
-																	<th><?php echo $row->nombres?></th>
-																	<th><?php echo $row->numero_celular?></th>
-																	<th><?php echo $row->correo?></th>
-																	<th>
-																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalIdioma(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarIdioma(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
-																	</div>
-																	</th>
-																</tr>					
-																<?php }?>
-															</tbody>							
-															</table>
-															
-															</div>
-														
-														</div>
-													
-													</div>
-													
-												</div>
-													
-											</div>
-											
-											
-										</div>
-										
-									</div>
-							
-								</div>
-							</div>
-
-							<div class="tab-pane fade pt-3" id="informacion_proyecto" role="tabpanel" aria-labelledby="informacion_proyecto-tab">
-							
-								<div class="row" style="padding-top:0px">
-
-									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										
-										<div class="card">
-											<div class="card-header">
-												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<strong>
-															Informaci&oacute;n del Proyecto
-														</strong>
-														
-													</div>
-												</div>
-											</div>
-
-											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-												
-												<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoinfoProyecto" style="width:120px;margin-right:15px"/>
-												
-												<div style="clear:both"></div>
-												
-												<div class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													
-														<div class="card-body">
-										
-															<div class="table-responsive">
-															<table id="tblInfoProyecto" class="table table-hover table-sm">
-															<thead>
-																<tr style="font-size:13px">
-																	<th>Tipo Tramite</th>
-																	<th>Tipo de Habilitacion Urbana</th>
-																	<!--<th>Etapas</th>-->
-																	<th>&Aacute;rea Bruta del Terreno Declarado (m2)</th>
-																	<th>Formato de Registro</th>
-																	<th>Plano de Ubicaci&oacute;n</th>
-																	<th>FUHU</th>
-																	<!--<th>Opciones</th>-->
-																</tr>
-															</thead>
-															<tbody style="font-size:13px">
-																<?php foreach($info_uso_solicitud as $row){?>
-																<tr>
-																	<th><?php echo $row->tipo_tramite?></th>
-																	<th><?php echo $row->tipo_uso?></th>
-																	<th><?php echo $row->area_techada?></th>
-																	<!--
-																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFormato(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Formato</button></th>
-																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerPlano(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Plano</button></th>
-																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFUHU(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>FUHU</button></th>
-																	-->
-																	
-																	<td class="text-left" style="vertical-align:middle">
-																		<a href="/img/derecho_revision/<?php echo $row->ruta_archivo1?>" target="_blank" class="btn btn-sm btn-warning">Ver Imagen</a>
-																	</td>
-																	<td class="text-left" style="vertical-align:middle">
-																		<a href="/img/derecho_revision/<?php echo $row->ruta_archivo2?>" target="_blank" class="btn btn-sm btn-warning">Ver Imagen</a>
-																	</td>
-																	<td class="text-left" style="vertical-align:middle">
-																		<a href="/img/derecho_revision/<?php echo $row->ruta_archivo3?>" target="_blank" class="btn btn-sm btn-warning">Ver Imagen</a>
-																	</td>
-																	
-																	<!--<th><?php //echo $row->fecha_egresado?></th>
-																	<th><?php //echo $row->fecha_graduado?></th>
-																	<th><?php //echo $row->libro?></th>
-																	<th><?php //echo $row->folio?></th>-->
-																	<th>
-																	<!--<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
-																	</div>
-																	</th>
-																</tr>													
-																<?php }?>
-															</tbody>							
-															</table>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>		
-									</div>
-								</div>
-							</div>
-							<div class="tab-pane fade pt-3" id="datos_comprobante" role="tabpanel" aria-labelledby="datos_comprobante-tab">
-							
-								<div class="row" style="padding-top:0px">
-
-									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										
-										<div class="card">
-											<div class="card-header">
-												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<strong>
-															Datos del Comprobante
-														</strong>
-														
-													</div>
-												</div>
-											</div>
-
-											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-												
-												<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoComprobante" style="width:120px;margin-right:15px"/>
-												
-												<div style="clear:both"></div>
-												
-												<div class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													
-														<div class="card-body">
-										
-															<div class="table-responsive">
-															<table id="tblComprobante" class="table table-hover table-sm">
-															<thead>
-																<tr style="font-size:13px">
-																	<th>Tipo Persona</th>
-																	<th>N&uacute;mero Documento</th>
-																	<th>Nombre/Razon Social</th>
-																	<th>Direcci&oacute;n</th>
-																	<th>Departamento</th>
-																	<th>Provincia</th>
-																	<th>Distrito</th>
-																	<th>Opciones</th>
-																</tr>
-															</thead>
-															<tbody style="font-size:13px">
-																<?php //foreach($agremiado_estudio as $row){?>
-																<!--<tr>
-																	<th><?php //echo $row->universidad?></th>
-																	<th><?php //echo $row->especialidad?></th>
-																	<th><?php //echo $row->tesis?></th>
-																	<th><?php //echo $row->fecha_egresado?></th>
-																	<th><?php //echo $row->fecha_graduado?></th>
-																	<th><?php //echo $row->libro?></th>
-																	<th><?php //echo $row->folio?></th>
-																	<th>
-																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-																	</div>
-																	</th>
-																</tr>	-->													
-																<?php //}?>
-															</tbody>							
-															</table>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>		
-									</div>
-								</div>
-							</div>
-
-						</div>
-						
 					</div>
 					</form>
 				</div><!--card-body-->
