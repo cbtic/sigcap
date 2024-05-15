@@ -131,15 +131,18 @@ class IngresoController extends Controller
 
 
         $id_persona = $request->id_persona;
+        //print_r($id_persona);
         $tipo_documento = $request->tipo_documento;
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
         $valorizaciones_model = new Valorizacione;
         $resultado = $valorizaciones_model->getValidaValorizacion($tipo_documento,$id_persona);
 
-        //echo $resultado;
+        echo json_encode($resultado);
+
+        //print_r($resultado);
         //exit();
 
-        return $resultado;
+        //return $resultado;
 
         /*
 

@@ -76,7 +76,8 @@ class Valorizacione extends Model
             from valorizaciones v
             where v.id_empresa = ".$id_persona."            
                 and v.estado = '1'            
-                and v.pagado = '0'               
+                and v.pagado = '0'
+                and v.exonerado = '0'               
             order by v.fecha 
             limit 1            
 			";
@@ -86,7 +87,8 @@ class Valorizacione extends Model
             from valorizaciones v
             where v.id_persona = ".$id_persona."
                 and v.estado = '1'            
-                and v.pagado = '0'               
+                and v.pagado = '0'
+                and v.exonerado = '0'               
             order by v.fecha 
             limit 1             
 			";
