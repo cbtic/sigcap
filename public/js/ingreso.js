@@ -382,6 +382,8 @@ function calcular_total(obj){
 			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
 
 			$("#btnFactura").prop('disabled', false);
+
+
 			if(cboPeriodo_b!="" || cboMes_b!=""){
 				$("#btnBoleta").prop('disabled', true);
 				$("#btnFactura").prop('disabled', true);
@@ -1174,13 +1176,31 @@ function cargarDudoso(){
 }
 
 function ValidarDeudasVencidas(){
-    
+    //alert("ok");
+
 	$.ajax({
 		//url: "/ingreso/listar_valorizacion_concepto",
 		url: "/ingreso/valida_deuda_vencida",
 		type: "POST",
 		data : $("#frmValorizacion").serialize(),
-		success: function(result){
+
+		success: function (result) {  
+			alert(result);
+			
+			//$('#anio_deuda').val(result.anio);
+			//$('#mes_deuda').val(result.mes);
+
+
+	}
+		
+
+
+
+
+			//$('#empresa_razon_social').val(result.agremiado.razon_social);
+
+
+
 /*			
 			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
 			var option;
@@ -1193,7 +1213,7 @@ function ValidarDeudasVencidas(){
 			$('#cboTipoConcepto_b').select2();
 */			
 			//$('.loader').hide();			
-		}
+		
 		
 	});
 
@@ -1203,9 +1223,6 @@ function ValidarDeudasVencidas(){
 
 
 function enviarTipo(tipo){
-
-	//ValidarDeudasVencidas();
-	//exit();
 
 
 	var exonerado = $('#Exonerado').val();
@@ -1273,6 +1290,13 @@ function validar(tipo) {
 	//alert("id_persona-->"+ tipo_documento);
 	//alert("id_persona-->"+ id_persona);
 	//alert("empresa_id-->"+ empresa_id);
+
+	ValidarDeudasVencidas();
+
+	var anio = $('#anio_deuda').val();
+	var mes = $('#mes_deuda').val();
+
+	//alert(anio);
 	
 	if(tipo_documento != "79" && id_persona == "")msg += "Debe ingresar el Numero de Documento <br>";
 	if(tipo_documento == "79" && empresa_id == "")msg += "Debe ingresar el Numero de Documento <br>";

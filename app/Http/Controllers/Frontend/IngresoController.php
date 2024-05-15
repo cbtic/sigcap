@@ -128,6 +128,21 @@ class IngresoController extends Controller
 
     public function valida_deuda_vencida(Request $request){
 
+
+
+        $id_persona = $request->id_persona;
+        $tipo_documento = $request->tipo_documento;
+        if($tipo_documento=="79")$id_persona = $request->empresa_id;
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getValidaValorizacion($tipo_documento,$id_persona);
+
+        //echo $resultado;
+        //exit();
+
+        return $resultado;
+
+        /*
+
         $factura_detalle = $request->comprobante_detalle;
 
         $ind = 0;
@@ -180,6 +195,8 @@ class IngresoController extends Controller
             $ind++;
         }
 
+        */
+
 /*
         $id_persona = $request->id_persona;
         $tipo_documento = $request->tipo_documento;
@@ -191,6 +208,7 @@ class IngresoController extends Controller
 
         //print_r($valorizacion);exit();
 //		return $resultado;
+
 
     }
 

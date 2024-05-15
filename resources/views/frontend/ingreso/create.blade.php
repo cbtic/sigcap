@@ -280,6 +280,9 @@
 
                                                     <input type="hidden" readonly name="Exonerado" id="Exonerado" value="0" class="form-control form-control-sm">
 
+                                                    <input type="hidden" readonly name="mes_deuda" id="mes_deuda" value="" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="anio_deuda" id="anio_deuda" value="" class="form-control form-control-sm">
+
                                                 </div>
                                             </div>
                                         </div>
