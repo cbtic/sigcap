@@ -370,7 +370,19 @@
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
                         <input id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Fin" class="form-control form-control-sm">
                     </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="id_situacion_credipago" id="id_situacion_credipago" class="form-control form-control-sm" >
+                            <option value="">--Situaci&oacute;n Credipago--</option>
+                            <?php
+                            foreach ($situacion_credipago as $row) {?>
+                            <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                            <?php 
+                            }
+                            ?>
+                        </select>
+                    </div>
 				</div>
+                
                 <div class="row" style="padding:0px 20px 0px 20px;">
 					<!--<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="fecha_registro_bus" name="fecha_registro_bus" placeholder="Fecha Registro">
@@ -393,6 +405,7 @@
                             <th class="nombre_proy">Nombre Proyecto</th>
                             <th>Tipo Solicitud</th>
                             <th>N° Rev.</th>
+                            <th>Instancia</th>
                             <th>Municipalidad</th>
                             <th>N° CAP</th>
                             <th>Proyectista</th>

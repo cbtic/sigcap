@@ -715,7 +715,7 @@ Route::get('coordinador_zonal/modal_zonal_nuevoZonalDetalle/{id}', [CoordinadorZ
 Route::post('coordinador_zonal/send_zonal_nuevoZonal', [CoordinadorZonalDetalleController::class, 'send_zonal_nuevoZonal'])->name('coordinador_zonal.send_zonal_nuevoZonal');
 Route::get('coordinador_zonal/obtener_datos_zonal_detalle/{zonal}', [CoordinadorZonalDetalleController::class, 'obtener_datos_zonal_detalle'])->name('coordinador_zonal.obtener_datos_zonal_detalle');
 Route::get('coordinador_zonal/eliminar_zonal_detalle/{id}/{estado}', [CoordinadorZonalDetalleController::class, 'eliminar_zonal_detalle'])->name('coordinador_zonal.eliminar_zonal_detalle');
-Route::get('derecho_revision/eliminar_credipago/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_credipago'])->name('derecho_revision.eliminar_credipago');
+Route::get('derecho_revision/eliminar_credipago/{id}/{id_situacion}', [DerechoRevisionController::class, 'eliminar_credipago'])->name('derecho_revision.eliminar_credipago');
 
 Route::get('delegadoTributo/consulta_delegadoTributo', [DelegadoTributoController::class, 'consulta_delegadoTributo'])->name('delegadoTributo.consulta_delegadoTributo');
 Route::post('delegadoTributo/listar_delegadoTributo_ajax', [DelegadoTributoController::class, 'listar_delegadoTributo_ajax'])->name('delegadoTributo.listar_delegadoTributo_ajax');
@@ -733,3 +733,5 @@ Route::get('derecho_revision/eliminar_solicitud_edificaciones/{id}/{estado}', [D
 Route::get('derecho_revision/eliminar_solicitud_hu/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_hu'])->name('derecho_revision.eliminar_solicitud_hu');
 Route::get('derecho_revision/obtener_ubigeo/{municipalidad}', [DerechoRevisionController::class, 'obtener_ubigeo'])->name('derecho_revision.obtener_ubigeo');
 Route::get('derecho_revision/derecho_revision_reintegro/{id}', [DerechoRevisionController::class, 'derecho_revision_reintegro'])->name('derecho_revision.derecho_revision_reintegro');
+Route::post('derecho_revision/send_nuevo_reintegro', [DerechoRevisionController::class, 'send_nuevo_reintegro'])->name('derecho_revision.send_nuevo_reintegro');
+

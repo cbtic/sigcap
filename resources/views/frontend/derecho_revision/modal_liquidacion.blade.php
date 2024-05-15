@@ -150,7 +150,6 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 $(document).ready(function() {
 	 
 	
-	
 
 });
 
@@ -172,32 +171,32 @@ function editarPuesto(id){
 
 }
 
-function eliminarCredipago(id,estado){
-	var act_estado = "";
-	if(estado==1){
+function eliminarCredipago(id,id_situacion){
+	var act_situacion = "";
+	if(id_situacion==1){
 		act_estado = "Anular";
-		estado_=0;
+		id_situacion_=3;
 	}
-	if(estado==0){
+	if(id_situacion==0){
 		act_estado = "Activar";
-		estado_=1;
+		id_situacion_=1;
 	}
     bootbox.confirm({ 
         size: "small",
         message: "&iquest;Deseas "+act_estado+" el Credipago?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_credipago(id,estado_);
+                fn_eliminar_credipago(id,id_situacion_);
             }
         }
     });
     $(".modal-dialog").css("width","60%");
 }
 
-function fn_eliminar_credipago(id,estado){
+function fn_eliminar_credipago(id,id_situacion){
 	
     $.ajax({
-            url: "/derecho_revision/eliminar_credipago/"+id+"/"+estado,
+            url: "/derecho_revision/eliminar_credipago/"+id+"/"+id_situacion,
             type: "GET",
             success: function (result) {
 				datatablenew();
@@ -369,10 +368,10 @@ function fn_save_requisito(){
                             <td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
                             <td class="text-left" style="vertical-align:middle">
                                 <button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="credipago_pdf_('<?php echo $row->id?>')" ><i class="fa fa-edit"></i> Ver Credipago</button>
-                                <?php if($row->pagado==0) {?>
-                                    <a href="javascript:void(0)" onclick="eliminarCredipago(<?php echo $row->id?>,<?php echo $row->estado?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Anular</a>
-                                <?php }else if($row->pagado==1){ ?>
-                                    <a href="javascript:void(0)" onclick="eliminarCredipago(<?php echo $row->id?>,<?php echo $row->estado?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;"  disabled>Anular</a>
+                                <?php if($row->id_situacion==1) {?>
+                                    <a href="javascript:void(0)" onclick="eliminarCredipago(<?php echo $row->id?>,<?php echo $row->id_situacion?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Anular</a>
+                                <?php }else if($row->id_situacion==2 || $row->id_situacion==3){ ?>
+                                    <a href="javascript:void(0)" onclick="eliminarCredipago(<?php echo $row->id?>,<?php echo $row->id_situacion?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;"  disabled>Anular</a>
                                 <?php }?>
                             </td>
 						</tr>
