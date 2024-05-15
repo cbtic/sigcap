@@ -404,6 +404,77 @@ if($('#instancia').val()==250){
 								</div>
 							</div>
 						</div>
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Propietario/Administrado
+						</div>	
+						<div class="row" style="padding-left:10px">
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Tipo Documento</label>
+								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="obtenerPropietario_()">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_documento as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$persona->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+
+							<div class="col-lg-1">
+								<div class="form-group" id="dni_propietario_">
+								<label class="control-label form-control-sm">DNI</label>
+								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onchange="obtenerDatosDni()">
+								</div>
+								<div class="form-group" id="ruc_propietario_">
+									<label class="control-label form-control-sm">RUC</label>
+									<input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" onchange="obtenerDatosRuc()">
+								</div>
+							</div>
+
+							<div class="col-lg-3" >
+							<div class="form-group" id="nombre_propietario_">
+								<label class="control-label form-control-sm">Nombre</label>
+								<input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->desc_cliente_sunat?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="razon_social_propietario_">
+									<label class="control-label form-control-sm">Raz&oacute;n Social</label>
+									<input id="razon_social_propietario" name="razon_social_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+							<div class="col-lg-3" >
+								<div class="form-group" id="direccion_dni_">
+									<label class="control-label form-control-sm">Direcci&oacute;n</label>
+									<input id="direccion_dni" name="direccion_dni" on class="form-control form-control-sm"  value="<?php echo $persona->direccion?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="direccion_ruc_">
+									<label class="control-label form-control-sm">Direcci&oacute;n</label>
+									<input id="direccion_ruc" name="direccion_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+							
+							<div class="col-lg-1" >
+								<div class="form-group" id="celular_dni_">
+									<label class="control-label form-control-sm">Celular</label>
+									<input id="celular_dni" name="celular_dni" on class="form-control form-control-sm"  value="<?php echo $persona->numero_celular?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="telefono_ruc_">
+									<label class="control-label form-control-sm">Tel&eacute;fono</label>
+									<input id="telefono_ruc" name="telefono_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+
+							<div class="col-lg-2" >
+								<div class="form-group" id="email_dni_">
+									<label class="control-label form-control-sm">Email</label>
+									<input id="email_dni" name="email_dni" on class="form-control form-control-sm"  value="<?php echo $persona->correo?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="email_ruc_">
+									<label class="control-label form-control-sm">Email</label>
+									<input id="email_ruc" name="email_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->email?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+						</div>
 
 						<div style="padding: 0px 0px 15px 10px; font-weight: bold">
 							Datos del Proyecto

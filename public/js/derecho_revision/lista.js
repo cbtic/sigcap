@@ -100,11 +100,7 @@ $(document).ready(function () {
 	$("#id_municipalidad_bus").select2();
 	$("#municipalidad_bus_hu").select2();
 	
-	cargarPeriodo();
-	cargarPeriodoHu();
-	datatablenew();
-	datatablenew2();
-	calculoVistaPrevia();
+	
 	/*$('#numero_cap_').hide();
 	$('#agremiado_').hide();
 	$('#situacion_').hide();
@@ -117,6 +113,13 @@ $(document).ready(function () {
 	$('#direccion_persona_').hide();
 	$('#celular_').hide();
 	$('#email_').hide();
+
+	cargarPeriodo();
+	cargarPeriodoHu();
+	datatablenew();
+	datatablenew2();
+	obtenerPropietario_();
+	calculoVistaPrevia();
 	
 });
 
@@ -165,6 +168,176 @@ function guardar_credipago_(){
 				
             }
     });
+}
+
+function obtenerPropietario_(){
+	
+	var id_tipo_documento = $("#id_tipo_documento").val();
+
+	$('#frmSolicitudDerechoRevisionReintegroall #dni_propietario_').show();
+    $('#frmSolicitudDerechoRevisionReintegroall #nombre_propietario_').show();
+    $('#frmSolicitudDerechoRevisionReintegroall #direccion_dni_').show();
+    $('#frmSolicitudDerechoRevisionReintegroall #celular_dni_').show();
+    $('#frmSolicitudDerechoRevisionReintegroall #email_dni_').show();
+    $('#frmSolicitudDerechoRevisionReintegroall #ruc_propietario_').hide();
+    $('#frmSolicitudDerechoRevisionReintegroall #razon_social_propietario_').hide();
+    $('#frmSolicitudDerechoRevisionReintegroall #direccion_ruc_').hide();
+    $('#frmSolicitudDerechoRevisionReintegroall #telefono_ruc_').hide();
+    $('#frmSolicitudDerechoRevisionReintegroall #email_ruc_').hide();
+	
+	if (id_tipo_documento == "")//SELECCIONAR
+	{
+		
+		$('#dni_propietario_').show();
+        $('#nombre_propietario_').show();
+        $('#direccion_dni_').show();
+        $('#celular_dni_').show();
+        $('#email_dni_').show();
+        $('#ruc_propietario_').hide();
+        $('#razon_social_propietario_').hide();
+        $('#direccion_ruc_').hide();
+        $('#telefono_ruc_').hide();
+        $('#email_ruc_').hide();
+
+	} else if (id_tipo_documento == "78")//DNI
+	{
+		
+		$('#dni_propietario_').show();
+        $('#nombre_propietario_').show();
+        $('#direccion_dni_').show();
+        $('#celular_dni_').show();
+        $('#email_dni_').show();
+        $('#ruc_propietario_').hide();
+        $('#razon_social_propietario_').hide();
+        $('#direccion_ruc_').hide();
+        $('#telefono_ruc_').hide();
+        $('#email_ruc_').hide();
+
+	} else if (id_tipo_documento == "79") //Responsable de Tramite
+	{
+		$('#dni_propietario_').hide();
+        $('#nombre_propietario_').hide();
+        $('#direccion_dni_').hide();
+        $('#celular_dni_').hide();
+        $('#email_dni_').hide();
+        $('#ruc_propietario_').show();
+        $('#razon_social_propietario_').show();
+        $('#direccion_ruc_').show();
+        $('#telefono_ruc_').show();
+        $('#email_ruc_').show();
+
+	} 
+}
+
+function obtenerDatosDni(){
+		
+    var dni_propietario = $("#dni_propietario").val();
+    var msg = "";
+    
+    if(dni_propietario == "")msg += "Debe ingresar el numero de documento <br>";
+    
+    if (msg != "") {
+        bootbox.alert(msg);
+        return false;
+    }
+    
+    var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+    
+    $.ajax({
+        url: '/persona/obtener_datos_persona/' + dni_propietario,
+        dataType: "json",
+        success: function(result){
+            var persona = result.persona;
+
+            if(persona!="0")
+			{
+                $('#nombre_propietario').val(persona.nombres);
+                $('#direccion_dni').val(persona.direccion);
+                $('#celular_dni').val(persona.numero_celular);
+                $('#email_dni').val(persona.correo);
+                
+                $('.loader').hide();
+				
+			}else{
+				msg += "La Persona no esta registrado en la Base de Datos de CAP <br>";
+                $('#nombre_propietario').val("");
+                $('#direccion_dni').val("");
+                $('#celular_dni').val("");
+                $('#email_dni').val("");
+				$('.loader').hide();
+				
+			}
+
+			if (msg != "") {
+				bootbox.alert(msg);
+				return false;
+			}
+
+
+        }
+        
+    });
+    
+}
+
+
+function obtenerDatosRuc(){
+    
+    var ruc_propietario = $("#ruc_propietario").val();
+    var msg = "";
+    
+    if(ruc_propietario == "")msg += "Debe ingresar el RUC <br>";
+    
+    if (msg != "") {
+        bootbox.alert(msg);
+        return false;
+    }
+    
+    var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+    
+    $.ajax({
+        url: '/empresa/obtener_datos_empresa/' + ruc_propietario,
+        dataType: "json",
+        success: function(result){
+            var empresa = result.empresa;
+
+            if(empresa!="0")
+            {
+                $('#razon_social_propietario').val(empresa.razon_social);
+                $('#direccion_ruc').val(empresa.direccion);
+                $('#telefono_ruc').val(empresa.telefono);
+                $('#email_ruc').val(empresa.email);
+                
+                $('.loader').hide();
+                
+            }else{
+                msg += "La Empresa no esta registrada en la Base de Datos de CAP <br>";
+                $('#razon_social_propietario').val("");
+                $('#direccion_ruc').val("");
+                $('#telefono_ruc').val("");
+                $('#email_ruc').val("");
+                $('.loader').hide();
+                
+            }
+
+            if (msg != "") {
+                bootbox.alert(msg);
+                return false;
+            }
+
+
+        }
+        
+    });
+    
 }
 
 function credipago_pdf(id){
@@ -670,6 +843,7 @@ function datatablenew(){
 			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
 			var fecha_fin_bus = $('#fecha_fin_bus').val();
 			var estado_proyecto = $('#id_estado_proyecto_bus').val();
+			var situacion_credipago = $('#id_situacion_credipago').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -681,7 +855,7 @@ function datatablenew(){
 						tipo_proyecto:tipo_proyecto,tipo_solicitud:tipo_solicitud,credipago:credipago,
 						municipalidad:municipalidad,direccion:direccion,n_solicitud:n_solicitud,
 						codigo:codigo,estado_proyecto:estado_proyecto,fecha_inicio_bus:fecha_inicio_bus,
-						fecha_fin_bus:fecha_fin_bus,
+						fecha_fin_bus:fecha_fin_bus,situacion_credipago:situacion_credipago,
 						_token:_token
                        },
                 "success": function (result) {

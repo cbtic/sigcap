@@ -72,15 +72,32 @@ class DerechoRevision extends Model
 
         $cad = "select l.id, to_char(fecha,'dd-mm-yyyy')fecha,credipago,sub_total,igv,total,observacion, l.estado,
         (select v.pagado from valorizaciones v where pk_registro = l.id and v.id_modulo ='7' limit 1) pagado,
-        (select case when v.pagado = '1' then 'PAGADO' else 'PENDIENTE' end from valorizaciones v where pk_registro = l.id and v.id_modulo ='7' limit 1) situacion,
+        --(select case when v.pagado = '1' then 'PAGADO' else 'PENDIENTE' end from valorizaciones v where pk_registro = l.id and v.id_modulo ='7' limit 1) situacion,
         (select c.fecha_pago from valorizaciones v inner join comprobantes c on v.id_comprobante = c.id where pk_registro = l.id and v.id_modulo ='7' limit 1) fecha_pago,
-        (select concat(c.serie,'-', c.numero) numero_comprobante from valorizaciones v inner join comprobantes c on v.id_comprobante = c.id where pk_registro = l.id and v.id_modulo ='7' limit 1) numero_comprobante
+        (select concat(c.serie,'-', c.numero) numero_comprobante from valorizaciones v inner join comprobantes c on v.id_comprobante = c.id where pk_registro = l.id and v.id_modulo ='7' limit 1) numero_comprobante, l.id_situacion, tm.denominacion situacion
         from liquidaciones l 
+        left join tabla_maestras tm on l.id_situacion =tm.codigo::int and tm.tipo='125'
         where id_solicitud='".$id."'
         and l.estado = '1'";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
+    }
+
+    public function actSituacionLiquidacion($id){
+
+        $updateQuery = "update liquidaciones l 
+        set id_situacion = 
+        (case 
+        when l.id_situacion <> 3 then
+        (select case when v.pagado = '1' then 2 else 1 end 
+        from valorizaciones v 
+        where pk_registro = l.id and v.id_modulo ='7' 
+        limit 1)
+        else l.id_situacion end)
+        where l.id_solicitud ='".$id."' and l.estado='1'";
+
+        DB::update($updateQuery);
     }
 	
 	public function getProyectistaByIdSolicitud($id){
