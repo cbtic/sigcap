@@ -89,7 +89,7 @@ class DerechoRevision extends Model
         $updateQuery = "update liquidaciones l 
         set id_situacion = 
         (case 
-        when l.id_situacion <> 3 then
+        when l.id_situacion <> 3 or l.id_situacion is null then
         (select case when v.pagado = '1' then 2 else 1 end 
         from valorizaciones v 
         where pk_registro = l.id and v.id_modulo ='7' 
