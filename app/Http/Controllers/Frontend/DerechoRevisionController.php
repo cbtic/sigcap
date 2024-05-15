@@ -1571,7 +1571,7 @@ class DerechoRevisionController extends Controller
 			$codigoSolicitud = $derecho_revision->getCodigoSolicitud($solicitud_matriz->id_tipo_solicitud);
 			$codigo1 = $codigoSolicitud->codigo;
 			$numero_correlativo = $codigoSolicitud->numero;
-			$codigo2 = $derecho_revision->getCountProyectoTipoSolicitud($solicitud->id_proyecto,$solicitud_matriz->id_tipo_solicitud);
+			$codigo2 = $derecho_revision->getCountProyectoTipoSolicitud($derecho_revision->id_proyecto,$solicitud_matriz->id_tipo_solicitud);
 			$codigo = $codigo1.$codigo2;
 			
 			$id_user = Auth::user()->id;
