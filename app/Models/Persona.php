@@ -80,7 +80,7 @@ class Persona extends Model
 
     function getPersona($tipo_documento,$numero_documento){
 
-        $cad = "select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, a.id_situacion 
+        $cad = "select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, a.id_situacion, p.numero_celular, p.correo
 		from personas p 
 		left join agremiados a on p.id=a.id_persona
 		Where p.id_tipo_documento='".$tipo_documento."' And p.numero_documento='".$numero_documento."'";

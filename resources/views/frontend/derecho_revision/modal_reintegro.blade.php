@@ -200,7 +200,14 @@ function calculoVistaPrevia(){
         $('#sub_total2').val(formatoMoneda(sub_total_minimo));
         $('#igv2').val(formatoMoneda(igv_minimo));
         $('#total2').val(formatoMoneda(total_minimo));
-    }else{}
+    }else{
+        $('#sub_total').val(formatoMoneda(sub_total));
+        $('#igv_').val(formatoMoneda(igv_total));
+        $('#total').val(formatoMoneda(total));
+        $('#sub_total2').val(formatoMoneda(sub_total));
+        $('#igv2').val(formatoMoneda(igv_total));
+        $('#total2').val(formatoMoneda(total));
+    }
     //var_dump($total_minimo);exit;
 }
 

@@ -1576,7 +1576,7 @@ class DerechoRevisionController extends Controller
 			
 			$id_user = Auth::user()->id;
 			$liquidacion = new Liquidacione;
-			$liquidacion->id_solicitud = $request->id_solicitud;
+			$liquidacion->id_solicitud = $derecho_revision->id;
 			$liquidacion->fecha = Carbon::now()->format('Y-m-d');
 			$liquidacion->credipago = $codigo;
 			$liquidacion->sub_total = $sub_total;
