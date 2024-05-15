@@ -135,6 +135,8 @@ Route::get('agremiado/obtener_representante/{tipo_documento}/{numero_documento}'
 
 Route::post('agremiado/upload_agremiado', [AgremiadoController::class, 'upload_agremiado'])->name('agremiado.upload_agremiado');
 
+Route::get('agremiado/agremiado_inhabilita_fraccionamiento', [AgremiadoController::class, 'agremiado_inhabilita_fraccionamiento'])->name('agremiado.agremiado_inhabilita_fraccionamiento');
+Route::get('agremiado/importar_agremiado_cuota_vitalicio', [AgremiadoController::class, 'importar_agremiado_cuota_vitalicio'])->name('agremiado.importar_agremiado_cuota_vitalicio');
 
 Route::get('empresa/consulta_empresa', [EmpresaController::class, 'consulta_empresa'])->name('empresa.consulta_empresa');
 Route::post('empresa/listar_empresa_ajax', [EmpresaController::class, 'listar_empresa_ajax'])->name('empresa.listar_empresa_ajax');

@@ -22,8 +22,12 @@ class Agremiado extends Model
 		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_fecha',$p);
     }
 	
-	public function crud_automatico_agremiado_cuota_vitalicio($p){
-		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_vitalicio',$p);
+	public function crud_automatico_agremiado_cuota_vitalicio(){
+		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_vitalicio',[]);
+    }
+	
+	public function crud_automatico_agremiado_inhabilita_fraccionamiento(){
+		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_inhabilita_fraccionamiento',[]);
     }
 	
 	public function agremiado_cuota_traslado($op,$id_agremiado,$fecha_ini,$fecha_fin) {
