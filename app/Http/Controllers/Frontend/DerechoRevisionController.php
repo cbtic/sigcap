@@ -962,7 +962,7 @@ class DerechoRevisionController extends Controller
 
 		// Crear una instancia de Carbon a partir de la fecha
 
-		 $carbonDate =Carbon::now()->format('Y-m-d');
+		 $carbonDate =Carbon::now()->format('d-m-Y');
 
 		 $currentHour = Carbon::now()->format('H:i:s');
 
@@ -1060,7 +1060,7 @@ class DerechoRevisionController extends Controller
 
 		// Crear una instancia de Carbon a partir de la fecha
 
-		 $carbonDate =Carbon::now()->format('Y-m-d');
+		 $carbonDate =Carbon::now()->format('d-m-Y');
 
 		 $currentHour = Carbon::now()->format('H:i:s');
 
