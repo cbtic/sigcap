@@ -62,7 +62,7 @@ class DerechoRevisionController extends Controller
     }
 
 	public function modal_credipago($id){
-		 
+		
 		$DerechoRevision_model = new DerechoRevision;
 		$DerechoRevision_model->actSituacionLiquidacion($id);
         $liquidacion = $DerechoRevision_model->getLiquidacionByIdSolicitud($id);
@@ -106,8 +106,9 @@ class DerechoRevisionController extends Controller
         $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(24);
+		$situacion_credipago = $tablaMaestra_model->getMaestroByTipo(125);
         
-        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud','proyecto'));
+        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud','proyecto','situacion_credipago'));
     }
 
 	public function listar_derecho_revision_ajax(Request $request){
@@ -164,6 +165,7 @@ class DerechoRevisionController extends Controller
         $p[]=$request->credipago;
 		$p[]=$request->municipalidad;
         $p[]=$request->direccion;
+		$p[]=$request->situacion_credipago;
 		$p[]=$request->estado_proyecto;
 		$p[]="1";
 		$p[]=$request->NumeroPagina;
@@ -941,6 +943,8 @@ class DerechoRevisionController extends Controller
 		$instancia = $datos[0]->instancia;
 		$tipo_uso = $datos[0]->tipo_uso;
 		$tipo_obra = $datos[0]->tipo_obra;
+		$codigo = $datos[0]->codigo;
+		$tipo_tramite = $datos[0]->tipo_tramite;
 
 		$year = Carbon::now()->year;
 
@@ -958,7 +962,7 @@ class DerechoRevisionController extends Controller
 
 		// Crear una instancia de Carbon a partir de la fecha
 
-		 $carbonDate =Carbon::now()->format('Y-m-d');
+		 $carbonDate =Carbon::now()->format('d-m-Y');
 
 		 $currentHour = Carbon::now()->format('H:i:s');
 
@@ -992,7 +996,7 @@ class DerechoRevisionController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		*/
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia','tipo_uso','tipo_obra'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia','tipo_uso','tipo_obra','codigo','tipo_tramite'));
 		
 
 
@@ -1056,7 +1060,7 @@ class DerechoRevisionController extends Controller
 
 		// Crear una instancia de Carbon a partir de la fecha
 
-		 $carbonDate =Carbon::now()->format('Y-m-d');
+		 $carbonDate =Carbon::now()->format('d-m-Y');
 
 		 $currentHour = Carbon::now()->format('H:i:s');
 
@@ -1253,6 +1257,12 @@ class DerechoRevisionController extends Controller
 		$data['proyectos'] = $derecho_revision_model->importar_proyectos_dataLicencia();
 		
 		$data['solicitudes'] = $derecho_revision_model->importar_solicitudes_dataLicencia();
+
+		$data['uso_edificaciones'] = $derecho_revision_model->importar_uso_edificacion_dataLicencia();
+
+		$data['presupuesto'] = $derecho_revision_model->importar_presupuesto_dataLicencia();
+
+		$data['proyectista'] = $derecho_revision_model->importar_proyectista_dataLicencia();
 		
 		$result["aaData"] = $data;
 
@@ -1399,7 +1409,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->numero_piso = $request->n_pisos;
 		$derecho_revision->valor_obra = $request->valor_total_obra;
 		$derecho_revision->area_total = $request->area_techada_total;
-		$derecho_revision->id_tipo_liquidacion1 = $request->tipo_proyecto;
+		$derecho_revision->id_tipo_liquidacion1 = $request->tipo_liquidacion1;
 		
 		$derecho_revision->id_usuario_inserta = $id_user;
 		
