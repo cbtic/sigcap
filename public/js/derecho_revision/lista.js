@@ -94,7 +94,7 @@ $(document).ready(function () {
 	});
 
 	$('#btnSolicitudReintegro').click(function () {
-		guardar_solicitud_reintegro()
+		valida_reintegro()
 	});
 	
 	$("#id_municipalidad_bus").select2();
@@ -953,10 +953,6 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
-					/*var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					html += '<button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerProyectista('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i>Proyectista</button>';
-					html += '</div>';
-					return html;*/
 					var proyectista = "";
 					if(row.proyectista!= null)proyectista = row.proyectista;
 					return proyectista;
@@ -1065,7 +1061,12 @@ function datatablenew(){
 						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitud('+row.id+')" disabled><i class="fa fa-edit"></i>Generar Liquidaci&oacute;n</button>';
 					}
 
-					html += '<a href="/derecho_revision/derecho_revision_reintegro/'+row.id+'" onclick="" style="font-size: 12px; margin-left: 10px;" class="btn btn-secondary pull-rigth" id="btnReintroEdificaciones"><i class="fa fa-edit"></i> Reintegro</a>'
+					if (row.id_resultado == 4) {
+						html += '<a href="/derecho_revision/derecho_revision_reintegro/'+row.id+'" onclick="" style="font-size: 12px; margin-left: 10px;" class="btn btn-secondary pull-rigth" id="btnReintroEdificaciones"><i class="fa fa-edit"></i> Reintegro</a>'
+					}else{
+						html += '<a href="/derecho_revision/derecho_revision_reintegro/'+row.id+'" onclick="" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;" class="btn btn-secondary pull-rigth" id="btnReintroEdificaciones"><i class="fa fa-edit"></i> Reintegro</a>'
+					}
+
 					html += '<a href="javascript:void(0)" onclick=eliminarSolicitudEdificaciones('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
@@ -1119,6 +1120,7 @@ function datatablenew2(){
 			var municipalidad = $('#municipalidad_bus_hu').val();
 			var direccion = $('#direccion_proyecto_hu').val();
 			var estado_proyecto = $('#estado_solicitud_bus_hu').val();
+			var situacion_credipago = $('#id_situacion_credipago').val();
 			var _token = $('#_token').val();
 			
 
@@ -1131,6 +1133,7 @@ function datatablenew2(){
 						proyectista:proyectista,numero_documento:numero_documento,propietario:propietario,
 						tipo_proyecto:tipo_proyecto,tipo_solicitud:tipo_solicitud,credipago:credipago,
 						municipalidad:municipalidad,direccion:direccion,estado_proyecto:estado_proyecto,
+						situacion_credipago:situacion_credipago,
 						_token:_token
 					},
                 "success": function (result) {
@@ -1692,6 +1695,23 @@ function guardar_solicitud_derecho_revision(){
 				*/
 			}
 	});
+}
+
+function valida_reintegro(){
+    
+    var msg="";
+    var situacion=$("#frmSolicitudDerechoRevisionReintegroall #situacion").val();
+    
+    if(situacion=="FALLECIDO"){msg+="El agremiado est&aacute; FALLECIDO";}
+
+    if(situacion=="INHABILITADO"){msg+="El agremiado est&aacute; INHABILITADO";}
+    
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }else if(situacion=="HABILITADO"){
+        guardar_solicitud_reintegro();
+    } 
 }
 
 function guardar_solicitud_reintegro(){

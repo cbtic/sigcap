@@ -308,6 +308,23 @@ function limpiar(){
 	$('#img_foto').val("");
 }
 
+function valida(){
+    
+    var msg="";
+    var situacion=$("#situacion").val();
+    
+    if(situacion=="FALLECIDO"){msg+="El agremiado est&aacute; FALLECIDO";}
+
+    if(situacion=="INHABILITADO"){msg+="El agremiado est&aacute; INHABILITADO";}
+    
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }else if(situacion=="HABILITADO"){
+        fn_save_credipago();
+    } 
+}
+
 function fn_save_credipago(){
     
 	var _token = $('#_token').val();
@@ -682,7 +699,7 @@ function fn_save_requisito(){
 							<div class="col-sm-12 controls">
 								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 									
-									<a href="javascript:void(0)" onClick="fn_save_credipago()" class="btn btn-sm btn-success">Generar Credipago</a>
+									<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Generar Credipago</a>
 									
 								</div>
 													

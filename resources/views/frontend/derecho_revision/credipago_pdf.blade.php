@@ -149,14 +149,21 @@ $(document).ready(function() {
         <span style="width: 50%; ">Div 1</span>
         <span style="width: 50%; float: right;">Div 2</span>
     </div>-->
-    <div style="text-align: center;">
-        <span style="font_size: 12; margin-left: 3cm; font-weight: bold;"><?php echo $credipago;?></span>
-        <span style="float: right; font_size: 8.5">Cod. Proyecto:</span>
-    </div>
-    <div style="text-align: center;">
-        <span style="font_size: 8.5; margin-left: 3cm;">CREDIPAGO</span>
-        <span style="float: right; font_size: 8.5">N° Certificado:</span>
-    </div>
+    <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+            <tr>
+                <td class="td" style ="text-align: right; width: 55%; font-size:16px"><b><?php echo $credipago;?></b></td>
+                <td class="td" style ="text-align: left; width: 10%;"></td>
+                <td class="td" style ="text-align: left; width: 15%;">Cod. Proyecto:</b></td>
+                <td class="td" style ="text-align: right; width: 20%;"><?php echo $codigo;?></td>                
+            </tr>
+            <tr>
+                <td class="td" style ="text-align: right; width: 55%;">CREDIPAGO</td>
+                <td class="td" style ="text-align: left; width: 10%;"></td>
+                <td class="td" style ="text-align: left; width: 15%;">N° Certificado:</b></td>
+                <td class="td" style ="text-align: right; width: 20%;"><?php //echo $credipago;?></td>  
+            </tr>
+        </tbody>
+    </table>
     <hr>
 
     <p style="font_size: 8.5;text-align:justify"><b>LIQUIDACION DE DERECHOS POR REVISION DE ANTEPROYECTOS Y PROYECTOS DE ARQUITECTURA</b></p>
@@ -185,7 +192,7 @@ $(document).ready(function() {
                         <td class="td" style ="text-align: left; width: 57%; font-size:11px; height:25px"><?php echo $razon_social;?></td>
                     </tr>
                     <tr>
-                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px"><b>NOMBRE DE ANTEPROYECTO:</b></td>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px"><b>NOMBRE DE <?php echo $tipo_tramite;?>:</b></td>
                         <td class="td" style ="text-align: left; width: 57%; font-size:11px; height:25px"><?php echo $nombre;?></td>
                     </tr>
                     <tr>

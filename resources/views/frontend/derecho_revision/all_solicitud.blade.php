@@ -362,9 +362,24 @@
                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
                         <input type="text" name="n_solicitud_hu" id="n_solicitud_hu" placeholder="N° Solicitud" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div> 
-                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">				
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                         <input type="text" name="codigo_proyecto_hu" id="codigo_proyecto_hu" placeholder="C&oacute;digo Proyecto" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
                     </div> 
+                </div>
+                <div class="row" style="padding:15px 20px 15px 20px;">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="id_situacion_credipago" id="id_situacion_credipago" class="form-control form-control-sm" >
+                            <option value="">--Situaci&oacute;n Credipago--</option>
+                            <?php
+                            foreach ($situacion_credipago as $row) {?>
+                            <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                            <?php 
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+
                 </div>
                 <div class="row" style="padding:0px 20px 0px 20px;">
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="">
