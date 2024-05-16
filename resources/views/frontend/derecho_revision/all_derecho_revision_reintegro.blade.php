@@ -522,7 +522,7 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">&Aacute;rea Techada</label>
-								<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo $datos_usoEdificaciones->area_techada?>" type="text">
+								<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo number_format($datos_usoEdificaciones->area_techada, 2, '.', ',');?>" type="text">
 							</div>
 						</div>
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
@@ -543,21 +543,21 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">&Aacute;rea Techada m2</label>
-								<input id="area_techada_presupuesto" name="area_techada_presupuesto" on class="form-control form-control-sm"  value="<?php echo $datos_presupuesto->area_techada?>" type="text">
+								<input id="area_techada_presupuesto" name="area_techada_presupuesto" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->area_techada, 2, '.', ',');?>" type="text">
 							</div>
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Valor Unitario S/</label>
-								<input id="valor_unitario" name="valor_unitario" on class="form-control form-control-sm"  value="<?php echo $datos_presupuesto->valor_unitario?>" type="text">
+								<input id="valor_unitario" name="valor_unitario" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->valor_unitario, 2, '.', ',');?>" type="text">
 							</div>
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Presupuesto</label>
-								<input id="presupuesto" name="presupuesto" on class="form-control form-control-sm"  value="<?php echo $datos_presupuesto->total_presupuesto?>" type="text">
+								<input id="presupuesto" name="presupuesto" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->total_presupuesto, 2, '.', ',');?>" type="text">
 							</div>
 						</div>
 						<div class="row" style="padding-left:10px;padding-top:10px">
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">&Aacute;rea Techada Total</label>
-								<input id="area_techada_total" name="area_techada_total" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->area_total?>" type="text">
+								<input id="area_techada_total" name="area_techada_total" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->area_total, 2, '.', ',');?>" type="text">
 							</div>
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">N° S&oacute;tanos</label>
@@ -581,7 +581,7 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Valor Total de Obra S/</label>
-								<input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->valor_obra?>" type="text">
+								<input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->valor_obra, 2, '.', ',');?>" type="text">
 							</div>
 						</div>
 						<div style="padding: 15px 0px 15px 10px; font-weight: bold">

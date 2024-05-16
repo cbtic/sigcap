@@ -493,7 +493,7 @@ function fn_save_credipago(){
                     </div>-->
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea Techada (m2)</label>
-                        <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_total?>" type="text" readonly='readonly'>
+                        <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo number_format($liquidacion[0]->area_total, 2, '.', ',');?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div style="padding: 15px 0px 15px 10px; font-weight: bold">
