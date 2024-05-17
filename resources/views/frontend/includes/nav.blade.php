@@ -168,6 +168,10 @@
                                 <a href="/beneficiario/consulta_beneficiario" class="dropdown-item">Concepto Beneficiario</a>								
 								@endcan
 
+								@can('Consulta de Facturas')
+                                <a href="/comprobante/cuadre_caja" class="dropdown-item">Cuadre de Caja</a>								
+								@endcan
+
 						   </div>
 					</li>
 					@endif

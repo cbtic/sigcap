@@ -729,3 +729,5 @@ Route::get('derecho_revision/eliminar_solicitud_edificaciones/{id}/{estado}', [D
 Route::get('derecho_revision/eliminar_solicitud_hu/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_hu'])->name('derecho_revision.eliminar_solicitud_hu');
 Route::get('derecho_revision/obtener_ubigeo/{municipalidad}', [DerechoRevisionController::class, 'obtener_ubigeo'])->name('derecho_revision.obtener_ubigeo');
 Route::get('derecho_revision/derecho_revision_reintegro/{id}', [DerechoRevisionController::class, 'derecho_revision_reintegro'])->name('derecho_revision.derecho_revision_reintegro');
+
+Route::get('comprobante/cierre_caja', [ComprobanteControler::class, 'cierre_caja'])->name('comprobante.cierre_caja');

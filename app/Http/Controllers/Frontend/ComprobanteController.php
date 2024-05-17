@@ -31,6 +31,15 @@ class ComprobanteController extends Controller
         return view('frontend.comprobante.all');
     }
 
+    public function cuadre_caja(){
+        //$facturas_model = new Factura;
+        //$facturas = $facturas_model->getFactura();
+        //$facturas = Factura::where('fac_destinatario', 'like','%')->orderBy('id','desc')->get()->all();
+        //print_r($facturas);
+
+        return view('frontend.cuadre_caja');
+    }
+
 
 
 	public function edit(Request $request){
