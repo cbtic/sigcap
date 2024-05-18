@@ -815,6 +815,9 @@ class ComisionController extends Controller
 				
 				if($agremiadoRoleExiste){
 					
+					$agremiadoRol_model = new AgremiadoRole;
+					$agremiadoRol_model->updatePuestoConcursoInscripcion($row2->id_agremiado,$concurso->id,$rol_especifico);
+					
 				}else{
 				
 					$agremiadoRol = new AgremiadoRole;
