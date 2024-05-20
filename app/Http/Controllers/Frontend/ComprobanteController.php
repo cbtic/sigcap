@@ -14,7 +14,8 @@ use App\Models\Guia;
 
 use App\Models\Agremiado;
 use App\Models\ComprobantePago;
-
+use App\Models\ComprobanteCouta;
+use App\Models\ComprobanteCuota;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -460,6 +461,7 @@ class ComprobanteController extends Controller
 
         $id_tipo_afectacion_pp = $request->id_tipo_afectacion_pp;
 
+
          
 
 		//$facturaExiste = $facturas_model->getValidaFactura($request->TipoF,$request->ubicacion,$request->persona,$request->totalF);
@@ -854,6 +856,33 @@ class ComprobanteController extends Controller
 
             }
 
+            if($request->id_formapago_=='2'){
+                $credito = $request->credito;
+                //print_r($credito); 
+                $item_ = 0;
+        
+                foreach ($credito as $key => $value) {
+                    $total_credito = $value['total_frac'];
+                    $fecha_cuota = $value['fecha_cuota'];
+        
+                    //print_r($total_frac); 
+        
+                    $item_++;
+        
+                    $comprobanteCuota = new ComprobanteCuota;
+        
+                    $comprobanteCuota->id_comprobante = $id_factura;
+                    $comprobanteCuota->item = $item_;
+                    $comprobanteCuota->monto = $total_credito;
+                    $comprobanteCuota->fecha_vencimiento = $fecha_cuota;
+                    $comprobanteCuota->id_usuario_inserta = $id_user;
+        
+                    $comprobanteCuota->save();   
+        
+                }
+
+            }
+            
 
 
             if(isset($request->idMedio)):
