@@ -634,7 +634,7 @@ function fn_save_credipago(){
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">N&uacute;mero Revisi&oacute;n</label>
-                        <input id="numero_revision" name="numero_revision" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text">
+                        <input id="numero_revision" name="numero_revision" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->numero_revision?>" type="text">
                     </div>
                     <div class="col-lg-3">
                         <div id="valor_reintegro_" name="valor_reintegro_">
