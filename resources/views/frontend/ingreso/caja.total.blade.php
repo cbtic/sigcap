@@ -204,24 +204,39 @@
 						</div>
 
 						<div class="card-body">
-							<div id="divPlanilla" class="table-responsive">
-								<table id="tblPlanilla" class="table table-hover table-sm">
+							<div id="divCaja" class="table-responsive">
+								<table id="tblCaja" class="table table-hover table-sm">
 									<thead>
 										<tr style="font-size:13px">
-											<th>Municipalidad</th>
-											<th>Importe Bruto</th>
-											<th>IGV 18%</th>
-											<th>Comisi&oacute;n CAP RL 30%</th>
-											<th>Fondo Asistencia 2%</th>
-											<th>Saldo a favor de Delegados</th>
+											<th>Situación</th>
+											<th>Documento</th>
+											<th>Total</th>
+											<th>Cantidad</th>
 										</tr>
 									</thead>
 									<tbody>
 									</tbody>
 								</table>
 							</div><!--table-responsive-->
-
 						</div>
+
+						<div class="card-body">
+							<div id="divCondicion" class="table-responsive">
+								<table id="divCondicion" class="table table-hover table-sm">
+									<thead>
+										<tr style="font-size:13px">
+											<th>Condición</th>
+											<th>Toral US$</th>
+											<th>Total S/</th>
+											<th>Total en Soles</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div><!--table-responsive-->
+						</div>
+
 					</div>
 
 					@endsection
@@ -248,47 +263,5 @@
 	</div>
 
 	@push('after-scripts')
-	
-				<script src="{{ asset('js/FondoComun.js') }}"></script>
-												
-<!--
-	<script>
-		function cargarFondoComun() {
-
-			$("#divPlanilla").html("");
-			$.ajax({
-				//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
-				url: "/fondoComun/obtener_fondo_comun",
-				data: $("#frmAfiliacion").serialize(),
-				type: "POST",
-				success: function(result) {
-					$("#divPlanilla").html(result);
-				}
-			});
-
-		}
-
-		function fn_calcular() {
-			//var anio = $('#anio').val();
-			//var mes = $('#mes').val();
-			var p = {};
-			p.anio = $('#anio').val();
-			p.mes = $('#mes').val();
-
-			//alert(mes);
-			$.ajax({
-				url: "/fondoComun/calcula_fondo_comun",
-				type: "GET",
-				data: p,
-				success: function(result) {
-					//if(result="success")obtenerPlanDetalle(id_plan);
-					cargarFondoComun();
-				}
-			});
-		}
-
-
-	</script>
-	-->
-
+		<script src="{{ asset('js/caja.js') }}"></script>											
 	@endpush
