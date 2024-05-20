@@ -413,8 +413,11 @@ function datatablenew(){
 				
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 					//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalProfesion('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-					html += '<a href="javascript:void(0)" onclick=eliminarRevisorUrbano('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
-					
+					if (row.situacion_pago != 'P') {
+						html += '<a href="javascript:void(0)" onclick=eliminarRevisorUrbano('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					}else{
+						html += '<a href="javascript:void(0)" onclick=eliminarRevisorUrbano('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;">'+estado+'</a>';
+					}
 					html += '</div>';
 					return html;
 					},

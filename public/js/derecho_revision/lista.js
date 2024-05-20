@@ -1066,9 +1066,11 @@ function datatablenew(){
 					}else{
 						html += '<a href="/derecho_revision/derecho_revision_reintegro/'+row.id+'" onclick="" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;" class="btn btn-secondary pull-rigth" id="btnReintroEdificaciones"><i class="fa fa-edit"></i> Reintegro</a>'
 					}
-
-					html += '<a href="javascript:void(0)" onclick=eliminarSolicitudEdificaciones('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
-					
+					if (row.id_resultado == 1 || row.id_resultado == 2 || row.id_resultado == 3) {
+						html += '<a href="javascript:void(0)" onclick=eliminarSolicitudEdificaciones('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					}else{
+						html += '<a href="javascript:void(0)" onclick=eliminarSolicitudEdificaciones('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;">'+estado+'</a>';
+					}
 					html += '</div>';
 					return html;
 					},
@@ -1307,8 +1309,11 @@ function datatablenew2(){
 					html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerCredipago('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Credipago</button>';
 					html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitudRU('+row.id+')" ><i class="fa fa-edit"></i> Generar Liquidaci&oacute;n</button>';
 					//html += '<a href="/derecho_revision/editar_derecho_revision_nuevo/'+row.id+'" style="font-size: 12px; margin-left: 10px;" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Editar</a>';
-					html += '<a href="javascript:void(0)" onclick=eliminarSolicitudHU('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
-					
+					if (row.id_resultado == 1 || row.id_resultado == 2 || row.id_resultado == 3) {
+						html += '<a href="javascript:void(0)" onclick=eliminarSolicitudHU('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					}else{
+						html += '<a href="javascript:void(0)" onclick=eliminarSolicitudHU('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;">'+estado+'</a>';
+					}
 					html += '</div>';
 					return html;
 					},
