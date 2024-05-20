@@ -658,6 +658,7 @@ class DerechoRevisionController extends Controller
 		$proyectista->id_agremiado = $agremiado->id;
 		$proyectista->celular = $agremiado->celular1;
 		$proyectista->email = $agremiado->email1;
+		$proyectista->id_tipo_profesional = 211;
 		
 		//$proyectista->firma = $request->nombre;
 		//$profesion->estado = 1;
@@ -698,6 +699,12 @@ class DerechoRevisionController extends Controller
 		$proyectista->id_solicitud = $request->id_solicitud;
 		//$proyectista->firma = $request->nombre;
 		//$profesion->estado = 1;
+		$tipo_proyectista = Proyectista::where("id_solicitud",$request->id_solicitud)->where("estado","1")->first();
+		if($tipo_proyectista){
+			$tipo_proyectista->id_tipo_profesional = 212;
+			$proyectista->id_tipo_profesional = 212;
+			$tipo_proyectista->save();
+		}
 		$proyectista->id_usuario_inserta = $id_user;
 		$proyectista->save();
     }
@@ -920,7 +927,34 @@ class DerechoRevisionController extends Controller
 		$derecho_revision_model=new DerechoRevision;
 		$ubigeo_model = new Ubigeo;
 		$parametro_model = new Parametro;
+		$proyectista_model = new Proyectista;
+		$usoEdificacion_model = new UsoEdificacione;
+		$presupuesto_model = new Presupuesto;
 
+		$liquidacion = Liquidacione::find($id);
+
+		$datos_proyectista = $proyectista_model->getProyectistaSolicitud($liquidacion->id_solicitud);
+		$proyectista_nombres = array();
+		$proyectista_cap = array();
+		foreach($datos_proyectista as $proyectistas){
+			$proyectista_nombres[] = $proyectistas->agremiado;
+			$proyectista_cap[] = $proyectistas->numero_cap;
+		}
+
+		$datos_uso_edificacion = $usoEdificacion_model->getUsoEdificacionSolicitud($liquidacion->id_solicitud);
+		$tipo_uso_datos = array();
+		$sub_tipo_uso_datos = array();
+		foreach($datos_uso_edificacion as $uso_edificacion){
+			$tipo_uso_datos[] = $uso_edificacion->tipo_uso;
+			$sub_tipo_uso_datos[] = $uso_edificacion->sub_tipo_uso;
+		}
+
+		$datos_tipo_obra = $presupuesto_model->getTipoObraSolicitud($liquidacion->id_solicitud);
+		$tipo_obra_datos = array();
+		foreach($datos_tipo_obra as $tipo_obra){
+			$tipo_obra_datos[] = $tipo_obra->tipo_obra;
+		}
+		
 		$datos=$derecho_revision_model->getSolicitudPdf($id);
 		$credipago=$datos[0]->credipago;
 		$proyectista=$datos[0]->proyectista;
@@ -996,7 +1030,7 @@ class DerechoRevisionController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		*/
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia','tipo_uso','tipo_obra','codigo','tipo_tramite'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia','tipo_uso','tipo_obra','codigo','tipo_tramite','proyectista_nombres','proyectista_cap','tipo_uso_datos','sub_tipo_uso_datos','datos_uso_edificacion','tipo_obra_datos'));
 		
 
 
@@ -1019,6 +1053,17 @@ class DerechoRevisionController extends Controller
 		$derecho_revision_model=new DerechoRevision;
 		$ubigeo_model = new Ubigeo;
 		$parametro_model = new Parametro;
+		$proyectista_model = new Proyectista;
+
+		$liquidacion = Liquidacione::find($id);
+
+		$datos_proyectista = $proyectista_model->getProyectistaSolicitud($liquidacion->id_solicitud);
+		$proyectista_nombres = array();
+		$proyectista_cap = array();
+		foreach($datos_proyectista as $proyectistas){
+			$proyectista_nombres[] = $proyectistas->agremiado;
+			$proyectista_cap[] = $proyectistas->numero_cap;
+		}
 
 		$datos=$derecho_revision_model->getSolicitudPdfHU($id);
 		$credipago=$datos[0]->credipago;
@@ -1065,7 +1110,7 @@ class DerechoRevisionController extends Controller
 		 $currentHour = Carbon::now()->format('H:i:s');
 
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','tipo_uso','valor_minimo','valor_maximo','instancia'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','tipo_uso','valor_minimo','valor_maximo','instancia','proyectista_nombres'));
 		
 
 

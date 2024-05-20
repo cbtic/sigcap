@@ -174,10 +174,16 @@ $(document).ready(function() {
             <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
                 <tbody>
                     <tr>
-                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px"><b>PROFESIONAL:</b></td>
-                        <td class="td" style ="text-align: left; width: 37%; font-size:11px; height:25px"><?php echo $proyectista;?></td>
-                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px"><b>N° CAP:</b></td>
-                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px"><?php echo $numero_cap;?></td>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px; vertical-align:top"><b>PROFESIONAL:</b></td>
+                        <td class="td" style ="text-align: left; width: 37%; font-size:11px; height:25px"><?php foreach($proyectista_nombres as $nombres):?>
+                                                                                                            <?= ($nombres) ?> <br>
+                                                                                                            <?php endforeach;?>
+                                                                                                            </td>
+                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px; vertical-align:top"><b>N° CAP:</b></td>
+                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px"><?php foreach($proyectista_cap as $cap):?>
+                                                                                                            <?= ($cap) ?> <br>
+                                                                                                            <?php endforeach;?>
+                                                                                                            </td>
                     </tr>
                 </tbody>
             </table>
@@ -209,16 +215,22 @@ $(document).ready(function() {
             <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
                 <tbody>
                     <tr>
-                        <td class="td" style ="text-align: left; width: 43%; font-size:11px;"><b>TIPO DE OBRA:</b></td>
-                        <td class="td" style ="text-align: left; width: 57%; font-size:11px"><?php echo $tipo_obra;?></td>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; vertical-align:top; height:25px"><b>TIPO DE OBRA:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px"><?php foreach($tipo_obra_datos as $tipo_obra):?>
+                                                                                            <?= ($tipo_obra) ?> <br>
+                                                                                            <?php endforeach;?>
+                                                                                            </td>
                     </tr>
                     <tr>
-                        <td class="td" style ="text-align: left; width: 43%; font-size:11px"><b>USO DE EDIFICACION:</b></td>
-                        <td class="td" style ="text-align: left; width: 57%; font-size:11px"><?php echo $tipo_uso;?></td>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; vertical-align:top; height:25px"><b>USO DE EDIFICACION:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px; height:25px"><?php foreach($datos_uso_edificacion as $uso_edificacion):?>
+                                                                                            <?= ($uso_edificacion->tipo_uso) ?> - <?=  ($uso_edificacion->sub_tipo_uso) ?> <br>
+                                                                                            <?php endforeach;?>
+                                                                                            </td>
                     </tr>
                     <tr>
-                        <td class="td" style ="text-align: left; width: 43%; font-size:11px"><b>INSTANCIA:</b></td>
-                        <td class="td" style ="text-align: left; width: 57%; font-size:11px"><?php echo $instancia;?></td>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px"><b>INSTANCIA:</b></td>
+                        <td class="td" style ="text-align: left; width: 57%; font-size:11px; height:25px"><?php echo $instancia;?></td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: left; width: 43%; font-size:11px"><b>COMISION TECNICA:</b></td>

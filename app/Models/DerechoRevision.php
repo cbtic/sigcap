@@ -164,7 +164,7 @@ class DerechoRevision extends Model
         u.id_distrito distrito, pro.direccion, s.numero_revision, m.denominacion municipalidad, s.area_total total_area_techada, s.valor_obra, l.sub_total, l.igv, l.total, tm.denominacion tipo_proyectista, 
         tm2.denominacion tipo_liquidacion, tm3.denominacion instancia,
         (select tm4.denominacion from uso_edificaciones ue left join tabla_maestras tm4 on ue.id_tipo_uso = tm4.codigo::int and  tm4.tipo ='30' where ue.id_solicitud = s.id and ue.estado ='1' limit 1) tipo_uso,
-        (select tm5.denominacion from presupuestos p3 left join tabla_maestras tm5 on p3.id_tipo_obra = tm5.codigo::int and  tm5.tipo ='30' where p3.id_solicitud = s.id and p3.estado ='1' limit 1) tipo_obra, 
+        (select tm5.denominacion from presupuestos p3 left join tabla_maestras tm5 on p3.id_tipo_obra = tm5.codigo::int and  tm5.tipo ='112' where p3.id_solicitud = s.id and p3.estado ='1' limit 1) tipo_obra, 
         pro.codigo, tm5.denominacion tipo_tramite
         from solicitudes s 
         inner join liquidaciones l on l.id_solicitud = s.id
