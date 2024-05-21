@@ -11,7 +11,7 @@ class ComisionDelegado extends Model
     function getConcursoInscripcionAll($id_periodo,$id_sub_tipo_concurso){
 
         $cad = "select 
-		t1.id,t1.id_agremiado,t1.puesto_postula,t5.periodo,t6.denominacion tipo_concurso,
+		t1.id,t1.id_agremiado,t1.puesto_postula,t1.puesto,t5.periodo,t6.denominacion tipo_concurso,
 		to_char(t1.created_at,'dd-mm-yyyy')fecha_inscripcion,
 		t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,
 		t7.denominacion situacion,t8.denominacion region,t1.puntaje,t1.resultado,t11.denominacion puesto,t12.denominacion puesto_asignado,

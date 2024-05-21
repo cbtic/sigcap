@@ -820,7 +820,7 @@ class ComisionController extends Controller
 					
 				}else{
 				
-					$agremiadoRol = new AgremiadoRole;
+					$agremiadoRol = new AgremiadoRole; 
 					$agremiadoRol->id_agremiado = $row2->id_agremiado;
 					$agremiadoRol->rol = $id_tipo_concurso;
 					$agremiadoRol->rol_especifico = $rol_especifico;///
@@ -846,18 +846,21 @@ class ComisionController extends Controller
 			$concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionAll($request->periodo,$request->tipo_comision);	
 			
 			foreach($concurso_inscripcion as $key2=>$row2){
-				
+				/*
+				if($row2->puesto==""){
+					echo $row2->puesto."|";
+				}
+				*/
 				$rol_especifico = 12;
 				
 				$agremiadoRoleExiste2 = AgremiadoRole::where("id_agremiado",$row2->id_agremiado)->where("rol",$id_tipo_concurso)->first();
 				
 				if($agremiadoRoleExiste2){
-					
-					$agremiadoRol_model = new AgremiadoRole;
-					$agremiadoRol_model->updatePuestoConcursoInscripcion($row2->id_agremiado,$concurso->id,$rol_especifico);
+					//echo "1";
+					//$agremiadoRol_model = new AgremiadoRole;
+					//$agremiadoRol_model->updatePuestoConcursoInscripcion($row2->id_agremiado,$concurso->id,$rol_especifico);
 						
 				}else{
-					
 					$agremiadoRol = new AgremiadoRole;
 					$agremiadoRol->id_agremiado = $row2->id_agremiado;
 					$agremiadoRol->rol = $id_tipo_concurso;
@@ -869,8 +872,8 @@ class ComisionController extends Controller
 					$agremiadoRol->id_usuario_inserta = $id_user;
 					$agremiadoRol->save();
 					
-					$agremiadoRol_model = new AgremiadoRole;
-					$agremiadoRol_model->updatePuestoConcursoInscripcion($row2->id_agremiado,$concurso->id,$rol_especifico);
+					//$agremiadoRol_model = new AgremiadoRole;
+					//$agremiadoRol_model->updatePuestoConcursoInscripcion($row2->id_agremiado,$concurso->id,$rol_especifico);
 					
 				}
 			
