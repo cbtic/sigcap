@@ -1454,7 +1454,14 @@ function editarSolicitud(id){
 		url: '/derecho_revision/obtener_solicitud/'+id,
 		dataType: "json",
 		success: function(result){
+
+			function formatoMoneda(num) {
+				return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+			}
 			
+			var areaTotal = parseFloat(result.area_total.replace(',', '').replace('.', ''));
+			var valorObra = parseFloat(result.valor_obra.replace(',', '').replace('.', ''));
+
 			$('#id').val(result.id);
 			$('#nombre_proyecto').val(result.nombre_proyecto);
 			$('#direccion').val(result.direccion);
@@ -1469,8 +1476,8 @@ function editarSolicitud(id){
 			$('#tipo_solicitud').val(result.tipo_solicitud);
 			$('#tipo_proyecto').val(result.tipo_proyecto);
 			$('#numero_revision').val(result.numero_revision);
-			$('#area_techada').val(result.area_total);
-			$('#valor_obra').val(result.valor_obra);
+			$('#area_techada').val(formatoMoneda(areaTotal));
+			$('#valor_obra').val(formatoMoneda(valorObra));
 			
 		}
 		

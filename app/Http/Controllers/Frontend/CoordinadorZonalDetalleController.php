@@ -61,7 +61,7 @@ class CoordinadorZonalDetalleController extends Controller
 			$coordinadorZonalDetalle = new CoordinadorZonalDetalle;
 		}
 
-        $periodo = $periodo_model->getPeriodoVigenteAll();
+        $periodo = $periodo_model->getPeriodoAll();
         $tipo_coordinador = $tablaMaestra_model->getMaestroByTipo(117);
         $municipalidad = $municipalidad_model->getMunicipalidadOrden();
         $periodo_ultimo = PeriodoComisione::where("activo",1)->orderBy("id","desc")->first();
@@ -90,11 +90,11 @@ class CoordinadorZonalDetalleController extends Controller
 		
     }
 
-    public function obtener_datos_zonal_detalle($zonal){
+    public function obtener_datos_zonal_detalle($zonal,$id_periodo){
 
         $coordinadorZonalDetalle = new CoordinadorZonalDetalle;
         $sw = true;
-        $zonal_detalle = $coordinadorZonalDetalle->getZonalDetalle($zonal);
+        $zonal_detalle = $coordinadorZonalDetalle->getZonalDetalle($zonal,$id_periodo);
         //print_r($parentesco_lista);exit();
         return view('frontend.coordinador_zonal.lista_datos_zonal_detalle',compact('zonal_detalle'));
 

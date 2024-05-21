@@ -35,13 +35,13 @@ class Municipalidade extends Model
         return $data;
     }
 
-    function getMunicipalidadCoordinador($id){
+    function getMunicipalidadCoordinador($id,$periodo){
 
         $cad = "select m.*,tm.denominacion tipo_coordinador from coordinador_zonal_detalles czd 
         inner join municipalidades m on czd.id_municipalidad = m.id
         inner join tabla_maestras tm on czd.id_tipo_coordinador = tm.codigo::int and  tm.tipo ='117'
         inner join coordinador_zonales cz on czd.id_tipo_coordinador = cz.id_zonal 
-        where cz.id =".$id." and czd.estado ='1' order by denominacion asc ";
+        where cz.id ='".$id."' and czd.estado ='1' and czd.periodo='".$periodo."' order by denominacion asc ";
 		$data = DB::select($cad);
         return $data;
     }

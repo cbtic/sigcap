@@ -458,7 +458,7 @@ class DerechoRevisionController extends Controller
 			$liquidacion->sub_total = $sub_total;
 			$liquidacion->igv = $igv;
 			$liquidacion->total = $total;
-			$liquidacion->observacion = "obs";
+			$liquidacion->observacion = $request->observacion;
 			$liquidacion->id_situacion = 1;
 			$liquidacion->id_usuario_inserta = $id_user;
 			$liquidacion->save();
