@@ -26,4 +26,16 @@ class UsoEdificacione extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getUsoEdificacionSolicitud($id_solicitud){      
+        $cad = "select tm4.denominacion tipo_uso, tm5.denominacion sub_tipo_uso from uso_edificaciones ue 
+        left join tabla_maestras tm4 on ue.id_tipo_uso = tm4.codigo::int and  tm4.tipo ='111' and tm4.sub_codigo is null
+        left join tabla_maestras tm5 on ue.id_sub_tipo_uso = tm5.codigo::int and  tm5.tipo ='111' and tm5.sub_codigo ::int = ue.id_tipo_uso
+        where ue.id_solicitud ='".$id_solicitud."'
+        and ue.estado ='1'";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
 }

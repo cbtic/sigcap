@@ -340,7 +340,7 @@ function fn_save_credipago(){
 			data : $('#frmReintegroSolicitud').serialize(),
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				//datatablenew();
+				window.location.reload();
             }
     });
 }

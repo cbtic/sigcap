@@ -176,7 +176,10 @@ $(document).ready(function() {
                 <tbody>
                     <tr>
                         <td class="td" style ="text-align: left; width: 35%;"><b>ARQUITECTO:</b></td>
-                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $proyectista;?></td>
+                        <td class="td" style ="text-align: left; width: 45%;"><?php foreach($proyectista_nombres as $nombres):?>
+                                                                                <?= ($nombres) ?> <br>
+                                                                                <?php endforeach;?>
+                                                                                </td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: left; width: 35%;"></td>

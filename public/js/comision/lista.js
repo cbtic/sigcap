@@ -962,7 +962,7 @@ function modalAsignarDelegado(id){
 function fn_cerrar_comision(){
 
 	var periodo = $("#frmAfiliacion #periodo").val();
-	var tipo_comision=$("#tipo_comision").val();
+	var tipo_comision=$("#frmAfiliacion #tipo_comision").val();
 	
 	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
