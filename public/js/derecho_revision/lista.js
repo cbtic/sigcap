@@ -2,6 +2,8 @@ $(document).ready(function () {
 	actualizarBoton();
 	
 	obtenerProvincia();
+
+	//calculoVistaPrevia();
 	
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
@@ -90,15 +92,15 @@ $(document).ready(function () {
 		//Limpiar();
 		//window.location.reload();
 	});
+
+	$('#btnSolicitudReintegro').click(function () {
+		valida_reintegro()
+	});
 	
 	$("#id_municipalidad_bus").select2();
 	$("#municipalidad_bus_hu").select2();
 	
-	cargarPeriodo();
-	cargarPeriodoHu();
-	datatablenew();
-	datatablenew2();
-
+	
 	/*$('#numero_cap_').hide();
 	$('#agremiado_').hide();
 	$('#situacion_').hide();
@@ -111,30 +113,39 @@ $(document).ready(function () {
 	$('#direccion_persona_').hide();
 	$('#celular_').hide();
 	$('#email_').hide();
+
+	cargarPeriodo();
+	cargarPeriodoHu();
+	datatablenew();
+	datatablenew2();
+	obtenerPropietario_();
+	calculoVistaPrevia();
 	
 });
 
 function guardar_credipago(){
     
     $.ajax({
-			url: "/derecho_revision/send_credipago",
-            type: "POST",
-            data : $("#frmExpediente").serialize(),
-            success: function (result) {
-				if(result.sw==1){
-					datatablenew();
-				}else{
-					//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
-					bootbox.alert({
-						message: "Existe más de un registro de propietario con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.",
-						//className: "alert_style"
-					});
-					datatablenew();
-				}
-				
-            }
+		url: "/derecho_revision/send_credipago",
+		type: "POST",
+		data : $("#frmExpediente").serialize(),
+		success: function (result) {
+			if(result.sw==1){
+				datatablenew();
+			}else{
+				//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
+				bootbox.alert({
+					message: "Existe más de un registro de propietario con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.",
+					//className: "alert_style"
+				});
+				datatablenew();
+			}
+			
+		}
     });
 }
+
+
 
 function guardar_credipago_(){
     
@@ -157,6 +168,176 @@ function guardar_credipago_(){
 				
             }
     });
+}
+
+function obtenerPropietario_(){
+	
+	var id_tipo_documento = $("#id_tipo_documento").val();
+
+	$('#frmSolicitudDerechoRevisionReintegroall #dni_propietario_').show();
+    $('#frmSolicitudDerechoRevisionReintegroall #nombre_propietario_').show();
+    $('#frmSolicitudDerechoRevisionReintegroall #direccion_dni_').show();
+    $('#frmSolicitudDerechoRevisionReintegroall #celular_dni_').show();
+    $('#frmSolicitudDerechoRevisionReintegroall #email_dni_').show();
+    $('#frmSolicitudDerechoRevisionReintegroall #ruc_propietario_').hide();
+    $('#frmSolicitudDerechoRevisionReintegroall #razon_social_propietario_').hide();
+    $('#frmSolicitudDerechoRevisionReintegroall #direccion_ruc_').hide();
+    $('#frmSolicitudDerechoRevisionReintegroall #telefono_ruc_').hide();
+    $('#frmSolicitudDerechoRevisionReintegroall #email_ruc_').hide();
+	
+	if (id_tipo_documento == "")//SELECCIONAR
+	{
+		
+		$('#dni_propietario_').show();
+        $('#nombre_propietario_').show();
+        $('#direccion_dni_').show();
+        $('#celular_dni_').show();
+        $('#email_dni_').show();
+        $('#ruc_propietario_').hide();
+        $('#razon_social_propietario_').hide();
+        $('#direccion_ruc_').hide();
+        $('#telefono_ruc_').hide();
+        $('#email_ruc_').hide();
+
+	} else if (id_tipo_documento == "78")//DNI
+	{
+		
+		$('#dni_propietario_').show();
+        $('#nombre_propietario_').show();
+        $('#direccion_dni_').show();
+        $('#celular_dni_').show();
+        $('#email_dni_').show();
+        $('#ruc_propietario_').hide();
+        $('#razon_social_propietario_').hide();
+        $('#direccion_ruc_').hide();
+        $('#telefono_ruc_').hide();
+        $('#email_ruc_').hide();
+
+	} else if (id_tipo_documento == "79") //Responsable de Tramite
+	{
+		$('#dni_propietario_').hide();
+        $('#nombre_propietario_').hide();
+        $('#direccion_dni_').hide();
+        $('#celular_dni_').hide();
+        $('#email_dni_').hide();
+        $('#ruc_propietario_').show();
+        $('#razon_social_propietario_').show();
+        $('#direccion_ruc_').show();
+        $('#telefono_ruc_').show();
+        $('#email_ruc_').show();
+
+	} 
+}
+
+function obtenerDatosDni(){
+		
+    var dni_propietario = $("#dni_propietario").val();
+    var msg = "";
+    
+    if(dni_propietario == "")msg += "Debe ingresar el numero de documento <br>";
+    
+    if (msg != "") {
+        bootbox.alert(msg);
+        return false;
+    }
+    
+    var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+    
+    $.ajax({
+        url: '/persona/obtener_datos_persona/' + dni_propietario,
+        dataType: "json",
+        success: function(result){
+            var persona = result.persona;
+
+            if(persona!="0")
+			{
+                $('#nombre_propietario').val(persona.nombres);
+                $('#direccion_dni').val(persona.direccion);
+                $('#celular_dni').val(persona.numero_celular);
+                $('#email_dni').val(persona.correo);
+                
+                $('.loader').hide();
+				
+			}else{
+				msg += "La Persona no esta registrado en la Base de Datos de CAP <br>";
+                $('#nombre_propietario').val("");
+                $('#direccion_dni').val("");
+                $('#celular_dni').val("");
+                $('#email_dni').val("");
+				$('.loader').hide();
+				
+			}
+
+			if (msg != "") {
+				bootbox.alert(msg);
+				return false;
+			}
+
+
+        }
+        
+    });
+    
+}
+
+
+function obtenerDatosRuc(){
+    
+    var ruc_propietario = $("#ruc_propietario").val();
+    var msg = "";
+    
+    if(ruc_propietario == "")msg += "Debe ingresar el RUC <br>";
+    
+    if (msg != "") {
+        bootbox.alert(msg);
+        return false;
+    }
+    
+    var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+    
+    $.ajax({
+        url: '/empresa/obtener_datos_empresa/' + ruc_propietario,
+        dataType: "json",
+        success: function(result){
+            var empresa = result.empresa;
+
+            if(empresa!="0")
+            {
+                $('#razon_social_propietario').val(empresa.razon_social);
+                $('#direccion_ruc').val(empresa.direccion);
+                $('#telefono_ruc').val(empresa.telefono);
+                $('#email_ruc').val(empresa.email);
+                
+                $('.loader').hide();
+                
+            }else{
+                msg += "La Empresa no esta registrada en la Base de Datos de CAP <br>";
+                $('#razon_social_propietario').val("");
+                $('#direccion_ruc').val("");
+                $('#telefono_ruc').val("");
+                $('#email_ruc').val("");
+                $('.loader').hide();
+                
+            }
+
+            if (msg != "") {
+                bootbox.alert(msg);
+                return false;
+            }
+
+
+        }
+        
+    });
+    
 }
 
 function credipago_pdf(id){
@@ -662,6 +843,7 @@ function datatablenew(){
 			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
 			var fecha_fin_bus = $('#fecha_fin_bus').val();
 			var estado_proyecto = $('#id_estado_proyecto_bus').val();
+			var situacion_credipago = $('#id_situacion_credipago').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -673,7 +855,7 @@ function datatablenew(){
 						tipo_proyecto:tipo_proyecto,tipo_solicitud:tipo_solicitud,credipago:credipago,
 						municipalidad:municipalidad,direccion:direccion,n_solicitud:n_solicitud,
 						codigo:codigo,estado_proyecto:estado_proyecto,fecha_inicio_bus:fecha_inicio_bus,
-						fecha_fin_bus:fecha_fin_bus,
+						fecha_fin_bus:fecha_fin_bus,situacion_credipago:situacion_credipago,
 						_token:_token
                        },
                 "success": function (result) {
@@ -740,13 +922,23 @@ function datatablenew(){
 				"className": "dt-center",
 				},
 				{
+					"mRender": function (data, type, row) {
+						var instancia = "";
+						if(row.instancia!= null)instancia = row.instancia;
+						return instancia;
+					},
+					"bSortable": false,
+					"aTargets": [5],
+					"className": "dt-center",
+					},
+				{
 				"mRender": function (data, type, row) {
 					var municipalidad = "";
 					if(row.municipalidad!= null)municipalidad = row.municipalidad;
 					return municipalidad;
 				},
 				"bSortable": false,
-				"aTargets": [5],
+				"aTargets": [6],
 				"className": "dt-center",
 				},
 				{
@@ -756,21 +948,17 @@ function datatablenew(){
 					return numero_cap;
 				},
 				"bSortable": false,
-				"aTargets": [6],
+				"aTargets": [7],
 				"className": "dt-center",
 				},
 				{
 				"mRender": function (data, type, row) {
-					/*var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					html += '<button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerProyectista('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i>Proyectista</button>';
-					html += '</div>';
-					return html;*/
 					var proyectista = "";
 					if(row.proyectista!= null)proyectista = row.proyectista;
 					return proyectista;
 				},
 				"bSortable": false,
-				"aTargets": [7],
+				"aTargets": [8],
 				"className": "dt-center",
 				},
 				
@@ -785,7 +973,7 @@ function datatablenew(){
 					return propietario;
 				},
 				"bSortable": false,
-				"aTargets": [8],
+				"aTargets": [9],
 				"className": "dt-center",
 				},
 				/*
@@ -827,7 +1015,7 @@ function datatablenew(){
 					return credipago;
 				},
 				"bSortable": false,
-				"aTargets": [9],
+				"aTargets": [10],
 				"className": "dt-center",
 				},
 				{
@@ -837,7 +1025,7 @@ function datatablenew(){
 					return fecha_registro;
 				},
 				"bSortable": false,
-				"aTargets": [10],
+				"aTargets": [11],
 				"className": "dt-center",
 				},
 				{
@@ -847,7 +1035,7 @@ function datatablenew(){
 					return estado_proyecto;
 				},
 				"bSortable": false,
-				"aTargets": [11],
+				"aTargets": [12],
 				"className": "dt-center",
 				},
 				{
@@ -873,14 +1061,19 @@ function datatablenew(){
 						html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitud('+row.id+')" disabled><i class="fa fa-edit"></i>Generar Liquidaci&oacute;n</button>';
 					}
 
-					html += '<a href="/derecho_revision/derecho_revision_reintegro/'+row.id+'" onclick="" style="font-size: 12px; margin-left: 10px;" class="btn btn-secondary pull-rigth" id="btnReintroEdificaciones"><i class="fa fa-edit"></i> Reintegro</a>'
+					if (row.id_resultado == 4) {
+						html += '<a href="/derecho_revision/derecho_revision_reintegro/'+row.id+'" onclick="" style="font-size: 12px; margin-left: 10px;" class="btn btn-secondary pull-rigth" id="btnReintroEdificaciones"><i class="fa fa-edit"></i> Reintegro</a>'
+					}else{
+						html += '<a href="/derecho_revision/derecho_revision_reintegro/'+row.id+'" onclick="" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;" class="btn btn-secondary pull-rigth" id="btnReintroEdificaciones"><i class="fa fa-edit"></i> Reintegro</a>'
+					}
+
 					html += '<a href="javascript:void(0)" onclick=eliminarSolicitudEdificaciones('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					html += '</div>';
 					return html;
 					},
 					"bSortable": false,
-					"aTargets": [12],
+					"aTargets": [13],
 				},
             ]
     });
@@ -927,6 +1120,7 @@ function datatablenew2(){
 			var municipalidad = $('#municipalidad_bus_hu').val();
 			var direccion = $('#direccion_proyecto_hu').val();
 			var estado_proyecto = $('#estado_solicitud_bus_hu').val();
+			var situacion_credipago = $('#id_situacion_credipago').val();
 			var _token = $('#_token').val();
 			
 
@@ -939,6 +1133,7 @@ function datatablenew2(){
 						proyectista:proyectista,numero_documento:numero_documento,propietario:propietario,
 						tipo_proyecto:tipo_proyecto,tipo_solicitud:tipo_solicitud,credipago:credipago,
 						municipalidad:municipalidad,direccion:direccion,estado_proyecto:estado_proyecto,
+						situacion_credipago:situacion_credipago,
 						_token:_token
 					},
                 "success": function (result) {
@@ -1480,6 +1675,51 @@ function guardar_solicitud_derecho_revision(){
 				departamento:departamento,provincia:provincia,distrito:distrito,municipalidad:municipalidad,nombre_proyecto:nombre_proyecto,
 				parcela:parcela,superManzana:superManzana,lote:lote,fila:fila,sitio:sitio,zona:zona,tipo:tipo,sublote:sublote,zonificacion:zonificacion,
 				direccion_sitio:direccion_sitio,direccion_zona:direccion_zona,id_solicitud:id_solicitud},
+			success: function (result) {
+				
+				//$('#openOverlayOpc').modal('hide');
+				//modalSituacion(id_agremiado);
+				//datatableSuspension();
+
+				window.location.reload();
+				
+				//$('#openOverlayOpc').modal('hide');
+				
+				/*
+				$('#openOverlayOpc').modal('hide');
+				if(result==1){
+					bootbox.alert("La persona o empresa ya se encuentra registrado");
+				}else{
+					window.location.reload();
+				}
+				*/
+			}
+	});
+}
+
+function valida_reintegro(){
+    
+    var msg="";
+    var situacion=$("#frmSolicitudDerechoRevisionReintegroall #situacion").val();
+    
+    if(situacion=="FALLECIDO"){msg+="El agremiado est&aacute; FALLECIDO";}
+
+    if(situacion=="INHABILITADO"){msg+="El agremiado est&aacute; INHABILITADO";}
+    
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }else if(situacion=="HABILITADO"){
+        guardar_solicitud_reintegro();
+    } 
+}
+
+function guardar_solicitud_reintegro(){
+	
+	$.ajax({
+			url: "/derecho_revision/send_nuevo_reintegro",
+			type: "POST",
+			data : $("#frmSolicitudDerechoRevisionReintegroall").serialize(),
 			success: function (result) {
 				
 				//$('#openOverlayOpc').modal('hide');

@@ -22,8 +22,12 @@ class Agremiado extends Model
 		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_fecha',$p);
     }
 	
-	public function crud_automatico_agremiado_cuota_vitalicio($p){
-		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_vitalicio',$p);
+	public function crud_automatico_agremiado_cuota_vitalicio(){
+		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_cuota_vitalicio',[]);
+    }
+	
+	public function crud_automatico_agremiado_inhabilita_fraccionamiento(){
+		return $this->readFunctionPostgresTransaction('sp_crud_automatico_agremiado_inhabilita_fraccionamiento',[]);
     }
 	
 	public function agremiado_cuota_traslado($op,$id_agremiado,$fecha_ini,$fecha_fin) {
@@ -92,7 +96,7 @@ class Agremiado extends Model
 			
 			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,
 			t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, t1.apellido_paterno|| ' ' ||t1.apellido_materno || ', ' || t1.nombres as nombre_completo,t1.id_tipo_documento,email1 email, 
-			t4.denominacion actividad, t2.numero_regional, r.denominacion regional, t5.denominacion autoriza_tramite, t6.denominacion ubicacion, t7.denominacion categoria
+			t4.denominacion actividad, t2.numero_regional, r.denominacion regional, t5.denominacion autoriza_tramite, t6.denominacion ubicacion, t7.denominacion categoria, t2.celular1
 			from personas t1 
 			inner join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
 			left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'

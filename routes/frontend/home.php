@@ -135,6 +135,8 @@ Route::get('agremiado/obtener_representante/{tipo_documento}/{numero_documento}'
 
 Route::post('agremiado/upload_agremiado', [AgremiadoController::class, 'upload_agremiado'])->name('agremiado.upload_agremiado');
 
+Route::get('agremiado/agremiado_inhabilita_fraccionamiento', [AgremiadoController::class, 'agremiado_inhabilita_fraccionamiento'])->name('agremiado.agremiado_inhabilita_fraccionamiento');
+Route::get('agremiado/importar_agremiado_cuota_vitalicio', [AgremiadoController::class, 'importar_agremiado_cuota_vitalicio'])->name('agremiado.importar_agremiado_cuota_vitalicio');
 
 Route::get('empresa/consulta_empresa', [EmpresaController::class, 'consulta_empresa'])->name('empresa.consulta_empresa');
 Route::post('empresa/listar_empresa_ajax', [EmpresaController::class, 'listar_empresa_ajax'])->name('empresa.listar_empresa_ajax');
@@ -240,6 +242,8 @@ Route::post('ingreso/exonerar_valorizacion', [IngresoController::class, 'exonera
 
 Route::post('ingreso/anular_valorizacion', [IngresoController::class, 'anular_valorizacion'])->name('ingreso.anular_valorizacion');
 Route::get('ingreso/modal_consulta_persona', [IngresoController::class, 'modal_consulta_persona'])->name('ingreso.modal_consulta_persona');
+
+Route::post('ingreso/valida_deuda_vencida', [IngresoController::class, 'valida_deuda_vencida'])->name('ingreso.valida_deuda_vencida');
 
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
@@ -711,7 +715,7 @@ Route::get('coordinador_zonal/modal_zonal_nuevoZonalDetalle/{id}', [CoordinadorZ
 Route::post('coordinador_zonal/send_zonal_nuevoZonal', [CoordinadorZonalDetalleController::class, 'send_zonal_nuevoZonal'])->name('coordinador_zonal.send_zonal_nuevoZonal');
 Route::get('coordinador_zonal/obtener_datos_zonal_detalle/{zonal}', [CoordinadorZonalDetalleController::class, 'obtener_datos_zonal_detalle'])->name('coordinador_zonal.obtener_datos_zonal_detalle');
 Route::get('coordinador_zonal/eliminar_zonal_detalle/{id}/{estado}', [CoordinadorZonalDetalleController::class, 'eliminar_zonal_detalle'])->name('coordinador_zonal.eliminar_zonal_detalle');
-Route::get('derecho_revision/eliminar_credipago/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_credipago'])->name('derecho_revision.eliminar_credipago');
+Route::get('derecho_revision/eliminar_credipago/{id}/{id_situacion}', [DerechoRevisionController::class, 'eliminar_credipago'])->name('derecho_revision.eliminar_credipago');
 
 Route::get('delegadoTributo/consulta_delegadoTributo', [DelegadoTributoController::class, 'consulta_delegadoTributo'])->name('delegadoTributo.consulta_delegadoTributo');
 Route::post('delegadoTributo/listar_delegadoTributo_ajax', [DelegadoTributoController::class, 'listar_delegadoTributo_ajax'])->name('delegadoTributo.listar_delegadoTributo_ajax');
@@ -730,4 +734,7 @@ Route::get('derecho_revision/eliminar_solicitud_hu/{id}/{estado}', [DerechoRevis
 Route::get('derecho_revision/obtener_ubigeo/{municipalidad}', [DerechoRevisionController::class, 'obtener_ubigeo'])->name('derecho_revision.obtener_ubigeo');
 Route::get('derecho_revision/derecho_revision_reintegro/{id}', [DerechoRevisionController::class, 'derecho_revision_reintegro'])->name('derecho_revision.derecho_revision_reintegro');
 
-Route::get('comprobante/cierre_caja', [ComprobanteControler::class, 'cierre_caja'])->name('comprobante.cierre_caja');
+Route::get('comprobante_c/cuadre_caja', [ComprobanteController::class, 'cuadre_caja'])->name('comprobante_c.cuadre_caja');
+
+Route::post('derecho_revision/send_nuevo_reintegro', [DerechoRevisionController::class, 'send_nuevo_reintegro'])->name('derecho_revision.send_nuevo_reintegro');
+

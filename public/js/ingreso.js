@@ -362,10 +362,22 @@ function calcular_total(obj){
 
 		var tipo_documento = $('#tipo_documento').val();
 
+//		var cboPeriodo_b = $('#cboPeriodo_b').val();
+
+//		var cboMes_b = $('#cboMes_b').val();
+
+
+
 		if(tipo_documento == "79"){//RUC
 			
 			$("#btnBoleta").prop('disabled', true);
 			$("#btnFactura").prop('disabled', false);
+/*
+			if(cboPeriodo_b!="" || cboMes_b!=""){
+				$("#btnBoleta").prop('disabled', true);
+				$("#btnFactura").prop('disabled', true);
+			}
+*/
 		}else
 		{
 			$("#btnBoleta").prop('disabled', false);
@@ -373,6 +385,13 @@ function calcular_total(obj){
 			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
 
 			$("#btnFactura").prop('disabled', false);
+
+/*
+			if(cboPeriodo_b!="" || cboMes_b!=""){
+				$("#btnBoleta").prop('disabled', true);
+				$("#btnFactura").prop('disabled', true);
+			}
+			*/
 		}
 
 
@@ -387,6 +406,20 @@ function calcular_total(obj){
 		}
 
 		$("#btnAnulaVal").prop('disabled', false);
+
+
+
+		//alert(cboPeriodo_b);
+
+
+
+
+		
+
+		
+
+
+
 	}
 	
 
@@ -1146,9 +1179,65 @@ function cargarDudoso(){
 
 }
 
+function ValidarDeudasVencidas(tipo){
+    //alert("ok");
+
+	$.ajax({
+		//url: "/ingreso/listar_valorizacion_concepto",
+		url: "/ingreso/valida_deuda_vencida",
+		type: "POST",
+		data : $("#frmValorizacion").serialize(),
+		dataType: 'json',
+		success: function (result) {
+
+			//alert(result);
+			//console.log(result);
+
+			//var id = result[0].id;
+			
+			
+			//alert(result[0].anio);
+			
+			$('#anio_deuda').val(result[0].anio);
+			$('#mes_deuda').val(result[0].mes);
+
+			validar(tipo);
+
+
+	}
+		
+
+
+
+
+			//$('#empresa_razon_social').val(result.agremiado.razon_social);
+
+
+
+/*			
+			var option = "<option value='' selected='selected'>Seleccionar Concepto</option>";
+			var option;
+			$('#cboTipoConcepto_b').html("");
+			
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			$('#cboTipoConcepto_b').html(option);
+			$('#cboTipoConcepto_b').select2();
+*/			
+			//$('.loader').hide();			
+		
+		
+	});
+
+
+}
+
 
 
 function enviarTipo(tipo){
+
+	
 
 	var exonerado = $('#Exonerado').val();
 
@@ -1191,7 +1280,8 @@ function enviarTipo(tipo){
 	  });
 */
 
-validar(tipo);
+ValidarDeudasVencidas(tipo);
+//validar(tipo);
 	
 }
 
@@ -1215,7 +1305,30 @@ function validar(tipo) {
 	//alert("id_persona-->"+ tipo_documento);
 	//alert("id_persona-->"+ id_persona);
 	//alert("empresa_id-->"+ empresa_id);
+
+	//ValidarDeudasVencidas();
+	//exit();
+
+	var anio = $('#anio_deuda').val();
+	var mes = $('#mes_deuda').val();
+
+	var cboPeriodo_b = $('#cboPeriodo_b').val();
+	var cboMes_b = $('#cboMes_b').val();
+
+	if(cboPeriodo_b!="" ){
+		if(anio!=cboPeriodo_b){
+			msg += "Tiene Deudas Vencidas en el periodo " + anio + " que tiene que cancelar para continuar <br>";	
+		}
+	}
+
+	if(cboMes_b!=""){
+		if(mes!=cboMes_b){
+			msg += "Tiene Deudas Vencidas en el mes " + mes + " que tiene que cancelar para continuar <br>";	
+		}
+	}
+
 	
+
 	if(tipo_documento != "79" && id_persona == "")msg += "Debe ingresar el Numero de Documento <br>";
 	if(tipo_documento == "79" && empresa_id == "")msg += "Debe ingresar el Numero de Documento <br>";
 	/*

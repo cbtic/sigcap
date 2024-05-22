@@ -87,9 +87,108 @@
 
 <script>
 
-function modalVerFormato(){
-	
+function formatoMoneda(num) {
+    return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
+
+function calculoVistaPrevia(){
+    var igv_valor_ = <?php echo $parametro[0]->igv?> * 100;
+    var valor_minimo_edificaciones = <?php echo $parametro[0]->valor_minimo_edificaciones?>;
+    var uit_edificaciones = <?php echo $parametro[0]->valor_uit?>;
+    var sub_total_minimo = valor_minimo_edificaciones * uit_edificaciones;
+    var igv_valor = <?php echo $parametro[0]->igv?>;
+    var igv_minimo	= igv_valor * sub_total_minimo;
+    var total_minimo = sub_total_minimo + igv_minimo;
+    $('#minimo').val(formatoMoneda(total_minimo));
+    $('#igv').val(igv_valor_+"%");
+    //var_dump($total_minimo);exit;
+    
+    var valor_obra_= <?php echo $liquidacion[0]->valor_obra?>;
+    var porcentaje_calculo_edificacion = <?php echo $parametro[0]->porcentaje_calculo_edificacion?>;
+    var sub_total= valor_obra_* porcentaje_calculo_edificacion;
+    //var sub_total_formateado = number_format(sub_total, 2, '.', ',');
+    var igv_total=sub_total*igv_valor;
+    //var igv_total_formateado = number_format(igv_total, 2, '.', ',');
+    //var_dump($total_minimo);exit;
+    var total=sub_total+igv_total;
+    //var total_formateado = number_format(total, 2, '.', ',');
+    $('#sub_total').val(sub_total);
+    $('#igv_').val(igv_total);
+    $('#total').val(formatoMoneda(total));
+    
+    if(total<total_minimo){
+        var total_ = total_minimo;
+        var valor_minimo_edificaciones= <?php echo $parametro[0]->valor_minimo_edificaciones?>;
+        var uit_minimo= <?php echo $parametro[0]->valor_uit?>;
+        var sub_total_minimo=valor_minimo_edificaciones*uit_minimo;
+        var igv_minimo=sub_total_minimo*igv_valor;
+        //$sub_total_formateado_ = number_format($sub_total_minimo, 2, '.', ',');
+        //$igv_total_formateado_ = number_format($igv_minimo, 2, '.', ',');
+        //$total_formateado_ = number_format($total_minimo, 2, '.', ',');
+        $('#sub_total').val(formatoMoneda(sub_total));
+        $('#igv_').val(formatoMoneda(igv_total));
+        $('#total').val(formatoMoneda(total));
+        $('#sub_total2').val(formatoMoneda(sub_total_minimo));
+        $('#igv2').val(formatoMoneda(igv_minimo));
+        $('#total2').val(formatoMoneda(total_minimo));
+    }else{
+		$('#sub_total').val(formatoMoneda(sub_total));
+        $('#igv_').val(formatoMoneda(igv_total));
+        $('#total').val(formatoMoneda(total));
+        $('#sub_total2').val(formatoMoneda(sub_total));
+        $('#igv2').val(formatoMoneda(igv_total));
+        $('#total2').val(formatoMoneda(total));
+	}
+    //var_dump($total_minimo);exit;
+}
+
+function calcularReintegro(){
+
+if($('#instancia').val()==250){
+	if($('#valor_reintegro').val()!=''){
+		var reintegro=parseFloat($('#valor_reintegro').val());
+		var igv_=parseFloat($('#igv').val());
+		var valor_edificaciones=parseFloat($('#factor').val());
+
+		var sub_totalR=reintegro*valor_edificaciones;
+		var igv_totalR=sub_totalR*igv_/100;
+		var totalR=sub_totalR+igv_totalR;
+		
+		
+		if(totalR<parseFloat($('#minimo').val())){
+			
+			var total_minimo = parseFloat($('#minimo').val());
+			var igv_minimo = total_minimo*igv_/100;
+			var sub_total_minimo = total_minimo - igv_minimo;
+
+			var sub_totalR=reintegro*valor_edificaciones;
+			var igv_totalR=sub_totalR*igv_/100;
+			var totalR=sub_totalR+igv_totalR;
+
+			$('#total2').val(formatoMoneda(total_minimo));
+			$('#igv2').val(formatoMoneda(igv_minimo));
+			$('#sub_total2').val(formatoMoneda(sub_total_minimo));
+			$('#total').val(formatoMoneda(totalR));
+			$('#igv_').val(formatoMoneda(igv_totalR));
+			$('#sub_total').val(formatoMoneda(sub_totalR));
+			
+		}else{
+
+			//var sub_totalR_formateado = number_format(sub_totalR, 2, '.', ',');
+			//var igv_totalR_formateado = number_format(igv_totalR, 2, '.', ',');
+			//var totalR_formateado = number_format(totalR, 2, '.', ',');
+			$('#total2').val(formatoMoneda(totalR));
+			$('#igv2').val(formatoMoneda(igv_totalR));
+			$('#sub_total2').val(formatoMoneda(sub_totalR));
+			$('#total').val(formatoMoneda(totalR));
+			$('#igv_').val(formatoMoneda(igv_totalR));
+			$('#sub_total').val(formatoMoneda(sub_totalR));
+		}
+		
+	}
+}
+}
+
 </script>
 
 
@@ -135,14 +234,15 @@ function modalVerFormato(){
                 </div>
 				
 				<div class="card-body">
-			<form method="post" action="#" id="frmSolicitudDerechoRevisionReintegro" name="frmSolicitudDerechoRevisionReintegro">
+			<form method="post" action="#" id="frmSolicitudDerechoRevisionReintegroall" name="frmSolicitudDerechoRevisionReintegroall">
 			<div class="row">
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-					<!--<input type="hidden" name="id" id="id" value="<?php //echo $derecho_revision->id?>">-->
-					<input type="hidden" name="id_solicitud_reintegro" id="id_solicitud_reintegro" value="<?php echo $id?>">
+					<input type="hidden" name="id_solicitud_reintegro" id="id_solicitud_reintegro" value="0">
+					<input type="hidden" name="id_solicitud" id="id_solicitud" value="<?php echo $id?>">
+					<input type="hidden" name="codigo_proyecto" id="codigo_proyecto" value="<?php echo $proyecto2->codigo?>">
 
 					<div class="row" style="padding-left:10px">
 						<div class="row" style="padding-left:10px">
@@ -160,7 +260,7 @@ function modalVerFormato(){
 								</select>
 							</div>
 					
-							<div class="col-lg-3">
+							<div class="col-lg-4">
 								<label class="control-label form-control-sm">N° de Revisi&oacute;n</label>
 								<select name="n_revision" id="n_revision" class="form-control form-control-sm" value="<?php echo $derechoRevision_->numero_revision?>">
 								<?php
@@ -181,6 +281,18 @@ function modalVerFormato(){
 								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->nombre?>" type="text">
 							</div>
 
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Tipo</label>
+								<select name="tipo_direccion" id="tipo_direccion" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_tipo_direccion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
 						
 							<div class="col-lg-5">
 								<label class="control-label form-control-sm">Direccion</label>
@@ -225,37 +337,10 @@ function modalVerFormato(){
 								</select>
 							</div>
 						</div>
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Proyectista Principal
+						</div>	
 						<div class="row" style="padding-left:10px">
-							<div class="col-lg-2">
-								<div class="form-group">
-									<label class="control-label form-control-sm">Solicitante</label>
-									<select name="tipo_solicitante" id="tipo_solicitante" class="form-control form-control-sm" onchange="obtenerSolicitante()">
-									<option value="" selected="selected">--Seleccionar--</option>
-									<option value="1" <?php if ($tipo_solicitante == 1) echo "selected='selected'" ?>>Proyectista</option>
-									<option value="2" <?php if ($tipo_solicitante == 2) echo "selected='selected'" ?>>Responsable de Tramite</option>
-									<option value="3" <?php if ($tipo_solicitante == 3) echo "selected='selected'" ?>>Administrado / Propietario</option>
-									<!--<option value="">--Selecionar--</option>
-										<?/*php
-											foreach ($tipo_solicitante as $row) {*/?>
-										<option value="<?php /*echo $row->id*/?>" <?php/* if($row->id==$derecho_revision->id_solicitante)echo "selected='selected'"*/?>><?php /*echo $row->denominacion*/?></option>
-										<?php
-										/*}*/
-										?>-->
-									</select>
-								</div>
-							</div>
-					
-							<div class="col-lg-1">
-								<div class="form-group" id="numero_cap_">
-									<label class="control-label form-control-sm">N° CAP</label>
-									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_cap?>" type="text" onchange="obtenerProyectista()">
-								</div>
-								<div class="form-group" id="dni_">
-									<label class="control-label form-control-sm">DNI</label>
-									<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_documento?>" type="text" onchange="obtenerPropietario()">
-								</div>
-							</div>
-
 							<div class="col-lg-3" >
 								<div class="form-group "id="agremiado_">
 									<label class="control-label form-control-sm">Nombre</label>
@@ -266,7 +351,16 @@ function modalVerFormato(){
 									<input id="persona" name="persona" on class="form-control form-control-sm"  value="<?php //echo $persona->nombres?>" type="text" readonly='readonly'>
 								</div>
 							</div>
-
+							<div class="col-lg-1">
+								<div class="form-group" id="numero_cap_">
+									<label class="control-label form-control-sm">N° CAP</label>
+									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
+								</div>
+								<div class="form-group" id="dni_">
+									<label class="control-label form-control-sm">DNI</label>
+									<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_documento?>" type="text" onchange="obtenerPropietario()">
+								</div>
+							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="situacion_">
 									<label class="control-label form-control-sm">Situaci&oacute;n</label>
@@ -278,10 +372,10 @@ function modalVerFormato(){
 								</div>
 							</div>
 
-							<div class="col-lg-3">
+							<div class="col-lg-1">
 								<div class="form-group" id="direccion_agremiado_">
-									<label class="control-label form-control-sm">Direcci&oacute;n</label>
-									<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->direccion?>" type="text" readonly='readonly'>
+									<label class="control-label form-control-sm">T&eacute;lefono</label>
+									<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->celular1?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="direccion_persona_">
 									<label class="control-label form-control-sm">Direcci&oacute;n</label>
@@ -289,20 +383,16 @@ function modalVerFormato(){
 								</div>
 							</div>
 
-							<div class="col-lg-1-5">
+							<div class="col-lg-3">
 								<div class="form-group" id="n_regional_">
-									<label class="control-label form-control-sm">N° Regional</label>
-									<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_regional?>" type="text" readonly='readonly'>
+									<label class="control-label form-control-sm">Email</label>
+									<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->email?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="celular_">
 									<label class="control-label form-control-sm">Celular</label>
 									<input id="celular" name="celular" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->numero_celular?>" type="text" readonly='readonly'>
 								</div>
 							</div>
-
-						</div>
-						<div class="row" style="padding-left:10px">
-                    
 							<div class="col-lg-2">
 								<div class="form-group" id="act_gremial_">
 									<label class="control-label form-control-sm">Actividad Gremial</label>
@@ -314,440 +404,327 @@ function modalVerFormato(){
 								</div>
 							</div>
 						</div>
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Propietario/Administrado
+						</div>	
+						<div class="row" style="padding-left:10px">
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Tipo Documento</label>
+								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="obtenerPropietario_()">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_documento as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_persona->id_tipo_documento)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+
+							<div class="col-lg-1">
+								<div class="form-group" id="dni_propietario_">
+								<label class="control-label form-control-sm">DNI</label>
+								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm"  value="<?php echo $datos_persona->numero_documento?>" type="text" onchange="obtenerDatosDni()">
+								</div>
+								<div class="form-group" id="ruc_propietario_">
+									<label class="control-label form-control-sm">RUC</label>
+									<input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" onchange="obtenerDatosRuc()">
+								</div>
+							</div>
+
+							<div class="col-lg-3" >
+							<div class="form-group" id="nombre_propietario_">
+								<label class="control-label form-control-sm">Nombre</label>
+								<input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $datos_persona->apellido_paterno.' '. $datos_persona->apellido_materno.' '.$datos_persona->nombres?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="razon_social_propietario_">
+									<label class="control-label form-control-sm">Raz&oacute;n Social</label>
+									<input id="razon_social_propietario" name="razon_social_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+							<div class="col-lg-3" >
+								<div class="form-group" id="direccion_dni_">
+									<label class="control-label form-control-sm">Direcci&oacute;n</label>
+									<input id="direccion_dni" name="direccion_dni" on class="form-control form-control-sm"  value="<?php echo $datos_persona->direccion?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="direccion_ruc_">
+									<label class="control-label form-control-sm">Direcci&oacute;n</label>
+									<input id="direccion_ruc" name="direccion_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->direccion?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+							
+							<div class="col-lg-1" >
+								<div class="form-group" id="celular_dni_">
+									<label class="control-label form-control-sm">Celular</label>
+									<input id="celular_dni" name="celular_dni" on class="form-control form-control-sm"  value="<?php echo $datos_persona->numero_celular?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="telefono_ruc_">
+									<label class="control-label form-control-sm">Tel&eacute;fono</label>
+									<input id="telefono_ruc" name="telefono_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+
+							<div class="col-lg-2" >
+								<div class="form-group" id="email_dni_">
+									<label class="control-label form-control-sm">Email</label>
+									<input id="email_dni" name="email_dni" on class="form-control form-control-sm"  value="<?php echo $datos_persona->correo?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="email_ruc_">
+									<label class="control-label form-control-sm">Email</label>
+									<input id="email_ruc" name="email_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->email?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+						</div>
 
 						<div style="padding: 0px 0px 15px 10px; font-weight: bold">
 							Datos del Proyecto
 						</div>
-						<div class="row" style="padding-left:10px">
-							<div class="col-lg-1" style=";padding-right:15px">
-								<label class="control-label form-control-sm">Sitio</label>
-								<select name="sitio" id="sitio" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($sitio as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_tipo_sitio)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
-							</div>
 
-							<div class="col-lg-2">
-								<label class="control-label form-control-sm">Detalle Sitio</label>
-								<input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="<?php echo $proyecto2->sitio_descripcion?>" type="text">
-							</div>
-
-							<div class="col-lg-1" style="padding-left:15px">
-								<label class="control-label form-control-sm">Zona</label>
-								<select name="zona" id="zona" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($zona as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_zona)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
-							</div>
-
-							<div class="col-lg-2">
-								<label class="control-label form-control-sm">Detalle Zona</label>
-								<input id="direccion_zona" name="direccion_zona" on class="form-control form-control-sm"  value="<?php echo $proyecto2->zona_descripcion?>" type="text">
-							</div>
-
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Parcela</label>
-								<input id="parcela" name="parcela" on class="form-control form-control-sm"  value="<?php echo $proyecto2->parcela?>" type="text">
-							</div>
-
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">SuperManzana</label>
-								<input id="superManzana" name="superManzana" on class="form-control form-control-sm"  value="<?php echo $proyecto2->super_manzana?>" type="text">
-							</div>
-							
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Tipo</label>
-								<select name="tipo" id="tipo" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($tipo as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_tipo_direccion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
-							</div>
-
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Lote</label>
-								<input id="lote" name="lote" on class="form-control form-control-sm"  value="<?php echo $proyecto2->lote?>" type="text">
-							</div>
-
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">SubLote</label>
-								<input id="sublote" name="sublote" on class="form-control form-control-sm"  value="<?php echo $proyecto2->sub_lote?>" type="text">
-							</div>
-						
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Fila</label>
-								<input id="fila" name="fila" on class="form-control form-control-sm"  value="<?php echo $proyecto2->fila?>" type="text">
-							</div>
-
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Zonificaci&oacute;n</label>
-								<input id="zonificacion" name="zonificacion" on class="form-control form-control-sm"  value="<?php echo $proyecto2->zonificacion?>" type="text">
-							</div>
-
+						<div class="col-lg-3" style=";padding-right:15px">
+							<label class="control-label form-control-sm">Datos T&eacute;cnicos del proyecto</label>
+							<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="">
+								<option value="">--Selecionar--</option>
+								<?php
+								foreach ($tipo_proyecto as $row) {?>
+								<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$derechoRevision_->id_tipo_tramite)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+								<?php
+							    }
+								?>
+							</select>
 						</div>
-					</div>
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Uso de la Edificaci&oacute;n
+						</div>
+						<div class="row" style="padding-left:10px">
+							<div class="col-lg-3" style=";padding-right:15px">
+								<label class="control-label form-control-sm">Tipo de Uso</label>
+								<select name="tipo_uso" id="tipo_uso" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_uso as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+							<div class="col-lg-3" style=";padding-right:15px">
+								<label class="control-label form-control-sm">Sub-Tipo de Uso</label>
+								<select name="sub_tipo_uso" id="sub_tipo_uso" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($sub_tipo_uso as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_sub_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">&Aacute;rea Techada</label>
+								<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo number_format($datos_usoEdificaciones->area_techada, 2, '.', ',');?>" type="text">
+							</div>
+						</div>
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Presupuesto
+						</div>
+						<div class="row" style="padding-left:10px">
+							<div class="col-lg-3" style=";padding-right:15px">
+								<label class="control-label form-control-sm">Tipo de Obra</label>
+								<select name="tipo_obra" id="tipo_obra" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_obra as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_presupuesto->id_tipo_obra)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">&Aacute;rea Techada m2</label>
+								<input id="area_techada_presupuesto" name="area_techada_presupuesto" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->area_techada, 2, '.', ',');?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Valor Unitario S/</label>
+								<input id="valor_unitario" name="valor_unitario" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->valor_unitario, 2, '.', ',');?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Presupuesto</label>
+								<input id="presupuesto" name="presupuesto" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->total_presupuesto, 2, '.', ',');?>" type="text">
+							</div>
+						</div>
+						<div class="row" style="padding-left:10px;padding-top:10px">
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">&Aacute;rea Techada Total</label>
+								<input id="area_techada_total" name="area_techada_total" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->area_total, 2, '.', ',');?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">N° S&oacute;tanos</label>
+								<input id="n_sotanos" name="n_sotanos" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->numero_sotano?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Azotea</label>
+								<input id="azotea" name="azotea" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->azotea?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Semis&oacute;tano</label>
+								<input id="semisotano" name="semisotano" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->semisotano?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">N° de Pisos</label>
+								<input id="n_pisos" name="n_pisos" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->numero_piso?>" type="text">
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Fecha Registro</label>
+								<input id="fecha_registro" name="fecha_registro" on class="form-control form-control-sm"  value="<?php echo date('Y-m-d', strtotime($derechoRevision_->fecha_registro)); ?>" type="text" readonly='readonly'>
+							</div>
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm">Valor Total de Obra S/</label>
+								<input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->valor_obra, 2, '.', ',');?>" type="text">
+							</div>
+						</div>
+						<div style="padding: 15px 0px 15px 10px; font-weight: bold">
+							C&aacute;lculo Liquidaci&oacute;n
+						</div>
+						<div class="row" style="padding-left:10px">
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="control-label form-control-sm">Tipo Liquidaci&oacute;n 1</label>
+									<select name="tipo_liquidacion1" id="tipo_liquidacion1" class="form-control form-control-sm">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($tipo_liquidacion as $row) {
+											if (in_array($row->codigo, [135,142,136,138,306,137,143,258])){
+										?>
+										<option value="<?php echo $row->codigo?>" <?php if($row->codigo=='135')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+											}
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="control-label form-control-sm">Instancia</label>
+									<select name="instancia" id="instancia" class="form-control form-control-sm" onChange="habilitar_reintegro()">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($instancia as $row) {?>
+										<option value="<?php echo $row->codigo?>" <?php if($row->codigo=='250')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="control-label form-control-sm">Tipo Liquidaci&oacute;n 2</label>
+									<select name="tipo_liquidacion2" id="tipo_liquidacion2" class="form-control form-control-sm">
+										<option value="">--Selecionar--</option>
+										<?php
+										foreach ($tipo_liquidacion as $row) {
+											if (in_array($row->codigo, [143,258])){
+										?>
+										<option value="<?php echo $row->codigo?>" <?php if($row->codigo=='258')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+										<?php
+											}
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div id="valor_reintegro_" name="valor_reintegro_">
+									<label class="control-label form-control-sm">Valor Reintegro S/.</label>
+									<input id="valor_reintegro" name="valor_reintegro" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" onChange="calcularReintegro()">
+								</div>
+							</div>
+						</div>
+						<div class="row justify-content-center" style="padding-left:10px;padding-top:15px">
+							<div class="col-lg-4" style="padding:10px; border:1px solid #ccc;">
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">Factor</label>
+										<input id="factor" name="factor" on class="form-control form-control-sm"  value="<?php echo $parametro[0]->porcentaje_calculo_edificacion?>" type="text" readonly='readonly'>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">M&iacute;mino</label>
+										
+										<input id="minimo" name="minimo" on class="form-control form-control-sm"  value="<?php //echo $total_minimo?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">% IGV</label>
+										
+										<input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php //echo $igv_valor . '%'?>" type="text" readonly='readonly'>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">M&aacute;ximo</label>
+										<input id="maximo" name="maximo" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-12">
+										<label class="control-label form-control-sm">Observaci&oacute;n</label>
+										<input id="observacion" name="observacion" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4" style="padding:10px; border:1px solid #ccc;">
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">Sub Total</label>
+										
+										<input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php //echo $sub_total_formateado?>" type="text" readonly='readonly'>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">Sub Total</label>
+										<input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php //echo $sub_total_formateado_?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">IGV</label>
+										<?php
+										
+										
+										?>
+										<input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php //echo $igv_total_formateado?>" type="text" readonly='readonly'>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">IGV</label>
+										<input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php //echo $igv_total_formateado_?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;">
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">Total</label>
+										<?php
+										
+										?>
+										<input id="total" name="total" on class="form-control form-control-sm"  value="<?php //echo $total_formateado?>" type="text" readonly='readonly'>
+									</div>
+									<div class="col-lg-6">
+										<label class="control-label form-control-sm">Total a Pagar Soles</label>
+										<input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php //echo $total_formateado_?>" type="text" onchange="cambioPlantaTipica()">
+									</div>
+								</div>
+							</div>
+						</div>
+						
 						<div style="margin-top:15px" class="form-group">
 							<div class="col-sm-12 controls">
 								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 									<!--<a href="javascript:void(0)" onClick="btnSolicitudDerechoRevision()" class="btn btn-sm btn-success">Registrar</a>-->
-									<input class="btn btn-sm btn-success float-rigth" value="REGISTRAR" name="guardar" type="button" id="btnSolicitudDerechoRevision" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
+									<input class="btn btn-sm btn-success float-rigth" value="REGISTRAR" name="guardar" type="button" id="btnSolicitudReintegro" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
 								</div>
 								
 							</div>
 						</div>
-
-						<div style="clear:both;padding-top:15px"></div>
-					
-						<div class="card">
-						
-						<nav>
-							<div class="nav nav-pills" id="nav-tab" role="tablist">
-								<a
-									class="nav-link active"
-									id="proyectista_propietario-tab"
-									data-toggle="pill"
-									href="#proyectista_propietario"
-									role="tab"
-									aria-controls="proyectista_propietario"
-									aria-selected="true">Proyectistas y Propietario</a>
-								
-								<a
-									class="nav-link"
-									id="informacion_proyecto-tab"
-									data-toggle="pill"
-									href="#informacion_proyecto"
-									role="tab"
-									aria-controls="informacion_proyecto"
-									aria-selected="false"
-									>Informaci&oacute;n del proyecto</a>
-								
-								<a
-									class="nav-link"
-									id="datos_comprobante-tab"
-									data-toggle="pill"
-									href="#datos_comprobante"
-									role="tab"
-									aria-controls="datos_comprobante"
-									aria-selected="false"
-									>Datos del Comprobante</a>
-								
-							</div>
-						</nav>
-						<div class="tab-content" id="my-profile-tabsContent">
-							<div class="tab-pane fade pt-3 show active" id="proyectista_propietario" role="tabpanel" aria-labelledby="proyectista_propietario-tab">
-								
-								<div class="row" style="padding-top:0px">
-
-									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										
-										<div class="card">
-											<div class="card-header">
-												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<strong>
-															Proyectistas
-														</strong>
-														
-													</div>
-												</div>
-											</div>
-
-											<!--<div class="card-body" style="margin-top:15px;margin-bottom:15px">-->
-											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-												
-												<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoProyectista" style="width:120px;margin-right:15px"/>
-												
-												<div style="clear:both"></div>
-												
-												<div class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													
-														<div class="card-body">
-										
-															<div class="table-responsive">
-															<table id="tblProyectista" class="table table-hover table-sm">
-															<thead>
-																<tr style="font-size:13px">
-																	<th>N° CAP</th>
-																	<th>Nombres</th>
-																	<th>Celular</th>
-																	<th>Email</th>
-																	<!--<th>Firma</th> agregar despues
-																	<th>Opciones</th>-->
-																</tr>
-															</thead>
-															<tbody style="font-size:13px">
-																<?php foreach($proyectista_solicitud as $row){?>
-																<tr>
-																	<th><?php echo $row->numero_cap?></th>
-																	<th><?php echo $row->agremiado?></th>
-																	<th><?php echo $row->celular1?></th>
-																	<th><?php echo $row->email1?></th>
-																	<th>
-																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
-																	</div>
-																	</th>
-																</tr>											
-																<?php }?>
-															</tbody>							
-															</table>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>		
-										<div class="card">
-											<div class="card-header">
-												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<strong>
-															Propietario
-														</strong>
-														
-													</div>
-												</div>
-											</div>
-
-											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-											
-												<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoPropietario" style="width:120px;margin-right:15px"/>
-												
-												<div style="clear:both"></div>
-												
-												<div class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													
-														<div class="card-body">
-										
-															<div class="table-responsive">
-															<table id="tblPropietario" class="table table-hover table-sm">
-															<thead>
-																<tr style="font-size:13px">
-																	<th>Tipo Persona</th>
-																	<th>N&uacute;mero Documento</th>
-																	<th>Nombres</th>
-																	<th>celular</th>
-																	<th>Email</th>
-																	<!--<th>Opciones</th>-->
-																</tr>
-															</thead>
-															<tbody style="font-size:13px">
-																<?php foreach($propietario_solicitud as $row){?>
-																<tr>
-																	<th><?php echo $row->tipo_propietario?></th>
-																	<th><?php echo $row->numero_documento?></th>
-																	<th><?php echo $row->nombres?></th>
-																	<th><?php echo $row->numero_celular?></th>
-																	<th><?php echo $row->correo?></th>
-																	<th>
-																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalIdioma(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarIdioma(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
-																	</div>
-																	</th>
-																</tr>					
-																<?php }?>
-															</tbody>							
-															</table>
-															
-															</div>
-														
-														</div>
-													
-													</div>
-													
-												</div>
-													
-											</div>
-											
-											
-										</div>
-										
-									</div>
-							
-								</div>
-							</div>
-
-							<div class="tab-pane fade pt-3" id="informacion_proyecto" role="tabpanel" aria-labelledby="informacion_proyecto-tab">
-							
-								<div class="row" style="padding-top:0px">
-
-									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										
-										<div class="card">
-											<div class="card-header">
-												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<strong>
-															Informaci&oacute;n del Proyecto
-														</strong>
-														
-													</div>
-												</div>
-											</div>
-
-											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-												
-												<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoinfoProyecto" style="width:120px;margin-right:15px"/>
-												
-												<div style="clear:both"></div>
-												
-												<div class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													
-														<div class="card-body">
-										
-															<div class="table-responsive">
-															<table id="tblInfoProyecto" class="table table-hover table-sm">
-															<thead>
-																<tr style="font-size:13px">
-																	<th>Tipo Tramite</th>
-																	<th>Tipo de Habilitacion Urbana</th>
-																	<!--<th>Etapas</th>-->
-																	<th>&Aacute;rea Bruta del Terreno Declarado (m2)</th>
-																	<th>Formato de Registro</th>
-																	<th>Plano de Ubicaci&oacute;n</th>
-																	<th>FUHU</th>
-																	<!--<th>Opciones</th>-->
-																</tr>
-															</thead>
-															<tbody style="font-size:13px">
-																<?php foreach($info_uso_solicitud as $row){?>
-																<tr>
-																	<th><?php echo $row->tipo_tramite?></th>
-																	<th><?php echo $row->tipo_uso?></th>
-																	<th><?php echo $row->area_techada?></th>
-																	<!--
-																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFormato(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Formato</button></th>
-																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerPlano(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Plano</button></th>
-																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFUHU(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>FUHU</button></th>
-																	-->
-																	
-																	<td class="text-left" style="vertical-align:middle">
-																		<a href="/img/derecho_revision/<?php echo $row->ruta_archivo1?>" target="_blank" class="btn btn-sm btn-warning">Ver Imagen</a>
-																	</td>
-																	<td class="text-left" style="vertical-align:middle">
-																		<a href="/img/derecho_revision/<?php echo $row->ruta_archivo2?>" target="_blank" class="btn btn-sm btn-warning">Ver Imagen</a>
-																	</td>
-																	<td class="text-left" style="vertical-align:middle">
-																		<a href="/img/derecho_revision/<?php echo $row->ruta_archivo3?>" target="_blank" class="btn btn-sm btn-warning">Ver Imagen</a>
-																	</td>
-																	
-																	<!--<th><?php //echo $row->fecha_egresado?></th>
-																	<th><?php //echo $row->fecha_graduado?></th>
-																	<th><?php //echo $row->libro?></th>
-																	<th><?php //echo $row->folio?></th>-->
-																	<th>
-																	<!--<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
-																	</div>
-																	</th>
-																</tr>													
-																<?php }?>
-															</tbody>							
-															</table>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>		
-									</div>
-								</div>
-							</div>
-							<div class="tab-pane fade pt-3" id="datos_comprobante" role="tabpanel" aria-labelledby="datos_comprobante-tab">
-							
-								<div class="row" style="padding-top:0px">
-
-									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										
-										<div class="card">
-											<div class="card-header">
-												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<strong>
-															Datos del Comprobante
-														</strong>
-														
-													</div>
-												</div>
-											</div>
-
-											<div class="card-body" style="margin-top:15px;margin-bottom:15px">
-												
-												<input class="btn btn-success btn-sm float-right" value="NUEVO" type="button" id="btnNuevoComprobante" style="width:120px;margin-right:15px"/>
-												
-												<div style="clear:both"></div>
-												
-												<div class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													
-														<div class="card-body">
-										
-															<div class="table-responsive">
-															<table id="tblComprobante" class="table table-hover table-sm">
-															<thead>
-																<tr style="font-size:13px">
-																	<th>Tipo Persona</th>
-																	<th>N&uacute;mero Documento</th>
-																	<th>Nombre/Razon Social</th>
-																	<th>Direcci&oacute;n</th>
-																	<th>Departamento</th>
-																	<th>Provincia</th>
-																	<th>Distrito</th>
-																	<th>Opciones</th>
-																</tr>
-															</thead>
-															<tbody style="font-size:13px">
-																<?php //foreach($agremiado_estudio as $row){?>
-																<!--<tr>
-																	<th><?php //echo $row->universidad?></th>
-																	<th><?php //echo $row->especialidad?></th>
-																	<th><?php //echo $row->tesis?></th>
-																	<th><?php //echo $row->fecha_egresado?></th>
-																	<th><?php //echo $row->fecha_graduado?></th>
-																	<th><?php //echo $row->libro?></th>
-																	<th><?php //echo $row->folio?></th>
-																	<th>
-																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
-																	</div>
-																	</th>
-																</tr>	-->													
-																<?php //}?>
-															</tbody>							
-															</table>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>		
-									</div>
-								</div>
-							</div>
-
-						</div>
-						
 					</div>
 					</form>
 				</div><!--card-body-->

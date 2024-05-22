@@ -169,7 +169,7 @@
 								@endcan
 
 								@can('Consulta de Facturas')
-                                <a href="/comprobante/cuadre_caja" class="dropdown-item">Cuadre de Caja</a>								
+                                <a href="/comprobante_c/cuadre_caja" class="dropdown-item">Cuadre de Caja</a>								
 								@endcan
 
 						   </div>

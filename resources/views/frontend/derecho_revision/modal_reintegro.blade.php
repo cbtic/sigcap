@@ -154,7 +154,6 @@ $(document).ready(function() {
 	 
 	calculoVistaPrevia();
 	
-
 });
 
 function formatoMoneda(num) {
@@ -201,11 +200,16 @@ function calculoVistaPrevia(){
         $('#sub_total2').val(formatoMoneda(sub_total_minimo));
         $('#igv2').val(formatoMoneda(igv_minimo));
         $('#total2').val(formatoMoneda(total_minimo));
-    }else{}
+    }else{
+        $('#sub_total').val(formatoMoneda(sub_total));
+        $('#igv_').val(formatoMoneda(igv_total));
+        $('#total').val(formatoMoneda(total));
+        $('#sub_total2').val(formatoMoneda(sub_total));
+        $('#igv2').val(formatoMoneda(igv_total));
+        $('#total2').val(formatoMoneda(total));
+    }
     //var_dump($total_minimo);exit;
 }
-
-
 
 function habilitar_reintegro(){
 
@@ -489,7 +493,7 @@ function fn_save_credipago(){
                     </div>-->
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea Techada (m2)</label>
-                        <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_total?>" type="text" readonly='readonly'>
+                        <input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo number_format($liquidacion[0]->area_total, 2, '.', ',');?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div style="padding: 15px 0px 15px 10px; font-weight: bold">

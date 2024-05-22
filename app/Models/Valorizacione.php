@@ -67,6 +67,40 @@ class Valorizacione extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getValidaValorizacion($tipo_documento,$id_persona){  
+        
+        if($tipo_documento=="79"){  //RUC
+            $cad = "
+            select v.id, v.fecha, to_char(DATE_PART('MONTH', v.fecha),'00') mes, DATE_PART('year', v.fecha) anio
+            from valorizaciones v
+            where v.id_empresa = ".$id_persona."            
+                and v.estado = '1'            
+                and v.pagado = '0'
+                and v.exonerado = '0'               
+            order by v.fecha 
+            limit 1            
+			";
+        }else{
+            $cad = "            
+            select v.id, v.fecha, to_char(DATE_PART('MONTH', v.fecha),'00') mes, DATE_PART('year', v.fecha) anio            
+            from valorizaciones v
+            where v.id_persona = ".$id_persona."
+                and v.estado = '1'            
+                and v.pagado = '0'
+                and v.exonerado = '0'               
+            order by v.fecha 
+            limit 1             
+			";
+        }
+
+
+        //echo $cad;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+
     function getValorizacionFrac($tipo_documento,$id_persona,$periodo,$cuota,$concepto, $filas){  
         
         if($filas!="")$filas="limit ".$filas;   

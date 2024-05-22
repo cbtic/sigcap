@@ -72,15 +72,32 @@ class DerechoRevision extends Model
 
         $cad = "select l.id, to_char(fecha,'dd-mm-yyyy')fecha,credipago,sub_total,igv,total,observacion, l.estado,
         (select v.pagado from valorizaciones v where pk_registro = l.id and v.id_modulo ='7' limit 1) pagado,
-        (select case when v.pagado = '1' then 'PAGADO' else 'PENDIENTE' end from valorizaciones v where pk_registro = l.id and v.id_modulo ='7' limit 1) situacion,
+        --(select case when v.pagado = '1' then 'PAGADO' else 'PENDIENTE' end from valorizaciones v where pk_registro = l.id and v.id_modulo ='7' limit 1) situacion,
         (select c.fecha_pago from valorizaciones v inner join comprobantes c on v.id_comprobante = c.id where pk_registro = l.id and v.id_modulo ='7' limit 1) fecha_pago,
-        (select concat(c.serie,'-', c.numero) numero_comprobante from valorizaciones v inner join comprobantes c on v.id_comprobante = c.id where pk_registro = l.id and v.id_modulo ='7' limit 1) numero_comprobante
+        (select concat(c.serie,'-', c.numero) numero_comprobante from valorizaciones v inner join comprobantes c on v.id_comprobante = c.id where pk_registro = l.id and v.id_modulo ='7' limit 1) numero_comprobante, l.id_situacion, tm.denominacion situacion
         from liquidaciones l 
+        left join tabla_maestras tm on l.id_situacion =tm.codigo::int and tm.tipo='125'
         where id_solicitud='".$id."'
         and l.estado = '1'";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
+    }
+
+    public function actSituacionLiquidacion($id){
+
+        $updateQuery = "update liquidaciones l 
+        set id_situacion = 
+        (case 
+        when l.id_situacion <> 3 or l.id_situacion is null then
+        (select case when v.pagado = '1' then 2 else 1 end 
+        from valorizaciones v 
+        where pk_registro = l.id and v.id_modulo ='7' 
+        limit 1)
+        else l.id_situacion end)
+        where l.id_solicitud ='".$id."' and l.estado='1'";
+
+        DB::update($updateQuery);
     }
 	
 	public function getProyectistaByIdSolicitud($id){
@@ -147,7 +164,8 @@ class DerechoRevision extends Model
         u.id_distrito distrito, pro.direccion, s.numero_revision, m.denominacion municipalidad, s.area_total total_area_techada, s.valor_obra, l.sub_total, l.igv, l.total, tm.denominacion tipo_proyectista, 
         tm2.denominacion tipo_liquidacion, tm3.denominacion instancia,
         (select tm4.denominacion from uso_edificaciones ue left join tabla_maestras tm4 on ue.id_tipo_uso = tm4.codigo::int and  tm4.tipo ='30' where ue.id_solicitud = s.id and ue.estado ='1' limit 1) tipo_uso,
-        (select tm5.denominacion from presupuestos p3 left join tabla_maestras tm5 on p3.id_tipo_obra = tm5.codigo::int and  tm5.tipo ='29' where p3.id_solicitud = s.id and p3.estado ='1' limit 1) tipo_obra
+        (select tm5.denominacion from presupuestos p3 left join tabla_maestras tm5 on p3.id_tipo_obra = tm5.codigo::int and  tm5.tipo ='29' where p3.id_solicitud = s.id and p3.estado ='1' limit 1) tipo_obra, 
+        pro.codigo, tm5.denominacion tipo_tramite
         from solicitudes s 
         inner join liquidaciones l on l.id_solicitud = s.id
         left join proyectistas p on p.id_solicitud = s.id
@@ -162,6 +180,7 @@ class DerechoRevision extends Model
         left join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41'
         left join tabla_maestras tm2 on s.id_tipo_liquidacion1 = tm2.codigo::int and  tm2.tipo ='27'
         left join tabla_maestras tm3 on s.id_instancia = tm3.codigo::int and  tm3.tipo ='47'
+        left join tabla_maestras tm5 on s.id_tipo_tramite = tm5.codigo::int and  tm5.tipo ='25'
         where l.id='".$id."'";
 
 		//echo $cad;
@@ -282,6 +301,24 @@ class DerechoRevision extends Model
     public function importar_personas_dataLicencia(){
 
         return $this->readFuntionPostgres_('copia_datalicencia_persona()');
+
+    }
+
+    public function importar_uso_edificacion_dataLicencia(){
+
+        return $this->readFuntionPostgres_('copia_datalicencia_eduso()');
+
+    }
+
+    public function importar_presupuesto_dataLicencia(){
+
+        return $this->readFuntionPostgres_('copia_datalicencia_presupuesto()');
+
+    }
+
+    public function importar_proyectista_dataLicencia(){
+
+        return $this->readFuntionPostgres_('copia_datalicencia_proyectista()');
 
     }
 

@@ -750,6 +750,13 @@ class AgremiadoController extends Controller
 		$agremiado_model = new Agremiado;
 		$data = $agremiado_model->crud_automatico_agremiado_cuota_vitalicio();
 		
+	}
+	
+	public function agremiado_inhabilita_fraccionamiento(){
+		
+		$agremiado_model = new Agremiado;
+		$data = $agremiado_model->crud_automatico_agremiado_inhabilita_fraccionamiento();
+		
 	} 
 	
 	public function importar_agremiado($fecha){ 
