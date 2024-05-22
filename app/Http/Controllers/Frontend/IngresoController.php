@@ -672,6 +672,33 @@ class IngresoController extends Controller
         return view('frontend.ingreso.all_liquidacion_caja',compact('caja'));
     }
 	
+    public function caja_total(){	
+		$caja_model = new TablaMaestra;
+        $caja = $caja_model->getMaestroByTipo("91");
+
+        return view('frontend.ingreso.all_caja_total',compact('caja'));
+    }
+
+    public function obtener_caja_condicion_pago($tipo_documento,$id_persona){
+ 
+        $valorizaciones_model = new Valorizacione;
+        $sw = true;
+        //$valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);
+        //print_r($valorizacion);exit();
+        return view('frontend.ingreso.lista_caja_condicion_pago',compact('valorizacion'));
+
+    }
+
+    public function obtener_caja_venta($tipo_documento,$id_persona){
+ 
+        $valorizaciones_model = new Valorizacione;
+        $sw = true;
+        //$valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);
+        //print_r($valorizacion);exit();
+        return view('frontend.ingreso.lista_caja_venta',compact('valorizacion'));
+
+    }
+
 	public function modal_liquidacion($id){        
 		$valorizaciones_model = new Valorizacione;
 
