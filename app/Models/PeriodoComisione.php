@@ -99,7 +99,7 @@ class PeriodoComisione extends Model
 
     function actualizarActivoPeriodoComision(){
   
-        $cad = "update periodo_comisiones set estado = '1' where now() between fecha_inicio and fecha_fin and estado = '0'";
+        $cad = "update periodo_comisiones set estado = '1' where now() between fecha_inicio and fecha_fin and estado = '2'";
         //echo $cad;
         $data = DB::select($cad);
         return $data;

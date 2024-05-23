@@ -458,7 +458,7 @@ class DerechoRevisionController extends Controller
 			$liquidacion->sub_total = $sub_total;
 			$liquidacion->igv = $igv;
 			$liquidacion->total = $total;
-			$liquidacion->observacion = "obs";
+			$liquidacion->observacion = $request->observacion;
 			$liquidacion->id_situacion = 1;
 			$liquidacion->id_usuario_inserta = $id_user;
 			$liquidacion->save();
@@ -669,6 +669,8 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->save();
 		$proyectista->id_solicitud = $derecho_revision->id;
 		$proyectista->save();
+
+		return $derecho_revision->id;
     }
 
 	public function modal_nuevo_proyectista($id){
@@ -753,6 +755,52 @@ class DerechoRevisionController extends Controller
 			$propietario->id_empresa = $empresa->id;
 			$propietario->celular = $request->telefono_ruc;
 			$propietario->email = $request->email_ruc;
+			$propietario->id_solicitud = $request->id_solicitud;
+			//$proyectista->firma = $request->nombre;
+			//$profesion->estado = 1;
+			$propietario->id_usuario_inserta = $id_user;
+			$propietario->save();
+		}else if(!$persona && $request->ruc_propietario==''){
+			//var_dump($request->ruc_propietario);exit();
+
+			$persona = new Persona();
+			$persona->id_tipo_documento = $request->id_tipo_documento;
+			$persona->numero_documento = $request->dni_propietario;
+			$persona->apellido_paterno = $request->ap_paterno;
+			$persona->apellido_materno = $request->ap_materno;
+			$persona->nombres = $request->nombres;
+			$persona->direccion = $request->direccion_dni;
+			$persona->numero_celular = $request->celular_dni;
+			$persona->correo = $request->email_dni;
+			$persona->id_usuario_inserta = $id_user;
+			$persona->save();
+
+			$propietario->id_tipo_propietario = 78;
+			$propietario->id_persona = $persona->id;
+			$propietario->celular = $request->celular_dni;
+			$propietario->email = $request->email_dni;
+			$propietario->id_solicitud = $request->id_solicitud;
+			//$proyectista->firma = $request->nombre;
+			//$profesion->estado = 1;
+			$propietario->id_usuario_inserta = $id_user;
+			$propietario->save();
+		}else if(!$empresa && $request->ruc_propietario!=''){
+
+			$empresa = new Empresa();
+			$empresa->ruc = $request->ruc_propietario;
+			$empresa->nombre_comercial = $request->razon_social_propietario;
+			$empresa->razon_social = $request->razon_social_propietario;
+			$empresa->direccion = $request->direccion_ruc;
+			$empresa->telefono = $request->telefono_ruc;
+			$empresa->email = $request->email_ruc;
+			$empresa->id_usuario_inserta = $id_user;
+			$empresa->save();
+
+			$propietario->id_tipo_propietario = 79;
+			$propietario->id_empresa = $empresa->id;
+			$propietario->celular = $request->telefono_ruc;
+			$propietario->email = $request->email_ruc;
+			$propietario->id_solicitud = $request->id_solicitud;
 			//$proyectista->firma = $request->nombre;
 			//$profesion->estado = 1;
 			$propietario->id_usuario_inserta = $id_user;
@@ -792,26 +840,35 @@ class DerechoRevisionController extends Controller
 		$procedimientos_complementarios = $request->input('procedimientos_complementarios');
 		$procedimientos_complementarios2 = $request->input('procedimientos_complementarios2');
 
+		$procedimientosArray = explode(',', $procedimientos_complementarios2);
+		$procedimientosArray = array_map('trim', $procedimientosArray);
+		$procedimientosArray = array_filter($procedimientosArray, 'is_numeric');
+    	$procedimientosArray = array_map('intval', $procedimientosArray);
+
 		$solicitud = Solicitude::find($request->id_solicitud);
 		$solicitud->id_tipo_tramite = $procedimientos_complementarios;
 		$solicitud->area_total = $request->areaBruta;
 		$solicitud->id_usuario_inserta = $id_user;
 		//var_dump($procedimientos_complementarios2);exit();
 		$solicitud->save();
+			//var_dump($procedimientosArray);exit();
 
-
-		//var_dump($solicitud->id);exit();
-		//$usoEdificacion_ = UsoEdificacione::where("id_solicitud",$solicitud->id)->where("estado","1")->first();
-		//$usoEdificacion = UsoEdificacione::find($usoEdificacion_->id);
-		//$usoEdificacion = new UsoEdificacione;
-		$usoEdificacion->id_tipo_uso = $procedimientos_complementarios2;
-		//$usoEdificacion->id_sub_tipo_uso = $procedimientos_complementarios2;
-		$usoEdificacion->id_solicitud = $request->id_solicitud;
-		$usoEdificacion->area_techada = $request->areaBruta;
-		//$proyectista->firma = $request->nombre;
-		//$profesion->estado = 1;
-		$usoEdificacion->id_usuario_inserta = $id_user;
-		$usoEdificacion->save();
+		foreach($procedimientosArray as $uso){
+			$usoEdificacion = new UsoEdificacione;
+			//var_dump($solicitud->id);exit();
+			//$usoEdificacion_ = UsoEdificacione::where("id_solicitud",$solicitud->id)->where("estado","1")->first();
+			//$usoEdificacion = UsoEdificacione::find($usoEdificacion_->id);
+			//$usoEdificacion = new UsoEdificacione;
+			$usoEdificacion->id_tipo_uso = $uso;
+			//$usoEdificacion->id_sub_tipo_uso = $procedimientos_complementarios2;
+			$usoEdificacion->id_solicitud = $request->id_solicitud;
+			$usoEdificacion->area_techada = $request->areaBruta;
+			//$proyectista->firma = $request->nombre;
+			//$profesion->estado = 1;
+			$usoEdificacion->id_usuario_inserta = $id_user;
+			$usoEdificacion->save();
+		}
+		
 		
 		
 		$solicitudDocumento1 = new SolicitudDocumento;
@@ -1335,10 +1392,10 @@ class DerechoRevisionController extends Controller
 		echo $derecho_revision->id;
     }
 
-	public function obtener_ubigeo($municipalidad){
+	public function obtener_ubigeo($distrito){
 			
 		$municipalidad_model = new Municipalidade;
-		$IdUbigeo = $municipalidad_model->getIdUbigeoByMunicipalidad($municipalidad);
+		$IdUbigeo = $municipalidad_model->getIdUbigeoByMunicipalidad($distrito);
 		//print_r($tipo_solicitud);
 		//$array["id"] = $tipo_solicitud->id;
 		//echo json_encode($tipo_solicitud);
@@ -1347,9 +1404,9 @@ class DerechoRevisionController extends Controller
 
         foreach ($IdUbigeo as $ubigeo) {
             $datos_formateados[] = [
-                'id_departamento' => $ubigeo->id_departamento,
-                'id_provincia' => $ubigeo->id_provincia,
-				'id_distrito' => $ubigeo->id_ubigeo,
+                'municipalidad' => $ubigeo->id,
+                //'id_provincia' => $ubigeo->id_provincia,
+				//'id_distrito' => $ubigeo->id_ubigeo,
             ];
         }
         return response()->json($datos_formateados);
@@ -1397,7 +1454,7 @@ class DerechoRevisionController extends Controller
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_uso = $tablaMaestra_model->getMaestroByTipo(30);
 		$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipo(111);
-		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(29);
+		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(112);
 		$tipo_liquidacion = $tablaMaestra_model->getMaestroByTipo(27);
 		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
@@ -1827,6 +1884,14 @@ class DerechoRevisionController extends Controller
         
         return response()->json($datos_formateados);*/
 	
+	}
+
+	public function obtener_provincia_distrito_solicitud($id){
+		
+		$derechoRevision_model = new DerechoRevision;
+		$solicitud_ubigeo = $derechoRevision_model->getProvinciaDistritoByIdSolicitud($id);
+		
+		echo json_encode($solicitud_ubigeo);
 	}
 
 }

@@ -298,12 +298,15 @@ function obtenerDatosDni(){
                 $('.loader').hide();
 				
 			}else{
-				msg += "La Persona no esta registrado en la Base de Datos de CAP <br>";
+                //alert("ok");
                 $('#nombre_propietario').val("");
                 $('#direccion_dni').val("");
                 $('#celular_dni').val("");
                 $('#email_dni').val("");
 				$('.loader').hide();
+                validaDni(dni_propietario);
+				/*msg += "La Persona no esta registrado en la Base de Datos de CAP <br>";
+                */
 				
 			}
 
@@ -317,6 +320,64 @@ function obtenerDatosDni(){
         
     });
     
+}
+
+function validaDni(dni) {
+
+var numero_documento = $("#dni_propietario").val();
+var tipo_documento = 78;
+var msg = "";
+
+if (msg != "") {
+    bootbox.alert(msg);
+    return false;
+}
+
+if (tipo_documento == "0" || numero_documento == "") {
+    bootbox.alert(msg);
+    return false;
+}
+
+var settings = {
+    "url": "https://apiperu.dev/api/dni/" + dni,
+    "method": "GET",
+    "timeout": 0,
+    "headers": {
+        "Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
+    },
+};
+
+$.ajax(settings).done(function(response) {
+    console.log(response);
+
+    if (response.success == true) {
+
+        var data = response.data;
+
+        //$('#nombre_propietario').val('')
+
+        var apellidoPaterno = data.apellido_paterno;
+        var apellidoMaterno = data.apellido_materno;
+        var nombres = data.nombres;
+
+        var nombreCompleto = apellidoPaterno + ' ' + apellidoMaterno + ', ' + nombres;
+
+        $('#nombre_propietario').val(nombreCompleto);
+        $('#nombres').val(nombres);
+        $('#ap_paterno').val(apellidoPaterno);
+        $('#ap_materno').val(apellidoMaterno);
+        $('#direccion_dni').attr("readonly",false);
+        $('#celular_dni').attr("readonly",false);
+        $('#email_dni').attr("readonly",false);
+
+        //alert(data.nombre_o_razon_social);
+
+    } else {
+        Swal.fire("DNI Inv&aacute;lido. Revise el DNI digitado!");
+        return false;
+    }
+
+});
 }
 
 
@@ -354,12 +415,13 @@ function obtenerDatosRuc(){
                 $('.loader').hide();
                 
             }else{
-                msg += "La Empresa no esta registrada en la Base de Datos de CAP <br>";
+
                 $('#razon_social_propietario').val("");
                 $('#direccion_ruc').val("");
                 $('#telefono_ruc').val("");
                 $('#email_ruc').val("");
                 $('.loader').hide();
+                validaRuc(ruc_propietario);
                 
             }
 
@@ -373,6 +435,41 @@ function obtenerDatosRuc(){
         
     });
     
+}
+
+function validaRuc(ruc){
+	var settings = {
+		"url": "https://apiperu.dev/api/ruc/"+ruc,
+		"method": "GET",
+		"timeout": 0,
+		"headers": {
+		  "Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
+		},
+	  };
+	  
+	  $.ajax(settings).done(function (response) {
+		console.log(response);
+		
+		if (response.success == true){
+
+			var data= response.data;
+
+			//$('#razon_social_propietario').val('')
+			
+			$('#razon_social_propietario').val(data.nombre_o_razon_social).attr('readonly', true);
+
+			$('#direccion_ruc').attr("readonly",false);
+            $('#telefono_ruc').attr("readonly",false);
+            $('#email_ruc').attr("readonly",false);
+
+		}
+		else{
+			Swal.fire("RUC Inv&aacute;lido. Revise el RUC digitado!");
+			return false;
+		}
+
+		
+	  });
 }
     
 
@@ -471,16 +568,26 @@ function fn_save_propietario(){
     var direccion_ruc = $('#direccion_ruc').val();
 	var telefono_ruc = $('#telefono_ruc').val();
 	var email_ruc = $('#email_ruc').val();
+    var id_tipo_documento = $('#id_tipo_documento').val();
     var dni_propietario = $('#dni_propietario').val();
 	var nombre_propietario = $('#nombre_propietario').val();
     var direccion_dni = $('#direccion_dni').val();
 	var celular_dni = $('#celular_dni').val();
 	var email_dni = $('#email_dni').val();
+    var ap_paterno = $('#ap_paterno').val();
+    var ap_materno = $('#ap_materno').val();
+    var nombres = $('#nombres').val();
 	
 	$.ajax({
 			url: "/derecho_revision/send_nueno_propietario",
             type: "POST",
-            data : {_token:_token,id:id,ruc_propietario:ruc_propietario,razon_social_propietario:razon_social_propietario,direccion_ruc:direccion_ruc,telefono_ruc:telefono_ruc,email_ruc:email_ruc,dni_propietario:dni_propietario,nombre_propietario:nombre_propietario,direccion_dni:direccion_dni,celular_dni:celular_dni,email_dni:email_dni,id_solicitud:id_solicitud},
+            data : {_token:_token,id:id,
+                    ruc_propietario:ruc_propietario,razon_social_propietario:razon_social_propietario,
+                    direccion_ruc:direccion_ruc,telefono_ruc:telefono_ruc,email_ruc:email_ruc,
+                    dni_propietario:dni_propietario,nombre_propietario:nombre_propietario,
+                    direccion_dni:direccion_dni,celular_dni:celular_dni,email_dni:email_dni,
+                    id_solicitud:id_solicitud,id_tipo_documento:id_tipo_documento,ap_paterno:ap_paterno,
+                    ap_materno:ap_materno,nombres:nombres},
 			success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				window.location.reload();
@@ -555,6 +662,9 @@ function fn_save_propietario(){
                                 <div class="form-group" id="nombre_propietario_">
                                     <label class="control-label form-control-sm">Nombre</label>
                                     <input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->desc_cliente_sunat?>" type="text" onchange="" readonly='readonly'>
+                                    <input id="nombres" name="nombres" on class="form-control form-control-sm" type="hidden">
+                                    <input id="ap_paterno" name="ap_paterno" on class="form-control form-control-sm" type="hidden">
+                                    <input id="ap_materno" name="ap_materno" on class="form-control form-control-sm" type="hidden">
                                     </div>
                                     <div class="form-group" id="razon_social_propietario_">
                                         <label class="control-label form-control-sm">Raz&oacute;n Social</label>

@@ -247,7 +247,7 @@ function modalVerFormato(){
 
 						<div class="col-lg-2">
 								<label class="control-label form-control-sm">Municipalidad</label>
-								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="obtenerUbigeo()"> 
+								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange=""> 
 									<?php
 									$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
 									?>
@@ -302,10 +302,9 @@ function modalVerFormato(){
                             </select>
 						</div>
                         
-
 						<div class="col-lg-2">
                             <label class="control-label form-control-sm">Distrito</label>
-                            <select name="distrito" id="distrito" class="form-control form-control-sm" onChange="">
+                            <select name="distrito" id="distrito" class="form-control form-control-sm" onChange="obtenerUbigeo()">
                                 <option value="">--Selecionar--</option>
                             </select>
                         </div>
@@ -550,7 +549,7 @@ function modalVerFormato(){
 																<tr>
 																	<th><?php echo $row->tipo_propietario?></th>
 																	<th><?php echo $row->numero_documento?></th>
-																	<th><?php echo $row->nombres?></th>
+																	<th><?php echo $row->propietario?></th>
 																	<th><?php echo $row->numero_celular?></th>
 																	<th><?php echo $row->correo?></th>
 																	<th>

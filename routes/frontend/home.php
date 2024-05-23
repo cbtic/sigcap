@@ -715,7 +715,7 @@ Route::get('coordinador_zonal/consulta_coordinador_detalle', [CoordinadorZonalDe
 Route::post('coordinador_zonal/listar_coordinadorZonal_detalle_ajax', [CoordinadorZonalDetalleController::class, 'listar_coordinadorZonal_detalle_ajax'])->name('coordinador_zonal.listar_coordinadorZonal_detalle_ajax');
 Route::get('coordinador_zonal/modal_zonal_nuevoZonalDetalle/{id}', [CoordinadorZonalDetalleController::class, 'modal_zonal_nuevoZonalDetalle'])->name('coordinador_zonal.modal_zonal_nuevoZonalDetalle');
 Route::post('coordinador_zonal/send_zonal_nuevoZonal', [CoordinadorZonalDetalleController::class, 'send_zonal_nuevoZonal'])->name('coordinador_zonal.send_zonal_nuevoZonal');
-Route::get('coordinador_zonal/obtener_datos_zonal_detalle/{zonal}', [CoordinadorZonalDetalleController::class, 'obtener_datos_zonal_detalle'])->name('coordinador_zonal.obtener_datos_zonal_detalle');
+Route::get('coordinador_zonal/obtener_datos_zonal_detalle/{zonal}/{id_periodo}', [CoordinadorZonalDetalleController::class, 'obtener_datos_zonal_detalle'])->name('coordinador_zonal.obtener_datos_zonal_detalle');
 Route::get('coordinador_zonal/eliminar_zonal_detalle/{id}/{estado}', [CoordinadorZonalDetalleController::class, 'eliminar_zonal_detalle'])->name('coordinador_zonal.eliminar_zonal_detalle');
 Route::get('derecho_revision/eliminar_credipago/{id}/{id_situacion}', [DerechoRevisionController::class, 'eliminar_credipago'])->name('derecho_revision.eliminar_credipago');
 
@@ -733,10 +733,11 @@ Route::get('planilla/obtener_datos_reintegro_detalle/{id_agremiado}', [PlanillaD
 Route::get('adelanto/obtener_datos_adelanto/{id_agremiado}', [AdelantoController::class, 'obtener_datos_adelanto'])->name('adelanto.obtener_datos_adelanto');
 Route::get('derecho_revision/eliminar_solicitud_edificaciones/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_edificaciones'])->name('derecho_revision.eliminar_solicitud_edificaciones');
 Route::get('derecho_revision/eliminar_solicitud_hu/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_hu'])->name('derecho_revision.eliminar_solicitud_hu');
-Route::get('derecho_revision/obtener_ubigeo/{municipalidad}', [DerechoRevisionController::class, 'obtener_ubigeo'])->name('derecho_revision.obtener_ubigeo');
+Route::get('derecho_revision/obtener_ubigeo/{distrito}', [DerechoRevisionController::class, 'obtener_ubigeo'])->name('derecho_revision.obtener_ubigeo');
 Route::get('derecho_revision/derecho_revision_reintegro/{id}', [DerechoRevisionController::class, 'derecho_revision_reintegro'])->name('derecho_revision.derecho_revision_reintegro');
 
 Route::get('comprobante_c/cuadre_caja', [ComprobanteController::class, 'cuadre_caja'])->name('comprobante_c.cuadre_caja');
 
 Route::post('derecho_revision/send_nuevo_reintegro', [DerechoRevisionController::class, 'send_nuevo_reintegro'])->name('derecho_revision.send_nuevo_reintegro');
+Route::get('derecho_revision/obtener_provincia_distrito_solicitud/{id}', [DerechoRevisionController::class, 'obtener_provincia_distrito_solicitud'])->name('municipalidad.obtener_provincia_distrito_solicitud');
 

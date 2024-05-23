@@ -2,7 +2,7 @@
 //jQuery.noConflict(true);
 
 $(document).ready(function () {
-	
+	$("#id_municipalidad_bus").select2({ width: '100%' });
 	//alert("cc");
 	$(".upload").on('click', function() {
 		//alert("okkk");
@@ -684,6 +684,7 @@ function datatablenew(){
 			var periodo = $('#periodo_').val();
 			var numero_cap = $('#numero_cap_').val();
             var agremiado = $('#agremiado_').val();
+			var id_municipalidad = $('#id_municipalidad_bus').val();
 			var estado = $('#estado_').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -692,7 +693,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,periodo:periodo,numero_cap:numero_cap,agremiado:agremiado,estado:estado,
+						id:id,periodo:periodo,numero_cap:numero_cap,agremiado:agremiado,id_municipalidad:id_municipalidad,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -747,12 +748,21 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
+					var municipalidad = "";
+					if(row.municipalidad!= null)municipalidad = row.municipalidad;
+					return municipalidad;
+				},
+				"bSortable": false,
+				"aTargets": [4]
+				},
+				{
+				"mRender": function (data, type, row) {
 					var estado_coordinador = "";
 					if(row.estado_coordinador!= null)estado_coordinador = row.estado_coordinador;
 					return estado_coordinador;
 				},
 				"bSortable": false,
-				"aTargets": [4]
+				"aTargets": [5]
 				},
 			{
 				"mRender": function (data, type, row) {
@@ -775,7 +785,7 @@ function datatablenew(){
 					return html;
 				},
 				"bSortable": false,
-				"aTargets": [5],
+				"aTargets": [6],
 				},
 
             ]

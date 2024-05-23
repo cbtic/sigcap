@@ -31,13 +31,13 @@ class CoordinadorZonalDetalle extends Model
         return $data;
     }
 
-    function getZonalDetalle($zonal){
+    function getZonalDetalle($zonal,$id_periodo){
 
         $cad = "select czd.id, tm.denominacion tipo_coordinador, m.denominacion municipalidad, pc.descripcion periodo, czd.estado from coordinador_zonal_detalles czd
         inner join tabla_maestras tm on czd.id_tipo_coordinador = tm.codigo::int and  tm.tipo ='117'
         inner join municipalidades m on czd.id_municipalidad = m.id
         inner join periodo_comisiones pc on czd.periodo::int = pc.id
-        where czd.id_tipo_coordinador='".$zonal."' and czd.estado='1'";
+        where czd.id_tipo_coordinador='".$zonal."' and pc.id='".$id_periodo."' and czd.estado='1'";
     
 		$data = DB::select($cad);
         return $data;
