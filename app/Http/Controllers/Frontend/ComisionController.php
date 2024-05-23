@@ -815,6 +815,9 @@ class ComisionController extends Controller
 				
 				if($agremiadoRoleExiste){
 					
+					$agremiadoRol_model = new AgremiadoRole;
+					$agremiadoRol_model->updatePuestoConcursoInscripcion($row2->id_agremiado,$concurso->id,$rol_especifico);
+					
 				}else{
 				
 					$agremiadoRol = new AgremiadoRole;
@@ -850,6 +853,9 @@ class ComisionController extends Controller
 				
 				if($agremiadoRoleExiste2){
 					
+					$agremiadoRol_model = new AgremiadoRole;
+					$agremiadoRol_model->updatePuestoConcursoInscripcion($row2->id_agremiado,$concurso->id,$rol_especifico);
+						
 				}else{
 					
 					$agremiadoRol = new AgremiadoRole;
@@ -862,6 +868,9 @@ class ComisionController extends Controller
 					$agremiadoRol->estado = 1;
 					$agremiadoRol->id_usuario_inserta = $id_user;
 					$agremiadoRol->save();
+					
+					$agremiadoRol_model = new AgremiadoRole;
+					$agremiadoRol_model->updatePuestoConcursoInscripcion($row2->id_agremiado,$concurso->id,$rol_especifico);
 					
 				}
 			
