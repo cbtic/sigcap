@@ -47,6 +47,20 @@ limit 1";
         return $data[0];
     }
 	
+	function getConcursoInscripcionByIdAgremiadoIdPeriodoIdSubTipoConcurso($id_agremiado,$id_periodo,$id_sub_tipo_concurso){
+
+        $cad = "select id 
+from concurso_inscripciones ci 
+where id_agremiado=".$id_agremiado." 
+and id_concurso_puesto in(select id from concurso_puestos cp 
+						   where id_concurso in(select id from concursos c where id_periodo=".$id_periodo." and id_sub_tipo_concurso=".$id_sub_tipo_concurso." and estado='1') 
+					and estado='1')
+and ci.estado='1'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+	
 	function getConcursoUltimoNuevoByIdAgremiado($id_concurso_inscripcion,$id_agremiado,$id_tipo_concurso,$id_sub_tipo_concurso){
 
         $cad = "select t1.id   
