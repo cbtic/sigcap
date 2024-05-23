@@ -672,11 +672,20 @@ class IngresoController extends Controller
         return view('frontend.ingreso.all_liquidacion_caja',compact('caja'));
     }
 	
-    public function caja_total(){	
-		$caja_model = new TablaMaestra;
+    public function caja_total(){
+        
+        $caja_model = new TablaMaestra;
         $caja = $caja_model->getMaestroByTipo("91");
+        //print_r($caja);
+        //print_r("/n");
 
-        return view('frontend.ingreso.all_caja_total',compact('caja'));
+        $caja_ingreso_model = new CajaIngreso();
+        $caja_usuario = $caja_ingreso_model->getCajaUsuario();
+
+        //print_r($caja_usuario); exit();
+
+
+        return view('frontend.ingreso.all_caja_total',compact('caja_usuario'));
     }
 
     public function obtener_caja_condicion_pago($tipo_documento,$id_persona){
@@ -689,13 +698,14 @@ class IngresoController extends Controller
 
     }
 
-    public function obtener_caja_venta($tipo_documento,$id_persona){
- 
-        $valorizaciones_model = new Valorizacione;
-        $sw = true;
-        //$valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);
-        //print_r($valorizacion);exit();
-        return view('frontend.ingreso.lista_caja_venta',compact('valorizacion'));
+    public function obtener_caja_venta(Request $request){
+        $id_usuario_caja = $request->id_usuario_caja;
+        $fecha = $request->fecha;
+
+        $caja_ingreso_model = new CajaIngreso();
+        $resultado = $caja_ingreso_model->getCajaComprobante($id_usuario_caja, $fecha);
+
+        return view('frontend.ingreso.lista_caja_venta',compact('resultado'));
 
     }
 

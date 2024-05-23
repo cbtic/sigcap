@@ -4,7 +4,7 @@
 $(document).ready(function () {
 	
 	$('#btnBuscar').click(function () {
-		fn_ListarBusqueda();
+		obtenerCajaVenta();
 	});
 	
 	$('#btnNuevo').click(function () {
@@ -663,8 +663,23 @@ function cargarFondoComun() {
 			$("#divPlanilla").html(result);
 		}
 	});
-
 }
+
+
+function obtenerCajaVenta() {
+
+	$("#divCaja").html("");
+	$.ajax({
+		//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
+		url: "/ingreso/obtener_caja_venta",
+		data: $("#frmAfiliacion").serialize(),
+		type: "POST",
+		success: function(result) {
+			$("#divCaja").html(result);
+		}
+	});
+}
+
 
 //obtenerAnioPerido();
 
