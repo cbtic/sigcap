@@ -424,22 +424,22 @@ if($('#instancia').val()==250){
 							<div class="col-lg-1">
 								<div class="form-group" id="dni_propietario_">
 								<label class="control-label form-control-sm">DNI</label>
-								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm"  value="<?php echo $datos_persona->numero_documento?>" type="text" onchange="obtenerDatosDni()">
+								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm"  value="<?php echo $datos_propietario->numero_documento?>" type="text" onchange="obtenerDatosDni()">
 								</div>
 								<div class="form-group" id="ruc_propietario_">
 									<label class="control-label form-control-sm">RUC</label>
-									<input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" onchange="obtenerDatosRuc()">
+									<input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php echo $datos_propietario->numero_documento?>" type="text" onchange="obtenerDatosRuc()">
 								</div>
 							</div>
 
 							<div class="col-lg-3" >
 							<div class="form-group" id="nombre_propietario_">
 								<label class="control-label form-control-sm">Nombre</label>
-								<input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $datos_persona->apellido_paterno.' '. $datos_persona->apellido_materno.' '.$datos_persona->nombres?>" type="text" onchange="" readonly='readonly'>
+								<input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $datos_propietario->propietario?>" type="text" onchange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="razon_social_propietario_">
 									<label class="control-label form-control-sm">Raz&oacute;n Social</label>
-									<input id="razon_social_propietario" name="razon_social_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" onchange="" readonly='readonly'>
+									<input id="razon_social_propietario" name="razon_social_propietario" on class="form-control form-control-sm"  value="<?php echo $datos_propietario->propietario?>" type="text" onchange="" readonly='readonly'>
 								</div>
 							</div>
 							<div class="col-lg-3" >
@@ -456,11 +456,11 @@ if($('#instancia').val()==250){
 							<div class="col-lg-1" >
 								<div class="form-group" id="celular_dni_">
 									<label class="control-label form-control-sm">Celular</label>
-									<input id="celular_dni" name="celular_dni" on class="form-control form-control-sm"  value="<?php echo $datos_persona->numero_celular?>" type="text" onchange="" readonly='readonly'>
+									<input id="celular_dni" name="celular_dni" on class="form-control form-control-sm"  value="<?php echo $datos_propietario->numero_celular?>" type="text" onchange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="telefono_ruc_">
 									<label class="control-label form-control-sm">Tel&eacute;fono</label>
-									<input id="telefono_ruc" name="telefono_ruc" on class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" type="text" onchange="" readonly='readonly'>
+									<input id="telefono_ruc" name="telefono_ruc" on class="form-control form-control-sm"  value="<?php echo $datos_propietario->numero_celular?>" type="text" onchange="" readonly='readonly'>
 								</div>
 							</div>
 
