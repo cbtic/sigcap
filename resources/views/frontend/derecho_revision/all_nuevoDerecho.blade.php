@@ -550,8 +550,8 @@ function modalVerFormato(){
 																	<th><?php echo $row->tipo_propietario?></th>
 																	<th><?php echo $row->numero_documento?></th>
 																	<th><?php echo $row->propietario?></th>
-																	<th><?php //echo $row->numero_celular?></th>
-																	<th><?php //echo $row->correo?></th>
+																	<th><?php echo $row->numero_celular?></th>
+																	<th><?php echo $row->correo?></th>
 																	<th>
 																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
 																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalIdioma(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>

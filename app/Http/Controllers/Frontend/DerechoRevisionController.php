@@ -840,26 +840,35 @@ class DerechoRevisionController extends Controller
 		$procedimientos_complementarios = $request->input('procedimientos_complementarios');
 		$procedimientos_complementarios2 = $request->input('procedimientos_complementarios2');
 
+		$procedimientosArray = explode(',', $procedimientos_complementarios2);
+		$procedimientosArray = array_map('trim', $procedimientosArray);
+		$procedimientosArray = array_filter($procedimientosArray, 'is_numeric');
+    	$procedimientosArray = array_map('intval', $procedimientosArray);
+
 		$solicitud = Solicitude::find($request->id_solicitud);
 		$solicitud->id_tipo_tramite = $procedimientos_complementarios;
 		$solicitud->area_total = $request->areaBruta;
 		$solicitud->id_usuario_inserta = $id_user;
 		//var_dump($procedimientos_complementarios2);exit();
 		$solicitud->save();
+			//var_dump($procedimientosArray);exit();
 
-
-		//var_dump($solicitud->id);exit();
-		//$usoEdificacion_ = UsoEdificacione::where("id_solicitud",$solicitud->id)->where("estado","1")->first();
-		//$usoEdificacion = UsoEdificacione::find($usoEdificacion_->id);
-		//$usoEdificacion = new UsoEdificacione;
-		$usoEdificacion->id_tipo_uso = $procedimientos_complementarios2;
-		//$usoEdificacion->id_sub_tipo_uso = $procedimientos_complementarios2;
-		$usoEdificacion->id_solicitud = $request->id_solicitud;
-		$usoEdificacion->area_techada = $request->areaBruta;
-		//$proyectista->firma = $request->nombre;
-		//$profesion->estado = 1;
-		$usoEdificacion->id_usuario_inserta = $id_user;
-		$usoEdificacion->save();
+		foreach($procedimientosArray as $uso){
+			$usoEdificacion = new UsoEdificacione;
+			//var_dump($solicitud->id);exit();
+			//$usoEdificacion_ = UsoEdificacione::where("id_solicitud",$solicitud->id)->where("estado","1")->first();
+			//$usoEdificacion = UsoEdificacione::find($usoEdificacion_->id);
+			//$usoEdificacion = new UsoEdificacione;
+			$usoEdificacion->id_tipo_uso = $uso;
+			//$usoEdificacion->id_sub_tipo_uso = $procedimientos_complementarios2;
+			$usoEdificacion->id_solicitud = $request->id_solicitud;
+			$usoEdificacion->area_techada = $request->areaBruta;
+			//$proyectista->firma = $request->nombre;
+			//$profesion->estado = 1;
+			$usoEdificacion->id_usuario_inserta = $id_user;
+			$usoEdificacion->save();
+		}
+		
 		
 		
 		$solicitudDocumento1 = new SolicitudDocumento;
@@ -1445,7 +1454,7 @@ class DerechoRevisionController extends Controller
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_uso = $tablaMaestra_model->getMaestroByTipo(30);
 		$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipo(111);
-		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(29);
+		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(112);
 		$tipo_liquidacion = $tablaMaestra_model->getMaestroByTipo(27);
 		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
