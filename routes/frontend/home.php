@@ -727,7 +727,8 @@ Route::get('planilla/obtener_datos_reintegro_detalle/{id_agremiado}', [PlanillaD
 Route::get('adelanto/obtener_datos_adelanto/{id_agremiado}', [AdelantoController::class, 'obtener_datos_adelanto'])->name('adelanto.obtener_datos_adelanto');
 Route::get('derecho_revision/eliminar_solicitud_edificaciones/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_edificaciones'])->name('derecho_revision.eliminar_solicitud_edificaciones');
 Route::get('derecho_revision/eliminar_solicitud_hu/{id}/{estado}', [DerechoRevisionController::class, 'eliminar_solicitud_hu'])->name('derecho_revision.eliminar_solicitud_hu');
-Route::get('derecho_revision/obtener_ubigeo/{municipalidad}', [DerechoRevisionController::class, 'obtener_ubigeo'])->name('derecho_revision.obtener_ubigeo');
+Route::get('derecho_revision/obtener_ubigeo/{distrito}', [DerechoRevisionController::class, 'obtener_ubigeo'])->name('derecho_revision.obtener_ubigeo');
 Route::get('derecho_revision/derecho_revision_reintegro/{id}', [DerechoRevisionController::class, 'derecho_revision_reintegro'])->name('derecho_revision.derecho_revision_reintegro');
 Route::post('derecho_revision/send_nuevo_reintegro', [DerechoRevisionController::class, 'send_nuevo_reintegro'])->name('derecho_revision.send_nuevo_reintegro');
+Route::get('derecho_revision/obtener_provincia_distrito_solicitud/{id}', [DerechoRevisionController::class, 'obtener_provincia_distrito_solicitud'])->name('municipalidad.obtener_provincia_distrito_solicitud');
 

@@ -42,7 +42,7 @@ class DerechoRevision extends Model
 	function getCountProyectoTipoSolicitud($id_proyecto,$id_tipo_solicitud){
 		
 		$cad = "select lpad(count(*)::varchar,2,'0') codigo from solicitudes s where id_proyecto=".$id_proyecto." and id_tipo_solicitud=".$id_tipo_solicitud;
-        
+
 		$data = DB::select($cad);
         return $data[0]->codigo;
     }
@@ -103,9 +103,9 @@ class DerechoRevision extends Model
 	public function getProyectistaByIdSolicitud($id){
 
         $cad = "select a.numero_cap, a.desc_cliente
-    from proyectistas pr 
-    left join agremiados a on pr.id_agremiado = a.id
-    where pr.id_solicitud=".$id;
+        from proyectistas pr 
+        left join agremiados a on pr.id_agremiado = a.id
+        where pr.id_solicitud=".$id;
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
@@ -326,6 +326,17 @@ class DerechoRevision extends Model
 
         $cad = "select " . $function;
         $data = DB::select($cad);
+        return $data;
+    }
+
+    public function getProvinciaDistritoByIdSolicitud($id){
+
+        $cad = "select u.id_provincia provincia, u.id_ubigeo distrito from solicitudes s
+        inner join proyectos p on s.id_proyecto = p.id
+        inner join ubigeos u on p.id_ubigeo = u.id_ubigeo 
+        where s.id=".$id;
+		//echo $cad;
+		$data = DB::select($cad);
         return $data;
     }
     

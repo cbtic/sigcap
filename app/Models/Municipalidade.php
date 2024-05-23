@@ -62,11 +62,11 @@ class Municipalidade extends Model
 
     }
 
-    function getIdUbigeoByMunicipalidad($municipalidad){
+    function getIdUbigeoByMunicipalidad($distrito){
 
-        $cad = "select u.id_departamento, u.id_provincia, u.id_ubigeo from municipalidades m 
+        $cad = "select m.id from municipalidades m
         inner join ubigeos u on m.id_ubigeo = u.id_ubigeo 
-        where m.id=".$municipalidad." and m.estado ='1'";
+        where u.id_ubigeo ='".$distrito."' and m.estado ='1'";
 		$data = DB::select($cad);
         return $data;
     }
