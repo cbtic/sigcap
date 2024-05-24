@@ -96,7 +96,6 @@ Route::get('persona/buscar_persona2/{numero_documento}', [PersonaController::cla
 Route::get('persona/buscar_numero_documento/{numero_documento}', [PersonaController::class, 'buscar_numero_documento'])->name('persona.buscar_numero_documento');
 Route::get('persona/modal_personaNuevo', [PersonaController::class, 'modal_personaNuevo'])->name('persona.modal_personaNuevo');
 
-
 Route::get('agremiado', [AgremiadoController::class, 'index'])->name('agremiado');
 Route::get('agremiado/editar_agremiado/{id}', [AgremiadoController::class, 'editar_agremiado'])->name('agremiado.editar_agremiado');
 Route::get('agremiado/importar_agremiado/{fecha}', [AgremiadoController::class, 'importar_agremiado'])->name('agremiado.importar_agremiado');
@@ -207,7 +206,6 @@ Route::post('prontoPago/send_prontoPago_nuevoProntoPago', [ProntoPagoController:
 
 Route::get('prontoPago/eliminar_prontoPago/{id}/{estado}', [ProntoPagoController::class, 'eliminar_prontoPago'])->name('prontoPago.eliminar_prontoPago');
 
-
 //Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 Route::get('ingreso/create', [IngresoController::class, 'create'])->name('ingreso.create');
 Route::get('ingreso/obtener_valorizacion/{tipo_documento}/{id_persona}', [IngresoController::class, 'obtener_valorizacion'])->name('ingreso.obtener_valorizacion')->where('tipo_documento', '(.*)');
@@ -226,7 +224,6 @@ Route::get('ingreso/obtener_conceptos/{periodo}', [IngresoController::class, 'ob
 Route::post('ingreso/send_concepto', [IngresoController::class, 'send_concepto'])->name('ingreso.send_concepto');
 Route::post('ingreso/send_fracciona_deuda', [IngresoController::class, 'send_fracciona_deuda'])->name('ingreso.send_fracciona_deuda');
 Route::get('ingreso/modal_valorizacion_factura/{id}', [IngresoController::class, 'modal_valorizacion_factura'])->name('ingreso.modal_valorizacion_factura');
-
 Route::get('ingreso/liquidacion_caja', [IngresoController::class, 'liquidacion_caja'])->name('ingreso.liquidacion_caja');
 Route::get('ingreso/modal_liquidacion/{id}', [IngresoController::class, 'modal_liquidacion'])->name('ingreso.modal_liquidacion');
 Route::get('ingreso/modal_detalle_factura/{id}', [IngresoController::class, 'modal_detalle_factura'])->name('ingreso.modal_detalle_factura');
@@ -236,14 +233,16 @@ Route::post('ingreso/listar_liquidacion_caja_ajax', [IngresoController::class, '
 Route::get('ingreso/exportar_liquidacion_caja/{fecha_inicio_desde}/{fecha_inicio_hasta}/{fecha_ini}/{fecha_fin}/{id_caja}/{estado}', [IngresoController::class, 'exportar_liquidacion_caja'])->name('ingreso.exportar_liquidacion_caja');
 Route::get('ingreso/exportar_estado_cuenta/{tipo}/{afiliado}/{numero_documento}/{periodo}/{fecha_inicio}/{fecha_fin}/{pago}/{order}/{sort}', [IngresoController::class, 'exportar_estado_cuenta'])->name('ingreso.exportar_estado_cuenta');
 Route::post('ingreso/listar_empresa_beneficiario_ajax', [IngresoController::class, 'listar_empresa_beneficiario_ajax'])->name('ingreso.listar_empresa_beneficiario_ajax');
-
 Route::post('ingreso/anula_fraccionamiento', [IngresoController::class, 'anula_fraccionamiento'])->name('ingreso.anula_fraccionamiento');
 Route::post('ingreso/exonerar_valorizacion', [IngresoController::class, 'exonerar_valorizacion'])->name('ingreso.exonerar_valorizacion');
-
 Route::post('ingreso/anular_valorizacion', [IngresoController::class, 'anular_valorizacion'])->name('ingreso.anular_valorizacion');
 Route::get('ingreso/modal_consulta_persona', [IngresoController::class, 'modal_consulta_persona'])->name('ingreso.modal_consulta_persona');
-
 Route::post('ingreso/valida_deuda_vencida', [IngresoController::class, 'valida_deuda_vencida'])->name('ingreso.valida_deuda_vencida');
+
+Route::get('ingreso/caja_total', [IngresoController::class, 'caja_total'])->name('ingreso.caja_total');
+Route::post('ingreso/obtener_caja_condicion_pago', [IngresoController::class, 'obtener_caja_condicion_pago'])->name('ingreso.obtener_caja_condicion_pago');
+Route::post('ingreso/obtener_caja_venta', [IngresoController::class, 'obtener_caja_venta'])->name('ingreso.obtener_caja_ventañ');
+
 
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
@@ -374,21 +373,13 @@ Route::get('comision/modal_municipalidadesIntegrada/{id}', [ComisionController::
 
 Route::get('concurso/consulta_resultado', [ConcursoController::class, 'consulta_resultado'])->name('concurso.consulta_resultado');
 Route::post('concurso/listar_resultado_ajax', [ConcursoController::class, 'listar_resultado_ajax'])->name('concurso.listar_resultado_ajax');
-
-
 Route::get('certificado/consulta_certificado', [CertificadoController::class, 'consulta_certificado'])->name('certificado.consulta_certificado');
-
-
 Route::get('periodoComision/consulta_periodoComision', [PeriodoComisionController::class, 'consulta_periodoComision'])->name('periodoComision.consulta_periodoComision');
 Route::post('periodoComision/listar_consulta_periodoComision_ajax', [PeriodoComisionController::class, 'listar_consulta_periodoComision_ajax'])->name('periodoComision.listar_consulta_periodoComision_ajax');
 Route::get('periodoComision/editar_consulta_periodoComision/{id}', [PeriodoComisionController::class, 'editar_consulta_periodoComision'])->name('periodoComision.editar_consulta_periodoComision');
 Route::get('periodoComision/modal_periodoComision_nuevoPeriodoComision/{id}', [PeriodoComisionController::class, 'modal_periodoComision_nuevoPeriodoComision'])->name('periodoComision.modal_periodoComision_nuevoPeriodoComision');
 Route::post('periodoComision/send_periodoComision_nuevoPeriodoComision', [PeriodoComisionController::class, 'send_periodoComision_nuevoPeriodoComision'])->name('periodoComision.send_periodoComision_nuevoPeriodoComision');
 Route::get('periodoComision/eliminar_periodoComision/{id}/{estado}', [PeriodoComisionController::class, 'eliminar_periodoComision'])->name('periodoComision.eliminar_periodoComision');
-
-
-
-
 Route::get('certificado/consultar_certificado', [CertificadoController::class, 'consultar_certificado'])->name('certificado.consultar_certificado');
 Route::post('certificado/listar_certificado', [CertificadoController::class, 'listar_certificado'])->name('certificado.listar_certificado');
 Route::get('certificado/modal_certificado/{id}', [CertificadoController::class, 'modal_certificado'])->name('certificado.modal_certificado');
@@ -397,7 +388,6 @@ Route::post('certificado/send_certificado', [CertificadoController::class, 'send
 Route::get('certificado/eliminar_certificado/{id}/{estado}', [CertificadoController::class, 'eliminar_certificado'])->name('certificado.eliminar_certificado');
 Route::get('certificado/certificado_vista/{id}', [CertificadoController::class, 'certificado_vista'])->name('certificado.certificado_vista');
 Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
-
 Route::get('comprobante/consultar', [ComprobanteController::class, 'consultar'])->name('comprobante.consultar');
 Route::post('comprobante/listar_comprobante', [ComprobanteController::class, 'listar_comprobante'])->name('comprobante.listar_comprobante');
 //Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
@@ -464,7 +454,6 @@ Route::get('profesionalesOtro/modal_profesionalesOtro_nuevoProfesionalesOtro/{id
 Route::post('profesionalesOtro/send_profesionalesOtro_nuevoProfesionalesOtro', [ProfesionalesOtroController::class, 'send_profesionalesOtro_nuevoProfesionalesOtro'])->name('profesionalesOtro.send_profesionalesOtro_nuevoProfesionalesOtro');
 Route::get('profesionalesOtro/eliminar_profesionalesOtro/{id}/{estado}', [ProfesionalesOtroController::class, 'eliminar_profesionalesOtro'])->name('profesionalesOtro.eliminar_profesionalesOtro');
 
-
 /*
 Route::get('sesion/lista_programacion_sesion', [SesionController::class, 'lista_programacion_sesion'])->name('sesion.lista_programacion_sesion');
 Route::post('sesion/lista_programacion_sesion_ajax', [SesionController::class, 'lista_programacion_sesion_ajax'])->name('sesion.lista_programacion_sesion_ajax');
@@ -474,12 +463,8 @@ Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'o
 Route::get('sesion/obtener_comision/{id_periodo}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
 */
 Route::get('comision/obtener_comision_periodo_tipo_comision/{id_periodo}/{id_tipo_comision}', [ComisionController::class, 'obtener_comision_periodo_tipo_comision'])->name('comision.obtener_comision_periodo_tipo_comision');
-
-
-
 Route::get('comision/modalDiaSemana/{id}', [ComisionController::class, 'modalDiaSemana'])->name('comision.modalDiaSemana');
 Route::post('comision/send_dia_semana', [ComisionController::class, 'send_dia_semana'])->name('comision.send_dia_semana');
-
 Route::get('revisorUrbano/consulta_revisorUrbano', [RevisorUrbanoController::class, 'consulta_revisorUrbano'])->name('revisorUrbano.consulta_revisorUrbano');
 Route::post('revisorUrbano/listar_revisorUrbano_ajax', [RevisorUrbanoController::class, 'listar_revisorUrbano_ajax'])->name('revisorUrbano.listar_revisorUrbano_ajax');
 Route::get('revisorUrbano/editar_revisorUrbano/{id}', [RevisorUrbanoController::class, 'editar_revisorUrbano'])->name('revisorUrbano.editar_revisorUrbano');

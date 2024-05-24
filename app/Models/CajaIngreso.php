@@ -28,6 +28,64 @@ class CajaIngreso extends Model
         if($data)return $data[0];
     }
 
+    function getCajaUsuario(){
+
+        $cad = "select distinct t3.id id,t3.name ||'-'||t2.denominacion denominacion
+                from caja_ingresos t1
+                    inner join tabla_maestras t2 on t2.codigo = t1.id_caja::varchar and t2.tipo = '91'
+                    inner join users t3 on t1.id_usuario=t3.id			
+                where t1.saldo_liquidado is null
+                order by 1
+        ";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getCajaComprobante($id_usuario, $fecha){
+
+        $cad = "select situacion, tipo, sum(total)total, count(*) cantidad
+            from(
+                select (case when c.estado_pago='P' then 'PENDIENTE' else 'CANCELADO'end) situacion, t.denominacion tipo, sum(c.total) total
+                from comprobantes c 
+                    inner join tabla_maestras t on t.abreviatura = c.tipo  and t.tipo = '126'
+                    inner join tabla_maestras m on m.codigo = c.id_caja::varchar and m.tipo = '91'
+                group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha
+                having  c.id_usuario_inserta = ".$id_usuario."
+                and TO_CHAR(c.fecha, 'dd/mm/yyyy')  = '".$fecha."'
+            )
+            group by situacion, tipo
+        ";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
+    
+    function getCajaCondicionPago($id_usuario, $fecha){
+
+        $cad = "           
+        select condicion, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
+         from(
+             select t.denominacion condicion, 0 total_us, 0/3.7 total_tc, cp.monto total_soles
+             from comprobantes c                                
+                 inner join comprobante_pagos cp on cp.id_comprobante = c.id
+                 inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
+             group by t.denominacion,cp.monto, c.id_usuario_inserta, c.fecha
+             having  c.id_usuario_inserta = ".$id_usuario."
+             and TO_CHAR(c.fecha, 'dd/mm/yyyy')  = '".$fecha."'
+         )
+       group by condicion
+        ";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
+    
+
+
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';

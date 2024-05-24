@@ -173,6 +173,7 @@
 							<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
 							<div class="row" style="padding:20px 20px 0px 20px;">
+							
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Fecha</label>
@@ -180,13 +181,13 @@
 									</div>
 								</div>	
 
-								<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+								<div class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Caja</label>
-										<select name="id_caja" id="id_caja" class="form-control form-control-sm">
+										<select name="id_usuario_caja" id="id_usuario_caja" class="form-control form-control-sm">
 											<option value="0">Seleccionar</option>
-											<?php foreach($caja as $row):?>
-											<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+											<?php foreach($caja_usuario as $row):?>
+											<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
 											<?php  endforeach;?>
 										</select>
 									</div>
@@ -194,7 +195,7 @@
 									
 
 
-								<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
+								<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
 									<input class="btn btn-warning pull-rigth" value="Buscar" type="button"  id="btnBuscar" />
 									
 								</div>
@@ -222,7 +223,7 @@
 
 						<div class="card-body">
 							<div id="divCondicion" class="table-responsive">
-								<table id="divCondicion" class="table table-hover table-sm">
+								<table id="tlbCondicion" class="table table-hover table-sm">
 									<thead>
 										<tr style="font-size:13px">
 											<th>Condición</th>
