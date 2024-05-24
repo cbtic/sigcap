@@ -223,7 +223,7 @@
 
 						<div class="card-body">
 							<div id="divCondicion" class="table-responsive">
-								<table id="divCondicion" class="table table-hover table-sm">
+								<table id="tlbCondicion" class="table table-hover table-sm">
 									<thead>
 										<tr style="font-size:13px">
 											<th>Condición</th>

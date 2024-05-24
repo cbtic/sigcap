@@ -55,7 +55,7 @@ class CajaIngreso extends Model
                 having  c.id_usuario_inserta = ".$id_usuario."
                 and TO_CHAR(c.fecha, 'dd/mm/yyyy')  = '".$fecha."'
             )
-            group by situacion, tipo;
+            group by situacion, tipo
         ";
 
 		//echo $cad;
@@ -63,6 +63,28 @@ class CajaIngreso extends Model
         return $data;
     }
     
+    function getCajaCondicionPago($id_usuario, $fecha){
+
+        $cad = "           
+        select condicion, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
+         from(
+             select t.denominacion condicion, 0 total_us, 0/3.7 total_tc, cp.monto total_soles
+             from comprobantes c                                
+                 inner join comprobante_pagos cp on cp.id_comprobante = c.id
+                 inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
+             group by t.denominacion,cp.monto, c.id_usuario_inserta, c.fecha
+             having  c.id_usuario_inserta = ".$id_usuario."
+             and TO_CHAR(c.fecha, 'dd/mm/yyyy')  = '".$fecha."'
+         )
+       group by condicion
+        ";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
+    
+
 
     public function readFuntionPostgres($function, $parameters = null){
 

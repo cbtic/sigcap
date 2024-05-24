@@ -688,13 +688,15 @@ class IngresoController extends Controller
         return view('frontend.ingreso.all_caja_total',compact('caja_usuario'));
     }
 
-    public function obtener_caja_condicion_pago($tipo_documento,$id_persona){
+    public function obtener_caja_condicion_pago(request $request){
  
-        $valorizaciones_model = new Valorizacione;
-        $sw = true;
-        //$valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona);
-        //print_r($valorizacion);exit();
-        return view('frontend.ingreso.lista_caja_condicion_pago',compact('valorizacion'));
+        $id_usuario_caja = $request->id_usuario_caja;
+        $fecha = $request->fecha;
+
+        $caja_ingreso_model = new CajaIngreso();
+        $resultado = $caja_ingreso_model->getCajaCondicionPago($id_usuario_caja, $fecha);
+
+        return view('frontend.ingreso.lista_caja_condicion_pago',compact('resultado'));
 
     }
 
