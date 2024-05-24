@@ -683,14 +683,14 @@ function obtenerCajaVenta() {
 
 function obtenerCondicionPago() {
 
-	$("#divCaja").html("");
+	$("#divCondicion").html("");
 	$.ajax({
 		//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
 		url: "/ingreso/obtener_caja_condicion_pago",
 		data: $("#frmAfiliacion").serialize(),
 		type: "POST",
 		success: function(result) {
-			$("#divCaja").html(result);
+			$("#divCondicion").html(result);
 		}
 	});
 }
