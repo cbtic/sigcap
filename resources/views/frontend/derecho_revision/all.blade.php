@@ -265,7 +265,7 @@
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
                         <form action="{{ url('/derecho_revision/importar_dataLicencia') }}" method="GET">
                         @csrf
-                        <input class="btn btn-danger pull-rigth" value="Importar Datos Datalicencia" id="btnImportar" style="margin-left:10px"/>
+                        <input class="btn btn-danger pull-rigth" value="Importar Datos Datalicencia" type="button" id="btnImportar" style="margin-left:10px"/>
                         </form>
 					</div>
 				</div>

@@ -16,6 +16,10 @@ $(document).ready(function () {
 		guardar_sesion_bloque();
 	});
 
+	$('#btnImportarDictamenes').click(function () {
+		importarDatalicenciaDictamenes();
+	});
+
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -850,6 +854,19 @@ function cargarDictamen(id_concurso_inscripcion){
 function fn_ListarBusqueda() {
     datatablenew();
 };
+
+function importarDatalicenciaDictamenes(){
+
+	$.ajax({
+		url: "/sesion/importar_dataLicencia_dictamenes",
+		type: "GET",
+		success: function(result){
+
+			bootbox.alert("Se import&oacute; exitosamente los datos"); 
+			datatablenew();
+		}
+	});
+}
 
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
     //fn_util_bloquearPantalla("Buscando");

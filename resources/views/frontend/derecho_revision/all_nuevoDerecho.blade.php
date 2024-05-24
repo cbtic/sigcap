@@ -431,7 +431,7 @@ function modalVerFormato(){
 									aria-selected="false"
 									>Informaci&oacute;n del proyecto</a>
 								
-								<a
+								<!--<a
 									class="nav-link"
 									id="datos_comprobante-tab"
 									data-toggle="pill"
@@ -439,7 +439,7 @@ function modalVerFormato(){
 									role="tab"
 									aria-controls="datos_comprobante"
 									aria-selected="false"
-									>Datos del Comprobante</a>
+									>Datos del Comprobante</a>-->
 								
 							</div>
 						</nav>
@@ -495,8 +495,8 @@ function modalVerFormato(){
 																	<th><?php echo $row->email1?></th>
 																	<th>
 																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
+																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>-->
+																	<a href="javascript:void(0)" onclick="eliminarProyectistaHU(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 																	</div>
 																	</th>
 																</tr>											
@@ -669,7 +669,7 @@ function modalVerFormato(){
 									</div>
 								</div>
 							</div>
-							<div class="tab-pane fade pt-3" id="datos_comprobante" role="tabpanel" aria-labelledby="datos_comprobante-tab">
+							<!--<div class="tab-pane fade pt-3" id="datos_comprobante" role="tabpanel" aria-labelledby="datos_comprobante-tab">
 							
 								<div class="row" style="padding-top:0px">
 
@@ -712,7 +712,7 @@ function modalVerFormato(){
 																	<th>Opciones</th>
 																</tr>
 															</thead>
-															<tbody style="font-size:13px">
+															<tbody style="font-size:13px">-->
 																<?php //foreach($agremiado_estudio as $row){?>
 																<!--<tr>
 																	<th><?php //echo $row->universidad?></th>
@@ -730,7 +730,7 @@ function modalVerFormato(){
 																	</th>
 																</tr>	-->													
 																<?php //}?>
-															</tbody>							
+															<!--</tbody>							
 															</table>
 															</div>
 														</div>
@@ -740,7 +740,7 @@ function modalVerFormato(){
 										</div>		
 									</div>
 								</div>
-							</div>
+							</div>-->
 
 						</div>
 						
