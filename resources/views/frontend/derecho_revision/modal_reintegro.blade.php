@@ -407,7 +407,7 @@ function fn_save_credipago(){
 	var id_comision = $('#id_comision').val();
 	var id_regional = $('#id_regional').val();
 	var id_tipo_sesion = $('#id_tipo_sesion').val();
-	var observaciones = $('#observaciones').val();
+	var observaciones = $('#observacion').val();
 	
     $.ajax({
 			url: "/derecho_revision/send_credipago_liquidacion",
@@ -634,7 +634,7 @@ function fn_save_credipago(){
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">N&uacute;mero Revisi&oacute;n</label>
-                        <input id="numero_revision" name="numero_revision" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text">
+                        <input id="numero_revision" name="numero_revision" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->numero_revision?>" type="text">
                     </div>
                     <div class="col-lg-3">
                         <div id="valor_reintegro_" name="valor_reintegro_">
@@ -670,7 +670,7 @@ function fn_save_credipago(){
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-12">
                                 <label class="control-label form-control-sm">Observaci&oacute;n</label>
-                                <input id="observacion" name="observacion" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                                <input id="observacion" name="observacion" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text">
                             </div>
                         </div>
                     </div>

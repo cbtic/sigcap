@@ -12,7 +12,10 @@
 	#tblCoordinadorSesion tbody tr{
 		font-size:13px
 	}
-
+    
+    #tblAfiliado tbody tr{
+		font-size:13px
+	}
     .table-sortable tbody tr {
         cursor: move;
     }
@@ -324,6 +327,18 @@
                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                             <input class="form-control form-control-sm" id="agremiado_" name="agremiado_" placeholder="Nombres">
                         </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                            <select name="id_municipalidad_bus" id="id_municipalidad_bus" class="form-control form-control-sm" >
+                                <option value="">--Municipalidad--</option>
+                                <?php
+                                foreach ($municipalidad as $row) {?>
+                                <option value="<?php echo $row->denominacion?>"><?php echo $row->denominacion?></option>
+                                <?php 
+                                }
+                                ?>
+                            </select>
+                        </div>
                         
                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                             <select name="estado_" id="estado_" class="form-control form-control-sm">
@@ -351,6 +366,7 @@
                                 <th>N° CAP</th>
                                 <th>Agremiado</th>
                                 <th>Zonal</th>
+                                <th>Municipalidad</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>

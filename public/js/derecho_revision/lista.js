@@ -7,6 +7,7 @@ $(document).ready(function () {
 	
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
+		obtenerDatosUbigeo();
 	}
 
 	$('#fecha_registro_bus').datepicker({
@@ -363,10 +364,10 @@ function credipago_pdf(id){
 
 function obtenerUbigeo(){
 
-	var municipalidad = $("#municipalidad").val();
+	var distrito = $("#distrito").val();
 
 	$.ajax({
-		url: "/derecho_revision/obtener_ubigeo/"+municipalidad,
+		url: "/derecho_revision/obtener_ubigeo/"+distrito,
 		type: "GET",
 		success: function (result) {
 			
@@ -375,12 +376,14 @@ function obtenerUbigeo(){
 			//var id = result.id;
 			//alert(result[0].id_distrito);
 
-			$("#provincia").val(result[0].id_provincia).promise().done(function(){
+			/*$("#provincia").val(result[0].id_provincia).promise().done(function(){
 				
 				});
 				obtenerDistrito_(function(){
 					$("#distrito").val(result[0].id_distrito);
-			});
+			});*/
+
+			$("#municipalidad").val(result[0].municipalidad);
 		}
 	});
 }
@@ -658,6 +661,31 @@ function obtenerProvincia(){
 		
 	});
 	
+}
+
+function obtenerDatosUbigeo(){
+
+	var id = $('#id_solicitud').val();
+	
+	$.ajax({
+		url: '/derecho_revision/obtener_provincia_distrito_solicitud/'+id,
+		dataType: "json",
+		success: function(result){
+			
+			//alert(result[0].provincia);
+
+			$('#provincia').val(result[0].provincia);
+
+			obtenerDistrito_(function(){
+
+				$('#distrito').val(result[0].distrito);
+
+			});
+			
+		}
+		
+	});
+
 }
 
 function obtenerDistrito(){
@@ -1454,7 +1482,14 @@ function editarSolicitud(id){
 		url: '/derecho_revision/obtener_solicitud/'+id,
 		dataType: "json",
 		success: function(result){
+
+			function formatoMoneda(num) {
+				return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+			}
 			
+			var areaTotal = parseFloat(result.area_total.replace(',', '').replace('.', ''));
+			var valorObra = parseFloat(result.valor_obra.replace(',', '').replace('.', ''));
+
 			$('#id').val(result.id);
 			$('#nombre_proyecto').val(result.nombre_proyecto);
 			$('#direccion').val(result.direccion);
@@ -1469,8 +1504,8 @@ function editarSolicitud(id){
 			$('#tipo_solicitud').val(result.tipo_solicitud);
 			$('#tipo_proyecto').val(result.tipo_proyecto);
 			$('#numero_revision').val(result.numero_revision);
-			$('#area_techada').val(result.area_total);
-			$('#valor_obra').val(result.valor_obra);
+			$('#area_techada').val(formatoMoneda(areaTotal));
+			$('#valor_obra').val(formatoMoneda(valorObra));
 			
 		}
 		
@@ -1486,6 +1521,11 @@ function editarSolicitudHU(id){
 		url: '/derecho_revision/obtener_solicitud/'+id,
 		dataType: "json",
 		success: function(result){
+
+			function formatoMoneda(num) {
+				return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+				
+			}
 			
 			$('#id').val(result.id);
 			$('#nombre_proyecto').val(result.nombre_proyecto);
@@ -1500,8 +1540,16 @@ function editarSolicitudHU(id){
 			$('#municipalidad').val(result.municipalidad);
 			$('#tipo_solicitud').val(result.tipo_solicitud);
 			$('#tipo_proyecto').val(result.tipo_proyecto);
+			if (result.area_total !== null && result.area_total !== undefined) {
+				// Convertir el valor a número
+				var areaTotal = parseFloat(result.area_total.replace(',', '').replace('.', ''));
+				// Formatear y asignar el valor
+				$('#area_techada').val(formatoMoneda(areaTotal));
+			} else {
+				$('#area_techada').val('');
+			}
 			$('#numero_revision').val(result.numero_revision);
-			$('#area_techada').val(result.area_total);
+			
 			$('#valor_obra').val(result.valor_obra);
 			$('#id_editar').val(result.id);
 			actualizarBoton();
@@ -1682,22 +1730,11 @@ function guardar_solicitud_derecho_revision(){
 				direccion_sitio:direccion_sitio,direccion_zona:direccion_zona,id_solicitud:id_solicitud},
 			success: function (result) {
 				
-				//$('#openOverlayOpc').modal('hide');
-				//modalSituacion(id_agremiado);
-				//datatableSuspension();
-
-				window.location.reload();
+				//alert();
+				var href = '/derecho_revision/editar_derecho_revision_nuevo/'+result;
+				window.location.href = href;
+				//window.location.reload();
 				
-				//$('#openOverlayOpc').modal('hide');
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}
-				*/
 			}
 	});
 }

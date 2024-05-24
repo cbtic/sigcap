@@ -318,12 +318,13 @@ function fn_save_(){
 function datatableZonalDetalle(){
 	
 	var zonal =  $('#zonal').val();
+	var id_periodo =  $('#id_periodo').val();
 	
     $("#tblZonalDetalle tbody").html("");
 	$.ajax({
-			url: "/coordinador_zonal/obtener_datos_zonal_detalle/"+zonal,
+			url: "/coordinador_zonal/obtener_datos_zonal_detalle/"+zonal+"/"+id_periodo,
 			type: "GET",
-			success: function (result) {  
+			success: function (result) {
 					$("#tblZonalDetalle tbody").html(result);
 			}
 	});

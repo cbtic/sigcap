@@ -16,6 +16,7 @@ use App\Models\Comisione;
 use App\Models\ComisionDelegado;
 use App\Models\ComisionSesionDelegado;
 use App\Models\MunicipalidadIntegrada;
+use App\Models\CoordinadorZonalDetalle;
 use Auth;
 
 class CoordinadorZonalController extends Controller
@@ -39,11 +40,13 @@ class CoordinadorZonalController extends Controller
         $persona = new Persona;
         $periodo_model = new PeriodoComisione;
         $region_model = new Regione;
+		$municipalidad_modal = new Municipalidade;
 		$region = $region_model->getRegionAll();
-        $periodo = $periodo_model->getPeriodoVigenteAll();
+        $periodo = $periodo_model->getPeriodoAll();
 		$zonal = $tablaMaestra_model->getMaestroByTipo(117);
 		$estado_aprobacion = $tablaMaestra_model->getMaestroByTipo(109);
 		$estado = $tablaMaestra_model->getMaestroByTipo(119);
+		$municipalidad = $municipalidad_modal->getMunicipalidadOrden();
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		$meses =[1=>'Enero',2=>'Febrero',3=>'Marzo',4=>'Abril',5=>'Mayo',6=>'Junio',7=>'Julio',8=>'Agosto',9=>'Setiembre',
@@ -51,7 +54,7 @@ class CoordinadorZonalController extends Controller
 		$mes_actual = date('m');
 		
 		
-        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion','periodo_activo','meses','mes_actual'));
+        return view('frontend.coordinador_zonal.all',compact('coordinador_zonal','region','periodo','agremiado','persona','zonal','estado','periodo_ultimo','estado_aprobacion','periodo_activo','meses','mes_actual','municipalidad'));
 
     }
 
@@ -61,6 +64,7 @@ class CoordinadorZonalController extends Controller
 		$p[]=$request->periodo;
 		$p[]=$request->numero_cap;//$request->nombre;
 		$p[]=$request->agremiado;
+		$p[]=$request->id_municipalidad;
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -136,15 +140,21 @@ class CoordinadorZonalController extends Controller
 			$coordinadorZonal = CoordinadorZonal::find($id);
             $agremiado = Agremiado::where("id",$coordinadorZonal->id_agremiado)->where("estado","1")->first();
             //$agremiado_model = Agremiado::find($id);
+			$coordinadorZonalDetalle = CoordinadorZonalDetalle::where('id_tipo_coordinador',$coordinadorZonal->id_zonal)->where("estado","1")->first();
+			
 		}else{
 			$coordinadorZonal = new CoordinadorZonal;
 		}
 
-        $periodo = $periodo_model->getPeriodoVigenteAll();
+        $periodo = $periodo_model->getPeriodoAll();
         $mes = $tablaMaestra_model->getMaestroByTipo(116);
         $estado_sesion = $tablaMaestra_model->getMaestroByTipo(109);
-        $municipalidad = $municipalidad_model->getMunicipalidadCoordinador($id);
-		
+		if($coordinadorZonalDetalle){
+			$municipalidad = $municipalidad_model->getMunicipalidadCoordinador($id,$coordinadorZonalDetalle->periodo);
+		}else{
+			$municipalidad = $municipalidad_model->getMunicipalidadCoordinador($id,null);
+		}
+        
 		//$concepto = $concepto_model->getConceptoAll();
 		
 		return view('frontend.coordinador_zonal.modal_coordinadorZonal_nuevoCoordinadorZonal',compact('id','agremiado','coordinadorZonal','periodo','mes','municipalidad','estado_sesion'));
@@ -347,7 +357,7 @@ class CoordinadorZonalController extends Controller
 		$id_aprobar_pago =$sesion_delegado->id_aprobar_pago;
 		
 
-        $periodo = $periodo_model->getPeriodoVigenteAll();
+        $periodo = $periodo_model->getPeriodoAll();
         $mes = $tablaMaestra_model->getMaestroByTipo(116);
         $estado_sesion = $tablaMaestra_model->getMaestroByTipo(109);
 		$aprobar_pago = [2=>"Si",0=>"No"];

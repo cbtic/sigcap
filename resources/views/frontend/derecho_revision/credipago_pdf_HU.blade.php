@@ -176,7 +176,10 @@ $(document).ready(function() {
                 <tbody>
                     <tr>
                         <td class="td" style ="text-align: left; width: 35%;"><b>ARQUITECTO:</b></td>
-                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $proyectista;?></td>
+                        <td class="td" style ="text-align: left; width: 45%;"><?php foreach($proyectista_nombres as $nombres):?>
+                                                                                <?= ($nombres) ?> <br>
+                                                                                <?php endforeach;?>
+                                                                                </td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: left; width: 35%;"></td>
@@ -229,7 +232,7 @@ $(document).ready(function() {
             <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
                 <tbody>
                     <tr>
-                        <td class="td" style ="text-align: center; width: 80%;"><b>FACTOR A APLICAR SOBRE EL AREA DEL TERRENO ES <?php echo $valor_metro_cuadrado;?></b></td>
+                        <td class="td" style ="text-align: center; width: 80%;"><b>FACTOR A APLICAR SOBRE EL AREA DEL TERRENO ES <?php echo number_format($valor_metro_cuadrado,3,'.',',');?></b></td>
                         <td class="td" style ="text-align: left; width: 5%;">S/.</td>
                         <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($sub_total, 2, '.', ',');?></td>
                     </tr>

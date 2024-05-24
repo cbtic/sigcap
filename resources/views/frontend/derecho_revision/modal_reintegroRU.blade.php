@@ -340,7 +340,7 @@ function fn_save_credipago(){
 			data : $('#frmReintegroSolicitud').serialize(),
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				//datatablenew();
+				window.location.reload();
             }
     });
 }
@@ -616,7 +616,7 @@ function fn_save_requisito(){
                         <div class="row" style="padding-left:10px;">
                             <div class="col-lg-12">
                                 <label class="control-label form-control-sm">Observaci&oacute;n</label>
-                                <input id="observacion" name="observacion" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->valor_maximo_hu?>" type="text" readonly='readonly'>
+                                <input id="observacion" name="observacion" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->valor_maximo_hu?>" type="text">
                             </div>
                         </div>
                     </div>

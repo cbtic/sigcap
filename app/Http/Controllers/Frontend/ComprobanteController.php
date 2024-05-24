@@ -32,6 +32,17 @@ class ComprobanteController extends Controller
         return view('frontend.comprobante.all');
     }
 
+    public function cuadre_caja(){
+        //$facturas_model = new Factura;
+        //$facturas = $facturas_model->getFactura();
+        //$facturas = Factura::where('fac_destinatario', 'like','%')->orderBy('id','desc')->get()->all();
+        //print_r($facturas);
+
+      
+
+        return view('frontend.comprobante.cuadre_caja');
+    }
+
 
 
 	public function edit(Request $request){
@@ -1637,6 +1648,8 @@ class ComprobanteController extends Controller
 
 
 	public function show($id){
+
+
         $factura_model = new Comprobante;
 
         $factura = Comprobante::where('id', $id)->get()[0];
@@ -1657,7 +1670,7 @@ class ComprobanteController extends Controller
         $datos=  $datos_model->getDatosByComprobante($id);
         
         $cronograma=  $datos_model->getCronogramaPagos($id);
-        //print_r($datos); exit();
+       
 
 		if($factura->nro_guia!=""){
 			$fac_serie_guia = $factura->serie_guia;
