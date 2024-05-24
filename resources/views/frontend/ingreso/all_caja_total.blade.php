@@ -1,123 +1,75 @@
+<link rel="stylesheet" href="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--<script src="<?php echo URL::to('/') ?>/js/manifest.js"></script>
 <script src="<?php echo URL::to('/') ?>/js/vendor.js"></script>
 <script src="<?php echo URL::to('/') ?>/js/frontend.js"></script>-->
-
-
-<link rel="stylesheet" href="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-<!--<link rel="stylesheet" type="text/css" href="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.css">-->
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
-<!--<script src="<?php echo URL::to('/') ?>assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>-->
-
-<style>
-
-	table, tr td {
-		/*border: 1px solid red*/
-	}
-	tbody {
-		display: block;
-		height: 520px;
-		overflow: auto;
-	}
-	thead, tbody tr, tfoot tr {
-		display: table;
-		width: 100%;
-		table-layout: fixed;/* even columns width , fix width of table too*/
-	}
-	thead {
-		width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
-	}
-	table {
-		width: 500px;
-	}
-
-
-	#tblAfiliado tbody tr {
-		font-size: 13px
-	}
-
-	.table-sortable tbody tr {
-		cursor: move;
-	}
-
-	/*
-    #global {        
-        width: 95%;        
-        margin: 15px 15px 15px 15px;     
-        height: 380px !important;        
-        border: 1px solid #ddd;
-        overflow-y: scroll !important;
+<style type="text/css">
+    .dataTables_length {
+        float: left !important;
     }
-	*/
-	#global {
-		height: 650px !important;
-		width: auto;
-		border: 1px solid #ddd;
-		margin: 15px
-			/* background: #f1f1f1;*/
-			/*overflow-y: scroll !important;*/
-	}
 
-	.margin {
-
-		margin-bottom: 20px;
-	}
-
-	.margin-buscar {
-		margin-bottom: 5px;
-		margin-top: 5px;
-	}
-
-	/*.row{
-        margin-top:10px;
-        padding: 0 10px;
-    }*/
-	.clickable {
-		cursor: pointer;
-	}
-
-	/*.panel-heading div {
-        margin-top: -18px;
-        font-size: 15px;        
+    .tooltip>.tooltip-inner {
+        background-color: #5cb85c !important;
+        color: #FFFFFF;
+        border: 1px solid #5cb85c !important;
+        padding: 4px;
+        font-size: 11px;
     }
-    .panel-heading div span{
-        margin-left:5px;
-    }*/
-	.panel-body {
-		display: block;
-	}
 
-	.dataTables_filter {
-		display: none;
-	}
+    .tooltip.top>.tooltip-arrow {
+        border-top: 2px solid #5cb85c !important;
+    }
 
-	.loader {
-		width: 100%;
-		height: 100%;
-		/*height: 1500px;*/
-		overflow: hidden;
-		top: 0px;
-		left: 0px;
-		z-index: 10000;
-		text-align: center;
-		position: absolute;
-		background-color: #000;
-		opacity: 0.6;
-		filter: alpha(opacity=40);
-		display: none;
-	}
+    .tooltip.bottom>.tooltip-arrow {
+        border-bottom: 2px solid #5cb85c !important;
+    }
 
-	.dataTables_processing {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 500px !important;
-		font-size: 1.7em;
-		border: 0px;
-		margin-left: -17% !important;
-		text-align: center;
-		background: #3c8dbc;
-		color: #FFFFFF;
-	}
+    .tooltip.left>.tooltip-arrow {
+        border-left: 2px solid #5cb85c !important;
+    }
+
+    .tooltip.right>.tooltip-arrow {
+        border-right: 2px solid #5cb85c !important;
+    }
+
+    .loader {
+        width: 100%;
+        height: 100%;
+        /*height: 1500px;*/
+        overflow: hidden;
+        top: 0px;
+        left: 0px;
+        z-index: 10000;
+        text-align: center;
+        position: absolute;
+        background-color: #000;
+        opacity: 0.6;
+        filter: alpha(opacity=40);
+        display: none;
+    }
+
+    .selected {
+        background-color: brown;
+        color: #FFF;
+    }
+
+    /*
+    #btnBoleta{
+        padding: 3px!important;
+        font-size: 10px;
+
+    }
+*/
+    #tblPago .form-horizontal {
+        margin-bottom: 0px !important;
+        padding-bottom: 0px !important;
+    }
+
+    .auto_height {
+        /* CSS */
+        width: 100%;
+    }
 </style>
 
 @extends('frontend.layouts.app')
@@ -177,9 +129,11 @@
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Fecha</label>
-										<input class="form-control form-control-sm" id="fecha" name="fecha" value="<?php echo date("d-m-Y")?>" placeholder="Fecha">
+										<input class="form-control form-control-sm" id="fecha" name="fecha" value="<?php echo date("d/m/Y")?>" placeholder="Fecha">
 									</div>
-								</div>	
+								</div>
+
+
 
 								<div class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">

@@ -17,13 +17,14 @@ $(document).ready(function () {
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
 	
-	/*
-	$('#fecha_inicio').datepicker({
+	
+	$('#fecha').datepicker({
         autoclose: true,
 		dateFormat: 'dd/mm/yy',
 		changeMonth: true,
 		changeYear: true,
     });
+	/*
 	
 	$('#fecha_vencimiento').datepicker({
         autoclose: true,
