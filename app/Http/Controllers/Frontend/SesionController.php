@@ -990,5 +990,24 @@ class SesionController extends Controller
 		echo $comisionSesionDelegado->id;
 
     }
+
+	function importar_dataLicencia_dictamenes(){
+	
+		
+		$sesion_model = new ComisionSesione;
+
+		$data = [];
+
+		$fecha_actual = Carbon::now()->format('Y-m-d');
+
+		$data['dictamenes'] = $sesion_model->importar_dictamenes_dataLicencia($fecha_actual);
+		
+		$result["aaData"] = $data;
+
+		//var_dump($data);exit;
+
+		echo json_encode($result);
+	
+	}
 		
 }

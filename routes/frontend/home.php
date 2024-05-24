@@ -740,4 +740,5 @@ Route::get('comprobante_c/cuadre_caja', [ComprobanteController::class, 'cuadre_c
 
 Route::post('derecho_revision/send_nuevo_reintegro', [DerechoRevisionController::class, 'send_nuevo_reintegro'])->name('derecho_revision.send_nuevo_reintegro');
 Route::get('derecho_revision/obtener_provincia_distrito_solicitud/{id}', [DerechoRevisionController::class, 'obtener_provincia_distrito_solicitud'])->name('municipalidad.obtener_provincia_distrito_solicitud');
+Route::get('sesion/importar_dataLicencia_dictamenes', [SesionController::class, 'importar_dataLicencia_dictamenes'])->name('sesion.importar_dataLicencia_dictamenes');
 

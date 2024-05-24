@@ -291,5 +291,18 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
 	  $data = DB::select($cad);
       return $data;
    }
+
+   public function importar_dictamenes_dataLicencia($fecha_actual){
+
+	return $this->readFuntionPostgres_('copiar_dalalicencia_sesiones("'.$fecha_actual.'")');
+
+	}
+
+	public function readFuntionPostgres_($function = null){
+
+		$cad = "select " . $function;
+		$data = DB::select($cad);
+		return $data;
+	}
    
 }
