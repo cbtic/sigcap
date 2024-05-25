@@ -4,10 +4,12 @@ $(document).ready(function () {
 	obtenerProvincia();
 
 	//calculoVistaPrevia();
+	$('#solicitante_solicitud').hide();
 	
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
 		obtenerDatosUbigeo();
+		
 	}
 
 	$('#fecha_registro_bus').datepicker({
@@ -1841,4 +1843,82 @@ function importarDatalicencia(){
 			datatablenew();
 		}
 	});
+}
+
+function eliminarProyectistaHU(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas eliminar el Proyectista?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_proyectista_hu(id);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_proyectista_hu(id){
+	
+	$.ajax({
+            url: "/derecho_revision/eliminar_proyectista_hu/"+id,
+            type: "GET",
+            success: function (result) {
+				//datatable_mov();
+				window.location.reload();
+            }
+    });
+}
+
+function eliminarPropietarioHU(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas eliminar el Propietario?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_propietario_hu(id);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_propietario_hu(id){
+	
+	$.ajax({
+            url: "/derecho_revision/eliminar_propietario_hu/"+id,
+            type: "GET",
+            success: function (result) {
+				//datatable_mov();
+				window.location.reload();
+            }
+    });
+}
+
+function eliminarInfoProyectoHU(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas eliminar el Registro?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_infoProyecto_hu(id);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_infoProyecto_hu(id){
+	
+	$.ajax({
+            url: "/derecho_revision/eliminar_infoProyecto_hu/"+id,
+            type: "GET",
+            success: function (result) {
+				//datatable_mov();
+				window.location.reload();
+            }
+    });
 }

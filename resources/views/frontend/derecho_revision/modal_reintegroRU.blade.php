@@ -127,10 +127,7 @@ $(document).ready(function() {
 	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
 
-    $('#valor_reintegro_').hide();
-
-    
-    
+    $('#valor_reintegro_').hide();    
     
 });
 </script>
@@ -154,9 +151,6 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 });
 
 $(document).ready(function() {
-	 
-	
-	
 
 });
 
@@ -610,7 +604,7 @@ function fn_save_requisito(){
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">M&aacute;ximo</label>
-                                <input id="maximo" name="maximo" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado = number_format($parametro[0]->valor_maximo_hu, 2, '.', ','); ?>" type="text" readonly='readonly'>
+                                <input id="maximo" name="maximo" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado = number_format(($parametro[0]->valor_maximo_hu)*$parametro[0]->valor_metro_cuadrado_habilitacion_urbana, 2, '.', ','); ?>" type="text" readonly='readonly'>
                             </div>
                         </div>
                         <div class="row" style="padding-left:10px;">
@@ -627,13 +621,13 @@ function fn_save_requisito(){
                                 <?php
                                 $area_total_=$liquidacion[0]->area_total;
                                 $valor_metro_cuadrado_habilitacion_urbana_ = $parametro[0]->valor_metro_cuadrado_habilitacion_urbana;
-                                $sub_total=$area_total_*$valor_metro_cuadrado_habilitacion_urbana_;
-                                $sub_total_formateado = number_format($sub_total, 2, '.', ',');
-                                $igv_ = $parametro[0]->igv;
-                                $igv_total=$sub_total*$igv_;
-                                $igv_total_formateado = number_format($igv_total, 2, '.', ',');
-                                $total=$sub_total+$igv_total;
+                                $total=$area_total_*$valor_metro_cuadrado_habilitacion_urbana_;
                                 $total_formateado = number_format($total, 2, '.', ',');
+                                $igv_ = $parametro[0]->igv;
+                                $sub_total=$total/($igv_+1);
+                                $sub_total_formateado = number_format($sub_total, 2, '.', ',');
+                                $igv_total=$total-$sub_total;
+                                $igv_total_formateado = number_format($igv_total, 2, '.', ',');
                                 
                                 ?>
                                 <input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php echo $sub_total_formateado?>" type="text" readonly='readonly'>
@@ -648,8 +642,16 @@ function fn_save_requisito(){
                                     $total_minimo_hu_formateado = number_format($total_minimo_hu, 2, '.', ',');
                                     $subtotal_minimo_hu_formateado = number_format($subtotal_minimo_hu, 2, '.', ',');
                                     $igv_minimo_hu_formateado = number_format($igv_minimo_hu, 2, '.', ',');
-                                }else{
-                                    $total_minimo_hu = $total;
+                                }else if($total>($parametro[0]->valor_maximo_hu*$parametro[0]->valor_metro_cuadrado_habilitacion_urbana)){
+                                    $total_maximo_hu = $parametro[0]->valor_maximo_hu*$parametro[0]->valor_metro_cuadrado_habilitacion_urbana;
+                                    //var_dump((float)$sub_total*(1+($parametro[0]->igv)));exit;
+                                    $subtotal_maximo_hu = $total_maximo_hu/(1+($parametro[0]->igv));
+                                    //var_dump($subtotal_minimo_hu);exit;
+                                    $igv_maximo_hu = $total_maximo_hu-$subtotal_maximo_hu;
+                                    $total_minimo_hu_formateado = number_format($total_maximo_hu, 2, '.', ',');
+                                    $subtotal_minimo_hu_formateado = number_format($subtotal_maximo_hu, 2, '.', ',');
+                                    $igv_minimo_hu_formateado = number_format($igv_maximo_hu, 2, '.', ',');
+                                }else{$minimo_hu = $total;
                                     //var_dump((float)$sub_total*(1+($parametro[0]->igv)));exit;
                                     $subtotal_minimo_hu = $total_minimo_hu/(1+($parametro[0]->igv));
                                     //var_dump($subtotal_minimo_hu);exit;

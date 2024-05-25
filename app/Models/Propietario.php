@@ -12,7 +12,7 @@ class Propietario extends Model
 
     function getPropietarioSolicitud($id_solicitud){      
 
-        $cad = "select
+        $cad = "select p.id,
         CASE 
              WHEN p.id_tipo_propietario = '78' THEN (select p2.numero_documento from personas p2 where p2.id = p.id_persona)
              WHEN p.id_tipo_propietario = '79' THEN (select e.ruc from empresas e where e.id = p.id_empresa)

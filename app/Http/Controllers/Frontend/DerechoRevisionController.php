@@ -414,9 +414,9 @@ class DerechoRevisionController extends Controller
 				$id_tipo_documento = 22;
 				$m2 = $parametro->valor_metro_cuadrado_habilitacion_urbana;
 				
-				$sub_total 	= ($m2*$area_total);
-				$igv		= ($parametro->igv*$sub_total);
-				$total		= $sub_total + $igv;
+				$total 	= ($m2*$area_total);
+				$sub_total		= $total/($parametro->igv+1);
+				$igv		= $total-$sub_total;
 				
 				$total_minimo		= $parametro->valor_minimo_hu;
 				$sub_total_minimo 	= $total_minimo/(1+$parametro->igv);
@@ -647,6 +647,8 @@ class DerechoRevisionController extends Controller
 		$proyecto->id_zona = $request->zona;
 		$proyecto->id_tipo_direccion = $request->tipo;
 		$proyecto->id_tipo_proyecto = 124;
+		$codigoHU = $derecho_revision->getCodigoSolicitudHU();
+		$proyecto->codigo = $codigoHU;
 		$proyecto->zonificacion = $request->zonificacion;
 		$proyecto->sub_lote = $request->sublote;
 		$proyecto->id_usuario_inserta = $id_user;
@@ -1142,6 +1144,7 @@ class DerechoRevisionController extends Controller
 		$tipo_proyectista = $datos[0]->tipo_proyectista;
 		$tipo_uso = $datos[0]->tipo_uso;
 		$instancia = $datos[0]->instancia;
+		$codigo = $datos[0]->codigo;
 
 		$year = Carbon::now()->year;
 
@@ -1167,7 +1170,7 @@ class DerechoRevisionController extends Controller
 		 $currentHour = Carbon::now()->format('H:i:s');
 
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','tipo_uso','valor_minimo','valor_maximo','instancia','proyectista_nombres'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','tipo_uso','valor_minimo','valor_maximo','instancia','proyectista_nombres','codigo'));
 		
 
 
@@ -1895,5 +1898,35 @@ class DerechoRevisionController extends Controller
 		
 		echo json_encode($solicitud_ubigeo);
 	}
+
+	public function eliminar_proyectista_hu($id){
+
+		$proyectista = Proyectista::find($id);
+		$proyectista->estado= "0";
+		$proyectista->save();
+		
+		echo "success";
+
+    }
+
+	public function eliminar_propietario_hu($id){
+
+		$propietario = Propietario::find($id);
+		$propietario->estado= "0";
+		$propietario->save();
+		
+		echo "success";
+
+    }
+
+	public function eliminar_infoProyecto_hu($id){
+
+		$uso_edificacion = UsoEdificacione::find($id);
+		$uso_edificacion->estado= "0";
+		$uso_edificacion->save();
+		
+		echo "success";
+
+    }
 
 }
