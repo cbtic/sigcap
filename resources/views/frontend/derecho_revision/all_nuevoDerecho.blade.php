@@ -146,14 +146,20 @@ function modalVerFormato(){
 
 					<div class="row" style="padding-left:10px">
 
-						<div class="col-lg-2">
-							<div class="form-group">
+						<div class="col-lg-2" id="solicitante_solicitud">
+							<div class="form-group" >
 								<label class="control-label form-control-sm">Solicitante</label>
 								<select name="tipo_solicitante" id="tipo_solicitante" class="form-control form-control-sm" onchange="obtenerSolicitante()">
+								<!--<option value="" selected="selected">--Seleccionar--</option>
+								<option value="1" <?php //if ($tipo_solicitante == 1) echo "selected='selected'" ?>>Proyectista</option>
+								<option value="2" <?php //if ($tipo_solicitante == 2) echo "selected='selected'" ?>>Responsable de Tramite</option>
+								<option value="3" <?php //if ($tipo_solicitante == 3) echo "selected='selected'" ?>>Administrado / Propietario</option>-->
+								
 								<option value="" selected="selected">--Seleccionar--</option>
-								<option value="1" <?php if ($tipo_solicitante == 1) echo "selected='selected'" ?>>Proyectista</option>
-								<option value="2" <?php if ($tipo_solicitante == 2) echo "selected='selected'" ?>>Responsable de Tramite</option>
-								<option value="3" <?php if ($tipo_solicitante == 3) echo "selected='selected'" ?>>Administrado / Propietario</option>
+								<option value="1" selected='selected'>Proyectista</option>
+								<option value="2">Responsable de Tramite</option>
+								<option value="3">Administrado / Propietario</option>
+
 								<!--<option value="">--Selecionar--</option>
 									<?/*php
 										foreach ($tipo_solicitante as $row) {*/?>
@@ -219,9 +225,6 @@ function modalVerFormato(){
 								<input id="celular" name="celular" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->numero_celular?>" type="text" readonly='readonly'>
 							</div>
 						</div>
-
-                    </div>
-                    <div class="row" style="padding-left:10px">
                     
 						<div class="col-lg-2">
 							<div class="form-group" id="act_gremial_">
@@ -496,7 +499,7 @@ function modalVerFormato(){
 																	<th>
 																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
 																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>-->
-																	<a href="javascript:void(0)" onclick="eliminarProyectistaHU(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
+																	<a href="javascript:void(0)" onclick="eliminarProyectistaHU(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 																	</div>
 																	</th>
 																</tr>											
@@ -554,8 +557,8 @@ function modalVerFormato(){
 																	<th><?php echo $row->correo?></th>
 																	<th>
 																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalIdioma(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarIdioma(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
+																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalIdioma(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>-->
+																	<a href="javascript:void(0)" onclick="eliminarPropietarioHU(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 																	</div>
 																	</th>
 																</tr>					
@@ -652,8 +655,8 @@ function modalVerFormato(){
 																	<th><?php //echo $row->folio?></th>-->
 																	<th>
 																	<!--<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-																	<a href="javascript:void(0)" onclick="eliminarEstudio(<?php //echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>-->
+																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>-->
+																	<a href="javascript:void(0)" onclick="eliminarInfoProyectoHU(<?php echo $row->id_uso_edificacion?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 																	</div>
 																	</th>
 																</tr>													

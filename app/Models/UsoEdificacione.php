@@ -11,7 +11,7 @@ class UsoEdificacione extends Model
     use HasFactory;
 
     function getInfoSolicitudUso($id_solicitud){      
-        $cad = "select s.id, tm.denominacion tipo_tramite, tm2.denominacion tipo_uso, ue.area_techada,
+        $cad = "select s.id, ue.id id_uso_edificacion, tm.denominacion tipo_tramite, tm2.denominacion tipo_uso, ue.area_techada,
 		(select ruta_archivo from solicitud_documentos sd where id_solicitud=ue.id_solicitud and id_tipo_documento=1 and estado='1' order by 1 desc limit 1)ruta_archivo1,
 		(select ruta_archivo from solicitud_documentos sd where id_solicitud=ue.id_solicitud and id_tipo_documento=2 and estado='1' order by 1 desc limit 1)ruta_archivo2,
 		(select ruta_archivo from solicitud_documentos sd where id_solicitud=ue.id_solicitud and id_tipo_documento=3 and estado='1' order by 1 desc limit 1)ruta_archivo3 

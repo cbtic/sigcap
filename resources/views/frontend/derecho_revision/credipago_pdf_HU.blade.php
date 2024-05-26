@@ -155,7 +155,7 @@ $(document).ready(function() {
                 <td class="td" style ="text-align: right; width: 60%; font-size:16px"><b><?php echo $credipago;?></b></td>
                 <td class="td" style ="text-align: left; width: 15%;"></td>
                 <td class="td" style ="text-align: left; width: 20%;">Cod. Proyecto:</b></td>
-                <td class="td" style ="text-align: right; width: 5%;"><?php //echo $credipago;?></td>                
+                <td class="td" style ="text-align: right; width: 5%;"><?php echo $codigo;?></td>                
             </tr>
             <tr>
                 <td class="td" style ="text-align: right; width: 60%;">CREDIPAGO</td>

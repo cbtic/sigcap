@@ -196,7 +196,7 @@ class DerechoRevision extends Model
         end as razon_social, pro.nombre, u.id_departamento departamento, u.id_provincia provincia,
         u.id_distrito distrito, pro.direccion, s.numero_revision, m.denominacion municipalidad, s.area_total total_area_techada, s.valor_obra, l.sub_total, l.igv, l.total, tm.denominacion tipo_proyectista, 
         tm2.denominacion tipo_liquidacion, tm3.denominacion instancia,
-        (select tm4.denominacion from uso_edificaciones ue inner join tabla_maestras tm4 on ue.id_tipo_uso = tm4.codigo::int and  tm4.tipo ='123' where ue.id_solicitud = s.id) tipo_uso
+        (select tm4.denominacion from uso_edificaciones ue inner join tabla_maestras tm4 on ue.id_tipo_uso = tm4.codigo::int and  tm4.tipo ='123' where ue.id_solicitud = s.id) tipo_uso, pro.codigo 
         from solicitudes s 
         inner join liquidaciones l on l.id_solicitud = s.id
         left join proyectistas p on p.id_solicitud = s.id
@@ -338,6 +338,15 @@ class DerechoRevision extends Model
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
+    }
+
+    public function getCodigoSolicitudHU(){
+		
+		$cad = "select lpad((count(*)+1)::varchar,5,'0') codigo 
+        from solicitudes s where id_tipo_solicitud ='124'";
+        
+		$data = DB::select($cad);
+        return $data[0]->codigo;
     }
     
 }
