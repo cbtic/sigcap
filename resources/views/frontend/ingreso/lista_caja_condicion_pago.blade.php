@@ -2,8 +2,9 @@
 	<thead>
 		<tr style="font-size:13px">
 			<th>Condición</th>
-			<th  class="text-right">Toral US$</th>
+			<!--<th  class="text-right">Total US$</th>
 			<th class="text-right">Total S/</th>
+-->
 			<th class="text-right">Total en Soles</th>
 		</tr>
 	</thead>
@@ -17,9 +18,11 @@
 			foreach ($resultado as $row) { ?>
 				<tr style="font-size:13px">
 					<td class="text-left" style="vertical-align:middle"><?php echo $row->condicion ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo $row->total_us ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo $row->total_tc ?></td>
-					<td class="text-right" style="vertical-align:middle"><?php echo $row->total_soles ?></td>
+					<!--
+					<td class="text-right" style="vertical-align:middle"><//?php echo number_format($row->total_us,2) ?></td>
+					<td class="text-right" style="vertical-align:middle"><//?php echo number_format($row->total_tc,2) ?></td>
+			-->
+					<td class="text-right" style="vertical-align:middle"><?php echo number_format($row->total_soles,2) ?></td>
 
 				</tr>
 		<?php
@@ -36,9 +39,11 @@
 	<tfoot>
 		<tr style="font-size:13px">
 			<th class="text-left" style="vertical-align:middle" colspan="1">Totales Generales</th>
-			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $total_us ?></th>
-			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $total_tc ?></th>
-			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo $total_soles ?></th>
+			<!--
+			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><//?php echo number_format($total_us,2) ?></th>
+			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><//?php echo number_format($total_tc,2) ?></th>
+	-->
+			<th class="text-right" style="vertical-align:middle;padding-left:0px!important"><?php echo number_format($total_soles,2) ?></th>
 		</tr>
 	</tfoot>
 </table>

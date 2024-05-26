@@ -72,8 +72,8 @@ class CajaIngreso extends Model
              from comprobantes c                                
                  inner join comprobante_pagos cp on cp.id_comprobante = c.id
                  inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
-             group by t.denominacion,cp.monto, c.id_usuario_inserta, c.fecha
-             having  c.id_usuario_inserta = ".$id_usuario."
+             --group by t.denominacion,cp.monto, c.id_usuario_inserta, c.fecha
+             where  c.id_usuario_inserta = ".$id_usuario."
              and TO_CHAR(c.fecha, 'dd/mm/yyyy')  = '".$fecha."'
          )
        group by condicion

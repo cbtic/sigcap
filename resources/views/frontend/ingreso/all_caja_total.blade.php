@@ -129,7 +129,7 @@
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Fecha</label>
-										<input class="form-control form-control-sm" id="fecha" name="fecha" value="<?php echo date("d/m/Y")?>" placeholder="Fecha">
+										<input class="form-control form-control-sm" id="fecha" name="fecha" value="<?php echo date("d-m-Y")?>" placeholder="Fecha">										
 									</div>
 								</div>
 
@@ -181,8 +181,10 @@
 									<thead>
 										<tr style="font-size:13px">
 											<th>Condición</th>
+											<!--
 											<th>Toral US$</th>
 											<th>Total S/</th>
+											-->
 											<th>Total en Soles</th>
 										</tr>
 									</thead>
