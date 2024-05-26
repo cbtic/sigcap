@@ -4,7 +4,8 @@
 $(document).ready(function () {
 	
 	$('#btnBuscar').click(function () {
-		fn_ListarBusqueda();
+		obtenerCajaVenta();
+		obtenerCondicionPago();
 	});
 	
 	$('#btnNuevo').click(function () {
@@ -16,13 +17,17 @@ $(document).ready(function () {
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
 	
-	/*
-	$('#fecha_inicio').datepicker({
+	
+	$('#fecha').datepicker({
         autoclose: true,
-		dateFormat: 'dd/mm/yy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
+
+
+
+	/*
 	
 	$('#fecha_vencimiento').datepicker({
         autoclose: true,
@@ -663,8 +668,37 @@ function cargarFondoComun() {
 			$("#divPlanilla").html(result);
 		}
 	});
-
 }
+
+
+function obtenerCajaVenta() {
+
+	$("#divCaja").html("");
+	$.ajax({
+		//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
+		url: "/ingreso/obtener_caja_venta",
+		data: $("#frmAfiliacion").serialize(),
+		type: "POST",
+		success: function(result) {
+			$("#divCaja").html(result);
+		}
+	});
+}
+
+function obtenerCondicionPago() {
+
+	$("#divCondicion").html("");
+	$.ajax({
+		//url: "/concurso/obtener_concurso_documento/"+id_concurso_inscripcion,
+		url: "/ingreso/obtener_caja_condicion_pago",
+		data: $("#frmAfiliacion").serialize(),
+		type: "POST",
+		success: function(result) {
+			$("#divCondicion").html(result);
+		}
+	});
+}
+
 
 //obtenerAnioPerido();
 

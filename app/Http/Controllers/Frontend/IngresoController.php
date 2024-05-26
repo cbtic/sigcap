@@ -672,6 +672,45 @@ class IngresoController extends Controller
         return view('frontend.ingreso.all_liquidacion_caja',compact('caja'));
     }
 	
+    public function caja_total(){
+        
+        $caja_model = new TablaMaestra;
+        $caja = $caja_model->getMaestroByTipo("91");
+        //print_r($caja);
+        //print_r("/n");
+
+        $caja_ingreso_model = new CajaIngreso();
+        $caja_usuario = $caja_ingreso_model->getCajaUsuario();
+
+        //print_r($caja_usuario); exit();
+
+
+        return view('frontend.ingreso.all_caja_total',compact('caja_usuario'));
+    }
+
+    public function obtener_caja_condicion_pago(request $request){
+ 
+        $id_usuario_caja = $request->id_usuario_caja;
+        $fecha = $request->fecha;
+
+        $caja_ingreso_model = new CajaIngreso();
+        $resultado = $caja_ingreso_model->getCajaCondicionPago($id_usuario_caja, $fecha);
+
+        return view('frontend.ingreso.lista_caja_condicion_pago',compact('resultado'));
+
+    }
+
+    public function obtener_caja_venta(Request $request){
+        $id_usuario_caja = $request->id_usuario_caja;
+        $fecha = $request->fecha;
+
+        $caja_ingreso_model = new CajaIngreso();
+        $resultado = $caja_ingreso_model->getCajaComprobante($id_usuario_caja, $fecha);
+
+        return view('frontend.ingreso.lista_caja_venta',compact('resultado'));
+
+    }
+
 	public function modal_liquidacion($id){        
 		$valorizaciones_model = new Valorizacione;
 
