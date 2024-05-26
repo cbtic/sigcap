@@ -74,7 +74,7 @@ class CajaIngreso extends Model
                  inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
              --group by t.denominacion,cp.monto, c.id_usuario_inserta, c.fecha
              where  c.id_usuario_inserta = ".$id_usuario."
-             and TO_CHAR(c.fecha, 'dd/mm/yyyy')  = '".$fecha."'
+             and TO_CHAR(c.fecha, 'dd-mm-yyyy')  = '".$fecha."'
          )
        group by condicion
         ";
