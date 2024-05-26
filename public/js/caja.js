@@ -20,10 +20,13 @@ $(document).ready(function () {
 	
 	$('#fecha').datepicker({
         autoclose: true,
-		dateFormat: 'dd/mm/yy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
+
+
+
 	/*
 	
 	$('#fecha_vencimiento').datepicker({
