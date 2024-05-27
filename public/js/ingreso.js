@@ -7,6 +7,9 @@ $(document).ready(function () {
 	$('#example-select-all').on('click', function(){
 		//alert("ok");
 
+		//var tipo_documento_b = $("#tipo_documento_b").val();
+		//$("#tipo_documento").val(tipo_documento_b);
+
 		if(id_caja_usuario=="0"){
 			bootbox.alert("Debe seleccionar una Caja disponible");
 			//$(obj).prop("checked",false);
@@ -73,7 +76,7 @@ $(document).ready(function () {
 	});
 	  
 
-	$('#numero_documento').keypress(function (e) {
+	$('#numero_documento_b').keypress(function (e) {
 		if (e.keyCode == 13) {
 			obtenerBeneficiario();
 		}
@@ -687,6 +690,11 @@ function calcular_dudoso(obj){
 }
 
 function validaTipoDocumento(){
+	//var tipo_documento_b = $("#tipo_documento_b").val();
+	//$("#tipo_documento").val(tipo_documento_b);
+
+	//alert($("#tipo_documento").val());
+
 	var tipo_documento = $("#tipo_documento").val();
 	$('#nombre_afiliado').val("");
 	$('#empresa_afiliado').val("");
@@ -695,6 +703,7 @@ function validaTipoDocumento(){
 	$('#codigo_afiliado').val("");	
 	$('#fecha_afiliado').val("");
 	$('#numero_documento').val("");
+	$('#numero_documento_b').val("");
 	$('#empresa_razon_social').val("");
 	$('#nombre_').val("");
 
@@ -744,6 +753,13 @@ function validaTipoDocumento(){
 }
 
 function obtenerBeneficiario(){
+
+	var tipo_documento_b = $("#tipo_documento_b").val();
+	$("#tipo_documento").val(tipo_documento_b);
+
+
+	var numero_documento_b = $("#numero_documento_b").val();
+	$("#numero_documento").val(numero_documento_b);
 	
 	var tipo_documento = $("#tipo_documento").val();
 	var numero_documento = $("#numero_documento").val();
@@ -810,6 +826,51 @@ function obtenerBeneficiario(){
 			if (result) {
 				//alert(result.agremiado.id);
 				//alert(result);
+
+				$("#tipo_documento").val(result.agremiado.id_tipo_documento);
+				$("#numero_documento").val(result.agremiado.numero_documento_);
+
+				tipo_documento = $("#tipo_documento").val();
+				numero_documento = $("#numero_documento").val();
+				//validaTipoDocumento();
+				//tipo_documento = $("#tipo_documento").val();
+				//numero_documento = $("#numero_documento").val();
+
+
+
+				//alert($("#tipo_documento").val());
+				//alert($("#numero_documento").val());
+
+				//alert(result.agremiado.id_tipo_documento);
+
+				if(tipo_documento == "79"){ //RUC
+					$('#divNombreApellido').hide();
+					$('#divCodigoAfliado').hide();
+					$('#divFechaAfliado').hide();
+					$('#divRucP').hide();
+					$('#divCategoria').hide();
+			
+					$('#divDireccionEmpresa').show();
+					$('#divRepresentanteEmpresa').show();
+					$('#divEmpresaRazonSocial').show();
+					$('#divBeneficiarioRuc').show();
+					//$("#btnBoleta").prop('disabled', false);
+					//$("#btnFactura").prop('disabled', true);
+				
+				}else{
+					$('#divNombreApellido').show();
+					$('#divCodigoAfliado').show();
+					$('#divFechaAfliado').show();
+					$('#divRucP').show();
+					$('#divCategoria').show();
+			
+					$('#divDireccionEmpresa').hide();
+					$('#divRepresentanteEmpresa').hide();
+					$('#divEmpresaRazonSocial').hide();
+					$('#divBeneficiarioRuc').hide();
+				}
+
+
 
 				if (tipo_documento == "79")//RUC
 				{

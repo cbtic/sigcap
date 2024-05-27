@@ -465,10 +465,10 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			var id = $('#id').val();
-			var numero_documento = $('#numero_documento').val();
-            var agremiado = $('#agremiado').val();
-			var sexo = $('#sexo').val();
-			var estado = $('#estado').val();
+			var numero_documento = $('#numero_documento_').val();
+            var agremiado = $('#agremiado_').val();
+			var sexo = $('#sexo_').val();
+			var estado = $('#estado_').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',

@@ -1081,7 +1081,7 @@ $.mask.definitions['p'] = "[Mm]";
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($tipo_documento as $row) { ?>
-														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '78') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
 													<?php
 													}
 													?>

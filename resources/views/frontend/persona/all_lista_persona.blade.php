@@ -150,15 +150,15 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="numero_documento" name="numero_documento" placeholder="Numero Documento">
+						<input class="form-control form-control-sm" id="numero_documento_" name="numero_documento_" placeholder="Numero Documento">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombres">
+						<input class="form-control form-control-sm" id="agremiado_" name="agremiado_" placeholder="Nombres">
 					</div>
 
                     <div class="col-lg-2">
                         <div class="form-group">
-                            <select name="sexo" id="sexo" class="form-control form-control-sm" onchange="">
+                            <select name="sexo_" id="sexo_" class="form-control form-control-sm" onchange="">
                                 <option value="">--Selecionar Sexo--</option>
                                 <?php
                                 foreach ($sexo as $row) {?>
@@ -171,7 +171,7 @@
 					</div>
                     
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado" id="estado" class="form-control form-control-sm">
+						<select name="estado_" id="estado_" class="form-control form-control-sm">
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
 							<option value="0">Eliminado</option>

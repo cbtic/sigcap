@@ -1634,7 +1634,31 @@ class AgremiadoController extends Controller
 	
 	public function obtener_agremiado($tipo_documento,$numero_documento){
 
-        $agremiado_model = new Agremiado;
+		$agremiado_model = new Agremiado;
+		if($tipo_documento=="87"){
+
+			//print_r("hi");exit();
+			$resultado = $agremiado_model->getAgremiadoLiquidacion($numero_documento);
+
+			if(isset($resultado->numero_documento)){
+				//echo("DNI");
+				$tipo_documento = $resultado->id_tipo_documento;
+				$numero_documento = $resultado->numero_documento;
+				//echo($resultado->numero_documento);
+
+			}else if(isset($resultado->ruc)){
+			//	echo("RUC");
+				$tipo_documento="79";
+				$numero_documento=$resultado->ruc;
+
+			}
+
+		}
+
+		//print_r($resultado);
+		//exit();
+        
+		$agremiado_model = new Agremiado;
         //$valorizaciones_model = new Valorizacione;
         $sw = true;
         $agremiado = $agremiado_model->getAgremiado($tipo_documento,$numero_documento);
