@@ -94,6 +94,7 @@ function datatablenew(){
 			var numero_cap = $('#numero_cap').val();
 			var agremiado = $('#nombre').val();
 			var rol = $('#rol').val();
+			var sub_rol = $('#sub_rol').val();
 			var rol_especifico = $('#rol_especifico').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
@@ -102,7 +103,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						periodo:periodo,numero_cap:numero_cap,agremiado:agremiado,rol:rol,rol_especifico:rol_especifico,estado:estado,
+						periodo:periodo,numero_cap:numero_cap,agremiado:agremiado,rol:rol,rol_especifico:rol_especifico,estado:estado,sub_rol:sub_rol,
 						_token:_token
                        },
                 "success": function (result) {
@@ -157,12 +158,22 @@ function datatablenew(){
 				},
 				{
 				"mRender": function (data, type, row) {
+					var sub_rol = "";
+					if(row.sub_rol!= null)sub_rol = row.sub_rol;
+					return sub_rol;
+				},
+				"bSortable": false,
+				"aTargets": [4],
+				"className": "dt-center",
+				},
+				{
+				"mRender": function (data, type, row) {
 					var rol_especifico = "";
 					if(row.rol_especifico!= null)rol_especifico = row.rol_especifico;
 					return rol_especifico;
 				},
 				"bSortable": false,
-				"aTargets": [4],
+				"aTargets": [5],
 				"className": "dt-center",
 				},
 				{
@@ -172,7 +183,7 @@ function datatablenew(){
 					return fecha_inicio;
 				},
 				"bSortable": false,
-				"aTargets": [5],
+				"aTargets": [6],
 				"className": "dt-center",
 				},
 				{
@@ -182,7 +193,7 @@ function datatablenew(){
 					return fecha_fin;
 				},
 				"bSortable": false,
-				"aTargets": [6],
+				"aTargets": [7],
 				"className": "dt-center",
 				},
 				{
@@ -197,7 +208,7 @@ function datatablenew(){
 				return estado;
 				},
 				"bSortable": false,
-				"aTargets": [7]
+				"aTargets": [8]
 				},
 				/*{
 				"mRender": function (data, type, row) {
@@ -224,6 +235,46 @@ function datatablenew(){
 				},*/
             ]
     });
+}
+
+function obtenerSubTipoConcurso(){
+	
+	var id_tipo_concurso = $('#rol').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/93/'+id_tipo_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>--Seleccionar Sub Rol--</option>";
+			$("#id_sub_rol").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_sub_rol").html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerRoEspecifico(){
+	
+	var id_sub_rol = $('#id_sub_rol').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/94/'+id_sub_rol,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>--Seleccionar Espec&iacute;fico--</option>";
+			$("#rol_especifico").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#rol_especifico").html(option);
+		}
+		
+	});
+	
 }
 
 function fn_ListarBusqueda() {

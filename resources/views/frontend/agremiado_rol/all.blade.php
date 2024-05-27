@@ -155,8 +155,8 @@
 					</div>
                     <div class="col-lg-1-5">
                         <div class="form-group">
-                            <select name="rol" id="rol" class="form-control form-control-sm" onchange="">
-                                <option value="">--Selecionar Rol--</option>
+                            <select name="rol" id="rol" class="form-control form-control-sm" onchange="obtenerSubTipoConcurso()">
+                                <option value="">--Seleccionar Rol--</option>
                                 <?php
                                 foreach ($rol as $row) {?>
                                 <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado_rol->rol)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
@@ -168,13 +168,20 @@
 					</div>
                     <div class="col-lg-2">
                         <div class="form-group">
+                            <select name="id_sub_rol" id="id_sub_rol" class="form-control form-control-sm" onChange="obtenerRoEspecifico()">
+                                <option value="">--Seleccionar Sub Rol--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
                             <select name="rol_especifico" id="rol_especifico" class="form-control form-control-sm" onchange="">
-                                <option value="">--Selecionar Espec&iacute;fico--</option>
+                                <option value="">--Seleccionar Espec&iacute;fico--</option>
                                 <?php
-                                foreach ($rol_especifico as $row) {?>
-                                <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$agremiado_rol->rol_especifico)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                //foreach ($rol_especifico as $row) {?>
+                                <!--<option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$agremiado_rol->rol_especifico)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>-->
                                 <?php
-                                }
+                                //}
                                 ?>
                             </select>
                         </div>
@@ -204,6 +211,7 @@
                             <th>N&uacute;mero CAP</th>
                             <th>Nombres</th>
                             <th>Rol</th>
+                            <th>Sub Rol</th>
                             <th>Rol Espec&iacute;fico</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
