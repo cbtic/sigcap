@@ -651,8 +651,9 @@ function fn_save_requisito(){
                                     $total_minimo_hu_formateado = number_format($total_maximo_hu, 2, '.', ',');
                                     $subtotal_minimo_hu_formateado = number_format($subtotal_maximo_hu, 2, '.', ',');
                                     $igv_minimo_hu_formateado = number_format($igv_maximo_hu, 2, '.', ',');
-                                }else{$minimo_hu = $total;
-                                    $total_minimo_hu = $parametro[0]->valor_minimo_hu;
+                                }else{
+                                    $total_minimo_hu = $total;
+                                    //$total_minimo_hu = $parametro[0]->valor_minimo_hu;
                                     //var_dump((float)$sub_total*(1+($parametro[0]->igv)));exit;
                                     $subtotal_minimo_hu = $total_minimo_hu/(1+($parametro[0]->igv));
                                     //var_dump($subtotal_minimo_hu);exit;

@@ -44,6 +44,7 @@ class AgremiadoRolesController extends Controller
 		$p[]=$request->numero_cap;
         $p[]=$request->agremiado;
         $p[]=$request->rol;
+		$p[]=$request->sub_rol;
 		$p[]=$request->rol_especifico;
         $p[]="";
         $p[]="";
