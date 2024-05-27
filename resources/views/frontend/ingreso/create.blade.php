@@ -247,7 +247,7 @@
                                                     <?php ?>
                                                     <label class="form-control-sm">Tipo Documento</label>
 
-                                                    <select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onblur="validaTipoDocumento();">
+                                                    <select name="tipo_documento_b" id="tipo_documento_b" class="form-control form-control-sm" onblur="validaTipoDocumento();">
                                                         <?php
                                                         foreach ($tipo_documento as $row) { ?>
                                                             <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == "85") echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
@@ -255,6 +255,11 @@
                                                         }
                                                         ?>
                                                     </select>
+
+                                                    <input type="hidden" readonly name="tipo_documento" id="tipo_documento" value="85" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="numero_documento" id="numero_documento" value="" class="form-control form-control-sm">
+
+                                                    
 
                                                     <input type="hidden" readonly name="empresa_id" id="empresa_id" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="id_ubicacion" id="id_ubicacion" value="" class="form-control form-control-sm">
@@ -302,7 +307,7 @@
                                                     <!--
                                 <input type="text" name="numero_documento" id="numero_documento" onblur="obtenerBeneficiario()" value="{{old('clinum')}}"  placeholder="" class="form-control form-control-sm" />
                                         -->
-                                                    <input class="form-control input-sm text-uppercase" type="text" name="numero_documento" id="numero_documento" autocomplete="OFF" maxlength="12" required="" tabindex="0">
+                                                    <input class="form-control input-sm text-uppercase" type="text" name="numero_documento_b" id="numero_documento_b" autocomplete="OFF" maxlength="20" required="" tabindex="0">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerBeneficiario()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
                                                     </span>
