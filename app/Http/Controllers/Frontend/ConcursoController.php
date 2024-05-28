@@ -812,6 +812,16 @@ class ConcursoController extends Controller
 	
 		$id_user = Auth::user()->id;
 		
+		$cantidadInscripcionDocumento = 0;
+		$cantidadConcursoRequisito = 0;
+		
+		$InscripcionDocumentoExiste = InscripcionDocumento::where("id_concurso_inscripcion",$request->id_concurso_inscripcion)->where("orden_requisito",$request->orden_requisito)->where("id","!=",$request->id)->where("estado",1)->get();
+		$msg = "";
+		
+		$cantidad = count($InscripcionDocumentoExiste);
+		
+		if($cantidad == 0){
+		
 		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
 			
 		$agremiado = Agremiado::find($concursoInscripcion->id_agremiado);
@@ -894,6 +904,7 @@ class ConcursoController extends Controller
 		//$inscripcionDocumento->ruta_archivo = $request->img_foto;
 		$inscripcionDocumento->fecha_documento = $request->fecha_documento;
 		$inscripcionDocumento->observacion = $request->observacion;
+		$inscripcionDocumento->orden_requisito = $request->orden_requisito;
 		$inscripcionDocumento->estado = 1;
 		$inscripcionDocumento->id_usuario_inserta = $id_user;
 		$inscripcionDocumento->save();
@@ -903,8 +914,14 @@ class ConcursoController extends Controller
         $inscripcionDocumento = $inscripcionDocumento_model->getConcursoInscripcionDocumentoById($request->id_concurso_inscripcion);
         $concursoRequisito = $concurso_model->getConcursoRequisitoByIdConcurso($concursoPuesto->id_concurso);
 		
-		$data["inscripcionDocumento"] = count($inscripcionDocumento);
-		$data["concursoRequisito"] = count($concursoRequisito);
+		$cantidadInscripcionDocumento = count($inscripcionDocumento);
+		$cantidadConcursoRequisito = count($concursoRequisito);
+		
+		}
+		
+		$data["inscripcionDocumento"] = $cantidadInscripcionDocumento;
+		$data["concursoRequisito"] = $cantidadConcursoRequisito;
+		$data["cantidad"] = $cantidad;
 		echo json_encode($data);
 		
     }

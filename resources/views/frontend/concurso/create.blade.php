@@ -779,6 +779,7 @@ function obtenerSubTipoConcurso(callback){
 																	<thead>
 																		<tr style="font-size:13px">
 																			<!--<th>N&deg;</th>-->
+																			<th>Orden</th>
 																			<th>Nombre del documento</th>
 																			<th>Tipo de Doc</th>
 																			<th>Fecha</th>
