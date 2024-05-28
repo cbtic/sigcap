@@ -516,6 +516,7 @@ if(id>0){
 	$("#id_regional").attr("disabled",true);
 	$("#observaciones").attr("disabled",true);
 	$("#tipo_comision").attr("disabled",true);
+	cargarDelegados();
 }
 
 function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
@@ -556,6 +557,22 @@ function fn_validar_dia(opc){
 		$("#btnGuardarSemana").hide();
 		$("#btnCancelarSemana").hide();
 	}
+}
+
+
+function cargarDelegados(){
+    
+	var id=$("#id").val();
+	
+    $("#tblDelegado tbody").html("");
+	$.ajax({
+			url: "/sesion/obtener_delegados/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#tblDelegado tbody").html(result);
+			}
+	});
+
 }
 
 </script>

@@ -187,6 +187,20 @@ class SesionController extends Controller
 
     }
 	
+	public function obtener_delegados($id){
+		
+		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
+		
+		if($id>0){
+			$delegados = $comisionSesionDelegado_model->getComisionSesionDelegadosByIdComisionSesion($id);
+		}else{
+			$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision(0/*$request->id_comision*/);
+		}
+		
+		return view('frontend.sesion.lista_sesion_delegado',compact('id','delegados'));
+		
+	}
+	
 	public function obtener_comision($id_periodo,$tipo_comision){
 			
 		$comision_model = new Comisione;
