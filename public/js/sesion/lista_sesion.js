@@ -851,6 +851,19 @@ function cargarDictamen(id_concurso_inscripcion){
 
 }
 
+function cargarDictamenNuevo(id_concurso_inscripcion){
+       
+    $("#tblDictamenNuevo tbody").html("");
+	$.ajax({
+			url: "/sesion/obtener_dictamen/"+id_concurso_inscripcion,
+			type: "GET",
+			success: function (result) {  
+					$("#tblDictamenNuevo tbody").html(result);
+			}
+	});
+
+}
+
 function fn_ListarBusqueda() {
     datatablenew();
 };
