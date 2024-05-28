@@ -516,6 +516,8 @@ if(id>0){
 	$("#id_regional").attr("disabled",true);
 	$("#observaciones").attr("disabled",true);
 	$("#tipo_comision").attr("disabled",true);
+	cargarDelegados();
+	cargarDictamenNuevo(id);
 }
 
 function obtenerComisionEdit(id_periodo,tipo_comision,id_comision){
@@ -556,6 +558,22 @@ function fn_validar_dia(opc){
 		$("#btnGuardarSemana").hide();
 		$("#btnCancelarSemana").hide();
 	}
+}
+
+
+function cargarDelegados(){
+    
+	var id=$("#id").val();
+	
+    $("#tblDelegado tbody").html("");
+	$.ajax({
+			url: "/sesion/obtener_delegados/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#tblDelegado tbody").html(result);
+			}
+	});
+
 }
 
 </script>
@@ -879,6 +897,29 @@ function fn_validar_dia(opc){
 										</tbody>
 									</table>
                 				</div>
+								
+								<div class="table-responsive">
+								<table id="tblDictamenNuevo" class="table table-hover table-sm">
+									<thead>
+									<tr style="font-size:13px">
+										<!--<th>C&oacute;digo</th>-->
+										<th>Tipo de Solicitud</th>
+										<th>Distrito</th>
+										<th>Revis&oacute;n</th>
+										<th>N&deg; Liquidaci&oacute;n</th>
+										<th>Monto</th>
+										<th>Fecha Liquidaci&oacute;n</th>
+										<!--<th>Nombre</th>-->
+										<th>Direcci&oacute;n</th>
+										<th>Dictamen</th>
+										<th>Exp. Municipal</th>
+										<th>Proyectista</th>
+									</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								</div>
 								
 							</div>
 						</div>

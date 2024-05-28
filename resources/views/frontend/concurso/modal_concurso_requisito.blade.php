@@ -219,6 +219,7 @@ function fn_save_documento(){
 	var observacion = $('#observacion').val();
 	var img_foto = $('#img_foto').val();
 	var fecha_documento = $('#fecha_documento').val();
+	var orden_requisito = $('#orden_requisito').val();
 	
 	var msg = "";
 	
@@ -235,9 +236,15 @@ function fn_save_documento(){
     $.ajax({
 			url: "/concurso/send_concurso_documento",
             type: "POST",
-            data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,observacion:observacion,img_foto:img_foto,fecha_documento:fecha_documento},
+            data : {_token:_token,id:id,id_concurso_inscripcion:id_concurso_inscripcion,id_tipo_documento:id_tipo_documento,observacion:observacion,img_foto:img_foto,fecha_documento:fecha_documento,orden_requisito:orden_requisito},
 			dataType: 'json',
             success: function (result) { 
+			
+				if(result.cantidad>0){
+					bootbox.alert("El orden de requisito ingresado ya existe, verifique y cambielo"); 
+        			return false;
+				}
+			
 				$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
 				datatablenew();
@@ -307,6 +314,13 @@ function fn_save_documento(){
 							$readonly=$id>0?"readonly='readonly'":'';
 							$readonly_=$id>0?'':"readonly='readonly'";
 						?>
+						
+						<div class="col-lg-2">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Orden Requisito</label>
+								<input id="orden_requisito" name="orden_requisito" class="form-control form-control-sm"  value="<?php echo $inscripcionDocumento->orden_requisito?>" type="text">
+							</div>
+						</div>
 						
 						<div class="col-lg-12">
 							<div class="form-group">
