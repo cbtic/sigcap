@@ -593,7 +593,7 @@ function obtenerSubTipoConcurso(callback){
 													</div>-->
 													
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-														<select name="flag_concurso" id="flag_concurso" class="form-control form-control-sm" >
+														<select disabled="disabled" name="flag_concurso" id="flag_concurso" class="form-control form-control-sm" >
 															<option value="">--Todos los Concursos--</option>
 															<option value="1" selected="selected">Concursos Vigentes</option>
 															<option value="2">Concursos Pasados</option>

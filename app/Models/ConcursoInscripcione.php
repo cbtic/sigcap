@@ -156,6 +156,12 @@ where id_agremiado=".$id_agremiado." and ci.estado='1'";
 
     }
 	
+	public function listar_concurso_resultado_agremiado($p){
+
+        return $this->readFuntionPostgres('sp_listar_concurso_resultado_agremiado_paginado',$p);
+
+    }
+	
 	public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';

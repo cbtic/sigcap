@@ -1708,7 +1708,7 @@ function ocultar_solicitud(){
 function datatablenew(){
     var oTable = $('#tblConcurso').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/concurso/listar_concurso_agremiado",
+        "sAjaxSource": "/concurso/listar_concurso_resultado_agremiado",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         "bFilter": false,
@@ -1741,7 +1741,10 @@ function datatablenew(){
 			var id_estado = $('#id_estado_bus').val();
 			var campo = $('#campo').val();
 			var orden = $('#orden').val();
-			
+			var id_periodo = $('#id_periodo_bus').val();
+			var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
+			var id_sub_tipo_concurso = $('#id_sub_tipo_concurso_bus').val();
+			var id_puesto = $('#id_puesto_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -1752,6 +1755,8 @@ function datatablenew(){
 						numero_documento:numero_documento,agremiado:agremiado,
 						id_situacion:id_situacion,id_estado:id_estado,
 						campo:campo,orden:orden,
+						id_periodo:id_periodo,id_tipo_concurso:id_tipo_concurso,
+						id_sub_tipo_concurso:id_sub_tipo_concurso,id_puesto:id_puesto,
 						_token:_token
                        },
                 "success": function (result) {
@@ -3581,6 +3586,46 @@ function obtenerPuesto(id_concurso,id){
 				option += "<option value='"+oo.id+"' "+selected+" >"+oo.puesto+"</option>";
 			});
 			$("#asignar_puesto").html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerSubTipoConcursoBus(){
+	
+	var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/93/'+id_tipo_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_sub_tipo_concurso_bus").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_sub_tipo_concurso_bus").html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerRoEspecifico(){
+	
+	var id_sub_rol = $('#id_sub_tipo_concurso_bus').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/94/'+id_sub_rol,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>--Seleccionar Espec&iacute;fico--</option>";
+			$("#id_puesto_bus").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_puesto_bus").html(option);
 		}
 		
 	});
