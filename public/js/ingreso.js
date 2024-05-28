@@ -695,7 +695,7 @@ function validaTipoDocumento(){
 
 	//alert($("#tipo_documento").val());
 
-	var tipo_documento = $("#tipo_documento").val();
+	var tipo_documento = $("#tipo_documento_b").val();
 	$('#nombre_afiliado').val("");
 	$('#empresa_afiliado').val("");
 	$('#empresa_direccion').val("");
@@ -717,7 +717,13 @@ function validaTipoDocumento(){
 
 	//$("#btnTicket").prop('disabled', true).hide();
 	//alert(tipo_documento);
-	if(tipo_documento == "79"){ //RUC
+	if(tipo_documento == "87"){
+
+		$("#chkExonerado").prop('disabled', true);
+		$("#cboTipoConcepto_b").prop('disabled', true);
+
+
+	}else if(tipo_documento == "79"){ //RUC
 		$('#divNombreApellido').hide();
 		$('#divCodigoAfliado').hide();
 		$('#divFechaAfliado').hide();
