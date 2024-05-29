@@ -285,7 +285,7 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>Id</th>
+                            <!--<th>Id</th>-->
 							<th>Periodo</th>
 							<th>Tipo Concurso</th>
 							<th>SubTipo Concurso</th>

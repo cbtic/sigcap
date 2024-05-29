@@ -426,7 +426,7 @@ function datatablenew(){
 
         "aoColumnDefs":
             [	
-				{
+				/*{
                 "mRender": function (data, type, row) {
                 	var id = "";
 					if(row.id!= null)id = row.id;
@@ -436,7 +436,7 @@ function datatablenew(){
                 "aTargets": [0],
 				"className": "dt-center",
 				//"className": 'control'
-                },
+                },*/
 				
 				{
                 "mRender": function (data, type, row) {
@@ -445,7 +445,7 @@ function datatablenew(){
 					return periodo;
                 },
                 "bSortable": true,
-                "aTargets": [1]
+                "aTargets": [0]
                 },
 				
 				{
@@ -455,7 +455,7 @@ function datatablenew(){
 					return tipo_concurso;
                 },
                 "bSortable": true,
-                "aTargets": [2]
+                "aTargets": [1]
                 },
 				
 				{
@@ -465,7 +465,7 @@ function datatablenew(){
 					return sub_tipo_concurso;
                 },
                 "bSortable": true,
-                "aTargets": [3]
+                "aTargets": [2]
                 },
 				
 				{
@@ -475,7 +475,7 @@ function datatablenew(){
 					return fecha;
                 },
                 "bSortable": true,
-                "aTargets": [4]
+                "aTargets": [3]
                 },
 				
 				{
@@ -485,7 +485,7 @@ function datatablenew(){
 					return fecha_inscripcion_inicio;
                 },
                 "bSortable": true,
-                "aTargets": [5]
+                "aTargets": [4]
                 },
 				
 				{
@@ -495,7 +495,7 @@ function datatablenew(){
 					return fecha_inscripcion_fin;
                 },
                 "bSortable": true,
-                "aTargets": [6]
+                "aTargets": [5]
                 },
 				
 				{
@@ -505,7 +505,7 @@ function datatablenew(){
 					return fecha_acreditacion_inicio;
                 },
                 "bSortable": true,
-                "aTargets": [7]
+                "aTargets": [6]
                 },
 				
 				{
@@ -515,7 +515,7 @@ function datatablenew(){
 					return fecha_acreditacion_fin;
                 },
                 "bSortable": true,
-                "aTargets": [8]
+                "aTargets": [7]
                 },
 				
 				{
@@ -530,7 +530,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [9]
+					"aTargets": [8]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -561,7 +561,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [10],
+					"aTargets": [9],
 				},
 
             ]

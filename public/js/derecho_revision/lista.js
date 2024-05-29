@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 	//calculoVistaPrevia();
 	$('#solicitante_solicitud').hide();
-	
+
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
 		obtenerDatosUbigeo();
@@ -116,6 +116,20 @@ $(document).ready(function () {
 	$('#direccion_persona_').hide();
 	$('#celular_').hide();
 	$('#email_').hide();
+
+	
+
+	$('#area_techada_presupuesto, #valor_unitario').on('blur', function() {
+        var input = $(this).val().replace(/[^0-9.]/g, '');
+        $(this).val(formatoMoneda(input));
+        calcularPresupuesto();
+    });
+
+    // Initially format the inputs if they have values
+    $('#area_techada_presupuesto, #valor_unitario').each(function() {
+        var input = $(this).val().replace(/[^0-9.]/g, '');
+        $(this).val(formatoMoneda(input));
+    });
 
 	cargarPeriodo();
 	cargarPeriodoHu();
@@ -1922,3 +1936,41 @@ function fn_eliminar_infoProyecto_hu(id){
             }
     });
 }
+
+
+function calcularPresupuesto() {
+	var areaTechada = parseFloat($('#area_techada_presupuesto').val().replace(/,/g, '')) || 0;
+	var valorUnitario = parseFloat($('#valor_unitario').val().replace(/,/g, '')) || 0;
+	var presupuesto = areaTechada * valorUnitario;
+	$('#presupuesto').val(presupuesto.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+}
+
+function formatoMoneda(input) {
+	return parseFloat(input.replace(/,/g, '')).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+}
+
+function copiarArea(){
+	var input = document.getElementById('area_techada').value.replace(/[^0-9.]/g, '');
+	var valor_formateado = formatoMoneda(input);
+    document.getElementById('area_techada').value = valor_formateado;
+    document.getElementById('area_techada_total').value = valor_formateado;
+}
+
+function AddFilaPresupuesto() {
+
+    var container = document.getElementById('presupuesto-container');
+    var newRow = container.children[0].cloneNode(true); // Clona la primera fila
+
+    // Limpia los valores de los campos en la nueva fila
+    newRow.querySelectorAll('input').forEach(function(input) {
+        input.value = '';
+    });
+    newRow.querySelectorAll('select').forEach(function(select) {
+        select.selectedIndex = "";
+    });
+
+    container.appendChild(newRow); // Agrega la nueva fila al contenedor
+
+}
+
+

@@ -407,14 +407,14 @@ function fn_save_requisito(){
                 </div>
 
                 <div class="row" style="padding-left:10px">
-                    <div class="col-lg-3">
+                    <!--<div class="col-lg-3">
                         <label class="control-label form-control-sm">Valor Total Obra</label>
                         <?php
-                        $valor_obra_=$liquidacion[0]->valor_obra;
-                        $valor_obra_formateado = number_format($valor_obra_, 2, '.', ',');
+                        //$valor_obra_=$liquidacion[0]->valor_obra;
+                        //$valor_obra_formateado = number_format($valor_obra_, 2, '.', ',');
                         ?>
-                        <input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo $valor_obra_formateado?>" type="text" readonly='readonly'>
-                    </div>
+                        <input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php //echo $valor_obra_formateado?>" type="text" readonly='readonly'>
+                    </div>-->
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea del Terreno</label>
                         <input id="area_terreno" name="area_terreno" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_total?>" type="text" readonly='readonly'>
