@@ -522,66 +522,106 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">&Aacute;rea Techada</label>
-								<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo number_format($datos_usoEdificaciones->area_techada, 2, '.', ',');?>" type="text">
+								<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo number_format($datos_usoEdificaciones->area_techada, 2, '.', ',');?>" type="text" onchange="copiarArea()">
+							</div>
+							<div style="margin-top:37px" class="form-group">
+								<div class="col-sm-12 controls">
+									<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+										<a href="javascript:void(0)" onClick="AddFilaUso()" class="btn btn-sm btn-success">Agregar</a>
+										<!--<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
+									</div>
+								</div>
 							</div>
 						</div>
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
 							Presupuesto
 						</div>
-						<div class="row" style="padding-left:10px">
-							<div class="col-lg-3" style=";padding-right:15px">
-								<label class="control-label form-control-sm">Tipo de Obra</label>
-								<select name="tipo_obra" id="tipo_obra" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($tipo_obra as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_presupuesto->id_tipo_obra)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
+						<div class="row">
+							<div class="col-lg-8" style=";padding-right:15px">
+								<div class="row" style="padding-left:10px">
+									<div class="col-lg-12" id="presupuesto-container">
+										<div class="row presupuesto-row">
+											<div class="col-lg-5" style=";padding-right:15px">
+												<label class="control-label form-control-sm">Tipo de Obra</label>
+												<select name="tipo_obra" id="tipo_obra" class="form-control form-control-sm" onChange="">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($tipo_obra as $row) {?>
+													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_presupuesto->id_tipo_obra)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+													<?php
+													}
+													?>
+												</select>
+											</div>
+											<div class="col-lg-2">
+												<label class="control-label form-control-sm">&Aacute;rea Techada m2</label>
+												<input id="area_techada_presupuesto" name="area_techada_presupuesto" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->area_techada, 2, '.', ',');?>" type="text">
+											</div>
+											<div class="col-lg-2">
+												<label class="control-label form-control-sm">Valor Unitario S/</label>
+												<input id="valor_unitario" name="valor_unitario" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->valor_unitario, 2, '.', ',');?>" type="text">
+											</div>
+											<div class="col-lg-2">
+												<label class="control-label form-control-sm">Presupuesto</label>
+												<input id="presupuesto" name="presupuesto" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->total_presupuesto, 2, '.', ',');?>" type="text" readonly='readonly'>
+											</div>
+											<div style="margin-top:37px" class="form-group">
+												<div class="col-sm-12 controls">
+													<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+														<a href="javascript:void(0)" onClick="AddFilaPresupuesto()" class="btn btn-sm btn-success">Agregar</a>
+														<!--<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;padding-top:10px; display:flex; justify-content:flex-end">
+									<div class="col-lg-3">
+										<label class="control-label form-control-sm">Valor Total de Obra S/</label>
+										<input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->valor_obra, 2, '.', ',');?>" type="text">
+									</div>
+								</div>
 							</div>
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">&Aacute;rea Techada m2</label>
-								<input id="area_techada_presupuesto" name="area_techada_presupuesto" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->area_techada, 2, '.', ',');?>" type="text">
+							<div class="col-lg-2" style=";padding-right:15px; border-left:2px solid #ccc;">
+								<div class="row" style="padding-left:10px;padding-top:10px">
+									<div class="col-lg-8">
+										<label class="control-label form-control-sm">&Aacute;rea Techada Total</label>
+										<input id="area_techada_total" name="area_techada_total" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->area_total, 2, '.', ',');?>" type="text" readonly='readonly'>
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;padding-top:10px">
+									<div class="col-lg-8">
+										<label class="control-label form-control-sm">Azotea</label>
+										<input id="azotea" name="azotea" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->azotea?>" type="text">
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;padding-top:10px">
+									<div class="col-lg-8">
+										<label class="control-label form-control-sm">N° de Pisos</label>
+										<input id="n_pisos" name="n_pisos" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->numero_piso?>" type="text">
+									</div>
+								</div>
 							</div>
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Valor Unitario S/</label>
-								<input id="valor_unitario" name="valor_unitario" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->valor_unitario, 2, '.', ',');?>" type="text">
-							</div>
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Presupuesto</label>
-								<input id="presupuesto" name="presupuesto" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->total_presupuesto, 2, '.', ',');?>" type="text">
-							</div>
-						</div>
-						<div class="row" style="padding-left:10px;padding-top:10px">
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">&Aacute;rea Techada Total</label>
-								<input id="area_techada_total" name="area_techada_total" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->area_total, 2, '.', ',');?>" type="text">
-							</div>
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">N° S&oacute;tanos</label>
-								<input id="n_sotanos" name="n_sotanos" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->numero_sotano?>" type="text">
-							</div>
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Azotea</label>
-								<input id="azotea" name="azotea" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->azotea?>" type="text">
-							</div>
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Semis&oacute;tano</label>
-								<input id="semisotano" name="semisotano" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->semisotano?>" type="text">
-							</div>
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">N° de Pisos</label>
-								<input id="n_pisos" name="n_pisos" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->numero_piso?>" type="text">
-							</div>
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Fecha Registro</label>
-								<input id="fecha_registro" name="fecha_registro" on class="form-control form-control-sm"  value="<?php echo date('Y-m-d', strtotime($derechoRevision_->fecha_registro)); ?>" type="text" readonly='readonly'>
-							</div>
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Valor Total de Obra S/</label>
-								<input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->valor_obra, 2, '.', ',');?>" type="text">
+							<div class="col-lg-2" style=";padding-right:15px">
+								<div class="row" style="padding-left:10px;padding-top:10px">
+									<div class="col-lg-8">
+										<label class="control-label form-control-sm">N° S&oacute;tanos</label>
+										<input id="n_sotanos" name="n_sotanos" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->numero_sotano?>" type="text">
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;padding-top:10px">
+									<div class="col-lg-8">
+										<label class="control-label form-control-sm">Semis&oacute;tano</label>
+										<input id="semisotano" name="semisotano" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->semisotano?>" type="text">
+									</div>
+								</div>
+								<div class="row" style="padding-left:10px;padding-top:10px">
+									<div class="col-lg-8">
+										<label class="control-label form-control-sm">Fecha Registro</label>
+										<input id="fecha_registro" name="fecha_registro" on class="form-control form-control-sm"  value="<?php echo date('Y-m-d', strtotime($derechoRevision_->fecha_registro)); ?>" type="text" readonly='readonly'>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div style="padding: 15px 0px 15px 10px; font-weight: bold">

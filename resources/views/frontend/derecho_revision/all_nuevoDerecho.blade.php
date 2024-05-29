@@ -277,20 +277,23 @@ function modalVerFormato(){
 
 						<div class="col-lg-2">
                             <label class="control-label form-control-sm">Departamento</label>
-                            <select name="departamento" id="departamento" class="form-control form-control-sm" onChange="obtenerProvincia()" disabled='disabled'>
+                            <select name="departamento" id="departamento" class="form-control form-control-sm" onChange="obtenerProvincia()">
                                 <?php if($id>0){ ?>
 								<option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($departamento as $row) {?>
                                 <option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($derechoRevision_->id_ubigeo,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
                                 <?php 
-									}
-								}else {?>
+								}
+								
+								}else{?>
 									<option value="">--Selecionar--</option>
 									<?php
-									foreach ($departamento as $row) {?>
+									foreach ($departamento as $row) {
+										if ($row->id_departamento == '15' || $row->id_departamento == '07') { ?>
 									<option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==15)echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
 									<?php 
+										} 
 									}
 								}
                                 ?>

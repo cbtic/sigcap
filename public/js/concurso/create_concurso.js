@@ -1773,7 +1773,7 @@ function datatablenew(){
 		},
         "aoColumnDefs":
             [	
-			 	{
+			 	/*{
                 "mRender": function (data, type, row, meta) {	
                 	var id = "";
 					if(row.id!= null)id = row.id;
@@ -1781,7 +1781,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "aTargets": [0]
-                },
+                },*/
 				{
                 "mRender": function (data, type, row) {
                 	var periodo = "";
@@ -1789,7 +1789,7 @@ function datatablenew(){
 					return periodo;
                 },
                 "bSortable": false,
-                "aTargets": [1],
+                "aTargets": [0],
 				},
 				{
                 "mRender": function (data, type, row) {
@@ -1798,7 +1798,7 @@ function datatablenew(){
 					return tipo_concurso;
                 },
                 "bSortable": false,
-                "aTargets": [2],
+                "aTargets": [1],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1807,7 +1807,7 @@ function datatablenew(){
 					return sub_tipo_concurso;
                 },
                 "bSortable": false,
-                "aTargets": [3],
+                "aTargets": [2],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1816,7 +1816,7 @@ function datatablenew(){
 					return puesto;
                 },
                 "bSortable": false,
-                "aTargets": [4],
+                "aTargets": [3],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1825,7 +1825,7 @@ function datatablenew(){
 					return fecha_inscripcion;
                 },
                 "bSortable": false,
-                "aTargets": [5],
+                "aTargets": [4],
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1834,7 +1834,7 @@ function datatablenew(){
 					return pago;
                 },
                 "bSortable": false,
-                "aTargets": [6]
+                "aTargets": [5]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1843,7 +1843,7 @@ function datatablenew(){
 					return numero_cap;
                 },
                 "bSortable": false,
-                "aTargets": [7]
+                "aTargets": [6]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1852,7 +1852,7 @@ function datatablenew(){
 					return numero_documento;
                 },
                 "bSortable": false,
-                "aTargets": [8]
+                "aTargets": [7]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1861,7 +1861,7 @@ function datatablenew(){
 					return apellido_paterno;
                 },
                 "bSortable": false,
-                "aTargets": [9]
+                "aTargets": [8]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -1870,7 +1870,7 @@ function datatablenew(){
 					return situacion;
                 },
                 "bSortable": false,
-                "aTargets": [10]
+                "aTargets": [9]
                 },
 				
 				{
@@ -1880,7 +1880,7 @@ function datatablenew(){
 					return formato_miles(puntaje);
                 },
                 "bSortable": false,
-                "aTargets": [11]
+                "aTargets": [10]
                 },
 				
 				{
@@ -1890,7 +1890,7 @@ function datatablenew(){
 					return estado;
                 },
                 "bSortable": false,
-                "aTargets": [12]
+                "aTargets": [11]
                 },
 				{
 					"mRender": function (data, type, row) {
@@ -1906,7 +1906,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [13],
+					"aTargets": [12],
 				},
 				
 				
