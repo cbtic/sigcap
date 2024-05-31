@@ -45,6 +45,11 @@ $(document).ready(function () {
 	$('#btnDescargarComprimido').on('click', function () {
 													   
 		var id_concurso= $('#id_concurso_bus').val();
+		var id_periodo = $('#id_periodo_bus').val();
+		var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
+		var id_sub_tipo_concurso = $('#id_sub_tipo_concurso_bus').val();
+		var id_puesto = $('#id_puesto_bus').val();	
+		
 		var numero_cap = $('#numero_cap_bus').val();
 		var numero_documento = $('#numero_documento_bus').val();
 		var agremiado = $('#agremiado_bus').val();
@@ -55,7 +60,13 @@ $(document).ready(function () {
 		
 		if(numero_cap=="")numero_cap="0";
 		if(id_concurso=="")id_concurso="0";
-		location.href = '/concurso/descargar_comprimido/'+numero_cap+"/"+id_concurso;
+		if(id_periodo=="")id_periodo="0";
+		if(id_tipo_concurso=="")id_tipo_concurso="0";
+		if(id_sub_tipo_concurso=="")id_sub_tipo_concurso="0";
+		if(id_puesto=="")id_puesto="0";
+		
+		location.href = '/concurso/descargar_comprimido/'+numero_cap+"/"+id_concurso+"/"+id_periodo+"/"+id_tipo_concurso+"/"+id_sub_tipo_concurso+"/"+id_puesto;
+		
 	});
 
 
@@ -142,6 +153,10 @@ function DescargarArchivos(){
 	var id_estado = $('#id_estado_bus').val();
 	var campo = $('#campo').val();
 	var orden = $('#orden').val();
+	var id_periodo = $('#id_periodo_bus').val();
+	var id_tipo_concurso = $('#id_tipo_concurso_bus').val();
+	var id_sub_tipo_concurso = $('#id_sub_tipo_concurso_bus').val();
+	var id_puesto = $('#id_puesto_bus').val();	
 	var id_agremiado = 0;
 	var id_regional = 0;
 	
@@ -153,8 +168,12 @@ function DescargarArchivos(){
 	if (id_estado == "")id_estado = 0;
 	if (campo == "")campo = 0;
 	if (orden == "")orden = 0;
+	if (id_periodo == "")id_periodo = 0;
+	if (id_tipo_concurso == "")id_tipo_concurso = 0;
+	if (id_sub_tipo_concurso == "")id_sub_tipo_concurso = 0;
+	if (id_puesto == "")id_puesto = 0;
 	
-	location.href = '/concurso/exportar_listar_concurso_agremiado/' + id_concurso + '/' + numero_documento + '/' + id_agremiado + '/' + agremiado + '/' + numero_cap + '/' + id_regional + '/' + id_situacion + '/' + id_estado + '/' + campo + '/' + orden;
+	location.href = '/concurso/exportar_listar_concurso_agremiado/' + id_concurso + '/' + numero_documento + '/' + id_agremiado + '/' + agremiado + '/' + numero_cap + '/' + id_regional + '/' + id_situacion + '/' + id_estado + '/' + campo + '/' + orden + '/' + id_periodo + '/' + id_tipo_concurso + '/' + id_sub_tipo_concurso + '/' + id_puesto;
 	
 }
 
