@@ -926,7 +926,7 @@ function obtenerBeneficiario(){
 
 					
 
-					$('#numero_documento_').val(result.agremiado.numero_documento);
+					$('#numero_documento_').val(numero_documento);
 					$('#id_tipo_documento_').val(tipo_documento);
 					$('#id_tipo_documento').val(tipo_documento);
 					
@@ -948,7 +948,7 @@ function obtenerBeneficiario(){
 					$('#id_ubicacion_p').val("0");
 					$('#email').val(result.agremiado.email);
 
-					$('#numero_documento_').val(tipo_documento);
+					$('#numero_documento_').val(numero_documento);
 					$('#id_tipo_documento_').val(tipo_documento);
 					$('#btnOtroConcepto').attr("disabled", false);
 					$('#btnBeneficiario').attr("disabled",false);
