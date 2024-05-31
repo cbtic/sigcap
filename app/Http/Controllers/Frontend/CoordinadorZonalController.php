@@ -315,6 +315,8 @@ class CoordinadorZonalController extends Controller
 
 		echo $coordinadorZonal->id;
     }
+	
+	
 
 	public function obtener_coordinador($id)
 	{

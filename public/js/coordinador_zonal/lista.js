@@ -982,7 +982,7 @@ function datatablenew2(){
 					
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEditarCoordinador('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-					//html += '<a href="javascript:void(0)" onclick=eliminarMovilidad('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+					html += '<a href="javascript:void(0)" onclick=eliminarComisionSesionDelegado('+row.id+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					
 					//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 					
@@ -1408,3 +1408,31 @@ function fn_eliminar_zonal_detalle(id,estado){
     });
 }
 
+
+function eliminarComisionSesionDelegado(id){
+	
+	var act_estado = "Eliminar";
+
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas "+act_estado+" la Sesion?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_comision_sesion_delegado(id);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_comision_sesion_delegado(id){
+	
+    $.ajax({
+            url: "/sesion/eliminar_comision_sesion_delegados/"+id,
+            type: "GET",
+            success: function (result) {
+                //if(result="success")obtenerPlanDetalle(id_plan);
+				datatablenew2();
+            }
+    });
+}
