@@ -10,7 +10,7 @@ use DB;
 
 class Valorizacione extends Model
 {
-    function getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$cuota,$concepto, $filas,$exonerado){  
+    function getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$cuota,$concepto, $filas,$exonerado,$numero_documento_b){  
         
         if($filas!="")$filas="limit ".$filas;   
 
@@ -34,6 +34,7 @@ class Valorizacione extends Model
                 and v.estado = '1'            
                 and v.pagado = '0'
                 and v.exonerado ilike '%".$exonerado."'
+                and v.descripcion ilike '%".$numero_documento_b."' 
             order by v.fecha desc
              ".$filas."
 			";
@@ -56,6 +57,7 @@ class Valorizacione extends Model
                 and v.estado = '1'            
                 and v.pagado = '0'
                 and v.exonerado ilike '%".$exonerado."' 
+                and v.descripcion ilike '%".$numero_documento_b."' 
             order by v.fecha desc
              ".$filas."
 			";
