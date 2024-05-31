@@ -412,21 +412,21 @@ function fn_save_infoProyeto(){
                     <div class="row" style="padding-left:10px">
                         <div class="col-lg-6" >
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="check_opc1" name="grupo_tramite1">
+                                <input class="form-check-input" type="checkbox" value="1" id="check_opc1" name="grupo_tramite1" <?php if (in_array(1, $selectedIdsTramite)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc1">
                                     Habilitaci&oacute;n Urbana
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="2" id="check_opc2" name="grupo_tramite1">
+                                <input class="form-check-input" type="checkbox" value="2" id="check_opc2" name="grupo_tramite1" <?php if (in_array(2, $selectedIdsTramite)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc2">
                                     Regularizaci&oacute;n de habilitaci&oacute;n urbana
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="3" id="check_opc3" name="grupo_tramite1">
+                                <input class="form-check-input" type="checkbox" value="3" id="check_opc3" name="grupo_tramite1" <?php if (in_array(3, $selectedIdsTramite)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc3">
                                     Modificaci&oacute;n de proyecto aprobado de habilitaci&oacute;n urbana
                                 </label>
@@ -434,14 +434,14 @@ function fn_save_infoProyeto(){
                             <div class="row">
                                 <div class="col-lg-3" >
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="7" id="check_opc4" name="grupo_tramite1">
+                                        <input class="form-check-input" type="checkbox" value="7" id="check_opc4" name="grupo_tramite1" <?php if (in_array(7, $selectedIdsTramite)) echo "checked='checked'"; ?>>
                                         <label class="form-check-label" for="check_opc4">
                                             Otros
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-lg-9" >
-                                    <input id="otro" name="otro" on class="form-control form-control-sm"  value="" type="text" onChange="">
+                                    <input id="otro" name="otro" on class="form-control form-control-sm"  value="" type="text" onChange="" <?php if (in_array(0, $selectedIdsTramite)) echo "checked='checked'"; ?>>
                                 </div>
                             </div>
                         </div>   
@@ -450,14 +450,14 @@ function fn_save_infoProyeto(){
                                 Procedimientos Complementarios
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="4" id="check_opc5" name="grupo_tramite1">
+                                <input class="form-check-input" type="checkbox" value="4" id="check_opc5" name="grupo_tramite1" <?php if (in_array(4, $selectedIdsTramite)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc5">
                                     Independizaci&oacute;n o parcelaci&oacute;n de terrenos rusticos
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="5" id="check_opc6" name="grupo_tramite1">
+                                <input class="form-check-input" type="checkbox" value="5" id="check_opc6" name="grupo_tramite1" <?php if (in_array(5, $selectedIdsTramite)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc6">
                                     Subdivisi&oacute;n de lote urbano
                                 </label>
@@ -473,42 +473,42 @@ function fn_save_infoProyeto(){
                     <div class="row" style="padding-left:10px">
                         <div class="col-lg-6" >
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" id="check_opc8" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="1" id="check_opc8" name="grupo_tramite2" <?php if (in_array(1, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc8">
                                     Uso de Vivienda o urbanizaci&oacute;n
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="2" id="check_opc9" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="2" id="check_opc9" name="grupo_tramite2" <?php if (in_array(2, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc9">
                                     Tipo Convecional
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="3" id="check_opc10" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="3" id="check_opc10" name="grupo_tramite2" <?php if (in_array(3, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc10">
                                     Con Construcci&oacute;n simultanea
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="4" id="check_opc11" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="4" id="check_opc11" name="grupo_tramite2" <?php if (in_array(4, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc11">
                                     Con Venta de Viviendas edificadas
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="5" id="check_opc12" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="5" id="check_opc12" name="grupo_tramite2" <?php if (in_array(5, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc12">
                                     De tipo Progresivo
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="12" id="check_opc13" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="12" id="check_opc13" name="grupo_tramite2" <?php if (in_array(12, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc13">
                                     Otros
                                 </label>
@@ -516,42 +516,42 @@ function fn_save_infoProyeto(){
                         </div>
                         <div class="col-lg-6" >  
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="6" id="check_opc14" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="6" id="check_opc14" name="grupo_tramite2" <?php if (in_array(6, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc14">
                                     Uso Industrial
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="7" id="check_opc15" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="7" id="check_opc15" name="grupo_tramite2" <?php if (in_array(7, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc15">
                                     Convencional
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="8" id="check_opc16" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="8" id="check_opc16" name="grupo_tramite2" <?php if (in_array(8, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc16">
                                     Con Construcci&oacute;n simultanea
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="9" id="check_opc17" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="9" id="check_opc17" name="grupo_tramite2" <?php if (in_array(9, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc17">
                                     Usos Especiales
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="10" id="check_opc18" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="10" id="check_opc18" name="grupo_tramite2" <?php if (in_array(10, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc18">
                                     En riberos y laderas
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="11" id="check_opc19" name="grupo_tramite2">
+                                <input class="form-check-input" type="checkbox" value="11" id="check_opc19" name="grupo_tramite2" <?php if (in_array(11, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc19">
                                     Reurbanizaci&oacute;n
                                 </label>
@@ -565,7 +565,7 @@ function fn_save_infoProyeto(){
                             <label class="control-label form-control-sm">&Aacute;rea Bruta del Terreno Declarado (m2)</label>
                         </div>
                         <div class="col-lg-3">
-                            <input id="areaBruta" name="areaBruta" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onChange="">
+                            <input id="areaBruta" name="areaBruta" on class="form-control form-control-sm"  value="<?php echo $uso_edificion->area_techada?>" type="text" onChange="">
                         </div>
                     </div>
 
@@ -582,12 +582,17 @@ function fn_save_infoProyeto(){
                         <!--<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
                         -->
                         <input type="button" class="btn btn-primary upload" id="1" value="Subir" style="margin-left:10px;float:left;">
-                        <?php 
+                        <?php
 						$img = "/img/logo-sin-fondo2.png";
 						//if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
 						?>
-						<img src="<?php echo $img?>" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
+                        @if(count($selectedDocumentos) > 0)
+                            <img src="/img/derecho_revision/{{ $selectedDocumentos[0] }}" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
+                            <input type="hidden" id="img_foto1" name="img_foto1" value="{{ $selectedDocumentos[0] }}" style="padding-left:10px" />
+                        @else
+						<img src="<?php echo $img ?>" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
                         <input type="hidden" id="img_foto1" name="img_foto1" value="" style="padding-left:10px" />
+                        @endif
                         </div>
                     </div>
 
@@ -608,8 +613,13 @@ function fn_save_infoProyeto(){
 						$img = "/img/logo-sin-fondo2.png";
 						//if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
 						?>
-						<img src="<?php echo $img?>" id="img_ruta2" width="140px" height="50px" alt="" style="margin-left:10px" />
+                         @if(count($selectedDocumentos) > 0)
+                            <img src="/img/derecho_revision/{{ $selectedDocumentos[1] }}" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
+                            <input type="hidden" id="img_foto2" name="img_foto2" value="{{ $selectedDocumentos[1] }}" style="padding-left:10px" />
+                        @else
+						<img src="<?php echo $img ?>" id="img_ruta2" width="140px" height="50px" alt="" style="margin-left:10px" />
                         <input type="hidden" id="img_foto2" name="img_foto2" value="" />
+                        @endif
                         </div>
                     </div>
 
@@ -630,9 +640,14 @@ function fn_save_infoProyeto(){
 						$img = "/img/logo-sin-fondo2.png";
 						//if($inscripcionDocumento->ruta_archivo!="")$img="/".$inscripcionDocumento->ruta_archivo;
 						?>
-						<img src="<?php echo $img?>" id="img_ruta3" width="140px" height="50px" alt="" style="margin-left:10px" />
+                        @if(count($selectedDocumentos) > 0)
+                            <img src="/img/derecho_revision/{{ $selectedDocumentos[2] }}" id="img_ruta1" width="140px" height="50px" alt="" style="margin-left:10px" />
+                            <input type="hidden" id="img_foto3" name="img_foto3" value="{{ $selectedDocumentos[2] }}" style="padding-left:10px" />
+                        @else
+						<img src="<?php echo $img ?>" id="img_ruta3" width="140px" height="50px" alt="" style="margin-left:10px" />
 								
                         <input type="hidden" id="img_foto3" name="img_foto3" value="" />
+                        @endif
                         </div>
                     </div>
 

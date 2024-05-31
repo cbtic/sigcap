@@ -594,7 +594,7 @@ class DerechoRevisionController extends Controller
 		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud($id);
 		$propietario_solicitud = $propietario_model->getPropietarioSolicitud($id);
 		$info_solicitud = $presupuesto_model->getInfoSolicitud($id);
-		$info_uso_solicitud = $usoEdificacione_model->getInfoSolicitudUso($id);
+		$info_uso_solicitud = $usoEdificacione_model->getInfoSolicitudUsoTipo($id);
 		
 		
         return view('frontend.derecho_revision.all_nuevoDerecho',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud'));
@@ -714,7 +714,7 @@ class DerechoRevisionController extends Controller
     }
 
 	public function modal_nuevo_propietario($id){
-		 
+		
 		$proyectista = new Proyectista();
 		$derechoRevision = new DerechoRevision;
 		$agremiado = new Agremiado;
@@ -811,13 +811,26 @@ class DerechoRevisionController extends Controller
     }
 
 	public function modal_nuevo_infoProyecto($id){
-		 
-		$proyectista = new Proyectista();
-		$derechoRevision = new DerechoRevision;
-		$agremiado = new Agremiado;
-		$persona = new Persona;
 		
-        return view('frontend.derecho_revision.modal_nuevo_infoProyecto',compact('id','proyectista','agremiado','persona'));
+		if($id>0){
+			$derechoRevision = DerechoRevision::find($id);
+			$uso_edificion = UsoEdificacione::find($id);
+			$solicitud = DerechoRevision::where("id",$uso_edificion->id_solicitud)->where("estado","1")->get();
+			$uso_edificion_ = UsoEdificacione::where("id_solicitud",$uso_edificion->id_solicitud)->where("estado","1")->get();
+			$selectedIds = $uso_edificion_->pluck('id_tipo_uso')->toArray();
+			$selectedIdsTramite = $solicitud->pluck('id_tipo_tramite')->toArray();
+			$solicitudDocumento = SolicitudDocumento::where("id_solicitud",$uso_edificion->id_solicitud)->where("estado","1")->get();
+			$selectedDocumentos = $solicitudDocumento->pluck('ruta_archivo')->toArray();
+		}else{
+			$derechoRevision = new DerechoRevision;
+			$uso_edificion = new UsoEdificacione;
+			$selectedIds = [];
+			$selectedIdsTramite = [];
+			$selectedDocumentos = [];
+		}
+		//var_dump($selectedDocumentos[2]);exit();
+		
+        return view('frontend.derecho_revision.modal_nuevo_infoProyecto',compact('id','uso_edificion','selectedIds','selectedIdsTramite','selectedDocumentos'));
 		
     }
 
@@ -837,8 +850,15 @@ class DerechoRevisionController extends Controller
 		}else{
 			$usoEdificacion = UsoEdificacione::find($request->id);
 			$solicitud = Solicitude::find($request->id);
+			$uso_edificion_ = UsoEdificacione::where("id_solicitud",$request->id_solicitud)->where("estado","1")->get();
+			
+			foreach ($uso_edificion_ as $uso) {
+				$uso->estado = "0";
+				$uso->id_usuario_inserta = $id_user;
+				$uso->save();
+			}
 		}
-
+		//var_dump($uso_edificion_);exit();
 		$procedimientos_complementarios = $request->input('procedimientos_complementarios');
 		$procedimientos_complementarios2 = $request->input('procedimientos_complementarios2');
 
@@ -1408,6 +1428,7 @@ class DerechoRevisionController extends Controller
         foreach ($IdUbigeo as $ubigeo) {
             $datos_formateados[] = [
                 'municipalidad' => $ubigeo->id,
+				'denominacion' => $ubigeo->denominacion,
                 //'id_provincia' => $ubigeo->id_provincia,
 				//'id_distrito' => $ubigeo->id_ubigeo,
             ];
