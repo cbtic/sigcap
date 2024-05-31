@@ -717,11 +717,20 @@ function validaTipoDocumento(){
 
 	//$("#btnTicket").prop('disabled', true).hide();
 	//alert(tipo_documento);
+
+	$("#chkExonerado").prop('disabled', false);
+	$("#cboTipoConcepto_b").prop('disabled', false);
+	$("#cboPeriodo_b").prop('disabled', false);
+	$("#cboMes_b").prop('disabled', false);
+	$("#cboTipoCuota_b").prop('disabled', false);
+
 	if(tipo_documento == "87"){
 
 		$("#chkExonerado").prop('disabled', true);
 		$("#cboTipoConcepto_b").prop('disabled', true);
-
+		$("#cboPeriodo_b").prop('disabled', true);
+		$("#cboMes_b").prop('disabled', true);
+		$("#cboTipoCuota_b").prop('disabled', true);
 
 	}else if(tipo_documento == "79"){ //RUC
 		$('#divNombreApellido').hide();

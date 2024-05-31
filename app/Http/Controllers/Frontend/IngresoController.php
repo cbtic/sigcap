@@ -94,7 +94,23 @@ class IngresoController extends Controller
         $tipo_couta = $request->cboTipoCuota_b;
         $concepto = $request->cboTipoConcepto_b;
         $filas = $request->cboFilas;
-        // print_r($filas);exit();
+
+        $tipo_documento_b = $request->tipo_documento_b;
+
+        //print_r($tipo_documento_b);exit();
+
+
+        if($tipo_documento_b=="87"){
+            $numero_documento_b = $request->numero_documento_b;
+        }else{
+            $numero_documento_b = "";
+        }
+        
+
+
+        //print_r("-".$numero_documento_b);exit();
+
+
         $valorizaciones_model = new Valorizacione;
         $sw = true;
         
@@ -102,7 +118,7 @@ class IngresoController extends Controller
         if ($SelFracciona=="S"){
             $valorizacion = $valorizaciones_model->getValorizacionFrac($tipo_documento,$id_persona,$periodo,$tipo_couta,$concepto,$filas);
         }else{
-            $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado);
+            $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
         }
         
        
