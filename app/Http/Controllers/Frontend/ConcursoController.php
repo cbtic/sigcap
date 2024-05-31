@@ -170,7 +170,8 @@ class ConcursoController extends Controller
 			$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionZipNuevo($row1->id_agremiado,$id_periodo,$id_tipo_concurso,$id_sub_tipo_concurso,$id_puesto);
 			
 			/**************ZIP2****************************/
-			$zip_path2 = ($row1->numero_cap).'.zip';
+			//$zip_path2 = ($row1->apellido_paterno." ".$row1->apellido_materno." ".$row1->nombres."-".$row1->numero_cap).'.zip';
+			$zip_path2 = ($row1->apellido_paterno." ".$row1->nombres."-".$row1->numero_cap).'.zip';
   			$zip2 = new ZipArchive();
 			//echo $zip_path2;
 			if ($zip2->open($zip_path2, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) !== TRUE) {

@@ -107,9 +107,10 @@ where id_concurso_inscripcion=".$id;
 	
 	function getAgremiadoConcursoInscripcionZip($numero_cap){
 
-        $cad = "select distinct id_agremiado,a.numero_cap 
+        $cad = "select distinct id_agremiado,a.numero_cap,p.apellido_paterno,p.apellido_materno,p.nombres 
 from concurso_inscripciones ci 
 inner join agremiados a on ci.id_agremiado=a.id 
+inner join personas p on a.id_persona=p.id
 where ci.estado='1' ";
 
 		if($numero_cap!=""){
