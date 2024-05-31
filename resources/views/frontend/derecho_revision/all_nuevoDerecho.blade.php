@@ -254,7 +254,7 @@ function modalVerFormato(){
 									<?php
 									$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
 									?>
-									<option value="">--Selecionar--</option>
+									<option value="">--Seleccionar--</option>
 									<?php
 										foreach ($municipalidad as $row) {
 									?>
@@ -279,7 +279,7 @@ function modalVerFormato(){
                             <label class="control-label form-control-sm">Departamento</label>
                             <select name="departamento" id="departamento" class="form-control form-control-sm" onChange="obtenerProvincia()">
                                 <?php if($id>0){ ?>
-								<option value="">--Selecionar--</option>
+								<option value="">--Seleccionar--</option>
                                 <?php
                                 foreach ($departamento as $row) {?>
                                 <option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($derechoRevision_->id_ubigeo,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
@@ -287,7 +287,7 @@ function modalVerFormato(){
 								}
 								
 								}else{?>
-									<option value="">--Selecionar--</option>
+									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($departamento as $row) {
 										if ($row->id_departamento == '15' || $row->id_departamento == '07') { ?>
@@ -304,14 +304,14 @@ function modalVerFormato(){
 						<div class="col-lg-2">
                             <label class="control-label form-control-sm">Provincia</label>
                             <select name="provincia" id="provincia" class="form-control form-control-sm" onChange="obtenerDistrito()">
-                                <option value="">--Selecionar--</option>
+                                <option value="">--Seleccionar--</option>
                             </select>
 						</div>
                         
 						<div class="col-lg-2">
                             <label class="control-label form-control-sm">Distrito</label>
                             <select name="distrito" id="distrito" class="form-control form-control-sm" onChange="obtenerUbigeo()">
-                                <option value="">--Selecionar--</option>
+                                <option value="">--Seleccionar--</option>
                             </select>
                         </div>
                     </div>
@@ -319,7 +319,7 @@ function modalVerFormato(){
 						<div class="col-lg-1" style=";padding-right:15px">
                             <label class="control-label form-control-sm">Sitio</label>
                             <select name="sitio" id="sitio" class="form-control form-control-sm" onChange="">
-                                <option value="">--Selecionar--</option>
+                                <option value="">--Seleccionar--</option>
                                 <?php
                                 foreach ($sitio as $row) {?>
                                 <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyecto2->id_tipo_sitio)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
@@ -627,7 +627,7 @@ function modalVerFormato(){
 																	<th>Formato de Registro</th>
 																	<th>Plano de Ubicaci&oacute;n</th>
 																	<th>FUHU</th>
-																	<!--<th>Opciones</th>-->
+																	<th>Acciones</th>
 																</tr>
 															</thead>
 															<tbody style="font-size:13px">
@@ -657,21 +657,21 @@ function modalVerFormato(){
 																	<th><?php //echo $row->libro?></th>
 																	<th><?php //echo $row->folio?></th>-->
 																	<th>
-																	<!--<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>-->
+																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+																	<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalInfoProyecto(<?php echo $row->id_uso_edificacion?>)" ><i class="fa fa-edit"></i> Editar</button>
 																	<a href="javascript:void(0)" onclick="eliminarInfoProyectoHU(<?php echo $row->id_uso_edificacion?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 																	</div>
 																	</th>
-																</tr>													
+																</tr>
 																<?php }?>
-															</tbody>							
+															</tbody>
 															</table>
 															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>		
+										</div>
 									</div>
 								</div>
 							</div>

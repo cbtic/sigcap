@@ -87,7 +87,7 @@
 
 <script>
 
-function formatoMoneda(num) {
+function formatoMoneda_(num) {
     return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
 
@@ -99,7 +99,7 @@ function calculoVistaPrevia(){
     var igv_valor = <?php echo $parametro[0]->igv?>;
     var igv_minimo	= igv_valor * sub_total_minimo;
     var total_minimo = sub_total_minimo + igv_minimo;
-    $('#minimo').val(formatoMoneda(total_minimo));
+    $('#minimo').val(formatoMoneda_(total_minimo));
     $('#igv').val(igv_valor_+"%");
     //var_dump($total_minimo);exit;
     
@@ -114,7 +114,7 @@ function calculoVistaPrevia(){
     //var total_formateado = number_format(total, 2, '.', ',');
     $('#sub_total').val(sub_total);
     $('#igv_').val(igv_total);
-    $('#total').val(formatoMoneda(total));
+    $('#total').val(formatoMoneda_(total));
     
     if(total<total_minimo){
         var total_ = total_minimo;
@@ -125,19 +125,19 @@ function calculoVistaPrevia(){
         //$sub_total_formateado_ = number_format($sub_total_minimo, 2, '.', ',');
         //$igv_total_formateado_ = number_format($igv_minimo, 2, '.', ',');
         //$total_formateado_ = number_format($total_minimo, 2, '.', ',');
-        $('#sub_total').val(formatoMoneda(sub_total));
-        $('#igv_').val(formatoMoneda(igv_total));
-        $('#total').val(formatoMoneda(total));
-        $('#sub_total2').val(formatoMoneda(sub_total_minimo));
-        $('#igv2').val(formatoMoneda(igv_minimo));
-        $('#total2').val(formatoMoneda(total_minimo));
+        $('#sub_total').val(formatoMoneda_(sub_total));
+        $('#igv_').val(formatoMoneda_(igv_total));
+        $('#total').val(formatoMoneda_(total));
+        $('#sub_total2').val(formatoMoneda_(sub_total_minimo));
+        $('#igv2').val(formatoMoneda_(igv_minimo));
+        $('#total2').val(formatoMoneda_(total_minimo));
     }else{
-		$('#sub_total').val(formatoMoneda(sub_total));
-        $('#igv_').val(formatoMoneda(igv_total));
-        $('#total').val(formatoMoneda(total));
-        $('#sub_total2').val(formatoMoneda(sub_total));
-        $('#igv2').val(formatoMoneda(igv_total));
-        $('#total2').val(formatoMoneda(total));
+		$('#sub_total').val(formatoMoneda_(sub_total));
+        $('#igv_').val(formatoMoneda_(igv_total));
+        $('#total').val(formatoMoneda_(total));
+        $('#sub_total2').val(formatoMoneda_(sub_total));
+        $('#igv2').val(formatoMoneda_(igv_total));
+        $('#total2').val(formatoMoneda_(total));
 	}
     //var_dump($total_minimo);exit;
 }
@@ -165,24 +165,24 @@ if($('#instancia').val()==250){
 			var igv_totalR=sub_totalR*igv_/100;
 			var totalR=sub_totalR+igv_totalR;
 
-			$('#total2').val(formatoMoneda(total_minimo));
-			$('#igv2').val(formatoMoneda(igv_minimo));
-			$('#sub_total2').val(formatoMoneda(sub_total_minimo));
-			$('#total').val(formatoMoneda(totalR));
-			$('#igv_').val(formatoMoneda(igv_totalR));
-			$('#sub_total').val(formatoMoneda(sub_totalR));
+			$('#total2').val(formatoMoneda_(total_minimo));
+			$('#igv2').val(formatoMoneda_(igv_minimo));
+			$('#sub_total2').val(formatoMoneda_(sub_total_minimo));
+			$('#total').val(formatoMoneda_(totalR));
+			$('#igv_').val(formatoMoneda_(igv_totalR));
+			$('#sub_total').val(formatoMoneda_(sub_totalR));
 			
 		}else{
 
 			//var sub_totalR_formateado = number_format(sub_totalR, 2, '.', ',');
 			//var igv_totalR_formateado = number_format(igv_totalR, 2, '.', ',');
 			//var totalR_formateado = number_format(totalR, 2, '.', ',');
-			$('#total2').val(formatoMoneda(totalR));
-			$('#igv2').val(formatoMoneda(igv_totalR));
-			$('#sub_total2').val(formatoMoneda(sub_totalR));
-			$('#total').val(formatoMoneda(totalR));
-			$('#igv_').val(formatoMoneda(igv_totalR));
-			$('#sub_total').val(formatoMoneda(sub_totalR));
+			$('#total2').val(formatoMoneda_(totalR));
+			$('#igv2').val(formatoMoneda_(igv_totalR));
+			$('#sub_total2').val(formatoMoneda_(sub_totalR));
+			$('#total').val(formatoMoneda_(totalR));
+			$('#igv_').val(formatoMoneda_(igv_totalR));
+			$('#sub_total').val(formatoMoneda_(sub_totalR));
 		}
 		
 	}
@@ -495,40 +495,48 @@ if($('#instancia').val()==250){
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
 							Uso de la Edificaci&oacute;n
 						</div>
-						<div class="row" style="padding-left:10px">
-							<div class="col-lg-3" style=";padding-right:15px">
-								<label class="control-label form-control-sm">Tipo de Uso</label>
-								<select name="tipo_uso" id="tipo_uso" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($tipo_uso as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
-							</div>
-							<div class="col-lg-3" style=";padding-right:15px">
-								<label class="control-label form-control-sm">Sub-Tipo de Uso</label>
-								<select name="sub_tipo_uso" id="sub_tipo_uso" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
-									<?php
-									foreach ($sub_tipo_uso as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_sub_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
-							</div>
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm">&Aacute;rea Techada</label>
-								<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo number_format($datos_usoEdificaciones->area_techada, 2, '.', ',');?>" type="text" onchange="copiarArea()">
-							</div>
-							<div style="margin-top:37px" class="form-group">
-								<div class="col-sm-12 controls">
-									<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-										<a href="javascript:void(0)" onClick="AddFilaUso()" class="btn btn-sm btn-success">Agregar</a>
-										<!--<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
+						<div class="row">
+							<div class="col-lg-8" style=";padding-right:15px">
+								<div class="row" style="padding-left:10px">
+									<div class="col-lg-12" id="uso-container">
+										<div class="row uso-row">
+											<div class="col-lg-5" style=";padding-right:15px">
+											<label class="control-label form-control-sm">Tipo de Uso</label>
+											<select name="tipo_uso" id="tipo_uso" class="form-control form-control-sm" onChange="">
+												<option value="">--Selecionar--</option>
+												<?php
+												foreach ($tipo_uso as $row) {?>
+												<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+												<?php
+												}
+												?>
+											</select>
+										</div>
+										<div class="col-lg-4" style=";padding-right:15px">
+											<label class="control-label form-control-sm">Sub-Tipo de Uso</label>
+											<select name="sub_tipo_uso" id="sub_tipo_uso" class="form-control form-control-sm" onChange="">
+												<option value="">--Selecionar--</option>
+												<?php
+												foreach ($sub_tipo_uso as $row) {?>
+												<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_sub_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+												<?php
+												}
+												?>
+											</select>
+										</div>
+										<div class="col-lg-2">
+											<label class="control-label form-control-sm">&Aacute;rea Techada</label>
+											<input id="area_techada" name="area_techada" on class="form-control form-control-sm"  value="<?php echo number_format($datos_usoEdificaciones->area_techada, 2, '.', ',');?>" type="text" onchange="">
+										</div>
+										<div style="margin-top:37px" class="form-group">
+											<div class="col-sm-12 controls">
+												<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+													<a href="javascript:void(0)" onClick="AddFilaUso()" class="btn btn-sm btn-success">Agregar</a>
+													<!--<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
+												</div>
+											</div>
+										</div>
+									</div>
 									</div>
 								</div>
 							</div>
@@ -579,7 +587,7 @@ if($('#instancia').val()==250){
 								<div class="row" style="padding-left:10px;padding-top:10px; display:flex; justify-content:flex-end">
 									<div class="col-lg-3">
 										<label class="control-label form-control-sm">Valor Total de Obra S/</label>
-										<input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->valor_obra, 2, '.', ',');?>" type="text">
+										<input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->valor_obra, 2, '.', ',');?>" type="text" readonyl="readonly">
 									</div>
 								</div>
 							</div>
@@ -787,6 +795,6 @@ if($('#instancia').val()==250){
 
 @push('after-scripts')
 
-<script src="{{ asset('js/derecho_revision/lista.js') }}"></script>
+<script src="{{ asset('js/derecho_revision/listaReintegro.js') }}"></script>
 
 @endpush

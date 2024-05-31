@@ -1,5 +1,4 @@
 $(document).ready(function () {
-	actualizarBoton();
 	
 	obtenerProvincia();
 
@@ -122,7 +121,7 @@ $(document).ready(function () {
 	$('#area_techada_presupuesto, #valor_unitario').on('blur', function() {
         var input = $(this).val().replace(/[^0-9.]/g, '');
         $(this).val(formatoMoneda(input));
-        calcularPresupuesto();
+        calcularPresupuesto_();
     });
 
     // Initially format the inputs if they have values
@@ -398,19 +397,8 @@ function obtenerUbigeo(){
 				obtenerDistrito_(function(){
 					$("#distrito").val(result[0].id_distrito);
 			});*/
-			var option = "<option value=''>--Seleccionar--</option>";
-			$('#municipalidad').html("");
 
-			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.municipalidad+"'>"+oo.denominacion+"</option>";
-			});
-			$('#municipalidad').html(option);
-
-			if (result.length > 0) {
-				$('#municipalidad').val(result[0].municipalidad);
-			}
-			//$("#municipalidad").val(result[0].id);
-			//$('#distrito').attr("disabled",false);
+			$("#municipalidad").val(result[0].municipalidad);
 		}
 	});
 }
@@ -1949,11 +1937,25 @@ function fn_eliminar_infoProyecto_hu(id){
 }
 
 
-function calcularPresupuesto() {
+/*function calcularPresupuesto() {
 	var areaTechada = parseFloat($('#area_techada_presupuesto').val().replace(/,/g, '')) || 0;
 	var valorUnitario = parseFloat($('#valor_unitario').val().replace(/,/g, '')) || 0;
 	var presupuesto = areaTechada * valorUnitario;
 	$('#presupuesto').val(presupuesto.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));
+}*/
+
+function calcularPresupuesto_(row) {
+	var areaTechadaInput = row.querySelector('#area_techada_presupuesto');
+    var valorUnitarioInput = row.querySelector('#valor_unitario');
+    var presupuestoInput = row.querySelector('#presupuesto');
+
+    if (areaTechadaInput && valorUnitarioInput && presupuestoInput) {
+        var areaTechada = parseFloat(areaTechadaInput.value.replace(/,/g, '')) || 0;
+        var valorUnitario = parseFloat(valorUnitarioInput.value.replace(/,/g, '')) || 0;
+        var presupuesto = areaTechada * valorUnitario;
+        presupuestoInput.value = formatCurrency(presupuesto);
+        calcularValorTotalObra();
+    }
 }
 
 function formatoMoneda(input) {
@@ -1975,13 +1977,116 @@ function AddFilaPresupuesto() {
     // Limpia los valores de los campos en la nueva fila
     newRow.querySelectorAll('input').forEach(function(input) {
         input.value = '';
+		if (input.id === 'area_techada_presupuesto' || input.id === 'valor_unitario') {
+            input.addEventListener('input', function() {
+                calcularPresupuesto_(newRow);
+            });
+            input.addEventListener('blur', function() {
+                formatInputAsCurrency(input);
+            });
+        }
+		input.addEventListener('input', calcularValorTotalObra);
     });
-    newRow.querySelectorAll('select').forEach(function(select) {
-        select.selectedIndex = "";
+
+	newRow.querySelectorAll('select').forEach(function(select) {
+        select.value = ''; // Reset the select element
     });
 
     container.appendChild(newRow); // Agrega la nueva fila al contenedor
 
+	calcularValorTotalObra();
 }
 
+function calcularValorTotalObra() {
+    var total = 0;
+    var container = document.getElementById('presupuesto-container');
+    var inputs = container.querySelectorAll('input[name="presupuesto"]'); // Select all "Presupuesto" inputs
+
+    inputs.forEach(function(input) {
+        var value = parseFloat(input.value.replace(/,/g, '')); // Remove commas and parse to float
+        if (!isNaN(value)) {
+            total += value;
+        }
+    });
+
+    var totalInput = document.getElementById('valor_total_obra');
+    totalInput.value = total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); // Format the total with commas
+}
+
+document.querySelectorAll('#area_techada_presupuesto, #valor_unitario').forEach(function(input) {
+    input.addEventListener('input', function() {
+        calcularPresupuesto_(input.closest('.row'));
+    });
+    input.addEventListener('blur', function() {
+        formatInputAsCurrency(input);
+    });
+});
+
+	// Add event listener to existing "Presupuesto" inputs on page load
+document.querySelectorAll('input[name="presupuesto"]').forEach(function(input) {
+    input.addEventListener('input', calcularValorTotalObra);
+});
+
+function formatCurrency(value) {
+    return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+}
+
+function formatInputAsCurrency(input) {
+    var value = parseFloat(input.value.replace(/,/g, ''));
+    if (!isNaN(value)) {
+        input.value = formatCurrency(value);
+    }
+}
+
+function AddFilaUso() {
+
+    var container = document.getElementById('uso-container');
+    var newRow = container.children[0].cloneNode(true); // Clona la primera fila
+
+    // Limpia los valores de los campos en la nueva fila
+    newRow.querySelectorAll('input').forEach(function(input) {
+        input.value = '';
+		if (input.id === 'area_techada') {
+            input.addEventListener('input', function() {
+                calcularAreaTechada(newRow);
+            });
+            input.addEventListener('blur', function() {
+                formatInputAsCurrency(input);
+            });
+        }
+		//input.addEventListener('input', calcularValorTotalObra);
+		
+    });
+
+	newRow.querySelectorAll('select').forEach(function(select) {
+        select.value = ''; // Reset the select element
+    });
+
+    container.appendChild(newRow); // Agrega la nueva fila al contenedor
+}
+
+function calcularAreaTechada() {
+    var total = 0;
+    var container = document.getElementById('uso-container');
+    var inputs = container.querySelectorAll('input[name="area_techada"]'); // Select all "Presupuesto" inputs
+
+    inputs.forEach(function(input) {
+        var value = parseFloat(input.value.replace(/,/g, '')); // Remove commas and parse to float
+        if (!isNaN(value)) {
+            total += value;
+        }
+    });
+
+    var totalInput = document.getElementById('area_techada_total');
+    totalInput.value = total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); // Format the total with commas
+}
+
+document.querySelectorAll('#area_techada').forEach(function(input) {
+    input.addEventListener('input', function() {
+        calcularAreaTechada(input.closest('.row'));
+    });
+    input.addEventListener('blur', function() {
+        formatInputAsCurrency(input);
+    });
+});
 
