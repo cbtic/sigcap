@@ -62,6 +62,17 @@ And cp.id_concurso = ".$id;
         return $data;
     }
 	
+	function getPuestoResultado(){
+
+        $cad = "select distinct cp.id_tipo_plaza codigo,tm.denominacion 
+from concurso_puestos cp 
+inner join tabla_maestras tm on cp.id_tipo_plaza::int=tm.codigo::int and tm.tipo='94'
+where cp.estado='1'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+	
 	function getConcursoVigentePendienteByAgremiado($id_agremiado){
 
         $cad = "select c.id,pc.descripcion periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,

@@ -278,14 +278,22 @@ function fn_save(){
         return false;
     }
 	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
     $.ajax({
 			url: "/sesion/send_delegado_sesion",
             type: "POST",
             data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado,flag_titular_suplente:flag_titular_suplente,fecha_inicio_sesion:fecha_inicio_sesion,fecha_fin_sesion:fecha_fin_sesion},
             success: function (result) {
-				$('#openOverlayOpc').modal('hide');
+				$('.loader').hide();
+				$('#openOverlayOpc2').modal('hide');
 				//datatablenew();
-				location.reload();
+				//location.reload();
+				cargarDelegados();
 				//obtenerInversionista(0);
 				//obtenerDetalleInversionista(0);
 				//window.location.reload();

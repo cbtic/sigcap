@@ -3,6 +3,7 @@
 foreach($inscripcionDocumento as $row):?>
 <tr style="font-size:13px">
 	<!--<td class="text-left" style="vertical-align:middle"><?php //echo $row->id?></td>-->
+	<td class="text-left" style="vertical-align:middle"><?php echo $row->orden_requisito?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->observacion?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->tipo_documento?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->fecha_documento?></td>

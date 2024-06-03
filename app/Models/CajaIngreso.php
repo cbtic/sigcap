@@ -53,7 +53,7 @@ class CajaIngreso extends Model
                     inner join tabla_maestras m on m.codigo = c.id_caja::varchar and m.tipo = '91'
                 group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha
                 having  c.id_usuario_inserta = ".$id_usuario."
-                and TO_CHAR(c.fecha, 'dd/mm/yyyy')  = '".$fecha."'
+                and TO_CHAR(c.fecha, 'dd-mm-yyyy')  = '".$fecha."'
             )
             group by situacion, tipo
         ";

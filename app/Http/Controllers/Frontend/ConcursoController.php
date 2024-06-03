@@ -124,6 +124,7 @@ class ConcursoController extends Controller
 		$concurso_model = new Concurso();
 		//$regione_model = new Regione;
 		$tablaMaestra_model = new TablaMaestra;
+		$periodoComisione_model = new PeriodoComisione;
 		
 		//$id_persona = Auth::user()->id_persona;
 		$concurso = $concurso_model->getConcurso();
@@ -132,16 +133,28 @@ class ConcursoController extends Controller
 		//$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		
-        return view('frontend.concurso.create_resultado',compact('concurso',/*'agremiado',*//*'region',*/'situacion_cliente','concurso_ultimo'));
+		$tipo_concurso = $tablaMaestra_model->getMaestroByTipo(101);
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		
+		$puesto = $concurso_model->getPuestoResultado();
+		
+        return view('frontend.concurso.create_resultado',compact('concurso',/*'agremiado',*//*'region',*/'situacion_cliente','concurso_ultimo','periodo','periodo_ultimo','periodo_activo','tipo_concurso','puesto'));
     }
 	
-	public function descargar_comprimido($numero_cap,$id_concurso){
+	public function descargar_comprimido($numero_cap,$id_concurso,$id_periodo,$id_tipo_concurso,$id_sub_tipo_concurso,$id_puesto){
 		
 		//getAgremiadoConcursoInscripcionZip
 		//getConcursoInscripcionZip
 		//getConcursoInscripcionDocumentoZip
 		if($numero_cap==0)$numero_cap="";
 		if($id_concurso==0)$id_concurso="";
+		
+		if($id_periodo==0)$id_periodo="";
+		if($id_tipo_concurso==0)$id_tipo_concurso="";
+		if($id_sub_tipo_concurso==0)$id_sub_tipo_concurso="";
+		if($id_puesto==0)$id_puesto="";
 		
 		$concursoInscripcione_model = new ConcursoInscripcione();
 		$concursoAgremiado = $concursoInscripcione_model->getAgremiadoConcursoInscripcionZip($numero_cap);
@@ -154,10 +167,11 @@ class ConcursoController extends Controller
 		}
 		
 		foreach($concursoAgremiado as $row1){
-			$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionZip($row1->id_agremiado,$id_concurso);
+			$concursoInscripcion = $concursoInscripcione_model->getConcursoInscripcionZipNuevo($row1->id_agremiado,$id_periodo,$id_tipo_concurso,$id_sub_tipo_concurso,$id_puesto);
 			
 			/**************ZIP2****************************/
-			$zip_path2 = ($row1->numero_cap).'.zip';
+			//$zip_path2 = ($row1->apellido_paterno." ".$row1->apellido_materno." ".$row1->nombres."-".$row1->numero_cap).'.zip';
+			$zip_path2 = ($row1->apellido_paterno." ".$row1->nombres."-".$row1->numero_cap).'.zip';
   			$zip2 = new ZipArchive();
 			//echo $zip_path2;
 			if ($zip2->open($zip_path2, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE) !== TRUE) {
@@ -267,6 +281,43 @@ class ConcursoController extends Controller
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $concursoInscripcione_model->listar_concurso_agremiado($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
+	
+	public function listar_concurso_resultado_agremiado(Request $request){
+	
+		$concursoInscripcione_model = new ConcursoInscripcione();
+		$p[]=$request->id_periodo;
+		$p[]=$request->id_tipo_concurso;
+		$p[]=$request->id_sub_tipo_concurso;
+		$p[]=$request->id_puesto;
+		$p[]=$request->id_concurso;
+		$p[]=$request->numero_documento;
+		$p[]=$request->id_agremiado;
+		$p[]=$request->agremiado;
+		$p[]=$request->numero_cap;
+		$p[]=$request->id_regional;
+		$p[]=$request->id_situacion;
+		$p[]=$request->id_estado;
+		$p[]=(isset($request->campo))?$request->campo:"t1.id";
+		$p[]=(isset($request->orden))?$request->orden:"desc";
+		$p[]=$request->flag_concurso;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $concursoInscripcione_model->listar_concurso_resultado_agremiado($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -589,13 +640,17 @@ class ConcursoController extends Controller
 		
 		$id_user = Auth::user()->id;
 		
-		$concursoPuesto = ConcursoPuesto::find($request->asignar_puesto);
-		
 		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
 		$concursoInscripcion->puntaje = $request->puntaje;
 		$concursoInscripcion->resultado = $request->id_estado;
+		
+		if(isset($request->asignar_puesto) && $request->asignar_puesto>0){
+			$concursoPuesto = ConcursoPuesto::find($request->asignar_puesto);
+			$concursoInscripcion->puesto = $concursoPuesto->id_tipo_plaza;
+		}
+		
 		//$concursoInscripcione->puesto = $concursoInscripcione->id_concurso_puesto;
-		$concursoInscripcion->puesto = $concursoPuesto->id_tipo_plaza;
+		//$concursoInscripcion->puesto = $concursoPuesto->id_tipo_plaza;
 		$concursoInscripcion->save();
 		echo $concursoInscripcion->id;
 		
@@ -605,21 +660,24 @@ class ConcursoController extends Controller
 		$fecha_acreditacion_fin = $concurso->fecha_acreditacion_fin;
 		$id_tipo_concurso = $concurso->id_tipo_concurso;
 		
-		$agremiadoRoleExiste = AgremiadoRole::where("id_agremiado",$concursoInscripcion->id_agremiado)->where("rol",$id_tipo_concurso)->first();
 		
-		if($agremiadoRoleExiste){
-			$agremiadoRoleExiste->rol_especifico = $concursoPuesto->id_tipo_plaza;
-			$agremiadoRoleExiste->save();
-		}else{
-			$agremiadoRol = new AgremiadoRole;
-			$agremiadoRol->id_agremiado = $concursoInscripcion->id_agremiado;
-			$agremiadoRol->rol = $id_tipo_concurso;
-			$agremiadoRol->rol_especifico = $concursoPuesto->id_tipo_plaza;
-			$agremiadoRol->fecha_inicio = $fecha_acreditacion_inicio;
-			$agremiadoRol->fecha_fin = $fecha_acreditacion_fin;
-			$agremiadoRol->estado = 1;
-			$agremiadoRol->id_usuario_inserta = $id_user;
-			$agremiadoRol->save();
+		if(isset($request->asignar_puesto) && $request->asignar_puesto>0){
+			$agremiadoRoleExiste = AgremiadoRole::where("id_agremiado",$concursoInscripcion->id_agremiado)->where("rol",$id_tipo_concurso)->first();
+			
+			if($agremiadoRoleExiste){
+				$agremiadoRoleExiste->rol_especifico = $concursoPuesto->id_tipo_plaza;
+				$agremiadoRoleExiste->save();
+			}else{
+				$agremiadoRol = new AgremiadoRole;
+				$agremiadoRol->id_agremiado = $concursoInscripcion->id_agremiado;
+				$agremiadoRol->rol = $id_tipo_concurso;
+				$agremiadoRol->rol_especifico = $concursoPuesto->id_tipo_plaza;
+				$agremiadoRol->fecha_inicio = $fecha_acreditacion_inicio;
+				$agremiadoRol->fecha_fin = $fecha_acreditacion_fin;
+				$agremiadoRol->estado = 1;
+				$agremiadoRol->id_usuario_inserta = $id_user;
+				$agremiadoRol->save();
+			}
 		}
     }
 	
@@ -760,6 +818,16 @@ class ConcursoController extends Controller
 	
 		$id_user = Auth::user()->id;
 		
+		$cantidadInscripcionDocumento = 0;
+		$cantidadConcursoRequisito = 0;
+		
+		$InscripcionDocumentoExiste = InscripcionDocumento::where("id_concurso_inscripcion",$request->id_concurso_inscripcion)->where("orden_requisito",$request->orden_requisito)->where("id","!=",$request->id)->where("estado",1)->get();
+		$msg = "";
+		
+		$cantidad = count($InscripcionDocumentoExiste);
+		
+		if($cantidad == 0){
+		
 		$concursoInscripcion = ConcursoInscripcione::find($request->id_concurso_inscripcion);
 			
 		$agremiado = Agremiado::find($concursoInscripcion->id_agremiado);
@@ -842,6 +910,7 @@ class ConcursoController extends Controller
 		//$inscripcionDocumento->ruta_archivo = $request->img_foto;
 		$inscripcionDocumento->fecha_documento = $request->fecha_documento;
 		$inscripcionDocumento->observacion = $request->observacion;
+		$inscripcionDocumento->orden_requisito = $request->orden_requisito;
 		$inscripcionDocumento->estado = 1;
 		$inscripcionDocumento->id_usuario_inserta = $id_user;
 		$inscripcionDocumento->save();
@@ -851,8 +920,14 @@ class ConcursoController extends Controller
         $inscripcionDocumento = $inscripcionDocumento_model->getConcursoInscripcionDocumentoById($request->id_concurso_inscripcion);
         $concursoRequisito = $concurso_model->getConcursoRequisitoByIdConcurso($concursoPuesto->id_concurso);
 		
-		$data["inscripcionDocumento"] = count($inscripcionDocumento);
-		$data["concursoRequisito"] = count($concursoRequisito);
+		$cantidadInscripcionDocumento = count($inscripcionDocumento);
+		$cantidadConcursoRequisito = count($concursoRequisito);
+		
+		}
+		
+		$data["inscripcionDocumento"] = $cantidadInscripcionDocumento;
+		$data["concursoRequisito"] = $cantidadConcursoRequisito;
+		$data["cantidad"] = $cantidad;
 		echo json_encode($data);
 		
     }
@@ -892,7 +967,7 @@ class ConcursoController extends Controller
 		echo $_FILES['file']['name'];
 	}
 	
-	public function exportar_listar_concurso_agremiado($id_concurso,$numero_documento,$id_agremiado,$agremiado,$numero_cap,$id_regional,$id_situacion,$id_estado,$campo,$orden) {
+	public function exportar_listar_concurso_agremiado($id_concurso,$numero_documento,$id_agremiado,$agremiado,$numero_cap,$id_regional,$id_situacion,$id_estado,$campo,$orden,$id_periodo,$id_tipo_concurso,$id_sub_tipo_concurso,$id_puesto) {
 		
 		if($id_concurso==0)$id_concurso = "";
 		if($numero_documento==0)$numero_documento = "";
@@ -905,7 +980,16 @@ class ConcursoController extends Controller
 		if($campo=="0")$campo = "";
 		if($orden=="0")$orden = "";
 		
+		if($id_periodo=="0")$id_periodo = "";
+		if($id_tipo_concurso=="0")$id_tipo_concurso = "";
+		if($id_sub_tipo_concurso=="0")$id_sub_tipo_concurso = "";
+		if($id_puesto=="0")$id_puesto = "";
+		
 		$concursoInscripcione_model = new ConcursoInscripcione();
+		$p[]=$id_periodo;
+		$p[]=$id_tipo_concurso;
+		$p[]=$id_sub_tipo_concurso;
+		$p[]=$id_puesto;
 		$p[]=$id_concurso;
 		$p[]=$numero_documento;
 		$p[]=$id_agremiado;
@@ -916,9 +1000,10 @@ class ConcursoController extends Controller
 		$p[]=$id_estado;
 		$p[]=$campo;
 		$p[]=$orden;
+		$p[]="";
 		$p[]=1;
 		$p[]=10000;
-		$data = $concursoInscripcione_model->listar_concurso_agremiado($p);
+		$data = $concursoInscripcione_model->listar_concurso_resultado_agremiado($p);
 		
 		$variable = [];
 		$n = 1;

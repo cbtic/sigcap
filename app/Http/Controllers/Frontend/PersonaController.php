@@ -437,6 +437,9 @@ class PersonaController extends Controller
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
+
+		//echo($p);exit();
+		//echo($request->NumeroRegistros);
 		$data = $persona_model->listar_persona2_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
@@ -460,12 +463,13 @@ class PersonaController extends Controller
 		
 		if($id>0){
 			$persona = Persona::find($id);
+			//echo($persona);
 		}else{
 			$persona = new Persona;
 		}
 		
 		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
-		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(110);
 		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
 		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
         

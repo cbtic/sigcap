@@ -523,32 +523,98 @@ label.form-control-sm{
 											</div>
 											
 											<div class="row" style="padding:20px 20px 0px 20px;">
+													<!--
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="id_concurso_bus" id="id_concurso_bus" class="form-control form-control-sm" >
 															<option value="">--Concurso--</option>
 															<?php
-															foreach ($concurso as $row) {?>
-															<option <?php if($row->id==$concurso_ultimo->id)echo "selected='selected'"?> value="<?php echo $row->id?>"><?php echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
+															//foreach ($concurso as $row) {?>
+															<option <?php //if($row->id==$concurso_ultimo->id)echo "selected='selected'"?> value="<?php //echo $row->id?>"><?php //echo $row->periodo." - ".$row->tipo_concurso; if($row->sub_tipo_concurso!="")echo " - ".$row->sub_tipo_concurso?></option>
 															<?php 
-															}
+															//}
 															?>
 														</select>
 													</div>
+													-->
+													
+												<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													<?php 
+													if($periodo_activo){
+													?>
+													<input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+													<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComision()" disabled="disabled">
+														<option value="">--Periodo--</option>
+														<?php
+														foreach ($periodo as $row) {?>
+														<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+														<?php 
+														}
+														?>
+													</select>
+													<?php
+													}else{
+													?>
+													<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComision()">
+														<option value="">--Periodo--</option>
+														<?php
+														foreach ($periodo as $row) {?>
+														<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+														<?php 
+														}
+														?>
+													</select>
+													<?php } ?>
+												</div>
+												
+												<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													<select name="id_tipo_concurso_bus" id="id_tipo_concurso_bus" class="form-control form-control-sm" onChange="obtenerSubTipoConcursoBus()">
+														<option value="">--TIPO CONCURSO--</option>
+														<?php
+														foreach ($tipo_concurso as $row) {?>
+														<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$concurso->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+														<?php 
+														}
+														?>
+													</select>
+												</div>
+												
+												<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													<select name="id_sub_tipo_concurso_bus" id="id_sub_tipo_concurso_bus" class="form-control form-control-sm" onchange="obtenerRoEspecifico()">
+														<option value="">--SUBTIPO CONCURSO--</option>
+													</select>
+												</div>
+													
 													<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="Numero Cap">
 													</div>
 													<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 															<input class="form-control form-control-sm" id="numero_documento_bus" name="numero_documento_bus" placeholder="Numero Documento">
 													</div>
-													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+													<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 														<input class="form-control form-control-sm" id="agremiado_bus" name="agremiado_bus" placeholder="Agremiado">
 													</div>
-													<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+												</div>
+												
+												<div class="row" style="padding:10px 20px 0px 20px;">
+												
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 														<select name="id_situacion_bus" id="id_situacion_bus" class="form-control form-control-sm" >
 															<option value="">--Situaci&oacute;n--</option>
 															<?php
 															foreach ($situacion_cliente as $row) {?>
 															<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+															<?php 
+															}
+															?>
+														</select>
+													</div>
+													
+													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+														<select name="id_puesto_bus" id="id_puesto_bus" class="form-control form-control-sm">
+															<option value="">--Puesto--</option>
+															<?php
+															foreach ($puesto as $row) {?>
+															<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$concurso->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 															<?php 
 															}
 															?>

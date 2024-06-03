@@ -12,7 +12,7 @@ class ConcursoInscripcione extends Model
 	
 	function getConcursoInscripcionById($id){
 
-        $cad = "select t1.id,t5.periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
+        $cad = "select t1.id,pc.descripcion periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso,
 t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,
 t7.denominacion situacion,t8.denominacion region,t10.tipo,t10.serie,t10.numero,t4.id_concurso,
 to_char(t5.fecha_acreditacion_inicio,'dd-mm-yyyy')fecha_acreditacion_inicio,to_char(t5.fecha_acreditacion_fin,'dd-mm-yyyy')fecha_acreditacion_fin,t11.denominacion nombre_puesto,puesto,t1.puntaje,t1.resultado   
@@ -20,7 +20,8 @@ from concurso_inscripciones t1
 inner join agremiados t2 on t1.id_agremiado=t2.id
 inner join personas t3 on t2.id_persona=t3.id
 inner join concurso_puestos t4 on t1.id_concurso_puesto=t4.id 
-inner join concursos t5 on t4.id_concurso=t5.id
+inner join concursos t5 on t4.id_concurso=t5.id 
+inner join periodo_comisiones pc on t5.id_periodo=pc.id 
 /*inner join tabla_maestras t6 on t5.id_tipo_concurso=t6.codigo::int and t6.tipo='93'*/
 inner join tabla_maestras tm on t5.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
 left join tabla_maestras tms on t5.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
@@ -107,9 +108,10 @@ where id_concurso_inscripcion=".$id;
 	
 	function getAgremiadoConcursoInscripcionZip($numero_cap){
 
-        $cad = "select distinct id_agremiado,a.numero_cap 
+        $cad = "select distinct id_agremiado,a.numero_cap,p.apellido_paterno,p.apellido_materno,p.nombres 
 from concurso_inscripciones ci 
 inner join agremiados a on ci.id_agremiado=a.id 
+inner join personas p on a.id_persona=p.id
 where ci.estado='1' ";
 
 		if($numero_cap!=""){
@@ -142,6 +144,43 @@ where id_agremiado=".$id_agremiado." and ci.estado='1'";
         return $data;
     }
 	
+	function getConcursoInscripcionZipNuevo($id_agremiado,$id_periodo,$id_tipo_concurso,$id_sub_tipo_concurso,$id_puesto){
+
+        $cad = "select ci.id,replace(pc.descripcion,'/','-') periodo,tm.denominacion tipo_concurso,tms.denominacion sub_tipo_concurso 
+from concurso_inscripciones ci
+inner join concurso_puestos cp on ci.id_concurso_puesto=cp.id
+inner join concursos c on cp.id_concurso=c.id
+inner join periodo_comisiones pc on c.id_periodo=pc.id 
+inner join tabla_maestras tm on c.id_tipo_concurso::int=tm.codigo::int and tm.tipo='101'
+left join tabla_maestras tms on c.id_sub_tipo_concurso::int=tms.codigo::int and tms.tipo='93'
+where id_agremiado=".$id_agremiado." and ci.estado='1'";
+		/*
+		if($id_concurso!=""){
+			$cad .= "and cp.id_concurso='".$id_concurso."' ";
+		}
+		*/
+		
+		if($id_puesto!="" && $id_puesto!="0"){
+	 		$cad .= "And ci.puesto_postula = '".$id_puesto."' ";
+		}
+	
+		if($id_tipo_concurso!="" && $id_tipo_concurso!="0"){
+	 		$cad .= "And c.id_tipo_concurso = '".$id_tipo_concurso."' ";
+		}
+
+		if($id_sub_tipo_concurso!="" && $id_sub_tipo_concurso!="0"){
+	 		$cad .= "And c.id_sub_tipo_concurso = '".$id_sub_tipo_concurso."' ";
+		}
+	
+		if($id_periodo!="" && $id_periodo!="0"){
+	 		$cad .= "And c.id_periodo = '".$id_periodo."' ";
+		}
+		
+		//echo $cad;exit();
+		$data = DB::select($cad);
+        return $data;
+    }
+	
 	function getConcursoInscripcionDocumentoZip($id_concurso_inscripcion){
 
         $cad = "select ruta_archivo from inscripcion_documentos id where id_concurso_inscripcion=".$id_concurso_inscripcion;
@@ -153,6 +192,12 @@ where id_agremiado=".$id_agremiado." and ci.estado='1'";
 	public function listar_concurso_agremiado($p){
 
         return $this->readFuntionPostgres('sp_listar_concurso_agremiado_paginado',$p);
+
+    }
+	
+	public function listar_concurso_resultado_agremiado($p){
+
+        return $this->readFuntionPostgres('sp_listar_concurso_resultado_agremiado_paginado',$p);
 
     }
 	

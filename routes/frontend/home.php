@@ -311,6 +311,7 @@ Route::post('concurso/send_inscripcion', [ConcursoController::class, 'send_inscr
 Route::get('concurso/editar_inscripcion/{id}', [ConcursoController::class, 'editar_inscripcion'])->name('concurso.editar_inscripcion');
 
 Route::post('concurso/listar_concurso_agremiado', [ConcursoController::class, 'listar_concurso_agremiado'])->name('concurso.listar_concurso_agremiado');
+Route::post('concurso/listar_concurso_resultado_agremiado', [ConcursoController::class, 'listar_concurso_resultado_agremiado'])->name('concurso.listar_concurso_resultado_agremiado');
 
 Route::get('concurso/obtener_concurso_inscripcion/{id}', [ConcursoController::class, 'obtener_concurso_inscripcion'])->name('concurso.obtener_concurso_inscripcion');
 
@@ -336,14 +337,14 @@ Route::get('concurso/eliminar_concurso/{id}/{estado}', [ConcursoController::clas
 Route::get('concurso/listar_puesto_concurso/{id_concurso}', [ConcursoController::class, 'listar_puesto_concurso'])->name('concurso.listar_puesto_concurso');
 Route::post('concurso/upload_concurso', [ConcursoController::class, 'upload_concurso'])->name('concurso.upload_concurso');
 
-Route::get('concurso/exportar_listar_concurso_agremiado/{id_concurso}/{numero_documento}/{id_agremiado}/{agremiado}/{numero_cap}/{id_regional}/{id_situacion}/{id_estado}/{campo}/{orden}', [ConcursoController::class, 'exportar_listar_concurso_agremiado'])->name('concurso.exportar_listar_concurso_agremiado');
+Route::get('concurso/exportar_listar_concurso_agremiado/{id_concurso}/{numero_documento}/{id_agremiado}/{agremiado}/{numero_cap}/{id_regional}/{id_situacion}/{id_estado}/{campo}/{orden}/{id_periodo}/{id_tipo_concurso}/{id_sub_tipo_concurso}/{id_puesto}', [ConcursoController::class, 'exportar_listar_concurso_agremiado'])->name('concurso.exportar_listar_concurso_agremiado');
 
 Route::get('comision/consulta_comision', [ComisionController::class, 'consulta_comision'])->name('comision.consulta_comision');
 Route::post('comision/listar_comision_ajax', [ComisionController::class, 'listar_comision_ajax'])->name('comision.listar_comision_ajax');
 Route::post('concurso/upload_documento', [ConcursoController::class, 'upload_documento'])->name('concurso.upload_documento');
 Route::post('concurso/upload_documento_requisito', [ConcursoController::class, 'upload_documento_requisito'])->name('concurso.upload_documento_requisito');
 
-Route::get('concurso/descargar_comprimido/{numero_cap}/{id_concurso}', [ConcursoController::class, 'descargar_comprimido'])->name('concurso.descargar_comprimido');
+Route::get('concurso/descargar_comprimido/{numero_cap}/{id_concurso}/{id_periodo}/{id_tipo_concurso}/{id_sub_tipo_concurso}/{id_puesto}', [ConcursoController::class, 'descargar_comprimido'])->name('concurso.descargar_comprimido');
 
 Route::get('comision/lista_comision', [ComisionController::class, 'lista_comision'])->name('comision.lista_comision');
 Route::post('comision/lista_comision_ajax', [ComisionController::class, 'lista_comision_ajax'])->name('comision.lista_comision_ajax');
@@ -439,6 +440,7 @@ Route::get('sesion/ver_calendario_sesion_coordinador_zonal_pdf/{id_periodo}/{ani
 
 Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eliminar_computo_sesion'])->name('sesion.eliminar_computo_sesion');
 Route::get('sesion/eliminar_comision_sesion_delegados/{id}', [SesionController::class, 'eliminar_comision_sesion_delegados'])->name('sesion.eliminar_comision_sesion_delegados');
+Route::get('sesion/obtener_delegados/{id}', [SesionController::class, 'obtener_delegados'])->name('sesion.obtener_delegados');
 
 Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
 Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
