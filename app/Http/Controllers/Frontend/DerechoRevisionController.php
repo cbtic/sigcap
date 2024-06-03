@@ -1144,7 +1144,7 @@ class DerechoRevisionController extends Controller
 			$proyectista_cap[] = $proyectistas->numero_cap;
 		}
 
-		$datos=$derecho_revision_model->getSolicitudPdfHU($id);
+		$datos=$derecho_revision_model->getSolicitudPdfHU2($id);
 		$credipago=$datos[0]->credipago;
 		$proyectista=$datos[0]->proyectista;
 		$numero_cap=$datos[0]->numero_cap;
@@ -1162,7 +1162,7 @@ class DerechoRevisionController extends Controller
 		$igv = $datos[0]->igv;
 		$total = $datos[0]->total;
 		$tipo_proyectista = $datos[0]->tipo_proyectista;
-		$tipo_uso = $datos[0]->tipo_uso;
+		//$tipo_uso = $datos[0]->tipo_uso;
 		$instancia = $datos[0]->instancia;
 		$codigo = $datos[0]->codigo;
 
@@ -1190,7 +1190,7 @@ class DerechoRevisionController extends Controller
 		 $currentHour = Carbon::now()->format('H:i:s');
 
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','tipo_uso','valor_minimo','valor_maximo','instancia','proyectista_nombres','codigo'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','valor_minimo','valor_maximo','instancia','proyectista_nombres','codigo'));
 		
 
 
