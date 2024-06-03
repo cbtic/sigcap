@@ -821,16 +821,19 @@ class DerechoRevisionController extends Controller
 			$selectedIdsTramite = $solicitud->pluck('id_tipo_tramite')->toArray();
 			$solicitudDocumento = SolicitudDocumento::where("id_solicitud",$uso_edificion->id_solicitud)->where("estado","1")->get();
 			$selectedDocumentos = $solicitudDocumento->pluck('ruta_archivo')->toArray();
+			$solicitud_ = DerechoRevision::where("id",$uso_edificion->id_solicitud)->where("estado","1")->first();
 		}else{
 			$derechoRevision = new DerechoRevision;
 			$uso_edificion = new UsoEdificacione;
 			$selectedIds = [];
 			$selectedIdsTramite = [];
 			$selectedDocumentos = [];
+			$solicitud=new DerechoRevision;
+			$solicitud_=new DerechoRevision;
 		}
-		//var_dump($selectedDocumentos[2]);exit();
+		//var_dump($solicitud_);exit();
 		
-        return view('frontend.derecho_revision.modal_nuevo_infoProyecto',compact('id','uso_edificion','selectedIds','selectedIdsTramite','selectedDocumentos'));
+        return view('frontend.derecho_revision.modal_nuevo_infoProyecto',compact('id','uso_edificion','selectedIds','selectedIdsTramite','selectedDocumentos','solicitud','solicitud_'));
 		
     }
 

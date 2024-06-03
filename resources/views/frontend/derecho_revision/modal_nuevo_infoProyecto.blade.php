@@ -565,7 +565,8 @@ function fn_save_infoProyeto(){
                             <label class="control-label form-control-sm">&Aacute;rea Bruta del Terreno Declarado (m2)</label>
                         </div>
                         <div class="col-lg-3">
-                            <input id="areaBruta" name="areaBruta" on class="form-control form-control-sm"  value="<?php echo $uso_edificion->area_techada?>" type="text" onChange="">
+                            <input id="areaBruta" name="areaBruta" on class="form-control form-control-sm"  value="<?php echo $uso_edificion->area_techada?>" type="text" onChange=""
+                            @if ($solicitud_->id_resultado == 4) readonly @endif>
                         </div>
                     </div>
 
