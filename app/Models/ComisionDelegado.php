@@ -143,6 +143,20 @@ class ComisionDelegado extends Model
         return $data;
     }
 	
+	function getComisionDelegadoByComisionAndPeriodo($id_comision,$id_periodo){
+ 
+        $cad = "select cd.* 
+from comision_delegados cd
+inner join comisiones c on cd.id_comision=c.id
+where cd.id_comision=".$id_comision."
+and c.id_periodo_comisiones=".$id_periodo."
+and cd.estado='1'
+and id_puesto not in(22)";
+
+		$data = DB::select($cad);
+        return $data;
+    }
+	
 	function getComisionDelegadoByComision($id_comision){
 
         $cad = " select cd.id,r.denominacion region,tm.denominacion situacion,tm2.denominacion puesto,

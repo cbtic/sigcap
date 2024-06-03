@@ -856,37 +856,51 @@ class ComisionController extends Controller
 		
 		foreach($comision as $row){
 		
-			$comisionDelegado = ComisionDelegado::where("id_comision",$row->id)->where("estado","1")->orderBy("id","desc")->get();
+			$comisionDelegado_model = new ComisionDelegado;
+			//$comisionDelegado = ComisionDelegado::where("id_comision",$row->id)->where("estado","1")->orderBy("id","desc")->get();
+			$comisionDelegado = $comisionDelegado_model->getComisionDelegadoByComisionAndPeriodo($row->id,$request->periodo);
 			
 			foreach($comisionDelegado as $key2=>$row2){
 				
 				//if($key2==0)$rol_especifico = 1;
 				//else $rol_especifico = 2;
-				
-				$rol_especifico = $row2->id_puesto;
+				 
+				$rol_especifico = $row2->id_puesto; 
 				
 				$concursoInscripcion_model = new ConcursoInscripcione;
-				$concursoInscripciones = $concursoInscripcion_model->getConcursoInscripcionByIdAgremiadoIdPeriodoIdSubTipoConcurso($row2->id_agremiado,9,1);
-				$concursoInscripcion = ConcursoInscripcione::find($concursoInscripciones->id);
-				$concursoInscripcion->puesto = $rol_especifico;
-				$concursoInscripcion->save();
+				$concursoInscripciones = $concursoInscripcion_model->getConcursoInscripcionByIdAgremiadoIdPeriodoIdSubTipoConcurso($row2->id_agremiado,$request->periodo,$request->tipo_comision); 
 				
-				$agremiadoRoleExiste = AgremiadoRole::where("id_agremiado",$concursoInscripcion->id_agremiado)->where("rol",$id_tipo_concurso)->where("rol_especifico",$rol_especifico)->where("id_periodo",$request->periodo)->first();
-				
-				if($agremiadoRoleExiste){
+				if($concursoInscripciones){
 					
-				}else{
-				
-					$agremiadoRol = new AgremiadoRole; 
-					$agremiadoRol->id_agremiado = $concursoInscripcion->id_agremiado;
-					$agremiadoRol->rol = $id_tipo_concurso;
-					$agremiadoRol->rol_especifico = $rol_especifico;///
-					$agremiadoRol->fecha_inicio = $concurso->fecha_acreditacion_inicio;
-					$agremiadoRol->fecha_fin = $concurso->fecha_acreditacion_fin;
-					$agremiadoRol->id_periodo = $request->periodo;
-					$agremiadoRol->estado = 1;
-					$agremiadoRol->id_usuario_inserta = $id_user;
-					$agremiadoRol->save();
+					/*
+					if($concursoInscripciones->id==56){
+						echo $rol_especifico."|";
+						echo $row->id."|";
+					}
+					*/
+					
+					$concursoInscripcion = ConcursoInscripcione::find($concursoInscripciones->id);
+					$concursoInscripcion->puesto = $rol_especifico;
+					$concursoInscripcion->save();
+					
+					$agremiadoRoleExiste = AgremiadoRole::where("id_agremiado",$concursoInscripcion->id_agremiado)->where("rol",$id_tipo_concurso)->where("rol_especifico",$rol_especifico)->where("id_periodo",$request->periodo)->first();
+					
+					if($agremiadoRoleExiste){
+						
+					}else{
+					
+						$agremiadoRol = new AgremiadoRole; 
+						$agremiadoRol->id_agremiado = $concursoInscripcion->id_agremiado;
+						$agremiadoRol->rol = $id_tipo_concurso;
+						$agremiadoRol->rol_especifico = $rol_especifico;///
+						$agremiadoRol->fecha_inicio = $concurso->fecha_acreditacion_inicio;
+						$agremiadoRol->fecha_fin = $concurso->fecha_acreditacion_fin;
+						$agremiadoRol->id_periodo = $request->periodo;
+						$agremiadoRol->estado = 1;
+						$agremiadoRol->id_usuario_inserta = $id_user;
+						$agremiadoRol->save();
+						
+					}
 					
 				}
 				

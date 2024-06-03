@@ -75,6 +75,8 @@ class SesionController extends Controller
 		$p[]=$request->id_estado_aprobacion;
 		$p[]=$request->cantidad_delegado;
 		$p[]=$request->id_situacion;
+		$p[]=(isset($request->campo))?$request->campo:"t1.fecha_programado";
+		$p[]=(isset($request->orden))?$request->orden:"asc";
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comisionSesion_model->lista_programacion_sesion_ajax($p);
@@ -442,6 +444,7 @@ class SesionController extends Controller
 			$comisionSesion->hora_fin = $request->hora_fin;
 			$comisionSesion->id_estado_aprobacion = $request->id_estado_aprobacion;
 			$comisionSesion->id_estado_sesion = $request->id_estado_sesion;
+			$comisionSesion->observaciones = $request->observaciones;
 			$comisionSesion->save();
 			
 			$id_comision_sesion = $request->id;
