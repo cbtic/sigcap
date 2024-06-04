@@ -45,12 +45,18 @@ class MunicipalidadIntegrada extends Model
 		}
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$cad .= " and mi.estado='1' order by mi.denominacion asc";
 =======
+=======
+>>>>>>> 8e9db6ebee0a588e4be7a7d94ab00c709814ccd6
 		//$cad .= " and mi.estado='1' order by 1 desc ";
-		$cad .= " and mi.estado='1' order by mi.denominacion asc ";
+		$cad .= " and mi.estado='1' order by mi.denominacion asc "; 
 		
+<<<<<<< HEAD
 >>>>>>> 4d3ffdb7f4bcd1299e32b1f0e1e5c6b0f757e079
+=======
+>>>>>>> 8e9db6ebee0a588e4be7a7d94ab00c709814ccd6
 		$data = DB::select($cad);
         return $data;
     }
