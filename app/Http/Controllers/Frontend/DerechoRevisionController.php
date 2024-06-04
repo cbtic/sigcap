@@ -351,6 +351,18 @@ class DerechoRevisionController extends Controller
 		$area_total = $solicitud->area_total;
 		$id_tipo_solicitud = $solicitud->id_tipo_solicitud;
 
+		$total2_ = $request->input('total2');
+		$total2_ = preg_replace('/[^\d.]/','',$total2_);
+		$total2_ = floatval($total2_);
+
+		$subtotal2_ = $request->input('sub_total2');
+		$subtotal2_ = preg_replace('/[^\d.]/','',$subtotal2_);
+		$subtotal2_ = floatval($subtotal2_);
+
+		$igv2_ = $request->input('igv2');
+		$igv2_ = preg_replace('/[^\d.]/','',$igv2_);
+		$igv2_ = floatval($igv2_);
+
 		//if($request->tipo_liquidacion1==136)$valor_obra = $request->total2;
 		
 		if($request->instancia==250)$valor_obra = $request->valor_reintegro;
@@ -380,9 +392,9 @@ class DerechoRevisionController extends Controller
 				$id_tipo_documento = 20;
 				if($request->tipo_liquidacion1==136){
 					//$valor_obra = $request->total2;
-					$sub_total 	= $request->sub_total2;
-					$igv		= $request->igv2;
-					$total		= $request->total2;
+					$sub_total 	= $subtotal2_;
+					$igv		= $igv2_;
+					$total		= $total2_;
 
 				}else{
 					$sub_total 	= ($parametro->porcentaje_calculo_edificacion*$valor_obra);//(0.0005*$valor_obra);
@@ -821,16 +833,19 @@ class DerechoRevisionController extends Controller
 			$selectedIdsTramite = $solicitud->pluck('id_tipo_tramite')->toArray();
 			$solicitudDocumento = SolicitudDocumento::where("id_solicitud",$uso_edificion->id_solicitud)->where("estado","1")->get();
 			$selectedDocumentos = $solicitudDocumento->pluck('ruta_archivo')->toArray();
+			$solicitud_ = DerechoRevision::where("id",$uso_edificion->id_solicitud)->where("estado","1")->first();
 		}else{
 			$derechoRevision = new DerechoRevision;
 			$uso_edificion = new UsoEdificacione;
 			$selectedIds = [];
 			$selectedIdsTramite = [];
 			$selectedDocumentos = [];
+			$solicitud=new DerechoRevision;
+			$solicitud_=new DerechoRevision;
 		}
-		//var_dump($selectedDocumentos[2]);exit();
+		//var_dump($solicitud_);exit();
 		
-        return view('frontend.derecho_revision.modal_nuevo_infoProyecto',compact('id','uso_edificion','selectedIds','selectedIdsTramite','selectedDocumentos'));
+        return view('frontend.derecho_revision.modal_nuevo_infoProyecto',compact('id','uso_edificion','selectedIds','selectedIdsTramite','selectedDocumentos','solicitud','solicitud_'));
 		
     }
 

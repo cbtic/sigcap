@@ -232,6 +232,31 @@ $(document).ready(function() {
 	}
 	
 });
+
+$('#btnImportarDictamenes').click(function () {
+	importarDatalicenciaDictamenes();
+});
+
+function importarDatalicenciaDictamenes(){
+
+var msgLoader = "";
+msgLoader = "Procesando, espere un momento por favor";
+var heightBrowser = $(window).width()/2;
+$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+$('.loader').show();
+
+$.ajax({
+	url: "/sesion/importar_dataLicencia_dictamenes",
+	type: "GET",
+	success: function(result){
+
+		$('.loader').hide();
+		bootbox.alert("Se import&oacute; exitosamente los datos"); 
+		datatablenew();
+	}
+});
+}
+
 </script>
 
 <script type="text/javascript">
@@ -807,8 +832,11 @@ function cargarDelegados(){
 									?>
 								</select>
 							</div>
+							
 						</div>
-						
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="padding-right:0px;padding-left:0px">
+								<input class="btn btn-info" value="Importar Dictamenes" id="btnImportarDictamenes" style="margin-left:10px;margin-top:30px"/>
+							</div>
 						<?php } ?>
 																	
 					</div>
