@@ -21,7 +21,11 @@ class Municipalidade extends Model
         from municipalidades t1
         inner join tabla_maestras tm on t1.id_tipo_municipalidad::int =tm.codigo::int and tm.tipo='43'
         where t1.estado='1' 
+<<<<<<< HEAD
         order by t1.denominacion asc";
+=======
+		order by t1.denominacion asc ";
+>>>>>>> 4d3ffdb7f4bcd1299e32b1f0e1e5c6b0f757e079
 		$data = DB::select($cad);
         return $data;
     }

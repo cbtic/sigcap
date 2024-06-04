@@ -79,7 +79,8 @@ class Agremiado extends Model
 		inner join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
 		left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'                    
 		Where  t1.estado='1' 
-		and t2.id_situacion not in(74,83)";
+		and t2.id_situacion not in(74,83)
+		order by (t1.apellido_paterno||' '||t1.apellido_materno||' '||t1.nombres) asc";
 		$data = DB::select($cad);
 		
         return $data;

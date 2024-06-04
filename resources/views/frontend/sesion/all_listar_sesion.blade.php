@@ -231,9 +231,9 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
                     	<select name="id_estado_sesion_bus" id="id_estado_sesion_bus" class="form-control form-control-sm">
-							<option value="">--Estado Sesi&oacute;n--</option>
+							<option value="">Estado Sesi&oacute;n</option>
 							<?php
 							foreach ($estado_sesion as $row) {?>
 							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
@@ -243,9 +243,9 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                     	<select name="id_estado_aprobacion_bus" id="id_estado_aprobacion_bus" class="form-control form-control-sm">
-							<option value="">--Estado Aprobaci&oacute;n--</option>
+							<option value="">Estado Aprobaci&oacute;n</option>
 							<?php
 							foreach ($estado_aprobacion as $row) {?>
 							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
@@ -255,9 +255,9 @@
 						</select>
 					</div>
 					
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                     	<select name="cantidad_delegado" id="cantidad_delegado" class="form-control form-control-sm">
-							<option value="">--Cantidad Delegado--</option>
+							<option value="">--Can.Delegado--</option>
 							<option value="0">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
@@ -273,6 +273,25 @@
 							<?php 
 							}
 							?>
+						</select>
+					</div>
+					
+					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+						<select name="campo" id="campo" class="form-control form-control-sm">
+							<option value="t1.fecha_programado">--Campo--</option>
+							<option value="t1.fecha_programado">Fecha Programada</option>
+							<option value="t8.denominacion">Tipo Comisi&oacute;n</option>
+							<option value="t4.denominacion||'' ''||t4.comision">Comisi&oacute;n</option>
+							<option value="t2.denominacion">Sesi&oacute;n Programada</option>
+							<option value="t3.denominacion">Estado Sesi&oacute;n</option>
+							<option value="t7.denominacion">Estado Aprobaci&oacute;n</option>
+						</select>
+					</div>
+					
+					<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+						<select name="orden" id="orden" class="form-control form-control-sm">
+							<option value="asc">Ascendente</option>
+							<option value="desc">Descendente</option>
 						</select>
 					</div>
 					

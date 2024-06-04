@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION public.sp_listar_programacion_sesion_paginado(p_id_regional character varying, p_id_periodo_comisiones character varying, p_tipo_comision character varying, p_id_comision character varying, p_fecha_programado_desde character varying, p_fecha_programado_hasta character varying, p_id_tipo_sesion character varying, p_id_tipo_agrupacion character varying, p_id_estado_sesion character varying, p_id_estado_aprobacion character varying, p_cantidad_delegado character varying, p_id_situacion character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_programacion_sesion_paginado(p_id_regional character varying, p_id_periodo_comisiones character varying, p_tipo_comision character varying, p_id_comision character varying, p_fecha_programado_desde character varying, p_fecha_programado_hasta character varying, p_id_tipo_sesion character varying, p_id_tipo_agrupacion character varying, p_id_estado_sesion character varying, p_id_estado_aprobacion character varying, p_cantidad_delegado character varying, p_id_situacion character varying,p_campo character varying, p_orden character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -98,9 +98,11 @@ where csd.id_comision_sesion=t1.id and (coalesce(csd.id_delegado,0)!=0 or coales
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By t1.fecha_programado asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		--t1.fecha_programado asc
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By '||p_campo||' '||p_orden||' LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By t1.fecha_programado asc ;'; 
+		--t1.fecha_programado asc
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By '||p_campo||' '||p_orden||' ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;
@@ -110,3 +112,4 @@ End
 
 $function$
 ;
+

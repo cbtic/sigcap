@@ -400,6 +400,8 @@ function obtenerComisionBus(){
 
 function obtenerComisionDelegado(){
 	
+	var id = $("#id").val();
+	
 	var id_comision = $('#id_comision').val();
 	$.ajax({
 		url: '/sesion/obtener_comision_delegado/'+id_comision,
@@ -419,7 +421,14 @@ function obtenerComisionDelegado(){
 				var sel = "";
 				if(oo.coordinador==1)sel = "checked='checked'";
 				option += "<td class='text-center'><input type='radio' name='coordinador' "+sel+" value='"+oo.id+"' /></td>";
+				
+				if(id>0){
 				option += "<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('"+oo.id+"') ><i class='fa fa-edit'></i> Editar</button></td>";
+				}else{
+				option += "<td class='text-left'></td><td class='text-left'></td><td class='text-left'></td>";
+				}
+				
+				
 				option += "</tr>";
 			});
 			$('#tblDelegado tbody').html(option);
@@ -641,6 +650,8 @@ function datatablenew(){
 			var fecha_fin_bus = $('#fecha_fin_bus').val();
 			var cantidad_delegado = $('#cantidad_delegado').val();
 			var id_situacion = $('#id_situacion_bus').val();
+			var campo = $('#campo').val();
+			var orden = $('#orden').val();
 			var _token = $('#_token').val();
 			
             oSettings.jqXHR = $.ajax({
@@ -653,6 +664,7 @@ function datatablenew(){
 						id_tipo_sesion:id_tipo_sesion,id_estado_sesion:id_estado_sesion,
 						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
 						id_estado_aprobacion:id_estado_aprobacion,cantidad_delegado:cantidad_delegado,id_situacion:id_situacion,
+						campo:campo,orden:orden,
 						_token:_token
                        },
                 "success": function (result) {
@@ -1104,12 +1116,20 @@ function eliminarDelegadoSesion(id){
 
 function fn_eliminar_delegado_sesion(id){
 	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
     $.ajax({
             url: "/sesion/eliminar_comision_sesion_delegados/"+id,
             type: "GET",
             success: function (result) {
-                $('#openOverlayOpc').modal('hide');
-				datatablenew();
+                $('.loader').hide();
+				//$('#openOverlayOpc').modal('hide');
+				//datatablenew();
+				cargarDelegados();
             }
     });
 }
