@@ -294,7 +294,7 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
 
    public function importar_dictamenes_dataLicencia($fecha_actual){
 
-	return $this->readFuntionPostgres_('copiar_dalalicencia_sesiones("'.$fecha_actual.'")');
+	return $this->readFuntionPostgres_('copiar_datalicencia_sesiones("'.$fecha_actual.'")');
 
 	}
 

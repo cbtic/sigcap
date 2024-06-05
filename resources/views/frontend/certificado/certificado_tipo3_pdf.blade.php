@@ -121,7 +121,7 @@ $(document).ready(function() {
             <p id="primero">El Colegio de Arquitectos del Perú - Regi&oacute;n Lima, certifica que:</p>
             <p style="margin-left: 2cm;"><?php echo $tratodesc;?>   : <?php echo $datos[0]->desc_cliente;?> </p>
             <p style="margin-left: 2cm;">         N° CAP                 : <?php echo $datos[0]->numero_cap;?> </p>
-            <p style="margin-left: 2cm;">         FECHA DE COLEGIATURA   : <?php echo $datos[0]->fecha_colegiado;?> </p>
+            <p style="margin-left: 2cm;">         FECHA DE COLEGIATURA   : <?php echo $fecha_colegiado_formateado;?> </p>
             <p style="margin-left: 2cm;">         N° INSCRIPCIÓN REGIONAL: <?php echo $datos[0]->numero_regional;?> </p>
             <p style="text-align: justify;" > Está <?php echo $inscripcion;?> en nuestra Institución de conformidad a la Ley N° 14085 y
                              al Estatuto del Colegio de Arquitectos del Perú, encontrándose en condición 

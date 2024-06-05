@@ -26,7 +26,10 @@ class CertificadoController extends Controller
 {
     function consultar_certificado(){
 
-        return view('frontend.certificado.all');
+		$tablaMaestra_model = new TablaMaestra;
+        $tipo_certificado = $tablaMaestra_model->getMaestroByTipo(100);
+
+        return view('frontend.certificado.all',compact('tipo_certificado'));
     }
 
 	function consultar_certificado_tipo3(){
@@ -40,7 +43,8 @@ class CertificadoController extends Controller
         
         $p[]=$request->cap;
 		$p[]=$request->nombre;
-		$p[]=$request->estado;          
+		$p[]=$request->tipo;
+		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
         //print_r(json_encode($p)); exit();
@@ -189,11 +193,13 @@ class CertificadoController extends Controller
 		
 		
 		if($persona->id){
+			$propietario->id_tipo_propietario = 78;
 			$propietario->id_persona = $persona->id;
 			$propietario->representante = $request->nombre_propietario;
 			$propietario->celular = $request->celular_dni;
 			$propietario->email = $request->email_dni;
 		}else{
+			$propietario->id_tipo_propietario = 79;
 			$propietario->id_empresa = $empresa->id;
 			$propietario->representante = $empresa-> representante;
 			$propietario->celular = $request->telefono_ruc;
@@ -461,10 +467,15 @@ class CertificadoController extends Controller
 		$nombre=$datos[0]->numero_cap;
 		$fecha_emision=$datos[0]->fecha_emision;
 		$trato=$datos[0]->id_sexo;
+		$fecha_colegiado=$datos[0]->fecha_colegiado;
 
 		$numero = $datos[0]->dias_validez;
 		$tramite = $datos[0]->tipo_tramite;
 		
+		//$fecha_colegiado_ = Carbon::createFromFormat('Y-m-d',$datos[0]->fecha_colegiado);
+		$fecha_colegiado_ = new Carbon($datos[0]->fecha_colegiado);
+		$fecha_colegiado_formateado = $fecha_colegiado_->format('d-m-Y');
+
 		$numeroEnLetras = $this->numeroALetras($numero); 
 		
 
@@ -498,7 +509,7 @@ class CertificadoController extends Controller
 		//$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		//var_dump($mes_minimoEnLetras);exit;
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_pdf',compact('datos','nombre','inscripcion','habilita','tratodesc','faculta','numeroEnLetras','fecha_detallada'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_pdf',compact('datos','nombre','inscripcion','habilita','tratodesc','faculta','numeroEnLetras','fecha_detallada','fecha_colegiado_formateado'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -715,6 +726,8 @@ class CertificadoController extends Controller
 		$numero = $datos[0]->dias_validez;
 		$numeroEnLetras = $this->numeroALetras($numero); 
 		
+		$fecha_colegiado_ = new Carbon($datos[0]->fecha_colegiado);
+		$fecha_colegiado_formateado = $fecha_colegiado_->format('d-m-Y');
 
 		if ($trato==3) {
 			$tratodesc="EL ARQUITECTO ";
@@ -771,7 +784,7 @@ class CertificadoController extends Controller
 
 		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','direccion','provincia','departamento','distrito','nombre_propietario','nombre_proyecto','cita','valor_obra','area_techada','habilita','inscripcion','tratodesc','faculta','numeroEnLetras','tipo_tramite_tipo3','expediente','fecha_detallada'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_tipo3_pdf',compact('datos','nombre','direccion','provincia','departamento','distrito','nombre_propietario','nombre_proyecto','cita','valor_obra','area_techada','habilita','inscripcion','tratodesc','faculta','numeroEnLetras','tipo_tramite_tipo3','expediente','fecha_detallada','fecha_colegiado_formateado'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -938,8 +951,6 @@ class CertificadoController extends Controller
 		$numero_cap=$proyectos[0]->numero_cap;
 		$agremiado=$proyectos[0]->agremiado;
 		$fecha_colegiado=$proyectos[0]->fecha_colegiado;
-
-
 
 		if ($trato==3) {
 			$tratodesc="ARQUITECTO ";

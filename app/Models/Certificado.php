@@ -63,7 +63,12 @@ from certificados c where id_tipo=".$id_tipo;
 
         $cad = "select c.id, a.numero_cap, p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado, tm.denominacion Tipo_certificado, c.codigo, c.estado, a.desc_cliente, 
         a.id_situacion, tms.denominacion situacion, a.fecha_colegiado, a.numero_regional, fecha_emision, p.id_sexo, c.dias_validez, t3.denominacion situacion, a.email1, t4.denominacion tipo_proyectista, 
-        u.id_departamento, u.id_provincia, u.id_distrito, pro.direccion direccion, pro.lugar lugar, p2.desc_cliente_sunat propietario, pre.valor_unitario, pre.area_techada, t5.denominacion tipo_obra, 
+        u.id_departamento, u.id_provincia, u.id_distrito, pro.direccion direccion, pro.lugar lugar, 
+        CASE 
+            WHEN prop.id_tipo_propietario = '78' THEN (select p2.apellido_paterno||' '||p2.apellido_materno||' '||p2.nombres agremiado from personas p2 where p2.id = prop.id_persona)
+            WHEN prop.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = prop.id_empresa)
+        end as propietario,
+        pre.valor_unitario, pre.area_techada, t5.denominacion tipo_obra, 
         (select t6.denominacion tipo_uso from uso_edificaciones ue 
         left join tabla_maestras t6 on ue.id_tipo_uso = t6.codigo::int And t6.tipo ='111' and t6.sub_codigo is null
         where ue.id_solicitud = c.id_solicitud 
@@ -80,7 +85,7 @@ from certificados c where id_tipo=".$id_tipo;
         left join solicitudes s on c.id_solicitud =s.id
         left join proyectistas pr on s.id_proyectista = pr.id
         left join proyectos pro on s.id_proyecto = pro.id 
-        left join ubigeos u on pro.id_ubigeo = u.id
+        left join ubigeos u on pro.id_ubigeo = u.id_ubigeo
         left join propietarios prop on prop.id_solicitud = s.id 
         left join personas p2 on prop.id_persona = p2.id
         left join presupuestos pre on pre.id_solicitud = s.id 
@@ -100,7 +105,12 @@ from certificados c where id_tipo=".$id_tipo;
 
     public function datos_agremiado_certificado2($id){
 
-        $cad = "select c.id , a.numero_cap ,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado ,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez,t3.denominacion situacion,a.email1, t4.denominacion tipo_proyectista, u.id_departamento, u.id_provincia, u.id_distrito, pro.direccion direccion, pro.lugar lugar, p2.desc_cliente_sunat propietario, pre.valor_unitario, pre.area_techada,t5.denominacion tipo_tramite, t6.denominacion tipo_uso, pro.zonificacion, s.area_total, pro.nombre nombre_proyecto
+        $cad = "select c.id , a.numero_cap ,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado ,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez,t3.denominacion situacion,a.email1, t4.denominacion tipo_proyectista, u.id_departamento, u.id_provincia, u.id_distrito, pro.direccion direccion, pro.lugar lugar, 
+        CASE 
+            WHEN prop.id_tipo_propietario = '78' THEN (select p2.apellido_paterno||' '||p2.apellido_materno||' '||p2.nombres agremiado from personas p2 where p2.id = prop.id_persona)
+            WHEN prop.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = prop.id_empresa)
+        end as propietario,
+        pre.valor_unitario, pre.area_techada,t5.denominacion tipo_tramite, t6.denominacion tipo_uso, pro.zonificacion, s.area_total, pro.nombre nombre_proyecto
         from certificados c 
         inner join agremiados a on c.id_agremiado =a.id 
         inner join tabla_maestras tm on c.id_tipo =tm.codigo::int and tm.tipo ='100' 
@@ -109,7 +119,7 @@ from certificados c where id_tipo=".$id_tipo;
         left join solicitudes s on c.id_solicitud =s.id
         left join proyectistas pr on s.id_proyectista = pr.id
         left join proyectos pro on s.id_proyecto = pro.id 
-        left join ubigeos u on pro.id_ubigeo = u.id
+        left join ubigeos u on pro.id_ubigeo = u.id_ubigeo
         left join propietarios prop on prop.id_solicitud = s.id 
         left join personas p2 on prop.id_persona = p2.id
         left join presupuestos pre on pre.id_solicitud = s.id 

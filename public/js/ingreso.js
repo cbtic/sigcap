@@ -27,7 +27,6 @@ $(document).ready(function () {
 			
 			$('#DescuentoPP').val("N");
 		
-	
 			return false;
 	
 		}

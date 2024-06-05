@@ -407,6 +407,7 @@ function datatablenew(){
 			
             var cap = $('#cap_lista').val();
 			var agremiado = $('#denominacion').val();
+			var tipo = $('#tipo_certificado_bus').val();
 			var estado = $('#estado').val();
 			
 			var _token = $('#_token').val();
@@ -416,7 +417,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						agremiado:agremiado,cap:cap,estado:estado,
+						agremiado:agremiado,cap:cap,estado:estado,tipo:tipo,
 						_token:_token
                        },
                 "success": function (result) {
@@ -471,6 +472,16 @@ function datatablenew(){
                 "bSortable": true,
                 "aTargets": [3]
                 },
+
+				{
+				"mRender": function (data, type, row) {
+					var fecha_emision = "";
+					if(row.fecha_emision!= null)fecha_emision = row.fecha_emision;
+					return fecha_emision;
+				},
+				"bSortable": true,
+				"aTargets": [4]
+				},
 				
 				{
 					"mRender": function (data, type, row) {
@@ -484,7 +495,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [4]
+					"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -511,7 +522,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [6],
 				},
 
             ]
