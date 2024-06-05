@@ -154,7 +154,7 @@
 				<tr>
 					<td style="border:1px solid #A4A4A4;width:40px;text-align:center"><?php echo ($key+1)?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->tipo?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo date('Y-m-d', strtotime($r->fecha));?></td>
+					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo date('d-m-Y', strtotime($r->fecha));?></td>
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->credipago?></td>
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->propietario?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->nombreproyecto?></td>

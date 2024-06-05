@@ -155,6 +155,18 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Apellidos y Nombres">
 					</div>
+
+                    <div class="form-group">
+                        <select name="tipo_certificado_bus" id="tipo_certificado_bus" class="form-control form-control-sm" onchange="">
+                            <option value="">--Seleccionar Tipo--</option>
+                            <?php
+                            foreach ($tipo_certificado as $row) {?>
+                            <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
 					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
@@ -181,6 +193,7 @@
                             <th>CAP</th>
                             <th>Apellidos y Nombres</th>
                             <th>Tipo Certificado</th>
+                            <th>Fecha</th>
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

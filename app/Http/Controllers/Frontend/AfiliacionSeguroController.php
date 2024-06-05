@@ -147,7 +147,7 @@ class AfiliacionSeguroController extends Controller
         //$seguro_parentesco=seguro_afiliado_parentesco::where('id_afiliacion', $id)->where('estado', '1')->get()->all();
 		
 		$datos_model= new seguro_afiliado_parentesco();
-		$datos_seguro_agremiado=$datos_model->getDatosSeguro($id);
+		$datos_seguro_agremiado=$datos_model->getDatosSeguro_act($id);
 
 
 		return view('frontend.afiliacion_seguro.modal_parentesco',compact('id',/*'seguro_parentesco',*/'datos_seguro_agremiado'));

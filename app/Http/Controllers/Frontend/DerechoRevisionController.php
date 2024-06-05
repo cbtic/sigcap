@@ -1308,7 +1308,7 @@ class DerechoRevisionController extends Controller
 	}
 
 	public function modal_reintegro($id){
-		 
+		
 		//$derechoRevision = new DerechoRevision;
 		$derechoRevision_model = new DerechoRevision;
 		$tablaMaestra_model = new TablaMaestra;

@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Sistema SIGCAP</title>
 
 <style>
@@ -352,9 +353,11 @@ $.mask.definitions['p'] = "[Mm]";
 			},
 			//dataType: 'json',
 			success: function(result) {
-				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
-				datatablenew();
+					Swal.fire("Se gener&oacute; el certificado correctamente. Puede imprimirlo en el bot&oacute;n Ver Certificado")
+					$('#openOverlayOpc').modal('hide');
+					//window.location.reload();
+					datatablenew();
+				//});
 
 			}
 		});

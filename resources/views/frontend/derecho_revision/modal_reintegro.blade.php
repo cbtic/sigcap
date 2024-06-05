@@ -153,6 +153,7 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 $(document).ready(function() {
 	 
 	calculoVistaPrevia();
+    activarEtapas();
 	
 });
 
@@ -209,6 +210,14 @@ function calculoVistaPrevia(){
         $('#total2').val(formatoMoneda(total));
     }
     //var_dump($total_minimo);exit;
+}
+
+function activarEtapas(){
+    if($('#etapas').val()==1){
+        $('#n_etapas_').show();
+    }else{
+        $('#n_etapas_').hide();
+    }
 }
 
 function habilitar_reintegro(){
@@ -640,6 +649,29 @@ function fn_save_credipago(){
                         <div id="valor_reintegro_" name="valor_reintegro_">
                             <label class="control-label form-control-sm">Valor Reintegro S/.</label>
                             <input id="valor_reintegro" name="valor_reintegro" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" onChange="calcularReintegro()">
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="control-label form-control-sm">Por Etapas</label>
+                        <select name="etapas" id="etapas" class="form-control form-control-sm" onchange="activarEtapas()">
+                            <option value="">--Selecionar--</option>
+                            <option value="1">SI</option>
+                            <option value="0" selected='selected'>NO</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <div id="n_etapas_" name="n_etapas_">
+                            <label class="control-label form-control-sm">N&uacute;mero de Etapas</label>
+                            <select name="n_etapas" id="n_etapas" class="form-control form-control-sm">
+                                <option value="">--Selecionar--</option>
+                                    <?php
+                                    for ($i=1; $i<=10;$i++) {
+                                    ?>
+                                    <option value="<?php echo $i;?>"><?php echo $i?></option>
+                                    <?php
+                                    }
+                                    ?>
+                            </select>
                         </div>
                     </div>
                 </div>
