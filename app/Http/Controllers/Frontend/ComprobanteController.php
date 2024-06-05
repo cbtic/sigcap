@@ -796,8 +796,30 @@ class ComprobanteController extends Controller
 				
 				}
 
-                
-                
+
+                $valorizad_ = $request->valorizad;
+                $numero_documento_b = $request->numero_documento_b;
+
+                foreach ($valorizad_ as $key => $value) {
+
+                    $id_val = $value['id'];
+
+                    $id_concepto = $value['id_concepto'];
+
+                    if ($id_concepto=='26474'){
+    
+                        $valorizaciones_model = new Valorizacione; 
+    
+                        $credipago = $valorizaciones_model->ActualizaValorizacionCredipago($id_val);
+    
+                    }
+
+                    
+                } 
+
+
+
+
 
                 $descuentopp = $request->descuentopp;
                 $id_pronto_pago = $request->id_pronto_pago;

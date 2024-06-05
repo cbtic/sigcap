@@ -515,6 +515,23 @@ class Valorizacione extends Model
         if($data)return $data[0];
     }
     
+    function ActualizaValorizacionCredipago($id_val){        
+       
+        $cad = "
+        update solicitudes s set id_resultado = '4' 
+        from liquidaciones l 
+            inner join valorizaciones v on v.pk_registro = l.id 
+        where v.id =  ".$id_val."
+            and l.id_solicitud = s.id 
+        ";
+       
+        
+      //  echo $cad;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+    
 	public function listar_liquidacion_caja_ajax($p){
 		return $this->readFunctionPostgres('sp_listar_liquidacion_caja_paginado',$p);
     }
