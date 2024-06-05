@@ -64,7 +64,7 @@ class ComisionController extends Controller
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.comision.all_listar_comision',compact('periodo','tipoAgrupacion','tipoComision','periodo_ultimo','periodo_activo'));
+        return view('frontend.comision.all_listar_comision_nuevo',compact('periodo','tipoAgrupacion','tipoComision','periodo_ultimo','periodo_activo'));
     }
 	
 	public function lista_comision_ajax(Request $request){
@@ -77,6 +77,33 @@ class ComisionController extends Controller
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comision_model->lista_comision_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
+	
+	public function lista_comision_nuevo_ajax(Request $request){
+	
+		$comision_model = new Comisione();
+		$p[]=$request->id_periodo;
+		$p[]=$request->tipo_agrupacion;
+		$p[]=$request->tipo_comision;
+		$p[]=$request->id_comision;
+		$p[]=$request->estado;      
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $comision_model->lista_comision_nuevo_ajax($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;

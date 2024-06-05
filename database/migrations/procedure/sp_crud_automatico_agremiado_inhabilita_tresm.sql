@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_crud_automatico_agremiado_inhabilita_tresm()
  RETURNS character varying
  LANGUAGE plpgsql
@@ -38,7 +37,7 @@ begin
 	select distinct  id_agremiado  
 	from agremiado_cuotas ac inner join agremiados a on a.id = ac.id_agremiado 
 	where fecha_venc_pago >= CURRENT_DATE - INTERVAL '3 months' and 
-			ac.id_situacion =60 and 
+			ac.id_situacion !=60 and 
 			a.id_situacion =73 and 
 			ac.id_concepto =26411 
 	order by id_agremiado 			
