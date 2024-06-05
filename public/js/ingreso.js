@@ -943,7 +943,8 @@ function obtenerBeneficiario(){
 					$('#fecha_colegiatura').val(result.agremiado.actividad);
 					$('#fecha_').val(result.agremiado.fecha_colegiado);
 					$('#id_persona').val(result.agremiado.id_p);
-					$('#id_agremiado').val(result.agremiado.id);
+					//$('#id_agremiado').val(result.agremiado.id);
+					$('#id_agremiado').val("0");
 					$('#ruc_p').val(result.agremiado.numero_ruc);
 					$('#id_ubicacion_p').val("0");
 					$('#email').val(result.agremiado.email);
