@@ -31,7 +31,7 @@ left join tabla_maestras tm2 on a.id_situacion = tm2.codigo::int And tm2.tipo ='
 left join tabla_maestras tm3 on cd.id_puesto::int = tm3.codigo::int And tm3.tipo =''94''
 left join tabla_maestras tm4 on c.id_tipo_comision::varchar = tm4.codigo::varchar And tm4.tipo =''102'' ';
 	
-	v_where = ' Where 1=1  ';
+	v_where = ' Where 1=1 and cd.estado=''1'' ';
 	
 	If p_id_periodo_comisiones<>'0' Then
 	 v_where:=v_where||'And mi.id_periodo_comision = '''||p_id_periodo_comisiones||''' ';
