@@ -246,11 +246,11 @@
 							<option value="">--Tipo Tirular--</option>
 							<?php
 							foreach ($puesto as $row) {
-								if($row->codigo==1 || $row->codigo==2){
+								//if($row->codigo==1 || $row->codigo==2){
 							?>
 							<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$concurso->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 							<?php 
-								}
+								//}
 							}
 							?>
 						</select>
