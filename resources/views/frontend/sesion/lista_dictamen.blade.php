@@ -8,9 +8,9 @@ foreach($dictamen as $row):?>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->numero_revision?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->credipago?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo round($row->total,2)?></td>
-	<td class="text-left" style="vertical-align:middle"><?php echo $row->fecha_liquidacion?></td>
-	<!--<td class="text-left" style="vertical-align:middle"><?php //echo $row->nombre?></td>-->
-	<td class="text-left" style="vertical-align:middle"><?php echo $row->direccion?></td>
+	<!--<td class="text-left" style="vertical-align:middle"><?php //echo $row->fecha_liquidacion?></td>
+	<td class="text-left" style="vertical-align:middle"><?php //echo $row->nombre?></td>
+	<td class="text-left" style="vertical-align:middle"><?php //echo $row->direccion?></td>-->
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->dictamen?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->numero_expediente_municipal?></td>
 	<td class="text-left">

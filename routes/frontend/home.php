@@ -728,7 +728,7 @@ Route::get('comprobante_c/cuadre_caja', [ComprobanteController::class, 'cuadre_c
 
 Route::post('derecho_revision/send_nuevo_reintegro', [DerechoRevisionController::class, 'send_nuevo_reintegro'])->name('derecho_revision.send_nuevo_reintegro');
 Route::get('derecho_revision/obtener_provincia_distrito_solicitud/{id}', [DerechoRevisionController::class, 'obtener_provincia_distrito_solicitud'])->name('municipalidad.obtener_provincia_distrito_solicitud');
-Route::get('sesion/importar_dataLicencia_dictamenes', [SesionController::class, 'importar_dataLicencia_dictamenes'])->name('sesion.importar_dataLicencia_dictamenes');
+Route::get('sesion/importar_dataLicencia_dictamenes/{fecha_ejecucion}/{id_comision}/{id_sesion}', [SesionController::class, 'importar_dataLicencia_dictamenes'])->name('sesion.importar_dataLicencia_dictamenes');
 Route::get('derecho_revision/eliminar_proyectista_hu/{id}', [DerechoRevisionController::class, 'eliminar_proyectista_hu'])->name('derecho_revision.eliminar_proyectista_hu');
 Route::get('derecho_revision/eliminar_propietario_hu/{id}', [DerechoRevisionController::class, 'eliminar_propietario_hu'])->name('derecho_revision.eliminar_propietario_hu');
 Route::get('derecho_revision/eliminar_infoProyecto_hu/{id}', [DerechoRevisionController::class, 'eliminar_infoProyecto_hu'])->name('derecho_revision.eliminar_infoProyecto_hu');

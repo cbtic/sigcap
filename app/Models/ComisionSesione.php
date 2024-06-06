@@ -292,9 +292,9 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
       return $data;
    }
 
-   public function importar_dictamenes_dataLicencia($fecha_actual){
+   /*public function importar_dictamenes_dataLicencia($fecha_ejecucion_formateada,$id_comision,$id_sesion){
 
-	return $this->readFuntionPostgres_('copiar_datalicencia_sesiones("'.$fecha_actual.'")');
+	return $this->readFuntionPostgres_('copiar_datalicencia_sesiones("'.$fecha_ejecucion_formateada.'",'.$id_comision.','.$id_sesion.')');
 
 	}
 
@@ -303,6 +303,34 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
 		$cad = "select " . $function;
 		$data = DB::select($cad);
 		return $data;
+	}*/
+
+	public function importar_dictamenes_dataLicencia($fecha_ejecucion_formateada, $equivaComision, $id_sesion) {
+		
+		$function = 'copiar_datalicencia_sesiones(:fecha_ejecucion, :id_comision, :id_sesion)';
+	
+		
+		return $this->readFuntionPostgres_($function, [
+			'fecha_ejecucion' => $fecha_ejecucion_formateada,
+			'id_comision' => $equivaComision,
+			'id_sesion' => $id_sesion
+		]);
 	}
-   
+	
+	public function readFuntionPostgres_($function = null, $params = []) {
+		
+		$cad = "SELECT " . $function;
+	
+		$data = DB::select($cad, $params);
+	
+		return $data;
+	}
+
+	public static function getComisionData($id_comision){
+
+		$cad = "select id_comision_dl FROM equiva_comisiones_dl WHERE id_comision = '".$id_comision."' LIMIT 1";
+		//$data = DB::select($cad, ['id_comision' => $id_comision]);
+		$data = DB::select($cad);
+		return $data;
+	}
 }

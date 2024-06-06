@@ -1493,8 +1493,8 @@ class DerechoRevisionController extends Controller
         $zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
-		$tipo_uso = $tablaMaestra_model->getMaestroByTipo(111);
-		$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipo(111);
+		$tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'TIPO USO');
+		$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'SUB TIPO USO');
 		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(112);
 		$tipo_liquidacion = $tablaMaestra_model->getMaestroByTipo(27);
 		$instancia = $tablaMaestra_model->getMaestroByTipo(47);

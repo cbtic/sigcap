@@ -1008,16 +1008,22 @@ class SesionController extends Controller
 
     }
 
-	function importar_dataLicencia_dictamenes(){
+	function importar_dataLicencia_dictamenes($fecha_ejecucion,$id_comision,$id_sesion){
 	
 		
 		$sesion_model = new ComisionSesione;
 
 		$data = [];
 
-		$fecha_actual = Carbon::now()->format('Y-m-d');
+		//$fecha_actual = Carbon::now()->format('Y-m-d');
 
-		$data['dictamenes'] = $sesion_model->importar_dictamenes_dataLicencia($fecha_actual);
+		$equivaComision = $sesion_model->getComisionData($id_comision);
+
+		$id_sesion = intval($id_sesion);
+
+		$fecha_ejecucion_formateada = Carbon::createFromFormat('d-m-Y', $fecha_ejecucion)->format('Y-m-d');
+		//var_dump($fecha_ejecucion_formateada,$equivaComision[0]->id_comision_dl,$id_sesion);exit();
+		$data['dictamenes'] = $sesion_model->importar_dictamenes_dataLicencia($fecha_ejecucion_formateada,$equivaComision[0]->id_comision_dl,$id_sesion);
 		
 		$result["aaData"] = $data;
 

@@ -563,8 +563,8 @@ if($('#instancia').val()==250){
 										<div class="row uso-row">
 											<div class="col-lg-5" style=";padding-right:15px">
 											<label class="control-label form-control-sm">Tipo de Uso</label>
-											<select name="tipo_uso[]" id="tipo_uso" class="form-control form-control-sm" onChange="">
-												<option value="">--Selecionar--</option>
+											<select name="tipo_uso[]" id="tipo_uso" class="form-control form-control-sm" onChange="obtenerSubTipoUso()">
+												<option value="">--Seleccionar--</option>
 												<?php
 												foreach ($tipo_uso as $row) {?>
 												<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
@@ -576,10 +576,10 @@ if($('#instancia').val()==250){
 										<div class="col-lg-4" style=";padding-right:15px">
 											<label class="control-label form-control-sm">Sub-Tipo de Uso</label>
 											<select name="sub_tipo_uso[]" id="sub_tipo_uso" class="form-control form-control-sm" onChange="">
-												<option value="">--Selecionar--</option>
+												<option value="">--Seleccionar--</option>
 												<?php
 												foreach ($sub_tipo_uso as $row) {?>
-												<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_sub_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+												<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 												<?php
 												}
 												?>

@@ -363,7 +363,6 @@ class ConcursoController extends Controller
 		
     }
 	
-	
 	public function listar_maestro_by_tipo_subtipo($tipo,$sub_codigo){
 	
 		$tablaMaestra_model = new TablaMaestra;

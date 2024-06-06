@@ -1574,6 +1574,48 @@ function editarSolicitudHU(id){
 
 }
 
+/*function obtenerSubTipoUso(){
+	//alert("ok");
+	var tipo_uso_elements = document.getElementsByName("tipo_uso[]");
+	for (var i = 0; i < tipo_uso_elements.length; i++) {
+		var valorSeleccionado = tipo_uso_elements[i].value;
+		
+		$.ajax({
+			url: '/concurso/listar_maestro_by_tipo_subtipo/111/'+valorSeleccionado,
+			dataType: "json",
+			success: function(result){
+				var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
+				$("#sub_tipo_uso_"+i).html("");
+				$(result).each(function (ii, oo) {
+					option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+				});
+				$("#sub_tipo_uso_"+i).html(option);
+			}
+			
+		});
+	}
+}*/
+
+function obtenerSubTipoUso(){
+	var valorSeleccionado = document.getElementById("tipo_uso").value;
+		//alert(valorSeleccionado);
+		
+		$.ajax({
+			url: '/concurso/listar_maestro_by_tipo_subtipo/111/'+valorSeleccionado,
+			dataType: "json",
+			success: function(result){
+				var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
+				$("#sub_tipo_uso").html("");
+                $(result).each(function (ii, oo) {
+                    option += "<option value='" + oo.codigo + "'>" + oo.denominacion + "</option>";
+                });
+                $("#sub_tipo_uso").html(option);
+			}
+			
+		});
+	
+}
+
 function actualizarBoton() {
     //alert($('#id_editar').val());
     var id = $('#id_editar').val();
