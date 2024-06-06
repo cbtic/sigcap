@@ -239,22 +239,25 @@ $('#btnImportarDictamenes').click(function () {
 
 function importarDatalicenciaDictamenes(){
 
-var msgLoader = "";
-msgLoader = "Procesando, espere un momento por favor";
-var heightBrowser = $(window).width()/2;
-$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-$('.loader').show();
+	var fecha_ejecucion = $('#fecha_programado').val();
+	var id_comision = $('#id_comision').val();
 
-$.ajax({
-	url: "/sesion/importar_dataLicencia_dictamenes",
-	type: "GET",
-	success: function(result){
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
 
-		$('.loader').hide();
-		bootbox.alert("Se import&oacute; exitosamente los datos"); 
-		datatablenew();
-	}
-});
+	$.ajax({
+		url: "/sesion/importar_dataLicencia_dictamenes/"+fecha_ejecucion+"/"+id_comision,
+		type: "GET",
+		success: function(result){
+
+			$('.loader').hide();
+			bootbox.alert("Se import&oacute; exitosamente los datos"); 
+			datatablenew();
+		}
+	});
 }
 
 </script>

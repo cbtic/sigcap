@@ -292,9 +292,9 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
       return $data;
    }
 
-   public function importar_dictamenes_dataLicencia($fecha_actual){
+   public function importar_dictamenes_dataLicencia($fecha_ejecucion,$id_comision){
 
-	return $this->readFuntionPostgres_('copiar_datalicencia_sesiones("'.$fecha_actual.'")');
+	return $this->readFuntionPostgres_('copiar_datalicencia_sesiones("'.$fecha_ejecucion.'",'.$id_comision.')');
 
 	}
 
