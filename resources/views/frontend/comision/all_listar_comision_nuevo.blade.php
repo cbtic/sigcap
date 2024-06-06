@@ -276,7 +276,7 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-							<th>Id</th>
+							<!--<th>Id</th>-->
 							<th>Denomincaci&oacute;n</th>
                             <th>Tipo Agrupaci&oacute;n</th>
 							<th>Tipo Comisi&oacute;n</th>
