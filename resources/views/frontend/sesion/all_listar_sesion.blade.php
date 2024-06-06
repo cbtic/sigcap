@@ -299,7 +299,7 @@
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-success pull-rigth" value="N. Sesi&oacute;n" type="button" id="btnNuevo" style="margin-left:10px" />
 						<input class="btn btn-danger pull-rigth" value="Ejecutar" type="button" id="btnEjecutar" style="margin-left:10px" />
-						<input class="btn btn-info" value="Importar Dictamenes" id="btnImportarDictamenes" style="margin-left:10px"/>
+						<!--<input class="btn btn-info" value="Importar Dictamenes" id="btnImportarDictamenes" style="margin-left:10px"/>-->
 					</div>
 				</div>
 				

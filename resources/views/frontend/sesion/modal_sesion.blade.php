@@ -241,6 +241,7 @@ function importarDatalicenciaDictamenes(){
 
 	var fecha_ejecucion = $('#fecha_programado').val();
 	var id_comision = $('#id_comision').val();
+	var id_sesion = $('#id').val();
 
 	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
@@ -249,7 +250,7 @@ function importarDatalicenciaDictamenes(){
 	$('.loader').show();
 
 	$.ajax({
-		url: "/sesion/importar_dataLicencia_dictamenes/"+fecha_ejecucion+"/"+id_comision,
+		url: "/sesion/importar_dataLicencia_dictamenes/"+fecha_ejecucion+"/"+id_comision+"/"+id_sesion,
 		type: "GET",
 		success: function(result){
 
@@ -939,9 +940,9 @@ function cargarDelegados(){
 										<th>Revis&oacute;n</th>
 										<th>N&deg; Liquidaci&oacute;n</th>
 										<th>Monto</th>
-										<th>Fecha Liquidaci&oacute;n</th>
-										<!--<th>Nombre</th>-->
-										<th>Direcci&oacute;n</th>
+										<!--<th>Fecha Liquidaci&oacute;n</th>
+										<th>Nombre</th>
+										<th>Direcci&oacute;n</th>-->
 										<th>Dictamen</th>
 										<th>Exp. Municipal</th>
 										<th>Proyectista</th>
