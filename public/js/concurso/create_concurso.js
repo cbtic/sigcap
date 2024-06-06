@@ -3601,6 +3601,7 @@ function obtenerPuesto(id_concurso,id){
 			var selected = "";
 			$(result).each(function (ii, oo) {
 				selected = "";
+				//alert(oo.id_tipo_plaza+"|"+id);
 				if(oo.id_tipo_plaza == id)selected = "selected='selected'";
 				option += "<option value='"+oo.id+"' "+selected+" >"+oo.puesto+"</option>";
 			});

@@ -542,7 +542,7 @@ if(id>0){
 	$("#id_tipo_sesion").attr("disabled",true);
 	$("#id_periodo").attr("disabled",true);
 	$("#id_regional").attr("disabled",true);
-	$("#observaciones").attr("disabled",true);
+	//$("#observaciones").attr("disabled",true);
 	$("#tipo_comision").attr("disabled",true);
 	cargarDelegados();
 	cargarDictamenNuevo(id);

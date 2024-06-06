@@ -43,8 +43,10 @@ class MunicipalidadIntegrada extends Model
 		if($tipo_comision>0){
 			$cad .= " and mi.id_tipo_comision='".$tipo_comision."'";
 		}
+			//$cad .= " and mi.estado='1' order by 1 desc ";
+		$cad .= " and mi.estado='1' order by mi.denominacion asc "; 
 		
-		$cad .= " and mi.estado='1' order by mi.denominacion asc";
+
 		$data = DB::select($cad);
         return $data;
     }

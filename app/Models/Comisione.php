@@ -21,6 +21,12 @@ class Comisione extends Model
         return $this->readFuntionPostgres('sp_listar_comision_new_paginado',$p);
 
     }
+	
+	public function lista_comision_nuevo_ajax($p){
+
+        return $this->readFuntionPostgres('sp_listar_comision_delegado_paginado',$p);
+
+    }
 
     public function listar_municipalidad_integrada_ajax($p){
 
@@ -70,6 +76,8 @@ class Comisione extends Model
         if($cad_id!="" && $cad_id!="0"){
             $cad .= " and c.id_municipalidad_integrada in (".$cad_id.")";
         }
+		
+		$cad .= " order by c.denominacion asc";
 
 		$data = DB::select($cad);
         return $data;

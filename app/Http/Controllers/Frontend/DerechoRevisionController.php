@@ -1515,7 +1515,15 @@ class DerechoRevisionController extends Controller
     }
 
 	public function send_nuevo_reintegro(Request $request){
-
+		
+		$tipo_uso = $request->tipo_uso;
+		$sub_tipo_uso = $request->sub_tipo_uso;
+		$area_techada = $request->area_techada;
+		$tipo_obra = $request->tipo_obra;
+		$area_techada_presupuesto = $request->area_techada_presupuesto;
+		$valor_unitario = $request->valor_unitario;
+		$presupuesto_ = $request->presupuesto;
+		
 		$id_user = Auth::user()->id;
 		$id_solicitud = $request->id_solicitud_reintegro;
 		//dd($id_solicitud).exit();
@@ -1553,8 +1561,8 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->azotea = $request->azotea;
 		$derecho_revision->semisotano = $request->semisotano;
 		$derecho_revision->numero_piso = $request->n_pisos;
-		$derecho_revision->valor_obra = $request->valor_total_obra;
-		$derecho_revision->area_total = $request->area_techada_total;
+		$derecho_revision->valor_obra = convertir_entero($request->valor_total_obra);
+		$derecho_revision->area_total = convertir_entero($request->area_techada_total);
 		$derecho_revision->id_tipo_liquidacion1 = $request->tipo_liquidacion1;
 		
 		$derecho_revision->id_usuario_inserta = $id_user;
@@ -1583,22 +1591,54 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->save();
 		$proyectista->id_solicitud = $derecho_revision->id;
 		$proyectista->save();
+		
+		/***********************************/
+		
+		foreach($tipo_uso as $key=>$row){
+			//echo "ok";
+			$uso_edificacion = new UsoEdificacione;
+			$uso_edificacion->id_tipo_uso = $tipo_uso[$key];
+			$uso_edificacion->id_sub_tipo_uso = $sub_tipo_uso[$key];
+			$uso_edificacion->area_techada = convertir_entero($area_techada[$key]);
+			$uso_edificacion->id_solicitud = $derecho_revision->id;
+			$uso_edificacion->id_usuario_inserta = $id_user;
+			$uso_edificacion->save();
+			
+			/*
+			$uso_edificacion->id_tipo_uso = $request->tipo_uso;
+			$uso_edificacion->id_sub_tipo_uso = $request->sub_tipo_uso;
+			$uso_edificacion->area_techada = convertir_entero($request->area_techada);
+			$uso_edificacion->id_solicitud = $derecho_revision->id;
+			$uso_edificacion->id_usuario_inserta = $id_user;
+			$uso_edificacion->save();
+			*/
+		}
+		
+		foreach($tipo_obra as $key=>$row){
+			
+			$presupuesto1 = new Presupuesto;
+			$presupuesto1->id_tipo_obra = $tipo_obra[$key];
+			$presupuesto1->area_techada = convertir_entero($area_techada_presupuesto[$key]);
+			$presupuesto1->valor_unitario = convertir_entero($valor_unitario[$key]);
+			$presupuesto1->total_presupuesto = convertir_entero($presupuesto_[$key]);
+			$presupuesto1->id_solicitud = $derecho_revision->id;
+			$presupuesto1->id_usuario_inserta = $id_user;
+			$presupuesto1->save();
+			
+			/*
+			$presupuesto->id_tipo_obra = $request->tipo_obra;
+			$presupuesto->area_techada = convertir_entero($request->area_techada_presupuesto);
+			$presupuesto->valor_unitario = convertir_entero($request->valor_unitario);
+			$presupuesto->total_presupuesto = convertir_entero($request->presupuesto);
+			$presupuesto->id_solicitud = $derecho_revision->id;
+			$presupuesto->id_usuario_inserta = $id_user;
+			$presupuesto->save();
+			*/
 
-		$uso_edificacion->id_tipo_uso = $request->tipo_uso;
-		$uso_edificacion->id_sub_tipo_uso = $request->sub_tipo_uso;
-		$uso_edificacion->area_techada = $request->area_techada;
-		$uso_edificacion->id_solicitud = $derecho_revision->id;
-		$uso_edificacion->id_usuario_inserta = $id_user;
-		$uso_edificacion->save();
-
-		$presupuesto->id_tipo_obra = $request->tipo_obra;
-		$presupuesto->area_techada = $request->area_techada_presupuesto;
-		$presupuesto->valor_unitario = $request->valor_unitario;
-		$presupuesto->total_presupuesto = $request->presupuesto;
-		$presupuesto->id_solicitud = $derecho_revision->id;
-		$presupuesto->id_usuario_inserta = $id_user;
-		$presupuesto->save();
-
+		}
+		
+		/***********************************/
+		
 		$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
 		$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();
 		

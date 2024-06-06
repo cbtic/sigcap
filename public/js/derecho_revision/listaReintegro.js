@@ -2000,7 +2000,7 @@ function AddFilaPresupuesto() {
 function calcularValorTotalObra() {
     var total = 0;
     var container = document.getElementById('presupuesto-container');
-    var inputs = container.querySelectorAll('input[name="presupuesto"]'); // Select all "Presupuesto" inputs
+    var inputs = container.querySelectorAll('input[name="presupuesto[]"]'); // Select all "Presupuesto" inputs
 
     inputs.forEach(function(input) {
         var value = parseFloat(input.value.replace(/,/g, '')); // Remove commas and parse to float
@@ -2068,7 +2068,7 @@ function AddFilaUso() {
 function calcularAreaTechada() {
     var total = 0;
     var container = document.getElementById('uso-container');
-    var inputs = container.querySelectorAll('input[name="area_techada"]'); // Select all "Presupuesto" inputs
+    var inputs = container.querySelectorAll('input[name="area_techada[]"]'); // Select all "Presupuesto" inputs
 
     inputs.forEach(function(input) {
         var value = parseFloat(input.value.replace(/,/g, '')); // Remove commas and parse to float

@@ -272,6 +272,16 @@ function fn_save(){
 	var fecha_fin_sesion = $('#fecha_fin_sesion').val();
 	
 	if($('input[name=flag_titular_suplente]').is(':checked')==false){msg+="Debe seleccionar cambiar titular o suplente<br>";}
+	if(id_delegado==""){msg+="Debe seleccionar un Delegado<br>";}
+	if(flag_titular_suplente==2 && fecha_inicio_sesion==""){msg+="Debe ingresar una Fecha de Inicio<br>";}
+	if(flag_titular_suplente==2 && fecha_fin_sesion==""){msg+="Debe ingresar una Fecha de Fin<br>";}
+	
+	/*
+	alert(id_delegado);
+	alert(flag_titular_suplente);
+	alert(msg);
+	return false;
+	*/
 	
 	if(msg!=""){
         bootbox.alert(msg); 
