@@ -74,9 +74,9 @@ left join tabla_maestras tm4 on c.id_tipo_comision::varchar = tm4.codigo::varcha
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By c.id desc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By c.denominacion asc, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By c.id desc ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By c.denominacion asc, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres asc ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;
