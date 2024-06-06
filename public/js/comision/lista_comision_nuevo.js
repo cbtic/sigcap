@@ -426,7 +426,13 @@ function datatablenew(){
 			var tipo_comision = $('#tipo_comision').val();
             var id_comision = $('#id_comision_bus').val();
 			var tipo_agrupacion = $('#tipo_agrupacion_bus').val();
+			var delegado = $('#delegado').val();
+			var numero_cap = $('#numero_cap').val();
+			var coordinador = $('#coordinador').val();
+			var id_situacion = $('#id_situacion').val();
+			var id_puesto = $('#id_puesto').val();
 			var estado = $('#estado').val();
+			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -435,6 +441,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_periodo:id_periodo,id_comision:id_comision,tipo_comision:tipo_comision,
+						delegado:delegado,numero_cap:numero_cap,coordinador:coordinador,id_situacion:id_situacion,id_puesto:id_puesto,
 						tipo_agrupacion:tipo_agrupacion,estado:estado,
 						_token:_token
                        },

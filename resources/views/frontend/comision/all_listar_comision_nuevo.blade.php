@@ -208,6 +208,54 @@
 						</select>
 					</div>
 					
+				</div>
+				
+				<div class="row" style="padding:20px 20px 0px 20px;">	
+					
+					
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="delegado" name="delegado" placeholder="Delegado">
+					</div>
+					
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+						<input class="form-control form-control-sm" id="numero_cap" name="numero_cap" placeholder="Numero Cap">
+					</div>
+					
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+						<select name="coordinador" id="coordinador" class="form-control form-control-sm" >
+							<option value="">--Coordinador--</option>
+							<option value="1">SI</option>
+							<option value="0">NO</option>
+						</select>
+					</div>
+					
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="id_situacion" id="id_situacion" class="form-control form-control-sm" >
+							<option value="">--Situaci&oacute;n--</option>
+							<?php
+							foreach ($situacion_cliente as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
+					
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="id_puesto" id="id_puesto" class="form-control form-control-sm">
+							<option value="">--Tipo Tirular--</option>
+							<?php
+							foreach ($puesto as $row) {
+								if($row->codigo==1 || $row->codigo==2){
+							?>
+							<option value="<?php echo $row->codigo?>" <?php //if($row->codigo==$concurso->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+							<?php 
+								}
+							}
+							?>
+						</select>
+					</div>
+					
                     <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Estado</option>

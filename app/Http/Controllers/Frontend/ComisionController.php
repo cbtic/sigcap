@@ -57,14 +57,17 @@ class ComisionController extends Controller
 		
 		$periodoComisione_model = new PeriodoComisione;
 		$tablaMaestra_model = new TablaMaestra;
+		$concurso_model = new Concurso();
 		
 		$periodo = $periodoComisione_model->getPeriodoAll();
 		$tipoAgrupacion = $tablaMaestra_model->getMaestroByTipo(99);
 		$tipoComision = $tablaMaestra_model->getMaestroByTipo(102);
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
+		$puesto = $concurso_model->getPuestoResultado();
 		
-        return view('frontend.comision.all_listar_comision_nuevo',compact('periodo','tipoAgrupacion','tipoComision','periodo_ultimo','periodo_activo'));
+        return view('frontend.comision.all_listar_comision_nuevo',compact('periodo','tipoAgrupacion','tipoComision','periodo_ultimo','periodo_activo','situacion_cliente','puesto'));
     }
 	
 	public function lista_comision_ajax(Request $request){
@@ -100,7 +103,12 @@ class ComisionController extends Controller
 		$p[]=$request->tipo_agrupacion;
 		$p[]=$request->tipo_comision;
 		$p[]=$request->id_comision;
-		$p[]=$request->estado;      
+		$p[]=$request->numero_cap;
+		$p[]=$request->delegado;
+		$p[]=$request->coordinador;
+		$p[]=$request->id_situacion;
+		$p[]=$request->id_puesto;
+		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comision_model->lista_comision_nuevo_ajax($p);
