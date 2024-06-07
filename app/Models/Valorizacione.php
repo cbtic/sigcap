@@ -12,8 +12,12 @@ class Valorizacione extends Model
 {
     function getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$cuota,$concepto, $filas,$exonerado,$numero_documento_b){  
         
-        if($filas!="")$filas="limit ".$filas;   
-
+        if($filas!="")$filas="limit ".$filas;
+        $credipago = "";
+        if($numero_documento_b!="")$credipago=" and v.descripcion ilike '%".$numero_documento_b."' ";
+        if($exonerado=="0")$exonerado="";
+        
+    
         if($tipo_documento=="79"){  //RUC
             $cad = "
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 
@@ -34,7 +38,8 @@ class Valorizacione extends Model
                 and v.estado = '1'            
                 and v.pagado = '0'
                 and v.exonerado ilike '%".$exonerado."'
-                and v.descripcion ilike '%".$numero_documento_b."' 
+                ".$credipago."
+                --and v.descripcion ilike '%".$numero_documento_b."' 
             order by v.fecha desc
              ".$filas."
 			";
@@ -57,7 +62,8 @@ class Valorizacione extends Model
                 and v.estado = '1'            
                 and v.pagado = '0'
                 and v.exonerado ilike '%".$exonerado."' 
-                and v.descripcion ilike '%".$numero_documento_b."' 
+                ".$credipago."
+                --and v.descripcion ilike '%".$numero_documento_b."' 
             order by v.fecha desc
              ".$filas."
 			";

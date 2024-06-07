@@ -1127,6 +1127,8 @@ function cargarValorizacion(){
 	//$('#tblValorizacion').dataTable().fnDestroy();
     //$("#tblValorizacion tbody").html("");
 
+	//alert($('#Exonerado').val());
+
 	$.ajax({
 		url: "/ingreso/listar_valorizacion",
 		type: "POST",
