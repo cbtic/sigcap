@@ -1506,7 +1506,7 @@ class DerechoRevisionController extends Controller
 		$propietario_solicitud = $propietario_model->getPropietarioSolicitud($id);
 		//var_dump($propietario_solicitud[0]).exit();
 		$info_solicitud = $presupuesto_model->getInfoSolicitud($id);
-		$info_uso_solicitud = $usoEdificacione_model->getInfoSolicitudUso($id);
+		$info_uso_solicitud = $usoEdificacione_model->getInfoSolicitudUso2($id);
 		$anio_actual = Carbon::now()->year;
 		$parametro = $parametro_model->getParametroAnio($anio_actual);
 		$liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
