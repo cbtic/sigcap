@@ -697,6 +697,7 @@ if($('#instancia').val()==250){
 									</div>
 								</div>
 							</div>
+							
 							<div class="col-lg-2" style=";padding-right:15px">
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
