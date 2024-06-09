@@ -415,8 +415,8 @@ function obtenerComisionDelegado(){
 				option += "<tr style='font-size:13px'>";
 				option += "<input type='hidden' name='id_delegado[]' value='"+oo.id+"' >";
 				option += "<td class='text-left'>"+oo.puesto+"</td>";
-				option += "<td class='text-left'>"+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</td>";
 				option += "<td class='text-left'>"+oo.numero_cap+"</td>";
+				option += "<td class='text-left'>"+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</td>";
 				option += "<td class='text-left'>"+oo.situacion+"</td>";
 				var sel = "";
 				if(oo.coordinador==1)sel = "checked='checked'";

@@ -16,8 +16,8 @@ echo $puesto;
 
 if($puesto=="ASESOR / ESPECIALISTA" || $puesto=="SUPLENTE")$disabled = "disabled='disabled'";
 ?></td>
-<td class='text-left'><?php echo $row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></td>
 <td class='text-left'><?php echo $row->numero_cap?></td>
+<td class='text-left'><?php echo $row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></td>
 <td class='text-left'><?php echo $row->situacion?></td>
 <td class='text-center'>
 <input type="radio" <?php echo $disabled?> name="coordinador" value="<?php echo $id_delegado?>" <?php if($row->coordinador==1)echo "checked='checked'"?> onChange="guardar_coordinador(<?php echo $row->id?>,<?php echo $id_delegado?>)" />

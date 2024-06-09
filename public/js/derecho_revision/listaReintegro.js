@@ -667,7 +667,7 @@ function obtenerProvincia(){
 			var option2 = "<option value=''>Seleccionar</option>";
 			$('#distrito').html(option2);
 			
-			$('#provincia').attr("disabled",false);
+			$('#provincia').attr("disabled",true);
 			$('#distrito').attr("disabled",false);
 			
 			$('.loader').hide();
@@ -727,7 +727,7 @@ function obtenerDistrito(){
 			});
 			$('#distrito').html(option);
 			
-			$('#distrito').attr("disabled",false);
+			$('#distrito').attr("disabled",true);
 			$('.loader').hide();
 			
 		}
@@ -760,7 +760,7 @@ function obtenerDistrito_(callback){
 			});
 			$('#distrito').html(option);
 			
-			$('#distrito').attr("disabled",false);
+			$('#distrito').attr("disabled",true);
 			$('.loader').hide();
 
 			callback();

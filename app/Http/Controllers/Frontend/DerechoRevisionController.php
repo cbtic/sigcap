@@ -1517,7 +1517,7 @@ class DerechoRevisionController extends Controller
     }
 
 	public function send_nuevo_reintegro(Request $request){
-		 
+		
 		$tipo_uso = $request->tipo_uso;
 		$sub_tipo_uso = $request->sub_tipo_uso;
 		$area_techada = $request->area_techada;
@@ -1721,11 +1721,11 @@ class DerechoRevisionController extends Controller
 					}
 				}
 				$concepto = Concepto::where("id",26474)->where("estado","1")->first();
-				$solicitud = new Solicitude;
+				/*$solicitud = new Solicitude;
 				$solicitud->id_instancia=$request->instancia;
 				$solicitud->id_tipo_liquidacion1=$request->tipo_liquidacion1;
 				$solicitud->id_usuario_inserta = $id_user;
-				$solicitud->save();
+				$solicitud->save();*/
 
 			}
 				
@@ -1763,7 +1763,6 @@ class DerechoRevisionController extends Controller
 				$solicitud->id_resultado='2';
 				$solicitud->id_usuario_inserta = $id_user;
 				$solicitud->save();
-				
 			}
 			
 			$codigoSolicitud = $derecho_revision->getCodigoSolicitud($solicitud_matriz->id_tipo_solicitud);

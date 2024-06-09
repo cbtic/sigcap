@@ -248,7 +248,7 @@ if($('#instancia').val()==250){
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-5">
 								<label class="control-label form-control-sm">Municipalidad</label>
-								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="obtenerUbigeo()"> 
+								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="obtenerUbigeo()" disabled ='disabled'> 
 									<?php
 									$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
 									?>
@@ -262,7 +262,7 @@ if($('#instancia').val()==250){
 					
 							<div class="col-lg-4">
 								<label class="control-label form-control-sm">N° de Revisi&oacute;n</label>
-								<select name="n_revision" id="n_revision" class="form-control form-control-sm" value="<?php echo $derechoRevision_->numero_revision?>">
+								<select name="n_revision" id="n_revision" class="form-control form-control-sm" value="<?php echo $derechoRevision_->numero_revision?>" disabled='disabled'>
 								<?php
 								$valorSeleccionado = isset($derechoRevision_->numero_revision) ? $derechoRevision_->numero_revision : '';
 								?>
@@ -278,12 +278,12 @@ if($('#instancia').val()==250){
 
 							<div class="col-lg-5">
 								<label class="control-label form-control-sm">Nombre del Proyecto</label>
-								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->nombre?>" type="text">
+								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->nombre?>" type="text" readonly='readonly'>
 							</div>
 
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Tipo</label>
-								<select name="tipo_direccion" id="tipo_direccion" class="form-control form-control-sm" onChange="">
+								<select name="tipo_direccion" id="tipo_direccion" class="form-control form-control-sm" onChange="" disabled='disabled'>
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo as $row) {?>
@@ -296,7 +296,7 @@ if($('#instancia').val()==250){
 						
 							<div class="col-lg-5">
 								<label class="control-label form-control-sm">Direccion</label>
-								<input id="direccion_proyecto" name="direccion_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->direccion?>" type="text">
+								<input id="direccion_proyecto" name="direccion_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->direccion?>" type="text" readonly='readonly'>
 							</div>
 
 							<div class="col-lg-2">
@@ -471,7 +471,7 @@ if($('#instancia').val()==250){
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Tipo Documento</label>
-								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="obtenerPropietario_()">
+								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="obtenerPropietario_()" disabled='disabled'>
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_documento as $row) {?>
@@ -485,7 +485,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-1">
 								<div class="form-group" id="dni_propietario_">
 								<label class="control-label form-control-sm">DNI</label>
-								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm" value="<?php echo isset($propietario_solicitud) && $propietario_solicitud[0]->id_tipo_propietario=='78' ? $propietario_solicitud[0]->numero_documento : '';?>" type="text" onchange="obtenerDatosDni()">
+								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm" value="<?php echo isset($propietario_solicitud) && $propietario_solicitud[0]->id_tipo_propietario=='78' ? $propietario_solicitud[0]->numero_documento : '';?>" type="text" onchange="obtenerDatosDni()" readonly='readonly'>
 								</div>
 								<div class="form-group" id="ruc_propietario_">
 									<label class="control-label form-control-sm">RUC</label>
@@ -543,7 +543,7 @@ if($('#instancia').val()==250){
 
 						<div class="col-lg-3" style=";padding-right:15px">
 							<label class="control-label form-control-sm">Datos T&eacute;cnicos del proyecto</label>
-							<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="">
+							<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="" disabled ='disabled'>
 								<option value="">--Selecionar--</option>
 								<?php
 								foreach ($tipo_proyecto as $row) {?>
@@ -697,7 +697,7 @@ if($('#instancia').val()==250){
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="col-lg-2" style=";padding-right:15px">
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
