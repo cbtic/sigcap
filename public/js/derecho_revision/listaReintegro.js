@@ -118,14 +118,14 @@ $(document).ready(function () {
 
 	
 
-	$('#area_techada_presupuesto, #valor_unitario').on('blur', function() {
+	$('#area_techada_presupuesto, #valor_unitario, #valor_reintegro').on('blur', function() {
         var input = $(this).val().replace(/[^0-9.]/g, '');
         $(this).val(formatoMoneda(input));
         calcularPresupuesto_();
     });
 
     // Initially format the inputs if they have values
-    $('#area_techada_presupuesto, #valor_unitario').each(function() {
+    $('#area_techada_presupuesto, #valor_unitario, #valor_reintegro').each(function() {
         var input = $(this).val().replace(/[^0-9.]/g, '');
         $(this).val(formatoMoneda(input));
     });
@@ -1596,8 +1596,9 @@ function editarSolicitudHU(id){
 	}
 }*/
 
-function obtenerSubTipoUso(){
-	var valorSeleccionado = document.getElementById("tipo_uso").value;
+function obtenerSubTipoUso(obj){
+	//var valorSeleccionado = document.getElementById("tipo_uso").value;
+	var valorSeleccionado = $(obj).val();
 		//alert(valorSeleccionado);
 		
 		$.ajax({
@@ -1605,11 +1606,12 @@ function obtenerSubTipoUso(){
 			dataType: "json",
 			success: function(result){
 				var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
-				$("#sub_tipo_uso").html("");
+				$(obj).parent().parent().find("#sub_tipo_uso").html("");
                 $(result).each(function (ii, oo) {
                     option += "<option value='" + oo.codigo + "'>" + oo.denominacion + "</option>";
                 });
-                $("#sub_tipo_uso").html(option);
+                //$("#sub_tipo_uso").html(option);
+				$(obj).parent().parent().find("#sub_tipo_uso").html(option);
 			}
 			
 		});
@@ -2001,7 +2003,8 @@ function calcularPresupuesto_(row) {
 }
 
 function formatoMoneda(input) {
-	return parseFloat(input.replace(/,/g, '')).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+	//return parseFloat(input.replace(/,/g, '')).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+	return (input!="")?parseFloat(input.replace(/,/g, '')).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'):0;
 }
 
 function copiarArea(){

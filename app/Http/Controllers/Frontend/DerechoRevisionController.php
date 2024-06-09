@@ -1467,8 +1467,8 @@ class DerechoRevisionController extends Controller
 		$datos_agremiado= $agremiado_model->getAgremiado(85,$agremiado_->numero_cap);
 		$persona_ = Persona::where("id",$agremiado_->id_persona)->where("estado","1")->first();
 		$datos_persona= $persona_model->getPersona(78,$persona_->numero_documento);
-		$datos_usoEdificaciones = UsoEdificacione::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->first();
-		$datos_presupuesto = Presupuesto::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->first();
+		$datos_usoEdificaciones = UsoEdificacione::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
+		$datos_presupuesto = Presupuesto::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
 		//$datos_propietario= $propietario_model->getPropietarioSolicitud($id);
 		//var_dump($proyectista_->id_agremiado);exit();
 		$tipo_solicitante = 1;
@@ -1480,7 +1480,7 @@ class DerechoRevisionController extends Controller
 		$agremiado = new Agremiado;
 		$persona = new Persona;
 		$proyecto = new Proyecto;
-		$tablaMaestra_model = new TablaMaestra;
+		$tablaMaestra_model = new TablaMaestra; 
 		$ubigeo_model = new Ubigeo;
 		$municipalidad_model = new Municipalidade;
 		$presupuesto_model = new Presupuesto;
@@ -1494,7 +1494,9 @@ class DerechoRevisionController extends Controller
 		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'TIPO USO');
-		$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'SUB TIPO USO');
+		//$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'SUB TIPO USO');
+		//$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipoAndSubTipo(111,$sub_codigo);
+		
 		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(112);
 		$tipo_liquidacion = $tablaMaestra_model->getMaestroByTipo(27);
 		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
@@ -1511,11 +1513,11 @@ class DerechoRevisionController extends Controller
 		$parametro = $parametro_model->getParametroAnio($anio_actual);
 		$liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
 		//dd($liquidacion);
-        return view('frontend.derecho_revision.all_derecho_revision_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones','sub_tipo_uso','tipo_obra','datos_presupuesto','tipo_liquidacion','instancia','parametro','liquidacion','tipo','tipo_documento','empresa'));
+        return view('frontend.derecho_revision.all_derecho_revision_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones',/*'sub_tipo_uso',*/'tipo_obra','datos_presupuesto','tipo_liquidacion','instancia','parametro','liquidacion','tipo','tipo_documento','empresa'));
     }
 
 	public function send_nuevo_reintegro(Request $request){
-		
+		 
 		$tipo_uso = $request->tipo_uso;
 		$sub_tipo_uso = $request->sub_tipo_uso;
 		$area_techada = $request->area_techada;
@@ -1687,7 +1689,7 @@ class DerechoRevisionController extends Controller
 		}
 		
 		if($empresa_cantidad==1){
-			if($request->instancia==250)$valor_obra = $request->valor_reintegro;
+			if($request->instancia==250)$valor_obra = convertir_entero($request->valor_reintegro);
 
 			$anio = Carbon::now()->year;
 			$parametro = Parametro::where("anio",$anio)->where("estado",1)->orderBy("id","desc")->first();

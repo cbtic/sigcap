@@ -556,58 +556,10 @@ if($('#instancia').val()==250){
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
 							Uso de la Edificaci&oacute;n
 						</div>
-						<div class="row">
-							<div class="col-lg-8" style=";padding-right:15px">
-								<div class="row" style="padding-left:10px">
-									<div class="col-lg-12" id="uso-container">
-										<div class="row uso-row">
-											<div class="col-lg-5" style=";padding-right:15px">
-											<label class="control-label form-control-sm">Tipo de Uso</label>
-											<select name="tipo_uso[]" id="tipo_uso" class="form-control form-control-sm" onChange="obtenerSubTipoUso()">
-												<option value="">--Seleccionar--</option>
-												<?php
-												foreach ($tipo_uso as $row) {?>
-												<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-												<?php
-												}
-												?>
-											</select>
-										</div>
-										<div class="col-lg-4" style=";padding-right:15px">
-											<label class="control-label form-control-sm">Sub-Tipo de Uso</label>
-											<select name="sub_tipo_uso[]" id="sub_tipo_uso" class="form-control form-control-sm" onChange="">
-												<option value="">--Seleccionar--</option>
-												<?php
-												foreach ($sub_tipo_uso as $row) {?>
-												<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_usoEdificaciones->id_tipo_uso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-												<?php
-												}
-												?>
-											</select>
-										</div>
-										<div class="col-lg-2">
-											<label class="control-label form-control-sm">&Aacute;rea Techada</label>
-											<input id="area_techada" name="area_techada[]" on class="form-control form-control-sm"  value="<?php echo number_format($datos_usoEdificaciones->area_techada, 2, '.', ',');?>" type="text" onchange="">
-										</div>
-										<div style="margin-top:37px" class="form-group">
-											<div class="col-sm-12 controls">
-												<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-													<a href="javascript:void(0)" onClick="AddFilaUso()" class="btn btn-sm btn-success">Agregar</a>
-													<!--<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
-												</div>
-											</div>
-										</div>
-									</div>
-									</div>
-								</div>
-							</div>
-						</div>
 						
 						<?php 
-						//if(count($info_uso_solicitud)>1){
-							foreach($info_uso_solicitud as $row){
-							//if($row->numero_cap!=$datos_agremiado->numero_cap){
-								print_r($info_uso_solicitud);
+							foreach($datos_usoEdificaciones as $row){
+							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
 						?>
 							
 							<div class="row">
@@ -617,11 +569,11 @@ if($('#instancia').val()==250){
 										<div class="row uso-row">
 											<div class="col-lg-5" style=";padding-right:15px">
 											<label class="control-label form-control-sm">Tipo de Uso</label>
-											<select name="tipo_uso[]" id="tipo_uso" class="form-control form-control-sm" onChange="obtenerSubTipoUso()">
+											<select name="tipo_uso[]" id="tipo_uso" class="form-control form-control-sm" onChange="obtenerSubTipoUso(this)">
 												<option value="">--Seleccionar--</option>
 												<?php
 												foreach ($tipo_uso as $row_) {?>
-												<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$datos_usoEdificaciones->id_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+												<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
 												<?php
 												}
 												?>
@@ -633,7 +585,7 @@ if($('#instancia').val()==250){
 												<option value="">--Seleccionar--</option>
 												<?php
 												foreach ($sub_tipo_uso as $row_) {?>
-												<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$datos_usoEdificaciones->id_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+												<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
 												<?php
 												}
 												?>
@@ -641,13 +593,12 @@ if($('#instancia').val()==250){
 										</div>
 										<div class="col-lg-2">
 											<label class="control-label form-control-sm">&Aacute;rea Techada</label>
-											<input id="area_techada" name="area_techada[]" on class="form-control form-control-sm"  value="<?php echo number_format($datos_usoEdificaciones->area_techada, 2, '.', ',');?>" type="text" onchange="">
+											<input id="area_techada" name="area_techada[]" on class="form-control form-control-sm"  value="<?php echo number_format($row->area_techada, 2, '.', ',');?>" type="text" onchange="">
 										</div>
 										<div style="margin-top:37px" class="form-group">
 											<div class="col-sm-12 controls">
 												<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 													<a href="javascript:void(0)" onClick="AddFilaUso()" class="btn btn-sm btn-success">Agregar</a>
-													<!--<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
 												</div>
 											</div>
 										</div>
@@ -667,8 +618,15 @@ if($('#instancia').val()==250){
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
 							Presupuesto
 						</div>
+						
+						
 						<div class="row">
 							<div class="col-lg-8" style=";padding-right:15px">
+								
+								<?php 
+									foreach($datos_presupuesto as $row){	
+								?>
+								
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="presupuesto-container">
 										<div class="row presupuesto-row">
@@ -677,8 +635,8 @@ if($('#instancia').val()==250){
 												<select name="tipo_obra[]" id="tipo_obra" class="form-control form-control-sm" onChange="">
 													<option value="">--Selecionar--</option>
 													<?php
-													foreach ($tipo_obra as $row) {?>
-													<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$datos_presupuesto->id_tipo_obra)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+													foreach ($tipo_obra as $row_) {?>
+													<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_obra)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
 													<?php
 													}
 													?>
@@ -686,15 +644,15 @@ if($('#instancia').val()==250){
 											</div>
 											<div class="col-lg-2">
 												<label class="control-label form-control-sm">&Aacute;rea Techada m2</label>
-												<input id="area_techada_presupuesto" name="area_techada_presupuesto[]" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->area_techada, 2, '.', ',');?>" type="text">
+												<input id="area_techada_presupuesto" name="area_techada_presupuesto[]" on class="form-control form-control-sm"  value="<?php echo number_format($row->area_techada, 2, '.', ',');?>" type="text">
 											</div>
 											<div class="col-lg-2">
 												<label class="control-label form-control-sm">Valor Unitario S/</label>
-												<input id="valor_unitario" name="valor_unitario[]" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->valor_unitario, 2, '.', ',');?>" type="text">
+												<input id="valor_unitario" name="valor_unitario[]" on class="form-control form-control-sm"  value="<?php echo number_format($row->valor_unitario, 2, '.', ',');?>" type="text">
 											</div>
 											<div class="col-lg-2">
 												<label class="control-label form-control-sm">Presupuesto</label>
-												<input id="presupuesto" name="presupuesto[]" on class="form-control form-control-sm"  value="<?php echo number_format($datos_presupuesto->total_presupuesto, 2, '.', ',');?>" type="text" readonly='readonly'>
+												<input id="presupuesto" name="presupuesto[]" on class="form-control form-control-sm"  value="<?php echo number_format($row->total_presupuesto, 2, '.', ',');?>" type="text" readonly='readonly'>
 											</div>
 											<div style="margin-top:37px" class="form-group">
 												<div class="col-sm-12 controls">
@@ -707,6 +665,11 @@ if($('#instancia').val()==250){
 										</div>
 									</div>
 								</div>
+								
+								<?php 
+									} 
+								?>		
+								
 								<div class="row" style="padding-left:10px;padding-top:10px; display:flex; justify-content:flex-end">
 									<div class="col-lg-3">
 										<label class="control-label form-control-sm">Valor Total de Obra S/</label>
@@ -755,6 +718,8 @@ if($('#instancia').val()==250){
 								</div>
 							</div>
 						</div>
+						
+						
 						<div style="padding: 15px 0px 15px 10px; font-weight: bold">
 							C&aacute;lculo Liquidaci&oacute;n
 						</div>
