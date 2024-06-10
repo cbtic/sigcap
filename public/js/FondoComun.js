@@ -7,8 +7,8 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 	
-	$('#btnNuevo').click(function () {
-		modalPersona(0);
+	$('#btnCalcular').click(function () {
+		fn_calcular();
 	});
 		
 	cargarFondoComun();

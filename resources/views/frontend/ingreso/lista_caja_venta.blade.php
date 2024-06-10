@@ -22,10 +22,12 @@
 
 				</tr>
 		<?php
-
+		/*
+			if ($row->) {
 				$total += $row->total;
 				$cantidad += $row->cantidad;
-
+			}
+*/
 			}
 		}
 		?>
