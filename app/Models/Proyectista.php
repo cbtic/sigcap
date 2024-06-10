@@ -23,7 +23,7 @@ class Proyectista extends Model
 
     function getProyectistaSolicitud($id_solicitud){      
         $cad = "select p.id, a.numero_cap, pe.apellido_paterno||' '||pe.apellido_materno||' '||pe.nombres agremiado, a.celular1, a.email1, 
-		t3.denominacion situacion,t4.denominacion actividad 
+		t3.denominacion situacion,t4.denominacion actividad, p.id_tipo_profesional 
 		from proyectistas p 
         inner join agremiados a on p.id_agremiado = a.id 
         inner join personas pe on a.id_persona = pe.id

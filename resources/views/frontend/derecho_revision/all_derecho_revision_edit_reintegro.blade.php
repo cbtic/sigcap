@@ -248,7 +248,7 @@ if($('#instancia').val()==250){
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-5">
 								<label class="control-label form-control-sm">Municipalidad</label>
-								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="obtenerUbigeo()" disabled ='disabled'> 
+								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="obtenerUbigeo()"> 
 									<?php
 									$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
 									?>
@@ -262,7 +262,7 @@ if($('#instancia').val()==250){
 					
 							<div class="col-lg-4">
 								<label class="control-label form-control-sm">N° de Revisi&oacute;n</label>
-								<select name="n_revision" id="n_revision" class="form-control form-control-sm" value="<?php echo $derechoRevision_->numero_revision?>" disabled='disabled'>
+								<select name="n_revision" id="n_revision" class="form-control form-control-sm" value="<?php echo $derechoRevision_->numero_revision?>">
 								<?php
 								$valorSeleccionado = isset($derechoRevision_->numero_revision) ? $derechoRevision_->numero_revision : '';
 								?>
@@ -543,7 +543,7 @@ if($('#instancia').val()==250){
 
 						<div class="col-lg-3" style=";padding-right:15px">
 							<label class="control-label form-control-sm">Datos T&eacute;cnicos del proyecto</label>
-							<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="" disabled ='disabled'>
+							<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="">
 								<option value="">--Selecionar--</option>
 								<?php
 								foreach ($tipo_proyecto as $row) {?>
@@ -857,7 +857,7 @@ if($('#instancia').val()==250){
 							<div class="col-sm-12 controls">
 								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 									<!--<a href="javascript:void(0)" onClick="btnSolicitudDerechoRevision()" class="btn btn-sm btn-success">Registrar</a>-->
-									<input class="btn btn-sm btn-success float-rigth" value="REGISTRAR" name="guardar" type="button" id="btnSolicitudReintegro" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
+									<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnEditarSolicitudReintegro" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
 								</div>
 								
 							</div>

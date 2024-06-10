@@ -242,7 +242,23 @@ $(document).ready(function() {
                 <tbody>
                     <tr>
                         <td class="td" style ="text-align: left; width: 43%; font-size:11px"><b>TOTAL AREA TECHADA (Intervenida) (M2):</b></td>
-                        <td class="td" style ="text-align: left; width: 38%; font-size:11px"><?php echo number_format($total_area_techada,2,'.',',');?></td>
+                        <td class="td" style ="text-align: left; width: 38%; font-size:11px"><?php /*foreach($tipo_obra_datos as $tipo_obra):?>
+                                                                                            <?= ($tipo_obra) ?><br>
+                                                                                            <?php endforeach;?>
+                                                                                            <?php foreach($area_techada_datos as $area_datos):?>
+                                                                                            <?= ($area_datos) ?><br>
+                                                                                            <?php endforeach;*/?>
+                                                                                            <?php 
+                                                                                            foreach ($tipo_obra_datos as $index => $tipo_obra) {
+                                                                                               
+                                                                                                $area_datos = $area_techada_datos[$index];
+
+                                                                                                $area_formateada = number_format((float)$area_datos, 2, '.', ',');
+
+                                                                                                echo "{$tipo_obra} - {$area_formateada}<br>";
+                                                                                            }
+                                                                                            ?>
+                                                                                            </td>
                         <td class="td" style ="text-align: left; width: 15%; font-size:11px"><b>N° de Revision:</b></td>
                         <td class="td" style ="text-align: right; width: 4%; font-size:11px"><?php echo $numero_revision;?></td>
                     </tr>
