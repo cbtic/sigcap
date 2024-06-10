@@ -37,7 +37,7 @@ class ComisionDelegado extends Model
 		if($id_sub_tipo_concurso>0){
 			$cad .= " and t5.id_sub_tipo_concurso=".$id_sub_tipo_concurso;
 		}
-
+		$cad .= " order by t3.apellido_paterno asc";
 		//echo $cad;
 
 		$data = DB::select($cad);
@@ -117,6 +117,8 @@ class ComisionDelegado extends Model
 			$cad .= " and t5.id_sub_tipo_concurso=".$id_sub_tipo_concurso;
 		}
 
+		$cad .= " order by t3.apellido_paterno asc";
+		
 		//echo $cad;
 
 		$data = DB::select($cad);
