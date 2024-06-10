@@ -2009,4 +2009,68 @@ class DerechoRevisionController extends Controller
 
     }
 
+	public function derecho_revision_editar_reintegro($id){
+
+		$agremiado_model = new Agremiado;
+		$persona_model = new Persona;
+		//$propietario_model = new Propietario;
+		$derechoRevision_ = DerechoRevision::find($id);
+		$proyecto_ = Proyecto::where("id",$derechoRevision_->id_proyecto)->where("estado","1")->first();
+		$proyecto2 = Proyecto::find($proyecto_->id);
+		//var_dump($proyecto2->id_tipo_sitio);exit();
+		$proyectista_ = Proyectista::where("id_solicitud",$id)->where("estado","1")->orderBy('id')->first();
+		$proyectista = Proyectista::find($proyectista_->id);
+		$agremiado_ = Agremiado::find($proyectista_->id_agremiado);
+		$datos_agremiado= $agremiado_model->getAgremiado(85,$agremiado_->numero_cap);
+		$persona_ = Persona::where("id",$agremiado_->id_persona)->where("estado","1")->first();
+		$datos_persona= $persona_model->getPersona(78,$persona_->numero_documento);
+		$datos_usoEdificaciones = UsoEdificacione::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
+		$datos_presupuesto = Presupuesto::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
+		//$datos_propietario= $propietario_model->getPropietarioSolicitud($id);
+		//var_dump($proyectista_->id_agremiado);exit();
+		$tipo_solicitante = 1;
+		
+		$proyectista_model = new Proyectista;
+		$propietario_model = new Propietario;
+		$derechoRevision_model = new DerechoRevision;
+		$derechoRevision = new DerechoRevision;
+		$agremiado = new Agremiado;
+		$persona = new Persona;
+		$proyecto = new Proyecto;
+		$tablaMaestra_model = new TablaMaestra; 
+		$ubigeo_model = new Ubigeo;
+		$municipalidad_model = new Municipalidade;
+		$presupuesto_model = new Presupuesto;
+		$usoEdificacione_model = new UsoEdificacione;
+		$parametro_model = new Parametro;
+		$empresa = new Empresa;
+
+		$departamento = $ubigeo_model->getDepartamento();
+        $sitio = $tablaMaestra_model->getMaestroByTipo(33);
+        $zona = $tablaMaestra_model->getMaestroByTipo(34);
+		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
+		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
+		$tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'TIPO USO');
+		//$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'SUB TIPO USO');
+		//$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipoAndSubTipo(111,$sub_codigo);
+		
+		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(112);
+		$tipo_liquidacion = $tablaMaestra_model->getMaestroByTipo(27);
+		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
+		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud($id);
+		//$propietario_ = Propietario::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->first();
+		//var_dump($derechoRevision_->id).exit();
+		$propietario_solicitud = $propietario_model->getPropietarioSolicitud($id);
+		//var_dump($propietario_solicitud[0]).exit();
+		$info_solicitud = $presupuesto_model->getInfoSolicitud($id);
+		$info_uso_solicitud = $usoEdificacione_model->getInfoSolicitudUso2($id);
+		$anio_actual = Carbon::now()->year;
+		$parametro = $parametro_model->getParametroAnio($anio_actual);
+		$liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
+		//dd($liquidacion);
+        return view('frontend.derecho_revision.all_derecho_revision_edit_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones',/*'sub_tipo_uso',*/'tipo_obra','datos_presupuesto','tipo_liquidacion','instancia','parametro','liquidacion','tipo','tipo_documento','empresa'));
+    }
+
 }

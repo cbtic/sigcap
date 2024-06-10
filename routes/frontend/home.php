@@ -732,4 +732,5 @@ Route::get('sesion/importar_dataLicencia_dictamenes/{fecha_ejecucion}/{id_comisi
 Route::get('derecho_revision/eliminar_proyectista_hu/{id}', [DerechoRevisionController::class, 'eliminar_proyectista_hu'])->name('derecho_revision.eliminar_proyectista_hu');
 Route::get('derecho_revision/eliminar_propietario_hu/{id}', [DerechoRevisionController::class, 'eliminar_propietario_hu'])->name('derecho_revision.eliminar_propietario_hu');
 Route::get('derecho_revision/eliminar_infoProyecto_hu/{id}', [DerechoRevisionController::class, 'eliminar_infoProyecto_hu'])->name('derecho_revision.eliminar_infoProyecto_hu');
+Route::get('derecho_revision/derecho_revision_editar_reintegro/{id}', [DerechoRevisionController::class, 'derecho_revision_editar_reintegro'])->name('derecho_revision.derecho_revision_editar_reintegro');
 
