@@ -745,6 +745,8 @@ class ComprobanteController extends Controller
 
                 $factura_upd->estado_pago =  $request->estado_pago;
 
+                $factura_upd->id_forma_pago =  $request->id_formapago_;
+
 				$factura_upd->save();
 
 

@@ -64,9 +64,10 @@ class CajaIngreso extends Model
                 from comprobantes c 
                 inner join tabla_maestras t on t.abreviatura = c.tipo and t.tipo = '126' 
                 inner join tabla_maestras m on m.codigo = c.id_caja::varchar and m.tipo = '91' 
-                group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo 
+                group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago 
                 having c.id_usuario_inserta = ".$id_usuario."
                 and TO_CHAR(c.fecha, 'dd-mm-yyyy') = '".$fecha."' 
+                and c.id_forma_pago = 1
                 ) 
                 group by situacion, tipo_,tipo";
 
@@ -87,6 +88,7 @@ class CajaIngreso extends Model
              --group by t.denominacion,cp.monto, c.id_usuario_inserta, c.fecha
              where  c.id_usuario_inserta = ".$id_usuario."
              and TO_CHAR(c.fecha, 'dd-mm-yyyy')  = '".$fecha."'
+             and c.id_forma_pago = 1
          )
        group by condicion, tipo
         ";
