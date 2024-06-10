@@ -44,7 +44,7 @@ class CajaIngreso extends Model
     }
 
     function getCajaComprobante($id_usuario, $fecha){
-
+/*
         $cad = "select situacion, tipo, sum(total)total, count(*) cantidad
             from(
                 select (case when c.estado_pago='P' then 'PENDIENTE' else 'CANCELADO'end) situacion, t.denominacion tipo, sum(c.total) total
@@ -57,8 +57,21 @@ class CajaIngreso extends Model
             )
             group by situacion, tipo
         ";
+*/
+        $cad = "select situacion, tipo, tipo_, sum(total)total, count(*) cantidad 
+                from( select (case when c.estado_pago='P' then 'PENDIENTE' else 'CANCELADO'end) situacion, 
+                t.denominacion tipo, c.tipo tipo_, sum(c.total) total 
+                from comprobantes c 
+                inner join tabla_maestras t on t.abreviatura = c.tipo and t.tipo = '126' 
+                inner join tabla_maestras m on m.codigo = c.id_caja::varchar and m.tipo = '91' 
+                group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago 
+                having c.id_usuario_inserta = ".$id_usuario."
+                and TO_CHAR(c.fecha, 'dd-mm-yyyy') = '".$fecha."' 
+                and c.id_forma_pago = 1
+                ) 
+                group by situacion, tipo_,tipo";
 
-		echo $cad;
+		//echo $cad;
         $data = DB::select($cad);
         return $data;
     }
@@ -66,17 +79,18 @@ class CajaIngreso extends Model
     function getCajaCondicionPago($id_usuario, $fecha){
 
         $cad = "           
-        select condicion, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
+        select condicion, tipo, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
          from(
-             select t.denominacion condicion, 0 total_us, 0/3.7 total_tc, cp.monto total_soles
+             select t.denominacion condicion, c.tipo, 0 total_us, 0/3.7 total_tc, cp.monto total_soles
              from comprobantes c                                
                  inner join comprobante_pagos cp on cp.id_comprobante = c.id
                  inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
              --group by t.denominacion,cp.monto, c.id_usuario_inserta, c.fecha
              where  c.id_usuario_inserta = ".$id_usuario."
              and TO_CHAR(c.fecha, 'dd-mm-yyyy')  = '".$fecha."'
+             and c.id_forma_pago = 1
          )
-       group by condicion
+       group by condicion, tipo
         ";
 
 		//echo $cad;

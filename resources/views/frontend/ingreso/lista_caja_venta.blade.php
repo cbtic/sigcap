@@ -22,12 +22,12 @@
 
 				</tr>
 		<?php
-		/*
-			if ($row->) {
+		
+			if ($row->tipo_=="FT" || $row->tipo_=="BV") {
 				$total += $row->total;
 				$cantidad += $row->cantidad;
 			}
-*/
+
 			}
 		}
 		?>
