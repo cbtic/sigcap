@@ -58,7 +58,7 @@ class CajaIngreso extends Model
             group by situacion, tipo
         ";
 
-		//echo $cad;
+		echo $cad;
         $data = DB::select($cad);
         return $data;
     }
