@@ -12,7 +12,7 @@ foreach($dictamen as $row):?>
 	<td class="text-left" style="vertical-align:middle"><?php //echo $row->nombre?></td>
 	<td class="text-left" style="vertical-align:middle"><?php //echo $row->direccion?></td>-->
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->dictamen?></td>
-	<td class="text-left" style="vertical-align:middle"><?php echo $row->numero_expediente_municipal?></td>
+	<td class="text-left" style="vertical-align:middle"><?php echo $row->numero_expediente?></td>
 	<td class="text-left">
 		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
 			<button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerProyectista(<?php echo $row->id_solicitud?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Proyectista
