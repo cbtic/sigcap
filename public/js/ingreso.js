@@ -783,7 +783,7 @@ function obtenerBeneficiario(){
 	
 	$('#example-select-all').prop( "checked", false );
 	
-	//alert(tipo_documento);
+	//alert($("#tipo_documento").val());
 	
 	if (msg != "") {
 		bootbox.alert(msg);
@@ -839,7 +839,7 @@ function obtenerBeneficiario(){
 
 			if (result) {
 				//alert(result.agremiado.id);
-				//alert(result);
+				//alert(tipo_documento);
 
 				$("#tipo_documento").val(result.agremiado.id_tipo_documento);
 				$("#numero_documento").val(result.agremiado.numero_documento_);
@@ -850,7 +850,7 @@ function obtenerBeneficiario(){
 				//tipo_documento = $("#tipo_documento").val();
 				//numero_documento = $("#numero_documento").val();
 
-
+				
 
 				//alert($("#tipo_documento").val());
 				//alert($("#numero_documento").val());

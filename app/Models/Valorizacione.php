@@ -17,7 +17,8 @@ class Valorizacione extends Model
         if($numero_documento_b!="")$credipago=" and v.descripcion ilike '%".$numero_documento_b."' ";
         if($exonerado=="0")$exonerado="";
         
-    
+    //echo($tipo_documento);
+
         if($tipo_documento=="79"){  //RUC
             $cad = "
             select v.id, v.fecha, c.denominacion  concepto, v.monto,t.denominacion moneda, v.id_moneda, v.fecha_proceso, 

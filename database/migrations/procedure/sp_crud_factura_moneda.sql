@@ -84,7 +84,7 @@ begin
 					select substr(CAST(mod(_total,trunc(_total)) AS varchar),3) into _decimal_letras;
 				End if;
 
-				if tipo = 'FT' and  persona = 0  Then
+				if tipo = 'FT' and  ubicacion > 0  Then
 					select t2.ruc, t2.razon_social, (case when t2.direccion = 'Direccion' then '' else t2.direccion end) direccion, t2.email into  _ruc,_razon_social, _direccion, _correo
 						from empresas t2						
 						Where t2.id=ubicacion;

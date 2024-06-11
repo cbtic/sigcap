@@ -1,3 +1,5 @@
+-- DROP FUNCTION public.sp_crud_comprobante_ncnd(varchar, int4, varchar, varchar, varchar, varchar, varchar, int4, int4, numeric, varchar, int4, int4, varchar, varchar, int4, varchar);
+
 CREATE OR REPLACE FUNCTION public.sp_crud_comprobante_ncnd(serie character varying, numero integer, tipo character varying, cod_tributario character varying, total character varying, descripcion character varying, cod_contable character varying, id_v integer, id_caja integer, descuento numeric, accion character varying, p_id_usuario integer, p_id_moneda integer, p_razon_social character varying, p_direccion character varying, p_comprobante_origen integer, correo character varying)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -78,7 +80,7 @@ begin
 					pu, pu_con_igv, igv_total, descuento, importe,afect_igv, cod_contable, valor_gratu, unidad,id_usuario_inserta,id_comprobante)
 					Values (_serie,numero,tipo,0,1,descripcion,_total/1.18,(_total/1.18),(_total/1.18)*0.18,descuento,_total,10,cod_contable,0,'ZZ',p_id_usuario, id_caja);
 				
-				update valorizaciones Set id_comprobante  = id_caja
+				update valorizaciones Set id_comprobante  = id_caja, pagado ='0'
 					where id = id_v;
 								
 				idp:=numero;
