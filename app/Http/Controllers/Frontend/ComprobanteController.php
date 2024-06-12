@@ -608,18 +608,34 @@ class ComprobanteController extends Controller
 
             echo "ubicacion_id2 -> {$ubicacion_id2}\n ";
             echo "id_persona2 -> {$id_persona2}\n ";
-     */       
-           // exit();
-
+  */         
+   //         exit();
+/*
+            direccion -> Av. candada 3394 
+            correo -> frimacc@gmail.com 
+            id_persona_act -> 
+            id_ubicacion_act -> 28131 
+            tipoF -> FT 
+            ubicacion_id -> 28131 
+            id_persona -> 
+            ubicacion_id2 -> 
+            id_persona2 ->
+           
+*/
             if ($id_persona_act != 0 || $id_ubicacion_act != 0 ) {
+
+                
 
                // exit($id_persona_act);
 
                 
                 if ($tipoF == 'FT' &&  $ubicacion_id !='' )
                 {
+
+                    
                     $empresa = Empresa::where('id', $id_ubicacion_act)->first();
                     if($empresa){
+
                         $empresa->direccion = $direccion;
                         $empresa->email = $correo;
                         $empresa->save();
@@ -695,6 +711,8 @@ class ComprobanteController extends Controller
                 
 
             }
+
+            //exit();
 				//$valoriza = Valorizacione::where('val_aten_estab', '=', $vestab)->where('val_codigo', '=', $vcodigo)->first();                
               
                 //$valoriza = Valorizacione::find($id_val);

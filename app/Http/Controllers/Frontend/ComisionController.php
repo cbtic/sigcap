@@ -889,6 +889,9 @@ class ComisionController extends Controller
 		$id_tipo_concurso = $subtipoConcurso->sub_codigo;
 		$concurso = Concurso::where("id_periodo",$request->periodo)->where("id_sub_tipo_concurso",$request->tipo_comision)->where("estado","1")->first();
 		
+		$concursoInscripcion_model_ = new ConcursoInscripcione;
+		$concursoInscripcion_model_->updateConcursoInscripcionByIdPeriodoIdSubTipoConcurso($request->periodo,$request->tipo_comision);
+		
 		foreach($comision as $row){
 		
 			$comisionDelegado_model = new ComisionDelegado;
@@ -899,6 +902,8 @@ class ComisionController extends Controller
 				
 				//if($key2==0)$rol_especifico = 1;
 				//else $rol_especifico = 2;
+				 
+				//if($row2->id_agremiado==11713)echo "ok";exit(); 
 				 
 				$rol_especifico = $row2->id_puesto; 
 				

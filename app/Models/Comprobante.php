@@ -30,7 +30,7 @@ class Comprobante extends Model
 
 		$data = DB::select($cad, array($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,     $id_user,  $id_moneda));
                                     //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
-        //print_r($data); exit();
+       // print_r($data); exit();
         return $data[0]->sp_crud_factura_moneda;
     }                   
 
@@ -138,7 +138,7 @@ class Comprobante extends Model
             $data = DB::select($cad);
             
         }
-        //print_r($cad); //exit();
+       
 
         if(isset($data[0]))return $data[0];
     }

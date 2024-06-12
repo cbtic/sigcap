@@ -231,7 +231,7 @@
 					<?php
 				foreach($distritoSesion as $row0){
 					
-					$comisionSesion = \App\Models\ComisionSesione::getComisionDistritoSesion($anio,$mes,$row0->id_ubigeo);
+					$comisionSesion = \App\Models\ComisionSesione::getComisionDistritoSesion($anio,$mes,$row0->id_ubigeo,$row->id);
 				?>
 					
 					<tr>

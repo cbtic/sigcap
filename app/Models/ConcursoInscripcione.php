@@ -62,6 +62,18 @@ and ci.estado='1'";
         if(isset($data[0]))return $data[0];
     }
 	
+	function updateConcursoInscripcionByIdPeriodoIdSubTipoConcurso($id_periodo,$id_sub_tipo_concurso){
+
+        $cad = "update concurso_inscripciones set puesto=null  
+where id_concurso_puesto in(select id from concurso_puestos cp 
+						   where id_concurso in(select id from concursos c where id_periodo=".$id_periodo." and id_sub_tipo_concurso=".$id_sub_tipo_concurso." and estado='1') 
+					and estado='1')
+and estado='1'";
+		//if($id_agremiado==3364)echo $cad;
+		$data = DB::select($cad);
+        //if(isset($data[0]))return $data[0];
+    }
+	
 	function getConcursoUltimoNuevoByIdAgremiado($id_concurso_inscripcion,$id_agremiado,$id_tipo_concurso,$id_sub_tipo_concurso){
 
         $cad = "select t1.id   
