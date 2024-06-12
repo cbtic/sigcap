@@ -24,7 +24,7 @@ from comision_sesiones t1
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 inner join comisiones t4 on t1.id_comision=t4.id
 where t0.id_aprobar_pago=2 
-And t1.id_periodo_comisione = 7
+And t1.id_periodo_comisione = ".$id_periodo."
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and t4.id_municipalidad_integrada=mi.id)cantidad
