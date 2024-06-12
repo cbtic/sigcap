@@ -98,6 +98,10 @@ $(document).ready(function () {
 	$('#btnSolicitudReintegro').click(function () {
 		valida_reintegro()
 	});
+
+	$('#btnEditarSolicitudReintegro').click(function () {
+		valida_editar_reintegro()
+	});
 	
 	$("#id_municipalidad_bus").select2();
 	$("#municipalidad_bus_hu").select2();
@@ -727,7 +731,7 @@ function obtenerDistrito(){
 			});
 			$('#distrito').html(option);
 			
-			$('#distrito').attr("disabled",true);
+			$('#distrito').attr("disabled",false);
 			$('.loader').hide();
 			
 		}
@@ -760,7 +764,7 @@ function obtenerDistrito_(callback){
 			});
 			$('#distrito').html(option);
 			
-			$('#distrito').attr("disabled",true);
+			$('#distrito').attr("disabled",false);
 			$('.loader').hide();
 
 			callback();
@@ -1819,6 +1823,51 @@ function guardar_solicitud_reintegro(){
 	
 	$.ajax({
 			url: "/derecho_revision/send_nuevo_reintegro",
+			type: "POST",
+			data : $("#frmSolicitudDerechoRevisionReintegroall").serialize(),
+			success: function (result) {
+				
+				//$('#openOverlayOpc').modal('hide');
+				//modalSituacion(id_agremiado);
+				//datatableSuspension();
+
+				window.location.reload();
+				
+				//$('#openOverlayOpc').modal('hide');
+				
+				/*
+				$('#openOverlayOpc').modal('hide');
+				if(result==1){
+					bootbox.alert("La persona o empresa ya se encuentra registrado");
+				}else{
+					window.location.reload();
+				}
+				*/
+			}
+	});
+}
+
+function valida_editar_reintegro(){
+    
+    var msg="";
+    var situacion=$("#frmSolicitudDerechoRevisionReintegroall #situacion").val();
+    
+    if(situacion=="FALLECIDO"){msg+="El agremiado est&aacute; FALLECIDO";}
+
+    if(situacion=="INHABILITADO"){msg+="El agremiado est&aacute; INHABILITADO";}
+    
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }else if(situacion=="HABILITADO"){
+        guardar_editar_solicitud_reintegro();
+    }
+}
+
+function guardar_editar_solicitud_reintegro(){
+	
+	$.ajax({
+			url: "/derecho_revision/send_editar_reintegro",
 			type: "POST",
 			data : $("#frmSolicitudDerechoRevisionReintegroall").serialize(),
 			success: function (result) {

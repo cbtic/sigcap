@@ -230,7 +230,7 @@ function fn_save_parametro(){
                         <div class="col-lg-6">
                           <div class="form-group">
                             <label class="control-label form-control-sm">Valor M&iacute;nimo % de UIT - Edificaciones</label>
-                            <input id="valor_minimo_edificaciones" name="valor_minimo_edificaciones" on class="form-control form-control-sm"  value="<?php echo $parametro->porcentaje_calculo_edificacion?>" type="text" >
+                            <input id="valor_minimo_edificaciones" name="valor_minimo_edificaciones" on class="form-control form-control-sm"  value="<?php echo $parametro->valor_minimo_edificaciones?>" type="text" >
                           
                           </div>
                         </div>

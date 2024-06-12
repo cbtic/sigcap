@@ -23,7 +23,7 @@ class Presupuesto extends Model
     }
 
     function getTipoObraSolicitud($id_solicitud){      
-        $cad = "select tm4.denominacion tipo_obra from presupuestos p 
+        $cad = "select tm4.denominacion tipo_obra, p.area_techada from presupuestos p 
         left join tabla_maestras tm4 on p.id_tipo_obra = tm4.codigo::int and  tm4.tipo ='112'
         where id_solicitud ='".$id_solicitud."'
         and p.estado ='1'";
