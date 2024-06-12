@@ -192,7 +192,7 @@
 				<?php foreach($municipalidadSesion as $row){
 					
 					//$distritoSesion = \App\Models\ComisionSesione::getDistritoSesion($anio,$mes,$row->id);
-					$delegadoSesion = \App\Models\ComisionSesione::getDelegadoComisionSesionCoordinadorZonal($anio,$mes,$row->id);
+					$delegadoSesion = \App\Models\ComisionSesione::getDelegadoComisionSesionCoordinadorZonal($id_periodo,$anio,$mes,$row->id); 
 					
 					?>
 					

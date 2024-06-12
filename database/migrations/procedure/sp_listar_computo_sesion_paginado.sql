@@ -25,7 +25,7 @@ begin
 
 	v_tabla=' from (
 select mi.denominacion municipalidad,t4.comision comision,
-p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres delegado,a.numero_cap,tmp.denominacion puesto, 
+p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres delegado,a.numero_cap,tmp.denominacion puesto,cd.id_puesto::int id_puesto, 
 t5.descripcion periodo,
 (case when t0.coordinador=''1'' then ''COORDINADOR'' else '''' end) coordinador,
 sum(case when tmts.denominacion=''ORDINARIA'' then 1 else 0 end) computada,
@@ -60,7 +60,7 @@ where t0.id_aprobar_pago=2 ';
 	 v_tabla:=v_tabla||'And to_char(t1.fecha_ejecucion,''mm'') = '''||p_mes||''' ';
 	End If;
 
-	v_tabla:=v_tabla||'group by t0.coordinador,mi.denominacion,t4.comision,p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres,a.numero_cap,tmp.denominacion, t5.descripcion
+	v_tabla:=v_tabla||'group by t0.coordinador,mi.denominacion,t4.comision,p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres,a.numero_cap,tmp.denominacion,cd.id_puesto::int, t5.descripcion
 )R ';
 	
 	v_where = ' Where 1=1  ';
@@ -109,9 +109,9 @@ where t0.id_aprobar_pago=2 ';
 	v_col_count:=v_col_count||' ,'||v_sesion_delegado||' as total_sesion_delegado ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By municipalidad asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By municipalidad asc,id_puesto asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By municipalidad asc ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By municipalidad asc,id_puesto asc ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;
