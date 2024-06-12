@@ -264,7 +264,7 @@ class DerechoRevision extends Model
               WHEN pr.id_tipo_propietario = '78' THEN (select p2.apellido_paterno||' '||p2.apellido_materno||' '||p2.nombres agremiado from personas p2 where p2.id = pr.id_persona)
               WHEN pr.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = pr.id_empresa)
         end as propietario,
-        s.valor_obra, s.area_total, pre.area_techada, p.id_ubigeo, tm.denominacion tipo, p.direccion direccion_proyecto, a.numero_cap, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres agremiado, tm2.denominacion ubicacion, a.numero_regional, a.direccion, l.denominacion as local, r.denominacion regional, tm3.denominacion autoriza, tm4.denominacion actividad_gremial, tm5.denominacion situacion, m.denominacion municipalidad, s.valor_obra, s.numero_revision 
+        s.valor_obra, s.area_total, pre.area_techada, p.id_ubigeo, tm.denominacion tipo, p.direccion direccion_proyecto, a.numero_cap, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres agremiado, tm2.denominacion ubicacion, a.numero_regional, a.direccion, l.denominacion as local, r.denominacion regional, tm3.denominacion autoriza, tm4.denominacion actividad_gremial, tm5.denominacion situacion, m.denominacion municipalidad, s.valor_obra, s.numero_revision, s.etapa, s.numero_etapa  
         from solicitudes s 
         left join proyectos p on s.id_proyecto = p.id
         left join propietarios pr on pr.id_solicitud = s.id
