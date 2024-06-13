@@ -274,6 +274,7 @@
                     
                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group form-group-sm">
+                            
                             <select name="anio_bus" id="anio_bus" class="form-control form-control-sm">
                             </select>
                         </div>
