@@ -159,7 +159,7 @@ $(document).ready(function() {
             <tr>
                 <td class="td" style ="text-align: right; width: 55%;">CREDIPAGO</td>
                 <td class="td" style ="text-align: left; width: 10%;"></td>
-                <td class="td" style ="text-align: left; width: 15%;">N° Certificado:</b></td>
+                <td class="td" style ="text-align: left; width: 15%;"></b></td>
                 <td class="td" style ="text-align: right; width: 20%;"><?php //echo $credipago;?></td>  
             </tr>
         </tbody>
