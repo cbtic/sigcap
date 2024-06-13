@@ -14,7 +14,14 @@ class Valorizacione extends Model
         
         if($filas!="")$filas="limit ".$filas;
         $credipago = "";
-        if($numero_documento_b!="")$credipago=" and v.descripcion ilike '%".$numero_documento_b."' ";
+        $tlb_liquidacion = "";
+        if($numero_documento_b!=""){
+            //$credipago=" and v.descripcion ilike '%".$numero_documento_b."' ";
+            $credipago=" and l.credipago = '".$numero_documento_b."' ";
+            $tlb_liquidacion = "left join liquidaciones l  on l.id = v.pk_registro and v.id_modulo = 7";
+
+        }
+        
         if($exonerado=="0")$exonerado="";
         
     //echo($tipo_documento);
@@ -31,6 +38,7 @@ class Valorizacione extends Model
                 inner join conceptos c  on c.id = v.id_concepto
                 --inner join agremiado_cuotas a  on a.id = v.pk_registro
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
+                ".$tlb_liquidacion."
                 where v.id_empresa = ".$id_persona."            
                 and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
                 and to_char(DATE_PART('MONTH', v.fecha),'00') ilike '%".$mes."'                
@@ -55,6 +63,7 @@ class Valorizacione extends Model
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto            
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
+                ".$tlb_liquidacion."
                 where v.id_persona = ".$id_persona."            
                 and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
                 and to_char(DATE_PART('MONTH', v.fecha),'00') ilike '%".$mes."'
