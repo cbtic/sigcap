@@ -312,7 +312,10 @@ class DerechoRevisionController extends Controller
 			$valorizacion->id_moneda = $concepto->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-			$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago;
+			$fechaValorizacion = Carbon::now();
+			$fecha_valorizacion = $fechaValorizacion->format('my');
+			$municipalidad = Municipalidade::where("id",$solicitud->id_municipalidad)->where("estado","1")->first();
+			$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago ." - ". $municipalidad->denominacion ." - ". $fecha_valorizacion ;
 			//$valorizacion->estado = 1;
 			//print_r($valorizacion->descripcion).exit();
 			$valorizacion->id_usuario_inserta = $id_user;
@@ -492,7 +495,11 @@ class DerechoRevisionController extends Controller
 			$valorizacion->id_moneda = $concepto->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-			$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago;
+			//$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago;
+			$fechaValorizacion = Carbon::now();
+			$fecha_valorizacion = $fechaValorizacion->format('my');
+			$municipalidad = Municipalidade::where("id",$solicitud->id_municipalidad)->where("estado","1")->first();
+			$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago ." - ". $municipalidad->denominacion ." - ". $fecha_valorizacion ;
 			//$valorizacion->estado = 1;
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
@@ -1804,7 +1811,11 @@ class DerechoRevisionController extends Controller
 			$valorizacion->id_moneda = $concepto->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-			$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago;
+			//$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago;
+			$fechaValorizacion = Carbon::now();
+			$fecha_valorizacion = $fechaValorizacion->format('my');
+			$municipalidad = Municipalidade::where("id",$solicitud->id_municipalidad)->where("estado","1")->first();
+			$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago ." - ". $municipalidad->denominacion ." - ". $fecha_valorizacion ;
 			//$valorizacion->estado = 1;
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
