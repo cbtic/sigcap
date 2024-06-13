@@ -27,7 +27,7 @@ and t4.id_municipalidad_integrada=".$id_municipalidad_integrada;
         return $data;
     }
 	
-	public static function getComisionDistritoSesion($anio,$mes,$id_ubigeo){
+	public static function getComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_municipalidad_integrada){
 
         $cad = "select distinct t4.id,t4.comision comision
 from comision_sesiones t1 
@@ -40,7 +40,8 @@ inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
 where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
-and u.id_ubigeo = '".$id_ubigeo."'";
+and u.id_ubigeo = '".$id_ubigeo."'
+and t4.id_municipalidad_integrada=".$id_municipalidad_integrada;
 
 		$data = DB::select($cad);
         return $data;
@@ -69,7 +70,7 @@ and t1.id_comision=".$id_comision;
         return $data;
     }
 	
-	public static function getDelegadoComisionSesionCoordinadorZonal($anio,$mes,$id_municipalidad_integrada){
+	public static function getDelegadoComisionSesionCoordinadorZonal($id_periodo,$anio,$mes,$id_municipalidad_integrada){
 
         $cad = "select distinct 'CZ' tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap
 from comision_sesiones t1 
@@ -81,9 +82,11 @@ inner join coordinador_zonales cz on a.id=cz.id_agremiado and t4.id=cz.id_comisi
 inner join personas p on a.id_persona=p.id 
 where t0.id_aprobar_pago=2
 and t0.estado='1'
+and t4.denominacion in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
-and t4.id_municipalidad_integrada = ".$id_municipalidad_integrada;
+and t4.id_municipalidad_integrada = ".$id_municipalidad_integrada."
+and t1.id_periodo_comisione=".$id_periodo;
 
 		$data = DB::select($cad);
         return $data;
@@ -162,7 +165,7 @@ where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' 
 And t1.id_periodo_comisione = ".$id_periodo." 
-and t4.denominacion ilike '%coordinador%'";
+and t4.denominacion in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')";
 		$data = DB::select($cad);
         return $data;
     }

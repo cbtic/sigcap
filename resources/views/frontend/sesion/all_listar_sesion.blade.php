@@ -338,9 +338,9 @@
 							<th>Revis&oacute;n</th>
 							<th>N&deg; Liquidaci&oacute;n</th>
 							<th>Monto</th>
-							<th>Fecha Liquidaci&oacute;n</th>
-							<!--<th>Nombre</th>-->
-							<th>Direcci&oacute;n</th>
+							<!--<th>Fecha Liquidaci&oacute;n</th>
+							<th>Nombre</th>
+							<th>Direcci&oacute;n</th>-->
 							<th>Dictamen</th>
 							<th>Exp. Municipal</th>
 							<th>Proyectista</th>

@@ -172,8 +172,6 @@
                                 <a href="/ingreso/caja_total" class="dropdown-item">Resumen de Caja</a>
 								@endcan	
 
-
-
 						   </div>
 					</li>
 					@endif
