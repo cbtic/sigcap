@@ -1372,7 +1372,9 @@ function datatablenew2(){
 					}
 				
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarSolicitudHU('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					//html += '<a href="/derecho_revision/editar_derecho_revision_nuevo/" onclick="" style="font-size: 12px; margin-left: 10px;" class="btn btn-sm btn-success" id="btnEditar"><i class="fa fa-edit"></i> Editar</a>';
+					html += '<a href="/derecho_revision/editar_derecho_revision_nuevo/'+row.id+'" onclick="" class="btn btn-sm btn-success" style="font-size:12px;margin-left:10px" id=""><i class="fa fa-edit"></i> Editar</a>';
+					//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarSolicitudHU('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 					
 					html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerCredipago('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Credipago</button>';
 					html += '<button style="font-size:12px;margin-left:10px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalReintegroSolicitudRU('+row.id+')" ><i class="fa fa-edit"></i> Generar Liquidaci&oacute;n</button>';
@@ -1599,6 +1601,18 @@ function editarSolicitudHU(id){
 
 }
 
+function editarSolicitudHU_derecho(id){
+	
+    $.ajax({
+            url: "/derecho_revision/editar_derecho_revision_nuevo/"+id,
+            type: "GET",
+            success: function (result) {
+				datatablenew();
+
+            }
+    });
+}
+
 function actualizarBoton() {
     //alert($('#id_editar').val());
     var id = $('#id_editar').val();
@@ -1606,7 +1620,7 @@ function actualizarBoton() {
         $('#btnEditar').addClass('disabled').attr('onclick','return false;');
     } else {
 		$('#btnEditar').removeClass('disabled').removeAttr('onclick');
-        $('a.btn-success').attr('href', '/derecho_revision/editar_derecho_revision_nuevo/' + id);
+        $('a.btn-success').attr('href', '/derecho_revision/editar_derecho_revision_nuevo/'+id);
     }
 }
 
@@ -1831,7 +1845,7 @@ function cargarPeriodo(){
 		type: "POST",
 		data : $("#frmExpediente").serialize(),
 		success: function(result){
-			var option = "<option value='' selected='selected'>--Año--</option>";
+			var option = "<option value='' selected='selected'>--Todos--</option>";
 			var currentYear = new Date().getFullYear();
 			$('#anio_bus').html("");
 			$(result).each(function (ii, oo) {
