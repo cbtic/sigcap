@@ -654,20 +654,26 @@ function fn_save_credipago(){
                     <div class="col-lg-2">
                         <label class="control-label form-control-sm">Por Etapas</label>
                         <select name="etapas" id="etapas" class="form-control form-control-sm" onchange="activarEtapas()">
-                            <option value="">--Selecionar--</option>
-                            <option value="1">SI</option>
-                            <option value="0" selected='selected'>NO</option>
+                            <?php
+                            $valorSeleccionado = isset($liquidacion[0]->etapa) ? $liquidacion[0]->etapa : '0';
+                            ?>
+                            <option value="" <?php echo ($valorSeleccionado == '') ? 'selected="selected"' : '';?>>--Selecionar--</option>
+                            <option value="1" <?php echo ($valorSeleccionado == '1') ? 'selected="selected"' : '';?>>SI</option>
+                            <option value="0" <?php echo ($valorSeleccionado == '0') ? 'selected="selected"' : '';?>>NO</option>
                         </select>
                     </div>
                     <div class="col-lg-2">
                         <div id="n_etapas_" name="n_etapas_">
                             <label class="control-label form-control-sm">N&uacute;mero de Etapas</label>
                             <select name="n_etapas" id="n_etapas" class="form-control form-control-sm">
+                                <?php
+                                $valorSeleccionado = isset($liquidacion[0]->numero_etapa) ? $liquidacion[0]->numero_etapa : '';
+                                ?>
                                 <option value="">--Selecionar--</option>
                                     <?php
                                     for ($i=1; $i<=10;$i++) {
                                     ?>
-                                    <option value="<?php echo $i;?>"><?php echo $i?></option>
+                                    <option value="<?php echo $i;?>" <?php echo ($valorSeleccionado == $i) ? 'selected="selected"' : '';?>><?php echo $i?></option>
                                     <?php
                                     }
                                     ?>

@@ -442,7 +442,7 @@ class CertificadoController extends Controller
 		$valorizacion->id_moneda = $concepto->id_moneda;
 		$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 		$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-		$valorizacion->descripcion = $concepto->denominacion;
+		$valorizacion->descripcion = $concepto->denominacion ." N° ". $certificado->codigo;
 		//$valorizacion->estado = 1;
 		//print_r($valorizacion->descripcion).exit();
 		$valorizacion->id_usuario_inserta = $id_user;

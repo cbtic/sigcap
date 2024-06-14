@@ -193,7 +193,7 @@ class MultaController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
 
         $moneda = $tablaMaestra_model->getMaestroByTipo(1);
-		$concepto = $concepto_model->getConceptoAllDenominacion();
+		$concepto = $concepto_model->getConceptoAllDenominacionMulta();
 		
 		if($id>0){
 			$multa = Multa::find($id);
@@ -284,7 +284,7 @@ class MultaController extends Controller
 			$valorizacion->id_moneda = $multa->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-			$valorizacion->descripcion = $concepto->denominacion ." - " . $request->periodo ." - ". $multa->denominacion;
+			$valorizacion->descripcion = $multa->denominacion;
 			//$valorizacion->estado = 1;
 			//print_r($valorizacion->descripcion).exit();
 			$valorizacion->id_usuario_inserta = $id_user;
