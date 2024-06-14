@@ -377,7 +377,7 @@
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <label class="control-label form-control-sm" style="margin-bottom: 0;">C&oacute;digo Proyecto</label>	
                         <input type="text" name="codigo_proyecto_hu" id="codigo_proyecto_hu" placeholder="C&oacute;digo Proyecto" class="form-control form-control-sm" <?php "readonly='readonly'"?> >
-                    </div> 
+                    </div>
                 </div>
                 <div class="row" style="padding:15px 20px 15px 20px;">
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
