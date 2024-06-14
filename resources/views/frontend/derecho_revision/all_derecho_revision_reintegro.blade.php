@@ -609,7 +609,7 @@ if($('#instancia').val()==250){
 												<option value="">--Seleccionar--</option>
 												<?php
 												foreach ($sub_tipo_uso as $row_) {?>
-												<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+												<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_sub_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
 												<?php
 												}
 												?>
