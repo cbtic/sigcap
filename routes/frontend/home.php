@@ -57,6 +57,8 @@ use App\Http\Controllers\Frontend\TablaMaestraController;
 use App\Http\Controllers\Frontend\CoordinadorZonalDetalleController;
 use App\Http\Controllers\Frontend\DelegadoTributoController;
 
+use App\Http\Controllers\Frontend\OperacionController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -734,4 +736,7 @@ Route::get('derecho_revision/eliminar_propietario_hu/{id}', [DerechoRevisionCont
 Route::get('derecho_revision/eliminar_infoProyecto_hu/{id}', [DerechoRevisionController::class, 'eliminar_infoProyecto_hu'])->name('derecho_revision.eliminar_infoProyecto_hu');
 Route::get('derecho_revision/derecho_revision_editar_reintegro/{id}', [DerechoRevisionController::class, 'derecho_revision_editar_reintegro'])->name('derecho_revision.derecho_revision_editar_reintegro');
 Route::post('derecho_revision/send_editar_reintegro', [DerechoRevisionController::class, 'send_editar_reintegro'])->name('derecho_revision.send_editar_reintegro');
+
+//Route::get('operacion/consulta', 'Frontend\OperacionController@consulta');
+Route::post('operacion/consulta', [OperacionController::class, 'consulta'])->name('operacion.consulta');
 
