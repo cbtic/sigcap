@@ -120,4 +120,15 @@ class Concepto extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getConceptoAllDenominacionMulta(){
+
+        $cad = "select *
+                from conceptos c
+                where c.estado='1' and id='26461'
+                order by denominacion ";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 }
