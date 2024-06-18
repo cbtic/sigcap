@@ -84,7 +84,6 @@ class OperacionController extends Controller
 		}
 		*/
 		
-		
 		/************1. REQUERIMIENTO ENVIO*************/
 		
 		$bancoInterconexionRequerimientoEnvio = new BancoInterconexione();
@@ -137,8 +136,6 @@ class OperacionController extends Controller
 		//$bancoInterconexion->anio = $request->input('TIME LOCAL TRANSACTION');
 		//$bancoInterconexion->cuota = $request->input('TIME LOCAL TRANSACTION');
 		//$bancoInterconexion->monedadoc = $request->input('TIME LOCAL TRANSACTION');
-		
-		$bancoInterconexionRequerimientoEnvio->estado = 1;
 		$bancoInterconexionRequerimientoEnvio->id_usuario_inserta = $id_user;
 		$bancoInterconexionRequerimientoEnvio->save();
 		$id_banco_interconexion_requerimiento_envio = $bancoInterconexionRequerimientoEnvio->id;
@@ -174,173 +171,159 @@ class OperacionController extends Controller
 				$bancoInterconexionRequerimientoDetalleEnvio->cuota = $row["Cuota"];
 				$bancoInterconexionRequerimientoDetalleEnvio->monedadoc = $row["MonedaDoc"];
 				$bancoInterconexionRequerimientoDetalleEnvio->filler = $row["Filler"];
-				//$bancoInterconexionRequerimientoDetalleEnvio->estado = $request->input('TRACE');
 				$bancoInterconexionRequerimientoDetalleEnvio->id_usuario_inserta = $id_user;
 				$bancoInterconexionRequerimientoDetalleEnvio->save();
 			
 			}
 		}
 		
-		
 		/************3. REQUERIMIENTO RESPUESTA*************/
+			
+		$bancoInterconexione_model = new BancoInterconexione;
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="";
+		$p[]="1";
+		$p[]="3";
+		$respuesta = $bancoInterconexione_model->listar_operacion_ajax($p);
+		//$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 		
+		$bancoInterconexionEnvio = BancoInterconexione::find($id_banco_interconexion_requerimiento_envio);
+		
+		$bancoInterconexionRequerimientoRespuesta = new BancoInterconexione();
+		$bancoInterconexionRequerimientoRespuesta->tipo_conexion = 6;
+		$bancoInterconexionRequerimientoRespuesta->message_type_identification = $bancoInterconexionEnvio->message_type_identification;
+		$bancoInterconexionRequerimientoRespuesta->primary_bit_map = $bancoInterconexionEnvio->primary_bit_map;
+		$bancoInterconexionRequerimientoRespuesta->secondary_bit_map = $bancoInterconexionEnvio->secondary_bit_map;
+		$bancoInterconexionRequerimientoRespuesta->primary_account_number = $bancoInterconexionEnvio->primary_account_number;
+		$bancoInterconexionRequerimientoRespuesta->processing_code = $bancoInterconexionEnvio->processing_code;
+		$bancoInterconexionRequerimientoRespuesta->amount_transaction = $bancoInterconexionEnvio->amount_transaction;
+		$bancoInterconexionRequerimientoRespuesta->trace = $bancoInterconexionEnvio->trace;
+		$bancoInterconexionRequerimientoRespuesta->time_local_transaction = $bancoInterconexionEnvio->time_local_transaction;
+		$bancoInterconexionRequerimientoRespuesta->date_local_transaction = $bancoInterconexionEnvio->date_local_transaction;
+		$bancoInterconexionRequerimientoRespuesta->pos_entry_mode = $bancoInterconexionEnvio->pos_entry_mode;
+		$bancoInterconexionRequerimientoRespuesta->pos_condition_code = $bancoInterconexionEnvio->pos_condition_code;
+		$bancoInterconexionRequerimientoRespuesta->acquirer_institution_id_code = $bancoInterconexionEnvio->acquirer_institution_id_code;
+		$bancoInterconexionRequerimientoRespuesta->forward_institution_id_code = $bancoInterconexionEnvio->forward_institution_id_code;
+		$bancoInterconexionRequerimientoRespuesta->retrieval_reference_number = $bancoInterconexionEnvio->retrieval_reference_number;
+		$bancoInterconexionRequerimientoRespuesta->card_acceptor_terminal_id = $bancoInterconexionEnvio->card_acceptor_terminal_id;
+		//$bancoInterconexionRequerimientoRespuesta->card_acceptor_id_code = $bancoInterconexionEnvio->card_acceptor_id_code;
+		//$bancoInterconexionRequerimientoRespuesta->card_acceptor_name_location = $bancoInterconexionEnvio->card_acceptor_name_location;
+		$bancoInterconexionRequerimientoRespuesta->transaction_currency_code = $bancoInterconexionEnvio->transaction_currency_code;
+		$bancoInterconexionRequerimientoRespuesta->longitud = $bancoInterconexionEnvio->longitud;
+		$bancoInterconexionRequerimientoRespuesta->codigoempresa = $bancoInterconexionEnvio->codigoempresa;
+		/*
 		if($tipo_conexion==1){
-			
-			$bancoInterconexione_model = new BancoInterconexione;
-			$p[]="";
-			$p[]="";
-			$p[]="";
-			$p[]="";
-			$p[]="";
-			$p[]="";
-			$p[]="";
-			$p[]="";
-			$p[]="1";
-			$p[]="3";
-			$respuesta = $bancoInterconexione_model->listar_operacion_ajax($p);
-			//$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
-			
-			$bancoInterconexionEnvio = BancoInterconexione::find($id_banco_interconexion_requerimiento_envio);
-			
-			$bancoInterconexionRequerimientoRespuesta = new BancoInterconexione();
-			$bancoInterconexionRequerimientoRespuesta->tipo_conexion = 6;
-			$bancoInterconexionRequerimientoRespuesta->message_type_identification = $bancoInterconexionEnvio->message_type_identification;
-			$bancoInterconexionRequerimientoRespuesta->primary_bit_map = $bancoInterconexionEnvio->primary_bit_map;
-			$bancoInterconexionRequerimientoRespuesta->secondary_bit_map = $bancoInterconexionEnvio->secondary_bit_map;
-			$bancoInterconexionRequerimientoRespuesta->primary_account_number = $bancoInterconexionEnvio->primary_account_number;
-			$bancoInterconexionRequerimientoRespuesta->processing_code = $bancoInterconexionEnvio->processing_code;
-			$bancoInterconexionRequerimientoRespuesta->amount_transaction = $bancoInterconexionEnvio->amount_transaction;
-			$bancoInterconexionRequerimientoRespuesta->trace = $bancoInterconexionEnvio->trace;
-			$bancoInterconexionRequerimientoRespuesta->time_local_transaction = $bancoInterconexionEnvio->time_local_transaction;
-			$bancoInterconexionRequerimientoRespuesta->date_local_transaction = $bancoInterconexionEnvio->date_local_transaction;
-			$bancoInterconexionRequerimientoRespuesta->pos_entry_mode = $bancoInterconexionEnvio->pos_entry_mode;
-			$bancoInterconexionRequerimientoRespuesta->pos_condition_code = $bancoInterconexionEnvio->pos_condition_code;
-			$bancoInterconexionRequerimientoRespuesta->acquirer_institution_id_code = $bancoInterconexionEnvio->acquirer_institution_id_code;
-			$bancoInterconexionRequerimientoRespuesta->forward_institution_id_code = $bancoInterconexionEnvio->forward_institution_id_code;
-			$bancoInterconexionRequerimientoRespuesta->retrieval_reference_number = $bancoInterconexionEnvio->retrieval_reference_number;
-			
-			$bancoInterconexionRequerimientoRespuesta->card_acceptor_terminal_id = $bancoInterconexionEnvio->card_acceptor_terminal_id;
-			//$bancoInterconexionRequerimientoRespuesta->card_acceptor_id_code = $bancoInterconexionEnvio->card_acceptor_id_code;
-			//$bancoInterconexionRequerimientoRespuesta->card_acceptor_name_location = $bancoInterconexionEnvio->card_acceptor_name_location;
-			$bancoInterconexionRequerimientoRespuesta->transaction_currency_code = $bancoInterconexionEnvio->transaction_currency_code;
-			$bancoInterconexionRequerimientoRespuesta->longitud = $bancoInterconexionEnvio->longitud;
-			$bancoInterconexionRequerimientoRespuesta->codigoempresa = $bancoInterconexionEnvio->codigoempresa;
-			/*
-			if($tipo_conexion==1){
-				$bancoInterconexion->codigoproducto = $request->input('CodigoProducto');
-				$bancoInterconexion->numpagina = $request->input('NumPagina');
-				$bancoInterconexion->nummaxdocs = $request->input('NumMaxDocs');
-				$bancoInterconexion->filler = $request->input('Filler');
-			}
-			*/
-			$bancoInterconexionRequerimientoRespuesta->tipoconsulta = $bancoInterconexionEnvio->tipoconsulta;
-			$bancoInterconexionRequerimientoRespuesta->numconsulta = $bancoInterconexionEnvio->numconsulta;
-			$bancoInterconexionRequerimientoRespuesta->numdocs = $bancoInterconexionEnvio->numdocs;
-			
-			$bancoInterconexionRequerimientoRespuesta->estado = 1;
-			$bancoInterconexionRequerimientoRespuesta->id_usuario_inserta = $id_user;
-			$bancoInterconexionRequerimientoRespuesta->save();
-			$id_banco_interconexion_requerimiento_respuesta = $bancoInterconexionRequerimientoRespuesta->id;
-			/*
-			if($tipo_conexion==2){
-				$bancoInterconexion->formapago = $request->input('FormaPago');
-				$bancoInterconexion->numreferenciaoriginal = $request->input('NumReferenciaOriginal');
-				$bancoInterconexion->numdocs = $request->input('NumDocs');
-			}
-			*/
-			
-			/************4. REQUERIMIENTO DETALLE RESPUESTA*************/
-			
-			foreach ($respuesta as $row) {
-				$bancoInterconexionRequerimientoDetalleRespuesta = new BancoInterconexionDetalle();
-				$bancoInterconexionRequerimientoDetalleRespuesta->id_banco_interconexion = $id_banco_interconexion_requerimiento_respuesta;
-				//$bancoInterconexionDetalle->codigoerrororiginal = $request->input('TRACE');
-				//$bancoInterconexionDetalle->descrespuesta = $request->input('TRACE');
-				//$bancoInterconexionDetalle->nombrecliente = $request->input('TRACE');
-				//$bancoInterconexionDetalle->nombreempresa = $request->input('TRACE');
-				//$bancoInterconexionDetalle->numoperacionerp = $request->input('TRACE');
-				$bancoInterconexionRequerimientoDetalleRespuesta->codigoproducto = "123";//$row["CodigoProducto"];
-				//$bancoInterconexionDetalle->descrproducto = $request->input('TRACE');
-				$bancoInterconexionRequerimientoDetalleRespuesta->numdocumento = "123";//$row["NumDocumento"];
-				//$bancoInterconexionDetalle->descdocumento = $request->input('TRACE');
-				$bancoInterconexionRequerimientoDetalleRespuesta->fechavencimiento = "123";//$row["FechaVencimiento"];
-				$bancoInterconexionRequerimientoDetalleRespuesta->fechaemision = "123";//$row["FechaEmision"];
-				$bancoInterconexionRequerimientoDetalleRespuesta->deuda = "123";//$row["Deuda"];
-				$bancoInterconexionRequerimientoDetalleRespuesta->mora = "123";//$row["Mora"];
-				$bancoInterconexionRequerimientoDetalleRespuesta->gastosadm = "123";//$row["GastosAdm"];
-				//$bancoInterconexionDetalle->pagominimo = $request->input('TRACE');
-				$bancoInterconexionRequerimientoDetalleRespuesta->importetotal = "123";//$row["ImporteTotal"];
-				$bancoInterconexionRequerimientoDetalleRespuesta->periodo = "123";//$row["Periodo"];
-				//$bancoInterconexionDetalle->anio = $row["Año"];
-				$bancoInterconexionRequerimientoDetalleRespuesta->cuota = "123";//$row["Cuota"];
-				$bancoInterconexionRequerimientoDetalleRespuesta->monedadoc = "123";//$row["MonedaDoc"];
-				$bancoInterconexionRequerimientoDetalleRespuesta->filler = "123";//$row["Filler"];
-				//$bancoInterconexionDetalle->estado = $request->input('TRACE');
-				$bancoInterconexionRequerimientoDetalleRespuesta->id_usuario_inserta = $id_user;
-				$bancoInterconexionRequerimientoDetalleRespuesta->save();
-				//echo $bancoInterconexionDetalleRespuesta->id;
-				//print_r($bancoInterconexionDetalleRespuesta);
-				//echo "ok";
-				
-			}
-			//exit();
-			
-			/************5. SALIDA WS CABECERA*******************/
-			
-			$bancoInterconexionRequerimientoSalida = BancoInterconexione::find($id_banco_interconexion_requerimiento_respuesta);
-			
-			$data["MESSAGE TYPE IDENTIFICATION"] = $bancoInterconexionRequerimientoSalida->message_type_identification;
-			$data["PRIMARY BIT MAP"] = $bancoInterconexionRequerimientoSalida->primary_bit_map;
-			$data["SECONDARY BIT MAP"] = $bancoInterconexionRequerimientoSalida->secondary_bit_map;
-			$data["PRIMARY ACCOUNT NUMBER"] = $bancoInterconexionRequerimientoSalida->primary_account_number;
-			$data["PROCESSING CODE"] = $bancoInterconexionRequerimientoSalida->processing_code;
-			$data["AMOUNT TRANSACTION"] = $bancoInterconexionRequerimientoSalida->amount_transaction;
-			$data["TRACE"] = $bancoInterconexionRequerimientoSalida->trace;
-			$data["TIME LOCAL TRANSACTION"] = $bancoInterconexionRequerimientoSalida->time_local_transaction;
-			$data["DATE LOCAL TRANSACTION"] = $bancoInterconexionRequerimientoSalida->date_local_transaction;
-			$data["POS ENTRY MODE"] = $bancoInterconexionRequerimientoSalida->pos_entry_mode;
-			$data["POS CONDITION CODE"] = $bancoInterconexionRequerimientoSalida->pos_condition_code;
-			$data["ACQUIRER INSTITUTION ID CODE"] = $bancoInterconexionRequerimientoSalida->acquirer_institution_id_code;
-			$data["FORWARD INSTITUTION ID CODE"] = $bancoInterconexionRequerimientoSalida->forward_institution_id_code;
-			$data["RETRIEVAL REFERENCE NUMBER"] = $bancoInterconexionRequerimientoSalida->retrieval_reference_number;
-			$data["APPROVAL CODE"] = "000301";
-			$data["RESPONSE CODE"] = "00";
-			$data["CARD ACCEPTOR TERMINAL ID"] = $bancoInterconexionRequerimientoSalida->card_acceptor_terminal_id;
-			$data["TRANSACTION CURRENCY CODE"] = $bancoInterconexionRequerimientoSalida->transaction_currency_code;
-			$data["LONGITUD"] = "0634";
-			$data["CodigoEmpresa"] = $bancoInterconexionRequerimientoSalida->codigoempresa;
-			$data["TipoConsulta"] = $bancoInterconexionRequerimientoSalida->tipoconsulta;
-			$data["NumConsulta"] = $bancoInterconexionRequerimientoSalida->numconsulta;
-			$data["CodigoErrorOriginal"] = "000";
-			$data["DescRespuesta"] = "TRANSACCION PROCESADA OK";
-			$data["NombreCliente"] = "GINOCCHIO MENDOZA PATRICIA MON";
-			$data["NombreEmpresa"] = "LA POSITIVA";
-			$data["NumDocs"] = "03";
-			
-			/************6. DEVOLVER DATOS WS DETALLE*******************/
-			
-			$bancoInterconexionRequerimientoDetalleSalida = BancoInterconexionDetalle::where("id_banco_interconexion",$id_banco_interconexion_requerimiento_respuesta)->get();
-			
-			$bloque_de_documentos_a_pagar = array();
-			foreach($bancoInterconexionRequerimientoDetalleSalida as $row){
-				$bloque_de_documentos_a_pagar["CodigoProducto"] = $row->codigoproducto;
-				$bloque_de_documentos_a_pagar["NumDocumento"] = $row->numdocumento;
-				$bloque_de_documentos_a_pagar["FechaVencimiento"] = $row->fechavencimiento;
-				$bloque_de_documentos_a_pagar["FechaEmision"] = $row->fechaemision;
-				$bloque_de_documentos_a_pagar["Deuda"] = $row->deuda;
-				$bloque_de_documentos_a_pagar["Mora"] = $row->mora;
-				$bloque_de_documentos_a_pagar["GastosAdm"] = $row->gastosadm;
-				$bloque_de_documentos_a_pagar["ImporteTotal"] = $row->importetotal;
-				$bloque_de_documentos_a_pagar["Periodo"] = $row->periodo;
-				$bloque_de_documentos_a_pagar["Anio"] = $row->anio;
-				$bloque_de_documentos_a_pagar["Cuota"] = $row->cuota;
-				$bloque_de_documentos_a_pagar["MonedaDoc"] = $row->monedadoc;
-				$bloque_de_documentos_a_pagar["Filler"] = $row->filler;
-			}
-			
-			$data["Bloque de documentos a pagar"] = $bloque_de_documentos_a_pagar;
+			$bancoInterconexion->codigoproducto = $request->input('CodigoProducto');
+			$bancoInterconexion->numpagina = $request->input('NumPagina');
+			$bancoInterconexion->nummaxdocs = $request->input('NumMaxDocs');
+			$bancoInterconexion->filler = $request->input('Filler');
+		}
+		*/
+		$bancoInterconexionRequerimientoRespuesta->tipoconsulta = $bancoInterconexionEnvio->tipoconsulta;
+		$bancoInterconexionRequerimientoRespuesta->numconsulta = $bancoInterconexionEnvio->numconsulta;
+		$bancoInterconexionRequerimientoRespuesta->numdocs = $bancoInterconexionEnvio->numdocs;
+		$bancoInterconexionRequerimientoRespuesta->id_usuario_inserta = $id_user;
+		$bancoInterconexionRequerimientoRespuesta->save();
+		$id_banco_interconexion_requerimiento_respuesta = $bancoInterconexionRequerimientoRespuesta->id;
+		/*
+		if($tipo_conexion==2){
+			$bancoInterconexion->formapago = $request->input('FormaPago');
+			$bancoInterconexion->numreferenciaoriginal = $request->input('NumReferenciaOriginal');
+			$bancoInterconexion->numdocs = $request->input('NumDocs');
+		}
+		*/
+		
+		/************4. REQUERIMIENTO DETALLE RESPUESTA*************/
+		
+		foreach ($respuesta as $row) {
+			$bancoInterconexionRequerimientoDetalleRespuesta = new BancoInterconexionDetalle();
+			$bancoInterconexionRequerimientoDetalleRespuesta->id_banco_interconexion = $id_banco_interconexion_requerimiento_respuesta;
+			//$bancoInterconexionDetalle->codigoerrororiginal = $request->input('TRACE');
+			//$bancoInterconexionDetalle->descrespuesta = $request->input('TRACE');
+			//$bancoInterconexionDetalle->nombrecliente = $request->input('TRACE');
+			//$bancoInterconexionDetalle->nombreempresa = $request->input('TRACE');
+			//$bancoInterconexionDetalle->numoperacionerp = $request->input('TRACE');
+			$bancoInterconexionRequerimientoDetalleRespuesta->codigoproducto = "123";//$row["CodigoProducto"];
+			//$bancoInterconexionDetalle->descrproducto = $request->input('TRACE');
+			$bancoInterconexionRequerimientoDetalleRespuesta->numdocumento = "123";//$row["NumDocumento"];
+			//$bancoInterconexionDetalle->descdocumento = $request->input('TRACE');
+			$bancoInterconexionRequerimientoDetalleRespuesta->fechavencimiento = "123";//$row["FechaVencimiento"];
+			$bancoInterconexionRequerimientoDetalleRespuesta->fechaemision = "123";//$row["FechaEmision"];
+			$bancoInterconexionRequerimientoDetalleRespuesta->deuda = "123";//$row["Deuda"];
+			$bancoInterconexionRequerimientoDetalleRespuesta->mora = "123";//$row["Mora"];
+			$bancoInterconexionRequerimientoDetalleRespuesta->gastosadm = "123";//$row["GastosAdm"];
+			//$bancoInterconexionDetalle->pagominimo = $request->input('TRACE');
+			$bancoInterconexionRequerimientoDetalleRespuesta->importetotal = "123";//$row["ImporteTotal"];
+			$bancoInterconexionRequerimientoDetalleRespuesta->periodo = "123";//$row["Periodo"];
+			//$bancoInterconexionDetalle->anio = $row["Año"];
+			$bancoInterconexionRequerimientoDetalleRespuesta->cuota = "123";//$row["Cuota"];
+			$bancoInterconexionRequerimientoDetalleRespuesta->monedadoc = "123";//$row["MonedaDoc"];
+			$bancoInterconexionRequerimientoDetalleRespuesta->filler = "123";//$row["Filler"];
+			$bancoInterconexionRequerimientoDetalleRespuesta->id_usuario_inserta = $id_user;
+			$bancoInterconexionRequerimientoDetalleRespuesta->save();
 			
 		}
+		
+		/************5. SALIDA WS CABECERA*******************/
+		
+		$bancoInterconexionRequerimientoSalida = BancoInterconexione::find($id_banco_interconexion_requerimiento_respuesta);
+		
+		$data["MESSAGE TYPE IDENTIFICATION"] = $bancoInterconexionRequerimientoSalida->message_type_identification;
+		$data["PRIMARY BIT MAP"] = $bancoInterconexionRequerimientoSalida->primary_bit_map;
+		$data["SECONDARY BIT MAP"] = $bancoInterconexionRequerimientoSalida->secondary_bit_map;
+		$data["PRIMARY ACCOUNT NUMBER"] = $bancoInterconexionRequerimientoSalida->primary_account_number;
+		$data["PROCESSING CODE"] = $bancoInterconexionRequerimientoSalida->processing_code;
+		$data["AMOUNT TRANSACTION"] = $bancoInterconexionRequerimientoSalida->amount_transaction;
+		$data["TRACE"] = $bancoInterconexionRequerimientoSalida->trace;
+		$data["TIME LOCAL TRANSACTION"] = $bancoInterconexionRequerimientoSalida->time_local_transaction;
+		$data["DATE LOCAL TRANSACTION"] = $bancoInterconexionRequerimientoSalida->date_local_transaction;
+		$data["POS ENTRY MODE"] = $bancoInterconexionRequerimientoSalida->pos_entry_mode;
+		$data["POS CONDITION CODE"] = $bancoInterconexionRequerimientoSalida->pos_condition_code;
+		$data["ACQUIRER INSTITUTION ID CODE"] = $bancoInterconexionRequerimientoSalida->acquirer_institution_id_code;
+		$data["FORWARD INSTITUTION ID CODE"] = $bancoInterconexionRequerimientoSalida->forward_institution_id_code;
+		$data["RETRIEVAL REFERENCE NUMBER"] = $bancoInterconexionRequerimientoSalida->retrieval_reference_number;
+		$data["APPROVAL CODE"] = "000301";
+		$data["RESPONSE CODE"] = "00";
+		$data["CARD ACCEPTOR TERMINAL ID"] = $bancoInterconexionRequerimientoSalida->card_acceptor_terminal_id;
+		$data["TRANSACTION CURRENCY CODE"] = $bancoInterconexionRequerimientoSalida->transaction_currency_code;
+		$data["LONGITUD"] = "0634";
+		$data["CodigoEmpresa"] = $bancoInterconexionRequerimientoSalida->codigoempresa;
+		$data["TipoConsulta"] = $bancoInterconexionRequerimientoSalida->tipoconsulta;
+		$data["NumConsulta"] = $bancoInterconexionRequerimientoSalida->numconsulta;
+		$data["CodigoErrorOriginal"] = "000";
+		$data["DescRespuesta"] = "TRANSACCION PROCESADA OK";
+		$data["NombreCliente"] = "GINOCCHIO MENDOZA PATRICIA MON";
+		$data["NombreEmpresa"] = "LA POSITIVA";
+		$data["NumDocs"] = "03";
+		
+		/************6. DEVOLVER DATOS WS DETALLE*******************/
+		
+		$bancoInterconexionRequerimientoDetalleSalida = BancoInterconexionDetalle::where("id_banco_interconexion",$id_banco_interconexion_requerimiento_respuesta)->get();
+		
+		$bloque_de_documentos_a_pagar = array();
+		foreach($bancoInterconexionRequerimientoDetalleSalida as $row){
+			$bloque_de_documentos_a_pagar["CodigoProducto"] = $row->codigoproducto;
+			$bloque_de_documentos_a_pagar["NumDocumento"] = $row->numdocumento;
+			$bloque_de_documentos_a_pagar["FechaVencimiento"] = $row->fechavencimiento;
+			$bloque_de_documentos_a_pagar["FechaEmision"] = $row->fechaemision;
+			$bloque_de_documentos_a_pagar["Deuda"] = $row->deuda;
+			$bloque_de_documentos_a_pagar["Mora"] = $row->mora;
+			$bloque_de_documentos_a_pagar["GastosAdm"] = $row->gastosadm;
+			$bloque_de_documentos_a_pagar["ImporteTotal"] = $row->importetotal;
+			$bloque_de_documentos_a_pagar["Periodo"] = $row->periodo;
+			$bloque_de_documentos_a_pagar["Anio"] = $row->anio;
+			$bloque_de_documentos_a_pagar["Cuota"] = $row->cuota;
+			$bloque_de_documentos_a_pagar["MonedaDoc"] = $row->monedadoc;
+			$bloque_de_documentos_a_pagar["Filler"] = $row->filler;
+		}
+		
+		$data["Bloque de documentos a pagar"] = $bloque_de_documentos_a_pagar;
 		
 		/************7. DEVOLVER DATOS WS JSON*******************/
 		
