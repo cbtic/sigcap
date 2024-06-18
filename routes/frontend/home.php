@@ -739,4 +739,8 @@ Route::post('derecho_revision/send_editar_reintegro', [DerechoRevisionController
 
 //Route::get('operacion/consulta', 'Frontend\OperacionController@consulta');
 Route::post('operacion/consulta', [OperacionController::class, 'consulta'])->name('operacion.consulta');
+Route::post('operacion/pago', [OperacionController::class, 'pago'])->name('operacion.pago');
+Route::post('operacion/extorno_pago', [OperacionController::class, 'extorno_pago'])->name('operacion.extorno_pago');
+Route::post('operacion/anulacion', [OperacionController::class, 'anulacion'])->name('operacion.anulacion');
+Route::post('operacion/extorno_anulacion', [OperacionController::class, 'extorno_anulacion'])->name('operacion.extorno_anulacion');
 
