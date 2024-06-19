@@ -780,7 +780,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-2">
 								<div id="valor_reintegro_" name="valor_reintegro_">
 									<label class="control-label form-control-sm">Valor Reintegro S/.</label>
-									<input id="valor_reintegro" name="valor_reintegro" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" onChange="calcularReintegro()">
+									<input id="valor_reintegro" name="valor_reintegro" on class="form-control form-control-sm"  value="<?php echo $solicitud->valor_reintegro?>" type="text" onChange="calcularReintegro()">
 								</div>
 							</div>
 						</div>

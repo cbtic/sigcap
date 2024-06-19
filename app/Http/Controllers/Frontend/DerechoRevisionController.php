@@ -2032,6 +2032,9 @@ class DerechoRevisionController extends Controller
 
 		$agremiado_model = new Agremiado;
 		$persona_model = new Persona;
+		
+		$solicitud = Solicitude::find($id);
+		
 		//$propietario_model = new Propietario;
 		$derechoRevision_ = DerechoRevision::find($id);
 		$proyecto_ = Proyecto::where("id",$derechoRevision_->id_proyecto)->where("estado","1")->first();
@@ -2089,10 +2092,10 @@ class DerechoRevisionController extends Controller
 		$parametro = $parametro_model->getParametroAnio($anio_actual);
 		$liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
 		//dd($liquidacion);
-        return view('frontend.derecho_revision.all_derecho_revision_edit_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones',/*'sub_tipo_uso',*/'tipo_obra','datos_presupuesto','tipo_liquidacion','instancia','parametro','liquidacion','tipo','tipo_documento','empresa'));
+        return view('frontend.derecho_revision.all_derecho_revision_edit_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones',/*'sub_tipo_uso',*/'tipo_obra','datos_presupuesto','tipo_liquidacion','instancia','parametro','liquidacion','tipo','tipo_documento','empresa','solicitud'));
     }
 
-	public function send_editar_reintegro(Request $request){ 
+	public function send_editar_reintegro(Request $request){  
 		
 		$id_uso_edificaciones = $request->id_uso_edificaciones;
 		$id_presupuesto = $request->id_presupuesto;
@@ -2111,8 +2114,11 @@ class DerechoRevisionController extends Controller
 		$ubigeo = $request->distrito;
 		$id_ubi = Ubigeo::where("id_ubigeo",$ubigeo)->where("estado","1")->first();
 		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
-		$solicitud_matriz = Solicitude::find($request->id_solicitud);
-
+		$solicitud_matriz = Solicitude::find($request->id_solicitud); 
+		
+		$solicitud_matriz->valor_reintegro = $request->valor_reintegro;
+		$solicitud_matriz->save();
+		
 		//var_dump($request->id_solicitud);exit();
 		
 		/*
