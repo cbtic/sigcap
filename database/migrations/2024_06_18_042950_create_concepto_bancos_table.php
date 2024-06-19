@@ -24,6 +24,8 @@ class CreateConceptoBancosTable extends Migration
 			$table->bigInteger('id_usuario_actualiza')->nullable()->unsigned()->index(); 
 
             $table->timestamps();
+            $table->foreign('id_concepto')->references('id')->on('conceptos');
+
         });
     }
 
