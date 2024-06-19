@@ -743,7 +743,7 @@ class DerechoRevisionController extends Controller
 		$persona = new Persona;
 		$empresa = new Empresa;
 
-		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(127);
 		
         return view('frontend.derecho_revision.modal_nuevo_propietario',compact('id','tipo_documento','empresa','proyectista','agremiado','persona'));
 		

@@ -147,6 +147,7 @@ $.mask.definitions['p'] = "[Mm]";
 $(document).ready(function() {
 	$(".upload").on('click', function() {
 		var id = $(this).attr("id");
+        var formData = new FormData();
 		//alert(id);return false;
         var formData = new FormData();
         var files = $('#image'+id)[0].files[0];
@@ -162,9 +163,21 @@ $(document).ready(function() {
             processData: false,
             success: function(response) {
 				
-				$("#img_foto"+id).val(response);
-				$("#img_ruta"+id).attr("src", "/img/frontend/tmp_derecho_revision/"+response);
-				
+                if (response != 0) {
+					var extension = "";
+					extension = response.substring(response.lastIndexOf('.') + 1);
+
+                    //alert(id);
+					
+					if(extension=="doc" || extension=="docx" || extension=="pdf" || extension=="xls" || extension=="xlsx"){
+						$("#img_ruta"+id).attr("src", "/img/check.png");
+					}else{
+                    	$("#img_ruta"+id).attr("src", "/img/frontend/tmp_derecho_revision/"+response);
+					}
+					$("#img_foto"+id).val(response);
+                } else {
+                    alert('Formato de imagen incorrecto.');
+                }
             }
         });
 		return false;
@@ -492,6 +505,22 @@ function fn_save_infoProyeto(){
                                 onclick="document.getElementById('check_opc8').checked = this.checked || document.getElementById('check_opc9').checked;">
                                 <label class="form-check-label" for="check_opc10">
                                     Con Construcci&oacute;n simultanea
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="4" id="check_opc11" name="grupo_tramite2" <?php if (in_array(4, $selectedIds)) echo "checked='checked'"; ?>
+                                onclick="document.getElementById('check_opc10').checked = this.checked || document.getElementById('check_opc11').checked;">
+                                <label class="form-check-label" for="check_opc11">
+                                    Con Venta de Viviendas edificadas
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="4" id="check_opc11" name="grupo_tramite2" <?php if (in_array(4, $selectedIds)) echo "checked='checked'"; ?>
+                                onclick="document.getElementById('check_opc10').checked = this.checked || document.getElementById('check_opc11').checked;">
+                                <label class="form-check-label" for="check_opc11">
+                                    Con Venta de Viviendas edificadas
                                 </label>
                             </div>
 
