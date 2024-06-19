@@ -141,7 +141,7 @@ $(document).ready(function () {
 	obtenerPropietario_();
 	calculoVistaPrevia();
 	
-	calcularReintegro()
+	//calcularReintegro()
 	
 });
 
