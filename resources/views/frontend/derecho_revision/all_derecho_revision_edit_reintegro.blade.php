@@ -569,6 +569,8 @@ if($('#instancia').val()==250){
 										<div class="row uso-row">
 											<div class="col-lg-5" style=";padding-right:15px">
 											<label class="control-label form-control-sm">Tipo de Uso</label>
+											
+											<input type="hidden" name="id_uso_edificaciones[]" id="id_uso_edificaciones" value="<?php echo $row->id?>" />
 											<select name="tipo_uso[]" id="tipo_uso" class="form-control form-control-sm" onChange="obtenerSubTipoUso(this)">
 												<option value="">--Seleccionar--</option>
 												<?php
@@ -585,7 +587,7 @@ if($('#instancia').val()==250){
 												<option value="">--Seleccionar--</option>
 												<?php
 												foreach ($sub_tipo_uso as $row_) {?>
-												<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+												<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_sub_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
 												<?php
 												}
 												?>
@@ -632,6 +634,8 @@ if($('#instancia').val()==250){
 										<div class="row presupuesto-row">
 											<div class="col-lg-5" style=";padding-right:15px">
 												<label class="control-label form-control-sm">Tipo de Obra</label>
+												
+												<input type="hidden" name="id_presupuesto[]" id="id_presupuesto" value="<?php echo $row->id?>" />
 												<select name="tipo_obra[]" id="tipo_obra" class="form-control form-control-sm" onChange="">
 													<option value="">--Selecionar--</option>
 													<?php

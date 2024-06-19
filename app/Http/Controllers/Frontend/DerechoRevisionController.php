@@ -2090,8 +2090,10 @@ class DerechoRevisionController extends Controller
         return view('frontend.derecho_revision.all_derecho_revision_edit_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante','datos_agremiado','datos_persona','info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones',/*'sub_tipo_uso',*/'tipo_obra','datos_presupuesto','tipo_liquidacion','instancia','parametro','liquidacion','tipo','tipo_documento','empresa'));
     }
 
-	public function send_editar_reintegro(Request $request){
+	public function send_editar_reintegro(Request $request){ 
 		
+		$id_uso_edificaciones = $request->id_uso_edificaciones;
+		$id_presupuesto = $request->id_presupuesto;
 		$tipo_uso = $request->tipo_uso;
 		$sub_tipo_uso = $request->sub_tipo_uso;
 		$area_techada = $request->area_techada;
@@ -2110,7 +2112,8 @@ class DerechoRevisionController extends Controller
 		$solicitud_matriz = Solicitude::find($request->id_solicitud);
 
 		//var_dump($request->id_solicitud);exit();
-
+		
+		/*
 		if($id_solicitud == 0){
 			$derecho_revision = new DerechoRevision;
 			$proyecto = new Proyecto;
@@ -2122,14 +2125,19 @@ class DerechoRevisionController extends Controller
 			$proyecto = Proyecto::find($derecho_revision->id_proyecto);
 			$proyectista = Proyectista::find($derecho_revision->id_proyectista);
 		}
+		*/
+		
+		$derecho_revision = DerechoRevision::find($request->id_solicitud);
+		//$proyecto = Proyecto::find($derecho_revision->id_proyecto);
+		//$proyectista = Proyectista::find($derecho_revision->id_proyectista);
 		
 		$derecho_revision->id_regional = 5;
-		$derecho_revision->fecha_registro = Carbon::now()->format('Y-m-d');
-		$derecho_revision->numero_revision = $request->n_revision;
-		$derecho_revision->direccion = $request->direccion_proyecto;
-		$derecho_revision->id_municipalidad = $request->municipalidad;
-		$derecho_revision->id_ubigeo = $ubigeo;
-		$derecho_revision->id_resultado = 2;
+		//$derecho_revision->fecha_registro = Carbon::now()->format('Y-m-d');
+		//$derecho_revision->numero_revision = $request->n_revision;
+		//$derecho_revision->direccion = $request->direccion_proyecto;
+		//$derecho_revision->id_municipalidad = $request->municipalidad;
+		//$derecho_revision->id_ubigeo = $ubigeo;
+		//$derecho_revision->id_resultado = 2;
 		$derecho_revision->id_instancia = $request->instancia;
 		$derecho_revision->id_tipo_solicitud = $solicitud_matriz->id_tipo_solicitud;
 		$derecho_revision->id_tipo_tramite = $request->tipo_proyecto;
@@ -2142,7 +2150,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->id_tipo_liquidacion1 = $request->tipo_liquidacion1;
 		
 		$derecho_revision->id_usuario_inserta = $id_user;
-		
+		/*
 		$proyecto->id_ubigeo = $ubigeo;
 		$proyecto->nombre = $request->nombre_proyecto;
 		$proyecto->direccion = $request->direccion_proyecto;
@@ -2151,27 +2159,34 @@ class DerechoRevisionController extends Controller
 		$proyecto->codigo = $request->codigo_proyecto;
 		$proyecto->id_usuario_inserta = $id_user;
 		$proyecto->save();
-
+		*/
+		/*
 		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 
 		$proyectista->id_tipo_profesional = $request->tipo_proyectista;
 		$proyectista->id_agremiado = $agremiado->id;
 		$proyectista->celular = $agremiado->celular1;
 		$proyectista->email = $agremiado->email1;
-	
+		
 		$proyectista->id_usuario_inserta = $id_user;
 		$proyectista->save();
-		$derecho_revision->id_proyecto = $proyecto->id;
-		$derecho_revision->id_proyectista = $proyectista->id;
+		*/
+		
+		//$derecho_revision->id_proyecto = $proyecto->id;
+		//$derecho_revision->id_proyectista = $proyectista->id;
 		$derecho_revision->save();
-		$proyectista->id_solicitud = $derecho_revision->id;
-		$proyectista->save();
+		//$proyectista->id_solicitud = $derecho_revision->id;
+		//$proyectista->save();
+		
 		
 		foreach($tipo_uso as $key=>$row){
-			//echo "ok";
-			//$uso_edificacion = new UsoEdificacione;
-			$uso_edificacion_ = UsoEdificacione::where("id_solicitud",$request->id_solicitud)->where("estado","1")->first();
-			$uso_edificacion = UsoEdificacione::find($uso_edificacion_->id);
+			
+			if(isset($id_uso_edificaciones[$key]) && $id_uso_edificaciones[$key]>0){
+				$uso_edificacion = UsoEdificacione::find($id_uso_edificaciones[$key]);
+			}else{
+				$uso_edificacion = new UsoEdificacione;
+			}
+			
 			$uso_edificacion->id_tipo_uso = $tipo_uso[$key];
 			$uso_edificacion->id_sub_tipo_uso = $sub_tipo_uso[$key];
 			$uso_edificacion->area_techada = convertir_entero($area_techada[$key]);
@@ -2181,10 +2196,15 @@ class DerechoRevisionController extends Controller
 			
 		}
 		
+		
 		foreach($tipo_obra as $key=>$row){
 			
-			//$presupuesto1 = new Presupuesto;
-			$presupuesto1 = Presupuesto::where("id_solicitud",$request->id_solicitud)->where("estado","1")->first();
+			if(isset($id_presupuesto[$key]) && $id_presupuesto[$key]>0){
+				$presupuesto1 = Presupuesto::find($id_presupuesto[$key]);
+			}else{
+				$presupuesto1 = new Presupuesto;
+			}
+			
 			$presupuesto1->id_tipo_obra = $tipo_obra[$key];
 			$presupuesto1->area_techada = convertir_entero($area_techada_presupuesto[$key]);
 			$presupuesto1->valor_unitario = convertir_entero($valor_unitario[$key]);
@@ -2195,6 +2215,7 @@ class DerechoRevisionController extends Controller
 			
 		}
 		
+		/*
 		$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
 		$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();
 		
@@ -2202,18 +2223,14 @@ class DerechoRevisionController extends Controller
 			$propietario = new Propietario;
 		}else{
 			$propietario = Propietario::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
-			//$propietario = Propietario::find($request->id);
 		}
 
 		if($persona){
-			//var_dump($persona);exit();
 			$propietario->id_tipo_propietario = 78;
 			$propietario->id_persona = $persona->id;
 			$propietario->celular = $request->celular_dni;
 			$propietario->email = $request->email_dni;
 			$propietario->id_solicitud = $derecho_revision->id;
-			//$proyectista->firma = $request->nombre;
-			//$profesion->estado = 1;
 			$propietario->id_usuario_inserta = $id_user;
 			$propietario->save();
 
@@ -2223,8 +2240,6 @@ class DerechoRevisionController extends Controller
 			$propietario->celular = $request->telefono_ruc;
 			$propietario->email = $request->email_ruc;
 			$propietario->id_solicitud = $derecho_revision->id;
-			//$proyectista->firma = $request->nombre;
-			//$profesion->estado = 1;
 			$propietario->id_usuario_inserta = $id_user;
 			$propietario->save();
 		}
@@ -2240,7 +2255,9 @@ class DerechoRevisionController extends Controller
 			$persona = Persona::where("id",$propietario->id_persona)->where("estado","1")->first();
 			$empresa_cantidad = Persona::where("numero_documento",$persona->numero_documento)->where("estado","1")->count();
 		}
+		*/
 		
+		/*
 		if($empresa_cantidad==1){
 			if($request->instancia==250)$valor_obra = convertir_entero($request->valor_reintegro);
 
@@ -2249,11 +2266,11 @@ class DerechoRevisionController extends Controller
 			
 			$uit = $parametro->valor_uit;
 		
-			/*****Edificaciones*********/
+			//Edificaciones
 			if($solicitud_matriz->id_tipo_solicitud == 123){
 				
 				if($request->tipo_liquidacion1==136){
-					//$valor_obra = $request->total2;
+
 					$sub_total 	= $request->sub_total2;
 					$igv		= $request->igv2;
 					$total		= $request->total2;
@@ -2274,15 +2291,9 @@ class DerechoRevisionController extends Controller
 					}
 				}
 				$concepto = Concepto::where("id",26474)->where("estado","1")->first();
-				/*$solicitud = new Solicitude;
-				$solicitud->id_instancia=$request->instancia;
-				$solicitud->id_tipo_liquidacion1=$request->tipo_liquidacion1;
-				$solicitud->id_usuario_inserta = $id_user;
-				$solicitud->save();*/
-
 			}
 				
-			/*****Habilitaciones urbanas*********/
+			//Habilitaciones urbanas
 			
 			if($solicitud_matriz->id_tipo_solicitud == 124){
 				
@@ -2325,7 +2336,6 @@ class DerechoRevisionController extends Controller
 			$codigo = $codigo1.$codigo2;
 			
 			$id_user = Auth::user()->id;
-			//$liquidacion = new Liquidacione;
 			$liquidacion = Liquidacione::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
 			$liquidacion->id_solicitud = $derecho_revision->id;
 			$liquidacion->fecha = Carbon::now()->format('Y-m-d');
@@ -2338,6 +2348,8 @@ class DerechoRevisionController extends Controller
 			$liquidacion->save();
 			
 		}
+		*/
+		
 	}
 
 }
