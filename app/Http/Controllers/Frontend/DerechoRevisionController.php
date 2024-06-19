@@ -2116,7 +2116,7 @@ class DerechoRevisionController extends Controller
 		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		$solicitud_matriz = Solicitude::find($request->id_solicitud); 
 		
-		$solicitud_matriz->valor_reintegro = $request->valor_reintegro;
+		$solicitud_matriz->valor_reintegro = convertir_entero($request->valor_reintegro);
 		$solicitud_matriz->save();
 		
 		//var_dump($request->id_solicitud);exit();
