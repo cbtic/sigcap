@@ -22,7 +22,7 @@ class TablaMaestra extends Model
         return $data;
     }
 	
-	function getMaestroByTipoAndSubTipo($tipo,$sub_codigo){
+	public static function getMaestroByTipoAndSubTipo($tipo,$sub_codigo){
 
         $cad = "select codigo,denominacion 
                 from tabla_maestras 
