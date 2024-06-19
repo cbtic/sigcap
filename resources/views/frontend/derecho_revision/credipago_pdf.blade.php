@@ -179,7 +179,9 @@ $(document).ready(function() {
                                                                                                             <?= ($nombres) ?> <br>
                                                                                                             <?php endforeach;?>
                                                                                                             </td>
-                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px; vertical-align:top"><b>N° CAP:</b></td>
+                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px; vertical-align:top"><b><?php foreach($tipo_colegiatura_cap as $tipo_colegiatura):?>
+                                                                                                            <?= ('N° '.$tipo_colegiatura) ?> <br>
+                                                                                                            <?php endforeach;?></b></td>
                         <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px"><?php foreach($proyectista_cap as $cap):?>
                                                                                                             <?= ($cap) ?> <br>
                                                                                                             <?php endforeach;?>

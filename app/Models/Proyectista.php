@@ -38,6 +38,29 @@ class Proyectista extends Model
         return $data;
     }
 
+    function getProyectistaSolicitud2($id_solicitud){      
+        $cad = "select 'CAP' tipo_colegiatura, p4.id, a2.numero_cap AS numero_cap, pe.apellido_paterno||' '||pe.apellido_materno||' '||pe.nombres agremiado, a2.celular1, a2.email1, 
+        t3.denominacion situacion,t4.denominacion actividad, p4.id_tipo_profesional
+        FROM proyectistas p4
+        INNER JOIN agremiados a2 ON p4.id_agremiado = a2.id 
+        inner join personas pe on a2.id_persona = pe.id
+        left join tabla_maestras t3 on a2.id_situacion = t3.codigo::int And t3.tipo ='14'
+        left join tabla_maestras t4 on a2.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
+        WHERE p4.id_solicitud = ".$id_solicitud."
+        UNION
+        SELECT 'CIP' tipo_colegiatura, po.id, po.colegiatura AS numero_cap, pe2.apellido_paterno||' '||pe2.apellido_materno||' '||pe2.nombres agremiado, pe2.numero_celular, pe2.correo, 
+        '' situacion,'' actividad, null id_tipo_profesional
+        FROM profesion_otros po 
+        INNER JOIN solicitudes s2 ON po.id_solicitud = s2.id
+        inner join personas pe2 on po.id_persona = pe2.id
+        WHERE po.id_solicitud = ".$id_solicitud."
+        order by tipo_colegiatura,id";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
     function getProyectista($id_solicitud){
 
         $cad = "select a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, a.celular1, a.email1

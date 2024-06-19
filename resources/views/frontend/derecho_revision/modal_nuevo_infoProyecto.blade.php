@@ -479,22 +479,25 @@ function fn_save_infoProyeto(){
                                 </label>
                             </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="2" id="check_opc9" name="grupo_tramite2" <?php if (in_array(2, $selectedIds)) echo "checked='checked'"; ?>>
+                            <div class="form-check subtipo">
+                                <input class="form-check-input" type="checkbox" value="2" id="check_opc9" name="grupo_tramite2" <?php if (in_array(2, $selectedIds)) echo "checked='checked'"; ?>
+                                onclick="document.getElementById('check_opc8').checked = this.checked || document.getElementById('check_opc10').checked;">
                                 <label class="form-check-label" for="check_opc9">
                                     Tipo Convecional
                                 </label>
                             </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="3" id="check_opc10" name="grupo_tramite2" <?php if (in_array(3, $selectedIds)) echo "checked='checked'"; ?>>
+                            <div class="form-check subtipo">
+                                <input class="form-check-input" type="checkbox" value="3" id="check_opc10" name="grupo_tramite2" <?php if (in_array(3, $selectedIds)) echo "checked='checked'"; ?>
+                                onclick="document.getElementById('check_opc8').checked = this.checked || document.getElementById('check_opc9').checked;">
                                 <label class="form-check-label" for="check_opc10">
                                     Con Construcci&oacute;n simultanea
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="4" id="check_opc11" name="grupo_tramite2" <?php if (in_array(4, $selectedIds)) echo "checked='checked'"; ?>>
+                                <input class="form-check-input" type="checkbox" value="4" id="check_opc11" name="grupo_tramite2" <?php if (in_array(4, $selectedIds)) echo "checked='checked'"; ?>
+                                onclick="document.getElementById('check_opc10').checked = this.checked || document.getElementById('check_opc11').checked;">
                                 <label class="form-check-label" for="check_opc11">
                                     Con Venta de Viviendas edificadas
                                 </label>

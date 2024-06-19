@@ -261,10 +261,51 @@ class DerechoRevision extends Model
 
         $cad = "select p.nombre, 
         CASE 
-              WHEN pr.id_tipo_propietario = '78' THEN (select p2.apellido_paterno||' '||p2.apellido_materno||' '||p2.nombres agremiado from personas p2 where p2.id = pr.id_persona)
-              WHEN pr.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = pr.id_empresa)
+            WHEN pr.id_tipo_propietario = '78' THEN (select p2.apellido_paterno||' '||p2.apellido_materno||' '||p2.nombres agremiado from personas p2 where p2.id = pr.id_persona)
+        WHEN pr.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = pr.id_empresa)
         end as propietario,
-        s.valor_obra, s.area_total, pre.area_techada, p.id_ubigeo, tm.denominacion tipo, p.direccion direccion_proyecto, a.numero_cap, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres agremiado, tm2.denominacion ubicacion, a.numero_regional, a.direccion, l.denominacion as local, r.denominacion regional, tm3.denominacion autoriza, tm4.denominacion actividad_gremial, tm5.denominacion situacion, m.denominacion municipalidad, s.valor_obra, s.numero_revision, s.etapa, s.numero_etapa  
+        s.valor_obra, s.area_total, pre.area_techada, p.id_ubigeo, tm.denominacion tipo, p.direccion direccion_proyecto, 
+        (SELECT numero_cap
+        FROM (
+            SELECT 1 as tipo, a2.numero_cap AS numero_cap
+            FROM proyectistas p4
+            INNER JOIN agremiados a2 ON p4.id_agremiado = a2.id 
+            WHERE p4.id_solicitud = s.id
+            UNION
+            SELECT 2 AS tipo, po.colegiatura AS numero_cap
+            FROM profesion_otros po 
+            INNER JOIN solicitudes s2 ON po.id_solicitud = s2.id
+            WHERE po.id_solicitud = s.id
+            ORDER BY tipo
+            LIMIT 1
+        )  subquery_proyectista_cap
+        ) numero_cap,
+        (SELECT nombre_completo
+        FROM (
+            SELECT 1 AS tipo, p.apellido_paterno || ' ' || p.apellido_materno || ' ' || p.nombres AS nombre_completo
+        FROM proyectistas p4
+        INNER JOIN agremiados a2 ON p4.id_agremiado = a2.id 
+        INNER JOIN personas p ON a2.id_persona = p.id 
+        WHERE p4.id_solicitud = s.id
+        UNION
+        SELECT 2 AS tipo, p.apellido_paterno || ' ' || p.apellido_materno || ' ' || p.nombres AS nombre_completo
+            FROM profesion_otros po 
+            INNER JOIN solicitudes s2 ON po.id_solicitud = s2.id
+            INNER JOIN personas p ON po.id_persona = p.id 
+            WHERE po.id_solicitud = s.id
+            ORDER BY tipo
+            LIMIT 1
+        )  subquery_proyectista
+        )  agremiado,
+        tm2.denominacion ubicacion, a.numero_regional, a.direccion, l.denominacion as local, r.denominacion regional, tm3.denominacion autoriza, tm4.denominacion actividad_gremial, tm5.denominacion situacion, m.denominacion municipalidad, s.valor_obra, s.numero_revision, s.etapa, s.numero_etapa,
+        (select 'CAP' tipo_colegiatura
+        FROM proyectistas p4
+        WHERE p4.id_solicitud = s.id
+        UNION
+        SELECT 'CIP' tipo_colegiatura
+        FROM profesion_otros po 
+        WHERE po.id_solicitud = s.id
+        order by tipo_colegiatura limit 1) as tipo_colegiatura
         from solicitudes s 
         left join proyectos p on s.id_proyecto = p.id
         left join propietarios pr on pr.id_solicitud = s.id

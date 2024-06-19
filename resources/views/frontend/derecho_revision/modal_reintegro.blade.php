@@ -404,7 +404,7 @@ function valida(){
     if(msg!=""){
         bootbox.alert(msg); 
         return false;
-    }else if(situacion=="HABILITADO"){
+    }else if(situacion=="HABILITADO" || situacion==""){
         fn_save_credipago();
     } 
 }
@@ -537,7 +537,7 @@ function fn_save_credipago(){
                 </div>
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
-                        <label class="control-label form-control-sm">N&uacute;mero CAP</label>
+                        <label class="control-label form-control-sm">N&uacute;mero <?php echo $liquidacion[0]->tipo_colegiatura?></label>
                         <input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->numero_cap?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">

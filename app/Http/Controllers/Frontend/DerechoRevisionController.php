@@ -1036,12 +1036,14 @@ class DerechoRevisionController extends Controller
 
 		$liquidacion = Liquidacione::find($id);
 
-		$datos_proyectista = $proyectista_model->getProyectistaSolicitud($liquidacion->id_solicitud);
+		$datos_proyectista = $proyectista_model->getProyectistaSolicitud2($liquidacion->id_solicitud);
 		$proyectista_nombres = array();
 		$proyectista_cap = array();
+		$tipo_colegiatura_cap = array();
 		foreach($datos_proyectista as $proyectistas){
 			$proyectista_nombres[] = $proyectistas->agremiado;
 			$proyectista_cap[] = $proyectistas->numero_cap;
+			$tipo_colegiatura_cap[] = $proyectistas->tipo_colegiatura;
 		}
 
 		$datos_uso_edificacion = $usoEdificacion_model->getUsoEdificacionSolicitud($liquidacion->id_solicitud);
@@ -1135,7 +1137,7 @@ class DerechoRevisionController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		*/
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia','tipo_uso','tipo_obra','codigo','tipo_tramite','proyectista_nombres','proyectista_cap','tipo_uso_datos','sub_tipo_uso_datos','datos_uso_edificacion','tipo_obra_datos','area_techada_datos'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia','tipo_uso','tipo_obra','codigo','tipo_tramite','proyectista_nombres','proyectista_cap','tipo_uso_datos','sub_tipo_uso_datos','datos_uso_edificacion','tipo_obra_datos','area_techada_datos','tipo_colegiatura_cap'));
 		
 
 
