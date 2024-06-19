@@ -2251,7 +2251,8 @@ class DerechoRevisionController extends Controller
 			$propietario->id_usuario_inserta = $id_user;
 			$propietario->save();
 		}
-
+		*/
+		/*
 		$propietario = Propietario::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
 		
 		if(isset($propietario->id_empresa) && $propietario->id_empresa>0){
@@ -2263,9 +2264,8 @@ class DerechoRevisionController extends Controller
 			$persona = Persona::where("id",$propietario->id_persona)->where("estado","1")->first();
 			$empresa_cantidad = Persona::where("numero_documento",$persona->numero_documento)->where("estado","1")->count();
 		}
-		*/
 		
-		/*
+		
 		if($empresa_cantidad==1){
 			if($request->instancia==250)$valor_obra = convertir_entero($request->valor_reintegro);
 
@@ -2345,9 +2345,9 @@ class DerechoRevisionController extends Controller
 			
 			$id_user = Auth::user()->id;
 			$liquidacion = Liquidacione::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
-			$liquidacion->id_solicitud = $derecho_revision->id;
-			$liquidacion->fecha = Carbon::now()->format('Y-m-d');
-			$liquidacion->credipago = $codigo;
+			//$liquidacion->id_solicitud = $derecho_revision->id;
+			//$liquidacion->fecha = Carbon::now()->format('Y-m-d');
+			//$liquidacion->credipago = $codigo;
 			$liquidacion->sub_total = $sub_total;
 			$liquidacion->igv = $igv;
 			$liquidacion->total = $total;

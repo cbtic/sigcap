@@ -141,6 +141,8 @@ $(document).ready(function () {
 	obtenerPropietario_();
 	calculoVistaPrevia();
 	
+	calcularReintegro()
+	
 });
 
 function guardar_credipago(){
