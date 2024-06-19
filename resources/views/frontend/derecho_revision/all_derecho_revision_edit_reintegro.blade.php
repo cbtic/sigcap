@@ -185,6 +185,8 @@ if($('#instancia').val()==250){
 			$('#sub_total').val(formatoMoneda_(sub_totalR));
 		}
 		
+		//alert(sub_totalR);
+		
 	}
 }
 }
@@ -889,5 +891,4 @@ if($('#instancia').val()==250){
 @push('after-scripts')
 
 <script src="{{ asset('js/derecho_revision/listaReintegro.js') }}"></script>
-
 @endpush
