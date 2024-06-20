@@ -131,6 +131,7 @@ $.mask.definitions['p'] = "[Mm]";
 		//$('#hora_solicitud').focus();
 		$('#hora_solicitud').mask('00:00');
 		//$("#id_empresa").select2({ width: '100%' });
+		
 	});
 </script>
 
@@ -153,7 +154,10 @@ $.mask.definitions['p'] = "[Mm]";
 
 	$(document).ready(function() {
 
-
+		$("#cuenta").select2({ width: '100%' });
+		$("#centro_costo").select2({ width: '100%' });
+		$("#partida_presupuestal").select2({ width: '100%' });
+		$("#medio_pago").select2({ width: '100%' });
 
 	});
 
