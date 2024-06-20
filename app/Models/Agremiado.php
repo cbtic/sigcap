@@ -134,7 +134,7 @@ class Agremiado extends Model
 		left join personas p on p.id = pr.id_persona 
 		left join empresas e  on e.id = pr.id_empresa 
 		where 1=1 and
-		trim(l.credipago) = '".$numero_documento."'
+		l.credipago = '".$numero_documento."'
 		limit 1
 		";
 
