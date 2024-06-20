@@ -85,7 +85,6 @@ class AsignacionCuentaController extends Controller
 	public function modal_asignacion($id){
 		$id_user = Auth::user()->id;
 		
-		
 		if($id>0){
 			$asignacion = AsignacionCuenta::find($id);
 		}else{
@@ -101,9 +100,10 @@ class AsignacionCuentaController extends Controller
 		$medio_pago = $tablaMaestra_model->getMaestroByTipo(108);
 		$origen = $tablaMaestra_model->getMaestroByTipo(128);
 		$codigo_financiero = CodigoFinanciero::where('estado','1')->orderBy('id', 'asc')->get()->all();
+		$tipo_planilla = $tablaMaestra_model->getMaestroByTipo(129);
 
 		//print_r($array);exit();
-		return view('frontend.asignacion.modal_asignacion',compact('id','asignacion','plan_contable', 'tipo_cuenta', 'centro_costo', 'partida_presupuestal', 'medio_pago','origen','codigo_financiero'));
+		return view('frontend.asignacion.modal_asignacion',compact('id','asignacion','plan_contable', 'tipo_cuenta', 'centro_costo', 'partida_presupuestal', 'medio_pago','origen','codigo_financiero','tipo_planilla'));
 	}
 
 	public function send_asignacion(Request $request){
@@ -118,6 +118,7 @@ class AsignacionCuentaController extends Controller
 		$codigo_financiero =  $request->codigo_financiero;
 		$medio_pago = $request->medio_pago ;
 		$origen = $request->origen;
+		$tipo_planilla = $request->tipo_planilla;
 		
 		if($request->id == 0){									
 			$asignar = new AsignacionCuenta;
@@ -130,6 +131,7 @@ class AsignacionCuentaController extends Controller
 			$asignar->id_codigo_financiero = $codigo_financiero;
 			$asignar->id_medio_pago = $medio_pago;
 			$asignar->id_origen = $origen;
+			$asignar->id_tipo_planilla = $tipo_planilla;
 
 			$asignar->id_usuario_inserta = $id_user;
 
@@ -145,6 +147,7 @@ class AsignacionCuentaController extends Controller
 			$asignar->id_codigo_financiero = $codigo_financiero;
 			$asignar->id_medio_pago = $medio_pago;
 			$asignar->id_origen = $origen;
+			$asignar->id_tipo_planilla = $tipo_planilla;
 
 			$asignar->save();
 		}

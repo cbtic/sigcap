@@ -188,6 +188,7 @@
                         <thead>
                         <tr style="font-size:13px">
                      
+                            <th>Tipo Planilla</th>
                             <th>Cuenta</th>
                             <th>Denominaci&oacute;n</th>                            
                             <th>Tipo</th>

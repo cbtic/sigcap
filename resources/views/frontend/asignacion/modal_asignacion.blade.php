@@ -197,6 +197,7 @@ $.mask.definitions['p'] = "[Mm]";
 		var codigo_financiero = $('#codigo_financiero').val();
 		var medio_pago = $('#medio_pago').val();
 		var origen = $('#origen').val();
+		var tipo_planilla = $('#tipo_planilla').val();
 /*
 
 		if (estado == "0") {
@@ -221,7 +222,8 @@ $.mask.definitions['p'] = "[Mm]";
 					partida_presupuestal: partida_presupuestal,
 					codigo_financiero: codigo_financiero,
 					medio_pago: medio_pago,
-					origen: origen
+					origen: origen,
+					tipo_planilla:tipo_planilla
 				},
 				success: function(result) {
 					$('#openOverlayOpc').modal('hide');
@@ -229,6 +231,18 @@ $.mask.definitions['p'] = "[Mm]";
 				}
 			});
 		}
+	}
+
+	function generarDenominacion(){
+
+		var cuenta = $('#cuenta option:selected').text();
+		var cuenta_partes = cuenta.split('-');
+
+		var cuenta_denominacion = cuenta_partes.length > 1 ? cuenta_partes.slice(1).join('-').trim():'';
+
+		//alert(cuenta_denominacion);
+
+		$('#denominacion').val(cuenta_denominacion);
 	}
 
 
@@ -263,8 +277,24 @@ $.mask.definitions['p'] = "[Mm]";
 
 							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-									<label class="control-label">Cuenta</label>
-									<select name="cuenta" id="cuenta" class="form-control form-control-sm">
+									<label class="form-control-sm">Tipo Planilla</label>
+									<select name="tipo_planilla" id="tipo_planilla" class="form-control form-control-sm">
+										<option value="0">Seleccionar</option>
+										<?php foreach ($tipo_planilla as $row) { ?>
+											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $asignacion->id_tipo_cuenta) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+										<?php } ?>
+										@error('tipo_planilla') <span ...>Dato requerido</span> @enderror
+									</select>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
+									<label class="form-control-sm">Cuenta</label>
+									<select name="cuenta" id="cuenta" class="form-control form-control-sm" onchange="generarDenominacion();">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($plan_contable as $row) { ?>
 											<option value="<?php echo $row->id ?>" <?php if ($row->id == $asignacion->id_plan_contable) echo "selected='selected'" ?>><?php echo $row->cuenta."-".$row->denominacion ?></option>
@@ -276,17 +306,15 @@ $.mask.definitions['p'] = "[Mm]";
 							</div>
 
 							<div class="col-lg-6">
-								<div class="form-group form-group-sm" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
+								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 									<label class="form-control-sm">Denominación</label>
 									<input type="text" name="denominacion" id="denominacion" value="<?php echo $asignacion->denominacion ?>" class="form-control form-control-sm">
 								</div>
 							</div>
-						</div>
-
-						<div class="row">
+						
 							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-									<label class="control-label">Tipo</label>
+									<label class="form-control-sm">Tipo</label>
 									<select name="tipo_cuenta" id="tipo_cuenta" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($tipo_cuenta as $row) { ?>
@@ -300,7 +328,7 @@ $.mask.definitions['p'] = "[Mm]";
 
 							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-									<label class="control-label">Centro Costos</label>
+									<label class="form-control-sm">Centro Costos</label>
 									<select name="centro_costo" id="centro_costo" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($centro_costo as $row) { ?>
@@ -317,7 +345,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 
-									<label class="control-label">Partida Presupuestal</label>
+									<label class="form-control-sm">Partida Presupuestal</label>
 									<select name="partida_presupuestal" id="partida_presupuestal" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($partida_presupuestal as $row) { ?>
@@ -331,7 +359,7 @@ $.mask.definitions['p'] = "[Mm]";
 
 							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-									<label class="control-label">Código Financiero</label>
+									<label class="form-control-sm">Código Financiero</label>
 									<select name="codigo_financiero" id="codigo_financiero" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($codigo_financiero as $row) { ?>
@@ -347,7 +375,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 
-									<label class="control-label">Medio Pago</label>
+									<label class="form-control-sm">Medio Pago</label>
 									<select name="medio_pago" id="medio_pago" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($medio_pago as $row) { ?>
@@ -361,7 +389,7 @@ $.mask.definitions['p'] = "[Mm]";
 
 							<div class="col-lg-6">
 								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-									<label class="control-label">Origen</label>
+									<label class="form-control-sm">Origen</label>
 									<select name="origen" id="origen" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($origen as $row) { ?>

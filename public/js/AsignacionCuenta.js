@@ -179,13 +179,24 @@ function datatablenew(){
         "aoColumnDefs":
             [	
 				{
+				"mRender": function (data, type, row) {
+					var tipo_planilla = "";
+					if(row.tipo_planilla!= null)tipo_planilla = row.tipo_planilla;
+					return tipo_planilla;
+				},
+				"bSortable": false,
+				"aTargets": [0],
+				"className": "dt-center",
+				//"className": 'control'
+				},
+				{
                 "mRender": function (data, type, row) {
                 	var cuenta = "";
 					if(row.cuenta!= null)cuenta = row.cuenta;
 					return cuenta;
                 },
                 "bSortable": false,
-                "aTargets": [0],
+                "aTargets": [1],
 				"className": "dt-center",
 				//"className": 'control'
                 },
@@ -196,7 +207,7 @@ function datatablenew(){
 					return denominacion;
                 },
                 "bSortable": false,
-                "aTargets": [1]
+                "aTargets": [2]
                 },
                 {
                 "mRender": function (data, type, row) {
@@ -205,7 +216,7 @@ function datatablenew(){
 					return tipo_cuenta;
                 },
                 "bSortable": false,
-                "aTargets": [2]
+                "aTargets": [3]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -214,7 +225,7 @@ function datatablenew(){
 					return centro_costo;
                 },
                 "bSortable": false,
-                "aTargets": [3]
+                "aTargets": [4]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -223,7 +234,7 @@ function datatablenew(){
 					return partida_presupuestal;
                 },
                 "bSortable": false,
-                "aTargets": [4]
+                "aTargets": [5]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -232,7 +243,7 @@ function datatablenew(){
 					return codigo_financiero;
                 },
                 "bSortable": false,
-                "aTargets": [5]
+                "aTargets": [6]
                 },
 				{
 					"mRender": function (data, type, row) {
@@ -241,7 +252,7 @@ function datatablenew(){
 						return medio_pago;
 					},
 					"bSortable": false,
-					"aTargets": [6]
+					"aTargets": [7]
 				},				
 				{
 					"mRender": function (data, type, row) {
@@ -250,7 +261,7 @@ function datatablenew(){
 						return origen;
 					},
 					"bSortable": false,
-					"aTargets": [7]
+					"aTargets": [8]
 				},					
 				{
                 "mRender": function (data, type, row) {
@@ -260,7 +271,7 @@ function datatablenew(){
 					return nombre_estado;
                 },
                 "bSortable": false,
-                "aTargets": [8]
+                "aTargets": [9]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -282,7 +293,7 @@ function datatablenew(){
 					return html;
                 },
                 "bSortable": false,
-                "aTargets": [9],
+                "aTargets": [10],
                 },				
             ]
 
