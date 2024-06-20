@@ -10,6 +10,7 @@ use App\Models\TablaMaestra;
 use App\Models\PlanContable;
 use App\Models\CentroCosto;
 use App\Models\PartidaPresupuestale;
+use App\Models\CodigoFinanciero;
 
 
 //use App\Models\CondicionLaborale;
@@ -98,9 +99,11 @@ class AsignacionCuentaController extends Controller
 		$centro_costo = CentroCosto::where('estado','1')->orderBy('codigo', 'asc')->get()->all();
 		$partida_presupuestal = PartidaPresupuestale::where('estado','1')->orderBy('id', 'desc')->get()->all();
 		$medio_pago = $tablaMaestra_model->getMaestroByTipo(108);
+		$origen = $tablaMaestra_model->getMaestroByTipo(128);
+		$codigo_financiero = CodigoFinanciero::where('estado','1')->orderBy('id', 'asc')->get()->all();
 
 		//print_r($array);exit();
-		return view('frontend.asignacion.modal_asignacion',compact('id','asignacion','plan_contable', 'tipo_cuenta', 'centro_costo', 'partida_presupuestal', 'medio_pago'));
+		return view('frontend.asignacion.modal_asignacion',compact('id','asignacion','plan_contable', 'tipo_cuenta', 'centro_costo', 'partida_presupuestal', 'medio_pago','origen','codigo_financiero'));
 	}
 
 	public function send_asignacion(Request $request){

@@ -158,6 +158,8 @@ $.mask.definitions['p'] = "[Mm]";
 		$("#centro_costo").select2({ width: '100%' });
 		$("#partida_presupuestal").select2({ width: '100%' });
 		$("#medio_pago").select2({ width: '100%' });
+		$("#codigo_financiero").select2({ width: '100%' });
+		$("#origen").select2({ width: '100%' });
 
 	});
 
@@ -328,12 +330,17 @@ $.mask.definitions['p'] = "[Mm]";
 							</div>
 
 							<div class="col-lg-6">
-								<div class="form-group form-group-sm">
-									<label class="form-control-sm">Código Financiero</label>
-									<input type="text" name="codigo_financiero" id="codigo_financiero" value="<?php echo $asignacion->id_codigo_financiero ?>" class="form-control form-control-sm">
+								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
+									<label class="control-label">Código Financiero</label>
+									<select name="codigo_financiero" id="codigo_financiero" class="form-control form-control-sm">
+										<option value="0">Seleccionar</option>
+										<?php foreach ($codigo_financiero as $row) { ?>
+											<option value="<?php echo $row->id ?>" <?php if ($row->id == $asignacion->id_codigo_financiero) echo "selected='selected'" ?>><?php echo $row->codigo."-".$row->denominacion ?></option>
+										<?php } ?>
+										@error('codigo_financiero') <span ...>Dato requerido</span> @enderror
+									</select>
 								</div>
 							</div>
-
 						</div>
 
 						<div class="row">
@@ -353,9 +360,15 @@ $.mask.definitions['p'] = "[Mm]";
 							</div>
 
 							<div class="col-lg-6">
-								<div class="form-group form-group-sm">
-									<label class="form-control-sm">Origen</label>
-									<input type="text" name="origen" id="origen" value="<?php echo $asignacion->id_origen ?>" class="form-control form-control-sm">
+								<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
+									<label class="control-label">Origen</label>
+									<select name="origen" id="origen" class="form-control form-control-sm">
+										<option value="0">Seleccionar</option>
+										<?php foreach ($origen as $row) { ?>
+											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $asignacion->id_origen) echo "selected='selected'" ?>><?php echo $row->codigo."-".$row->denominacion ?></option>
+										<?php } ?>
+										@error('codigo_financiero') <span ...>Dato requerido</span> @enderror
+									</select>
 								</div>
 							</div>
 
