@@ -262,7 +262,9 @@ class PlanillaDelegadoController extends Controller
 		//}else{
 			$planillaDelegado_model = new PlanillaDelegado;
 			$planillaDelegado_model->eliminar_planilla_delegado($request->id_periodo_bus,$request->anio,$request->mes);
-		//}
+		
+			//return $planillaDelegado_model;
+			//}
 		
 		//return $msg;
 		
@@ -436,7 +438,7 @@ class PlanillaDelegadoController extends Controller
 		$variable = [];
 		$n = 1;
 		
-		array_push($variable, array("N","Delegado","Municipio","Sesiones", "Sub Total", "Adelanto \nCon Rec. \nHon.", "(+) \nReintegro", "(+) Adicional \npor \nCoordinador", "Total \nHonorario \nBruto por \nSesiones", "Movilidad \nPor Sesion \nRegular", "Total \nHonorario por \nMovilidad","Reintegro \npor Pago a Asesores \nAsumido por el CAP RL","Total Honorario \nBruto","I.R. 4TA \n8.00 %","Total Honorario \nNeto","Dscto","Saldo",utf8_encode("OBSERVACIÓN")));
+		array_push($variable, array("N","Delegado","Municipio","Sesiones", "Sub Total", "Adelanto \nCon Rec. \nHon.", "(+) \nReintegro", "(+) Adicional \npor \nCoordinador", "Total \nHonorario \nBruto por \nSesiones", "Movilidad \nPor Sesion \nRegular", "Total \nHonorario por \nMovilidad","Reintegro \npor Pago a Asesores \nAsumido por el CAP RL","Total Honorario \nBruto","I.R. 4TA \n8.00 %","Total Honorario \nNeto","Dscto","Saldo",utf8_encode("OBSERVACIï¿½N")));
 		
 		$sesiones=0;
 		$sesiones_asesor=0;

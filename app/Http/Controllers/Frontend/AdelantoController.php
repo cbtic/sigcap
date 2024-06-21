@@ -253,6 +253,7 @@ class AdelantoController extends Controller
 
 		$adelantoPagar = json_decode($request->input('adelanto_pagar'));
 		$idAdelantoDetalle = json_decode($request->input('id_adelanto_detalle'));
+		$fecha = json_decode($request->input('fecha'));
 		//var_dump($idAdelantoDetalle);exit;
 		
 		foreach($adelantoPagar as $key => $monto){
@@ -262,6 +263,7 @@ class AdelantoController extends Controller
 			
 			$nuevoDetalle->adelanto_pagar = $monto;
 			$nuevoDetalle->id_adelento = $adelanto->id;
+			$nuevoDetalle->fecha_pago = $fecha[$key];
 			//$nuevoDetalle->numero_cuota = $idAdelantoDetalle[$key];
 			$nuevoDetalle->save();
 		}
