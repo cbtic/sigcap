@@ -299,7 +299,9 @@ function editarDetalle(){
     fechaFormateada = fechaFormateada.replace(/\//g, '-');*/
     //alert(fechaActual);
     if (fechaPago < fechaActual) {
-      input.disabled = true;
+      if(input.classList.contains('adelanto-input')){
+        input.disabled = true;
+      }
     }else{
       input.disabled  = false;
     }
@@ -312,12 +314,21 @@ function fn_save_detalle(){
   var adelantoPagar = [];
   var idAdelantoDetalle = [];
   var fechas_pago = [];
+  var primera_fecha =null;
 
   $("input[name='fecha[]']").each(function() {
-    fechas_pago.push($(this).val());
-  });
+    
+    var fechaString = ($(this).val());
+    var fecha_partes = fechaString.split('-');
+    var fecha = new Date(fecha_partes[2],fecha_partes[1]-1,fecha_partes[0]);
 
-  
+    if(primera_fecha==null || fecha < primera_fecha){
+      primera_fecha = fecha;
+    }
+
+    fechas_pago.push($(this).val());
+   
+  });
 
   $("input[name='adelanto_pagar[]']").each(function(){
     var monto_detalle = parseFloat($(this).val().replace(',',''))
@@ -334,30 +345,41 @@ function fn_save_detalle(){
   });
   //alert(idAdelantoDetalle);
   var totalAdelanto = ("<?php echo $adelanto_detalle[0]->total_adelanto; ?>");
+  var fecha_prestamo = ("<?php echo $adelanto_detalle[0]->fecha_prestamo; ?>");
+  var fecha_prestamo_partes = fecha_prestamo.split('-');
+  var fechaPrestamo = new Date(fecha_prestamo_partes[2],fecha_prestamo_partes[1]-1,fecha_prestamo_partes[0]);
   var id = "<?php echo $id; ?>";
   var _token = "{{ csrf_token() }}";
 
+  //var fecha_prestamo_formato = new Date(fecha_prestamo);
+  //alert(fechaPrestamo);
+  //alert(fecha_actual);
   if(totalPago==totalAdelanto){
-    //alert('El total es igual');
-    $.ajax({
-      url: "/adelanto/send_detalle_adelanto",
-      type: "POST",
-      data: {
-        _token:_token,
-        id: id,
-        adelanto_pagar: JSON.stringify(adelantoPagar),
-        id_adelanto_detalle: JSON.stringify(idAdelantoDetalle),
-        fecha: JSON.stringify(fechas_pago)
-        
-      },
-      //dataType: 'json',
-      success: function(result) {
-        $('#openOverlayOpc').modal('hide');
-        //window.location.reload();
-        datatablenew();
+    if(primera_fecha>=fechaPrestamo){
+      //alert('El total es igual');
+      $.ajax({
+            url: "/adelanto/send_detalle_adelanto",
+            type: "POST",
+            data: {
+              _token:_token,
+              id: id,
+              adelanto_pagar: JSON.stringify(adelantoPagar),
+              id_adelanto_detalle: JSON.stringify(idAdelantoDetalle),
+              fecha: JSON.stringify(fechas_pago)
+              
+            },
+            //dataType: 'json',
+            success: function(result) {
+              $('#openOverlayOpc').modal('hide');
+              //window.location.reload();
+              datatablenew();
 
-      }
-    });
+            }
+          });
+    
+    }else{
+      bootbox.alert("La fecha ingresada no puede ser anterior a la fecha "+fecha_prestamo);
+    }
     
   }else{
     bootbox.alert("El total no coincide con las cuotas");
