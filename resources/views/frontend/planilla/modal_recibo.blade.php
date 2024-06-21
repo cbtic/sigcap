@@ -279,7 +279,7 @@ function send_recibo_honorario(){
 	var selTipo = $('#selTipo').val();
 
 	var periodo = $('#periodo').val();
-	var mes = $('#mes').val();
+	var mes = $('#mes_').val();
 	var id_periodo_comision = $('#id_periodo_comision').val();
 	var id_grupo = $('#id_grupo').val();
 
@@ -334,7 +334,7 @@ function send_recibo_honorario(){
 				<input type="hidden" name="selTipo" id="selTipo" value="">
 
 				<input type="hidden" name="periodo" id="periodo" value="<?php echo $datosRecibo[0]->periodo?>">
-				<input type="hidden" name="mes" id="mes" value="<?php echo $datosRecibo[0]->mes?>">
+				<input type="hidden" name="mes_" id="mes_" value="<?php echo $datosRecibo[0]->mes?>">
 				<input type="hidden" name="id_periodo_comision" id="id_periodo_comision" value="<?php echo $datosRecibo[0]->id_periodo_comision?>">
 				<input type="hidden" name="id_grupo" id="id_grupo" value="<?php echo $datosRecibo[0]->id_grupo?>">
 												
