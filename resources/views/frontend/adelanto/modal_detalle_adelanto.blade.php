@@ -264,9 +264,17 @@ function obtener_profesional(){
 	
 }
 
+$('.datepicker2').datepicker({
+  format: "dd-mm-yyyy",
+  autoclose: true,
+  container: '#openOverlayOpc modal-body'
+  //defaultDate: '01/07/2024'
+
+	});
+
 function editarDetalle(){
 
-  var inputs = document.querySelectorAll('.adelanto-input');
+  var inputs = document.querySelectorAll('.adelanto-input, .fecha-input');
 
   inputs.forEach(function(input) {
     
@@ -274,11 +282,22 @@ function editarDetalle(){
 
     var fila = input.closest('tr');
  
-    var fechaPagoCell = fila.querySelector('.fecha-pago');
-    var fechaPagoString = fechaPagoCell.innerText;
-    var fechaPago = new Date(fechaPagoString);
+    //var fechaPagoCell = fila.querySelector('.fecha-pago input');
+    //var fechaPagoString = fechaPagoCell.innerText;
+    //var partes = fechaPagoString.split('-');
+    //var fechaPago = new Date(partes[2], partes[1] - 1, partes[0]);
+    var fechaPagoInput = fila.querySelector('.fecha-pago input');
+    var fechaPagoString = fechaPagoInput.value;
+    var partes = fechaPagoString.split('-');
+    var fechaPago = new Date(partes[2], partes[1] - 1, partes[0]);
+
+    //var fechaPago = new Date(fechaPagoString);
     
     var fechaActual = new Date();
+    /*var opciones = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    var fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
+    fechaFormateada = fechaFormateada.replace(/\//g, '-');*/
+    //alert(fechaActual);
     if (fechaPago < fechaActual) {
       input.disabled = true;
     }else{
@@ -292,6 +311,13 @@ function fn_save_detalle(){
   var totalPago = 0;
   var adelantoPagar = [];
   var idAdelantoDetalle = [];
+  var fechas_pago = [];
+
+  $("input[name='fecha[]']").each(function() {
+    fechas_pago.push($(this).val());
+  });
+
+  
 
   $("input[name='adelanto_pagar[]']").each(function(){
     var monto_detalle = parseFloat($(this).val().replace(',',''))
@@ -320,7 +346,8 @@ function fn_save_detalle(){
         _token:_token,
         id: id,
         adelanto_pagar: JSON.stringify(adelantoPagar),
-        id_adelanto_detalle: JSON.stringify(idAdelantoDetalle)
+        id_adelanto_detalle: JSON.stringify(idAdelantoDetalle),
+        fecha: JSON.stringify(fechas_pago)
         
       },
       //dataType: 'json',
@@ -434,8 +461,8 @@ function modal_personaNuevo(){
 											<input type='hidden' name='id_adelanto_detalle[]' value='<?php echo $row->id?>'>
 											<td class='text-left id_cuota'><?php echo 'cuota '.$row->numero_cuota?></td>
 											<td class='text-left'><input type='text' name='adelanto_pagar[]' value='<?php echo number_format($row->adelanto_pagar, 2, '.', ',')?>' size="10" class="adelanto-input" disabled='disabled' onchange=""></td>
-											<td class='text-left fecha-pago'><?php echo $row->fecha_pago?></td>
-											<!--<td class='text-left'><?php //echo $row->estado?></td>-->
+											<!--<td class='text-left fecha-pago'><?php //echo $row->fecha_pago?></td>-->
+											<td class='text-left fecha-pago'><input id="fecha" name="fecha[]" class="form-control form-control-sm datepicker2 fecha-input"  value="<?php echo $row->fecha_pago?>" type="text" disabled='disabled' style="width: 140px;" onchange="editarDetalle()">
 										<?php } ?>
                     </tr>
                     <tr style='border-top: 1px solid #000;'>

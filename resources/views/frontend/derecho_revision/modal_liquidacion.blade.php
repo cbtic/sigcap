@@ -334,7 +334,7 @@ function fn_save_requisito(){
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
 					
-                <div class="card-body">				
+                <div class="card-body">
 
                     <div class="table-responsive">
                     <table id="tblPuesto" class="table table-hover table-sm">

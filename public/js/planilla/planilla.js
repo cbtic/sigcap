@@ -253,6 +253,8 @@ function eliminarPlanilla(){
 						return false;
 					}
 					*/
+
+					alert(result);
 					cargarPlanillaDelegado();
 					
 			}

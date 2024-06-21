@@ -30,7 +30,18 @@ class AsignacionCuentaController extends Controller
 	}
 	
     public function index(){
-        return view('frontend.asignacion.all');
+
+		$tablaMaestra_model = new TablaMaestra;
+		$plan_contable = PlanContable::where('estado','1')->orderBy('cuenta', 'asc')->get()->all();        
+		$tipo_cuenta = $tablaMaestra_model->getMaestroByTipo(122);
+		$centro_costo = CentroCosto::where('estado','1')->orderBy('codigo', 'asc')->get()->all();
+		$partida_presupuestal = PartidaPresupuestale::where('estado','1')->orderBy('id', 'desc')->get()->all();
+		$medio_pago = $tablaMaestra_model->getMaestroByTipo(108);
+		$origen = $tablaMaestra_model->getMaestroByTipo(128);
+		$codigo_financiero = CodigoFinanciero::where('estado','1')->orderBy('id', 'asc')->get()->all();
+		$tipo_planilla = $tablaMaestra_model->getMaestroByTipo(129);
+
+        return view('frontend.asignacion.all',compact('plan_contable','tipo_cuenta','centro_costo','partida_presupuestal','medio_pago','origen','codigo_financiero','tipo_planilla'));
     }
 
 	public function create()
@@ -42,6 +53,7 @@ class AsignacionCuentaController extends Controller
 		
 		$asignacion_model = new AsignacionCuenta;
 		
+		$p[]=$request->tipo_planilla;
 		$p[]=$request->cuenta;
 		$p[]=$request->denominacion;
 		$p[]=$request->tipo_cuenta;
