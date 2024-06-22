@@ -297,13 +297,22 @@ function fn_save(){
     $.ajax({
 			url: "/sesion/send_delegado_sesion",
             type: "POST",
+			dataType: "json",
             data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_delegado:id_delegado,flag_titular_suplente:flag_titular_suplente,fecha_inicio_sesion:fecha_inicio_sesion,fecha_fin_sesion:fecha_fin_sesion},
             success: function (result) {
+			
+				if(result.cantidad>0){
+					bootbox.alert("No se puedo agregar, el agremiado ya se encuentra registrado");
+					//return false;
+				}else{
+					cargarDelegados();
+				}
+			
 				$('.loader').hide();
 				$('#openOverlayOpc2').modal('hide');
 				//datatablenew();
 				//location.reload();
-				cargarDelegados();
+				//cargarDelegados();
 				//obtenerInversionista(0);
 				//obtenerDetalleInversionista(0);
 				//window.location.reload();

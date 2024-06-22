@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_asignacion_cuenta_paginado(p_cuenta character varying, p_denominacion character varying, p_tipo character varying, p_centro_costo character varying, p_partida_presupuestal character varying, p_cod_financiero character varying, p_medio_pago character varying, p_origen character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_asignacion_cuenta_paginado(p_tipo_planilla character varying, p_cuenta character varying, p_denominacion character varying, p_tipo character varying, p_centro_costo character varying, p_partida_presupuestal character varying, p_cod_financiero character varying, p_medio_pago character varying, p_origen character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -34,8 +34,12 @@ begin
 	
 	v_where = ' Where 1=1  ';
 	
+	If p_tipo_planilla<>'' Then
+	 v_where:=v_where||'And ac.id_tipo_planilla ='''||p_tipo_planilla||''' ';
+	End If;
+
 	If p_cuenta<>'' Then
-	 v_where:=v_where||'And pc.cuenta ilike '''||p_cuenta||'%'' ';
+	 v_where:=v_where||'And pc.id ='''||p_cuenta||''' ';
 	End If;
 	
 	If p_denominacion<>'' Then
@@ -43,29 +47,28 @@ begin
 	End If;
 
 	If p_tipo<>'' Then
-	 v_where:=v_where||'And tc.denominacion ilike '''||p_tipo||'%'' ';
+	 v_where:=v_where||'And ac.id_tipo_cuenta = '''||p_tipo||''' ';
 	End If;
 
 	If p_centro_costo<>'' Then
-	 v_where:=v_where||'And cc.codigo ilike '''||p_centro_costo||'%'' ';
+	 v_where:=v_where||'And ac.id_centro_costo = '''||p_centro_costo||''' ';
 	End If;
 
 	If p_partida_presupuestal<>'' Then
-	 v_where:=v_where||'And pp.codigo ilike '''||p_partida_presupuestal||'%'' ';
+	 v_where:=v_where||'And ac.id_partida_presupuestal = '''||p_partida_presupuestal||''' ';
 	End If;
 
 	If p_cod_financiero<>'' Then
-	 v_where:=v_where||'And ac.id_codigo_financiero ilike '''||p_cod_financiero||'%'' ';
+	 v_where:=v_where||'And ac.id_codigo_financiero = '''||p_cod_financiero||''' ';
 	End If;
 
 	If p_medio_pago<>'' Then
-	 v_where:=v_where||'And mp.codigo ilike '''||p_medio_pago||'%'' ';
+	 v_where:=v_where||'And ac.id_medio_pago = '''||p_medio_pago||''' ';
 	End If;
 
 	If p_origen<>'' Then
 	 v_where:=v_where||'And ac.id_origen = '''||p_origen||''' ';
 	End If;
-
 
 	If p_estado<>'' Then
 	 v_where:=v_where||'And ac.estado = '''||p_estado||''' ';

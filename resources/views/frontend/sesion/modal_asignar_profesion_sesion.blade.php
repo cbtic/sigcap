@@ -277,15 +277,19 @@ function fn_save(){
 			url: "/sesion/send_profesion_otro",
             type: "POST",
             data : {_token:_token,id:id,id_comision_sesion:id_comision_sesion,id_profesion_otro:id_profesion_otro},
+			dataType: "json",
             success: function (result) {
+				
+				if(result.cantidad>0){
+					bootbox.alert("No se puedo agregar, el agremiado ya se encuentra registrado");
+					//return false;
+				}else{
+					cargarDelegados();
+				}
+				
 				$('.loader').hide();
-				//$('#openOverlayOpc').modal('hide');
 				$('#openOverlayOpc2').modal('hide');
-				//datatablenew();
-				cargarDelegados();
-				//obtenerInversionista(0);
-				//obtenerDetalleInversionista(0);
-				//window.location.reload();
+				
 				
             }
     });

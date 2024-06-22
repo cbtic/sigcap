@@ -41,6 +41,18 @@ where t0.id_periodo_comisiones=".$id_periodo;
         return $data;
     }
 	
+	function getValidaDelegadosBySesionAndAgremiado($id_comision_sesion,$id_agremiado){
+
+        $cad = "select count(*) cantidad
+from comision_sesion_delegados csd 
+left join comision_delegados cd on csd.id_delegado=cd.id  
+where id_comision_sesion=".$id_comision_sesion."
+and coalesce(cd.id_agremiado,csd.id_agremiado)=".$id_agremiado;
+
+		$data = DB::select($cad);
+        return $data[0]->cantidad;
+    }
+	
 	function getComisionDelegadosByIdDelegadoAndFecha($id_agremiado,$fecha_programado,$fecha_inicio_sesion,$fecha_fin_sesion){
 
         $cad = "select csd.* 
