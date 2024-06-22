@@ -319,6 +319,13 @@ label.form-control-sm{
 	cursor:pointer
 }
 
+.form-control[readonly]{
+	background-color:#cff4fc!important;
+	border-color:#b6effb!important;
+	color:#055160!important;
+	opacity:1
+}
+
 </style>
 
 

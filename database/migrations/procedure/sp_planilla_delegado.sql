@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_planilla_delegado(p_id_periodo_comision character varying, p_anio character varying, p_mes character varying)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -99,8 +98,8 @@ begin
 	p_importe_por_sesion:=(p_fondo_comun/(v_suma_sesion_mes_actual-(0.5 * v_suma_asesor_sesion_mes_actual)));
 	
 	/*********INSERTA LA CABECERA DE LA PLANILLA DELEGADO*****************/
-	insert into planilla_delegados(id_periodo_comision,id_regional,periodo,mes,importe_sesion,estado,id_usuario_inserta,created_at,updated_at)
-	values (p_id_periodo_comision::int,5,p_anio::int,p_mes::int,p_importe_por_sesion,1,1,now(),now());
+	insert into planilla_delegados(id_computo_sesion,id_periodo_comision,id_regional,periodo,mes,importe_sesion,estado,id_usuario_inserta,created_at,updated_at)
+	values (p_id_computo_sesion,p_id_periodo_comision::int,5,p_anio::int,p_mes::int,p_importe_por_sesion,1,1,now(),now());
 	
 	p_id_planilla_delegado := (SELECT currval('planilla_delegados_id_seq'));
 	
@@ -195,4 +194,3 @@ begin
 end;
 $function$
 ;
-
