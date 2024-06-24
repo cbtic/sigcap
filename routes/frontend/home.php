@@ -743,4 +743,5 @@ Route::post('operacion/pago', [OperacionController::class, 'pago'])->name('opera
 Route::post('operacion/extorno_pago', [OperacionController::class, 'extorno_pago'])->name('operacion.extorno_pago');
 Route::post('operacion/anulacion', [OperacionController::class, 'anulacion'])->name('operacion.anulacion');
 Route::post('operacion/extorno_anulacion', [OperacionController::class, 'extorno_anulacion'])->name('operacion.extorno_anulacion');
+Route::get('planilla/exportar_listar_recibo_honorario/{periodo}/{anio}/{mes}/{numero_cap}/{agremiado}/{municipalidad}/{fecha_inicio}/{fecha_fin}/{provision}/{cancelacion}/{ruc}', [PlanillaDelegadoController::class, 'exportar_listar_recibo_honorario'])->name('planilla.exportar_listar_recibo_honorario');
 
