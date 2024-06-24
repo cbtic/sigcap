@@ -32,6 +32,11 @@ $(document).ready(function () {
 		descargarExcel()
 
 	});
+
+	$('#btnDescargarRH').on('click', function () {
+		DescargarArchivosRH()
+
+	});
 	
 
 	$('#agremiado_bus').keypress(function(e){
@@ -354,9 +359,10 @@ function datatablenew(){
 			var fecha_inicio = $('#fecha_inicio_bus').val();
 			var fecha_fin = $('#fecha_fin_bus').val();
 
-			var provision = $('#Provision_b').val();
+			var provision = $('#provision_b').val();
 			var cancelacion = $('#cancelacion_b').val();
 			var grupo = '';
+			var tiene_ruc = $('#ruc_b').val();
 
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
@@ -369,7 +375,7 @@ function datatablenew(){
 						id:id,periodo:periodo,anio:anio,mes:mes,numero_cap:numero_cap,municipalidad:municipalidad,
 						agremiado:agremiado,situacion:situacion,numero_comprobante:numero_comprobante,
 						fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,provision:provision,cancelacion:cancelacion,grupo:grupo,
-						_token:_token
+						tiene_ruc:tiene_ruc,_token:_token
                        },
                 "success": function (result) {
                     fnCallback(result);
@@ -780,4 +786,35 @@ function descargarExcel(){
 	
 }
 
-
+function DescargarArchivosRH(){
+	
+	var periodo = $('#id_periodo_bus_').val();
+	var anio = $('#anio').val();
+	var mes = $('#mes').val();
+	var numero_cap = $('#numero_cap_bus').val();
+	var agremiado = $('#agremiado_bus').val();
+	var municipalidad = $('#municipalidad_bus').val();
+	var fecha_inicio = $('#fecha_inicio_bus').val();
+	var fecha_fin = $('#fecha_fin_bus').val();
+	var provision = $('#provision_b').val();
+	var cancelacion = $('#cancelacion_b').val();
+	var ruc = $('#ruc_b').val();
+	//var id_agremiado = 0;
+	//var id_regional = 0;
+	if (periodo == "")periodo = 0;
+	if (anio == "")anio = 0;
+	if (mes == "")mes = 0;
+	if (numero_cap == "")numero_cap = 0;
+	if (agremiado == "")agremiado = "0";
+	if (municipalidad == "")municipalidad = "0";
+	if (fecha_inicio == "")fecha_inicio = "0";
+	if (fecha_fin == "")fecha_fin = "0";
+	if (provision == "")provision = "0";
+	if (cancelacion == "")cancelacion = "0";
+	if (ruc == "")ruc = "0";
+	//if (campo == "")campo = 0;
+	//if (orden == "")orden = 0;
+	
+	
+	location.href = '/planilla/exportar_listar_recibo_honorario/'+periodo+'/'+anio+'/'+mes+'/'+numero_cap+'/'+agremiado+'/'+municipalidad+'/'+fecha_inicio+'/'+fecha_fin+'/'+provision+'/'+cancelacion+'/'+ruc;
+}

@@ -2088,9 +2088,37 @@ function AddFilaPresupuesto() {
         select.value = ''; // Reset the select element
     });
 
-    container.appendChild(newRow); // Agrega la nueva fila al contenedor
+	var existingRemoveButton = newRow.querySelector('.btn-danger');
+    if (existingRemoveButton) {
+        existingRemoveButton.parentNode.removeChild(existingRemoveButton);
+    }
+
+    var removeButton = document.createElement('button');
+    removeButton.className = 'btn btn-sm btn-danger';
+    //removeButton.style.marginLeft = '10px';
+	removeButton.style.marginTop = '37px';
+	removeButton.style.marginBottom = '37px';
+    removeButton.innerHTML = 'Eliminar';
+
+    removeButton.onclick = function() {
+        removeFilaPresupuesto(event,newRow);
+    };
+
+    newRow.appendChild(removeButton);
+
+    container.appendChild(newRow);
 
 	calcularValorTotalObra();
+}
+
+function removeFilaPresupuesto(event,row) {
+	event.preventDefault();
+    var container = document.getElementById('presupuesto-container');
+    if (container.children.length > 1) {
+        container.removeChild(row);
+    } else {
+        bootbox.alert("Debe haber al menos una fila.");
+    }
 }
 
 function calcularValorTotalObra() {
@@ -2158,7 +2186,36 @@ function AddFilaUso() {
         select.value = ''; // Reset the select element
     });
 
-    container.appendChild(newRow); // Agrega la nueva fila al contenedor
+	var existingRemoveButton = newRow.querySelector('.btn-danger');
+    if (existingRemoveButton) {
+        existingRemoveButton.parentNode.removeChild(existingRemoveButton);
+    }
+
+    
+    var removeButton = document.createElement('button');
+    removeButton.className = 'btn btn-sm btn-danger';
+    //removeButton.style.marginLeft = '10px';
+	removeButton.style.marginTop = '37px';
+	removeButton.style.marginBottom = '37px';
+    removeButton.innerHTML = 'Eliminar';
+
+    removeButton.onclick = function() {
+        removeFilaUso(event,newRow);
+    };
+
+    newRow.appendChild(removeButton);
+
+    container.appendChild(newRow);
+}
+
+function removeFilaUso(event,row) {
+	event.preventDefault();
+    var container = document.getElementById('uso-container');
+    if (container.children.length > 1) {
+        container.removeChild(row);
+    } else {
+        bootbox.alert("Debe haber al menos una fila.");
+    }
 }
 
 function calcularAreaTechada() {

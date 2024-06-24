@@ -1569,7 +1569,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->direccion = $request->direccion_proyecto;
 		$derecho_revision->id_municipalidad = $request->municipalidad;
 		$derecho_revision->id_ubigeo = $ubigeo;
-		$derecho_revision->id_resultado = 1;
+		$derecho_revision->id_resultado = 2;
 		$derecho_revision->id_instancia = $request->instancia;
 		$derecho_revision->id_tipo_solicitud = $solicitud_matriz->id_tipo_solicitud;
 		$derecho_revision->id_tipo_tramite = $request->tipo_proyecto;
