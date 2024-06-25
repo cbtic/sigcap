@@ -126,5 +126,23 @@ class FondoComunController extends Controller
         return view('frontend.fondoComun.lista_fondo_comun',compact('fondoComun'));
 
     }
+
+	public function fondoComun_pdf($municipalidad)
+	{
+		$fondo_comun_model = new FondoComun();
+
+		$fondoComun = $fondo_comun_model->ListarFondoComun($anio, $mes, $periodo);
+
+		$pdf = Pdf::loadView('frontend.fondoComun.fondoComun_pdf');
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream('fondoComun_pdf.pdf');
+	}
 	
 }
