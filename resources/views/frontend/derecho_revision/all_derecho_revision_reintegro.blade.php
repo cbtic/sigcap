@@ -623,7 +623,7 @@ if($('#instancia').val()==250){
 											<div class="col-sm-12 controls">
 												<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 													<a href="javascript:void(0)" onClick="AddFilaUso()" class="btn btn-sm btn-success">Agregar</a>
-													<button class="btn btn-sm btn-danger" style="margin-left:10px" onclick="removeFilaUso(event,this.parentNode)">Eliminar</button>
+													<!--<button class="btn btn-sm btn-danger" style="margin-left:10px" onclick="removeFilaUso(event,this.parentNode)">Eliminar</button>-->
 												</div>
 											</div>
 										</div>
@@ -683,8 +683,8 @@ if($('#instancia').val()==250){
 												<div class="col-sm-12 controls">
 													<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 														<a href="javascript:void(0)" onClick="AddFilaPresupuesto()" class="btn btn-sm btn-success">Agregar</a>
-														<button class="btn btn-sm btn-danger" style="margin-left:10px" onclick="removeFilaPresupuesto(event,this.parentNode)">Eliminar</button>
-														<!--<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
+														<!--<button class="btn btn-sm btn-danger" style="margin-left:10px" onclick="removeFilaPresupuesto(event,this.parentNode)">Eliminar</button>
+														<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
 													</div>
 												</div>
 											</div>

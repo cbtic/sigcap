@@ -154,7 +154,26 @@ $.mask.definitions['p'] = "[Mm]";
 
 	$(document).ready(function() {
 
-		$("#cuenta").select2({ width: '100%' });
+		$("#cuenta").select2({ 
+			width: '100%',
+			matcher: function(params, data) {
+
+            if ($.trim(params.term) === '') {
+                return data;
+            }
+
+            var text = data.text || '';
+
+            var parts = text.split('-');
+            var cuenta = parts[0] ? parts[0].trim() : '';
+
+            if (cuenta.toUpperCase().startsWith(params.term.toUpperCase())) {
+                return data;
+            }
+
+            return null;
+        } 
+		});
 		$("#centro_costo").select2({ width: '100%' });
 		$("#partida_presupuestal").select2({ width: '100%' });
 		$("#medio_pago").select2({ width: '100%' });

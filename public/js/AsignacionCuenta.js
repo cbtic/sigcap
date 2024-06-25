@@ -14,7 +14,26 @@ $(document).ready(function () {
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
 
-	$("#cuenta_bus").select2({ width: '100%' });
+	$("#cuenta_bus").select2({ 
+		width: '100%',
+		matcher: function(params, data) {
+
+            if ($.trim(params.term) === '') {
+                return data;
+            }
+
+            var text = data.text || '';
+
+            var parts = text.split('-');
+            var cuenta = parts[0] ? parts[0].trim() : '';
+
+            if (cuenta.toUpperCase().startsWith(params.term.toUpperCase())) {
+                return data;
+            }
+
+            return null;
+        } 
+	});
 	$("#centro_costo_bus").select2({ width: '100%' });
 	$("#partida_presupuestal_bus").select2({ width: '100%' });
 	$("#medio_pago_bus").select2({ width: '100%' });
