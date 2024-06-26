@@ -282,6 +282,7 @@
 								@can('Parametros')
 								<a href="/parametro/consulta_parametro" class="dropdown-item">Par&aacute;metros</a>
 								@endcan
+								<a href="/reporte" class="dropdown-item">Reporte</a>
 						   </div>
 					</li>
 					@endif

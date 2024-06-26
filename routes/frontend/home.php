@@ -59,6 +59,8 @@ use App\Http\Controllers\Frontend\DelegadoTributoController;
 
 use App\Http\Controllers\Frontend\OperacionController;
 
+use App\Http\Controllers\Frontend\ReporteController;
+
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -743,4 +745,7 @@ Route::post('operacion/pago', [OperacionController::class, 'pago'])->name('opera
 Route::post('operacion/extorno_pago', [OperacionController::class, 'extorno_pago'])->name('operacion.extorno_pago');
 Route::post('operacion/anulacion', [OperacionController::class, 'anulacion'])->name('operacion.anulacion');
 Route::post('operacion/extorno_anulacion', [OperacionController::class, 'extorno_anulacion'])->name('operacion.extorno_anulacion');
+
+Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');
+Route::get('reporte/lista_reporte_ajax', [ReporteController::class, 'lista_reporte_ajax'])->name('reporte.lista_reporte_ajax');
 
