@@ -569,7 +569,7 @@ if($('#instancia').val()==250){
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="uso-container">
 										<div class="row uso-row">
-											<div class="col-lg-5" style=";padding-right:15px">
+											<div class="col-lg-4" style=";padding-right:15px">
 											<label class="control-label form-control-sm">Tipo de Uso</label>
 											
 											<input type="hidden" name="id_uso_edificaciones[]" id="id_uso_edificaciones" value="<?php echo $row->id?>" />
@@ -634,7 +634,7 @@ if($('#instancia').val()==250){
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="presupuesto-container">
 										<div class="row presupuesto-row">
-											<div class="col-lg-5" style=";padding-right:15px">
+											<div class="col-lg-4" style=";padding-right:15px">
 												<label class="control-label form-control-sm">Tipo de Obra</label>
 												
 												<input type="hidden" name="id_presupuesto[]" id="id_presupuesto" value="<?php echo $row->id?>" />
