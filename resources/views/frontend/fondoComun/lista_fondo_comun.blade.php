@@ -18,11 +18,16 @@
 		$importe_fondo_asistencia = 0;
 		$saldo = 0;
 
-
+		
 		if ($fondoComun) {
 			foreach ($fondoComun as $row) { ?>
 				<tr style="font-size:13px">
-					<td class="text-left" style="vertical-align:middle"><?php echo $row->municipalidad ?></td>
+					<td class="text-left" style="vertical-align:middle">
+                        <a href="javascript:void(0);"  onclick="abrirPdfMunicipalidad('<?php echo addslashes($row->municipalidad); ?>', <?php echo $anio; ?>, <?php echo $mes; ?>)"
+                           style="font-size: 12px; text-decoration: underline; color: blue;">
+                            <?php echo htmlspecialchars($row->municipalidad); ?>
+                        </a>
+                    </td>
 					<td class="text-right" style="vertical-align:middle"><?php echo $row->importe_bruto ?></td>
 					<td class="text-right" style="vertical-align:middle"><?php echo $row->importe_igv ?></td>
 					<td class="text-right" style="vertical-align:middle"><?php echo $row->importe_comision_cap ?></td>
@@ -51,3 +56,11 @@
 		</tr>
 	</tfoot>
 </table>
+
+<script>
+function abrirPdfMunicipalidad(municipalidad,anio,mes) {
+	//alert(municipalidad+anio+mes);
+	var href = '/fondoComun/fondoComun_pdf/'+municipalidad+'/'+anio+'/'+mes;
+	window.open(href, '_blank');
+}
+</script>

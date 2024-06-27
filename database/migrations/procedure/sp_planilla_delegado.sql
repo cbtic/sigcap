@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_planilla_delegado(p_id_periodo_comision character varying, p_anio character varying, p_mes character varying)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -99,8 +98,8 @@ begin
 	p_importe_por_sesion:=(p_fondo_comun/(v_suma_sesion_mes_actual-(0.5 * v_suma_asesor_sesion_mes_actual)));
 	
 	/*********INSERTA LA CABECERA DE LA PLANILLA DELEGADO*****************/
-	insert into planilla_delegados(id_periodo_comision,id_regional,periodo,mes,importe_sesion,estado,id_usuario_inserta,created_at,updated_at)
-	values (p_id_periodo_comision::int,5,p_anio::int,p_mes::int,p_importe_por_sesion,1,1,now(),now());
+	insert into planilla_delegados(id_computo_sesion,id_periodo_comision,id_regional,periodo,mes,importe_sesion,estado,id_usuario_inserta,created_at,updated_at)
+	values (p_id_computo_sesion,p_id_periodo_comision::int,5,p_anio::int,p_mes::int,p_importe_por_sesion,1,1,now(),now());
 	
 	p_id_planilla_delegado := (SELECT currval('planilla_delegados_id_seq'));
 	
@@ -115,19 +114,19 @@ begin
 	,((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)total_bruto
 	
 	,(case 
-		when id_tipo_tributo=460 or id_tipo_tributo=0 then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) 
+		when id_tipo_tributo=460 or (id_tipo_tributo=0 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1')) then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08)   
 		when id_tipo_tributo=461 then 0 
 		when id_tipo_tributo=458 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1') then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) else 0
 	end) ir_cuarta
 	
 	,(((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)-(case 
-		when id_tipo_tributo=460 or id_tipo_tributo=0 then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) 
+		when id_tipo_tributo=460 or (id_tipo_tributo=0 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1')) then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) 
 		when id_tipo_tributo=461 then 0 
 		when id_tipo_tributo=458 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1') then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) else 0
 	end))total_honorario
 	,descuento
 	,((((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)-(case 
-		when id_tipo_tributo=460 or id_tipo_tributo=0 then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) 
+		when id_tipo_tributo=460 or (id_tipo_tributo=0 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1')) then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) 
 		when id_tipo_tributo=461 then 0 
 		when id_tipo_tributo=458 and (sub_total-adelanto+reintegro+coordinador)>(select monto_minimo_rh from parametros p where anio=p_anio and estado='1') then (((sub_total-adelanto+reintegro+coordinador)+total_movilidad+reintegro_asesor)*0.08) else 0
 	end))-descuento)saldo
@@ -152,7 +151,7 @@ begin
 	--sum(case when to_char(cs.fecha_programado,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
-	coalesce((select sum(total_adelanto) from adelantos a where id_agremiado=cd.id_agremiado and fecha between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)adelanto,
+	coalesce((select sum(total_adelanto) from adelantos a where id_agremiado=cd.id_agremiado and coalesce(a.id_tiene_recibo,0)=1 and fecha between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)adelanto,
 	--coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,	
 	coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
 	coalesce((select id_tipo_tributo from delegado_tributos dt where id_agremiado=cd.id_agremiado and id_periodo_comision=cs.id_periodo_comisione and anio=p_anio::int and ('01-'||p_mes||'-'||p_anio)::date between fecha_inicio and fecha_fin and estado='1'),0)id_tipo_tributo,
@@ -195,4 +194,3 @@ begin
 end;
 $function$
 ;
-

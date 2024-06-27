@@ -1187,3 +1187,20 @@ function modalVerProyectista(id){
 	});
 
 }
+
+function modalHistorialDelegadoSesion(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc2 .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/sesion/modal_historial_delegado_sesion/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc2").html(result);
+					$('#openOverlayOpc2').modal('show');
+			}
+	});
+
+}
+

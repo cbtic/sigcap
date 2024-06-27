@@ -580,17 +580,20 @@ class DerechoRevisionController extends Controller
 
 	public function editar_derecho_revision_nuevo($id){
 
+		
 		$agremiado_model = new Agremiado;
 		$persona_model = new Persona;
 		$derechoRevision_ = DerechoRevision::find($id);
 		$proyecto_ = Proyecto::where("id",$derechoRevision_->id_proyecto)->where("estado","1")->first();
 		$proyecto2 = Proyecto::find($proyecto_->id);
 		//var_dump($proyecto2->id_tipo_sitio);exit();
-		$proyectista_ = Proyectista::where("id_solicitud",$id)->where("estado","1")->orderBy('id')->first();
+		$proyectista_ = Proyectista::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->first();
 		$proyectista = Proyectista::find($proyectista_->id);
-		$agremiado_ = Agremiado::find($proyectista_->id_agremiado);
+		$agremiado_ = Agremiado::find($proyectista->id_agremiado);
 		$datos_agremiado= $agremiado_model->getAgremiado(85,$agremiado_->numero_cap);
+		
 		$persona_ = Persona::where("id",$agremiado_->id_persona)->where("estado","1")->first();
+		//var_dump($persona_->numero_documento);exit();
 		$datos_persona= $persona_model->getPersona(78,$persona_->numero_documento);
 		//var_dump($proyectista_->id_agremiado);exit();
 		$tipo_solicitante = 1;
@@ -682,6 +685,7 @@ class DerechoRevisionController extends Controller
 		$proyectista->celular = $agremiado->celular1;
 		$proyectista->email = $agremiado->email1;
 		$proyectista->id_tipo_profesional = 211;
+		$proyectista->id_tipo_proyectista = 1;
 		
 		//$proyectista->firma = $request->nombre;
 		//$profesion->estado = 1;
@@ -728,6 +732,7 @@ class DerechoRevisionController extends Controller
 		if($tipo_proyectista){
 			$tipo_proyectista->id_tipo_profesional = 212;
 			$proyectista->id_tipo_profesional = 212;
+			$proyectista->id_tipo_proyectista = 2;
 			$tipo_proyectista->save();
 		}
 		$proyectista->id_usuario_inserta = $id_user;
@@ -1218,7 +1223,7 @@ class DerechoRevisionController extends Controller
 		 $currentHour = Carbon::now()->format('H:i:s');
 
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','valor_minimo','valor_maximo','instancia','proyectista_nombres','codigo'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','valor_minimo','valor_maximo','instancia','proyectista_nombres','codigo','proyectista_cap'));
 		
 
 
