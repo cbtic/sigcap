@@ -542,7 +542,8 @@ Route::get('planilla/obtener_delegado_periodo/{id_periodo}', [PlanillaDelegadoCo
 Route::get('planilla/obtener_comision_delegado_periodo/{id_periodo}/{id_agremiado}', [PlanillaDelegadoController::class, 'obtener_comision_delegado_periodo'])->name('planilla.obtener_comision_delegado_periodo');
 Route::post('planilla/send_reintegro', [PlanillaDelegadoController::class, 'send_reintegro'])->name('planilla.send_reintegro');
 Route::get('planilla/obtener_anio_periodo/{id_periodo}', [PlanillaDelegadoController::class, 'obtener_anio_periodo'])->name('planilla.obtener_anio_periodo');
-Route::get('planilla/exportar_planilla_delegado/{periodo}/{anio}/{mes}', [PlanillaDelegadoController::class, 'exportar_planilla_delegado'])->name('planilla.exportar_planilla_delegado');
+Route::get('planilla/exportar_planilla_delegado/{periodo}/{anio}/{mes}', [PlanillaDelegadoController::class, 'exportar_planilla_delegado'])->name('planilla.exportar_planilla_delegado'); 
+Route::get('planilla/ver_planilla_delegado_pdf/{id_periodo}/{anio}/{mes}', [PlanillaDelegadoController::class, 'ver_planilla_delegado_pdf'])->name('planilla.ver_planilla_delegado_pdf');
 
 Route::get('centro_costo/importar_centro_costo', [CentroCostoController::class, 'importar_centro_costo'])->name('centro_costo.importar_centro_costo');
 Route::get('partida_presupuestal/importar_partida_presupuestal', [PartidaPresupuestalController::class, 'importar_partida_presupuestal'])->name('partida_presupuestal.importar_partida_presupuestal');

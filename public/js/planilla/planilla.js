@@ -33,6 +33,10 @@ $(document).ready(function () {
 
 	});
 	
+	$('#btnDescargarPdf').on('click', function () {
+		descargarPdf()
+
+	});
 
 	$('#agremiado_bus').keypress(function(e){
 		if(e.which == 13) {
@@ -777,6 +781,21 @@ function descargarExcel(){
 	if (mes == "")mes = 0;
 	
 	location.href = '/planilla/exportar_planilla_delegado/' + periodo + '/' + anio + '/' + mes;
+	
+}
+
+function descargarPdf(){
+		
+	var periodo = $('#id_periodo_bus').val();
+	var anio = $('#anio').val();
+	var mes = $('#mes').val();
+	
+	if (periodo == "")periodo = 0;
+	if (anio == "")anio = 0;
+	if (mes == "")mes = 0;
+	
+	var href = '/planilla/ver_planilla_delegado_pdf/' + periodo + '/' + anio + '/' + mes;
+	window.open(href, '_blank');
 	
 }
 
