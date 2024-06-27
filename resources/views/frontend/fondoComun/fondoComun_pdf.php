@@ -113,7 +113,7 @@
                 <td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $mesEnLetras?></td>
                 <td style="padding:0px!important;margin:0px!important;text-align:right"></td>
                 <td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Municipalidad:</td>
-                <td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $municipalidad?></td>
+                <td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $municipalidad_denominacion?></td>
                 </tr>
                     </tbody>
                 </table>
