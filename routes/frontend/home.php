@@ -58,7 +58,7 @@ use App\Http\Controllers\Frontend\CoordinadorZonalDetalleController;
 use App\Http\Controllers\Frontend\DelegadoTributoController;
 
 use App\Http\Controllers\Frontend\OperacionController;
-
+use App\Http\Controllers\Frontend\TipoCambioController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -745,4 +745,10 @@ Route::post('operacion/anulacion', [OperacionController::class, 'anulacion'])->n
 Route::post('operacion/extorno_anulacion', [OperacionController::class, 'extorno_anulacion'])->name('operacion.extorno_anulacion');
 Route::get('planilla/exportar_listar_recibo_honorario/{periodo}/{anio}/{mes}/{numero_cap}/{agremiado}/{municipalidad}/{fecha_inicio}/{fecha_fin}/{provision}/{cancelacion}/{ruc}', [PlanillaDelegadoController::class, 'exportar_listar_recibo_honorario'])->name('planilla.exportar_listar_recibo_honorario');
 Route::get('fondoComun/fondoComun_pdf/{id_ubigeo}/{anio}/{mes}', [FondoComunController::class, 'fondoComun_pdf'])->name('fondoComun.fondoComun_pdf');
+
+Route::get('tipo_cambio/consulta_tipo_cambio', [TipoCambioController::class, 'consulta_tipo_cambio'])->name('tipo_cambio.consulta_tipo_cambio');
+Route::post('tipo_cambio/listar_tipo_cambio_ajax', [TipoCambioController::class, 'listar_tipo_cambio_ajax'])->name('tipo_cambio.listar_tipo_cambio_ajax');
+Route::get('tipo_cambio/modal_tipo_cambio_nuevoTipoCambio/{id}', [TipoCambioController::class, 'modal_tipo_cambio_nuevoTipoCambio'])->name('tipo_cambio.modal_tipo_cambio_nuevoTipoCambio');
+Route::get('tipo_cambio/eliminar_tipo_cambio/{id}', [TipoCambioController::class, 'eliminar_tipo_cambio'])->name('tipo_cambio.eliminar_tipo_cambio');
+Route::post('tipo_cambio/send_tipo_cambio_nuevoTipoCambio', [TipoCambioController::class, 'send_tipo_cambio_nuevoTipoCambio'])->name('tipo_cambio.send_tipo_cambio_nuevoTipoCambio');
 

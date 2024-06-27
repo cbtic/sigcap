@@ -67,21 +67,21 @@ begin
 					(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
 					id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle, centro_costo, presupuesto, fecha_documento,fecha_vencimiento,created_at,numero_comprobante, orden)				
 					select 
-					1, cursor_rh.id_persona, '63291', cursor_rh.total_bruto, 0,  cursor_rh.total_bruto/3.71, cursor_rh.glosa, 1, 1, 3.7, 1, 
+					1, cursor_rh.id_persona, '63291', cursor_rh.total_bruto, 0,  cursor_rh.total_bruto/3.71, cursor_rh.glosa, 1, 1, 3.755, 1, 
 					_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id, '2025601', '01P2501', cursor_rh.fecha_comprobante, cursor_rh.fecha_vencimiento, current_timestamp, cursor_rh.numero_comprobante,1;
 			
 				insert into  asiento_planillas
 					(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
 					id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle, fecha_documento,fecha_vencimiento,created_at,numero_comprobante, orden)				
 					select 
-					1, cursor_rh.id_persona, '40172', 0, cursor_rh.ir_cuarta, cursor_rh.ir_cuarta/3.71, cursor_rh.glosa, 1, 1, 3.7, 1, 
+					1, cursor_rh.id_persona, '40172', 0, cursor_rh.ir_cuarta, cursor_rh.ir_cuarta/3.71, cursor_rh.glosa, 1, 1, 3.755, 1, 
 					_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id, cursor_rh.fecha_comprobante, cursor_rh.fecha_vencimiento, current_timestamp, cursor_rh.numero_comprobante,2;
 			
 				insert into  asiento_planillas
 					(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
 					id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle, fecha_documento,fecha_vencimiento,created_at,numero_comprobante, orden)				
 					select 
-					1, cursor_rh.id_persona, '4241', 0, cursor_rh.total_honorario, cursor_rh.total_honorario/3.71, cursor_rh.glosa, 1, 1, 3.7, 1, 
+					1, cursor_rh.id_persona, '4241', 0, cursor_rh.total_honorario, cursor_rh.total_honorario/3.71, cursor_rh.glosa, 1, 1, 3.755, 1, 
 					_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id, cursor_rh.fecha_comprobante, cursor_rh.fecha_vencimiento, current_timestamp, cursor_rh.numero_comprobante,3;
 				
 				update planilla_delegado_detalles set id_grupo = _grupo where id = cursor_rh.id;
