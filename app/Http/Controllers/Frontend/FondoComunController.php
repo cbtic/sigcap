@@ -128,16 +128,21 @@ class FondoComunController extends Controller
 
     }
 
-	public function fondoComun_pdf($municipalidad,$anio,$mes)
+	public function fondoComun_pdf($id_ubigeo,$anio,$mes)
 	{
 		$fondo_comun_model = new FondoComun();
 
+		$municipalidad_model = new Municipalidade();
+
 		$mesEnLetras = $this->mesesALetras($mes);
 
-		$fondoComun = $fondo_comun_model->ListarDetalleFondoComun($municipalidad, $anio, $mes);
+		$municipalidad = $municipalidad_model->getIdUbigeoByMunicipalidad($id_ubigeo);
+		$municipalidad_denominacion = $municipalidad[0]->denominacion;
+		//var_dump($municipalidad_denominacion);exit();
+		$fondoComun = $fondo_comun_model->ListarDetalleFondoComun($id_ubigeo, $anio, $mes);
 		//var_dump($fondoComun);exit();
 
-		$pdf = Pdf::loadView('frontend.fondoComun.fondoComun_pdf',compact('fondoComun','municipalidad','anio','mesEnLetras'));
+		$pdf = Pdf::loadView('frontend.fondoComun.fondoComun_pdf',compact('fondoComun','municipalidad_denominacion','anio','mesEnLetras'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
