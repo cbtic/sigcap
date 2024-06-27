@@ -10,6 +10,7 @@ use App\Models\ComisionDelegado;
 use App\Models\Comisione;
 use App\Models\TablaMaestra;
 use App\Models\Municipalidade;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
 
 class FondoComunController extends Controller
@@ -123,8 +124,34 @@ class FondoComunController extends Controller
 		$fondo_comun_model = new FondoComun;
 		$fondoComun = $fondo_comun_model->ListarFondoComun($anio, $mes, $periodo);
 
-        return view('frontend.fondoComun.lista_fondo_comun',compact('fondoComun'));
+        return view('frontend.fondoComun.lista_fondo_comun',compact('fondoComun','anio','mes'));
 
     }
+
+	public function fondoComun_pdf($municipalidad,$anio,$mes)
+	{
+		$fondo_comun_model = new FondoComun();
+
+		$mesEnLetras = $this->mesesALetras($mes);
+
+		$fondoComun = $fondo_comun_model->ListarDetalleFondoComun($municipalidad, $anio, $mes);
+		//var_dump($fondoComun);exit();
+
+		$pdf = Pdf::loadView('frontend.fondoComun.fondoComun_pdf',compact('fondoComun','municipalidad','anio','mesEnLetras'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream('fondoComun_pdf.pdf');
+	}
+
+	function mesesALetras($mes) { 
+		$meses = array('','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'setiembre','octubre','noviembre','diciembre'); 
+		return $meses[$mes];
+	}
 	
 }
