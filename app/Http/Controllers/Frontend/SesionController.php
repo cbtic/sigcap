@@ -15,6 +15,7 @@ use App\Models\ComisionDelegado;
 use App\Models\ProfesionalesOtro;
 use App\Models\ComputoSesione;
 use App\Models\ComisionSesionDictamene;
+use App\Models\ComisionSesionDelegadosHistoriale;
 use Carbon\Carbon;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -202,6 +203,15 @@ class SesionController extends Controller
 		return view('frontend.sesion.lista_sesion_delegado',compact('id','delegados'));
 		
 	}
+	
+	public function modal_historial_delegado_sesion($id){
+		 
+		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
+        $comisionSesionDelegadoHistorial = $comisionSesionDelegado_model->getHistorialComisionSesionDelegadosByIdComisionSesionDelegado($id);
+		
+        return view('frontend.sesion.modal_historial_sesion_delegado',compact('comisionSesionDelegadoHistorial'));
+		
+    }
 	
 	public function obtener_comision($id_periodo,$tipo_comision){
 			
@@ -698,7 +708,12 @@ class SesionController extends Controller
 		
 		/***********************/
 		
+		$id_delegado_anterior = $comisionSesionDelegado->id_delegado;
+		$id_agremiado_anterior = $comisionSesionDelegado->id_agremiado;
+		
 		$comisionSesionDelegado->id_comision_sesion = $request->id_comision_sesion;
+		$comisionSesionDelegado->id_delegado_anterior = $id_delegado_anterior;
+		$comisionSesionDelegado->id_agremiado_anterior = $id_agremiado_anterior;
 		$comisionSesionDelegado->id_delegado = $id_delegado;
 		$comisionSesionDelegado->id_profesion_otro = NULL;
 		$comisionSesionDelegado->id_aprobar_pago = NULL;
@@ -707,14 +722,43 @@ class SesionController extends Controller
 		$comisionSesionDelegado->id_usuario_inserta = $id_user;
 		$comisionSesionDelegado->save();
 		
+		/*********************************/
+		
+		$comisionSesionDelegadosHistorial = new ComisionSesionDelegadosHistoriale;
+		$comisionSesionDelegadosHistorial->id_comision_sesion_delegado = $comisionSesionDelegado->id;
+		$comisionSesionDelegadosHistorial->id_delegado = $id_delegado_anterior;
+		$comisionSesionDelegadosHistorial->id_agremiado = $id_agremiado_anterior;
+		$comisionSesionDelegadosHistorial->estado = 1;
+		$comisionSesionDelegadosHistorial->id_usuario_inserta = $id_user;
+		$comisionSesionDelegadosHistorial->save();
+		
+		/*********************************/
+		
 		$comisionSesion = ComisionSesione::find($comisionSesionDelegado->id_comision_sesion);
 		$comisionSesionDelegado_model = new ComisionSesionDelegado();
 		$comisionSesionDelegados = $comisionSesionDelegado_model->getComisionDelegadosByIdDelegadoAndFecha($comisionDelegadoOld->id_agremiado,$comisionSesion->fecha_programado,$request->fecha_inicio_sesion,$request->fecha_fin_sesion);
 		
 		foreach($comisionSesionDelegados as $row){
 			$comisionSesionDelegadoObj = ComisionSesionDelegado::find($row->id);
+			
+			$id_delegado_anterior_obj = $comisionSesionDelegadoObj->id_delegado;
+			$id_agremiado_anterior_obj = $comisionSesionDelegadoObj->id_agremiado;
+			
 			$comisionSesionDelegadoObj->id_delegado = $id_delegado;
 			$comisionSesionDelegadoObj->save();
+			
+			/*********************************/
+			
+			$comisionSesionDelegadosHistorialObj = new ComisionSesionDelegadosHistoriale;
+			$comisionSesionDelegadosHistorialObj->id_comision_sesion_delegado = $comisionSesionDelegadoObj->id;
+			$comisionSesionDelegadosHistorialObj->id_delegado = $id_delegado_anterior_obj;
+			$comisionSesionDelegadosHistorialObj->id_agremiado = $id_agremiado_anterior_obj;
+			$comisionSesionDelegadosHistorialObj->estado = 1;
+			$comisionSesionDelegadosHistorialObj->id_usuario_inserta = $id_user;
+			$comisionSesionDelegadosHistorialObj->save();
+			
+			/*********************************/
+			
 		}
 		
 		}

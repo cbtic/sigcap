@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:60%!important
+	max-width:70%!important
   }
   
 #tablemodal{

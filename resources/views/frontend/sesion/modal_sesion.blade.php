@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:60%!important
+	max-width:70%!important
   }
   
 #tablemodal{
@@ -894,6 +894,9 @@ function cargarDelegados(){
 											<th>Situaci&oacute;n</th>
 											<th>Coordinador</th>
 											<th>Aprobar Pago</th>
+											<th>CAP Anterior</th>
+											<th>Delegado Anterior</th>
+											<th>Delegados</th>
 											<th>Editar</th>
 											<th>Eliminar</th>
 										</tr>
