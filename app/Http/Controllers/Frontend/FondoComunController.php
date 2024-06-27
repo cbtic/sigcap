@@ -128,13 +128,13 @@ class FondoComunController extends Controller
 
     }
 
-	public function fondoComun_pdf($municipalidad,$anio,$mes)
+	public function fondoComun_pdf($id_ubigeo,$anio,$mes)
 	{
 		$fondo_comun_model = new FondoComun();
 
 		$mesEnLetras = $this->mesesALetras($mes);
 
-		$fondoComun = $fondo_comun_model->ListarDetalleFondoComun($municipalidad, $anio, $mes);
+		$fondoComun = $fondo_comun_model->ListarDetalleFondoComun($id_ubigeo, $anio, $mes);
 		//var_dump($fondoComun);exit();
 
 		$pdf = Pdf::loadView('frontend.fondoComun.fondoComun_pdf',compact('fondoComun','municipalidad','anio','mesEnLetras'));
