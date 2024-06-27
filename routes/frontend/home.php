@@ -744,5 +744,5 @@ Route::post('operacion/extorno_pago', [OperacionController::class, 'extorno_pago
 Route::post('operacion/anulacion', [OperacionController::class, 'anulacion'])->name('operacion.anulacion');
 Route::post('operacion/extorno_anulacion', [OperacionController::class, 'extorno_anulacion'])->name('operacion.extorno_anulacion');
 Route::get('planilla/exportar_listar_recibo_honorario/{periodo}/{anio}/{mes}/{numero_cap}/{agremiado}/{municipalidad}/{fecha_inicio}/{fecha_fin}/{provision}/{cancelacion}/{ruc}', [PlanillaDelegadoController::class, 'exportar_listar_recibo_honorario'])->name('planilla.exportar_listar_recibo_honorario');
-Route::get('fondoComun/fondoComun_pdf/{municipalidad}', [FondoComunController::class, 'fondoComun_pdf'])->name('fondoComun.fondoComun_pdf');
+Route::get('fondoComun/fondoComun_pdf/{municipalidad}/{anio}/{mes}', [FondoComunController::class, 'fondoComun_pdf'])->name('fondoComun.fondoComun_pdf');
 
