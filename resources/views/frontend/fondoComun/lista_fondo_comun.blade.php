@@ -23,7 +23,7 @@
 			foreach ($fondoComun as $row) { ?>
 				<tr style="font-size:13px">
 					<td class="text-left" style="vertical-align:middle">
-                        <a href="javascript:void(0);"  onclick="abrirPdfMunicipalidad('<?php echo addslashes($row->municipalidad); ?>', <?php echo $anio; ?>, <?php echo $mes; ?>)"
+                        <a href="javascript:void(0);"  onclick="abrirPdfMunicipalidad('<?php echo addslashes($row->id_ubigeo); ?>', <?php echo $anio; ?>, <?php echo $mes; ?>)"
                            style="font-size: 12px; text-decoration: underline; color: blue;">
                             <?php echo htmlspecialchars($row->municipalidad); ?>
                         </a>
@@ -58,9 +58,9 @@
 </table>
 
 <script>
-function abrirPdfMunicipalidad(municipalidad,anio,mes) {
+function abrirPdfMunicipalidad(id_ubigeo,anio,mes) {
 	//alert(municipalidad+anio+mes);
-	var href = '/fondoComun/fondoComun_pdf/'+municipalidad+'/'+anio+'/'+mes;
+	var href = '/fondoComun/fondoComun_pdf/'+id_ubigeo+'/'+anio+'/'+mes;
 	window.open(href, '_blank');
 }
 </script>

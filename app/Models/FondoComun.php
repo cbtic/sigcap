@@ -34,12 +34,12 @@ class FondoComun extends Model
 
         $mes= intval($mes);
 
-        $cad = "select t3.desc_ubigeo municipalidad,sum(round(t1.importe_bruto::numeric,2))importe_bruto, sum(round(t1.importe_igv::numeric,2))importe_igv, sum(round(t1.importe_comision_cap::numeric,2))importe_comision_cap, sum(round(t1.importe_fondo_asistencia::numeric,2))importe_fondo_asistencia, sum(round(t1.saldo::numeric,2))saldo
+        $cad = "select t3.desc_ubigeo municipalidad,sum(round(t1.importe_bruto::numeric,2))importe_bruto, sum(round(t1.importe_igv::numeric,2))importe_igv, sum(round(t1.importe_comision_cap::numeric,2))importe_comision_cap, sum(round(t1.importe_fondo_asistencia::numeric,2))importe_fondo_asistencia, sum(round(t1.saldo::numeric,2))saldo, t3.id_ubigeo 
         from delegado_fondo_comuns t1
         --inner join municipalidades t3 on t3.id = t1.id_municipalidad
         inner join ubigeos t3 on t3.id_ubigeo = t1.id_ubigeo
         inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle
-        group by  fecha, desc_ubigeo 
+        group by  fecha, desc_ubigeo, t3.id_ubigeo 
         having EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
         And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'  
         order by 1 asc         
@@ -74,7 +74,7 @@ class FondoComun extends Model
         return $data;
     }
 
-    function ListarDetalleFondoComun($municipalidad ,$anio, $mes){
+    function ListarDetalleFondoComun($id_ubigeo ,$anio, $mes){
 
         //$mes= intval($mes);
 
@@ -84,7 +84,7 @@ class FondoComun extends Model
         inner join liquidaciones l on v.pk_registro = l.id
         inner join solicitudes s on l.id_solicitud = s.id
         inner join municipalidades m on s.id_municipalidad = m.id
-        where m.denominacion ilike '".$municipalidad."' and s.id_tipo_solicitud ='123'
+        where m.id_ubigeo = '".$id_ubigeo."' and s.id_tipo_solicitud ='123'
         and EXTRACT(YEAR FROM c.fecha_pago)::varchar = '".$anio."'
         and EXTRACT(MONTH FROM c.fecha_pago)::varchar = '".$mes."'
         order by c.fecha";
