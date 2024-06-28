@@ -1080,7 +1080,8 @@ class SesionController extends Controller
 
 	function importar_dataLicencia_dictamenes($fecha_ejecucion,$id_comision,$id_sesion){
 	
-		
+		//var_dump($fecha_ejecucion);exit();
+
 		$sesion_model = new ComisionSesione;
 
 		$data = [];
@@ -1092,7 +1093,7 @@ class SesionController extends Controller
 		$id_sesion = intval($id_sesion);
 
 		$fecha_ejecucion_formateada = Carbon::createFromFormat('d-m-Y', $fecha_ejecucion)->format('Y-m-d');
-		//var_dump($fecha_ejecucion_formateada,$equivaComision[0]->id_comision_dl,$id_sesion);exit();
+		//var_dump($equivaComision[0]->id_comision_dl);exit();
 		
 		$dictamenes = NULL;
 		if(isset($equivaComision[0]->id_comision_dl) && $equivaComision[0]->id_comision_dl>0){

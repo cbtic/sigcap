@@ -102,10 +102,16 @@ class DerechoRevision extends Model
 	
 	public function getProyectistaByIdSolicitud($id){
 
-        $cad = "select a.numero_cap, a.desc_cliente
+        $cad = "select a.numero_cap, a.desc_cliente, pr.id_tipo_proyectista 
         from proyectistas pr 
         left join agremiados a on pr.id_agremiado = a.id
-        where pr.id_solicitud=".$id;
+        where pr.id_solicitud= '".$id."'
+        union all 
+        select po.colegiatura numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres nombres, po.id_tipo_proyectista 
+        from profesion_otros po 
+        inner join personas p on po.id_persona =p.id
+        where po.id_solicitud= '".$id."'
+        order by id_tipo_proyectista ";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
