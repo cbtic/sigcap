@@ -320,11 +320,11 @@ class DerechoRevision extends Model
         tm2.denominacion ubicacion, a.numero_regional, a.direccion, l.denominacion as local, r.denominacion regional, tm3.denominacion autoriza, tm4.denominacion actividad_gremial, tm5.denominacion situacion, m.denominacion municipalidad, s.valor_obra, s.numero_revision, s.etapa, s.numero_etapa,
         (select 'CAP' tipo_colegiatura
         FROM proyectistas p4
-        WHERE p4.id_solicitud = s.id
+        WHERE p4.id_solicitud = s.id and p4.id_tipo_proyectista=1
         UNION
         SELECT 'CIP' tipo_colegiatura
         FROM profesion_otros po 
-        WHERE po.id_solicitud = s.id
+        WHERE po.id_solicitud = s.id and po.id_tipo_proyectista=1
         order by tipo_colegiatura limit 1) as tipo_colegiatura
         from solicitudes s 
         left join proyectos p on s.id_proyecto = p.id

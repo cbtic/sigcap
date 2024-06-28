@@ -154,4 +154,29 @@ class Proyectista extends Model
         return $data;
     }
 
+    function getDatosProyectistaIngeniero_($id_solicitud){
+
+        $cad = "select p.id, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres nombres, a.numero_cap numero_cap, tm3.denominacion ubicacion, a.numero_regional, p.direccion , lo.denominacion as local, r.denominacion regional, tm4.denominacion autoriza, tm.denominacion situacion, p.numero_celular, tm2.denominacion actividad, 'CAP' tipo_colegiatura
+        from proyectistas p2 
+        inner join agremiados a on p2.id_agremiado = a.id
+        left join personas p on a.id_persona =p.id
+        inner join solicitudes s on p2.id_solicitud = s.id
+        left join tabla_maestras tm on a.id_situacion = tm.codigo::int And tm.tipo ='14'
+        left join tabla_maestras tm2 on a.id_actividad_gremial = tm2.codigo::int And tm2.tipo ='46'
+        left join tabla_maestras tm3 on a.id_ubicacion = tm3.codigo::int And tm3.tipo ='63'
+        left join locales lo on a.id_local = lo.id 
+        left join regiones r on a.id_regional = r.id
+        left join tabla_maestras tm4 on a.id_autoriza_tramite = tm4.codigo::int And tm4.tipo ='45'
+        Where s.id='".$id_solicitud."' and p2.id_tipo_proyectista=1
+        union all
+        select p.id, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres nombres, po.colegiatura numero_cap, '' ubicacion, null numero_regional, p.direccion , '' as local, '' regional, '' autoriza, '' situacion, p.numero_celular, '' actividad, 'CIP' tipo_colegiatura
+        from profesion_otros po 
+        inner join personas p on po.id_persona = p.id
+        inner join solicitudes s on po.id_solicitud = s.id
+        where s.id='".$id_solicitud."' and po.id_tipo_proyectista=1";
+            
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }

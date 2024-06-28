@@ -1330,6 +1330,7 @@ class DerechoRevisionController extends Controller
 		
 		//$derechoRevision = new DerechoRevision;
 		$derechoRevision_model = new DerechoRevision;
+		$proyectista_model = new Proyectista;
 		$tablaMaestra_model = new TablaMaestra;
 		$parametro_model = new Parametro;
 		$ubigeo_model=new Ubigeo;
@@ -1343,10 +1344,11 @@ class DerechoRevisionController extends Controller
 		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
 		$anio_actual = Carbon::now()->year;
 		$parametro = $parametro_model->getParametroAnio($anio_actual);
+		$proyectista_ = $proyectista_model->getDatosProyectistaIngeniero_($id);
 
 		//var_dump($parametro);exit;
 
-        return view('frontend.derecho_revision.modal_reintegro',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro'));
+        return view('frontend.derecho_revision.modal_reintegro',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro','proyectista_'));
 		
     }
 
