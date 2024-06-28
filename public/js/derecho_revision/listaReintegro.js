@@ -139,7 +139,9 @@ $(document).ready(function () {
 	datatablenew();
 	datatablenew2();
 	obtenerPropietario_();
-	calculoVistaPrevia();
+	//if($('#valor_reintegro').val()==0){
+		calculoVistaPrevia();
+	//}
 	
 	//calcularReintegro()
 	

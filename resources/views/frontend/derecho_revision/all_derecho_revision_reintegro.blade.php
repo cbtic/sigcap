@@ -347,7 +347,8 @@ if($('#instancia').val()==250){
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_proyectista as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyectista->id_tipo_profesional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->codigo?>" <?php if(isset($proyectista->id_tipo_profesional) && $row->codigo==$proyectista->id_tipo_profesional) {echo "selected='selected'";}
+									elseif (isset($profesionales_otro->id_tipo_profesional) && $row->codigo==$profesionales_otro->id_tipo_profesional) {echo "selected='selected'";}?>><?php echo $row->denominacion?></option>
 									<?php
 									}
 									?>
@@ -356,7 +357,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-3" >
 								<div class="form-group "id="agremiado_">
 									<label class="control-label form-control-sm">Nombre</label>
-									<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->apellido_paterno.' '. $datos_persona->apellido_materno.' '.$datos_persona->nombres?>" type="text" readonly='readonly'>
+									<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->nombres?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="persona_">
 									<label class="control-label form-control-sm">Nombre/Raz&oacute;n Social</label>
@@ -365,8 +366,8 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="numero_cap_">
-									<label class="control-label form-control-sm">N° CAP</label>
-									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
+									<label class="control-label form-control-sm">N° <?php echo $datos_proyectista[0]->tipo_colegiatura?></label>
+									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
 								</div>
 								<div class="form-group" id="dni_">
 									<label class="control-label form-control-sm">DNI</label>
@@ -376,29 +377,29 @@ if($('#instancia').val()==250){
 							<div class="col-lg-1">
 								<div class="form-group" id="situacion_">
 									<label class="control-label form-control-sm">Situaci&oacute;n</label>
-									<input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->situacion?>" type="text" readonly='readonly'>
+									<input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->situacion?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="fecha_nacimiento_">
 									<label class="control-label form-control-sm">Fecha de Nacimiento</label>
-									<input id="fecha_nacimiento" name="fecha_nacimiento" on class="form-control form-control-sm"  value="<?php echo $datos_persona->fecha_nacimiento?>" type="text" readonly='readonly'>
+									<input id="fecha_nacimiento" name="fecha_nacimiento" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->fecha_nacimiento?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 
 							<div class="col-lg-1">
 								<div class="form-group" id="direccion_agremiado_">
 									<label class="control-label form-control-sm">T&eacute;lefono</label>
-									<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->celular1?>" type="text" readonly='readonly'>
+									<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->numero_celular?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="direccion_persona_">
 									<label class="control-label form-control-sm">Direcci&oacute;n</label>
-									<input id="direccion_persona" name="direccion_persona" on class="form-control form-control-sm"  value="<?php echo $datos_persona->direccion?>" type="text" readonly='readonly'>
+									<input id="direccion_persona" name="direccion_persona" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->direccion?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 
 							<div class="col-lg-3">
 								<div class="form-group" id="n_regional_">
 									<label class="control-label form-control-sm">Email</label>
-									<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->email?>" type="text" readonly='readonly'>
+									<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->correo?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="celular_">
 									<label class="control-label form-control-sm">Celular</label>
@@ -408,7 +409,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-2">
 								<div class="form-group" id="act_gremial_">
 									<label class="control-label form-control-sm">Actividad Gremial</label>
-									<input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->actividad?>" type="text" readonly='readonly'>
+									<input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->actividad?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="email_">
 									<label class="control-label form-control-sm">Email</label>
@@ -426,7 +427,7 @@ if($('#instancia').val()==250){
 						
 						<?php 
 							foreach($proyectista_solicitud as $row){
-							if($row->numero_cap!=$datos_agremiado->numero_cap){
+							if($row->numero_cap!=$datos_proyectista[0]->numero_cap){
 						?>
 							
 						<div class="row" style="padding-left:10px">
@@ -450,7 +451,7 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="numero_cap_">
-									<label class="control-label form-control-sm">N° CAP</label>
+									<label class="control-label form-control-sm">N° <?php echo $row->tipo_colegiatura?></label>
 									<input id="numero_cap_row" name="numero_cap_row" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
 								</div>
 							</div>

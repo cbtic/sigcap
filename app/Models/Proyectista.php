@@ -23,15 +23,20 @@ class Proyectista extends Model
 
     function getProyectistaSolicitud($id_solicitud){      
         $cad = "select p.id, a.numero_cap, pe.apellido_paterno||' '||pe.apellido_materno||' '||pe.nombres agremiado, a.celular1, a.email1, 
-		t3.denominacion situacion,t4.denominacion actividad, p.id_tipo_profesional 
-		from proyectistas p 
+        t3.denominacion situacion,t4.denominacion actividad, p.id_tipo_profesional, 'CAP' tipo_colegiatura
+        from proyectistas p 
         inner join agremiados a on p.id_agremiado = a.id 
         inner join personas pe on a.id_persona = pe.id
-		left join tabla_maestras t3 on a.id_situacion = t3.codigo::int And t3.tipo ='14'
-		left join tabla_maestras t4 on a.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
-        where p.id_solicitud = '".$id_solicitud."'
+        left join tabla_maestras t3 on a.id_situacion = t3.codigo::int And t3.tipo ='14'
+        left join tabla_maestras t4 on a.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
+        where p.id_solicitud = '".$id_solicitud."' and p.id_tipo_proyectista=2
         and p.estado='1'
-        order by p.id asc";
+        union all
+        select p.id, po.colegiatura numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.numero_celular, p.correo, '' situacion, '' actividad, po.id_tipo_profesional , 'CIP' tipo_colegiatura
+        from profesion_otros po 
+        inner join personas p on po.id_persona = p.id
+        inner join solicitudes s on po.id_solicitud = s.id
+        where s.id='".$id_solicitud."' and po.id_tipo_proyectista=2 and p.estado='1'";
 
         //echo $cad;
 		$data = DB::select($cad);
@@ -61,6 +66,40 @@ class Proyectista extends Model
         return $data;
     }
 
+    function getProyectistaSolicitudHU($id_solicitud){      
+        $cad = "select p.id, a.numero_cap, pe.apellido_paterno||' '||pe.apellido_materno||' '||pe.nombres agremiado, a.celular1, a.email1, 
+        t3.denominacion situacion,t4.denominacion actividad, p.id_tipo_profesional, 'CAP' tipo_colegiatura, p.id_tipo_proyectista
+        from proyectistas p 
+        inner join agremiados a on p.id_agremiado = a.id 
+        inner join personas pe on a.id_persona = pe.id
+        left join tabla_maestras t3 on a.id_situacion = t3.codigo::int And t3.tipo ='14'
+        left join tabla_maestras t4 on a.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
+        where p.id_solicitud = '".$id_solicitud."'
+        and p.estado='1'
+        order by p.id_tipo_proyectista";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getProyectistaSolicitudHULiq($id_solicitud){      
+        $cad = "select p.id, a.numero_cap, pe.apellido_paterno||' '||pe.apellido_materno||' '||pe.nombres agremiado, a.celular1, a.email1, 
+        t3.denominacion situacion,t4.denominacion actividad, p.id_tipo_profesional, 'CAP' tipo_colegiatura
+        from proyectistas p 
+        inner join agremiados a on p.id_agremiado = a.id 
+        inner join personas pe on a.id_persona = pe.id
+        left join tabla_maestras t3 on a.id_situacion = t3.codigo::int And t3.tipo ='14'
+        left join tabla_maestras t4 on a.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
+        where p.id_solicitud = '".$id_solicitud."'
+        and p.estado='1'
+        order by p.id_tipo_proyectista";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
     function getProyectista($id_solicitud){
 
         $cad = "select a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, a.celular1, a.email1
@@ -70,6 +109,46 @@ class Proyectista extends Model
         inner join solicitudes s on p.id_solicitud = s.id
         where s.id='".$id_solicitud."'
         and p.estado='1'";
+        
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getProyectistaIngeniero($id_solicitud){
+
+        $cad = "select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, a.id_situacion, p.numero_celular, p.correo
+        from proyectistas p2 
+        inner join agremiados a on p2.id_agremiado = a.id
+        left join personas p on a.id_persona =p.id
+        inner join solicitudes s on p2.id_solicitud = s.id
+        Where s.id='".$id_solicitud."' and p2.id_tipo_proyectista=1
+        union all
+        select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, null, p.numero_celular, p.correo 
+        from profesion_otros po 
+        inner join personas p on po.id_persona = p.id
+        inner join solicitudes s on po.id_solicitud = s.id
+        where s.id='".$id_solicitud."' and po.id_tipo_proyectista=1";
+        
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getDatosProyectistaIngeniero($id_solicitud){
+
+        $cad = "select p.id, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres nombres, a.numero_cap numero_cap, tm.denominacion situacion, p.numero_celular, p.correo,tm2.denominacion actividad, 'CAP' tipo_colegiatura
+        from proyectistas p2 
+        inner join agremiados a on p2.id_agremiado = a.id
+        left join personas p on a.id_persona =p.id
+        inner join solicitudes s on p2.id_solicitud = s.id
+        left join tabla_maestras tm on a.id_situacion = tm.codigo::int And tm.tipo ='14'
+        left join tabla_maestras tm2 on a.id_actividad_gremial = tm2.codigo::int And tm2.tipo ='46'
+        Where s.id='".$id_solicitud."' and p2.id_tipo_proyectista=1
+        union all
+        select p.id, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres nombres, po.colegiatura numero_cap, '' situacion, p.numero_celular, p.correo, '' actividad, 'CIP' tipo_colegiatura
+        from profesion_otros po 
+        inner join personas p on po.id_persona = p.id
+        inner join solicitudes s on po.id_solicitud = s.id
+        where s.id='".$id_solicitud."' and po.id_tipo_proyectista=1";
         
 		$data = DB::select($cad);
         return $data;
