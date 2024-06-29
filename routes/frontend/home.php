@@ -747,5 +747,5 @@ Route::post('operacion/anulacion', [OperacionController::class, 'anulacion'])->n
 Route::post('operacion/extorno_anulacion', [OperacionController::class, 'extorno_anulacion'])->name('operacion.extorno_anulacion');
 
 Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');
-Route::get('reporte/lista_reporte_ajax', [ReporteController::class, 'lista_reporte_ajax'])->name('reporte.lista_reporte_ajax');
+Route::get('reporte/listar_reporte_usuario', [ReporteController::class, 'listar_reporte_usuario'])->name('reporte.listar_reporte_usuario');
 

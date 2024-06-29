@@ -87,8 +87,9 @@ $(document).ready(function () {
 		changeYear: true,
     });
 	
-	datatablenew();
-	datatablenewComputoCerrado();
+	//cargarReporte()
+	//datatablenew();
+	//datatablenewComputoCerrado();
 
 	$(function() {
 		$('#modalSeguro #nombre_plan_').keyup(function() {
@@ -602,6 +603,51 @@ $('#modalEmpresaTitularSaveBtn').click(function (e) {
   });
 });
 
+function cargarReportes(){
+	var tipo_documento = $("#tipo_documento").val();
+	var id_persona = 0;
+	if(tipo_documento=="79")id_persona = $('#id_ubicacion').val();
+	else id_persona = $('#id_persona').val();
+	
+	$('#tblReporte').dataTable().fnDestroy();
+    $("#tblReporte tbody").html("");
+	$.ajax({
+			//url: "/ingreso/obtener_pago/"+numero_documento,
+			url: "/ingreso/obtener_pago/"+tipo_documento+"/"+id_persona,
+			type: "GET",
+			success: function (result) {  
+					$("#tblReporte").html(result);
+					$('[data-toggle="tooltip"]').tooltip();
+					
+					$('#tblReporte').DataTable({
+						//"sPaginationType": "full_numbers",
+						//"paging":false,
+						"searching": false,
+						"info": false,
+						"bSort" : false,
+						"dom": '<"top">rt<"bottom"flpi><"clear">',
+						"language": {"url": "/js/Spanish.json"},
+					});
+							
+			}
+	});
+
+}
+
+function cargarReporte(){
+    
+	//var numero_documento = $("#numero_documento").val();
+	//var tipo_documento = $("#tipo_documento").val();
+    $("#tblReporte tbody").html("");
+	$.ajax({
+			url: "/reporte/listar_reporte_usuario",
+			type: "GET",
+			success: function (result) {  
+					$("#tblReporte tbody").html(result);
+			}
+	});
+
+}
 
 function datatablenew(){
     var oTable = $('#tblAfiliado').dataTable({
@@ -797,7 +843,7 @@ function datatablenew(){
 function datatablenewComputoCerrado(){
     var oTable = $('#tblComputoCerrado').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/sesion/lista_computo_cerrado_ajax",
+        "sAjaxSource": "/reporte/lista_reporte_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -956,8 +1002,9 @@ function datatablenewComputoCerrado(){
 }
 
 function fn_ListarBusqueda() {
-    datatablenew();
-	datatablenewComputoCerrado();
+	//cargarReporte()
+    //datatablenew();
+	//datatablenewComputoCerrado();
 };
 
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {

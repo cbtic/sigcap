@@ -202,25 +202,49 @@
 								</div>
 
 							</div>
-
-
-
 								
 							
 						</div>
 
 						<div class="card-body">
-							<div id="divPlanilla" class="table-responsive">
-								<table id="tblPlanilla" class="table table-hover table-sm">
+							<div id="divReporte" class="table-responsive">
+								<table id="tblReporte" class="table table-hover table-sm">
 									<thead>
 										<tr style="font-size:13px">
 											<th>id</th>
 											<th>Reporte</th>
 											<th>Ver</th>
-
 										</tr>
 									</thead>
 									<tbody>
+										<?php $n = 0;		?>
+											<?php foreach ($reporte as $key => $row) { ?>
+
+												<tr>
+													<td class="text-left"><?php $n = $n + 1;
+																			echo $n; ?>
+													</td>
+
+													<td class="text-left">
+														<?php														
+															echo $row['descripcion'] //echo $row; ?>
+													</td>
+													
+													<td class="text-left">
+														<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nd_edita')}}" id="frmPagos_nd" name="frmPagos_nd" autocomplete="off">		
+	
+															<input class="btn btn-info pull-rigth" value="Reporte" type="button" id="btnBoleta" onclick="">
+														</form>
+													
+													</td>
+													
+												</tr>
+												
+											<?php } ?>
+										
+
+										
+
 									</tbody>
 								</table>
 							</div><!--table-responsive-->
