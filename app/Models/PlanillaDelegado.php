@@ -29,11 +29,13 @@ where pd.id=".$id;
         $cad = "delete from planilla_delegado_detalles where id_planilla=(select id from planilla_delegados pd where id_periodo_comision=".$id_periodo." and periodo=".$anio." and mes=".$mes." and estado='1')";
 		
 		$data = DB::select($cad);
+
+		//if(!$data)
 		
 		$cad = "delete from planilla_delegados where id_periodo_comision=".$id_periodo." and periodo=".$anio." and mes=".$mes." and estado='1'";
 		
 		$data = DB::select($cad);
-		
+		//var_dump($data);
         return $data;
     }
 	

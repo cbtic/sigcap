@@ -32,7 +32,16 @@ $(document).ready(function () {
 		descargarExcel()
 
 	});
+
+	$('#btnDescargarRH').on('click', function () {
+		DescargarArchivosRH()
+
+	});
 	
+	$('#btnDescargarPdf').on('click', function () {
+		descargarPdf()
+
+	});
 
 	$('#agremiado_bus').keypress(function(e){
 		if(e.which == 13) {
@@ -253,6 +262,8 @@ function eliminarPlanilla(){
 						return false;
 					}
 					*/
+
+					alert(result);
 					cargarPlanillaDelegado();
 					
 			}
@@ -352,9 +363,10 @@ function datatablenew(){
 			var fecha_inicio = $('#fecha_inicio_bus').val();
 			var fecha_fin = $('#fecha_fin_bus').val();
 
-			var provision = $('#Provision_b').val();
+			var provision = $('#provision_b').val();
 			var cancelacion = $('#cancelacion_b').val();
 			var grupo = '';
+			var tiene_ruc = $('#ruc_b').val();
 
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
@@ -367,7 +379,7 @@ function datatablenew(){
 						id:id,periodo:periodo,anio:anio,mes:mes,numero_cap:numero_cap,municipalidad:municipalidad,
 						agremiado:agremiado,situacion:situacion,numero_comprobante:numero_comprobante,
 						fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,estado:estado,provision:provision,cancelacion:cancelacion,grupo:grupo,
-						_token:_token
+						tiene_ruc:tiene_ruc,_token:_token
                        },
                 "success": function (result) {
                     fnCallback(result);

@@ -13,6 +13,32 @@ $(document).ready(function () {
 	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
+
+	$("#cuenta_bus").select2({ 
+		width: '100%',
+		matcher: function(params, data) {
+
+            if ($.trim(params.term) === '') {
+                return data;
+            }
+
+            var text = data.text || '';
+
+            var parts = text.split('-');
+            var cuenta = parts[0] ? parts[0].trim() : '';
+
+            if (cuenta.toUpperCase().startsWith(params.term.toUpperCase())) {
+                return data;
+            }
+
+            return null;
+        } 
+	});
+	$("#centro_costo_bus").select2({ width: '100%' });
+	$("#partida_presupuestal_bus").select2({ width: '100%' });
+	$("#medio_pago_bus").select2({ width: '100%' });
+	$("#codigo_financiero_bus").select2({ width: '100%' });
+	$("#origen_b").select2({ width: '100%' });
 	
 	
 	$(function() {
@@ -145,13 +171,14 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 		
-			var cuenta = $('#cuenta_b').val();
+			var tipo_planilla = $('#tipo_planilla_bus').val();
+			var cuenta = $('#cuenta_bus').val();
 			var denominacion = $('#denominacion_b').val();
-			var tipo_cuenta = $('#tipo_cuenta_b').val();
-			var centro_costo = $('#centro_costo_b').val();
-			var partida_presupuestal = $('#partida_presupuestal_b').val();
-			var codigo_financiero = $('#codigo_financiero_b').val();
-			var medio_pago = $('#medio_pago_b').val();
+			var tipo_cuenta = $('#tipo_cuenta_bus').val();
+			var centro_costo = $('#centro_costo_bus').val();
+			var partida_presupuestal = $('#partida_presupuestal_bus').val();
+			var codigo_financiero = $('#codigo_financiero_bus').val();
+			var medio_pago = $('#medio_pago_bus').val();
 			var origen = $('#origen_b').val();
 			var estado = $('#estado_b').val();
 
@@ -163,7 +190,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						cuenta:cuenta,denominacion:denominacion,tipo_cuenta:tipo_cuenta,centro_costo:centro_costo,
+						tipo_planilla:tipo_planilla,cuenta:cuenta,denominacion:denominacion,tipo_cuenta:tipo_cuenta,centro_costo:centro_costo,
 						partida_presupuestal:partida_presupuestal,codigo_financiero:codigo_financiero,medio_pago:medio_pago,origen:origen,estado:estado,
 						_token:_token
                        },

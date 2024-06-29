@@ -148,21 +148,93 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
+
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="tipo_planilla_bus" id="tipo_planilla_bus" class="form-control form-control-sm">
+                            <option value="">--Seleccionar Tipo Planilla--</option>
+                            <?php foreach ($tipo_planilla as $row) { ?>
+                                <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="cuenta_bus" id="cuenta_bus" class="form-control form-control-sm">
+                            <option value="">--Seleccionar Cuenta--</option>
+                            <?php foreach ($plan_contable as $row) { ?>
+                                <option value="<?php echo $row->id?>"><?php echo $row->cuenta."-".$row->denominacion ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="denominacion_b" name="denominacion_b" placeholder="Denominación">
 					</div>
 
-                    <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="origen_b" name="origen_b" placeholder="Origen">
-					</div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="tipo_cuenta_bus" id="tipo_cuenta_bus" class="form-control form-control-sm">
+                            <option value="">--Seleccionar Tipo--</option>
+                            <?php foreach ($tipo_cuenta as $row) { ?>
+                                <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
 
-                    <input type="hidden" name="cuenta_b" id="cuenta_b" value="">
-                    <input type="hidden" name="tipo_cuenta_b" id="tipo_cuenta_b" value="">
-                    <input type="hidden" name="centro_costo_b" id="centro_costo_b" value="">
-                    <input type="hidden" name="partida_presupuestal_b" id="partida_presupuestal_b" value="">
-                    <input type="hidden" name="codigo_financiamiento_b" id="codigo_financiamiento_b" value="">
-                    <input type="hidden" name="medio_pago_b" id="medio_pago_b" value="">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="centro_costo_bus" id="centro_costo_bus" class="form-control form-control-sm">
+                            <option value="">--Seleccionar Centro Costo--</option>
+                            <?php foreach ($centro_costo as $row) { ?>
+                                <option value="<?php echo $row->id?>"><?php echo $row->codigo."-".$row->denominacion ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="partida_presupuestal_bus" id="partida_presupuestal_bus" class="form-control form-control-sm">
+                            <option value="">--Seleccionar Partida Presupuestal--</option>
+                            <?php foreach ($partida_presupuestal as $row) { ?>
+                                <option value="<?php echo $row->id?>"><?php echo $row->codigo."-".$row->denominacion ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" style="padding:20px 20px 0px 20px;">
+
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="codigo_financiero_bus" id="codigo_financiero_bus" class="form-control form-control-sm">
+                            <option value="">--Seleccionar C&oacute;digo Financiero--</option>
+                            <?php foreach ($codigo_financiero as $row) { ?>
+                                <option value="<?php echo $row->id?>"><?php echo $row->codigo."-".$row->denominacion ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="medio_pago_bus" id="medio_pago_bus" class="form-control form-control-sm">
+                            <option value="">--Seleccionar Medio de Pago--</option>
+                            <?php foreach ($medio_pago as $row) { ?>
+                                <option value="<?php echo $row->codigo?>"><?php echo $row->codigo."-".$row->denominacion ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <select name="origen_b" id="origen_b" class="form-control form-control-sm">
+                            <option value="">--Seleccionar Origen--</option>
+                            <?php foreach ($origen as $row) { ?>
+                                <option value="<?php echo $row->codigo?>"><?php echo $row->codigo."-".$row->denominacion ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                    <input type="hidden" name="tipo_planilla_bus" id="tipo_planilla_bus" value="">
+                    <input type="hidden" name="cuenta_bus" id="cuenta_bus" value="">
+                    <input type="hidden" name="tipo_cuenta_bus" id="tipo_cuenta_bus" value="">
+                    <input type="hidden" name="centro_costo_bus" id="centro_costo_bus" value="">
+                    <input type="hidden" name="partida_presupuestal_bus" id="partida_presupuestal_bus" value="">
+                    <input type="hidden" name="codigo_financiero_bus" id="codigo_financiero_bus" value="">
+                    <input type="hidden" name="medio_pago_bus" id="medio_pago_bus" value="">
                     <input type="hidden" name="origen_b" id="origen_b" value="">
                                  
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">

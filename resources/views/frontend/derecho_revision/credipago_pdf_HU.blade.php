@@ -142,7 +142,7 @@ $(document).ready(function() {
     <div class="container">
         <div class="vertical-text" style="position: absolute; top: 0; right: 65; writing-mode: vertical-lr;">
             <div style="display: inline-block; white-space: nowrap; font-weight: bold;">IMPORTANTE.-</div>
-            <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n adjuntarla al certificado de habilitaci&oacute;</div>
+            <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n adjuntarla al certificado de habilitaci&oacute;n</div>
         </div>
     </div>
     <!--<div style="display: flex !important; width:100%">
@@ -160,7 +160,7 @@ $(document).ready(function() {
             <tr>
                 <td class="td" style ="text-align: right; width: 60%;">CREDIPAGO</td>
                 <td class="td" style ="text-align: left; width: 15%;"></td>
-                <td class="td" style ="text-align: left; width: 20%;">N° Certificado:</b></td>
+                <td class="td" style ="text-align: left; width: 20%;"></b></td>
                 <td class="td" style ="text-align: right; width: 5%;"><?php //echo $credipago;?></td>                
             </tr>
         </tbody>
@@ -172,18 +172,27 @@ $(document).ready(function() {
         <hr>
         <div class="contenido">
             
-            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px; vertical-align:top">
                 <tbody>
                     <tr>
-                        <td class="td" style ="text-align: left; width: 35%;"><b>ARQUITECTO:</b></td>
-                        <td class="td" style ="text-align: left; width: 45%;"><?php foreach($proyectista_nombres as $nombres):?>
+                        <td class="td" style ="text-align: left; width: 44%;"><b>ARQUITECTO:</b></td>
+                        <td class="td" style ="text-align: left; width: 41%;"><?php foreach($proyectista_nombres as $nombres):?>
                                                                                 <?= ($nombres) ?> <br>
                                                                                 <?php endforeach;?>
                                                                                 </td>
+                        <td class="td" style ="text-align: right; width: 7%; font-size:11px; height:25px;"><b>N° CAP</b></td>
+                        <td class="td" style ="text-align: right; width: 8%; font-size:11px; height:25px"><?php foreach($proyectista_cap as $cap):?>
+                                                                                                            <?= ($cap) ?> <br>
+                                                                                                            <?php endforeach;?>
+                                                                                                            </td>
                     </tr>
+                </tbody>
+            </table>
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+                <tbody>
                     <tr>
-                        <td class="td" style ="text-align: left; width: 35%;"></td>
-                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $tipo_proyectista;?></td>
+                        <td class="td" style ="text-align: left; width: 35%; font-size:11px; height:25px"></td>
+                        <td class="td" style ="text-align: left; width: 45%; font-size:11px; height:25px"><?php echo $tipo_proyectista;?></td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: left; width: 35%; height:25px"><b>NOMBRE DEL PROPIETARIO:</b></td>

@@ -31,11 +31,12 @@ class PlanContableController extends Controller
 		
 		foreach($dataWebApi as $row){
 			//print_r($row);
-			$planContableExiste = PlanContable::where("cuenta",$row->CUENTA)->where("estado",1)->get();
+			$CUENTA = trim($row->CUENTA);
+			$planContableExiste = PlanContable::where("cuenta",$CUENTA)->where("estado",1)->get();
 			
 			if(count($planContableExiste)==0){
 				$planContable = new PlanContable;
-				$planContable->cuenta = $row->CUENTA;
+				$planContable->cuenta = $CUENTA;
 				$planContable->denominacion = $row->NOMBRE;
 				$planContable->estado = 1;
 				$planContable->id_usuario_inserta = 1;

@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:60%!important
+	max-width:70%!important
   }
   
 #tablemodal{
@@ -260,7 +260,7 @@ function fn_save_requisito(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Ver Proyectistas
+				Historial Delegados
 			</div>
 			
             <div class="card-body">
@@ -275,17 +275,25 @@ function fn_save_requisito(){
                     <table id="tblPuesto" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
+                            <th>Puesto</th>
                             <th>CAP</th>
-                            <th>Nombre Proyectista</th>
+							<th>Delegado</th>
+							<th>Situaci&oacute;n</th>
                         </tr>
                         </thead>
                         <tbody style="font-size:13px">
 						<?php  
-						foreach($proyectista as $row){
+						foreach($comisionSesionDelegadoHistorial as $row){
+							$puesto = $row->puesto;
+							$disabled = "";
+							if($puesto=="")$puesto="ASESOR / ESPECIALISTA";
+							//echo $puesto; 
 						?>
 						<tr>
+							<td class="text-left" style="vertical-align:middle"><?php echo $puesto?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->numero_cap?></td>
-							<td class="text-left" style="vertical-align:middle"><?php echo $row->desc_cliente?></td>
+							<td class="text-left" style="vertical-align:middle"><?php echo $row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></td>
+							<td class="text-left" style="vertical-align:middle"><?php echo $row->situacion?></td>
 						</tr>
 						<?php 
 							}	
@@ -297,7 +305,7 @@ function fn_save_requisito(){
 					<div class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-md float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide');" class="btn btn-md btn-success" style="margin-bottom:15px;">Cerrar</a>
+								<a href="javascript:void(0)" onClick="$('#openOverlayOpc2').modal('hide');" class="btn btn-md btn-success" style="margin-bottom:15px;">Cerrar</a>
 								
 							</div>
 												

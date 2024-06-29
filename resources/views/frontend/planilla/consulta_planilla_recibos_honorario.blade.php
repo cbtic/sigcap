@@ -600,7 +600,7 @@ label.form-control-sm{
 													</div>
 													
 													
-													<div class="col-lg-2 col-md-1-5 col-sm-12 col-xs-12">
+													<div class="col-lg-1-5 col-md-1-5 col-sm-12 col-xs-12">
 														<select name="provision_b" id="provision_b" class="form-control form-control-sm">
 															<option value="">Todos Provisión</option>
 															<option value="Si">Si</option>
@@ -608,7 +608,7 @@ label.form-control-sm{
 														</select>
 													</div>
 
-													<div class="col-lg-2 col-md-1-5 col-sm-12 col-xs-12">
+													<div class="col-lg-1-5 col-md-1-5 col-sm-12 col-xs-12">
 														<select name="cancelacion_b" id="cancelacion_b" class="form-control form-control-sm">
 															<option value="">Todos Cancelación</option>
 															<option value="Si">Si</option>
@@ -616,10 +616,18 @@ label.form-control-sm{
 														</select>
 													</div>
 
+													<div class="col-lg-1 col-md-1-5 col-sm-12 col-xs-12">
+														<select name="ruc_b" id="ruc_b" class="form-control form-control-sm">
+															<option value="">Todos RUC</option>
+															<option value="Si">CON RUC</option>
+															<option value="No">SIN RUC</option>
+														</select>
+													</div>
 						
 													
 													<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 														<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar_" style="margin-left:20px" />
+														<input class="btn btn-sm btn-secondary float-rigth" value="Descargar" name="descargar" type="button" id="btnDescargarRH" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 													</div>
 												</div>

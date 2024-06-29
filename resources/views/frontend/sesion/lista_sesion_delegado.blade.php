@@ -30,6 +30,12 @@ if($row->situacion=="INHABILITADO" || $row->situacion=="FALLECIDO")echo "disable
 ?> 
 />
 </td>
+
+<td class='text-left'><?php echo $row->numero_cap_anterior?></td>
+<td class='text-left'><?php echo $row->apellido_paterno_anterior." ".$row->apellido_materno_anterior." ".$row->nombres_anterior?></td>
+<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-warning' data-toggle='modal' onclick=modalHistorialDelegadoSesion('<?php echo $row->id?>') >Ver Historial</button></td>
+
+
 <td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('<?php echo $row->id?>') >Editar</button></td>
 <td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-danger' data-toggle='modal' onclick=eliminarDelegadoSesion('<?php echo $row->id?>') >Eliminar</button></td>
 <?php 
