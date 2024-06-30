@@ -1531,7 +1531,7 @@ class DerechoRevisionController extends Controller
 		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
-		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud($id);
+		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud_($id);
 		//$propietario_ = Propietario::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->first();
 		//var_dump($derechoRevision_->id).exit();
 		$propietario_solicitud = $propietario_model->getPropietarioSolicitud($id);
@@ -1625,15 +1625,18 @@ class DerechoRevisionController extends Controller
 		$proyectista->id_solicitud = $derecho_revision->id;
 		$proyectista->save();
 
-		foreach($tipo_uso as $key=>$row){
+		foreach($tipo_proyectista as $key=>$row){
+
+			$agremiado = Agremiado::where("numero_cap",$request->numero_cap_row[$key])->where("estado","1")->first();
 			//echo "ok";
-			$uso_edificacion = new UsoEdificacione;
-			$uso_edificacion->id_tipo_uso = $tipo_uso[$key];
-			$uso_edificacion->id_sub_tipo_uso = $sub_tipo_uso[$key];
-			$uso_edificacion->area_techada = convertir_entero($area_techada[$key]);
-			$uso_edificacion->id_solicitud = $derecho_revision->id;
-			$uso_edificacion->id_usuario_inserta = $id_user;
-			$uso_edificacion->save();
+			$proyectista = new Proyectista;
+			$proyectista->id_tipo_profesional = $request->tipo_proyectista[$key];
+			$proyectista->id_agremiado = $agremiado->id;
+			$proyectista->celular = $agremiado->celular1;
+			$proyectista->email = $agremiado->email1;
+			$proyectista->id_solicitud = $derecho_revision->id;
+			$proyectista->id_usuario_inserta = $id_user;
+			$proyectista->save();
 		}
 		
 		/***********************************/
