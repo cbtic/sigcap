@@ -537,48 +537,48 @@ function fn_save_credipago(){
                 </div>
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
-                        <label class="control-label form-control-sm">N&uacute;mero <?php echo $liquidacion[0]->tipo_colegiatura?></label>
-                        <input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->numero_cap?>" type="text" readonly='readonly'>
+                        <label class="control-label form-control-sm">N&uacute;mero <?php echo $proyectista_[0]->tipo_colegiatura?></label>
+                        <input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->numero_cap?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Nombres</label>
-                        <input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->agremiado?>" type="text" readonly='readonly'>
+                        <input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->nombres?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Ubicaci&oacute;n</label>
-                        <input id="ubicacion" name="ubicacion" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->ubicacion?>" type="text" readonly='readonly'>
+                        <input id="ubicacion" name="ubicacion" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->ubicacion?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">N° Regional</label>
-                        <input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->numero_regional?>" type="text" readonly='readonly'>
+                        <input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->numero_regional?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Direcci&oacute;n</label>
-                        <input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->direccion?>" type="text" readonly='readonly'>
+                        <input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->direccion?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Zonal</label>
-                        <input id="zonal" name="zonal" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->local?>" type="text" readonly='readonly'>
+                        <input id="zonal" name="zonal" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->local?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Regional</label>
-                        <input id="regional" name="regional" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->regional?>" type="text" readonly='readonly'>
+                        <input id="regional" name="regional" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->regional?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Autoriza</label>
-                        <input id="autoriza" name="autoriza" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->autoriza?>" type="text" readonly='readonly'>
+                        <input id="autoriza" name="autoriza" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->autoriza?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Actividad Gremial</label>
-                        <input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->actividad_gremial?>" type="text" readonly='readonly'>
+                        <input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->actividad?>" type="text" readonly='readonly'>
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">Situaci&oacute;n</label>
-                        <input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
+                        <input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->situacion?>" type="text" readonly='readonly'>
                     </div>
                 </div>
                 <div style="padding: 15px 0px 15px 10px; font-weight: bold">

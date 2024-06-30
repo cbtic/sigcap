@@ -179,5 +179,21 @@ class Persona extends Model
 		$data = DB::select($cad);
         return $data[0];
     }
+
+    function getPersonaById($tipo_documento,$id_persona){
+
+        $cad = "select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, a.id_situacion, p.numero_celular, p.correo
+        from personas p 
+        left join agremiados a on p.id=a.id_persona
+        Where p.id_tipo_documento='".$tipo_documento."' And p.id='".$id_persona."'
+        union all
+        select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, null, p.numero_celular, p.correo 
+        from profesion_otros po 
+        inner join personas p on po.id_persona = p.id
+        where p.id='".$id_persona."'";
+		
+		$data = DB::select($cad);
+        return $data[0];
+    }
  
 }

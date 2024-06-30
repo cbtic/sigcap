@@ -239,7 +239,7 @@ $('#btnImportarDictamenes').click(function () {
 
 function importarDatalicenciaDictamenes(){
 
-	var fecha_ejecucion = $('#fecha_programado').val();
+	var fecha_ejecucion = $('#fecha_ejecucion').val();
 	var id_comision = $('#id_comision').val();
 	var id_sesion = $('#id').val();
 

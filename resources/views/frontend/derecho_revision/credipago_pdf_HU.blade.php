@@ -172,16 +172,16 @@ $(document).ready(function() {
         <hr>
         <div class="contenido">
             
-            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
+            <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px; vertical-align:top">
                 <tbody>
                     <tr>
                         <td class="td" style ="text-align: left; width: 44%;"><b>ARQUITECTO:</b></td>
-                        <td class="td" style ="text-align: left; width: 36%;"><?php foreach($proyectista_nombres as $nombres):?>
+                        <td class="td" style ="text-align: left; width: 41%;"><?php foreach($proyectista_nombres as $nombres):?>
                                                                                 <?= ($nombres) ?> <br>
                                                                                 <?php endforeach;?>
                                                                                 </td>
-                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px;"><b>N° CAP</b></td>
-                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px"><?php foreach($proyectista_cap as $cap):?>
+                        <td class="td" style ="text-align: right; width: 7%; font-size:11px; height:25px;"><b>N° CAP</b></td>
+                        <td class="td" style ="text-align: right; width: 8%; font-size:11px; height:25px"><?php foreach($proyectista_cap as $cap):?>
                                                                                                             <?= ($cap) ?> <br>
                                                                                                             <?php endforeach;?>
                                                                                                             </td>

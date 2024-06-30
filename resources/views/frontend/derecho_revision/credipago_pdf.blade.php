@@ -174,12 +174,12 @@ $(document).ready(function() {
             <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
                 <tbody>
                     <tr>
-                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px; vertical-align:top"><b>PROFESIONAL:</b></td>
+                        <td class="td" style ="text-align: left; width: 43%; font-size:11px; height:25px;"><b>PROFESIONAL:</b></td>
                         <td class="td" style ="text-align: left; width: 37%; font-size:11px; height:25px"><?php foreach($proyectista_nombres as $nombres):?>
                                                                                                             <?= ($nombres) ?> <br>
                                                                                                             <?php endforeach;?>
                                                                                                             </td>
-                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px; vertical-align:top"><b><?php foreach($tipo_colegiatura_cap as $tipo_colegiatura):?>
+                        <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px"><b><?php foreach($tipo_colegiatura_cap as $tipo_colegiatura):?>
                                                                                                             <?= ('N° '.$tipo_colegiatura) ?> <br>
                                                                                                             <?php endforeach;?></b></td>
                         <td class="td" style ="text-align: right; width: 10%; font-size:11px; height:25px"><?php foreach($proyectista_cap as $cap):?>
