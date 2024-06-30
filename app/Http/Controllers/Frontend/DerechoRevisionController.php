@@ -1554,6 +1554,8 @@ class DerechoRevisionController extends Controller
 		$area_techada_presupuesto = $request->area_techada_presupuesto;
 		$valor_unitario = $request->valor_unitario;
 		$presupuesto_ = $request->presupuesto;
+		$numero_cap_row = $request->numero_cap_row;
+		$tipo_proyectista_row = $request->tipo_proyectista_row;
 		
 		$id_user = Auth::user()->id;
 		$id_solicitud = $request->id_solicitud_reintegro;
@@ -1624,19 +1626,24 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->save();
 		$proyectista->id_solicitud = $derecho_revision->id;
 		$proyectista->save();
-
-		foreach($tipo_proyectista as $key=>$row){
-
-			$agremiado = Agremiado::where("numero_cap",$request->numero_cap_row[$key])->where("estado","1")->first();
+		
+		foreach($tipo_proyectista_row as $key=>$row){
+			
+			//echo $tipo_proyectista_row[$key];
+			$agremiado = Agremiado::where("numero_cap",$numero_cap_row[$key])->where("estado","1")->first();
 			//echo "ok";
-			$proyectista = new Proyectista;
-			$proyectista->id_tipo_profesional = $request->tipo_proyectista[$key];
-			$proyectista->id_agremiado = $agremiado->id;
-			$proyectista->celular = $agremiado->celular1;
-			$proyectista->email = $agremiado->email1;
-			$proyectista->id_solicitud = $derecho_revision->id;
-			$proyectista->id_usuario_inserta = $id_user;
-			$proyectista->save();
+			//if(isset($tipo_proyectista_row[$key]) && $tipo_proyectista_row[$key]>0){
+				
+				$proyectista = new Proyectista;
+				$proyectista->id_tipo_profesional = (isset($tipo_proyectista_row[$key]) && $tipo_proyectista_row[$key]>0)?$tipo_proyectista_row[$key]:0;
+				$proyectista->id_agremiado = $agremiado->id;
+				$proyectista->celular = $agremiado->celular1;
+				$proyectista->email = $agremiado->email1;
+				$proyectista->id_solicitud = $derecho_revision->id;
+				$proyectista->id_usuario_inserta = $id_user;
+				$proyectista->save();
+				
+			//}
 		}
 		
 		/***********************************/
@@ -1846,7 +1853,7 @@ class DerechoRevisionController extends Controller
 			//$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago;
 			$fechaValorizacion = Carbon::now();
 			$fecha_valorizacion = $fechaValorizacion->format('my');
-			$municipalidad = Municipalidade::where("id",$solicitud->id_municipalidad)->where("estado","1")->first();
+			$municipalidad = Municipalidade::where("id",$solicitud_matriz->id_municipalidad)->where("estado","1")->first();
 			$valorizacion->descripcion = $concepto->denominacion ." - ". $liquidacion->credipago ." - ". $municipalidad->denominacion ." - ". $fecha_valorizacion ;
 			//$valorizacion->estado = 1;
 			$valorizacion->id_usuario_inserta = $id_user;
@@ -2219,6 +2226,7 @@ class DerechoRevisionController extends Controller
 		//$proyectista->id_solicitud = $derecho_revision->id;
 		//$proyectista->save();
 		
+		$array_tipo_uso = array();
 		
 		foreach($tipo_uso as $key=>$row){
 			
@@ -2235,8 +2243,22 @@ class DerechoRevisionController extends Controller
 			$uso_edificacion->id_usuario_inserta = $id_user;
 			$uso_edificacion->save();
 			
+			$array_tipo_uso[] = $uso_edificacion->id;
 		}
 		
+		
+		$usoEdificacionAll = UsoEdificacione::where("id_solicitud",$request->id_solicitud)->where("estado","1")->get();
+		foreach($usoEdificacionAll as $key=>$row){
+			
+			if (!in_array($row->id, $array_tipo_uso)){
+				$uso_edificacion = UsoEdificacione::find($row->id);
+				$uso_edificacion->estado = 0;
+				$uso_edificacion->save();
+			}
+			
+		}
+		
+		$array_tipo_obra = array();
 		
 		foreach($tipo_obra as $key=>$row){
 			
@@ -2253,6 +2275,19 @@ class DerechoRevisionController extends Controller
 			$presupuesto1->id_solicitud = $derecho_revision->id;
 			$presupuesto1->id_usuario_inserta = $id_user;
 			$presupuesto1->save();
+			
+			$array_tipo_obra[] = $presupuesto1->id;
+			
+		}
+		
+		$presupuestoAll = Presupuesto::where("id_solicitud",$request->id_solicitud)->where("estado","1")->get();
+		foreach($presupuestoAll as $key=>$row){
+			
+			if (!in_array($row->id, $array_tipo_obra)){
+				$presupuesto = Presupuesto::find($row->id);
+				$presupuesto->estado = 0;
+				$presupuesto->save();
+			}
 			
 		}
 
