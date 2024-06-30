@@ -338,17 +338,124 @@ function AddFila(){
 	
 	
 	/***************/
-    
+    /*
+	$('.datepicker2').datepicker({
+	  format: "dd-mm-yyyy",
+	  autoclose: true,
+	  container: '#openOverlayOpc modal-body',
+	});
+	*/
+	//var today = new Date();
+	//var mes = ($("#mes").val()-1);
+	//$('.datepicker2').datepicker("startDate", new Date(today.getFullYear(),mes,01) );
+	
+	//$('.datepicker2').datepicker("maxDate", new Date(2024,2,13) );
+	//$('.datepicker2').datepicker("minDate", new Date(2024,2,03) );
+	
+	/**************************/
+	/*
+	$('.datepicker2').datepicker('destroy');
+	$('.datepicker2').datepicker('option', 'minDate', new Date(2024,2,13));
+	$('.datepicker2').datepicker('option', 'maxDate', new Date(2024,2,03));
+	*/
+	$(function () {
+		/*
+	    $.fn.datepicker.dates['es'] = {
+			days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+		    daysShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+		    daysMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+		    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		    monthsShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+		    today: 'Hoy',
+		    clear: 'Limpiar',
+		    format: 'dd/mm/yy',
+		    titleFormat: "MM yyyy", 
+		    weekStart: 1
+		};
+		*/
+		$.datepicker.regional['es'] = {
+		  closeText: 'Cerrar',
+		  prevText: '<Ant',
+		  nextText: 'Sig>',
+		  currentText: 'Hoy',
+		  monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		  monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+		  dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+		  dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+		  dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+		  weekHeader: 'Sm',
+		  dateFormat: 'dd/mm/yy',
+		  firstDay: 1,
+		  isRTL: false,
+		  showMonthAfterYear: false,
+		  yearSuffix: ''
+		};
+		
+		$.datepicker.setDefaults($.datepicker.regional['es']);
+		/*
+		$("#datepicker").datepicker({
+		    language: 'es', 
+		    autoclose: true, 
+		    todayHighlight: true,
+		}).datepicker('update', new Date());
+		*/
+	});
+	/*******************************/
+	
+	var mes = ($("#mes").val()-1);
+	const obtenerFechaInicioDeMes = () => {
+	const fechaInicio = new Date();
+		//return new Date(fechaInicio.getFullYear(), fechaInicio.getMonth(), 1);
+		return new Date(fechaInicio.getFullYear(), mes, 1);
+	};
+	
+	const obtenerFechaFinDeMes = () => {
+		const fechaFin = new Date();
+		//return new Date(fechaFin.getFullYear(), fechaFin.getMonth() + 1, 0);
+		return new Date(fechaFin.getFullYear(), mes + 1, 0);
+	};
+	
+	const fechaInicio = obtenerFechaInicioDeMes();
+	const fechaFin = obtenerFechaFinDeMes();
+	
+	$('.datepicker2').datepicker({
+	  format: "dd-mm-yyyy",
+	  autoclose: true,
+	  container: '#openOverlayOpc modal-body',
+	  startDate: fechaInicio,
+	  endDate: fechaFin 
+	});
+	
+	
+	/*
+	$('.datepicker2').datepicker({
+        dateFormat: 'yy-mm-dd',
+        showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true,
+yearRange: '1999:2012',
+        showOn: "button",
+        buttonImage: "images/calendar.gif",
+        buttonImageOnly: true,
+        startDate: new Date(1999, 10 - 1, 25),
+        maxDate: '+30Y',
+        inline: true
+    });
+	*/
+	/**************************/
+	
+	
   }
- 
+ 	
+	/*
   $('.datepicker2').datepicker({
   format: "dd-mm-yyyy",
   autoclose: true,
-  container: '#openOverlayOpc modal-body'
-  //defaultDate: '01/07/2024'
+  container: '#openOverlayOpc modal-body',
+  setDate: new Date(2008,9,03)
 
 	});
-
+	*/
   
 
  
