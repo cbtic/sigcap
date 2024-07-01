@@ -174,6 +174,7 @@
 
 							<div class="row" style="padding:20px 20px 0px 20px;">
 
+							<!--
 					
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<select name="anio" id="anio" class="form-control form-control-sm">
@@ -190,6 +191,31 @@
 											<option value="{{ $key }}">{{ $mes }}</option>
 										@endforeach
 									</select>
+								</div>
+-->
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Fecha inicio</label>
+										<input class="form-control form-control-sm" id="fecha_ini" name="fecha_ini" value="<?php echo date("d-m-Y")?>" placeholder="Fecha Inicio">
+									</div>
+								</div>
+								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Fecha Fin</label>
+										<input class="form-control form-control-sm" id="fecha_fin" name="fecha_fin" value="<?php echo date("d-m-Y")?>" placeholder="Fecha fin">
+									</div>
+								</div>
+
+								<div class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Caja</label>
+										<select name="id_usuario_caja" id="id_usuario_caja" class="form-control form-control-sm">
+											<option value="0">Todos</option>
+											<?php foreach($caja_usuario as $row):?>
+											<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+											<?php  endforeach;?>
+										</select>
+									</div>
 								</div>
 									
 
@@ -213,12 +239,12 @@
 										<tr style="font-size:13px">
 											<th>id</th>
 											<th>Reporte</th>
-											<th>Ver</th>
+											<th>.</th>
 										</tr>
 									</thead>
 									<tbody>
 										<?php $n = 0;		?>
-											<?php foreach ($reporte as $key => $row) { ?>
+											<?php foreach ($reporte as $row) { ?>
 
 												<tr>
 													<td class="text-left"><?php $n = $n + 1;
@@ -227,9 +253,9 @@
 
 													<td class="text-left">
 														<?php														
-															echo $row['descripcion'] //echo $row; ?>
+															echo $row->descripcion //echo $row; ?>
 													</td>
-													
+													<!--
 													<td class="text-left">
 														<form class="form-horizontal" method="post" action="{{route('frontend.comprobante.nd_edita')}}" id="frmPagos_nd" name="frmPagos_nd" autocomplete="off">		
 	
@@ -237,6 +263,17 @@
 														</form>
 													
 													</td>
+											-->
+
+
+													<td class="text-left" style="vertical-align:middle">
+														<a href="javascript:void(0);"  
+																					   onclick="abrirPdfReporte('<?php echo addslashes($row->funcion); ?>' )"
+														style="font-size: 12px; text-decoration: underline; color: blue;">
+															Ver Informe
+														</a>
+													</td>
+					
 													
 												</tr>
 												

@@ -19,53 +19,10 @@ $(document).ready(function () {
 		});
 	});
 	
-	$('#btnVistaPreviaComputo').click(function () {
-		//guardar_computo()
-		var id_periodo_bus = $("#id_periodo_bus").val();
-		var anio = $("#anio").val();
-		var mes = $("#mes").val();
-		//if (fecha == "")fecha = 0;
-		var href = '/sesion/ver_computo_sesion_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
-		window.open(href, '_blank');
-	});
-	
-	$('#btnVistaPreviaCalendario').click(function () {
-		//guardar_computo()
-		var id_periodo_bus = $("#id_periodo_bus").val();
-		var anio = $("#anio").val();
-		var mes = $("#mes").val();
-		//if (fecha == "")fecha = 0;
-		var href = '/sesion/ver_calendario_sesion_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
-		window.open(href, '_blank');
-	});
 
-	$('#btnVistaPreviaMovilidad').click(function () {
-		
-		var id_periodo_bus = $("#id_periodo_bus").val();
-		var anio = $("#anio").val();
-		var mes = $("#mes").val();
-		var href = '/movilidad/ver_movilidad_pdf/'+id_periodo_bus+'/'+anio+'/'+mes;
-		window.open(href, '_blank');
-	});
 	
-	$('#btnVistaPreviaCoordinador').click(function () {
-		
-		var id_periodo_bus = $("#id_periodo_bus").val();
-		var anio = $("#anio").val();
-		var mes = $("#mes").val();
-		var href = '/sesion/ver_delegado_coordinador_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
-		window.open(href, '_blank');
-	});
-	
-	$('#btnVistaPreviaCalendarioCoordinadorZonal').click(function () {
-		//guardar_computo()
-		var id_periodo_bus = $("#id_periodo_bus").val();
-		var anio = $("#anio").val();
-		var mes = $("#mes").val();
-		//if (fecha == "")fecha = 0;
-		var href = '/sesion/ver_calendario_sesion_coordinador_zonal_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
-		window.open(href, '_blank');
-	});
+
+
 	
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
@@ -223,7 +180,7 @@ function fn_save___(){
     });
 }
 
-obtenerAnioPerido();
+//obtenerAnioPerido();
 
 function obtenerAnioPerido(){
 	
@@ -1205,6 +1162,31 @@ function fn_eliminar(id){
     });
 	
 }
+
+
+function abrirPdfReporte(funcion) {
+	//alert (funcion);
+
+	//alert(municipalidad+anio+mes);
+
+	var todayDate = new Date().toISOString().slice(0, 10);
+	alert(todayDate);
+
+	
+	$fini = $('#fecha_ini').val();
+	//alert($fini);
+	$ffin = $('#fecha_fin').val();
+	//alert($ffin);
+
+	$usuario = $('#id_usuario_caja').val();
+	//alert($usuario);
+
+	//exit();
+
+	var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$ffin+'/'+$usuario;
+	window.open(href, '_blank');
+}
+
 
 
 

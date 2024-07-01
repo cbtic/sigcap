@@ -759,4 +759,5 @@ Route::post('tipo_cambio/send_tipo_cambio_nuevoTipoCambio', [TipoCambioControlle
 
 Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');
 Route::get('reporte/listar_reporte_usuario', [ReporteController::class, 'listar_reporte_usuario'])->name('reporte.listar_reporte_usuario');
+Route::get('reporte/rep_pdf/{funcion}/{fini}/{ffin}/{usuario}', [ReporteController::class, 'rep_pdf'])->name('reporte.rep_pdf');
 
