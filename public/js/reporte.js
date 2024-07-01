@@ -1169,12 +1169,15 @@ function abrirPdfReporte(funcion) {
 
 	//alert(municipalidad+anio+mes);
 
-	var todayDate = new Date().toISOString().slice(0, 10);
-	alert(todayDate);
+
 
 	
 	$fini = $('#fecha_ini').val();
 	//alert($fini);
+	var todayDate = parse($fini).toISOString().slice(0, 10);
+	alert(todayDate);
+	
+
 	$ffin = $('#fecha_fin').val();
 	//alert($ffin);
 
