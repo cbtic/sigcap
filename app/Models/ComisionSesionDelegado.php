@@ -41,6 +41,18 @@ where t0.id_periodo_comisiones=".$id_periodo;
         return $data;
     }
 	
+	function getValidaDelegadosBySesionAndAgremiado($id_comision_sesion,$id_agremiado){
+
+        $cad = "select count(*) cantidad
+from comision_sesion_delegados csd 
+left join comision_delegados cd on csd.id_delegado=cd.id  
+where id_comision_sesion=".$id_comision_sesion."
+and coalesce(cd.id_agremiado,csd.id_agremiado)=".$id_agremiado;
+
+		$data = DB::select($cad);
+        return $data[0]->cantidad;
+    }
+	
 	function getComisionDelegadosByIdDelegadoAndFecha($id_agremiado,$fecha_programado,$fecha_inicio_sesion,$fecha_fin_sesion){
 
         $cad = "select csd.* 
@@ -98,16 +110,38 @@ left join tabla_maestras t11 on t1.puesto_postula::int = t11.codigo::int And t11
 		*/
 		$cad = "select t0.id,coalesce(t1.id_agremiado,t0.id_agremiado)id_agremiado,to_char(t1.created_at,'dd-mm-yyyy')fecha_inscripcion,
 t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,t4.denominacion puesto,
-t5.denominacion situacion,t0.coordinador,t0.id_delegado,t0.id_aprobar_pago     
+t5.denominacion situacion,t0.coordinador,t0.id_delegado,t0.id_aprobar_pago,
+t2_.numero_cap numero_cap_anterior,t3_.nombres nombres_anterior,t3_.apellido_paterno apellido_paterno_anterior,t3_.apellido_materno apellido_materno_anterior
 from comision_sesion_delegados t0 
 left join comision_delegados t1 on t0.id_delegado=t1.id
 left join agremiados t2 on coalesce(t1.id_agremiado,t0.id_agremiado)=t2.id
 inner join personas t3 on t2.id_persona=t3.id
 left join tabla_maestras t4 on t1.id_puesto::int = t4.codigo::int And t4.tipo ='94'
 left join tabla_maestras t5 on t2.id_situacion = t5.codigo::int And t5.tipo ='14'
+left join comision_delegados t1_ on t0.id_delegado_anterior=t1_.id
+left join agremiados t2_ on coalesce(t1_.id_agremiado,t0.id_agremiado_anterior)=t2_.id
+left join personas t3_ on t2_.id_persona=t3_.id
 where t0.id_comision_sesion=".$id_comision_sesion."
 and t0.estado='1'
 order by t1.id_puesto::int asc";
+
+		
+		$data = DB::select($cad);
+        return $data;
+    }
+	
+	function getHistorialComisionSesionDelegadosByIdComisionSesionDelegado($id_comision_sesion_delegado){ 
+		
+		$cad = "select t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,t4.denominacion puesto,
+t5.denominacion situacion 
+from comision_sesion_delegados_historiales csdh
+left join comision_delegados t1 on csdh.id_delegado=t1.id
+left join agremiados t2 on coalesce(t1.id_agremiado,csdh.id_agremiado)=t2.id
+inner join personas t3 on t2.id_persona=t3.id
+left join tabla_maestras t4 on t1.id_puesto::int = t4.codigo::int And t4.tipo ='94'
+left join tabla_maestras t5 on t2.id_situacion = t5.codigo::int And t5.tipo ='14'
+where csdh.id_comision_sesion_delegado=".$id_comision_sesion_delegado."
+order by csdh.id desc";
 
 		
 		$data = DB::select($cad);

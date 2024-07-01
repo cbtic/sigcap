@@ -43,6 +43,34 @@ class CajaIngreso extends Model
         return $data;
     }
 
+    function getAllCajaUsuario(){
+
+        $cad = "select distinct t1.id id,t3.name ||'-'||t2.denominacion denominacion
+                from caja_ingresos t1
+                    inner join tabla_maestras t2 on t2.codigo = t1.id_caja::varchar and t2.tipo = '91'
+                    inner join users t3 on t1.id_usuario=t3.id			
+                where t1.saldo_liquidado is not null
+                order by 1
+        ";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getCajaIngresoById($id){
+        $cad = "select distinct t1.id id,t3.name ||'-'||t2.denominacion denominacion
+            from caja_ingresos t1
+                inner join tabla_maestras t2 on t2.codigo = t1.id_caja::varchar and t2.tipo = '91'
+                inner join users t3 on t1.id_usuario=t3.id			
+            where t1.id = ".$id."
+        ";
+
+        //echo $cad;
+        $data = DB::select($cad);
+        return $data;
+
+    }
     function getCajaComprobante($id_usuario, $fecha){
 /*
         $cad = "select situacion, tipo, sum(total)total, count(*) cantidad
@@ -97,7 +125,77 @@ class CajaIngreso extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+
+    function getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_fin){
+
+        $cad = "
+        		select situacion, tipo, tipo_, sum(total)total, count(*) cantidad 
+                from( 
+                    select (case when c.estado_pago='P' then 'PENDIENTE' else 'CANCELADO'end) situacion, 
+                    t.denominacion tipo, c.tipo tipo_, sum(c.total) total 
+                    from comprobantes c 
+                        inner join tabla_maestras t on t.abreviatura = c.tipo and t.tipo = '126' 
+                        inner join tabla_maestras m on m.codigo = c.id_caja::varchar and m.tipo = '91' 
+                    group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago, c.anulado 
+                    having c.id_usuario_inserta = ".$id_usuario."
+                    and c.id_caja = ".$id_caja."                       
+                    and TO_CHAR(c.fecha, 'dd-mm-yyyy') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                    and c.id_forma_pago = 1
+                    and c.anulado = 'N'
+                ) 
+                group by situacion, tipo_,tipo";
+
+        echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
     
+    function getAllCajaCondicionPago($id_usuario, $f_inicio, $f_fin){
+
+        $cad = "
+            select condicion, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
+            from(
+                select t.denominacion||' '||m.denominacion condicion, 0 total_us, 0/3.7 total_tc, cp.monto total_soles
+                from comprobantes c                                
+                    inner join comprobante_pagos cp on cp.id_comprobante = c.id
+                    inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
+                    inner join tabla_maestras m on m.codigo  = c.id_moneda::varchar and m.tipo = '1'
+                where  c.id_usuario_inserta = ".$id_usuario."
+                and TO_CHAR(c.fecha, 'dd-mm-yyyy') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                and c.id_forma_pago = '1'
+                and c.anulado = 'N'
+            )
+            group by condicion";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getAllCajaComprobanteDet($id_usuario, $f_inicio, $f_fin){
+
+        $cad = "
+            select denominacion, sum(importe) importe
+            from(
+                select co.denominacion, cd.importe
+                from comprobantes c                                
+                    inner join comprobante_detalles cd on cd.id_comprobante = c.id
+                    inner join conceptos co  on co.id  = cd.id_concepto    
+            where  c.id_usuario_inserta = ".$id_usuario."
+            and to_char(c.fecha, 'YYYY-MM-DD') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+            and c.id_forma_pago = '1'
+            and c.anulado = 'N'
+            )
+            group by denominacion
+       
+    
+        ";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
 
 
     public function readFuntionPostgres($function, $parameters = null){

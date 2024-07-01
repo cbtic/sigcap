@@ -185,8 +185,8 @@ from certificados c where id_tipo=".$id_tipo;
     function getRecordProyecto($numero_cap){
 
         $cad = "select s.id, s.fecha_registro fecha, l.credipago, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres propietario, pr.nombre nombreProyecto, 
-        m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, 
-        case when exists (select 1 from solicitudes s2 where id=s.id) then 'Derecho Revision' else null end tipo
+        m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, null total_area_techada_m2, null area_total, tm.denominacion tipo_profesional, 'Derecho Revision' tipo
+        --case when exists (select 1 from solicitudes s2 where id=s.id) then 'Derecho Revision' else null end tipo
         from solicitudes s --where id_proyectista ='6725'
         left join liquidaciones l on l.id_solicitud = s.id 
         left join propietarios p on p.id_solicitud = s.id 
@@ -196,7 +196,24 @@ from certificados c where id_tipo=".$id_tipo;
         left join proyectistas pro on pro.id_solicitud = s.id
         left join agremiados a on pro.id_agremiado = a.id
         left join personas p2 on a.id_persona = p2.id
-        where a.numero_cap ='".$numero_cap."'";
+        left join tabla_maestras tm on pro.id_tipo_profesional = tm.codigo::int And tm.tipo ='41'
+        where a.numero_cap ='".$numero_cap."'
+        union all
+        select s.id, s.fecha_registro fecha, l.credipago, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres propietario, pr.nombre nombreProyecto, 
+        m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, s.total_area_techada_m2::float, s.area_total, tm.denominacion tipo_profesional, 'Certificado' tipo
+        from certificados c 
+        inner join solicitudes s on c.id_solicitud = s.id
+        left join liquidaciones l on l.id_solicitud = s.id 
+        left join propietarios p on p.id_solicitud = s.id 
+        left join personas pe on p.id_persona = pe.id
+        left join proyectos pr on s.id_proyecto = pr.id 
+        left join municipalidades m on s.id_municipalidad = m.id 
+        left join proyectistas pro on pro.id_solicitud = s.id
+        left join agremiados a on pro.id_agremiado = a.id
+        left join personas p2 on a.id_persona = p2.id
+        left join tabla_maestras tm on pro.id_tipo_profesional = tm.codigo::int And tm.tipo ='41'
+        where a.numero_cap ='".$numero_cap."'
+        order by fecha asc";
 
         $data = DB::select($cad);
         return $data;

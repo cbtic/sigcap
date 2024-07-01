@@ -91,7 +91,7 @@ function formatoMoneda_(num) {
     return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
 
-function calculoVistaPrevia(){
+/*function calculoVistaPrevia(){
     var igv_valor_ = <?php echo $parametro[0]->igv?> * 100;
     var valor_minimo_edificaciones = <?php echo $parametro[0]->valor_minimo_edificaciones?>;
     var uit_edificaciones = <?php echo $parametro[0]->valor_uit?>;
@@ -140,6 +140,18 @@ function calculoVistaPrevia(){
         $('#total2').val(formatoMoneda_(total));
 	}
     //var_dump($total_minimo);exit;
+}*/
+
+function calculoVistaPrevia(){
+    var igv_valor_ = <?php echo $parametro[0]->igv?> * 100;
+    var valor_minimo_edificaciones = <?php echo $parametro[0]->valor_minimo_edificaciones?>;
+    var uit_edificaciones = <?php echo $parametro[0]->valor_uit?>;
+    var sub_total_minimo = valor_minimo_edificaciones * uit_edificaciones;
+    var igv_valor = <?php echo $parametro[0]->igv?>;
+    var igv_minimo	= igv_valor * sub_total_minimo;
+    var total_minimo = sub_total_minimo + igv_minimo;
+    $('#minimo').val(formatoMoneda_(total_minimo));
+    $('#igv').val(igv_valor_+"%");
 }
 
 function calcularReintegro(){
@@ -153,7 +165,6 @@ if($('#instancia').val()==250){
 		var sub_totalR=reintegro*valor_edificaciones;
 		var igv_totalR=sub_totalR*igv_/100;
 		var totalR=sub_totalR+igv_totalR;
-		
 		
 		if(totalR<parseFloat($('#minimo').val())){
 			
@@ -559,17 +570,17 @@ if($('#instancia').val()==250){
 							Uso de la Edificaci&oacute;n
 						</div>
 						
-						<?php 
-							foreach($datos_usoEdificaciones as $row){
-							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
-						?>
-							
-							<div class="row">
+						<div class="row">
 							<div class="col-lg-8" style=";padding-right:15px">
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="uso-container">
+									
+						<?php 
+							foreach($datos_usoEdificaciones as $key=>$row){
+							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
+						?>
 										<div class="row uso-row">
-											<div class="col-lg-5" style=";padding-right:15px">
+											<div class="col-lg-4" style=";padding-right:15px">
 											<label class="control-label form-control-sm">Tipo de Uso</label>
 											
 											<input type="hidden" name="id_uso_edificaciones[]" id="id_uso_edificaciones" value="<?php echo $row->id?>" />
@@ -606,18 +617,24 @@ if($('#instancia').val()==250){
 												</div>
 											</div>
 										</div>
+										
+										<?php if($key!=0){?>
+											
+											<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
+											
+										<?php } ?>
+										
 									</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						
-						
+									
 						<?php 
 								//}
 							} 
 						?>
+						
+						</div>
+								</div>
+							</div>
+						</div>
 
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
 							Presupuesto
@@ -627,14 +644,14 @@ if($('#instancia').val()==250){
 						<div class="row">
 							<div class="col-lg-8" style=";padding-right:15px">
 								
-								<?php 
-									foreach($datos_presupuesto as $row){	
-								?>
-								
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="presupuesto-container">
+									
+								<?php 
+									foreach($datos_presupuesto as $key=>$row){	
+								?>
 										<div class="row presupuesto-row">
-											<div class="col-lg-5" style=";padding-right:15px">
+											<div class="col-lg-4" style=";padding-right:15px">
 												<label class="control-label form-control-sm">Tipo de Obra</label>
 												
 												<input type="hidden" name="id_presupuesto[]" id="id_presupuesto" value="<?php echo $row->id?>" />
@@ -668,13 +685,22 @@ if($('#instancia').val()==250){
 													</div>
 												</div>
 											</div>
+											
+											<?php if($key!=0){?>
+											
+											<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
+											
+											<?php } ?>
+											
 										</div>
-									</div>
-								</div>
+									
 								
 								<?php 
 									} 
-								?>		
+								?>	
+								
+								</div>
+								</div>	
 								
 								<div class="row" style="padding-left:10px;padding-top:10px; display:flex; justify-content:flex-end">
 									<div class="col-lg-3">
@@ -822,11 +848,11 @@ if($('#instancia').val()==250){
 									<div class="col-lg-6">
 										<label class="control-label form-control-sm">Sub Total</label>
 										
-										<input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php //echo $sub_total_formateado?>" type="text" readonly='readonly'>
+										<input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php echo $liquidacion_datos[0]->sub_total;?>" type="text" readonly='readonly'>
 									</div>
 									<div class="col-lg-6">
 										<label class="control-label form-control-sm">Sub Total</label>
-										<input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php //echo $sub_total_formateado_?>" type="text" readonly='readonly'>
+										<input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php echo $liquidacion_datos[0]->sub_total;?>" type="text" readonly='readonly'>
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;">
@@ -836,11 +862,11 @@ if($('#instancia').val()==250){
 										
 										
 										?>
-										<input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php //echo $igv_total_formateado?>" type="text" readonly='readonly'>
+										<input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php echo $liquidacion_datos[0]->igv?>" type="text" readonly='readonly'>
 									</div>
 									<div class="col-lg-6">
 										<label class="control-label form-control-sm">IGV</label>
-										<input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php //echo $igv_total_formateado_?>" type="text" readonly='readonly'>
+										<input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php echo $liquidacion_datos[0]->igv?>" type="text" readonly='readonly'>
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;">
@@ -849,11 +875,11 @@ if($('#instancia').val()==250){
 										<?php
 										
 										?>
-										<input id="total" name="total" on class="form-control form-control-sm"  value="<?php //echo $total_formateado?>" type="text" readonly='readonly'>
+										<input id="total" name="total" on class="form-control form-control-sm"  value="<?php echo $liquidacion_datos[0]->total?>" type="text" readonly='readonly'>
 									</div>
 									<div class="col-lg-6">
 										<label class="control-label form-control-sm">Total a Pagar Soles</label>
-										<input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php //echo $total_formateado_?>" type="text" onchange="cambioPlantaTipica()">
+										<input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php echo $liquidacion_datos[0]->total?>" type="text" onchange="cambioPlantaTipica()">
 									</div>
 								</div>
 							</div>

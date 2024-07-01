@@ -139,7 +139,9 @@ $(document).ready(function () {
 	datatablenew();
 	datatablenew2();
 	obtenerPropietario_();
-	calculoVistaPrevia();
+	//if($('#valor_reintegro').val()==0){
+		calculoVistaPrevia();
+	//}
 	
 	//calcularReintegro()
 	
@@ -1823,6 +1825,13 @@ function valida_reintegro(){
 
 function guardar_solicitud_reintegro(){
 	
+	var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    //var heightBrowser = $(window).width()/2;
+	var heightBrowser = $(window).width()*2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
 	$.ajax({
 			url: "/derecho_revision/send_nuevo_reintegro",
 			type: "POST",
@@ -1832,7 +1841,7 @@ function guardar_solicitud_reintegro(){
 				//$('#openOverlayOpc').modal('hide');
 				//modalSituacion(id_agremiado);
 				//datatableSuspension();
-
+				$('.loader').hide();
 				window.location.reload();
 				
 				//$('#openOverlayOpc').modal('hide');
@@ -2088,9 +2097,44 @@ function AddFilaPresupuesto() {
         select.value = ''; // Reset the select element
     });
 
-    container.appendChild(newRow); // Agrega la nueva fila al contenedor
+	var existingRemoveButton = newRow.querySelector('.btn-danger');
+    if (existingRemoveButton) {
+        existingRemoveButton.parentNode.removeChild(existingRemoveButton);
+    }
+
+    var removeButton = document.createElement('button');
+    removeButton.className = 'btn btn-sm btn-danger';
+    //removeButton.style.marginLeft = '10px';
+	removeButton.style.marginTop = '37px';
+	removeButton.style.marginBottom = '37px';
+    removeButton.innerHTML = 'Eliminar';
+
+    removeButton.onclick = function() {
+        removeFilaPresupuesto(event,newRow);
+    };
+
+    newRow.appendChild(removeButton);
+
+    container.appendChild(newRow);
 
 	calcularValorTotalObra();
+}
+
+function removeFilaPresupuesto(event,row) {
+	event.preventDefault();
+    var container = document.getElementById('presupuesto-container');
+    if (container.children.length > 1) {
+        container.removeChild(row);
+    } else {
+        bootbox.alert("Debe haber al menos una fila.");
+    }
+}
+
+function removeFilaPresupuestoEdit(obj) {
+	
+	event.preventDefault();
+	$(obj).parent().remove();
+	return false;
 }
 
 function calcularValorTotalObra() {
@@ -2158,7 +2202,43 @@ function AddFilaUso() {
         select.value = ''; // Reset the select element
     });
 
-    container.appendChild(newRow); // Agrega la nueva fila al contenedor
+	var existingRemoveButton = newRow.querySelector('.btn-danger');
+    if (existingRemoveButton) {
+        existingRemoveButton.parentNode.removeChild(existingRemoveButton);
+    }
+
+    
+    var removeButton = document.createElement('button');
+    removeButton.className = 'btn btn-sm btn-danger';
+    //removeButton.style.marginLeft = '10px';
+	removeButton.style.marginTop = '37px';
+	removeButton.style.marginBottom = '37px';
+    removeButton.innerHTML = 'Eliminar';
+
+    removeButton.onclick = function() {
+        removeFilaUso(event,newRow);
+    };
+
+    newRow.appendChild(removeButton);
+
+    container.appendChild(newRow);
+}
+
+function removeFilaUso(event,row) {
+	event.preventDefault();
+    var container = document.getElementById('uso-container');
+    if (container.children.length > 1) {
+        container.removeChild(row);
+    } else {
+        bootbox.alert("Debe haber al menos una fila.");
+    }
+}
+
+function removeFilaUsoEdit(obj) {
+	
+	event.preventDefault();
+    $(obj).parent().remove();
+	return false;
 }
 
 function calcularAreaTechada() {

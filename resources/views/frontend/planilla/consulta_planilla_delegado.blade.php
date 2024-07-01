@@ -319,6 +319,13 @@ label.form-control-sm{
 	cursor:pointer
 }
 
+.form-control[readonly]{
+	background-color:#cff4fc!important;
+	border-color:#b6effb!important;
+	color:#055160!important;
+	opacity:1
+}
+
 </style>
 
 
@@ -455,7 +462,7 @@ label.form-control-sm{
 														</select>
 													</div>
 													
-													<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="padding-right:0px">
+													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12" style="padding-right:0px">
 														
 														<input class="btn btn-warning pull-rigth" onclick="cargarPlanillaDelegado()" value="Buscar" type="button" id="btnBuscar" />
 														
@@ -464,6 +471,8 @@ label.form-control-sm{
 														<input class="btn btn-danger pull-rigth" onclick="eliminarPlanilla()" value="Eliminar Planilla" type="button" id="btnGenerar" style="margin-left:20px" />
 														
 														<input class="btn btn-primary pull-rigth" onclick="descargarPlanilla()" value="Descargar Excel" type="button" id="btnDescargar" style="margin-left:20px" />
+														
+														<input class="btn btn-primary pull-rigth" onclick="descargarPlanillaPdf()" value="Descargar PDF" type="button" id="btnDescargarPdf" style="margin-left:20px" />
 														
 														<!--<a href="/agremiado" class="btn btn-success pull-rigth" style="margin-left:15px"/>NUEVO</a>-->
 													</div>

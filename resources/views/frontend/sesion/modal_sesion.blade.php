@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:60%!important
+	max-width:70%!important
   }
   
 #tablemodal{
@@ -239,7 +239,7 @@ $('#btnImportarDictamenes').click(function () {
 
 function importarDatalicenciaDictamenes(){
 
-	var fecha_ejecucion = $('#fecha_programado').val();
+	var fecha_ejecucion = $('#fecha_ejecucion').val();
 	var id_comision = $('#id_comision').val();
 	var id_sesion = $('#id').val();
 
@@ -255,8 +255,14 @@ function importarDatalicenciaDictamenes(){
 		success: function(result){
 
 			$('.loader').hide();
+			
+			//cargarDelegados();
+			cargarDictamenNuevo(id_sesion);
+			
 			bootbox.alert("Se import&oacute; exitosamente los datos"); 
+			
 			datatablenew();
+			
 		}
 	});
 }
@@ -888,6 +894,9 @@ function cargarDelegados(){
 											<th>Situaci&oacute;n</th>
 											<th>Coordinador</th>
 											<th>Aprobar Pago</th>
+											<th>CAP Anterior</th>
+											<th>Delegado Anterior</th>
+											<th>Delegados</th>
 											<th>Editar</th>
 											<th>Eliminar</th>
 										</tr>

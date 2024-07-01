@@ -59,6 +59,9 @@ use App\Http\Controllers\Frontend\DelegadoTributoController;
 
 use App\Http\Controllers\Frontend\OperacionController;
 
+use App\Http\Controllers\Frontend\ReporteController;
+
+use App\Http\Controllers\Frontend\TipoCambioController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -421,6 +424,7 @@ Route::post('sesion/send_sesion_bloque', [SesionController::class, 'send_sesion_
 Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
 Route::get('sesion/obtener_comision/{id_periodo}/{tipo_comision}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
 Route::get('sesion/modal_asignar_delegado_sesion/{id}', [SesionController::class, 'modal_asignar_delegado_sesion'])->name('sesion.modal_asignar_delegado_sesion');
+Route::get('sesion/modal_historial_delegado_sesion/{id}', [SesionController::class, 'modal_historial_delegado_sesion'])->name('sesion.modal_historial_delegado_sesion');
 Route::get('sesion/modal_asignar_profesion_sesion/{id}', [SesionController::class, 'modal_asignar_profesion_sesion'])->name('sesion.modal_asignar_profesion_sesion');
 Route::post('sesion/send_profesion_otro', [SesionController::class, 'send_profesion_otro'])->name('sesion.send_profesion_otro');
 Route::post('sesion/send_delegado_sesion', [SesionController::class, 'send_delegado_sesion'])->name('sesion.send_delegado_sesion');
@@ -541,7 +545,8 @@ Route::get('planilla/obtener_delegado_periodo/{id_periodo}', [PlanillaDelegadoCo
 Route::get('planilla/obtener_comision_delegado_periodo/{id_periodo}/{id_agremiado}', [PlanillaDelegadoController::class, 'obtener_comision_delegado_periodo'])->name('planilla.obtener_comision_delegado_periodo');
 Route::post('planilla/send_reintegro', [PlanillaDelegadoController::class, 'send_reintegro'])->name('planilla.send_reintegro');
 Route::get('planilla/obtener_anio_periodo/{id_periodo}', [PlanillaDelegadoController::class, 'obtener_anio_periodo'])->name('planilla.obtener_anio_periodo');
-Route::get('planilla/exportar_planilla_delegado/{periodo}/{anio}/{mes}', [PlanillaDelegadoController::class, 'exportar_planilla_delegado'])->name('planilla.exportar_planilla_delegado');
+Route::get('planilla/exportar_planilla_delegado/{periodo}/{anio}/{mes}', [PlanillaDelegadoController::class, 'exportar_planilla_delegado'])->name('planilla.exportar_planilla_delegado'); 
+Route::get('planilla/ver_planilla_delegado_pdf/{id_periodo}/{anio}/{mes}', [PlanillaDelegadoController::class, 'ver_planilla_delegado_pdf'])->name('planilla.ver_planilla_delegado_pdf');
 
 Route::get('centro_costo/importar_centro_costo', [CentroCostoController::class, 'importar_centro_costo'])->name('centro_costo.importar_centro_costo');
 Route::get('partida_presupuestal/importar_partida_presupuestal', [PartidaPresupuestalController::class, 'importar_partida_presupuestal'])->name('partida_presupuestal.importar_partida_presupuestal');
@@ -743,4 +748,16 @@ Route::post('operacion/pago', [OperacionController::class, 'pago'])->name('opera
 Route::post('operacion/extorno_pago', [OperacionController::class, 'extorno_pago'])->name('operacion.extorno_pago');
 Route::post('operacion/anulacion', [OperacionController::class, 'anulacion'])->name('operacion.anulacion');
 Route::post('operacion/extorno_anulacion', [OperacionController::class, 'extorno_anulacion'])->name('operacion.extorno_anulacion');
+Route::get('planilla/exportar_listar_recibo_honorario/{periodo}/{anio}/{mes}/{numero_cap}/{agremiado}/{municipalidad}/{fecha_inicio}/{fecha_fin}/{provision}/{cancelacion}/{ruc}', [PlanillaDelegadoController::class, 'exportar_listar_recibo_honorario'])->name('planilla.exportar_listar_recibo_honorario');
+Route::get('fondoComun/fondoComun_pdf/{id_ubigeo}/{anio}/{mes}', [FondoComunController::class, 'fondoComun_pdf'])->name('fondoComun.fondoComun_pdf');
+
+Route::get('tipo_cambio/consulta_tipo_cambio', [TipoCambioController::class, 'consulta_tipo_cambio'])->name('tipo_cambio.consulta_tipo_cambio');
+Route::post('tipo_cambio/listar_tipo_cambio_ajax', [TipoCambioController::class, 'listar_tipo_cambio_ajax'])->name('tipo_cambio.listar_tipo_cambio_ajax');
+Route::get('tipo_cambio/modal_tipo_cambio_nuevoTipoCambio/{id}', [TipoCambioController::class, 'modal_tipo_cambio_nuevoTipoCambio'])->name('tipo_cambio.modal_tipo_cambio_nuevoTipoCambio');
+Route::get('tipo_cambio/eliminar_tipo_cambio/{id}', [TipoCambioController::class, 'eliminar_tipo_cambio'])->name('tipo_cambio.eliminar_tipo_cambio');
+Route::post('tipo_cambio/send_tipo_cambio_nuevoTipoCambio', [TipoCambioController::class, 'send_tipo_cambio_nuevoTipoCambio'])->name('tipo_cambio.send_tipo_cambio_nuevoTipoCambio');
+
+Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');
+Route::get('reporte/listar_reporte_usuario', [ReporteController::class, 'listar_reporte_usuario'])->name('reporte.listar_reporte_usuario');
+Route::get('reporte/rep_pdf/{funcion}/{fini}/{ffin}/{usuario}', [ReporteController::class, 'rep_pdf'])->name('reporte.rep_pdf');
 

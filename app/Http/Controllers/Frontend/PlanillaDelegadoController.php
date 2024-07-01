@@ -17,6 +17,8 @@ use App\Models\DelegadoReintegroDetalle;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
+use App\Models\ComputoSesione;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PlanillaDelegadoController extends Controller
 {
@@ -227,12 +229,13 @@ class PlanillaDelegadoController extends Controller
 		
 		$planilla = NULL;
 		$fondo_comun = NULL;
-		
+		$computoSesion = NULL;
 		if(isset($planillaDelegado->id)){
         	$planilla = $planillaDelegado_model->getPlanillaDelegadoDetalleByIdPlanilla($planillaDelegado->id);
 			$fondo_comun = $planillaDelegado_model->getSaldoDelegadoFondoComun($request->id_periodo_bus,$request->anio,$request->mes);
+			$computoSesion = ComputoSesione::find($planillaDelegado->id_computo_sesion);
 		}
-        return view('frontend.planilla.lista_planilla_delegado',compact('planilla','fondo_comun'));
+        return view('frontend.planilla.lista_planilla_delegado',compact('planilla','fondo_comun','computoSesion'));
 
     }
 	
@@ -312,6 +315,7 @@ class PlanillaDelegadoController extends Controller
 		$p[]=$request->provision;
 		$p[]=$request->cancelacion;
 		$p[]=$request->grupo;
+		$p[]=$request->tiene_ruc;
 		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;

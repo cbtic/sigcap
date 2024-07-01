@@ -347,7 +347,8 @@ if($('#instancia').val()==250){
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_proyectista as $row) {?>
-									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$proyectista->id_tipo_profesional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<option value="<?php echo $row->codigo?>" <?php if(isset($proyectista->id_tipo_profesional) && $row->codigo==$proyectista->id_tipo_profesional) {echo "selected='selected'";}
+									elseif (isset($profesionales_otro->id_tipo_profesional) && $row->codigo==$profesionales_otro->id_tipo_profesional) {echo "selected='selected'";}?>><?php echo $row->denominacion?></option>
 									<?php
 									}
 									?>
@@ -356,7 +357,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-3" >
 								<div class="form-group "id="agremiado_">
 									<label class="control-label form-control-sm">Nombre</label>
-									<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->apellido_paterno.' '. $datos_persona->apellido_materno.' '.$datos_persona->nombres?>" type="text" readonly='readonly'>
+									<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->nombres?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="persona_">
 									<label class="control-label form-control-sm">Nombre/Raz&oacute;n Social</label>
@@ -365,8 +366,8 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="numero_cap_">
-									<label class="control-label form-control-sm">N° CAP</label>
-									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
+									<label class="control-label form-control-sm">N° <?php echo $datos_proyectista[0]->tipo_colegiatura?></label>
+									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
 								</div>
 								<div class="form-group" id="dni_">
 									<label class="control-label form-control-sm">DNI</label>
@@ -376,29 +377,29 @@ if($('#instancia').val()==250){
 							<div class="col-lg-1">
 								<div class="form-group" id="situacion_">
 									<label class="control-label form-control-sm">Situaci&oacute;n</label>
-									<input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->situacion?>" type="text" readonly='readonly'>
+									<input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->situacion?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="fecha_nacimiento_">
 									<label class="control-label form-control-sm">Fecha de Nacimiento</label>
-									<input id="fecha_nacimiento" name="fecha_nacimiento" on class="form-control form-control-sm"  value="<?php echo $datos_persona->fecha_nacimiento?>" type="text" readonly='readonly'>
+									<input id="fecha_nacimiento" name="fecha_nacimiento" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->fecha_nacimiento?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 
 							<div class="col-lg-1">
 								<div class="form-group" id="direccion_agremiado_">
 									<label class="control-label form-control-sm">T&eacute;lefono</label>
-									<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->celular1?>" type="text" readonly='readonly'>
+									<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->numero_celular?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="direccion_persona_">
 									<label class="control-label form-control-sm">Direcci&oacute;n</label>
-									<input id="direccion_persona" name="direccion_persona" on class="form-control form-control-sm"  value="<?php echo $datos_persona->direccion?>" type="text" readonly='readonly'>
+									<input id="direccion_persona" name="direccion_persona" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->direccion?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 
 							<div class="col-lg-3">
 								<div class="form-group" id="n_regional_">
 									<label class="control-label form-control-sm">Email</label>
-									<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->email?>" type="text" readonly='readonly'>
+									<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->correo?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="celular_">
 									<label class="control-label form-control-sm">Celular</label>
@@ -408,7 +409,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-2">
 								<div class="form-group" id="act_gremial_">
 									<label class="control-label form-control-sm">Actividad Gremial</label>
-									<input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->actividad?>" type="text" readonly='readonly'>
+									<input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php echo $datos_proyectista[0]->actividad?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="email_">
 									<label class="control-label form-control-sm">Email</label>
@@ -426,14 +427,14 @@ if($('#instancia').val()==250){
 						
 						<?php 
 							foreach($proyectista_solicitud as $row){
-							if($row->numero_cap!=$datos_agremiado->numero_cap){
+							if($row->numero_cap!=$datos_proyectista[0]->numero_cap){
 						?>
 							
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-1" hidden>
 								<label class="control-label form-control-sm">Tipo Proyectista</label>
-								<select name="tipo_proyectista_row" id="tipo_proyectista_row" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
+								<select name="tipo_proyectista_row[]" id="tipo_proyectista_row" class="form-control form-control-sm" onChange="">
+									<option value="0">--Selecionar--</option>
 									<?php
 									foreach ($tipo_proyectista as $row_) {?>
 									<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_profesional)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
@@ -450,8 +451,8 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="numero_cap_">
-									<label class="control-label form-control-sm">N° CAP</label>
-									<input id="numero_cap_row" name="numero_cap_row" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
+									<label class="control-label form-control-sm">N° <?php echo $row->tipo_colegiatura?></label>
+									<input id="numero_cap_row[]" name="numero_cap_row" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
 								</div>
 							</div>
 							<div class="col-lg-1">
@@ -581,17 +582,17 @@ if($('#instancia').val()==250){
 							Uso de la Edificaci&oacute;n
 						</div>
 						
-						<?php 
-							foreach($datos_usoEdificaciones as $row){
-							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
-						?>
-							
-							<div class="row">
+						<div class="row">
 							<div class="col-lg-8" style=";padding-right:15px">
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="uso-container">
+									
+						<?php 
+							foreach($datos_usoEdificaciones as $key=>$row){
+							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
+						?>
 										<div class="row uso-row">
-											<div class="col-lg-5" style=";padding-right:15px">
+											<div class="col-lg-4" style=";padding-right:15px">
 											<label class="control-label form-control-sm">Tipo de Uso</label>
 											<select name="tipo_uso[]" id="tipo_uso" class="form-control form-control-sm" onChange="obtenerSubTipoUso(this)">
 												<option value="">--Seleccionar--</option>
@@ -623,21 +624,30 @@ if($('#instancia').val()==250){
 											<div class="col-sm-12 controls">
 												<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 													<a href="javascript:void(0)" onClick="AddFilaUso()" class="btn btn-sm btn-success">Agregar</a>
+													<!--
+													<button class="btn btn-sm btn-danger" style="margin-left:10px" onclick="removeFilaUso(event,this.parentNode)">Eliminar</button>
+													-->
 												</div>
 											</div>
 										</div>
+										
+										
+										<?php if($key!=0){?>
+											
+											<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
+											
+										<?php } ?>
+										
 									</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						
-						
 						<?php 
 								//}
 							} 
 						?>
+						
+						</div>
+								</div>
+							</div>
+						</div>
 
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
 							Presupuesto
@@ -647,14 +657,16 @@ if($('#instancia').val()==250){
 						<div class="row">
 							<div class="col-lg-8" style=";padding-right:15px">
 								
-								<?php 
-									foreach($datos_presupuesto as $row){	
-								?>
-								
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="presupuesto-container">
+									
+								<?php 
+									foreach($datos_presupuesto as $key=>$row){	
+								?>
+								
+								
 										<div class="row presupuesto-row">
-											<div class="col-lg-5" style=";padding-right:15px">
+											<div class="col-lg-4" style=";padding-right:15px">
 												<label class="control-label form-control-sm">Tipo de Obra</label>
 												<select name="tipo_obra[]" id="tipo_obra" class="form-control form-control-sm" onChange="">
 													<option value="">--Selecionar--</option>
@@ -682,17 +694,27 @@ if($('#instancia').val()==250){
 												<div class="col-sm-12 controls">
 													<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 														<a href="javascript:void(0)" onClick="AddFilaPresupuesto()" class="btn btn-sm btn-success">Agregar</a>
-														<!--<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
+														<!--<button class="btn btn-sm btn-danger" style="margin-left:10px" onclick="removeFilaPresupuesto(event,this.parentNode)">Eliminar</button>
+														<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
 													</div>
 												</div>
 											</div>
+											
+											<?php if($key!=0){?>
+											
+											<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
+											
+											<?php } ?>
+											
 										</div>
-									</div>
-								</div>
+									
 								
 								<?php 
 									} 
 								?>		
+								
+								</div>
+								</div>
 								
 								<div class="row" style="padding-left:10px;padding-top:10px; display:flex; justify-content:flex-end">
 									<div class="col-lg-3">

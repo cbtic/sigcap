@@ -27,7 +27,7 @@ declare
 	v_denominacion varchar;
 	
 	p_i_id_agremiado_cuota integer;
-
+	v_mes_agremiado_letra varchar;
 
 begin
 	
@@ -76,8 +76,21 @@ begin
 			
 			p_i_id_agremiado_cuota := currval('agremiado_cuotas_id_seq');
 		
+			if v_mes_agremiado_::int=1 then v_mes_agremiado_letra:='ENE'; end if;
+			if v_mes_agremiado_::int=2 then v_mes_agremiado_letra:='FEB'; end if;
+			if v_mes_agremiado_::int=3 then v_mes_agremiado_letra:='MAR'; end if;
+			if v_mes_agremiado_::int=4 then v_mes_agremiado_letra:='ABR'; end if;
+			if v_mes_agremiado_::int=5 then v_mes_agremiado_letra:='MAY'; end if;
+			if v_mes_agremiado_::int=6 then v_mes_agremiado_letra:='JUN'; end if;
+			if v_mes_agremiado_::int=7 then v_mes_agremiado_letra:='JUL'; end if;
+			if v_mes_agremiado_::int=8 then v_mes_agremiado_letra:='AGO'; end if;
+			if v_mes_agremiado_::int=9 then v_mes_agremiado_letra:='SET'; end if;
+			if v_mes_agremiado_::int=10 then v_mes_agremiado_letra:='OCT'; end if;
+			if v_mes_agremiado_::int=11 then v_mes_agremiado_letra:='NOV'; end if;
+			if v_mes_agremiado_::int=12 then v_mes_agremiado_letra:='DIC'; end if;
+		
 			insert into valorizaciones(id_modulo,pk_registro,id_concepto,id_agremido,id_persona,monto,id_moneda,fecha,fecha_proceso,estado,id_usuario_inserta,created_at,updated_at, descripcion)
-			values (2,p_i_id_agremiado_cuota,v_id_concepto,entradas_mes.id_agremiado,entradas_mes.id_persona,v_importe,v_id_moneda,v_last_day_month::date,now(),1,1,now(),now(), v_denominacion||' '||v_mes_||'-'||v_anio::varchar);
+			values (2,p_i_id_agremiado_cuota,v_id_concepto,entradas_mes.id_agremiado,entradas_mes.id_persona,v_importe,v_id_moneda,v_last_day_month::date,now(),1,1,now(),now(), v_denominacion||' '||v_mes_agremiado_letra||'-'||p_anio::varchar);
 			
 			end if;
 		
@@ -93,3 +106,4 @@ begin
 end;
 $function$
 ;
+

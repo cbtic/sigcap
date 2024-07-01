@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>CAP</title>
-        <link rel="stylesheet" type="text/css" href="css/pdf.css"  />
+        <link rel="stylesheet" type="text/css" href="css/pdf.css"/>
         <style>
             .td_left{
                 text-align: left !important;
@@ -28,7 +28,7 @@
                 width: 25%;
             }
             td{
-                padding-left: 2px !important;
+                padding-left: 1px !important;
             }
             table{
                 font-size: 10px !important; 
@@ -39,7 +39,7 @@
             }
             .titulos{
                 font-weight: bold;
-				padding:0px 10px;
+				padding:0px 5px;
             }
             h2{
                 font-size: 15px !important
@@ -136,8 +136,8 @@
                 
 				<tr>
 					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">#</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;text-align:left;padding-top:5px;padding-bottom:5pxM;text-align:center" width="5%">Tipo</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;text-align:left;padding-top:5px;padding-bottom:5pxM;text-align:center" width="10%">Fecha</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">Tipo</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Fecha</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Credipago</td>
                     <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Propietario</td>
                     <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Nombre Proyecto</td>
@@ -159,10 +159,10 @@
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->propietario?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->nombreproyecto?></td>
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->distrito?></td>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php //echo $r->area_lote?></td>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php //echo $r->area_construida?></td>
+                    <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right"><?php echo $r->area_total !== null ? number_format($r->area_total,2,'.',',') : '-';?></td>
+                    <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right"><?php echo $r->total_area_techada_m2 !== null ? number_format($r->total_area_techada_m2,2,'.',',') : '-';?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php //echo $r->area_remodelada?></td>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php //echo $r->tipo_proyecto?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->tipo_profesional?></td>
 				</tr>
 				<?php
 				} 

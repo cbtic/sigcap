@@ -1,4 +1,15 @@
 
+<div class="row" style="padding-left:10px">
+	<div class="col-lg-1">
+		<label class="control-label form-control-sm">N&deg; C&oacute;mputo</label>
+		<input id="num_computo" name="num_computo" class="form-control form-control-sm" value="<?php if($computoSesion)echo $computoSesion->id?>" type="text" readonly="readonly">
+	</div>
+	<div class="col-lg-1">
+		<label class="control-label form-control-sm">Fecha C&oacute;mputo</label>
+		<input id="fecha_computo" name="fecha_computo" class="form-control form-control-sm" value="<?php if($computoSesion)echo date("d-m-Y", strtotime($computoSesion->fecha))?>" type="text" readonly="readonly">
+	</div>
+</div>
+
 <table id="tblPlanilla" class="table table-hover table-sm">
 	<thead>
 	<tr style="font-size:13px">
