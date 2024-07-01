@@ -570,15 +570,15 @@ if($('#instancia').val()==250){
 							Uso de la Edificaci&oacute;n
 						</div>
 						
-						<?php 
-							foreach($datos_usoEdificaciones as $row){
-							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
-						?>
-							
-							<div class="row">
+						<div class="row">
 							<div class="col-lg-8" style=";padding-right:15px">
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="uso-container">
+									
+						<?php 
+							foreach($datos_usoEdificaciones as $key=>$row){
+							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
+						?>
 										<div class="row uso-row">
 											<div class="col-lg-4" style=";padding-right:15px">
 											<label class="control-label form-control-sm">Tipo de Uso</label>
@@ -617,18 +617,24 @@ if($('#instancia').val()==250){
 												</div>
 											</div>
 										</div>
+										
+										<?php if($key!=0){?>
+											
+											<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
+											
+										<?php } ?>
+										
 									</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						
-						
+									
 						<?php 
 								//}
 							} 
 						?>
+						
+						</div>
+								</div>
+							</div>
+						</div>
 
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
 							Presupuesto
@@ -638,12 +644,12 @@ if($('#instancia').val()==250){
 						<div class="row">
 							<div class="col-lg-8" style=";padding-right:15px">
 								
-								<?php 
-									foreach($datos_presupuesto as $row){	
-								?>
-								
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="presupuesto-container">
+									
+								<?php 
+									foreach($datos_presupuesto as $key=>$row){	
+								?>
 										<div class="row presupuesto-row">
 											<div class="col-lg-4" style=";padding-right:15px">
 												<label class="control-label form-control-sm">Tipo de Obra</label>
@@ -679,13 +685,22 @@ if($('#instancia').val()==250){
 													</div>
 												</div>
 											</div>
+											
+											<?php if($key!=0){?>
+											
+											<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
+											
+											<?php } ?>
+											
 										</div>
-									</div>
-								</div>
+									
 								
 								<?php 
 									} 
-								?>		
+								?>	
+								
+								</div>
+								</div>	
 								
 								<div class="row" style="padding-left:10px;padding-top:10px; display:flex; justify-content:flex-end">
 									<div class="col-lg-3">

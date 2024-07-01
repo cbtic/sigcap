@@ -1825,6 +1825,13 @@ function valida_reintegro(){
 
 function guardar_solicitud_reintegro(){
 	
+	var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    //var heightBrowser = $(window).width()/2;
+	var heightBrowser = $(window).width()*2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
 	$.ajax({
 			url: "/derecho_revision/send_nuevo_reintegro",
 			type: "POST",
@@ -1834,7 +1841,7 @@ function guardar_solicitud_reintegro(){
 				//$('#openOverlayOpc').modal('hide');
 				//modalSituacion(id_agremiado);
 				//datatableSuspension();
-
+				$('.loader').hide();
 				window.location.reload();
 				
 				//$('#openOverlayOpc').modal('hide');
@@ -2123,6 +2130,13 @@ function removeFilaPresupuesto(event,row) {
     }
 }
 
+function removeFilaPresupuestoEdit(obj) {
+	
+	event.preventDefault();
+	$(obj).parent().remove();
+	return false;
+}
+
 function calcularValorTotalObra() {
     var total = 0;
     var container = document.getElementById('presupuesto-container');
@@ -2218,6 +2232,13 @@ function removeFilaUso(event,row) {
     } else {
         bootbox.alert("Debe haber al menos una fila.");
     }
+}
+
+function removeFilaUsoEdit(obj) {
+	
+	event.preventDefault();
+    $(obj).parent().remove();
+	return false;
 }
 
 function calcularAreaTechada() {
