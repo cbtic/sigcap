@@ -2649,7 +2649,12 @@ class ComprobanteController extends Controller
  
             $id_comprobante_ncdc = $request->id_comprobante_ncdc;
             $id_comprobante = $request->id_comprobante;
- 
+
+            $id_comprobante_origen=$request->id_comprobante_origen;
+
+            echo("id_comprobante_origen: ".$id_comprobante_origen);
+            
+            exit();
  
             $trans = $request->trans;
             
