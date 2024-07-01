@@ -433,8 +433,8 @@ if($('#instancia').val()==250){
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-1" hidden>
 								<label class="control-label form-control-sm">Tipo Proyectista</label>
-								<select name="tipo_proyectista_row" id="tipo_proyectista_row" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
+								<select name="tipo_proyectista_row[]" id="tipo_proyectista_row" class="form-control form-control-sm" onChange="">
+									<option value="0">--Selecionar--</option>
 									<?php
 									foreach ($tipo_proyectista as $row_) {?>
 									<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_profesional)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
@@ -452,7 +452,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-1">
 								<div class="form-group" id="numero_cap_">
 									<label class="control-label form-control-sm">N° <?php echo $row->tipo_colegiatura?></label>
-									<input id="numero_cap_row" name="numero_cap_row" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
+									<input id="numero_cap_row[]" name="numero_cap_row" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
 								</div>
 							</div>
 							<div class="col-lg-1">
@@ -582,15 +582,15 @@ if($('#instancia').val()==250){
 							Uso de la Edificaci&oacute;n
 						</div>
 						
-						<?php 
-							foreach($datos_usoEdificaciones as $row){
-							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
-						?>
-							
-							<div class="row">
+						<div class="row">
 							<div class="col-lg-8" style=";padding-right:15px">
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="uso-container">
+									
+						<?php 
+							foreach($datos_usoEdificaciones as $key=>$row){
+							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
+						?>
 										<div class="row uso-row">
 											<div class="col-lg-4" style=";padding-right:15px">
 											<label class="control-label form-control-sm">Tipo de Uso</label>
@@ -624,22 +624,30 @@ if($('#instancia').val()==250){
 											<div class="col-sm-12 controls">
 												<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 													<a href="javascript:void(0)" onClick="AddFilaUso()" class="btn btn-sm btn-success">Agregar</a>
-													<!--<button class="btn btn-sm btn-danger" style="margin-left:10px" onclick="removeFilaUso(event,this.parentNode)">Eliminar</button>-->
+													<!--
+													<button class="btn btn-sm btn-danger" style="margin-left:10px" onclick="removeFilaUso(event,this.parentNode)">Eliminar</button>
+													-->
 												</div>
 											</div>
 										</div>
+										
+										
+										<?php if($key!=0){?>
+											
+											<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
+											
+										<?php } ?>
+										
 									</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						
-						
 						<?php 
 								//}
 							} 
 						?>
+						
+						</div>
+								</div>
+							</div>
+						</div>
 
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
 							Presupuesto
@@ -649,12 +657,14 @@ if($('#instancia').val()==250){
 						<div class="row">
 							<div class="col-lg-8" style=";padding-right:15px">
 								
-								<?php 
-									foreach($datos_presupuesto as $row){	
-								?>
-								
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="presupuesto-container">
+									
+								<?php 
+									foreach($datos_presupuesto as $key=>$row){	
+								?>
+								
+								
 										<div class="row presupuesto-row">
 											<div class="col-lg-4" style=";padding-right:15px">
 												<label class="control-label form-control-sm">Tipo de Obra</label>
@@ -689,13 +699,22 @@ if($('#instancia').val()==250){
 													</div>
 												</div>
 											</div>
+											
+											<?php if($key!=0){?>
+											
+											<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
+											
+											<?php } ?>
+											
 										</div>
-									</div>
-								</div>
+									
 								
 								<?php 
 									} 
 								?>		
+								
+								</div>
+								</div>
 								
 								<div class="row" style="padding-left:10px;padding-top:10px; display:flex; justify-content:flex-end">
 									<div class="col-lg-3">
