@@ -202,4 +202,26 @@ order by id_tipo_proyectista";
         return $data;
     }
 
+    function datos_proyectista_editar($id_solicitud){      
+        $cad = "select p.id, a.numero_cap, pe.apellido_paterno||' '||pe.apellido_materno||' '||pe.nombres agremiado, a.celular1, a.email1, 
+        t3.denominacion situacion,t4.denominacion actividad, p.id_tipo_profesional, 'CAP' tipo_colegiatura
+        from proyectistas p 
+        inner join agremiados a on p.id_agremiado = a.id 
+        inner join personas pe on a.id_persona = pe.id
+        left join tabla_maestras t3 on a.id_situacion = t3.codigo::int And t3.tipo ='14'
+        left join tabla_maestras t4 on a.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
+        where p.id_solicitud = '".$id_solicitud."' and p.id_tipo_proyectista=1
+        and p.estado='1'
+        union all
+        select p.id, po.colegiatura numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.numero_celular, p.correo, '' situacion, '' actividad, po.id_tipo_profesional , 'CIP' tipo_colegiatura
+        from profesion_otros po 
+        inner join personas p on po.id_persona = p.id
+        inner join solicitudes s on po.id_solicitud = s.id
+        where s.id='".$id_solicitud."' and po.id_tipo_proyectista=1 and p.estado='1'";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }
