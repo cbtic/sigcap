@@ -58,6 +58,9 @@ use App\Http\Controllers\Frontend\CoordinadorZonalDetalleController;
 use App\Http\Controllers\Frontend\DelegadoTributoController;
 
 use App\Http\Controllers\Frontend\OperacionController;
+
+use App\Http\Controllers\Frontend\ReporteController;
+
 use App\Http\Controllers\Frontend\TipoCambioController;
 /*
  * Frontend Controllers
@@ -753,4 +756,8 @@ Route::post('tipo_cambio/listar_tipo_cambio_ajax', [TipoCambioController::class,
 Route::get('tipo_cambio/modal_tipo_cambio_nuevoTipoCambio/{id}', [TipoCambioController::class, 'modal_tipo_cambio_nuevoTipoCambio'])->name('tipo_cambio.modal_tipo_cambio_nuevoTipoCambio');
 Route::get('tipo_cambio/eliminar_tipo_cambio/{id}', [TipoCambioController::class, 'eliminar_tipo_cambio'])->name('tipo_cambio.eliminar_tipo_cambio');
 Route::post('tipo_cambio/send_tipo_cambio_nuevoTipoCambio', [TipoCambioController::class, 'send_tipo_cambio_nuevoTipoCambio'])->name('tipo_cambio.send_tipo_cambio_nuevoTipoCambio');
+
+Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');
+Route::get('reporte/listar_reporte_usuario', [ReporteController::class, 'listar_reporte_usuario'])->name('reporte.listar_reporte_usuario');
+Route::get('reporte/rep_pdf/{funcion}/{fini}/{ffin}/{usuario}', [ReporteController::class, 'rep_pdf'])->name('reporte.rep_pdf');
 
