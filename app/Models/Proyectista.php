@@ -139,14 +139,14 @@ order by id_tipo_proyectista";
 
     function getProyectistaIngeniero($id_solicitud){
 
-        $cad = "select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, a.id_situacion, p.numero_celular, p.correo
+        $cad = "select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, a.id_situacion, p.numero_celular, p.correo, p2.id id_profesional
         from proyectistas p2 
         inner join agremiados a on p2.id_agremiado = a.id
         left join personas p on a.id_persona =p.id
         inner join solicitudes s on p2.id_solicitud = s.id
         Where s.id='".$id_solicitud."' and p2.id_tipo_proyectista=1
         union all
-        select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, null, p.numero_celular, p.correo 
+        select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, null, p.numero_celular, p.correo, po.id id_profesional
         from profesion_otros po 
         inner join personas p on po.id_persona = p.id
         inner join solicitudes s on po.id_solicitud = s.id

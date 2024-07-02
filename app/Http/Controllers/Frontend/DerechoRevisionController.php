@@ -1485,8 +1485,8 @@ class DerechoRevisionController extends Controller
 		//var_dump($proyecto2->id_tipo_sitio);exit();
 		$proyectista_ = $proyectista_model->getProyectistaIngeniero($id);
 		//var_dump($proyectista_);exit();
-		$proyectista = Proyectista::find($proyectista_[0]->id);
-		$profesionales_otro = ProfesionalesOtro::find($proyectista_[0]->id);
+		$proyectista = Proyectista::find($proyectista_[0]->id_profesional);
+		$profesionales_otro = ProfesionalesOtro::find($proyectista_[0]->id_profesional);
 
 		$datos_proyectista = $proyectista_model->getDatosProyectistaIngeniero($id);
 		/*$agremiado_ = Agremiado::find($proyectista_[0]->id_agremiado);
