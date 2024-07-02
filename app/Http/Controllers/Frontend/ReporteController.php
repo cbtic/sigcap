@@ -157,7 +157,7 @@ class ReporteController extends Controller
 
         $caja_ingreso_model = new CajaIngreso();
         $venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_fin);
-		print_r($venta);exit();
+		//print_r($venta);exit();
 
         $caja_ingreso_model = new CajaIngreso();
         $forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_fin);
