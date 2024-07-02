@@ -1818,7 +1818,7 @@ function valida_reintegro(){
     if(msg!=""){
         bootbox.alert(msg); 
         return false;
-    }else if(situacion=="HABILITADO"){
+    }else if(situacion=="HABILITADO" || situacion==""){
         guardar_solicitud_reintegro();
     } 
 }
@@ -1842,7 +1842,7 @@ function guardar_solicitud_reintegro(){
 				//modalSituacion(id_agremiado);
 				//datatableSuspension();
 				$('.loader').hide();
-				window.location.reload();
+				//window.location.reload();
 				
 				//$('#openOverlayOpc').modal('hide');
 				
