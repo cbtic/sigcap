@@ -1521,6 +1521,7 @@ class DerechoRevisionController extends Controller
         $zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
 		$tipo_proyectista = $tablaMaestra_model->getMaestroByTipo(41);
+		$principal_asociado = $tablaMaestra_model->getMaestroByTipo(130);
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'TIPO USO');
 		//$sub_tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'SUB TIPO USO');
@@ -1542,7 +1543,7 @@ class DerechoRevisionController extends Controller
 		$parametro = $parametro_model->getParametroAnio($anio_actual);
 		$liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
 		//dd($liquidacion);
-        return view('frontend.derecho_revision.all_derecho_revision_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante',/*'datos_agremiado','datos_persona',*/'info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones',/*'sub_tipo_uso',*/'tipo_obra','datos_presupuesto','tipo_liquidacion','instancia','parametro','liquidacion','tipo','tipo_documento','empresa','tipo_proyectista','profesionales_otro','datos_proyectista'));
+        return view('frontend.derecho_revision.all_derecho_revision_reintegro',compact('id','derechoRevision','proyectista','agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad','proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2','tipo_solicitante',/*'datos_agremiado','datos_persona',*/'info_solicitud','info_uso_solicitud','tipo_proyecto','tipo_uso','datos_usoEdificaciones',/*'sub_tipo_uso',*/'tipo_obra','datos_presupuesto','tipo_liquidacion','instancia','parametro','liquidacion','tipo','tipo_documento','empresa','tipo_proyectista','profesionales_otro','datos_proyectista','principal_asociado'));
     }
 
 	public function send_nuevo_reintegro(Request $request){
