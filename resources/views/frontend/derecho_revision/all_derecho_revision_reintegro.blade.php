@@ -348,7 +348,7 @@ if($('#instancia').val()==250){
 									<?php
 									foreach ($tipo_proyectista as $row) {?>
 									<option value="<?php echo $row->codigo?>" <?php if(isset($proyectista->id_tipo_profesional) && $row->codigo==$proyectista->id_tipo_profesional) {echo "selected='selected'";}
-									elseif (isset($profesionales_otro->id_tipo_profesional) && $row->codigo==$profesionales_otro->id_tipo_profesional) {echo "selected='selected'";}?>><?php echo $row->denominacion?></option>
+									else if (isset($profesionales_otro->id_tipo_profesional) && $row->codigo==$profesionales_otro->id_tipo_profesional) {echo "selected='selected'";}?>><?php echo $row->denominacion?></option>
 									<?php
 									}
 									?>
@@ -483,7 +483,7 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Principal_asociado</label>
-								<select name="principal_asociado_row[]" id="principal_asociado_row" class="form-control form-control-sm" onChange="">
+								<select name="principal_asociado_row" id="principal_asociado_row" class="form-control form-control-sm" onChange="">
 									<option value="0">--Selecionar--</option>
 									<?php
 									foreach ($principal_asociado as $row_) {?>
