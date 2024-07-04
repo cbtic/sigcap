@@ -146,7 +146,7 @@ class CajaIngreso extends Model
                 ) 
                 group by situacion, tipo_,tipo";
 
-        echo $cad; exit();
+        //echo $cad; exit();
         $data = DB::select($cad);
         return $data;
     }
@@ -168,7 +168,7 @@ class CajaIngreso extends Model
             )
             group by condicion";
 
-		//echo $cad;
+        //echo $cad; exit();
         $data = DB::select($cad);
         return $data;
     }
@@ -192,7 +192,7 @@ class CajaIngreso extends Model
     
         ";
 
-		//echo $cad;
+		echo $cad; exit();
         $data = DB::select($cad);
         return $data;
     }
