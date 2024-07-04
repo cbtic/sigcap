@@ -1172,13 +1172,23 @@ function abrirPdfReporte(funcion) {
 
 
 	
-	$fini = $('#fecha_ini').val();
+	//$fini = formatDate($('#fecha_ini').val());
 	//alert($fini);
-	var todayDate = parse($fini).toISOString().slice(0, 10);
-	alert(todayDate);
-	
 
+	$fini = $('#fecha_ini').val();
+
+	var date = new Date($fini); // Or your date here
+	$fini= ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
+
+	//alert($fini);
+
+	//$ffin = formatDate($('#fecha_fin').val());
 	$ffin = $('#fecha_fin').val();
+
+	var date = new Date($ffin); // Or your date here
+	$ffin = ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
+
+
 	//alert($ffin);
 
 	$usuario = $('#id_usuario_caja').val();
@@ -1190,6 +1200,46 @@ function abrirPdfReporte(funcion) {
 	window.open(href, '_blank');
 }
 
+function formatDate1(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
 
+function formatDate(dates) {
+	var date = new Date(dates);
+    var year = date.getFullYear().toString();
+    var month = (date.getMonth() + 101).toString().substring(1);
+    var day = (date.getDate() + 100).toString().substring(1);
+    return year + "-" + month + "-" + day;
+}
 
+
+function zfill(number, width) {
+    var numberOutput = Math.abs(number); /* Valor absoluto del número */
+    var length = number.toString().length; /* Largo del número */ 
+    var zero = "0"; /* String de cero */  
+    
+    if (width <= length) {
+        if (number < 0) {
+             return ("-" + numberOutput.toString()); 
+        } else {
+             return numberOutput.toString(); 
+        }
+    } else {
+        if (number < 0) {
+            return ("-" + (zero.repeat(width - length)) + numberOutput.toString()); 
+        } else {
+            return ((zero.repeat(width - length)) + numberOutput.toString()); 
+        }
+    }
+}

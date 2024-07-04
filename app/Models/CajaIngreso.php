@@ -137,10 +137,10 @@ class CajaIngreso extends Model
                     from comprobantes c 
                         inner join tabla_maestras t on t.abreviatura = c.tipo and t.tipo = '126' 
                         inner join tabla_maestras m on m.codigo = c.id_caja::varchar and m.tipo = '91' 
-                    group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago, c.anulado 
+                    group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago, c.anulado,c.id_caja 
                     having c.id_usuario_inserta = ".$id_usuario."
                     and c.id_caja = ".$id_caja."                       
-                    and TO_CHAR(c.fecha, 'dd-mm-yyyy') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                    and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                     and c.id_forma_pago = 1
                     and c.anulado = 'N'
                 ) 
