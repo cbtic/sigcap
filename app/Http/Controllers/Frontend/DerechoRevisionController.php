@@ -1345,10 +1345,20 @@ class DerechoRevisionController extends Controller
 		$anio_actual = Carbon::now()->year;
 		$parametro = $parametro_model->getParametroAnio($anio_actual);
 		$proyectista_ = $proyectista_model->getDatosProyectistaIngeniero_($id);
+		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud_($id);
+		$datos_proyectista = $proyectista_model->getDatosProyectistaIngeniero($id);
+		$tipo_proyectista = $tablaMaestra_model->getMaestroByTipo(41);
+		$principal_asociado = $tablaMaestra_model->getMaestroByTipo(130);
+		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
+		$derechoRevision_ = DerechoRevision::find($id);
+		$datos_usoEdificaciones = UsoEdificacione::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
+		$tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'TIPO USO');
+		$datos_presupuesto = Presupuesto::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
+		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(112);
 
 		//var_dump($parametro);exit;
 
-        return view('frontend.derecho_revision.modal_reintegro',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro','proyectista_'));
+        return view('frontend.derecho_revision.modal_reintegro',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro','proyectista_','proyectista_solicitud','datos_proyectista','tipo_proyectista','principal_asociado','tipo_proyecto','derechoRevision_','datos_usoEdificaciones','tipo_uso','datos_presupuesto','tipo_obra'));
 		
     }
 

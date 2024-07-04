@@ -1842,7 +1842,7 @@ function guardar_solicitud_reintegro(){
 				//modalSituacion(id_agremiado);
 				//datatableSuspension();
 				$('.loader').hide();
-				//window.location.reload();
+				window.location.reload();
 				
 				//$('#openOverlayOpc').modal('hide');
 				
