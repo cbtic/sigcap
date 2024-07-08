@@ -139,7 +139,7 @@ class CajaIngreso extends Model
                         inner join tabla_maestras m on m.codigo = c.id_caja::varchar and m.tipo = '91' 
                     group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago, c.anulado,c.id_caja 
                     having c.id_usuario_inserta = ".$id_usuario."
-                    and c.id_caja = ".$id_caja."                       
+                    --and c.id_caja = ".$id_caja."                       
                     and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                     and c.id_forma_pago = 1
                     and c.anulado = 'N'
@@ -151,7 +151,7 @@ class CajaIngreso extends Model
         return $data;
     }
     
-    function getAllCajaCondicionPago($id_usuario, $f_inicio, $f_fin){
+    function getAllCajaCondicionPago($id_usuario,  $id_caja, $f_inicio, $f_fin){
 
         $cad = "
             select condicion, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
@@ -162,7 +162,8 @@ class CajaIngreso extends Model
                     inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
                     inner join tabla_maestras m on m.codigo  = c.id_moneda::varchar and m.tipo = '1'
                 where  c.id_usuario_inserta = ".$id_usuario."
-                and TO_CHAR(c.fecha, 'dd-mm-yyyy') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                --and c.id_caja = ".$id_caja." 
+                and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                 and c.id_forma_pago = '1'
                 and c.anulado = 'N'
             )
@@ -173,7 +174,7 @@ class CajaIngreso extends Model
         return $data;
     }
 
-    function getAllCajaComprobanteDet($id_usuario, $f_inicio, $f_fin){
+    function getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_fin){
 
         $cad = "
             select denominacion, sum(importe) importe
@@ -183,7 +184,8 @@ class CajaIngreso extends Model
                     inner join comprobante_detalles cd on cd.id_comprobante = c.id
                     inner join conceptos co  on co.id  = cd.id_concepto    
             where  c.id_usuario_inserta = ".$id_usuario."
-            and to_char(c.fecha, 'YYYY-MM-DD') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+            --and c.id_caja = ".$id_caja." 
+            and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
             and c.id_forma_pago = '1'
             and c.anulado = 'N'
             )
@@ -192,7 +194,7 @@ class CajaIngreso extends Model
     
         ";
 
-		echo $cad; exit();
+		//echo $cad; exit();
         $data = DB::select($cad);
         return $data;
     }
