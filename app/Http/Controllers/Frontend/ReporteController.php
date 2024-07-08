@@ -152,7 +152,7 @@ class ReporteController extends Controller
 
 		}
 
-		//print_r($titulo);
+		//print_r($id_caja);
 		//exit();
 
         $caja_ingreso_model = new CajaIngreso();
@@ -163,12 +163,12 @@ class ReporteController extends Controller
         $forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_fin);
 
 		$caja_ingreso_model = new CajaIngreso();
-        $detalle_venta = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_fin);
+        $detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_fin);
 
 
 
 
-		$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta'));
+		$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_fin'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
