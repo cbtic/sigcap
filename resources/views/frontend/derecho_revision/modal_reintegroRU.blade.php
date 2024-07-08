@@ -387,7 +387,7 @@ function fn_save_requisito(){
     <div class="justify-content-center">
       <div class="card">
         <div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-          Vista Previa
+            Solicitud de Derecho de Revisi&oacute;n - Habilitaci&oacute;n Urbana
         </div>
         <div class="card-body">
           

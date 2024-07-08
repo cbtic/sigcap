@@ -456,7 +456,7 @@ function fn_save_credipago(){
     <div class="justify-content-center">
       <div class="card">
         <div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-          Registro de Reintegro
+          Solicitud de Derecho de Revisi&oacute;n - Edificaciones
         </div>
         <div class="card-body">
           
@@ -581,6 +581,248 @@ function fn_save_credipago(){
                         <input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $proyectista_[0]->situacion?>" type="text" readonly='readonly'>
                     </div>
                 </div>
+                <?php if(count($proyectista_solicitud)>1){?>
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Proyectista Asociados
+						</div>
+						
+						<?php } ?>
+						
+						<?php 
+							foreach($proyectista_solicitud as $row){
+							if($row->numero_cap!=$datos_proyectista[0]->numero_cap){
+						?>
+							
+						<div class="row" style="padding-left:10px">
+							<div class="col-lg-1" hidden>
+								<label class="control-label form-control-sm">Tipo Proyectista</label>
+								<select name="tipo_proyectista_row[]" id="tipo_proyectista_row" class="form-control form-control-sm" onChange="">
+									<option value="0">--Selecionar--</option>
+									<?php
+									foreach ($tipo_proyectista as $row_) {?>
+									<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_profesional)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group" id="numero_cap_">
+									<label class="control-label form-control-sm">N° <?php echo $row->tipo_colegiatura?></label>
+									<input id="numero_cap_row" name="numero_cap_row[]" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
+									<input id="tipo_colegiatura_row" name="tipo_colegiatura_row[]" value="<?php echo $row->tipo_colegiatura?>" type="hidden">
+								</div>
+							</div>
+                            <div class="col-lg-3" >
+								<div class="form-group "id="agremiado_">
+									<label class="control-label form-control-sm">Nombre</label>
+									<input id="agremiado_row" name="agremiado_row" on class="form-control form-control-sm"  value="<?php echo $row->agremiado?>" type="text" readonly='readonly'>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group" id="situacion_">
+									<label class="control-label form-control-sm">Situaci&oacute;n</label>
+									<input id="situacion_row" name="situacion_row" on class="form-control form-control-sm"  value="<?php echo $row->situacion?>" type="text" readonly='readonly'>
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<div class="form-group" id="direccion_agremiado_">
+									<label class="control-label form-control-sm">T&eacute;lefono</label>
+									<input id="direccion_agremiado_row" name="direccion_agremiado_row" on class="form-control form-control-sm"  value="<?php echo $row->celular1?>" type="text" readonly='readonly'>
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<div class="form-group" id="n_regional_">
+									<label class="control-label form-control-sm">Email</label>
+									<input id="n_regional_row" name="n_regional_row" on class="form-control form-control-sm"  value="<?php echo $row->email1?>" type="text" readonly='readonly'>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group" id="act_gremial_">
+									<label class="control-label form-control-sm">Actividad Gremial</label>
+									<input id="act_gremial_row" name="act_gremial_row" on class="form-control form-control-sm"  value="<?php echo $row->actividad?>" type="text" readonly='readonly'>
+								</div>
+							</div>
+							<div class="col-lg-1" hidden>
+								<label class="control-label form-control-sm">Principal_asociado</label>
+								<select name="principal_asociado_row" id="principal_asociado_row" class="form-control form-control-sm" onChange="">
+									<option value="0">--Selecionar--</option>
+									<?php
+									foreach ($principal_asociado as $row_) {?>
+									<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_proyectista)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						
+						
+						<?php 
+								}
+							} 
+						?>
+                    </div>
+                </div>
+                <div style="padding: 0px 0px 15px 10px; font-weight: bold">
+							Datos del Proyecto
+						</div>
+
+						<div class="col-lg-4" style=";padding-right:15px">
+							<label class="control-label form-control-sm">Datos T&eacute;cnicos del proyecto</label>
+							<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="" disabled>
+								<option value="">--Selecionar--</option>
+								<?php
+								foreach ($tipo_proyecto as $row) {?>
+								<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$derechoRevision_->id_tipo_tramite)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+								<?php
+							    }
+								?>
+							</select>
+						</div>
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Uso de la Edificaci&oacute;n
+						</div>
+						
+						<div class="row">
+							<div class="col-lg-10" style=";padding-right:15px">
+								<div class="row" style="padding-left:10px">
+									<div class="col-lg-12" id="uso-container">
+									
+						<?php 
+							foreach($datos_usoEdificaciones as $key=>$row){
+							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
+						?>
+										<div class="row uso-row">
+											<div class="col-lg-5" style=";padding-right:15px">
+											<label class="control-label form-control-sm">Tipo de Uso</label>
+											<select name="tipo_uso[]" id="tipo_uso" class="form-control form-control-sm" onChange="obtenerSubTipoUso(this)" disabled>
+												<option value="">--Seleccionar--</option>
+												<?php
+												foreach ($tipo_uso as $row_) {?>
+												<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+												<?php
+												}
+												?>
+											</select>
+										</div>
+										<div class="col-lg-5" style=";padding-right:15px">
+											<label class="control-label form-control-sm">Sub-Tipo de Uso</label>
+											<select name="sub_tipo_uso[]" id="sub_tipo_uso" class="form-control form-control-sm" onChange="" disabled>
+												<option value="">--Seleccionar--</option>
+												<?php
+												foreach ($sub_tipo_uso as $row_) {?>
+												<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_sub_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+												<?php
+												}
+												?>
+											</select>
+										</div>
+										<div class="col-lg-2">
+											<label class="control-label form-control-sm">&Aacute;rea Techada</label>
+											<input id="area_techada" name="area_techada[]" on class="form-control form-control-sm"  value="<?php echo number_format($row->area_techada, 2, '.', ',');?>" type="text" onchange="" readonly>
+										</div>
+									</div>
+                                    
+						<?php 
+								//}
+							} 
+						?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-10 d-flex justify-content-end">
+                            <div class="row" style="width: 100%; justify-content: flex-end;">
+                                    <div class="col-lg-2">
+                                        <label class="control-label form-control-sm">&Aacute;rea Techada Total</label>
+                                        <input id="area_techada_total" name="area_techada_total" on class="form-control form-control-sm"  value="<?php echo number_format($derechoRevision_->area_total, 2, '.', ',');?>" type="text" readonly='readonly'>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+							Presupuesto
+						</div>
+						<div class="row">
+							<div class="col-lg-9" style=";padding-right:15px">
+								
+								<div class="row" style="padding-left:10px">
+									<div class="col-lg-12" id="presupuesto-container">
+									
+                                    <?php 
+                                        foreach($datos_presupuesto as $key=>$row){	
+                                    ?>
+								
+                                        <div class="row presupuesto-row">
+                                            <div class="col-lg-6" style=";padding-right:15px">
+                                                <label class="control-label form-control-sm">Tipo de Obra</label>
+                                                <select name="tipo_obra[]" id="tipo_obra" class="form-control form-control-sm" onChange="" disabled>
+                                                    <option value="">--Selecionar--</option>
+                                                    <?php
+                                                    foreach ($tipo_obra as $row_) {?>
+                                                    <option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_obra)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <label class="control-label form-control-sm">&Aacute;rea Techada m2</label>
+                                                <input id="area_techada_presupuesto" name="area_techada_presupuesto[]" on class="form-control form-control-sm"  value="<?php echo number_format($row->area_techada, 2, '.', ',');?>" type="text" readonly>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <label class="control-label form-control-sm">Valor Unitario S/</label>
+                                                <input id="valor_unitario" name="valor_unitario[]" on class="form-control form-control-sm"  value="<?php echo number_format($row->valor_unitario, 2, '.', ',');?>" type="text" readonly>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <label class="control-label form-control-sm">Presupuesto</label>
+                                                <input id="presupuesto" name="presupuesto[]" on class="form-control form-control-sm"  value="<?php echo number_format($row->total_presupuesto, 2, '.', ',');?>" type="text" readonly='readonly'>
+                                            </div>
+                                        </div>
+                                    <?php 
+                                        } 
+                                    ?>		
+									</div>
+								</div>
+                            </div>
+                            <div class="col-lg-1-5" style="border-left:2px solid #ccc;">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label class="control-label form-control-sm">Azotea</label>
+                                        <input id="azotea" name="azotea" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->azotea?>" type="text" readonly>
+                                    </div>
+                                </div>
+								<div class="row">
+									<div class="col-lg-12">
+                                        <label class="control-label form-control-sm">N° de Pisos</label>
+                                        <input id="n_pisos" name="n_pisos" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->numero_piso?>" type="text" readonly>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="col-lg-1-5">
+								<div class="row">
+									<div class="col-lg-12">
+                                        <label class="control-label form-control-sm">N° S&oacute;tanos</label>
+                                        <input id="n_sotanos" name="n_sotanos" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->numero_sotano?>" type="text" readonly>
+                                    </div>
+                                </div>
+								<div class="row">
+									<div class="col-lg-12">
+                                        <label class="control-label form-control-sm">Semis&oacute;tano</label>
+                                        <input id="semisotano" name="semisotano" on class="form-control form-control-sm"  value="<?php echo $derechoRevision_->semisotano?>" type="text" readonly>
+                                    </div>
+                                </div>
+								<div class="row">
+									<div class="col-lg-12" hidden>
+                                        <label class="control-label form-control-sm">Fecha Registro</label>
+                                        <input id="fecha_registro" name="fecha_registro" on class="form-control form-control-sm"  value="<?php echo date('Y-m-d', strtotime($derechoRevision_->fecha_registro)); ?>" type="text" readonly='readonly'>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 <div style="padding: 15px 0px 15px 10px; font-weight: bold">
                     C&aacute;lculo Liquidaci&oacute;n
                 </div>
