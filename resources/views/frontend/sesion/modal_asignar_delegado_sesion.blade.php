@@ -260,7 +260,7 @@ function guardarCita(id_medico,fecha_cita){
     }
 }
 
-function fn_save(){
+function fn_save_delegado(){
     
 	var msg = "";
 	var _token = $('#_token').val();
@@ -563,7 +563,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_delegado()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>
