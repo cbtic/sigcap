@@ -282,6 +282,7 @@ function obtenerComision(){
 	var id_periodo = $('#id_periodo').val();
 	var tipo_comision = $('#tipo_comision').val();
 	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var id_comision = $("#id_comision_bus").val();
 	
 	$.ajax({
 		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision,
@@ -289,9 +290,12 @@ function obtenerComision(){
 		success: function(result){
 			var option = "";
 			$('#id_comision').html("");
+			var sel = "";
 			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.denominacion+" "+oo.comision+"</option>";
+				sel = "";
+				if(id_comision==oo.id)sel = "selected='selected'";
+				option += "<option value='"+oo.id+"' "+sel+">"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision').html(option);
 		}
