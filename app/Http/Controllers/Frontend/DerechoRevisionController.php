@@ -1092,6 +1092,7 @@ class DerechoRevisionController extends Controller
 		$tipo_obra = $datos[0]->tipo_obra;
 		$codigo = $datos[0]->codigo;
 		$tipo_tramite = $datos[0]->tipo_tramite;
+		$valor_reintegro = $datos[0]->valor_reintegro;
 
 		$year = Carbon::now()->year;
 
@@ -1143,7 +1144,7 @@ class DerechoRevisionController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		*/
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia','tipo_uso','tipo_obra','codigo','tipo_tramite','proyectista_nombres','proyectista_cap','tipo_uso_datos','sub_tipo_uso_datos','datos_uso_edificacion','tipo_obra_datos','area_techada_datos','tipo_colegiatura_cap'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia','tipo_uso','tipo_obra','codigo','tipo_tramite','proyectista_nombres','proyectista_cap','tipo_uso_datos','sub_tipo_uso_datos','datos_uso_edificacion','tipo_obra_datos','area_techada_datos','tipo_colegiatura_cap','valor_reintegro'));
 		
 
 
