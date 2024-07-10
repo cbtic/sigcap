@@ -126,10 +126,11 @@ class ReporteController extends Controller
 
     }
 
-	public function rep_pdf($funcion,$f_inicio,$id_usuario_caja)
+	public function rep_pdf($funcion,$f_inicio,$id_usuario_caja,$tipo)
 	{
 		//print_r($f_inicio);
 		//exit();
+
 
 		$titulo = "";
 
@@ -138,8 +139,12 @@ class ReporteController extends Controller
 		//print_r($usuario_caja);
 		//exit();
 
-		$id_usuario = $usuario_caja->id_usuario;
-		$id_caja = $usuario_caja->id_caja;
+		//$id_usuario = $usuario_caja->id_usuario;
+		//$id_caja = $usuario_caja->id_caja;
+
+		$id_usuario = $id_usuario_caja;
+		$id_caja = "0";
+
 
 		$caja_ingreso_model = new CajaIngreso();
         $usuario_det = $caja_ingreso_model->getCajaIngresoById($id_usuario_caja);
@@ -147,23 +152,23 @@ class ReporteController extends Controller
 		//print_r($id_caja);exit();
 
 
-		if ($funcion=='reporte_01'){
-			$titulo = "CONSOLIDADO ".$usuario_det[0] ->denominacion;
+		if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_det[0] ->denominacion;
+		if ($funcion=='cct')$titulo = "CONSOLIDADO DE TODAS LAS CAJAS ";
 
-		}
+		
 
 		//print_r($id_caja);
 		//exit();
 
         $caja_ingreso_model = new CajaIngreso();
-        $venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio);
+        $venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
 		//print_r($venta);exit();
 
         $caja_ingreso_model = new CajaIngreso();
-        $forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio);
+        $forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
 
 		$caja_ingreso_model = new CajaIngreso();
-        $detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio);
+        $detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
 
 
 
