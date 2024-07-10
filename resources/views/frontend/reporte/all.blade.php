@@ -212,7 +212,7 @@
 									<div class="form-group">
 										<label class="form-control-sm">Caja</label>
 										<select name="id_usuario_caja" id="id_usuario_caja" class="form-control form-control-sm">
-											<option value="0">Todos</option>
+											<option value="">Todos</option>
 											<?php foreach($caja_usuario as $row):?>
 											<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
 											<?php  endforeach;?>
@@ -271,7 +271,7 @@
 
 													<td class="text-left" style="vertical-align:middle">
 														<a href="javascript:void(0);"  
-																					   onclick="abrirPdfReporte('<?php echo addslashes($row->funcion); ?>' )"
+																					   onclick="abrirPdfReporte('<?php echo addslashes($row->funcion); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
 														style="font-size: 12px; text-decoration: underline; color: blue;">
 															Ver Informe
 														</a>
