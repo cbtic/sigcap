@@ -1164,7 +1164,7 @@ function fn_eliminar(id){
 }
 
 
-function abrirPdfReporte(funcion) {
+function abrirPdfReporte(funcion, tipo) {
 	//alert (funcion);
 
 	//alert(municipalidad+anio+mes);
@@ -1175,19 +1175,18 @@ function abrirPdfReporte(funcion) {
 	//$fini = formatDate($('#fecha_ini').val());
 	//alert($fini);
 
+	
+
 	$fini = $('#fecha_ini').val();
 
 	var date = new Date($fini); // Or your date here
 	$fini= ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
-
 	//alert($fini);
-
 	//$ffin = formatDate($('#fecha_fin').val());
 	$ffin = $('#fecha_fin').val();
 
 	var date = new Date($ffin); // Or your date here
 	$ffin = ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
-
 
 	//alert($ffin);
 
@@ -1197,8 +1196,19 @@ function abrirPdfReporte(funcion) {
 	//exit();
 
 	//var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$ffin+'/'+$usuario;
-	var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$usuario;
-	window.open(href, '_blank');
+	if (tipo =='1'){
+		if($usuario!=''){
+			var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$usuario+'/'+tipo;
+			window.open(href, '_blank');		
+		}else{
+			alert('Requiere seleccionar un usuario')
+		}
+	}
+	if (tipo =='2'){
+		$usuario!='0';
+		var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$usuario+'/'+tipo;
+		window.open(href, '_blank');		
+	}
 }
 
 function formatDate1(date) {

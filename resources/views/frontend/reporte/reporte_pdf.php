@@ -105,12 +105,12 @@
                                         <h2><?php echo $titulo?> <?php //echo $anio?> </h2>
                                     </td>
                                 </tr>
-            <tr style="padding:0px!important;margin:0px!important">
-                <td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Recaudación del día:</td>
-                <td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $f_inicio?></td>
-                <td style="padding:0px!important;margin:0px!important;text-align:right"></td>
-                <td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">TC:</td>
-                <td style="padding:0px!important;margin:0px!important;width:60px;text-align:left">3.84<?php //echo $mesEnLetras?></td>
+                            <tr style="padding:0px!important;margin:0px!important">
+                            <td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Recaudación del día:</td>
+                            <td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $f_inicio?></td>
+                            <td style="padding:0px!important;margin:0px!important;text-align:right"></td>
+                            <td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">TC:</td>
+                            <td style="padding:0px!important;margin:0px!important;width:60px;text-align:left">3.84<?php //echo $mesEnLetras?></td>
 
                 </tr>
                     </tbody>

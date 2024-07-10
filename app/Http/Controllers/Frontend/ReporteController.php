@@ -126,10 +126,11 @@ class ReporteController extends Controller
 
     }
 
-	public function rep_pdf($funcion,$f_inicio,$id_usuario_caja)
+	public function rep_pdf($funcion,$f_inicio,$id_usuario_caja,$tipo)
 	{
 		//print_r($f_inicio);
 		//exit();
+
 
 		$titulo = "";
 
@@ -138,8 +139,12 @@ class ReporteController extends Controller
 		//print_r($usuario_caja);
 		//exit();
 
-		$id_usuario = $usuario_caja->id_usuario;
-		$id_caja = $usuario_caja->id_caja;
+		//$id_usuario = $usuario_caja->id_usuario;
+		//$id_caja = $usuario_caja->id_caja;
+
+		$id_usuario = $id_usuario_caja;
+		$id_caja = "0";
+
 
 		$caja_ingreso_model = new CajaIngreso();
         $usuario_det = $caja_ingreso_model->getCajaIngresoById($id_usuario_caja);
@@ -147,37 +152,59 @@ class ReporteController extends Controller
 		//print_r($id_caja);exit();
 
 
-		if ($funcion=='reporte_01'){
-			$titulo = "CONSOLIDADO ".$usuario_det[0] ->denominacion;
+		if ($funcion=='ccu' || $funcion=='cct'){
+			if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_det[0] ->denominacion;
+			if ($funcion=='cct')$titulo = "CONSOLIDADO DE TODAS LAS CAJAS ";
+
+			$caja_ingreso_model = new CajaIngreso();
+			$venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
+			//print_r($venta);exit();
+	
+			$caja_ingreso_model = new CajaIngreso();
+			$forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+	
+			$caja_ingreso_model = new CajaIngreso();
+			$detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+	
+	
+			$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio'));
+			$pdf->getDomPDF()->set_option("enable_php", true);
+			
+			//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+			$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+			$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+			$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+			$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
 
 		}
 
-		//print_r($id_caja);
-		//exit();
+		if ($funcion=='mcu' || $funcion=='mct' ){
+			if ($funcion=='mcu')$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_det[0] ->denominacion;
+			if ($funcion=='mct')$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";
 
-        $caja_ingreso_model = new CajaIngreso();
-        $venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio);
-		//print_r($venta);exit();
+			$caja_ingreso_model = new CajaIngreso();
+			$venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
+			//print_r($venta);exit();
+	
+			$caja_ingreso_model = new CajaIngreso();
+			$forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+	
+			$caja_ingreso_model = new CajaIngreso();
+			$detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+	
+	
+			$pdf = Pdf::loadView('frontend.reporte.reporte_mov_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio'));
+			$pdf->getDomPDF()->set_option("enable_php", true);
+			
+			$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+			$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+			$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+			$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+			$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
 
-        $caja_ingreso_model = new CajaIngreso();
-        $forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio);
-
-		$caja_ingreso_model = new CajaIngreso();
-        $detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio);
-
-
-
-
-		$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio'));
-		$pdf->getDomPDF()->set_option("enable_php", true);
-		
-		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
-    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
-   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
-    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
-    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
-
-		return $pdf->stream('reporte_pdf.pdf');
+		}
+	
+		return $pdf->stream('reporte.pdf');
 	}
 
 	function mesesALetras($mes) { 
