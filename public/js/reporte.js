@@ -1196,7 +1196,8 @@ function abrirPdfReporte(funcion) {
 
 	//exit();
 
-	var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$ffin+'/'+$usuario;
+	//var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$ffin+'/'+$usuario;
+	var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$usuario;
 	window.open(href, '_blank');
 }
 

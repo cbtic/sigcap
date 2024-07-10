@@ -126,15 +126,15 @@
 			<tbody>
                 
 				<tr>
-                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">Concepto</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">VENTAS</td>
                     <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">REF US$</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">Total S.</td>
 				</tr>
-
+<!--
                 <tr>
                 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">VENTAS</td>
 				</tr>
-				
+		-->		
 				<?php 
                 $total_monto = 0;
 				foreach($venta as $key=>$r){
@@ -167,13 +167,15 @@
         <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
 			<tbody>
                 <tr>
-                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">Concepto</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">FORMAS DE RECAUDACIÓN</td>
                     <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">REF US$</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">Total S.</td>
-				</tr>                
+				</tr>  
+                <!--              
                 <tr>
                 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">FORMAS DE RECAUDACIÓN</td>
 				</tr>
+            -->
 				
 				<?php 
                 $total_monto_f = 0;
@@ -206,14 +208,15 @@
         <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
 			<tbody>
                 <tr>
-                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">Concepto</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">DESCRIPCIÓN DE LOS INGRESOS</td>
                     <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">REF US$</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">Total S.</td>
-				</tr>                
+				</tr>   
+                <!--             
                 <tr>
                 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">DESCRIPCIÓN DE LOS INGRESOS</td>
 				</tr>
-				
+            -->
 				<?php 
                 $total_monto_d = 0;
 				foreach($detalle_venta as $key=>$d){
