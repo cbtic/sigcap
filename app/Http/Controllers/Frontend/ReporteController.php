@@ -134,7 +134,7 @@ class ReporteController extends Controller
 
 		$titulo = "";
 
-		$usuario_caja = CajaIngreso::where("id",$id_usuario_caja)->first();
+		//$usuario_caja = CajaIngreso::where("id",$id_usuario_caja)->first();
 
 		//print_r($usuario_caja);
 		//exit();
