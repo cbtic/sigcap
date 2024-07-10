@@ -195,16 +195,18 @@
 -->
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<div class="form-group">
-										<label class="form-control-sm">Fecha inicio</label>
+										<label class="form-control-sm">Fecha </label>
 										<input class="form-control form-control-sm" id="fecha_ini" name="fecha_ini" value="<?php echo date("d-m-Y")?>" placeholder="Fecha Inicio">
 									</div>
 								</div>
+								<!--
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Fecha Fin</label>
 										<input class="form-control form-control-sm" id="fecha_fin" name="fecha_fin" value="<?php echo date("d-m-Y")?>" placeholder="Fecha fin">
 									</div>
 								</div>
+-->
 
 								<div class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
@@ -218,15 +220,16 @@
 									</div>
 								</div>
 									
-
+<!--
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<input class="btn btn-warning pull-rigth" value="Buscar" type="button"  id="btnBuscar" />									
 								</div>
-
+											-->
+<!--								
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<input class="btn btn-success pull-rigth" value="Excel" type="button"  id="btnCalcular" />
 								</div>
-
+											-->
 							</div>
 								
 							

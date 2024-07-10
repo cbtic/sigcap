@@ -126,7 +126,7 @@ class ReporteController extends Controller
 
     }
 
-	public function rep_pdf($funcion,$f_inicio,$f_fin,$id_usuario_caja)
+	public function rep_pdf($funcion,$f_inicio,$id_usuario_caja)
 	{
 		//print_r($f_inicio);
 		//exit();
@@ -156,19 +156,19 @@ class ReporteController extends Controller
 		//exit();
 
         $caja_ingreso_model = new CajaIngreso();
-        $venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_fin);
+        $venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio);
 		//print_r($venta);exit();
 
         $caja_ingreso_model = new CajaIngreso();
-        $forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_fin);
+        $forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio);
 
 		$caja_ingreso_model = new CajaIngreso();
-        $detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_fin);
+        $detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio);
 
 
 
 
-		$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_fin'));
+		$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)

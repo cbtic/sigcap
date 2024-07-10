@@ -692,6 +692,7 @@ function obtenerTitular(){
 			var flagx = 0;
 			cmb = $(this);
 			idMedio = $("#idMedio"+ind).val();
+			
 			//id_user={{Auth::user()->id}};
 		
 			$('.idMedio').each(function(){
@@ -708,6 +709,17 @@ function obtenerTitular(){
 				//}
 			}
 			else{
+				//bootbox.alert("SEL EFECTIVO");
+
+				if(idMedio=='91'){
+					//var flagx =  Math.trunc("10.25");					
+					//bootbox.alert(flagx);
+					
+					//let decimal = Math.trunc(13.37);
+					//console.log(decimal);
+				}
+
+				
 				
 				if(ind==0){
 					monto = $("#total_fac_").val();
@@ -721,6 +733,7 @@ function obtenerTitular(){
 					
 		});
 		
+
 		
 		$("#monto"+ind).on("keyup", function (e) {
 			monto = $("#monto"+ind).val();
@@ -745,6 +758,8 @@ function obtenerTitular(){
 		});
 		
 	}
+
+
 
 	function obtenerRepresentante(){
 
