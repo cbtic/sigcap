@@ -1196,7 +1196,7 @@ function abrirPdfReporte(funcion, tipo) {
 	//exit();
 
 	//var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$ffin+'/'+$usuario;
-	if (funcion =='ccu' && tipo =='1'){
+	if (tipo =='1'){
 		if($usuario!=''){
 			var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$usuario+'/'+tipo;
 			window.open(href, '_blank');		
@@ -1204,7 +1204,7 @@ function abrirPdfReporte(funcion, tipo) {
 			alert('Requiere seleccionar un usuario')
 		}
 	}
-	if (funcion =='cct' && tipo =='2'){
+	if (tipo =='2'){
 		$usuario!='0';
 		var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$usuario+'/'+tipo;
 		window.open(href, '_blank');		

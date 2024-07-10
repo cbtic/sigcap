@@ -152,37 +152,59 @@ class ReporteController extends Controller
 		//print_r($id_caja);exit();
 
 
-		if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_det[0] ->denominacion;
-		if ($funcion=='cct')$titulo = "CONSOLIDADO DE TODAS LAS CAJAS ";
+		if ($funcion=='ccu' || $funcion=='cct'){
+			if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_det[0] ->denominacion;
+			if ($funcion=='cct')$titulo = "CONSOLIDADO DE TODAS LAS CAJAS ";
 
-		
+			$caja_ingreso_model = new CajaIngreso();
+			$venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
+			//print_r($venta);exit();
+	
+			$caja_ingreso_model = new CajaIngreso();
+			$forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+	
+			$caja_ingreso_model = new CajaIngreso();
+			$detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+	
+	
+			$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio'));
+			$pdf->getDomPDF()->set_option("enable_php", true);
+			
+			//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+			$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+			$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+			$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+			$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
 
-		//print_r($id_caja);
-		//exit();
+		}
 
-        $caja_ingreso_model = new CajaIngreso();
-        $venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
-		//print_r($venta);exit();
+		if ($funcion=='mcu' || $funcion=='mct' ){
+			if ($funcion=='mcu')$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_det[0] ->denominacion;
+			if ($funcion=='mct')$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";
 
-        $caja_ingreso_model = new CajaIngreso();
-        $forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+			$caja_ingreso_model = new CajaIngreso();
+			$venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
+			//print_r($venta);exit();
+	
+			$caja_ingreso_model = new CajaIngreso();
+			$forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+	
+			$caja_ingreso_model = new CajaIngreso();
+			$detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+	
+	
+			$pdf = Pdf::loadView('frontend.reporte.reporte_mov_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio'));
+			$pdf->getDomPDF()->set_option("enable_php", true);
+			
+			$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+			$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+			$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+			$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+			$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
 
-		$caja_ingreso_model = new CajaIngreso();
-        $detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
-
-
-
-
-		$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio'));
-		$pdf->getDomPDF()->set_option("enable_php", true);
-		
-		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
-    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
-   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
-    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
-    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
-
-		return $pdf->stream('reporte_pdf.pdf');
+		}
+	
+		return $pdf->stream('reporte.pdf');
 	}
 
 	function mesesALetras($mes) { 
