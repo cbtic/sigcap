@@ -96,7 +96,7 @@ class CajaIngreso extends Model
                 having c.id_usuario_inserta = ".$id_usuario."
                 and TO_CHAR(c.fecha, 'dd-mm-yyyy') = '".$fecha."' 
                 and c.id_forma_pago = 1
-                ) 
+                )  as reporte
                 group by situacion, tipo_,tipo";
 
 		//echo $cad;
@@ -146,7 +146,7 @@ class CajaIngreso extends Model
                     and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                     and c.id_forma_pago = 1
                     and c.anulado = 'N'
-                ) 
+                ) as reporte
                 group by situacion, tipo_,tipo";
 
         //echo $cad; exit();
@@ -172,7 +172,7 @@ class CajaIngreso extends Model
                 and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                 and c.id_forma_pago = '1'
                 and c.anulado = 'N'
-            )
+            ) as reporte
             group by condicion";
 
         //echo $cad; exit();
@@ -197,7 +197,7 @@ class CajaIngreso extends Model
             and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
             and c.id_forma_pago = '1'
             and c.anulado = 'N'
-            )
+            ) as reporte
             group by denominacion
        
     
