@@ -62,6 +62,7 @@ use App\Http\Controllers\Frontend\OperacionController;
 use App\Http\Controllers\Frontend\ReporteController;
 
 use App\Http\Controllers\Frontend\TipoCambioController;
+use App\Http\Controllers\Frontend\CorreoController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -760,4 +761,8 @@ Route::post('tipo_cambio/send_tipo_cambio_nuevoTipoCambio', [TipoCambioControlle
 Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');
 Route::get('reporte/listar_reporte_usuario', [ReporteController::class, 'listar_reporte_usuario'])->name('reporte.listar_reporte_usuario');
 Route::get('reporte/rep_pdf/{funcion}/{fini}/{usuario}/{tipo}', [ReporteController::class, 'rep_pdf'])->name('reporte.rep_pdf');
+
+
+Route::get('correo/generar_credipago', [CorreoController::class, 'generar_credipago'])->name('correo.generar_credipago');
+Route::get('derecho_revision/correo_credipago', [DerechoRevisionController::class, 'correo_credipago'])->name('derecho_revision.correo_credipago');
 
