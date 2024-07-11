@@ -46,10 +46,8 @@ class ReporteController extends Controller
 
 		
         $caja_ingreso_model = new CajaIngreso();
-        $caja_usuario = $caja_ingreso_model->getCajaUsuario();
-
-		
-
+        $caja_usuario = $caja_ingreso_model->getCajaUsuario_u();
+	
 		//$reporte = Reporte::where(['estado' => '1'])->get();
 
 		//print_r($reporte);
@@ -58,29 +56,13 @@ class ReporteController extends Controller
 		
         return view('frontend.reporte.all',compact('periodo','anio','mes','reporte','periodo_ultimo','periodo_activo','caja_usuario'));
     }
-/*
-    function lista_reporte_ajax(){
-
-		$periodoComisione_model = new PeriodoComisione;
-
-		$anio = range(date('Y'), date('Y') - 20); 
-		$mes = [
-            '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
-            '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
-            '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
-            '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre',
-        ];
+	public function obtener_caja_usuario($idUsuario){
 		
-		$reporte_model = new Reporte;
-		$reportes = $reporte_model->getReporteAll();
+		$caja_ingreso_model = new CajaIngreso();
+        $caja = $caja_ingreso_model->getCajaUsuario_c($idUsuario);
+		echo json_encode($caja);
+	}
 
-		$periodo = $periodoComisione_model->getPeriodoAll();
-		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
-		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
-		
-        return view('frontend.reporte.all_reporte',compact('periodo','anio','mes','reportes','periodo_ultimo','periodo_activo'));
-    }
-*/
 	public function lista_reporte_ajax(Request $request){
 	
 		$reporte_model = new Reporte(); 
@@ -126,7 +108,7 @@ class ReporteController extends Controller
 
     }
 
-	public function rep_pdf($funcion,$f_inicio,$id_usuario_caja,$tipo)
+	public function rep_pdf($funcion,$f_inicio,$id_usuario,$id_caja,$tipo)
 	{
 		//print_r($f_inicio);
 		//exit();
@@ -134,7 +116,7 @@ class ReporteController extends Controller
 
 		$titulo = "";
 
-		//$usuario_caja = CajaIngreso::where("id",$id_usuario_caja)->first();
+		//$usuario_caja = CajaIngreso::where("id",$id_caja)->first();
 
 		//print_r($usuario_caja);
 		//exit();
@@ -142,18 +124,19 @@ class ReporteController extends Controller
 		//$id_usuario = $usuario_caja->id_usuario;
 		//$id_caja = $usuario_caja->id_caja;
 
-		$id_usuario = $id_usuario_caja;
-		$id_caja = "0";
+		//$id_usuario = $id_usuario_caja;
+		//$id_caja = "0";
 
 
 		$caja_ingreso_model = new CajaIngreso();
-        $usuario_det = $caja_ingreso_model->getCajaIngresoById($id_usuario_caja);
+        $caja_ingresos= $caja_ingreso_model->getCajaById($id_caja);
+		$usuario_ingresos= $caja_ingreso_model->getUsuarioById($id_usuario);
 
 		//print_r($id_caja);exit();
 
 
 		if ($funcion=='ccu' || $funcion=='cct'){
-			if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_det[0] ->denominacion;
+			if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
 			if ($funcion=='cct')$titulo = "CONSOLIDADO DE TODAS LAS CAJAS ";
 
 			$caja_ingreso_model = new CajaIngreso();
