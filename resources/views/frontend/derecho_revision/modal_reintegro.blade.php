@@ -418,6 +418,12 @@ function fn_save_credipago(){
 	var id_tipo_sesion = $('#id_tipo_sesion').val();
 	var observaciones = $('#observacion').val();
 	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
     $.ajax({
 			url: "/derecho_revision/send_credipago_liquidacion",
             type: "POST",
@@ -426,6 +432,8 @@ function fn_save_credipago(){
 
 				//alert(result[0].sw);
 				//datatablenew();
+				$('.loader').hide();
+				
                 if(result[0].sw==true){
                     $('#openOverlayOpc').modal('hide');
                     window.location.reload();
@@ -609,7 +617,7 @@ function fn_save_credipago(){
 							<div class="col-lg-3">
 								<div class="form-group" id="numero_cap_">
 									<label class="control-label form-control-sm">N° <?php echo $row->tipo_colegiatura?></label>
-									<input id="numero_cap_row" name="numero_cap_row[]" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
+									<input id="numero_cap_row" name="numero_cap_row[]" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onChange="obtenerProyectista()"readonly='readonly'>
 									<input id="tipo_colegiatura_row" name="tipo_colegiatura_row[]" value="<?php echo $row->tipo_colegiatura?>" type="hidden">
 								</div>
 							</div>
@@ -722,7 +730,7 @@ function fn_save_credipago(){
 										</div>
 										<div class="col-lg-2">
 											<label class="control-label form-control-sm">&Aacute;rea Techada</label>
-											<input id="area_techada" name="area_techada[]" on class="form-control form-control-sm"  value="<?php echo number_format($row->area_techada, 2, '.', ',');?>" type="text" onchange="" readonly>
+											<input id="area_techada" name="area_techada[]" on class="form-control form-control-sm"  value="<?php echo number_format($row->area_techada, 2, '.', ',');?>" type="text" onChange="" readonly>
 										</div>
 									</div>
                                     
@@ -895,7 +903,7 @@ function fn_save_credipago(){
                     </div>
                     <div class="col-lg-2">
                         <label class="control-label form-control-sm">Por Etapas</label>
-                        <select name="etapas" id="etapas" class="form-control form-control-sm" onchange="activarEtapas()">
+                        <select name="etapas" id="etapas" class="form-control form-control-sm" onChange="activarEtapas()">
                             <?php
                             $valorSeleccionado = isset($liquidacion[0]->etapa) ? $liquidacion[0]->etapa : '0';
                             ?>
@@ -990,7 +998,7 @@ function fn_save_credipago(){
                             </div>
                             <div class="col-lg-6">
                                 <label class="control-label form-control-sm">Total a Pagar Soles</label>
-                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php //echo $total_formateado_?>" type="text" onchange="cambioPlantaTipica()">
+                                <input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php //echo $total_formateado_?>" type="text" onChange="cambioPlantaTipica()">
                             </div>
                         </div>
 						
