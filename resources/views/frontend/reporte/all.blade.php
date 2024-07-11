@@ -208,14 +208,23 @@
 								</div>
 -->
 
-								<div class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
+								<div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
-										<label class="form-control-sm">Caja</label>
-										<select name="id_usuario_caja" id="id_usuario_caja" class="form-control form-control-sm">
+										<label class="form-control-sm">Usuario</label>
+										<select name="id_usuario" id="id_usuario" class="form-control form-control-sm" onchange="obtenerCaja()">
 											<option value="">Todos</option>
 											<?php foreach($caja_usuario as $row):?>
 											<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
 											<?php  endforeach;?>
+										</select>
+									</div>
+								</div>
+
+								<div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Caja</label>
+										<select name="id_caja" id="id_caja" class="form-control form-control-sm">
+											<option value="">Todos</option>
 										</select>
 									</div>
 								</div>
