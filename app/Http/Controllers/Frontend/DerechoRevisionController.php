@@ -552,7 +552,7 @@ class DerechoRevisionController extends Controller
         Mail::send('emails.mensaje', ['pasaje' => $agremiado], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje) {
 		
 			$m->from(config('mail.mailers.smtp.username'), 'CAP');
-            $m->to($correo_electronico, $paterno)->subject('SOLICITUD XXX CODIGO DE PROYECTO YYN');
+            $m->to($correo_electronico, $paterno)->subject('SOLICITUD XXX CODIGO DE PROYECTO YYO');
 			
         });
 		
