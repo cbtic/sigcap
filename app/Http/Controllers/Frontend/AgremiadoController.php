@@ -1781,6 +1781,13 @@ class AgremiadoController extends Controller
 		//$suspension->estado = 1;
 		$suspension->id_usuario_inserta = $id_user;
 		$suspension->save();
+		
+		$fecha_fin = "";
+		if(isset($request->fecha_fin) && $request->fecha_fin!="")$fecha_fin = $request->fecha_fin;
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_suspension('i',$request->id_agremiado,$request->fecha_inicio,$fecha_fin);
+		
+		
 			
     }
 	

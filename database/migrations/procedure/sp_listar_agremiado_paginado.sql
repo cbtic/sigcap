@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_listar_agremiado_paginado(p_region character varying, p_numero_cap character varying, p_numero_documento character varying, p_agremiado character varying, p_fecha_inicio character varying, p_fecha_fin character varying, p_id_situacion character varying, p_id_categoria character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -80,4 +79,3 @@ End
 
 $function$
 ;
-
