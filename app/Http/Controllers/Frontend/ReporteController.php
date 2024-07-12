@@ -131,7 +131,7 @@ class ReporteController extends Controller
 		//print_r($f_inicio);
 		//exit();
 
-
+		//var_dump($tipo);exit();
 		$titulo = "";
 
 		$usuario_caja = CajaIngreso::where("id",$id_usuario_caja)->first();
@@ -147,7 +147,7 @@ class ReporteController extends Controller
 
 
 		$caja_ingreso_model = new CajaIngreso();
-        $usuario_det = $caja_ingreso_model->getCajaIngresoById($id_usuario_caja);
+        $usuario_det = $caja_ingreso_model->getCajaIngresoById($id_usuario_caja,$f_inicio);
 
 		//print_r($id_caja);exit();
 

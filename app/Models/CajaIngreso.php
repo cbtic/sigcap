@@ -58,7 +58,7 @@ class CajaIngreso extends Model
         return $data;
     }
 
-    function getCajaIngresoById($id){
+    function getCajaIngresoById($id,$f_inicio){
         $cad = "select distinct t1.id id,t3.name ||'-'||t2.denominacion denominacion
             from caja_ingresos t1
                 inner join tabla_maestras t2 on t2.codigo = t1.id_caja::varchar and t2.tipo = '91'
