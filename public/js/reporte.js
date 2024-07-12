@@ -1198,17 +1198,51 @@ function obtenerCaja(){
 }
 
 function abrirPdfReporte(funcion, tipo) {
-	//alert (funcion);
+	//$fini = $('#fecha_ini').val();
+	var fechaIni = document.getElementById('fecha_ini').value;
+	//alert($fini);
+	//var date = new Date($fini); // Or your date here
+	//$fini= ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
+	var partesFecha = fechaIni.split('-');
+	var dia = partesFecha[0];
+	var mes = partesFecha[1];
+	var anio = partesFecha[2];
+	var fechaFormateada = anio + '-' + mes + '-' + dia;
+	var date = new Date(fechaFormateada); // Or your date here
+	$fini= ((date.getFullYear() + '-' + zfill(date.getMonth() + 1,2) + '-'+ zfill(date.getDate()+1,2)));
+	//alert($fini);
+	//$ffin = formatDate($('#fecha_fin').val());
+	$ffin = $('#fecha_fin').val();
 
-	//alert(municipalidad+anio+mes);
+	var date = new Date($ffin); // Or your date here
+	$ffin = ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
 
+	//alert($ffin);
 
+	$id_usuario = $('#id_usuario').val();
+	$id_caja = $('#id_caja').val();
+	//alert($usuario);
 
-	
-	//$fini = formatDate($('#fecha_ini').val());
-	
+	//exit();
 
-	
+	//var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$ffin+'/'+$usuario;
+	if (tipo =='1'){
+		if($id_caja!=''){
+			var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$id_usuario+'/'+$id_caja+'/'+tipo;
+			window.open(href, '_blank');		
+		}else{
+			alert('Requiere seleccionar un usuario')
+		}
+	}
+	if (tipo =='2'){
+		$id_usuario!='0';
+		$id_caja!='0';
+		var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$id_usuario+'/'+$id_caja+'/'+tipo;
+		window.open(href, '_blank');		
+	}
+}
+
+function abrirPdfReporte1(funcion, tipo) {
 
 	$fini = $('#fecha_ini').val();
 	alert($fini);	
@@ -1248,6 +1282,7 @@ function abrirPdfReporte(funcion, tipo) {
 		window.open(href, '_blank');		
 	}
 }
+
 
 function formatDate1(date) {
     var d = new Date(date),
@@ -1292,3 +1327,4 @@ function zfill(number, width) {
         }
     }
 }
+
