@@ -524,13 +524,13 @@ class DerechoRevisionController extends Controller
 			'sw' => $sw,
 		];
         
-		$this->correo_credipago();
+		$this->correo_credipago($request->id);
 		
         return response()->json($datos_formateados);
 	
 	}
 	
-	public function correo_credipago(){
+	public function correo_credipago($id){
 		
 		view('emails.mensaje');
 		$email_paciente = "";
@@ -547,8 +547,12 @@ class DerechoRevisionController extends Controller
 		$paterno = "";
 		$fecha_viaje = "";
 		
-		$agremiado = Agremiado::find(100);
-		
+		//$agremiado = Agremiado::find(100);
+		$derecho_revision = DerechoRevision::find($id);
+
+		$proyectista = Proyectista::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
+		//var_dump($proyectista);exit();
+		$agremiado = Agremiado::where("id",$proyectista->id_agremiado)->where("estado","1")->first();
         Mail::send('emails.mensaje', ['pasaje' => $agremiado], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje) {
 		
 			$m->from(config('mail.mailers.smtp.username'), 'CAP');
