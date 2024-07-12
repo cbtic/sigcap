@@ -110,8 +110,8 @@ class ReporteController extends Controller
 
 	public function rep_pdf($funcion,$f_inicio,$id_usuario,$id_caja,$tipo)
 	{
-		//print_r($f_inicio);
-		//exit();
+		print_r($f_inicio);
+		exit();
 
 
 		$titulo = "";
@@ -162,7 +162,7 @@ class ReporteController extends Controller
 		}
 
 		if ($funcion=='mcu' || $funcion=='mct' ){
-			if ($funcion=='mcu')$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_det[0] ->denominacion;
+			if ($funcion=='mcu')$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
 			if ($funcion=='mct')$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";
 
 			$caja_ingreso_model = new CajaIngreso();
