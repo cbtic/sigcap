@@ -110,8 +110,8 @@ class ReporteController extends Controller
 
 	public function rep_pdf($funcion,$f_inicio,$id_usuario,$id_caja,$tipo)
 	{
-		print_r($f_inicio);
-		exit();
+		//print_r($f_inicio);
+		//exit();
 
 
 		$titulo = "";
