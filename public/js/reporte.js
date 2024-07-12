@@ -30,16 +30,16 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#fecha_inicio_bus').datepicker({
+	$('#fecha_ini').datepicker({
         autoclose: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 	
-	$('#fecha_fin_bus').datepicker({
+	$('#fecha_fin').datepicker({
         autoclose: true,
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
@@ -1206,20 +1206,21 @@ function abrirPdfReporte(funcion, tipo) {
 
 	
 	//$fini = formatDate($('#fecha_ini').val());
-	//alert($fini);
+	
 
 	
 
 	$fini = $('#fecha_ini').val();
-
+	//alert($fini);
 	var date = new Date($fini); // Or your date here
 	$fini= ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
 	//alert($fini);
 	//$ffin = formatDate($('#fecha_fin').val());
-	$ffin = $('#fecha_fin').val();
 
-	var date = new Date($ffin); // Or your date here
-	$ffin = ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
+
+	//$ffin = $('#fecha_fin').val();
+	//var date = new Date($ffin); // Or your date here
+	//$ffin = ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
 
 	//alert($ffin);
 

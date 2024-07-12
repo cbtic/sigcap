@@ -113,7 +113,7 @@ class ReporteController extends Controller
 		//print_r($f_inicio);
 		//exit();
 
-
+		//var_dump($tipo);exit();
 		$titulo = "";
 
 		//$usuario_caja = CajaIngreso::where("id",$id_caja)->first();
@@ -133,6 +133,8 @@ class ReporteController extends Controller
 		$usuario_ingresos= $caja_ingreso_model->getUsuarioById($id_usuario);
 
 		//print_r($id_caja);exit();
+
+		$f_inicio = str_replace("-","/",$f_inicio);
 
 
 		if ($funcion=='ccu' || $funcion=='cct'){
@@ -162,7 +164,7 @@ class ReporteController extends Controller
 		}
 
 		if ($funcion=='mcu' || $funcion=='mct' ){
-			if ($funcion=='mcu')$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_det[0] ->denominacion;
+			if ($funcion=='mcu')$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
 			if ($funcion=='mct')$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";
 
 			$caja_ingreso_model = new CajaIngreso();

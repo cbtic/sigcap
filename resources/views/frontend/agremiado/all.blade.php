@@ -198,6 +198,18 @@
 							?>
 						</select>
 					</div>
+
+					<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+						<select name="id_act_gremial_bus" id="id_act_gremial_bus" class="form-control form-control-sm" >
+							<option value="">--Act. Gremial--</option>
+							<?php
+							foreach ($act_gremial_cliente as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+							<?php 
+							}
+							?>
+						</select>
+					</div>
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-left:0px;padding-right:0px">
                         <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
@@ -210,7 +222,7 @@
 					</div>
 				</div>
 				
-                <div class="card-body">				
+                <div class="card-body">
 
                     <div class="table-responsive">
                     <table id="tblAfiliado" class="table table-hover table-sm">
@@ -225,6 +237,7 @@
 							<th>Fecha Nacimiento</th>
 							<th>Situaci&oacute;n</th>
 							<th>Categoria</th>
+							<th>Act. Gremial</th>
 							<th>Acciones</th>
                         </tr>
                         </thead>
