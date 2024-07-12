@@ -16,21 +16,21 @@
                     </div>
                     <div class="panel-body" style="border:2px solid #1C77B9!important;padding:10px">
                         
-						<p>Estimado <b>Sr(a). {{$pasaje->nombre}} {{$pasaje->paterno}} {{$pasaje->materno}}</b></p>
+						<p>Estimado <b>Sr(a). {{$datos_correo[0]->nombres}}</b></p>
                         
-						<p>Le informamos que recientemente se ha registrado con su Nro de CAP 21966, el proyecto PRUEBA con los siguientes datos:</p>
+						<p>Le informamos que recientemente se ha registrado con su Nro de CAP {{$datos_correo[0]->numero_cap}}, el proyecto {{$datos_correo[0]->nombre_proyecto}} con los siguientes datos:</p>
                         <p>
                             <?php
-                            $originalDate = $pasaje->fecha_viaje;
-                            $fecha_viaje = date("d-m-Y", strtotime($originalDate));
+                            //$originalDate = $pasaje->fecha_viaje;
+                            //$fecha_viaje = date("d-m-Y", strtotime($originalDate));
                             ?>
                         <ul>
-                            <li>Tipo de Tramite: ANTEPROYECTO</li>
-                            <li>Distrito: Lima</li>
+                            <li>Tipo de Tramite: {{$datos_correo[0]->tipo_tramite}}</li>
+                            <li>Distrito: {{$datos_correo[0]->distrito}}</li>
                         </ul>
                         </p>
 						
-						<p>Se ha constatado que el <b>proyectista xxx con CAP N  xxx se encuentra INHABILITADO</b>, por lo que debe proceder a HABILITARSE previa aprobación de la solicitud, para lo cual se debe comunicar con el área de CAJA a los teléfonos </p>
+						<p>Se ha constatado que el <b>proyectista {{$datos_correo[0]->nombres}} con CAP N {{$datos_correo[0]->numero_cap}} se encuentra {{$datos_correo[0]->situacion}}</b>, por lo que debe proceder a HABILITARSE previa aprobación de la solicitud, para lo cual se debe comunicar con el área de CAJA a los teléfonos </p>
 						
                         <p>627-1200 anexo 181-182-184</p>
                         

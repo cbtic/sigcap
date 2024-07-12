@@ -22,7 +22,7 @@ class Valorizacione extends Model
 
         }
         
-        if($exonerado=="0")$exonerado="";
+        //if($exonerado=="0")$exonerado="";
         
     //echo($tipo_documento);
 
@@ -47,7 +47,7 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado ilike '%".$exonerado."'
+                and v.exonerado = '".$exonerado."' 
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
             order by v.fecha desc
@@ -73,7 +73,7 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado ilike '%".$exonerado."' 
+                and v.exonerado = '".$exonerado."' 
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
             order by v.fecha desc

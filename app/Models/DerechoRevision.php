@@ -438,5 +438,23 @@ class DerechoRevision extends Model
 		$data = DB::select($cad);
         return $data[0]->codigo;
     }
+
+    public function getSolicitudCorreo($id){
+		
+		$cad = "select s.id, p.nombre nombre_proyecto, p.codigo, pe.nombres ||' '|| pe.apellido_paterno ||' '|| pe.apellido_materno nombres, a.numero_cap, s.codigo_solicitud, tm2.denominacion tipo_tramite,
+        u.desc_ubigeo distrito, tm.denominacion situacion 
+        from solicitudes s 
+        inner join proyectos p on s.id_proyecto = p.id 
+        inner join proyectistas pr on pr.id_solicitud = s.id 
+        inner join agremiados a on pr.id_agremiado = a.id 
+        inner join personas pe on a.id_persona = pe.id 
+        left join tabla_maestras tm on a.id_situacion = tm.codigo::int and  tm.tipo ='14'
+        left join tabla_maestras tm2 on s.id_tipo_tramite = tm2.codigo::int and  tm2.tipo ='25'
+        inner join ubigeos u on s.id_ubigeo = u.id_ubigeo 
+        where s.id='".$id."'";
+        
+		$data = DB::select($cad);
+        return $data;
+    }
     
 }
