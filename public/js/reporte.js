@@ -1211,11 +1211,9 @@ function abrirPdfReporte(funcion, tipo) {
 	
 
 	$fini = $('#fecha_ini').val();
-	//alert($fini);	
-	//$fini = str_replace("-","/",$fini);
 	//alert($fini);
-	//var date = new Date($fini); // Or your date here
-	//$fini= ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
+	var date = new Date($fini); // Or your date here
+	$fini= ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
 	//alert($fini);
 	//$ffin = formatDate($('#fecha_fin').val());
 

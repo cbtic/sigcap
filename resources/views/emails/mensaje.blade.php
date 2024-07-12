@@ -10,7 +10,7 @@
                             <div class="row">
                                 <div class="col-sm-12" style="background:#1C77B9!important;text-align:center;padding-top:10px;padding-bottom:10px">
                                     <img width="200px" height="80px" style="text-align:center" src="http://pruebasigcap.limacap.org:8082/img/logo-sin-fondo2.png" align="center">
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>

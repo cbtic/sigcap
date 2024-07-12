@@ -454,6 +454,7 @@ function datatablenew(){
 			var fecha_fin = $('#fecha_fin_bus').val();
 			var id_situacion = $('#id_situacion_bus').val();
 			var id_categoria = $('#id_categoria_bus').val();
+			var id_act_gremial = $('#id_act_gremial_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -462,7 +463,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
-						agremiado:agremiado,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,id_situacion:id_situacion,id_categoria:id_categoria,
+						agremiado:agremiado,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,id_situacion:id_situacion,id_categoria:id_categoria,id_act_gremial:id_act_gremial,
 						_token:_token
                        },
                 "success": function (result) {
@@ -561,6 +562,15 @@ function datatablenew(){
 				},
 				{
 					"mRender": function (data, type, row) {
+						var act_gremial = "";
+						if(row.act_gremial!= null)act_gremial = row.act_gremial;
+						return act_gremial;
+					},
+					"bSortable": false,
+					"aTargets": [9]
+				},
+				{
+					"mRender": function (data, type, row) {
 						var estado = "";
 						var clase = "";
 						if(row.estado == 1){
@@ -582,7 +592,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [9],
+					"aTargets": [10],
 				},
 
             ]
