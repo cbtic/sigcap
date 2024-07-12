@@ -698,6 +698,7 @@ function DescargarArchivos(){
 	var fecha_fin = $('#fecha_fin_bus').val().replace(/\//g, '-');
 	var id_situacion = $('#id_situacion_bus').val();
 	var id_categoria = $('#id_categoria_bus').val();
+	var id_act_gremial = $('#id_act_gremial_bus').val();
 	//var id_agremiado = 0;
 	//var id_regional = 0;
 	
@@ -709,10 +710,11 @@ function DescargarArchivos(){
 	if (fecha_fin == "")fecha_fin = 0;
 	if (id_situacion == "")id_situacion = 0;
 	if (id_categoria == "")id_categoria = 0;
+	if (id_act_gremial == "")id_act_gremial = 0;
 	//if (campo == "")campo = 0;
 	//if (orden == "")orden = 0;
 	
-	location.href = '/agremiado/exportar_listar_agremiado/' + id_regional + '/' + numero_cap + '/' + numero_documento + '/' + agremiado + '/' + fecha_inicio + '/' + fecha_fin + '/' + id_situacion + '/' + id_categoria;
+	location.href = '/agremiado/exportar_listar_agremiado/' + id_regional + '/' + numero_cap + '/' + numero_documento + '/' + agremiado + '/' + fecha_inicio + '/' + fecha_fin + '/' + id_situacion + '/' + id_categoria + '/' + id_act_gremial;
 	
 }
 

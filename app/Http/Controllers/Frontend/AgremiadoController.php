@@ -1794,7 +1794,7 @@ class AgremiadoController extends Controller
 
     }
 
-	public function exportar_listar_agremiado($id_regional, $numero_cap, $numero_documento, $agremiado, $fecha_inicio, $fecha_fin, $id_situacion, $id_categoria) {
+	public function exportar_listar_agremiado($id_regional, $numero_cap, $numero_documento, $agremiado, $fecha_inicio, $fecha_fin, $id_situacion, $id_categoria, $id_act_gremial) {
 		
 		if($id_regional==0)$id_regional = "";
 		if($numero_cap==0)$numero_cap = "";
@@ -1804,6 +1804,7 @@ class AgremiadoController extends Controller
 		if($fecha_fin==0)$fecha_fin = "";
 		if($id_situacion==0)$id_situacion = "";
 		if($id_categoria==0)$id_categoria = "";
+		if($id_act_gremial==0)$id_act_gremial = "";
 	
 		$agremiado_model = new Agremiado;
 		$p[]=$id_regional;
@@ -1814,19 +1815,21 @@ class AgremiadoController extends Controller
 		$p[]=$fecha_fin;
 		$p[]=$id_situacion;
 		$p[]=$id_categoria;
+		$p[]=$id_act_gremial;
 		$p[]=1;
 		$p[]=25000;
 		$data = $agremiado_model->listar_agremiado_ajax($p);
 	
 		$variable = [];
 		$n = 1;
+		
 		//array_push($variable, array("SISTEMA CAP"));
 		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
-		array_push($variable, array("N","Tipo Documento","Numero Documento","Numero CAP","Regional", "Fecha Inicio", "Agremiado", "Fecha Nacimiento", "Situacion", "Categoria"));
+		array_push($variable, array("N","Tipo Documento","Numero Documento","Numero CAP","Regional", "Fecha Inicio", "Agremiado", "Fecha Nacimiento", "Situacion", "Categoria", "Act. Gremial"));
 		
 		foreach ($data as $r) {
 			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
-			array_push($variable, array($n++,$r->tipo_documento, $r->numero_documento, $r->numero_cap,$r->region,$r->fecha_colegiado, $r->agremiado, $r->fecha_nacimiento, $r->situacion, $r->categoria));
+			array_push($variable, array($n++,$r->tipo_documento, $r->numero_documento, $r->numero_cap,$r->region,$r->fecha_colegiado, $r->agremiado, $r->fecha_nacimiento, $r->situacion, $r->categoria, $r->act_gremial));
 		}
 		
 		
