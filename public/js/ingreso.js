@@ -1732,6 +1732,39 @@ function modal_fraccionar(){
 	//cargarConceptos();
 
 }
+
+function modal_exonerar(){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc').modal('show');
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	var idPersona = $('#id_persona').val();
+	var idAgremiado = $('#id_agremiado').val();
+	var TotalFraccionar = $('#total').val();
+	//alert(TotalFraccionar);
+	var idConcepto = $('#idConcepto').val();
+	//alert(idConcepto);
+	
+	
+	$.ajax({
+			url: "/ingreso/modal_exonerar"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
+			type: "GET",
+			//data : $("#frmOtroPago").serialize(),
+			success: function (result) {
+				
+					//alert(result)
+				
+					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
+
+	//cargarConceptos();
+
+}
+
 function muestraSeleccion() {
 	select = document.getElementById('cboTipoConcepto_b');
 	for (var i = 0; i < select.options.length; i++) {

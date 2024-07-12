@@ -388,7 +388,7 @@
                                         <div class="row" id="divFechaAfliado">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label class="form-control-sm">Actividad</label>
+                                                    <label class="form-control-sm">Actividad Gremial</label>
                                                     <input type="text" readonly name="fecha_colegiatura" id="fecha_colegiatura" value="{{old('clinom')}}" class="form-control form-control-sm">
                                                 </div>
                                             </div>
@@ -643,7 +643,7 @@
                                                 <div class="col">
                                                     <div class="form-group mb-0 clearfix">
 
-                                                        <input style="display:none" class="btn btn-warning pull-rigth" value="EXONERAR" type="button" id="btnExonerarS" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
+                                                        <input style="display:none" class="btn btn-warning pull-rigth" value="EXONERAR" type="button" id="btnExonerarS" disabled="disabled" onclick="modal_exonerar()"/>
                                                         <input style="display:none" class="btn btn-success pull-rigth" value="NO EXONERAR" type="button" id="btnExonerarN" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
 
                                                     </div><!--form-group-->
