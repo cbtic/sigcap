@@ -356,8 +356,9 @@ class AgremiadoController extends Controller
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		$categoria_cliente = $tablaMaestra_model->getMaestroByTipo(18);
+		$act_gremial_cliente = $tablaMaestra_model->getMaestroByTipo(46);
 		
-		return view('frontend.agremiado.all',compact('region','situacion_cliente','categoria_cliente'));
+		return view('frontend.agremiado.all',compact('region','situacion_cliente','categoria_cliente','act_gremial_cliente'));
 		
 	}
 	
@@ -372,6 +373,7 @@ class AgremiadoController extends Controller
 		$p[]=$request->fecha_fin;
 		$p[]=$request->id_situacion;
 		$p[]=$request->id_categoria;
+		$p[]=$request->id_act_gremial;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $agremiado_model->listar_agremiado_ajax($p);

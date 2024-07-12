@@ -43,6 +43,31 @@ class CajaIngreso extends Model
         return $data;
     }
 
+    function getCajaUsuario_u(){
+
+        $cad = "select u.id, u.name  denominacion
+                from users u 
+                where u.id in(select distinct  ci.id_usuario from caja_ingresos ci where ci.estado = '0')
+        ";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
+    function getCajaUsuario_c($id){
+
+        $cad = "select distinct t2.codigo id, t2.denominacion 
+                from caja_ingresos t1
+                inner join tabla_maestras t2 on t2.codigo = t1.id_caja::varchar and t2.tipo = '91'
+                where t1.id_usuario = ".$id."
+                order by 2
+        ";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
+
     function getAllCajaUsuario(){
 
         $cad = "select distinct t1.id id,t3.name ||'-'||t2.denominacion denominacion
@@ -71,6 +96,32 @@ class CajaIngreso extends Model
         return $data;
 
     }
+
+    function getCajaById($id){
+        $cad = "select t2.denominacion denominacion
+            from tabla_maestras t2 
+            where t2.codigo = '".$id."' and t2.tipo = '91'
+        ";
+
+        //echo $cad;
+        $data = DB::select($cad);
+        return $data;
+
+    }
+
+    function getUsuarioById($id){
+        $cad = "select t2.name usuario
+            from users t2 
+            where t2.id = ".$id."
+        ";
+
+        //echo $cad;
+        $data = DB::select($cad);
+        return $data;
+
+    }
+
+
     function getCajaComprobante($id_usuario, $fecha){
 /*
         $cad = "select situacion, tipo, sum(total)total, count(*) cantidad

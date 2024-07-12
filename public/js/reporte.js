@@ -1163,6 +1163,39 @@ function fn_eliminar(id){
 	
 }
 
+function obtenerCaja(){
+	
+	var id = $('#id_usuario').val();
+	if(id=="")return false;
+	$('#id_caja').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/reporte/obtener_caja_usuario/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Todos</option>";
+			$('#id_caja').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			$('#id_caja').html(option);
+
+			$('#id_caja').attr("disabled",false);
+			
+			
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
 
 function abrirPdfReporte(funcion, tipo) {
 	//alert (funcion);
@@ -1190,23 +1223,25 @@ function abrirPdfReporte(funcion, tipo) {
 
 	//alert($ffin);
 
-	$usuario = $('#id_usuario_caja').val();
+	$id_usuario = $('#id_usuario').val();
+	$id_caja = $('#id_caja').val();
 	//alert($usuario);
 
 	//exit();
 
 	//var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$ffin+'/'+$usuario;
 	if (tipo =='1'){
-		if($usuario!=''){
-			var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$usuario+'/'+tipo;
+		if($id_caja!=''){
+			var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$id_usuario+'/'+$id_caja+'/'+tipo;
 			window.open(href, '_blank');		
 		}else{
 			alert('Requiere seleccionar un usuario')
 		}
 	}
 	if (tipo =='2'){
-		$usuario!='0';
-		var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$usuario+'/'+tipo;
+		$id_usuario!='0';
+		$id_caja!='0';
+		var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$id_usuario+'/'+$id_caja+'/'+tipo;
 		window.open(href, '_blank');		
 	}
 }
