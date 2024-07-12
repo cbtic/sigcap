@@ -220,7 +220,7 @@ class CajaIngreso extends Model
                     inner join tabla_maestras m on m.codigo  = c.id_moneda::varchar and m.tipo = '1'
                 where  1=1
                 ".$usuario_sel."
-                and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                and TO_CHAR(c.fecha, 'yyyy/mm/dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                 and c.id_forma_pago = '1'
                 and c.anulado = 'N'
             ) as reporte
@@ -245,7 +245,7 @@ class CajaIngreso extends Model
                     inner join conceptos co  on co.id  = cd.id_concepto    
             where 1=1 
             ".$usuario_sel."
-            and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+            and to_char(c.fecha, 'yyyy/mm/dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
             and c.id_forma_pago = '1'
             and c.anulado = 'N'
             ) as reporte
