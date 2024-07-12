@@ -194,13 +194,13 @@ class CajaIngreso extends Model
                     group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago, c.anulado,c.id_caja 
                     having  1=1
                     ".$usuario_sel."
-                    and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                    and TO_CHAR(c.fecha, 'yyyy/mm/dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                     and c.id_forma_pago = 1
                     and c.anulado = 'N'
                 ) 
                 group by situacion, tipo_,tipo";
 
-        echo $cad; exit();
+        //echo $cad; exit();
         $data = DB::select($cad);
         return $data;
     }
