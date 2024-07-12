@@ -32,14 +32,14 @@ $(document).ready(function () {
 	
 	$('#fecha_ini').datepicker({
         autoclose: true,
-		format: 'dd/mm/yyyy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 	
 	$('#fecha_fin').datepicker({
         autoclose: true,
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
