@@ -196,7 +196,7 @@
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Fecha </label>
-										<input class="form-control form-control-sm" id="fecha_ini" name="fecha_ini" value="<?php echo date("d-m-Y")?>" placeholder="Fecha Inicio">
+										<input class="form-control form-control-sm" id="fecha_ini" name="fecha_ini" value="<?php echo date("d-m-Y")?>" placeholder="Fecha Inicio">										
 									</div>
 								</div>
 								<!--

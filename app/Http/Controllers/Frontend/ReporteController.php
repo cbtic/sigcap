@@ -134,6 +134,8 @@ class ReporteController extends Controller
 
 		//print_r($id_caja);exit();
 
+		$f_inicio = str_replace("-","/",$f_inicio);
+
 
 		if ($funcion=='ccu' || $funcion=='cct'){
 			if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
