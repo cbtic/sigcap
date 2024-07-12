@@ -548,15 +548,23 @@ class DerechoRevisionController extends Controller
 		$fecha_viaje = "";
 		
 		//$agremiado = Agremiado::find(100);
-		$derecho_revision = DerechoRevision::find($id);
+		/*$derecho_revision = DerechoRevision::find($id);
+
+		$proyecto = Proyecto::where("id",$derecho_revision->id_proyecto)->where("estado","1")->first();
 
 		$proyectista = Proyectista::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
 		//var_dump($proyectista);exit();
 		$agremiado = Agremiado::where("id",$proyectista->id_agremiado)->where("estado","1")->first();
-        Mail::send('emails.mensaje', ['pasaje' => $agremiado], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje) {
-		
+		$persona = Persona::where("id",$agremiado->id_persona)->where("estado","1")->first();*/
+
+		$derecho_revision_model = new DerechoRevision;
+
+		$datos_correo = $derecho_revision_model->getSolicitudCorreo($id);
+		//var_dump($datos_correo);exit();
+        Mail::send('emails.mensaje', ['datos_correo' => $datos_correo], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje,$datos_correo) {
+			$asunto = 'SOLICITUD '.$datos_correo[0]->codigo_solicitud.' CODIGO DE PROYECTO '.$datos_correo[0]->codigo;
 			$m->from(config('mail.mailers.smtp.username'), 'CAP');
-            $m->to($correo_electronico, $paterno)->subject('SOLICITUD XXX CODIGO DE PROYECTO YYO');
+            $m->to($correo_electronico, $paterno)->subject($asunto);
 			
         });
 		
