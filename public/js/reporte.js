@@ -1211,7 +1211,7 @@ function abrirPdfReporte(funcion, tipo) {
 	
 
 	$fini = $('#fecha_ini').val();
-	//alert($fini);	
+	alert($fini);	
 	//$fini = str_replace("-","/",$fini);
 	//alert($fini);
 	//var date = new Date($fini); // Or your date here
