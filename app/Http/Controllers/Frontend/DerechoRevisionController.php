@@ -572,7 +572,7 @@ class DerechoRevisionController extends Controller
 
 	public function correo_credipago_aprobado_hu($id){
 		
-		view('emails.mensaje');
+		view('emails.mensaje_correo_aprobado_hu');
 		$email_paciente = "";
 		$pasaje_actual = "";
 		$nombre_boletopaciente = "";
@@ -600,6 +600,37 @@ class DerechoRevisionController extends Controller
 		
 	}
 	
+	
+	public function correo_credipago_aprobado_reintegro($id){
+		
+		view('emails.mensaje_correo_aprobado_reintegro');
+		$email_paciente = "";
+		$pasaje_actual = "";
+		$nombre_boletopaciente = "";
+		$nombre_boletopaciente_extra1 = "";
+		$nombre_boletopaciente_extra2 = "";
+		$nombre_boletopaciente_extra3 = "";
+		$nombre_boletoacompanante = "";
+		$nombre_boletomedico = "";
+		
+		//$correo_electronico = "wyamunaque.expertta@gmail.com";
+		$correo_electronico = "julioyamunaque04@gmail.com";
+		$paterno = "";
+		$fecha_viaje = "";
+
+		$derecho_revision_model = new DerechoRevision;
+
+		$datos_correo = $derecho_revision_model->getSolicitudCorreoAprobadoHu($id);
+		//var_dump($datos_correo);exit();
+        Mail::send('emails.mensaje_correo_aprobado_reintegro', ['datos_correo' => $datos_correo], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje,$datos_correo) {
+			$asunto = 'SOLICITUD DE DERECHO DE REVISIÓN DE HABILITACIÓN URBANA';
+			$m->from(config('mail.mailers.smtp.username'), 'CAP');
+            $m->to($correo_electronico, $paterno)->subject($asunto);
+			
+        });
+		
+	}
+
 	public function modal_solicitud_nuevoSolicitud($id){
 		
 		$proyectista = new Proyectista;
