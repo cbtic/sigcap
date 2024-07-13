@@ -373,7 +373,7 @@ class DerechoRevisionController extends Controller
 		if($request->instancia==250)$valor_obra = $request->valor_reintegro;
 
 		$propietario = Propietario::where("id_solicitud",$request->id)->where("estado","1")->first();
-		
+		//var_dump($propietario);exit();
 		if(isset($propietario->id_empresa) && $propietario->id_empresa>0){
 			$empresa = Empresa::where("id",$propietario->id_empresa)->where("estado","1")->first();
 			$empresa_cantidad = Empresa::where("ruc",$empresa->ruc)->where("estado","1")->count();
@@ -524,7 +524,7 @@ class DerechoRevisionController extends Controller
 			'sw' => $sw,
 		];
         
-		$this->correo_credipago($request->id);
+		//$this->correo_credipago($request->id);
 		
         return response()->json($datos_formateados);
 	
@@ -563,6 +563,36 @@ class DerechoRevisionController extends Controller
 		//var_dump($datos_correo);exit();
         Mail::send('emails.mensaje', ['datos_correo' => $datos_correo], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje,$datos_correo) {
 			$asunto = 'SOLICITUD '.$datos_correo[0]->codigo_solicitud.' CODIGO DE PROYECTO '.$datos_correo[0]->codigo;
+			$m->from(config('mail.mailers.smtp.username'), 'CAP');
+            $m->to($correo_electronico, $paterno)->subject($asunto);
+			
+        });
+		
+	}
+
+	public function correo_credipago_aprobado_hu($id){
+		
+		view('emails.mensaje');
+		$email_paciente = "";
+		$pasaje_actual = "";
+		$nombre_boletopaciente = "";
+		$nombre_boletopaciente_extra1 = "";
+		$nombre_boletopaciente_extra2 = "";
+		$nombre_boletopaciente_extra3 = "";
+		$nombre_boletoacompanante = "";
+		$nombre_boletomedico = "";
+		
+		//$correo_electronico = "wyamunaque.expertta@gmail.com";
+		$correo_electronico = "julioyamunaque04@gmail.com";
+		$paterno = "";
+		$fecha_viaje = "";
+
+		$derecho_revision_model = new DerechoRevision;
+
+		$datos_correo = $derecho_revision_model->getSolicitudCorreoAprobadoHu($id);
+		//var_dump($datos_correo);exit();
+        Mail::send('emails.mensaje_correo_aprobado_hu', ['datos_correo' => $datos_correo], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje,$datos_correo) {
+			$asunto = 'SOLICITUD DE DERECHO DE REVISIÓN DE HABILITACIÓN URBANA';
 			$m->from(config('mail.mailers.smtp.username'), 'CAP');
             $m->to($correo_electronico, $paterno)->subject($asunto);
 			

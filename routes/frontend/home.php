@@ -762,3 +762,7 @@ Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');
 Route::get('reporte/listar_reporte_usuario', [ReporteController::class, 'listar_reporte_usuario'])->name('reporte.listar_reporte_usuario');
 Route::get('reporte/rep_pdf/{funcion}/{fini}/{usuario}/{caja}/{tipo}', [ReporteController::class, 'rep_pdf'])->name('reporte.rep_pdf');
 Route::get('reporte/obtener_caja_usuario/{idUsuario}', [ReporteController::class, 'obtener_caja_usuario'])->name('reporte.obtener_caja_usuario');
+
+Route::get('derecho_revision/correo_credipago/{id}', [DerechoRevisionController::class, 'correo_credipago'])->name('derecho_revision.correo_credipago');
+Route::get('derecho_revision/correo_credipago_aprobado_hu/{id}', [DerechoRevisionController::class, 'correo_credipago_aprobado_hu'])->name('derecho_revision.correo_credipago_aprobado_hu');
+
