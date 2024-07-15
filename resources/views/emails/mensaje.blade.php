@@ -30,10 +30,10 @@
                         </ul>
                         </p>
 						
-						<p>Se ha constatado que
+						<p>Se ha constatado que el
                             @foreach($datos_correo as $dato)
                                 @if({{$dato->situacion}}=='INHABILITADO'){
-                                    el <b>proyectista {{$dato->nombres}} con CAP N {{$dato->numero_cap}} se encuentra {{$dato->situacion}}</b>, 
+                                    <b>proyectista {{$dato->nombres}} con CAP N {{$dato->numero_cap}} se encuentra {{$dato->situacion}}</b>, 
                                 }
                                 @endif
                             @endforeach
