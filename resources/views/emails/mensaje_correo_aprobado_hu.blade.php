@@ -26,12 +26,12 @@
                             ?>
                         <ul>
                             <li>Tipo de Tramite: {{$datos_correo[0]->tipo_tramite}}</li>
-                            <li>Área Bruta del Terreno: {{$datos_correo[0]->area_total}}</li>
+                            <li>Área Bruta del Terreno: {{ number_format($datos_correo[0]->area_total, 2, '.', ',') m2 }}</li>
                             <li>Distrito: {{$datos_correo[0]->distrito}}</li>
                             <li>Dirección: {{$datos_correo[0]->direccion}}</li>
                             <li>Propietario: {{$datos_correo[0]->propietario}}</li>
                             <li></li>
-                            <li>El número de Liquidación (Credipago) {{$datos_correo[0]->credipago}} Monto a Pagar: S.{{ number_format($datos_correo[0]->total, 2, '.', ',') }}</li>
+                            <li>El número de Liquidación (Credipago) {{$datos_correo[0]->credipago}} Monto a Pagar: S/.{{ number_format($datos_correo[0]->total, 2, '.', ',') }}</li>
                         </ul>
                         </p>
 						
