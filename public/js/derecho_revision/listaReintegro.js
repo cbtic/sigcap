@@ -1837,12 +1837,19 @@ function guardar_solicitud_reintegro(){
 			type: "POST",
 			data : $("#frmSolicitudDerechoRevisionReintegroall").serialize(),
 			success: function (result) {
-				
+				//alert(result);
 				//$('#openOverlayOpc').modal('hide');
 				//modalSituacion(id_agremiado);
 				//datatableSuspension();
 				$('.loader').hide();
 				window.location.reload();
+				$.ajax({
+                    url: "/derecho_revision/correo_credipago_aprobado_reintegro/" + result,
+                    method: 'GET',
+                    success: function(result) {
+                    
+                    },
+                });
 				
 				//$('#openOverlayOpc').modal('hide');
 				

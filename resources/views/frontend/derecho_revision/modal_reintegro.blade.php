@@ -396,13 +396,27 @@ function valida(){
     
     var msg="";
     var situacion=$("#situacion").val();
+    var id_solicitud=$("#id").val();
     
-    if(situacion=="FALLECIDO"){msg+="El agremiado est&aacute; FALLECIDO";}
+    if(situacion=="FALLECIDO"){
+        msg+="El agremiado est&aacute; FALLECIDO";
+    }
 
-    if(situacion=="INHABILITADO"){msg+="El agremiado est&aacute; INHABILITADO";}
+    if(situacion=="INHABILITADO"){
+        msg+="El agremiado est&aacute; INHABILITADO";
+    }
     
     if(msg!=""){
         bootbox.alert(msg); 
+
+        $.ajax({
+            url: "/derecho_revision/correo_credipago/" + id_solicitud,
+            method: 'GET',
+            success: function(result) {
+               
+            },
+        });
+
         return false;
     }else if(situacion=="HABILITADO" || situacion==""){
         fn_save_credipago();

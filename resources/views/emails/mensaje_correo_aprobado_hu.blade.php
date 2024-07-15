@@ -18,7 +18,7 @@
                         
 						<p>Estimado <b>Arq. {{$datos_correo[0]->nombres}}</b></p>
                         
-						<p>Le informamos que recientemente se ha registrado con su Nro de CAP {{$datos_correo[0]->numero_cap}}, el proyecto {{$datos_correo[0]->nombre_proyecto}} con los siguientes datos:</p>
+						<p>Le informamos que se aprobó su solicitud de derecho de revisión Habilitación Urbana.</p>
                         <p>
                             <?php
                             //$originalDate = $pasaje->fecha_viaje;
@@ -26,23 +26,16 @@
                             ?>
                         <ul>
                             <li>Tipo de Tramite: {{$datos_correo[0]->tipo_tramite}}</li>
+                            <li>Área Bruta del Terreno: {{ number_format($datos_correo[0]->area_total, 2, '.', ',') m2 }}</li>
                             <li>Distrito: {{$datos_correo[0]->distrito}}</li>
+                            <li>Dirección: {{$datos_correo[0]->direccion}}</li>
+                            <li>Propietario: {{$datos_correo[0]->propietario}}</li>
+                            <li></li>
+                            <li>El número de Liquidación (Credipago) {{$datos_correo[0]->credipago}} Monto a Pagar: S/.{{ number_format($datos_correo[0]->total, 2, '.', ',') }}</li>
                         </ul>
                         </p>
 						
-						<p>Se ha constatado que el
-                            @foreach($datos_correo as $dato)
-                                @if($dato->situacion=='INHABILITADO')
-                                    <b>proyectista {{$dato->nombres}} con CAP N {{$dato->numero_cap}} se encuentra {{$dato->situacion}}</b>, 
-                                @endif
-                            @endforeach
-                            por lo que debe proceder a HABILITARSE previa aprobación de la solicitud, para lo cual se debe comunicar con el área de CAJA a los teléfonos </p>
-						
-                        <p>627-1200 anexo 181-182-184</p>
-                        
-						<p>954-495-957 </p>
-						<p>	¿No reconoce este proyecto?</p>
-						<p>	Haga click aquí para alertar al Área de Asuntos Técnicos
+						<p> Puede realizar el pago de la liquidación en el siquiente link
 						</p>
 					
                     </div>
