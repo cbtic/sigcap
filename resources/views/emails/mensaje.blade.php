@@ -30,7 +30,14 @@
                         </ul>
                         </p>
 						
-						<p>Se ha constatado que el <b>proyectista {{$datos_correo[0]->nombres}} con CAP N {{$datos_correo[0]->numero_cap}} se encuentra {{$datos_correo[0]->situacion}}</b>, por lo que debe proceder a HABILITARSE previa aprobación de la solicitud, para lo cual se debe comunicar con el área de CAJA a los teléfonos </p>
+						<p>Se ha constatado que el
+                            @foreach($datos_correo as $dato)
+                                @if({{$dato->situacion}}=='INHABILITADO'){
+                                    <b>proyectista {{$dato->nombres}} con CAP N {{$dato->numero_cap}} se encuentra {{$dato->situacion}}</b>, 
+                                }
+                                @endif
+                            @endforeach
+                            por lo que debe proceder a HABILITARSE previa aprobación de la solicitud, para lo cual se debe comunicar con el área de CAJA a los teléfonos </p>
 						
                         <p>627-1200 anexo 181-182-184</p>
                         
