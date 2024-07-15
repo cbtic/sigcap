@@ -620,10 +620,10 @@ class DerechoRevisionController extends Controller
 
 		$derecho_revision_model = new DerechoRevision;
 
-		$datos_correo = $derecho_revision_model->getSolicitudCorreoAprobadoHu($id);
+		$datos_correo = $derecho_revision_model->getSolicitudCorreoAprobadoReintegro($id);
 		//var_dump($datos_correo);exit();
         Mail::send('emails.mensaje_correo_aprobado_reintegro', ['datos_correo' => $datos_correo], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje,$datos_correo) {
-			$asunto = 'SOLICITUD DE DERECHO DE REVISIÓN DE HABILITACIÓN URBANA';
+			$asunto = 'SOLICITUD '.$datos_correo[0]->codigo_solicitud.' CODIGO DE PROYECTO '.$datos_correo[0]->codigo;
 			$m->from(config('mail.mailers.smtp.username'), 'CAP');
             $m->to($correo_electronico, $paterno)->subject($asunto);
 			
@@ -2044,6 +2044,7 @@ class DerechoRevisionController extends Controller
 			
 			$sw = true;
 		}
+		return response()->json($derecho_revision->id);
 		
 	}
 

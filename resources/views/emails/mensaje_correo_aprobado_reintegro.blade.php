@@ -18,7 +18,7 @@
                         
 						<p>Estimado <b>Arq. {{$datos_correo[0]->nombres}}</b></p>
                         
-						<p>Le informamos que se aprobó su solicitud de derecho de revisión Habilitación Urbana.</p>
+						<p>Le informamos que se aprobó su SOLICITUD N° {{$datos_correo[0]->codigo_solicitud}} REINTEGRO DE DERECHO DE REVISIÓN EDIFICACIONES - CODIGO DE PROYECTO {{$datos_correo[0]->codigo}}.</p>
                         <p>
                             <?php
                             //$originalDate = $pasaje->fecha_viaje;
@@ -26,10 +26,12 @@
                             ?>
                         <ul>
                             <li>Tipo de Tramite: {{$datos_correo[0]->tipo_tramite}}</li>
-                            <li>Área Bruta del Terreno: {{$datos_correo[0]->area_total}}</li>
+                            <li>Área Techada Total: {{ number_format($datos_correo[0]->area_total, 2, '.', ',') }} m2</li>
+                            <li>Área Remodelada: 0.00 m2</li>
                             <li>Distrito: {{$datos_correo[0]->distrito}}</li>
                             <li>Dirección: {{$datos_correo[0]->direccion}}</li>
                             <li>Propietario: {{$datos_correo[0]->propietario}}</li>
+                            <li>Área Total de Obra: {{ number_format($datos_correo[0]->valor_obra, 2, '.', ',') }} m2</li>
                             <li></li>
                             <li>El número de Liquidación (Credipago) {{$datos_correo[0]->credipago}} Monto a Pagar: S.{{ number_format($datos_correo[0]->total, 2, '.', ',') }}</li>
                         </ul>

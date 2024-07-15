@@ -765,4 +765,5 @@ Route::get('reporte/obtener_caja_usuario/{idUsuario}', [ReporteController::class
 
 Route::get('derecho_revision/correo_credipago/{id}', [DerechoRevisionController::class, 'correo_credipago'])->name('derecho_revision.correo_credipago');
 Route::get('derecho_revision/correo_credipago_aprobado_hu/{id}', [DerechoRevisionController::class, 'correo_credipago_aprobado_hu'])->name('derecho_revision.correo_credipago_aprobado_hu');
+Route::get('derecho_revision/correo_credipago_aprobado_reintegro/{id}', [DerechoRevisionController::class, 'correo_credipago_aprobado_reintegro'])->name('derecho_revision.correo_credipago_aprobado_reintegro');
 
