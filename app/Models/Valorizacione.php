@@ -558,4 +558,18 @@ class Valorizacione extends Model
 		return $this->readFunctionPostgres('sp_listar_deudas_seguro_paginado',$p);
     }
 
+    function getExonerado($id_agremido){        
+       
+        $cad = "select *
+        from valorizaciones
+        where id_concepto = 26461
+        and id_agremido = '".$id_agremido."'
+        and pagado = '0' and exonerado = '0'";
+       
+        
+      //  echo $cad;
+
+		$data = DB::select($cad);
+        return $data;
+    }
 }

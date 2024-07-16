@@ -2328,6 +2328,7 @@ function fn_exonerar_valorizacion(){
 					data : $("#frmValorizacion").serialize()+"&tipo=",
 					success: function (result) {  
 							cargarValorizacion();
+							obtenerBeneficiario();
 					}
 				});
 			}
