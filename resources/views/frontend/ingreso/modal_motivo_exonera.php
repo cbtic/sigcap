@@ -456,42 +456,20 @@ legend.scheduler-border {
 
 												<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
-
-												
 												<div class="row" style="padding-left:10px">
-													<!--
-													<div class="col-lg-12">
-														<div class="form-group">
-															<label class="control-label form-control-sm">N° Doc. / Nombre</label>
-															<input id="nombres_o" name="nombres_o" on class="form-control form-control-sm" value="" type="text" readonly>
-														</div>
-													</div>
--->
-													<div class="card-body">
-														<div class="row">
-
-														<div class="col-lg-12">
-															<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
-															
-															<textarea  id="motivo_" name="motivo_" class="form-control form-control-sm" value="" type="text" ></textarea>
-															</div>
-														</div>
-
-														</div>
-
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+														<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 														
+															<textarea  id="motivo_" name="motivo_" class="form-control form-control-sm" value="" type="text" ></textarea>
+														</div>
 													</div>
-
 												</div>
 												<div style="margin-top:15px" class="form-group">
-													<div class="col-sm-8 controls">
+													<div class="col-sm-12 controls">
 														<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 															<a href="javascript:void(0)" onClick="fn_exonerar_valorizacion(document.getElementById('motivo_').value)" class="btn btn-sm btn-success">Guardar</a>
 														</div>
-
 													</div>
-												</div>
-											</div>
 										</div>
 									</div>
 								</form>
