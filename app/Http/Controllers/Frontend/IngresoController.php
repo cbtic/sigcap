@@ -339,15 +339,14 @@ class IngresoController extends Controller
 		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado' ));
 	}
 
-    public function modal_exonerar($idConcepto, $id_persona, $id_agremiado, $total_fraccionar ){
+    public function modal_exonerar( ){
 
-        $concepto = Concepto::find($idConcepto);
 
-        //$concepto = json_encode($concepto_model);
+        $concepto ="" ;
 
-        //print_r(json_encode($concepto)); exit();
+       // print_r(json_encode($concepto)); exit();
 		
-		return view('frontend.ingreso.modal_motivo_exonera',compact('concepto','total_fraccionar','id_persona','id_agremiado' ));
+		return view('frontend.ingreso.modal_motivo_exonera',compact('concepto' ));
 	}
 
     public function modal_fraccionamiento(Request $request){
@@ -899,7 +898,7 @@ class IngresoController extends Controller
 
 
     }
-    public function exonerar_valorizacion(Request $request){
+    public function exonerar_valorizacion(Request $request,$motivo){
         $msg = "";
         $id_user = Auth::user()->id;
 
@@ -916,6 +915,7 @@ class IngresoController extends Controller
                     $valorizacion = Valorizacione::find($id);            
                     $valorizacion-> exonerado = "1";
                     $valorizacion-> id_usuario_actualiza = $id_user;                    
+                    $valorizacion-> exonerado_motivo = $motivo;                    
                     $valorizacion->save();  
                 }
 

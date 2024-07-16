@@ -457,11 +457,7 @@ legend.scheduler-border {
 												<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
 
-												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona ?>">
-												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado ?>">
-												<input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo ?>">
-												<input type="hidden" name="tipo_documento" id="tipo_documento" value="<?php echo $tipo_documento ?>">
-
+												
 												<div class="row" style="padding-left:10px">
 													<!--
 													<div class="col-lg-12">
@@ -474,7 +470,7 @@ legend.scheduler-border {
 													<div class="card-body">
 														<div class="row">
 
-														<div class="col-lg-4">
+														<div class="col-lg-12">
 															<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 															<label class="control-label form-control-sm"></label>
 															<input id="motivo_" name="motivo_" class="form-control form-control-sm" value="" type="text" >
@@ -490,7 +486,7 @@ legend.scheduler-border {
 												<div style="margin-top:15px" class="form-group">
 													<div class="col-sm-12 controls">
 														<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-															<a href="javascript:void(0)" onClick="guardar_concepto_valorizacion()" class="btn btn-sm btn-success">Guardar</a>
+															<a href="javascript:void(0)" onClick="fn_exonerar_valorizacion(document.getElementById('motivo_').value)" class="btn btn-sm btn-success">Guardar</a>
 														</div>
 
 													</div>

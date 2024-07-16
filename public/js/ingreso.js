@@ -1716,7 +1716,7 @@ function modal_fraccionar(){
 	
 	
 	$.ajax({
-			url: "/ingreso/modal_fraccionar"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
+			url: "/ingreso/modal_fraccionar/"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
 			type: "GET",
 			//data : $("#frmOtroPago").serialize(),
 			success: function (result) {
@@ -1748,7 +1748,7 @@ function modal_exonerar(){
 	
 	
 	$.ajax({
-			url: "/ingreso/modal_exonerar"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
+			url: "/ingreso/modal_exonerar/",
 			type: "GET",
 			//data : $("#frmOtroPago").serialize(),
 			success: function (result) {
@@ -2334,7 +2334,7 @@ function fn_nota_credito(id){
 
 
 
-function fn_exonerar_valorizacion(){
+function fn_exonerar_valorizacion(motivo){
 
 	var exonerado = $('#Exonerado').val();
 	var mensaje = "";
@@ -2356,10 +2356,14 @@ function fn_exonerar_valorizacion(){
 	  }).then((result) => {
 			if (result.value) {
 				$.ajax({
-					url: "/ingreso/exonerar_valorizacion",
+					url: "/ingreso/exonerar_valorizacion/" + motivo ,
 					type: "POST",
 					data : $("#frmValorizacion").serialize()+"&tipo=",
 					success: function (result) {  
+							$('.loader').hide();
+							$('#openOverlayOpc').modal('hide');
+
+						
 							cargarValorizacion();
 					}
 				});
