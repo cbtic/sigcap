@@ -2365,6 +2365,7 @@ function fn_exonerar_valorizacion(motivo){
 
 						
 							cargarValorizacion();
+							obtenerBeneficiario();
 					}
 				});
 			}

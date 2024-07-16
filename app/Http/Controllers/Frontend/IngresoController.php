@@ -917,6 +917,19 @@ class IngresoController extends Controller
                     $valorizacion-> id_usuario_actualiza = $id_user;                    
                     $valorizacion-> exonerado_motivo = $motivo;                    
                     $valorizacion->save();  
+                   
+                    //$agremiado_ = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+                    //$valorizacion_ = Valorizacione::where("id_concepto",26461)->where("id_agremido",$valorizacion->id_agremiado)->where("pagado",0)->where("exonerado",0)->where("id_modulo",3)->first();  
+                    $valorizacion_model = new Valorizacione;
+                    $valorizacion_ = $valorizacion_model->getExonerado($valorizacion->id_agremido);
+                    //print_r($valorizacion_);exit();
+                    if($valorizacion_){
+                            
+                    }else{
+                        $agremiado = Agremiado::find($valorizacion->id_agremido); 
+                        $agremiado->id_situacion=73;
+                        $agremiado->save();
+                    }
                 }
 
                 if($opcion=="1"){
