@@ -395,12 +395,8 @@ class MultaController extends Controller
 							
 						}
 					}
-					
-					
 				}
-		
 			}
-		
 		}
 	}
 

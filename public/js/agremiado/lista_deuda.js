@@ -38,6 +38,7 @@ $(document).ready(function () {
 	});
 		
 	datatablenew();
+	cargarPeriodoDeuda();
 	/*	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
@@ -194,6 +195,29 @@ function fn_save___(){
 					location.href="/afiliacion";
             }
     });
+}
+
+function cargarPeriodoDeuda(){    	
+
+	$.ajax({
+		url: "/agremiado/listar_valorizacion_periodo_deuda",
+		type: "POST",
+		data : $("#frmDeudas").serialize(),
+		success: function(result){
+			
+			var option = "<option value='' selected='selected'>--Año--</option>";
+			$('#anio').html("");
+			$(result).each(function (ii, oo) {
+				//alert(oo.anio);
+				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
+			});
+			$('#anio').html(option);
+			//$('#anio').select2();
+			
+			//$('.loader').hide();			
+		}
+		
+	});
 }
 
 function validaTipoDocumento(){
@@ -467,6 +491,7 @@ function datatablenew(){
 			var concepto = $('#concepto').val();
 			//var estado = $('#estado').val();
 			var mes = $('#mes').val();
+			var pago = $('#pago_bus').val();
 			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -475,7 +500,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						anio:anio,concepto:concepto,
-						mes:mes,
+						mes:mes,pago:pago,
 						_token:_token
                        },
                 "success": function (result) {
@@ -547,20 +572,38 @@ function datatablenew(){
 				"mRender": function (data, type, row) {
 					var monto = "";
 					if(row.monto!= null)monto = row.monto;
-					return monto;
+					return parseFloat(monto).toFixed(2);;
 				},
 				"bSortable": false,
 				"aTargets": [6],
 				},
 				{
                 "mRender": function (data, type, row) {
-                    var situacion = "";
-					if(row.situacion!= null)situacion = row.situacion;
-					return situacion;
+                    var pago = "";
+					if(row.pago!= null)pago = row.pago;
+					return pago;
                 },
                 "bSortable": false,
                 "aTargets": [7]
                 },
+				{
+				"mRender": function (data, type, row) {
+					var serie = "";
+					if(row.serie!= null)serie = row.serie;
+					return serie;
+				},
+				"bSortable": false,
+				"aTargets": [8]
+				},
+				{
+				"mRender": function (data, type, row) {
+					var numero = "";
+					if(row.numero!= null)numero = row.numero;
+					return numero;
+				},
+				"bSortable": false,
+				"aTargets": [9]
+				},
                 {
                 "mRender": function (data, type, row) {
                 	var email1 = "";
@@ -568,7 +611,7 @@ function datatablenew(){
 					return email1;
                 },
                 "bSortable": false,
-                "aTargets": [8]
+                "aTargets": [10]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -577,7 +620,7 @@ function datatablenew(){
 					return email2;
                 },
                 "bSortable": false,
-                "aTargets": [9]
+                "aTargets": [11]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -586,7 +629,7 @@ function datatablenew(){
 					return telefono1;
                 },
                 "bSortable": false,
-                "aTargets": [10]
+                "aTargets": [12]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -595,7 +638,7 @@ function datatablenew(){
 					return telefono2;
                 },
                 "bSortable": false,
-                "aTargets": [11]
+                "aTargets": [13]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -604,7 +647,7 @@ function datatablenew(){
 					return celular1;
                 },
                 "bSortable": false,
-                "aTargets": [12]
+                "aTargets": [14]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -613,7 +656,7 @@ function datatablenew(){
 					return celular2;
                 },
                 "bSortable": false,
-                "aTargets": [13]
+                "aTargets": [15]
                 },
             ]
     });
@@ -679,16 +722,18 @@ function DescargarArchivosDeuda(){
 	var anio = $('#anio').val();
 	var concepto = $('#concepto').val();
 	var mes = $('#mes').val();
+	var pago = $('#pago_bus').val();
 	//var id_agremiado = 0;
 	//var id_regional = 0;
 	
 	if (anio == "")anio = 0;
 	if (concepto == "")concepto = 0;
 	if (mes == "")mes = 0;
+	if (pago == "")pago = 0;
 	//if (campo == "")campo = 0;
 	//if (orden == "")orden = 0;
 	
-	location.href = '/agremiado/exportar_lista_deudas/' + anio + '/' + concepto + '/' + mes;
+	location.href = '/agremiado/exportar_lista_deudas/' + anio + '/' + concepto + '/' + mes + '/' + pago;
 	
 }
 

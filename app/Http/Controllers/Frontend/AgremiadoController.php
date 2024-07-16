@@ -1829,7 +1829,7 @@ class AgremiadoController extends Controller
 	
 		$variable = [];
 		$n = 1;
-		
+
 		//array_push($variable, array("SISTEMA CAP"));
 		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
 		array_push($variable, array("N","Tipo Documento","Numero Documento","Numero CAP","Regional", "Fecha Inicio", "Agremiado", "Fecha Nacimiento", "Situacion", "Categoria", "Act. Gremial"));
@@ -1865,6 +1865,7 @@ class AgremiadoController extends Controller
 		$p[]=$request->anio;
 		$p[]=$request->concepto;
 		$p[]=$request->mes;
+		$p[]=$request->pago;
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -1882,16 +1883,18 @@ class AgremiadoController extends Controller
 		echo json_encode($result);
 	}
 
-	public function exportar_lista_deudas($anio, $concepto, $mes) {
+	public function exportar_lista_deudas($anio, $concepto, $mes, $pago) {
 		
 		if($anio==0)$anio = "";
 		if($concepto==0)$concepto = "";
 		if($mes==0)$mes = "";
+		if($pago==0)$pago = "";
 	
 		$valorizacion_model = new Valorizacione;
 		$p[]=$anio;
 		$p[]=$concepto;
 		$p[]=$mes;
+		$p[]=$pago;
         $p[]=1;
 		$p[]=1;
 		$p[]=10000;
@@ -1901,11 +1904,11 @@ class AgremiadoController extends Controller
 		$n = 1;
 		//array_push($variable, array("SISTEMA CAP"));
 		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
-		array_push($variable, array("N","Numero CAP","Nombre Arquitecto","Beneficiario","Concepto","Detalle de Afiliado", "Edad", "Importe", "Situacion", "Correo1", "Correo2", "Telefono1", "Telefono2", "Celular1", "Celular2"));
+		array_push($variable, array("N","Numero CAP","Nombre Arquitecto","Beneficiario","Concepto","Detalle de Afiliado", "Edad", "Importe", "Situacion","Serie","Numero", "Correo1", "Correo2", "Telefono1", "Telefono2", "Celular1", "Celular2"));
 		
 		foreach ($data as $r) {
 			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
-			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->beneficiario, $r->concepto,$r->plan,$r->edad, $r->monto, $r->situacion, $r->email1, $r->email2, $r->telefono1, $r->telefono2, $r->celular1, $r->celular2));
+			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->beneficiario, $r->concepto,$r->plan,$r->edad, $r->monto, $r->pago, $r->serie, $r->numero, $r->email1, $r->email2, $r->telefono1, $r->telefono2, $r->celular1, $r->celular2));
 		}
 		
 		
@@ -1923,7 +1926,16 @@ class AgremiadoController extends Controller
         return view('frontend.agremiado.lista_suspension',compact('suspension_lista'));
 
     }
-		
+
+	public function listar_valorizacion_periodo_deuda(Request $request){
+       
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getGeneraAnioDeuda();
+
+        //print_r($resultado);exit();
+		return $resultado;
+
+    }
 }
 
 class InvoicesExport implements FromArray

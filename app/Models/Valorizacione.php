@@ -572,4 +572,16 @@ class Valorizacione extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getGeneraAnioDeuda(){
+        $cad = "select distinct  DATE_PART('YEAR', v.fecha)::varchar anio
+        from valorizaciones v
+        where v.estado ='1'
+        and v.id_modulo ='4'
+        order by anio desc";
+    
+		$data = DB::select($cad);
+        return $data;
+        //if($data)return $data[0];
+    }
 }
