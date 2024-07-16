@@ -223,7 +223,7 @@ $(document).ready(function() {
 		if(tipo_comision>0)$("#tipo_comision_").val(tipo_comision);
 		
 		obtenerComision();
-		
+		obtenerComisionDelegadoNuevo(id_comision);
 	}else{
 		var fecha_ejecucion = $("#fecha_ejecucion").val();
 		var fecha_programado = $("#fecha_programado").val();

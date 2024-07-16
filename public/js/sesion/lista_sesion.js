@@ -429,7 +429,50 @@ function obtenerComisionDelegado(){
 				if(id>0){
 				option += "<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('"+oo.id+"') ><i class='fa fa-edit'></i> Editar</button></td>";
 				}else{
-				option += "<td class='text-left'></td><td class='text-left'></td><td class='text-left'></td>";
+				option += "<td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td>";
+				}
+				
+				
+				option += "</tr>";
+			});
+			$('#tblDelegado tbody').html(option);
+			
+			$("#dia_semana").val(dia_semana.denominacion);
+			$("#id_dia_semana").val(dia_semana.codigo);
+		}
+		
+	});
+	
+}
+
+function obtenerComisionDelegadoNuevo(id_comision){
+	
+	var id = $("#id").val();
+	
+	//var id_comision = $('#id_comision').val();
+	$.ajax({
+		url: '/sesion/obtener_comision_delegado/'+id_comision,
+		dataType: "json",
+		success: function(result){
+			var delegado = result.delegado;
+			var dia_semana = result.dia_semana[0];
+			var option = "";
+			$('#tblDelegado tbody').html("");
+			$(delegado).each(function (ii, oo) {
+				option += "<tr style='font-size:13px'>";
+				option += "<input type='hidden' name='id_delegado[]' value='"+oo.id+"' >";
+				option += "<td class='text-left'>"+oo.puesto+"</td>";
+				option += "<td class='text-left'>"+oo.numero_cap+"</td>";
+				option += "<td class='text-left'>"+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</td>";
+				option += "<td class='text-left'>"+oo.situacion+"</td>";
+				var sel = "";
+				if(oo.coordinador==1)sel = "checked='checked'";
+				option += "<td class='text-center'><input type='radio' name='coordinador' "+sel+" value='"+oo.id+"' /></td>";
+				
+				if(id>0){
+				option += "<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('"+oo.id+"') ><i class='fa fa-edit'></i> Editar</button></td>";
+				}else{
+				option += "<td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td>";
 				}
 				
 				
