@@ -121,7 +121,7 @@ class IngresoController extends Controller
             $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
         }
         
-       
+      // var_dump($valorizacion);exit();
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 
@@ -901,7 +901,7 @@ class IngresoController extends Controller
     public function exonerar_valorizacion(Request $request,$motivo){
         $msg = "";
         $id_user = Auth::user()->id;
-
+        $nombre_user= Auth::user()->name;  //user::find ($id_user);
         //print_r($request->comprobante_detalle); exit();
         $opcion = $request->Exonerado; 
 
@@ -915,7 +915,7 @@ class IngresoController extends Controller
                     $valorizacion = Valorizacione::find($id);            
                     $valorizacion-> exonerado = "1";
                     $valorizacion-> id_usuario_actualiza = $id_user;                    
-                    $valorizacion-> exonerado_motivo = $motivo;                    
+                    $valorizacion-> exonerado_motivo = $motivo .  " usuario: ". $nombre_user . " Fecha: " . Carbon::now()->format('Y-m-d'); ;                    
                     $valorizacion->save();  
                    
                     //$agremiado_ = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();

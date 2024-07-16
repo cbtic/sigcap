@@ -35,7 +35,7 @@ foreach($valorizacion as $key=>$row):
 	
 		
 ?>
-<tr style="font-size:13px">	
+<tr style="font-size:13px" data-toggle="tooltip" data-placement="top" title="<?php echo $row->exonerado_motivo ?>"  >	
 	<td class="text-center">
         <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">		
 			<input type="checkbox" key="<?php echo $key?>" class="mov" name="comprobante_detalles[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)"  <?php echo $disabled?> />

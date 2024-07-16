@@ -33,7 +33,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto, 
-                codigo_fraccionamiento, v.exonerado                
+                codigo_fraccionamiento, v.exonerado,v.exonerado_motivo                 
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -61,7 +61,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto,
-                codigo_fraccionamiento, v.exonerado               
+                codigo_fraccionamiento, v.exonerado,v.exonerado_motivo               
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto            
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
