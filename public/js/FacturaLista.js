@@ -160,6 +160,7 @@ function datatablenew(){
             var estado_pago = $('#estado_pago').val();
             var anulado = $('#anulado').val();
             var sunat = $('#sunat').val();
+            var formapago = $('#sunat').val();
             var pdf = $('#pdf').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -310,6 +311,24 @@ function datatablenew(){
                 "bSortable": false,
                 "aTargets": [11]
                 },
+                {
+                "mRender": function (data, type, row) {
+                    var caja = "";
+                    if(row.caja!= null)caja = row.caja;
+                    return caja;
+                },
+                "bSortable": false,
+                "aTargets": [12]
+                },
+                {
+                    "mRender": function (data, type, row) {
+                        var caja = "";
+                        if(row.caja!= null)caja = row.caja;
+                        return caja;
+                    },
+                    "bSortable": false,
+                    "aTargets": [13]
+                },                    
 				{
                     "mRender": function (data, type, row) {
                         var usuario = "";
@@ -317,7 +336,7 @@ function datatablenew(){
                         return usuario;
                     },
                     "bSortable": false,
-                    "aTargets": [12]
+                    "aTargets": [14]
                 },
                 /*
 				{
@@ -368,7 +387,7 @@ function datatablenew(){
                        
                     },
                     "bSortable": false,
-                    "aTargets": [13]
+                    "aTargets": [15]
                 },              
 				{
                     "mRender": function (data, type, row) {
@@ -377,7 +396,7 @@ function datatablenew(){
                         return html;
                     },
                     "bSortable": false,
-                    "aTargets": [14],
+                    "aTargets": [16],
                 },
                 
 /*

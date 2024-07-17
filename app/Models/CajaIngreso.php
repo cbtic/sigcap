@@ -194,7 +194,7 @@ class CajaIngreso extends Model
                     group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago, c.anulado,c.id_caja 
                     having  1=1
                     ".$usuario_sel."
-                    and TO_CHAR(c.fecha, 'yyyy/mm/dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                    and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                     and c.id_forma_pago = 1
                     and c.anulado = 'N'
                 ) 
@@ -213,14 +213,14 @@ class CajaIngreso extends Model
         $cad = "
             select condicion, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
             from(
-                select t.denominacion||' '||m.denominacion condicion, 0 total_us, 0/3.7 total_tc, cp.monto total_soles
+                select t.denominacion||' '||m.denominacion condicion, 0 total_us, 0/3.7 total_tc, round( CAST(cp.monto as numeric), 2) total_soles
                 from comprobantes c                                
                     inner join comprobante_pagos cp on cp.id_comprobante = c.id
                     inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
                     inner join tabla_maestras m on m.codigo  = c.id_moneda::varchar and m.tipo = '1'
                 where  1=1
                 ".$usuario_sel."
-                and TO_CHAR(c.fecha, 'yyyy/mm/dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                 and c.id_forma_pago = '1'
                 and c.anulado = 'N'
             )
@@ -245,7 +245,7 @@ class CajaIngreso extends Model
                     inner join conceptos co  on co.id  = cd.id_concepto    
             where 1=1 
             ".$usuario_sel."
-            and to_char(c.fecha, 'yyyy/mm/dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+            and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
             and c.id_forma_pago = '1'
             and c.anulado = 'N'
             )
