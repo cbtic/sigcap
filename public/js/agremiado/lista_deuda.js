@@ -489,7 +489,7 @@ function datatablenew(){
 			
 			var anio = $('#anio').val();
 			var concepto = $('#concepto').val();
-			//var estado = $('#estado').val();
+			var estado = 1;
 			var mes = $('#mes').val();
 			var pago = $('#pago_bus').val();
 			
@@ -500,7 +500,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						anio:anio,concepto:concepto,
-						mes:mes,pago:pago,
+						mes:mes,pago:pago,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
