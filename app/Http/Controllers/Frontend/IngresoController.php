@@ -18,7 +18,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Empresa;
 use App\Models\Beneficiario;
 use App\Models\Comprobante;
-
+use App\Models\AgremiadoMulta;
 use Auth;
 
 class IngresoController extends Controller
@@ -920,6 +920,11 @@ class IngresoController extends Controller
                    
                     //$agremiado_ = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
                     //$valorizacion_ = Valorizacione::where("id_concepto",26461)->where("id_agremido",$valorizacion->id_agremiado)->where("pagado",0)->where("exonerado",0)->where("id_modulo",3)->first();  
+                    if($valorizacion->id_modulo='3'){
+                        $agremiado_multa = AgremiadoMulta::find($valorizacion->pk_registro);
+                        $agremiado_multa->id_estado_multa='2';
+                        $agremiado_multa->save();
+                    }
                     $valorizacion_model = new Valorizacione;
                     $valorizacion_ = $valorizacion_model->getExonerado($valorizacion->id_agremido);
                     //print_r($valorizacion_);exit();
@@ -929,6 +934,7 @@ class IngresoController extends Controller
                         $agremiado = Agremiado::find($valorizacion->id_agremido); 
                         $agremiado->id_situacion=73;
                         $agremiado->save();
+
                     }
                 }
 

@@ -701,7 +701,7 @@ Route::get('tabla_maestra/eliminar_tablaMaestra/{id}/{estado}', [TablaMaestraCon
 Route::get('tabla_maestra/obtener_datos_tabla_maestra/{tipo_nombre}', [TablaMaestraController::class, 'obtener_datos_tabla_maestra'])->name('tabla_maestra.obtener_datos_tabla_maestra');
 Route::get('agremiado/consulta_reporte_deuda', [AgremiadoController::class, 'consulta_reporte_deuda'])->name('agremiado.consulta_reporte_deuda');
 Route::post('agremiado/listar_reporte_deudas_ajax', [AgremiadoController::class, 'listar_reporte_deudas_ajax'])->name('agremiado.listar_reporte_deudas_ajax');
-Route::get('agremiado/exportar_lista_deudas/{anio}/{concepto}/{mes}', [AgremiadoController::class, 'exportar_lista_deudas'])->name('agremiado.exportar_lista_deudas');
+Route::get('agremiado/exportar_lista_deudas/{anio}/{concepto}/{mes}/{pago}', [AgremiadoController::class, 'exportar_lista_deudas'])->name('agremiado.exportar_lista_deudas');
 Route::get('revisorUrbano/eliminar_revisor_urbano/{id}/{estado}', [RevisorUrbanoController::class, 'eliminar_revisor_urbano'])->name('revisorUrbano.eliminar_revisor_urbano');
 Route::get('revisorUrbano/exportar_listar_revisor_urbano/{numero_cap}/{agremiado}/{codigo_itf}/{codigo_ru}/{situacion_pago}/{estado}', [RevisorUrbanoController::class, 'exportar_listar_revisor_urbano'])->name('revisorUrbano.exportar_listar_revisor_urbano');
 Route::get('derecho_revision/modal_reintegroRU/{id}', [DerechoRevisionController::class, 'modal_reintegroRU'])->name('derecho_revision.modal_reintegroRU');
@@ -767,4 +767,6 @@ Route::get('reporte/obtener_caja_usuario/{idUsuario}', [ReporteController::class
 Route::get('derecho_revision/correo_credipago/{id}', [DerechoRevisionController::class, 'correo_credipago'])->name('derecho_revision.correo_credipago');
 Route::get('derecho_revision/correo_credipago_aprobado_hu/{id}', [DerechoRevisionController::class, 'correo_credipago_aprobado_hu'])->name('derecho_revision.correo_credipago_aprobado_hu');
 Route::get('derecho_revision/correo_credipago_aprobado_reintegro/{id}', [DerechoRevisionController::class, 'correo_credipago_aprobado_reintegro'])->name('derecho_revision.correo_credipago_aprobado_reintegro');
+
+Route::post('agremiado/listar_valorizacion_periodo_deuda', [AgremiadoController::class, 'listar_valorizacion_periodo_deuda'])->name('agremiado.listar_valorizacion_periodo_deuda');
 

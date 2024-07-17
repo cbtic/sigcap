@@ -12,6 +12,10 @@
 	#tblTablaMaestra tbody tr{
 		font-size:13px
 	}
+    
+    #tblDeuda tbody tr{
+		font-size:13px
+	}
     .table-sortable tbody tr {
         cursor: move;
     }
@@ -171,8 +175,11 @@
                             
                                 <div class="row">
                             
-                                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                                        <input class="form-control form-control-sm" id="anio" name="anio" placeholder="Año">
+                                    <div class="col-lg-1 col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group form-group-sm">
+                                            <select id="anio" name="anio" class="form-control form-control-sm" onchange="">
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class="col-lg-2">
@@ -202,6 +209,15 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <select name="pago_bus" id="pago_bus" class="form-control form-control-sm" onchange="">
+                                                <option value="" selected="selected">--Selecionar Situaci&oacute;n--</option>
+                                                <option value="1">PAGADO</option>
+                                                <option value="0">PENDIENTE</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     
                                     <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
                                         <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscarDeuda" />
@@ -226,8 +242,10 @@
                                         <th>Concepto</th>
                                         <th>Detalle de Afiliado</th>
                                         <th>Edad</th>
-                                        <th>Importe</th>
+                                        <th>Importe S/.</th>
                                         <th>Situaci&oacute;n</th>
+                                        <th>Serie</th>
+                                        <th>N&uacute;mero</th>
                                         <th>Correo 1</th>
                                         <th>Correo 2</th>
                                         <th>Tel&eacute;fono 1</th>
