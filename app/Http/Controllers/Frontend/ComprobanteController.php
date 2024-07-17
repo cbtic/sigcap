@@ -28,8 +28,11 @@ class ComprobanteController extends Controller
         //$facturas = $facturas_model->getFactura();
         //$facturas = Factura::where('fac_destinatario', 'like','%')->orderBy('id','desc')->get()->all();
         //print_r($facturas);
+        $tabla_model = new TablaMaestra;
 
-        return view('frontend.comprobante.all');
+        $formapago = $tabla_model->getMaestroByTipo('104');
+
+        return view('frontend.comprobante.all',compact('formapago'));
     }
 
     public function cuadre_caja(){
