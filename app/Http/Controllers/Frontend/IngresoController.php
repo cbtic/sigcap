@@ -18,7 +18,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Empresa;
 use App\Models\Beneficiario;
 use App\Models\Comprobante;
-
+use App\Models\AgremiadoMulta;
 use Auth;
 
 class IngresoController extends Controller
@@ -121,7 +121,7 @@ class IngresoController extends Controller
             $valorizacion = $valorizaciones_model->getValorizacion($tipo_documento,$id_persona,$periodo,$mes,$tipo_couta,$concepto,$filas,$Exonerado,$numero_documento_b);
         }
         
-       
+      // var_dump($valorizacion);exit();
        
         return view('frontend.ingreso.lista_valorizacion',compact('valorizacion'));
 
@@ -337,6 +337,16 @@ class IngresoController extends Controller
         //print_r(json_encode($concepto)); exit();
 		
 		return view('frontend.ingreso.modal_fraccionar',compact('concepto','total_fraccionar','id_persona','id_agremiado' ));
+	}
+
+    public function modal_exonerar( ){
+
+
+        $concepto ="" ;
+
+       // print_r(json_encode($concepto)); exit();
+		
+		return view('frontend.ingreso.modal_motivo_exonera',compact('concepto' ));
 	}
 
     public function modal_fraccionamiento(Request $request){
@@ -888,10 +898,10 @@ class IngresoController extends Controller
 
 
     }
-    public function exonerar_valorizacion(Request $request){
+    public function exonerar_valorizacion(Request $request,$motivo){
         $msg = "";
         $id_user = Auth::user()->id;
-
+        $nombre_user= Auth::user()->name;  //user::find ($id_user);
         //print_r($request->comprobante_detalle); exit();
         $opcion = $request->Exonerado; 
 
@@ -905,7 +915,27 @@ class IngresoController extends Controller
                     $valorizacion = Valorizacione::find($id);            
                     $valorizacion-> exonerado = "1";
                     $valorizacion-> id_usuario_actualiza = $id_user;                    
+                    $valorizacion-> exonerado_motivo = $motivo .  " usuario: ". $nombre_user . " Fecha: " . Carbon::now()->format('Y-m-d'); ;                    
                     $valorizacion->save();  
+                   
+                    //$agremiado_ = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
+                    //$valorizacion_ = Valorizacione::where("id_concepto",26461)->where("id_agremido",$valorizacion->id_agremiado)->where("pagado",0)->where("exonerado",0)->where("id_modulo",3)->first();  
+                    if($valorizacion->id_modulo='3'){
+                        $agremiado_multa = AgremiadoMulta::find($valorizacion->pk_registro);
+                        $agremiado_multa->id_estado_multa='2';
+                        $agremiado_multa->save();
+                    }
+                    $valorizacion_model = new Valorizacione;
+                    $valorizacion_ = $valorizacion_model->getExonerado($valorizacion->id_agremido);
+                    //print_r($valorizacion_);exit();
+                    if($valorizacion_){
+                            
+                    }else{
+                        $agremiado = Agremiado::find($valorizacion->id_agremido); 
+                        $agremiado->id_situacion=73;
+                        $agremiado->save();
+
+                    }
                 }
 
                 if($opcion=="1"){

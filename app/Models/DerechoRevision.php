@@ -185,7 +185,7 @@ class DerechoRevision extends Model
         tm2.denominacion tipo_liquidacion, tm3.denominacion instancia,
         (select tm4.denominacion from uso_edificaciones ue left join tabla_maestras tm4 on ue.id_tipo_uso = tm4.codigo::int and  tm4.tipo ='30' where ue.id_solicitud = s.id and ue.estado ='1' limit 1) tipo_uso,
         (select tm5.denominacion from presupuestos p3 left join tabla_maestras tm5 on p3.id_tipo_obra = tm5.codigo::int and  tm5.tipo ='112' where p3.id_solicitud = s.id and p3.estado ='1' limit 1) tipo_obra, 
-        pro.codigo, tm5.denominacion tipo_tramite
+        pro.codigo, tm5.denominacion tipo_tramite, s.valor_reintegro 
         from solicitudes s 
         inner join liquidaciones l on l.id_solicitud = s.id
         left join proyectistas p on p.id_solicitud = s.id
@@ -437,6 +437,80 @@ class DerechoRevision extends Model
         
 		$data = DB::select($cad);
         return $data[0]->codigo;
+    }
+
+    public function getSolicitudCorreo($id){
+		
+		$cad = "select s.id, p.nombre nombre_proyecto, p.codigo, pe.nombres ||' '|| pe.apellido_paterno ||' '|| pe.apellido_materno nombres, a.numero_cap, s.codigo_solicitud, tm2.denominacion tipo_tramite,
+        u.desc_ubigeo distrito, tm.denominacion situacion 
+        from solicitudes s 
+        inner join proyectos p on s.id_proyecto = p.id 
+        inner join proyectistas pr on pr.id_solicitud = s.id 
+        inner join agremiados a on pr.id_agremiado = a.id 
+        inner join personas pe on a.id_persona = pe.id 
+        left join tabla_maestras tm on a.id_situacion = tm.codigo::int and  tm.tipo ='14'
+        left join tabla_maestras tm2 on s.id_tipo_tramite = tm2.codigo::int and  tm2.tipo ='25'
+        inner join ubigeos u on s.id_ubigeo = u.id_ubigeo 
+        where s.id='".$id."'
+        and s.id_tipo_solicitud ='123'
+        and s.estado = '1'
+        order by pr.id_tipo_proyectista asc";
+        
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    public function getSolicitudCorreoAprobadoHu($id){
+		
+		$cad = "select s.id, p.nombre nombre_proyecto, p.codigo, pe.nombres ||' '|| pe.apellido_paterno ||' '|| pe.apellido_materno nombres, a.numero_cap, tm2.denominacion tipo_tramite,
+        u.desc_ubigeo distrito, tm.denominacion situacion, s.area_total, p.direccion,
+        (select case WHEN pro2.id_empresa IS NOT NULL THEN e.razon_social ELSE pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres END
+        from propietarios pro2
+        left join personas pe on pro2.id_persona = pe.id 
+        left join empresas e on pro2.id_empresa = e.id where pro2.id_solicitud = s.id limit 1) propietario,
+        l.credipago, l.total 
+        from solicitudes s 
+        inner join proyectos p on s.id_proyecto = p.id 
+        inner join proyectistas pr on pr.id_solicitud = s.id 
+        inner join agremiados a on pr.id_agremiado = a.id 
+        inner join personas pe on a.id_persona = pe.id 
+        left join tabla_maestras tm on a.id_situacion = tm.codigo::int and  tm.tipo ='14'
+        left join tabla_maestras tm2 on s.id_tipo_tramite = tm2.codigo::int and  tm2.tipo ='123'
+        inner join ubigeos u on s.id_ubigeo = u.id_ubigeo 
+        left join liquidaciones l on l.id_solicitud = s.id
+        where s.id='".$id."'
+        and s.id_tipo_solicitud ='124'
+        and s.estado = '1'";
+        
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    public function getSolicitudCorreoAprobadoReintegro($id){
+		
+		$cad = "select s.id, p.nombre nombre_proyecto, p.codigo, pe.nombres ||' '|| pe.apellido_paterno ||' '|| pe.apellido_materno nombres, a.numero_cap, tm2.denominacion tipo_tramite,
+        u.desc_ubigeo distrito, tm.denominacion situacion, s.area_total, p.direccion,
+        (select case WHEN pro2.id_empresa IS NOT NULL THEN e.razon_social ELSE pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres END
+        from propietarios pro2
+        left join personas pe on pro2.id_persona = pe.id 
+        left join empresas e on pro2.id_empresa = e.id where pro2.id_solicitud = s.id limit 1) propietario,
+        l.credipago, l.total,s.codigo_solicitud, s.valor_obra 
+        from solicitudes s 
+        inner join proyectos p on s.id_proyecto = p.id 
+        inner join proyectistas pr on pr.id_solicitud = s.id 
+        inner join agremiados a on pr.id_agremiado = a.id 
+        inner join personas pe on a.id_persona = pe.id 
+        left join tabla_maestras tm on a.id_situacion = tm.codigo::int and  tm.tipo ='14'
+        left join tabla_maestras tm2 on s.id_tipo_tramite = tm2.codigo::int and  tm2.tipo ='25'
+        inner join ubigeos u on s.id_ubigeo = u.id_ubigeo 
+        left join liquidaciones l on l.id_solicitud = s.id
+        where s.id='".$id."'
+        and s.id_tipo_solicitud ='123'
+        and s.estado = '1'
+        order by pr.id_tipo_proyectista asc";
+        
+		$data = DB::select($cad);
+        return $data;
     }
     
 }

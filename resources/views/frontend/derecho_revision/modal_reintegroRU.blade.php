@@ -337,6 +337,13 @@ function fn_save_credipago(){
                 if(result[0].sw==true){
 				$('#openOverlayOpc').modal('hide');
 				window.location.reload();
+                $.ajax({
+                    url: "/derecho_revision/correo_credipago_aprobado_hu/" + id,
+                    method: 'GET',
+                    success: function(result) {
+                    
+                    },
+                });
                 }else{
 					//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
 					bootbox.alert({
@@ -387,7 +394,7 @@ function fn_save_requisito(){
     <div class="justify-content-center">
       <div class="card">
         <div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-          Vista Previa
+            Solicitud de Derecho de Revisi&oacute;n - Habilitaci&oacute;n Urbana
         </div>
         <div class="card-body">
           

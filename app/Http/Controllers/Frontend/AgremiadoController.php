@@ -356,8 +356,9 @@ class AgremiadoController extends Controller
 		$region = $regione_model->getRegionAll();
 		$situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
 		$categoria_cliente = $tablaMaestra_model->getMaestroByTipo(18);
+		$act_gremial_cliente = $tablaMaestra_model->getMaestroByTipo(46);
 		
-		return view('frontend.agremiado.all',compact('region','situacion_cliente','categoria_cliente'));
+		return view('frontend.agremiado.all',compact('region','situacion_cliente','categoria_cliente','act_gremial_cliente'));
 		
 	}
 	
@@ -372,6 +373,7 @@ class AgremiadoController extends Controller
 		$p[]=$request->fecha_fin;
 		$p[]=$request->id_situacion;
 		$p[]=$request->id_categoria;
+		$p[]=$request->id_act_gremial;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $agremiado_model->listar_agremiado_ajax($p);
@@ -1779,6 +1781,13 @@ class AgremiadoController extends Controller
 		//$suspension->estado = 1;
 		$suspension->id_usuario_inserta = $id_user;
 		$suspension->save();
+		
+		$fecha_fin = "";
+		if(isset($request->fecha_fin) && $request->fecha_fin!="")$fecha_fin = $request->fecha_fin;
+		$agremiado_model = new Agremiado;
+		$agremiado_model->agremiado_cuota_suspension('i',$request->id_agremiado,$request->fecha_inicio,$fecha_fin);
+		
+		
 			
     }
 	
@@ -1792,7 +1801,7 @@ class AgremiadoController extends Controller
 
     }
 
-	public function exportar_listar_agremiado($id_regional, $numero_cap, $numero_documento, $agremiado, $fecha_inicio, $fecha_fin, $id_situacion, $id_categoria) {
+	public function exportar_listar_agremiado($id_regional, $numero_cap, $numero_documento, $agremiado, $fecha_inicio, $fecha_fin, $id_situacion, $id_categoria, $id_act_gremial) {
 		
 		if($id_regional==0)$id_regional = "";
 		if($numero_cap==0)$numero_cap = "";
@@ -1802,6 +1811,7 @@ class AgremiadoController extends Controller
 		if($fecha_fin==0)$fecha_fin = "";
 		if($id_situacion==0)$id_situacion = "";
 		if($id_categoria==0)$id_categoria = "";
+		if($id_act_gremial==0)$id_act_gremial = "";
 	
 		$agremiado_model = new Agremiado;
 		$p[]=$id_regional;
@@ -1812,19 +1822,21 @@ class AgremiadoController extends Controller
 		$p[]=$fecha_fin;
 		$p[]=$id_situacion;
 		$p[]=$id_categoria;
+		$p[]=$id_act_gremial;
 		$p[]=1;
 		$p[]=25000;
 		$data = $agremiado_model->listar_agremiado_ajax($p);
 	
 		$variable = [];
 		$n = 1;
+
 		//array_push($variable, array("SISTEMA CAP"));
 		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
-		array_push($variable, array("N","Tipo Documento","Numero Documento","Numero CAP","Regional", "Fecha Inicio", "Agremiado", "Fecha Nacimiento", "Situacion", "Categoria"));
+		array_push($variable, array("N","Tipo Documento","Numero Documento","Numero CAP","Regional", "Fecha Inicio", "Agremiado", "Fecha Nacimiento", "Situacion", "Categoria", "Act. Gremial"));
 		
 		foreach ($data as $r) {
 			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
-			array_push($variable, array($n++,$r->tipo_documento, $r->numero_documento, $r->numero_cap,$r->region,$r->fecha_colegiado, $r->agremiado, $r->fecha_nacimiento, $r->situacion, $r->categoria));
+			array_push($variable, array($n++,$r->tipo_documento, $r->numero_documento, $r->numero_cap,$r->region,$r->fecha_colegiado, $r->agremiado, $r->fecha_nacimiento, $r->situacion, $r->categoria, $r->act_gremial));
 		}
 		
 		
@@ -1853,6 +1865,7 @@ class AgremiadoController extends Controller
 		$p[]=$request->anio;
 		$p[]=$request->concepto;
 		$p[]=$request->mes;
+		$p[]=$request->pago;
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -1870,16 +1883,18 @@ class AgremiadoController extends Controller
 		echo json_encode($result);
 	}
 
-	public function exportar_lista_deudas($anio, $concepto, $mes) {
+	public function exportar_lista_deudas($anio, $concepto, $mes, $pago) {
 		
 		if($anio==0)$anio = "";
 		if($concepto==0)$concepto = "";
 		if($mes==0)$mes = "";
+		if($pago==0)$pago = "";
 	
 		$valorizacion_model = new Valorizacione;
 		$p[]=$anio;
 		$p[]=$concepto;
 		$p[]=$mes;
+		$p[]=$pago;
         $p[]=1;
 		$p[]=1;
 		$p[]=10000;
@@ -1889,11 +1904,11 @@ class AgremiadoController extends Controller
 		$n = 1;
 		//array_push($variable, array("SISTEMA CAP"));
 		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
-		array_push($variable, array("N","Numero CAP","Nombre Arquitecto","Beneficiario","Concepto","Detalle de Afiliado", "Edad", "Importe", "Situacion", "Correo1", "Correo2", "Telefono1", "Telefono2", "Celular1", "Celular2"));
+		array_push($variable, array("N","Numero CAP","Nombre Arquitecto","Beneficiario","Concepto","Detalle de Afiliado", "Edad", "Importe", "Situacion","Serie","Numero", "Correo1", "Correo2", "Telefono1", "Telefono2", "Celular1", "Celular2"));
 		
 		foreach ($data as $r) {
 			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
-			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->beneficiario, $r->concepto,$r->plan,$r->edad, $r->monto, $r->situacion, $r->email1, $r->email2, $r->telefono1, $r->telefono2, $r->celular1, $r->celular2));
+			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->beneficiario, $r->concepto,$r->plan,$r->edad, $r->monto, $r->pago, $r->serie, $r->numero, $r->email1, $r->email2, $r->telefono1, $r->telefono2, $r->celular1, $r->celular2));
 		}
 		
 		
@@ -1911,7 +1926,16 @@ class AgremiadoController extends Controller
         return view('frontend.agremiado.lista_suspension',compact('suspension_lista'));
 
     }
-		
+
+	public function listar_valorizacion_periodo_deuda(Request $request){
+       
+        $valorizaciones_model = new Valorizacione;
+        $resultado = $valorizaciones_model->getGeneraAnioDeuda();
+
+        //print_r($resultado);exit();
+		return $resultado;
+
+    }
 }
 
 class InvoicesExport implements FromArray

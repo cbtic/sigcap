@@ -266,7 +266,7 @@ $(document).ready(function() {
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: left; width: 43%; font-size:11px"><b>VALOR DE LA OBRA DECLARADO EN EL FUE:</b></td>
-                        <td class="td" style ="text-align: left; width: 38%; font-size:11px"> S/. <?php echo number_format($valor_obra,2,'.',',');?></td>
+                        <td class="td" style ="text-align: left; width: 38%; font-size:11px"> S/. <?php if($instancia =='REINTEGRO'){echo number_format($valor_reintegro,2,'.',',');} else{echo number_format($valor_obra,2,'.',',');} ?></td>
                         <td class="td" style ="text-align: left; width: 15%; font-size:11px"></td>
                         <td class="td" style ="text-align: right; width: 4%; font-size:11px"></td>
                     </tr>

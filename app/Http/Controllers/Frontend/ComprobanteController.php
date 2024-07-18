@@ -2657,7 +2657,7 @@ class ComprobanteController extends Controller
 
             echo("id_comprobante_origen: ".$id_comprobante_origen);
             
-            exit();
+            
  
             $trans = $request->trans;
             

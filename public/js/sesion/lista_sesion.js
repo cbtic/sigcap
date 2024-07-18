@@ -282,6 +282,7 @@ function obtenerComision(){
 	var id_periodo = $('#id_periodo').val();
 	var tipo_comision = $('#tipo_comision').val();
 	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var id_comision = $("#id_comision_bus").val();
 	
 	$.ajax({
 		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision,
@@ -289,9 +290,12 @@ function obtenerComision(){
 		success: function(result){
 			var option = "";
 			$('#id_comision').html("");
+			var sel = "";
 			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.denominacion+" "+oo.comision+"</option>";
+				sel = "";
+				if(id_comision==oo.id)sel = "selected='selected'";
+				option += "<option value='"+oo.id+"' "+sel+">"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision').html(option);
 		}
@@ -425,7 +429,50 @@ function obtenerComisionDelegado(){
 				if(id>0){
 				option += "<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('"+oo.id+"') ><i class='fa fa-edit'></i> Editar</button></td>";
 				}else{
-				option += "<td class='text-left'></td><td class='text-left'></td><td class='text-left'></td>";
+				option += "<td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td>";
+				}
+				
+				
+				option += "</tr>";
+			});
+			$('#tblDelegado tbody').html(option);
+			
+			$("#dia_semana").val(dia_semana.denominacion);
+			$("#id_dia_semana").val(dia_semana.codigo);
+		}
+		
+	});
+	
+}
+
+function obtenerComisionDelegadoNuevo(id_comision){
+	
+	var id = $("#id").val();
+	
+	//var id_comision = $('#id_comision').val();
+	$.ajax({
+		url: '/sesion/obtener_comision_delegado/'+id_comision,
+		dataType: "json",
+		success: function(result){
+			var delegado = result.delegado;
+			var dia_semana = result.dia_semana[0];
+			var option = "";
+			$('#tblDelegado tbody').html("");
+			$(delegado).each(function (ii, oo) {
+				option += "<tr style='font-size:13px'>";
+				option += "<input type='hidden' name='id_delegado[]' value='"+oo.id+"' >";
+				option += "<td class='text-left'>"+oo.puesto+"</td>";
+				option += "<td class='text-left'>"+oo.numero_cap+"</td>";
+				option += "<td class='text-left'>"+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</td>";
+				option += "<td class='text-left'>"+oo.situacion+"</td>";
+				var sel = "";
+				if(oo.coordinador==1)sel = "checked='checked'";
+				option += "<td class='text-center'><input type='radio' name='coordinador' "+sel+" value='"+oo.id+"' /></td>";
+				
+				if(id>0){
+				option += "<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('"+oo.id+"') ><i class='fa fa-edit'></i> Editar</button></td>";
+				}else{
+				option += "<td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td>";
 				}
 				
 				

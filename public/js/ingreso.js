@@ -1716,7 +1716,7 @@ function modal_fraccionar(){
 	
 	
 	$.ajax({
-			url: "/ingreso/modal_fraccionar"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
+			url: "/ingreso/modal_fraccionar/"+idConcepto+"/"+idPersona+"/"+idAgremiado+"/"+TotalFraccionar,
 			type: "GET",
 			//data : $("#frmOtroPago").serialize(),
 			success: function (result) {
@@ -1732,6 +1732,39 @@ function modal_fraccionar(){
 	//cargarConceptos();
 
 }
+
+function modal_exonerar(){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc').modal('show');
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	var idPersona = $('#id_persona').val();
+	var idAgremiado = $('#id_agremiado').val();
+	var TotalFraccionar = $('#total').val();
+	//alert(TotalFraccionar);
+	var idConcepto = $('#idConcepto').val();
+	//alert(idConcepto);
+	
+	
+	$.ajax({
+			url: "/ingreso/modal_exonerar/",
+			type: "GET",
+			//data : $("#frmOtroPago").serialize(),
+			success: function (result) {
+				
+					//alert(result)
+				
+					$("#diveditpregOpc").html(result);
+					//$('#openOverlayOpc').modal('show');
+					
+			}
+	});
+
+	//cargarConceptos();
+
+}
+
 function muestraSeleccion() {
 	select = document.getElementById('cboTipoConcepto_b');
 	for (var i = 0; i < select.options.length; i++) {
@@ -2301,7 +2334,7 @@ function fn_nota_credito(id){
 
 
 
-function fn_exonerar_valorizacion(){
+function fn_exonerar_valorizacion(motivo){
 
 	var exonerado = $('#Exonerado').val();
 	var mensaje = "";
@@ -2323,11 +2356,16 @@ function fn_exonerar_valorizacion(){
 	  }).then((result) => {
 			if (result.value) {
 				$.ajax({
-					url: "/ingreso/exonerar_valorizacion",
+					url: "/ingreso/exonerar_valorizacion/" + motivo ,
 					type: "POST",
 					data : $("#frmValorizacion").serialize()+"&tipo=",
 					success: function (result) {  
+							$('.loader').hide();
+							$('#openOverlayOpc').modal('hide');
+
+						
 							cargarValorizacion();
+							obtenerBeneficiario();
 					}
 				});
 			}

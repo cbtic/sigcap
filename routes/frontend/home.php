@@ -62,6 +62,7 @@ use App\Http\Controllers\Frontend\OperacionController;
 use App\Http\Controllers\Frontend\ReporteController;
 
 use App\Http\Controllers\Frontend\TipoCambioController;
+use App\Http\Controllers\Frontend\CorreoController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -224,6 +225,7 @@ Route::get('ingreso/modal_otro_pago/{periodo}/{idpersona}/{idagremiado}/{tipo_do
 Route::get('ingreso/modal_fraccionar/{idConcepto}/{idpersona}/{idagremiado}/{TotalFraccionar}', [IngresoController::class, 'modal_fraccionar'])->name('ingreso.modal_fraccionar');
 Route::post('ingreso/modal_fraccionamiento', [IngresoController::class, 'modal_fraccionamiento'])->name('ingreso.modal_fraccionamiento');
 Route::post('ingreso/modal_persona', [IngresoController::class, 'modal_persona'])->name('ingreso.modal_persona');
+Route::get('ingreso/modal_exonerar', [IngresoController::class, 'modal_exonerar'])->name('ingreso.modal_exonerar');
 
 Route::get('ingreso/obtener_conceptos/{periodo}', [IngresoController::class, 'obtener_conceptos'])->name('ingreso.obtener_conceptos')->where('periodo', '(.*)');
 Route::post('ingreso/send_concepto', [IngresoController::class, 'send_concepto'])->name('ingreso.send_concepto');
@@ -239,7 +241,7 @@ Route::get('ingreso/exportar_liquidacion_caja/{fecha_inicio_desde}/{fecha_inicio
 Route::get('ingreso/exportar_estado_cuenta/{tipo}/{afiliado}/{numero_documento}/{periodo}/{fecha_inicio}/{fecha_fin}/{pago}/{order}/{sort}', [IngresoController::class, 'exportar_estado_cuenta'])->name('ingreso.exportar_estado_cuenta');
 Route::post('ingreso/listar_empresa_beneficiario_ajax', [IngresoController::class, 'listar_empresa_beneficiario_ajax'])->name('ingreso.listar_empresa_beneficiario_ajax');
 Route::post('ingreso/anula_fraccionamiento', [IngresoController::class, 'anula_fraccionamiento'])->name('ingreso.anula_fraccionamiento');
-Route::post('ingreso/exonerar_valorizacion', [IngresoController::class, 'exonerar_valorizacion'])->name('ingreso.exonerar_valorizacion');
+Route::post('ingreso/exonerar_valorizacion/{motivo}', [IngresoController::class, 'exonerar_valorizacion'])->name('ingreso.exonerar_valorizacion');
 Route::post('ingreso/anular_valorizacion', [IngresoController::class, 'anular_valorizacion'])->name('ingreso.anular_valorizacion');
 Route::get('ingreso/modal_consulta_persona', [IngresoController::class, 'modal_consulta_persona'])->name('ingreso.modal_consulta_persona');
 Route::post('ingreso/valida_deuda_vencida', [IngresoController::class, 'valida_deuda_vencida'])->name('ingreso.valida_deuda_vencida');
@@ -688,7 +690,7 @@ Route::get('agremiado_rol/consulta_agremiado_rol', [AgremiadoRolesController::cl
 Route::post('agremiado_rol/listar_agremiado_rol_ajax', [AgremiadoRolesController::class, 'listar_agremiado_rol_ajax'])->name('agremiado_rol.listar_agremiado_rol_ajax');
 Route::get('coordinador_zonal/modal_informes/{id}', [CoordinadorZonalController::class, 'modal_informes'])->name('coordinador_zonal.modal_informes');
 Route::get('derecho_revision/modal_reintegro/{id}', [DerechoRevisionController::class, 'modal_reintegro'])->name('derecho_revision.modal_reintegro');
-Route::get('agremiado/exportar_listar_agremiado/{id_regional}/{numero_cap}/{numero_documento}/{agremiado}/{fecha_inicio}/{fecha_fin}/{id_situacion}/{id_categoria}', [AgremiadoController::class, 'exportar_listar_agremiado'])->name('agremiado.exportar_listar_agremiado');
+Route::get('agremiado/exportar_listar_agremiado/{id_regional}/{numero_cap}/{numero_documento}/{agremiado}/{fecha_inicio}/{fecha_fin}/{id_situacion}/{id_categoria}/{id_act_gremial}', [AgremiadoController::class, 'exportar_listar_agremiado'])->name('agremiado.exportar_listar_agremiado');
 Route::get('certificado/validez_constancia/{id}', [CertificadoController::class, 'validez_constancia'])->name('certificado.validez_constancia');
 
 Route::get('tabla_maestra/consulta_tabla_maestra', [TablaMaestraController::class, 'consulta_tabla_maestra'])->name('tabla_maestra.consulta_tabla_maestra');
@@ -699,7 +701,7 @@ Route::get('tabla_maestra/eliminar_tablaMaestra/{id}/{estado}', [TablaMaestraCon
 Route::get('tabla_maestra/obtener_datos_tabla_maestra/{tipo_nombre}', [TablaMaestraController::class, 'obtener_datos_tabla_maestra'])->name('tabla_maestra.obtener_datos_tabla_maestra');
 Route::get('agremiado/consulta_reporte_deuda', [AgremiadoController::class, 'consulta_reporte_deuda'])->name('agremiado.consulta_reporte_deuda');
 Route::post('agremiado/listar_reporte_deudas_ajax', [AgremiadoController::class, 'listar_reporte_deudas_ajax'])->name('agremiado.listar_reporte_deudas_ajax');
-Route::get('agremiado/exportar_lista_deudas/{anio}/{concepto}/{mes}', [AgremiadoController::class, 'exportar_lista_deudas'])->name('agremiado.exportar_lista_deudas');
+Route::get('agremiado/exportar_lista_deudas/{anio}/{concepto}/{mes}/{pago}', [AgremiadoController::class, 'exportar_lista_deudas'])->name('agremiado.exportar_lista_deudas');
 Route::get('revisorUrbano/eliminar_revisor_urbano/{id}/{estado}', [RevisorUrbanoController::class, 'eliminar_revisor_urbano'])->name('revisorUrbano.eliminar_revisor_urbano');
 Route::get('revisorUrbano/exportar_listar_revisor_urbano/{numero_cap}/{agremiado}/{codigo_itf}/{codigo_ru}/{situacion_pago}/{estado}', [RevisorUrbanoController::class, 'exportar_listar_revisor_urbano'])->name('revisorUrbano.exportar_listar_revisor_urbano');
 Route::get('derecho_revision/modal_reintegroRU/{id}', [DerechoRevisionController::class, 'modal_reintegroRU'])->name('derecho_revision.modal_reintegroRU');
@@ -761,3 +763,10 @@ Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');
 Route::get('reporte/listar_reporte_usuario', [ReporteController::class, 'listar_reporte_usuario'])->name('reporte.listar_reporte_usuario');
 Route::get('reporte/rep_pdf/{funcion}/{fini}/{usuario}/{caja}/{tipo}', [ReporteController::class, 'rep_pdf'])->name('reporte.rep_pdf');
 Route::get('reporte/obtener_caja_usuario/{idUsuario}', [ReporteController::class, 'obtener_caja_usuario'])->name('reporte.obtener_caja_usuario');
+
+Route::get('derecho_revision/correo_credipago/{id}', [DerechoRevisionController::class, 'correo_credipago'])->name('derecho_revision.correo_credipago');
+Route::get('derecho_revision/correo_credipago_aprobado_hu/{id}', [DerechoRevisionController::class, 'correo_credipago_aprobado_hu'])->name('derecho_revision.correo_credipago_aprobado_hu');
+Route::get('derecho_revision/correo_credipago_aprobado_reintegro/{id}', [DerechoRevisionController::class, 'correo_credipago_aprobado_reintegro'])->name('derecho_revision.correo_credipago_aprobado_reintegro');
+
+Route::post('agremiado/listar_valorizacion_periodo_deuda', [AgremiadoController::class, 'listar_valorizacion_periodo_deuda'])->name('agremiado.listar_valorizacion_periodo_deuda');
+

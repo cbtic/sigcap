@@ -33,7 +33,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto, 
-                codigo_fraccionamiento, v.exonerado                
+                codigo_fraccionamiento, v.exonerado,v.exonerado_motivo                 
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -61,7 +61,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto,
-                codigo_fraccionamiento, v.exonerado               
+                codigo_fraccionamiento, v.exonerado,v.exonerado_motivo               
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto            
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
@@ -558,4 +558,30 @@ class Valorizacione extends Model
 		return $this->readFunctionPostgres('sp_listar_deudas_seguro_paginado',$p);
     }
 
+    function getExonerado($id_agremido){        
+       
+        $cad = "select *
+        from valorizaciones
+        where id_concepto = 26461
+        and id_agremido = '".$id_agremido."'
+        and pagado = '0' and exonerado = '0'";
+       
+        
+      //  echo $cad;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getGeneraAnioDeuda(){
+        $cad = "select distinct  DATE_PART('YEAR', v.fecha)::varchar anio
+        from valorizaciones v
+        where v.estado ='1'
+        and v.id_modulo ='4'
+        order by anio desc";
+    
+		$data = DB::select($cad);
+        return $data;
+        //if($data)return $data[0];
+    }
 }

@@ -83,7 +83,7 @@ class CajaIngreso extends Model
         return $data;
     }
 
-    function getCajaIngresoById($id){
+    function getCajaIngresoById($id,$f_inicio){
         $cad = "select distinct t1.id id,t3.name ||'-'||t2.denominacion denominacion
             from caja_ingresos t1
                 inner join tabla_maestras t2 on t2.codigo = t1.id_caja::varchar and t2.tipo = '91'
@@ -147,7 +147,7 @@ class CajaIngreso extends Model
                 having c.id_usuario_inserta = ".$id_usuario."
                 and TO_CHAR(c.fecha, 'dd-mm-yyyy') = '".$fecha."' 
                 and c.id_forma_pago = 1
-                ) 
+                )  as reporte
                 group by situacion, tipo_,tipo";
 
 		//echo $cad;
@@ -197,7 +197,7 @@ class CajaIngreso extends Model
                     and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                     and c.id_forma_pago = 1
                     and c.anulado = 'N'
-                ) 
+                ) as reporte
                 group by situacion, tipo_,tipo";
 
         //echo $cad; exit();
@@ -223,7 +223,7 @@ class CajaIngreso extends Model
                 and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                 and c.id_forma_pago = '1'
                 and c.anulado = 'N'
-            )
+            ) as reporte
             group by condicion";
 
         //echo $cad; exit();
@@ -248,8 +248,53 @@ class CajaIngreso extends Model
             and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
             and c.id_forma_pago = '1'
             and c.anulado = 'N'
-            )
+            ) as reporte
             group by denominacion
+       
+    
+        ";
+
+		//echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getAllComprobanteConteo($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
+
+        $usuario_sel = "";
+        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+
+        $cad = "
+            select denominacion tipo_documento, count(*) cantidad 
+            from (
+                    select tm.denominacion, c.serie ||'-'|| c.numero::varchar(20) 
+                    from comprobantes c inner join tabla_maestras tm on c.tipo =tm.abreviatura  and tm.tipo='126'
+                    where 1=1 
+                    ".$usuario_sel."
+                    and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'                     
+            ) as reporte_cantidad group by denominacion;    
+       
+    
+        ";
+
+		//echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getAllComprobanteLista($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
+
+        $usuario_sel = "";
+        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+
+        $cad = "
+                    select tm.denominacion tipo_documento, c.serie ||'-'|| c.numero::varchar(20) numero 
+                    from comprobantes c inner join tabla_maestras tm on c.tipo =tm.abreviatura  and tm.tipo='126'
+                    where 1=1 
+                    ".$usuario_sel."
+                    and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'
+                    order by tm.denominacion,c.id                     
+                    ;    
        
     
         ";

@@ -27,6 +27,7 @@ use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\ProfesionalesOtro;
 use Auth;
+use Mail;
 
 class DerechoRevisionController extends Controller
 {
@@ -372,7 +373,7 @@ class DerechoRevisionController extends Controller
 		if($request->instancia==250)$valor_obra = $request->valor_reintegro;
 
 		$propietario = Propietario::where("id_solicitud",$request->id)->where("estado","1")->first();
-		
+		//var_dump($propietario);exit();
 		if(isset($propietario->id_empresa) && $propietario->id_empresa>0){
 			$empresa = Empresa::where("id",$propietario->id_empresa)->where("estado","1")->first();
 			$empresa_cantidad = Empresa::where("ruc",$empresa->ruc)->where("estado","1")->count();
@@ -518,16 +519,118 @@ class DerechoRevisionController extends Controller
 		echo json_encode($array);*/
 
 		$datos_formateados = [];
-
         
 		$datos_formateados[] = [
 			'sw' => $sw,
 		];
         
+		//$this->correo_credipago($request->id);
+		
         return response()->json($datos_formateados);
 	
 	}
 	
+	public function correo_credipago($id){
+		
+		view('emails.mensaje');
+		$email_paciente = "";
+		$pasaje_actual = "";
+		$nombre_boletopaciente = "";
+		$nombre_boletopaciente_extra1 = "";
+		$nombre_boletopaciente_extra2 = "";
+		$nombre_boletopaciente_extra3 = "";
+		$nombre_boletoacompanante = "";
+		$nombre_boletomedico = "";
+		
+		//$correo_electronico = "wyamunaque.expertta@gmail.com";
+		$correo_electronico = "julioyamunaque04@gmail.com";
+		$paterno = "";
+		$fecha_viaje = "";
+		
+		//$agremiado = Agremiado::find(100);
+		/*$derecho_revision = DerechoRevision::find($id);
+
+		$proyecto = Proyecto::where("id",$derecho_revision->id_proyecto)->where("estado","1")->first();
+
+		$proyectista = Proyectista::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
+		//var_dump($proyectista);exit();
+		$agremiado = Agremiado::where("id",$proyectista->id_agremiado)->where("estado","1")->first();
+		$persona = Persona::where("id",$agremiado->id_persona)->where("estado","1")->first();*/
+
+		$derecho_revision_model = new DerechoRevision;
+
+		$datos_correo = $derecho_revision_model->getSolicitudCorreo($id);
+		//var_dump($datos_correo);exit();
+        Mail::send('emails.mensaje', ['datos_correo' => $datos_correo], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje,$datos_correo) {
+			$asunto = 'SOLICITUD '.$datos_correo[0]->codigo_solicitud.' CODIGO DE PROYECTO '.$datos_correo[0]->codigo;
+			$m->from(config('mail.mailers.smtp.username'), 'CAP');
+            $m->to($correo_electronico, $paterno)->subject($asunto);
+			
+        });
+		
+	}
+
+	public function correo_credipago_aprobado_hu($id){
+		
+		view('emails.mensaje_correo_aprobado_hu');
+		$email_paciente = "";
+		$pasaje_actual = "";
+		$nombre_boletopaciente = "";
+		$nombre_boletopaciente_extra1 = "";
+		$nombre_boletopaciente_extra2 = "";
+		$nombre_boletopaciente_extra3 = "";
+		$nombre_boletoacompanante = "";
+		$nombre_boletomedico = "";
+		
+		//$correo_electronico = "wyamunaque.expertta@gmail.com";
+		$correo_electronico = "julioyamunaque04@gmail.com";
+		$paterno = "";
+		$fecha_viaje = "";
+
+		$derecho_revision_model = new DerechoRevision;
+
+		$datos_correo = $derecho_revision_model->getSolicitudCorreoAprobadoHu($id);
+		//var_dump($datos_correo);exit();
+        Mail::send('emails.mensaje_correo_aprobado_hu', ['datos_correo' => $datos_correo], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje,$datos_correo) {
+			$asunto = 'SOLICITUD DE DERECHO DE REVISIÓN DE HABILITACIÓN URBANA';
+			$m->from(config('mail.mailers.smtp.username'), 'CAP');
+            $m->to($correo_electronico, $paterno)->subject($asunto);
+			
+        });
+		
+	}
+	
+	
+	public function correo_credipago_aprobado_reintegro($id){
+		
+		view('emails.mensaje_correo_aprobado_reintegro');
+		$email_paciente = "";
+		$pasaje_actual = "";
+		$nombre_boletopaciente = "";
+		$nombre_boletopaciente_extra1 = "";
+		$nombre_boletopaciente_extra2 = "";
+		$nombre_boletopaciente_extra3 = "";
+		$nombre_boletoacompanante = "";
+		$nombre_boletomedico = "";
+		
+		//$correo_electronico = "wyamunaque.expertta@gmail.com";
+		$correo_electronico = "julioyamunaque04@gmail.com";
+		$paterno = "";
+		$fecha_viaje = "";
+
+		$derecho_revision_model = new DerechoRevision;
+
+		$datos_correo = $derecho_revision_model->getSolicitudCorreoAprobadoReintegro($id);
+		//var_dump($datos_correo);exit();
+        Mail::send('emails.mensaje_correo_aprobado_reintegro', ['datos_correo' => $datos_correo], function ($m) use ($pasaje_actual, $email_paciente,$nombre_boletopaciente,$nombre_boletopaciente_extra1,$nombre_boletopaciente_extra2,$nombre_boletopaciente_extra3,$nombre_boletoacompanante,$nombre_boletomedico, $correo_electronico,$paterno,$fecha_viaje,$datos_correo) {
+			$asunto = 'SOLICITUD REINTEGRO CODIGO DE PROYECTO '.$datos_correo[0]->codigo;
+			$m->from(config('mail.mailers.smtp.username'), 'CAP');
+            $m->to($correo_electronico, $paterno)->subject($asunto);
+			
+        });
+		
+	}
+
 	public function modal_solicitud_nuevoSolicitud($id){
 		
 		$proyectista = new Proyectista;
@@ -1092,6 +1195,7 @@ class DerechoRevisionController extends Controller
 		$tipo_obra = $datos[0]->tipo_obra;
 		$codigo = $datos[0]->codigo;
 		$tipo_tramite = $datos[0]->tipo_tramite;
+		$valor_reintegro = $datos[0]->valor_reintegro;
 
 		$year = Carbon::now()->year;
 
@@ -1143,7 +1247,7 @@ class DerechoRevisionController extends Controller
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		*/
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia','tipo_uso','tipo_obra','codigo','tipo_tramite','proyectista_nombres','proyectista_cap','tipo_uso_datos','sub_tipo_uso_datos','datos_uso_edificacion','tipo_obra_datos','area_techada_datos','tipo_colegiatura_cap'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','porcentaje','tipo_liquidacion','instancia','tipo_uso','tipo_obra','codigo','tipo_tramite','proyectista_nombres','proyectista_cap','tipo_uso_datos','sub_tipo_uso_datos','datos_uso_edificacion','tipo_obra_datos','area_techada_datos','tipo_colegiatura_cap','valor_reintegro'));
 		
 
 
@@ -1345,10 +1449,20 @@ class DerechoRevisionController extends Controller
 		$anio_actual = Carbon::now()->year;
 		$parametro = $parametro_model->getParametroAnio($anio_actual);
 		$proyectista_ = $proyectista_model->getDatosProyectistaIngeniero_($id);
+		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud_($id);
+		$datos_proyectista = $proyectista_model->getDatosProyectistaIngeniero($id);
+		$tipo_proyectista = $tablaMaestra_model->getMaestroByTipo(41);
+		$principal_asociado = $tablaMaestra_model->getMaestroByTipo(130);
+		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
+		$derechoRevision_ = DerechoRevision::find($id);
+		$datos_usoEdificaciones = UsoEdificacione::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
+		$tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'TIPO USO');
+		$datos_presupuesto = Presupuesto::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
+		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(112);
 
 		//var_dump($parametro);exit;
 
-        return view('frontend.derecho_revision.modal_reintegro',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro','proyectista_'));
+        return view('frontend.derecho_revision.modal_reintegro',compact('id','liquidacion','departamento','provincia','distrito','tipo_liquidacion','instancia','parametro','proyectista_','proyectista_solicitud','datos_proyectista','tipo_proyectista','principal_asociado','tipo_proyecto','derechoRevision_','datos_usoEdificaciones','tipo_uso','datos_presupuesto','tipo_obra'));
 		
     }
 
@@ -1555,8 +1669,10 @@ class DerechoRevisionController extends Controller
 		$area_techada_presupuesto = $request->area_techada_presupuesto;
 		$valor_unitario = $request->valor_unitario;
 		$presupuesto_ = $request->presupuesto;
-		$numero_cap_row = $request->numero_cap_row;
+		//$numero_cap_row = $request->numero_cap_row;
+		//var_dump($request->numero_cap_row);exit();
 		$tipo_proyectista_row = $request->tipo_proyectista_row;
+		//var_dump($tipo_proyectista_row);exit();
 		$tipo_colegiatura_row = $request->tipo_colegiatura_row;
 		
 		$id_user = Auth::user()->id;
@@ -1567,7 +1683,7 @@ class DerechoRevisionController extends Controller
 		$id_ubi = Ubigeo::where("id_ubigeo",$ubigeo)->where("estado","1")->first();
 		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		$solicitud_matriz = Solicitude::find($request->id_solicitud);
-
+		//dd($solicitud_matriz).exit();
 		if($id_solicitud == 0){
 			$derecho_revision = new DerechoRevision;
 			$proyecto = new Proyecto;
@@ -1620,6 +1736,7 @@ class DerechoRevisionController extends Controller
 			$proyectista->id_agremiado = $agremiado->id;
 			$proyectista->celular = $agremiado->celular1;
 			$proyectista->email = $agremiado->email1;
+			$proyectista->id_tipo_proyectista = $request->principal_asociado;
 			
 			$proyectista->id_usuario_inserta = $id_user;
 			$proyectista->save();
@@ -1648,9 +1765,9 @@ class DerechoRevisionController extends Controller
 			$profesionalesOtro->id_persona = $profesionalesOtroBus->id_persona;
 			$profesionalesOtro->id_profesion = 1;
 			$profesionalesOtro->id_solicitud = $derecho_revision->id;
+			$profesionalesOtro->id_tipo_proyectista = $request->principal_asociado;
 			$profesionalesOtro->id_usuario_inserta = $id_user;
 			$profesionalesOtro->save();
-			
 			
 		}
 		
@@ -1658,35 +1775,39 @@ class DerechoRevisionController extends Controller
 		
 			foreach($tipo_proyectista_row as $key=>$row){
 				
-				//echo $tipo_proyectista_row[$key];
+			//var_dump($tipo_colegiatura_row[2]);exit();
 				//echo "ok";
 				//if(isset($tipo_proyectista_row[$key]) && $tipo_proyectista_row[$key]>0){
 					
 					if($tipo_colegiatura_row[$key]=="CAP"){
 					
-						$agremiado = Agremiado::where("numero_cap",$numero_cap_row[$key])->where("estado","1")->first();
-						
+						$agremiado = Agremiado::where("numero_cap",$request->numero_cap_row[$key])->where("estado","1")->first();
+						//var_dump($numero_cap_row[3]);exit();
 						$proyectista = new Proyectista;
 						$proyectista->id_tipo_profesional = (isset($tipo_proyectista_row[$key]) && $tipo_proyectista_row[$key]>0)?$tipo_proyectista_row[$key]:0;
 						$proyectista->id_agremiado = $agremiado->id;
 						$proyectista->celular = $agremiado->celular1;
 						$proyectista->email = $agremiado->email1;
 						$proyectista->id_solicitud = $derecho_revision->id;
+						//var_dump($key);exit();
+						$proyectista->id_tipo_proyectista = 2;
 						$proyectista->id_usuario_inserta = $id_user;
 						$proyectista->save();
 					}
 					
 					if($tipo_colegiatura_row[$key]=="CIP"){
 					
-						$profesionalesOtroBus = ProfesionalesOtro::where("colegiatura",$numero_cap_row[$key])->where("estado","1")->first();
+						//var_dump($request->numero_cap_row[$key]);exit();
+						$profesionalesOtroBus = ProfesionalesOtro::where("colegiatura",$request->numero_cap_row[$key])->where("estado","1")->first();
 						
 						$profesionalesOtro = new ProfesionalesOtro;
 						$profesionalesOtro->id_tipo_profesional = (isset($tipo_proyectista_row[$key]) && $tipo_proyectista_row[$key]>0)?$tipo_proyectista_row[$key]:0;
-						$profesionalesOtro->colegiatura = $numero_cap_row[$key];
+						$profesionalesOtro->colegiatura = $request->numero_cap_row[$key];
 						$profesionalesOtro->colegiatura_abreviatura = "CIP";
 						$profesionalesOtro->id_persona = $profesionalesOtroBus->id_persona;
 						$profesionalesOtro->id_profesion = 1;
 						$profesionalesOtro->id_solicitud = $derecho_revision->id;
+						$profesionalesOtro->id_tipo_proyectista = 2;
 						$profesionalesOtro->id_usuario_inserta = $id_user;
 						$profesionalesOtro->save();
 					}
@@ -1923,6 +2044,7 @@ class DerechoRevisionController extends Controller
 			
 			$sw = true;
 		}
+		return response()->json($derecho_revision->id);
 		
 	}
 
@@ -1970,24 +2092,48 @@ class DerechoRevisionController extends Controller
 		$persona_model = new Persona;
 		
 		$solicitud = Solicitude::find($id);
+		$proyectista_model = new Proyectista;
 		
 		//$propietario_model = new Propietario;
 		$derechoRevision_ = DerechoRevision::find($id);
 		$proyecto_ = Proyecto::where("id",$derechoRevision_->id_proyecto)->where("estado","1")->first();
 		$proyecto2 = Proyecto::find($proyecto_->id);
-		//var_dump($proyecto2->id_tipo_sitio);exit();
-		$proyectista_ = Proyectista::where("id_solicitud",$id)->where("estado","1")->orderBy('id')->first();
-		$proyectista = Proyectista::find($proyectista_->id);
-		$agremiado_ = Agremiado::find($proyectista_->id_agremiado);
-		$datos_agremiado= $agremiado_model->getAgremiado(85,$agremiado_->numero_cap);
-		$persona_ = Persona::where("id",$agremiado_->id_persona)->where("estado","1")->first();
-		$datos_persona= $persona_model->getPersona(78,$persona_->numero_documento);
+		//var_dump($request->tipo_colegiatura);exit();
+
+		$proyectista = $proyectista_model->datos_proyectista_editar($id);
+		
+		if($proyectista[0]->tipo_colegiatura=='CAP'){
+			
+			$proyectista_ = Proyectista::where("id_solicitud",$id)->where("estado","1")->orderBy('id')->first();
+			$proyectista = Proyectista::find($proyectista_->id);
+			$agremiado_ = Agremiado::find($proyectista_->id_agremiado);
+			$datos_agremiado= $agremiado_model->getAgremiado(85,$agremiado_->numero_cap);
+			$persona_ = Persona::where("id",$agremiado_->id_persona)->where("estado","1")->first();
+			//var_dump($proyectista[0]->tipo_colegiatura);exit();
+		}
+		
+		else if($proyectista[0]->tipo_colegiatura=='CIP'){
+			$proyectista_ = ProfesionalesOtro::where("id_solicitud",$id)->where("estado","1")->orderBy('id')->first();
+			$proyectista = ProfesionalesOtro::find($proyectista_->id);
+			$persona_ = Persona::where("id",$proyectista->id_persona)->where("estado","1")->first();
+			$datos_agremiado = new \stdClass();
+			$datos_agremiado->numero_cap=$proyectista->colegiatura;
+			$datos_agremiado->situacion='';
+			$datos_agremiado->celular1=$persona_->numero_celular;
+			$datos_agremiado->email=$persona_->correo;
+			$datos_agremiado->actividad='';
+			//var_dump($proyectista->colegiatura);exit();
+		}
+		
+		
+		$datos_persona= $persona_model->getPersonaById(78,$persona_->id);
 		$datos_usoEdificaciones = UsoEdificacione::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
 		$datos_presupuesto = Presupuesto::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
 		//$datos_propietario= $propietario_model->getPropietarioSolicitud($id);
 		//var_dump($proyectista_->id_agremiado);exit();
 		$tipo_solicitante = 1;
 		
+
 		$proyectista_model = new Proyectista;
 		$propietario_model = new Propietario;
 		$derechoRevision_model = new DerechoRevision;
@@ -2018,7 +2164,7 @@ class DerechoRevisionController extends Controller
 		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
-		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud($id);
+		$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud_($id);
 		//$propietario_ = Propietario::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->first();
 		//var_dump($derechoRevision_->id).exit();
 		$propietario_solicitud = $propietario_model->getPropietarioSolicitud($id);

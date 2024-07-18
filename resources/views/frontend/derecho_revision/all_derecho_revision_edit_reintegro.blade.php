@@ -358,6 +358,7 @@ if($('#instancia').val()==250){
 								<div class="form-group "id="agremiado_">
 									<label class="control-label form-control-sm">Nombre</label>
 									<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->apellido_paterno.' '. $datos_persona->apellido_materno.' '.$datos_persona->nombres?>" type="text" readonly='readonly'>
+									<input id="tipo_colegiatura" name="tipo_colegiatura" value="<?php echo $proyectista_solicitud[0]->tipo_colegiatura?>" type="hidden" >
 								</div>
 								<div class="form-group" id="persona_">
 									<label class="control-label form-control-sm">Nombre/Raz&oacute;n Social</label>
@@ -366,7 +367,7 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="numero_cap_">
-									<label class="control-label form-control-sm">N° CAP</label>
+									<label class="control-label form-control-sm">N° <?php echo $proyectista_solicitud[0]->tipo_colegiatura?></label>
 									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
 								</div>
 								<div class="form-group" id="dni_">
@@ -439,7 +440,7 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="numero_cap_">
-									<label class="control-label form-control-sm">N° CAP</label>
+									<label class="control-label form-control-sm">N° <?php echo $row->tipo_colegiatura?></label>
 									<input id="numero_cap_row" name="numero_cap_row" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
 								</div>
 							</div>

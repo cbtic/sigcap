@@ -112,7 +112,7 @@ class ReporteController extends Controller
 	{
 
 
-
+		//var_dump($tipo);exit();
 		$titulo = "";
 
 		//$usuario_caja = CajaIngreso::where("id",$id_caja)->first();
@@ -142,6 +142,8 @@ class ReporteController extends Controller
 			if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
 			if ($funcion=='cct')$titulo = "CONSOLIDADO DE TODAS LAS CAJAS ";
 
+			$usuario=$usuario_ingresos[0] ->usuario;
+
 			$caja_ingreso_model = new CajaIngreso();
 			$venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
 			//print_r($venta);exit();
@@ -151,9 +153,13 @@ class ReporteController extends Controller
 	
 			$caja_ingreso_model = new CajaIngreso();
 			$detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+
+			$comprobante_conteo=$caja_ingreso_model->getAllComprobanteConteo($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+
+			$comprobante_lista=$caja_ingreso_model->getAllComprobanteLista($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
 	
 	
-			$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio'));
+			$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio','comprobante_conteo','comprobante_lista','usuario'));
 			$pdf->getDomPDF()->set_option("enable_php", true);
 			
 			//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)

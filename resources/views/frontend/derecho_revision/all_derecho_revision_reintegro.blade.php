@@ -417,6 +417,19 @@ if($('#instancia').val()==250){
 									<input id="email" name="email" on class="form-control form-control-sm"  value="<?php //echo $persona->correo?>" type="text" readonly='readonly'>
 								</div>
 							</div>
+							<div class="col-lg-1" hidden>
+								<label class="control-label form-control-sm">Principal_asociado</label>
+								<select name="principal_asociado" id="principal_asociado" class="form-control form-control-sm" onChange="">
+									<option value="0">--Selecionar--</option>
+									<?php
+									foreach ($principal_asociado as $row_) {?>
+									<option value="<?php echo $row_->codigo?>" <?php if(isset($proyectista->id_tipo_profesional) && $row_->codigo==$proyectista->id_tipo_proyectista) {echo "selected='selected'";}
+									else if (isset($profesionales_otro->id_tipo_profesional) && $row_->codigo==$profesionales_otro->id_tipo_proyectista)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
 						</div>
 						
 						<?php if(count($proyectista_solicitud)>1){?>
@@ -453,7 +466,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-1">
 								<div class="form-group" id="numero_cap_">
 									<label class="control-label form-control-sm">N° <?php echo $row->tipo_colegiatura?></label>
-									<input id="numero_cap_row[]" name="numero_cap_row" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
+									<input id="numero_cap_row" name="numero_cap_row[]" on class="form-control form-control-sm"  value="<?php echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
 									<input id="tipo_colegiatura_row" name="tipo_colegiatura_row[]" value="<?php echo $row->tipo_colegiatura?>" type="hidden">
 								</div>
 							</div>
@@ -483,13 +496,13 @@ if($('#instancia').val()==250){
 									<input id="act_gremial_row" name="act_gremial_row" on class="form-control form-control-sm"  value="<?php echo $row->actividad?>" type="text" readonly='readonly'>
 								</div>
 							</div>
-							<div class="col-lg-1">
+							<div class="col-lg-1" hidden>
 								<label class="control-label form-control-sm">Principal_asociado</label>
 								<select name="principal_asociado_row" id="principal_asociado_row" class="form-control form-control-sm" onChange="">
 									<option value="0">--Selecionar--</option>
 									<?php
 									foreach ($principal_asociado as $row_) {?>
-									<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_profesional)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+									<option value="<?php echo $row_->codigo?>" <?php if($row_->codigo==$row->id_tipo_proyectista)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
 									<?php
 									}
 									?>

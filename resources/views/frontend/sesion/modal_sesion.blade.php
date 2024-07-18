@@ -208,10 +208,12 @@ $(document).ready(function() {
 	$("#id_regional").select2({ width: '100%' });
 	$("#id_concurso_inscripcion").select2({ width: '100%' });
 	
-	var id = "<?php echo $id?>";
+	var id = "<?php echo $id?>"; 
 	if(id==0){
 		var id_periodo = $("#id_periodo_bus").val();
 		var tipo_comision = $("#tipo_comision_bus").val();
+		var id_comision = $("#id_comision_bus").val();
+		
 		$("#id_regional").attr("disabled",true);
 		$("#id_periodo").val(id_periodo).attr("disabled",true);
 		if(tipo_comision>0)$("#tipo_comision").val(tipo_comision).attr("disabled",true);
@@ -221,7 +223,7 @@ $(document).ready(function() {
 		if(tipo_comision>0)$("#tipo_comision_").val(tipo_comision);
 		
 		obtenerComision();
-		
+		obtenerComisionDelegadoNuevo(id_comision);
 	}else{
 		var fecha_ejecucion = $("#fecha_ejecucion").val();
 		var fecha_programado = $("#fecha_programado").val();
