@@ -153,10 +153,7 @@
                  foreach($movimiento_comprobante as $key=>$d){
 					$total_cuenta += 1;
 
-					$suma_afecto_parcial += $d->imp_afecto;
-					$suma_inafecto_parcial += $d->imp_inafecto;
-					$suma_igv_parcial += $d->igv;
-					$suma_total_parcial += $d->total;
+					
                  ?>
 				 
 				<?php 
@@ -172,10 +169,10 @@
 				 ?>
 				 			<tr>
 								<th colspan="10" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important">Total </th>
-								<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_afecto_parcial, 2, '.', ',');?></th>
-								<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_inafecto_parcial, 2, '.', ',');?></th>
-								<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_igv_parcial, 2, '.', ',');?></th>
-								<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_total_parcial, 2, '.', ',');?></th>
+								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_afecto_parcial, 2, '.', ',');?></th>
+								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_inafecto_parcial, 2, '.', ',');?></th>
+								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_igv_parcial, 2, '.', ',');?></th>
+								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_total_parcial, 2, '.', ',');?></th>
 							</tr>
 
 					<tr>				
@@ -219,18 +216,20 @@
 					$suma_igv += $d->igv;
 					$suma_total += $d->total;
 
-					if ($total_cuenta==4) {
-						$suma_afecto_parcial += $d->imp_afecto;
-						$suma_inafecto_parcial += $d->imp_inafecto;
-						$suma_igv_parcial += $d->igv;
-						$suma_total_parcial += $d->total;
+					$suma_afecto_parcial += $d->imp_afecto;
+					$suma_inafecto_parcial += $d->imp_inafecto;
+					$suma_igv_parcial += $d->igv;
+					$suma_total_parcial += $d->total;
+
+					if ($total_cuenta==count($movimiento_comprobante)) {
+						
 						?>
 						   <tr>
 								<th colspan="10" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important">Total </th>
-								<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_afecto_parcial, 2, '.', ',');?></th>
-								<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_inafecto_parcial, 2, '.', ',');?></th>
-								<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_igv_parcial, 2, '.', ',');?></th>
-								<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_total_parcial, 2, '.', ',');?></th>
+								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_afecto_parcial, 2, '.', ',');?></th>
+								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_inafecto_parcial, 2, '.', ',');?></th>
+								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_igv_parcial, 2, '.', ',');?></th>
+								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_total_parcial, 2, '.', ',');?></th>
 							</tr>
 
 					   <?php 
@@ -243,11 +242,11 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="10" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">Total General</th>
-					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_afecto, 2, '.', ',');?></th>
-					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_inafecto, 2, '.', ',');?></th>
-					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_igv, 2, '.', ',');?></th>
-					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_total, 2, '.', ',');?></th>
+					<th colspan="10" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important">Total General</th>
+					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_afecto, 2, '.', ',');?></th>
+					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_inafecto, 2, '.', ',');?></th>
+					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_igv, 2, '.', ',');?></th>
+					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_total, 2, '.', ',');?></th>
 				</tr>
 			</tfoot>
 		</table>
