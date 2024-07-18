@@ -68,6 +68,19 @@ class Agremiado extends Model
 		
         return $data;
 	}
+	
+	function getEdadAgremiadoById($id){
+		$cad = "select date_part('year',age(now(), p.fecha_nacimiento::timestamp))edad 
+from agremiados a
+inner join personas p on a.id_persona=p.id
+where p.estado='1'
+and a.estado='1'
+and a.id=".$id;
+
+		$data = DB::select($cad);
+		
+        if(isset($data[0]))return $data[0]->edad;
+	}
 
 	function getAgremiadoRLAll(){
 		$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, desc_cliente nombre_completo,t1.id_tipo_documento 								
