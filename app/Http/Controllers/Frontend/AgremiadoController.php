@@ -108,13 +108,14 @@ class AgremiadoController extends Controller
 	public function editar_agremiado($id){
 		//echo date('Y-m-d');exit();
         /*
-		$firstDate = "2019-01-01";
-		$secondDate = "2020-03-04";
+		$firstDate = "1998-07-26";
+		$secondDate = "2024-07-18";
 		$dateDifference = abs(strtotime($secondDate) - strtotime($firstDate));
 		$years  = floor($dateDifference / (365 * 60 * 60 * 24));
 		echo $years;
 		exit();
 		*/
+		
 		$agremiado = Agremiado::find($id);
 		$id_persona = $agremiado->id_persona;
 		$persona = Persona::find($id_persona);
@@ -130,7 +131,9 @@ class AgremiadoController extends Controller
 		$agremiadoSituacione_model = new AgremiadoSituacione;
 		$agremiadoRol_model = new AgremiadoRole;
 		$suspension_model = new Suspensione;
+		$agremiado_model = new Agremiado;
 		
+		$edad = $agremiado_model->getEdadAgremiadoById($id);
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$tipo_zona = $tablaMaestra_model->getMaestroByTipo(34);
 		$estado_civil = $tablaMaestra_model->getMaestroByTipo(3);
@@ -170,7 +173,7 @@ class AgremiadoController extends Controller
 		$p[]="100";
 		$agremiado_rol = $concursoInscripcione_model->listar_concurso_agremiado($p);
 		//print_r($agremiado_rol);
-		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion','agremiado_rol'));
+		return view('frontend.agremiado.create',compact('id','id_persona','agremiado','persona','tipo_documento','tipo_zona','estado_civil','sexo','nacionalidad','seguro_social','actividad_gremial','ubicacion_cliente','autoriza_tramite','situacion_cliente','region','departamento','grupo_sanguineo','categoria_cliente','agremiado_estudio','agremiado_idioma','agremiado_parentesco','agremiado_trabajo','agremiado_traslado','agremiado_situacion','agremiado_rol','edad'));
 		
     }
 	
