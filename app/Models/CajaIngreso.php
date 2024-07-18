@@ -259,6 +259,51 @@ class CajaIngreso extends Model
         return $data;
     }
 
+    function getAllComprobanteConteo($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
+
+        $usuario_sel = "";
+        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+
+        $cad = "
+            select denominacion tipo_documento, count(*) cantidad 
+            from (
+                    select tm.denominacion, c.serie ||'-'|| c.numero::varchar(20) 
+                    from comprobantes c inner join tabla_maestras tm on c.tipo =tm.abreviatura  and tm.tipo='126'
+                    where 1=1 
+                    ".$usuario_sel."
+                    and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'                     
+            ) as reporte_cantidad group by denominacion;    
+       
+    
+        ";
+
+		//echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getAllComprobanteLista($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
+
+        $usuario_sel = "";
+        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+
+        $cad = "
+                    select tm.denominacion tipo_documento, c.serie ||'-'|| c.numero::varchar(20) numero 
+                    from comprobantes c inner join tabla_maestras tm on c.tipo =tm.abreviatura  and tm.tipo='126'
+                    where 1=1 
+                    ".$usuario_sel."
+                    and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'
+                    order by tm.denominacion,c.id                     
+                    ;    
+       
+    
+        ";
+
+		//echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
+
 
     public function readFuntionPostgres($function, $parameters = null){
 

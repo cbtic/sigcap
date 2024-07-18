@@ -244,7 +244,106 @@
 				
             </thead>
 		</table>
+
+        <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
+			<tbody>
+                <tr>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">DOCUMENTOS UTILIZADOS</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">CANTIDAD</td>
+					
+				</tr>   
+                <!--             
+                <tr>
+                <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">DESCRIPCIÓN DE LOS INGRESOS</td>
+				</tr>
+            -->
+				<?php 
+                 $total_cuenta = 0;
+                 foreach($comprobante_conteo as $key=>$d){
+                 $total_cuenta += $d->cantidad;
+                 ?>
+                 <tr>
+ 
+                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->tipo_documento)?></td>
+                     <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->cantidad?></td>
+                 </tr>
+				<?php
+				} 
+				?>
+				
+			</tbody>
+		</table>
+        <table class="table table-hover table-sm" style="width:35%!important;padding-top:15px" align="right">
+            <thead>
+                
+                <tr style="font-size:13px">
+                    <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Total</th>
+                    <th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_cuenta, 0, '.', ',');?></span></th>
+                </tr>
+				
+            </thead>
+		</table>
+
+        <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
+			<tbody>
+                <tr>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">TIPO DOCUMENTO</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">NUMERO</td>
+					
+				</tr>   
+                <!--             
+                <tr>
+                <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">DESCRIPCIÓN DE LOS INGRESOS</td>
+				</tr>
+            -->
+				<?php 
+                 $total_cuenta = 0;
+                 foreach($comprobante_lista as $key=>$d){
+                 $total_cuenta += 1;
+                 ?>
+                 <tr>
+ 
+                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->tipo_documento)?></td>
+                     <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->numero?></td>
+                 </tr>
+				<?php
+				} 
+				?>
+				
+			</tbody>
+		</table>
+        <table class="table table-hover table-sm" style="width:35%!important;padding-top:15px" align="right">
+            <thead>
+                
+                <tr style="font-size:13px">
+                    <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Total</th>
+                    <th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_cuenta, 0, '.', ',');?></span></th>
+                </tr>
+				
+            </thead>
+		</table>
 		
+        <table class="table table-hover table-sm" style="width:100%!important;padding-top:15px" align="center">
+            <thead>
+                
+            <tr style="font-size:10px">
+                    <th class="td_center" style="border:0px solid #A4A4A4;padding-left:5px!important" align="center">_____________________________________</th>
+                    <th class="td_center" style="border:0px solid #A4A4A4;padding-left:5px!important" align="center">_____________________________________</th>
+                </tr>
+
+                <tr style="font-size:10px">
+                    <th class="td_center" style="border:0px solid #A4A4A4;padding-left:5px!important" align="center">AREVALO IPANAQUE MELLANY GLEENDA</th>
+                    <th class="td_center" style="border:0px solid #A4A4A4;padding-left:5px!important" align="center"><span id="sesion_delegados"><?php echo $usuario?> </span></th>
+                </tr>
+
+                <tr style="font-size:10px">
+                    <th class="td_center" style="border:0px solid #A4A4A4;padding-left:5px!important" align="center">ENCARGADO(A) DE CAJA</th>
+                    <th class="td_center" style="border:0px solid #A4A4A4;padding-left:5px!important" align="center"><span id="sesion_delegados">Cajero</span></th>
+                </tr>
+				
+            </thead>
+		</table>
+
 		<!--<table style="margin-top: 10px">
             <tr>
                 <td class="td_ancho_espacios"></td>
