@@ -506,7 +506,46 @@ class PlanillaDelegadoController extends Controller
 		return Excel::download($export, 'planilla_delegado.xlsx');
 		
     }
-		    
+	
+	
+	public function ver_planilla_delegado_pdf($id_periodo,$anio,$mes){
+		/*
+		$movilidad_model = new ComisionMovilidade;
+		
+		$movilidad = $movilidad_model->getMovilidadByPeriodo($id_periodo,$anio,$mes);
+		
+		$dias = array('L','M','M','J','V','S','D');
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+		*/
+
+		$planillaDelegado = PlanillaDelegado::where("id_periodo_comision",$id_periodo)->where("periodo",$anio)->where("mes",$mes)->where("estado",1)->first();
+
+        $planillaDelegado_model = new PlanillaDelegado;
+
+		$planilla = NULL;
+		$fondo_comun = NULL;
+		$computoSesion = NULL;
+		if(isset($planillaDelegado->id)){
+        	$planilla = $planillaDelegado_model->getPlanillaDelegadoDetalleByIdPlanilla($planillaDelegado->id);
+			$fondo_comun = $planillaDelegado_model->getSaldoDelegadoFondoComun($id_periodo,$anio,$mes);
+			$computoSesion = ComputoSesione::find($planillaDelegado->id_computo_sesion);
+		}
+        //return view('frontend.planilla.lista_planilla_delegado',compact('planilla','fondo_comun','computoSesion'));
+
+		$pdf = Pdf::loadView('pdf.ver_planilla_delegado',compact('planilla','fondo_comun','computoSesion','anio','mes'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+
+		$pdf->setPaper('A4', 'landscape'); // Tama�o de papel (puedes cambiarlo seg�n tus necesidades)
+    	$pdf->setOption('margin-top', 20); // M�rgen superior en mil�metros
+   		$pdf->setOption('margin-right', 50); // M�rgen derecho en mil�metros
+    	$pdf->setOption('margin-bottom', 20); // M�rgen inferior en mil�metros
+    	$pdf->setOption('margin-left', 100); // M�rgen izquierdo en mil�metros
+
+		return $pdf->stream('ver_planilla_delegado.pdf');
+
+	}
+			    
 }
 
 class InvoicesExport implements FromArray

@@ -791,3 +791,18 @@ function descargarExcel(){
 }
 
 
+function descargarPdf(){
+
+	var periodo = $('#id_periodo_bus').val();
+	var anio = $('#anio').val();
+	var mes = $('#mes').val();
+
+	if (periodo == "")periodo = 0;
+	if (anio == "")anio = 0;
+	if (mes == "")mes = 0;
+
+	var href = '/planilla/ver_planilla_delegado_pdf/' + periodo + '/' + anio + '/' + mes;
+	window.open(href, '_blank');
+
+}
+
