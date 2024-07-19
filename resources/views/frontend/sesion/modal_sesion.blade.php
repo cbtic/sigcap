@@ -904,7 +904,8 @@ function cargarDelegados(){
 										</tr>
 										</thead>
 										<tbody>
-										<?php foreach ($delegados as $row) {
+										<?php 
+										foreach ($delegados as $row) {
 											$id_delegado = ($row->id_delegado>0)?$row->id_delegado:$row->id_agremiado;
 											$id_tipo = ($row->id_delegado>0)?1:2;
 										?>
@@ -984,8 +985,13 @@ function cargarDelegados(){
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<?php //if($id==0){?>
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<?php //if($id==0){
+									$btnDisabledGuardar = "";
+									if(count($delegados)==0)$btnDisabledGuardar = "disabled='disabled'";
+								?>
+								
+								<button <?php echo $btnDisabledGuardar ?> style="font-size:12px;" type="button" onclick="fn_save()" class="btn btn-sm btn-success">Guardar</button>
+								<!--<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>-->
 								<?php //}else{?>
 								<!--<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide')" class="btn btn-sm btn-warning">Cerrar</a>-->
 								<?php //} ?>
