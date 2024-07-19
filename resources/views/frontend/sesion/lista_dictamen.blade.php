@@ -7,7 +7,7 @@ foreach($dictamen as $row):?>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->distrito?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->id_numero_revision?></td>
 	<td class="text-left" style="vertical-align:middle"><?php echo $row->credipago?></td>
-	<td class="text-left" style="vertical-align:middle"><?php echo round($row->total,2)?></td>
+	<td class="text-left" style="vertical-align:middle"><?php echo number_format($row->total,2, '.', ',')//round($row->total,2)?></td>
 	<!--<td class="text-left" style="vertical-align:middle"><?php //echo $row->fecha_liquidacion?></td>
 	<td class="text-left" style="vertical-align:middle"><?php //echo $row->nombre?></td>
 	<td class="text-left" style="vertical-align:middle"><?php //echo $row->direccion?></td>-->
