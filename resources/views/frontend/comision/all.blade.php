@@ -315,7 +315,7 @@
                                         <th>Selec</th>
                                         <th>Denominaci&oacute;n</th>
                                         <th>Comisi&oacute;n</th>
-                                        <!--<th>Movilidad</th>-->
+                                        <th>D&iacute;a Semana</th>
 										<th>Nuevo Titular</th>
                                         <th>Acc.</th>
                                     </tr>
