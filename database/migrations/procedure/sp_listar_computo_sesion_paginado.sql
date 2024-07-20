@@ -109,9 +109,9 @@ where t0.id_aprobar_pago=2 ';
 	v_col_count:=v_col_count||' ,'||v_sesion_delegado||' as total_sesion_delegado ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By municipalidad asc,id_puesto asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By municipalidad asc,comision asc,id_puesto asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By municipalidad asc,id_puesto asc ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By municipalidad asc,comision asc,id_puesto asc ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;
@@ -121,3 +121,4 @@ End
 
 $function$
 ;
+
