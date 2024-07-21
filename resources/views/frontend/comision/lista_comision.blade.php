@@ -7,6 +7,7 @@ foreach($comision as $row):?>
 	</td>
 	<td class="text-left"><?php echo $row->denominacion?></td>
 	<td class="text-left"><?php echo $row->comision?></td>
+	<td class="text-left"><?php echo $row->dia_semana?></td>
 	<!--<td class="text-left"><?php //echo $row->monto?></td>-->
 	<!--<td class="text-left"><?php /*if($row->estado=='1') {echo "Activo";} else {echo "Inactivo";}*/?></td>-->
 	<td class="text-left">

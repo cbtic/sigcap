@@ -321,6 +321,7 @@
 							<th>Estado Aprobaci&oacute;n</th>
 							<th>Num Delegado</th>
 							<th>Num Situaci&oacute;n</th>
+							<th>Observaci&oacute;n</th>
 							<th>Dictamen</th>
 							<th>Editar</th>
                         </tr>

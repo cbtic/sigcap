@@ -174,18 +174,21 @@ class ReporteController extends Controller
 			if ($funcion=='mcu')$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
 			if ($funcion=='mct')$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";
 
-			$caja_ingreso_model = new CajaIngreso();
-			$venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
+			
+			$usuario=$usuario_ingresos[0] ->usuario;
+
 			//print_r($venta);exit();
 	
 			$caja_ingreso_model = new CajaIngreso();
 			$forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
-	
+
 			$caja_ingreso_model = new CajaIngreso();
-			$detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+			$movimiento_comprobante = $caja_ingreso_model->getAllMovimientoComprobantes($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
+			//print_r($venta);exit();
 	
 	
-			$pdf = Pdf::loadView('frontend.reporte.reporte_mov_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio'));
+	
+			$pdf = Pdf::loadView('frontend.reporte.reporte_mov_pdf',compact('titulo','movimiento_comprobante','forma_pago','f_inicio','f_inicio'));
 			$pdf->getDomPDF()->set_option("enable_php", true);
 			
 			$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)

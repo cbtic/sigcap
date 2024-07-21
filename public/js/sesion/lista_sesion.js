@@ -350,10 +350,19 @@ function habilitarAprobarPago(){
 	
 	var id_estado_aprobacion = $('#id_estado_aprobacion').val();
 	
-	$(".id_aprobar_pago").attr("checked",false);
+	$(".id_aprobar_pago").prop("checked",false);
+	
 	
 	if(id_estado_aprobacion==2){
-		$(".id_aprobar_pago").attr("checked",true);
+		$(".id_aprobar_pago").prop("checked",true);
+		
+		$(".edit_delegado").prop("disabled",true);	
+		$(".delete_delegado").prop("disabled",true);
+		
+	}else{
+		
+		$(".edit_delegado").prop("disabled",false);	
+		$(".delete_delegado").prop("disabled",false);
 	}
 	
 	
@@ -872,29 +881,49 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
-                	var newRow = "";
-					newRow="<button style='font-size:12px' type='button' class='btn btn-sm btn-info' data-toggle='modal' onclick=cargarDictamen('"+row.id+"') ><i class='fa fa-edit'></i> Ver Dictamen</button>"
-					return newRow;
+                	var observaciones = "";
+					if(row.observaciones!= null)observaciones = row.observaciones;
+					return '<span data-toggle="tooltip" title="'+observaciones+'">' + observaciones.substring(0,12) + '</span>';
                 },
                 "bSortable": true,
+				"className": "text-center",
                 "aTargets": [10]
                 },
 				
 				{
                 "mRender": function (data, type, row) {
                 	var newRow = "";
-					newRow="<button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalSesion('"+row.id+"') ><i class='fa fa-edit'></i> Editar - Ejecutar</button>"
+					var btnDisabled="";
+					if(row.flag_cz==1)btnDisabled="disabled='disabled'";
+						newRow="<button "+btnDisabled+" style='font-size:12px' type='button' class='btn btn-sm btn-info' data-toggle='modal' onclick=cargarDictamen('"+row.id+"') ><i class='fa fa-edit'></i> Ver Dictamen</button>"
+					
 					return newRow;
                 },
                 "bSortable": true,
                 "aTargets": [11]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var newRow = "";
+					var btnDisabled="";
+					if(row.flag_cz==1)btnDisabled="disabled='disabled'";
+					newRow="<button "+btnDisabled+" style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalSesion('"+row.id+"') ><i class='fa fa-edit'></i> Editar - Ejecutar</button>"
+					return newRow;
+                },
+                "bSortable": true,
+                "aTargets": [12]
                 },
 
             ]
 
 
     });
-
+	
+	$('#tblAfiliado').on('draw.dt', function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+	
 }
 
 function cargarDictamen(id_concurso_inscripcion){
@@ -1250,4 +1279,20 @@ function modalHistorialDelegadoSesion(id){
 	});
 
 }
+
+function habilitarAprobar(obj){
+	
+	
+	if(!$(obj).is(':checked')) {
+		$(obj).parent().parent().find(".edit_delegado").prop("disabled",false);	
+		$(obj).parent().parent().find(".delete_delegado").prop("disabled",false);	
+	}else{
+		$(obj).parent().parent().find(".edit_delegado").prop("disabled",true);
+		$(obj).parent().parent().find(".delete_delegado").prop("disabled",true);
+	}
+	
+
+}
+
+
 

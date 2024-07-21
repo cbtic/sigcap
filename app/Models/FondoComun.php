@@ -87,6 +87,7 @@ class FondoComun extends Model
         where m.id_ubigeo = '".$id_ubigeo."' and s.id_tipo_solicitud ='123'
         and EXTRACT(YEAR FROM c.fecha_pago)::varchar = '".$anio."'
         and EXTRACT(MONTH FROM c.fecha_pago)::varchar = '".$mes."'
+        and v.id_modulo ='7'
         order by c.fecha";
 		$data = DB::select($cad);
         return $data;

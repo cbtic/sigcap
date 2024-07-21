@@ -734,7 +734,7 @@ label.form-control-sm{
 												Edad
 												</div>
 												<?php
-												
+												/*
 												$edad = "";
 												if($persona->fecha_nacimiento!=""){
 													$fecha_actual = date('Y-m-d');
@@ -742,7 +742,7 @@ label.form-control-sm{
 													$dateDifference = abs(strtotime($fecha_nacimiento) - strtotime($fecha_actual));
 													$edad  = floor($dateDifference / (365 * 60 * 60 * 24));
 												}
-												
+												*/
 												?>
 												<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 												<input type="text" name="edad" id="edad" readonly="readonly" value="<?php echo $edad?>" class="form-control form-control-sm" >
