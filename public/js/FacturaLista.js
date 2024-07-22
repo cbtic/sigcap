@@ -313,27 +313,27 @@ function datatablenew(){
                 },
                 {
                 "mRender": function (data, type, row) {
-                    var caja = "";
-                    if(row.caja!= null)caja = row.caja;
-                    return caja;
+                    var usuario = "";
+                    if(row.usuario!= null)usuario = row.usuario;
+                    return usuario;
                 },
                 "bSortable": false,
                 "aTargets": [12]
                 },
                 {
                     "mRender": function (data, type, row) {
-                        var caja = "";
-                        if(row.caja!= null)caja = row.caja;
-                        return caja;
+                        var forma_pago = "";
+                        if(row.forma_pago!= null)forma_pago = row.forma_pago;
+                        return forma_pago;
                     },
                     "bSortable": false,
                     "aTargets": [13]
                 },                    
 				{
                     "mRender": function (data, type, row) {
-                        var usuario = "";
-                        if(row.usuario!= null)usuario = row.usuario;
-                        return usuario;
+                        var restante_credito = "";
+                        if(row.restante_credito!= null)restante_credito = row.restante_credito;
+                        return restante_credito;
                     },
                     "bSortable": false,
                     "aTargets": [14]

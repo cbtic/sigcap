@@ -759,9 +759,10 @@ Route::get('tipo_cambio/modal_tipo_cambio_nuevoTipoCambio/{id}', [TipoCambioCont
 Route::get('tipo_cambio/eliminar_tipo_cambio/{id}', [TipoCambioController::class, 'eliminar_tipo_cambio'])->name('tipo_cambio.eliminar_tipo_cambio');
 Route::post('tipo_cambio/send_tipo_cambio_nuevoTipoCambio', [TipoCambioController::class, 'send_tipo_cambio_nuevoTipoCambio'])->name('tipo_cambio.send_tipo_cambio_nuevoTipoCambio');
 
-Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');
+//Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');}
+Route::get('reporte/{tipo}', [ReporteController::class, 'index'])->name('reporte');
 Route::get('reporte/listar_reporte_usuario', [ReporteController::class, 'listar_reporte_usuario'])->name('reporte.listar_reporte_usuario');
-Route::get('reporte/rep_pdf/{funcion}/{fini}/{usuario}/{caja}/{tipo}', [ReporteController::class, 'rep_pdf'])->name('reporte.rep_pdf');
+Route::get('reporte/rep_pdf/{id}/{fini}/{ffin}/{opc1}/{opc2}', [ReporteController::class, 'rep_pdf'])->name('reporte.rep_pdf');
 Route::get('reporte/obtener_caja_usuario/{idUsuario}', [ReporteController::class, 'obtener_caja_usuario'])->name('reporte.obtener_caja_usuario');
 
 Route::get('derecho_revision/correo_credipago/{id}', [DerechoRevisionController::class, 'correo_credipago'])->name('derecho_revision.correo_credipago');

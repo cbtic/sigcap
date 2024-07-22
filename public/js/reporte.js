@@ -2,6 +2,32 @@
 $(document).ready(function () {
 	
 	$("#id_regional_bus").select2({ width: '100%' });
+
+	var tipo_reporte = $('#tipo_reporte').val();
+
+	$("#div_fecha_ini").hide();
+	$("#div_fecha_fin").hide();
+	$("#div_usuario").hide();
+	$("#div_caja").hide();
+	$("#div_forma_pago").hide();
+	$("#div_concepto").hide();
+
+	if(tipo_reporte=="1"){
+		$("#div_fecha_ini").show();
+		$("#div_fecha_fin").show();
+		$("#div_usuario").show();
+		$("#div_caja").show();
+
+	}
+	else if(tipo_reporte=="2"){
+		$("#div_fecha_ini").show();
+		$("#div_fecha_fin").show();
+		$("#div_forma_pago").show();
+		$("#div_concepto").show();
+	}
+
+
+	//alert(tipo_reporte);
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
@@ -18,10 +44,6 @@ $(document).ready(function () {
 			}
 		});
 	});
-	
-
-	
-
 
 	
 	$('#denominacion').keypress(function(e){
@@ -1197,12 +1219,9 @@ function obtenerCaja(){
 	
 }
 
-function abrirPdfReporte(funcion, tipo) {
-	//$fini = $('#fecha_ini').val();
+function abrirPdfReporte(id, por_usuario, tipo) {
+
 	var fechaIni = document.getElementById('fecha_ini').value;
-	//alert($fini);
-	//var date = new Date($fini); // Or your date here
-	//$fini= ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
 	var partesFecha = fechaIni.split('-');
 	var dia = partesFecha[0];
 	var mes = partesFecha[1];
@@ -1210,34 +1229,40 @@ function abrirPdfReporte(funcion, tipo) {
 	var fechaFormateada = anio + '-' + mes + '-' + dia;
 	var date = new Date(fechaFormateada); // Or your date here
 	$fini= ((date.getFullYear() + '-' + zfill(date.getMonth() + 1,2) + '-'+ zfill(date.getDate()+1,2)));
-	//alert($fini);
-	//$ffin = formatDate($('#fecha_fin').val());
-	$ffin = $('#fecha_fin').val();
 
-	var date = new Date($ffin); // Or your date here
-	$ffin = ((date.getFullYear() + '-' + zfill(date.getDate(),2) + '-' + zfill(date.getMonth() + 1,2)));
+	var fechaFin = document.getElementById('fecha_fin').value;
+	var partesFechaf = fechaFin.split('-');
+	 dia = partesFechaf[0];
+	 mes = partesFechaf[1];
+	 anio = partesFechaf[2];
+	 fechaFormateada = anio + '-' + mes + '-' + dia;
+	 date = new Date(fechaFormateada); // Or your date here
+	$ffin= ((date.getFullYear() + '-' + zfill(date.getMonth() + 1,2) + '-'+ zfill(date.getDate()+1,2)));
 
-	//alert($ffin);
 
-	$id_usuario = $('#id_usuario').val();
-	$id_caja = $('#id_caja').val();
-	//alert($usuario);
+	if(tipo=='1'){
+		$opc1 = $('#id_usuario').val();
+		$opc2 = $('#id_caja').val();
+	}
 
-	//exit();
+	if(tipo=='2'){
+		$opc1 = $('#id_formapago').val();
+		$opc2 = $('#id_concepto').val();
+	}
 
-	//var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$ffin+'/'+$usuario;
-	if (tipo =='1'){
-		if($id_caja!=''){
-			var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$id_usuario+'/'+$id_caja+'/'+tipo;
+
+	if (por_usuario =='S'){
+		if($opc2!=''){
+			var href = '/reporte/rep_pdf/'+id+'/'+$fini+'/'+$ffin+'/'+$opc1+'/'+$opc2;
 			window.open(href, '_blank');		
 		}else{
 			alert('Requiere seleccionar un usuario')
 		}
 	}
-	if (tipo =='2'){
-		$id_usuario!='0';
-		$id_caja!='0';
-		var href = '/reporte/rep_pdf/'+funcion+'/'+$fini+'/'+$id_usuario+'/'+$id_caja+'/'+tipo;
+	if (por_usuario =='N'){
+		$opc1!='0';
+		$opc2!='0';
+		var href = '/reporte/rep_pdf/'+id+'/'+$fini+'/'+$ffin+'/'+$opc1+'/'+$opc2;
 		window.open(href, '_blank');		
 	}
 }

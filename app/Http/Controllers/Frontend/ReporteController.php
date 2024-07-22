@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\PeriodoComisione;
 use App\Models\Reporte;
 use App\Models\CajaIngreso;
+use App\Models\Concepto;
+use App\Models\TablaMaestra;
 use Carbon\Carbon;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -24,7 +26,9 @@ class ReporteController extends Controller
     	});
 	}
 
-    public function index(){
+    public function index($tipo_reporte){
+			//echo($tipo_reporte); exit();
+
 		$periodoComisione_model = new PeriodoComisione;
 
 		$id_user = Auth::user()->id;
@@ -38,7 +42,7 @@ class ReporteController extends Controller
         ];
 		
 		$reporte_model = new Reporte;
-		$reporte = $reporte_model->getReporteAll($id_user);
+		$reporte = $reporte_model->getReporteAll($tipo_reporte);
 
 		$periodo = $periodoComisione_model->getPeriodoAll();
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
@@ -47,6 +51,13 @@ class ReporteController extends Controller
 		
         $caja_ingreso_model = new CajaIngreso();
         $caja_usuario = $caja_ingreso_model->getCajaUsuario_u();
+
+		$concepto_model = new Concepto();
+		$concepto = $concepto_model->getConceptoAllDenominacion2();
+
+		$tabla_model = new TablaMaestra;
+        $formapago = $tabla_model->getMaestroByTipo('104');
+
 	
 		//$reporte = Reporte::where(['estado' => '1'])->get();
 
@@ -54,7 +65,7 @@ class ReporteController extends Controller
 
 
 		
-        return view('frontend.reporte.all',compact('periodo','anio','mes','reporte','periodo_ultimo','periodo_activo','caja_usuario'));
+        return view('frontend.reporte.all',compact('tipo_reporte','periodo','anio','mes','reporte','periodo_ultimo','periodo_activo','caja_usuario', 'concepto','formapago'));
     }
 	public function obtener_caja_usuario($idUsuario){
 		
@@ -108,95 +119,94 @@ class ReporteController extends Controller
 
     }
 
-	public function rep_pdf($funcion,$f_inicio,$id_usuario,$id_caja,$tipo)
+	public function rep_pdf($id,$f_inicio,$f_fin,$opc1,$opc2)
 	{
 
+		$reporte = Reporte::find($id);
 
-		//var_dump($tipo);exit();
-		$titulo = "";
+		$id_tipo= $reporte->id_tipo;
+		$funcion = $reporte->funcion;
+		$por_usuario= $reporte->por_usuario;
 
-		//$usuario_caja = CajaIngreso::where("id",$id_caja)->first();
+		if ($id_tipo == '1'){
 
-		//print_r($usuario_caja);
-		//exit();
+			$id_usuario = $opc1;
+			$id_caja = $opc2;
 
-		//$id_usuario = $usuario_caja->id_usuario;
-		//$id_caja = $usuario_caja->id_caja;
-
-		//$id_usuario = $id_usuario_caja;
-		//$id_caja = "0";
-
-
-		$caja_ingreso_model = new CajaIngreso();
-        $caja_ingresos= $caja_ingreso_model->getCajaById($id_caja);
-		$usuario_ingresos= $caja_ingreso_model->getUsuarioById($id_usuario);
-
-		//print_r($id_caja);exit();
-
-		//$f_inicio = str_replace("-","/",$f_inicio);
-
-
-		//print_r($f_inicio);exit(); 
-
-		if ($funcion=='ccu' || $funcion=='cct'){
-			if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
-			if ($funcion=='cct')$titulo = "CONSOLIDADO DE TODAS LAS CAJAS ";
-
-			$usuario=$usuario_ingresos[0] ->usuario;
+			//var_dump($tipo);exit();
+			$titulo = "";
 
 			$caja_ingreso_model = new CajaIngreso();
-			$venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
-			//print_r($venta);exit();
-	
-			$caja_ingreso_model = new CajaIngreso();
-			$forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
-	
-			$caja_ingreso_model = new CajaIngreso();
-			$detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+			$caja_ingresos= $caja_ingreso_model->getCajaById($id_caja);
+			$usuario_ingresos= $caja_ingreso_model->getUsuarioById($id_usuario);
 
-			$comprobante_conteo=$caja_ingreso_model->getAllComprobanteConteo($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
 
-			$comprobante_lista=$caja_ingreso_model->getAllComprobanteLista($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
-	
-	
-			$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio','comprobante_conteo','comprobante_lista','usuario'));
-			$pdf->getDomPDF()->set_option("enable_php", true);
-			
-			//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
-			$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
-			$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
-			$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
-			$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+			if ($funcion=='ccu' || $funcion=='cct'){
+				if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
+				if ($funcion=='cct')$titulo = "CONSOLIDADO DE TODAS LAS CAJAS ";
 
-		}
+				$usuario=$usuario_ingresos[0] ->usuario;
 
-		if ($funcion=='mcu' || $funcion=='mct' ){
-			if ($funcion=='mcu')$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
-			if ($funcion=='mct')$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";
+				$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '1';
+				$venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$por_usuario);
+				//print_r($venta);exit();
+		
+				$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '';
+				$forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
+		
+				$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '';
+				$detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
 
-			
-			$usuario=$usuario_ingresos[0] ->usuario;
+				//$tipo= '';
+				$comprobante_conteo=$caja_ingreso_model->getAllComprobanteConteo($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
+				//$tipo= '';
+				$comprobante_lista=$caja_ingreso_model->getAllComprobanteLista($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
+		
+		
+				$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio','comprobante_conteo','comprobante_lista','usuario'));
+				$pdf->getDomPDF()->set_option("enable_php", true);
+				
+				//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
 
-			//print_r($venta);exit();
-	
-			$caja_ingreso_model = new CajaIngreso();
-			$forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $tipo);
+			}
 
-			$caja_ingreso_model = new CajaIngreso();
-			$movimiento_comprobante = $caja_ingreso_model->getAllMovimientoComprobantes($id_usuario, $id_caja, $f_inicio, $f_inicio ,$tipo);
-			//print_r($venta);exit();
-	
-	
-	
-			$pdf = Pdf::loadView('frontend.reporte.reporte_mov_pdf',compact('titulo','movimiento_comprobante','forma_pago','f_inicio','f_inicio'));
-			$pdf->getDomPDF()->set_option("enable_php", true);
-			
-			$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
-			$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
-			$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
-			$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
-			$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+			if ($funcion=='mcu' || $funcion=='mct' ){
+				if ($funcion=='mcu')$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
+				if ($funcion=='mct')$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";
 
+				
+				$usuario=$usuario_ingresos[0] ->usuario;
+
+				//print_r($venta);exit();
+		
+				$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '';			
+				$forma_pago = $caja_ingreso_model->getAllCajaCondicionPago($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
+
+				$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '';
+				$movimiento_comprobante = $caja_ingreso_model->getAllMovimientoComprobantes($id_usuario, $id_caja, $f_inicio, $f_inicio ,$por_usuario);
+				//print_r($venta);exit();
+		
+		
+		
+				$pdf = Pdf::loadView('frontend.reporte.reporte_mov_pdf',compact('titulo','movimiento_comprobante','forma_pago','f_inicio','f_inicio'));
+				$pdf->getDomPDF()->set_option("enable_php", true);
+				
+				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+			}
 		}
 	
 		return $pdf->stream('reporte.pdf');
