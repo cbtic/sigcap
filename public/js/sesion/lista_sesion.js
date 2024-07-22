@@ -416,6 +416,7 @@ function obtenerComisionDelegado(){
 	var id = $("#id").val();
 	
 	var id_comision = $('#id_comision').val();
+	
 	$.ajax({
 		url: '/sesion/obtener_comision_delegado/'+id_comision,
 		dataType: "json",
@@ -444,6 +445,10 @@ function obtenerComisionDelegado(){
 				
 				option += "</tr>";
 			});
+			
+			if(option!="")$("#btnSesionGuardar").prop("disabled",false);
+			else $("#btnSesionGuardar").prop("disabled",true);
+			
 			$('#tblDelegado tbody').html(option);
 			
 			$("#dia_semana").val(dia_semana.denominacion);

@@ -990,7 +990,7 @@ function cargarDelegados(){
 									if(count($delegados)==0)$btnDisabledGuardar = "disabled='disabled'";
 								?>
 								
-								<button <?php echo $btnDisabledGuardar ?> style="font-size:12px;" type="button" onclick="fn_save()" class="btn btn-sm btn-success">Guardar</button>
+								<button <?php echo $btnDisabledGuardar ?> style="font-size:12px;" type="button" onClick="fn_save()" class="btn btn-sm btn-success" id="btnSesionGuardar">Guardar</button>
 								<!--<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>-->
 								<?php //}else{?>
 								<!--<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide')" class="btn btn-sm btn-warning">Cerrar</a>-->
