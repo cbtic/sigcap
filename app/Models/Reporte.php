@@ -10,11 +10,12 @@ class Reporte extends Model
 {
     use HasFactory;
 
-    function getReporteAll($id_user){
+    function getReporteAll($tipo_reporte){
 
         $cad = "select *
                 from reportes
-                where estado='1' 
+                where estado='1'
+                and id_tipo = ".$tipo_reporte." 
                 order by descripcion ";
         //echo($cad);
     

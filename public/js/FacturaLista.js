@@ -160,6 +160,7 @@ function datatablenew(){
             var estado_pago = $('#estado_pago').val();
             var anulado = $('#anulado').val();
             var sunat = $('#sunat').val();
+            var formapago = $('#sunat').val();
             var pdf = $('#pdf').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -310,14 +311,32 @@ function datatablenew(){
                 "bSortable": false,
                 "aTargets": [11]
                 },
-				{
+                {
+                "mRender": function (data, type, row) {
+                    var usuario = "";
+                    if(row.usuario!= null)usuario = row.usuario;
+                    return usuario;
+                },
+                "bSortable": false,
+                "aTargets": [12]
+                },
+                {
                     "mRender": function (data, type, row) {
-                        var usuario = "";
-                        if(row.usuario!= null)usuario = row.usuario;
-                        return usuario;
+                        var forma_pago = "";
+                        if(row.forma_pago!= null)forma_pago = row.forma_pago;
+                        return forma_pago;
                     },
                     "bSortable": false,
-                    "aTargets": [12]
+                    "aTargets": [13]
+                },                    
+				{
+                    "mRender": function (data, type, row) {
+                        var restante_credito = "";
+                        if(row.restante_credito!= null)restante_credito = row.restante_credito;
+                        return restante_credito;
+                    },
+                    "bSortable": false,
+                    "aTargets": [14]
                 },
                 /*
 				{
@@ -368,7 +387,7 @@ function datatablenew(){
                        
                     },
                     "bSortable": false,
-                    "aTargets": [13]
+                    "aTargets": [15]
                 },              
 				{
                     "mRender": function (data, type, row) {
@@ -377,7 +396,7 @@ function datatablenew(){
                         return html;
                     },
                     "bSortable": false,
-                    "aTargets": [14],
+                    "aTargets": [16],
                 },
                 
 /*

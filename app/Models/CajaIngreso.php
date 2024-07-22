@@ -213,7 +213,7 @@ class CajaIngreso extends Model
         $cad = "
             select condicion, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
             from(
-                select t.denominacion||' '||m.denominacion condicion, 0 total_us, 0/3.7 total_tc, cp.monto total_soles
+                select t.denominacion||' '||m.denominacion condicion, 0 total_us, 0/3.7 total_tc, round( CAST(cp.monto as numeric), 2) total_soles
                 from comprobantes c                                
                     inner join comprobante_pagos cp on cp.id_comprobante = c.id
                     inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
