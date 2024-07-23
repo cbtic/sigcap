@@ -347,4 +347,66 @@ class CajaIngreso extends Model
         return $data;
 
     }
+
+    function datos_reporte_deudas($id){
+
+        $cad = "select  c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, descripcion, ac.importe 
+                from agremiado_cuotas ac
+                inner join valorizaciones v on ac.id =v.pk_registro
+                inner join conceptos c on ac.id_concepto =c.id
+                where id_agremiado =".$id." and id_situacion in (59,51)";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getDenominacionDeuda($id){
+
+        $cad = "select distinct c.denominacion 
+                from agremiado_cuotas ac
+                inner join valorizaciones v ON ac.id = v.pk_registro
+                inner join conceptos c ON ac.id_concepto = c.id
+                where id_agremiado = ".$id."
+                and id_situacion in (59, 51)
+                order by c.denominacion asc";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getReporteDeudasTotal($id){
+
+        $cad = "select  c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, v.descripcion, ac.importe ,ac.fecha_venc_pago fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante , 
+tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_operacion ,  case when  v.pagado='1' then 'PAGADO' else 'PENDIENTE' end  estado_pago
+                from agremiado_cuotas ac 
+                inner join valorizaciones v on ac.id =v.pk_registro
+                inner join conceptos c on ac.id_concepto =c.id
+                inner join tabla_maestras tm on tm.codigo =id_situacion::varchar(10) and tm.tipo='11' 
+                left join comprobantes c2 on c2.id=V.id_comprobante
+                left join tabla_maestras tm2 on tm2.codigo = c2.id_forma_pago::varchar(10) and tm2.tipo='104' 
+                left join comprobante_pagos cp on c2.id =cp.id_comprobante 
+                left join  tabla_maestras tm3 on tm3.codigo = cp.id_medio ::varchar(10) and tm3.tipo='19' 
+                where  id_agremiado =".$id;
+
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getDenominacionDeudaTotal($id){
+
+        $cad = "select  distinct(c.denominacion)
+                from agremiado_cuotas ac 
+                inner join valorizaciones v on ac.id =v.pk_registro
+                inner join conceptos c on ac.id_concepto =c.id
+                inner join tabla_maestras tm on tm.codigo =id_situacion::varchar(10) and tipo='11' 
+                where  id_agremiado =".$id."
+                order by c.denominacion asc";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
 }

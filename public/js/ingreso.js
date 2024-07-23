@@ -2590,3 +2590,19 @@ function selPerona(cap, numero_documento){
 	obtenerBeneficiario();
 
 }
+
+function reporte_deudas(){
+
+	var numero_cap = $('#numero_documento_b').val();
+
+	var href = '/ingreso/reporte_deudas_pdf/'+numero_cap;
+	window.open(href, '_blank');
+}
+
+function reporte_deudas_total(){
+
+	var numero_cap = $('#numero_documento_b').val();
+
+	var href = '/ingreso/reporte_deudas_total_pdf/'+numero_cap;
+	window.open(href, '_blank');
+}

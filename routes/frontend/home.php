@@ -771,3 +771,5 @@ Route::get('derecho_revision/correo_credipago_aprobado_reintegro/{id}', [Derecho
 
 Route::post('agremiado/listar_valorizacion_periodo_deuda', [AgremiadoController::class, 'listar_valorizacion_periodo_deuda'])->name('agremiado.listar_valorizacion_periodo_deuda');
 
+Route::get('ingreso/reporte_deudas_pdf/{numero_cap}', [IngresoController::class, 'reporte_deudas_pdf'])->name('ingreso.reporte_deudas_pdf');
+Route::get('ingreso/reporte_deudas_total_pdf/{numero_cap}', [IngresoController::class, 'reporte_deudas_total_pdf'])->name('ingreso.reporte_deudas_total_pdf');
