@@ -492,6 +492,10 @@ function obtenerComisionDelegadoNuevo(id_comision){
 				
 				option += "</tr>";
 			});
+			
+			if(option!="")$("#btnSesionGuardar").prop("disabled",false);
+			else $("#btnSesionGuardar").prop("disabled",true);
+			
 			$('#tblDelegado tbody').html(option);
 			
 			$("#dia_semana").val(dia_semana.denominacion);
