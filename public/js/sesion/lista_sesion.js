@@ -881,6 +881,17 @@ function datatablenew(){
 				
 				{
                 "mRender": function (data, type, row) {
+                	var observaciones = "";
+					if(row.observaciones!= null)observaciones = row.observaciones;
+					return '<span data-toggle="tooltip" title="'+observaciones+'">' + observaciones.substring(0,12) + '</span>';
+                },
+                "bSortable": true,
+				"className": "text-center",
+                "aTargets": [10]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
                 	var newRow = "";
 					var btnDisabled="";
 					if(row.flag_cz==1)btnDisabled="disabled='disabled'";
@@ -889,7 +900,7 @@ function datatablenew(){
 					return newRow;
                 },
                 "bSortable": true,
-                "aTargets": [10]
+                "aTargets": [11]
                 },
 				
 				{
@@ -901,14 +912,18 @@ function datatablenew(){
 					return newRow;
                 },
                 "bSortable": true,
-                "aTargets": [11]
+                "aTargets": [12]
                 },
 
             ]
 
 
     });
-
+	
+	$('#tblAfiliado').on('draw.dt', function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+	
 }
 
 function cargarDictamen(id_concurso_inscripcion){

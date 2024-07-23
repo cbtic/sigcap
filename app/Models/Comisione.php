@@ -58,12 +58,14 @@ class Comisione extends Model
 
     public function getComisionAll($periodo,$tipo_comision,$cad_id,$estado){
 
-        $cad = "select c.*,tm.denominacion tipo_agrupacion, cm.monto,pc.descripcion periodo
+        $cad = "select c.*,tm.denominacion tipo_agrupacion, cm.monto,pc.descripcion periodo,
+		c.id_dia_semana,tmd.denominacion dia_semana
 		from comisiones c
         inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
-        inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
+        inner join tabla_maestras tm on mi.id_tipo_agrupacion::int=tm.codigo::int and tm.tipo='99'
         left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id 
 		inner join periodo_comisiones pc on c.id_periodo_comisiones=pc.id
+		left join tabla_maestras tmd on c.id_dia_semana::int=tmd.codigo::int and tmd.tipo='70'
         where c.estado ilike '%".$estado."'";
 		
 		if($periodo!="" && $periodo!="0"){
@@ -150,7 +152,13 @@ class Comisione extends Model
 
     function getCodigoComision($id_municipalidad_integrada){
 
-        $cad = "select lpad((count(*)+1)::varchar,2,'0') codigo from comisiones c where id_municipalidad_integrada=".$id_municipalidad_integrada." and estado ='1'";
+        //$cad = "select lpad((count(*)+1)::varchar,2,'0') codigo from comisiones c where id_municipalidad_integrada=".$id_municipalidad_integrada." /*and estado ='1'*/";
+		
+		$cad = "select lpad((coalesce(max(to_number(comision,'999999999999D99')),0)+1)::varchar,2,'0') codigo
+		from comisiones c 
+		where id_municipalidad_integrada=".$id_municipalidad_integrada." 
+		and estado ='1'";
+		
         //echo $cad;exit();
 		$data = DB::select($cad);
         return $data[0]->codigo;

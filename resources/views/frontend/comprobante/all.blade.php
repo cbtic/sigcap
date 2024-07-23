@@ -260,6 +260,8 @@
                                                 <th>Anulado</th>
                                                 <th>Caja</th>
                                                 <th>Usuario</th>
+                                                <th>Forma Pago</th>
+                                                <th>Cred. Restante</th>
                                                 <th>Sunat</th>
                                                 <th class="text-left">Factura</th>
                                             </tr>

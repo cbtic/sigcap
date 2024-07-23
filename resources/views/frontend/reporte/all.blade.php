@@ -172,6 +172,8 @@
 
 							<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
+							<input type='hidden' name="tipo_reporte" id="tipo_reporte" value="<?php echo $tipo_reporte?>">	
+
 							<div class="row" style="padding:20px 20px 0px 20px;">
 
 							<!--
@@ -193,22 +195,22 @@
 									</select>
 								</div>
 -->
-								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+								<div id="div_fecha_ini" class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<div class="form-group">
-										<label class="form-control-sm">Fecha </label>
+										<label class="form-control-sm">Fecha Inicio</label>
 										<input class="form-control form-control-sm" id="fecha_ini" name="fecha_ini" value="<?php echo date("d-m-Y")?>" placeholder="Fecha Inicio">										
 									</div>
 								</div>
-								<!--
-								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+								
+								<div id="div_fecha_fin" class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Fecha Fin</label>
-										<input class="form-control form-control-sm" id="fecha_fin" name="fecha_fin" value="<?php //echo date("d-m-Y")?>" placeholder="Fecha fin">
+										<input class="form-control form-control-sm" id="fecha_fin" name="fecha_fin" value="<?php echo date("d-m-Y")?>" placeholder="Fecha fin">
 									</div>
 								</div>
--->
 
-								<div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
+
+								<div id="div_usuario" class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Usuario</label>
 										<select name="id_usuario" id="id_usuario" class="form-control form-control-sm" onchange="obtenerCaja()">
@@ -220,7 +222,7 @@
 									</div>
 								</div>
 
-								<div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
+								<div id="div_caja" class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Caja</label>
 										<select name="id_caja" id="id_caja" class="form-control form-control-sm">
@@ -228,6 +230,34 @@
 										</select>
 									</div>
 								</div>
+
+								<div id="div_forma_pago" class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+									<label class="form-group">Forma de pago</label>
+									<select name="id_formapago" id="id_formapago" class="form-control form-control-sm" onChange="">
+										<option value="">Todos</option>
+										<?php
+										foreach ($formapago as $row) { ?>
+											<option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+
+								<div id="div_concepto" class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Conceptos</label>
+										<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" >
+											<option value="">Todos</option>
+											<?php foreach($concepto as $row):?>
+											<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
+											<?php  endforeach;?>
+										</select>
+									</div>
+								</div>
+
+
+								
 									
 <!--
 								<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -280,7 +310,7 @@
 
 													<td class="text-left" style="vertical-align:middle">
 														<a href="javascript:void(0);"  
-																					   onclick="abrirPdfReporte('<?php echo addslashes($row->funcion); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
+																					   onclick="abrirPdfReporte('<?php echo addslashes($row->id); ?>', '<?php echo addslashes($row->por_usuario); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
 														style="font-size: 12px; text-decoration: underline; color: blue;">
 															Ver Informe
 														</a>
