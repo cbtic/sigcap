@@ -2092,6 +2092,28 @@ class ComprobanteController extends Controller
 		$forma_pago = $tabla_model->getMaestroByTipoAndDenomina('19',$term);
          return response()->json($forma_pago);
     }
+
+    public function credito_pago($id){
+		
+		$id_user = Auth::user()->id;
+		$tabla_model = new TablaMaestra;
+
+        $medio_pago = $tabla_model->getMaestroByTipo('19');
+
+		return view('frontend.comprobante.modal_credito_pago',compact('id','medio_pago'));
+
+    }
+
+
+
+    public function listar_credito_pago($id){
+
+        $comprobante_model = new Comprobante; 
+        $resultado = $comprobante_model->listar_credito_pago($id);
+		return $resultado;
+
+    }
+
 	
     public function firmar($id_factura){
 
