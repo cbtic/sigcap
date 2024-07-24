@@ -627,6 +627,10 @@
 
                                                     <input style="display:none" class="btn btn-danger pull-rigth" value="ANULAR FRAC" type="button" id="btnAnulaFrac" disabled="disabled" onclick="anular_fraccionamiento()" />
 
+                                                    <input class="btn btn-success pull-rigth" value="REPORTE DEUDAS" type="button" id="btnReporteDeuda" onclick="reporte_deudas()" />
+
+                                                    <input class="btn btn-success pull-rigth" value="REPORTE DEUDA TOTAL" type="button" id="btnReporteDeuda" onclick="reporte_deudas_total()" />
+
                                                 </div><!--form-group-->
                                             </div><!--col-->
                                         </div><!--row-->

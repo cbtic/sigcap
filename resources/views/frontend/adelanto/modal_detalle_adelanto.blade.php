@@ -209,6 +209,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
 <script type="text/javascript">
 
+$(document).ready(function () {
+
+  $("#fecha").attr("disabled",true);
+
+  var fechaPagoInput = $('.fila .fecha-pago input');
+    fechaPagoInput.datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        todayHighlight: true
+    });
+
+});
 
 $("#profesion").select2();
 
@@ -355,7 +367,7 @@ function fn_save_detalle(){
   //alert(fechaPrestamo);
   //alert(fecha_actual);
   if(totalPago==totalAdelanto){
-    if(primera_fecha>=fechaPrestamo){
+    //if(primera_fecha>=fechaPrestamo){
       //alert('El total es igual');
       $.ajax({
             url: "/adelanto/send_detalle_adelanto",
@@ -377,9 +389,9 @@ function fn_save_detalle(){
             }
           });
     
-    }else{
+    /*}else{
       bootbox.alert("La fecha ingresada no puede ser anterior a la fecha "+fecha_prestamo);
-    }
+    }*/
     
   }else{
     bootbox.alert("El total no coincide con las cuotas");
