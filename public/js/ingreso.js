@@ -811,6 +811,8 @@ function obtenerBeneficiario(){
 	$("#btnDescuento").prop('disabled', true);
 	//$("#btnFracciona").prop('disabled', true);
 	$("#btnAnulaVal").prop('disabled', true);
+	$("#btnReporteDeuda").attr('disabled', true);
+	$("#btnReporteDeudaTotal").attr('disabled', true);
 
 	$('#cboTipoConcepto_b').val("");
 	$('#cboTipoCuota_b').val("");
@@ -934,6 +936,8 @@ function obtenerBeneficiario(){
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
 					$('#btnAnulaVal').attr("disabled", false);
+					$("#btnReporteDeuda").attr('disabled', false);
+					$("#btnReporteDeudaTotal").attr('disabled', false);
 
 				} else {
 					var agremiado = result.agremiado.apellido_paterno + " " + result.agremiado.apellido_materno + ", " + result.agremiado.nombres;

@@ -141,13 +141,15 @@
 			<tbody>
                 <tr>
                     <td style="font-size : 8.5px;padding-left:5px!important" width="60%">
-                        *** Las deudas que est&aacute;n registradas en D&oacute;lares se muestra en Soles con el tipo de cambio S/. 3.75 del dia 22/11/2023.
+                        *** Las deudas que est&aacute;n registradas en D&oacute;lares se muestra en Soles con el tipo de cambio S/. <?php echo number_format($tipo_cambio[0]->valor_venta, 3, '.', ',')?> del dia <?php echo $tipo_cambio[0]->fecha?>.
                     </td>
                 </tr>
 			</tbody>
 		</table>
         <?php 
+        $total_deuda = 0;
         foreach($denominacion_reporte_deudas as $key2=>$k){
+           
         ?>
         <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;padding-bottom:10px" width="100%">
 			<tbody>
@@ -164,28 +166,48 @@
 				</tr>
 				
 				<?php 
+                $total_monto = 0;
 				foreach($datos_reporte_deudas as $key=>$r){
+                    
                     if ($k->denominacion == $r->denominacion):
+                    $total_monto += $r->importe;
+                    $total_deuda +=  $r->importe;
+                    
 				?>
 				<tr>
 					<td style="border:1px solid #A4A4A4;width:40px;text-align:center"><?php echo $r->row_num?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->descripcion?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($r->importe, 2, '.', ',')?></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($r->importe, 2, '.', ',')?></td>
 				</tr>
 				<?php
+                 
                     endif;
 				} 
 				?>
-
-                <tr>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">Item</td>
-				</tr>
 				
 			</tbody>
 		</table>
+
+        <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
+            <tbody>
+                <tr>
+					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="80%"><?php echo 'TOTAL ' .($key2+1).': DEUDA POR '.$k->denominacion.': S/'?></td>
+                    <td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="20%"><?php echo number_format($total_monto, 2, '.', ',')?></td>
+				</tr>
+            </tbody>
+        </table>
 		<?php
+        
         } 
         ?>
+        <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
+            <tbody>
+                <tr>
+					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="80%"><?php echo 'TOTAL DEUDA: S/'?></td>
+                    <td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="20%"><?php echo number_format($total_deuda, 2, '.', ',')?></td>
+				</tr>
+            </tbody>
+        </table>
 		<!--<table style="margin-top: 10px">
             <tr>
                 <td class="td_ancho_espacios"></td>
