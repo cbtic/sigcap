@@ -527,7 +527,6 @@ function datatablenew(){
 
             ]
 
-
     });
 
 }

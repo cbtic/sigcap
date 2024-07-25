@@ -243,7 +243,7 @@
 					
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="id_puesto" id="id_puesto" class="form-control form-control-sm">
-							<option value="">--Tipo Tirular--</option>
+							<option value="">--Tipo Titular--</option>
 							<?php
 							foreach ($puesto as $row) {
 								//if($row->codigo==1 || $row->codigo==2){
