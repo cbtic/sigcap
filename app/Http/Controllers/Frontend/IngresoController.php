@@ -19,6 +19,8 @@ use App\Models\Empresa;
 use App\Models\Beneficiario;
 use App\Models\Comprobante;
 use App\Models\AgremiadoMulta;
+use App\Models\TipoCambio;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
 
 class IngresoController extends Controller
@@ -964,8 +966,83 @@ class IngresoController extends Controller
 		$sexo = $tablaMaestra_model->getMaestroByTipo(2);
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(110);
 
-
 		return view('frontend.ingreso.modal_consulta_persona',compact('sexo','tipo_documento', 'id_tipo_documento'));
+	}
+
+    public function reporte_deudas_pdf($numero_cap){
+		
+		$caja_ingreso_model=new CajaIngreso;
+        $agremiado_model=new Agremiado;
+        $tipo_cambio_model= new TipoCambio;
+
+        $datos_agremiado=$agremiado_model->getAgremiado(85,$numero_cap);
+        $numero_cap=$datos_agremiado->numero_cap;
+        $nombre_completo=$datos_agremiado->nombre_completo;
+        //var_dump($datos_agremiado);exit();
+		$datos_reporte_deudas=$caja_ingreso_model->datos_reporte_deudas($datos_agremiado->id);
+        $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeuda($datos_agremiado->id);
+        $tipo_cambio=$tipo_cambio_model->getTipoCambio();
+		//$nombre=$datos[0]->numero_cap;
+		//var_dump($denominacion_reporte_deudas);exit();
+		//$numeroEnLetras = $this->numeroALetras($numero);
+
+		Carbon::setLocale('es');
+
+        $fecha_actual = Carbon::now()->format('d/m/Y');
+        $hora_actual = Carbon::now()->format('H:i:s');
+
+		//$carbonDate = new Carbon($fecha_actual);
+	
+		//$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
+		
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_deudas_pdf',compact('datos_agremiado','numero_cap','nombre_completo','datos_reporte_deudas','fecha_actual','hora_actual','denominacion_reporte_deudas','tipo_cambio'));
+		
+		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream();
+
+	}
+
+    public function reporte_deudas_total_pdf($numero_cap){
+		
+		$caja_ingreso_model=new CajaIngreso;
+        $agremiado_model=new Agremiado;
+        $tipo_cambio_model= new TipoCambio;
+
+        $datos_agremiado=$agremiado_model->getAgremiado(85,$numero_cap);
+        $numero_cap=$datos_agremiado->numero_cap;
+        $nombre_completo=$datos_agremiado->nombre_completo;
+        //var_dump($datos_agremiado);exit();
+		$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id);
+        $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id);
+        $tipo_cambio=$tipo_cambio_model->getTipoCambio();
+		//$nombre=$datos[0]->numero_cap;
+		//var_dump($denominacion_reporte_deudas);exit();
+		//$numeroEnLetras = $this->numeroALetras($numero);
+
+		Carbon::setLocale('es');
+
+        $fecha_actual = Carbon::now()->format('d/m/Y');
+        $hora_actual = Carbon::now()->format('H:i:s');
+
+		//$carbonDate = new Carbon($fecha_actual);
+	
+		//$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
+		
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_deudas_total_pdf',compact('datos_agremiado','numero_cap','nombre_completo','datos_reporte_deudas','fecha_actual','hora_actual','denominacion_reporte_deudas','tipo_cambio'));
+		
+		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream();
+
 	}
 
 }

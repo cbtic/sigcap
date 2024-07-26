@@ -626,6 +626,16 @@
                                                     <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="modal_fraccionamiento()" />
 
                                                     <input style="display:none" class="btn btn-danger pull-rigth" value="ANULAR FRAC" type="button" id="btnAnulaFrac" disabled="disabled" onclick="anular_fraccionamiento()" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding-top:20px">
+                                            <div class="col">
+                                                <div class="form-group mb-0 clearfix">
+
+                                                    <input class="btn btn-success pull-rigth" value="REPORTE DEUDAS" type="button" id="btnReporteDeuda" disabled="disabled" onclick="reporte_deudas()" />
+
+                                                    <input class="btn btn-success pull-rigth" value="REPORTE DEUDA TOTAL" type="button" id="btnReporteDeudaTotal" disabled="disabled" onclick="reporte_deudas_total()" />
 
                                                 </div><!--form-group-->
                                             </div><!--col-->
