@@ -21,7 +21,7 @@ inner join tabla_maestras t4 on t1.id_puesto::int = t4.codigo::int And t4.tipo =
 inner join tabla_maestras t5 on t2.id_situacion = t5.codigo::int And t5.tipo ='14' 
 where id_comision=".$id_comision;
 
-		$cad .= " and t1.id_puesto not in (12) ";
+		$cad .= " and t1.id_puesto not in (12) and t1.estado='1' and t2.estado='1' and t3.estado='1' ";
 		$cad .= " order by t4.denominacion ";
 		//echo $cad;
 		$data = DB::select($cad);
