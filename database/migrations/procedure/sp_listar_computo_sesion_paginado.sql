@@ -1,4 +1,11 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(p_id_periodo_comisiones character varying, p_id_comision character varying, p_anio character varying, p_mes character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(
+p_id_periodo_comisiones character varying, 
+p_id_comision character varying,
+p_id_puesto character varying,
+p_anio character varying, 
+p_mes character varying, 
+p_pagina character varying, 
+p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -25,7 +32,7 @@ begin
 
 	v_tabla=' from (
 select mi.denominacion municipalidad,t4.comision comision,
-p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres delegado,a.numero_cap,tmp.denominacion puesto,cd.id_puesto::int id_puesto, 
+p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres delegado,a.numero_cap,coalesce(tmp.denominacion,''ASESOR / ESPECIALISTA'') puesto,cd.id_puesto::int id_puesto, 
 t5.descripcion periodo,
 (case when t0.coordinador=''1'' then ''COORDINADOR'' else '''' end) coordinador,
 sum(case when tmts.denominacion=''ORDINARIA'' then 1 else 0 end) computada,
@@ -41,8 +48,10 @@ left join tabla_maestras t7 on t1.id_estado_aprobacion::int = t7.codigo::int And
 inner join comisiones t4 on t1.id_comision=t4.id
 inner join periodo_comisiones t5 on t1.id_periodo_comisione=t5.id
 inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
-inner join comision_delegados cd on t0.id_delegado=cd.id  
-inner join agremiados a on cd.id_agremiado=a.id 
+/*inner join comision_delegados cd on t0.id_delegado=cd.id  
+inner join agremiados a on cd.id_agremiado=a.id*/
+left join comision_delegados cd on t0.id_delegado=cd.id  
+left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id 
 inner join personas p on a.id_persona=p.id 
 inner join tabla_maestras tmts on t1.id_tipo_sesion::int = tmts.codigo::int And tmts.tipo =''71''
 left join tabla_maestras tmp  on cd.id_puesto::int = tmp.codigo::int And tmp.tipo =''94''
@@ -50,6 +59,14 @@ where t0.id_aprobar_pago=2 ';
 	
 	If p_id_periodo_comisiones<>'' Then
 	 v_tabla:=v_tabla||'And t1.id_periodo_comisione = '''||p_id_periodo_comisiones||''' ';
+	End If;
+	
+	If p_id_comision<>'' and p_id_comision<>'0' Then
+	 v_tabla:=v_tabla||' And t1.id_comision = '''||p_id_comision||''' ';
+	End If;
+
+	If p_id_puesto<>'' and p_id_puesto<>'0' Then
+	 v_tabla:=v_tabla||' And cd.id_puesto = '''||p_id_puesto||''' ';
 	End If;
 
 	If p_anio<>'' Then

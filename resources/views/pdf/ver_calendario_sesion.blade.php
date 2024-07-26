@@ -106,7 +106,14 @@
 										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $anio?></td>
 										<td style="padding:0px!important;margin:0px!important;text-align:right"></td>
 										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Mes:</td>
-										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $mes?></td>
+										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left">
+										<?php 
+										setlocale(LC_ALL, 'es_ES');
+										$dateObj   = DateTime::createFromFormat('!m', $mes);
+										$mes_ = strftime('%B', $dateObj->getTimestamp());
+										echo $mes_;
+										?>
+										</td>
 										<td style="padding:0px!important;margin:0px!important;text-align:right"></td>
 										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Fecha Computo:</td>
 										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo date("d-m-Y")?></td>
@@ -141,6 +148,8 @@
 					<td colspan="3" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
 				
 					<?php
+					$colspan = 3;
+					$suma_total_delegado = 0;
 					
 					$fechaInicio = $anio."-".$mes."-01";
 					$fechaFin = date("Y-m-t", strtotime($fechaInicio));
@@ -152,6 +161,7 @@
 					?>
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;width:20px"><?php echo $dias[$i] ?></td>
 					<?php	
+					$colspan++;
 					}
 					
 					for($i=strtotime($fechaInicio); $i<=strtotime($fechaFin); $i+=86400){
@@ -161,6 +171,7 @@
 						?>
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;width:20px"><?php echo $dia ?></td>
 					<?php	
+						$colspan++;
 						}
 					}
 					
@@ -172,6 +183,7 @@
 					?>
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;width:20px"><?php echo $dias[$i] ?></td>
 					<?php
+						$colspan++;
 						}	
 					}
 					
@@ -370,7 +382,7 @@
 						<?php
 							}	
 						}
-						
+						$suma_total_delegado += $total_delegado;
 						?>
 						
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:center"><?php echo $total_delegado?></td>
@@ -386,15 +398,20 @@
 				
 				<?php }?>
 				
-				
+				<tfoot>
+				<tr>
+				<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:left" colspan="<?php echo $colspan;?>">Total asistencia del mes</td>
+				<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:center"><?php echo $suma_total_delegado?></td>
+				</tr>
+				</tfoot>
 				
 		</table>
 		
         <footer>
         <script type="text/php">
             if (isset($pdf)) {
-				$x = 510;
-				$y = 815;
+				$x = 730;
+				$y = 573;
                 $text = "Pagina {PAGE_NUM} de {PAGE_COUNT}";
                 $font = null;
                 $size = 8;
