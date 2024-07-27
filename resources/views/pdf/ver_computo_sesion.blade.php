@@ -151,6 +151,7 @@
 				foreach($comisionSesion as $key=>$r){
 					if($key==0){
 						$municipalidad_old = $r->municipalidad;
+						$comision_old = $r->comision;
 						$total_sesion_delegado = $r->total_sesion_delegado;
 						$total_sesion_coordinador_zonal = $r->total_sesion_coordinador_zonal;
 						$total_sesion = $total_sesion_delegado + $total_sesion_coordinador_zonal;
@@ -174,8 +175,16 @@
 					?>
 				<tr>
 					<td style="border:1px solid #A4A4A4;width:30px"><?php echo $n?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->municipalidad?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->comision?></td>
+					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">
+					<?php
+						if($key==0 || $municipalidad_old!=$r->municipalidad)echo $r->municipalidad;
+					?>
+					</td>
+					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">
+					<?php 
+						if($key==0 || ($municipalidad_old."|".$comision_old!=$r->municipalidad."|".$r->comision))echo $r->comision;
+					?>
+					</td>
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->delegado?></td>
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->numero_cap?></td>
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->puesto?></td>
@@ -197,6 +206,7 @@
 					
 					
 					$municipalidad_old = $r->municipalidad;
+					$comision_old = $r->comision;
 					
 				} 
 				

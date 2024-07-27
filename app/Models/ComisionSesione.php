@@ -62,7 +62,8 @@ inner join personas p on a.id_persona=p.id
 left join tabla_maestras tmp on cd.id_puesto::int=tmp.codigo::int And tmp.tipo ='94'
 where 1=1
 --And t0.id_aprobar_pago=2
-And t1.id_estado_aprobacion=2
+--And t1.id_estado_aprobacion=2
+And t1.id_estado_sesion=290 
 and t0.estado='1'
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
@@ -85,7 +86,9 @@ left join comision_delegados cd on t0.id_delegado=cd.id
 left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
 inner join coordinador_zonales cz on a.id=cz.id_agremiado and t4.id=cz.id_comision and t1.id_periodo_comisione=cz.id_periodo 
 inner join personas p on a.id_persona=p.id 
-where t0.id_aprobar_pago=2
+where 1=1
+--And t0.id_aprobar_pago=2
+And t1.id_estado_sesion=290   
 and t0.estado='1'
 and t4.denominacion in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
@@ -103,10 +106,14 @@ and t1.id_periodo_comisione=".$id_periodo;
         $cad = "select case 
 		when id_tipo_sesion='401' then
 			case 
-				when t0.id_aprobar_pago=2 then 'O' 
+				when t1.id_estado_aprobacion=2 then 'O' 
 				else 'X'
 			end
-		when id_tipo_sesion='402' then 'E' 
+		when id_tipo_sesion='402' then 
+			case 
+				when t1.id_estado_aprobacion=2 then 'E' 
+				else 'X'
+			end 
 		end tipo_sesion 
 from comision_sesiones t1 
 inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
@@ -119,7 +126,8 @@ left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
 inner join personas p on a.id_persona=p.id 
 where 1=1
 --And t0.id_aprobar_pago=2
-And t1.id_estado_aprobacion=2 
+--And t1.id_estado_aprobacion=2 
+And t1.id_estado_sesion=290 
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and u.id_ubigeo = '".$id_ubigeo."' 
@@ -134,14 +142,21 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
 	public static function getFechaDelegadoComisionSesionCoordinadorZonal($anio,$mes,$id_municipalidad_integrada,$id_agremiado,$fecha){
 		
 		//select case when id_tipo_sesion='401' and t0.id_delegado>0 then 'O' when id_tipo_sesion='402' and t0.id_delegado>0 then 'E'  else 'AE' end tipo_sesion
-        $cad = "select 'E' tipo_sesion 
+        $cad = "select 
+--'E' tipo_sesion 
+case 
+	when t0.id_aprobar_pago=2 then 'E' 
+	else 'X'
+end tipo_sesion 
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 inner join comisiones t4 on t1.id_comision=t4.id
 left join comision_delegados cd on t0.id_delegado=cd.id  
 left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
 inner join personas p on a.id_persona=p.id 
-where t0.id_aprobar_pago=2
+where 1=1
+--And t0.id_aprobar_pago=2
+And t1.id_estado_sesion=290 
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and t4.id_municipalidad_integrada = ".$id_municipalidad_integrada." 
