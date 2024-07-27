@@ -157,7 +157,7 @@
                  ?>
 					 <table>
             <thead>
-			<?php var_dump($items->comprobante_detalles.id_concepto); exit(); ?>
+			
                 <tr>
 					
                     <th>Campo 1</th>
