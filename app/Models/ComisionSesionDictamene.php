@@ -37,6 +37,7 @@ where id_comision_sesion=".$id." and csd.estado='1'";
 		where cs.id = ".$id." and l.id_situacion =1
 		order by u.desc_ubigeo asc";
 		
+		
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
