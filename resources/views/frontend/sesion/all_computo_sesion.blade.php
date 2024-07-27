@@ -169,7 +169,7 @@
 							if($periodo_activo){
 							?>
 							<input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
-							<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido()" disabled="disabled">
+							<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido();obtenerPuestoBus()" disabled="disabled">
 								<option value="">--Periodo--</option>
 								<?php
 								foreach ($periodo as $row) {?>
@@ -181,7 +181,7 @@
 							<?php
 							}else{
 							?>
-							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido()">
+							<select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComisionBus();obtenerAnioPerido();obtenerPuestoBus()">
 								<option value="">--Periodo--</option>
 								<?php
 								foreach ($periodo as $row) {?>
@@ -210,9 +210,9 @@
 						</div>
 					</div>
 					<div class="row" style="padding:20px 20px 0px 20px;">
-						<div class="col-lg-6">
+						<div class="col-lg-8">
 							<div class="form-group">
-								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="">
+								<select name="id_comision_bus" id="id_comision_bus" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar Comisi&oacute;n--</option>
 									<?php
 									foreach ($comision as $row) {?>
@@ -223,20 +223,34 @@
 								</select>
 							</div>
 						</div>
-
+						
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+							<select name="id_puesto_bus" id="id_puesto_bus" class="form-control form-control-sm">
+								<option value="">--Puesto--</option>
+								<?php
+								//foreach ($puesto as $row) {?>
+								<!--<option value="<?php //echo $row->codigo?>"><?php //echo $row->denominacion?></option>-->
+								<?php 
+								//}
+								?>
+							</select>
+						</div>
+						
+						<!--
 						<div class="col-lg-6">
 							<div class="form-group">
 								<select name="id_delegado" id="id_delegado" class="form-control form-control-sm" onChange="">
 									<option value="">--Seleccionar Delegado--</option>
 									<?php
-									foreach ($concurso_inscripcion as $row) {?>
-									<option value="<?php echo $row->id?>"><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
+									//foreach ($concurso_inscripcion as $row) {?>
+									<option value="<?php //echo $row->id?>"><?php //echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
 									<?php 
-									}
+									//}
 									?>
 								</select>
 							</div>
 						</div>
+						-->
 					</div>
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
@@ -351,5 +365,9 @@
 @push('after-scripts')
 
 <script src="{{ asset('js/sesion/lista_computo.js') }}"></script>
-
+<script>
+obtenerComisionBus();
+obtenerAnioPerido();
+obtenerPuestoBus();
+</script>
 @endpush

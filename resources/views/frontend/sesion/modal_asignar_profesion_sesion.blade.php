@@ -260,7 +260,7 @@ function guardarCita(id_medico,fecha_cita){
     }
 }
 
-function fn_save(){
+function fn_save_asesor(){
     
 	var _token = $('#_token').val();
 	var id = $('#id_').val();
@@ -360,7 +360,7 @@ function obtenerVehiculo(id,obj){
 				newRow += "<tr class='normal'><td>"+oo.placa+"</td>";
 				newRow += '<td class="text-left" style="padding:0px!important;margin:0px!important">';
 				newRow += '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-				newRow += '<a href="javascript:void(0)" onClick=fn_save("'+oo.id_vehiculo+'") class="btn btn-sm btn-normal">';
+				newRow += '<a href="javascript:void(0)" onClick=fn_save_asesor("'+oo.id_vehiculo+'") class="btn btn-sm btn-normal">';
 				newRow += '<i class="fa fa-2x fa-check" style="color:green"></i></a></a></div></td></tr>';
 			});
 			$('#tblPlanDetalle tbody').html(newRow);
@@ -485,7 +485,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save_asesor()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

@@ -425,6 +425,7 @@ Route::post('sesion/update_sesion_dia_semana', [SesionController::class, 'update
 Route::post('sesion/send_sesion_bloque', [SesionController::class, 'send_sesion_bloque'])->name('sesion.send_sesion_bloque');
 Route::get('sesion/obtener_comision_delegado/{id}', [SesionController::class, 'obtener_comision_delegado'])->name('sesion.obtener_comision_delegado');
 Route::get('sesion/obtener_comision/{id_periodo}/{tipo_comision}', [SesionController::class, 'obtener_comision'])->name('sesion.obtener_comision');
+Route::get('sesion/obtener_puesto/{id_periodo}/{tipo_comision}', [SesionController::class, 'obtener_puesto'])->name('sesion.obtener_puesto');
 Route::get('sesion/modal_asignar_delegado_sesion/{id}', [SesionController::class, 'modal_asignar_delegado_sesion'])->name('sesion.modal_asignar_delegado_sesion');
 Route::get('sesion/modal_historial_delegado_sesion/{id}', [SesionController::class, 'modal_historial_delegado_sesion'])->name('sesion.modal_historial_delegado_sesion');
 Route::get('sesion/modal_asignar_profesion_sesion/{id}', [SesionController::class, 'modal_asignar_profesion_sesion'])->name('sesion.modal_asignar_profesion_sesion');
@@ -440,7 +441,7 @@ Route::post('sesion/send_computo_sesion', [SesionController::class, 'send_comput
 Route::get('sesion/obtener_dictamen/{id}', [SesionController::class, 'obtener_dictamen'])->name('sesion.obtener_dictamen');
 
 Route::get('sesion/computo_sesion_pdf/{id}', [SesionController::class, 'computo_sesion_pdf'])->name('sesion.computo_sesion_pdf');
-Route::get('sesion/ver_computo_sesion_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_computo_sesion_pdf'])->name('sesion.ver_computo_sesion_pdf');
+Route::get('sesion/ver_computo_sesion_pdf/{id_periodo}/{id_comision}/{id_puesto}/{anio}/{mes}', [SesionController::class, 'ver_computo_sesion_pdf'])->name('sesion.ver_computo_sesion_pdf');
 Route::get('sesion/ver_delegado_coordinador_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_delegado_coordinador_pdf'])->name('sesion.ver_delegado_coordinador_pdf');
 
 Route::get('sesion/calendario_sesion_pdf/{id}', [SesionController::class, 'calendario_sesion_pdf'])->name('sesion.calendario_sesion_pdf');
