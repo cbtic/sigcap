@@ -420,7 +420,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
+                        <div class="col-lg-1-5 col-md-1 col-sm-12 col-xs-12">
                             <select name="mes_" id="mes_" class="form-control form-control-sm">
                                 <option value="">--Seleccionar Mes--</option>
                                 <?php
@@ -432,8 +432,15 @@
                             </select>
                         </div>
 
-                        <div class="col-lg-3 col-md-2 col-sm-12 col-xs-12">
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                             <input class="form-control form-control-sm" id="agremiado_2" name="agremiado_2" placeholder="Nombres">
+                        </div>
+
+                        <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+                            <input class="form-control form-control-sm" id="fecha_inicio_bus" name="fecha_inicio_bus" placeholder="Fecha Desde">
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
+                            <input class="form-control form-control-sm" id="fecha_fin_bus" name="fecha_fin_bus" placeholder="Fecha Hasta">
                         </div>
                         
                         <div class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
