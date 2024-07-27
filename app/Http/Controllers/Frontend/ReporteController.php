@@ -128,12 +128,14 @@ class ReporteController extends Controller
 		$funcion = $reporte->funcion;
 		$por_usuario= $reporte->por_usuario;
 
+	
+
 		if ($id_tipo == '1'){
 
 			$id_usuario = $opc1;
 			$id_caja = $opc2;
 
-			//var_dump($tipo);exit();
+	
 			$titulo = "";
 
 			$caja_ingreso_model = new CajaIngreso();
@@ -198,6 +200,40 @@ class ReporteController extends Controller
 		
 		
 				$pdf = Pdf::loadView('frontend.reporte.reporte_mov_pdf',compact('titulo','movimiento_comprobante','forma_pago','f_inicio','f_inicio'));
+				$pdf->getDomPDF()->set_option("enable_php", true);
+				
+				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+			}
+		}
+
+		if ($id_tipo == '2'){
+
+			$concepto = $opc1;
+			$estado_pago = $opc2;
+
+
+			if ($funcion=='rv' || $funcion=='mct' ){
+				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
+				$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";
+
+				
+				//$usuario=$usuario_ingresos[0] ->usuario;
+
+				//print_r($venta);exit();
+		
+				$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '';			
+				$reporte_ventas = $caja_ingreso_model->getAllReporteVentas($f_inicio, $f_fin, $concepto,$estado_pago);
+				
+				//var_dump($reporte_ventas);exit();
+				//print_r($venta);exit();
+		
+				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_pdf',compact('titulo','reporte_ventas','f_inicio','f_inicio'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
 				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
