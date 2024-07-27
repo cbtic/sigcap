@@ -32,7 +32,7 @@ where id_comision_sesion=".$id." and csd.estado='1'";
 		inner join liquidaciones l on l.id_solicitud =s2.id 
 		inner join tabla_maestras tm on s2.id_tipo_tramite  =tm.codigo::int and tm.tipo='25'
 		inner join tabla_maestras tm2 on csd.id_dictamen  =tm2.codigo::int and tm2.tipo='114'
-		inner join tabla_maestras tm3 on csd.id_apela_recon  =tm3.codigo::int and tm2.tipo='200'
+		left join tabla_maestras tm3 on csd.id_apela_recon  =tm3.codigo::int and tm3.tipo='200'
 		inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo 
 		where cs.id = ".$id." 
 		order by u.desc_ubigeo asc";
