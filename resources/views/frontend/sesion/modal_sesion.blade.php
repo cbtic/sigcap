@@ -959,8 +959,7 @@ function cargarDelegados(){
 										<th>Proyectista</th>
 										<!--<th>Fecha Liquidaci&oacute;n</th>
 										<th>Nombre</th>
-										<th>Direcci&oacute;n</th>-->
-										
+										<th>Direcci&oacute;n</th>-->										
 									</tr>
 									</thead>
 									<tbody>
