@@ -957,6 +957,7 @@ function cargarDelegados(){
 										<th>Rec. o Apel</th>
 										<th>Revis&oacute;n</th>
 										<th>Proyectista</th>
+										
 										<!--<th>Fecha Liquidaci&oacute;n</th>
 										<th>Nombre</th>
 										<th>Direcci&oacute;n</th>-->										
