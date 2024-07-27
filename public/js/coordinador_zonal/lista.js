@@ -122,6 +122,20 @@ $(document).ready(function () {
 			return false;
 		}
 	});
+
+	$('#fecha_inicio_bus').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+
+	$('#fecha_fin_bus').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
 		
 	$('#btnNuevo').click(function () {
 		GuardarCoordinadorZonal(0);
@@ -828,6 +842,8 @@ function datatablenew2(){
 			var agremiado = $('#agremiado_2').val();
 			var mes = $('#mes_').val();
 			var estado_aprobado = $('#id_estado_aprobacion_bus').val();
+			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
+			var fecha_fin_bus = $('#fecha_fin_bus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -837,7 +853,7 @@ function datatablenew2(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id:id,periodo:periodo,agremiado:agremiado,mes:mes,estado_aprobado:estado_aprobado,estado:estado,
-						_token:_token
+						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,_token:_token
                        },
                 "success": function (result) {
                     fnCallback(result);
