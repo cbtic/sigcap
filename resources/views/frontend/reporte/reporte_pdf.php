@@ -137,7 +137,7 @@
 		-->		
 				<?php 
                 $total_monto = 0;
-				foreach($venta as $key=>$r){
+				foreach($reporte_ventas as $key=>$r){
                 $total_monto += $r->total;
 				?>
 				<tr>

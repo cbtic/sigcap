@@ -368,7 +368,7 @@
 							<td class="ancho_nro" style="text-align:center;border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo isset($fechaSesion->tipo_sesion)?$fechaSesion->tipo_sesion:""?></td>
 							<?php
 							
-							if(isset($fechaSesion->tipo_sesion))$total_delegado++;
+							if(isset($fechaSesion->tipo_sesion) && ($fechaSesion->tipo_sesion=="O" || $fechaSesion->tipo_sesion=="E"))$total_delegado++;
 							
 							}
 						}

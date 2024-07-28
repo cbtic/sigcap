@@ -231,6 +231,34 @@ class CajaIngreso extends Model
         return $data;
     }
 
+    function getAllReporteVentas( $f_inicio, $f_fin, $id_concepto, $estado_pago){
+
+        $concepto_sel = "";
+        $estado_pago_sel = "";
+
+       // if ($id_concepto!="") $concepto_sel = " and cd.id_concepto  = ".$id_concepto; 
+        //if ($estado_pago!="") $estado_pago_sel = " and c.estado_pago  = '". $estado_pago . "' "; 
+
+      //  $cad = "
+      //         select serie,numero, cod_tributario, destinatario, cantidad, descripcion, importe ,id_concepto
+      //          from (
+      //                  select fecha, c.serie,c.numero, cod_tributario, destinatario, cd.cantidad, cd.descripcion, cd.importe ,cd.id_concepto
+      //                  from comprobantes c inner join comprobante_detalles cd on c.id=cd.id_comprobante 
+       //                 where 1=1 "
+      //                .  $concepto_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' ) 
+       //               as reporte group by serie,numero, cod_tributario, destinatario, cantidad, descripcion, importe ,id_concepto";
+
+       // echo $cad; exit();
+        $data = DB::table('comprobantes')
+        ->join('comprobante_detalles', 'comprobantes.id', '=', 'comprobante_detalles.id_comprobante')
+        ->select('comprobante_detalles.id_concepto', 'comprobantes.fecha', 'cod_tributario', 'comprobante_detalles.id_concepto') // Selecciona los campos necesarios
+       ->get()
+        ->groupBy('comprobante_detalles.id_concepto');
+       //$data = DB::select($cad);
+        
+        return $data;
+    }
+
     function getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";
