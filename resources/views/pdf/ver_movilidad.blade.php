@@ -126,21 +126,32 @@
 				<tr>
 					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center">N°</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;text-align:left;padding-top:5px;padding-bottom:5pxM;text-align:center" width="25%">Municipalidad</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Importe por Distrito S/.</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="12%">Importe Mes Actual S/.</td>
-				</tr>
+					<!--<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Importe por Distrito S/.</td>-->
+					<?php foreach($movilidad_meses as $key2=>$k) {?>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="12%"><?php echo $k->mes_anio ?></td>
+                    <?php }?>
+                </tr>
 				
 				<?php 
-				foreach($movilidad as $key=>$r){
+				foreach($movilidad_mes as $key=>$sub_movilidad){
+
+                    //dd($movilidad_mes);
+                    //foreach($sub_movilidad as $index=>$r){
+                    //if($key<count($movilidad)-1){
 				?>
 				<tr>
 					<td style="border:1px solid #A4A4A4;width:40px;text-align:center"><?php echo ($key+1)?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->comision?></td>
-					<td class="td_right" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->monto?></td>
-					<td class="td_right" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo ($r->cantidad>0)?$r->monto:"0"?></td>
-				</tr>
+					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $sub_movilidad->comision?></td>
+					<!--<td class="td_right" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php //echo $r->monto?></td>-->
+					<?php foreach($movilidad as $key2=>$k) {//dd($movilidad);
+                        foreach($k as $index=>$r){
+                            //if($index<count($k)-1){?>
+                        
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo ($r->cantidad>0)?$r->monto:"0"?></td>
+                    <?php }}//}?>
+                </tr>
 				<?php
-				} 
+                }//}} 
 				?>
 				
 			</tbody>

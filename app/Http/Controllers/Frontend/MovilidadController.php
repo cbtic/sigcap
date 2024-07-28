@@ -84,14 +84,32 @@ class MovilidadController extends Controller
 		$p[]="1000";
 		$movilidad = $movilidad_model->listar_movilidad_ajax($p);
 		*/
-		$movilidad = $movilidad_model->getMovilidadByPeriodo($id_periodo,$anio,$mes);
+
+		$movilidad_meses = $movilidad_model->getMesesByPeriodo($id_periodo);
+
+		//var_dump($movilidad_meses);exit();
+
+		//$movilidad = $movilidad_model->getMovilidadByPeriodo($id_periodo,$anio,$mes);
+
+		$movilidad = array();
 		
+		foreach($movilidad_meses as $meses){
+			//var_dump($meses);exit();
+			$mes_ = $meses->mes;
+
+			$movilidad_mes = $movilidad_model->getMovilidadByPeriodo($id_periodo,$anio,$mes_);
+			
+			$movilidad[] = $movilidad_mes;
+		}
+		//var_dump($movilidad);exit();
+		//dd($movilidad);
+
 		$dias = array('L','M','M','J','V','S','D');
 
 		$mes_ = ltrim($mes, '0');
 		$mesEnLetras = $this->mesesALetras($mes_);
 		
-		$pdf = Pdf::loadView('pdf.ver_movilidad',compact('movilidad','anio','mesEnLetras','mes'));
+		$pdf = Pdf::loadView('pdf.ver_movilidad',compact('movilidad','anio','mesEnLetras','mes','movilidad_meses','movilidad_mes'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		//$pdf->setPaper('A4', 'landscape'); // Tama�o de papel (puedes cambiarlo seg�n tus necesidades)

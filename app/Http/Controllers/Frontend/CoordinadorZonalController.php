@@ -366,7 +366,7 @@ class CoordinadorZonalController extends Controller
         $periodo = $periodo_model->getPeriodoAll();
         $mes = $tablaMaestra_model->getMaestroByTipo(116);
         $estado_sesion = $tablaMaestra_model->getMaestroByTipo(109);
-		$aprobar_pago = [2=>"Si",0=>"No"];
+		$aprobar_pago = [2=>"Si",1=>"No"];
         $municipalidad = $municipalidad_model->getMunicipalidadOrden();
 		$region = $regione_model->getRegionAll();
 		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);
