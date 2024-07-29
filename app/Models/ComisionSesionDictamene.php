@@ -24,7 +24,7 @@ left join tabla_maestras tm on s2.id_tipo_solicitud=tm.codigo::int and tm.tipo='
 inner join liquidaciones l on l.id_solicitud =s2.id  
 where id_comision_sesion=".$id." and csd.estado='1'";
 		*/
-		$cad = "select  cs.id,p.codigo ,tm.denominacion as tipo_sol ,csd.id_numero_revision,to_char(l.fecha,'dd-mm-yyyy')fecha_liquidacion ,l.credipago ,p.nombre ,p.direccion ,tm2.denominacion as dictamen,tm3.denominacion, u.desc_ubigeo distrito,l.total,csd.numero_expediente,csd.id_solicitud     
+		$cad = "select  cs.id,p.codigo ,tm.denominacion as tipo_sol ,csd.id_numero_revision,to_char(l.fecha,'dd-mm-yyyy')fecha_liquidacion ,l.credipago ,p.nombre ,p.direccion ,tm2.denominacion as dictamen,tm3.denominacion as roa, u.desc_ubigeo distrito,l.total,csd.numero_expediente,csd.id_solicitud     
 				from comision_sesion_dictamenes csd 
 					inner join comision_sesiones cs on csd.id_comision_sesion =cs.id 									
 					inner join solicitudes s2 on s2.id =csd.id_solicitud  
