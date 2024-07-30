@@ -108,11 +108,14 @@
 										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Mes:</td>
 										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left">
 										<?php 
+										/*
 										setlocale(LC_ALL, 'es_ES');
 										$dateObj   = DateTime::createFromFormat('!m', $mes);
 										$mes_ = strftime('%B', $dateObj->getTimestamp());
 										echo $mes_;
+										*/
 										?>
+										<?php echo $mesEnLetras?>
 										</td>
 										<td style="padding:0px!important;margin:0px!important;text-align:right"></td>
 										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Fecha Computo:</td>
