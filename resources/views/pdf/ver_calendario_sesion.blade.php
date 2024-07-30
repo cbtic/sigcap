@@ -392,7 +392,7 @@
 						
 								$fechaSesion = \App\Models\ComisionSesione::getFechaDelegadoComisionDistritoSesion($anio,$mes,$row0->id_ubigeo,$row2->id,$row3->id,$fechaInicioTemp_);
 								
-								if($dia=="L")$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;';
+								if($dia=="L")$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;border-top:1px solid #A4A4A4;';
 								else $borde='border:1px solid #A4A4A4;';
 							?>
 							<td class="ancho_nro" style=" <?php echo $borde ?>text-align:center;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo isset($fechaSesion->tipo_sesion)?$fechaSesion->tipo_sesion:""?></td>
