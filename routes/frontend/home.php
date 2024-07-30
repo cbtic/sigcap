@@ -267,7 +267,10 @@ Route::get('comprobante/firmar_nc/{id}', [ComprobanteController::class, 'firmar_
 Route::get('comprobante/firmar_nd/{id}', [ComprobanteController::class, 'firmar_nd'])->name('comprobante.firmar_nd');
 Route::get('comprobante/envio_comprobante_sunat_automatico/{fecha}', [ComprobanteController::class, 'envio_comprobante_sunat_automatico'])->name('comprobante.envio_comprobante_sunat_automatico');
 
-Route::get('comprobante/forma_pago/{term}', [ComprobanteController::class, 'forma_pago'])->name('comprobante.forma_pago');
+Route::get('comprobante/credito_pago/{id}', [ComprobanteController::class, 'credito_pago'])->name('comprobante.credito_pago');
+Route::post('comprobante/listar_credito_pago', [ComprobanteController::class, 'listar_credito_pago'])->name('comprobante.listar_credito_pago');
+Route::post('comprobante/send_pago_credito', [ComprobanteController::class, 'send_pago_credito'])->name('seguro.send_pago_credito');
+
 
 //Route::get('pesaje/producto/{term}', [PesajeController::class, 'producto'])->name('pesaje.producto');
 

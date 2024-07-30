@@ -102,6 +102,23 @@ class Comprobante extends Model
         //print_r($data); exit();
         return $data;
     }
+
+    function listar_credito_pago($id){
+
+        $cad = "select  c.id, c.id_comprobante, c.item, c.fecha, c.id_medio, c.nro_operacion, c.descripcion, c.monto, c.fecha_vencimiento fecha, c.estado, cp.denominacion
+                from comprobante_cuota_pagos c
+                inner join tabla_maestras cp on cp.tipo = '19' and cp.codigo::int = c.id_medio 
+                where c.id_comprobante='". $id . "'
+                order by c.id" ;
+
+                //print_r($cad); exit();
+		$data = DB::select($cad);
+        //print_r($data); exit();
+        return $data;
+    }
+
+  
+
    
 
     function getDatosByComprobante($id){
