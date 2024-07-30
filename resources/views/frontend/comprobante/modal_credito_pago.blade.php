@@ -147,7 +147,7 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	datatablenewPlan();
+	//datatablenewPlan();
 
 });
 
@@ -411,28 +411,23 @@ function limpiar(){
 	$('#parentesco').val("");
 }
 
-function fn_save_plan(){
+function fn_save(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var id_seguro = $('#id_seguro').val();
-	var nombre = $('#nombre_plan_').val();
-	var descripcion = $('#descripcion_').val();
-	var fecha_inicio =$('#fecha_inicio').val();	
-	var fecha_fin =$('#fecha_fin').val();	
+	var id_medio = $('#id_medio').val();
+	var fecha = $('#fecha').val();
+	var nro_operacion = $('#nro_operacion').val();	
 	var monto =$('#monto').val();	
-	var edad_minima =$('#edad_minima').val();
-	var edad_maxima =$('#edad_maxima').val();
-	var sexo =$('#sexo').val();
-	var parentesco =$('#parentesco').val();
+
     $.ajax({
-			url: "/seguro/send_plan",
+			url: "/comprobante/send_pago_credito",
             type: "POST",
-            data : {_token:_token,id:id,id_seguro:id_seguro,nombre:nombre,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,monto:monto,edad_minima:edad_minima,edad_maxima:edad_maxima,sexo:sexo,parentesco:parentesco},
+            data : {_token:_token,id:id,id_medio:id_medio,fecha:fecha,nro_operacion:nro_operacion,monto:monto },
 			success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
-				datatablenewPlan();
-				limpiar();
+				//datatablenewPlan();
+				//limpiar();
 								
             }
     });
@@ -476,7 +471,7 @@ function fn_save_plan(){
 							<label class="control-label">Medio</label>
 						</div>
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<select name="medio" id="medio" class="form-control form-control-sm" onChange="">
+							<select name="id_medio" id="id_medio" class="form-control form-control-sm" onChange="">
 								<option value="">--Selecionar--</option>
 
 								<?php
@@ -501,7 +496,7 @@ function fn_save_plan(){
 							<label class="control-label">Nro Operación</label>
 						</div>
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-							<input id="monto" name="monto" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="text"  >
+							<input id="nro_operacion" name="nro_operacion" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="text"  >
 						</div>
 						
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
@@ -518,7 +513,7 @@ function fn_save_plan(){
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_plan()" class="btn btn-sm btn-primary">Guardar</a>
+								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-primary">Guardar</a>
 								
 								<a href="javascript:void(0)" onClick="limpiar()" class="btn btn-sm btn-warning" style="margin-left:10px">Limpiar</a>
 								
@@ -534,20 +529,32 @@ function fn_save_plan(){
                         <thead>
                         <tr style="font-size:13px">
                             <th>Id</th>
-							<th>Parentesco</th>
-                            <th>Plan</th>
-							<th>Fecha Inicio</th>
-							<th>Fecha Fin</th>
+							<th>Fecha </th>
+							<th>Medio Pago</th>                            
+							<th>Nro Operacion</th>							
 							<th>Monto</th>
-							<th>Moneda</th>
-							<th>Edad M&iacute;nima</th>
-							<th>Edad M&aacute;xima</th>
-							<th>Sexo</th>
-							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody style="font-size:13px">
+						<tbody style="font-size:13px">
+							<?php foreach($lista as $row){?>
+							<tr>
+								<th><?php echo $row->id?></th>
+								<th><?php echo $row->fecha?></th>
+								<th><?php echo $row->denominacion?></th>
+								<th><?php echo $row->nro_operacion?></th>
+								<th><?php echo $row->monto?></th>
+																
+								<th>
+								<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+								<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
+								<a href="javascript:void(0)" onclick="eliminarEstudio(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
+								</div>
+								</th>
+							</tr>														
+							<?php }?>
+						</tbody>
 						</tbody>
                     </table>
 					</div>
