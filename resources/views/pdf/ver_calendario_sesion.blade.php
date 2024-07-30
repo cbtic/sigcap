@@ -430,8 +430,11 @@
 				
 				<tfoot>
 				<tr>
-				<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:left" colspan="<?php echo $colspan;?>">Total asistencia del mes</td>
-				<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:center"><?php echo $suma_total_delegado?></td>
+				
+				<td class="ancho_nro" colspan="3" style="border-left:1px solid #A4A4A4;border-top:1px solid #A4A4A4;border-bottom:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">Total asistencia del mes</td>
+				
+				<td class="ancho_nro" style="border-top:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:left" colspan="<?php echo ($colspan-3);?>"></td>
+				<td class="ancho_nro" style="border-top:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;border-right:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:center"><?php echo $suma_total_delegado?></td>
 				</tr>
 				</tfoot>
 				
