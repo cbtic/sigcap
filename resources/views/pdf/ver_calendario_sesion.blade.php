@@ -377,7 +377,7 @@
 						<?php 
 						for($i=0;$i<($diax-1);$i++){
 						
-							if($i==0)$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;';
+							if($i==0)$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;border-top:1px solid #A4A4A4;';
 							else $borde='border:1px solid #A4A4A4;';
 						?>
 							<td class="ancho_nro" style=" <?php echo $borde ?>;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
