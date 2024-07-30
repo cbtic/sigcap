@@ -90,7 +90,7 @@ class MovilidadController extends Controller
 		//var_dump($movilidad_meses);exit();
 
 		//$movilidad = $movilidad_model->getMovilidadByPeriodo($id_periodo,$anio,$mes);
-
+		
 		$movilidad = array();
 		
 		foreach($movilidad_meses as $meses){
