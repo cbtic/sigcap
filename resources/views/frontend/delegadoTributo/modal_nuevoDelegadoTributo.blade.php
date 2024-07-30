@@ -195,7 +195,8 @@ $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
-
+	obtenerDelegado();
+	obtenerAnioPerido();
 	$('#ruc').blur(function () {
 		var id = $('#id').val();
 			if(id==0) {

@@ -312,7 +312,7 @@ function AddFila(){
     var fecha = '<input id="fecha" name="fecha[]" class="form-control form-control-sm datepicker2"  value="" type="text">'
     var distrito = '<select name="municipalidad[]" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
     var estado_sesion = '<select name="estado_sesion[]" id="estado_sesion" class="form-control form-control-sm" onChange="cambiarEstado()"> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
-    var aprobar_pago = '<select name="aprobar_pago[]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
+    var aprobar_pago = '<select name="aprobar_pago[]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="2">Si</option> <option value="1">No</option> </select>'
     //var informe = '<select name="informe[]" id="informe" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
     var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
     var informe =  '<span class="btn btn-warning btn-file">Examinar <input id="image_'+i+'" name="image[]" type="file" /></span><input type="button" class="btn btn-sm btn-primary" value="Subir" id="upload_'+i+'" onclick="upload_img('+i+')" name="subir" style="margin-left:10px"><img src="/img/logo-sin-fondo2.png" id="img_ruta_'+i+'" width="80px" height="50px" alt="" style="margin-left:10px"><input type="hidden" id="img_foto_'+i+'" name="img_foto[]" value="" />'
@@ -534,7 +534,7 @@ function cambiarEstado() {
       
       var estado = $(this).val();
       
-      var aprobarPago = (estado == 2) ? 1 : 0;
+      var aprobarPago = (estado == 2) ? 2 : 1;
       
       $('select[name="aprobar_pago[]"]').eq(index).val(aprobarPago);
   });

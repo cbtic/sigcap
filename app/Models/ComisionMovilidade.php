@@ -78,4 +78,17 @@ group by cm.id";
         return $data;
 
     }
+
+    function getMesesByPeriodo($id_periodo){
+
+        $cad = "select distinct to_char(mes,'MM') mes, to_char(mes,'YYYYMM') mes_anio 
+        from( select generate_series(date_trunc('month', pc.fecha_inicio), date_trunc('month',pc.fecha_fin), '1 month'::interval) mes
+        from periodo_comisiones pc 
+        where id='".$id_periodo."' ) serie";
+
+		$cad .= " order by mes";
+		
+		$data = DB::select($cad);
+        return $data;
+    }
 }
