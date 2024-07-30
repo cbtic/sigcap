@@ -108,7 +108,7 @@
 										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $anio?></td>
 										<td style="padding:0px!important;margin:0px!important;text-align:right"></td>
 										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Mes:</td>
-										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $mes?></td>
+										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $mesEnLetras?></td>
 										<td style="padding:0px!important;margin:0px!important;text-align:right"></td>
 										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Fecha Computo:</td>
 										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo date("d-m-Y")?></td>
