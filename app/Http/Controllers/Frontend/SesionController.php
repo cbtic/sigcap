@@ -1058,7 +1058,10 @@ class SesionController extends Controller
 		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesionCoordinadorZonal($id_periodo,$anio,$mes);
 		$dias = array('L','M','M','J','V','S','D');
 		
-		$pdf = Pdf::loadView('pdf.ver_calendario_sesion_coordinador_zonal',compact('municipalidadSesion','id_periodo','dias','anio','mes'));
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+		
+		$pdf = Pdf::loadView('pdf.ver_calendario_sesion_coordinador_zonal',compact('municipalidadSesion','id_periodo','dias','anio','mes','mesEnLetras'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
