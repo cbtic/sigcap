@@ -98,7 +98,7 @@
 								<tbody style="padding:0px!important;margin:0px!important">
 									<tr style="padding:0px!important;margin:0px!important">
 										<td style="padding:0px!important;margin:0px!important" align="center" colspan="11" class="titulo_principal">
-											<h2>REPORTE DE CALENDARIO DE SESIONxx</h2>
+											<h2>REPORTE DE CALENDARIO DE SESION</h2>
 										</td>
 									</tr>
 									<tr style="padding:0px!important;margin:0px!important">
