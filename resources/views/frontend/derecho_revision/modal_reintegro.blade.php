@@ -450,7 +450,8 @@ function fn_save_credipago(){
 				
                 if(result[0].sw==true){
                     $('#openOverlayOpc').modal('hide');
-                    window.location.reload();
+                    //window.location.reload();
+                    datatablenew();
 				}else{
 					//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
 					bootbox.alert({

@@ -318,7 +318,7 @@ $(document).ready(function() {
             <span style="font_size: 8.5;"><b>V.B</b></span>
             <span style="float: right; font_size: 8.5"><b>Recibido por:...................................................</b></span> 
             <br>
-            <span style="font_size: 8.5;"><b>Fecha de Emisi&oacute;n: <?php echo $carbonDate;?> &nbsp; &nbsp; &nbsp; <?php echo $currentHour;?></b></span>
+            <span style="font_size: 8.5;"><b>Fecha de Emisi&oacute;n: <?php echo $fecha_liquidacion;?> &nbsp; &nbsp; &nbsp; <?php echo $currentHour;?></b></span>
             <span style="float: right; font_size: 8.5"><b>N° DNI:.................................................</b></span>   
             <hr>
             <p class="p">Costo por devoluci&oacute;n: S/. 50.00 + 12% del valor del Derecho de Revisi&oacute;n por conceptos administrativos.</p>
