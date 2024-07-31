@@ -947,17 +947,20 @@ function cargarDelegados(){
 									<thead>
 									<tr style="font-size:13px">
 										<!--<th>C&oacute;digo</th>-->
-										<th>Tipo de Solicitud</th>
+										
 										<th>Distrito</th>
-										<th>Revis&oacute;n</th>
+										<th>Exp. Municipal</th>
+										<th>Tipo de Solicitud</th>
 										<th>N&deg; Liquidaci&oacute;n</th>
 										<th>Monto</th>
-										<!--<th>Fecha Liquidaci&oacute;n</th>
-										<th>Nombre</th>
-										<th>Direcci&oacute;n</th>-->
 										<th>Dictamen</th>
-										<th>Exp. Municipal</th>
+										<th>Rec. o Apel</th>
+										<th>Revis&oacute;n</th>
 										<th>Proyectista</th>
+										
+										<!--Cambio 29/07</th>
+										<th>Nombre</th>
+										<th>Direcci&oacute;n</th>-->										
 									</tr>
 									</thead>
 									<tbody>

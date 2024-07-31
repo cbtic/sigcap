@@ -101,7 +101,8 @@ class SesionController extends Controller
 	
 		$comisionSesion_model = new ComisionSesione(); 
 		$p[]=$request->id_periodo;
-		$p[]="";
+		$p[]=$request->id_comision;
+		$p[]=$request->id_puesto;
 		$p[]=$request->anio;
 		$p[]=$request->mes;
 		$p[]=$request->NumeroPagina;
@@ -218,6 +219,14 @@ class SesionController extends Controller
 		$comision_model = new Comisione;
 		$comision = $comision_model->getComisionByPeriodo($id_periodo,$tipo_comision);
 		echo json_encode($comision);
+		
+	}
+	
+	public function obtener_puesto($id_periodo,$tipo_comision){
+			
+		$comision_model = new Comisione;
+		$puesto = $comision_model->getPuestoByPeriodo($id_periodo,$tipo_comision);
+		echo json_encode($puesto);
 		
 	}
 	
@@ -892,7 +901,7 @@ class SesionController extends Controller
         ];
 		
 		$comisionDelegado_model = new ComisionDelegado;
-		$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
+		//$concurso_inscripcion = $comisionDelegado_model->getComisionDelegado();
 
 		$comision_model = new Comisione;
 		$comision = $comision_model->getComisionAll("","","","1");
@@ -900,7 +909,7 @@ class SesionController extends Controller
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		
-        return view('frontend.sesion.all_computo_sesion',compact('periodo','anio','mes','comision','concurso_inscripcion','periodo_ultimo','periodo_activo'));
+        return view('frontend.sesion.all_computo_sesion',compact('periodo','anio','mes','comision'/*,'concurso_inscripcion'*/,'periodo_ultimo','periodo_activo'));
     }
 
 	public function obtener_anio_periodo($id_periodo){
@@ -943,11 +952,12 @@ class SesionController extends Controller
 	
 	}
 	
-	public function ver_computo_sesion_pdf($id_periodo,$anio,$mes){
+	public function ver_computo_sesion_pdf($id_periodo,$id_comision,$id_puesto,$anio,$mes){
 		
 		$comisionSesion_model = new ComisionSesione(); 
 		$p[]=$id_periodo;
-		$p[]="";
+		$p[]=$id_comision;
+		$p[]=$id_puesto;
 		$p[]=$anio;//$request->anio;
 		$p[]=$mes;//$request->mes;
 		$p[]=1;
@@ -1025,7 +1035,10 @@ class SesionController extends Controller
 		
 		$dias = array('L','M','M','J','V','S','D');
 		
-		$pdf = Pdf::loadView('pdf.ver_calendario_sesion',compact('municipalidadSesion','dias','anio','mes'));
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+		
+		$pdf = Pdf::loadView('pdf.ver_calendario_sesion',compact('municipalidadSesion','dias','anio','mes','mesEnLetras'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
@@ -1045,7 +1058,10 @@ class SesionController extends Controller
 		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesionCoordinadorZonal($id_periodo,$anio,$mes);
 		$dias = array('L','M','M','J','V','S','D');
 		
-		$pdf = Pdf::loadView('pdf.ver_calendario_sesion_coordinador_zonal',compact('municipalidadSesion','id_periodo','dias','anio','mes'));
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+		
+		$pdf = Pdf::loadView('pdf.ver_calendario_sesion_coordinador_zonal',compact('municipalidadSesion','id_periodo','dias','anio','mes','mesEnLetras'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)

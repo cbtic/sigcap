@@ -106,7 +106,17 @@
 										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $anio?></td>
 										<td style="padding:0px!important;margin:0px!important;text-align:right"></td>
 										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Mes:</td>
-										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo $mes?></td>
+										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left">
+										<?php 
+										/*
+										setlocale(LC_ALL, 'es_ES');
+										$dateObj   = DateTime::createFromFormat('!m', $mes);
+										$mes_ = strftime('%B', $dateObj->getTimestamp());
+										echo $mes_;
+										*/
+										?>
+										<?php echo $mesEnLetras?>
+										</td>
 										<td style="padding:0px!important;margin:0px!important;text-align:right"></td>
 										<td style="padding:0px!important;margin:0px!important;width:100px;text-align:right">Fecha Computo:</td>
 										<td style="padding:0px!important;margin:0px!important;width:60px;text-align:left"><?php echo date("d-m-Y")?></td>
@@ -127,12 +137,12 @@
 					
 					<td colspan="3" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
 				
-					<td colspan="6" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">1ra. Semana</td>
-					<td colspan="6" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">2da. Semana</td>
-					<td colspan="6" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">3ra. Semana</td>
-					<td colspan="6" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">4ta. Semana</td>
-					<td colspan="6" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">5ta. Semana</td>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">Total</td>
+					<td colspan="6" class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">1ra. Semana</td>
+					<td colspan="6" class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">2da. Semana</td>
+					<td colspan="6" class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">3ra. Semana</td>
+					<td colspan="6" class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">4ta. Semana</td>
+					<td colspan="6" class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">5ta. Semana</td>
+					<td class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">Total</td>
 					
 				</tr>
 			
@@ -141,6 +151,8 @@
 					<td colspan="3" class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"></td>
 				
 					<?php
+					$colspan = 3;
+					$suma_total_delegado = 0;
 					
 					$fechaInicio = $anio."-".$mes."-01";
 					$fechaFin = date("Y-m-t", strtotime($fechaInicio));
@@ -149,18 +161,26 @@
 					$diax = (date('N', strtotime($fechaInicioTemp)));
 					
 					for($i=0;$i<($diax-1);$i++){
+					
+						if($dias[$i]=="L")$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;';
+						else $borde='border:1px solid #A4A4A4;';
 					?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;width:20px"><?php echo $dias[$i] ?></td>
+						<td class="ancho_nro" style=" <?php echo $borde ?>;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;width:20px"><?php echo $dias[$i] ?></td>
 					<?php	
+					$colspan++;
 					}
 					
 					for($i=strtotime($fechaInicio); $i<=strtotime($fechaFin); $i+=86400){
 						$fechaInicioTemp = date("d-m-Y", $i);
 						$dia = $dias[(date('N', strtotime($fechaInicioTemp))) - 1];
 						if($dia!="D"){
+						
+						if($dia=="L")$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;';
+						else $borde='border:1px solid #A4A4A4;';
 						?>
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;width:20px"><?php echo $dia ?></td>
+						<td class="ancho_nro" style=" <?php echo $borde ?>;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;width:20px"><?php echo $dia ?></td>
 					<?php	
+						$colspan++;
 						}
 					}
 					
@@ -172,12 +192,13 @@
 					?>
 						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;width:20px"><?php echo $dias[$i] ?></td>
 					<?php
+						$colspan++;
 						}	
 					}
 					
 					?>
 					
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;"></td>
+					<td class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:1px solid #A4A4A4;font-style:italic;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;"></td>
 				</tr>
 				
 				<?php foreach($municipalidadSesion as $row){
@@ -195,8 +216,10 @@
 					
 						<?php 
 						for($i=0;$i<($diax-1);$i++){
+							if($i==0)$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;';
+							else $borde='border:1px solid #A4A4A4;';
 						?>
-							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo 0 ?></td>
+							<td class="ancho_nro" style=" <?php echo $borde ?>;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo 0 ?></td>
 						<?php	
 						}
 						
@@ -205,8 +228,11 @@
 							$fechaInicioTemp_ = date("d-m-Y", $i);
 							$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
 							if($dia!="D"){
+							
+							if($dia=="L")$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;';
+							else $borde='border:1px solid #A4A4A4;';
 							?>
-							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo $fechaInicioTemp ?></td>
+							<td class="ancho_nro" style=" <?php echo $borde ?>;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px"><?php echo $fechaInicioTemp ?></td>
 							<?php
 							}
 						}
@@ -224,7 +250,7 @@
 						?>
 						
 						
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;"></td>
+						<td class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;"></td>
 						
 					</tr>
 					
@@ -243,8 +269,10 @@
 					
 						<?php 
 						for($i=0;$i<($diax-1);$i++){
+							if($i==0)$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;';
+							else $borde='border:1px solid #A4A4A4;';
 						?>
-							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+							<td class="ancho_nro" style=" <?php echo $borde ?>;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
 						<?php	
 						}
 						
@@ -253,8 +281,10 @@
 							$fechaInicioTemp_ = date("d-m-Y", $i);
 							$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
 							if($dia!="D"){
+								if($dia=="L")$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;';
+								else $borde='border:1px solid #A4A4A4;';
 							?>
-							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+							<td class="ancho_nro" style=" <?php echo $borde ?>;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
 							<?php
 							}
 						}
@@ -271,7 +301,7 @@
 						
 						?>
 						
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;"></td>
+						<td class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;"></td>
 						
 						
 					</tr>
@@ -293,8 +323,11 @@
 					
 						<?php 
 						for($i=0;$i<($diax-1);$i++){
+						
+						if($i==0)$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;';
+						else $borde='border:1px solid #A4A4A4;';
 						?>
-							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+							<td class="ancho_nro" style=" <?php echo $borde ?>;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
 						<?php	
 						}
 						
@@ -303,8 +336,11 @@
 							$fechaInicioTemp_ = date("d-m-Y", $i);
 							$dia = $dias[(date('N', strtotime($fechaInicioTemp_))) - 1];
 							if($dia!="D"){
+								
+								if($dia=="L")$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;';
+								else $borde='border:1px solid #A4A4A4;';
 							?>
-							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+							<td class="ancho_nro" style=" <?php echo $borde ?>;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
 							<?php
 							}
 						}
@@ -321,7 +357,7 @@
 						
 						?>
 						
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;"></td>
+						<td class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;"></td>
 						
 					</tr>
 					
@@ -340,8 +376,11 @@
 					
 						<?php 
 						for($i=0;$i<($diax-1);$i++){
+						
+							if($i==0)$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;border-top:1px solid #A4A4A4;';
+							else $borde='border:1px solid #A4A4A4;';
 						?>
-							<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
+							<td class="ancho_nro" style=" <?php echo $borde ?>;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"></td>
 						<?php	
 						}
 						
@@ -352,11 +391,14 @@
 							if($dia!="D"){
 						
 								$fechaSesion = \App\Models\ComisionSesione::getFechaDelegadoComisionDistritoSesion($anio,$mes,$row0->id_ubigeo,$row2->id,$row3->id,$fechaInicioTemp_);
+								
+								if($dia=="L")$borde='border-left:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;border-top:1px solid #A4A4A4;';
+								else $borde='border:1px solid #A4A4A4;';
 							?>
-							<td class="ancho_nro" style="text-align:center;border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo isset($fechaSesion->tipo_sesion)?$fechaSesion->tipo_sesion:""?></td>
+							<td class="ancho_nro" style=" <?php echo $borde ?>text-align:center;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo isset($fechaSesion->tipo_sesion)?$fechaSesion->tipo_sesion:""?></td>
 							<?php
 							
-							if(isset($fechaSesion->tipo_sesion))$total_delegado++;
+							if(isset($fechaSesion->tipo_sesion) && ($fechaSesion->tipo_sesion=="O" || $fechaSesion->tipo_sesion=="E"))$total_delegado++;
 							
 							}
 						}
@@ -370,10 +412,10 @@
 						<?php
 							}	
 						}
-						
+						$suma_total_delegado += $total_delegado;
 						?>
 						
-						<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:center"><?php echo $total_delegado?></td>
+						<td class="ancho_nro" style="border-left:3px solid #A4A4A4;border-right:3px solid #A4A4A4;border-top:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:center"><?php echo $total_delegado?></td>
 						
 							
 					</tr>
@@ -386,15 +428,23 @@
 				
 				<?php }?>
 				
+				<tfoot>
+				<tr>
 				
+				<td class="ancho_nro" colspan="3" style="border-left:1px solid #A4A4A4;border-top:1px solid #A4A4A4;border-bottom:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px">Total asistencia del mes</td>
+				
+				<td class="ancho_nro" style="border-top:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:left" colspan="<?php echo ($colspan-3);?>"></td>
+				<td class="ancho_nro" style="border-top:3px solid #A4A4A4;border-bottom:1px solid #A4A4A4;border-right:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px;text-align:center"><?php echo $suma_total_delegado?></td>
+				</tr>
+				</tfoot>
 				
 		</table>
 		
         <footer>
         <script type="text/php">
             if (isset($pdf)) {
-				$x = 510;
-				$y = 815;
+				$x = 730;
+				$y = 573;
                 $text = "Pagina {PAGE_NUM} de {PAGE_COUNT}";
                 $font = null;
                 $size = 8;

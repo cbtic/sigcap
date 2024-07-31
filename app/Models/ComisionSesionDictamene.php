@@ -24,17 +24,18 @@ left join tabla_maestras tm on s2.id_tipo_solicitud=tm.codigo::int and tm.tipo='
 inner join liquidaciones l on l.id_solicitud =s2.id  
 where id_comision_sesion=".$id." and csd.estado='1'";
 		*/
-		$cad = "select  cs.id,p.codigo ,tm.denominacion as tipo_sol ,csd.id_numero_revision,to_char(l.fecha,'dd-mm-yyyy')fecha_liquidacion ,l.credipago ,p.nombre ,p.direccion ,tm2.denominacion as dictamen,u.desc_ubigeo distrito,l.total,csd.numero_expediente,csd.id_solicitud     
-		from comision_sesion_dictamenes csd 
-		inner join comision_sesiones cs on csd.id_comision_sesion =cs.id 									
-		inner join solicitudes s2 on s2.id =csd.id_solicitud  
-		inner join proyectos p on p.id=s2.id_proyecto  
-		inner join liquidaciones l on l.id_solicitud =s2.id 
-		inner join tabla_maestras tm on s2.id_tipo_tramite  =tm.codigo::int and tm.tipo='25'
-		inner join tabla_maestras tm2 on csd.id_dictamen  =tm2.codigo::int and tm2.tipo='114'
-		inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo 
-		where cs.id = ".$id." 
-		order by u.desc_ubigeo asc";
+		$cad = "select  cs.id,p.codigo ,tm.denominacion as tipo_sol ,csd.id_numero_revision,to_char(l.fecha,'dd-mm-yyyy')fecha_liquidacion ,l.credipago ,p.nombre ,p.direccion ,tm2.denominacion as dictamen,tm3.denominacion as roa, u.desc_ubigeo distrito,l.total,csd.numero_expediente,csd.id_solicitud     
+				from comision_sesion_dictamenes csd 
+					inner join comision_sesiones cs on csd.id_comision_sesion =cs.id 									
+					inner join solicitudes s2 on s2.id =csd.id_solicitud  
+					inner join proyectos p on p.id=s2.id_proyecto  
+					inner join liquidaciones l on l.id_solicitud =s2.id 
+					inner join tabla_maestras tm on s2.id_tipo_tramite  =tm.codigo::int and tm.tipo='25'
+					inner join tabla_maestras tm2 on csd.id_dictamen  =tm2.codigo::int and tm2.tipo='114'
+					left join tabla_maestras tm3 on csd.id_apela_recon  =tm3.codigo::int and tm3.tipo='200'
+					inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo 
+				where cs.id = ".$id." and l.id_situacion =1
+				order by u.desc_ubigeo asc";
 		
 		//echo $cad;
 		$data = DB::select($cad);

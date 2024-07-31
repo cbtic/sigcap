@@ -2,6 +2,7 @@
 $(document).ready(function () {
 	
 	$("#id_regional_bus").select2({ width: '100%' });
+	$("#id_comision_bus").select2({ width: '100%' });
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
@@ -22,10 +23,12 @@ $(document).ready(function () {
 	$('#btnVistaPreviaComputo').click(function () {
 		//guardar_computo()
 		var id_periodo_bus = $("#id_periodo_bus").val();
+		var id_comision_bus = $("#id_comision_bus").val();
+		var id_puesto_bus = $("#id_puesto_bus").val();
 		var anio = $("#anio").val();
 		var mes = $("#mes").val();
 		//if (fecha == "")fecha = 0;
-		var href = '/sesion/ver_computo_sesion_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		var href = '/sesion/ver_computo_sesion_pdf/'+id_periodo_bus+'/'+id_comision_bus+'/'+id_puesto_bus+'/'+ anio + '/' + mes;
 		window.open(href, '_blank');
 	});
 	
@@ -373,7 +376,7 @@ function obtenerComision(){
 			$('#id_comision').html("");
 			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision').html(option);
 		}
@@ -386,15 +389,36 @@ function obtenerComisionBus(){
 	
 	var id_periodo = $('#id_periodo_bus').val();
 	$.ajax({
-		url: '/sesion/obtener_comision/'+id_periodo,
+		url: '/sesion/obtener_comision/'+id_periodo+'/1',
 		dataType: "json",
 		success: function(result){
 			var option = "";
 			$('#id_comision_bus').html("");
+			option += "<option value='0'>--Seleccionar Comisión--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision_bus').html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerPuestoBus(){
+	
+	var id_periodo = $('#id_periodo_bus').val();
+	$.ajax({
+		url: '/sesion/obtener_puesto/'+id_periodo+'/1',
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_puesto_bus').html("");
+			option += "<option value='0'>--Puesto--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
+			});
+			$('#id_puesto_bus').html(option);
 		}
 		
 	});
@@ -635,6 +659,7 @@ function datatablenew(){
 			
 			var id_periodo = $('#id_periodo_bus').val();
 			var id_comision = $('#id_comision_bus').val();
+			var id_puesto = $('#id_puesto_bus').val();
 			var anio = $('#anio').val();
 			var mes = $('#mes').val();
 			var id_estado_aprobacion = $('#id_estado_aprobacion_bus').val();
@@ -649,7 +674,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_periodo:id_periodo,id_comision:id_comision,
-						anio:anio,mes:mes,
+						anio:anio,mes:mes,id_puesto:id_puesto,
 						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
 						id_estado_aprobacion:id_estado_aprobacion,
 						_token:_token

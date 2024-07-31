@@ -1188,6 +1188,7 @@ function fn_eliminar(id){
 function obtenerCaja(){
 	
 	var id = $('#id_usuario').val();
+	alert("XXX");
 	if(id=="")return false;
 	$('#id_caja').attr("disabled",true);
 	
@@ -1239,7 +1240,7 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 	 date = new Date(fechaFormateada); // Or your date here
 	$ffin= ((date.getFullYear() + '-' + zfill(date.getMonth() + 1,2) + '-'+ zfill(date.getDate()+1,2)));
 
-
+	
 	if(tipo=='1'){
 		$opc1 = $('#id_usuario').val();
 		$opc2 = $('#id_caja').val();
@@ -1249,7 +1250,7 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 		$opc1 = $('#id_formapago').val();
 		$opc2 = $('#id_concepto').val();
 	}
-
+	
 
 	if (por_usuario =='S'){
 		if($opc2!=''){
@@ -1260,8 +1261,8 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 		}
 	}
 	if (por_usuario =='N'){
-		$opc1!='0';
-		$opc2!='0';
+		//$opc1!='0';
+		//$opc2!='0';
 		var href = '/reporte/rep_pdf/'+id+'/'+$fini+'/'+$ffin+'/'+$opc1+'/'+$opc2;
 		window.open(href, '_blank');		
 	}

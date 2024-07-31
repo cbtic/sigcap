@@ -311,8 +311,8 @@ function AddFila(){
     var cap = $('#numero_cap').val();
     var fecha = '<input id="fecha" name="fecha[]" class="form-control form-control-sm datepicker2"  value="" type="text">'
     var distrito = '<select name="municipalidad[]" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
-    var estado_sesion = '<select name="estado_sesion[]" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
-    var aprobar_pago = '<select name="aprobar_pago[]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
+    var estado_sesion = '<select name="estado_sesion[]" id="estado_sesion" class="form-control form-control-sm" onChange="cambiarEstado()"> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
+    var aprobar_pago = '<select name="aprobar_pago[]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="2">Si</option> <option value="1">No</option> </select>'
     //var informe = '<select name="informe[]" id="informe" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
     var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
     var informe =  '<span class="btn btn-warning btn-file">Examinar <input id="image_'+i+'" name="image[]" type="file" /></span><input type="button" class="btn btn-sm btn-primary" value="Subir" id="upload_'+i+'" onclick="upload_img('+i+')" name="subir" style="margin-left:10px"><img src="/img/logo-sin-fondo2.png" id="img_ruta_'+i+'" width="80px" height="50px" alt="" style="margin-left:10px"><input type="hidden" id="img_foto_'+i+'" name="img_foto[]" value="" />'
@@ -331,7 +331,7 @@ function AddFila(){
 
     $('#tblSesion tbody').append(newRow);
 	
-	
+    cambiarEstado();
 	/**************/
 	
 	//$("#upload_"+i).on('click', function() {
@@ -464,10 +464,25 @@ yearRange: '1999:2012',
 	function upload_img(i){
 		//console.log(m);
 		//alert("okkk"+m);
+    var fileInput = $('#image_'+i)[0];
+    var file = fileInput.files[0];
+    var maxSize = 10 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+        bootbox.alert("El archivo supera el tamaño máximo permitido de 15 MB.");
+        return; 
+    }
 		console.log($('#image_'+i));
 		var formData = new FormData();
 		var files = $('#image_'+i)[0].files[0];
 		formData.append('file',files);
+
+    var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+
 		$.ajax({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -485,7 +500,7 @@ yearRange: '1999:2012',
 					$("#img_ruta_"+i).attr("src", "/img/informe/tmp/"+response).show();
 					//$(".delete_ruta").show();
 					$("#img_foto_"+i).val(response);
-
+          $('.loader').hide();
 					ind_img++;
 					/*
 					var newRow = "";
@@ -498,17 +513,33 @@ yearRange: '1999:2012',
 					$("#divImagenes").append(newRow);
 					$("#ind_img").val(ind_img);
 					*/
+         
 				} else {
+          $('.loader').hide();
 					alert('Formato de imagen incorrecto.');
 				}
-				
+				$('.loader').hide();
 			}
 		});
+    
 		
 		
 	//});
 	}
 	
+function cambiarEstado() {
+  $('select[name="estado_sesion[]"]').on('change', function() {
+      
+      var index = $('select[name="estado_sesion[]"]').index(this);
+      
+      var estado = $(this).val();
+      
+      var aprobarPago = (estado == 2) ? 2 : 1;
+      
+      $('select[name="aprobar_pago[]"]').eq(index).val(aprobarPago);
+  });
+}
+
 
 function AddFila1(){
 	
@@ -666,13 +697,29 @@ function modal_personaNuevo(){
                 <!--<input type="hidden" name="id_persona" id="id_persona">-->
                 <div style="padding-left:15px">
                 <div class="row">
-                    <div class="col-lg-2">
-                      <div class="form-group">
-                        <label class="control-label form-control-sm">N&uacute;mero CAP</label>
-                        <input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="" readonly='readonly'>
-                          
-                      </div>
+                  <div class="col-lg-1">
+                    <div class="form-group">
+                      <label class="control-label form-control-sm">N&uacute;mero CAP</label>
+                      <input name="numero_cap" id="numero_cap" type="text" class="form-control form-control-sm" value="<?php echo $agremiado->numero_cap?>"  onblur="" readonly='readonly'>
+                        
                     </div>
+                  </div>
+
+                  <div class="col-lg-3">
+                    <div class="form-group">
+                      <label class="control-label form-control-sm">Agremiado</label>
+                      <input name="agremiado" id="agremiado" type="text" class="form-control form-control-sm" value="<?php echo $persona->apellido_paterno.' '.$persona->apellido_materno.' '.$persona->nombres?>"  onblur="" readonly='readonly'>
+                        
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2">
+                    <div class="form-group">
+                      <label class="control-label form-control-sm">Zonal</label>
+                      <input name="zonal" id="zonal" type="text" class="form-control form-control-sm" value="<?php echo $zonal[0]->denominacion?>"  onblur="" readonly='readonly'>
+                        
+                    </div>
+                  </div>
 
                   <div class="col-lg-2">
                       <div class="form-group">
@@ -704,7 +751,7 @@ function modal_personaNuevo(){
                         </select>
                       </div>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-1">
                       <div class="form-group">
                         <label class="control-label form-control-sm">N° sesi&oacute;n</label>
                           <select name="numero_sesion" id="numero_sesion" class="form-control form-control-sm">

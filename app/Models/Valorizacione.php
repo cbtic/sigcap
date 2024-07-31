@@ -262,7 +262,7 @@ class Valorizacione extends Model
 
         if($tipo_documento=="79"){
             $cad = "select distinct c.id id_comprobante,c.tipo, c.fecha, c.serie, c.numero, c.total, u.name usuario_registro,
-            (select string_agg(DISTINCT coalesce(d.descripcion), ',')  from comprobante_detalles d  where d.id_comprobante = c.id) descripcion,id_comprobante_ncnd, 
+            (select string_agg(DISTINCT coalesce(d.descripcion), ',')  from comprobante_detalles d  where d.id_comprobante = c.id order by item desc) descripcion,id_comprobante_ncnd, 
             (select id
              from comprobantes cc 
              where c.id=cc.id_comprobante_ncnd and cc.tipo='NC' limit 1) as tiene_nc,
@@ -279,7 +279,7 @@ class Valorizacione extends Model
 
         }else{
             $cad = "select distinct c.id id_comprobante,c.tipo, c.fecha, c.serie, c.numero, c.total, u.name usuario_registro,
-            (select string_agg(DISTINCT coalesce(d.descripcion), ',')  from comprobante_detalles d  where d.id_comprobante = c.id) descripcion,id_comprobante_ncnd ,
+            (select string_agg(DISTINCT coalesce(d.descripcion), ',')  from comprobante_detalles d  where d.id_comprobante = c.id order by item desc) descripcion,id_comprobante_ncnd ,
             (select id
              from comprobantes cc 
              where c.id=cc.id_comprobante_ncnd and cc.tipo='NC' limit 1) as tiene_nc,
@@ -571,17 +571,5 @@ class Valorizacione extends Model
 
 		$data = DB::select($cad);
         return $data;
-    }
-
-    function getGeneraAnioDeuda(){
-        $cad = "select distinct  DATE_PART('YEAR', v.fecha)::varchar anio
-        from valorizaciones v
-        where v.estado ='1'
-        and v.id_modulo ='4'
-        order by anio desc";
-    
-		$data = DB::select($cad);
-        return $data;
-        //if($data)return $data[0];
     }
 }

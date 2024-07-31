@@ -213,6 +213,7 @@
 $(document).ready(function() {
 
   obtener_datos_adelanto();
+  obtenerDelegado()
 
 });
 

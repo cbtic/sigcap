@@ -92,6 +92,8 @@ class CoordinadorZonalController extends Controller
 		$p[]="";
 		$p[]="";
 		$p[]=$request->estado_aprobado;
+		$p[]=$request->fecha_inicio_bus;
+		$p[]=$request->fecha_fin_bus;
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -139,9 +141,11 @@ class CoordinadorZonalController extends Controller
 		if($id>0){
 			$coordinadorZonal = CoordinadorZonal::find($id);
             $agremiado = Agremiado::where("id",$coordinadorZonal->id_agremiado)->where("estado","1")->first();
+			$persona = Persona::where("id",$agremiado->id_persona)->where("estado","1")->first();
             //$agremiado_model = Agremiado::find($id);
 			$coordinadorZonalDetalle = CoordinadorZonalDetalle::where('id_tipo_coordinador',$coordinadorZonal->id_zonal)->where("estado","1")->first();
-			
+			$zonal = $tablaMaestra_model->getMaestroC(117,$coordinadorZonal->id_zonal);
+			//var_dump($zonal);exit();
 		}else{
 			$coordinadorZonal = new CoordinadorZonal;
 		}
@@ -157,7 +161,7 @@ class CoordinadorZonalController extends Controller
         
 		//$concepto = $concepto_model->getConceptoAll();
 		
-		return view('frontend.coordinador_zonal.modal_coordinadorZonal_nuevoCoordinadorZonal',compact('id','agremiado','coordinadorZonal','periodo','mes','municipalidad','estado_sesion'));
+		return view('frontend.coordinador_zonal.modal_coordinadorZonal_nuevoCoordinadorZonal',compact('id','agremiado','coordinadorZonal','periodo','mes','municipalidad','estado_sesion','persona','zonal'));
 	
 	}
 
@@ -362,7 +366,7 @@ class CoordinadorZonalController extends Controller
         $periodo = $periodo_model->getPeriodoAll();
         $mes = $tablaMaestra_model->getMaestroByTipo(116);
         $estado_sesion = $tablaMaestra_model->getMaestroByTipo(109);
-		$aprobar_pago = [2=>"Si",0=>"No"];
+		$aprobar_pago = [2=>"Si",1=>"No"];
         $municipalidad = $municipalidad_model->getMunicipalidadOrden();
 		$region = $regione_model->getRegionAll();
 		$tipo_comision = $tablaMaestra_model->getMaestroByTipo(102);

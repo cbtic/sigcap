@@ -140,6 +140,28 @@ class Comisione extends Model
 		$data = DB::select($cad);
         return $data;
     }
+	
+	function getPuestoByPeriodo($id_periodo,$tipo_comision){
+
+        $cad = " select distinct cd.id_puesto::int id,tmp.denominacion
+from comision_sesiones t1 
+inner join comisiones t4 on t1.id_comision=t4.id
+inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+inner join comision_delegados cd on t0.id_delegado=cd.id  
+left join tabla_maestras tmp  on cd.id_puesto::int = tmp.codigo::int And tmp.tipo ='94'
+where t0.id_aprobar_pago=2 
+And t1.id_periodo_comisione=".$id_periodo;
+		
+		if($tipo_comision!="" && $tipo_comision!="0"){
+			$cad .= " and t4.id_tipo_comision='".$tipo_comision."'";
+		}
+
+		$cad .= " order by tmp.denominacion asc ";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+	
 
     function getDiaComisionAll(){
 

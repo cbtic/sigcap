@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ComisionMovilidade;
+use App\Models\Movilidade;
 use App\Models\Regione;
 use App\Models\MunicipalidadIntegrada;
 use App\Models\PeriodoComisione;
@@ -72,7 +73,10 @@ class MovilidadController extends Controller
 	
 	public function ver_movilidad_pdf($id_periodo,$anio,$mes){
 		
-		$movilidad_model = new ComisionMovilidade;
+		$comisionMovilidad_model = new ComisionMovilidade;
+		$movilidad_model = new Movilidade;
+		
+		$periodo = PeriodoComisione::find($id_periodo);
 		/*
 		$p[]="";
 		$p[]=$id_periodo;
@@ -84,14 +88,15 @@ class MovilidadController extends Controller
 		$p[]="1000";
 		$movilidad = $movilidad_model->listar_movilidad_ajax($p);
 		*/
-		$movilidad = $movilidad_model->getMovilidadByPeriodo($id_periodo,$anio,$mes);
+		$movilidad = $comisionMovilidad_model->getMovilidadByPeriodo($id_periodo,$anio,$mes);
+		$meses = $movilidad_model->getMesByPeriodo($id_periodo);
 		
 		$dias = array('L','M','M','J','V','S','D');
 
 		$mes_ = ltrim($mes, '0');
 		$mesEnLetras = $this->mesesALetras($mes_);
 		
-		$pdf = Pdf::loadView('pdf.ver_movilidad',compact('movilidad','anio','mesEnLetras','mes'));
+		$pdf = Pdf::loadView('pdf.ver_movilidad',compact('movilidad','anio','mesEnLetras','mes','meses','id_periodo','periodo'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		//$pdf->setPaper('A4', 'landscape'); // Tama�o de papel (puedes cambiarlo seg�n tus necesidades)
