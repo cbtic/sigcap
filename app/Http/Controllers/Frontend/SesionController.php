@@ -963,8 +963,11 @@ class SesionController extends Controller
 		$p[]=1;
 		$p[]=10000;
 		$comisionSesion = $comisionSesion_model->lista_computo_sesion_ajax($p);
+
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
 		
-		$pdf = Pdf::loadView('pdf.ver_computo_sesion',compact('comisionSesion','anio','mes'));
+		$pdf = Pdf::loadView('pdf.ver_computo_sesion',compact('comisionSesion','anio','mes','mesEnLetras'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
