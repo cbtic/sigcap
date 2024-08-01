@@ -69,7 +69,7 @@ And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and u.id_ubigeo = '".$id_ubigeo."' 
 and t1.id_comision=".$id_comision." 
-order by tmp.denominacion
+order by tmp.orden /*tmp.denominacion*/
 ";
 
 		$data = DB::select($cad);
