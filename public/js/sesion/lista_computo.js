@@ -418,6 +418,7 @@ function obtenerPuestoBus(){
 			$(result).each(function (ii, oo) {
 				option += "<option value='"+oo.id+"'>"+oo.denominacion+"</option>";
 			});
+			option += "<option value='999'>--ASESOR / ESPECIALISTA--</option>";
 			$('#id_puesto_bus').html(option);
 		}
 		
