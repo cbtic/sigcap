@@ -65,8 +65,12 @@ where t0.id_aprobar_pago=2 ';
 	 v_tabla:=v_tabla||' And t1.id_comision = '''||p_id_comision||''' ';
 	End If;
 
-	If p_id_puesto<>'' and p_id_puesto<>'0' Then
-	 v_tabla:=v_tabla||' And cd.id_puesto = '''||p_id_puesto||''' ';
+	If p_id_puesto<>'' and p_id_puesto<>'0' then
+		If p_id_puesto='999' then
+			v_tabla:=v_tabla||' And cd.id_puesto is null ';
+		else
+	 		v_tabla:=v_tabla||' And cd.id_puesto = '''||p_id_puesto||''' ';
+		End If;
 	End If;
 
 	If p_anio<>'' Then
