@@ -49,7 +49,7 @@ and t4.id_municipalidad_integrada=".$id_municipalidad_integrada;
 	
 	public static function getDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision){ 
 
-        $cad = "select distinct case when cd.id_puesto=12 then 'S' when t0.id_agremiado>0 then 'AE' else 'T' end tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap,tmp.denominacion
+        $cad = "select distinct case when cd.id_puesto=12 then 'S' when t0.id_agremiado>0 then 'AE' else 'T' end tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap,tmp.denominacion,tmp.orden 
 from comision_sesiones t1 
 inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
 inner join solicitudes s2 on s2.id=csd.id_solicitud
