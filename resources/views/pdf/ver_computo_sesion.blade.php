@@ -262,6 +262,30 @@
 			</tbody>
 		</table>
 		
+		
+		<table class="table table-hover table-sm" style="width:35%!important;padding-top:15px" align="left">
+			<thead>
+			<tr style="font-size:13px">
+				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Calendario de sesiones</th>
+				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo $calendarioSesion?></span></th>
+			</tr>
+			<tr style="font-size:13px">
+				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Sesiones coordinado zonal</th>
+				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo $calendarioCoordinadorZonalSesion?></span></th>
+			</tr>
+			<tr style="font-size:13px">
+				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">(-) Diferencia de Reportes</th>
+				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_coordinador_zonal"><?php echo $total_sesion - $calendarioSesion + $calendarioCoordinadorZonalSesion?></span></th>
+			</tr>
+			<tr style="font-size:13px">
+				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">Total de sesiones</th>
+				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_total"><?php echo $total_sesion?></span></th>
+			</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		
 		<!--<table style="margin-top: 10px">
             <tr>
                 <td class="td_ancho_espacios"></td>

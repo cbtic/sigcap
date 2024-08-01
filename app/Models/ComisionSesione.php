@@ -365,4 +365,50 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
 		$data = DB::select($cad);
 		return $data;
 	}
+	
+	public function getCalendarioSesion($id_periodo,$anio,$mes){
+
+        $cad = "select count(*) cantidad
+from comision_sesiones t1 
+inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion and t0.estado='1' 
+inner join comisiones t4 on t1.id_comision=t4.id
+inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
+left join comision_delegados cd on t0.id_delegado=cd.id  
+left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
+inner join personas p on a.id_persona=p.id 
+where 1=1
+and t1.id_periodo_comisione=".$id_periodo."
+And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+And t1.id_estado_sesion=290 
+and t1.id_estado_aprobacion=2
+and t1.id in (select id_comision_sesion from comision_sesion_dictamenes)";
+
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0]->cantidad;
+    }
+	
+	public function getCalendarioCoordinadorZonalSesion($id_periodo,$anio,$mes){
+
+        $cad = "select count(*) cantidad
+from comision_sesiones t1 
+inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion and t0.estado='1' 
+inner join comisiones t4 on t1.id_comision=t4.id
+inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
+left join comision_delegados cd on t0.id_delegado=cd.id  
+left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
+inner join personas p on a.id_persona=p.id 
+where 1=1
+and t1.id_periodo_comisione=".$id_periodo."
+And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+And t1.id_estado_sesion=290 
+and t1.id_estado_aprobacion=2
+and t4.denominacion in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')";
+
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0]->cantidad;
+    }
+	
+	
 }
