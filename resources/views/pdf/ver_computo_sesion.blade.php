@@ -275,7 +275,7 @@
 			</tr>
 			<tr style="font-size:13px">
 				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">(-) Diferencia de Reportes</th>
-				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_coordinador_zonal"><?php echo $total_sesion - $calendarioSesion + $calendarioCoordinadorZonalSesion?></span></th>
+				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_coordinador_zonal"><?php echo $total_sesion - $calendarioSesion - $calendarioCoordinadorZonalSesion?></span></th>
 			</tr>
 			<tr style="font-size:13px">
 				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">Total de sesiones</th>
