@@ -321,6 +321,10 @@
 							<th><span id="sesion_delegados"></span></th>
                         </tr>
 						<tr style="font-size:13px">
+							<th>Sesiones suplentes</th>
+							<th><span id="sesion_suplentes"></span></th>
+                        </tr>
+						<tr style="font-size:13px">
 							<th>Sesiones coordinador zonal</th>
 							<th><span id="sesion_coordinador_zonal"></span></th>
                         </tr>

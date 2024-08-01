@@ -682,10 +682,12 @@ function datatablenew(){
                 "success": function (result) {
                     fnCallback(result);
 					var total_sesion_delegado = result.aaData[0].total_sesion_delegado;
+					var total_sesion_suplente = result.aaData[0].total_sesion_suplente;
 					var total_sesion_coordinador_zonal = result.aaData[0].total_sesion_coordinador_zonal;
-					var total_sesion = Number(total_sesion_delegado) + Number(total_sesion_coordinador_zonal);
+					var total_sesion = Number(total_sesion_delegado) + Number(total_sesion_coordinador_zonal) + Number(total_sesion_suplente);
 					$('#sesion_delegados').html(total_sesion_delegado);
 					$('#sesion_coordinador_zonal').html(total_sesion_coordinador_zonal);
+					$('#sesion_suplentes').html(total_sesion_suplente);
 					$('#sesion_total').html(total_sesion);
                 },
                 "error": function (msg, textStatus, errorThrown) {
