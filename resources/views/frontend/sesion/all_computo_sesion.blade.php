@@ -325,6 +325,10 @@
 							<th><span id="sesion_suplentes"></span></th>
                         </tr>
 						<tr style="font-size:13px">
+							<th>Sesiones especialistas</th>
+							<th><span id="sesion_especialistas"></span></th>
+                        </tr>
+						<tr style="font-size:13px">
 							<th>Sesiones coordinador zonal</th>
 							<th><span id="sesion_coordinador_zonal"></span></th>
                         </tr>
