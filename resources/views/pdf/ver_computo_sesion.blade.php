@@ -124,7 +124,9 @@
 		<table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
 			<tbody>
 				<tr>
+					<!--
 					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px">N°</td>
+					-->
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;text-align:left;padding-top:5px;padding-bottom:5px" width="5%">Municipalidad</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="2%">Comisión</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="4%">Delegado</td>  
@@ -176,7 +178,9 @@
 					}
 					?>
 				<tr>
-					<td style="border:1px solid #A4A4A4;width:30px"><?php echo $n?></td>
+					<!--
+					<td style="border:1px solid #A4A4A4;width:30px"><?php //echo $n?></td>
+					-->
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">
 					<?php
 						if($key==0 || $municipalidad_old!=$r->municipalidad)echo $r->municipalidad;
@@ -215,7 +219,7 @@
 				if(($key+1) == count($comisionSesion)){
 				?>
 				<tr>
-					<th colspan="7" class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">Sub Total</th>
+					<th colspan="6" class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">Sub Total</th>
 					<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_computada_?></th>
 					<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_adicional_?></th>
 					<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total_?></th>
@@ -231,7 +235,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="7" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">Total</th>
+					<th colspan="6" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">Total</th>
 					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_computada?></th>
 					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_adicional?></th>
 					<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $suma_total?></th>
