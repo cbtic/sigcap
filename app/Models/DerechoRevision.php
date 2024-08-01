@@ -512,5 +512,16 @@ class DerechoRevision extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getCredipagoUnico($id_solicitud){
+
+        $cad = "select count(*) cantidad from liquidaciones l 
+        inner join solicitudes s on l.id_solicitud = s.id
+        where s.id='".$id_solicitud."'
+        and l.id_situacion is distinct from 3";
+
+        $data = DB::select($cad);
+        return $data;
+    }
     
 }

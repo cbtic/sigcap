@@ -281,7 +281,7 @@
                             <option value="">--Todos--</option>
                                 <?php
                                 foreach ($estado_solicitud as $row) {?>
-                                    <option value="<?php echo $row->codigo?>"<?php if($row->codigo==1)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                    <option value="<?php echo $row->codigo?>"<?php //if($row->codigo==1)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php 
                                 }
                                 ?>

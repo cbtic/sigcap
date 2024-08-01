@@ -2207,19 +2207,6 @@ class DerechoRevisionController extends Controller
 		
 		//var_dump($request->id_solicitud);exit();
 		
-		/*
-		if($id_solicitud == 0){
-			$derecho_revision = new DerechoRevision;
-			$proyecto = new Proyecto;
-			$proyectista = new Proyectista;
-			$uso_edificacion = new UsoEdificacione;
-			$presupuesto = new Presupuesto;
-		}else{
-			$derecho_revision = DerechoRevision::find($request->id_solicitud);
-			$proyecto = Proyecto::find($derecho_revision->id_proyecto);
-			$proyectista = Proyectista::find($derecho_revision->id_proyectista);
-		}
-		*/
 		
 		$derecho_revision = DerechoRevision::find($request->id_solicitud);
 		//$proyecto = Proyecto::find($derecho_revision->id_proyecto);
@@ -2244,27 +2231,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->id_tipo_liquidacion1 = $request->tipo_liquidacion1;
 		
 		$derecho_revision->id_usuario_inserta = $id_user;
-		/*
-		$proyecto->id_ubigeo = $ubigeo;
-		$proyecto->nombre = $request->nombre_proyecto;
-		$proyecto->direccion = $request->direccion_proyecto;
-		$proyecto->id_tipo_direccion = $request->tipo_direccion;
-		$proyecto->id_tipo_proyecto = $solicitud_matriz->id_tipo_solicitud;
-		$proyecto->codigo = $request->codigo_proyecto;
-		$proyecto->id_usuario_inserta = $id_user;
-		$proyecto->save();
-		*/
-		/*
-		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
-
-		$proyectista->id_tipo_profesional = $request->tipo_proyectista;
-		$proyectista->id_agremiado = $agremiado->id;
-		$proyectista->celular = $agremiado->celular1;
-		$proyectista->email = $agremiado->email1;
 		
-		$proyectista->id_usuario_inserta = $id_user;
-		$proyectista->save();
-		*/
 		
 		//$derecho_revision->id_proyecto = $proyecto->id;
 		//$derecho_revision->id_proyectista = $proyectista->id;
@@ -2395,141 +2362,37 @@ class DerechoRevisionController extends Controller
 				$liquidacion->id_usuario_inserta = $id_user;
 				$liquidacion->save();
 		}
-		/*
-		$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
-		$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();
 		
-		if($id_solicitud == 0){
-			$propietario = new Propietario;
-		}else{
-			$propietario = Propietario::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
-		}
+	}
 
-		if($persona){
-			$propietario->id_tipo_propietario = 78;
-			$propietario->id_persona = $persona->id;
-			$propietario->celular = $request->celular_dni;
-			$propietario->email = $request->email_dni;
-			$propietario->id_solicitud = $derecho_revision->id;
-			$propietario->id_usuario_inserta = $id_user;
-			$propietario->save();
+	public function valida_credipago_unico($id_solicitud){
 
-		}else if($empresa){
-			$propietario->id_tipo_propietario = 79;
-			$propietario->id_empresa = $empresa->id;
-			$propietario->celular = $request->telefono_ruc;
-			$propietario->email = $request->email_ruc;
-			$propietario->id_solicitud = $derecho_revision->id;
-			$propietario->id_usuario_inserta = $id_user;
-			$propietario->save();
-		}
-		*/
-		/*
-		$propietario = Propietario::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
-		
-		if(isset($propietario->id_empresa) && $propietario->id_empresa>0){
-			$empresa = Empresa::where("id",$propietario->id_empresa)->where("estado","1")->first();
-			$empresa_cantidad = Empresa::where("ruc",$empresa->ruc)->where("estado","1")->count();
-		}
-		
-		if(isset($propietario->id_persona) && $propietario->id_persona>0){
-			$persona = Persona::where("id",$propietario->id_persona)->where("estado","1")->first();
-			$empresa_cantidad = Persona::where("numero_documento",$persona->numero_documento)->where("estado","1")->count();
-		}
-		
-		
-		if($empresa_cantidad==1){
-			if($request->instancia==250)$valor_obra = convertir_entero($request->valor_reintegro);
+		$derecho_revision_model = new DerechoRevision;
+		$credipago_unico = $derecho_revision_model->getCredipagoUnico($id_solicitud);
 
-			$anio = Carbon::now()->year;
-			$parametro = Parametro::where("anio",$anio)->where("estado",1)->orderBy("id","desc")->first();
-			
-			$uit = $parametro->valor_uit;
-		
-			//Edificaciones
-			if($solicitud_matriz->id_tipo_solicitud == 123){
-				
-				if($request->tipo_liquidacion1==136){
+		$datos_formateados = [];
 
-					$sub_total 	= $request->sub_total2;
-					$igv		= $request->igv2;
-					$total		= $request->total2;
+        foreach ($credipago_unico as $credipago) {
+            $datos_formateados[] = [
+                'cantidad' => $credipago->cantidad,
+            ];
+        }
+        return response()->json($datos_formateados);
+	}
 
-				}else{
-					$sub_total 	= ($parametro->porcentaje_calculo_edificacion*$valor_obra);//(0.0005*$valor_obra);
-					$igv		= ($parametro->igv*$sub_total);
-					$total		= $sub_total + $igv;
-					
-					$sub_total_minimo 	= ($parametro->valor_minimo_edificaciones*$uit);//123.75
-					$igv_minimo			= ($parametro->igv*$sub_total_minimo);//22.275
-					$total_minimo		= $sub_total_minimo + $igv_minimo;//146.025
-					
-					if($total<$total_minimo){
-						$sub_total 	= $sub_total_minimo;
-						$igv		= $igv_minimo;
-						$total		= $total_minimo;
-					}
-				}
-				$concepto = Concepto::where("id",26474)->where("estado","1")->first();
-			}
-				
-			//Habilitaciones urbanas
-			
-			if($solicitud_matriz->id_tipo_solicitud == 124){
-				
-				$m2 = $parametro->valor_metro_cuadrado_habilitacion_urbana;
-				
-				$sub_total 	= ($m2*$area_total);
-				$igv		= ($parametro->igv*$sub_total);
-				$total		= $sub_total + $igv;
-				
-				$total_minimo		= $parametro->valor_minimo_hu;
-				$sub_total_minimo 	= $total_minimo/(1+$parametro->igv);
-				$igv_minimo			= $total_minimo - $sub_total_minimo;
-				
-				$total_maximo		= $parametro->valor_maximo_hu*$m2;
-				$sub_total_maximo 	= $total_maximo/(1+$parametro->igv);
-				$igv_maximo			= $total_maximo - $sub_total_maximo;
-				
-				if($total<$total_minimo){
-					$sub_total 	= $sub_total_minimo;
-					$igv		= $igv_minimo;
-					$total		= $total_minimo;
-				}
-				
-				if($total>$total_maximo){
-					$sub_total 	= $sub_total_maximo;
-					$igv		= $igv_maximo;
-					$total		= $total_maximo;
-				}
-				$solicitud = new Solicitude;
-				$concepto = Concepto::where("id",26483)->where("estado","1")->first();
-				$solicitud->id_resultado='2';
-				$solicitud->id_usuario_inserta = $id_user;
-				$solicitud->save();
-			}
-			
-			$codigoSolicitud = $derecho_revision->getCodigoSolicitud($solicitud_matriz->id_tipo_solicitud);
-			$codigo1 = $codigoSolicitud->codigo;
-			$numero_correlativo = $codigoSolicitud->numero;
-			$codigo2 = $derecho_revision->getCountProyectoTipoSolicitud($derecho_revision->id_proyecto,$solicitud_matriz->id_tipo_solicitud);
-			$codigo = $codigo1.$codigo2;
-			
-			$id_user = Auth::user()->id;
-			$liquidacion = Liquidacione::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
-			//$liquidacion->id_solicitud = $derecho_revision->id;
-			//$liquidacion->fecha = Carbon::now()->format('Y-m-d');
-			//$liquidacion->credipago = $codigo;
-			$liquidacion->sub_total = $sub_total;
-			$liquidacion->igv = $igv;
-			$liquidacion->total = $total;
-			$liquidacion->observacion = "obs";
-			$liquidacion->id_usuario_inserta = $id_user;
-			$liquidacion->save();
-			
-		}
-		*/
-		
+	public function validar_proyectista_hu($id){
+
+		$proyectista_model = new Proyectista;
+		$proyectista_principal = $proyectista_model->getProyectistaPrincipal($id);
+
+		$datos_formateados = [];
+
+        foreach ($proyectista_principal as $proyectista) {
+            $datos_formateados[] = [
+                'id_tipo_proyectista' => $proyectista->id_tipo_proyectista,
+            ];
+        }
+        return response()->json($datos_formateados);
 	}
 
 }
