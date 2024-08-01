@@ -145,6 +145,7 @@
 				$suma_adicional_ = 0;
 				$suma_total_ = 0; 
 				$total_sesion_delegado = 0;
+				$total_sesion_suplente = 0;
 				$total_sesion_coordinador_zonal = 0;
 				$total_sesion = 0;
 				
@@ -153,8 +154,9 @@
 						$municipalidad_old = $r->municipalidad;
 						$comision_old = $r->comision;
 						$total_sesion_delegado = $r->total_sesion_delegado;
+						$total_sesion_suplente = $r->total_sesion_suplente;
 						$total_sesion_coordinador_zonal = $r->total_sesion_coordinador_zonal;
-						$total_sesion = $total_sesion_delegado + $total_sesion_coordinador_zonal;
+						$total_sesion = $total_sesion_delegado + $total_sesion_coordinador_zonal + $total_sesion_suplente;
 					}
 					
 					$n++;
@@ -242,6 +244,10 @@
 			<tr style="font-size:13px">
 				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Sesiones delegados</th>
 				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo $total_sesion_delegado?></span></th>
+			</tr>
+			<tr style="font-size:13px">
+				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Sesiones suplentes</th>
+				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo $total_sesion_suplente?></span></th>
 			</tr>
 			<tr style="font-size:13px">
 				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important">Sesiones coordinador zonal</th>

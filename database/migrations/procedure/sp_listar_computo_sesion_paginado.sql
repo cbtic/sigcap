@@ -1,11 +1,5 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(
-p_id_periodo_comisiones character varying, 
-p_id_comision character varying,
-p_id_puesto character varying,
-p_anio character varying, 
-p_mes character varying, 
-p_pagina character varying, 
-p_limit character varying, p_ref refcursor)
+
+CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(p_id_periodo_comisiones character varying, p_id_comision character varying, p_id_puesto character varying, p_anio character varying, p_mes character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -23,6 +17,7 @@ v_col_count varchar;
 
 v_sesion_delegado varchar;
 v_sesion_coordinador_zonal varchar;
+v_sesion_suplente varchar;
 
 begin
 	
@@ -35,10 +30,13 @@ select mi.denominacion municipalidad,t4.comision comision,
 p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres delegado,a.numero_cap,coalesce(tmp.denominacion,''ASESOR / ESPECIALISTA'') puesto,cd.id_puesto::int id_puesto, 
 t5.descripcion periodo,
 (case when t0.coordinador=''1'' then ''COORDINADOR'' else '''' end) coordinador,
-sum(case when tmts.denominacion=''ORDINARIA'' then 1 else 0 end) computada,
-sum(case when tmts.denominacion=''ORDINARIA'' and mi.denominacion ilike ''COORDINADOR ZONAL%'' then 1 else 0 end) sesion_coordinado_zonal,
-sum(case when tmts.denominacion=''ORDINARIA'' and mi.denominacion not ilike ''COORDINADOR ZONAL%'' then 1 else 0 end) sesion_delegado,
-sum(case when tmts.denominacion=''EXTRAORDINARIA'' then 1 else 0 end) adicional,
+/*sum(case when tmts.denominacion=''ORDINARIA'' then 1 else 0 end) computada,*/
+sum(1) computada,
+sum(case when /*tmts.denominacion=''ORDINARIA'' and*/ t4.denominacion in(select denominacion from tabla_maestras tm where tipo=''117'' and estado=''1'') then 1 else 0 end) sesion_coordinado_zonal,
+sum(case when /*tmts.denominacion=''ORDINARIA'' and*/ coalesce(tmp.denominacion,''0'')!=''SUPLENTE'' and t4.denominacion not in(select denominacion from tabla_maestras tm where tipo=''117'' and estado=''1'') then 1 else 0 end) sesion_delegado,
+/*sum(case when tmts.denominacion=''EXTRAORDINARIA'' then 1 else 0 end) adicional,*/
+0 adicional,
+sum(case when coalesce(tmp.denominacion,''0'')=''SUPLENTE'' then 1 else 0 end) sesion_suplente,
 count(*) total
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
@@ -120,10 +118,12 @@ where t0.id_aprobar_pago=2 ';
 
 	EXECUTE ('SELECT coalesce(sum(sesion_coordinado_zonal),0) From (SELECT '||v_campos||v_tabla||v_where||')R') INTO v_sesion_coordinador_zonal;
 	EXECUTE ('SELECT coalesce(sum(sesion_delegado),0) From (SELECT '||v_campos||v_tabla||v_where||')R') INTO v_sesion_delegado;
+	EXECUTE ('SELECT coalesce(sum(sesion_suplente),0) From (SELECT '||v_campos||v_tabla||v_where||')R') INTO v_sesion_suplente;
 
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 	v_col_count:=v_col_count||' ,'||v_sesion_coordinador_zonal||' as total_sesion_coordinador_zonal ';
 	v_col_count:=v_col_count||' ,'||v_sesion_delegado||' as total_sesion_delegado ';
+	v_col_count:=v_col_count||' ,'||v_sesion_suplente||' as total_sesion_suplente ';
 
 	If v_count::Integer > p_limit::Integer then
 		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By municipalidad asc,comision asc,id_puesto asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
@@ -138,4 +138,5 @@ End
 
 $function$
 ;
+
 
