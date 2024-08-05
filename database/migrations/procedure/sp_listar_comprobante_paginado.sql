@@ -1,6 +1,4 @@
--- DROP FUNCTION public.sp_listar_comprobante_paginado(varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, refcursor);
-
-CREATE OR REPLACE FUNCTION public.sp_listar_comprobante_paginado(p_fecha_ini character varying, p_fecha_fin character varying, p_tipo character varying, p_serie character varying, p_numero character varying, p_razon_social character varying, p_estado_pago character varying, p_anulado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_comprobante_paginado(p_fecha_ini character varying, p_fecha_fin character varying, p_tipo character varying, p_serie character varying, p_numero character varying, p_razon_social character varying, p_estado_pago character varying, p_anulado character varying, p_forma_pago character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -82,6 +80,12 @@ Begin
 	If p_anulado<>'' then
 	 v_where:=v_where||' And f.anulado = '''||p_anulado||''' '; 
 	End If;
+
+	If p_forma_pago<>'' then
+	 v_where:=v_where||' And f.id_forma_pago = '''||p_forma_pago||''' '; 
+	End If;
+
+
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
