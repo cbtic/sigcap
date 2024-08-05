@@ -894,7 +894,10 @@ function cargarDelegados(){
 											<th>CAP</th>
 											<th>Delegado</th>
 											<th>Situaci&oacute;n</th>
-											<th>Coordinador</th>
+											<th>
+												<span style="float:left">Coordinador</span> 
+												<span style="display:block;color:#0099FF;float:left;padding-left:5px;cursor:pointer" onClick="limpiar_coordinador()">(X)</span>
+											</th>
 											<th>Aprobar Pago</th>
 											<th>CAP Anterior</th>
 											<th>Delegado Anterior</th>

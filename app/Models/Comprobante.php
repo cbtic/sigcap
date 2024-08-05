@@ -117,7 +117,22 @@ class Comprobante extends Model
         return $data;
     }
 
+    public function listar_credito_pago_paginado($p){
+
+        return $this->readFuntionPostgres('sp_listar_comprobante_cuota_pago_paginado',$p);
+
+    }
   
+    function getCuotaPagoById($id){
+
+        $cad = "select *
+                from comprobante_cuota_pagos
+                where id=".$id." 
+				";
+    
+		$data = DB::select($cad);
+        return $data[0];
+    }
 
    
 

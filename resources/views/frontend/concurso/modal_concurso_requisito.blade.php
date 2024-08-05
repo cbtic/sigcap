@@ -177,6 +177,12 @@ $(document).ready(function() {
     $(".upload").on('click', function() {
         var formData = new FormData();
         var files = $('#image')[0].files[0];
+		var maxSize = 10 * 1024 * 1024;
+
+		if (files.size > maxSize) {
+			bootbox.alert("El archivo supera el tamaño máximo permitido de 15 MB.");
+			return; 
+		}
         formData.append('file',files);
         $.ajax({
 			headers: {

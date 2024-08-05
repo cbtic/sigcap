@@ -49,7 +49,7 @@
 	left: 0px;
 	z-index: 10000;
 	text-align: center;
-	position:absolute; 
+	position:fixed;
 	background-color: #000;
 	opacity:0.6;
 	filter:alpha(opacity=40);
@@ -889,8 +889,8 @@ if($('#instancia').val()==250){
 						<div style="margin-top:15px" class="form-group">
 							<div class="col-sm-12 controls">
 								<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-									<!--<a href="javascript:void(0)" onClick="btnSolicitudDerechoRevision()" class="btn btn-sm btn-success">Registrar</a>-->
 									<input class="btn btn-sm btn-success float-rigth" value="GUARDAR" name="guardar" type="button" id="btnEditarSolicitudReintegro" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
+									<input class="btn btn-sm btn-info float-rigth" value="SALIR" name="salir" type="button" id="btnSalir" style="padding-left:25px;padding-right:25px;margin-left:10px;margin-top:15px" />
 								</div>
 								
 							</div>

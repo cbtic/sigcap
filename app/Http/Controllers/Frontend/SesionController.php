@@ -967,7 +967,10 @@ class SesionController extends Controller
 		$mes_ = ltrim($mes, '0');
 		$mesEnLetras = $this->mesesALetras($mes_);
 		
-		$pdf = Pdf::loadView('pdf.ver_computo_sesion',compact('comisionSesion','anio','mes','mesEnLetras'));
+		$calendarioSesion = $comisionSesion_model->getCalendarioSesion($id_periodo,$anio,$mes);
+		$calendarioCoordinadorZonalSesion = $comisionSesion_model->getCalendarioCoordinadorZonalSesion($id_periodo,$anio,$mes);
+		
+		$pdf = Pdf::loadView('pdf.ver_computo_sesion',compact('comisionSesion','anio','mes','mesEnLetras','calendarioSesion','calendarioCoordinadorZonalSesion'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
 		$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)

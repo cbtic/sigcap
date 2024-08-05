@@ -1134,11 +1134,12 @@ function datatablenew(){
 						html += '<a href="/derecho_revision/derecho_revision_reintegro/'+row.id+'" onclick="" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;" class="btn btn-secondary pull-rigth" id="btnReintroEdificaciones"><i class="fa fa-edit"></i> Reintegro</a>'
 					}
 					
-					if (row.id_resultado == 1 || row.id_resultado == 2 || row.id_resultado == 3) {
+					/*if (row.id_resultado == 1 || row.id_resultado == 2 || row.id_resultado == 3) {
 						html += '<a href="javascript:void(0)" onclick=eliminarSolicitudEdificaciones('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 					}else{
 						html += '<a href="javascript:void(0)" onclick=eliminarSolicitudEdificaciones('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;">'+estado+'</a>';
-					}
+					}*/
+
 					html += '</div>';
 					return html;
 					},
@@ -1903,6 +1904,24 @@ function importarDatalicencia(){
 
 		}
 	});
+}
+
+function validarProyectistaPrincipal(id){
+
+
+	$.ajax({
+		url: "/derecho_revision/validar_proyectista_hu/"+id,
+		type: "GET",
+		success: function (result) {
+			
+			//alert(result[0].id_tipo_proyectista);
+			if(result[0].id_tipo_proyectista==1){
+				bootbox.alert("No puede eliminar al proyectista principal"); 
+			}else{
+				eliminarProyectistaHU(id);
+			}
+		}
+});
 }
 
 function eliminarProyectistaHU(id){

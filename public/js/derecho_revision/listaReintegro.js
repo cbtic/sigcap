@@ -64,6 +64,11 @@ $(document).ready(function () {
 		guardar_credipago()
 	});
 
+	$('#btnSalir').click(function () {
+		//modalProfesion(0);
+		salir_derecho_revision();
+	});
+
 	$('#btnNuevoProyectista').click(function () {
 		//modalProfesion(0);
 		modalProyectista(0)
@@ -1842,7 +1847,8 @@ function guardar_solicitud_reintegro(){
 				//modalSituacion(id_agremiado);
 				//datatableSuspension();
 				$('.loader').hide();
-				window.location.reload();
+				//window.location.reload();
+				consulta_derecho_revision();
 				$.ajax({
                     url: "/derecho_revision/correo_credipago_aprobado_reintegro/" + result,
                     method: 'GET',
@@ -1850,7 +1856,9 @@ function guardar_solicitud_reintegro(){
                     
                     },
                 });
+
 				
+
 				//$('#openOverlayOpc').modal('hide');
 				
 				/*
@@ -1863,6 +1871,16 @@ function guardar_solicitud_reintegro(){
 				*/
 			}
 	});
+}
+
+function consulta_derecho_revision(){
+	var href = '/derecho_revision/consulta_derecho_revision/';
+	window.location.href = href;
+}
+
+function salir_derecho_revision(){
+	var href = '/derecho_revision/consulta_derecho_revision/';
+	window.location.href = href;
 }
 
 function valida_editar_reintegro(){
@@ -1884,6 +1902,13 @@ function valida_editar_reintegro(){
 
 function guardar_editar_solicitud_reintegro(){
 	
+	var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    //var heightBrowser = $(window).width()/2;
+	var heightBrowser = $(window).width()*2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+
 	$.ajax({
 			url: "/derecho_revision/send_editar_reintegro",
 			type: "POST",
@@ -1893,7 +1918,7 @@ function guardar_editar_solicitud_reintegro(){
 				//$('#openOverlayOpc').modal('hide');
 				//modalSituacion(id_agremiado);
 				//datatableSuspension();
-
+				$('.loader').hide();
 				window.location.reload();
 				
 				//$('#openOverlayOpc').modal('hide');

@@ -1773,6 +1773,7 @@ class ComprobanteController extends Controller
         $p[]=$request->razon_social;
         $p[]=$request->estado_pago;
         $p[]=$request->anulado;
+        $p[]=$request->formapago;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		
@@ -2100,13 +2101,9 @@ class ComprobanteController extends Controller
 		$tabla_model = new TablaMaestra;
 
         $medio_pago = $tabla_model->getMaestroByTipo('19');
+        $id_comprobante =0;
 
-        $comprobante_model = new Comprobante; 
-        $lista = $comprobante_model->listar_credito_pago($id);
-
-       // print_r($lista); exit();
-
-		return view('frontend.comprobante.modal_credito_pago',compact('id','medio_pago','lista'));
+		return view('frontend.comprobante.modal_credito_pago',compact('id','medio_pago'));
 
     }
 
@@ -2121,16 +2118,16 @@ class ComprobanteController extends Controller
     }
         */
 
-    public function listar_puesto(Request $request){
+    public function listar_credito_pago(Request $request){
 	
 		//$puesto_model = new Concurso();
         $comprobante_model = new Comprobante;
 
-		$p[]=$request->id_concurso;
+		$p[]=$request->id;
 		$p[]=1;          
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
-		$data = $comprobante_model->listar_puesto($p);
+		$data = $comprobante_model->listar_credito_pago_paginado($p);
 		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
 
 		$result["PageStart"] = $request->NumeroPagina;
@@ -2799,7 +2796,25 @@ class ComprobanteController extends Controller
         echo json_encode($array);
     }
 
-    public function send_pago_credito(Request $request){
+    public function obtener_credito_pago($id){
+		
+		$comprobante_model = new Comprobante;
+		$credito_pago = $comprobante_model->getCuotaPagoById($id);
+		
+		echo json_encode($credito_pago);
+	}
+
+    public function eliminar_credito_pago($id){
+
+		$cuotaPago = ComprobanteCuotaPago::find($id);
+		$cuotaPago->estado= "0";
+		$cuotaPago->save();
+		
+		echo "success";
+
+    }
+
+    public function send_credito_pago(Request $request){
 	
 		$id_user = Auth::user()->id;
 		
@@ -2815,7 +2830,9 @@ class ComprobanteController extends Controller
 		
 		
 		$cuotaPago->fecha = $request->fecha;
+        $cuotaPago->fecha_vencimiento = $request->fecha;
         $cuotaPago->id_medio = $request->id_medio;
+        $cuotaPago->id_comprobante = $request->id_comprobante;
         $cuotaPago->nro_operacion = $request->nro_operacion;
         $cuotaPago->monto = $request->monto;
         
