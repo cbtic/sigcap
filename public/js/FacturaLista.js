@@ -338,17 +338,7 @@ function datatablenew(){
                     "bSortable": false,
                     "aTargets": [14]
                 },
-                /*
-				{
-                    "mRender": function (data, type, row) {
-                        var sunat = "";
-                        if(row.sunat!= null)sunat = row.sunat;
-                        return sunat;
-                    },
-                    "bSortable": false,
-                    "aTargets": [13]
-                },
-                */                
+              
 				{
                     "mRender": function (data, type, row) {
                         var sunat = "";
@@ -392,26 +382,24 @@ function datatablenew(){
 				{
                     "mRender": function (data, type, row) {
                         var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-                        html += '<a href="/comprobante/'+row.id+'" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-search"></i></a>';
+                        //html += '<a href="/comprobante/'+row.id+'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-credit-card"></i></a>';
+                        html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalCreditoPago('+row.id+')" ><i class="fa fa-edit"></i> </button>';
                         return html;
                     },
                     "bSortable": false,
                     "aTargets": [16],
-                },
-                
-/*
-                {
+                },                
+				{
                     "mRender": function (data, type, row) {
                         var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-                        html += '<a href="/factura/'+row.id+'" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-search"></i></a>';
-                        html += '<i class="fa fa-search"></i></a></div>';
+                        html += '<a href="/comprobante/'+row.id+'" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-search"></i></a>';
                         return html;
                     },
                     "bSortable": false,
-                    "aTargets": [13],
-
+                    "aTargets": [17],
                 },
-  */
+                
+
             ]
 
 
@@ -422,6 +410,22 @@ function datatablenew(){
 function fn_ListarBusqueda() {
     datatablenew();
 };
+
+function modalCreditoPago(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/comprobante/credito_pago/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
 
 function modalFactura(id){
 	

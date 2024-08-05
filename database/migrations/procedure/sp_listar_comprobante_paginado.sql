@@ -36,11 +36,15 @@ Begin
 
 
 	v_campos=' f.id, f.serie, f.numero, f.tipo, f.fecha, f.cod_tributario, f.destinatario, 
-        f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, f.estado_sunat sunat, f.ruta_comprobante pdf, u.name usuario, tm.denominacion caja ';
+        f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, f.estado_sunat sunat, f.ruta_comprobante pdf, u.name usuario, tm.denominacion caja,
+        f.id_forma_pago, fp.denominacion forma_pago, case when f.id_forma_pago = 2  then f.total - (select sum(t.monto) monto from comprobante_cuota_pagos t where t.estado = ''1'' and t.id_comprobante = f.id) 
+		else 0 end restante_credito 
+';
         
 	v_tabla='FROM comprobantes f 
 				left join users u on u.id = f.id_usuario_inserta 
 				left join tabla_maestras tm on tm.tipo = ''91'' and tm.codigo::int = f.id_caja
+				left join tabla_maestras fp on fp.tipo = ''104'' and fp.codigo::int = f.id_forma_pago 
 
 ';
 

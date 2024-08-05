@@ -224,10 +224,12 @@
                                 <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-top:30px">
                                     <input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
                                 </div>
+<!--
                                 <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-top:30px">
                                     <input class="btn btn-success pull-rigth" value="Nuevo" type="button" id="btnNuevo1" data-toggle="modal" data-target="#exampleModal2" style="margin-left:15px" />
 
                                 </div>
+                                    -->
                                 <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-top:30px">
                                     <input class="btn btn-success pull-rigth" value="Excel" type="button" id="btnExcel" onclick="reporteFactura()" />
                                 </div>
@@ -263,6 +265,7 @@
                                                 <th>Forma Pago</th>
                                                 <th>Cred. Restante</th>
                                                 <th>Sunat</th>
+                                                <th class="text-left">Credito</th>
                                                 <th class="text-left">Factura</th>
                                             </tr>
                                         </thead>
@@ -281,6 +284,7 @@
                     <!--</div>--><!--row-->
 
                     <!-- Modal -->
+<!--                     
                     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -303,15 +307,19 @@
                                     </div>
 
                                 </div>
-
-                                <!--
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    </div>
--->
                             </div>
                         </div>
                     </div>
+                                    -->
+                    <div id="openOverlayOpc" class="modal fade" role="dialog">
+                        <div class="modal-dialog" >
+                            <div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">                            
+                                <div class="modal-body" style="padding: 0px;margin: 0px">
+                                    <div id="diveditpregOpc"></div>
+                                </div>                            
+                            </div>
+                        </div>                            
+                    </div>                    
 
 
                     @endsection
