@@ -185,7 +185,7 @@ class DerechoRevision extends Model
         tm2.denominacion tipo_liquidacion, tm3.denominacion instancia,
         (select tm4.denominacion from uso_edificaciones ue left join tabla_maestras tm4 on ue.id_tipo_uso = tm4.codigo::int and  tm4.tipo ='30' where ue.id_solicitud = s.id and ue.estado ='1' limit 1) tipo_uso,
         (select tm5.denominacion from presupuestos p3 left join tabla_maestras tm5 on p3.id_tipo_obra = tm5.codigo::int and  tm5.tipo ='112' where p3.id_solicitud = s.id and p3.estado ='1' limit 1) tipo_obra, 
-        pro.codigo, tm5.denominacion tipo_tramite, s.valor_reintegro 
+        pro.codigo, tm5.denominacion tipo_tramite, s.valor_reintegro, to_char(l.fecha, 'dd-mm-yyyy') fecha_liquidacion
         from solicitudes s 
         inner join liquidaciones l on l.id_solicitud = s.id
         left join proyectistas p on p.id_solicitud = s.id
