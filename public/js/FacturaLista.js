@@ -159,8 +159,9 @@ function datatablenew(){
             var razon_social = $('#razon_social').val();
             var estado_pago = $('#estado_pago').val();
             var anulado = $('#anulado').val();
+            
             var sunat = $('#sunat').val();
-            var formapago = $('#sunat').val();
+            var formapago = $('#id_formapago').val();
             var pdf = $('#pdf').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -170,7 +171,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						fecha_ini:fecha_ini,fecha_fin:fecha_fin,
-						tipo_documento:tipo_documento, serie:serie, numero:numero, razon_social:razon_social, estado_pago:estado_pago, anulado:anulado,
+						tipo_documento:tipo_documento, serie:serie, numero:numero, razon_social:razon_social, estado_pago:estado_pago, anulado:anulado, formapago:formapago,
                         sunat:sunat, pdf:pdf, _token:_token
                        },
                 "success": function (result) {

@@ -208,11 +208,11 @@
                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 
                                     <label class="form-group">Forma de pago</label>
-                                    <select name="id_formapago_" id="id_formapago_" class="form-control form-control-sm" onChange="">
+                                    <select name="id_formapago" id="id_formapago" class="form-control form-control-sm" onChange="">
                                         <option value="">--Selecionar--</option>
                                         <?php
                                         foreach ($formapago as $row) { ?>
-                                            <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                            <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
                                         <?php
                                         }
                                         ?>

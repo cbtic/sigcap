@@ -1773,6 +1773,7 @@ class ComprobanteController extends Controller
         $p[]=$request->razon_social;
         $p[]=$request->estado_pago;
         $p[]=$request->anulado;
+        $p[]=$request->formapago;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		
@@ -2828,7 +2829,8 @@ class ComprobanteController extends Controller
 		}
 		
 		
-		$cuotaPago->fecha_vencimiento = $request->fecha;
+		$cuotaPago->fecha = $request->fecha;
+        $cuotaPago->fecha_vencimiento = $request->fecha;
         $cuotaPago->id_medio = $request->id_medio;
         $cuotaPago->id_comprobante = $request->id_comprobante;
         $cuotaPago->nro_operacion = $request->nro_operacion;
