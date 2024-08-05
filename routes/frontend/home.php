@@ -269,11 +269,11 @@ Route::get('comprobante/envio_comprobante_sunat_automatico/{fecha}', [Comprobant
 
 Route::get('comprobante/credito_pago/{id}', [ComprobanteController::class, 'credito_pago'])->name('comprobante.credito_pago');
 Route::post('comprobante/listar_credito_pago', [ComprobanteController::class, 'listar_credito_pago'])->name('comprobante.listar_credito_pago');
-Route::post('comprobante/send_pago_credito', [ComprobanteController::class, 'send_pago_credito'])->name('seguro.send_pago_credito');
-
+Route::post('comprobante/send_credito_pago', [ComprobanteController::class, 'send_credito_pago'])->name('comprobante.send_credito_pago');
+Route::get('comprobante/obtener_credito_pago/{id}', [ComprobanteController::class, 'obtener_credito_pago'])->name('comprobante.obtener_credito_pago');
+Route::get('comprobante/eliminar_credito_pago/{id}', [ComprobanteController::class, 'eliminar_credito_pago'])->name('comprobante.eliminar_credito_pago');
 
 //Route::get('pesaje/producto/{term}', [PesajeController::class, 'producto'])->name('pesaje.producto');
-
 Route::get('seguro/consulta_seguro', [SeguroController::class, 'consulta_seguro'])->name('seguro.consulta_seguro');
 Route::post('seguro/listar_seguro', [SeguroController::class, 'listar_seguro'])->name('seguro.listar_seguro');
 Route::post('seguro/listar_plan', [SeguroController::class, 'listar_plan'])->name('seguro.listar_plan');

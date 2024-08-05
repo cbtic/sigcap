@@ -147,14 +147,14 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	//datatablenewPlan();
+	datatablenewPago();
 
 });
 
-function datatablenewPlan(){
+function datatablenewPago(){
     var oTable1 = $('#tblPlan').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/seguro/listar_plan",
+        "sAjaxSource": "/comprobante/listar_credito_pago",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,
@@ -181,7 +181,7 @@ function datatablenewPlan(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id_seguro = $('#id_seguro').val();
+			var id = $('#id_comprobante').val();
 			//var denominacion = $('#nombre').val();
 			var estado = $('#estado').val();
 			
@@ -192,7 +192,7 @@ function datatablenewPlan(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id_seguro:id_seguro,estado:estado,
+						id:id,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {
@@ -219,39 +219,30 @@ function datatablenewPlan(){
                 },
 				{
                 "mRender": function (data, type, row) {
-                	var parentesco = "";
-					if(row.parentesco!= null)parentesco = row.parentesco;
-					return parentesco;
+                	var fecha = "";
+					if(row.fecha!= null)fecha = row.fecha;
+					return fecha;
                 },
                 "bSortable": true,
                 "aTargets": [1]
                 },
 				{
                 "mRender": function (data, type, row) {
-                	var nombre = "";
-					if(row.nombre!= null)nombre = row.nombre;
-					return nombre;
+                	var denominacion = "";
+					if(row.denominacion!= null)denominacion = row.denominacion;
+					return denominacion;
                 },
                 "bSortable": true,
                 "aTargets": [2]
                 },
 				{
                 "mRender": function (data, type, row) {
-                	var fecha_inicio = "";
-					if(row.fecha_inicio!= null)fecha_inicio = row.fecha_inicio;
-					return fecha_inicio;
+                	var nro_operacion = "";
+					if(row.nro_operacion!= null)nro_operacion = row.nro_operacion;
+					return nro_operacion;
                 },
                 "bSortable": true,
                 "aTargets": [3]
-                },
-				{
-                "mRender": function (data, type, row) {
-                	var fecha_fin = "";
-					if(row.fecha_fin!= null)fecha_fin = row.fecha_fin;
-					return fecha_fin;
-                },
-                "bSortable": true,
-                "aTargets": [4]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -260,72 +251,23 @@ function datatablenewPlan(){
 					return monto;
                 },
                 "bSortable": true,
-                "aTargets": [5]
+                "aTargets": [4]
                 },
-				{
-                "mRender": function (data, type, row) {
-                	var moneda = "";
-					if(row.moneda!= null)moneda = row.moneda;
-					return moneda;
-                },
-                "bSortable": true,
-                "aTargets": [6]
-                },
-				{
-                "mRender": function (data, type, row) {
-                	var edad_minima = "";
-					if(row.edad_minima!= null)edad_minima = row.edad_minima;
-					return edad_minima;
-                },
-                "bSortable": true,
-                "aTargets": [7]
-                },
-				{
-                "mRender": function (data, type, row) {
-                	var edad_maxima = "";
-					if(row.edad_maxima!= null)edad_maxima = row.edad_maxima;
-					return edad_maxima;
-                },
-                "bSortable": true,
-                "aTargets": [8]
-                },
-				{
-                "mRender": function (data, type, row) {
-                	var sexo = "";
-					if(row.sexo!= null)sexo = row.sexo;
-					return sexo;
-                },
-                "bSortable": true,
-                "aTargets": [9]
-                },
-				
-				{
-					"mRender": function (data, type, row) {
-						var estado = "";
-						if(row.estado == 1){
-							estado = "Activo";
-						}
-						if(row.estado == 0){
-							estado = "Inactivo";
-						}
-						return estado;
-					},
-					"bSortable": false,
-					"aTargets": [10]
-				},
+
+
 				{
 					"mRender": function (data, type, row) {
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarPlan('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editar('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						
-						html += '<a href="javascript:void(0)" onclick=eliminarPlan('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
 						
 						html += '</div>';
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [11],
+					"aTargets": [5],
 				},
 
             ]
@@ -335,51 +277,47 @@ function datatablenewPlan(){
 
 }
 
-function editarPlan(id){
+function editar(id){
 
 	$.ajax({
-		url: '/seguro/obtener_plan/'+id,
+		url: '/comprobante/obtener_credito_pago/'+id,
 		dataType: "json",
 		success: function(result){
 			//alert(result);
 			console.log(result);
 			$('#id').val(result.id);
-			$('#nombre_plan_').val(result.nombre);
-			$('#descripcion_').val(result.descripcion);
-			$('#fecha_inicio').val(result.fecha_inicio);
-			$('#fecha_fin').val(result.fecha_fin);
+			$('#id_medio').val(result.id_medio);
 			$('#monto').val(result.monto);
-			$('#edad_minima').val(result.edad_minima);
-			$('#edad_maxima').val(result.edad_maxima);
-			$('#sexo').val(result.sexo);
-			$('#parentesco').val(result.id_parentesco);
+			$('#nro_operacion').val(result.nro_operacion);
+			$('#fecha').val(result.fecha);
+
 		}
 		
 	});
 
 }
 
-function eliminarPlan(id){
+function eliminar(id){
 	
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas eliminar el Plan?", 
+        message: "&iquest;Deseas eliminar..?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_plan(id);
+                fn_eliminar(id);
             }
         }
     });
     //$(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_plan(id){
+function fn_eliminar(id){
 	
 	$.ajax({
-            url: "/seguro/eliminar_plan/"+id,
+            url: "/comprobante/eliminar_credito_pago/"+id,
             type: "GET",
             success: function (result) {
-				datatablenewPlan();
+				datatablenewPago();
             }
     });
 }
@@ -400,34 +338,31 @@ function validacion(){
 
 function limpiar(){
 	$('#id').val("0");
-	$('#nombre_plan_').val("");
-	$('#descripcion_').val("");
-	$('#fecha_inicio').val("");	
-	$('#fecha_fin').val("");
+	$('#id_comprobante').val("");
+	$('#id_medio').val("");
+	$('#fecha').val("");	
+	$('#nro_operacion').val("");
 	$('#monto').val("");
-	$('#edad_minima').val("");
-	$('#edad_maxima').val("");
-	$('#sexo').val("");
-	$('#parentesco').val("");
 }
 
 function fn_save(){
     
 	var _token = $('#_token').val();
-	var id = $('#id').val();
-	var id_medio = $('#id_medio').val();
+	var id = $('#id').val();	
+	var id_comprobante = $('#id_comprobante').val();
+	var id_medio = $('#id_medio').val();	
 	var fecha = $('#fecha').val();
 	var nro_operacion = $('#nro_operacion').val();	
 	var monto =$('#monto').val();	
 
     $.ajax({
-			url: "/comprobante/send_pago_credito",
+			url: "/comprobante/send_credito_pago",
             type: "POST",
-            data : {_token:_token,id:id,id_medio:id_medio,fecha:fecha,nro_operacion:nro_operacion,monto:monto },
+            data : {_token:_token,id:id,id_comprobante:id_comprobante,id_medio:id_medio,fecha:fecha,nro_operacion:nro_operacion,monto:monto },
 			success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
-				//datatablenewPlan();
-				//limpiar();
+				datatablenewPago();
+				limpiar();
 								
             }
     });
@@ -463,7 +398,7 @@ function fn_save(){
             	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
 					
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="id_seguro" id="id_seguro" value="<?//php echo $id?>">
+					<input type="hidden" name="id_comprobante" id="id_comprobante" value="<?php echo $id?>">
 					<input type="hidden" name="id" id="id" value="0">
 
 					<div class="row">
@@ -488,7 +423,7 @@ function fn_save(){
 						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 							<label class="control-label">Monto</label>
 						</div>
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 							<input id="monto" name="monto" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="text"  >
 						</div>
 
@@ -499,7 +434,7 @@ function fn_save(){
 							<input id="nro_operacion" name="nro_operacion" class="form-control form-control-sm"  value="<?php //echo $seguro->descripcion?>" type="text"  >
 						</div>
 						
-						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+						<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 							<label class="control-label">Fecha </label>
 						</div>
 						<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
@@ -536,26 +471,27 @@ function fn_save(){
                             <th>Acciones</th>
                         </tr>
                         </thead>
-                        <tbody style="font-size:13px">
+						<tbody></tbody>
+                        <!--
 						<tbody style="font-size:13px">
-							<?php foreach($lista as $row){?>
+							<//?php foreach($lista as $row){?>
 							<tr>
-								<th><?php echo $row->id?></th>
-								<th><?php echo $row->fecha?></th>
-								<th><?php echo $row->denominacion?></th>
-								<th><?php echo $row->nro_operacion?></th>
-								<th><?php echo $row->monto?></th>
+								<th><?//php echo $row->id?></th>
+								<th><?//php echo $row->fecha?></th>
+								<th><?//php echo $row->denominacion?></th>
+								<th><?//php echo $row->nro_operacion?></th>
+								<th><?//php echo $row->monto?></th>
 																
 								<th>
 								<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
-								<a href="javascript:void(0)" onclick="eliminarEstudio(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
+								<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?//php echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>
+								<a href="javascript:void(0)" onclick="eliminarEstudio(<?//php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 								</div>
 								</th>
 							</tr>														
-							<?php }?>
+							<//?php }?>
 						</tbody>
-						</tbody>
+							-->
                     </table>
 					</div>
                 </div>				

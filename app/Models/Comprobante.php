@@ -123,6 +123,16 @@ class Comprobante extends Model
 
     }
   
+    function getCuotaPagoById($id){
+
+        $cad = "select *
+                from comprobante_cuota_pagos
+                where id=".$id." 
+				";
+    
+		$data = DB::select($cad);
+        return $data[0];
+    }
 
    
 
