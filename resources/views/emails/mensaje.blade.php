@@ -42,7 +42,7 @@
                         
 						<p>954-495-957 </p>
 						<p>	¿No reconoce este proyecto?</p>
-						<p>	Haga click aquí para alertar al Área de Asuntos Técnicos
+						<p>	Haga click <a href="mailto:derechoderevision@limacap.org?subject=NO RECONOZCO EL PROYECTO-ALERTA CAP-RL">aquí</a> para alertar al Área de Asuntos Técnicos
 						</p>
 					
                     </div>
