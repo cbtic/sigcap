@@ -337,8 +337,7 @@ function validacion(){
 }
 
 function limpiar(){
-	$('#id').val("0");
-	$('#id_comprobante').val("");
+	$('#id').val("0");	
 	$('#id_medio').val("");
 	$('#fecha').val("");	
 	$('#nro_operacion').val("");

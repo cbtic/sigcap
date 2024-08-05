@@ -1,3 +1,4 @@
+-- DROP FUNCTION public.sp_listar_comprobante_cuota_pago_paginado(varchar, varchar, varchar, varchar, refcursor);
 
 CREATE OR REPLACE FUNCTION public.sp_listar_comprobante_cuota_pago_paginado(p_id character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
