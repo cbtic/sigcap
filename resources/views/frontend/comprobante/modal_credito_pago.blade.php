@@ -251,6 +251,7 @@ function datatablenewPago(){
 					return monto;
                 },
                 "bSortable": true,
+				"className": "text-right",
                 "aTargets": [4]
                 },
 
@@ -362,6 +363,7 @@ function fn_save(){
 				//$('#openOverlayOpc').modal('hide');
 				datatablenewPago();
 				limpiar();
+				fn_ListarBusqueda();
 								
             }
     });
@@ -471,6 +473,21 @@ function fn_save(){
                         </tr>
                         </thead>
 						<tbody></tbody>
+						<tfoot>
+							<tr>
+								<td style="padding-bottom:0px;margin-bottom:0px">
+
+									<th colspan="1" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda</th>									
+									<td style="padding-bottom:0px;margin-bottom:0px">
+										<input type="text" readonly name="deudaTotales" id="deudaTotales"  value="<?php echo $total?>" class="form-control form-control-sm text-right">
+									</td>
+									<th style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total</th>
+									<td style="padding-bottom:0px;margin-bottom:0px">
+										<input type="text" readonly name="total_credito" id="total_credito" value="<?php echo $total_credito?>" class="form-control form-control-sm text-right">
+									</td>
+								</td>
+							</tr>
+						</tfoot>
                         <!--
 						<tbody style="font-size:13px">
 							<//?php foreach($lista as $row){?>
