@@ -333,7 +333,12 @@ function datatablenew(){
 				{
                     "mRender": function (data, type, row) {
                         var restante_credito = "";
-                        if(row.restante_credito!= null)restante_credito = row.restante_credito;
+                        var forma_pago = "";
+                        if(row.forma_pago!= null)forma_pago = row.forma_pago;
+
+                        if(forma_pago=="CREDITO"){
+                            if(row.restante_credito!= null && forma_pago=="CREDITO")restante_credito = row.restante_credito;
+                        }
                         return restante_credito;
                     },
                     "bSortable": false,
@@ -382,10 +387,18 @@ function datatablenew(){
                 },              
 				{
                     "mRender": function (data, type, row) {
-                        var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-                        //html += '<a href="/comprobante/'+row.id+'" class="btn btn-sm btn-warning" target="_blank"><i class="fa fa-credit-card"></i></a>';
-                        html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalCreditoPago('+row.id+')" ><i class="fa fa-edit"></i> </button>';
-                        return html;
+                        var forma_pago = "";
+                        if(row.forma_pago!= null)forma_pago = row.forma_pago;
+
+                        if(forma_pago=="CREDITO"){
+                            var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';                       
+                            html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalCreditoPago('+row.id+')" ><i class="fa fa-edit"></i> </button>';
+                        }else{
+                            var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';                                                   
+                        }
+                        return html;    
+
+
                     },
                     "bSortable": false,
                     "aTargets": [16],

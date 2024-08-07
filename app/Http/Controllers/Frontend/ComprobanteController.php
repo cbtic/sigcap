@@ -2103,7 +2103,18 @@ class ComprobanteController extends Controller
         $medio_pago = $tabla_model->getMaestroByTipo('19');
         $id_comprobante =0;
 
-		return view('frontend.comprobante.modal_credito_pago',compact('id','medio_pago'));
+        
+        $comprobante_model=new Comprobante;
+        $comprobante=$comprobante_model->getComprobanteById($id);
+
+        //print_r($comprobante);
+
+        if($comprobante){
+            $total=$comprobante->total;
+            $total_credito=$comprobante->total_credito;
+        }
+
+		return view('frontend.comprobante.modal_credito_pago',compact('id','medio_pago','total','total_credito'));
 
     }
 
