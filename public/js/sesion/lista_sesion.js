@@ -1303,5 +1303,9 @@ function habilitarAprobar(obj){
 
 }
 
-
+function limpiar_coordinador(){
+	
+	$('input[name=coordinador]').prop("checked",false);
+	
+}
 

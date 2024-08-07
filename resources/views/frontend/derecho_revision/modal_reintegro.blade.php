@@ -17,7 +17,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:60%!important
+	max-width:90%!important
   }
   
 #tablemodal{
@@ -419,7 +419,21 @@ function valida(){
 
         return false;
     }else if(situacion=="HABILITADO" || situacion==""){
-        fn_save_credipago();
+        $.ajax({
+            url: "/derecho_revision/valida_credipago_unico/" + id_solicitud,
+            method: 'GET',
+            success: function(result) {
+                
+                //alert(result[0].cantidad);
+                if(result[0].cantidad>0){
+                    bootbox.alert("Existe una liquidacion pendiente, no puede generar otra");
+                }else{
+                    fn_save_credipago();
+                }
+                
+            },
+        });
+        
     } 
 }
 
@@ -450,7 +464,8 @@ function fn_save_credipago(){
 				
                 if(result[0].sw==true){
                     $('#openOverlayOpc').modal('hide');
-                    window.location.reload();
+                    //window.location.reload();
+                    datatablenew();
 				}else{
 					//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
 					bootbox.alert({
