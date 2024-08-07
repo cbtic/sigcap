@@ -957,8 +957,8 @@ function cargarDelegados(){
 										<th>N&deg; Liquidaci&oacute;n</th>
 										<th>Monto</th>
 										<th>Dictamen</th>
+										<th>Revisi&oacute;n</th>
 										<th>Rec. o Apel</th>
-										<th>Revis&oacute;n</th>
 										<th>Proyectista</th>
 										
 										<!--Cambio 29/07</th>
