@@ -2846,9 +2846,14 @@ class ComprobanteController extends Controller
         $cuotaPago->id_comprobante = $request->id_comprobante;
         $cuotaPago->nro_operacion = $request->nro_operacion;
         $cuotaPago->monto = $request->monto;
-        
+        $cuotaPago->save();
+
+
+        $comprobante = Comprobante::find($request->id_comprobante);
+		$comprobante->total_credito= $request->total_credito;
+		$comprobante->save();
   
-		$cuotaPago->save();
+		
 		
     }
 
