@@ -262,7 +262,7 @@ function datatablenewPago(){
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editar('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						
-						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+						html += '<a href="javascript:void(0)" onclick=eliminar('+row.id+','+row.monto+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
 						
 						html += '</div>';
 						return html;
@@ -290,7 +290,7 @@ function editar(id){
 			$('#id_medio').val(result.id_medio);
 			$('#monto').val(result.monto);
 			$('#nro_operacion').val(result.nro_operacion);
-			$('#fecha').val(result.fecha);
+			$('#fecha').val(result.fecha);			
 
 		}
 		
@@ -298,14 +298,16 @@ function editar(id){
 
 }
 
-function eliminar(id){
+function eliminar(id, monto){
 	
     bootbox.confirm({ 
         size: "small",
         message: "&iquest;Deseas eliminar..?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar(id);
+                fn_eliminar(id);				
+				var total_credito = $('#total_credito').val();
+				$('#total_credito').val(total_credito - monto);
             }
         }
     });
@@ -361,6 +363,8 @@ function fn_save(){
             data : {_token:_token,id:id,id_comprobante:id_comprobante,id_medio:id_medio,fecha:fecha,nro_operacion:nro_operacion,monto:monto },
 			success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
+				var total_credito = $('#total_credito').val();
+				$('#total_credito').val(total_credito + monto);
 				datatablenewPago();
 				limpiar();
 				fn_ListarBusqueda();

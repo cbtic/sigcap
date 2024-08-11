@@ -2113,6 +2113,7 @@ class ComprobanteController extends Controller
             $total=$comprobante->total;
             $total_credito=$comprobante->total_credito;
         }
+        if (isset($variable))$total_credito="0";
 
 		return view('frontend.comprobante.modal_credito_pago',compact('id','medio_pago','total','total_credito'));
 
@@ -2817,9 +2818,16 @@ class ComprobanteController extends Controller
 
     public function eliminar_credito_pago($id){
 
-		$cuotaPago = ComprobanteCuotaPago::find($id);
-		$cuotaPago->estado= "0";
+		$cuotaPago = ComprobanteCuotaPago::find($id);		
+        $id_comprobante = $cuotaPago->id_comprobante;
+        $monto = $cuotaPago->monto;  
+        $cuotaPago->estado= "0";
 		$cuotaPago->save();
+
+        
+        $comprobante = Comprobante::find($id_comprobante);
+		$comprobante->total_credito= $comprobante->total_credito-$monto;
+		$comprobante->save();
 		
 		echo "success";
 
