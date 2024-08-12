@@ -149,6 +149,13 @@ $(document).ready(function() {
 	 
 	datatablenewPago();
 
+	var pago_total = $('#pago_total').val();
+	var deuda_total= $('#deuda_total').val();
+	var resta_total= Number(deuda_total) - Number(pago_total);
+	
+	$('#resta_total').val(resta_total.toFixed(2));
+
+
 });
 
 function datatablenewPago(){
@@ -305,10 +312,16 @@ function eliminar(id, monto){
         message: "&iquest;Deseas eliminar..?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar(id);				
-				var total_credito = $('#total_credito').val();
-				$('#total_credito').val(total_credito - monto);
+                fn_eliminar(id);
+				var pago_total = $('#pago_total').val();
+				$('#pago_total').val(pago_total - monto);
+
+				var deuda_total= $('#deuda_total').val();
+				pago_total = $('#pago_total').val();
+				var resta_total = Number(deuda_total) - Number(pago_total);
+				$('#resta_total').val(resta_total.toFixed(2));
             }
+			//datatablenewPago();
         }
     });
     //$(".modal-dialog").css("width","30%");
@@ -321,6 +334,8 @@ function fn_eliminar(id){
             type: "GET",
             success: function (result) {
 				datatablenewPago();
+				limpiar();
+				fn_ListarBusqueda();
             }
     });
 }
@@ -357,14 +372,44 @@ function fn_save(){
 	var nro_operacion = $('#nro_operacion').val();	
 	var monto =$('#monto').val();	
 
+	
+	var pago_total = $('#pago_total').val();	
+	var deuda_total= $('#deuda_total').val();
+	var resta_total = Number(deuda_total) - (Number(pago_total) + Number(monto));
+	
+	var msg = "";
+
+	if(id_medio==""){msg+="Seleccione el medio de pago <br>";}
+	if(monto==""){msg+="Ingrese el monto <br>";}
+	if(monto<1){msg+="El monto es mayor que Cero <br>";}
+	if(nro_operacion==""){msg+="Ingrese el número de operación <br>";}
+	if(fecha==""){msg+="Ingrese la fecha del pago <br>";}
+
+
+    if(resta_total.toFixed(2)<0){msg+="El monto a pagar no be exceder a la Diferencia a cancelar <br>";}
+
+    
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
+
     $.ajax({
 			url: "/comprobante/send_credito_pago",
             type: "POST",
             data : {_token:_token,id:id,id_comprobante:id_comprobante,id_medio:id_medio,fecha:fecha,nro_operacion:nro_operacion,monto:monto },
 			success: function (result) {
+				//alert(result);
 				//$('#openOverlayOpc').modal('hide');
-				var total_credito = $('#total_credito').val();
-				$('#total_credito').val(total_credito + monto);
+				//var total_credito = $('#total_credito').val();
+				//$('#total_credito').val(Number(total_credito) + Number(monto));
+				var pago_total = result;
+				$('#pago_total').val(Number(pago_total));
+				var deuda_total= $('#deuda_total').val();
+				var resta_total = Number(deuda_total) - Number(pago_total);
+
+				$('#resta_total').val(resta_total.toFixed(2));
+
 				datatablenewPago();
 				limpiar();
 				fn_ListarBusqueda();
@@ -481,13 +526,29 @@ function fn_save(){
 							<tr>
 								<td style="padding-bottom:0px;margin-bottom:0px">
 
-									<th colspan="1" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda</th>									
+
+									<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total Pago</th>
 									<td style="padding-bottom:0px;margin-bottom:0px">
-										<input type="text" readonly name="deudaTotales" id="deudaTotales"  value="<?php echo $total?>" class="form-control form-control-sm text-right">
+										<input type="text" readonly name="pago_total" id="pago_total" value="<?php echo $total_credito?>" class="form-control form-control-sm text-right">
 									</td>
-									<th style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Total</th>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-bottom:0px;margin-bottom:0px">
+
+									<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Deuda Total</th>									
 									<td style="padding-bottom:0px;margin-bottom:0px">
-										<input type="text" readonly name="total_credito" id="total_credito" value="<?php echo $total_credito?>" class="form-control form-control-sm text-right">
+										<input type="text" readonly name="deuda_total" id="deuda_total"  value="<?php echo $total?>" class="form-control form-control-sm text-right">
+									</td>
+								</td>
+							</tr>
+
+							<tr>
+								<td style="padding-bottom:0px;margin-bottom:0px">
+
+									<th colspan="3" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px">Diferencia</th>									
+									<td style="padding-bottom:0px;margin-bottom:0px">
+										<input type="text" readonly name="resta_total" id="resta_total"  value="" class="form-control form-control-sm text-right">
 									</td>
 								</td>
 							</tr>

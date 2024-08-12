@@ -2824,12 +2824,32 @@ class ComprobanteController extends Controller
         $cuotaPago->estado= "0";
 		$cuotaPago->save();
 
-        
+        /*
         $comprobante = Comprobante::find($id_comprobante);
 		$comprobante->total_credito= $comprobante->total_credito-$monto;
 		$comprobante->save();
+*/
+        
+        $cuotaPagos = ComprobanteCuotaPago::where([
+            'id_comprobante' => $id_comprobante
+        ])->where('estado', '=', '1')->get();
+        $monto=0;
+
+        
+        foreach ($cuotaPagos as $index => $row) {
+
+            $monto= $monto+$row->monto; 
+
+        }
+       // print_r($monto); exit();
+
+
+        $comprobante = Comprobante::find($id_comprobante);
+        $comprobante->total_credito= $monto;            
+        $comprobante->save(); 
 		
-		echo "success";
+		//echo "success";
+        echo $comprobante->total_credito;
 
     }
 
@@ -2857,11 +2877,35 @@ class ComprobanteController extends Controller
         $cuotaPago->save();
 
 
+
+        //echo($request->id_comprobante);
+        //echo($request->monto);
+        //exit();
+
         $comprobante = Comprobante::find($request->id_comprobante);
-		$comprobante->total_credito= $request->total_credito;
-		$comprobante->save();
-  
-		
+
+        //echo($comprobante->total_credito);
+
+        if (isset($comprobante->total_credito)){
+            $cuotaPagos = ComprobanteCuotaPago::where([
+                'id_comprobante' => $request->id_comprobante
+            ])->where('estado', '=', '1')->get();
+            $monto=0;
+
+            foreach ($cuotaPagos as $index => $row) {
+
+                $monto= $monto+$row->monto; 
+
+            }
+            $comprobante->total_credito= $monto;            
+        }else{
+            $monto=$request->monto;
+            $comprobante->total_credito= $monto;                
+        }
+        
+        $comprobante->save(); 
+        
+        echo $monto;
 		
     }
 

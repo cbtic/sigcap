@@ -263,7 +263,7 @@
                                                 <th>Caja</th>
                                                 <th>Usuario</th>
                                                 <th>Forma Pago</th>
-                                                <th>Cred. Restante</th>
+                                                <th class="text-right">Credito</th>
                                                 <th>Sunat</th>
                                                 <th class="text-left">Credito</th>
                                                 <th class="text-left">Factura</th>

@@ -342,6 +342,7 @@ function datatablenew(){
                         return restante_credito;
                     },
                     "bSortable": false,
+                    "className": "text-right",
                     "aTargets": [14]
                 },
               
