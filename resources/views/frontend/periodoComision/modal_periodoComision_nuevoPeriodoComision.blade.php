@@ -520,6 +520,30 @@ function fn_save_periodoComision(){
 												
 						</div>
 					</div> 
+
+				<div class="card-body">				
+                    <div class="table-responsive">
+						<table id="tblPlan" class="table table-hover table-sm">
+							<thead>
+							<tr style="font-size:13px">
+								<th>Id</th>
+								<th>Periodo </th>
+								<th>Estado</th>                            
+							</tr>
+							</thead>
+							
+							<tbody style="font-size:13px">
+								<?php foreach($listaPeriodoComisionDetalle as $row){?>
+								<tr>
+									<th><?php echo $row->id?></th>
+									<th><?php echo $row->denominacion?></th>
+									<th><?php  if($row->estado=="1")echo("ACTIVO");?></th>
+								</tr>														
+								<?php }?>
+							</tbody>								
+						</table>
+					</div>
+                </div>				
 					
               </div>
 			  
