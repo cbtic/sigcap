@@ -299,9 +299,8 @@ function generarAsientoPlanilla(){
 	p.anio =  $('#anio').val();
 	p.mes = $('#mes').val();
 	p.periodo  = $('#id_periodo').val();
-	p.tipo  = $('#TipoAsiento').val();
-	p.id_periodo_bus_  = $('#id_periodo_bus_').val();
-	p.id_periodo_bus  = $('#id_periodo_bus').val();
+	p.tipo  = $('#TipoAsiento').val();	
+	p.id_periodo  = $('#id_periodo_bus').val(); 
 
 	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
