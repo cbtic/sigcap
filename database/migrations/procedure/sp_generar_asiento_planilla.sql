@@ -27,8 +27,8 @@ begin
 	
 	
 
-	_id_periodo_comision:=(select id_periodo_comision from periodo_comision_detalles where denominacion = p_anio||p_mes);
-	_id_periodo_comision_detalle:=(select id from periodo_comision_detalles where denominacion = p_anio||p_mes);
+	_id_periodo_comision:=(select id_periodo_comision from periodo_comision_detalles where id_periodo_comision = p_id_periodo::integer and denominacion = p_anio||p_mes);
+	_id_periodo_comision_detalle:=(select id from periodo_comision_detalles where id_periodo_comision = p_id_periodo::integer and denominacion = p_anio||p_mes);
 
 	Case p_asiento
 		When '1' then 
@@ -54,7 +54,8 @@ begin
 					and pl.id_periodo_comision = _id_periodo_comision 
 					and pl.mes = p_mes::integer 
 					and pl.periodo = p_anio::integer 
-					and pl.estado = '1'					
+					and pl.estado = '1'
+					and nullif(trim(pd.numero_comprobante),'') is not null
 					and pd.id not in(
 						select ap.id_planilla_delegado_detalle
 						from asiento_planillas ap
@@ -67,21 +68,21 @@ begin
 					(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
 					id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle, centro_costo, presupuesto, fecha_documento,fecha_vencimiento,created_at,numero_comprobante, orden)				
 					select 
-					1, cursor_rh.id_persona, '63291', cursor_rh.total_bruto, 0,  cursor_rh.total_bruto/3.71, cursor_rh.glosa, 1, 1, 3.755, 1, 
+					1, cursor_rh.id_persona, '63291', cursor_rh.total_bruto, 0,  cursor_rh.total_bruto/3.71, cursor_rh.glosa, 1, 1, 3.7, 1, 
 					_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id, '2025601', '01P2501', cursor_rh.fecha_comprobante, cursor_rh.fecha_vencimiento, current_timestamp, cursor_rh.numero_comprobante,1;
 			
 				insert into  asiento_planillas
 					(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
 					id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle, fecha_documento,fecha_vencimiento,created_at,numero_comprobante, orden)				
 					select 
-					1, cursor_rh.id_persona, '40172', 0, cursor_rh.ir_cuarta, cursor_rh.ir_cuarta/3.71, cursor_rh.glosa, 1, 1, 3.755, 1, 
+					1, cursor_rh.id_persona, '40172', 0, cursor_rh.ir_cuarta, cursor_rh.ir_cuarta/3.71, cursor_rh.glosa, 1, 1, 3.7, 1, 
 					_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id, cursor_rh.fecha_comprobante, cursor_rh.fecha_vencimiento, current_timestamp, cursor_rh.numero_comprobante,2;
 			
 				insert into  asiento_planillas
 					(id_tipo, id_persona, cuenta, debe, haber, equivalente, glosa, id_tipo_documento, id_moneda, tipo_cambio, id_usuario_inserta,  
 					id_periodo_comision, id_periodo_comision_detalle, id_grupo, id_planilla_delegado_detalle, fecha_documento,fecha_vencimiento,created_at,numero_comprobante, orden)				
 					select 
-					1, cursor_rh.id_persona, '4241', 0, cursor_rh.total_honorario, cursor_rh.total_honorario/3.71, cursor_rh.glosa, 1, 1, 3.755, 1, 
+					1, cursor_rh.id_persona, '4241', 0, cursor_rh.total_honorario, cursor_rh.total_honorario/3.71, cursor_rh.glosa, 1, 1, 3.7, 1, 
 					_id_periodo_comision, _id_periodo_comision_detalle, _grupo, cursor_rh.id, cursor_rh.fecha_comprobante, cursor_rh.fecha_vencimiento, current_timestamp, cursor_rh.numero_comprobante,3;
 				
 				update planilla_delegado_detalles set id_grupo = _grupo where id = cursor_rh.id;
