@@ -379,8 +379,8 @@ function fn_save_periodoComision(){
 				descripcion:descripcion,fijar_periodo:fijar_periodo,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,tipo:tipo},
             success: function (result) {
 				
-				//$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
+				$('#openOverlayOpc').modal('hide');
+				window.location.reload();
 				datatablenew();
 				
 				/*
