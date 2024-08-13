@@ -202,12 +202,13 @@ class AsientoPlanillaController extends Controller
 		$anio =$request->anio;
 		$mes =$request->mes;
 		$periodo =$request->periodo;
+		$id_periodo =$request->id_periodo;
 		$tipo =$request->tipo;
 
-		//print_r($tipo); exit();
+		//print_r($id_periodo_bus); exit();
 
 		$asiento_planilla_model = new AsientoPlanilla;
-		$data = $asiento_planilla_model->generar_asiento_planilla($tipo,$periodo ,$anio, $mes);
+		$data = $asiento_planilla_model->generar_asiento_planilla($tipo,$id_periodo ,$anio, $mes);
 
 		$result["aaData"] = $data;
 

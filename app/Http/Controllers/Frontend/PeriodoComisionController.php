@@ -179,25 +179,36 @@ class PeriodoComisionController extends Controller
 
 		$comienzo = Carbon::parse($request->fecha_inicio);
 		$final = Carbon::parse($request->fecha_fin);
+
+		//echo($comienzo);
 		
 		for($i = $comienzo; $i <= $final; $i->modify('+1 month')){
+			
 			//echo $i->format("Ym") . "\n";
 			$perido_d = $i->format("Ym");
+			//echo($idPeriodoComision);
+
 			$periodoComisionDetalle = PeriodoComisionDetalle::where("id_periodo_comision", $idPeriodoComision)->where("denominacion", $perido_d)->first();
-			print_r($periodoComisionDetalle);exit();
+			//print_r($periodoComisionDetalle);exit();
 
 			if ($periodoComisionDetalle){
-				$periodoComisionDet = new PeriodoComisionDetalle;
+				//$periodoComisionDet = new PeriodoComisionDetalle;
+				$periodoComisionDet = PeriodoComisionDetalle::find($periodoComisionDetalle->id);
+				$periodoComisionDet->id_usuario_actualiza = $id_user;
 
 			}else{
-				$periodoComisionDet = PeriodoComisionDetalle::find($periodoComisionDetalle->id);
+				$periodoComisionDet = new PeriodoComisionDetalle;
+				//$periodoComisionDet = PeriodoComisionDetalle::find($periodoComisionDetalle->id);
+				$periodoComisionDet->id_usuario_inserta = $id_user;
 			}
 
 			$periodoComisionDet->id_periodo_comision = $idPeriodoComision;
 			$periodoComisionDet->denominacion = $perido_d;
+			$periodoComisionDet->fecha = $i;
+
 			$periodoComisionDet->estado = "1";
 			$periodoComisionDet->activo = "0";
-			$periodoComisionDet->id_usuario_inserta = $id_user;
+			
 			$periodoComisionDet->save();
 
 		}

@@ -300,6 +300,8 @@ function generarAsientoPlanilla(){
 	p.mes = $('#mes').val();
 	p.periodo  = $('#id_periodo').val();
 	p.tipo  = $('#TipoAsiento').val();
+	p.id_periodo_bus_  = $('#id_periodo_bus_').val();
+	p.id_periodo_bus  = $('#id_periodo_bus').val();
 
 	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
@@ -308,7 +310,7 @@ function generarAsientoPlanilla(){
     $('.loader').show();
 	
     $.ajax({
-            url: "/asiento/generar_asiento_planilla",
+            url: "/asiento/generar_asiento_planilla", 
             type: "GET",
 			data: p,
             success: function (result) {

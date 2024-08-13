@@ -52,11 +52,11 @@ class AsientoPlanilla extends Model
         return $data;
     }
 
-    public function generar_asiento_planilla($tipo, $periodo, $anio, $mes) {
+    public function generar_asiento_planilla($tipo, $id_periodo, $anio, $mes) {
 
         $cad = "Select  sp_generar_asiento_planilla(?, ?, ?, ?)";
      
-		$data = DB::select($cad, array($tipo, $periodo, $anio, $mes ));
+		$data = DB::select($cad, array($tipo, $id_periodo, $anio, $mes ));
         return $data[0]->sp_generar_asiento_planilla;
     }
 
