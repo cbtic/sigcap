@@ -2395,4 +2395,31 @@ class DerechoRevisionController extends Controller
         return response()->json($datos_formateados);
 	}
 
+	public function obtener_numero_revision($id_solicitud){
+
+		$derecho_revision_model = new DerechoRevision;
+		$numero_revision_data = $derecho_revision_model->getNumeroRevisionBySolicitud($id_solicitud);
+		//dd($numero_revision);exit();
+        
+		$id = $numero_revision_data[0]->id;
+		$numero_revision = $numero_revision_data[0]->numero_revision;
+		$codigo = $numero_revision_data[0]->codigo;
+            
+		$pago_liquidacion = $derecho_revision_model->getLiquidacionByRevision($id, $numero_revision, $codigo);
+
+		/*foreach($pago_liquidacion as $pago){
+			if($pago->pagado==1){
+				$pagado=1;
+			}else{
+				$pagado=0;
+			}
+		}*/
+
+		//dd($pago_liquidacion);exit();
+
+        return response()->json($pago_liquidacion);
+	}
+
+
+
 }

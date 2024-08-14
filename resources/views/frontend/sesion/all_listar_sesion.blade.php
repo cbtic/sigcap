@@ -341,6 +341,7 @@
 							<th>Monto</th>
 							<th>Dictamen</th>
 							<th>Revis&oacute;n</th>
+							<th>Rec. o Apel</th>
 							<th>Proyectista</th>
                         </tr>
                         </thead>
