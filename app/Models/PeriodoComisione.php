@@ -112,4 +112,12 @@ class PeriodoComisione extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+    function actualizarInactivoPeriodoComisionDertalle($id_periodo_comision){
+  
+        $cad = "update periodo_comision_detalles set estado = '0' where id_periodo_comision=".$id_periodo_comision;
+        //echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
 }

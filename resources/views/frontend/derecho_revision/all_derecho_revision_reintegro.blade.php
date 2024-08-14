@@ -49,7 +49,7 @@
 	left: 0px;
 	z-index: 10000;
 	text-align: center;
-	position:absolute; 
+	position:fixed; 
 	background-color: #000;
 	opacity:0.6;
 	filter:alpha(opacity=40);

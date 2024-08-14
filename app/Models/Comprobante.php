@@ -102,6 +102,38 @@ class Comprobante extends Model
         //print_r($data); exit();
         return $data;
     }
+
+    function listar_credito_pago($id){
+
+        $cad = "select  c.id, c.id_comprobante, c.item, c.fecha, c.id_medio, c.nro_operacion, c.descripcion, c.monto, c.fecha_vencimiento fecha, c.estado, cp.denominacion
+                from comprobante_cuota_pagos c
+                inner join tabla_maestras cp on cp.tipo = '19' and cp.codigo::int = c.id_medio 
+                where c.id_comprobante='". $id . "'
+                order by c.id" ;
+
+                //print_r($cad); exit();
+		$data = DB::select($cad);
+        //print_r($data); exit();
+        return $data;
+    }
+
+    public function listar_credito_pago_paginado($p){
+
+        return $this->readFuntionPostgres('sp_listar_comprobante_cuota_pago_paginado',$p);
+
+    }
+  
+    function getCuotaPagoById($id){
+
+        $cad = "select *
+                from comprobante_cuota_pagos
+                where id=".$id." 
+				";
+    
+		$data = DB::select($cad);
+        return $data[0];
+    }
+
    
 
     function getDatosByComprobante($id){

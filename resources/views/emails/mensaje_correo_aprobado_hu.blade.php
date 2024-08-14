@@ -35,7 +35,7 @@
                         </ul>
                         </p>
 						
-						<p> Puede realizar el pago de la liquidación en el siquiente link
+						<p> Puede realizar el pago de la liquidación en el siquiente <a href="https://limacap.org/formulario-de-pago/" target="_blank">link</a>.</p>
 						</p>
 					
                     </div>

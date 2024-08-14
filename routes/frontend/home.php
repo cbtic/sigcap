@@ -267,10 +267,13 @@ Route::get('comprobante/firmar_nc/{id}', [ComprobanteController::class, 'firmar_
 Route::get('comprobante/firmar_nd/{id}', [ComprobanteController::class, 'firmar_nd'])->name('comprobante.firmar_nd');
 Route::get('comprobante/envio_comprobante_sunat_automatico/{fecha}', [ComprobanteController::class, 'envio_comprobante_sunat_automatico'])->name('comprobante.envio_comprobante_sunat_automatico');
 
-Route::get('comprobante/forma_pago/{term}', [ComprobanteController::class, 'forma_pago'])->name('comprobante.forma_pago');
+Route::get('comprobante/credito_pago/{id}', [ComprobanteController::class, 'credito_pago'])->name('comprobante.credito_pago');
+Route::post('comprobante/listar_credito_pago', [ComprobanteController::class, 'listar_credito_pago'])->name('comprobante.listar_credito_pago');
+Route::post('comprobante/send_credito_pago', [ComprobanteController::class, 'send_credito_pago'])->name('comprobante.send_credito_pago');
+Route::get('comprobante/obtener_credito_pago/{id}', [ComprobanteController::class, 'obtener_credito_pago'])->name('comprobante.obtener_credito_pago');
+Route::get('comprobante/eliminar_credito_pago/{id}', [ComprobanteController::class, 'eliminar_credito_pago'])->name('comprobante.eliminar_credito_pago');
 
 //Route::get('pesaje/producto/{term}', [PesajeController::class, 'producto'])->name('pesaje.producto');
-
 Route::get('seguro/consulta_seguro', [SeguroController::class, 'consulta_seguro'])->name('seguro.consulta_seguro');
 Route::post('seguro/listar_seguro', [SeguroController::class, 'listar_seguro'])->name('seguro.listar_seguro');
 Route::post('seguro/listar_plan', [SeguroController::class, 'listar_plan'])->name('seguro.listar_plan');
@@ -774,3 +777,6 @@ Route::post('agremiado/listar_valorizacion_periodo_deuda', [AgremiadoController:
 
 Route::get('ingreso/reporte_deudas_pdf/{numero_cap}', [IngresoController::class, 'reporte_deudas_pdf'])->name('ingreso.reporte_deudas_pdf');
 Route::get('ingreso/reporte_deudas_total_pdf/{numero_cap}', [IngresoController::class, 'reporte_deudas_total_pdf'])->name('ingreso.reporte_deudas_total_pdf');
+
+Route::get('derecho_revision/valida_credipago_unico/{id_solicitud}', [DerechoRevisionController::class, 'valida_credipago_unico'])->name('derecho_revision.valida_credipago_unico');
+Route::get('derecho_revision/validar_proyectista_hu/{id}', [DerechoRevisionController::class, 'validar_proyectista_hu'])->name('derecho_revision.validar_proyectista_hu');

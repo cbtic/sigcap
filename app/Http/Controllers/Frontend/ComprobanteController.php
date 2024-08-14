@@ -15,7 +15,8 @@ use App\Models\Guia;
 use App\Models\Agremiado;
 use App\Models\ComprobantePago;
 use App\Models\ComprobanteCouta;
-use App\Models\ComprobanteCuota;
+use App\Models\ComprobanteCuotaPago;
+
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -1772,6 +1773,7 @@ class ComprobanteController extends Controller
         $p[]=$request->razon_social;
         $p[]=$request->estado_pago;
         $p[]=$request->anulado;
+        $p[]=$request->formapago;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		
@@ -2092,6 +2094,68 @@ class ComprobanteController extends Controller
 		$forma_pago = $tabla_model->getMaestroByTipoAndDenomina('19',$term);
          return response()->json($forma_pago);
     }
+
+    public function credito_pago($id){
+		
+		$id_user = Auth::user()->id;
+		$tabla_model = new TablaMaestra;
+
+        $medio_pago = $tabla_model->getMaestroByTipo('19');
+        $id_comprobante =0;
+
+        
+        $comprobante_model=new Comprobante;
+        $comprobante=$comprobante_model->getComprobanteById($id);
+
+        //print_r($comprobante);
+
+        if($comprobante){
+            $total=$comprobante->total;
+            $total_credito=$comprobante->total_credito;
+        }
+        if (isset($variable))$total_credito="0";
+
+		return view('frontend.comprobante.modal_credito_pago',compact('id','medio_pago','total','total_credito'));
+
+    }
+
+/*
+
+    public function listar_credito_pago($id){
+
+        $comprobante_model = new Comprobante; 
+        $resultado = $comprobante_model->listar_credito_pago($id);
+		return $resultado;
+
+    }
+        */
+
+    public function listar_credito_pago(Request $request){
+	
+		//$puesto_model = new Concurso();
+        $comprobante_model = new Comprobante;
+
+		$p[]=$request->id;
+		$p[]=1;          
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $comprobante_model->listar_credito_pago_paginado($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+        //print_r(json_encode($result)); exit();
+		echo json_encode($result);
+
+	
+	}
+
 	
     public function firmar($id_factura){
 
@@ -2742,6 +2806,107 @@ class ComprobanteController extends Controller
         $array["msg"] = $msg;
         $array["id_factura"] = $id_factura;
         echo json_encode($array);
+    }
+
+    public function obtener_credito_pago($id){
+		
+		$comprobante_model = new Comprobante;
+		$credito_pago = $comprobante_model->getCuotaPagoById($id);
+		
+		echo json_encode($credito_pago);
+	}
+
+    public function eliminar_credito_pago($id){
+
+		$cuotaPago = ComprobanteCuotaPago::find($id);		
+        $id_comprobante = $cuotaPago->id_comprobante;
+        $monto = $cuotaPago->monto;  
+        $cuotaPago->estado= "0";
+		$cuotaPago->save();
+
+        /*
+        $comprobante = Comprobante::find($id_comprobante);
+		$comprobante->total_credito= $comprobante->total_credito-$monto;
+		$comprobante->save();
+*/
+        
+        $cuotaPagos = ComprobanteCuotaPago::where([
+            'id_comprobante' => $id_comprobante
+        ])->where('estado', '=', '1')->get();
+        $monto=0;
+
+        
+        foreach ($cuotaPagos as $index => $row) {
+
+            $monto= $monto+$row->monto; 
+
+        }
+       // print_r($monto); exit();
+
+
+        $comprobante = Comprobante::find($id_comprobante);
+        $comprobante->total_credito= $monto;            
+        $comprobante->save(); 
+		
+		//echo "success";
+        echo $comprobante->total_credito;
+
+    }
+
+    public function send_credito_pago(Request $request){
+	
+		$id_user = Auth::user()->id;
+		
+		if($request->id == 0){
+			$cuotaPago = new ComprobanteCuotaPago;
+			$cuotaPago->id_usuario_inserta = $id_user;
+            $cuotaPago->item = 1;
+            
+		}else{
+			$cuotaPago = ComprobanteCuotaPago::find($request->id);
+            $cuotaPago->id_usuario_actualiza = $id_user;            
+		}
+		
+		
+		$cuotaPago->fecha = $request->fecha;
+        $cuotaPago->fecha_vencimiento = $request->fecha;
+        $cuotaPago->id_medio = $request->id_medio;
+        $cuotaPago->id_comprobante = $request->id_comprobante;
+        $cuotaPago->nro_operacion = $request->nro_operacion;
+        $cuotaPago->monto = $request->monto;
+        $cuotaPago->save();
+
+
+
+        //echo($request->id_comprobante);
+        //echo($request->monto);
+        //exit();
+
+        $comprobante = Comprobante::find($request->id_comprobante);
+
+        //echo($comprobante->total_credito);
+
+        if (isset($comprobante->total_credito)){
+            $cuotaPagos = ComprobanteCuotaPago::where([
+                'id_comprobante' => $request->id_comprobante
+            ])->where('estado', '=', '1')->get();
+            $monto=0;
+
+            foreach ($cuotaPagos as $index => $row) {
+
+                $monto= $monto+$row->monto; 
+
+            }
+            $comprobante->total_credito= $monto;            
+        }else{
+            $monto=$request->monto;
+            $comprobante->total_credito= $monto;                
+        }
+        
+        $comprobante->save(); 
+        
+        echo $monto;
+		
     }
 
 }

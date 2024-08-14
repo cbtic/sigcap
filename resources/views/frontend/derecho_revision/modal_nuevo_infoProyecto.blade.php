@@ -110,6 +110,10 @@
 .form-check.subtipo {
     margin-left: 20px;
 }
+
+.form-check.subsubtipo {
+    margin-left: 40px;
+}
 </style>
 
 <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>-->
@@ -159,6 +163,12 @@ $(document).ready(function() {
 		//alert(id);return false;
         var formData = new FormData();
         var files = $('#image'+id)[0].files[0];
+        var maxSize = 10 * 1024 * 1024;
+
+		if (files.size > maxSize) {
+			bootbox.alert("El archivo supera el tamaño máximo permitido de 15 MB.");
+			return; 
+		}
         formData.append('file',files);
         $.ajax({
 			headers: {
@@ -492,60 +502,67 @@ function fn_save_infoProyeto(){
                     
                     <div class="row" style="padding-left:10px">
                         <div class="col-lg-6" >
-                            <div class="form-check">
+                            <div class="form-check tipo">
                                 <input class="form-check-input" type="checkbox" value="1" id="check_opc8" name="grupo_tramite2" <?php if (in_array(1, $selectedIds)) echo "checked='checked'"; ?>>
                                 <label class="form-check-label" for="check_opc8">
                                     Uso de Vivienda o urbanizaci&oacute;n
                                 </label>
                             </div>
 
-                            <div class="form-check tipo">
-                                <input class="form-check-input" type="checkbox" value="2" id="check_opc9" name="grupo_tramite2" <?php if (in_array(2, $selectedIds)) echo "checked='checked'"; ?>>
+                            <div class="form-check subtipo">
+                                <input class="form-check-input" type="checkbox" value="2" id="check_opc9" name="grupo_tramite2" <?php if (in_array(2, $selectedIds)) echo "checked='checked'"; ?>
+                                onclick="document.getElementById('check_opc8').checked = this.checked || document.getElementById('check_opc10').checked || document.getElementById('check_opc14').checked || document.getElementById('check_opc15').checked;">
                                 <label class="form-check-label" for="check_opc9">
                                     Tipo Convecional
                                 </label>
                             </div>
 
-                            <div class="form-check tipo">
-                                <input class="form-check-input" type="checkbox" value="3" id="check_opc10" name="grupo_tramite2" <?php if (in_array(3, $selectedIds)) echo "checked='checked'"; ?>>
+                            <div class="form-check subtipo">
+                                <input class="form-check-input" type="checkbox" value="3" id="check_opc10" name="grupo_tramite2" <?php if (in_array(3, $selectedIds)) echo "checked='checked'"; ?>
+                                onclick="document.getElementById('check_opc8').checked = this.checked || document.getElementById('check_opc9').checked || document.getElementById('check_opc14').checked || document.getElementById('check_opc15').checked;">
                                 <label class="form-check-label" for="check_opc10">
                                     Con Construcci&oacute;n simultanea
                                 </label>
                             </div>
 
-                            <div class="form-check subtipo">
+                            <div class="form-check subsubtipo">
                                 <input class="form-check-input" type="checkbox" value="13" id="check_opc11" name="grupo_tramite2" <?php if (in_array(13, $selectedIds)) echo "checked='checked'"; ?>
-                                onclick="document.getElementById('check_opc10').checked = this.checked || document.getElementById('check_opc12').checked || document.getElementById('check_opc13').checked;">
+                                onclick=" document.getElementById('check_opc10').checked = this.checked || document.getElementById('check_opc12').checked || document.getElementById('check_opc13').checked;
+                                document.getElementById('check_opc8').checked = this.checked || document.getElementById('check_opc12').checked || document.getElementById('check_opc13').checked;">
                                 <label class="form-check-label" for="check_opc11">
                                     Con Venta Garantizada de Lotes
                                 </label>
                             </div>
 
-                            <div class="form-check subtipo">
+                            <div class="form-check subsubtipo">
                                 <input class="form-check-input" type="checkbox" value="4" id="check_opc12" name="grupo_tramite2" <?php if (in_array(4, $selectedIds)) echo "checked='checked'"; ?>
-                                onclick="document.getElementById('check_opc10').checked = this.checked || document.getElementById('check_opc11').checked || document.getElementById('check_opc13').checked;">
+                                onclick="document.getElementById('check_opc10').checked = this.checked || document.getElementById('check_opc11').checked || document.getElementById('check_opc13').checked;
+                                document.getElementById('check_opc8').checked = this.checked || document.getElementById('check_opc11').checked || document.getElementById('check_opc13').checked;">
                                 <label class="form-check-label" for="check_opc12">
                                     Con Venta de Viviendas edificadas
                                 </label>
                             </div>
 
-                            <div class="form-check subtipo">
+                            <div class="form-check subsubtipo">
                                 <input class="form-check-input" type="checkbox" value="14" id="check_opc13" name="grupo_tramite2" <?php if (in_array(14, $selectedIds)) echo "checked='checked'"; ?>
-                                onclick="document.getElementById('check_opc10').checked = this.checked || document.getElementById('check_opc11').checked || document.getElementById('check_opc12').checked;">
+                                onclick="document.getElementById('check_opc10').checked = this.checked || document.getElementById('check_opc11').checked || document.getElementById('check_opc12').checked;
+                                document.getElementById('check_opc8').checked = this.checked || document.getElementById('check_opc11').checked || document.getElementById('check_opc12').checked;">
                                 <label class="form-check-label" for="check_opc13">
                                     Destinada a vivienda temporal o vacacional
                                 </label>
                             </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="5" id="check_opc14" name="grupo_tramite2" <?php if (in_array(5, $selectedIds)) echo "checked='checked'"; ?>>
+                            <div class="form-check subtipo">
+                                <input class="form-check-input" type="checkbox" value="5" id="check_opc14" name="grupo_tramite2" <?php if (in_array(5, $selectedIds)) echo "checked='checked'"; ?>
+                                onclick="document.getElementById('check_opc8').checked = this.checked || document.getElementById('check_opc9').checked || document.getElementById('check_opc10').checked || document.getElementById('check_opc15').checked;">
                                 <label class="form-check-label" for="check_opc14">
                                     De tipo Progresivo
                                 </label>
                             </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="12" id="check_opc15" name="grupo_tramite2" <?php if (in_array(12, $selectedIds)) echo "checked='checked'"; ?>>
+                            <div class="form-check subtipo">
+                                <input class="form-check-input" type="checkbox" value="12" id="check_opc15" name="grupo_tramite2" <?php if (in_array(12, $selectedIds)) echo "checked='checked'"; ?>
+                                onclick="document.getElementById('check_opc8').checked = this.checked || document.getElementById('check_opc9').checked || document.getElementById('check_opc10').checked || document.getElementById('check_opc14').checked;">
                                 <label class="form-check-label" for="check_opc15">
                                     Otros
                                 </label>

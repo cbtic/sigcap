@@ -502,7 +502,7 @@ function modalVerFormato(){
 																	<th>
 																	<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
 																	<!--<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEstudio(<?php //echo $row->id?>)" ><i class="fa fa-edit"></i> Editar</button>-->
-																	<a href="javascript:void(0)" onclick="eliminarProyectistaHU(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
+																	<a href="javascript:void(0)" onclick="validarProyectistaPrincipal(<?php echo $row->id?>)" class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>
 																	</div>
 																	</th>
 																</tr>											

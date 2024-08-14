@@ -224,4 +224,12 @@ order by id_tipo_proyectista";
         return $data;
     }
 
+    function getProyectistaPrincipal($id){      
+        $cad = "select * from proyectistas p where id='".$id."'";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }
