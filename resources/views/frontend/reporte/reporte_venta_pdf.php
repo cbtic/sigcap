@@ -125,15 +125,11 @@
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;text-align:left;padding-top:5px;padding-bottom:5px" width="1%">TD</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">Serie</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">Numero</td>  
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="2%">Fecha</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">tipo</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">serie</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">Número</td>
+					
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="2%">Cod. Tributario</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="5%">Destinatario</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">Importe afecto</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">Importe afecto</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">I.G.V.</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="10%">Destinatario</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">Cantidad</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="10%">Descripcion</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">Total</td>
 				</tr>
 				
@@ -149,70 +145,97 @@
 				 $suma_inafecto_parcial=0;
 				 $suma_igv_parcial=0;
 				 $suma_total_parcial=0;
-				//var_dump($reporte_ventas ); exit();
-                 foreach($reporte_ventas as $id_concepto=>$items){
-					$total_cuenta += 1;
-					 
-					//echo number_format($d->id_concepto);
-                 ?>
-					 <table>
-            <thead>
-			
-                <tr>
-					
-                    <th>Campo 1</th>
-                    <th>Campo 2</th>
-                    <th>Campo 3</th>
-                    <!-- Agrega más campos según sea necesario -->
-                </tr>
-				
-				
-            </thead>
-            <tbody>
-				
-        </table>
 
-					 <?php
-					 	
+                 foreach($reporte_ventas as $key=>$d){
+					$total_cuenta += 1;
+
+					
+                 ?>
+				 
+				<?php 
+                if ($total_cuenta==1) {  ?> 
+					<tr>				
+						<td colspan="9" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->concepto)?></td>
+						
+					</tr>
+                <?php 
+					$concepto_tmp=$d->concepto;
+                 } else {
+					if ($concepto_tmp!=$d->concepto) {
+				 ?>
+				 			<tr>
+								<th colspan="8" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important">Total </th>
+								
+								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_total_parcial, 2, '.', ',');?></th>
+							</tr>
+
+					<tr>				
+						<td colspan="9" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->concepto)?></td>
+						
+					</tr>
+				<?php 
+					$suma_afecto_parcial =0;
+					$suma_inafecto_parcial = 0;
+					$suma_igv_parcial =0;
+					$suma_total_parcial =0;
+
+					$concepto_tmp=$d->concepto;
+					}
+                 }
+				 ?>
 				
-			}
+
+                 <tr>
+       
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->fecha)?></td>  
+                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->tipo)?></td>
+                    
+					 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->serie?></td>
+					 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->numero?></td>
+				
+					 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->cod_tributario?></td>
+					 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->destinatario?></td>
+                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->cantidad?></td>
+                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->descripcion?></td>
+
+					 <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->importe, 2, '.', ',');   ?></td>
+					 
+					 
+                 </tr>
+				<?php
+					
+					$suma_total += $d->importe;
+
+					
+					$suma_total_parcial += $d->importe;
+
+					if ($total_cuenta==count($reporte_ventas)) {
+						
+						?>
+						   <tr>
+								<th colspan="8" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important">Total </th>
+								
+								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_total_parcial, 2, '.', ',');?></th>
+							</tr>
+
+					   <?php 
+	
+						   }
+						
+				} 
 				?>
 				
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="10" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important">Total General</th>
-					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_afecto, 2, '.', ',');?></th>
-					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_inafecto, 2, '.', ',');?></th>
-					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_igv, 2, '.', ',');?></th>
+					<th colspan="8" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important">Total General</th>
+					
 					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_total, 2, '.', ',');?></th>
 				</tr>
 			</tfoot>
 		</table>
 		
-		@foreach ($reporte_ventas as $category => $items)
-        <h2>Category: {{ id_concepto }}</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Campo 1</th>
-                    <th>Campo 2</th>
-                    <th>Campo 3</th>
-                    <!-- Agrega más campos según sea necesario -->
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($items as $item)
-                    <tr>
-                        <td>{{ $item->campo1 }}</td>
-                        <td>{{ $item->campo2 }}</td>
-                        <td>{{ $item->campo3 }}</td>
-                        <!-- Agrega más campos según sea necesario -->
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @endforeach
+		
 			
 		<!--<table style="margin-top: 10px">
             <tr>
