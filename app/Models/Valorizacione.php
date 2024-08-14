@@ -17,7 +17,7 @@ class Valorizacione extends Model
         $tlb_liquidacion = "";
         if($numero_documento_b!=""){
             //$credipago=" and v.descripcion ilike '%".$numero_documento_b."' ";
-            $credipago=" and l.credipago = '".$numero_documento_b."' ";
+            $credipago=" and l.credipago = '".$numero_documento_b."' and l.estado = '1' ";
             $tlb_liquidacion = "left join liquidaciones l  on l.id = v.pk_registro and v.id_modulo = 7";
 
         }
