@@ -393,6 +393,32 @@ function fn_save_requisito(){
 }
 
 function valida(){
+    var id_solicitud=$("#id").val();
+
+    $.ajax({
+            url: "/derecho_revision/obtener_numero_revision/" + id_solicitud,
+            method: 'GET',
+            success: function(result) {
+
+                var validaPago = true;
+
+                result.forEach(function(res) {
+                    if(res.pagado!=1){
+                        validaPago = false;
+                    }
+                });
+
+                if (validaPago) {
+                    valida2();
+                } else {
+                    bootbox.alert("Existe un credipago de revisi&oacute;n por pagar");
+                }
+
+            },
+        });
+}
+
+function valida2(){
     
     var msg="";
     var situacion=$("#situacion").val();

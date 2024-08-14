@@ -777,3 +777,4 @@ Route::get('ingreso/reporte_deudas_total_pdf/{numero_cap}', [IngresoController::
 
 Route::get('derecho_revision/valida_credipago_unico/{id_solicitud}', [DerechoRevisionController::class, 'valida_credipago_unico'])->name('derecho_revision.valida_credipago_unico');
 Route::get('derecho_revision/validar_proyectista_hu/{id}', [DerechoRevisionController::class, 'validar_proyectista_hu'])->name('derecho_revision.validar_proyectista_hu');
+Route::get('derecho_revision/obtener_numero_revision/{id}', [DerechoRevisionController::class, 'obtener_numero_revision'])->name('derecho_revision.obtener_numero_revision');
