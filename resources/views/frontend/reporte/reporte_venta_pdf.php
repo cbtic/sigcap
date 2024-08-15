@@ -245,8 +245,7 @@
         </table>-->
         <footer>
         <script type="text/php">
-            /*
-			if (isset($pdf)) {
+            if (isset($pdf)) {
 				$x = 760;
 				$y = 572;
                 $text = "Pagina {PAGE_NUM} de {PAGE_COUNT}";
@@ -258,7 +257,6 @@
                 $angle = 0.0;   //  default
                 $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
             }
-			*/
         </script>
 		</footer>
     </body>
