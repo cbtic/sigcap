@@ -738,7 +738,8 @@ class ComprobanteController extends Controller
                 $descuento =  $request->totalDescuento; 
                 if ($request->totalDescuento=='') $descuento = 0;
 
-                if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
+                //if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
+                //if ($id_concepto!= 26411 && $id_concepto!= 26412) $id_tipo_afectacion_pp=0;
 
 				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
