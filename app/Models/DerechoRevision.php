@@ -523,5 +523,33 @@ class DerechoRevision extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+    function getNumeroRevisionBySolicitud($id_solicitud){
+
+        $cad = "select s.id, s.numero_revision, p.codigo from solicitudes s 
+        inner join proyectos p on s.id_proyecto = p.id
+        where s.id='".$id_solicitud."'";
+
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getLiquidacionByRevision($id, $numero_revision, $codigo){
+
+        $cad = "select s.numero_revision, v.pagado , l.* from liquidaciones l 
+        inner join solicitudes s on l.id_solicitud = s.id 
+        inner join proyectos p on s.id_proyecto = p.id
+        inner join valorizaciones v on l.id = v.pk_registro and v.id_modulo = '7'
+        where p.codigo ilike '%".$codigo."%'
+        and l.id_situacion is distinct from 3
+        and l.id_solicitud is distinct from '".$id."'
+        and s.numero_revision < ".$numero_revision."
+        and s.estado ='1'
+        and l.estado ='1'
+        order by s.numero_revision asc";
+
+        $data = DB::select($cad);
+        return $data;
+    }
     
 }
