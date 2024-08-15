@@ -262,7 +262,7 @@ class Valorizacione extends Model
 
         if($tipo_documento=="79"){
             $cad = "select distinct c.id id_comprobante,c.tipo, c.fecha, c.serie, c.numero, c.total, u.name usuario_registro,
-            (select string_agg(DISTINCT coalesce(d.descripcion), ',')  from comprobante_detalles d  where d.id_comprobante = c.id order by item desc) descripcion,id_comprobante_ncnd, 
+            (select string_agg(DISTINCT coalesce(d.descripcion), ',')  from comprobante_detalles d  where d.id_comprobante = c.id group by d.item order by d.item desc) descripcion,id_comprobante_ncnd, 
             (select id
              from comprobantes cc 
              where c.id=cc.id_comprobante_ncnd and cc.tipo='NC' limit 1) as tiene_nc,
@@ -279,7 +279,7 @@ class Valorizacione extends Model
 
         }else{
             $cad = "select distinct c.id id_comprobante,c.tipo, c.fecha, c.serie, c.numero, c.total, u.name usuario_registro,
-            (select string_agg(DISTINCT coalesce(d.descripcion), ',')  from comprobante_detalles d  where d.id_comprobante = c.id order by item desc) descripcion,id_comprobante_ncnd ,
+            (select string_agg(DISTINCT coalesce(d.descripcion), ',')  from comprobante_detalles d  where d.id_comprobante = c.id group by d.item order by d.item desc) descripcion,id_comprobante_ncnd ,
             (select id
              from comprobantes cc 
              where c.id=cc.id_comprobante_ncnd and cc.tipo='NC' limit 1) as tiene_nc,
