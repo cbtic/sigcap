@@ -107,6 +107,7 @@ function calculoDetraccion(){
 	var tipo_detraccion = "004";
 	var afecta_a = "022";
 	var medio_pago = "001";
+	var tipo_operacion = "2";
 	//var d = new Date();
 
 	//alert(Math.round(total_fac));
@@ -124,12 +125,16 @@ function calculoDetraccion(){
 		$('#tipo_detraccion').val(tipo_detraccion);
 		$('#afecta_a').val(afecta_a);
 		$('#medio_pago').val(medio_pago);
+		$('#id_tipooperacion_').val(tipo_operacion);
+
 	}else{
 		$('#porcentaje_detraccion').val("");
 		$('#monto_detraccion').val("");
 		$('#nc_detraccion').val("");
 		$('#tipo_detraccion').val("");
 		$('#afecta_a').val("");
+		$('#id_tipooperacion_').val("");
+		
 		//$('#medio_pago').value("");
 	}
 }

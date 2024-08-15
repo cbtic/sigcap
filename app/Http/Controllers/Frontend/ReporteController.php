@@ -213,8 +213,8 @@ class ReporteController extends Controller
 
 		if ($id_tipo == '2'){
 
-			$concepto = $opc1;
-			$estado_pago = $opc2;
+			$concepto = $opc2;
+			$estado_pago = $opc1;
 
 
 			if ($funcion=='rv' || $funcion=='mct' ){
