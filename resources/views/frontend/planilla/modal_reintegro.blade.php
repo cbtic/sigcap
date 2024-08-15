@@ -480,7 +480,7 @@ function calcular_importe(){
               </div>
 			  <div class="card-body">	
 
-						<div class="table-responsive">
+					<div class="table-responsive">
 						<table id="tblReintegroDetalle" class="table table-hover table-sm">
 							<thead>
 							<tr style="font-size:13px">
@@ -495,8 +495,8 @@ function calcular_importe(){
 							<tbody>
 							</tbody>
 						</table>
-						</div>
 					</div>
+				</div>
 			  
               
           </div>
