@@ -126,7 +126,7 @@ class ReporteController extends Controller
 		ini_set('display_startup_errors', 1);
 		error_reporting(E_ALL);
 		ini_set('memory_limit', '1280M');
-		ini_set('max_execution_time', '500');
+		ini_set('max_execution_time', '600');
 		
 		$reporte = Reporte::find($id);
 
