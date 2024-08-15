@@ -590,6 +590,8 @@ function calcular_total_otros(obj){
 		$(this).parent().parent().parent().find('#comprobante_detalle_cantidad').val(val_cantidad)
 		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(igv)
 		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(val_total)
+
+		//alert(val_total);
 		//$("#comprobante_detalle_cantidad").val(5000);
 
 		//$('input[name=comprobante_detalle[0][cantidad]]').val(5000);
@@ -2272,8 +2274,9 @@ function total_deuda(){
 		
 
 	});
-
+	//alert(total);
 	$('#deudaTotales').val(total.toFixed(2));
+	$('#total').val(total.toFixed(2));
 
 	
 

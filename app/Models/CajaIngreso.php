@@ -236,25 +236,22 @@ class CajaIngreso extends Model
         $concepto_sel = "";
         $estado_pago_sel = "";
 
-       // if ($id_concepto!="") $concepto_sel = " and cd.id_concepto  = ".$id_concepto; 
-        //if ($estado_pago!="") $estado_pago_sel = " and c.estado_pago  = '". $estado_pago . "' "; 
+        if ($id_concepto!="-1") $concepto_sel = " and cd.id_concepto  = ".$id_concepto; 
+        if ($estado_pago!="-1") $estado_pago_sel = " and c.estado_pago  = '". $estado_pago . "' "; 
 
-      //  $cad = "
-      //         select serie,numero, cod_tributario, destinatario, cantidad, descripcion, importe ,id_concepto
-      //          from (
-      //                  select fecha, c.serie,c.numero, cod_tributario, destinatario, cd.cantidad, cd.descripcion, cd.importe ,cd.id_concepto
-      //                  from comprobantes c inner join comprobante_detalles cd on c.id=cd.id_comprobante 
-       //                 where 1=1 "
-      //                .  $concepto_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' ) 
-       //               as reporte group by serie,numero, cod_tributario, destinatario, cantidad, descripcion, importe ,id_concepto";
+        $cad = "
+               select concepto, fecha,tipo, serie,numero, cod_tributario, destinatario, cantidad, descripcion, importe ,id_concepto  
+                from (
+                        select fecha,c.tipo, c.serie,c.numero, cod_tributario, destinatario, cd.cantidad, cd.descripcion, cd.importe ,cd.id_concepto , c2.denominacion concepto
+                        from comprobantes c inner join comprobante_detalles cd on c.id=cd.id_comprobante 
+                        inner join conceptos c2 on cd.id_concepto=c2.id 
+                       where 1=1 "
+                      .  $concepto_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' ) 
+                      as reporte group by fecha,tipo, serie,numero, cod_tributario, destinatario, cantidad, descripcion, importe ,id_concepto, concepto
+                      order by id_concepto, fecha";
 
-       // echo $cad; exit();
-        $data = DB::table('comprobantes')
-        ->join('comprobante_detalles', 'comprobantes.id', '=', 'comprobante_detalles.id_comprobante')
-        ->select('comprobante_detalles.id_concepto', 'comprobantes.fecha', 'cod_tributario', 'comprobante_detalles.id_concepto') // Selecciona los campos necesarios
-       ->get()
-        ->groupBy('comprobante_detalles.id_concepto');
-       //$data = DB::select($cad);
+        
+       $data = DB::select($cad);
         
         return $data;
     }
