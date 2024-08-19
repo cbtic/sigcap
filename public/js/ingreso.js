@@ -815,6 +815,7 @@ function obtenerBeneficiario(){
 	$("#btnAnulaVal").prop('disabled', true);
 	$("#btnReporteDeuda").attr('disabled', true);
 	$("#btnReporteDeudaTotal").attr('disabled', true);
+	$("#btnReporteFraccionamiento").attr('disabled', true);
 
 	$('#cboTipoConcepto_b').val("");
 	$('#cboTipoCuota_b').val("");
@@ -940,6 +941,7 @@ function obtenerBeneficiario(){
 					$('#btnAnulaVal').attr("disabled", false);
 					$("#btnReporteDeuda").attr('disabled', false);
 					$("#btnReporteDeudaTotal").attr('disabled', false);
+					$("#btnReporteFraccionamiento").attr('disabled', false);
 
 				} else {
 					var agremiado = result.agremiado.apellido_paterno + " " + result.agremiado.apellido_materno + ", " + result.agremiado.nombres;
@@ -2611,5 +2613,13 @@ function reporte_deudas_total(){
 	var numero_cap = $('#numero_documento_b').val();
 
 	var href = '/ingreso/reporte_deudas_total_pdf/'+numero_cap;
+	window.open(href, '_blank');
+}
+
+function reporte_fraccionamiento(){
+
+	var numero_cap = $('#numero_documento_b').val();
+
+	var href = '/ingreso/reporte_fraccionamiento_pdf/'+numero_cap;
 	window.open(href, '_blank');
 }

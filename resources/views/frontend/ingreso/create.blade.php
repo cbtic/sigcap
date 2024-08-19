@@ -637,6 +637,8 @@
 
                                                     <input class="btn btn-success pull-rigth" value="REPORTE DEUDA TOTAL" type="button" id="btnReporteDeudaTotal" disabled="disabled" onclick="reporte_deudas_total()" />
 
+                                                    <input class="btn btn-success pull-rigth" value="REPORTE FRACCIONAMIENTO" type="button" id="btnReporteFraccionamiento" disabled="disabled" onclick="reporte_fraccionamiento()" />
+
                                                 </div><!--form-group-->
                                             </div><!--col-->
                                         </div><!--row-->

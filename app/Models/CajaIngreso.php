@@ -434,4 +434,37 @@ tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_ope
 		$data = DB::select($cad);
         return $data;
     }
+    function getDeudaCuotaFraccionamiento($id){
+
+        $cad = "select c.denominacion, c.id, c.codigo, v.*
+                from valorizaciones v 
+                    inner join conceptos c on c.id = v.id_concepto 
+                where 1=1
+                    and v.id_agremido =".$id."
+                    and v.codigo_fraccionamiento is not null
+                    and v.id_concepto = 26411
+                order by v.fecha
+                    ";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getCronogramaFraccionamiento($id){
+
+        $cad = "select c.denominacion, c.id, c.codigo, v.*
+                from valorizaciones v 
+                    inner join conceptos c on c.id = v.id_concepto 
+                where 1=1
+                    and v.id_agremido =".$id."
+                    and v.codigo_fraccionamiento is not null
+                    and v.id_concepto = 26412
+                order by v.fecha
+                    ";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
 }
