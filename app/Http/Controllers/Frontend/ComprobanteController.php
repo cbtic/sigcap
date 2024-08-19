@@ -778,6 +778,20 @@ class ComprobanteController extends Controller
 
                 }
 
+                ///Abono Directo///
+
+                $total_pagar_abono = $request->total_pagar_abono;
+                if ($total_pagar_abono!="0"){     
+                    
+                    $total_pagar_abono = $request->total_pagar_abono;
+                    $total_g = $request->totalF;
+                    $total_abono= $total_pagar_abono - $total_g;
+
+                    $total = $total+$total_abono;
+
+
+                }
+
 
                 //if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
                 //if ($id_concepto!= 26411 && $id_concepto!= 26412) $id_tipo_afectacion_pp=0;
@@ -860,6 +874,32 @@ class ComprobanteController extends Controller
                         "igv" => 0 ,
                         "cantidad" => 1, 
                         "total" => round($total_redondeo,2), 
+                        "item" => 999 ,
+    
+                        );
+                    $tarifa[999]=$items1;
+                }
+
+                if ($total_pagar_abono!="0"){
+                    $total_pagar_abono = $request->total_pagar_abono;
+                    $total_g = $request->totalF;
+                    $total_abono = $total_pagar_abono - $total_g;
+                    $fecha_hoy = date('Y-m-d');
+
+                    $items1 = array(
+                        "id" => 1081517, 
+                        "fecha" => $fecha_hoy,
+                        "denominacion" => "REDONDEO",
+                        "descripcion" => "REDONDEO",
+                        "monto" => round($total_abono,2),
+                        "moneda" => "SOLES" ,
+                        "id_moneda" => 1 ,
+                        "descuento" => 0 ,
+                        "cod_contable" => "",
+                        "id_concepto" => 26464 ,
+                        "igv" => 0 ,
+                        "cantidad" => 1, 
+                        "total" => round($total_abono,2), 
                         "item" => 999 ,
     
                         );

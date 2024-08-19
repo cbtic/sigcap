@@ -995,7 +995,19 @@
                                                             <input type="text" readonly name="total_pagar" id="total_pagar" value="0" class="form-control form-control-sm text-right">
                                                         </th>
 
-                                                    </tr>                                                    
+                                                    </tr>  
+                                                    
+                                                    <tr style="display:none" id="tr_total_pagar_abono">
+                                                        <th></th>
+                                                        <th>Total a Pagar</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        
+                                                        <th style="padding-bottom:0px;margin-bottom:0px">
+                                                            <input type="text" readonly name="total_pagar_abono" id="total_pagar_abono" value="0" class="form-control form-control-sm text-right">
+                                                        </th>
+
+                                                    </tr> 
                                                 </tbody>
                                             </table>
                                         </div>

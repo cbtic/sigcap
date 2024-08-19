@@ -164,7 +164,13 @@ function guardarFactura(){
 
 	
 	if(total_!=total_fac_ && id_formapago_==1){
-		msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+
+		$total_pagar_abono = $("#total_pagar_abono").val();
+
+		if($total_pagar_abono=="0"){
+			msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+		}
+		
 	}
 
 
@@ -732,7 +738,16 @@ function obtenerTitular(){
 						}
 	
 
+					}else if(idMedio=='254'){
+						$("#monto"+ind).val(monto);
+
+						
+						$("#tr_total_pagar_abono").show();
+						$("#total_pagar_abono").val(monto);
+						
+
 					}
+					
 					else{
 
 						
@@ -740,6 +755,7 @@ function obtenerTitular(){
 						$("#monto"+ind).val(monto);
 
 						$("#total_pagar").val("0");
+						$("#total_pagar_abono").val("0");
 						$("#tr_total_pagar").hide();
 					}
 				}
@@ -771,6 +787,7 @@ function obtenerTitular(){
 
 			
 			$("#totalMedioPago").val(total);
+			$("#total_pagar_abono").val(total);
 			
 			
 			//$("#precio_peso").val(total);
