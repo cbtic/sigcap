@@ -714,25 +714,40 @@ function obtenerTitular(){
 				//}
 			}
 			else{
-				//bootbox.alert("SEL EFECTIVO");
-
-				if(idMedio=='91'){
-					//var flagx =  Math.trunc("10.25");					
-					//bootbox.alert(flagx);
-					
-					//let decimal = Math.trunc(13.37);
-					//console.log(decimal);
-				}
-
-				
 				
 				if(ind==0){
 					monto = $("#total_fac_").val();
-					$("#monto"+ind).val(monto);
+					//$("#monto"+ind).val(monto);
 					$("#totalMedioPago").val(monto);
+
+					if(idMedio=='91'){
+						//monto = $("#total_fac_").val();
+						monto_r = redondeoContableAFavor(Number(monto), 1);
+
+						$("#monto"+ind).val(monto_r);
+
+						if(monto!=monto_r){
+							$("#tr_total_pagar").show();
+							$("#total_pagar").val(monto_r);
+						}
+	
+
+					}
+					else{
+
+						
+
+						$("#monto"+ind).val(monto);
+
+						$("#total_pagar").val("0");
+						$("#tr_total_pagar").hide();
+					}
 				}
 
 				$("#fecha"+ind).val(fecha_);
+
+
+
 				
 			}
 					
@@ -762,6 +777,16 @@ function obtenerTitular(){
 					
 		});
 		
+	}
+
+	function redondeoContableAFavor(valor, decimales = 1) {
+		// Calcular el factor de redondeo según los decimales
+		const factor = Math.pow(10, decimales);
+		// Redondear hacia abajo al múltiplo más cercano según los decimales
+		const valorRedondeado = Math.floor(valor * factor) / factor;
+		// Calcular la diferencia (redondeo)
+		//const redondeo = valor - valorRedondeado;
+		return valorRedondeado;
 	}
 
 
