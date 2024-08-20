@@ -122,6 +122,12 @@ class ReporteController extends Controller
 	public function rep_pdf($id,$f_inicio,$f_fin,$opc1,$opc2)
 	{
 
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', '600');
+		
 		$reporte = Reporte::find($id);
 
 		$id_tipo= $reporte->id_tipo;
@@ -229,7 +235,7 @@ class ReporteController extends Controller
 				$caja_ingreso_model = new CajaIngreso();
 				//$tipo= '';			
 				$reporte_ventas = $caja_ingreso_model->getAllReporteVentas($f_inicio, $f_fin, $concepto,$estado_pago);
-				
+				//print_r($reporte_ventas);exit();
 				//var_dump($reporte_ventas);exit();
 				//print_r($venta);exit();
 		

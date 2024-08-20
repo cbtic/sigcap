@@ -178,7 +178,8 @@ where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' 
 And t1.id_periodo_comisione = ".$id_periodo." 
-and t4.denominacion not in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')";
+and t4.denominacion not in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')
+order by mi.denominacion";
 		$data = DB::select($cad);
         return $data;
     }
