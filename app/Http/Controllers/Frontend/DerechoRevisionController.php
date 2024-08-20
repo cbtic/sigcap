@@ -2404,9 +2404,14 @@ class DerechoRevisionController extends Controller
 		$id = $numero_revision_data[0]->id;
 		$numero_revision = $numero_revision_data[0]->numero_revision;
 		$codigo = $numero_revision_data[0]->codigo;
-            
-		$pago_liquidacion = $derecho_revision_model->getLiquidacionByRevision($id, $numero_revision, $codigo);
+		$pago_liquidacion = null;
+        
+		if($numero_revision !=1){
 
+			$pago_liquidacion = $derecho_revision_model->getLiquidacionByRevision($id, $numero_revision, $codigo);
+
+		}
+		
 		/*foreach($pago_liquidacion as $pago){
 			if($pago->pagado==1){
 				$pagado=1;
@@ -2417,7 +2422,7 @@ class DerechoRevisionController extends Controller
 
 		//dd($pago_liquidacion);exit();
 
-        return response()->json($pago_liquidacion);
+        return response()->json(['pago_liquidacion'=>$pago_liquidacion,'numero_revision'=>$numero_revision]);
 	}
 
 

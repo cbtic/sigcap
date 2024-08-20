@@ -400,15 +400,23 @@ function valida(){
             method: 'GET',
             success: function(result) {
 
-                alert(result);
+                //alert(result);
 
                 var validaPago = true;
 
-                if (!result || result.length === 0) {
+                var numero_revision = result.numero_revision;
+
+                if (numero_revision == 1) {
+                    valida2();
+                    return;
+                }
+
+                if (!result.pago_liquidacion || result.pago_liquidacion.length === 0) {
                     bootbox.alert("No se puede generar un credipago de revisi&oacute;n mayor");
                     return;
                 }
-                result.forEach(function(res) {
+                
+                result.pago_liquidacion.forEach(function(res) {
                     if(res.pagado!=1){
                         validaPago = false;
                     }
