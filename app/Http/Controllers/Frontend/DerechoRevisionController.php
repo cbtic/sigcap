@@ -134,7 +134,7 @@ class DerechoRevisionController extends Controller
 		$p[]=$request->fecha_fin_bus;
 		$p[]=$request->situacion_credipago;
 		$p[]=$request->estado_proyecto;
-		$p[]="1";
+		$p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_ajax($p);

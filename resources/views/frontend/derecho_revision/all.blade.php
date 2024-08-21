@@ -391,6 +391,14 @@
                             ?>
                         </select>
                     </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <label class="control-label form-control-sm" style="margin-bottom: 0;">Estado</label>
+						<select name="estado_bus" id="estado_bus" class="form-control form-control-sm">
+							<option value="">Todos</option>
+							<option value="1" selected="selected">No Anulado</option>
+							<option value="0">Anulado</option>
+						</select>
+					</div>
 				</div>
                 
                 <div class="row" style="padding:0px 20px 0px 20px;">
@@ -428,6 +436,7 @@
                             <th>Credipago</th>
                             <th>Fecha Registro</th>
                             <th>Estado Proyecto</th>
+                            <th>Estado</th>
 							<th>Acciones</th>
                         </tr>
                         </thead>
