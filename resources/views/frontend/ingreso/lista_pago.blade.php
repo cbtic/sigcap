@@ -53,9 +53,11 @@ foreach($pago as $row){?>
 	</td>
 	<td class="text-left">
 		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-			<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalValorizacionFactura(<?php echo $row->id_comprobante?>)" >
-				<i class="fa fa-search" style="font-size:9px!important"></i>
-			</button>
+
+		<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalValorizacionFactura(<?php echo $row->id_comprobante?>)" >
+			<i class="fa fa-search" style="font-size:9px!important"></i>
+		</button>
+
 		</div>
 	</td>
 	<td class="text-left">
@@ -67,7 +69,24 @@ foreach($pago as $row){?>
 		<input type='hidden' name="id_comprobante_origen" id="id_comprobante_origen" value="<?php echo $row->id_comprobante?>">	
 
 		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">		
-		<input class="btn btn-info pull-rigth" value="NC" type="button" id="btnBoleta" onclick="nc(<?php echo $row->id_comprobante?>,<?php echo $row->tiene_nc?>)">
+		
+
+		<?php 
+		if($row->tiene_nc=== null){?>
+			
+			<input class="btn btn-secondary pull-light" value="NC" type="button" id="btnBoleta" onclick="nc_v(<?php echo $row->id_comprobante?>,<?php echo $row->tiene_nc?>)">
+
+		<?php 	
+		}else{
+		?>
+			
+			<input type="button" value="Ir a Example" onclick="window.location.href='/comprobante/'<?php echo $row->tiene_nc?> ">
+
+
+		<?php 	
+		};                       
+		?>
+
 		
 		</form>
 		@endhasanyrole
@@ -79,8 +98,19 @@ foreach($pago as $row){?>
 		<input type='hidden' name="id_comprobante" id="id_comprobante" value="">		
 		<input type='hidden' name="id_comprobante_origen_nd" id="id_comprobante_origen_nd" value="<?php echo $row->id_comprobante?>">	
 		
-		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">		
-		<input class="btn btn-info pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>,<?php echo $row->tiene_nd?>)">
+		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
+		<?php 
+		if($row->tiene_nd=== null){?>
+			<input class="btn btn-secondary pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>,0)">
+		<?php 	
+		}else{
+		?>
+			<input class="btn btn-primary pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>,<?php echo $row->tiene_nd?>)">
+		<?php 	
+		};                       
+		?>
+
+		
 		
 		</form>
 		@endhasanyrole
