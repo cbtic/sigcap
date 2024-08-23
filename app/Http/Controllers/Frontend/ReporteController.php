@@ -144,10 +144,17 @@ class ReporteController extends Controller
 
 
 			if ($funcion=='ccu' || $funcion=='cct'){
-				if ($funcion=='ccu')$titulo = "CONSOLIDADO ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
-				if ($funcion=='cct')$titulo = "CONSOLIDADO DE TODAS LAS CAJAS ";
+				if ($funcion=='ccu') {
+					$titulo = "CONSOLIDADO ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
+					$usuario=$usuario_ingresos[0] ->usuario;
+				}
+				
+				if ($funcion=='cct'){
+					$titulo = "CONSOLIDADO DE TODAS LAS CAJAS ";
+					$usuario=0;
+				}
 
-				$usuario=$usuario_ingresos[0] ->usuario;
+				
 
 				$caja_ingreso_model = new CajaIngreso();
 				//$tipo= '1';
@@ -180,11 +187,14 @@ class ReporteController extends Controller
 			}
 
 			if ($funcion=='mcu' || $funcion=='mct' ){
-				if ($funcion=='mcu')$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
-				if ($funcion=='mct')$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";
+				if ($funcion=='mcu') {
+					$titulo = "REPORTE DE MOVIMIENTOS DE ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;  
+					$usuario=$usuario_ingresos[0] ->usuario;
+			    }
+				if ($funcion=='mct')$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";$usuario=0;
 
 				
-				$usuario=$usuario_ingresos[0] ->usuario;
+				
 
 				//print_r($venta);exit();
 		
@@ -213,13 +223,13 @@ class ReporteController extends Controller
 
 		if ($id_tipo == '2'){
 
-			$concepto = $opc2;
-			$estado_pago = $opc1;
+			$concepto = $opc1;
+			$estado_pago = $opc2;
 
 
 			if ($funcion=='rv' || $funcion=='mct' ){
 				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
-				$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";
+				$titulo = "REPORTE REPORTES DE VENTAS POR CONCEPTOS  ";
 
 				
 				//$usuario=$usuario_ingresos[0] ->usuario;
@@ -234,6 +244,33 @@ class ReporteController extends Controller
 				//print_r($venta);exit();
 		
 				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_pdf',compact('titulo','reporte_ventas','f_inicio','f_inicio'));
+				$pdf->getDomPDF()->set_option("enable_php", true);
+				
+				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+			}
+
+			if ($funcion=='rvm' || $funcion=='mct' ){
+				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
+				$titulo = "REPORTE DE REGISTRO VENTAS MENSUAL";
+
+				
+				//$usuario=$usuario_ingresos[0] ->usuario;
+
+				//print_r($venta);exit();
+		
+				$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '';			
+				$reporte_ventas = $caja_ingreso_model->getAllReporteVentasMensual($f_inicio, $f_fin, $concepto,$estado_pago);
+				
+				//var_dump($reporte_ventas);exit();
+				//print_r($venta);exit();
+		
+				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_inicio'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
 				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)

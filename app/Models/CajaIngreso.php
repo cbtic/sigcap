@@ -202,7 +202,7 @@ class CajaIngreso extends Model
 
         //echo $cad; exit();
         $data = DB::select($cad);
-        return $data;
+        returon $data;
     }
     
     function getAllCajaCondicionPago($id_usuario,  $id_caja, $f_inicio, $f_fin, $tipo){
@@ -249,6 +249,28 @@ class CajaIngreso extends Model
                       .  $concepto_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' ) 
                       as reporte group by fecha,tipo, serie,numero, cod_tributario, destinatario, cantidad, descripcion, importe ,id_concepto, concepto
                       order by id_concepto, fecha";
+
+        
+       $data = DB::select($cad);
+        
+        return $data;
+    }
+
+    function getAllReporteVentasMensual( $f_inicio, $f_fin, $id_concepto, $estado_pago){
+
+        $concepto_sel = "";
+        $estado_pago_sel = "";
+
+        if ($id_concepto!="-1") $concepto_sel = " and cd.id_concepto  = ".$id_concepto; 
+        if ($estado_pago!="-1") $estado_pago_sel = " and c.estado_pago  = '". $estado_pago . "' "; 
+
+        $cad = "
+                        select fecha,c.tipo, c.serie,c.numero, cod_tributario, destinatario,subtotal ,impuesto ,total , case when id_forma_pago=1 then 'CONTADO' else 'CREDITO' end as forma_pago, case when estado_pago='P' then 'PENDIENTE' else 'CANCELADO' end as estado_pago 
+                        from comprobantes c
+                       where 1=1 "
+                      .  $concepto_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin." '  
+                      
+                      order by  fecha";
 
         
        $data = DB::select($cad);
@@ -429,39 +451,6 @@ tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_ope
                 inner join tabla_maestras tm on tm.codigo =id_situacion::varchar(10) and tipo='11' 
                 where  id_agremiado =".$id."
                 order by c.denominacion asc";
-
-		//echo $cad;
-		$data = DB::select($cad);
-        return $data;
-    }
-    function getDeudaCuotaFraccionamiento($id){
-
-        $cad = "select c.denominacion, c.id, c.codigo, v.*
-                from valorizaciones v 
-                    inner join conceptos c on c.id = v.id_concepto 
-                where 1=1
-                    and v.id_agremido =".$id."
-                    and v.codigo_fraccionamiento is not null
-                    and v.id_concepto = 26411
-                order by v.fecha
-                    ";
-
-		//echo $cad;
-		$data = DB::select($cad);
-        return $data;
-    }
-
-    function getCronogramaFraccionamiento($id){
-
-        $cad = "select c.denominacion, c.id, c.codigo, v.*
-                from valorizaciones v 
-                    inner join conceptos c on c.id = v.id_concepto 
-                where 1=1
-                    and v.id_agremido =".$id."
-                    and v.codigo_fraccionamiento is not null
-                    and v.id_concepto = 26412
-                order by v.fecha
-                    ";
 
 		//echo $cad;
 		$data = DB::select($cad);

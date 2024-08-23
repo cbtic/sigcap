@@ -1188,7 +1188,7 @@ function fn_eliminar(id){
 function obtenerCaja(){
 	
 	var id = $('#id_usuario').val();
-	alert("XXX");
+	
 	if(id=="")return false;
 	$('#id_caja').attr("disabled",true);
 	
