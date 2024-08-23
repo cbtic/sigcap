@@ -202,7 +202,7 @@ class CajaIngreso extends Model
 
         //echo $cad; exit();
         $data = DB::select($cad);
-        returon $data;
+        return $data;
     }
     
     function getAllCajaCondicionPago($id_usuario,  $id_caja, $f_inicio, $f_fin, $tipo){
@@ -262,8 +262,10 @@ class CajaIngreso extends Model
         $estado_pago_sel = "";
 
         if ($id_concepto!="-1") $concepto_sel = " and cd.id_concepto  = ".$id_concepto; 
-        if ($estado_pago!="-1") $estado_pago_sel = " and c.estado_pago  = '". $estado_pago . "' "; 
 
+        
+        if ($estado_pago!="-1") $estado_pago_sel = " and c.id_forma_pago  = '". $estado_pago . "' "; 
+      
         $cad = "
                         select fecha,c.tipo, c.serie,c.numero, cod_tributario, destinatario,subtotal ,impuesto ,total , case when id_forma_pago=1 then 'CONTADO' else 'CREDITO' end as forma_pago, case when estado_pago='P' then 'PENDIENTE' else 'CANCELADO' end as estado_pago 
                         from comprobantes c

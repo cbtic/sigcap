@@ -276,7 +276,7 @@ class ReporteController extends Controller
 				//var_dump($reporte_ventas);exit();
 				//print_r($venta);exit();
 		
-				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_inicio'));
+				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_fin'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
 				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
