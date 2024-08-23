@@ -74,13 +74,13 @@ foreach($pago as $row){?>
 		<?php 
 		if($row->tiene_nc=== null){?>
 			
-			<input class="btn btn-secondary pull-light" value="NC" type="button" id="btnBoleta" onclick="nc_v(<?php echo $row->id_comprobante?>,<?php echo $row->tiene_nc?>)">
+			<input class="btn btn-secondary pull-light" value="NC" type="button" id="btnBoleta" onclick="nc(<?php echo $row->id_comprobante?>,<?php echo $row->tiene_nc?>)">
 
 		<?php 	
 		}else{
 		?>
 			
-			<input type="button" value="Ir a Example" onclick="window.location.href='/comprobante/'<?php echo $row->tiene_nc?> ">
+			<input class="btn btn-secondary pull-light" value="NC" type="button" id="btnBoleta" onclick="fn_nc_nd(<?php echo $row->tiene_nc?>)">
 
 
 		<?php 	
@@ -101,11 +101,11 @@ foreach($pago as $row){?>
 		<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 		<?php 
 		if($row->tiene_nd=== null){?>
-			<input class="btn btn-secondary pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>,0)">
+			<input class="btn btn-secondary pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>,<?php echo $row->tiene_nd?>)">
 		<?php 	
 		}else{
-		?>
-			<input class="btn btn-primary pull-rigth" value="ND" type="button" id="btnBoleta" onclick="nd(<?php echo $row->id_comprobante?>,<?php echo $row->tiene_nd?>)">
+		?>			
+			<input class="btn btn-primary pull-light" value="ND" type="button" id="btnBoleta" onclick="fn_nc_nd(<?php echo $row->tiene_nd?>)">
 		<?php 	
 		};                       
 		?>
@@ -132,3 +132,17 @@ foreach($pago as $row){?>
 	</td>
 </tr>
 </tfoot>
+
+<script type="text/javascript">
+
+	function fn_nc_nd(id) {
+		//alert("OK");
+		//var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';                                
+		//html += '<a href="/comprobante/'+id+'" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-paper-plane"></i></a>';
+		//return html;
+		if (id == "")id = 0;
+		var href = '/comprobante/' + id;
+		window.open(href, '_blank');
+
+	}
+</script>
