@@ -486,9 +486,36 @@ class ComprobanteController extends Controller
 
 			$tarifa = $request->facturad;
            
-           
+            /*
+            $total_pagar = $request->total_pagar;
+            $total = $request->totalF;
+            $total_redondeo = $total_pagar - $total;
+            $fecha_hoy = date('Y-m-d');
 
-		   //print_r($valorizad); exit();
+            if ($total_pagar!="0"){
+                $items1 = array(
+                    "id" => 1081517, 
+                    "fecha" => $fecha_hoy,
+                    "denominacion" => "REDONDEO",
+                    "descripcion" => "REDONDEO",
+                    "monto" => round($total_redondeo,2),
+                    "moneda" => "SOLES" ,
+                    "id_moneda" => 1 ,
+                    "descuento" => 0 ,
+                    "cod_contable" => "",
+                    "id_concepto" => 26464 ,
+                    "igv" => 0 ,
+                    "cantidad" => 1, 
+                    "total" => round($total_redondeo,2), 
+                    "item" => 999 ,
+
+                    );
+                $tarifa[999]=$items1;
+            }
+           
+		   print_r($tarifa); exit();
+
+*/
 
 			//echo "serieF=>".$request->serieF."<br>";
 			//echo "TipoF=>".$request->TipoF."<br>";
@@ -738,10 +765,38 @@ class ComprobanteController extends Controller
                 $descuento =  $request->totalDescuento; 
                 if ($request->totalDescuento=='') $descuento = 0;
 
+                ///redondeo///
+                $total_pagar = $request->total_pagar;
+                if ($total_pagar!="0"){     
+                    
+                    $total_pagar = $request->total_pagar;
+                    $total_g = $request->totalF;
+                    $total_redondeo = $total_pagar - $total_g;
+
+                    $total = $total+$total_redondeo;
+
+
+                }
+
+                ///Abono Directo///
+
+                $total_pagar_abono = $request->total_pagar_abono;
+                if ($total_pagar_abono!="0"){     
+                    
+                    $total_pagar_abono = $request->total_pagar_abono;
+                    $total_g = $request->totalF;
+                    $total_abono= $total_pagar_abono - $total_g;
+
+                    $total = $total+$total_abono;
+
+
+                }
+
+
                 //if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
                 //if ($id_concepto!= 26411 && $id_concepto!= 26412) $id_tipo_afectacion_pp=0;
 
-				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
+				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, round($total,2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
                 
@@ -796,6 +851,61 @@ class ComprobanteController extends Controller
 					
 				}
                 */
+                
+
+    
+                if ($total_pagar!="0"){
+                    $total_pagar = $request->total_pagar;
+                    $total_g = $request->totalF;
+                    $total_redondeo = $total_pagar - $total_g;
+                    $fecha_hoy = date('Y-m-d');
+
+                    $items1 = array(
+                        "id" => 1081517, 
+                        "fecha" => $fecha_hoy,
+                        "denominacion" => "REDONDEO",
+                        "descripcion" => "REDONDEO",
+                        "monto" => round($total_redondeo,2),
+                        "moneda" => "SOLES" ,
+                        "id_moneda" => 1 ,
+                        "descuento" => 0 ,
+                        "cod_contable" => "",
+                        "id_concepto" => 26464 ,
+                        "igv" => 0 ,
+                        "cantidad" => 1, 
+                        "total" => round($total_redondeo,2), 
+                        "item" => 999 ,
+    
+                        );
+                    $tarifa[999]=$items1;
+                }
+
+                if ($total_pagar_abono!="0"){
+                    $total_pagar_abono = $request->total_pagar_abono;
+                    $total_g = $request->totalF;
+                    $total_abono = $total_pagar_abono - $total_g;
+                    $fecha_hoy = date('Y-m-d');
+
+                    $items1 = array(
+                        "id" => 1081517, 
+                        "fecha" => $fecha_hoy,
+                        "denominacion" => "REDONDEO",
+                        "descripcion" => "REDONDEO",
+                        "monto" => round($total_abono,2),
+                        "moneda" => "SOLES" ,
+                        "id_moneda" => 1 ,
+                        "descuento" => 0 ,
+                        "cod_contable" => "",
+                        "id_concepto" => 26464 ,
+                        "igv" => 0 ,
+                        "cantidad" => 1, 
+                        "total" => round($total_abono,2), 
+                        "item" => 999 ,
+    
+                        );
+                    $tarifa[999]=$items1;
+                }
+               
 				
 				foreach ($tarifa as $key => $value) {
 					//echo "denominacion=>".$value['denominacion']."<br>";

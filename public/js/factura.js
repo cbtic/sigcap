@@ -164,7 +164,13 @@ function guardarFactura(){
 
 	
 	if(total_!=total_fac_ && id_formapago_==1){
-		msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+
+		$total_pagar_abono = $("#total_pagar_abono").val();
+
+		if($total_pagar_abono=="0"){
+			msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+		}
+		
 	}
 
 
@@ -714,25 +720,50 @@ function obtenerTitular(){
 				//}
 			}
 			else{
-				//bootbox.alert("SEL EFECTIVO");
-
-				if(idMedio=='91'){
-					//var flagx =  Math.trunc("10.25");					
-					//bootbox.alert(flagx);
-					
-					//let decimal = Math.trunc(13.37);
-					//console.log(decimal);
-				}
-
-				
 				
 				if(ind==0){
 					monto = $("#total_fac_").val();
-					$("#monto"+ind).val(monto);
+					//$("#monto"+ind).val(monto);
 					$("#totalMedioPago").val(monto);
+
+					if(idMedio=='91'){
+						//monto = $("#total_fac_").val();
+						monto_r = redondeoContableAFavor(Number(monto), 1);
+
+						$("#monto"+ind).val(monto_r);
+
+						if(monto!=monto_r){
+							$("#tr_total_pagar").show();
+							$("#total_pagar").val(monto_r);
+						}
+	
+
+					}else if(idMedio=='254'){
+						$("#monto"+ind).val(monto);
+
+						
+						$("#tr_total_pagar_abono").show();
+						$("#total_pagar_abono").val(monto);
+						
+
+					}
+					
+					else{
+
+						
+
+						$("#monto"+ind).val(monto);
+
+						$("#total_pagar").val("0");
+						$("#total_pagar_abono").val("0");
+						$("#tr_total_pagar").hide();
+					}
 				}
 
 				$("#fecha"+ind).val(fecha_);
+
+
+
 				
 			}
 					
@@ -756,12 +787,23 @@ function obtenerTitular(){
 
 			
 			$("#totalMedioPago").val(total);
+			$("#total_pagar_abono").val(total);
 			
 			
 			//$("#precio_peso").val(total);
 					
 		});
 		
+	}
+
+	function redondeoContableAFavor(valor, decimales = 1) {
+		// Calcular el factor de redondeo según los decimales
+		const factor = Math.pow(10, decimales);
+		// Redondear hacia abajo al múltiplo más cercano según los decimales
+		const valorRedondeado = Math.floor(valor * factor) / factor;
+		// Calcular la diferencia (redondeo)
+		//const redondeo = valor - valorRedondeado;
+		return valorRedondeado;
 	}
 
 

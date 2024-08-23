@@ -34,7 +34,7 @@ where id_comision_sesion=".$id." and csd.estado='1'";
 					inner join tabla_maestras tm2 on csd.id_dictamen  =tm2.codigo::int and tm2.tipo='114'
 					left join tabla_maestras tm3 on csd.id_apela_recon  =tm3.codigo::int and tm3.tipo='200'
 					inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo 
-				where cs.id = ".$id." and l.id_situacion =1
+				where cs.id = ".$id." and l.id_situacion =2
 				order by u.desc_ubigeo asc";
 		
 		//echo $cad;

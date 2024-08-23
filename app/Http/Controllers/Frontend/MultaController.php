@@ -356,12 +356,13 @@ class MultaController extends Controller
 					$cap = $row2[0];
 					$periodo = $row2[1];
 					$id_multa = $row2[2];
+					$id_estado_multa = $row2[3];
 					
 					$agremiado = Agremiado::where("numero_cap",$cap)->where("estado","1")->first();
 					
 					if($agremiado){
 					
-						$agremiadoMultaExiste = AgremiadoMulta::where("id_agremiado",$agremiado->id)->where("id_multa",$id_multa)->where("periodo",$periodo)->where("id_concepto","29")->where("estado","1")->first();
+						$agremiadoMultaExiste = AgremiadoMulta::where("id_agremiado",$agremiado->id)->where("id_multa",$id_multa)->where("periodo",$periodo)->where("id_concepto","29")->where("estado","1")->whereNotNull("id_estado_multa")->first();
 						if(!$agremiadoMultaExiste){
 						
 							$agremiadoMulta = new AgremiadoMulta;	
@@ -371,6 +372,7 @@ class MultaController extends Controller
 							$agremiadoMulta->id_estado_pago = 1;
 							$agremiadoMulta->id_concepto = 29;
 							$agremiadoMulta->periodo = $periodo;
+							$agremiadoMulta->id_estado_multa = $id_estado_multa;
 							$agremiadoMulta->estado = 1;
 							$agremiadoMulta->id_usuario_inserta = $id_user;
 							$agremiadoMulta->save();

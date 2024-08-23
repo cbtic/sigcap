@@ -400,9 +400,23 @@ function valida(){
             method: 'GET',
             success: function(result) {
 
+                //alert(result);
+
                 var validaPago = true;
 
-                result.forEach(function(res) {
+                var numero_revision = result.numero_revision;
+
+                if (numero_revision == 1) {
+                    valida2();
+                    return;
+                }
+
+                if (!result.pago_liquidacion || result.pago_liquidacion.length === 0) {
+                    bootbox.alert("No se puede generar un credipago de revisi&oacute;n mayor");
+                    return;
+                }
+                
+                result.pago_liquidacion.forEach(function(res) {
                     if(res.pagado!=1){
                         validaPago = false;
                     }
@@ -411,7 +425,7 @@ function valida(){
                 if (validaPago) {
                     valida2();
                 } else {
-                    bootbox.alert("Existe un credipago de revisi&oacute;n por pagar");
+                    bootbox.alert("Existe un credipago de revisi&oacute;n menor por pagar");
                 }
 
             },
