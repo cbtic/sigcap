@@ -1067,9 +1067,11 @@ class IngresoController extends Controller
         $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id);
         $tipo_cambio=$tipo_cambio_model->getTipoCambio();
 
-        $deuda_cuota_fraccionamiento=$caja_ingreso_model->getDeudaCuotaFraccionamiento($datos_agremiado->id);
+        $deuda_cuota_fraccionamiento=$caja_ingreso_model->getDeudaCuotaFraccionamiento($datos_agremiado->id_p);
 
-        $cronograma_fraccionamiento=$caja_ingreso_model->getCronogramaFraccionamiento($datos_agremiado->id);
+       // print_r ($deuda_cuota_fraccionamiento); exit();
+
+        $cronograma_fraccionamiento=$caja_ingreso_model->getCronogramaFraccionamiento($datos_agremiado->id_p);
 
 
 		Carbon::setLocale('es');
