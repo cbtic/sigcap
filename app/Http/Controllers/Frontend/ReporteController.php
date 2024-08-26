@@ -119,7 +119,7 @@ class ReporteController extends Controller
 
     }
 
-	public function rep_pdf($id,$f_inicio,$f_fin,$opc1,$opc2)
+	public function rep_pdf($id,$f_inicio,$f_fin,$opc1,$opc2,$opc3)
 	{
 
 		ini_set('display_errors', 1);
