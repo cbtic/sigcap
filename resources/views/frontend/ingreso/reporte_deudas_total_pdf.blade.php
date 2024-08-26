@@ -152,7 +152,7 @@
         ?>
         <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;padding-bottom:10px" width="100%">
 			<tbody>
-                <h2><?php echo ($key2+1)?>. DEUDA POR <?php echo $k->denominacion?></h2>
+                <h2><?php echo ($key2+1)?>. <?php echo $k->denominacion?></h2>
 			</tbody>
 		</table>
     	
@@ -205,12 +205,12 @@
 		</table>
         <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
             <tbody>
+                <!--<tr>
+					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="80%"><?php //echo 'TOTAL DEUDA PENDIENTE: S/'?></td>
+                    <td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="20%"><?php //echo number_format($total_monto_pendiente, 2, '.', ',')?></td>
+				</tr>-->
                 <tr>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="80%"><?php echo 'TOTAL DEUDA PENDIENTE: S/'?></td>
-                    <td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="20%"><?php echo number_format($total_monto_pendiente, 2, '.', ',')?></td>
-				</tr>
-                <tr>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="80%"><?php echo 'TOTAL DEUDA PAGADA: S/'?></td>
+					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="80%"><?php echo 'TOTAL PAGO '. $k->denominacion .': S/'?></td>
                     <td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="20%"><?php echo number_format($total_monto_pagado, 2, '.', ',')?></td>
 				</tr>
             </tbody>
@@ -221,7 +221,7 @@
         <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
             <tbody>
                 <tr>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="80%"><?php echo 'TOTAL DEUDA: S/'?></td>
+					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="80%"><?php echo 'TOTAL PAGO: S/'?></td>
                     <td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:right" width="20%"><?php echo number_format($total_deuda, 2, '.', ',')?></td>
 				</tr>
             </tbody>

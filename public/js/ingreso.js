@@ -2603,8 +2603,11 @@ function selPerona(cap, numero_documento){
 function reporte_deudas(){
 
 	var numero_cap = $('#numero_documento_b').val();
+	var id_concepto = $('#cboTipoConcepto_b').val();
 
-	var href = '/ingreso/reporte_deudas_pdf/'+numero_cap;
+	if(id_concepto==''){id_concepto=0}
+
+	var href = '/ingreso/reporte_deudas_pdf/'+numero_cap+'/'+id_concepto;
 	window.open(href, '_blank');
 }
 
