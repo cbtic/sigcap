@@ -750,6 +750,7 @@ class IngresoController extends Controller
     public function modal_detalle_factura($id){
 		
 		$cajaIngreso = CajaIngreso::find($id);
+        $tablaMaestra_model = new TablaMaestra;
 		$factura_model = new Comprobante;
 		$fecha_fin=$cajaIngreso->fecha_fin;
         $fecha_inicio = $cajaIngreso->fecha_inicio;
@@ -759,7 +760,11 @@ class IngresoController extends Controller
 
 		$factura = $factura_model->getFacturaByCaja($cajaIngreso->id_caja, $fecha_inicio, $fecha_fin);
 
-		return view('frontend.ingreso.modal_detalle_factura',compact('factura'));
+        $forma_pago = $tablaMaestra_model->getMaestroByTipo(104);
+
+        $medio_pago = $tablaMaestra_model->getMaestroByTipo(19);
+
+		return view('frontend.ingreso.modal_detalle_factura',compact('id','factura','forma_pago','medio_pago'));
 	
 	}
 	
@@ -1083,5 +1088,29 @@ class IngresoController extends Controller
 		return $pdf->stream();
 
 	}
+
+    public function obtener_detalle_factura($id, $forma_pago, $estado_pago, $medio_pago)
+    {
+        //$id
+       // $detalle = ssdsd->fgfffg($id);
+        //return view('frontend.ingreso.obtener_detalle_factura', compact('id','detalle'));
+        if($forma_pago==0){$forma_pago='';}
+        if($estado_pago==0){$estado_pago='';}
+        if($medio_pago==0){$medio_pago='';}
+
+        $factura_model = new Comprobante;
+        $cajaIngreso = CajaIngreso::find($id);
+
+        $fecha_fin=$cajaIngreso->fecha_fin;
+        $fecha_inicio = $cajaIngreso->fecha_inicio;
+        
+        //print_r($fecha_fin); exit();
+		if($cajaIngreso->fecha_fin=="")$fecha_fin=$factura_model->fecha_hora_actual(); 
+        
+        $factura = $factura_model->getFacturaByCajaFiltro($cajaIngreso->id_caja, $fecha_inicio, $fecha_fin, $forma_pago, $estado_pago, $medio_pago);
+
+        return response()->json($factura);
+    }
+
 
 }
