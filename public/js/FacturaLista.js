@@ -426,6 +426,8 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
+
+
 function modalCreditoPago(id){
 	
 	$(".modal-dialog").css("width","85%");

@@ -485,6 +485,10 @@ class ComprobanteController extends Controller
 			/**********RUC***********/
 
 			$tarifa = $request->facturad;
+
+           // $total_pagar_abono = $request->total_pagar_abono;
+
+            //echo($total_pagar_abono); exit();
            
             /*
             $total_pagar = $request->total_pagar;
@@ -880,7 +884,7 @@ class ComprobanteController extends Controller
                     $tarifa[999]=$items1;
                 }
 
-                if ($total_pagar_abono!="0"){
+                if ($total_abono!="0"){
                     $total_pagar_abono = $request->total_pagar_abono;
                     $total_g = $request->totalF;
                     $total_abono = $total_pagar_abono - $total_g;
