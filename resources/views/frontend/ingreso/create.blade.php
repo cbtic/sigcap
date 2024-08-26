@@ -635,7 +635,7 @@
 
                                                     <input class="btn btn-success pull-rigth" value="REPORTE DEUDAS" type="button" id="btnReporteDeuda" disabled="disabled" onclick="reporte_deudas()" />
 
-                                                    <input class="btn btn-success pull-rigth" value="REPORTE DEUDA TOTAL" type="button" id="btnReporteDeudaTotal" disabled="disabled" onclick="reporte_deudas_total()" />
+                                                    <input class="btn btn-success pull-rigth" value="HISTORIAL DE PAGOS" type="button" id="btnReporteDeudaTotal" disabled="disabled" onclick="reporte_deudas_total()" />
 
                                                     <input class="btn btn-success pull-rigth" value="REPORTE FRACCIONAMIENTO" type="button" id="btnReporteFraccionamiento" disabled="disabled" onclick="reporte_fraccionamiento()" />
 

@@ -397,28 +397,61 @@ class CajaIngreso extends Model
 
     }
 
-    function datos_reporte_deudas($id){
+    function datos_reporte_deudas($id,$id_concepto){
 
-        $cad = "select  c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, descripcion, ac.importe 
-                from agremiado_cuotas ac
-                inner join valorizaciones v on ac.id =v.pk_registro
-                inner join conceptos c on ac.id_concepto =c.id
-                where id_agremiado =".$id." and id_situacion in (59,51)";
+        $concepto="";
+
+        if ($id_concepto!="") $concepto = " and c.id = ".$id_concepto; 
+
+        $cad = "select  c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, descripcion, ac.importe, to_char(ac.fecha_venc_pago, 'dd-mm-yyyy' )  fecha_vencimiento
+        from agremiado_cuotas ac
+        inner join valorizaciones v on ac.id =v.pk_registro
+        inner join conceptos c on ac.id_concepto =c.id
+        where id_agremiado = ".$id."  
+        and id_situacion in (59) 
+        and v.codigo_fraccionamiento is null 
+        and v.fecha < now()
+        ".$concepto."
+        union all 
+        select v2.id, c.denominacion, ROW_NUMBER() OVER (PARTITION BY v2.id order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto,to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento
+        from valorizaciones v2 
+        inner join conceptos c on v2.id_concepto =c.id
+        where v2.id_agremido = ".$id." 
+        and v2.pagado = '0'
+        and v2.id_modulo = 6
+        and v2.fecha < now()
+        ".$concepto." ";
 
 		//echo $cad;
 		$data = DB::select($cad);
         return $data;
     }
 
-    function getDenominacionDeuda($id){
+    function getDenominacionDeuda($id,$id_concepto){
+
+        $concepto="";
+
+        if ($id_concepto!="") $concepto = " and c.id = ".$id_concepto; 
 
         $cad = "select distinct c.denominacion 
-                from agremiado_cuotas ac
-                inner join valorizaciones v ON ac.id = v.pk_registro
-                inner join conceptos c ON ac.id_concepto = c.id
-                where id_agremiado = ".$id."
-                and id_situacion in (59, 51)
-                order by c.denominacion asc";
+        from agremiado_cuotas ac
+        inner join valorizaciones v ON ac.id = v.pk_registro
+        inner join conceptos c ON ac.id_concepto = c.id
+        where id_agremiado = ".$id."
+        and id_situacion in (59)
+        and v.codigo_fraccionamiento is null 
+        and v.fecha < now()
+        ".$concepto." 
+        union all 
+        select c.denominacion
+        from valorizaciones v2 
+        inner join conceptos c on v2.id_concepto =c.id
+        where v2.id_agremido = ".$id."
+        and v2.pagado = '0'
+        and v2.id_modulo = 6
+        and v2.fecha < now()
+        ".$concepto." 
+        order by denominacion asc";
 
 		//echo $cad;
 		$data = DB::select($cad);
@@ -427,17 +460,30 @@ class CajaIngreso extends Model
 
     function getReporteDeudasTotal($id){
 
-        $cad = "select  c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, v.descripcion, ac.importe ,ac.fecha_venc_pago fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante , 
-tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_operacion ,  case when  v.pagado='1' then 'PAGADO' else 'PENDIENTE' end  estado_pago
-                from agremiado_cuotas ac 
-                inner join valorizaciones v on ac.id =v.pk_registro
-                inner join conceptos c on ac.id_concepto =c.id
-                inner join tabla_maestras tm on tm.codigo =id_situacion::varchar(10) and tm.tipo='11' 
-                left join comprobantes c2 on c2.id=V.id_comprobante
-                left join tabla_maestras tm2 on tm2.codigo = c2.id_forma_pago::varchar(10) and tm2.tipo='104' 
-                left join comprobante_pagos cp on c2.id =cp.id_comprobante 
-                left join  tabla_maestras tm3 on tm3.codigo = cp.id_medio ::varchar(10) and tm3.tipo='19' 
-                where  id_agremiado =".$id;
+        $cad = "select  c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, v.descripcion, ac.importe , to_char(ac.fecha_venc_pago, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante , 
+        tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_operacion ,  case when  v.pagado='1' then 'PAGADO' else 'PENDIENTE' end  estado_pago
+        from agremiado_cuotas ac 
+        inner join valorizaciones v on ac.id =v.pk_registro
+        inner join conceptos c on ac.id_concepto =c.id
+        inner join tabla_maestras tm on tm.codigo =id_situacion::varchar(10) and tm.tipo='11' 
+        left join comprobantes c2 on c2.id=v.id_comprobante
+        left join tabla_maestras tm2 on tm2.codigo = c2.id_forma_pago::varchar(10) and tm2.tipo='104' 
+        left join comprobante_pagos cp on c2.id =cp.id_comprobante 
+        left join  tabla_maestras tm3 on tm3.codigo = cp.id_medio ::varchar(10) and tm3.tipo='19' 
+        where  id_agremiado = ".$id." 
+        and v.pagado ='1'
+        union all
+        select v2.id, c.denominacion, ROW_NUMBER() OVER (PARTITION BY v2.id order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto, to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante ,
+        tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_operacion ,  case when  v2.pagado='1' then 'PAGADO' else 'PENDIENTE' end  estado_pago
+        from valorizaciones v2 
+        inner join conceptos c on v2.id_concepto =c.id
+        left join comprobantes c2 on c2.id=v2.id_comprobante
+        left join comprobante_pagos cp on c2.id =cp.id_comprobante 
+        left join tabla_maestras tm2 on tm2.codigo = c2.id_forma_pago::varchar(10) and tm2.tipo='104' 
+        left join  tabla_maestras tm3 on tm3.codigo = cp.id_medio ::varchar(10) and tm3.tipo='19' 
+        where v2.id_agremido = ".$id." 
+        and v2.id_modulo = 6
+        and v2.pagado ='1'";
 
 		//echo $cad;
 		$data = DB::select($cad);
@@ -447,12 +493,21 @@ tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_ope
     function getDenominacionDeudaTotal($id){
 
         $cad = "select  distinct(c.denominacion)
-                from agremiado_cuotas ac 
-                inner join valorizaciones v on ac.id =v.pk_registro
-                inner join conceptos c on ac.id_concepto =c.id
-                inner join tabla_maestras tm on tm.codigo =id_situacion::varchar(10) and tipo='11' 
-                where  id_agremiado =".$id."
-                order by c.denominacion asc";
+        from agremiado_cuotas ac 
+        inner join valorizaciones v on ac.id =v.pk_registro
+        inner join conceptos c on ac.id_concepto =c.id
+        inner join tabla_maestras tm on tm.codigo =id_situacion::varchar(10) and tipo='11' 
+        where  id_agremiado = ".$id."
+        and v.pagado = '1'
+        union all
+        select c.denominacion
+        from valorizaciones v2 
+        inner join conceptos c on v2.id_concepto =c.id
+        where v2.id_agremido = ".$id." 
+        and v2.pagado = '1'
+        and v2.id_modulo = 6
+        and v2.fecha < now()
+        order by denominacion asc";
 
 		//echo $cad;
 		$data = DB::select($cad);
