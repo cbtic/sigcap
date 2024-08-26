@@ -2840,7 +2840,7 @@ class ComprobanteController extends Controller
 
             $id_comprobante_origen=$request->id_comprobante_origen;
 
-            echo("id_comprobante_origen: ".$id_comprobante_origen);
+           // echo("id_comprobante_origen: ".$id_comprobante_origen);
             
             
  
