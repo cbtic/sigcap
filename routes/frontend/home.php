@@ -782,3 +782,5 @@ Route::get('ingreso/reporte_fraccionamiento_pdf/{numero_cap}', [IngresoControlle
 Route::get('derecho_revision/valida_credipago_unico/{id_solicitud}', [DerechoRevisionController::class, 'valida_credipago_unico'])->name('derecho_revision.valida_credipago_unico');
 Route::get('derecho_revision/validar_proyectista_hu/{id}', [DerechoRevisionController::class, 'validar_proyectista_hu'])->name('derecho_revision.validar_proyectista_hu');
 Route::get('derecho_revision/obtener_numero_revision/{id}', [DerechoRevisionController::class, 'obtener_numero_revision'])->name('derecho_revision.obtener_numero_revision');
+
+Route::get('ingreso/obtener_detalle_factura/{id}/{forma_pago}/{estado_pago}/{medio_pago}', [IngresoController::class, 'obtener_detalle_factura'])->name('ingreso.obtener_detalle_factura');
