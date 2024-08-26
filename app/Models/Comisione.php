@@ -79,7 +79,7 @@ class Comisione extends Model
             $cad .= " and c.id_municipalidad_integrada in (".$cad_id.")";
         }
 		
-		$cad .= " order by c.denominacion asc";
+		$cad .= " order by c.denominacion asc, c.comision asc";
 
 		$data = DB::select($cad);
         return $data;
