@@ -1936,11 +1936,11 @@ class ComprobanteController extends Controller
         $id_caja = $request->id_caja_;
         
         $id = $request->id_comprobante;
-        echo($id);
-        echo("-");
+        //echo($id);
+        //echo("-");
 
         $id_origen= $request->id_comprobante_origen;
-        echo($id_origen);
+        //echo($id_origen);
 
         
         if ($id=="" ){
@@ -1960,8 +1960,8 @@ class ComprobanteController extends Controller
 			$id_caja = (isset($caja_usuario->id_caja))?$caja_usuario->id_caja:0;
 		}
        
-      print_r($trans); 
-      echo($id);
+      //print_r($trans); 
+      //echo($id);
      // exit();
 
         if ( $trans == "FN"){
@@ -2073,11 +2073,11 @@ class ComprobanteController extends Controller
         $id_caja = $request->id_caja_;
 
         $id = $request->id_comprobante;
-        echo($id);
-        echo("-");
+        //echo($id);
+        //echo("-");
 
         $id_origen= $request->id_comprobante_origen_nd;
-        echo($id_origen);
+        //echo($id_origen);
         
         if ($id=="" ){
             $trans = "FN";
@@ -2822,7 +2822,7 @@ class ComprobanteController extends Controller
  
             $tarifa = $request->facturad;
  
-           // print_r($request); exit();
+            //print_r($request); exit();
  
             $total = $request->totalP;
             $serieF = $request->serieF;
@@ -2840,7 +2840,7 @@ class ComprobanteController extends Controller
 
             $id_comprobante_origen=$request->id_comprobante_origen;
 
-            echo("id_comprobante_origen: ".$id_comprobante_origen);
+            //echo("id_comprobante_origen: ".$id_comprobante_origen);
             
             
  
