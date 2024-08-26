@@ -187,6 +187,25 @@ br {
 }
 </style>
 
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+var idFormaPago = $("#idFormaPago").val();
+
+//alert(idFormaPago);
+
+if(idFormaPago=="2"){
+    $("#divListaCredito").show();
+}else{
+    $("#divListaCredito").hide();
+}
+
+    
+});
+
+</script>
+
 @stack('before-scripts')
 
 @stack('after-scripts')
@@ -224,9 +243,19 @@ br {
                 <div class="col col-sm-12 align-self-center">
                     <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.send')}}"
                         id="frmPesaje" autocomplete="off">
+                        <input type="hidden" id="idFormaPago" name="idFormaPago" value="{{$factura->id_forma_pago}}"/>
+
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+
+                        
+
+                        
+                        
+
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
                                 <div id="" class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="card">
@@ -276,7 +305,8 @@ br {
                                                                 <p>No esta identificado el tipo de documento</p>
                                                                 @endswitch
                                                             </p>
-                                                            <p><a href="/{{ $factura->ruta_comprobante }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>                                                        </strong>
+                                                            <p><a href="/{{ $factura->ruta_comprobante }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>                                                        
+                                                        </strong>
 
                                                     </div>
 													
@@ -307,8 +337,7 @@ br {
 														}
 													?>
 													
-                                                  
-                                                    
+                                                                                                    
                                                     <?php if ($factura->tipo == 'FT'|| $factura->tipo == 'BV' || $factura->tipo == 'NC' || $factura->tipo == 'ND'){?>
                                             
                                                         <table>
@@ -328,7 +357,7 @@ br {
                                                         </tr>
                                                         <tr>
                                                         <td>FECHA DE EMISIÓN :</td>
-                                                        <td style="text-align: right;"><span class="resaltado">{{ $factura->fecha }}</span></td>
+                                                        <td style="text-align: right;"><span class="resaltado">  {{ date('d-m-Y H:i:s',strtotime($factura->fecha)) }} </span></td>
                                                         </tr>
                                                         <tr>
                                                         <td>CAP :</td>
@@ -354,7 +383,7 @@ br {
                                         <!--card-->
                                     </div>
                                 </div>
-                                <br>
+                                
  
                                 <div id="" class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -429,25 +458,36 @@ br {
                                     </div>
                                     
                                     <div class="separador">&nbsp;</div>
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
-                                                    </div>
-                                                    
-                                                    <div>
-                                                    
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
+                                    </div>
+
+                                   
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="divListaCredito" style="display:none">
+                                    
+                                        <div class="card">
+
+                                            <div class="card-header">
+                                                <strong>                                            
+                                                    Información del crédito
+                                                </strong>
+                                            </div>
+                                            <div class="card-body">
+
+                                                <div class="table-responsive overflow-auto" style="max-height: 500px;">                                                   
                                                     <table id="tblcuotas" class="table table-hover" >
-                                                        <caption>Información del crédito</caption>
-                                                        <thead>
                                                         
+                                                        <thead>                                                            
                                                             <tr>
                                                                 <th class="text-center" width="8%">item</th>
                                                                 <th width="37%">Monto</th>
-                                                                <th width="37%">Fecha Venc.</th>
-                                                                
+                                                                <th width="37%">Fecha Venc.</th>                                                                    
                                                             </tr>
                                                         </thead>
+                                                        
                                                         <tbody>
-                                                    @foreach ($cronograma as $cronograma_v)
+                                                            @foreach ($cronograma as $cronograma_v)
                                                             <tr id="fila{{ $loop->iteration }}">
                                                                 <td class="text-center">
                                                                     {{ $cronograma_v->item }} 
@@ -459,23 +499,35 @@ br {
                                                                 </td>
 
                                                                 <td class="text-left">
-                                                                    {{ $cronograma_v->fecha_vencimiento }} 
+                                                                    {{ date('d-m-Y',strtotime($cronograma_v->fecha_vencimiento)) }} 
+
+
                                                                 </td>
-                                                           </tr>
+                                                            </tr>
                                                             @endforeach
-                                                    </div>
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="separador">&nbsp;</div>
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <p>Usuario: <span class="resaltado">{{ $datos->usuario }}</span></p>
-                                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <p>Usuario: <span class="resaltado">{{ $datos->usuario }}</span></p>
+                                    </div>
 
+                                    <div class="separador">&nbsp;</div>
                                     <hr style="width:90%", size="3", color=black>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <p>Representación impresa generada en el sisteman de SUNAT, puede verificarla
                                             utilizando su clave SOL</p>
 
                                     </div>
+
+
+
                                     <?php } ?>
                                 </div>
 
@@ -489,6 +541,10 @@ br {
             </div>
         </div>
     </div>
+
+
+    
+
 
     <!--row-->
     @endsection
