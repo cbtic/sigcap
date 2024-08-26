@@ -11,7 +11,7 @@ class Comprobante extends Model
     public function listar_comprobante($p){
 		return $this->readFuntionPostgres('sp_listar_comprobante_paginado',$p);
     }
-
+ 
 
     function fecha_hora_actual(){
 		

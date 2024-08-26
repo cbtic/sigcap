@@ -14,8 +14,10 @@ use App\Models\Guia;
 
 use App\Models\Agremiado;
 use App\Models\ComprobantePago;
-use App\Models\ComprobanteCouta;
+
 use App\Models\ComprobanteCuotaPago;
+
+use App\Models\ComprobanteCuota;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -785,6 +787,8 @@ class ComprobanteController extends Controller
                 ///Abono Directo///
 
                 $total_pagar_abono = $request->total_pagar_abono;
+                $total_abono= 0;
+
                 if ($total_pagar_abono!="0"){     
                     
                     $total_pagar_abono = $request->total_pagar_abono;
@@ -1874,6 +1878,8 @@ class ComprobanteController extends Controller
 
        // $model = new ComprobanteDetalle;
        // $comprobanteDetalle = $model->getMaestroByTipo(85);
+
+       //print_r($factura);
 
         return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia','datos','cronograma'));
     }
