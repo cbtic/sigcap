@@ -11,6 +11,8 @@ $n = 0;
 $tot_reg = count($valorizacion);
 //print_r ("cuenta registros ->".$count);
 
+//print_r ($valorizacion); exit();
+
 foreach($valorizacion as $key=>$row):
 	$id_tipo_afectacion = $row->id_tipo_afectacion;
 
