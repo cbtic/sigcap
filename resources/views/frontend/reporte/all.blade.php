@@ -244,6 +244,16 @@
 									</select>
 								</div>
 
+								<div id="div_forma_pago" class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+									<label class="form-group">Estado de pago</label>
+									<select name="id_formapago" id="id_formapago" class="form-control form-control-sm" onChange="">
+										<option value="">Todos</option>
+										<option value="¨P">Pendiente</option>
+										<option value="C">Cancelado</option>
+
+									</select>
+								</div>
+
 								<div id="div_concepto" class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Conceptos</label>
