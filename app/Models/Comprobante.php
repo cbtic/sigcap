@@ -210,7 +210,7 @@ class Comprobante extends Model
         $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres,direccion_sunat direccion,correo email
 		from personas p
 		Where p.numero_ruc='".$numero_documento."' or  p.numero_documento='".$numero_documento."'";
-		echo $cad;
+		//echo $cad;
 		$data = DB::select($cad);
         if(isset($data[0]))return $data[0];
     }

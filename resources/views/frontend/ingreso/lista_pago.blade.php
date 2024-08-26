@@ -80,7 +80,7 @@ foreach($pago as $row){?>
 		}else{
 		?>
 			
-			<input class="btn btn-secondary pull-light" value="NC" type="button" id="btnBoleta" onclick="fn_nc_nd(<?php echo $row->tiene_nc?>)">
+			<input class="btn btn-primary pull-light" value="NC" type="button" id="btnBoleta" onclick="fn_nc_nd(<?php echo $row->tiene_nc?>)">
 
 
 		<?php 	
