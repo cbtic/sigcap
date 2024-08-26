@@ -275,6 +275,10 @@ function calcular_total(obj){
 
 	var rol_exonera = $('#rol_exonera').val();
 
+	var id_tipo_afectacion= "";
+	var id_concepto="";
+	var id_concepto_actual="";
+
 	//alert(rol_exonera);
 	
 	//if(id_caja_usuario=="0" && rol_exonera=="0"){
@@ -339,11 +343,11 @@ function calcular_total(obj){
 	//$("#tblValorizacion input[type='checkbox']:checked").each(function (){
 	if(cantidad == 0)$('#id_concepto_sel').val("");
 	
-	var id_concepto = $('#id_concepto_sel').val();
+	id_concepto = $('#id_concepto_sel').val();
 	//$('#id_concepto_sel').val(id_concepto);
 	//alert("id_concepto->"+id_concepto);
 	
-	var id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
+	id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
 	//alert(id_concepto_actual);
 	//alert("id_concepto_actual->"+id_concepto_actual)
 	//$('#id_concepto_sel').val(id_concepto);
@@ -356,6 +360,9 @@ function calcular_total(obj){
 	}
 	
 	//$('#id_concepto_sel').val(id_concepto_actual);
+
+	var id_tipo_afectacion_sel = $('#id_tipo_afectacion_sel').val();
+	//alert(id_tipo_afectacion_sel);
 	
 	
 	var ruc_p = $('#ruc_p').val();
@@ -417,18 +424,7 @@ function calcular_total(obj){
 
 		$("#btnAnulaVal").prop('disabled', false);
 
-
-
-		//alert(cboPeriodo_b);
-
-
-
-
 		
-
-		
-
-
 
 	}
 	
@@ -470,8 +466,9 @@ function calcular_total(obj){
 		val_igv =val_igv.toString().replace(',','');
 
 		//var val_descuento = $(this).parent().parent().parent().find('.val_descuento').html();
-		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
-
+		id_concepto_actual = $(this).parent().parent().parent().find('.id_concepto_modal_sel').html();
+		id_concepto = $(this).parent().parent().parent().find('.id_concepto').html();
+		
 		var val_descuento =$('#DescuentoPP').val("");
 
 		var numero_cuotas_pp =$('#numero_cuotas_pp').val("");
@@ -481,8 +478,19 @@ function calcular_total(obj){
 		stotal += Number(val_sub_total);
 		igv += Number(val_igv);
 
+		id_tipo_afectacion  = $(this).parent().parent().parent().find('.id_tipo_afectacion_sel').html();
+
+		
+		//alert(id_tipo_afectacion);
+
 	});
 	descuento = 0;
+
+	//alert(id_tipo_afectacion);
+
+	//('#id_concepto_pp').val(id_concepto);
+	//('#id_tipo_afectacion_pp').val(id_tipo_afectacion);
+
 	
 
 	//$('#idConcepto').val(id_concepto);
@@ -501,7 +509,13 @@ function calcular_total(obj){
 	}else{
 		$('#MonAd').attr("readonly",false);
 		$('#MonAd').val(total.toFixed(2));
-	}	
+	}
+	
+	//alert(id_concepto);
+
+	$('#id_tipo_afectacion_pp').val(id_tipo_afectacion);
+	$('#id_concepto_pp').val(id_concepto);
+	
 }
 
 function calcular_total_otros(obj){

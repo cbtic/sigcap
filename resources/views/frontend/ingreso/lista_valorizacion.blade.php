@@ -63,6 +63,8 @@ foreach($valorizacion as $key=>$row):
 			<input type="hidden" id="vencio" name="comprobante_detalle[<?php echo $key?>][vencio]" value="<?php echo $row->vencio?>" /> 
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][id_concepto]" value="<?php echo $row->id_concepto?>" /> 
 
+			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][id_tipo_afectacion]" value="<?php echo $row->id_tipo_afectacion?>" /> 
+
 			<input type="hidden" id="codigo_fraccionamiento" name="comprobante_detalle[<?php echo $key?>][codigo_fraccionamiento]" value="<?php echo $row->codigo_fraccionamiento?>" /> 
 
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][item]" value="<?php echo $n?>" /> 
@@ -94,16 +96,21 @@ foreach($valorizacion as $key=>$row):
 	<td class="text-right val_total_">	
 		<span class="val_descuento" style="float:left"></span>	
 
-		<span class="val_total"><?php echo number_format($monto*$row->cantidad,2)?></span>
-		
+		<span class="val_total"><?php echo number_format($monto*$row->cantidad,2)?></span>		
 		<span hidden class="val_sub_total"><?php echo number_format($stotal,2)?></span>
 		<span hidden class="val_igv"><?php echo number_format($igv_,2)?></span>
-		<span hidden class="id_concepto_modal_sel"><?php echo $row->id_concepto?></span>
 
+
+		<span hidden class="id_concepto_modal_sel"><?php echo $row->id_concepto?></span>
 		<span hidden class="id_concepto"><?php echo $row->id_concepto?></span>
-		
+		<span hidden class="id_tipo_afectacion_sel"><?php echo $row->id_tipo_afectacion?></span>
+
 	</td>
 	
+	<td>	
+		
+
+	</td>
 
 
 </tr>
