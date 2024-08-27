@@ -1244,17 +1244,19 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 	if(tipo=='1'){
 		$opc1 = $('#id_usuario').val();
 		$opc2 = $('#id_caja').val();
+		$opc3 =-1
 	}
 
 	if(tipo=='2'){
 		$opc1 = $('#id_concepto').val();
 		$opc2 = $('#id_formapago').val();
+		$opc3 = $('#id_estadopago').val();
 	}
 	
 
 	if (por_usuario =='S'){
 		if($opc2!=''){
-			var href = '/reporte/rep_pdf/'+id+'/'+$fini+'/'+$ffin+'/'+$opc1+'/'+$opc2;
+			var href = '/reporte/rep_pdf/'+id+'/'+$fini+'/'+$ffin+'/'+$opc1+'/'+$opc2 +'/'+$opc3;
 			window.open(href, '_blank');		
 		}else{
 			alert('Requiere seleccionar un usuario')
@@ -1273,7 +1275,7 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 		
 		//$opc1!='0';
 		//$opc2!='0';
-		var href = '/reporte/rep_pdf/'+id+'/'+$fini+'/'+$ffin+'/'+$opc1+'/'+$opc2;
+		var href = '/reporte/rep_pdf/'+id+'/'+$fini+'/'+$ffin+'/'+$opc1+'/'+$opc2+'/'+$opc3;
 		window.open(href, '_blank');		
 	}
 }
