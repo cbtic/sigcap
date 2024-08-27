@@ -161,8 +161,9 @@
 			<tbody>
 				<tr>
 					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">Item</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="70%">Descripci&oacute;n</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">Importe</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="60%">Descripci&oacute;n</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="15%">Fecha Vencimiento</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="20%">Importe</td>
 				</tr>
 				
 				<?php 
@@ -177,6 +178,7 @@
 				<tr>
 					<td style="border:1px solid #A4A4A4;width:40px;text-align:center"><?php echo $r->row_num?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->descripcion?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->fecha_vencimiento?></td>
 					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($r->importe, 2, '.', ',')?></td>
 				</tr>
 				<?php

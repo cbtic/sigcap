@@ -750,6 +750,7 @@ class IngresoController extends Controller
     public function modal_detalle_factura($id){
 		
 		$cajaIngreso = CajaIngreso::find($id);
+        $tablaMaestra_model = new TablaMaestra;
 		$factura_model = new Comprobante;
 		$fecha_fin=$cajaIngreso->fecha_fin;
         $fecha_inicio = $cajaIngreso->fecha_inicio;
@@ -759,7 +760,11 @@ class IngresoController extends Controller
 
 		$factura = $factura_model->getFacturaByCaja($cajaIngreso->id_caja, $fecha_inicio, $fecha_fin);
 
-		return view('frontend.ingreso.modal_detalle_factura',compact('factura'));
+        $forma_pago = $tablaMaestra_model->getMaestroByTipo(104);
+
+        $medio_pago = $tablaMaestra_model->getMaestroByTipo(19);
+
+		return view('frontend.ingreso.modal_detalle_factura',compact('id','factura','forma_pago','medio_pago'));
 	
 	}
 	
@@ -970,7 +975,9 @@ class IngresoController extends Controller
 		return view('frontend.ingreso.modal_consulta_persona',compact('sexo','tipo_documento', 'id_tipo_documento'));
 	}
 
-    public function reporte_deudas_pdf($numero_cap){
+    public function reporte_deudas_pdf($numero_cap, $id_concepto){
+
+        if($id_concepto==0){$id_concepto='';}
 		
 		$caja_ingreso_model=new CajaIngreso;
         $agremiado_model=new Agremiado;
@@ -980,8 +987,8 @@ class IngresoController extends Controller
         $numero_cap=$datos_agremiado->numero_cap;
         $nombre_completo=$datos_agremiado->nombre_completo;
         //var_dump($datos_agremiado);exit();
-		$datos_reporte_deudas=$caja_ingreso_model->datos_reporte_deudas($datos_agremiado->id);
-        $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeuda($datos_agremiado->id);
+		$datos_reporte_deudas=$caja_ingreso_model->datos_reporte_deudas($datos_agremiado->id, $id_concepto);
+        $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeuda($datos_agremiado->id, $id_concepto);
         $tipo_cambio=$tipo_cambio_model->getTipoCambio();
 		//$nombre=$datos[0]->numero_cap;
 		//var_dump($denominacion_reporte_deudas);exit();
@@ -1060,9 +1067,11 @@ class IngresoController extends Controller
         $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id);
         $tipo_cambio=$tipo_cambio_model->getTipoCambio();
 
-        $deuda_cuota_fraccionamiento=$caja_ingreso_model->getDeudaCuotaFraccionamiento($datos_agremiado->id);
+        $deuda_cuota_fraccionamiento=$caja_ingreso_model->getDeudaCuotaFraccionamiento($datos_agremiado->id_p);
 
-        $cronograma_fraccionamiento=$caja_ingreso_model->getCronogramaFraccionamiento($datos_agremiado->id);
+       // print_r ($deuda_cuota_fraccionamiento); exit();
+
+        $cronograma_fraccionamiento=$caja_ingreso_model->getCronogramaFraccionamiento($datos_agremiado->id_p);
 
 
 		Carbon::setLocale('es');
@@ -1081,5 +1090,29 @@ class IngresoController extends Controller
 		return $pdf->stream();
 
 	}
+
+    public function obtener_detalle_factura($id, $forma_pago, $estado_pago, $medio_pago)
+    {
+        //$id
+       // $detalle = ssdsd->fgfffg($id);
+        //return view('frontend.ingreso.obtener_detalle_factura', compact('id','detalle'));
+        if($forma_pago==0){$forma_pago='';}
+        if($estado_pago==0){$estado_pago='';}
+        if($medio_pago==0){$medio_pago='';}
+
+        $factura_model = new Comprobante;
+        $cajaIngreso = CajaIngreso::find($id);
+
+        $fecha_fin=$cajaIngreso->fecha_fin;
+        $fecha_inicio = $cajaIngreso->fecha_inicio;
+        
+        //print_r($fecha_fin); exit();
+		if($cajaIngreso->fecha_fin=="")$fecha_fin=$factura_model->fecha_hora_actual(); 
+        
+        $factura = $factura_model->getFacturaByCajaFiltro($cajaIngreso->id_caja, $fecha_inicio, $fecha_fin, $forma_pago, $estado_pago, $medio_pago);
+
+        return response()->json($factura);
+    }
+
 
 }
