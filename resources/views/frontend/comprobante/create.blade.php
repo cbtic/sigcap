@@ -71,6 +71,9 @@
                 $('#totalcredito_').val($total)
                 $('#plazo_ ').val("30");
                 generarCuotas();
+
+                $('#estado_pago').val("P");
+                
             }
             //
         });

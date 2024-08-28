@@ -462,6 +462,29 @@ if(idFormaPago=="2"){
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
                                     </div>
+                                    @if($factura->tipo_operacion =="2")
+                                    <div class="separador">&nbsp;</div>
+                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                        <table>
+                                        <tbody>
+                                        <tr>
+                                        <td>BENEFICIARIO :</td>
+                                        <td style="text-align: left;">COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA</td>
+                                        </tr>
+                                        <div class="separador">&nbsp;</div>
+                                        <tr>
+                                        <td>CUENTAS:</td>
+                                        <td style="text-align: left;"> Abonar en Cta. Banco Interbank Soles : CCI:</td>
+                                        </tr>
+                                        <tr>
+                                        <td>COMENTARIOS LEGALES :</td>
+                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNATCta.Para Detacción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima ( Ruc: 20172977911).Tasa: S/ <span class="resaltado">{{ $factura->total * 12/100 }}</span> (12.0%)                                        
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                    @endif
 
                                    
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="divListaCredito" style="display:none">
