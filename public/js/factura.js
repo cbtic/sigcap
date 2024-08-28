@@ -738,7 +738,7 @@ function obtenerTitular(){
 						}
 	
 
-					}else if(idMedio=='254'){
+					}else if(idMedio=='254' || idMedio=='545'){
 						$("#monto"+ind).val(monto);
 
 						

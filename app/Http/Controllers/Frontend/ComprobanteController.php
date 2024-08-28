@@ -833,6 +833,8 @@ class ComprobanteController extends Controller
 
                 $factura_upd->id_forma_pago =  $request->id_formapago_;
 
+                $factura_upd->tipo_operacion = $request->id_tipooperacion_;
+
 				$factura_upd->save();
 
 
@@ -2999,14 +3001,16 @@ class ComprobanteController extends Controller
 
 
 
-        //echo($request->id_comprobante);
+
+       // $comprobante = Comprobante::find($request->id_comprobante);
+
+       // echo($request->id_comprobante);
         //echo($request->monto);
         //exit();
 
-        $comprobante = Comprobante::find($request->id_comprobante);
 
         //echo($comprobante->total_credito);
-
+/*
         if (isset($comprobante->total_credito)){
             $cuotaPagos = ComprobanteCuotaPago::where([
                 'id_comprobante' => $request->id_comprobante
@@ -3018,14 +3022,42 @@ class ComprobanteController extends Controller
                 $monto= $monto+$row->monto; 
 
             }
-            $comprobante->total_credito= $monto;            
+            $comprobante->total_credito= $comprobante->total_credito;            
         }else{
             $monto=$request->monto;
             $comprobante->total_credito= $monto;                
         }
+        */
+
+        $cuotaPagos = ComprobanteCuotaPago::where([
+            'id_comprobante' => $request->id_comprobante
+        ])->where('estado', '=', '1')->get();
+        $monto=0;
+
+        //echo($cuotaPagos);
+        //exit();
+
+        foreach ($cuotaPagos as $index => $row) {            
+            $monto= $monto+$row->monto; 
+        }
+
+        //echo($monto);
+
+        //$comprobante->total_credito= $comprobante->total_credito; 
+
+
         
+        $comprobante = Comprobante::find($request->id_comprobante);
+        $comprobante->total_credito= $monto; 
         $comprobante->save(); 
-        
+
+        $comprobante1 = Comprobante::find($request->id_comprobante);
+        $retante = $comprobante1->total - $monto;
+        if ($retante<= 0){
+            $comprobante1->estado_pago= "C";
+            $comprobante1->save(); 
+        }
+
         echo $monto;
 		
     }

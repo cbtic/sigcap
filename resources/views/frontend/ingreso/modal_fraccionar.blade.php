@@ -428,7 +428,11 @@ legend.scheduler-border {
 		$('#tblConceptos tbody tr').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][denominacion]" value="' + $("#denominacion").val() + '- Fraccionado ' + n + '"> </td>');
 		$('#tblConceptos tbody tr').after('<td> <input type="hidden" name="fraccionamiento[' + n + '][total_frac]" value="' + cuota_uno + '"> </td>');
 		*/
-		total_frac = parseFloat((total_frac - cuota_uno) / (nroCuotas - 1)).toFixed(1);
+		var total_frac_dif = total_frac - cuota_uno;
+
+		//alert(total_frac_dif);
+
+		total_frac = parseFloat((total_frac_dif) / (nroCuotas - 1)).toFixed(1);
 
 		var total_coutas = 0;
 		
@@ -447,7 +451,11 @@ legend.scheduler-border {
 			*/
 		}
 
-		var total_diferencia = (total_frac - cuota_uno) - total_coutas;
+		//alert(total_coutas.toFixed(1));
+		total_coutas=total_coutas.toFixed(1);
+
+		var total_diferencia = total_frac_dif - total_coutas;
+		
 		
 		var newRow = "";
 		for (let i = 0; i < nroCuotas; i++) {
@@ -460,6 +468,11 @@ legend.scheduler-border {
 				newRow+='<td> <input type="hidden" name="fraccionamiento[' + n + '][total_frac]" value="' + cuota_uno + '"> </td>';
 				newRow+='</tr>';
 			}else{
+
+				if (i==(nroCuotas-1)){
+					total_frac = Number(total_frac) + Number(total_diferencia);
+					total_frac = total_frac.toFixed(1);
+				}
 				
 				fecha_cuota = FormatFecha(sumarDias(d, 30))
 				newRow+='<tr>';
