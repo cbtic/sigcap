@@ -1272,6 +1272,10 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 		if ($opc2==""){
 			$opc2=-1
 		}
+
+		if ($opc3==""){
+			$opc3=-1
+		}
 		
 		//$opc1!='0';
 		//$opc2!='0';
