@@ -11,31 +11,32 @@ $(document).ready(function () {
 	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
-	
+
+		
 	$('#fecha_ini').datepicker({
         autoclose: true,
-		dateFormat: 'dd-mm-yy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 	
 	$('#fecha_fin').datepicker({
         autoclose: true,
-        dateFormat: 'dd-mm-yy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 	
 	$('#fecha_inicio_desde').datepicker({
         autoclose: true,
-		dateFormat: 'dd-mm-yy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
-	
+
 	$('#fecha_inicio_hasta').datepicker({
         autoclose: true,
-        dateFormat: 'dd-mm-yy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
