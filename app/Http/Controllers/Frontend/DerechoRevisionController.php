@@ -295,9 +295,9 @@ class DerechoRevisionController extends Controller
 			$liquidacion->id_solicitud = $request->id;
 			$liquidacion->fecha = Carbon::now()->format('Y-m-d');
 			$liquidacion->credipago = $codigo;
-			$liquidacion->sub_total = $sub_total;
-			$liquidacion->igv = $igv;
-			$liquidacion->total = $total;
+			$liquidacion->sub_total = number_format($sub_total, 2, '.', '');
+			$liquidacion->igv = number_format($igv, 2, '.', '');
+			$liquidacion->total = number_format($total, 2, '.', '');
 			$liquidacion->observacion = "obs";
 			$liquidacion->id_usuario_inserta = $id_user;
 			$liquidacion->save();
@@ -310,7 +310,7 @@ class DerechoRevisionController extends Controller
 			$valorizacion->pk_registro = $liquidacion->id;
 			$valorizacion->id_concepto = $concepto->id;
 			$valorizacion->id_empresa = $empresa->id;
-			$valorizacion->monto = $liquidacion->total;
+			$valorizacion->monto = number_format($liquidacion->total, 2, '.', '');
 			$valorizacion->id_moneda = $concepto->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
@@ -474,9 +474,9 @@ class DerechoRevisionController extends Controller
 			$liquidacion->id_solicitud = $request->id;
 			$liquidacion->fecha = Carbon::now()->format('Y-m-d');
 			$liquidacion->credipago = $codigo;
-			$liquidacion->sub_total = $sub_total;
-			$liquidacion->igv = $igv;
-			$liquidacion->total = $total;
+			$liquidacion->sub_total = number_format($sub_total, 2, '.', '');
+			$liquidacion->igv = number_format($igv, 2, '.', '');
+			$liquidacion->total = number_format($total, 2, '.', '');
 			$liquidacion->observacion = $request->observacion;
 			$liquidacion->id_situacion = 1;
 			$liquidacion->id_usuario_inserta = $id_user;
@@ -493,7 +493,7 @@ class DerechoRevisionController extends Controller
 			if(isset($empresa->id))$valorizacion->id_empresa = $empresa->id;
 			if(isset($persona->id))$valorizacion->id_persona = $persona->id;
 			
-			$valorizacion->monto = $liquidacion->total;
+			$valorizacion->monto = number_format($liquidacion->total, 2, '.', '');
 			$valorizacion->id_moneda = $concepto->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
@@ -2008,9 +2008,9 @@ class DerechoRevisionController extends Controller
 			$liquidacion->id_solicitud = $derecho_revision->id;
 			$liquidacion->fecha = Carbon::now()->format('Y-m-d');
 			$liquidacion->credipago = $codigo;
-			$liquidacion->sub_total = $sub_total;
-			$liquidacion->igv = $igv;
-			$liquidacion->total = $total;
+			$liquidacion->sub_total = number_format($sub_total, 2, '.', '');
+			$liquidacion->igv = number_format($igv, 2, '.', '');
+			$liquidacion->total = number_format($total, 2, '.', '');
 			$liquidacion->observacion = "obs";
 			$liquidacion->id_usuario_inserta = $id_user;
 			$liquidacion->save();
@@ -2026,7 +2026,7 @@ class DerechoRevisionController extends Controller
 			if(isset($empresa->id))$valorizacion->id_empresa = $empresa->id;
 			if(isset($persona->id))$valorizacion->id_persona = $persona->id;
 			
-			$valorizacion->monto = $liquidacion->total;
+			$valorizacion->monto = number_format($liquidacion->total, 2, '.', '');
 			$valorizacion->id_moneda = $concepto->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
 			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
@@ -2355,9 +2355,9 @@ class DerechoRevisionController extends Controller
 				//$liquidacion->id_solicitud = $derecho_revision->id;
 				//$liquidacion->fecha = Carbon::now()->format('Y-m-d');
 				//$liquidacion->credipago = $codigo;
-				$liquidacion->sub_total = $sub_total;
-				$liquidacion->igv = $igv;
-				$liquidacion->total = $total;
+				$liquidacion->sub_total = number_format($sub_total, 2, '.', '');
+				$liquidacion->igv = number_format($igv, 2, '.', '');
+				$liquidacion->total = number_format($total, 2, '.', '');
 				$liquidacion->observacion = "obs";
 				$liquidacion->id_usuario_inserta = $id_user;
 				$liquidacion->save();
