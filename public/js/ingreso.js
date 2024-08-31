@@ -824,7 +824,7 @@ function obtenerBeneficiario(){
 	$('#foto').attr('src','/img/profile-icon.png');
 
 	$('#btnOtroConcepto').attr("disabled",true);
-	$('#btnBeneficiario').attr("disabled",true);
+	//$('#btnBeneficiario').attr("disabled",true);
 
 	$("#btnFracciona").prop('disabled', true);
 	$("#btnBoleta").prop('disabled', true);
@@ -928,7 +928,7 @@ function obtenerBeneficiario(){
 
 
 					$('#btnOtroConcepto').attr("disabled", false);
-					$('#btnBeneficiario').attr("disabled",false);
+					//$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
 					$('#btnAnulaVal').attr("disabled", false);
@@ -955,7 +955,7 @@ function obtenerBeneficiario(){
 					$('#id_tipo_documento').val(tipo_documento);
 					
 					$('#btnOtroConcepto').attr("disabled", false);
-					$('#btnBeneficiario').attr("disabled",false);
+					//$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
 					$('#btnAnulaVal').attr("disabled", false);
@@ -979,7 +979,7 @@ function obtenerBeneficiario(){
 					$('#numero_documento_').val(numero_documento);
 					$('#id_tipo_documento_').val(tipo_documento);
 					$('#btnOtroConcepto').attr("disabled", false);
-					$('#btnBeneficiario').attr("disabled",false);
+					//$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
 					$('#btnAnulaVal').attr("disabled", false);

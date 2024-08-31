@@ -1897,6 +1897,7 @@ class ComprobanteController extends Controller
         $p[]=$request->estado_pago;
         $p[]=$request->anulado;
         $p[]=$request->formapago;
+        $p[]=$request->total_b;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		
