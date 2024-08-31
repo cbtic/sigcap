@@ -396,6 +396,10 @@ function calcular_total(obj){
 				$("#btnFactura").prop('disabled', true);
 			}
 */
+		}else if(tipo_documento == "87"){
+			$("#btnBoleta").prop('disabled', false);
+			$("#btnFactura").prop('disabled', false);
+
 		}else
 		{
 			$("#btnBoleta").prop('disabled', false);
@@ -403,7 +407,7 @@ function calcular_total(obj){
 			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
 
 			$("#btnFactura").prop('disabled', false);
-			$("#btnBoleta").prop('disabled', false);
+			//$("#btnBoleta").prop('disabled', true);
 
 /*
 			if(cboPeriodo_b!="" || cboMes_b!=""){
