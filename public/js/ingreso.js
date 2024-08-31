@@ -384,8 +384,9 @@ function calcular_total(obj){
 //		var cboMes_b = $('#cboMes_b').val();
 
 
-
+//alert(tipo_documento);
 		if(tipo_documento == "79"){//RUC
+			
 			
 			$("#btnBoleta").prop('disabled', true);
 			$("#btnFactura").prop('disabled', false);
@@ -402,6 +403,7 @@ function calcular_total(obj){
 			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
 
 			$("#btnFactura").prop('disabled', false);
+			$("#btnBoleta").prop('disabled', false);
 
 /*
 			if(cboPeriodo_b!="" || cboMes_b!=""){
