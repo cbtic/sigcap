@@ -26,11 +26,11 @@
 
 				</tr>
 		<?php
-			if ($row->tipo=="FT" || $row->tipo=="BV") {
+			//if ($row->tipo=="FT" || $row->tipo=="BV") {
 				$total_us += $row->total_us;
 				$total_tc += $row->total_tc;
 				$total_soles += $row->total_soles;
-			}
+			//}
 
 
 			}

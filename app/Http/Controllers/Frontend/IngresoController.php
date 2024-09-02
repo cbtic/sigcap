@@ -735,7 +735,8 @@ class IngresoController extends Controller
 
         $caja_ingreso_model = new CajaIngreso();
         $resultado = $caja_ingreso_model->getCajaComprobante($id_usuario_caja, $fecha);
-
+       
+     
         return view('frontend.ingreso.lista_caja_venta',compact('resultado'));
 
     }
