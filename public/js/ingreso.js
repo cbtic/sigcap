@@ -551,7 +551,7 @@ function calcular_total_otros(obj){
 
 		if(tipo_documento == "79"){//RUC
 			
-			$("#btnBoleta").prop('disabled', true);
+			$("#btnBoleta").prop('disabled', false);
 			$("#btnFactura").prop('disabled', false);
 		}else
 		{
@@ -2131,7 +2131,7 @@ function AplicarDescuento(){
 
 			if(tipo_documento == "79"){//RUC
 				
-				$("#btnBoleta").prop('disabled', true);
+				$("#btnBoleta").prop('disabled', false);
 				$("#btnFactura").prop('disabled', false);
 			}else
 			{
@@ -2236,7 +2236,7 @@ function select_all(){
 
 		if (tipo_documento == "79") {//RUC
 
-			$("#btnBoleta").prop('disabled', true);
+			$("#btnBoleta").prop('disabled', false);
 			$("#btnFactura").prop('disabled', false);
 		} else {
 			$("#btnBoleta").prop('disabled', false);
