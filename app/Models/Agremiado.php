@@ -141,7 +141,7 @@ and a.id=".$id;
 					and t1.estado='1' 
 					limit 1";
 		}
-		echo $cad;
+		//echo $cad;
 		$data = DB::select($cad);
 		
         return $data[0];
