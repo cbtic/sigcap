@@ -248,7 +248,7 @@
 									<label class="form-group">Estado de pago</label>
 									<select name="id_estadopago" id="id_estadopago" class="form-control form-control-sm" onChange="">
 										<option value="">Todos</option>
-										<option value="¨P">Pendiente</option>
+										<option value="P">Pendiente</option>
 										<option value="C">Cancelado</option>
 
 									</select>

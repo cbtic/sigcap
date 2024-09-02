@@ -230,7 +230,8 @@ class ReporteController extends Controller
 		if ($id_tipo == '2'){
 
 			$concepto = $opc1;
-			$estado_pago = $opc2;
+			$forma_pago = $opc2;
+			$estado_pago = $opc3;
 
 
 			if ($funcion=='rv' || $funcion=='mct' ){
@@ -240,11 +241,11 @@ class ReporteController extends Controller
 				
 				//$usuario=$usuario_ingresos[0] ->usuario;
 
-				//print_r($venta);exit();
+				
 		
 				$caja_ingreso_model = new CajaIngreso();
 				//$tipo= '';			
-				$reporte_ventas = $caja_ingreso_model->getAllReporteVentas($f_inicio, $f_fin, $concepto,$estado_pago);
+				$reporte_ventas = $caja_ingreso_model->getAllReporteVentas($f_inicio, $f_fin, $concepto,$forma_pago,$estado_pago);
 				//print_r($reporte_ventas);exit();
 				//var_dump($reporte_ventas);exit();
 				//print_r($venta);exit();
@@ -271,7 +272,7 @@ class ReporteController extends Controller
 		
 				$caja_ingreso_model = new CajaIngreso();
 				//$tipo= '';			
-				$reporte_ventas = $caja_ingreso_model->getAllReporteVentasMensual($f_inicio, $f_fin, $concepto,$estado_pago);
+				$reporte_ventas = $caja_ingreso_model->getAllReporteVentasMensual($f_inicio, $f_fin, $concepto,$forma_pago,$estado_pago);
 				
 				//var_dump($reporte_ventas);exit();
 				//print_r($venta);exit();
