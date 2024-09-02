@@ -363,7 +363,7 @@ class Comprobante extends Model
         ".$total_."
         Order By f.fecha Desc";
 
-        echo $cad;
+        echo $cad; exit();
         
         $data = DB::select($cad);
         return $data;
