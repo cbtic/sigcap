@@ -1092,7 +1092,7 @@ class IngresoController extends Controller
 
 	}
 
-    public function obtener_detalle_factura($id, $forma_pago, $estado_pago, $medio_pago)
+    public function obtener_detalle_factura($id, $forma_pago, $estado_pago, $medio_pago, $total)
     {
         //$id
        // $detalle = ssdsd->fgfffg($id);
@@ -1100,6 +1100,7 @@ class IngresoController extends Controller
         if($forma_pago==0){$forma_pago='';}
         if($estado_pago==0){$estado_pago='';}
         if($medio_pago==0){$medio_pago='';}
+        if($total==0){$total='';}
 
         $factura_model = new Comprobante;
         $cajaIngreso = CajaIngreso::find($id);
@@ -1110,7 +1111,7 @@ class IngresoController extends Controller
         //print_r($fecha_fin); exit();
 		if($cajaIngreso->fecha_fin=="")$fecha_fin=$factura_model->fecha_hora_actual(); 
         
-        $factura = $factura_model->getFacturaByCajaFiltro($cajaIngreso->id_caja, $fecha_inicio, $fecha_fin, $forma_pago, $estado_pago, $medio_pago);
+        $factura = $factura_model->getFacturaByCajaFiltro($cajaIngreso->id_caja, $fecha_inicio, $fecha_fin, $forma_pago, $estado_pago, $medio_pago,$total);
 
         return response()->json($factura);
     }

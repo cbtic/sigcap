@@ -119,16 +119,19 @@ $(document).ready(function() {
     
 });
 
+
 function buscarDetalleFactura(){
 
     var forma_pago = $('#forma_pago_bus').val();
     var estado_pago = $('#estado_pago_bus').val();
     var medio_pago = $('#medio_pago_bus').val();
     var id = $('#id').val();
+    var total = $('#total_b').val();
 
     if(forma_pago==''){forma_pago=0}
     if(estado_pago==''){estado_pago=0}
     if(medio_pago==''){medio_pago=0}
+    if(total==''){total=0}
 
     const tbody = $('#tblValorizacionFactura_');
 
@@ -137,7 +140,7 @@ function buscarDetalleFactura(){
     let total_acumulado = 0;
 
     $.ajax({
-            url: "/ingreso/obtener_detalle_factura/"+id+"/"+forma_pago+"/"+estado_pago+"/"+medio_pago,
+            url: "/ingreso/obtener_detalle_factura/"+id+"/"+forma_pago+"/"+estado_pago+"/"+total,
             type: "GET",
             success: function (result) {  
 
@@ -286,6 +289,17 @@ function validarLiquidacion() {
 	return false;
 }
 
+function validarDecimal(input) {
+    // Expresión regular para permitir solo números y un punto decimal
+    var regex = /^[0-9]*\.?[0-9]*$/;
+    
+    // Verificar si el valor ingresado coincide con la expresión regular
+    if (!regex.test(input.value)) {
+        // Si no coincide, eliminar el último carácter ingresado
+        input.value = input.value.slice(0, -1);
+    }
+}
+
 </script>
 
 
@@ -354,6 +368,13 @@ function validarLiquidacion() {
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="form-control-sm">Total</label>
+                                    <input type="text" name="total_b" id="total_b" value="" oninput="validarDecimal(this)" placeholder="" class="form-control form-control-sm">
+                                </div>
+                            </div>
+
                             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 
                                 <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" onclick="buscarDetalleFactura()" />
