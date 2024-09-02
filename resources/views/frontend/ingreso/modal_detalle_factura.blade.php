@@ -369,9 +369,8 @@ function validarDecimal(input) {
                                 </div>
                             </div>
                             <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="form-control-sm">Total</label>
-                                    <input type="text" name="total_b" id="total_b" value="" oninput="validarDecimal(this)" placeholder="" class="form-control form-control-sm">
+                                <div class="form-group">                                    
+                                    <input type="text" name="total_b" id="total_b" value="" oninput="validarDecimal(this)" placeholder="Total" class="form-control form-control-sm">
                                 </div>
                             </div>
 
