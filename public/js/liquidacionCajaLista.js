@@ -541,7 +541,7 @@ function datatablenew(){
 				{
                 "mRender": function (data, type, row) {
                     var saldo_inicial = "";
-					if(row.saldo_inicial!= null)saldo_inicial = row.saldo_inicial;
+					if(row.saldo_inicial!= null)saldo_inicial = parseFloat(row.saldo_inicial).toFixed(2);
 					return saldo_inicial;
                 },
                 "bSortable": false,
@@ -551,7 +551,7 @@ function datatablenew(){
 				{
                 "mRender": function (data, type, row) {
                     var total_recaudado = "";
-					if(row.total_recaudado!= null)total_recaudado = row.total_recaudado;
+					if(row.total_recaudado!= null)total_recaudado = parseFloat(row.total_recaudado).toFixed(2); 
 					return total_recaudado;
                 },
                 "bSortable": false,
@@ -560,7 +560,7 @@ function datatablenew(){
 				{
                 "mRender": function (data, type, row) {
                     var saldo_total = "";
-					if(row.saldo_total!= null)saldo_total = row.saldo_total;
+					if(row.saldo_total!= null)saldo_total = parseFloat(row.saldo_total).toFixed(2);
 					return saldo_total;
                 },
                 "bSortable": false,
