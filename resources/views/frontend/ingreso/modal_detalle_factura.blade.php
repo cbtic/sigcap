@@ -140,7 +140,7 @@ function buscarDetalleFactura(){
     let total_acumulado = 0;
 
     $.ajax({
-            url: "/ingreso/obtener_detalle_factura/"+id+"/"+forma_pago+"/"+estado_pago+"/"+total,
+            url: "/ingreso/obtener_detalle_factura/"+id+"/"+forma_pago+"/"+estado_pago+"/"+medio_pago+"/"+total,                        
             type: "GET",
             success: function (result) {  
 

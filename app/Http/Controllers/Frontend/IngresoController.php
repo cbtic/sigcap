@@ -1112,7 +1112,7 @@ class IngresoController extends Controller
 		if($cajaIngreso->fecha_fin=="")$fecha_fin=$factura_model->fecha_hora_actual(); 
         
         $factura = $factura_model->getFacturaByCajaFiltro($cajaIngreso->id_caja, $fecha_inicio, $fecha_fin, $forma_pago, $estado_pago, $medio_pago,$total);
-
+        //print_r($factura);
         return response()->json($factura);
     }
 
