@@ -754,17 +754,24 @@ function obtenerTitular(){
 		
 	}
 	
-    function calcular_total(fila){
+    function calcular_total(fila,afectacion){
 
         var imported=0;    
 		imported = $('#imported'+fila).val();
 
-		var igv = imported*0.18;
+		if (afectacion==30){
+			var igv = 0;	
+		}
+		else{
+			var igv = imported*0.18;	
+		};
+
+		//var igv = imported*0.18;
 
 
 		var totald = Number(imported) + Number(igv);
 
-		//alert(totald);
+		
 
 		$("#igvd"+fila).val(igv.toFixed(2));
 
@@ -816,7 +823,7 @@ function obtenerTitular(){
         
     }
 
-	function actualizaimportes(){
+	function actualizaimportes(afectacion){
 		var i=0;
 		
 	
@@ -825,7 +832,7 @@ function obtenerTitular(){
 			$("input[name^='importeantd']").each(function(i, obj) {
 				//alert(obj.value);
 				$("#totald"+i).val(obj.value);
-				calcular_total_2(i);
+				calcular_total_2(i,afectacion);
 				i++;
 				//total = Number(obj.value) + Number(total);
 
@@ -855,7 +862,7 @@ function obtenerTitular(){
 
 	}
 
-	function calcular_total_2(fila){
+	function calcular_total_2(fila,afectacion){
 		
         var totald=0;
 		var importeantd=0;
@@ -864,18 +871,30 @@ function obtenerTitular(){
 		importeantd=$('#importeantd'+fila).val()
 		
 		if (parseInt(totald) <=parseInt(importeantd) )  {
-			var imported =totald/1.18;  
-			var igv =  Number(totald) - Number(imported);
 
+		
 
+			if (afectacion==30){
+				var imported =totald
+				var igv =  0
+				var pu =totald
+			}
+			else{
+				var imported =totald/1.18;  
+				var igv =  Number(totald) - Number(imported);	
+				var pu =imported-igv
+			};
 			
 
-			//alert(totald);
+			
+alert(pu);
+			
 
 			$("#igvd"+fila).val(igv.toFixed(2));
 
 			$("#imported"+fila).val(imported.toFixed(2));
 
+			$("#imported"+fila).val(pu.toFixed(2));
 			
 			var gravadas=0;
 			igv=0;

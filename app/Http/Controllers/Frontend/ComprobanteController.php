@@ -1993,8 +1993,10 @@ class ComprobanteController extends Controller
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
             ])->get();
+           
+            $afectacion=$facturad[0]->afect_igv;
 
-           // print_r($facturad); exit();
+       
         }
         else {
             $comprobante_model=new Comprobante;
@@ -2083,7 +2085,7 @@ class ComprobanteController extends Controller
 
         //print_r($comprobante); exit();
 
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo'));
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion'));
         
     }
 

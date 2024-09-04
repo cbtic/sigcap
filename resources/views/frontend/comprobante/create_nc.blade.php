@@ -326,7 +326,7 @@
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-group">Tipo de Nota</label>                               
-                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" onChange="actualizaimportes()" >
+                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" onChange="actualizaimportes(<?php echo $afectacion?>)" >
                                                                 <option value="">--Selecionar--</option>
                                                                 <?php
                                                                 foreach ($tipooperacion as $row) { ?>
@@ -530,7 +530,7 @@
                                                                                                                                       <!--  <td class="text-right"></td>
                                                                                             -->
                                                                     <td>
-                                                                    <input type="text" name="imported[]"         id="imported<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>)" value="<?php if ($trans == 'FN') {
+                                                                    <input type="text" name="imported[]"         id="imported<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>,<?php echo $afectacion?>)" value="<?php if ($trans == 'FN') {
                                                                                                                             echo 0;
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
@@ -546,7 +546,7 @@
 
                                                                     
                                                                     <td>
-                                                                    <input type="text" name="totald[]"  id="totald<?php echo $key?>" onkeyup="calcular_total_2(<?php echo $key?>)" value="<?php if ($trans == 'FN') {
+                                                                    <input type="text" name="totald[]"  id="totald<?php echo $key?>" onkeyup="calcular_total_2(<?php echo $key?>,<?php echo $afectacion?>)" value="<?php if ($trans == 'FN') {
                                                                                                                             echo 0;
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {

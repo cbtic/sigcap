@@ -691,8 +691,9 @@ function obtenerTitular(){
 		
 	}
 	
-    function calcular_total(fila){
+    function calcular_total(fila,afectacion){
 
+		
         var imported=0;    
 		imported = $('#imported'+fila).val();
 
@@ -701,7 +702,7 @@ function obtenerTitular(){
 
 		var totald = Number(imported) + Number(igv);
 
-		//alert(totald);
+		
 
 		$("#igvd"+fila).val(igv.toFixed(2));
 
@@ -745,7 +746,7 @@ function obtenerTitular(){
     }
 
 
-	function calcular_total_2(fila){
+	function calcular_total_2(fila,afectacion){
 
         var totald=0;    
 		totald = $('#totald'+fila).val();
