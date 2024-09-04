@@ -150,7 +150,8 @@ class CajaIngreso extends Model
                 )  as reporte
                 group by situacion, tipo_,tipo";
 
-	
+	    //echo($cad);
+
         $data = DB::select($cad);
         return $data;
     }
