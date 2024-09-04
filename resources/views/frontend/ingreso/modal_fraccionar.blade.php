@@ -474,7 +474,12 @@ legend.scheduler-border {
 					total_frac = total_frac.toFixed(1);
 				}
 				
-				fecha_cuota = FormatFecha(sumarDias(d, 30))
+				fecha_cuota = FormatFecha(sumarDias(d, 30));
+
+				fecha_cuota= ultimoDiaDelMesDeFecha(fecha_cuota);
+
+
+
 				newRow+='<tr>';
 				newRow+='<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> <td width="10%">' + fecha_cuota + '</td>  <td width="55%">' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td width="10%">SOLES</td> <td width="20%">' + total_frac + '</td></tr>';
 				newRow+='<td> <input type="hidden" name="fraccionamiento[' + n + '][fecha_cuota]" value="' + fecha_cuota + '"> </td>';
@@ -485,6 +490,17 @@ legend.scheduler-border {
 			n++;
 			//alert(newRow);
 			$('#tblConceptos tbody').append(newRow);
+		}
+
+		function ultimoDiaDelMesDeFecha(fecha) {
+			// Separar la fecha en día, mes y año
+			let [dia, mes, año] = fecha.split('-').map(Number);
+
+			// Obtener el último día del mes
+			let ultimoDia = new Date(año, mes, 0).getDate();
+
+			// Formatear el resultado en d/m/Y
+			return `${ultimoDia}-${mes}-${año}`;
 		}
 
 		

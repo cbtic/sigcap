@@ -99,7 +99,7 @@ class ComprobanteController extends Controller
 
         $medio_pago = $tabla_model->getMaestroByTipo('19');
 
-
+        
         if ($trans == 'FA'){
 
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -177,7 +177,7 @@ class ComprobanteController extends Controller
                 $ind++;
             }
 
-        
+            
            // print_r($valorizad);
 
             //print_r($id_concepto_pp);exit();
@@ -260,14 +260,26 @@ class ComprobanteController extends Controller
 			//if($ubicacion=="")$ubicacion=3070;
             if ($TipoF == 'BV' || $TipoF == 'TK'){
 
-                //echo $persona;exit();
 
-                $empresa = $empresa_model->getPersonaId_BV($persona);
+                if($persona==''){
+                    $persona=-1; 
+                   // $empresa=-1;
+                   // $ubicacion=-1;
+                }
 
-				if(!$empresa){
-					//echo $ubicacion;exit();
-					$empresa = $empresa_model->getEmpresaId($ubicacion);
-				}
+
+
+                     
+
+                    $empresa = $empresa_model->getPersonaId_BV($persona);
+
+                   //echo $empresa;exit();
+
+                    if(!$empresa){
+                        //echo $ubicacion;exit();
+                        $empresa = $empresa_model->getEmpresaId($ubicacion);
+                    }
+                
 
             }
             else{
@@ -341,6 +353,10 @@ class ComprobanteController extends Controller
 
         $trans = $request->Trans;
         $id_caja=$request->id_caja;
+
+        //echo $id_caja;exit();
+
+
 
 		//if($id_caja=="")$id_caja = Session::get('id_caja');
 
