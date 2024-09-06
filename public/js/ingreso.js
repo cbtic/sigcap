@@ -1355,7 +1355,11 @@ function enviarTipo(tipo){
 		Swal.fire("Cuentas Exoneradas!");
 		exit();
 	}
-	
+	var ruc_p = $('#ruc_p').val();
+	if(tipo == 1 && ruc_p==""){
+		Swal.fire("Se Requiere el Número de RUC para generar una Factura!");
+		exit();
+	}
 
 	if(tipo == 1)$('#TipoF').val("FTFT");
 	if(tipo == 2)$('#TipoF').val("BVBV");
@@ -1364,6 +1368,10 @@ function enviarTipo(tipo){
 	if(tipo == 5)$('#NCBV').val("NCBV"); //'Nueva Nota Crédito Boleta de Venta'
 	if(tipo == 6)$('#NDFT').val("NDFT"); //'Nueva Nota Dévito Factura'
 	if(tipo == 7)$('#NDBV').val("NDBV"); //'Nueva Nota Dévito Boleta de Venta'
+
+	
+
+
 
 /*
 	$('#DescuentoPP').val("N");
