@@ -48,7 +48,7 @@ class Comprobante extends Model
        
     }
 
-    public function registrar_comprobante_ncnd($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$razon_social,$direccion,$id_comprobante_origen,$correo) {
+    public function registrar_comprobante_ncnd($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$razon_social,$direccion,$id_comprobante_origen,$correo,$id_afecta) {
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
       // print_r($serie ." numero". $numero." tipo". $tipo." ubicacion". $cod_tributario."persona ". $cod_tributario.
        //              " total". $total."descripcion ". $descripcion." ". $cod_contable." ". $id_v." ". $id_caja." ". $descuento.
@@ -63,7 +63,7 @@ class Comprobante extends Model
         $data = DB::select($cad, array($serie, $numero, $tipo, $cod_tributario, $total, 
                                        $descripcion, $cod_contable, $id_comprobante_origen, $id_caja, $descuento, 
                                        $accion,     $id_user,  $id_moneda, $razon_social, $direccion,
-                                       $id_comprobante_origen,$correo));
+                                       $id_comprobante_origen,$correo,$id_afecta));
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
         //print_r($data );exit();
        

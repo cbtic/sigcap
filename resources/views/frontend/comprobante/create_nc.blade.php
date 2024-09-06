@@ -243,6 +243,8 @@
                         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
+                        <input type="hidden" name="_afecta" id="_afecta" value="<?php echo $afectacion; ?>">
+                        
                         <input type="hidden" name="tipoF" value="NC">
                         <input type="hidden" name="vestab" value="1">
                         <input type="hidden" name="totalF" value="<?php if ($trans == 'FA') {

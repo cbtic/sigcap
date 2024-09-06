@@ -238,6 +238,7 @@ function fn_save_nc(){
     $('.loader').show();
 	$('#guardar').hide();
 	*/
+	
     $.ajax({
 			url: "/comprobante/send_nc",
             type: "POST",
@@ -248,7 +249,7 @@ function fn_save_nc(){
             success: function (result) {
 				
 			//	$('.loader').hide();
-				
+			
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
 				location.href=urlApp+"/comprobante/"+result.id_factura;
@@ -261,7 +262,7 @@ function ActualizaDetalle(){
 	
 	var campos = document.querySelectorAll('input[name^="importe"]');
     campos.forEach(function(campo) {
-		alert('sss')
+		
         campo.readOnly = true;
     });
 }
@@ -873,28 +874,30 @@ function obtenerTitular(){
 		if (parseInt(totald) <=parseInt(importeantd) )  {
 
 		
+			var imported =0;
+			var igv =  0;
+			var pu =0;
+
+			
 
 			if (afectacion==30){
-				var imported =totald
-				var igv =  0
-				var pu =totald
+				imported =Number(totald);
+				igv =  0;
+				pu =totald;
 			}
 			else{
-				var imported =totald/1.18;  
-				var igv =  Number(totald) - Number(imported);	
-				var pu =imported-igv
+				imported =totald/1.18;  
+				igv =  Number(totald) - Number(imported);	
+				pu =imported-igv;
 			};
-			
-
-			
-alert(pu);
-			
+			//	alert(imported);		
+				
 
 			$("#igvd"+fila).val(igv.toFixed(2));
 
 			$("#imported"+fila).val(imported.toFixed(2));
 
-			$("#imported"+fila).val(pu.toFixed(2));
+			//$("#imported"+fila).val(pu.toFixed(2));
 			
 			var gravadas=0;
 			igv=0;
