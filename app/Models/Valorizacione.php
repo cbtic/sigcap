@@ -585,4 +585,24 @@ class Valorizacione extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getDeudaReporte($f_fin){        
+       
+        $cad = "select v.id, a.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' ' || p.nombres apellidos_nombre, v.monto, c.denominacion concepto, v.descripcion , EXTRACT(YEAR FROM v.fecha) periodo , v.fecha fecha_vencimiento 
+        from valorizaciones v 
+        inner join conceptos c on v.id_concepto = c.id 
+        inner join agremiados a on v.id_agremido = a.id 
+        inner join personas p on a.id_persona = p.id
+        where v.estado ='1'
+        and v.pagado ='0'
+        and v.fecha <= '".$f_fin."'
+        and v.id_modulo in (2,3,4,6)
+        order by apellidos_nombre, concepto";
+        
+      //  echo $cad;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }

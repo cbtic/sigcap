@@ -1114,5 +1114,4 @@ class IngresoController extends Controller
         return response()->json($factura);
     }
 
-
 }

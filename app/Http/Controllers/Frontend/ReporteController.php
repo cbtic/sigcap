@@ -6,6 +6,7 @@ use App\Models\Reporte;
 use App\Models\CajaIngreso;
 use App\Models\Concepto;
 use App\Models\TablaMaestra;
+use App\Models\Valorizacione;
 use Carbon\Carbon;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -263,6 +264,70 @@ class ReporteController extends Controller
 			if ($funcion=='rvm' || $funcion=='mct' ){
 				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
 				$titulo = "REPORTE DE REGISTRO VENTAS MENSUAL";
+
+				
+				//$usuario=$usuario_ingresos[0] ->usuario;
+
+				//print_r($venta);exit();
+		
+				$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '';			
+				$reporte_ventas = $caja_ingreso_model->getAllReporteVentasMensual($f_inicio, $f_fin, $concepto,$estado_pago);
+				
+				//var_dump($reporte_ventas);exit();
+				//print_r($venta);exit();
+		
+				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_fin'));
+				$pdf->getDomPDF()->set_option("enable_php", true);
+				
+				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+			}
+		}
+
+		if ($id_tipo == '3'){
+
+			$concepto = $opc1;
+			//$estado_pago = $opc2;
+
+
+			if ($funcion=='rt'){
+				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
+				$titulo = "REPORTE DE DEUDA TOTAL";
+
+				
+				//$usuario=$usuario_ingresos[0] ->usuario;
+
+				//print_r($venta);exit();
+		
+				//$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '';			
+				//$reporte_ventas = $caja_ingreso_model->getAllReporteVentas($f_inicio, $f_fin, $concepto,$estado_pago);
+				//print_r($reporte_ventas);exit();
+				//var_dump($reporte_ventas);exit();
+				//print_r($venta);exit();
+
+				$valorizacion_model = new Valorizacione;
+				$valorizacion = $valorizacion_model->getDeudaReporte($f_fin);
+		
+				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_pdf',compact('titulo','reporte_ventas','f_inicio','f_inicio'));
+				$pdf->getDomPDF()->set_option("enable_php", true);
+				
+				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+			}
+
+			if ($funcion=='rd'){
+				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
+				$titulo = "REPORTE DE DEUDA DETALLADO";
 
 				
 				//$usuario=$usuario_ingresos[0] ->usuario;

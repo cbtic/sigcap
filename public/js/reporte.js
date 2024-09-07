@@ -25,7 +25,11 @@ $(document).ready(function () {
 		$("#div_forma_pago").show();
 		$("#div_concepto").show();
 	}
-
+	else if(tipo_reporte=="3"){
+		$("#div_fecha_fin").show();
+		$("#div_concepto").show();
+		$("#div_forma_pago").hide();
+	}
 
 	//alert(tipo_reporte);
 	
@@ -1249,6 +1253,13 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 	if(tipo=='2'){
 		$opc1 = $('#id_concepto').val();
 		$opc2 = $('#id_formapago').val();
+	}
+
+	if(tipo=='3'){
+		$opc1 = $('#id_concepto').val();
+		$fini = 0;
+		//$ffin = 0;
+		$opc2 = 0;
 	}
 	
 
