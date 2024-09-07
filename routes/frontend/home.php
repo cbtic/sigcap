@@ -455,6 +455,8 @@ Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eli
 Route::get('sesion/eliminar_comision_sesion_delegados/{id}', [SesionController::class, 'eliminar_comision_sesion_delegados'])->name('sesion.eliminar_comision_sesion_delegados');
 Route::get('sesion/obtener_delegados/{id}', [SesionController::class, 'obtener_delegados'])->name('sesion.obtener_delegados');
 
+Route::get('sesion/eliminar_sesion/{id}/{estado}', [SesionController::class, 'eliminar_sesion'])->name('sesion.eliminar_sesion');
+
 Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
 Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
 Route::get('profesion/editar_profesion/{id}', [ProfesionController::class, 'editar_profesion'])->name('profesion.editar_profesion');
