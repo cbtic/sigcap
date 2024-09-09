@@ -955,7 +955,7 @@ function obtenerTitular(){
         
     }
 
-	$('#addRow').on('click', function () {
+	$('#addRow1').on('click', function () {
 		AddFila();
 	});
 
