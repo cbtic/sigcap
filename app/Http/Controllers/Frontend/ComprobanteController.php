@@ -22,7 +22,7 @@ use App\Models\ComprobanteCuota;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ComprobanteController extends Controller
 {
@@ -1783,7 +1783,7 @@ class ComprobanteController extends Controller
 
                $descuento = $value['descuento'];
        
-              $id_factura = $facturas_model->registrar_comprobante_ncnd($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',     $id_user,  1,$razon_social,$direccion,$id_comprobante_ncdc,$correo);
+              $id_factura = $facturas_model->registrar_comprobante_ncnd($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',     $id_user,  1,$razon_social,$direccion,$id_comprobante_ncdc,$correo,$afecta);
              //  $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 
               // print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
@@ -1858,6 +1858,20 @@ class ComprobanteController extends Controller
 
         $factura = Comprobante::where('id', $id)->get()[0];
 
+        if (is_null($factura->id_comprobante_ncnd) ){
+            $factura_referencia = Comprobante::where('id', -1)->get();
+            $ref_comprobante="";
+            $ref_tipo="";
+        }   
+        else{
+            $factura_referencia = Comprobante::where('id', $factura->id_comprobante_ncnd)->get()[0];
+            $ref_comprobante=  $factura_referencia->serie . " - " .$factura_referencia->numero ;
+            $ref_tipo=$factura_referencia->tipo;
+        }
+
+        ;
+        
+
 
         $facd_serie = $factura->serie;
         $facd_numero = $factura->numero;
@@ -1899,7 +1913,7 @@ class ComprobanteController extends Controller
 
        //print_r($factura);
 
-        return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia','datos','cronograma'));
+        return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo'));
     }
 
 	public function listar_comprobante(Request $request){
@@ -2856,8 +2870,10 @@ class ComprobanteController extends Controller
             $correo=$request->correo;
             $id_caja = $request->id_caja;
             $adelanto   = $request->adelanto;
-            $afecta=$request->_afecta;
-        	
+            $afecta=$request->_afecta;            
+            $tiponota=$request->_afecta;            
+        	$motivo=$request->motivo_;
+            $afecta_ingreso=$request->afecta_ingreso;
           
  
             $id_comprobante_ncdc = $request->id_comprobante_ncdc;
@@ -2892,7 +2908,7 @@ class ComprobanteController extends Controller
  
                 $descuento = $value['descuento'];
                 
-               $id_factura = $facturas_model->registrar_comprobante_ncnd($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',     $id_user,  1,$razon_social,$direccion,$id_comprobante_ncdc,$correo,$afecta);
+               $id_factura = $facturas_model->registrar_comprobante_ncnd($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',      $id_user,  1,$razon_social,$direccion,$id_comprobante_ncdc,$correo,$afecta,$tiponota,   $motivo,$afecta_ingreso);
               //  $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
  
                // print_r($id_factura); exit();					       //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
@@ -2920,7 +2936,7 @@ class ComprobanteController extends Controller
                     }
                     $descuento = $value['descuento'];
                     if ($value['descuento']=='') $descuento = 0;
-                    $id_factura_detalle = $facturas_model->registrar_comprobante($serieF, $fac_numero, $tipoF, $value['item'], $total, $value['descripcion'], "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
+                    $id_factura_detalle = $facturas_model->registrar_comprobante_ncnd($serieF, $fac_numero, $tipoF, $value['item'], $total, $value['descripcion'], "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda,$razon_social,$direccion,$id_comprobante_ncdc,$correo,$afecta,$tiponota,   $motivo,$afecta_ingreso);
                                                                                  //(  serie,      numero,   tipo,      ubicacion, persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
                     
                 

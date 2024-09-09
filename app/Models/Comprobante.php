@@ -48,22 +48,22 @@ class Comprobante extends Model
        
     }
 
-    public function registrar_comprobante_ncnd($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$razon_social,$direccion,$id_comprobante_origen,$correo,$id_afecta) {
+    public function registrar_comprobante_ncnd($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$razon_social,$direccion,$id_comprobante_origen,$correo,$id_afecta,$tiponota,  $motivo,$afecta_ingreso) {
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
-      // print_r($serie ." numero". $numero." tipo". $tipo." ubicacion". $cod_tributario."persona ". $cod_tributario.
-       //              " total". $total."descripcion ". $descripcion." ". $cod_contable." ". $id_v." ". $id_caja." ". $descuento.
-       //              " ". $accion." ".    $id_user." ".   $id_moneda . " ". $razon_social. " ". $direccion." ". $id_comprobante_origen );exit();
+       //print_r($serie ." numero". $numero." tipo". $tipo." ubicacion". $cod_tributario."persona ". $cod_tributario.
+         //           " total". $total."descripcion ". $descripcion." ". $cod_contable." ". $id_v." ". $id_caja." ". $descuento.
+          //      " ". $accion." ".    $id_user." ".   $id_moneda . " ". $razon_social. " ". $direccion." ". $id_comprobante_origen ." ". $id_afecta ." ". $afecta_ingreso );exit();
         
        $cad = "Select sp_crud_comprobante_ncnd(?,?,?,?,?,
                                                 ?,?,?,?,?,
                                                 ?,?,?,?,?,
-                                                ?,?)";
+                                                ?,?,?,?,?,?)";
         //echo "Select sp_crud_factura(".$serie.",".$numero.", ".$tipo.", ".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$codigo_v.",".$estab_v.",".$modulo.",".$smodulo.",".$descuento.",".$accion.",".$id_user.")";
        
         $data = DB::select($cad, array($serie, $numero, $tipo, $cod_tributario, $total, 
                                        $descripcion, $cod_contable, $id_comprobante_origen, $id_caja, $descuento, 
                                        $accion,     $id_user,  $id_moneda, $razon_social, $direccion,
-                                       $id_comprobante_origen,$correo,$id_afecta));
+                                       $id_comprobante_origen,$correo,$id_afecta,$tiponota,  $motivo,$afecta_ingreso));
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
         //print_r($data );exit();
        

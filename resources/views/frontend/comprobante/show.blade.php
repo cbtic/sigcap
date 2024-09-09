@@ -192,6 +192,7 @@ br {
 $(document).ready(function() {
 
 var idFormaPago = $("#idFormaPago").val();
+var TipoCOmprobante = $("#idtipocomprobante").val();
 
 //alert(idFormaPago);
 
@@ -199,10 +200,18 @@ if(idFormaPago=="2"){
     $("#divListaCredito").show();
 }else{
     $("#divListaCredito").hide();
-}
+};
 
+if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
+    $("#trdocmodi").show();
+    $("#trdocmodi2").show();
+}else{
+    $("#trdocmodi").hide();
+    $("#trdocmodi2").hide();
+};
     
-});
+}
+);
 
 </script>
 
@@ -244,6 +253,7 @@ if(idFormaPago=="2"){
                     <form class="form-horizontal" method="post" action="{{ route('frontend.comprobante.send')}}"
                         id="frmPesaje" autocomplete="off">
                         <input type="hidden" id="idFormaPago" name="idFormaPago" value="{{$factura->id_forma_pago}}"/>
+                        <input type="hidden" id="idtipocomprobante" name="idtipocomprobante" value="{{$factura->tipo}}"/>
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -363,6 +373,31 @@ if(idFormaPago=="2"){
                                                         <td>CAP :</td>
                                                         <td style="text-align: right;"><span class="resaltado">{{ $datos->numero_cap }}</span></td>
                                                         </tr>
+
+                                                        <tr id="trdocmodi">
+                                                        <td>Documento que modifica :</td>
+                                                        <td style="text-align: right;"><span class="resaltado"> @switch($ref_tipo)
+                                                                @case('FT')
+                                                                 FACTURA ELECTRONICA  
+                                                                @break
+
+                                                                @case('BV')
+                                                                BOLETA ELECTRONICA   
+                                                                @break
+
+                                                                    
+                                                                @default
+                                                                <p>No esta identificado el tipo de documento</p>
+                                                                @endswitch
+
+                                                                {{ $ref_comprobante}}</span></td>
+                                                        </tr>
+                                                        
+                                                        <tr id="trdocmodi2">
+                                                            <td>Motivo o sustento :</td>
+                                                            <td style="text-align: right;"><span class="resaltado">{{ $factura->motivo_ncnd }}</span></td>
+                                                        </tr>    
+
                                                         </tbody>
                                                         </table>
                                                                
