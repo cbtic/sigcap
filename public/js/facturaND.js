@@ -618,6 +618,7 @@ function obtenerTitular(){
 
 	}
 
+	/*
 	AddFila();
 	function AddFila(){
 		
@@ -709,6 +710,7 @@ function obtenerTitular(){
 		});
 		
 	}
+	*/
 
 	function obtenerRepresentante(){
 
@@ -930,4 +932,151 @@ function obtenerTitular(){
 		//$("#igvd"+fila).val(igv);       
         
     }
+
+	$('#addRow').on('click', function () {
+		AddFila();
+	});
+
+	AddFila();
+	function AddFila(){
+		
+		var newRow = "";
+		var ind = $('#tblMedioPago tbody tr').length;
+		var tabindex = 11;
+		//var nuevalperiodo = "";
+
+		//var f = new Date();
+		var f = new Date();
+		var fecha_ = f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear();
+
+	
+		var item_producto 	= "";
+		$('#idMedioPagoTemp option').each(function(){
+			item_producto += "<option value="+$(this).val()+" ru='"+$(this).attr("ru")+"'>"+$(this).html()+"</option>"	
+		});
+	
+		newRow +='<tr>';
+		newRow +='<td><select class="form-control form-control-sm idMedio" id="idMedio'+ind+'" ind="'+ind+'" tabindex="'+tabindex+'" name="idMedio[]" >'+item_producto+'</select></td>';
+		
+		newRow +='<td><input onKeyPress="return soloNumerosMenosCero(event)" type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar el monto y presionar Enter para ingresar el nro operación" name="monto[]" required="" id="monto'+ind+'" class="limpia_text  monto input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		
+		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="nroOperacion[]" required="" id="nroOperacion'+ind+'" class="limpia_text nroOperacion input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		
+		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="descripcion[]" required="" id="descripcion'+ind+'" class="limpia_text  descripcion input-sm form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+
+		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="fecha[]" required="" id="fecha'+ind+'" class="form-control form-control-sm datepicker fecha input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		
+		newRow +='<td><button type="button" class="btn btn-danger deleteFila btn-xs" style="margin-left:4px"><i class="fa fa-times"></i> Eliminar</button></td>';
+
+		newRow +='</tr>';
+		$('#tblMedioPago tbody').append(newRow);
+
+		$("#idMedio"+ind).select2({max_selected_options: 4});
+		
+	
+		$("#idMedio"+ind).on("change", function (e) {
+			var flagx = 0;
+			cmb = $(this);
+			idMedio = $("#idMedio"+ind).val();
+			
+			//id_user={{Auth::user()->id}};
+		
+			$('.idMedio').each(function(){
+				var ind_tmp = $(this).val();
+				if($(this).val() == idMedio)flagx++;
+			});
+		
+			if(flagx > 1 && idMedio!='254'){
+				//alert(idMedio);
+				//if (idMedio!='254'){
+					bootbox.alert("El Medio de Pago ya ha sido ingresado");
+					$("#idMedio"+ind).val("").trigger("change");
+					return false;				
+				//}
+			}
+			else{
+				
+				if(ind==0){
+					monto = $("#total_fac_").val();
+					//$("#monto"+ind).val(monto);
+					$("#totalMedioPago").val(monto);
+
+					if(idMedio=='91'){
+						//monto = $("#total_fac_").val();
+						monto_r = redondeoContableAFavor(Number(monto), 1);
+
+						$("#monto"+ind).val(monto_r);
+
+						if(monto!=monto_r){
+							$("#tr_total_pagar").show();
+							$("#total_pagar").val(monto_r);
+						}
+	
+
+					}else if(idMedio=='254' || idMedio=='545' || idMedio=='543'){
+
+						$("#monto"+ind).val(monto);
+
+						
+						//$("#tr_total_pagar_abono").show();
+						//$("#total_pagar_abono").val(monto);
+						
+
+					}else{
+
+						$("#monto"+ind).val(monto);
+
+						$("#total_pagar").val("0");
+						$("#total_pagar_abono").val("0");
+						$("#tr_total_pagar").hide();
+					}
+					$("#tr_total_pagar_abono").show();
+					$("#total_pagar_abono").val(monto);
+				}
+
+				$("#fecha"+ind).val(fecha_);
+
+
+
+				
+			}
+					
+		});
+		
+
+		
+		$("#monto"+ind).on("keyup", function (e) {
+			monto = $("#monto"+ind).val();
+
+			var total = 0;
+			var val_total = 0;
+			
+			$(".monto").each(function (){
+				val_total = $(this).val();
+				
+				if(val_total!="")total += Number(val_total);
+			});
+
+			//alert(total);
+
+			
+			$("#totalMedioPago").val(total);
+			$("#total_pagar_abono").val(total);
+			
+			
+			//$("#precio_peso").val(total);
+					
+		});
+		
+	}
+
+	function redondeoContableAFavor(valor, decimales = 1) {
+		// Calcular el factor de redondeo según los decimales
+		const factor = Math.pow(10, decimales);
+		// Redondear hacia abajo al múltiplo más cercano según los decimales
+		const valorRedondeado = Math.floor(valor * factor) / factor;
+		// Calcular la diferencia (redondeo)
+		//const redondeo = valor - valorRedondeado;
+		return valorRedondeado;
+	}
 

@@ -789,15 +789,12 @@ class ComprobanteController extends Controller
 
                 ///redondeo///
                 $total_pagar = $request->total_pagar;
-                if ($total_pagar!="0"){     
-                    
+                if ($total_pagar!="0"){                         
                     $total_pagar = $request->total_pagar;
                     $total_g = $request->totalF;
                     $total_redondeo = $total_pagar - $total_g;
 
                     $total = $total+$total_redondeo;
-
-
                 }
 
                 ///Abono Directo///
@@ -805,15 +802,12 @@ class ComprobanteController extends Controller
                 $total_pagar_abono = $request->total_pagar_abono;
                 $total_abono= 0;
 
-                if ($total_pagar_abono!="0"){     
-                    
+                if ($total_pagar_abono!="0"){                         
                     $total_pagar_abono = $request->total_pagar_abono;
                     $total_g = $request->totalF;
                     $total_abono= $total_pagar_abono - $total_g;
 
                     $total = $total+$total_abono;
-
-
                 }
 
 
@@ -1777,6 +1771,38 @@ class ComprobanteController extends Controller
                    $id_val = $value['id'];
 
                }
+
+                    ///redondeo///
+                    $total_pagar = $request->total_pagar;
+                    //print_r($total_pagar);
+                    //print_r('-');
+
+                    if ($total_pagar!="0"){                         
+                        $total_pagar = $request->total_pagar;
+                        $total_g = $request->totalP;
+                        $total_redondeo = $total_pagar - $total_g;
+    
+                        $total = $total+$total_redondeo;
+                    }
+
+                    
+    
+                    ///Abono Directo///
+    
+                    $total_pagar_abono = $request->total_pagar_abono;
+                    $total_abono= 0;
+
+                    //print_r($total_pagar_abono);
+    
+                    if ($total_pagar_abono!="0"){                         
+                        $total_pagar_abono = $request->total_pagar_abono;
+                        $total_g = $request->totalP;
+                        $total_abono= $total_pagar_abono - $total_g;
+    
+                        $total = $total+$total_abono;
+                    }
+
+                   // print_r($total_abono);
               
                
                $id_moneda=1;
@@ -1797,6 +1823,70 @@ class ComprobanteController extends Controller
                if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
                
                $factura_upd->save();
+
+
+
+               if ($total_pagar!="0"){
+                $total_pagar = $request->total_pagar;
+                $total_g = $request->totalP;
+                $total_redondeo = $total_pagar - $total_g;
+                $fecha_hoy = date('Y-m-d');
+
+                $items1 = array(
+                    "id" => 1081517, 
+                    "fecha" => $fecha_hoy,
+                    "denominacion" => "REDONDEO.",
+                    "descripcion" => "REDONDEO.",
+                    "monto" => round($total_redondeo,2),
+                    "moneda" => "SOLES" ,
+                    "id_moneda" => 1 ,
+                    "descuento" => 0 ,
+                    "cod_contable" => "",
+                    //"id_concepto" => 26464 ,
+                    "importe" => round($total_redondeo,2),
+                    "igv" => 0 ,
+                    //"cantidad" => 1, 
+                    "total" => round($total_redondeo,2), 
+                    "item" => 999 ,
+
+                    );
+                $tarifa[999]=$items1;
+            }
+
+            
+            
+           // print_r($request->totalP);
+            //print_r('-');
+            //print_r($request->total_pagar_abono);
+
+            if ($total_abono!="0"){
+                $total_pagar_abono = $request->total_pagar_abono;
+                $total_g = $request->totalP;
+                $total_abono = $total_pagar_abono - $total_g;
+                $fecha_hoy = date('Y-m-d');
+
+                //print_r('=');
+                //print_r($total_abono);
+
+                $items1 = array(
+                    "id" => 1081517, 
+                    "fecha" => $fecha_hoy,
+                    "denominacion" => "REDONDEO",
+                    "descripcion" => "REDONDEO",
+                    "tipoF" => "ND",
+                    "monto" => round($total_abono,2),
+                    "moneda" => "SOLES" ,
+                    "id_moneda" => 1 ,
+                    "descuento" => 0 ,
+                    "cod_contable" => "",
+                    //"id_concepto" => 26464 ,
+                    "importe" => round($total_abono,2),
+                    "igv" => 0 ,
+                    "total" => round($total_abono,2), 
+                    "item" => 999 ,
+                    );
+                $tarifa[999]=$items1;
+            }
 
                //print_r($tarifa); exit();
                foreach ($tarifa as $key => $value) {
@@ -2089,6 +2179,8 @@ class ComprobanteController extends Controller
 
     public function nd_edita(Request $request){
 
+
+
         $id_caja = $request->id_caja_;
 
         $id = $request->id_comprobante;
@@ -2096,7 +2188,9 @@ class ComprobanteController extends Controller
         //echo("-");
 
         $id_origen= $request->id_comprobante_origen_nd;
-        //echo($id_origen);
+       // echo($id_origen);
+
+       // exit();
         
         if ($id=="" ){
             $trans = "FN";
@@ -2115,30 +2209,40 @@ class ComprobanteController extends Controller
 			$id_caja = (isset($caja_usuario->id_caja))?$caja_usuario->id_caja:0;
 		}
        
-      
+        //print_r($trans); exit();
+
         if ( $trans == "FN"){
 
             $comprobante_model=new Comprobante;
             $comprobante=$comprobante_model->getComprobanteById($id_origen);
 
+            //$id_comprobante_ncnd = $comprobante->tiene_nd;
+            //$comprobante_ncnd=$comprobante_model->getComprobanteById($id_comprobante_ncnd);
+
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
             ])->get();
 
-           // print_r($facturad); exit();
+            //print_r($comprobante); exit();
         }
         else {
             $comprobante_model=new Comprobante;
             $comprobante=$comprobante_model->getComprobanteById($id);
 
+            //$id_comprobante_ncnd = $comprobante->tiene_nd;
+            //$comprobante_ncnd=$comprobante_model->getComprobanteById($id_comprobante_ncnd);
+
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
             ])->get();
         }
+
+        
+
 
         if ($comprobante->tipo=="BV"){
             $persona_model= new Comprobante;
@@ -2195,8 +2299,10 @@ class ComprobanteController extends Controller
 
         $serie = $serie_model->getMaestro('95');
 
+        $medio_pago = $tabla_model->getMaestroByTipo('19');
 
-        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','direccion','correo'));
+
+        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','direccion','correo','medio_pago'));
         
 
     }
