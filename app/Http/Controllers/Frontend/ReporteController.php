@@ -6,12 +6,15 @@ use App\Models\Reporte;
 use App\Models\CajaIngreso;
 use App\Models\Concepto;
 use App\Models\TablaMaestra;
+use App\Models\Valorizacione;
 use Carbon\Carbon;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 
 class ReporteController extends Controller
@@ -126,15 +129,13 @@ class ReporteController extends Controller
 		ini_set('display_startup_errors', 1);
 		error_reporting(E_ALL);
 		ini_set('memory_limit', '-1');
-		ini_set('max_execution_time', '600');
+		ini_set('max_execution_time', '1200');
 		
 		$reporte = Reporte::find($id);
 
 		$id_tipo= $reporte->id_tipo;
 		$funcion = $reporte->funcion;
 		$por_usuario= $reporte->por_usuario;
-
-	
 
 		if ($id_tipo == '1'){
 
@@ -288,6 +289,72 @@ class ReporteController extends Controller
 
 			}
 		}
+
+		if ($id_tipo == '3'){
+
+			$concepto = $opc1;
+			//$estado_pago = $opc2;
+
+
+			if ($funcion=='rt'){
+				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
+				$titulo = "REPORTE DE DEUDA TOTAL";
+
+				
+				//$usuario=$usuario_ingresos[0] ->usuario;
+
+				//print_r($venta);exit();
+		
+				//$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '';			
+				//$reporte_ventas = $caja_ingreso_model->getAllReporteVentas($f_inicio, $f_fin, $concepto,$estado_pago);
+				//print_r($reporte_ventas);exit();
+				//var_dump($reporte_ventas);exit();
+				//print_r($venta);exit();
+
+				$valorizacion_model = new Valorizacione;
+				$valorizacion = $valorizacion_model->getDeudaReporte($f_fin);
+		
+				$pdf = Pdf::loadView('frontend.reporte.reporte_deuda_pdf',compact('titulo','valorizacion','f_fin'));
+				$pdf->getDomPDF()->set_option("enable_php", true);
+				
+				//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+			}
+
+			if ($funcion=='rd'){
+				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
+				$titulo = "REPORTE DE DEUDA DETALLADO";
+				
+				//$usuario=$usuario_ingresos[0] ->usuario;
+
+				//print_r($venta);exit();
+		
+				//$caja_ingreso_model = new CajaIngreso();
+				//$tipo= '';			
+				//$reporte_ventas = $caja_ingreso_model->getAllReporteVentasMensual($f_inicio, $f_fin, $concepto,$estado_pago);
+				
+				//var_dump($reporte_ventas);exit();
+				//print_r($venta);exit();
+
+				$valorizacion_model = new Valorizacione;
+				$valorizacion = $valorizacion_model->getDeudaDetalladoReporte($f_fin);
+		
+				$pdf = Pdf::loadView('frontend.reporte.reporte_deuda_detallado_pdf',compact('titulo','valorizacion','f_fin'));
+				$pdf->getDomPDF()->set_option("enable_php", true);
+				
+				//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+			}
+		}
 	
 		return $pdf->stream('reporte.pdf');
 	}
@@ -296,4 +363,116 @@ class ReporteController extends Controller
 		$meses = array('','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'setiembre','octubre','noviembre','diciembre'); 
 		return $meses[$mes];
 	}
+
+	/*public function exportar_lista_deuda($fecha_fin) {
+		
+		if($fecha_fin==0)$fecha_fin = "";
+	
+		$valorizacion_model = new Valorizacione;
+		$p[]=$fecha_fin;
+        $p[]=1;
+		$p[]=1;
+		$p[]=50000;
+		$data = $valorizacion_model->listar_deuda_detallado_caja_ajax($p);
+	
+		$variable = [];
+		$n = 1;
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto","Concepto", "Periodo", "Fecha Vencimiento"));
+		
+		foreach ($data as $r) {
+			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+			array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, $r->monto, $r->descripcion,$r->periodo,$r->fecha_vencimiento));
+		}
+		
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'lista_deuda_detallado.xlsx');
+		
+    }*/
+
+	public function exportar_lista_deuda($id, $fecha_fin) {
+		
+		if($fecha_fin==0)$fecha_fin = "";
+
+		$reporte = Reporte::find($id);
+
+		$id_tipo= $reporte->id_tipo;
+		$funcion = $reporte->funcion;
+		$por_usuario= $reporte->por_usuario;
+
+		if($funcion=='rd'){
+
+			$valorizacion_model = new Valorizacione;
+			$p[]=$fecha_fin;
+			$p[]=1;
+			$p[]=1;
+			$p[]=200000;
+			$data = $valorizacion_model->listar_deuda_detallado_caja_ajax($p);
+		
+			$output='';
+			$output.="N,Numero_CAP,Apellidos_Nombres,Monto,Concepto,Periodo,Fecha_Vencimiento\n";
+			$n = 1;
+
+			foreach($data as $r){
+
+				$output.= $n++.",".$r->numero_cap.",".$r->apellidos_nombre.",". $r->monto.",".$r->descripcion.",".$r->periodo.",".$r->fecha_vencimiento."\n";
+
+			}
+			
+			return Response::make($output,200,[
+				'Content-Type' => 'text/plain',
+				'Content-Disposition' =>'attachment; filename="lista_deuda_detallado.txt"',
+			]);
+			
+		}else if($funcion=='rt'){
+
+			$valorizacion_model = new Valorizacione;
+			$p[]=$fecha_fin;
+			$p[]=1;
+			$p[]=1;
+			$p[]=20000;
+			$data = $valorizacion_model->listar_deuda_caja_ajax($p);
+		
+			$variable = [];
+			$total_monto=0;
+			$n = 1;
+			//array_push($variable, array("SISTEMA CAP"));
+			//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+			array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto Total"));
+			
+			foreach ($data as $r) {
+				//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, $r->monto_total));
+
+				$total_monto+=$r->monto_total;
+			}
+
+			array_push($variable,array('','','Total',$total_monto));
+			
+			$export = new InvoicesExport([$variable]);
+			return Excel::download($export, 'lista_deuda.xlsx');
+			
+		}
+		/*$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'lista_deuda_detallado.xlsx');*/
+		
+    }
+}
+
+class InvoicesExport implements FromArray
+{
+	protected $invoices;
+
+	public function __construct(array $invoices)
+	{
+		$this->invoices = $invoices;
+	}
+
+	public function array(): array
+	{
+		return $this->invoices;
+	}
+
 }

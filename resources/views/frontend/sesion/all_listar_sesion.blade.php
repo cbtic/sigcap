@@ -324,6 +324,7 @@
 							<th>Observaci&oacute;n</th>
 							<th>Dictamen</th>
 							<th>Editar</th>
+							<th>Eliminar</th>
                         </tr>
                         </thead>
                         <tbody>

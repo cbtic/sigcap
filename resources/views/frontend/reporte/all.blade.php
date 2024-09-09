@@ -317,7 +317,7 @@
 													</td>
 											-->
 
-
+												<?php if($row->id_tipo!=3){ ?>
 													<td class="text-left" style="vertical-align:middle">
 														<a href="javascript:void(0);"  
 																					   onclick="abrirPdfReporte('<?php echo addslashes($row->id); ?>', '<?php echo addslashes($row->por_usuario); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
@@ -325,7 +325,15 @@
 															Ver Informe
 														</a>
 													</td>
-					
+												<?php }else{ ?>
+													<td class="text-left" style="vertical-align:middle">
+														<a href="javascript:void(0);"  
+															onclick="descargarExcel('<?php echo addslashes($row->id); ?>', '<?php echo addslashes($row->por_usuario); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
+														style="font-size: 12px; text-decoration: underline; color: blue;">
+															Descargar Excel
+														</a>
+													</td>
+												<?php } ?>
 													
 												</tr>
 												

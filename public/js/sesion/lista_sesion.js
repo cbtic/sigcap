@@ -923,6 +923,22 @@ function datatablenew(){
                 "bSortable": true,
                 "aTargets": [12]
                 },
+				{
+				"mRender": function (data, type, row) {
+					
+					var btn_disabled_tipo = "";
+					if(row.tipo_sesion!="EXTRAORDINARIA")var btn_disabled_tipo = "disabled='disabled'";
+					
+					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					html += '<button '+btn_disabled_tipo+' onclick=eliminarSesion('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px"><i class="fa fa-trash"></i> Eliminar Sesi&oacute;n</button>';
+					
+					html += '</div>';
+					return html;
+				},
+				"bSortable": false,
+				"aTargets": [13],
+				//"visible": (row.tipo_sesion!="EXTRAORDINARIA")?true:false,
+				},
 
             ]
 
@@ -1309,3 +1325,27 @@ function limpiar_coordinador(){
 	
 }
 
+function eliminarSesion(id){
+
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas Eliminar la Sesion?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_sesion(id,0);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_sesion(id,estado){
+	
+    $.ajax({
+            url: "/sesion/eliminar_sesion/"+id+"/"+estado,
+            type: "GET",
+            success: function (result) {
+                datatablenew();
+            }
+    });
+}

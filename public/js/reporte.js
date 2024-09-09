@@ -25,7 +25,11 @@ $(document).ready(function () {
 		$("#div_forma_pago").show();
 		$("#div_concepto").show();
 	}
-
+	else if(tipo_reporte=="3"){
+		$("#div_fecha_fin").show();
+		$("#div_concepto").show();
+		$("#div_forma_pago").hide();
+	}
 
 	//alert(tipo_reporte);
 	
@@ -1252,6 +1256,14 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 		$opc2 = $('#id_formapago').val();
 		$opc3 = $('#id_estadopago').val();
 	}
+
+	if(tipo=='3'){
+		$opc1 = $('#id_concepto').val();
+		$fini = -1;
+		//$ffin = 0;
+		$opc2 = -1;
+		$opc3 = -1;
+	}
 	
 
 	if (por_usuario =='S'){
@@ -1283,6 +1295,18 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 		window.open(href, '_blank');		
 	}
 }
+
+function descargarExcel(id, por_usuario, tipo){
+		
+	var fecha_fin = $('#fecha_fin').val();
+	//var concepto = $('#concepto').val();
+	
+	if (fecha_fin == "")fecha_fin = 0;
+	
+	location.href = '/reporte/exportar_lista_deuda/' + id + '/' +fecha_fin;
+	
+}
+
 
 function abrirPdfReporte1(funcion, tipo) {
 
