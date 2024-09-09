@@ -392,31 +392,67 @@ class ReporteController extends Controller
 		
     }*/
 
-	public function exportar_lista_deuda($fecha_fin) {
+	public function exportar_lista_deuda($id, $fecha_fin) {
 		
 		if($fecha_fin==0)$fecha_fin = "";
-	
-		$valorizacion_model = new Valorizacione;
-		$p[]=$fecha_fin;
-        $p[]=1;
-		$p[]=1;
-		$p[]=100000;
-		$data = $valorizacion_model->listar_deuda_detallado_caja_ajax($p);
-	
-		$output='';
-		$output.="N\tNumero_CAP\tApellidos_Nombres\tMonto\tConcepto\tPeriodo\tFecha_Vencimiento\n";
-		$n = 1;
 
-		foreach($data as $r){
+		$reporte = Reporte::find($id);
 
-			$output.= $n++."\t".$r->numero_cap."\t".$r->apellidos_nombre."\t". $r->monto."\t".$r->descripcion."\t".$r->periodo."\t".$r->fecha_vencimiento."\n";
+		$id_tipo= $reporte->id_tipo;
+		$funcion = $reporte->funcion;
+		$por_usuario= $reporte->por_usuario;
 
-		}
+		if($funcion=='rd'){
+
+			$valorizacion_model = new Valorizacione;
+			$p[]=$fecha_fin;
+			$p[]=1;
+			$p[]=1;
+			$p[]=200000;
+			$data = $valorizacion_model->listar_deuda_detallado_caja_ajax($p);
 		
-		return Response::make($output,200,[
-			'Content-Type' => 'text/plain',
-			'Content-Disposition' =>'attachment; filename="lista_deuda_detallado.txt"',
-		]);
+			$output='';
+			$output.="N\tNumero_CAP\tApellidos_Nombres\tMonto\tConcepto\tPeriodo\tFecha_Vencimiento\n";
+			$n = 1;
+
+			foreach($data as $r){
+
+				$output.= $n++."\t".$r->numero_cap."\t".$r->apellidos_nombre."\t". $r->monto."\t".$r->descripcion."\t".$r->periodo."\t".$r->fecha_vencimiento."\n";
+
+			}
+			
+			return Response::make($output,200,[
+				'Content-Type' => 'text/plain',
+				'Content-Disposition' =>'attachment; filename="lista_deuda_detallado.txt"',
+			]);
+			
+		}else if($funcion=='rt'){
+
+			$valorizacion_model = new Valorizacione;
+			$p[]=$fecha_fin;
+			$p[]=1;
+			$p[]=1;
+			$p[]=50000;
+			$data = $valorizacion_model->listar_deuda_caja_ajax($p);
+		
+			$variable = [];
+			$n = 1;
+			//array_push($variable, array("SISTEMA CAP"));
+			//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+			array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto","Concepto", "Periodo", "Fecha Vencimiento"));
+			
+			foreach ($data as $r) {
+				//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, $r->monto, $r->descripcion,$r->periodo,$r->fecha_vencimiento));
+			}
+			
+			
+			$export = new InvoicesExport([$variable]);
+			return Excel::download($export, 'lista_deuda_detallado.xlsx');
+			
+		}
+	
+		
 		
 		/*$export = new InvoicesExport([$variable]);
 		return Excel::download($export, 'lista_deuda_detallado.xlsx');*/

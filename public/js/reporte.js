@@ -1296,14 +1296,14 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 	}
 }
 
-function descargarExcel(){
+function descargarExcel(id, por_usuario, tipo){
 		
 	var fecha_fin = $('#fecha_fin').val();
 	//var concepto = $('#concepto').val();
 	
 	if (fecha_fin == "")fecha_fin = 0;
 	
-	location.href = '/reporte/exportar_lista_deuda/' + fecha_fin;
+	location.href = '/reporte/exportar_lista_deuda/' + id + '/' +fecha_fin;
 	
 }
 

@@ -562,6 +562,10 @@ class Valorizacione extends Model
 		return $this->readFunctionPostgres('sp_listar_deuda_detallado_caja_paginado',$p);
     }
 
+    public function listar_deuda_caja_ajax($p){
+		return $this->readFunctionPostgres('sp_listar_deuda_caja_paginado',$p);
+    }
+
     function getExonerado($id_agremido){        
        
         $cad = "select *
