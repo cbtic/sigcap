@@ -408,7 +408,7 @@ class ReporteController extends Controller
 			$p[]=$fecha_fin;
 			$p[]=1;
 			$p[]=1;
-			$p[]=300000;
+			$p[]=250000;
 			$data = $valorizacion_model->listar_deuda_detallado_caja_ajax($p);
 		
 			$output='';
