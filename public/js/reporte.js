@@ -2,6 +2,7 @@
 $(document).ready(function () {
 	
 	$("#id_regional_bus").select2({ width: '100%' });
+	$("#id_concepto").select2({ width: '100%' });
 
 	var tipo_reporte = $('#tipo_reporte').val();
 
@@ -11,12 +12,14 @@ $(document).ready(function () {
 	$("#div_caja").hide();
 	$("#div_forma_pago").hide();
 	$("#div_concepto").hide();
+	$("#div_estado_pago").hide();
 
 	if(tipo_reporte=="1"){
 		$("#div_fecha_ini").show();
 		$("#div_fecha_fin").show();
 		$("#div_usuario").show();
 		$("#div_caja").show();
+		$("#div_estado_pago").show();
 
 	}
 	else if(tipo_reporte=="2"){
@@ -25,7 +28,11 @@ $(document).ready(function () {
 		$("#div_forma_pago").show();
 		$("#div_concepto").show();
 	}
-
+	else if(tipo_reporte=="3"){
+		$("#div_fecha_fin").show();
+		$("#div_concepto").show();
+		$("#div_forma_pago").hide();
+	}
 
 	//alert(tipo_reporte);
 	
@@ -1252,6 +1259,14 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 		$opc2 = $('#id_formapago').val();
 		$opc3 = $('#id_estadopago').val();
 	}
+
+	if(tipo=='3'){
+		$opc1 = $('#id_concepto').val();
+		$fini = -1;
+		//$ffin = 0;
+		$opc2 = -1;
+		$opc3 = -1;
+	}
 	
 
 	if (por_usuario =='S'){
@@ -1283,6 +1298,20 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 		window.open(href, '_blank');		
 	}
 }
+
+function descargarExcel(id, por_usuario, tipo){
+		
+	var fecha_fin = $('#fecha_fin').val();
+	var id_concepto = $('#id_concepto').val();
+	//var concepto = $('#concepto').val();
+	
+	if (fecha_fin == "")fecha_fin = 0;
+	if (id_concepto == "")id_concepto = 0;
+
+	location.href = '/reporte/exportar_lista_deuda/' + id + '/' +fecha_fin + '/' +id_concepto;
+	
+}
+
 
 function abrirPdfReporte1(funcion, tipo) {
 

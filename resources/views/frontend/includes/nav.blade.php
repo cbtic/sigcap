@@ -282,8 +282,9 @@
 								@can('Parametros')
 								<a href="/parametro/consulta_parametro" class="dropdown-item">Par&aacute;metros</a>
 								@endcan
-								<a href="/reporte/1" class="dropdown-item">Reportes Caja</a>
-								<a href="/reporte/2" class="dropdown-item">Reportes Ventas</a>								
+								<a href="/reporte/1" class="dropdown-item">Reportes Ventas</a>
+								<a href="/reporte/2" class="dropdown-item">Reportes Cajas</a>			
+								<a href="/reporte/3" class="dropdown-item">Reportes Deudas</a>						
 								@can('Tipo Cambio')
 								<a href="/tipo_cambio/consulta_tipo_cambio" class="dropdown-item">Tipo Cambio</a>
 								@endcan

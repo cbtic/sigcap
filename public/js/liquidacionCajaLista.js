@@ -6,6 +6,10 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
+
+	$('#btnBuscarDeuda').click(function () {
+		//fn_ListarBusqueda();
+	});
 		
 	datatablenew();
 	

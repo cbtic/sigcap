@@ -1130,5 +1130,15 @@ class SesionController extends Controller
 		echo json_encode($result);
 	
 	}
-		
+	
+	public function eliminar_sesion($id,$estado)
+    {
+		$comisionSesion = ComisionSesione::find($id);
+		$comisionSesion->estado = $estado;
+		$comisionSesion->save();
+
+		echo $comisionSesion->id;
+    }
+	
+			
 }
