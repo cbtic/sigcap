@@ -786,4 +786,4 @@ Route::get('derecho_revision/validar_proyectista_hu/{id}', [DerechoRevisionContr
 Route::get('derecho_revision/obtener_numero_revision/{id}', [DerechoRevisionController::class, 'obtener_numero_revision'])->name('derecho_revision.obtener_numero_revision');
 
 Route::get('ingreso/obtener_detalle_factura/{id}/{forma_pago}/{estado_pago}/{medio_pago}/{total}', [IngresoController::class, 'obtener_detalle_factura'])->name('ingreso.obtener_detalle_factura');
-Route::get('reporte/exportar_lista_deuda/{id}/{fecha_fin}', [ReporteController::class, 'exportar_lista_deuda'])->name('reporte.exportar_lista_deuda');
+Route::get('reporte/exportar_lista_deuda/{id}/{fecha_fin}/{id_concepto}', [ReporteController::class, 'exportar_lista_deuda'])->name('reporte.exportar_lista_deuda');

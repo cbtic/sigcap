@@ -2,6 +2,7 @@
 $(document).ready(function () {
 	
 	$("#id_regional_bus").select2({ width: '100%' });
+	$("#id_concepto").select2({ width: '100%' });
 
 	var tipo_reporte = $('#tipo_reporte').val();
 
@@ -11,12 +12,14 @@ $(document).ready(function () {
 	$("#div_caja").hide();
 	$("#div_forma_pago").hide();
 	$("#div_concepto").hide();
+	$("#div_estado_pago").hide();
 
 	if(tipo_reporte=="1"){
 		$("#div_fecha_ini").show();
 		$("#div_fecha_fin").show();
 		$("#div_usuario").show();
 		$("#div_caja").show();
+		$("#div_estado_pago").show();
 
 	}
 	else if(tipo_reporte=="2"){
@@ -1299,11 +1302,13 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 function descargarExcel(id, por_usuario, tipo){
 		
 	var fecha_fin = $('#fecha_fin').val();
+	var id_concepto = $('#id_concepto').val();
 	//var concepto = $('#concepto').val();
 	
 	if (fecha_fin == "")fecha_fin = 0;
-	
-	location.href = '/reporte/exportar_lista_deuda/' + id + '/' +fecha_fin;
+	if (id_concepto == "")id_concepto = 0;
+
+	location.href = '/reporte/exportar_lista_deuda/' + id + '/' +fecha_fin + '/' +id_concepto;
 	
 }
 

@@ -392,9 +392,10 @@ class ReporteController extends Controller
 		
     }*/
 
-	public function exportar_lista_deuda($id, $fecha_fin) {
+	public function exportar_lista_deuda($id, $fecha_fin, $id_concepto) {
 		
 		if($fecha_fin==0)$fecha_fin = "";
+		if($id_concepto==0)$id_concepto = "";
 
 		$reporte = Reporte::find($id);
 
@@ -406,6 +407,7 @@ class ReporteController extends Controller
 
 			$valorizacion_model = new Valorizacione;
 			$p[]=$fecha_fin;
+			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
 			$p[]=200000;
@@ -430,6 +432,7 @@ class ReporteController extends Controller
 
 			$valorizacion_model = new Valorizacione;
 			$p[]=$fecha_fin;
+			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
 			$p[]=20000;
