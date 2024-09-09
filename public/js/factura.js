@@ -189,10 +189,28 @@ function guardarFactura(){
 	if(email=='')msg+="Debe ingresar el Email del comprobante<br>";
 
 
-	if (id_formapago_==2)
+	//if (id_formapago_==2)
 
 
-	//alert(msg); exit();
+	//
+
+	
+	
+	var ruc_p = $('#numero_documento2').val();
+	                
+	var tipo=$('#TipoF').val();
+
+	//alert(ruc_p); exit();
+
+	if(tipo == "FT" && ruc_p==""){
+		msg+="Se Requiere el Número de RUC para generar una Factura!";	
+		
+	}
+
+	if(tipo == "BV" && ruc_p==""){
+		msg+="Se Requiere el Número de RUC o DNI para generar una Boleta!";	
+		
+	}
 
 
     if(smodulo_guia=="32"){

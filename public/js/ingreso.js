@@ -1356,10 +1356,10 @@ function enviarTipo(tipo){
 		exit();
 	}
 	var ruc_p = $('#ruc_p').val();
-	if(tipo == 1 && ruc_p==""){
-		Swal.fire("Se Requiere el Número de RUC para generar una Factura!");
-		exit();
-	}
+	//if(tipo == 1 && ruc_p==""){
+	//	Swal.fire("Se Requiere el Número de RUC para generar una Factura!");
+	//	exit();
+	//}
 
 	if(tipo == 1)$('#TipoF').val("FTFT");
 	if(tipo == 2)$('#TipoF').val("BVBV");

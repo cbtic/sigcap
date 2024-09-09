@@ -139,11 +139,11 @@ class CajaIngreso extends Model
 */
         $cad = "select situacion, tipo, tipo_, sum(total)total, count(*) cantidad 
                 from( select (case when c.estado_pago='P' then 'PENDIENTE' else 'CANCELADO'end) situacion, 
-                t.denominacion tipo, c.tipo tipo_, sum(c.total) total 
+                t.denominacion tipo, c.tipo tipo_, case when  c.tipo ='NC' and c.afecta_caja='C' then -1* sum(c.total)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else sum(c.total) end  total  
                 from comprobantes c 
                 inner join tabla_maestras t on t.abreviatura = c.tipo and t.tipo = '126' 
                 inner join tabla_maestras m on m.codigo = c.id_caja::varchar and m.tipo = '91' 
-                group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago 
+                group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago ,c.afecta_caja
                 having c.id_usuario_inserta = ".$id_usuario."
                 and TO_CHAR(c.fecha, 'dd-mm-yyyy') = '".$fecha."' 
                 and c.id_forma_pago = 1
