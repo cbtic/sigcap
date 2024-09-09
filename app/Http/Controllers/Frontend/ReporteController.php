@@ -432,28 +432,25 @@ class ReporteController extends Controller
 			$p[]=$fecha_fin;
 			$p[]=1;
 			$p[]=1;
-			$p[]=50000;
+			$p[]=15000;
 			$data = $valorizacion_model->listar_deuda_caja_ajax($p);
 		
 			$variable = [];
 			$n = 1;
 			//array_push($variable, array("SISTEMA CAP"));
 			//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
-			array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto","Concepto", "Periodo", "Fecha Vencimiento"));
+			array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto Total"));
 			
 			foreach ($data as $r) {
 				//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
-				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, $r->monto, $r->descripcion,$r->periodo,$r->fecha_vencimiento));
+				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, $r->monto_total));
 			}
 			
 			
 			$export = new InvoicesExport([$variable]);
-			return Excel::download($export, 'lista_deuda_detallado.xlsx');
+			return Excel::download($export, 'lista_deuda.xlsx');
 			
 		}
-	
-		
-		
 		/*$export = new InvoicesExport([$variable]);
 		return Excel::download($export, 'lista_deuda_detallado.xlsx');*/
 		
