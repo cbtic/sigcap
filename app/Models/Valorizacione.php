@@ -275,6 +275,7 @@ class Valorizacione extends Model
             inner join valorizaciones v on v.id_comprobante = c.id            
             left join users u  on u.id  = c.id_usuario_inserta 
             where v.id_empresa = ".$persona_id."
+            and c.tipo in ('FT', 'BV')
             order by c.fecha desc";
 
         }else{
@@ -282,15 +283,16 @@ class Valorizacione extends Model
             (select string_agg( coalesce(d.descripcion), ',' order by d.item desc)  from comprobante_detalles d  where d.id_comprobante = c.id ) descripcion,id_comprobante_ncnd ,
             (select id
              from comprobantes cc 
-             where c.id=cc.id_comprobante_ncnd and cc.tipo='NC' limit 1) as tiene_nc,
+             where cc.id_comprobante_ncnd = c.id and cc.tipo='NC' limit 1) as tiene_nc,
              (select id
              from comprobantes cn 
-             where c.id=cn.id_comprobante_ncnd and cn.tipo='ND' limit 1) as tiene_nd
+             where cn.id_comprobante_ncnd = c.id and cn.tipo='ND' limit 1) as tiene_nd
             from comprobantes c
             inner join comprobante_detalles d on d.id_comprobante = c.id
             inner join valorizaciones v on v.id_comprobante = c.id            
             left join users u  on u.id  = c.id_usuario_inserta 
             where v.id_persona = ".$persona_id."
+            and c.tipo in ('FT', 'BV')
             order by c.fecha desc";
     
         }

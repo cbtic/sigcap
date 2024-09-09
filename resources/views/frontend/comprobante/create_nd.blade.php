@@ -563,6 +563,8 @@
                                                         <?php } ?>
 
                                                         <input type="hidden" name="smodulo_guia" id="smodulo_guia" value="<?php echo $smodulo ?>" />
+                                                        <input type="hidden" name="totalMedioPago" id="totalMedioPago" value="">
+                                                        
 
                                                     </tbody>
                                                 </table>
@@ -570,6 +572,44 @@
                                             <!--table-responsive-->
                                         </div>
                                         <!--card-body-->
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong>                                            
+                                                Medios de Pago
+                                            </strong>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="table-responsive overflow-auto" style="max-height: 500px;">
+
+                                                <div style="display:none">
+                                                    <select class="form-control" id="idMedioPagoTemp" tabindex="16" style="width: 500px"> 
+                                                        <option value="">Seleccionar Medio de Pago</option>
+                                                        <?php foreach ($medio_pago as $row) : ?>
+                                                            <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+
+                                                <button type="button" id="addRow" style="margin-left:10px" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Agregar Pago(s)</button>
+
+                                                <table id="tblMedioPago" class="table table-hover table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="40%">Medio</th>
+                                                            <th width="10%">Monto</th>
+                                                            <th width="15%">Nro Operacion</th>
+                                                            <th width="25%">Descripción</th>
+                                                            <th width="10%">F.Vencimiento</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!--card-->
                                 </div>
@@ -647,10 +687,38 @@
                                                             <th> <input type="text" name="totalP" readonly id="totalP" value="<?php if ($trans == 'FN') {
                                                                                                                                 echo number_format( $comprobante->total,2);
                                                                                                                             } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                        </th>
+                                                            </th>
 
                         
                                                         </tr>
+
+                                                        <tr style="display:none" id="tr_total_pagar">
+                                                            <th></th>
+                                                            <th>Total a Pagar</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            
+                                                            <th style="padding-bottom:0px;margin-bottom:0px">
+                                                                <input type="text" readonly name="total_pagar" id="total_pagar" value="0" class="form-control form-control-sm text-right">
+                                                            </th>
+
+                                                        </tr> 
+
+                                                        <tr style="display:none" id="tr_total_pagar_abono">
+                                                            <th></th>
+                                                            <th>Total a Pagar</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            
+                                                            <th style="padding-bottom:0px;margin-bottom:0px">
+                                                                <input type="text" readonly name="total_pagar_abono" id="total_pagar_abono" value="0" class="form-control form-control-sm text-right">
+                                                            </th>
+
+                                                        </tr> 
+                                                        <input type="hidden" name="total_fac_" id="total_fac_" value="<?php if ($trans == 'FN') {
+                                                                                                                                echo number_format( $comprobante->total,2);
+                                                                                                                            } ?>">
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -659,7 +727,6 @@
                                         <!--card-body-->
                                     </div>
                                     <!--card-->
-
 
 
                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">

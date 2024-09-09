@@ -995,7 +995,7 @@
                                                         <th></th>
                                                         
                                                         <th style="padding-bottom:0px;margin-bottom:0px">
-                                                            <input type="text" readonly name="total_pagar" id="total_pagar" value="0" class="form-control form-control-sm text-right">
+                                                            <input type="text" readonly name="total_pagar" id="total_pagar" value="0" class="form-control form-control-sm text-center">
                                                         </th>
 
                                                     </tr>  
@@ -1007,7 +1007,7 @@
                                                         <th></th>
                                                         
                                                         <th style="padding-bottom:0px;margin-bottom:0px">
-                                                            <input type="text" readonly name="total_pagar_abono" id="total_pagar_abono" value="0" class="form-control form-control-sm text-right">
+                                                            <input type="text" readonly name="total_pagar_abono" id="total_pagar_abono" value="0" class="form-control form-control-sm text-center">
                                                         </th>
 
                                                     </tr> 
