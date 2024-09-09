@@ -738,19 +738,16 @@ function obtenerTitular(){
 						}
 	
 
-					}else if(idMedio=='254'){
+					}else if(idMedio=='254' || idMedio=='545' || idMedio=='543'){
+
 						$("#monto"+ind).val(monto);
 
 						
-						$("#tr_total_pagar_abono").show();
-						$("#total_pagar_abono").val(monto);
+						//$("#tr_total_pagar_abono").show();
+						//$("#total_pagar_abono").val(monto);
 						
 
-					}
-					
-					else{
-
-						
+					}else{
 
 						$("#monto"+ind).val(monto);
 
@@ -758,6 +755,8 @@ function obtenerTitular(){
 						$("#total_pagar_abono").val("0");
 						$("#tr_total_pagar").hide();
 					}
+					$("#tr_total_pagar_abono").show();
+					$("#total_pagar_abono").val(monto);
 				}
 
 				$("#fecha"+ind).val(fecha_);

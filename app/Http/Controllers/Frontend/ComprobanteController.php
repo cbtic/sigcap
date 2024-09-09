@@ -99,7 +99,7 @@ class ComprobanteController extends Controller
 
         $medio_pago = $tabla_model->getMaestroByTipo('19');
 
-
+        
         if ($trans == 'FA'){
 
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -177,7 +177,7 @@ class ComprobanteController extends Controller
                 $ind++;
             }
 
-        
+            
            // print_r($valorizad);
 
             //print_r($id_concepto_pp);exit();
@@ -260,14 +260,26 @@ class ComprobanteController extends Controller
 			//if($ubicacion=="")$ubicacion=3070;
             if ($TipoF == 'BV' || $TipoF == 'TK'){
 
-                //echo $persona;exit();
 
-                $empresa = $empresa_model->getPersonaId_BV($persona);
+                if($persona==''){
+                    $persona=-1; 
+                   // $empresa=-1;
+                   // $ubicacion=-1;
+                }
 
-				if(!$empresa){
-					//echo $ubicacion;exit();
-					$empresa = $empresa_model->getEmpresaId($ubicacion);
-				}
+
+
+                     
+
+                    $empresa = $empresa_model->getPersonaId_BV($persona);
+
+                   //echo $empresa;exit();
+
+                    if(!$empresa){
+                        //echo $ubicacion;exit();
+                        $empresa = $empresa_model->getEmpresaId($ubicacion);
+                    }
+                
 
             }
             else{
@@ -341,6 +353,10 @@ class ComprobanteController extends Controller
 
         $trans = $request->Trans;
         $id_caja=$request->id_caja;
+
+        //echo $id_caja;exit();
+
+
 
 		//if($id_caja=="")$id_caja = Session::get('id_caja');
 
@@ -804,7 +820,7 @@ class ComprobanteController extends Controller
                 //if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
                 //if ($id_concepto!= 26411 && $id_concepto!= 26412) $id_tipo_afectacion_pp=0;
 
-				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, round($total,2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
+				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona_act, round($total,2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
                 
@@ -832,6 +848,8 @@ class ComprobanteController extends Controller
                 $factura_upd->estado_pago =  $request->estado_pago;
 
                 $factura_upd->id_forma_pago =  $request->id_formapago_;
+
+                $factura_upd->tipo_operacion = $request->id_tipooperacion_;
 
 				$factura_upd->save();
 
@@ -1895,6 +1913,7 @@ class ComprobanteController extends Controller
         $p[]=$request->estado_pago;
         $p[]=$request->anulado;
         $p[]=$request->formapago;
+        $p[]=$request->total_b;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		
@@ -2999,14 +3018,16 @@ class ComprobanteController extends Controller
 
 
 
-        //echo($request->id_comprobante);
+
+       // $comprobante = Comprobante::find($request->id_comprobante);
+
+       // echo($request->id_comprobante);
         //echo($request->monto);
         //exit();
 
-        $comprobante = Comprobante::find($request->id_comprobante);
 
         //echo($comprobante->total_credito);
-
+/*
         if (isset($comprobante->total_credito)){
             $cuotaPagos = ComprobanteCuotaPago::where([
                 'id_comprobante' => $request->id_comprobante
@@ -3018,14 +3039,42 @@ class ComprobanteController extends Controller
                 $monto= $monto+$row->monto; 
 
             }
-            $comprobante->total_credito= $monto;            
+            $comprobante->total_credito= $comprobante->total_credito;            
         }else{
             $monto=$request->monto;
             $comprobante->total_credito= $monto;                
         }
+        */
+
+        $cuotaPagos = ComprobanteCuotaPago::where([
+            'id_comprobante' => $request->id_comprobante
+        ])->where('estado', '=', '1')->get();
+        $monto=0;
+
+        //echo($cuotaPagos);
+        //exit();
+
+        foreach ($cuotaPagos as $index => $row) {            
+            $monto= $monto+$row->monto; 
+        }
+
+        //echo($monto);
+
+        //$comprobante->total_credito= $comprobante->total_credito; 
+
+
         
+        $comprobante = Comprobante::find($request->id_comprobante);
+        $comprobante->total_credito= $monto; 
         $comprobante->save(); 
-        
+
+        $comprobante1 = Comprobante::find($request->id_comprobante);
+        $retante = $comprobante1->total - $monto;
+        if ($retante<= 0){
+            $comprobante1->estado_pago= "C";
+            $comprobante1->save(); 
+        }
+
         echo $monto;
 		
     }

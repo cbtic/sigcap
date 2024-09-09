@@ -382,7 +382,7 @@ function fn_save(){
 	if(id_medio==""){msg+="Seleccione el medio de pago <br>";}
 	if(monto==""){msg+="Ingrese el monto <br>";}
 	if(monto<1){msg+="El monto es mayor que Cero <br>";}
-	if(nro_operacion==""){msg+="Ingrese el número de operación <br>";}
+	//if(nro_operacion==""){msg+="Ingrese el número de operación <br>";}
 	if(fecha==""){msg+="Ingrese la fecha del pago <br>";}
 
 

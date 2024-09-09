@@ -150,7 +150,8 @@ class CajaIngreso extends Model
                 )  as reporte
                 group by situacion, tipo_,tipo";
 
-		//echo $cad;
+	    //echo($cad);
+
         $data = DB::select($cad);
         return $data;
     }
@@ -158,18 +159,18 @@ class CajaIngreso extends Model
     function getCajaCondicionPago($id_usuario, $fecha){
 
         $cad = "           
-        select condicion, tipo, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
+        select condicion,  sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
          from(
-             select t.denominacion condicion, c.tipo, 0 total_us, 0/3.7 total_tc, cp.monto total_soles
+             select t.denominacion condicion,  0 total_us, 0/3.7 total_tc, cp.monto total_soles
              from comprobantes c                                
                  inner join comprobante_pagos cp on cp.id_comprobante = c.id
                  inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
-             --group by t.denominacion,cp.monto, c.id_usuario_inserta, c.fecha
+            
              where  c.id_usuario_inserta = ".$id_usuario."
              and TO_CHAR(c.fecha, 'dd-mm-yyyy')  = '".$fecha."'
              and c.id_forma_pago = 1
-         )
-       group by condicion, tipo
+         ) as consulta
+       group by condicion
         ";
 
 		//echo $cad;
@@ -231,12 +232,15 @@ class CajaIngreso extends Model
         return $data;
     }
 
-    function getAllReporteVentas( $f_inicio, $f_fin, $id_concepto, $estado_pago){
+    function getAllReporteVentas( $f_inicio, $f_fin, $id_concepto, $forma_pago,$estado_pago){
 
         $concepto_sel = "";
+        $forma_pago_sel="";
         $estado_pago_sel = "";
 
+
         if ($id_concepto!="-1") $concepto_sel = " and cd.id_concepto  = ".$id_concepto; 
+        if ($forma_pago!="-1") $forma_pago_sel = " and c.id_forma_pago  = '". $forma_pago . "' "; 
         if ($estado_pago!="-1") $estado_pago_sel = " and c.estado_pago  = '". $estado_pago . "' "; 
 
         $cad = "
@@ -246,7 +250,7 @@ class CajaIngreso extends Model
                         from comprobantes c inner join comprobante_detalles cd on c.id=cd.id_comprobante 
                         inner join conceptos c2 on cd.id_concepto=c2.id 
                        where 1=1 "
-                      .  $concepto_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' ) 
+                      .  $concepto_sel . $estado_pago_sel.  $forma_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' ) 
                       as reporte group by fecha,tipo, serie,numero, cod_tributario, destinatario, cantidad, descripcion, importe ,id_concepto, concepto
                       order by id_concepto, fecha";
 
@@ -256,21 +260,22 @@ class CajaIngreso extends Model
         return $data;
     }
 
-    function getAllReporteVentasMensual( $f_inicio, $f_fin, $id_concepto, $estado_pago){
+    function getAllReporteVentasMensual( $f_inicio, $f_fin, $id_concepto, $forma_pago,$estado_pago){
 
         $concepto_sel = "";
+        $forma_pago_sel="";
         $estado_pago_sel = "";
 
-        if ($id_concepto!="-1") $concepto_sel = " and cd.id_concepto  = ".$id_concepto; 
 
-        
-        if ($estado_pago!="-1") $estado_pago_sel = " and c.id_forma_pago  = '". $estado_pago . "' "; 
+        if ($id_concepto!="-1") $concepto_sel = " and cd.id_concepto  = ".$id_concepto; 
+        if ($forma_pago!="-1") $forma_pago_sel = " and c.id_forma_pago  = '". $forma_pago . "' "; 
+        if ($estado_pago!="-1") $estado_pago_sel = " and c.estado_pago  = '". $estado_pago . "' "; 
       
         $cad = "
                         select fecha,c.tipo, c.serie,c.numero, cod_tributario, destinatario,subtotal ,impuesto ,total , case when id_forma_pago=1 then 'CONTADO' else 'CREDITO' end as forma_pago, case when estado_pago='P' then 'PENDIENTE' else 'CANCELADO' end as estado_pago 
                         from comprobantes c
                        where 1=1 "
-                      .  $concepto_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin." '  
+                      .  $forma_pago_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin." '  
                       
                       order by  fecha";
 

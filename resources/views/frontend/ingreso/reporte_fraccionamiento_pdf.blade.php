@@ -149,7 +149,7 @@
 				<tr>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($item)?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($r->descripcion)?></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->monto?></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo  number_format($r->monto, 2, '.', ',');?></td>
 				</tr>
 				<?php
 				} 
@@ -205,13 +205,19 @@
                 $total_monto_f = 0;
 				foreach($cronograma_fraccionamiento as $key=>$f){
                 $total_monto_f += $f->monto;
+
+                $fecha_texto = $f->fecha;
+                // Convertir el texto en un objeto DateTime
+                $fecha = new DateTime($fecha_texto);
+                // Formatear la fecha en el formato deseado (por ejemplo, d-m-Y)
+                $fecha_formateada = $fecha->format("d/m/Y");
                 
 				?>
 				<tr>
 
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($f->descripcion)?></td>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $f->fecha?></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $f->monto?></td>
+                    <td class="td_center" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $fecha_formateada ?></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($f->monto, 2, '.', ',');?></td>
 				</tr>
 				<?php
 				} 

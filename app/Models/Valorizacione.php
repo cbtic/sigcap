@@ -82,7 +82,7 @@ class Valorizacione extends Model
         }
 
 
-        //echo $cad;
+       // echo $cad;
 
 		$data = DB::select($cad);
         return $data;
@@ -558,6 +558,10 @@ class Valorizacione extends Model
 		return $this->readFunctionPostgres('sp_listar_deudas_seguro_paginado',$p);
     }
 
+    public function listar_deuda_detallado_caja_ajax($p){
+		return $this->readFunctionPostgres('sp_listar_deuda_detallado_caja_paginado',$p);
+    }
+
     function getExonerado($id_agremido){        
        
         $cad = "select *
@@ -586,7 +590,7 @@ class Valorizacione extends Model
         return $data;
     }
 
-    function getDeudaReporte($f_fin){        
+    function getDeudaDetalladoReporte($f_fin){        
        
         $cad = "select v.id, a.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' ' || p.nombres apellidos_nombre, v.monto, c.denominacion concepto, v.descripcion , EXTRACT(YEAR FROM v.fecha) periodo , v.fecha fecha_vencimiento 
         from valorizaciones v 
@@ -597,7 +601,30 @@ class Valorizacione extends Model
         and v.pagado ='0'
         and v.fecha <= '".$f_fin."'
         and v.id_modulo in (2,3,4,6)
-        order by apellidos_nombre, concepto";
+        order by apellidos_nombre, concepto
+        limit 1000";
+        
+      //  echo $cad;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getDeudaReporte($f_fin){        
+       
+        $cad = "select a.numero_cap, p.apellido_paterno || ' ' || p.apellido_materno || ' ' || p.nombres AS apellidos_nombre, SUM(v.monto) AS monto_total
+        from valorizaciones v 
+        inner JOIN conceptos c ON v.id_concepto = c.id 
+        inner JOIN agremiados a ON v.id_agremido = a.id 
+        inner JOIN personas p ON a.id_persona = p.id
+        where v.estado = '1'
+        and v.pagado = '0'
+        and v.fecha <= '".$f_fin."'
+        and v.id_modulo IN (2, 3, 4, 6)
+        and a.id_regional = 5
+        group by a.numero_cap, apellidos_nombre
+        order by apellidos_nombre
+        limit 1000";
         
       //  echo $cad;
 

@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION public.sp_listar_comision_delegado_paginado(p_id_periodo_comisiones character varying, p_id_tipo_agrupacion character varying, p_tipo_comision character varying, p_comision character varying,p_numero_cap character varying, p_delegado character varying, p_coordinador character varying, p_id_situacion character varying, p_puesto character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_comision_delegado_paginado(p_id_periodo_comisiones character varying, p_id_tipo_agrupacion character varying, p_tipo_comision character varying, p_comision character varying, p_numero_cap character varying, p_delegado character varying, p_coordinador character varying, p_id_situacion character varying, p_puesto character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -32,7 +32,7 @@ left join tabla_maestras tm2 on a.id_situacion = tm2.codigo::int And tm2.tipo ='
 left join tabla_maestras tm3 on cd.id_puesto::int = tm3.codigo::int And tm3.tipo =''94''
 left join tabla_maestras tm4 on c.id_tipo_comision::varchar = tm4.codigo::varchar And tm4.tipo =''102'' ';
 	
-	v_where = ' Where 1=1 and cd.estado=''1'' ';
+	v_where = ' Where 1=1 and cd.estado=''1'' and mi.estado =''1''';
 	
 	If p_id_periodo_comisiones<>'0' Then
 	 v_where:=v_where||'And mi.id_periodo_comision = '''||p_id_periodo_comisiones||''' ';
@@ -70,13 +70,18 @@ left join tabla_maestras tm4 on c.id_tipo_comision::varchar = tm4.codigo::varcha
 	 v_where:=v_where||'And cd.coordinador = '''||p_coordinador||''' ';
 	End If;
 
+	If p_estado<>'' Then
+	 v_where:=v_where||'And c.estado = '''||p_estado||''' ';
+	End If;
+
+
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
 	If v_count::Integer > p_limit::Integer then
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By c.denominacion asc, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By c.denominacion asc,tm.denominacion asc,tm4.denominacion asc,c.comision asc, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres asc LIMIT '||p_limit||' OFFSET '||p_pagina||';'; 
 	else
-		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By c.denominacion asc, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres asc ;'; 
+		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By c.denominacion asc,tm.denominacion asc,tm4.denominacion asc,c.comision asc, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres asc ;'; 
 	End If;
 	
 	--Raise Notice '%',v_scad;

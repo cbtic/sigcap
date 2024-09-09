@@ -306,7 +306,7 @@ class Comprobante extends Model
         return $data;
     }
 
-    function getFacturaByCajaFiltro($id_caja,$fecha_inicio,$fecha_fin, $forma_pago, $estado_pago, $medio_pago){
+    function getFacturaByCajaFiltro($id_caja,$fecha_inicio,$fecha_fin, $forma_pago, $estado_pago, $medio_pago, $total){
         
         $forma_pago_="";
 
@@ -314,9 +314,13 @@ class Comprobante extends Model
 
         $medio_pago_="";
 
+        $total_="";
+
         if ($forma_pago!="") $forma_pago_ = " and f.id_forma_pago = ".$forma_pago." "; 
 
-        if ($estado_pago!="") $estado_pago_ = " and f.estado_pago = '".$estado_pago."' "; 
+        if ($estado_pago!="") $estado_pago_ = " and f.estado_pago = '".$estado_pago."' ";
+        
+        if ($total!="") $total_ = " and f.total = '".$total."' ";
 
         if ($medio_pago!="") $medio_pago_ = " and EXISTS (
         SELECT 1
@@ -356,10 +360,13 @@ class Comprobante extends Model
         ".$forma_pago_."
         ".$estado_pago_."
         ".$medio_pago_."
+        ".$total_."
         Order By f.fecha Desc";
+
+        //echo $cad; exit();
         
         $data = DB::select($cad);
-        return $data;
+        return $data;        
     }
 
 	

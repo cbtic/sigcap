@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_concurso_resultado_agremiado_paginado(p_periodo character varying,p_id_tipo_concurso character varying,p_id_sub_tipo_concurso character varying,p_id_puesto character varying,p_id_concurso character varying, p_numero_documento character varying, p_id_agremiado character varying, p_agremiado character varying, p_numero_cap character varying, p_id_regional character varying, p_id_situacion character varying, p_id_estado character varying, p_campo character varying, p_orden character varying, p_flag_concurso character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_concurso_resultado_agremiado_paginado(p_periodo character varying, p_id_tipo_concurso character varying, p_id_sub_tipo_concurso character varying, p_id_puesto character varying, p_id_concurso character varying, p_numero_documento character varying, p_id_agremiado character varying, p_agremiado character varying, p_numero_cap character varying, p_id_regional character varying, p_id_situacion character varying, p_id_estado character varying, p_campo character varying, p_orden character varying, p_flag_concurso character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -113,10 +113,11 @@ And t1.estado=''1'' ';
 		v_scad:='SELECT '||v_campos||v_col_count||v_tabla||v_where||' Order By '||p_campo||' '||p_orden||' ;'; 
 	End If;
 	
-	--Raise Notice '%',v_scad;
+	Raise Notice '%',v_scad;
 	Open p_ref For Execute(v_scad);
 	Return p_ref;
 End
 
 $function$
 ;
+

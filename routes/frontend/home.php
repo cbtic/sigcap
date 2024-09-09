@@ -409,7 +409,7 @@ Route::get('movilidad/editar_movilidad/{id}', [MovilidadController::class, 'edit
 Route::get('movilidad/modal_movilidad_nuevoMovilidad/{id}', [MovilidadController::class, 'modal_movilidad_nuevoMovilidad'])->name('movilidad.modal_movilidad_nuevoMovilidad');
 Route::post('movilidad/send_movilidad_nuevoMovilidad', [MovilidadController::class, 'send_movilidad_nuevoMovilidad'])->name('movilidad.send_movilidad_nuevoMovilidad');
 Route::get('comprobante/consultar', [ComprobanteController::class, 'consultar'])->name('comprobante.consultar');
-Route::post('comprobante/listar_comprobante', [ComprobanteController::class, 'listar_comprobante'])->name('comprobante.listar_comprobante');
+//Route::post('comprobante/listar_comprobante', [ComprobanteController::class, 'listar_comprobante'])->name('comprobante.listar_comprobante');
 //Route::get('certificado/certificado_pdf/{id}', [CertificadoController::class, 'certificado_pdf'])->name('certificado.certificado_pdf');
 Route::get('movilidad/eliminar_movilidad/{id}/{estado}', [MovilidadController::class, 'eliminar_movilidad'])->name('movilidad.eliminar_movilidad');
 
@@ -454,6 +454,8 @@ Route::get('sesion/ver_calendario_sesion_coordinador_zonal_pdf/{id_periodo}/{ani
 Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eliminar_computo_sesion'])->name('sesion.eliminar_computo_sesion');
 Route::get('sesion/eliminar_comision_sesion_delegados/{id}', [SesionController::class, 'eliminar_comision_sesion_delegados'])->name('sesion.eliminar_comision_sesion_delegados');
 Route::get('sesion/obtener_delegados/{id}', [SesionController::class, 'obtener_delegados'])->name('sesion.obtener_delegados');
+
+Route::get('sesion/eliminar_sesion/{id}/{estado}', [SesionController::class, 'eliminar_sesion'])->name('sesion.eliminar_sesion');
 
 Route::get('profesion/consulta_profesion', [ProfesionController::class, 'consulta_profesion'])->name('profesion.consulta_profesion');
 Route::post('profesion/listar_profesion_ajax', [ProfesionController::class, 'listar_profesion_ajax'])->name('profesion.listar_profesion_ajax');
@@ -766,7 +768,7 @@ Route::post('tipo_cambio/send_tipo_cambio_nuevoTipoCambio', [TipoCambioControlle
 //Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');}
 Route::get('reporte/{tipo}', [ReporteController::class, 'index'])->name('reporte');
 Route::get('reporte/listar_reporte_usuario', [ReporteController::class, 'listar_reporte_usuario'])->name('reporte.listar_reporte_usuario');
-Route::get('reporte/rep_pdf/{id}/{fini}/{ffin}/{opc1}/{opc2}', [ReporteController::class, 'rep_pdf'])->name('reporte.rep_pdf');
+Route::get('reporte/rep_pdf/{id}/{fini}/{ffin}/{opc1}/{opc2}/{opc3}', [ReporteController::class, 'rep_pdf'])->name('reporte.rep_pdf');
 Route::get('reporte/obtener_caja_usuario/{idUsuario}', [ReporteController::class, 'obtener_caja_usuario'])->name('reporte.obtener_caja_usuario');
 
 Route::get('derecho_revision/correo_credipago/{id}', [DerechoRevisionController::class, 'correo_credipago'])->name('derecho_revision.correo_credipago');
@@ -783,4 +785,5 @@ Route::get('derecho_revision/valida_credipago_unico/{id_solicitud}', [DerechoRev
 Route::get('derecho_revision/validar_proyectista_hu/{id}', [DerechoRevisionController::class, 'validar_proyectista_hu'])->name('derecho_revision.validar_proyectista_hu');
 Route::get('derecho_revision/obtener_numero_revision/{id}', [DerechoRevisionController::class, 'obtener_numero_revision'])->name('derecho_revision.obtener_numero_revision');
 
-Route::get('ingreso/obtener_detalle_factura/{id}/{forma_pago}/{estado_pago}/{medio_pago}', [IngresoController::class, 'obtener_detalle_factura'])->name('ingreso.obtener_detalle_factura');
+Route::get('ingreso/obtener_detalle_factura/{id}/{forma_pago}/{estado_pago}/{medio_pago}/{total}', [IngresoController::class, 'obtener_detalle_factura'])->name('ingreso.obtener_detalle_factura');
+Route::get('reporte/exportar_lista_deuda/{fecha_fin}', [ReporteController::class, 'exportar_lista_deuda'])->name('reporte.exportar_lista_deuda');

@@ -384,10 +384,11 @@ function calcular_total(obj){
 //		var cboMes_b = $('#cboMes_b').val();
 
 
-
+//alert(tipo_documento);
 		if(tipo_documento == "79"){//RUC
 			
-			$("#btnBoleta").prop('disabled', true);
+			
+			$("#btnBoleta").prop('disabled', false);
 			$("#btnFactura").prop('disabled', false);
 /*
 			if(cboPeriodo_b!="" || cboMes_b!=""){
@@ -395,13 +396,12 @@ function calcular_total(obj){
 				$("#btnFactura").prop('disabled', true);
 			}
 */
-		}else
-		{
-			$("#btnBoleta").prop('disabled', false);
-			
-			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
+		}else {
 
+			$("#btnBoleta").prop('disabled', false);			
+			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
 			$("#btnFactura").prop('disabled', false);
+			//$("#btnBoleta").prop('disabled', true);
 
 /*
 			if(cboPeriodo_b!="" || cboMes_b!=""){
@@ -551,7 +551,7 @@ function calcular_total_otros(obj){
 
 		if(tipo_documento == "79"){//RUC
 			
-			$("#btnBoleta").prop('disabled', true);
+			$("#btnBoleta").prop('disabled', false);
 			$("#btnFactura").prop('disabled', false);
 		}else
 		{
@@ -818,7 +818,7 @@ function obtenerBeneficiario(){
 	$('#foto').attr('src','/img/profile-icon.png');
 
 	$('#btnOtroConcepto').attr("disabled",true);
-	$('#btnBeneficiario').attr("disabled",true);
+	//$('#btnBeneficiario').attr("disabled",true);
 
 	$("#btnFracciona").prop('disabled', true);
 	$("#btnBoleta").prop('disabled', true);
@@ -922,7 +922,7 @@ function obtenerBeneficiario(){
 
 
 					$('#btnOtroConcepto').attr("disabled", false);
-					$('#btnBeneficiario').attr("disabled",false);
+					//$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
 					$('#btnAnulaVal').attr("disabled", false);
@@ -949,7 +949,7 @@ function obtenerBeneficiario(){
 					$('#id_tipo_documento').val(tipo_documento);
 					
 					$('#btnOtroConcepto').attr("disabled", false);
-					$('#btnBeneficiario').attr("disabled",false);
+					//$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
 					$('#btnAnulaVal').attr("disabled", false);
@@ -973,7 +973,7 @@ function obtenerBeneficiario(){
 					$('#numero_documento_').val(numero_documento);
 					$('#id_tipo_documento_').val(tipo_documento);
 					$('#btnOtroConcepto').attr("disabled", false);
-					$('#btnBeneficiario').attr("disabled",false);
+					//$('#btnBeneficiario').attr("disabled",false);
 					$('#btnDescuento').attr("disabled", false);
 					$('#btnFracciona').attr("disabled", false);
 					$('#btnAnulaVal').attr("disabled", false);
@@ -1355,7 +1355,11 @@ function enviarTipo(tipo){
 		Swal.fire("Cuentas Exoneradas!");
 		exit();
 	}
-	
+	var ruc_p = $('#ruc_p').val();
+	if(tipo == 1 && ruc_p==""){
+		Swal.fire("Se Requiere el Número de RUC para generar una Factura!");
+		exit();
+	}
 
 	if(tipo == 1)$('#TipoF').val("FTFT");
 	if(tipo == 2)$('#TipoF').val("BVBV");
@@ -1364,6 +1368,10 @@ function enviarTipo(tipo){
 	if(tipo == 5)$('#NCBV').val("NCBV"); //'Nueva Nota Crédito Boleta de Venta'
 	if(tipo == 6)$('#NDFT').val("NDFT"); //'Nueva Nota Dévito Factura'
 	if(tipo == 7)$('#NDBV').val("NDBV"); //'Nueva Nota Dévito Boleta de Venta'
+
+	
+
+
 
 /*
 	$('#DescuentoPP').val("N");
@@ -2131,7 +2139,7 @@ function AplicarDescuento(){
 
 			if(tipo_documento == "79"){//RUC
 				
-				$("#btnBoleta").prop('disabled', true);
+				$("#btnBoleta").prop('disabled', false);
 				$("#btnFactura").prop('disabled', false);
 			}else
 			{
@@ -2236,7 +2244,7 @@ function select_all(){
 
 		if (tipo_documento == "79") {//RUC
 
-			$("#btnBoleta").prop('disabled', true);
+			$("#btnBoleta").prop('disabled', false);
 			$("#btnFactura").prop('disabled', false);
 		} else {
 			$("#btnBoleta").prop('disabled', false);

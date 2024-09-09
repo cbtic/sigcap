@@ -219,6 +219,12 @@
                                     </select>
                                 </div>
 
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="form-control-sm">Total</label>
+                                        <input type="text" name="total_b" id="total_b" value="" oninput="validarDecimal(this)" placeholder="" class="form-control form-control-sm">
+                                    </div>
+                                </div>
  
 
                                 <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12" style="padding-top:30px">
@@ -330,3 +336,16 @@
 
                     <script src="{{ asset('js/FacturaLista.js') }}"></script>
                     @endpush
+
+<script>
+    function validarDecimal(input) {
+        // Expresión regular para permitir solo números y un punto decimal
+        var regex = /^[0-9]*\.?[0-9]*$/;
+        
+        // Verificar si el valor ingresado coincide con la expresión regular
+        if (!regex.test(input.value)) {
+            // Si no coincide, eliminar el último carácter ingresado
+            input.value = input.value.slice(0, -1);
+        }
+    }
+</script>
