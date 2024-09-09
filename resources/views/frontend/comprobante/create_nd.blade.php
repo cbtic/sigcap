@@ -593,7 +593,7 @@
                                                     </select>
                                                 </div>
 
-                                                <button type="button" id="addRow" style="margin-left:10px" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Agregar Pago(s)</button>
+                                                <button type="button" id="addRow1" style="margin-left:10px" class="btn btn-info btn-xs"><i class="fa fa-plus"></i> Agregar Pago(s)</button>
 
                                                 <table id="tblMedioPago" class="table table-hover table-sm">
                                                     <thead>
