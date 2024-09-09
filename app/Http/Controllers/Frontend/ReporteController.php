@@ -408,7 +408,7 @@ class ReporteController extends Controller
 			$p[]=$fecha_fin;
 			$p[]=1;
 			$p[]=1;
-			$p[]=200000;
+			$p[]=400000;
 			$data = $valorizacion_model->listar_deuda_detallado_caja_ajax($p);
 		
 			$output='';
@@ -432,7 +432,7 @@ class ReporteController extends Controller
 			$p[]=$fecha_fin;
 			$p[]=1;
 			$p[]=1;
-			$p[]=15000;
+			$p[]=20000;
 			$data = $valorizacion_model->listar_deuda_caja_ajax($p);
 		
 			$variable = [];
@@ -445,7 +445,6 @@ class ReporteController extends Controller
 				//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
 				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, $r->monto_total));
 			}
-			
 			
 			$export = new InvoicesExport([$variable]);
 			return Excel::download($export, 'lista_deuda.xlsx');
