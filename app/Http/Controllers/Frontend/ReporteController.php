@@ -408,16 +408,16 @@ class ReporteController extends Controller
 			$p[]=$fecha_fin;
 			$p[]=1;
 			$p[]=1;
-			$p[]=250000;
+			$p[]=200000;
 			$data = $valorizacion_model->listar_deuda_detallado_caja_ajax($p);
 		
 			$output='';
-			$output.="N\tNumero_CAP\tApellidos_Nombres\tMonto\tConcepto\tPeriodo\tFecha_Vencimiento\n";
+			$output.="N,Numero_CAP,Apellidos_Nombres,Monto,Concepto,Periodo,Fecha_Vencimiento\n";
 			$n = 1;
 
 			foreach($data as $r){
 
-				$output.= $n++."\t".$r->numero_cap."\t".$r->apellidos_nombre."\t". $r->monto."\t".$r->descripcion."\t".$r->periodo."\t".$r->fecha_vencimiento."\n";
+				$output.= $n++.",".$r->numero_cap.",".$r->apellidos_nombre.",". $r->monto.",".$r->descripcion.",".$r->periodo.",".$r->fecha_vencimiento."\n";
 
 			}
 			
@@ -436,6 +436,7 @@ class ReporteController extends Controller
 			$data = $valorizacion_model->listar_deuda_caja_ajax($p);
 		
 			$variable = [];
+			$total_monto=0;
 			$n = 1;
 			//array_push($variable, array("SISTEMA CAP"));
 			//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
@@ -444,7 +445,11 @@ class ReporteController extends Controller
 			foreach ($data as $r) {
 				//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
 				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, $r->monto_total));
+
+				$total_monto+=$r->monto_total;
 			}
+
+			array_push($variable,array('','','Total',$total_monto));
 			
 			$export = new InvoicesExport([$variable]);
 			return Excel::download($export, 'lista_deuda.xlsx');
