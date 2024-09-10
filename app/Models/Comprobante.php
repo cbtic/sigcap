@@ -162,8 +162,8 @@ class Comprobante extends Model
         if ( empty($data)){
             $cad = "select distinct u.name as usuario,a.numero_cap,a.id_persona  
                     from comprobantes c
-                    inner join personas p on c.cod_tributario =p.numero_ruc 
-                    inner join agremiados a on a.id_persona = p.id  
+                    left join personas p on c.cod_tributario =p.numero_ruc 
+                    left join agremiados a on a.id_persona = p.id  
                     inner join users u on c.id_usuario_inserta =u.id 
                     where c.id='". $id . "'" ;
 

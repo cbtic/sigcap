@@ -243,6 +243,7 @@
                         <input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 
                         <input type="hidden" name="trans" id="trans" value="<?php echo $trans; ?>">
+                        <input type="hidden" name="_afecta" id="_afecta" value="<?php echo $afectacion; ?>">
                         <input type="hidden" name="tipoF" value="ND">
                         <input type="hidden" name="vestab" value="1">
                         <input type="hidden" name="totalF" value="<?php if ($trans == 'FA') {
@@ -532,7 +533,7 @@
                                                                   <!--  <td class="text-right"></td>
                                                                                             -->
                                                                     <td>
-                                                                    <input type="text" name="imported[]"  id="imported<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>)" value="<?php if ($trans == 'FN') {
+                                                                    <input type="text" name="imported[]"  id="imported<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>,<?php echo $afectacion?>)" value="<?php if ($trans == 'FN') {
                                                                                                                             echo number_format($fac['pu'], 2);
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
@@ -547,7 +548,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                    <input type="text" name="totald[]"  id="totald<?php echo $key?>" onkeyup="calcular_total_2(<?php echo $key?>)" value="<?php if ($trans == 'FN') {
+                                                                    <input type="text" name="totald[]"  id="totald<?php echo $key?>" onkeyup="calcular_total_2(<?php echo $key?>,<?php echo $afectacion?>)" value="<?php if ($trans == 'FN') {
                                                                                                                             echo 0;
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
