@@ -188,16 +188,17 @@ class CajaIngreso extends Model
         		select situacion, tipo, tipo_, sum(total)total, count(*) cantidad 
                 from( 
                     select (case when c.estado_pago='P' then 'PENDIENTE' else 'CANCELADO'end) situacion, 
-                    t.denominacion tipo, c.tipo tipo_, sum(c.total) total 
+                    t.denominacion tipo, c.tipo tipo_, case when  c.tipo ='NC' and c.afecta_caja='C' then -1* sum(c.total)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else sum(c.total) end total 
                     from comprobantes c 
                         inner join tabla_maestras t on t.abreviatura = c.tipo and t.tipo = '126' 
                         inner join tabla_maestras m on m.codigo = c.id_caja::varchar and m.tipo = '91' 
-                    group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago, c.anulado,c.id_caja 
+                    group by c.estado_pago, t.denominacion, c.id_usuario_inserta, c.fecha, c.tipo, c.id_forma_pago, c.anulado,c.id_caja,afecta_caja 
                     having  1=1
                     ".$usuario_sel."
                     and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                     and c.id_forma_pago = 1
                     and c.anulado = 'N'
+
                 ) as reporte
                 group by situacion, tipo_,tipo";
 
@@ -293,7 +294,7 @@ class CajaIngreso extends Model
         $cad = "
             select denominacion, sum(importe) importe
             from(
-                select co.denominacion, cd.importe
+                select co.denominacion, case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.importe)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.importe end importe
                 from comprobantes c                                
                     inner join comprobante_detalles cd on cd.id_comprobante = c.id
                     inner join conceptos co  on co.id  = cd.id_concepto    
@@ -353,6 +354,55 @@ class CajaIngreso extends Model
     
         ";
 
+		//echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getAllComprobantencnd($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
+
+        $usuario_sel = "";
+        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+
+        $cad = "
+                    select tm.denominacion tipo_documento, c.serie ||'-'|| c.numero::varchar(20) numero, c.destinatario,  0 us , case when afecta_caja ='C' then -1* c.total 
+              																											    when afecta_caja ='D' then - c.total
+              																											    else c.total end  
+                    from comprobantes c inner join tabla_maestras tm on c.tipo =tm.abreviatura  and tm.tipo='126'
+                    where 1=1 
+                    ".$usuario_sel."
+                    and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'
+                    and (c.tipo ='NC' or c.tipo ='ND') and afecta_caja='C' 
+                    order by tm.denominacion,c.id  ;
+
+        ";
+
+		//echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getAllIngressComp($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
+
+        $usuario_sel = "";
+        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+
+        $cad = "
+                    select cp.fecha, c.tipo || '-' || c.serie || '-' || c.numero || '-' || c.destinatario || '-' || m.denominacion || '- S/ ' || cp.monto  || case when cp.nro_operacion<>'' then   '-Nro Oper. ' ||  cp.nro_operacion else '' end     comprobante ,0 usd, cp.monto importe
+                    from comprobantes c 
+                        inner join comprobante_cuota_pagos cp on c.id =cp.id_comprobante
+                        
+                        inner join tabla_maestras m on m.codigo = cp.id_medio::varchar and m.tipo = '19'
+                    where 1=1 
+                            ".$usuario_sel."
+                            and to_char(cp.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                            and c.id_forma_pago = '2'
+                            and cp.monto >0
+                            and to_char(c.fecha, 'yyyy-mm-dd')<'".$f_fin."'
+                            and c.anulado = 'N'
+                    
+        ";
+        
 		//echo $cad; exit();
         $data = DB::select($cad);
         return $data;

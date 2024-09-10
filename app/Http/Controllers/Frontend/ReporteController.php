@@ -180,9 +180,13 @@ class ReporteController extends Controller
 				$comprobante_conteo=$caja_ingreso_model->getAllComprobanteConteo($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
 				//$tipo= '';
 				$comprobante_lista=$caja_ingreso_model->getAllComprobanteLista($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
+
+				$comprobante_ncnd=$caja_ingreso_model->getAllComprobantencnd($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
+
+				$ingresos_complementarios=$caja_ingreso_model->getAllIngressComp($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
 		
 		
-				$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio','comprobante_conteo','comprobante_lista','usuario'));
+				$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio','comprobante_conteo','comprobante_lista','usuario','comprobante_ncnd','ingresos_complementarios'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
 				//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
