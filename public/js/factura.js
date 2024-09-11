@@ -200,7 +200,7 @@ function guardarFactura(){
 	                
 	var tipo=$('#TipoF').val();
 
-	alert(ruc_p); exit();
+	//alert(ruc_p); exit();
 
 	if(tipo == "FT" && ruc_p=="" && ruc_e==""){
 		msg+="Se Requiere el Número de RUC para generar una Factura!";	
