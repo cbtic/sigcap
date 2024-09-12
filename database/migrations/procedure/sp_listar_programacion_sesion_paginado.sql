@@ -18,7 +18,7 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' t1.id,to_char(t1.fecha_programado,''dd-mm-yyyy'')fecha_programado,to_char(t1.fecha_ejecucion,''dd-mm-yyyy'')fecha_ejecucion,
+	v_campos=' t1.id,t4.id_dia_semana,to_char(t1.fecha_programado,''dd-mm-yyyy'')fecha_programado,to_char(t1.fecha_ejecucion,''dd-mm-yyyy'')fecha_ejecucion,
 t1.hora_inicio,t1.hora_fin,t2.denominacion tipo_sesion,t3.denominacion estado_sesion,t7.denominacion estado_aprobacion,
 t4.denominacion||'' ''||t4.comision comision,t5.descripcion periodo,t6.denominacion region,t1.observaciones,
 (case when t4.denominacion in(select denominacion from tabla_maestras tm where tipo=''117'' and estado=''1'') then 1 else 0 end) flag_cz,
@@ -112,3 +112,4 @@ End
 
 $function$
 ;
+
