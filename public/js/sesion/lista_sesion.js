@@ -927,7 +927,7 @@ function datatablenew(){
 				"mRender": function (data, type, row) {
 					
 					var btn_disabled_tipo = "";
-					if(row.tipo_sesion!="EXTRAORDINARIA")var btn_disabled_tipo = "disabled='disabled'";
+					if(row.tipo_sesion!="EXTRAORDINARIA" || row.id_dia_semana!="398")var btn_disabled_tipo = "disabled='disabled'";
 					
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
 					html += '<button '+btn_disabled_tipo+' onclick=eliminarSesion('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px"><i class="fa fa-trash"></i> Eliminar Sesi&oacute;n</button>';
