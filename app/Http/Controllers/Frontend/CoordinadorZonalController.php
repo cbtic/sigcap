@@ -302,7 +302,8 @@ class CoordinadorZonalController extends Controller
 			$comisionSesionDelegado->id_agremiado = $agremiado->id;
 			$comisionSesionDelegado->coordinador = $coordinador;
 			$comisionSesionDelegado->id_profesion_otro = NULL;
-			$comisionSesionDelegado->id_aprobar_pago = ($aprobar_pago[$key]==1)?2:1;
+			//$comisionSesionDelegado->id_aprobar_pago = ($aprobar_pago[$key]==1)?2:1;
+			$comisionSesionDelegado->id_aprobar_pago = $aprobar_pago[$key];
 			$comisionSesionDelegado->observaciones = NULL;
 			$comisionSesionDelegado->estado = 1;
 			$comisionSesionDelegado->id_usuario_inserta = $id_user;

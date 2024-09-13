@@ -330,7 +330,11 @@
 														<a href="javascript:void(0);"  
 															onclick="descargarExcel('<?php echo addslashes($row->id); ?>', '<?php echo addslashes($row->por_usuario); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
 														style="font-size: 12px; text-decoration: underline; color: blue;">
+															<?php if($row->funcion=='rt'){?>
 															Descargar Excel
+															<?php }else if($row->funcion=='rd'){?>
+															Descargar txt
+															<?php }?>
 														</a>
 													</td>
 												<?php } ?>

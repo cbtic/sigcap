@@ -768,6 +768,7 @@ function modal_personaNuevo(){
                               foreach ($aprobar_pago as $row=>$value) {?> 
                               <!--<option value="<?php //echo $row?>" <?php //if($row==$id_aprobar_pago)echo "selected='selected'"?>><?php //echo $row?></option> -->
                               <?php 
+                              //if($row==1){$row=2;}else{$row=1;}
                               $selected = ($row ==$id_aprobar_pago) ? "selected='selected'" : "";
                               echo "<option value='{$row}' {$selected}>{$value}</option>";
                               ?>

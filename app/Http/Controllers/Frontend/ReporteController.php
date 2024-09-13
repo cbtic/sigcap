@@ -15,7 +15,11 @@ use Maatwebsite\Excel\Concerns\FromArray;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ReporteController extends Controller
 {
@@ -444,21 +448,21 @@ class ReporteController extends Controller
 		
 			$variable = [];
 			$total_monto=0;
-			$n = 1;
+			$n = 0;
 			//array_push($variable, array("SISTEMA CAP"));
 			//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
-			array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto Total"));
+			//array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto Total"));
 			
 			foreach ($data as $r) {
 				//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
-				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, $r->monto_total));
+				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, number_format($r->monto_total, 2,'.','')));
 
 				$total_monto+=$r->monto_total;
 			}
 
 			array_push($variable,array('','','Total',$total_monto));
 			
-			$export = new InvoicesExport([$variable]);
+			$export = new InvoicesExport([$variable], $fecha_fin);
 			return Excel::download($export, 'lista_deuda.xlsx');
 			
 		}
@@ -468,18 +472,75 @@ class ReporteController extends Controller
     }
 }
 
-class InvoicesExport implements FromArray
+class InvoicesExport implements FromArray, WithHeadings, WithStyles
 {
 	protected $invoices;
+	protected $fechaFin;
 
-	public function __construct(array $invoices)
+	public function __construct(array $invoices, $fechaFin)
 	{
 		$this->invoices = $invoices;
+		$this->fechaFin = $fechaFin;
 	}
 
 	public function array(): array
 	{
 		return $this->invoices;
 	}
+
+	public function headings(): array
+    {
+        return ["N", "Numero CAP", "Apellidos y Nombres", "Monto Total"];
+    }
+
+	public function styles(Worksheet $sheet)
+    {
+
+		$sheet->mergeCells('A1:D1');
+        
+		$fecha_actual = date('d-m-Y');
+
+        $sheet->setCellValue('A1', "LISTA DE LA DEUDA ACTUAL DE CUOTA INSTITUCIONAL DE \n ARQUITECTOS AL $fecha_actual (Fecha de cierre: {$this->fechaFin})");
+        $sheet->getStyle('A1:D1')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => '000000'],
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => 'A6C9EC'],
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+            ],
+        ]);
+
+		$sheet->getStyle('A1')->getAlignment()->setWrapText(true);
+		$sheet->getRowDimension(1)->setRowHeight(30);
+
+        $sheet->getStyle('A2:D2')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => '000000'],
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['rgb' => 'C1F0C8'],
+            ],
+			'alignment' => [
+			'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+    		],
+        ]);
+
+		$sheet->fromArray($this->headings(), NULL, 'A2');
+
+		$sheet->getStyle('D3:D'.$sheet->getHighestRow())
+		->getNumberFormat()
+		->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00);
+        
+        foreach (range('A', 'D') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+    }
 
 }
