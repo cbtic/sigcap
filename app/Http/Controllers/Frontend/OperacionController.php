@@ -336,4 +336,101 @@ class OperacionController extends Controller
 		
 	}
 	
+	
+	public function req_consulta(Request $request){
+		
+		/**********REQ CONSULTA************/
+		/*
+		{
+        "input": "0200F038048188E080000000000000000080000000000000000000031000000000000000015502413564318062024010602000100820001000000081451689BPI4    898            SERV CLI X INTERNET                     6040059031510800803563190       0105                              "
+}
+		*/
+		
+		$input = $request->input('input');
+		
+		$arr_var_input = array("MESSAGE TYPE IDENTIFICATION","PRIMARY BIT MAP","SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","AMOUNT TRANSACTION","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","CARD ACCEPTOR TERMINAL ID","CARD ACCEPTOR ID CODE","CARD ACCEPTOR NAME LOCATION","TRANSACTION CURRENCY CODE","LONGITUD","CodigoEmpresa","CodigoProducto","TipoConsulta","NumConsulta","NumPagina","NumMaxDocs","Filler");
+		
+		$arr_indice_input = array(1,5,21,37,56,62,74,80,86,94,97,99,107,115,127,135,150,190,193,197,204,207,208,222,224,226);
+		$arr_longitud_input = array(4,16,16,19,6,12,6,6,8,3,2,8,8,12,8,15,40,3,4,7,3,1,14,2,2,30);
+		
+		foreach($arr_var_input as $key=>$row){
+			$data_input[$row] = substr($input,($arr_indice_input[$key]-1),$arr_longitud_input[$key]);
+		}
+		
+		/**********RESP CONSULTA************/
+		/*
+		{
+		"output": "0210F03804818E808000000000000000008000000000000000000003100000000002022501550241356431806202401060200010082000100000008145168900183700BPI4    6040982031510803563190       000TRANSACCION PROCESADA OK      SULLON VILELA FRANK GUILLERMO COOPAC SANTA ISABEL PERUN05008CREDITO INDIVIDUAL  25807275        CUOTA 42 CREDITO EFE1507202416062024000000040450000000000000000000000000000000040450000000040450072024421                              008CREDITO INDIVIDUAL  25807276        CUOTA 43 CREDITO EFE1508202416072024000000040450000000000000000000000000000000040450000000040450082024431                              008CREDITO INDIVIDUAL  25807277        CUOTA 44 CREDITO EFE1609202416082024000000040450000000000000000000000000000000040450000000040450092024441                              008CREDITO INDIVIDUAL  25807278        CUOTA 45 CREDITO EFE1510202417092024000000040450000000000000000000000000000000040450000000040450102024451                              008CREDITO INDIVIDUAL  25807279        CUOTA 46 CREDITO EFE1511202416102024000000040450000000000000000000000000000000040450000000040450112024461                              "
+}
+		*/
+		
+		$arr_var_igual = array("SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","APPROVAL CODE","RESPONSE CODE","CARD ACCEPTOR TERMINAL ID","TRANSACTION CURRENCY CODE","LONGITUD","CodigoEmpresa","TipoConsulta","NumConsulta","CodigoErrorOriginal","DescRespuesta","NombreCliente","NombreEmpresa","NumDocs");
+		
+		$arr_var_output = array("MESSAGE TYPE IDENTIFICATION","PRIMARY BIT MAP","SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","AMOUNT TRANSACTION","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","APPROVAL CODE","RESPONSE CODE","CARD ACCEPTOR TERMINAL ID","TRANSACTION CURRENCY CODE","LONGITUD","CodigoEmpresa","TipoConsulta","NumConsulta","CodigoErrorOriginal","DescRespuesta","NombreCliente","NombreEmpresa","NumDocs");
+		
+		foreach($arr_var_input as $key=>$row){
+			$data_output[$row] = "";
+			if(in_array($row, $arr_var_igual)){
+				$data_output[$row] = $data_input[$row];
+			}
+		}
+		
+		//constantes
+		$data_output["MESSAGE TYPE IDENTIFICATION"] = "0210";//4
+		$data_output["PRIMARY BIT MAP"] = "F03804818E808000";//16
+		$data_output["RESPONSE CODE"] = "00"; //2-De uso interno de Interbank. La Empresa siempre debe devolver ceros
+		
+		//base de datos
+		$data_output["AMOUNT TRANSACTION"] = "000000005000"; //12-suma de los importes de las cuotas pendientes de pago enviadas
+		$data_output["APPROVAL CODE"] = "000301"; //6-Código creado por la Empresa,código único por transacción.,codigo generado 
+		$data_output["LONGITUD"] = "0634"; //4-Suma la longitud de las líneas desde P01 hasta el final
+		$data_output["NombreCliente"] = "GINOCCHIO MENDOZA PATRICIA MON"; //30-Contiene el Nombre del DEUDOR al que pertenece las deudas
+		$data_output["NombreEmpresa"] = "LA POSITIVA              "; //25-Empresa cliente de IBK (Recaudador)
+		$data_output["NumDocs"] = "03"; //2-Cantidad de documentos por cobrar.
+		
+		//codigo respuesta
+		$data_output["CodigoErrorOriginal"] = "000"; //3-Código de respuesta, utilizar los códigos de la hoja "RESPONSE CODE".
+		$data_output["DescRespuesta"] = "TRANSACCION PROCESADA OK      "; //30-descripción del código en la línea anterior (P04)
+		
+		$data_output_detalle = array();
+		$output_detalle = "";
+		
+		for($key=0;$key<5;$key++){
+			$data_output_detalle[$key]["CodigoProducto"] = "sfsvfsv1";
+			$data_output_detalle[$key]["DescrProducto"] = "sfsvfsv2";
+			$data_output_detalle[$key]["NumDocumento"] = "sfsvfsv3";
+			$data_output_detalle[$key]["FILLER"] = "sfsvfsv4";
+			$data_output_detalle[$key]["DescDocumento"] = "sfsvfsv5";
+			$data_output_detalle[$key]["FechaVencimiento"] = "sfsvfsv6";
+			$data_output_detalle[$key]["FechaEmision"] = "sfsvfsv7";
+			$data_output_detalle[$key]["Deuda"] = "sfsvfsv8";
+			$data_output_detalle[$key]["Mora"] = "sfsvfsv9";
+			$data_output_detalle[$key]["GastosAdm"] = "sfsvfsv10";
+			$data_output_detalle[$key]["PagoMinimo"] = "sfsvfsv11";
+			$data_output_detalle[$key]["ImporteTotal"] = "sfsvfsv12";
+			$data_output_detalle[$key]["Periodo"] = "sfsvfsv13";
+			$data_output_detalle[$key]["Año"] = "sfsvfsv14";
+			$data_output_detalle[$key]["Cuota"] = "sfsvfsv15";
+			$data_output_detalle[$key]["MonedaDoc"] = "sfsvfsv16";
+			$data_output_detalle[$key]["Filler"] = "sfsvfsv17";
+			
+			$output_detalle .= implode('',$data_output_detalle[$key]);
+			
+		}
+		
+		$output = implode('',$data_output);
+		
+		$output .= $output_detalle;
+		
+		$data["output"] = $output;
+		
+		$responsecode = 200;
+        $header = array (
+                'Content-Type' => 'application/json; charset=UTF-8',
+                'charset' => 'utf-8'
+            );
+		return response()->json($data , $responsecode, $header, JSON_UNESCAPED_UNICODE);
+	
+	}	
+			
 }
