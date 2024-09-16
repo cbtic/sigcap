@@ -1,4 +1,3 @@
--- DROP FUNCTION public.sp_calcula_del_fondo_comun_all(varchar, varchar, varchar);
 
 CREATE OR REPLACE FUNCTION public.sp_calcula_del_fondo_comun_all(p_id_periodo character varying, p_anio character varying, p_mes character varying)
  RETURNS character varying
@@ -29,10 +28,14 @@ begin
 --	_anio:=(select EXTRACT(YEAR FROM fecha) anio from periodo_delegado_detalles where id = pIdDelPeriodoDetalle);
 	
 	
-	_id_periodo_comision:=(select id_periodo_comision from periodo_comision_detalles where denominacion = p_anio||p_mes);
-	_id_periodo_comision_detalle:=(select id from periodo_comision_detalles where denominacion = p_anio||p_mes);
+	--_id_periodo_comision:=(select id_periodo_comision from periodo_comision_detalles where denominacion = p_anio||p_mes);
+	_id_periodo_comision:=(select id_periodo_comision from periodo_comision_detalles where denominacion = p_anio||p_mes and id_periodo_comision = p_id_periodo::int);
+	--_id_periodo_comision_detalle:=(select id from periodo_comision_detalles where denominacion = p_anio||p_mes);
+	_id_periodo_comision_detalle:=(select id from periodo_comision_detalles where denominacion = p_anio||p_mes and id_periodo_comision = p_id_periodo::int);
 
 	--_total := to_number(total,'9999999999.99');
+
+
 
 CREATE TEMPORARY TABLE temp_fondo_comun (
   id_ubigeo	text,
@@ -52,22 +55,59 @@ from (
 	sum(l.igv) igv, 
 	sum((l.total-l.igv)*0.3) comision, 
 	Sum((l.total-l.igv)*0.02) asistencia, 
+	sum(l.total-l.igv-((l.total-l.igv)*0.3)-((l.total-l.igv)*0.02)) saldo
+  -- select v.*
+	from 
+	--comision_sesion_dictamenes csd 
+--	inner join comision_sesiones cs on csd.id_comision_sesion =cs.id
+--	inner join comision_sesion_delegados t6 on t6.id_comision_sesion = cs.id
+--	inner join comisiones t7 on t7.id = cs.id_comision 
+  --inner join solicitudes s2 on s2.id =csd.id_solicitud
+    solicitudes s2
+--	inner join proyectos p on p.id=s2.id_proyecto  
+	inner join liquidaciones l on l.id_solicitud =s2.id
+	inner join valorizaciones v on v.id_modulo = 7 and v.pk_registro = l.id 
+	inner join comprobantes c on c.id = v.id_comprobante
+	inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
+	
+	group by c.fecha_pago, u.id_ubigeo, u.desc_ubigeo,v.pagado, s2.id_tipo_solicitud --, id_aprobar_pago, cs.fecha_ejecucion, cs.id_periodo_comisione
+	having 
+	--where
+	--to_char(cs.fecha_ejecucion,'yyyy') = '2024'
+	--And to_char(cs.fecha_ejecucion,'mm')= '03'
+	--and cs.id_periodo_comisione = 7
+	to_char(c.fecha_pago,'yyyy') = p_anio
+	And to_char(c.fecha_pago,'mm')= p_mes		
+	--and t6.id_aprobar_pago=2
+	and v.pagado = '1'
+	and s2.id_tipo_solicitud = '123'
+
+
+/*
+	select u.id_ubigeo, u.desc_ubigeo distrito, 
+	sum(l.total) importe_bruto, 
+	sum(l.igv) igv, 
+	sum((l.total-l.igv)*0.3) comision, 
+	Sum((l.total-l.igv)*0.02) asistencia, 
 	sum(l.total-l.igv-((l.total-l.igv)*0.3-((l.total-l.igv)*0.02))) saldo
 	from comision_sesion_dictamenes csd 
 	inner join comision_sesiones cs on csd.id_comision_sesion =cs.id
-	inner join comision_sesion_delegados t6 on t6.id_comision_sesion = cs.id
+--	inner join comision_sesion_delegados t6 on t6.id_comision_sesion = cs.id
 	inner join comisiones t7 on t7.id = cs.id_comision 
 	inner join solicitudes s2 on s2.id =csd.id_solicitud  
 	inner join proyectos p on p.id=s2.id_proyecto  
 	inner join liquidaciones l on l.id_solicitud =s2.id
+	inner join valorizaciones v on v.id_modulo = 7 and v.pk_registro = l.id 
 	inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo 
-	group by u.id_ubigeo, u.desc_ubigeo, cs.fecha_ejecucion, cs.id_periodo_comisione, id_aprobar_pago
+	group by u.id_ubigeo, u.desc_ubigeo, cs.fecha_ejecucion, cs.id_periodo_comisione, v.pagado --,id_aprobar_pago
 	having 
 	to_char(cs.fecha_ejecucion,'yyyy') = p_anio
 	And to_char(cs.fecha_ejecucion,'mm')= p_mes
 	and cs.id_periodo_comisione = p_id_periodo::integer
-	and t6.id_aprobar_pago=2
-)R
+	--and t6.id_aprobar_pago=2
+	and v.pagado = '1'
+	*/
+)
 group by id_ubigeo, distrito;
 
 
@@ -132,6 +172,7 @@ order by 2;
 DROP TABLE temp_fondo_comun; 
 
 --select * from delegado_fondo_comuns;
+
 
 
 idp:=1;
