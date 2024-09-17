@@ -515,6 +515,10 @@ legend.scheduler-border {
 		//alert(cuentaproductos);
 		//$('#tblConceptos tr:last').after('<tr id="fila' + pad(cuentaproductos, 2) + '"><td class="text-right">#</td></tr>');
 
+		
+		$("#divGuardar").show();
+
+
 	}
 
 	function eliminaFila(fila) {
@@ -694,7 +698,7 @@ legend.scheduler-border {
 
 												</div>
 												<div style="margin-top:15px" class="form-group">
-													<div class="col-sm-12 controls">
+													<div id ="divGuardar" class="col-sm-12 controls" style="display:none">
 														<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 															<a href="javascript:void(0)" onClick="guardar_fracciona_deuda()" class="btn btn-sm btn-success">Guardar</a>
 														</div>
