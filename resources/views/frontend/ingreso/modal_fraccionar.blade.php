@@ -612,6 +612,7 @@ legend.scheduler-border {
 																<div class="form-group form-group-sm">
 																	<label class="form-control-sm">Nro Cuotas</label>
 																	<!--<select name="cboCuotas" id="cboCuotas" class="form-control form-control-sm" onchange="cargarValorizacion()">-->
+																<!--		
 																	<select name="cboCuotas" id="cboCuotas" class="form-control form-control-sm">
 																		<option value="3" selected>03 meses</option>
 																		<option value="6">06 meses</option>
@@ -620,6 +621,22 @@ legend.scheduler-border {
 																		<option value="24">24 meses</option>
 																		<option value="36">36 meses</option>
 																	</select>
+											-->
+																	<select id="cboCuotas" name="cboCuotas" class="form-control form-control-sm">
+																		<option value="">Seleccione una opción</option>
+																		<?php
+																		// Generar las opciones de 2 a 99 con PHP
+																		for ($i = 2; $i <= 99; $i++) {
+																			// Por ejemplo, si quieres que la cuota 12 esté seleccionada por defecto:
+																			if ($i == 12) {
+																				echo "<option value='$i' selected>$i cuotas</option>";
+																			} else {
+																				echo "<option value='$i'>$i cuotas</option>";
+																			}
+																		}
+																		?>
+																	</select>
+
 																</div>
 															</div>
 															<div class="col-lg-2">
