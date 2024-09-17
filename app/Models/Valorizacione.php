@@ -289,9 +289,11 @@ class Valorizacione extends Model
              where cn.id_comprobante_ncnd = c.id and cn.tipo='ND' limit 1) as tiene_nd
             from comprobantes c
             inner join comprobante_detalles d on d.id_comprobante = c.id
-            inner join valorizaciones v on v.id_comprobante = c.id            
+            
             left join users u  on u.id  = c.id_usuario_inserta 
-            where v.id_persona = ".$persona_id."
+            inner join personas p on c.cod_tributario=p.numero_documento
+            where p.id = ".$persona_id."
+            
             and c.tipo in ('FT', 'BV')
             order by c.fecha desc";
     
