@@ -1118,4 +1118,12 @@ class IngresoController extends Controller
         return response()->json($factura);
     }
 
+    public function modal_concepto_reporte($numero_cap){
+
+        $conceptos_model = new Concepto;
+        $concepto = $conceptos_model->getConceptoAllDenominacion2();
+
+		return view('frontend.ingreso.modal_concepto_reporte',compact('numero_cap','concepto'));
+	}
+
 }

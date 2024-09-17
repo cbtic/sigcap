@@ -790,3 +790,5 @@ Route::get('derecho_revision/obtener_numero_revision/{id}', [DerechoRevisionCont
 
 Route::get('ingreso/obtener_detalle_factura/{id}/{forma_pago}/{estado_pago}/{medio_pago}/{total}', [IngresoController::class, 'obtener_detalle_factura'])->name('ingreso.obtener_detalle_factura');
 Route::get('reporte/exportar_lista_deuda/{id}/{fecha_fin}/{id_concepto}', [ReporteController::class, 'exportar_lista_deuda'])->name('reporte.exportar_lista_deuda');
+
+Route::get('ingreso/modal_concepto_reporte/{numero_cap}', [IngresoController::class, 'modal_concepto_reporte'])->name('ingreso.modal_concepto_reporte');
