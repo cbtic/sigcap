@@ -1016,7 +1016,9 @@ class IngresoController extends Controller
 
 	}
 
-    public function reporte_deudas_total_pdf($numero_cap){
+    public function reporte_deudas_total_pdf($numero_cap, $id_concepto){
+
+        if($id_concepto==0){$id_concepto='';}
 		
 		$caja_ingreso_model=new CajaIngreso;
         $agremiado_model=new Agremiado;
@@ -1026,8 +1028,8 @@ class IngresoController extends Controller
         $numero_cap=$datos_agremiado->numero_cap;
         $nombre_completo=$datos_agremiado->nombre_completo;
         //var_dump($datos_agremiado);exit();
-		$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id);
-        $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id);
+		$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id, $id_concepto);
+        $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id, $id_concepto);
         $tipo_cambio=$tipo_cambio_model->getTipoCambio();
 		//$nombre=$datos[0]->numero_cap;
 		//var_dump($denominacion_reporte_deudas);exit();

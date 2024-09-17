@@ -2636,8 +2636,11 @@ function reporte_deudas(){
 function reporte_deudas_total(){
 
 	var numero_cap = $('#numero_documento_b').val();
+	var id_concepto = $('#cboTipoConcepto_b').val();
 
-	var href = '/ingreso/reporte_deudas_total_pdf/'+numero_cap;
+	if(id_concepto==''){id_concepto=0}
+
+	var href = '/ingreso/reporte_deudas_total_pdf/'+numero_cap+'/'+id_concepto;
 	window.open(href, '_blank');
 }
 
