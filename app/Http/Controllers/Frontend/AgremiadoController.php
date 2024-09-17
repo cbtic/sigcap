@@ -797,6 +797,8 @@ class AgremiadoController extends Controller
 		
 		//$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=13&fecha=17-08-2023');
 		$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=11&fecha='.$fecha);
+		//$ch2 = curl_init('https://integracion.portalcap2.org.pe/api/v1/collegiate/?idRegional=5&fecha='.$fecha);
+		
 		curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch2, CURLOPT_HTTPHEADER, array('x-token: '.$token));
 		curl_setopt($ch2, CURLOPT_SSL_VERIFYHOST, false);

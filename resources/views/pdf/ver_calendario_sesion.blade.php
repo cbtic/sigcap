@@ -86,7 +86,7 @@
 	
     <body style="font-size: 11px; font-family: arial;border:1px solid #A4A4A4;padding:90px 10px 10px 10px">
 		<header>
-            
+            <?php $arrayPersonaFecha = array();?>
 			<table style="margin:0px;padding:0px;padding-bottom:10px">
 				<tbody>
 					<tr>
@@ -398,7 +398,16 @@
 							<td class="ancho_nro" style=" <?php echo $borde ?>text-align:center;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px"><?php echo isset($fechaSesion->tipo_sesion)?$fechaSesion->tipo_sesion:""?></td>
 							<?php
 							
-							if(isset($fechaSesion->tipo_sesion) && ($fechaSesion->tipo_sesion=="O" || $fechaSesion->tipo_sesion=="E"))$total_delegado++;
+								if(isset($fechaSesion->tipo_sesion) && ($fechaSesion->tipo_sesion=="O" || $fechaSesion->tipo_sesion=="E")){
+									
+									//$arrayPersonaFecha[] = $row3->numero_cap.'|'.$fechaInicioTemp_;
+									$personaFecha = $row3->numero_cap.'|'.$fechaInicioTemp_;
+									if(!in_array($personaFecha,$arrayPersonaFecha)){
+										$total_delegado++;
+										$arrayPersonaFecha[] = $row3->numero_cap.'|'.$fechaInicioTemp_;
+									}
+									
+								}
 							
 							}
 						}
