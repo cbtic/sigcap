@@ -55,7 +55,30 @@ class Comisione extends Model
         return $data;
 
     }
+	
+	public function getCantidadComision($periodo,$tipo_comision,$cad_id,$estado){
+	
+		$cad = "select count(*) as cantidad 
+from comisiones c
+inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
+        where c.estado = '".$estado."'";
+		
+		if($periodo!="" && $periodo!="0"){
+			$cad .= " and mi.id_periodo_comision='".$periodo."'";
+		}
+		
+		if($tipo_comision!="" && $tipo_comision!="0"){
+			$cad .= " and c.id_tipo_comision='".$tipo_comision."'";
+		}
+        if($cad_id!="" && $cad_id!="0"){
+            $cad .= " and c.id_municipalidad_integrada in (".$cad_id.")";
+        }
 
+		$data = DB::select($cad);
+        return $data->cantidad;
+		
+	}
+	
     public function getComisionAll($periodo,$tipo_comision,$cad_id,$estado){
 
         $cad = "select c.*,tm.denominacion tipo_agrupacion, cm.monto,pc.descripcion periodo,

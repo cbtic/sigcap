@@ -17,6 +17,7 @@ use App\Models\Agremiado;
 use App\Models\AgremiadoRole;
 use App\Models\ConcursoPuesto;
 use App\Models\Concurso;
+use App\Models\ComisionSesione;
 use Auth;
 
 class ComisionController extends Controller
@@ -809,22 +810,50 @@ class ComisionController extends Controller
 		$comision->save();
     }
 
-	public function eliminar_muniIntegrada($id,$estado)
-    {
-		$municipalidadesIntegrada = MunicipalidadIntegrada::find($id);
-		$municipalidadesIntegrada->estado = $estado;
-		$municipalidadesIntegrada->save();
+	public function eliminar_muniIntegrada($id,$estado){
+	
+		$idmunicipalidadesIntegrada="";
+		$msg = "";
+		$cantidad = Comisione::where("estado","1")->where("id_municipalidad_integrada",$id)->count();
+		
+		if($cantidad==0){
+			$municipalidadesIntegrada = MunicipalidadIntegrada::find($id);
+			$municipalidadesIntegrada->estado = $estado;
+			$municipalidadesIntegrada->save();
+			$idmunicipalidadesIntegrada = $municipalidadesIntegrada->id;
+		}else{
+			$msg = "No se puede eliminar la municipalidad porque contiene comisiones activas";
+		}
+		
 
-		echo $municipalidadesIntegrada->id;
+		$result["id"] = $idmunicipalidadesIntegrada;
+		$result["msg"] = $msg;
+
+        echo json_encode($result);
+		
     }
 
 	public function eliminarComision($id,$estado)
     {
-		$comision = Comisione::find($id);
-		$comision->estado = $estado;
-		$comision->save();
+		
+		$idcomisionSesion="";
+		$msg = "";
+		$cantidad = ComisionSesione::where("estado","1")->where("id_comision",$id)->count();
+		
+		if($cantidad==0){
+			$comision = Comisione::find($id);
+			$comision->estado = $estado;
+			$comision->save();
+			$idcomisionSesion = $comision->id;
+		}else{
+			$msg = "No se puede eliminar la comision porque contiene sesiones activas";
+		}
 
-		echo $comision->id;
+		$result["id"] = $idcomisionSesion;
+		$result["msg"] = $msg;
+
+        echo json_encode($result);
+
     }
 	
 	public function send_asignar_agremiado_rol2(){
