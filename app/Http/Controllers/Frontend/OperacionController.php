@@ -414,6 +414,7 @@ class OperacionController extends Controller
 		foreach($deuda_pendiente as $row){
 			
 			$codigoProducto = $row->codigo_producto;//12;
+			//echo $codigoProducto;echo "\n";
 			$descrProducto = substr($row->descr_producto,0,20);//"DEUDA CUOTA";
 			$numDocumento = $row->num_documento;//"FD221919437";
 			$descDocumento = substr($row->desc_documento,0,20);//"FACTURA DICIEMBRE";
@@ -507,23 +508,23 @@ class OperacionController extends Controller
         foreach ($data_input_detalle as $key => $value) {
 			$p_mov.="{";
 			$p_mov.=$value["CodigoProducto"].",";
-			$p_mov.=",";
+			$p_mov.="0,";
 			$p_mov.=$value["NumDocumento"].",";
-			$p_mov.=",";
+			$p_mov.="0,";
 			$p_mov.=$value["FechaVencimiento"].",";
 			$p_mov.=$value["FechaEmision"].",";
 			$p_mov.=$value["Deuda"].",";
 			$p_mov.=$value["Mora"].",";
 			$p_mov.=$value["GastosAdm"].",";
-			$p_mov.=",";
+			$p_mov.="0,";
 			$p_mov.=$value["ImporteTotal"].",";
 			$p_mov.=(int)$value["Periodo"].",";
 			$p_mov.=$value["Anio"].",";
 			$p_mov.=$value["Cuota"].",";
 			$p_mov.=$value["MonedaDoc"].",";
-			$p_mov.=",";
-			$p_mov.=",";
-			$p_mov.="";
+			$p_mov.="0,";
+			$p_mov.="0,";
+			$p_mov.="0";
 			$p_mov.="},";
         }
 		if(strlen($p_mov)>1)$p_mov=substr($p_mov,0,-1);
@@ -534,10 +535,11 @@ class OperacionController extends Controller
 		$comprobante_model = new Comprobante;
 		$p[]=strval($data_input["TipoConsulta"]);
 		$p[]=(int)$data_input["NumConsulta"];
+		$p[]=$p_mov;
 		
 		$actualiza_pago = $comprobante_model->actualiza_pago_pos($p);
 		
-		exit();
+		//exit();
 		
 		/**********RESP PAGO************/
 		/*
@@ -587,7 +589,7 @@ class OperacionController extends Controller
 		$data_output_detalle = array();
 		$output_detalle = "";
 		
-		foreach($deuda_pendiente as $row){
+		foreach($actualiza_pago as $row){
 			
 			$codigoProducto = $row->codigo_producto;//12;
 			$descrProducto = substr($row->descr_producto,0,20);//"DEUDA CUOTA";
