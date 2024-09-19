@@ -515,6 +515,10 @@ legend.scheduler-border {
 		//alert(cuentaproductos);
 		//$('#tblConceptos tr:last').after('<tr id="fila' + pad(cuentaproductos, 2) + '"><td class="text-right">#</td></tr>');
 
+		
+		$("#divGuardar").show();
+
+
 	}
 
 	function eliminaFila(fila) {
@@ -612,6 +616,7 @@ legend.scheduler-border {
 																<div class="form-group form-group-sm">
 																	<label class="form-control-sm">Nro Cuotas</label>
 																	<!--<select name="cboCuotas" id="cboCuotas" class="form-control form-control-sm" onchange="cargarValorizacion()">-->
+																<!--		
 																	<select name="cboCuotas" id="cboCuotas" class="form-control form-control-sm">
 																		<option value="3" selected>03 meses</option>
 																		<option value="6">06 meses</option>
@@ -620,6 +625,22 @@ legend.scheduler-border {
 																		<option value="24">24 meses</option>
 																		<option value="36">36 meses</option>
 																	</select>
+											-->
+																	<select id="cboCuotas" name="cboCuotas" class="form-control form-control-sm">
+																		<option value="">Seleccione una opción</option>
+																		<?php
+																		// Generar las opciones de 2 a 99 con PHP
+																		for ($i = 2; $i <= 99; $i++) {
+																			// Por ejemplo, si quieres que la cuota 12 esté seleccionada por defecto:
+																			if ($i == 12) {
+																				echo "<option value='$i' selected>$i cuotas</option>";
+																			} else {
+																				echo "<option value='$i'>$i cuotas</option>";
+																			}
+																		}
+																		?>
+																	</select>
+
 																</div>
 															</div>
 															<div class="col-lg-2">
@@ -677,7 +698,7 @@ legend.scheduler-border {
 
 												</div>
 												<div style="margin-top:15px" class="form-group">
-													<div class="col-sm-12 controls">
+													<div id ="divGuardar" class="col-sm-12 controls" style="display:none">
 														<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 															<a href="javascript:void(0)" onClick="guardar_fracciona_deuda()" class="btn btn-sm btn-success">Guardar</a>
 														</div>

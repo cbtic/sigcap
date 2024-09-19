@@ -2636,9 +2636,27 @@ function reporte_deudas(){
 function reporte_deudas_total(){
 
 	var numero_cap = $('#numero_documento_b').val();
+	//var id_concepto = $('#cboTipoConcepto_b').val();
 
-	var href = '/ingreso/reporte_deudas_total_pdf/'+numero_cap;
-	window.open(href, '_blank');
+	//if(id_concepto==''){id_concepto=0}
+
+	//var href = '/ingreso/reporte_deudas_total_pdf/'+numero_cap+'/'+id_concepto;
+	//window.open(href, '_blank');
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+		url: "/ingreso/modal_concepto_reporte/"+numero_cap,
+		type: "GET",
+		success: function (result) {
+			
+				$("#diveditpregOpc").html(result);
+				$('#openOverlayOpc').modal('show');
+				
+		}
+});
+
+
 }
 
 function reporte_fraccionamiento(){

@@ -261,7 +261,7 @@ class Valorizacione extends Model
     function getPago($tipo_documento,$persona_id){
 
         if($tipo_documento=="79"){
-            $cad = "select distinct c.id id_comprobante,c.tipo, c.fecha, c.serie, c.numero, c.total, u.name usuario_registro,
+            $cad = "select distinct c.id id_comprobante,c.tipo, c.fecha, c.serie, c.numero, c.total, u.name usuario_registro, c.estado_pago,
             (select string_agg(coalesce(d.descripcion), ',' order by d.item desc)  from comprobante_detalles d  where d.id_comprobante = c.id ) descripcion,id_comprobante_ncnd, 
             (select id
              from comprobantes cc 
@@ -279,7 +279,7 @@ class Valorizacione extends Model
             order by c.fecha desc";
 
         }else{
-            $cad = "select distinct c.id id_comprobante,c.tipo, c.fecha, c.serie, c.numero, c.total, u.name usuario_registro,
+            $cad = "select distinct c.id id_comprobante,c.tipo, c.fecha, c.serie, c.numero, c.total, u.name usuario_registro, c.estado_pago,
             (select string_agg( coalesce(d.descripcion), ',' order by d.item desc)  from comprobante_detalles d  where d.id_comprobante = c.id ) descripcion,id_comprobante_ncnd ,
             (select id
              from comprobantes cc 
@@ -289,9 +289,11 @@ class Valorizacione extends Model
              where cn.id_comprobante_ncnd = c.id and cn.tipo='ND' limit 1) as tiene_nd
             from comprobantes c
             inner join comprobante_detalles d on d.id_comprobante = c.id
-            inner join valorizaciones v on v.id_comprobante = c.id            
+            
             left join users u  on u.id  = c.id_usuario_inserta 
-            where v.id_persona = ".$persona_id."
+            inner join personas p on c.cod_tributario=p.numero_documento
+            where p.id = ".$persona_id."
+            
             and c.tipo in ('FT', 'BV')
             order by c.fecha desc";
     

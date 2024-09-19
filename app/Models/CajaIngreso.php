@@ -513,7 +513,11 @@ class CajaIngreso extends Model
         return $data;
     }
 
-    function getReporteDeudasTotal($id){
+    function getReporteDeudasTotal($id, $id_concepto){
+
+        $concepto="";
+
+        if ($id_concepto!="") $concepto = " and c.id = ".$id_concepto; 
 
         $cad = "select  c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, v.descripcion, ac.importe , to_char(ac.fecha_venc_pago, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante , 
         tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_operacion ,  case when  v.pagado='1' then 'PAGADO' else 'PENDIENTE' end  estado_pago
@@ -527,6 +531,7 @@ class CajaIngreso extends Model
         left join  tabla_maestras tm3 on tm3.codigo = cp.id_medio ::varchar(10) and tm3.tipo='19' 
         where  id_agremiado = ".$id." 
         and v.pagado ='1'
+        ".$concepto."
         union all
         select v2.id, c.denominacion, ROW_NUMBER() OVER (PARTITION BY v2.id order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto, to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento, cp.fecha fecha_pago, C2.tipo|| C2.serie || C2.numero comprobante ,
         tm2.denominacion forma_pago, tm3.denominacion condicion,cp.nro_operacion nro_operacion ,  case when  v2.pagado='1' then 'PAGADO' else 'PENDIENTE' end  estado_pago
@@ -537,6 +542,7 @@ class CajaIngreso extends Model
         left join tabla_maestras tm2 on tm2.codigo = c2.id_forma_pago::varchar(10) and tm2.tipo='104' 
         left join  tabla_maestras tm3 on tm3.codigo = cp.id_medio ::varchar(10) and tm3.tipo='19' 
         where v2.id_agremido = ".$id." 
+        ".$concepto."
         and v2.id_modulo = 6
         and v2.pagado ='1'";
 
@@ -545,7 +551,11 @@ class CajaIngreso extends Model
         return $data;
     }
 
-    function getDenominacionDeudaTotal($id){
+    function getDenominacionDeudaTotal($id, $id_concepto){
+
+        $concepto="";
+
+        if ($id_concepto!="") $concepto = " and c.id = ".$id_concepto; 
 
         $cad = "select  distinct(c.denominacion)
         from agremiado_cuotas ac 
@@ -554,6 +564,7 @@ class CajaIngreso extends Model
         inner join tabla_maestras tm on tm.codigo =id_situacion::varchar(10) and tipo='11' 
         where  id_agremiado = ".$id."
         and v.pagado = '1'
+        ".$concepto." 
         union all
         select c.denominacion
         from valorizaciones v2 
@@ -562,6 +573,7 @@ class CajaIngreso extends Model
         and v2.pagado = '1'
         and v2.id_modulo = 6
         and v2.fecha < now()
+        ".$concepto." 
         order by denominacion asc";
 
 		//echo $cad;

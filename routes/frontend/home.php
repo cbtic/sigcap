@@ -782,7 +782,7 @@ Route::get('derecho_revision/correo_credipago_aprobado_reintegro/{id}', [Derecho
 Route::post('agremiado/listar_valorizacion_periodo_deuda', [AgremiadoController::class, 'listar_valorizacion_periodo_deuda'])->name('agremiado.listar_valorizacion_periodo_deuda');
 
 Route::get('ingreso/reporte_deudas_pdf/{numero_cap}/{id_concepto}', [IngresoController::class, 'reporte_deudas_pdf'])->name('ingreso.reporte_deudas_pdf');
-Route::get('ingreso/reporte_deudas_total_pdf/{numero_cap}', [IngresoController::class, 'reporte_deudas_total_pdf'])->name('ingreso.reporte_deudas_total_pdf');
+Route::get('ingreso/reporte_deudas_total_pdf/{numero_cap}/{id_concepto}', [IngresoController::class, 'reporte_deudas_total_pdf'])->name('ingreso.reporte_deudas_total_pdf');
 Route::get('ingreso/reporte_fraccionamiento_pdf/{numero_cap}', [IngresoController::class, 'reporte_fraccionamiento_pdf'])->name('ingreso.reporte_fraccionamiento_pdf');
 
 Route::get('derecho_revision/valida_credipago_unico/{id_solicitud}', [DerechoRevisionController::class, 'valida_credipago_unico'])->name('derecho_revision.valida_credipago_unico');
@@ -791,3 +791,5 @@ Route::get('derecho_revision/obtener_numero_revision/{id}', [DerechoRevisionCont
 
 Route::get('ingreso/obtener_detalle_factura/{id}/{forma_pago}/{estado_pago}/{medio_pago}/{total}', [IngresoController::class, 'obtener_detalle_factura'])->name('ingreso.obtener_detalle_factura');
 Route::get('reporte/exportar_lista_deuda/{id}/{fecha_fin}/{id_concepto}', [ReporteController::class, 'exportar_lista_deuda'])->name('reporte.exportar_lista_deuda');
+
+Route::get('ingreso/modal_concepto_reporte/{numero_cap}', [IngresoController::class, 'modal_concepto_reporte'])->name('ingreso.modal_concepto_reporte');

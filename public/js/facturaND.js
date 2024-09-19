@@ -829,11 +829,12 @@ function obtenerTitular(){
 	function actualizaimportes(afectacion){
 		var i=0;
 		
+		
 	
 		if ($('#tiponota_').val()==270){	
 			i=0;
 			$("input[name^='importeantd']").each(function(i, obj) {
-				//alert(obj.value);
+				
 				$("#totald"+i).val(obj.value);
 				calcular_total_2(i,afectacion);
 				i++;
@@ -849,7 +850,7 @@ function obtenerTitular(){
 			$("input[name^='totald']").each(function(i, obj) {
 				//alert(obj.value);
 				$("#totald"+i).val(0);
-				calcular_total_2(i);
+				calcular_total_2(i,afectacion);
 
 				//total = Number(obj.value) + Number(total);
 
@@ -870,10 +871,14 @@ function obtenerTitular(){
         var totald=0;
 		var importeantd=0;
 
-		totald = $('#totald'+fila).val();
+		totald =  $('#totald'+fila).val();
+		totald= parseFloat(totald.replace(/,/g, ""));
 		importeantd=$('#importeantd'+fila).val()
+		importeantd=parseFloat(importeantd.replace(/,/g, ""));
+
 		
-		if (parseInt(totald) <=parseInt(importeantd) )  {
+		
+		if (totald <=importeantd )  {
 
 		
 			var imported =0;
@@ -883,22 +888,26 @@ function obtenerTitular(){
 			
 
 			if (afectacion==30){
-				imported =Number(totald);
+				imported =totald;
 				igv =  0;
 				pu =totald;
 			}
 			else{
+				
 				imported =totald/1.18;  
 				igv =  Number(totald) - Number(imported);	
-				pu =imported-igv;
+				
+
+
 			};
-			//	alert(imported);		
+				//alert(imported);		
 				
 
 			$("#igvd"+fila).val(igv.toFixed(2));
 
 			$("#imported"+fila).val(imported.toFixed(2));
-
+			
+			$("#totald"+fila).val(totald.toFixed(2));
 			//$("#imported"+fila).val(pu.toFixed(2));
 			
 			var gravadas=0;
@@ -906,9 +915,9 @@ function obtenerTitular(){
 			var total=0;
 
 
-			$("input[name^='imported']").each(function(i, obj) {			
-				$(this).parent().parent().parent().find('#facturad_pu').val(Number(obj.value));
-			});
+		//	$("input[name^='imported']").each(function(i, obj) {			
+		//		$(this).parent().parent().parent().find('#facturad_pu').val(Number(obj.value));
+		//	});
 
 			
 

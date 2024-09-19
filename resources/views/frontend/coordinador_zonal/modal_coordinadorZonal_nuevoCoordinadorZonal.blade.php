@@ -563,7 +563,7 @@ function AddFila1(){
     var fecha = '<input id="fecha" name="sesion['+n+'][fecha]" class="form-control form-control-sm datepicker2"  value="" type="text">'
     var distrito = '<select name="sesion['+n+'][municipalidad]" id="municipalidad" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($municipalidad as $row) {?> <option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
     var estado_sesion = '<select name="sesion['+n+'][estado_sesion]" id="estado_sesion" class="form-control form-control-sm" onChange=""> <option value="">--Selecionar--</option> <?php foreach ($estado_sesion as $row) {?> <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option> <?php } ?> </select>'
-    var aprobar_pago = '<select name="sesion['+n+'][aprobar_pago]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="1">Si</option> <option value="0">No</option> </select>'
+    var aprobar_pago = '<select name="sesion['+n+'][aprobar_pago]" id="aprobar_pago" class="form-control form-control-sm"> <option value="" selected="selected">--Seleccionar--</option> <option value="2">Si</option> <option value="1">No</option> </select>'
     var eliminar = '<button type="button" class="btn btn-danger btn-sm" onclick="EliminarFila(this)">Eliminar</button>';
     
     //newRow+='<tr>';

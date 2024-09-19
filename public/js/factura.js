@@ -112,8 +112,9 @@ function calculoDetraccion(){
 
 	//alert(Math.round(total_fac));
 	//alert(Math.round(total_fac));
+	var tipo= $('#TipoF').val()
 
-	if (Math.round(total_fac) > 700){
+	if (Math.round(total_fac) > 700 && tipo=='FT' ){
 	//	alert(Math.round(total_fac));
 
 		//var f_venci = FormatFecha(d);
