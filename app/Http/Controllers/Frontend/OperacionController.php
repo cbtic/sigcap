@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\BancoInterconexione;
 use App\Models\BancoInterconexionDetalle;
+use App\Models\Comprobante;
 use Auth;
 
 class OperacionController extends Controller
@@ -357,6 +358,15 @@ class OperacionController extends Controller
 			$data_input[$row] = substr($input,($arr_indice_input[$key]-1),$arr_longitud_input[$key]);
 		}
 		
+		$comprobante_model = new Comprobante;
+		$p[]=strval($data_input["TipoConsulta"]);
+		$p[]=(int)$data_input["NumConsulta"];
+		$p[]="5";
+		$deuda_pendiente = $comprobante_model->lista_deuda_pendiente($p);
+		//print_r($deuda_pendiente);
+		//$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+		
+		
 		/**********RESP CONSULTA************/
 		/*
 		{
@@ -368,7 +378,7 @@ class OperacionController extends Controller
 		
 		$arr_var_output = array("MESSAGE TYPE IDENTIFICATION","PRIMARY BIT MAP","SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","AMOUNT TRANSACTION","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","APPROVAL CODE","RESPONSE CODE","CARD ACCEPTOR TERMINAL ID","TRANSACTION CURRENCY CODE","LONGITUD","CodigoEmpresa","TipoConsulta","NumConsulta","CodigoErrorOriginal","DescRespuesta","NombreCliente","NombreEmpresa","NumDocs");
 		
-		foreach($arr_var_input as $key=>$row){
+		foreach($arr_var_output as $key=>$row){
 			$data_output[$row] = "";
 			if(in_array($row, $arr_var_igual)){
 				$data_output[$row] = $data_input[$row];
@@ -382,11 +392,11 @@ class OperacionController extends Controller
 		
 		//base de datos
 		$nombreEmpresa = "COLEGIO ARQ PERU";
-		$nombreCliente = "GINOCCHIO MENDOZA PATRICIA MON";
-		$numDocs = "3";
+		$nombreCliente = $deuda_pendiente[0]->destinatario;//"GINOCCHIO MENDOZA PATRICIA MON";
+		$numDocs = count($deuda_pendiente);
 		$suma_importes = 5000;
 		$correlativo = 301;
-		$suma_longitud = 634;
+		$suma_longitud = (174*count($deuda_pendiente))+112;//982//634;
 		
 		$data_output["AMOUNT TRANSACTION"] = str_pad($suma_importes, 12, "0", STR_PAD_LEFT); //12-suma de los importes de las cuotas pendientes de pago enviadas
 		$data_output["APPROVAL CODE"] = str_pad($correlativo, 6, "0", STR_PAD_LEFT); //6-Código creado por la Empresa,código único por transacción, codigo generado 
@@ -404,26 +414,27 @@ class OperacionController extends Controller
 		$data_output_detalle = array();
 		$output_detalle = "";
 		
-		for($key=0;$key<5;$key++){
+		//for($key=0;$key<5;$key++){
+		foreach($deuda_pendiente as $row){
 			
-			$codigoProducto = 12;
-			$descrProducto = "DEUDA CUOTA";
-			$numDocumento = "FD221919437";
-			$descDocumento = "FACTURA DICIEMBRE";
+			$codigoProducto = $row->codigo_producto;//12;
+			$descrProducto = substr($row->descr_producto,0,20);//"DEUDA CUOTA";
+			$numDocumento = $row->num_documento;//"FD221919437";
+			$descDocumento = substr($row->desc_documento,0,20);//"FACTURA DICIEMBRE";
 			
-			$fechaVencimiento = "25122019";
-			$fechaEmision = "25122019";
+			$fechaVencimiento = date("dmY", strtotime($row->fecha_vencimiento));//"25122019";
+			$fechaEmision = date("dmY", strtotime($row->fecha_emision));//"25122019";
 			
-			$deuda = 16089;
-			$mora = 1000;
-			$gastosAdm = 600;
-			$pagoMinimo = 17689;
-			$importeTotal = 17689;
+			$deuda = $row->deuda;//16089;
+			$mora = $row->mora;//1000;
+			$gastosAdm = $row->gastos_adm;//600;
+			$pagoMinimo = $row->pago_minimo;//17689;
+			$importeTotal = $row->importe_total;//17689;
 			
-			$periodo = 9;
-			$anio = 2024;
-			$cuota = 1;
-			$monedaDoc = 1;
+			$periodo = $row->periodo;//9;
+			$anio = $row->anio;//2024;
+			$cuota = $row->cuota;//1;
+			$monedaDoc = $row->moneda_doc;//1;
 			
 			$data_output_detalle[$key]["CodigoProducto"] = str_pad($codigoProducto, 3, "0", STR_PAD_LEFT);//3 - 17 o 19 servicios
 			$data_output_detalle[$key]["DescrProducto"] = str_pad($descrProducto, 20, " ", STR_PAD_RIGHT);//20 - Contiene el nombre del Servicio, DEUDA CUOTA
