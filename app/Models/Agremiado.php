@@ -154,7 +154,7 @@ and a.id=".$id;
 		left join personas p on p.id = pr.id_persona 
 		left join empresas e  on e.id = pr.id_empresa 
 		where 1=1 and
-		l.credipago = '".$numero_documento."'
+		trim(l.credipago) = '".$numero_documento."'
 		limit 1
 		";
 
