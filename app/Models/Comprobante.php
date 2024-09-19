@@ -373,6 +373,10 @@ class Comprobante extends Model
 		return $this->readFunctionPostgres('sp_lista_deuda_pendiente',$p);
     }
 	
+	public function actualiza_pago_pos($p){
+		return $this->readFunctionPostgres('sp_actualiza_pago_pos',$p);
+    }
+	
 	public function readFunctionPostgres($function, $parameters = null){
 
       $_parameters = '';
