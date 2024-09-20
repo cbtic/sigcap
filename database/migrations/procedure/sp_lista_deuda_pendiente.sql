@@ -1,5 +1,3 @@
--- DROP FUNCTION public.sp_lista_deuda_pendiente(varchar, varchar, varchar, refcursor);
-
 CREATE OR REPLACE FUNCTION public.sp_lista_deuda_pendiente(p_tipo_doc character varying, p_numero_doc character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
