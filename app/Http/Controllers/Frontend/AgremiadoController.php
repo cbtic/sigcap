@@ -621,6 +621,7 @@ class AgremiadoController extends Controller
 		
 		$agremiado = Agremiado::find($request->id_agremiado);
 		$agremiado->id_ubicacion = 336;
+		$agremiado->id_situacion = 74;
 		$agremiado->save();
 		
 		$fecha_fin = "";
