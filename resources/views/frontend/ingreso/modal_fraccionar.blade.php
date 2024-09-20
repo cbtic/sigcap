@@ -421,6 +421,8 @@ legend.scheduler-border {
 
 
 		$('#tblConceptos tbody').html("");
+		$("#divGuardar").hide();
+
 		/*
 		$('#tblConceptos tbody tr').after('<tr id="fila' + pad(n, 2) + '"> <td width="5%">' + n + '</td> <td td width="10%"> ' + fecha_cuota + ' </td> <td width="55%">' + $("#denominacion").val() + '- Fraccionado ' + n + '</td> <td width="10%">SOLES</td> <td width="20%">' + cuota_uno + '</td></tr>');
 
@@ -490,6 +492,7 @@ legend.scheduler-border {
 			n++;
 			//alert(newRow);
 			$('#tblConceptos tbody').append(newRow);
+			$("#divGuardar").show();
 		}
 
 		function ultimoDiaDelMesDeFecha(fecha) {
@@ -516,7 +519,7 @@ legend.scheduler-border {
 		//$('#tblConceptos tr:last').after('<tr id="fila' + pad(cuentaproductos, 2) + '"><td class="text-right">#</td></tr>');
 
 		
-		$("#divGuardar").show();
+		
 
 
 	}

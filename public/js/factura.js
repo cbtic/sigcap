@@ -115,10 +115,6 @@ function calculoDetraccion(){
 	var tipo= $('#TipoF').val()
 
 	if (Math.round(total_fac) > 700 && tipo=='FT' ){
-	//	alert(Math.round(total_fac));
-
-		//var f_venci = FormatFecha(d);
-		//$('#f_venci_01').val(f_venci);
 
 		$('#porcentaje_detraccion').val("12%");		
 		$('#monto_detraccion').val(total_detraccion.toFixed(2));
@@ -134,7 +130,7 @@ function calculoDetraccion(){
 		$('#nc_detraccion').val("");
 		$('#tipo_detraccion').val("");
 		$('#afecta_a').val("");
-		$('#id_tipooperacion_').val("");
+		$('#id_tipooperacion_').val("1");
 		
 		//$('#medio_pago').value("");
 	}
