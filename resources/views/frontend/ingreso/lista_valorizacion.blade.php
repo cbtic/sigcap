@@ -40,7 +40,7 @@ foreach($valorizacion as $key=>$row):
 <tr style="font-size:13px" data-toggle="tooltip" data-placement="top" title="<?php echo $row->exonerado_motivo ?>"  >	
 	<td class="text-center">
         <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">		
-			<input type="checkbox" key="<?php echo $key?>" class="mov" name="comprobante_detalles[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)"  <?php echo $disabled?> />
+			<input type="checkbox" key="<?php echo $key?>" class="mov" name="comprobante_detalles[<?php echo $key?>][id]" value="<?php echo $row->id?>" onchange="calcular_total(this)"  <?php if($n!=1) echo $disabled?> />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][chek]" value="" class="form-control form-control-sm text-right chek" />
 			<input type="hidden" id="comprobante_detalle_id" name="comprobante_detalle[<?php echo $key?>][id]" value="<?php echo $row->id?>" />
 			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][fecha]" value="<?php echo $row->fecha?>" />

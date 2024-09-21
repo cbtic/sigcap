@@ -1072,8 +1072,11 @@ class ComprobanteController extends Controller
 
                 if ($total_ <= 2) {
                     $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
-                    $agremiado->id_situacion = "73";
-                    $agremiado->save();
+
+                    if($agremiado->id_actividad_gremial != 225){
+                        $agremiado->id_situacion = "73";
+                        $agremiado->save();
+                    }
                 }
                 else{
                     $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
