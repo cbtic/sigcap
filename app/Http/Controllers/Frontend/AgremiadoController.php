@@ -620,7 +620,7 @@ class AgremiadoController extends Controller
 		$agremiadoSituacion->save();
 		
 		$agremiado = Agremiado::find($request->id_agremiado);
-		$agremiado->id_ubicacion = 336;
+		$agremiado->id_ubicacion = 336; 
 		$agremiado->id_situacion = 267; 
 		$agremiado->save();
 		
