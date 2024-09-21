@@ -1035,6 +1035,12 @@ class SesionController extends Controller
 	
 	public function ver_calendario_sesion_pdf($id_periodo,$anio,$mes){
 		
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', '1200');
+		
 		$comisionSesion_model = new ComisionSesione(); 
 		
 		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesion($id_periodo,$anio,$mes);

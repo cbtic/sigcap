@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_listar_computo_sesion_paginado(p_id_periodo_comisiones character varying, p_id_comision character varying, p_id_puesto character varying, p_anio character varying, p_mes character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -47,7 +46,7 @@ inner join tabla_maestras t3 on t1.id_estado_sesion::int = t3.codigo::int And t3
 left join tabla_maestras t7 on t1.id_estado_aprobacion::int = t7.codigo::int And t7.tipo =''109'' 
 inner join comisiones t4 on t1.id_comision=t4.id
 inner join periodo_comisiones t5 on t1.id_periodo_comisione=t5.id
-inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
+inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id and mi.estado=''1''  
 /*inner join comision_delegados cd on t0.id_delegado=cd.id  
 inner join agremiados a on cd.id_agremiado=a.id*/
 left join comision_delegados cd on t0.id_delegado=cd.id  
@@ -146,5 +145,3 @@ End
 
 $function$
 ;
-
-

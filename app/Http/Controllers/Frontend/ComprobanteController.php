@@ -814,6 +814,18 @@ class ComprobanteController extends Controller
                 //if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
                 //if ($id_concepto!= 26411 && $id_concepto!= 26412) $id_tipo_afectacion_pp=0;
 
+                /*
+                echo("ubicacion_id:".$ubicacion_id);
+                echo(" - ");
+                echo("id_persona_act:".$id_persona_act);
+                echo(" - ");
+                echo("ubicacion_id2:".$ubicacion_id2);
+                echo(" - ");
+                echo("id_persona2:".$id_persona2);
+                
+                exit();
+                */
+                
 				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona_act, round($total,2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
@@ -844,6 +856,12 @@ class ComprobanteController extends Controller
                 $factura_upd->id_forma_pago =  $request->id_formapago_;
 
                 $factura_upd->tipo_operacion = $request->id_tipooperacion_;
+
+
+                //$factura_upd->id_persona = $request->id_tipooperacion_;
+                //$factura_upd->id_empresa = $request->id_tipooperacion_;
+
+
 
 				$factura_upd->save();
 

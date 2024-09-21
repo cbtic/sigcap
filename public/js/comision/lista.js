@@ -857,10 +857,23 @@ function eliminarComision(id,estado){
 
 function fn_eliminar_muniIntegrada(id,estado){
 	
+	/*
+	var periodo = $("#frmAfiliacion #periodo").val();
+	var cad_id = $("#cad_id").val();
+	if(cad_id=="")cad_id="0";
+
+	var estado = $("#estado").val();
+	var tipo_comision = $("#frmAfiliacion #tipo_comision").val();
+	*/
     $.ajax({
             url: "/comision/eliminar_muniIntegrada/"+id+"/"+estado,
             type: "GET",
+			dataType: 'json',
             success: function (result) {
+				if(result.msg!=""){
+					bootbox.alert(result.msg);
+					return false;	
+				}
                 //if(result="success")obtenerPlanDetalle(id_plan);
 				datatablenew();
 				cargarMunicipalidadesIntegradas();
@@ -873,8 +886,13 @@ function fn_eliminar_comision(id,estado){
     $.ajax({
             url: "/comision/eliminarComision/"+id+"/"+estado,
             type: "GET",
+			dataType: 'json',
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
+				if(result.msg!=""){
+					bootbox.alert(result.msg);
+					return false;	
+				}
 				datatablenew();
 				cargarComisiones();
             }

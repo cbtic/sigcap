@@ -5,6 +5,7 @@
 	<th>Serie</th>
 	<th>Numero</th>
 	<th>Concepto</th>
+	<th>Est.Pago</th>
 	<th class="sum">Monto</th>
 	<th>Pago</th>
 	<th>Deuda</th>
@@ -43,7 +44,8 @@ foreach($pago as $row){?>
 		*/
 	?>
 	</td>
-	<td class="text-left"><?php echo $row->total?></td>
+	<td class="text-left"><?php echo $row->estado_pago?></td>
+	<td class="text-left"><?php echo $row->total?></td>	
 	<td class="text-left">
 		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
 			<a href="/comprobante/<?php echo $row->id_comprobante?>" class="btn btn-sm btn-success" style="font-size:9px!important" target="_blank">

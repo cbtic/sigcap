@@ -143,12 +143,14 @@ class CoordinadorZonalController extends Controller
             $agremiado = Agremiado::where("id",$coordinadorZonal->id_agremiado)->where("estado","1")->first();
 			$persona = Persona::where("id",$agremiado->id_persona)->where("estado","1")->first();
             //$agremiado_model = Agremiado::find($id);
-			$coordinadorZonalDetalle = CoordinadorZonalDetalle::where('id_tipo_coordinador',$coordinadorZonal->id_zonal)->where("estado","1")->first();
+			$coordinadorZonalDetalle = CoordinadorZonalDetalle::where('id_tipo_coordinador',$coordinadorZonal->id_zonal)->where('periodo',$coordinadorZonal->id_periodo)->where("estado","1")->first();
 			$zonal = $tablaMaestra_model->getMaestroC(117,$coordinadorZonal->id_zonal);
 			//var_dump($zonal);exit();
 		}else{
 			$coordinadorZonal = new CoordinadorZonal;
 		}
+
+		//dd($coordinadorZonalDetalle);exit();
 
         $periodo = $periodo_model->getPeriodoAll();
         $mes = $tablaMaestra_model->getMaestroByTipo(116);
