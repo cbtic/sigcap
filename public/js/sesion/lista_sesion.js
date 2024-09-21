@@ -2,6 +2,7 @@
 $(document).ready(function () {
 	
 	$("#id_regional_bus").select2({ width: '100%' });
+	$("#id_comision_bus").select2({ width: '100%' });
 	
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
@@ -10,13 +11,35 @@ $(document).ready(function () {
 	$('#btnNuevo').click(function () {
 		modalSesion(0);
 	});
+	
+	$('#btnEjecutar').click(function () {
+		guardar_sesion_bloque();
+	});
+
+	$('#btnImportarDictamenes').click(function () {
+		importarDatalicenciaDictamenes();
+	});
 
 	$('#denominacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
 	});
-		
+	
+	$('#fecha_inicio_bus').datepicker({
+        autoclose: true,
+		format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
+	$('#fecha_fin_bus').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy',
+		changeMonth: true,
+		changeYear: true,
+    });
+	
 	datatablenew();
 
 	$(function() {
@@ -52,6 +75,23 @@ $(document).ready(function () {
 		});
 	});
 });
+
+function guardar_sesion_bloque(){
+    
+	var _token = $('#_token').val();
+	var id_periodo = $('#id_periodo_bus').val();
+	
+    $.ajax({
+			url: "/sesion/send_sesion_bloque",
+            type: "POST",
+            data : {_token:_token,id_periodo:id_periodo},
+            success: function (result) {
+				$('#openOverlayOpc').modal('hide');
+				datatablenew();
+				
+            }
+    });
+}
 
 function habiliarTitular(){
 	/*
@@ -240,23 +280,95 @@ function obtenerTitular(){
 function obtenerComision(){
 	
 	var id_periodo = $('#id_periodo').val();
+	var tipo_comision = $('#tipo_comision').val();
+	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var id_comision = $("#id_comision_bus").val();
+	
 	$.ajax({
-		url: '/sesion/obtener_comision/'+id_periodo,
+		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision,
 		dataType: "json",
 		success: function(result){
 			var option = "";
 			$('#id_comision').html("");
+			var sel = "";
+			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				sel = "";
+				if(id_comision==oo.id)sel = "selected='selected'";
+				option += "<option value='"+oo.id+"' "+sel+">"+oo.denominacion+" "+oo.comision+"</option>";
 			});
 			$('#id_comision').html(option);
 		}
 		
 	});
 	
+	$("#divFechaProgramado").hide();
+	
+	var id_dia_semana = $("#id_dia_semana").val();
+	
+	if(id_dia_semana==398 || id_tipo_sesion==402){
+		$("#divFechaProgramado").show();
+	}
+	
+	/*
+	if(tipo_comision==2){
+		$("#divFechaProgramado").show();
+	}
+	
+	if(tipo_comision!=2 && id_tipo_sesion==402){
+		$("#divFechaProgramado").show();
+	}
+	*/
+	
 }
 
-function obtenerComisionBus(){
+function habilitarProgramacion(){
+	
+	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var tipo_comision = $("#tipo_comision").val();
+	var id_dia_semana = $("#id_dia_semana").val();
+	
+	$("#divFechaProgramado").hide();
+	
+	if(id_dia_semana==398 || id_tipo_sesion==402){
+		$("#divFechaProgramado").show();
+	}
+	
+	/*
+	if(tipo_comision==2){
+		$("#divFechaProgramado").show();
+	}
+	
+	if(tipo_comision!=2 && id_tipo_sesion==402){
+		$("#divFechaProgramado").show();
+	}
+	*/
+	
+}
+
+function habilitarAprobarPago(){
+	
+	var id_estado_aprobacion = $('#id_estado_aprobacion').val();
+	
+	$(".id_aprobar_pago").prop("checked",false);
+	
+	
+	if(id_estado_aprobacion==2){
+		$(".id_aprobar_pago").prop("checked",true);
+		
+		$(".edit_delegado").prop("disabled",true);	
+		$(".delete_delegado").prop("disabled",true);
+		
+	}else{
+		
+		$(".edit_delegado").prop("disabled",false);	
+		$(".delete_delegado").prop("disabled",false);
+	}
+	
+	
+}
+
+function obtenerComisionBusOld(){
 	
 	var id_periodo = $('#id_periodo_bus').val();
 	$.ajax({
@@ -265,6 +377,7 @@ function obtenerComisionBus(){
 		success: function(result){
 			var option = "";
 			$('#id_comision_bus').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
 			$(result).each(function (ii, oo) {
 				option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
 			});
@@ -275,26 +388,118 @@ function obtenerComisionBus(){
 	
 }
 
+function obtenerComisionBus(){
+	
+	var id_periodo = $('#id_periodo_bus').val();
+	var tipo_comision_bus = $('#tipo_comision_bus').val();
+	
+	$.ajax({
+		url: '/sesion/obtener_comision/'+id_periodo+'/'+tipo_comision_bus,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#id_comision_bus').html("");
+			option += "<option value='0'>--Seleccionar--</option>";
+			$(result).each(function (ii, oo) {
+				//option += "<option value='"+oo.id+"'>"+oo.comision+" "+oo.denominacion+"</option>";
+				option += "<option value='"+oo.id+"'>"+oo.denominacion+" "+oo.comision+"</option>";
+			});
+			$('#id_comision_bus').html(option);
+		}
+		
+	});
+	
+}
+
 function obtenerComisionDelegado(){
 	
+	var id = $("#id").val();
+	
 	var id_comision = $('#id_comision').val();
+	
 	$.ajax({
 		url: '/sesion/obtener_comision_delegado/'+id_comision,
 		dataType: "json",
 		success: function(result){
+			var delegado = result.delegado;
+			var dia_semana = result.dia_semana[0];
 			var option = "";
 			$('#tblDelegado tbody').html("");
-			$(result).each(function (ii, oo) {
+			$(delegado).each(function (ii, oo) {
 				option += "<tr style='font-size:13px'>";
-				option += "<input type='hidden' name='id_delegado[]' value='"+oo.id+"'>";
+				option += "<input type='hidden' name='id_delegado[]' value='"+oo.id+"' >";
 				option += "<td class='text-left'>"+oo.puesto+"</td>";
-				option += "<td class='text-left'>"+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</td>";
 				option += "<td class='text-left'>"+oo.numero_cap+"</td>";
+				option += "<td class='text-left'>"+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</td>";
 				option += "<td class='text-left'>"+oo.situacion+"</td>";
+				var sel = "";
+				if(oo.coordinador==1)sel = "checked='checked'";
+				option += "<td class='text-center'><input type='radio' name='coordinador' "+sel+" value='"+oo.id+"' /></td>";
+				
+				if(id>0){
 				option += "<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('"+oo.id+"') ><i class='fa fa-edit'></i> Editar</button></td>";
+				}else{
+				option += "<td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td>";
+				}
+				
+				
 				option += "</tr>";
 			});
+			
+			if(option!="")$("#btnSesionGuardar").prop("disabled",false);
+			else $("#btnSesionGuardar").prop("disabled",true);
+			
 			$('#tblDelegado tbody').html(option);
+			
+			$("#dia_semana").val(dia_semana.denominacion);
+			$("#id_dia_semana").val(dia_semana.codigo);
+		}
+		
+	});
+	
+}
+
+function obtenerComisionDelegadoNuevo(id_comision){
+	
+	var id = $("#id").val();
+	
+	//var id_comision = $('#id_comision').val();
+	$.ajax({
+		url: '/sesion/obtener_comision_delegado/'+id_comision,
+		dataType: "json",
+		success: function(result){
+			var delegado = result.delegado;
+			var dia_semana = result.dia_semana[0];
+			var option = "";
+			$('#tblDelegado tbody').html("");
+			$(delegado).each(function (ii, oo) {
+				option += "<tr style='font-size:13px'>";
+				option += "<input type='hidden' name='id_delegado[]' value='"+oo.id+"' >";
+				option += "<td class='text-left'>"+oo.puesto+"</td>";
+				option += "<td class='text-left'>"+oo.numero_cap+"</td>";
+				option += "<td class='text-left'>"+oo.apellido_paterno+" "+oo.apellido_materno+" "+oo.nombres+"</td>";
+				option += "<td class='text-left'>"+oo.situacion+"</td>";
+				var sel = "";
+				if(oo.coordinador==1)sel = "checked='checked'";
+				option += "<td class='text-center'><input type='radio' name='coordinador' "+sel+" value='"+oo.id+"' /></td>";
+				
+				if(id>0){
+				option += "<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalAsignarDelegadoSesion('"+oo.id+"') ><i class='fa fa-edit'></i> Editar</button></td>";
+				}else{
+				option += "<td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td><td class='text-left'></td>";
+				}
+				
+				
+				option += "</tr>";
+			});
+			
+			if(option!="")$("#btnSesionGuardar").prop("disabled",false);
+			else $("#btnSesionGuardar").prop("disabled",true);
+			
+			$('#tblDelegado tbody').html(option);
+			
+			$("#dia_semana").val(dia_semana.denominacion);
+			$("#id_dia_semana").val(dia_semana.codigo);
 		}
 		
 	});
@@ -484,7 +689,7 @@ function datatablenew(){
         "autoWidth": false,
         "bLengthChange": true,
         "destroy": true,
-        "lengthMenu": [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
+        "lengthMenu": [[8,10, 50, 100, 200, 60000], [8,10, 50, 100, 200, "Todos"]],
         "aoColumns": [
                         {},
         ],
@@ -501,20 +706,30 @@ function datatablenew(){
 			
 			var id_regional = $('#id_regional_bus').val();
             var id_periodo = $('#id_periodo_bus').val();
+			var tipo_comision = $('#tipo_comision_bus').val();
 			var id_comision = $('#id_comision_bus').val();
 			var id_tipo_sesion = $('#id_tipo_sesion_bus').val();
 			var id_estado_sesion = $('#id_estado_sesion_bus').val();
-			//var id_concurso = $('#id_concurso_bus').val();
-			
+			var id_estado_aprobacion = $('#id_estado_aprobacion_bus').val();
+			var fecha_inicio_bus = $('#fecha_inicio_bus').val();
+			var fecha_fin_bus = $('#fecha_fin_bus').val();
+			var cantidad_delegado = $('#cantidad_delegado').val();
+			var id_situacion = $('#id_situacion_bus').val();
+			var campo = $('#campo').val();
+			var orden = $('#orden').val();
 			var _token = $('#_token').val();
+			
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 //"contentType": "application/json; charset=utf-8",
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id_regional:id_regional,id_periodo:id_periodo,id_comision:id_comision,
-						id_tipo_sesion:id_tipo_sesion,id_estado_sesion:id_estado_sesion,/*id_concurso:id_concurso,*/
+						id_regional:id_regional,id_periodo:id_periodo,tipo_comision:tipo_comision,id_comision:id_comision,
+						id_tipo_sesion:id_tipo_sesion,id_estado_sesion:id_estado_sesion,
+						fecha_inicio_bus:fecha_inicio_bus,fecha_fin_bus:fecha_fin_bus,
+						id_estado_aprobacion:id_estado_aprobacion,cantidad_delegado:cantidad_delegado,id_situacion:id_situacion,
+						campo:campo,orden:orden,
 						_token:_token
                        },
                 "success": function (result) {
@@ -536,7 +751,7 @@ function datatablenew(){
 		},
         "aoColumnDefs":
             [	
-			 
+			 	/*
 			 	{
                 "mRender": function (data, type, row) {
                 	var region = "";
@@ -547,12 +762,23 @@ function datatablenew(){
                 "aTargets": [0],
 				"className": "dt-center",
 				},
-				
+				*/
 				{
                 "mRender": function (data, type, row) {
                 	var periodo = "";
 					if(row.periodo!= null)periodo = row.periodo;
 					return periodo;
+                },
+                "bSortable": false,
+                "aTargets": [0],
+				"className": "dt-center",
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var tipo_comision = "";
+					if(row.tipo_comision!= null)tipo_comision = row.tipo_comision;
+					return tipo_comision;
                 },
                 "bSortable": false,
                 "aTargets": [1],
@@ -580,7 +806,6 @@ function datatablenew(){
                 "aTargets": [3],
 				"className": "dt-center",
                 },
-				
 				{
                 "mRender": function (data, type, row) {
                 	var fecha_ejecucion = "";
@@ -590,7 +815,7 @@ function datatablenew(){
                 "bSortable": true,
                 "aTargets": [4]
                 },
-				
+				/*
                 {
                 "mRender": function (data, type, row) {
                 	var hora_inicio = "";
@@ -610,7 +835,7 @@ function datatablenew(){
                 "bSortable": true,
                 "aTargets": [6]
                 },
-				
+				*/
 				{
                 "mRender": function (data, type, row) {
                 	var tipo_sesion = "";
@@ -618,7 +843,7 @@ function datatablenew(){
 					return tipo_sesion;
                 },
                 "bSortable": true,
-                "aTargets": [7]
+                "aTargets": [5]
                 },
 				
 				{
@@ -628,23 +853,127 @@ function datatablenew(){
 					return estado_sesion;
                 },
                 "bSortable": true,
+                "aTargets": [6]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var estado_aprobacion = "";
+					if(row.estado_aprobacion!= null)estado_aprobacion = row.estado_aprobacion;
+					return estado_aprobacion;
+                },
+                "bSortable": true,
+                "aTargets": [7]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var cantidad_delegado = "";
+					if(row.cantidad_delegado!= null)cantidad_delegado = row.cantidad_delegado;
+					return cantidad_delegado;
+                },
+                "bSortable": true,
+				"className": "text-center",
                 "aTargets": [8]
                 },
 				
 				{
                 "mRender": function (data, type, row) {
+                	var cantidad_situacion = "";
+					if(row.cantidad_situacion!= null)cantidad_situacion = row.cantidad_situacion;
+					return cantidad_situacion;
+                },
+                "bSortable": true,
+				"className": "text-center",
+                "aTargets": [9]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var observaciones = "";
+					if(row.observaciones!= null)observaciones = row.observaciones;
+					return '<span data-toggle="tooltip" title="'+observaciones+'">' + observaciones.substring(0,12) + '</span>';
+                },
+                "bSortable": true,
+				"className": "text-center",
+                "aTargets": [10]
+                },
+				
+				{
+                "mRender": function (data, type, row) {
                 	var newRow = "";
-					newRow="<button style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalSesion('"+row.id+"') ><i class='fa fa-edit'></i> Editar</button>"
+					var btnDisabled="";
+					if(row.flag_cz==1)btnDisabled="disabled='disabled'";
+						newRow="<button "+btnDisabled+" style='font-size:12px' type='button' class='btn btn-sm btn-info' data-toggle='modal' onclick=cargarDictamen('"+row.id+"') ><i class='fa fa-edit'></i> Ver Dictamen</button>"
+					
 					return newRow;
                 },
                 "bSortable": true,
-                "aTargets": [9]
+                "aTargets": [11]
                 },
+				
+				{
+                "mRender": function (data, type, row) {
+                	var newRow = "";
+					var btnDisabled="";
+					if(row.flag_cz==1)btnDisabled="disabled='disabled'";
+					newRow="<button "+btnDisabled+" style='font-size:12px' type='button' class='btn btn-sm btn-success' data-toggle='modal' onclick=modalSesion('"+row.id+"') ><i class='fa fa-edit'></i> Editar - Ejecutar</button>"
+					return newRow;
+                },
+                "bSortable": true,
+                "aTargets": [12]
+                },
+				{
+				"mRender": function (data, type, row) {
+					
+					var btn_disabled_tipo = "";
+					if(row.tipo_sesion!="EXTRAORDINARIA" && row.id_dia_semana!="398")var btn_disabled_tipo = "disabled='disabled'";
+					
+					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
+					html += '<button '+btn_disabled_tipo+' onclick=eliminarSesion('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px"><i class="fa fa-trash"></i> Eliminar Sesi&oacute;n</button>';
+					
+					html += '</div>';
+					return html;
+				},
+				"bSortable": false,
+				"aTargets": [13],
+				//"visible": (row.tipo_sesion!="EXTRAORDINARIA")?true:false,
+				},
 
             ]
 
 
     });
+	
+	$('#tblAfiliado').on('draw.dt', function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+	
+}
+
+function cargarDictamen(id_concurso_inscripcion){
+       
+    $("#tblDictamen tbody").html("");
+	$.ajax({
+			url: "/sesion/obtener_dictamen/"+id_concurso_inscripcion,
+			type: "GET",
+			success: function (result) {  
+					$("#tblDictamen tbody").html(result);
+			}
+	});
+
+}
+
+function cargarDictamenNuevo(id_concurso_inscripcion){
+       
+    $("#tblDictamenNuevo tbody").html("");
+	$.ajax({
+			url: "/sesion/obtener_dictamen/"+id_concurso_inscripcion,
+			type: "GET",
+			success: function (result) {  
+					$("#tblDictamenNuevo tbody").html(result);
+			}
+	});
 
 }
 
@@ -652,9 +981,29 @@ function fn_ListarBusqueda() {
     datatablenew();
 };
 
+function importarDatalicenciaDictamenes(){
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+
+	$.ajax({
+		url: "/sesion/importar_dataLicencia_dictamenes",
+		type: "GET",
+		success: function(result){
+
+			$('.loader').hide();
+			bootbox.alert("Se import&oacute; exitosamente los datos"); 
+			datatablenew();
+		}
+	});
+}
+
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
     //fn_util_bloquearPantalla("Buscando");
-    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, 001);//500
+    setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, '001');//500
 }
 
 function fn_CargaSuGrilla(pValor, piIdMovimientoCompra) {
@@ -858,3 +1207,145 @@ function fn_eliminar(id,estado){
     });
 }
 
+
+function eliminarDelegadoSesion(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas Eliminar al delegado?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_delegado_sesion(id);
+            }
+        }
+    });
+    //$(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_delegado_sesion(id){
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+    $.ajax({
+            url: "/sesion/eliminar_comision_sesion_delegados/"+id,
+            type: "GET",
+            success: function (result) {
+                $('.loader').hide();
+				//$('#openOverlayOpc').modal('hide');
+				//datatablenew();
+				cargarDelegados();
+            }
+    });
+}
+
+function guardar_coordinador(id,id_delegado){
+	
+	bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas cambiar de coordinador en todas las sesiones?", 
+        callback: function(result){
+            if (result==true) {
+                fn_guardar_coordinador(id,id_delegado);
+            }
+        }
+    });
+	
+}
+
+function fn_guardar_coordinador(id,id_delegado){
+    
+	var msg = "";
+	var _token = $('#_token').val();
+	
+    $.ajax({
+			url: "/sesion/send_coordinador_delegado_sesion",
+            type: "POST",
+            data : {_token:_token,id:id,id_delegado:id_delegado},
+            success: function (result) {
+				$('#openOverlayOpc').modal('hide');
+				//location.reload();
+            }
+    });
+}
+
+
+function modalVerProyectista(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/derecho_revision/modal_proyectista/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
+
+function modalHistorialDelegadoSesion(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc2 .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/sesion/modal_historial_delegado_sesion/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc2").html(result);
+					$('#openOverlayOpc2').modal('show');
+			}
+	});
+
+}
+
+function habilitarAprobar(obj){
+	
+	
+	if(!$(obj).is(':checked')) {
+		$(obj).parent().parent().find(".edit_delegado").prop("disabled",false);	
+		$(obj).parent().parent().find(".delete_delegado").prop("disabled",false);	
+	}else{
+		$(obj).parent().parent().find(".edit_delegado").prop("disabled",true);
+		$(obj).parent().parent().find(".delete_delegado").prop("disabled",true);
+	}
+	
+
+}
+
+function limpiar_coordinador(){
+	
+	$('input[name=coordinador]').prop("checked",false);
+	
+}
+
+function eliminarSesion(id){
+
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas Eliminar la Sesion?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_sesion(id,0);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_sesion(id,estado){
+	
+    $.ajax({
+            url: "/sesion/eliminar_sesion/"+id+"/"+estado,
+            type: "GET",
+            success: function (result) {
+                datatablenew();
+            }
+    });
+}

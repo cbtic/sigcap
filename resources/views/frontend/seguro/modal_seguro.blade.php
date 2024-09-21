@@ -121,6 +121,7 @@ $.mask.definitions['p'] = "[Mm]";
 });
 */
 $(document).ready(function() {
+	$("#concepto").select2({ width: '100%' });
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
@@ -173,6 +174,8 @@ function valida(){
 	var id_regional = $('#id_regional').val();
 	var nombre = $('#denominacion_').val();
 	var descripcion =$('#descripcion_').val();	
+	var concepto =$('#concepto').val();	
+	
 
 	if (nombre==""){
 	   mensaje= "Falta ingresar la denominacion del Seguro";
@@ -195,16 +198,16 @@ function fn_save(){
 	var id_regional = $('#id_regional').val();
 	var nombre = $('#denominacion_').val();
 	var descripcion =$('#descripcion_').val();	
+	var concepto =$('#concepto').val();	
 
     $.ajax({
 			url: "/seguro/send_seguro",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,nombre:nombre,descripcion:descripcion},
-			//dataType: 'json',
+            data : {_token:_token,id:id,id_regional:id_regional,nombre:nombre,descripcion:descripcion,concepto:concepto},
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
-				datatablenew();
+				window.location.reload();
+				//datatablenew();
 								
             }
     });
@@ -240,7 +243,7 @@ function fn_save(){
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
 					
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
 					
@@ -279,6 +282,20 @@ function fn_save(){
 								<input id="descripcion_" name="descripcion_" class="form-control form-control-sm"  value="<?php echo $seguro->descripcion?>" type="textarea"  >
 							</div>
 						</div>
+						<div class="col-lg-10">
+									<div class="form-group">
+										<label class="control-label form-control-sm">Concepto</label>
+										<select name="concepto" id="concepto" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$seguro->id_concepto)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<?php 
+											}
+											?>
+										</select>
+									</div>
+								</div>
 					
 				
 					</div>
@@ -397,7 +414,7 @@ function fn_save(){
 					
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
-							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 								
 							</div>

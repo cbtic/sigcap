@@ -579,12 +579,22 @@ br {
                                                         </tr>
                                                         <tr>
                                                             <th></th>
-                                                            <th>Total</th>
+                                                            <th>Total--</th>
                                                             <th></th>
                                                             <th></th>
                                                             <th class="text-right"><span
                                                                     id="totalP"></span> <?php if ($trans == 'FA'){echo number_format($total,2);} if ($trans == 'FE'){echo number_format($facturas->fac_total,2);}?></th>
                                                         </tr>
+
+                                                        <tr id ="tr_total_pagar">
+                                                            <th></th>
+                                                            <th>Total a pagar</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th class="text-right"><span
+                                                                    id="totalP"></span> </th>
+                                                        </tr>
+
                                                     </tbody>
                                                 </table>
                                             </div>

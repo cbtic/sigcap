@@ -14,6 +14,11 @@ $(document).ready(function () {
 		}
 	});
 
+	$("#partida_presupuestal").select2();
+	$("#id_tipo_afectacion").select2();
+	$("#id_centro_costo").select2();
+	$("#id_tipo_concepto").select2();
+
 	/*	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
@@ -51,13 +56,13 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#tipo_afectacion').keypress(function(e){
+	$('#id_tipo_afectacion').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
 	});
 
-	$('#partida_presupuestalBus').keypress(function(e){
+	$('#id_partida_presupuestal').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 		}
@@ -495,13 +500,13 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var id = $('#id').val();
+			var codigo = $('#codigo').val();
 			var denominacion = $('#denominacionBus').val();
 			var cuenta_contable_debe = $('#cuenta_contable_debe').val();
 			var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
 			var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2').val();
-            var partida_presupuestal = $('#partida_presupuestalBus').val();
-			var tipo_afectacion = $('#tipo_afectacion').val();
+            var id_partida_presupuestal = $('#id_partida_presupuestal').val();
+			var id_tipo_afectacion = $('#id_tipo_afectacion').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -510,7 +515,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,denominacion:denominacion,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,estado:estado,
+						codigo:codigo,denominacion:denominacion,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,id_partida_presupuestal:id_partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,estado:estado,
 						_token:_token
                        },
                 "success": function (result) {

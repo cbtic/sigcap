@@ -18,13 +18,16 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' am2.id, r.denominacion regional, a2.numero_cap, p.numero_documento, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, tm.denominacion sexo, p.fecha_nacimiento,am2.periodo, m.denominacion multa, m.monto, m.estado  ';
+	v_campos=' am2.id, r.denominacion regional, a2.numero_cap, p.numero_documento, 
+				p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, tm.denominacion sexo, p.fecha_nacimiento,
+				am2.periodo, m.denominacion multa, m.monto, am2.estado, te.denominacion estado_multa  ';
 
 	v_tabla='from agremiado_multas am2 
 			inner join agremiados a2 on am2.id_agremiado =a2.id
 			inner join regiones r on a2.id_regional = r.id
 			inner join personas p on a2.id_persona = p.id
 			inner join tabla_maestras tm on p.id_sexo ::int=tm.codigo::int and tm.tipo=''2''
+			inner join tabla_maestras te on am2.id_estado_multa ::int=te.codigo::int and te.tipo=''120''
 			inner join multas m on am2.id_multa = m.id';
 	
 	v_where = ' Where 1=1  ';
@@ -45,7 +48,7 @@ Begin
 	End If;
 */
 	If p_estado<>'' Then
-	 v_where:=v_where||'And m.estado = '''||p_estado||''' ';
+	 v_where:=v_where||'And am2.estado = '''||p_estado||''' ';
 	End If;
 	
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
@@ -64,3 +67,4 @@ End
 
 $function$
 ;
+

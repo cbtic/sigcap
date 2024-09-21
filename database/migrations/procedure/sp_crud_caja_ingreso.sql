@@ -12,7 +12,7 @@ begin
 			select count(id) into cantidad_caja from caja_ingresos where id_caja=p_id_caja And estado = '1';
 		
 			if cantidad_caja=0 Then
-				Insert Into caja_ingresos (id_usuario, id_caja, saldo_inicial, total_recaudado,saldo_total,fecha_inicio,estado,created_at, id_regional, id_usuario_supervisor,id_usuario_inserta)
+				Insert Into caja_ingresos (id_usuario, id_caja, saldo_inicial, total_recaudado,saldo_total,fecha_inicio,estado,created_at, id_regional, id_usuario_contabilidad,id_usuario_inserta)
 				Values (p_id_usuario,p_id_caja,to_number( p_saldo_inicial,'9999999999.99'),to_number( p_total_recaudado,'9999999999.99'),to_number( p_saldo_total,'9999999999.99'),now(),p_estado,now(),5,p_id_usuario,p_id_usuario);
 				p_id_caja_ingreso := (SELECT currval('caja_ingresos_id_seq'));
 			End if;

@@ -148,21 +148,76 @@
 				<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
-				
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="nombre" name="nombre" placeholder="Denominacion">
+					
+					<div class="col-lg-2">
+                        <?php 
+                        if($periodo_activo){
+                        ?>
+                        <input type="hidden" name="id_periodo_bus" id="id_periodo_bus" value="<?php echo $periodo_activo->id?>">
+						<select name="id_periodo_bus_" id="id_periodo_bus_" class="form-control form-control-sm" onChange="obtenerComision()" disabled="disabled">
+							<option value="0">--Periodo--</option>
+							<?php
+							foreach ($periodo as $row) {?>
+							<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+							<?php 
+							}
+							?>
+						</select>
+                        <?php
+                        }else{
+                        ?>
+                        <select name="id_periodo_bus" id="id_periodo_bus" class="form-control form-control-sm" onChange="obtenerComision()">
+							<option value="0">--Periodo--</option>
+							<?php
+							foreach ($periodo as $row) {?>
+							<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+							<?php 
+							}
+							?>
+						</select>
+                        <?php } ?>
+					</div>
+
+                    <div class="col-lg-2">
+						<select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onChange="obtenerComision()">
+							<option value="0">--Tipo Comisi&oacute;n--</option>
+							<?php
+							foreach ($tipoComision as $row) {?>
+							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+								<?php 
+							}
+							?>
+						</select>
+					</div>
+					
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						<select name="id_comision_bus" id="id_comision_bus" class="form-control form-control-sm">
+							<option value="0">--Comisi&oacute;n--</option>
+						</select>
+					</div>
+					
+					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<select name="tipo_agrupacion_bus" id="tipo_agrupacion_bus" class="form-control form-control-sm">
+							<option value="0">--Tipo Agrupaci&oacute;n--</option>
+								<?php
+								foreach ($tipoAgrupacion as $row) {?>
+									<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+								<?php 
+								}
+								?>
+						</select>
 					</div>
 					
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
-							<option value="">Todos</option>
+							<option value="">Estado</option>
 							<option value="1" selected="selected">Activo</option>
 							<option value="0">Eliminado</option>
 						</select>
 					</div>
 
                     
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
 						<input class="btn btn-success pull-rigth" value="Nuevo Titular" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>

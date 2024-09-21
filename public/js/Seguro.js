@@ -384,7 +384,7 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#nombre').val();
+			var denominacion = $('#denominacion').val();
 			var estado = $('#estado').val();
 			
 			var _token = $('#_token').val();
@@ -449,6 +449,16 @@ function datatablenew(){
                 "bSortable": true,
                 "aTargets": [3]
                 },
+
+				{
+					"mRender": function (data, type, row) {
+						var concepto = "";
+						if(row.concepto!= null)concepto = row.concepto;
+						return concepto;
+					},
+					"bSortable": true,
+					"aTargets": [4]
+					},
 				
 				{
 					"mRender": function (data, type, row) {
@@ -462,7 +472,7 @@ function datatablenew(){
 						return estado;
 					},
 					"bSortable": false,
-					"aTargets": [4]
+					"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -491,7 +501,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [6],
 				},
 
             ]
@@ -549,7 +559,7 @@ function eliminar(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Municipalidad?", 
+        message: "&iquest;Deseas "+act_estado+" el Seguro?", 
         callback: function(result){
             if (result==true) {
                 fn_eliminar(id,estado_);
@@ -562,7 +572,7 @@ function eliminar(id,estado){
 function fn_eliminar(id,estado){
 	
     $.ajax({
-            url: "/municipalidad/eliminar_municipalidad/"+id+"/"+estado,
+            url: "/seguro/eliminar_seguro/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);

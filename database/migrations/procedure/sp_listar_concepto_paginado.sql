@@ -14,17 +14,22 @@ v_count varchar;
 v_col_count varchar;
 --v_perfil varchar;
 
-Begin
-
+begin
+	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' c.id, r.denominacion regional, c.codigo, c.denominacion , tc.denominacion tipo_concepto, c.importe, tm2.denominacion id_moneda, c.periodo, c.cuenta_contable_debe , c.cuenta_contable_al_haber1 , c.cuenta_contable_al_haber2 , c.partida_presupuestal , tm.denominacion tipo_afectacion, c.centro_costo, c.estado ';
+	v_campos=' c.id, r.denominacion regional, c.codigo , c.denominacion , tc.denominacion tipo_concepto, c.importe, tm2.denominacion id_moneda, c.periodo, pc.cuenta cuenta_contable_debe, pc2.cuenta cuenta_contable_al_haber1, pc3.cuenta cuenta_contable_al_haber2 , pp.codigo partida_presupuestal , tm.denominacion tipo_afectacion, cc.codigo centro_costo , c.estado ';
 
 	v_tabla='from conceptos c
-			left join regiones r on c.id_regional = r.id
-			left join tipo_conceptos tc on c.id_tipo_concepto = tc.id 
-			left join tabla_maestras tm on c.id_tipo_afectacion ::int=tm.codigo::int and tm.tipo=''53''
-			left join tabla_maestras tm2 on c.id_moneda::int=tm2.codigo::int and tm2.tipo=''1''';
+	left join regiones r on c.id_regional = r.id
+	left join plan_contables pc on c.cuenta_contable_debe = pc.id
+	left join plan_contables pc2 on c.cuenta_contable_al_haber1 = pc2.id
+	left join plan_contables pc3 on c.cuenta_contable_al_haber2 = pc3.id
+	left join tipo_conceptos tc on c.id_tipo_concepto = tc.id
+	left join partida_presupuestales pp on c.partida_presupuestal = pp.id
+	left join centro_costos cc on c.centro_costo = cc.id
+	left join tabla_maestras tm on c.id_tipo_afectacion ::int=tm.codigo::int and tm.tipo=''105''
+	left join tabla_maestras tm2 on c.id_moneda::int=tm2.codigo::int and tm2.tipo=''1''';
 	
 	v_where = ' Where 1=1  ';
 	

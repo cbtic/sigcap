@@ -36,6 +36,10 @@ $(document).ready(function () {
 		}
 	});
 
+	$("#municipalidad_integrada").select2({ width: '100%' });
+
+	
+
 	$('#estado').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
@@ -146,6 +150,28 @@ function habiliarTitular(){
     	$('#divTitular').show();
 	}
 	*/
+}
+
+function obtenerComisionBus(){
+	
+	var periodo = $('#frmAfiliacion #periodo').val();
+	var tipo_comision = $('#frmAfiliacion #tipo_comision').val();
+	
+	$.ajax({
+		url: '/movilidad/obtener_comision/'+periodo+'/'+tipo_comision,
+		dataType: "json",
+		success: function(result){
+			var option = "";
+			$('#frmAfiliacion #municipalidad_integrada').html("");
+			option += "<option value='0'>--Selecionar Municipalidad Integrada--</option>";
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id+"'>"+" "+oo.denominacion+"</option>";
+			});
+			$('#frmAfiliacion #municipalidad_integrada').html(option);
+		}
+		
+	});
+	
 }
 
 function guardarAfiliacion(){
@@ -476,11 +502,12 @@ function datatablenew(){
             var iCantMostrar 	= aoData[4].value;
 			
 			//var id = $('#id').val();
-			var comision = $('#comision').val();
-			var periodo = $('#periodo').val();
-			var regional = $('#regional').val();
-			var monto = $('#monto').val();
-			var estado = $('#estado').val();
+			var comision = $('#frmAfiliacion #municipalidad_integrada').val();
+			var periodo = $('#frmAfiliacion #periodo').val();
+			var regional = $('#frmAfiliacion #regional').val();
+			var monto = $('#frmAfiliacion #monto').val();
+			var estado = $('#frmAfiliacion #estado').val();
+			var tipo_comision = $('#frmAfiliacion #tipo_comision').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
@@ -489,6 +516,7 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						comision:comision,periodo:periodo,regional:regional,monto:monto,estado:estado,
+						tipo_comision:tipo_comision,
 						_token:_token
                        },
                 "success": function (result) {
@@ -598,9 +626,9 @@ function datatablenew(){
 }
 
 function datatablenew2(){
-    var oTable1 = $('#tblAfiliado').dataTable({
+    var oTable1 = $('#tblCoordinadorSesion').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/multa/listar_historialMulta_ajax",
+        "sAjaxSource": "/coordinador_zonal/listar_historialMulta_ajax",
         "bProcessing": true,
         "sPaginationType": "full_numbers",
         //"paging":false,

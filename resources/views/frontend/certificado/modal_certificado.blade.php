@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Sistema SIGCAP</title>
 
 <style>
@@ -127,6 +128,7 @@ $.mask.definitions['p'] = "[Mm]";
 });
 */
 	$(document).ready(function() {
+		$("#nombre_proyecto").select2({ width: '100%' });
 		//$('#hora_solicitud').focus();
 		//$('#hora_solicitud').mask('00:00');
 		//$("#id_empresa").select2({ width: '100%' });
@@ -152,7 +154,13 @@ $.mask.definitions['p'] = "[Mm]";
 
 	$(document).ready(function() {
 
-
+		/*if($('#id_tipo').val() =="0"){
+			$('#nombre_proyecto_').hide();
+			$('#tipo_tramite_').hide();
+		}*/
+		
+		
+		obtenerTipoCertificado();
 
 	});
 
@@ -171,6 +179,124 @@ $.mask.definitions['p'] = "[Mm]";
 		}
 	}
 
+	function obtenerTipoCertificado(){
+	
+	var id_tipo = $("#id_tipo").val();
+
+	$('#nombre_proyecto_').hide();
+	$('#tipo_tramite_').hide();
+	$('#tipo_tramite_certificado3_').hide();
+	$('#n_pisos_').hide();
+	$('#sotanos_').hide();
+	$('#semisotanos_').hide();
+	$('#piso_nivel_').hide();
+	$('#total_area_techada_').hide();
+	
+	if (id_tipo == "0")//SELECCIONAR
+	{
+		$('#nombre_proyecto_').hide();
+		$('#tipo_tramite_').hide();
+		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
+	}else if (id_tipo == "1")//CERTIFICADO TIPO 1
+	{
+		$('#nombre_proyecto_').show();
+		$('#tipo_tramite_').hide();
+		//$('#nombre_proyecto_').show();
+		$('#tipo_tramite').val('0');
+		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').show();
+		$('#sotanos_').show();
+		$('#semisotanos_').show();
+		$('#piso_nivel_').show();
+		$('#otro_piso_nivel_').show();
+		$('#total_area_techada_').show();
+
+	}else if (id_tipo == "2") //CERTIFICADO TIPO 2
+	{
+		$('#nombre_proyecto_').show();
+		$('#tipo_tramite_').hide();
+		//$('#nombre_proyecto_').show();
+		$('#tipo_tramite').val('0');
+		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
+	}else if (id_tipo == "3") //CERTIFICADO TIPO 3
+	{
+		$('#nombre_proyecto_').show();
+		$('#tipo_tramite_').hide();
+		//$('#nombre_proyecto_').show();
+		$('#tipo_tramite').val('0');
+		$('#tipo_tramite_certificado3_').show();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
+	}else if (id_tipo == "4") { //CERTIFICADO TIPO 4
+		$('#nombre_proyecto_').hide(); 
+		$('#tipo_tramite_').show();
+		$('#vigencia_group').show();
+		$('#nombre_proyecto').val('0');
+		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
+		//$('#tipo_tramite_').val('');
+	}else if (id_tipo == "5") { //CONSTANCIA
+		$('#nombre_proyecto_').hide(); 
+		$('#tipo_tramite_').hide();
+		$('#vigencia_group').hide();
+		$('#nombre_proyecto').val('0');
+		$('#tipo_tramite').val('');
+		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
+	}else if (id_tipo == "6"){ //RECORD DE PROYECTOS
+		$('#nombre_proyecto_').hide(); 
+		$('#tipo_tramite_').hide();
+		$('#nombre_proyecto').val('0');
+		$('#tipo_tramite').val('0');
+		$('#vigencia_group').hide();
+		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
+	}else{ //seleccionar
+		$('#nombre_proyecto_').hide(); 
+		$('#tipo_tramite_').hide();
+		$('#nombre_proyecto').val('0');
+		$('#tipo_tramite').val('0');
+		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
+	}
+}
+
 
 	function fn_save() {
 
@@ -186,6 +312,16 @@ $.mask.definitions['p'] = "[Mm]";
 		var observaciones = $('#observacion_').val();
 		var estado = 1;
 		var tipo = $('#id_tipo').val();
+		var nombre_proyecto = $('#nombre_proyecto').val();
+		var id_proyecto = $('#id_proyecto').val();
+		var tipo_tramite = $('#tipo_tramite').val();
+		var tipo_tramite_tipo3 = $('#tipo_tramite_certificado3').val();
+		var n_pisos = $('#n_pisos').val();
+		var sotanos_m2 = $('#sotanos').val();
+		var semisotano_m2 = $('#semisotanos').val();
+		var piso_nivel_m2 = $('#piso_nivel').val();
+		var otro_piso_nivel_m2 = $('#otro_piso_nivel').val();
+		var total_area_techada_m2 = $('#total_area_techada').val();
 
 		$.ajax({
 			url: "/certificado/send_certificado",
@@ -203,16 +339,55 @@ $.mask.definitions['p'] = "[Mm]";
 				validez: validez,
 				fecha_sol: fecha_sol,
 				tipo: tipo,
-				idagremiado: idagremiado
+				tipo_tramite:tipo_tramite,
+				id_proyecto:id_proyecto,
+				nombre_proyecto:nombre_proyecto,
+				idagremiado: idagremiado,
+				tipo_tramite_tipo3:tipo_tramite_tipo3,
+				n_pisos:n_pisos,
+				sotanos_m2:sotanos_m2,
+				semisotano_m2:semisotano_m2,
+				piso_nivel_m2:piso_nivel_m2,
+				otro_piso_nivel_m2:otro_piso_nivel_m2,
+				total_area_techada_m2:total_area_techada_m2
 			},
 			//dataType: 'json',
 			success: function(result) {
-				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
-				datatablenew();
+					Swal.fire("Se gener&oacute; el certificado correctamente. Puede imprimirlo en el bot&oacute;n Ver Certificado")
+					$('#openOverlayOpc').modal('hide');
+					//window.location.reload();
+					datatablenew();
+				//});
 
 			}
 		});
+	}
+	
+	function obtenerNombreProyecto() {
+
+	var ncap = $('#cap_').val();
+
+	$.ajax({
+		url: '/proyecto/obtener_proyecto/' + ncap,
+		dataType: "json",
+		success: function(result) {
+
+			//print_r(result).exit();
+			//alert(result);
+			console.log(result);
+			var option = "<option value='0'>--Seleccionar--</option>";
+			$("#nombre_proyecto").html("");
+			$("#id_proyecto").html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(id == oo.id)selected = "selected='selected'";
+				option += "<option value='"+oo.id+"' "+selected+" >"+oo.nombre+"</option>";
+			});
+			$("#nombre_proyecto").html(option);
+			$("#id_proyecto").html(option);
+		}
+	});
 	}
 
 	function obtenerAgremiado() {
@@ -226,10 +401,29 @@ $.mask.definitions['p'] = "[Mm]";
 				//alert(result);
 				console.log(result);
 
-				$('#idagremiado_').val(result.id);
-				$('#nombre_').val(result.nombre_completo);
-				$('#situacion_').val(result.situacion);
-				$('#email_').val(result.email1);
+					$('#idagremiado_').val('');
+					$('#nombre_').val('');
+					$('#situacion_').val('');
+					$('#email_').val('');
+				//alert(result.situacion).exit();
+				if(result.situacion=='HABILITADO'){
+					$('#idagremiado_').val(result.id);
+					$('#nombre_').val(result.nombre_completo);
+					$('#situacion_').val(result.situacion);
+					$('#email_').val(result.email);
+					obtenerNombreProyecto();
+				}else if (result.situacion=='FALLECIDO'){
+					bootbox.alert("El Agremiado est&aacute; FALLECIDO");
+				}else if (result.situacion=='REGIONAL'){
+					bootbox.alert("El Agremiado pertenece a otra REGIONAL");
+				}else if (result.situacion=='INHABILITADO'){
+					bootbox.alert("El Agremiado est&aacute; INHABILITADO");
+				}else if (result.situacion=='PROVINCIA'){
+					bootbox.alert("El Agremiado est&aacute; en otra PROVINCIA");
+				}else if (result.situacion=='EXTRANJERO'){
+					bootbox.alert("El Agremiado est&aacute; en el EXTRANJERO");
+				}
+				
 			}
 		});
 	}
@@ -296,7 +490,7 @@ $.mask.definitions['p'] = "[Mm]";
 							</div>
 							<div class="col-lg-2" style="padding-top:12px;padding-left:0px;padding-right:0px">
 								<br>
-								<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onclick="obtenerAgremiado('<?php echo $id ?>')">
+								<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onClick="obtenerAgremiado('<?php echo $id ?>')">
 									Buscar
 								</button>
 							</div>
@@ -322,22 +516,22 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Correo electr&oacute;nico</label>
-									<input id="email_" name="email_" class="form-control form-control-sm" value="<?php echo $id ?>" type="text">
+									<input id="email_" readonly="readonly" name="email_" class="form-control form-control-sm" value="<?php echo $email1 ?>" type="text">
 								</div>
 							</div>
 
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Fecha Registro</label>
-									<input id="fecha_r_" name="fecha_r_" class="form-control form-control-sm" value="<?php echo $certificado->fecha_solicitud ?>" type="date">
+									<input id="fecha_r_" name="fecha_r_" class="form-control form-control-sm" value="<?php if($certificado->fecha_solicitud!=""){echo date("Y-m-d",strtotime($certificado->fecha_solicitud));}else echo date('Y-m-d');?>" type="date" <?php echo $certificado->fecha_solicitud =! '' ? 'disabled' : ''; ?>>
 								</div>
 							</div>
 
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label class="control-label">Tipo de Certificado</label>
-									<select name="id_tipo" id="id_tipo" class="form-control form-control-sm" onChange="obtenerPlan()">
-										<option value="">--Selecionar--</option>
+									<select name="id_tipo" id="id_tipo" class="form-control form-control-sm" onChange="obtenerTipoCertificado()" <?php echo ($certificado->id_tipo != '') ? 'disabled' : ''; ?>>
+										<option value="0">--Selecionar--</option>
 										<?php
 										foreach ($tipo_certificado as $row) { ?>
 											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $certificado->id_tipo) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
@@ -348,9 +542,58 @@ $.mask.definitions['p'] = "[Mm]";
 								</div>
 							</div>
 
+							<div class="col-lg-12">
+								<div class="form-group" id="nombre_proyecto_">
+									<label class="control-label">Nombre del Proyecto</label>
+									<select name="nombre_proyecto" id="nombre_proyecto" class="form-control form-control-sm" onChange="">
+									<select name="id_proyecto" id="id_proyecto" class="form-control form-control-sm" style="display: none;" onChange="">
+										<!--<option value="">--Selecionar--</option>-->
+									</select>
+								</div>
+							</div>
+
 						</div>
 
 						<div class="row">
+							<div class="col-lg-2">
+								<div class="form-group" id="n_pisos_">
+									<label class="control-label">N° de pisos o niveles</label>
+									<input id="n_pisos" name="n_pisos" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="sotanos_">
+									<label class="control-label">S&oacute;tano(s)(m2)</label>
+									<input id="sotanos" name="sotanos" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="semisotanos_">
+									<label class="control-label">Semis&oacute;tano(m2)</label>
+									<input id="semisotanos" name="semisotanos" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="piso_nivel_">
+									<label class="control-label">1er. Piso o Nivel(m2)</label>
+									<input id="piso_nivel" name="piso_nivel" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="otro_piso_nivel_">
+									<label class="control-label">Otros Pisos o Nivel(m2)</label>
+									<input id="otro_piso_nivel" name="otro_piso_nivel" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group" id="total_area_techada_">
+									<label class="control-label">Total &Aacute;rea Techada(m2)</label>
+									<input id="total_area_techada" name="total_area_techada" class="form-control form-control-sm" value="<?php //echo $email1 ?>" type="text">
+								</div>
+							</div>
+						</div>
+
+						<!--<div class="row">
 
 							<div class="col-lg-12">
 								<div class="form-group">
@@ -369,7 +612,7 @@ $.mask.definitions['p'] = "[Mm]";
 
 										<div class="col-lg-2" style="padding-top:0px;padding-left:0px;padding-right:0px">
 
-											<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onclick="valida_pago()">
+											<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onClick="valida_pago()">
 												Validar pago
 											</button>
 										</div>
@@ -381,25 +624,62 @@ $.mask.definitions['p'] = "[Mm]";
 								</div>
 							</div>
 
-						</div>
+						</div>-->
 
 						<div class="row">
-							<div class="col-lg-4">
+							<div class="col-lg-2">
 								<div class="form-group">
 									<label class="control-label">Fecha Emision</label>
-									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php echo $certificado->fecha_emision ?>" type="date">
+									<input id="fecha_e_" name="fecha_e_" class="form-control form-control-sm" value="<?php if($certificado->fecha_emision!=""){echo date("Y-m-d",strtotime($certificado->fecha_emision));}else echo date('Y-m-d'); ?>" type="date" readonly='readonly'>
 								</div>
 							</div>
-							<div class="col-lg-4">
-								<div class="form-group">
-									<label class="control-label">Dias Vigencia</label>
-									<input id="vigencia_" name="vigencia_" class="form-control form-control-sm" value="<?php echo $certificado->dias_validez ?>" type="text">
+							
+							<div class="form-group" id="tipo_tramite_">
+								<div class="col-lg-12">
+									<label class="control-label">Tipo de Tramite</label>
+									<select name="tipo_tramite" id="tipo_tramite" class="form-control form-control-sm" onChange="obtenerTipoCertificado()">
+										<option value="0">--Selecionar--</option>
+										<?php
+										foreach ($tipo_tramite as $row) { ?>
+											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $certificado->id_tipo_tramite) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+										<?php
+										}
+										?>
+									</select>
 								</div>
 							</div>
-							<div class="col-lg-4">
-								<div class="form-group">
+							<div class="form-group" id="tipo_tramite_certificado3_">
+								<div class="col-lg-12">
+									<label class="control-label">Tipo de Tramite</label>
+									<select name="tipo_tramite_certificado3" id="tipo_tramite_certificado3" class="form-control form-control-sm" onChange="obtenerTipoCertificado">
+										<option value="0">--Selecionar--</option>
+										<?php
+										foreach ($tipo_tramite_tipo3 as $row) { ?>
+											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $certificado->id_tipo_tramite) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group" id="vigencia_group">
+								<div class="col-lg-12">
+									<label class="control-label">D&iacute;as Vigencia</label>
+									<select name="vigencia_" id="vigencia_" class="form-control form-control-sm">
+										<?php
+										$valorSeleccionado = isset($certificado->dias_validez) ? $certificado->dias_validez : '30';
+										?>
+									<option value="" <?php echo ($valorSeleccionado == '') ? 'selected="selected"' : ''; ?>>--Dias Vigencia--</option>
+									<option value="30" <?php echo ($valorSeleccionado == '30') ? 'selected="selected"' : ''; ?>>30 D&iacute;as</option>
+									<option value="60" <?php echo ($valorSeleccionado == '60') ? 'selected="selected"' : ''; ?>>60 D&iacute;as</option>
+									<option value="90" <?php echo ($valorSeleccionado == '90') ? 'selected="selected"' : ''; ?>>90 D&iacute;as</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-lg-12">
 									<label class="control-label">Codigo</label>
-									<input id="codigo_" name="codigo_" class="form-control form-control-sm" value="<?php echo $certificado->codigo ?>" type="text">
+									<input id="codigo_" name="codigo_" class="form-control form-control-sm" value="<?php echo $certificado->codigo ?>" type="text" readonly="readonly">
 								</div>
 							</div>
 						</div>
@@ -408,7 +688,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div class="col-lg-12">
 								<div class="form-group">
 									<label class="control-label">Observaciones</label>
-									<input id="observacion_" name="observacion_" class="form-control form-control-sm" value="<?php $certificado->observaciones ?>" type="textarea">
+									<input id="observacion_" name="observacion_" class="form-control form-control-sm" value="<?php echo $certificado->observaciones ?>" type="textarea">
 								</div>
 							</div>
 						</div>

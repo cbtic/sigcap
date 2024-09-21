@@ -23,9 +23,12 @@
 									<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" type="text">
                             			<option value="">--Seleccionar--</option>
 										<?php
-										foreach ($tipo_documento as $row) {?>
+										foreach ($tipo_documento as $row) {
+										if($row->codigo==78){
+										?>
 										<option value="<?php echo $row->codigo?>" <?php if($row->codigo==78)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 										<?php 
+										}
 										}
 										?>										        
                                     </select>
@@ -37,15 +40,15 @@
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Numero Documento</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" required autofocus autocomplete="numero_documento" onblur="obtenerPersona()" />
                                 </div>
                             </div><!--form-group-->
 							
 							<div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">@lang('Name')</label>
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Nombre y Apellidos</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" placeholder="{{ __('Name') }}" maxlength="100" required autofocus autocomplete="name" />
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" placeholder="Nombre y Apellidos" maxlength="100" required autofocus autocomplete="name" readonly="readonly" />
                                 </div>
                             </div><!--form-group-->
 
@@ -95,7 +98,7 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button class="btn btn-primary" type="submit">@lang('Register')</button>
+                                    <button class="btn btn-primary" type="submit" id="btnRegister">@lang('Register')</button>
                                 </div>
                             </div><!--form-group-->
                         </x-forms.post>
@@ -105,3 +108,42 @@
         </div><!--row-->
     </div><!--container-->
 @endsection
+
+
+<script type="text/javascript">
+
+function obtenerPersona(){
+		
+	var tipo_documento = $("#id_tipo_documento").val();
+	var numero_documento = $("#numero_documento").val();
+	var msg = "";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+	$.ajax({
+		url: '/persona/obtener_persona_login/' + tipo_documento + '/' + numero_documento,
+		dataType: "json",
+		success: function(result){
+			
+			if(result.persona.id_situacion==83){
+				bootbox.alert("No se puede registrar a un fallecido");
+				$("#btnRegister").attr("disabled",true);
+				return false;
+			}
+		
+			var nombre_persona= result.persona.apellido_paterno+" "+result.persona.apellido_materno+", "+result.persona.nombres;
+			$('#name').val(nombre_persona);
+		},
+		error: function(data) {
+			//alert("Persona no encontrada en la Base de Datos.");
+		}
+		
+	});
+	
+}
+
+
+</script>

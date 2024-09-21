@@ -171,8 +171,8 @@
 
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
-						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-success pull-rigth" value="Nuevo" type="button" id="btnNuevo" style="margin-left:15px" />
+						<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
+						<input class="btn btn-success" value="Nuevo" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>
 				
@@ -187,7 +187,8 @@
                             <th>Apellidos y nombres</th>
                             <th>Seguro</th>
                             <th>Plan</th>
-                            <th>Monto</th>                            
+                            <th>Monto</th>
+                            <th>Moneda</th>
 							<th>Estado</th>
                             <th>Acciones</th>
                         </tr>

@@ -94,6 +94,26 @@
 	color: #FFFFFF;
 }
 
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
 </style>
 
 @extends('frontend.layouts.app')
@@ -161,11 +181,11 @@
 							<input class="form-control form-control-sm" id="agremiado" name="agremiado" placeholder="Nombre Agremiado">
 						</div>
 
-						<div class="col-lg-1-5 col-md-4 col-sm-12 col-xs-12">
+						<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 							<input class="form-control form-control-sm" id="periodo" name="periodo" placeholder="Periodo">
 						</div>
 					
-						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 							<select name="estado" id="estado" class="form-control form-control-sm">
                                 <option value="">Todos</option>
 								<option value="1" selected="selected">Activo</option>
@@ -177,11 +197,35 @@
 							</select>
 						
                         </div>
-						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
+						<div class="col-lg-2 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
 							<input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 							
 							<input class="btn btn-success" value="NUEVO" type="button" id="btnNuevo" style="margin-left:15px"/>
 	
+						</div>
+						
+						<div class="col-lg-3 col-md-1 col-sm-12 col-xs-12" style="padding-right:0px">
+							<div class="form-group">
+								
+								<a type="button" href="/img/multa/plantilla/multa.xlsx" class="btn btn-secondary" style="float:left;margin-right:10px;">Plantilla</a>
+								
+								<span class="btn btn-warning btn-file" style="float:left">
+									Examinar <input id="image" name="image" type="file" />
+								</span>
+								
+								<i id="fileExcel" class="fa fa-file-excel" style="display:none;color:#00B300;font-size:35px;block;float:left;padding-left:10px"></i>
+								
+								<input type="button" class="btn btn-primary upload" value="Subir" style="margin-left:10px;float:left">
+								
+								<!--
+								<?php
+								//$img = "/img/logo-sin-fondo2.png";
+								?>
+								<img src="<?php //echo $img?>" id="img_ruta" width="240px" height="150px" alt="" style="margin-top:10px" />
+								-->
+								<input type="hidden" id="img_foto" name="img_foto" value="" />
+								
+							</div>	
 						</div>
 					
 					</div>

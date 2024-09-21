@@ -13,6 +13,8 @@ use App\Domains\Auth\Http\Controllers\Frontend\Auth\UpdatePasswordController;
 use App\Domains\Auth\Http\Controllers\Frontend\Auth\VerificationController;
 use Tabuna\Breadcrumbs\Trail;
 
+use App\Http\Controllers\Frontend\PersonaController;
+
 /*
  * Frontend Access Controllers
  * All route names are prefixed with 'frontend.auth'.
@@ -99,4 +101,7 @@ Route::group(['as' => 'auth.'], function () {
         Route::get('login/{provider}', [SocialController::class, 'redirect'])->name('social.login');
         Route::get('login/{provider}/callback', [SocialController::class, 'callback']);
     });
+	
+	Route::get('persona/obtener_persona_login/{tipo_documento}/{numero_documento}', [PersonaController::class, 'obtener_persona_login'])->name('persona.obtener_persona_login')->where('tipo_documento', '(.*)');
+	
 });

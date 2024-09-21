@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Sistema SIGCAP</title>
 
 <style>
@@ -147,6 +148,26 @@ input:checked + .slider:before {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
 <script type="text/javascript">
 
+function valida(){
+
+		var msg = "0";
+
+		var _token = $('#_token').val();
+		var id = $('#id').val();
+		var nombre = $('#nombre').val();
+
+		if (nombre==""){
+			msg= "Falta ingresar un Nombre";
+		}
+
+		if (msg=="0"){
+			fn_save_profesion()		
+		}
+		else {
+			Swal.fire(msg);
+		}
+
+	}
 
 function fn_save_profesion(){
     
@@ -208,7 +229,7 @@ function fn_save_profesion(){
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_profesion()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

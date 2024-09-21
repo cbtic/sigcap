@@ -170,6 +170,15 @@ $(document).ready(function() {
 
 });
 
+var id_tipo_concurso = "<?php echo $concurso->id_tipo_concurso?>";
+var id_sub_tipo_concurso = "<?php echo $concurso->id_sub_tipo_concurso?>";
+//alert(id_tipo_concurso);
+
+if(id_tipo_concurso>0){
+	obtenerSubTipoConcursoEdit(id_tipo_concurso,id_sub_tipo_concurso);
+}
+
+
 function validacion(){
     
     var msg = "";
@@ -223,6 +232,29 @@ function obtenerSubTipoConcurso(){
 			$("#id_sub_tipo_concurso").html("");
 			$(result).each(function (ii, oo) {
 				option += "<option value='"+oo.codigo+"'>"+oo.denominacion+"</option>";
+			});
+			$("#id_sub_tipo_concurso").html(option);
+		}
+		
+	});
+	
+}
+
+function obtenerSubTipoConcursoEdit(id_tipo_concurso,id_sub_tipo_concurso){
+	
+	//var id_tipo_concurso = $('#id_tipo_concurso').val();
+	
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/93/'+id_tipo_concurso,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_sub_tipo_concurso").html("");
+			var selected = "";
+			$(result).each(function (ii, oo) {
+				selected = "";
+				if(id_sub_tipo_concurso == oo.codigo)selected = "selected='selected'";
+				option += "<option value='"+oo.codigo+"' "+selected+" >"+oo.denominacion+"</option>";
 			});
 			$("#id_sub_tipo_concurso").html(option);
 		}
@@ -294,11 +326,38 @@ function obtenerSubTipoConcurso(){
 								</select>
 							</div>
 						</div>
-						
+
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label class="control-label">Periodo</label>
-								<input id="periodo" name="periodo" class="form-control form-control-sm"  value="<?php echo $concurso->periodo?>" type="text"  >
+								<label class="control-label form-control-sm">Periodo</label>
+								<?php 
+								if($periodo_activo){
+								?>
+								<select name="periodo" id="periodo" class="form-control form-control-sm" onChange="" disabled="disabled">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($periodo as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+									<?php 
+									}
+									?>
+								</select>
+								<?php
+								}else{
+								?>
+								<select name="periodo" id="periodo" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($periodo as $row) {?>
+									<option value="<?php echo $row->id?>" <?php 
+									if($id==0 && $row->id==$periodo_ultimo->id)echo "selected='selected'";
+									if($id>0 && $row->id==$concurso->id_periodo)echo "selected='selected'";
+									?>><?php echo $row->descripcion?></option>
+									<?php 
+									}
+									?>
+								</select>
+								<?php } ?>
 							</div>
 						</div>
 						
@@ -326,7 +385,7 @@ function obtenerSubTipoConcurso(){
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label">Fecha Acreditaci&oacute;n Inicio</label>
-								<input id="fecha_acreditacion_inicio" name="fecha_acreditacion_inicio" class="form-control form-control-sm"  value="<?php if($concurso->fecha_acreditacion_inicio!="")echo date('d-m-Y',strtotime($concurso->fecha_delegatura_inicio))?>" type="text"  >
+								<input id="fecha_acreditacion_inicio" name="fecha_acreditacion_inicio" class="form-control form-control-sm"  value="<?php if($concurso->fecha_acreditacion_inicio!="")echo date('d-m-Y',strtotime($concurso->fecha_acreditacion_inicio))?>" type="text"  >
 							</div>
 						</div>
 						

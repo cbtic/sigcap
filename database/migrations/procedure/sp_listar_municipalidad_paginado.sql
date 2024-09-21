@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.sp_listar_municipalidad_paginado(p_denominacion character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_municipalidad_paginado(p_denominacion character varying, p_tipo_municipalidad character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -18,9 +18,9 @@ Begin
 
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos='  m.id,m.denominacion ,tm.denominacion tipo_municipalidad ,tm2.denominacion tipo_comision,m.estado estado   ';
+	v_campos='  m.id, m.denominacion ,tm.denominacion tipo_municipalidad ,m.estado estado  ';
 
-	v_tabla=' from municipalidades m inner join tabla_maestras tm on m.id_tipo_municipalidad =tm.codigo inner join tabla_maestras tm2 on m.id_tipo_comision  =tm2.codigo ';
+	v_tabla=' from municipalidades m inner join tabla_maestras tm on m.id_tipo_municipalidad =tm.codigo';
 	
 	
 	v_where = ' Where 1=1  ';

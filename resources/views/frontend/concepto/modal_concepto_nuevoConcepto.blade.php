@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Sistema SIGCAP</title>
 
 <style>
@@ -192,6 +193,13 @@ $.mask.definitions['p'] = "[Mm]";
 $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	$('#hora_solicitud').mask('00:00');
+	$("#partida_presupuestal").select2({ width: '100%' });
+	$("#id_tipo_afectacion").select2({ width: '100%' });
+	$("#id_centro_costo").select2({ width: '100%' });
+	$("#id_tipo_concepto").select2({ width: '100%' });
+	$("#cuenta_contable_debe").select2({ width: '100%' });
+	$("#cuenta_contable_al_haber1").select2({ width: '100%' });
+	$("#cuenta_contable_al_haber2").select2({ width: '100%' });
 	//$("#id_empresa").select2({ width: '100%' });
 });
 </script>
@@ -331,11 +339,70 @@ function fn_save_empresa(){
     });
 }
 
+function valida(){
+	var msg = "0";
+
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var id_regional = $('#id_regional').val();
+	var id_tipo_concepto = $('#id_tipo_concepto').val();
+	var denominacion = $('#denominacion').val();
+	var importe = $('#importe').val();
+	var id_moneda = $('#id_moneda').val();
+	var periodo = $('#periodo').val();
+	var partida_presupuestal = $('#partida_presupuestal').val();
+	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
+	var centro_costo = $('#id_centro_costo').val();
+	var genera_pago = $('#genera_pago').val();
+
+	if (id_regional==""){
+		msg= "Falta seleccionar la Regional";
+	}else if (id_tipo_concepto==""){
+		msg= "Falta seleccionar el Tipo de Concepto";
+	}else if (denominacion==""){
+		msg= "Falta ingresar la Denominaci&oacute;n";
+	}else if (importe==""){
+		msg= "Falta ingresar el Importe";
+	}else if (id_moneda==""){
+		msg= "Falta seleccionar la Moneda";
+	}else if (periodo==""){
+		msg= "Falta ingresar el Periodo";
+	}else if (partida_presupuestal==""){
+		msg= "Falta ingresar la Partida Presupuestal";
+	}else if (id_tipo_afectacion==""){
+		msg= "Falta seleccionar el Tipo de Afectaci&oacute;n";
+	}else if (centro_costo==""){
+		msg= "Falta ingresar el Centro de Costos";
+	}else if (genera_pago==""){
+		msg= "Falta ingresar Genera Pago";
+	}
+	
+	
+	/*elseif (direccion==""){
+		msg= "Falta ingresar la direcci&oacuten";
+
+	}elseif (email==""){
+		msg= "Falta ingresar el Email";
+
+	}elseif (telefono==""){
+		msg= "Falta ingresar el tel&eacute;fono";
+
+	}*/
+
+	if (msg=="0"){
+		fn_save_concepto()		
+	}
+	else {
+		Swal.fire(msg);
+	}
+
+}
+
 function fn_save_concepto(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var codigo = $('#codigo').val();
+	//var codigo = $('#codigo').val();
 	var id_regional = $('#id_regional').val();
 	var id_tipo_concepto = $('#id_tipo_concepto').val();
 	var denominacion = $('#denominacion').val();
@@ -346,14 +413,15 @@ function fn_save_concepto(){
 	var cuenta_contable_al_haber1 = $('#cuenta_contable_al_haber1').val();
 	var cuenta_contable_al_haber2 = $('#cuenta_contable_al_haber2').val();
 	var partida_presupuestal = $('#partida_presupuestal').val();
-	var tipo_afectacion = $('#tipo_afectacion').val();
-	var centro_costo = $('#centro_costo').val();
+	var id_tipo_afectacion = $('#id_tipo_afectacion').val();
+	var centro_costo = $('#id_centro_costo').val();
+	var genera_pago = $('#genera_pago').val();
 	
 	
     $.ajax({
 			url: "/concepto/send_concepto_nuevoConcepto",
             type: "POST",
-            data : {_token:_token,id:id,codigo:codigo,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,tipo_afectacion:tipo_afectacion,centro_costo:centro_costo},
+            data : {_token:_token,id:id,id_regional:id_regional,id_tipo_concepto:id_tipo_concepto,denominacion:denominacion,importe:importe,id_moneda:id_moneda,periodo:periodo,cuenta_contable_debe:cuenta_contable_debe,cuenta_contable_al_haber1:cuenta_contable_al_haber1,cuenta_contable_al_haber2:cuenta_contable_al_haber2,partida_presupuestal:partida_presupuestal,id_tipo_afectacion:id_tipo_afectacion,centro_costo:centro_costo,genera_pago:genera_pago},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -542,8 +610,8 @@ container: '#myModal modal-body'
 											<option value="">--Selecionar--</option>
 												<?php
 												foreach ($region as $row) {?>
-													<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->id_regional)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-												<?php 
+													<option value="<?php echo $row->id?>" <?php if($row->id=='5')echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+												<?php
 												}
 												?>
 										</select>
@@ -595,37 +663,72 @@ container: '#myModal modal-body'
 										<input id="periodo" name="periodo" class="form-control form-control-sm"  value="<?php echo $concepto->periodo?>" type="text" >
 									</div>
 								</div>
+								
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Cuenta Contable Debe</label>
-										<input id="cuenta_contable_debe" name="cuenta_contable_debe" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_debe?>" type="text" >
+										<select name="cuenta_contable_debe" id="cuenta_contable_debe" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto_cuenta_debe as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->cuenta_contable_debe)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
+								
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Cuenta Contable al Haber1</label>
-										<input id="cuenta_contable_al_haber1" name="cuenta_contable_al_haber1" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_al_haber1?>" type="text" >
+										<select name="cuenta_contable_al_haber1" id="cuenta_contable_al_haber1" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto_cuenta_haber1 as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->cuenta_contable_al_haber1)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
+								
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Cuenta Contable al Haber2</label>
-										<input id="cuenta_contable_al_haber2" name="cuenta_contable_al_haber2" class="form-control form-control-sm"  value="<?php echo $concepto->cuenta_contable_al_haber2?>" type="text" >
+										<select name="cuenta_contable_al_haber2" id="cuenta_contable_al_haber2" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($concepto_cuenta_haber2 as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->cuenta_contable_al_haber2)echo "selected='selected'"?>><?php echo $row->cuenta?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Partida Presupuestal</label>
-										<input id="partida_presupuestal" name="partida_presupuestal" class="form-control form-control-sm"  value="<?php echo $concepto->partida_presupuestal?>" type="text" >
+										<select name="partida_presupuestal" id="partida_presupuestal" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($partidaPresupuestal as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->partida_presupuestal)echo "selected='selected'"?>><?php echo $row->codigo?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
 								</div>
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Tipo Afectaci&oacute;n</label>
-										<select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onChange="">
+										<select name="id_tipo_afectacion" id="id_tipo_afectacion" class="form-control form-control-sm" onChange="">
 											<option value="">--Selecionar--</option>
 											<?php
-												foreach ($tipo_afectacion as $row) {?>
+												foreach ($id_tipo_afectacion as $row) {?>
 												<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
 												<?php
 											}
@@ -636,8 +739,25 @@ container: '#myModal modal-body'
 								<div class="col-lg-5">
 									<div class="form-group">
 										<label class="control-label form-control-sm">Centro de Costos</label>
-										<input id="centro_costo" name="centro_costo" class="form-control form-control-sm"  value="<?php echo $concepto->centro_costo?>" type="text" >
+										<select name="id_centro_costo" id="id_centro_costo" class="form-control form-control-sm" onChange="">
+										<option value="">--Selecionar--</option>
+											<?php
+												foreach ($centroCosto as $row) {?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==$concepto->centro_costo)echo "selected='selected'"?>><?php echo $row->codigo?></option>
+											<?php
+											}
+											?>
+										</select>
 									</div>
+								</div>
+
+								<div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+									<label class="control-label form-control-sm">Genera Pago</label>
+									<select name="genera_pago" id="genera_pago" class="form-control form-control-sm">
+										<option value="" <?php if(''==$concepto->genera_pago)echo "selected='selected'"?>>--Selecciona Genera Pago--</option>
+										<option value="1" <?php if('1'==$concepto->genera_pago)echo "selected='selected'"?>>Si</option>
+										<option value="0" <?php if('0'==$concepto->genera_pago)echo "selected='selected'"?>>No</option>
+									</select>
 								</div>
 						
 					</div>
@@ -645,7 +765,7 @@ container: '#myModal modal-body'
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_concepto()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>

@@ -1,13 +1,4 @@
-
-CREATE OR REPLACE FUNCTION public.sp_listar_agremiado_paginado(
-p_region character varying, 
-p_numero_cap character varying,
-p_numero_documento character varying,
-p_agremiado character varying, 
-p_fecha_inicio character varying, 
-p_fecha_fin character varying,
-p_id_situacion character varying,
-p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_agremiado_paginado(p_region character varying, p_numero_cap character varying, p_numero_documento character varying, p_agremiado character varying, p_fecha_inicio character varying, p_fecha_fin character varying, p_id_situacion character varying, p_id_categoria character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -30,13 +21,14 @@ Begin
 	v_campos=' a.id,to_char(a.fecha_colegiado,''dd-mm-yyyy'')fecha_colegiado,tm.denominacion tipo_documento,
 p.numero_documento,a.numero_cap,r.denominacion region,
 p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, 
-p.fecha_nacimiento,tms.denominacion situacion ';
+to_char(p.fecha_nacimiento,''dd-mm-yyyy'')fecha_nacimiento,tms.denominacion situacion,tmc.denominacion categoria ';
 
 	v_tabla='from agremiados a 
 inner join personas p on a.id_persona=p.id
 inner join tabla_maestras tm on p.id_tipo_documento::int=tm.codigo::int and tm.tipo=''16''
 inner join regiones r on a.id_regional=r.id 
-inner join tabla_maestras tms on a.id_situacion::int=tms.codigo::int and tms.tipo=''14'' ';
+inner join tabla_maestras tms on a.id_situacion::int=tms.codigo::int and tms.tipo=''14'' 
+left join tabla_maestras tmc on a.id_categoria::int=tmc.codigo::int and tmc.tipo=''18'' ';
 	
 	v_where = ' Where 1=1  ';
 
@@ -67,6 +59,10 @@ inner join tabla_maestras tms on a.id_situacion::int=tms.codigo::int and tms.tip
 	 v_where:=v_where||'And a.id_situacion = '''||p_id_situacion||''' ';
 	End If;
 
+	If p_id_categoria<>'' Then
+	 v_where:=v_where||'And a.id_categoria = '''||p_id_categoria||''' ';
+	End If;
+	
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;
 	v_col_count:=' ,'||v_count||' as TotalRows ';
 
@@ -83,4 +79,3 @@ End
 
 $function$
 ;
-

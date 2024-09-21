@@ -19,7 +19,7 @@ class Empresa extends Model
     function getEmpresaId($id){
 
 
-        $cad = "ruc, nombre_comercial, razon_social, direccion, representante, estado, email, telefono
+        $cad = "select id, ruc, nombre_comercial, razon_social, direccion, representante, estado, email, telefono
         from empresas         
         Where id='".$id."' ";
     
@@ -29,7 +29,17 @@ class Empresa extends Model
 	
     function getPersonaId($id){
 
-        $cad = "select numero_documento ruc, apellido_paterno||' '||apellido_materno||' '||nombres nombre_comercial, apellido_paterno||' '||apellido_materno||' '||nombres razon_social, '' direccion, '' email
+        $cad = "select numero_ruc ruc, apellido_paterno||' '||apellido_materno||' '||nombres nombre_comercial, apellido_paterno||' '||apellido_materno||' '||nombres razon_social,  direccion, correo email
+        from personas
+        Where id='".$id."' ";
+    
+        $data = DB::select($cad);
+        if($data)return $data[0];
+    }
+
+    function getPersonaId_BV($id){
+
+        $cad = "select numero_documento ruc, apellido_paterno||' '||apellido_materno||' '||nombres nombre_comercial, apellido_paterno||' '||apellido_materno||' '||nombres razon_social,  direccion, correo email
         from personas
         Where id='".$id."' ";
     
@@ -51,6 +61,16 @@ class Empresa extends Model
         $data = DB::select($cad);
         return $data;
 
+    }
+
+    function getEmpresaPropietario($ruc_propietario){
+
+        $cad = "select e.id, e.razon_social, e.direccion, e.telefono, e.email 
+        from empresas e
+        Where e.ruc='".$ruc_propietario."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
     }
 
 }

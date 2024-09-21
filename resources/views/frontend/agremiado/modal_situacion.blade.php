@@ -261,6 +261,7 @@ function guardarCita(id_medico,fecha_cita){
 
 function fn_save_situacion(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_agremiado = $('#id_agremiado').val();
@@ -269,8 +270,15 @@ function fn_save_situacion(){
 	var fecha_fin = $('#fecha_fin').val();
 	var ruta_documento = $('#ruta_documento').val();
 	
-	//alert(id_agremiado);
-	//return false;
+	if(id_pais_destino == "0" || id_pais_destino == "")msg+="Debe seleccionar un Pa&iacute;s Destion<br>";
+	if(fecha_inicio == "")msg += "Debe ingresar una fecha de inicio <br>";
+	//if(fecha_fin == "")msg += "Debe ingresar una fecha de fin <br>";
+	if(ruta_documento == "")msg += "Debe ingresar una ruta de documento <br>";
+	
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
 	
     $.ajax({
 			url: "/agremiado/send_agremiado_situacion",
@@ -449,7 +457,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Movimiento
+				Registro Viajes Extranjero
 			</div>
 			
             <div class="card-body">

@@ -103,7 +103,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Consulta de Periodo de Comisiones</li>
+            <li class="breadcrumb-item active">Consulta de Periodos</li>
         </li>
     </ol>
 @endsection
@@ -128,7 +128,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0 text-primary">
-                        Consultar Periodo de Comisiones <!--<small class="text-muted">Usuarios activos</small>-->
+                        Consultar Periodos<!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -140,7 +140,7 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Lista de Periodo de Comisiones
+                        Lista de Periodos
                     </strong>
                 </div><!--card-header-->
 				
@@ -152,6 +152,19 @@
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="descripcion" name="descripcion" placeholder="Descripci&oacute;n de Periodo">
 					</div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <select name="tipoBus" id="tipoBus" class="form-control form-control-sm" onChange="">
+                                <option value="">--Selecionar Tipo--</option>
+                                <?php
+                                foreach ($tipo as $row) {?>
+                                <option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
                     <!--<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="fecha_inicio" name="fecha_inicio" placeholder="Fecha Inicio">
 					</div>
@@ -207,6 +220,8 @@
                         <thead>
                         <tr style="font-size:13px">
                             <th>Descripci&oacute;n de Periodo</th>
+                            <th>Tipo</th>
+                            <th>Activo</th>
                             <th>Fecha Inicio</th>
                             <th>Fecha Fin</th>
                             <th>Estado</th>

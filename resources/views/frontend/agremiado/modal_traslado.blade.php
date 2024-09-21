@@ -261,6 +261,7 @@ function guardarCita(id_medico,fecha_cita){
 
 function fn_save_traslado(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_agremiado = $('#id_agremiado').val();
@@ -270,8 +271,16 @@ function fn_save_traslado(){
 	var numero_regional = $('#numero_regional').val();
 	var observacion = $('#observacion').val();
 	
-	//alert(id_agremiado);
-	//return false;
+	if(id_region == "0" || id_region == "")msg+="Debe seleccionar una Regi&oacute;n <br>";
+	if(fecha_inicio == "")msg += "Debe ingresar una fecha de inicio <br>";
+	//if(fecha_fin == "")msg += "Debe ingresar una fecha de fin <br>";
+	if(numero_regional == "")msg += "Debe ingresar un numero regional <br>";
+	if(observacion == "")msg += "Debe ingresar una observaci&oacute;n <br>";
+	
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
 	
     $.ajax({
 			url: "/agremiado/send_agremiado_traslado",
@@ -449,7 +458,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Movimiento
+				Registro Traslados
 			</div>
 			
             <div class="card-body">
@@ -467,7 +476,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regi&oacute;n</label>
-								<select name="id_region" id="id_region" class="form-control form-control-sm" onchange="">
+								<select name="id_region" id="id_region" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($region as $row) {?>

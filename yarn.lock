@@ -5277,6 +5277,7 @@ terser-webpack-plugin@^5.2.4, terser-webpack-plugin@^5.3.7:
   "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.10.1.tgz"
   "version" "11.10.1"
 
+<<<<<<< HEAD
 "tapable@^2.1.1", "tapable@^2.2.0":
   "integrity" "sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ=="
   "resolved" "https://registry.npmjs.org/tapable/-/tapable-2.2.1.tgz"
@@ -5287,11 +5288,14 @@ terser-webpack-plugin@^5.2.4, terser-webpack-plugin@^5.3.7:
   "resolved" "https://registry.npmjs.org/terser-webpack-plugin/-/terser-webpack-plugin-5.3.9.tgz"
   "version" "5.3.9"
 =======
+||||||| 0065eae9c
+
+=======
+>>>>>>> bb2eb54b2b4386c86e907fb7ff300ec6040021d2
 "sweetalert2@^11.10.1":
   "integrity" "sha512-qu145oBuFfjYr5yZW9OSdG6YmRxDf8CnkgT/sXMfrXGe+asFy2imC2vlaLQ/L/naZ/JZna1MPAY56G4qYM0VUQ=="
   "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.10.1.tgz"
   "version" "11.10.1"
-
 
 "tapable@^2.1.1", "tapable@^2.2.0":
   "integrity" "sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ=="

@@ -210,7 +210,12 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
-	 
+var id_ubigeo_trabajo = $("#id_ubigeo_trabajo").val();
+var idProvinciaTrabajo = id_ubigeo_trabajo.substring(2,4);
+var idDistritoTrabajo = id_ubigeo_trabajo.substring(4,6);
+
+obtenerProvinciaTrabajoEdit(idProvinciaTrabajo);	 
+obtenerDistritoTrabajoEdit(idProvinciaTrabajo,idDistritoTrabajo);
 
 });
 
@@ -255,12 +260,15 @@ function guardarCita(id_medico,fecha_cita){
 
 function fn_save_trabajo(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_agremiado = $('#id_agremiado').val();
 	var id_cliente_cargo = $('#id_cliente_cargo').val();
 	var rubro_negocio = $('#rubro_negocio').val();
 	var id_departamento_trabajo = $('#id_departamento_trabajo').val();
+	var id_provincia_trabajo = $('#id_provincia_trabajo').val();
+	var id_distrito_trabajo = $('#id_distrito_trabajo').val();
 	var numero_documento = $('#numero_documento').val();
 	var razon_social = $('#razon_social').val();
 	var direccion = $('#direccion').val();
@@ -270,10 +278,29 @@ function fn_save_trabajo(){
 	var celular = $('#celular').val();
 	var email = $('#email').val();
 	
+	if(id_cliente_cargo == "0" || id_cliente_cargo == "")msg+="Debe seleccionar el Cargo <br>";
+	if(rubro_negocio == "")msg += "Debe ingresar el rubro <br>";
+	if(id_departamento_trabajo == "0" || id_departamento_trabajo == "")msg+="Debe seleccionar un Departamento <br>";
+	if(id_provincia_trabajo == "0" || id_provincia_trabajo == "")msg+="Debe seleccionar una Provincia <br>";
+	if(id_distrito_trabajo == "0" || id_distrito_trabajo == "")msg+="Debe seleccionar un Distrito <br>";
+	if(numero_documento == "")msg += "Debe ingresar el RUC <br>";
+	if(razon_social == "")msg += "Debe ingresar el Centro de Trabajo <br>";
+	if(direccion == "")msg += "Debe ingresar una Direcci&oacute;n <br>";
+	if(codigo_postal == "")msg += "Debe ingresar un codigo postal <br>";
+	if(referencia == "")msg += "Debe ingresar una referencia <br>";
+	if(telefono == "")msg += "Debe ingresar un tel&eacute;fono <br>";
+	if(celular == "")msg += "Debe ingresar un celular <br>";
+	if(email == "")msg += "Debe ingresar un email <br>";
+	
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
+	
     $.ajax({
 			url: "/agremiado/send_agremiado_trabajo",
             type: "POST",
-            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_cliente_cargo:id_cliente_cargo,rubro_negocio:rubro_negocio,id_departamento_trabajo:id_departamento_trabajo,numero_documento:numero_documento,razon_social:razon_social,direccion:direccion,codigo_postal:codigo_postal,referencia:referencia,telefono:telefono,celular:celular,email:email},
+            data : {_token:_token,id:id,id_agremiado:id_agremiado,id_cliente_cargo:id_cliente_cargo,rubro_negocio:rubro_negocio,id_departamento_trabajo:id_departamento_trabajo,id_provincia_trabajo:id_provincia_trabajo,id_distrito_trabajo:id_distrito_trabajo,numero_documento:numero_documento,razon_social:razon_social,direccion:direccion,codigo_postal:codigo_postal,referencia:referencia,telefono:telefono,celular:celular,email:email},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -446,7 +473,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Movimiento
+				Registro Trabajos
 			</div>
 			
             <div class="card-body">
@@ -488,7 +515,7 @@ container: '#myModal modal-body'
 							<div class="form-group">
 								<label class="control-label form-control-sm">Departamento</label>
 								<input type="hidden" name="id_ubigeo_trabajo" id="id_ubigeo_trabajo" value="<?php echo $agremiadoTrabajo->id_ubigeo?>">
-								<select name="id_departamento_trabajo" id="id_departamento_trabajo" class="form-control form-control-sm" onchange="obtenerProvincia()">
+								<select name="id_departamento_trabajo" id="id_departamento_trabajo" class="form-control form-control-sm" onChange="obtenerProvinciaTrabajo()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($departamento as $row) {?>
@@ -503,7 +530,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Provincia</label>
-								<select name="id_provincia_trabajo" id="id_provincia_trabajo" class="form-control form-control-sm" onchange="obtenerDistrito()">
+								<select name="id_provincia_trabajo" id="id_provincia_trabajo" class="form-control form-control-sm" onChange="obtenerDistritoTrabajo()">
 									<option value="">--Selecionar--</option>
 								</select>
 															
@@ -513,7 +540,7 @@ container: '#myModal modal-body'
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Distrito</label>
-								<select name="id_distrito_trabajo" id="id_distrito_trabajo" class="form-control form-control-sm" onchange="">
+								<select name="id_distrito_trabajo" id="id_distrito_trabajo" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 								</select>
 							</div>

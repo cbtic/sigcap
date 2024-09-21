@@ -149,33 +149,60 @@
 				
                             <div class="row" style="padding:20px 20px 0px 20px;">
                         
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <?php 
+                                            if($periodo_activo){
+                                            ?>
+                                            <select name="periodo" id="periodo" class="form-control form-control-sm" onchange="obtenerComisionBus()" disabled="disabled">
+                                            <option value="0">--Selecionar--</option>
+                                                <?php
+                                                foreach ($periodoComision as $row) {?>
+                                                    <option value="<?php echo $row->id?>" <?php if($row->id==$periodo_activo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                                <?php 
+                                                }
+                                                ?>
+                                            </select>
+                                            <?php
+                                            }else{
+                                            ?>
+                                            <select name="periodo" id="periodo" class="form-control form-control-sm" onchange="obtenerComisionBus()">
+                                            <option value="0">--Selecionar--</option>
+                                                <?php
+                                                foreach ($periodoComision as $row) {?>
+                                                    <option value="<?php echo $row->id?>" <?php if($row->id==$periodo_ultimo->id)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
+                                                <?php 
+                                                }
+                                                ?>
+                                            </select>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <select name="tipo_comision" id="tipo_comision" class="form-control form-control-sm" onchange="obtenerComisionBus()">
+                                                <option value="0">--Selecionar Tipo Municipalidad--</option>
+                                                    <?php
+                                                    foreach ($tipoComision as $row) {?>
+                                                        <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comision_movilidades->id_tipo_comision)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+                                                    <?php 
+                                                    }
+                                                    ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             
                                             <select name="municipalidad_integrada" id="municipalidad_integrada" class="form-control form-control-sm" onChange="">
                                                 <option value="">--Selecionar Municipalidad Integrada--</option>
-                                                    <?php
-                                                    foreach ($municipalidadIntegrada as $row) {?>
-                                                        <option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_municipalidad_integrada)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
-                                                    <?php 
-                                                    }
-                                                    ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            <select name="periodo" id="periodo" class="form-control form-control-sm" onChange="">
-                                                <option value="">--Selecionar Periodo--</option>
-                                                    <?php
-                                                    foreach ($periodoComision as $row) {?>
-                                                        <option value="<?php echo $row->id?>" <?php if($row->id==$comision_movilidades->id_periodo_comisiones)echo "selected='selected'"?>><?php echo $row->descripcion?></option>
-                                                    <?php 
-                                                    }
-                                                    ?>
-                                            </select>
-                                        </div>
-                                    </div>
+
+                                    
                                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                         <select name="estado" id="estado" class="form-control form-control-sm">
                                             <option value="">Todos</option>

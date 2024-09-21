@@ -8,6 +8,12 @@ foreach($municipalidad_integradas as $row):?>
 	<td class="text-left"><?php echo $row->denominacion?></td>
 	<td class="text-left"><?php echo $row->tipo_agrupacion?></td>
 	<td class="text-left"><?php echo $row->monto?></td>
+	<td class="text-left" style="width:100px">
+	<input class="btn btn-danger pull-rigth" value="X" type="button" id="btnEliminar" style="margin-left:0px; font-size: 9px;float:left" onclick="eliminarMuniIntegrada(<?php echo $row->id?>, '<?php echo $row->estado?>');" />
+	<?php if($row->tipo_agrupacion=="INTEGRADOS"){?>
+		<button style="font-size:9px;margin-left:3px;float:left;padding-top:8px;padding-bottom:8px" type="button" class="btn btn-success" data-toggle="modal" onclick="modalMunicipalidadIntegrada(<?php echo $row->id?>)"><i class="fa fa-edit"></i></button>
+	<?php } ?>
+	</td>
 </tr>
 <?php
 endforeach;

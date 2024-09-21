@@ -18,28 +18,28 @@ $(document).ready(function () {
 
 	$('#fecha_ini').datepicker({
         autoclose: true,
-		dateFormat: 'dd-mm-yy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 
 	$('#fecha_fin').datepicker({
         autoclose: true,
-        dateFormat: 'dd-mm-yy',
+        format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 
 	$('#fecha_inicio_desde').datepicker({
         autoclose: true,
-		dateFormat: 'dd-mm-yy',
+		format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
 
 	$('#fecha_inicio_hasta').datepicker({
         autoclose: true,
-        dateFormat: 'dd-mm-yy',
+        format: 'dd-mm-yyyy',
 		changeMonth: true,
 		changeYear: true,
     });
@@ -159,7 +159,10 @@ function datatablenew(){
             var razon_social = $('#razon_social').val();
             var estado_pago = $('#estado_pago').val();
             var anulado = $('#anulado').val();
+            var total_b = $('#total_b').val();
+            
             var sunat = $('#sunat').val();
+            var formapago = $('#id_formapago').val();
             var pdf = $('#pdf').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -169,8 +172,8 @@ function datatablenew(){
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						fecha_ini:fecha_ini,fecha_fin:fecha_fin,
-						tipo_documento:tipo_documento, serie:serie, numero:numero, razon_social:razon_social, estado_pago:estado_pago, anulado:anulado,
-                        sunat:sunat, pdf:pdf, _token:_token
+						tipo_documento:tipo_documento, serie:serie, numero:numero, razon_social:razon_social, estado_pago:estado_pago, anulado:anulado, formapago:formapago,
+                        sunat:sunat, pdf:pdf, total_b:total_b, _token:_token
                        },
                 "success": function (result) {
                     fnCallback(result);
@@ -242,6 +245,7 @@ function datatablenew(){
                 "bSortable": false,
                 "aTargets": [5]
                 },
+/*
 				{
                 "mRender": function (data, type, row) {
                     var plan_denominacion = "";
@@ -251,6 +255,7 @@ function datatablenew(){
                 "bSortable": false,
                 "aTargets": [6]
                 },
+                */
 				{
                 "mRender": function (data, type, row) {
                     var subtotal = "";
@@ -259,7 +264,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "className": "text-right",
-                "aTargets": [7]
+                "aTargets": [6]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -269,7 +274,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "className": "text-right",
-                "aTargets": [8]
+                "aTargets": [7]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -279,7 +284,7 @@ function datatablenew(){
                 },
                 "bSortable": false,
                 "className": "text-right",
-                "aTargets": [9]
+                "aTargets": [8]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -288,7 +293,7 @@ function datatablenew(){
 					return estado_pago;
                 },
                 "bSortable": false,
-                "aTargets": [10]
+                "aTargets": [9]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -297,7 +302,7 @@ function datatablenew(){
 					return anulado;
                 },
                 "bSortable": false,
-                "aTargets": [11]
+                "aTargets": [10]
                 },
 				{
                 "mRender": function (data, type, row) {
@@ -306,28 +311,42 @@ function datatablenew(){
 					return caja;
                 },
                 "bSortable": false,
+                "aTargets": [11]
+                },
+                {
+                "mRender": function (data, type, row) {
+                    var usuario = "";
+                    if(row.usuario!= null)usuario = row.usuario;
+                    return usuario;
+                },
+                "bSortable": false,
                 "aTargets": [12]
                 },
-				{
+                {
                     "mRender": function (data, type, row) {
-                        var usuario = "";
-                        if(row.usuario!= null)usuario = row.usuario;
-                        return usuario;
+                        var forma_pago = "";
+                        if(row.forma_pago!= null)forma_pago = row.forma_pago;
+                        return forma_pago;
                     },
                     "bSortable": false,
                     "aTargets": [13]
-                },
-                /*
+                },                    
 				{
                     "mRender": function (data, type, row) {
-                        var sunat = "";
-                        if(row.sunat!= null)sunat = row.sunat;
-                        return sunat;
+                        var restante_credito = "";
+                        var forma_pago = "";
+                        if(row.forma_pago!= null)forma_pago = row.forma_pago;
+
+                        if(forma_pago=="CREDITO"){
+                            if(row.restante_credito!= null && forma_pago=="CREDITO")restante_credito = row.restante_credito;
+                        }
+                        return restante_credito;
                     },
                     "bSortable": false,
-                    "aTargets": [13]
+                    "className": "text-right",
+                    "aTargets": [14]
                 },
-                */                
+              
 				{
                     "mRender": function (data, type, row) {
                         var sunat = "";
@@ -348,21 +367,44 @@ function datatablenew(){
                              
                             today = yyyy+'-'+mm+'-'+dd;
 
-                            if ((row.tipo=="FT" || row.tipo=="BV")&&(row.fecha).slice(0, -9)==today){
-                                var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-                                html += '<a href="/factura/firmar/'+row.id+'" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-paper-plane"></i></a>';
+                            if ((row.tipo=="FT" || row.tipo=="BV"|| row.tipo=="NC"|| row.tipo=="ND")&&(row.fecha).slice(0, -9)==today){
+                                var opcion="";
+                                if (row.tipo=="FT" || row.tipo=="BV")opcion = "firmar";
+                                if (row.tipo=="NC")opcion = "firmarNC";
+                                if (row.tipo=="ND")opcion = "firmarND";
+                                var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';                                
+                                html += '<a href="/comprobante/'+opcion+'/'+row.id+'" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-paper-plane"></i></a>';
                                 return html;
                             }
                             else{
                                 return sunat;
                             }
+                            
                         }
                         
                        
                     },
                     "bSortable": false,
-                    "aTargets": [14]
+                    "aTargets": [15]
                 },              
+				{
+                    "mRender": function (data, type, row) {
+                        var forma_pago = "";
+                        if(row.forma_pago!= null)forma_pago = row.forma_pago;
+
+                        if(forma_pago=="CREDITO"){
+                            var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';                       
+                            html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalCreditoPago('+row.id+')" ><i class="fa fa-edit"></i> </button>';
+                        }else{
+                            var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';                                                   
+                        }
+                        return html;    
+
+
+                    },
+                    "bSortable": false,
+                    "aTargets": [16],
+                },                
 				{
                     "mRender": function (data, type, row) {
                         var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
@@ -370,22 +412,10 @@ function datatablenew(){
                         return html;
                     },
                     "bSortable": false,
-                    "aTargets": [15],
+                    "aTargets": [17],
                 },
                 
-/*
-                {
-                    "mRender": function (data, type, row) {
-                        var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-                        html += '<a href="/factura/'+row.id+'" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-search"></i></a>';
-                        html += '<i class="fa fa-search"></i></a></div>';
-                        return html;
-                    },
-                    "bSortable": false,
-                    "aTargets": [13],
 
-                },
-  */
             ]
 
 
@@ -396,6 +426,24 @@ function datatablenew(){
 function fn_ListarBusqueda() {
     datatablenew();
 };
+
+
+
+function modalCreditoPago(id){
+	
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/comprobante/credito_pago/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
 
 function modalFactura(id){
 	

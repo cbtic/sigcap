@@ -1,8 +1,21 @@
+//const { message } = require("laravel-mix/src/Log");
 
 $(document).ready(function () {
 	
 	datatablenew();
 	
+	if(c_cantidad_concurso>0){
+		//var nombre_concurso = "";
+		//nombre_concurso += c_periodo+' '+c_tipo_concurso;
+		//if(c_sub_tipo_concurso!="")nombre_concurso += " - "+c_sub_tipo_concurso;
+		
+		bootbox.alert("La postulaci&oacute;n al concurso "+nombre_concurso+" esta pendiente de presentar documentos, haga click en el boton azul <u><b>(Registrar Doc)</b></u> para adjuntar");
+		//return false;
+	}
+
+	if($("#situacion").val()=='FALLECIDO'){
+		$("#btnGuardar").prop("disabled",true);
+	}
 	
 	$('#btnNuevoTrabajo').on('click', function () {
 		modalTrab(0);
@@ -12,8 +25,12 @@ $(document).ready(function () {
 		modalRequisito(0);
 	});
 	
+	$('#btnDuplicar').on('click', function () {
+		duplicar_concurso();
+	});
+	
 	$('#btnGuardar').on('click', function () {
-		guardar_inscripcion()
+		guardar_inscripcion();
 		//Limpiar();
 		//window.location.reload();
 	});
@@ -31,6 +48,8 @@ $(document).ready(function () {
 	$('#btnBuscar').click(function () {
 		fn_ListarBusqueda();
 	});
+	
+	$("#id_concurso_bus").select2();
 	
 	/*
 	$('#fecha_desde').datepicker({
@@ -88,9 +107,19 @@ function aperturar(accion){
 function guardar_inscripcion(){
     //alert("cvvfv");
     var msg = "";
+
+	if($("#situacion").val()=='INHABILITADO'){
+		bootbox.alert("Usted se encuentra INHABILITADO, debe estar HABILITADO para continuar con el proceso de concurso",function(){
+			fn_save();
+		});
+			
+	}else{
+		fn_save();
+	}
     
-	fn_save();
 }
+
+
 
 function fn_save(){
     
@@ -100,20 +129,38 @@ function fn_save(){
             //data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
             data : $("#frmExpediente").serialize(),
             success: function (result) {  
-			
-					datatablenew();
-                    //location.href="/concurso/editar_inscripcion/"+result;
+					if(result==false){
+						bootbox.alert("En este periodo ya cuenta con una postulación a delegado, no puede postular a otro");
+						return false;	
+					}
 					
-					//window.location.reload();
-					//Limpiar();
-					/*$('#openOverlayOpc').modal('hide');
-					$('#calendar').fullCalendar("refetchEvents");
-					modalDelegar(fecha_atencion_original);*/
-					//modalTurnos();
-					//modalHistorial();
-					//location.href="ver_cita/"+id_user+"/"+result;
+					//location.reload();
+					datatablenew();
+					
             }
     });
+}
+
+function obtenerConcursoVigentePendiente(id_agremiado){
+	
+	$.ajax({
+		url: '/concurso/obtener_concurso_vigente_pendiente/'+id_agremiado,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>Seleccionar</option>";
+			$("#id_concurso").html("");
+			var subtipo = "";
+			$(result).each(function (ii, oo) {
+				subtipo = "";
+				//console.log(oo.tipo_concurso);
+				if(oo.sub_tipo_concurso!=null)subtipo = " - "+oo.sub_tipo_concurso;
+				option += "<option fecha_acreditacion_inicio='"+oo.fecha_acreditacion_inicio+"' fecha_acreditacion_fin='"+oo.fecha_acreditacion_fin+"' value='"+oo.id+"'>"+oo.periodo+" - "+oo.tipo_concurso+subtipo+"</option>";
+			});
+			$("#id_concurso").html(option);
+		}
+		
+	});
+	
 }
 
 function Limpiar(){
@@ -1668,6 +1715,7 @@ function datatablenew(){
 			var agremiado = $('#agremiado_bus').val();
 			var id_situacion = $('#id_situacion_bus').val();
 			var id_concurso = $('#id_concurso_bus').val();
+			var flag_concurso = $('#flag_concurso').val();
 			
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -1677,7 +1725,7 @@ function datatablenew(){
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						id_regional:id_regional,numero_cap:numero_cap,numero_documento:numero_documento,
 						agremiado:agremiado,id_situacion:id_situacion,id_concurso:id_concurso,
-						id_agremiado:id_agremiado,
+						id_agremiado:id_agremiado,flag_concurso:flag_concurso,
 						_token:_token
                        },
                 "success": function (result) {
@@ -1785,10 +1833,12 @@ function datatablenew(){
 				{
 					"mRender": function (data, type, row) {
 						
+						var valida = "";
+						if(row.valida==1)valida = "disabled='disabled'";
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="editarConcursoInscripcion('+row.id+')" ><i class="fa fa-edit"></i> Registrar Doc</button>';
+						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="editarConcursoInscripcion('+row.id+')" '+valida+' ><i class="fa fa-edit"></i> Registrar Doc</button>';
 						
-						html += '<a href="javascript:void(0)" onclick=eliminarInscripcionConcurso('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px">Eliminar</a>';
+						html += '<button type="button" onclick=eliminarInscripcionConcurso('+row.id+') class="btn btn-sm btn-danger" style="font-size:12px;margin-left:10px" '+valida+'> Eliminar</button>';
 						
 						html += '</div>';
 						return html;
@@ -2633,12 +2683,12 @@ function obtenerBeneficiario(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono').attr("disabled",false);
 				$('#email').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento').attr("disabled",false);
 				$('#nombres').attr("disabled",false).attr("placeholder","Ingrese Nombres");
@@ -2697,11 +2747,11 @@ function obtenerBeneficiario_c(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono_c').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento_c').attr("disabled",false);
 				$('#nombres_c').attr("disabled",false).attr("placeholder","Ingrese Nombres");
@@ -2759,11 +2809,11 @@ function obtenerBeneficiario_a(){
 		success: function(result){
 			
 			if(result.sw==2){
-				bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+				bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				$('#telefono_a').attr("disabled",false);
 			}
 			if(result.sw==3){
-				bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+				bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 				//$('#numero_documento').val("");
 				$('#numero_documento_a').attr("disabled",false);
 				$('#nombres_a').attr("disabled",false).attr("placeholder","Ingrese Nombres");
@@ -3456,7 +3506,7 @@ function fn_eliminar_seg(id){
 
 
 function eliminarInscripcionConcurso(id){
-	
+	//event.preventdefault();
     bootbox.confirm({ 
         size: "small",
         message: "&iquest;Deseas eliminar la Inscripción del Concurso?", 
@@ -3466,6 +3516,7 @@ function eliminarInscripcionConcurso(id){
             }
         }
     });
+	return false;
     //$(".modal-dialog").css("width","30%");
 }
 
@@ -3507,4 +3558,60 @@ function fn_eliminar_inscripcion_documento(id){
             }
     });
 }
+
+function duplicar_concurso(){
+    
+	var id_concurso_inscripcion = $("#id_concurso_inscripcion").val();
+	
+    $.ajax({
+			url: "/concurso/send_duplicar_concurso",
+            type: "POST",
+            data : $("#frmExpediente").serialize(),
+            success: function (result) {  
+                    datatablenew();
+					//cargarRequisitos(id_concurso_inscripcion);
+					editarConcursoInscripcion(id_concurso_inscripcion);
+            }
+    });
+}
+
+function obtenerTipoSubTipo(){
+
+	var select = document.getElementById("id_concurso");
+    var selectedOption = select.options[select.selectedIndex];
+    var tipo_concurso = selectedOption.getAttribute("data_tipo_concurso");
+    var sub_tipo_concurso = selectedOption.getAttribute("data_sub_tipo_concurso");
+
+	if(tipo_concurso=='DELEGADO'){
+		$("#id_tipo_concurso").val(3);
+		obtenerSubTipoConcurso(function(){
+			
+			if(sub_tipo_concurso=='EDIFICACIONES'){
+				$("#id_sub_tipo").val(1);
+			}else if(sub_tipo_concurso=='HABILITACIONES URBANAS'){
+				$("#id_sub_tipo").val(2);
+			}
+			fn_ListarBusqueda();
+		});
+		
+	}else if(tipo_concurso=='IMO'){
+		$("#id_tipo_concurso").val(1);
+		obtenerSubTipoConcurso(function(){
+		if(sub_tipo_concurso=='EDIFICACIONES'){
+			$("#id_sub_tipo").val(3);
+		}else if(sub_tipo_concurso=='HABILITACIONES URBANAS'){
+			$("#id_sub_tipo").val(4);
+		}
+		fn_ListarBusqueda();
+		});
+
+	}else if(tipo_concurso=='ESPECIALISTA'){
+		$("#id_tipo_concurso").val(2);
+		obtenerSubTipoConcurso(function(){
+		$("#id_sub_tipo").val(5);
+		});
+		fn_ListarBusqueda();
+	}
+}
+
 

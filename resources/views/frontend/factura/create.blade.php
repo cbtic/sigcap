@@ -592,7 +592,7 @@ br {
                                                         </tr>
                                                         <tr>
                                                             <th></th>
-                                                            <th>Total</th>
+                                                            <th>Total--</th>
                                                             <th></th>
                                                             <th></th>
                                                             <th class="text-right"><span

@@ -261,14 +261,20 @@ function guardarCita(id_medico,fecha_cita){
 
 function fn_save_idioma(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_agremiado = $('#id_agremiado').val();
 	var id_idioma = $('#id_idioma').val();
 	var id_grado_conocimiento = $('#id_grado_conocimiento').val();
 	
-	//alert(id_agremiado);
-	//return false;
+	if(id_idioma == "0" || id_idioma == "")msg+="Debe seleccionar un Idioma <br>";
+	if(id_grado_conocimiento == "0" || id_grado_conocimiento == "")msg+="Debe seleccionar un Grado de conocimiento <br>";
+	
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
 	
     $.ajax({
 			url: "/agremiado/send_agremiado_idioma",
@@ -446,7 +452,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Movimiento
+				Registro Idioma
 			</div>
 			
             <div class="card-body">

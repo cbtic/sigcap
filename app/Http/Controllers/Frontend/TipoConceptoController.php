@@ -92,7 +92,7 @@ class TipoConceptoController extends Controller
 
 		if($request->id == 0){
 			$tipoConcepto = new TipoConcepto;
-			//$codigo = $tipoConcepto_model->getCodigoTipoConcepto();
+			//$codigo = $tipoConcepto_model->getTipoConcepto();
 		}else{
 			$tipoConcepto = TipoConcepto::find($request->id);
 			//$codigo = $request->codigo;

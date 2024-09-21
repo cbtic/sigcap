@@ -2,6 +2,45 @@
 //jQuery.noConflict(true);
 
 $(document).ready(function () {
+/*
+	$('#producto01').autocomplete({
+		appendTo: "#producto01_list",
+		source: function (request, response) {
+			$.ajax({
+				url: '/comprobante/forma_pago/' + $('#producto01').val(),
+				dataType: "json",
+				success: function (data) {
+					//alert("fddf");					
+					 //alert(JSON.stringify(data));
+					var resp = $.map(data, function (obj) {
+						console.log(obj);
+						//return obj.denominacion;
+						var hash = { key: obj.codigo, value: obj.denominacion };
+						return hash;
+					});
+					//alert(JSON.stringify(resp));
+					response(resp);
+					
+				},
+				error: function () {
+					//alert("cc");
+				}
+			});
+		},
+		select: function (event, ui) {
+			alert(ui.item.key);
+			flag_select = true;
+			$('#producto01').attr("readonly", true);
+		},
+		minLength: 2,
+		delay: 100
+	}).blur(function () {
+		if (typeof flag_select == "undefined") {
+			$('#producto01').val("");
+		}
+	});
+
+	*/
 
 	$('#fechaF').datepicker({
 		autoclose: true,
@@ -10,8 +49,92 @@ $(document).ready(function () {
 		changeYear: true,
 	});
 
+	$('#f_venci_01').datepicker({
+		autoclose: true,
+		dateFormat: 'dd/mm/yy',
+		changeMonth: true,
+		changeYear: true,
+	});
+
+/*
+	$(function() {
+		$('#producto01').keyup(function() {
+			this.value = this.value.toLocaleUpperCase();
+		});
+	});
+*/
+
+	$('#addRow').on('click', function () {
+		AddFila();
+	});
+
+	$('#tblMedioPago tbody').on('click', 'button.deleteFila', function () {
+		var obj = $(this);
+		obj.parent().parent().remove();
+		
+		var val_total = 0;
+		var total = 0;
+		$(".importe_especie").each(function (){
+			val_total = $(this).val();
+			if(val_total>0)total += Number(val_total);
+		});
+		
+		$("#precio_peso").val(total);
+		//simulaPesarCarreta();
+		
+	});
+
+	$('#numero_documento2').keypress(function (e) {
+		if (e.keyCode == 13) {
+			obtenerRepresentante();
+		}
+	});
+
+	
+
+	calculoDetraccion();
+
+	calculaPorcentaje(1);
+
+	
 });
 
+function calculoDetraccion(){
+	
+	var total_fac = $('#total_fac_').val();
+	var total_detraccion =total_fac*12/100;
+	var nc_detraccion = "111-111-111-11";
+	var tipo_detraccion = "004";
+	var afecta_a = "022";
+	var medio_pago = "001";
+	var tipo_operacion = "2";
+	//var d = new Date();
+
+	//alert(Math.round(total_fac));
+	//alert(Math.round(total_fac));
+	var tipo= $('#TipoF').val()
+
+	if (Math.round(total_fac) > 700 && tipo=='FT' ){
+
+		$('#porcentaje_detraccion').val("12%");		
+		$('#monto_detraccion').val(total_detraccion.toFixed(2));
+		$('#nc_detraccion').val(nc_detraccion);
+		$('#tipo_detraccion').val(tipo_detraccion);
+		$('#afecta_a').val(afecta_a);
+		$('#medio_pago').val(medio_pago);
+		$('#id_tipooperacion_').val(tipo_operacion);
+
+	}else{
+		$('#porcentaje_detraccion').val("");
+		$('#monto_detraccion').val("");
+		$('#nc_detraccion').val("");
+		$('#tipo_detraccion').val("");
+		$('#afecta_a').val("");
+		$('#id_tipooperacion_').val("1");
+		
+		//$('#medio_pago').value("");
+	}
+}
 
 function guardarFactura(){
 
@@ -20,7 +143,72 @@ function guardarFactura(){
 	var tipo_cambio = $('#tipo_cambio').val();
 	
 	var forma_pago = $('#forma_pago').val();
-	//alert(forma_pago); exit();
+
+	var valorizad = $('#valorizad').val();
+
+
+	var ind = $('#tblMedioPago tbody tr').length;
+	
+	if(ind==0)msg+="Debe adicionar el Medio de Pago <br>";
+	
+	var totalMedioPago = $('#totalMedioPago').val();
+	var total_fac_ = $('#total_fac_').val();
+
+	var id_formapago_ = $('#id_formapago_').val();
+
+	var total_ = 0;
+	total_ = Number(totalMedioPago);
+
+	
+	if(total_!=total_fac_ && id_formapago_==1){
+
+		$total_pagar_abono = $("#total_pagar_abono").val();
+
+		if($total_pagar_abono=="0"){
+			msg+="El total de medio de pago no coincide al total del comprobante..<br>";
+		}
+		
+	}
+
+
+	var direccion = $('#direccion').val();
+	var email = $('#email').val();
+	var direccion2 = $('#direccion2').val();
+	var email2 = $('#email2').val();
+	var razon_social2 = $('#razon_social2').val();
+
+	if(razon_social2!=''){
+		direccion = direccion2;
+		email= email2;
+	}
+
+	if(direccion=='')msg+="Debe ingresar la direcci&oacute;n del comprobante<br>";
+	if(email=='')msg+="Debe ingresar el Email del comprobante<br>";
+
+
+	//if (id_formapago_==2)
+
+
+	//
+
+	
+	var ruc_e = $('#numero_documento').val();
+	var ruc_p = $('#numero_documento2').val();
+	                
+	var tipo=$('#TipoF').val();
+
+	//alert(ruc_p); exit();
+
+	if(tipo == "FT" && ruc_p=="" && ruc_e==""){
+		msg+="Se Requiere el Número de RUC para generar una Factura!";	
+		
+	}
+
+	if(tipo == "BV" && ruc_p=="" && ruc_e=="" ){
+		msg+="Se Requiere el Número de RUC o DNI para generar una Boleta!";	
+		
+	}
+
 
     if(smodulo_guia=="32"){
 		var guia_llegada_direccion = $('#guia_llegada_direccion').val();
@@ -66,7 +254,7 @@ function guardarnc(){
 	
 
 }
-
+ 
 
 function fn_save(){
 
@@ -313,6 +501,7 @@ function obtenerTitular(){
             $('#duenoCargaModal').modal('hide');
         }
 	});
+}
 
 	function datatablenew(){
                       
@@ -460,5 +649,237 @@ function obtenerTitular(){
 		});
 	
 	}
-}
+
+
+	function calculaPorcentaje(fila) {		
+		var total_fac=  $("#total_fac_").val();		
+		var valorItem = $('#porcentajeproducto'+pad(fila, 2)).val()
+		var contador = 0;
+		$("input[name^='porcentajeproducto']").each(function(i, obj) {			
+			contador++;
+		});
+
+		if(contador == 1) {
+			$('#porcentajeproducto'+pad(fila, 2)).val(total_fac);
+			$('#producto01').val('EFECTIVO');
+		}
+		else{
+
+			$("input[name^='porcentajeproducto']").each(function(i, obj) {			
+				contador++;
+				valorItem+=  $('#porcentajeproducto'+pad(fila, 2)).val();
+			});
+			
+			//alert(parseInt(obj.value));
+
+		}
+
+
+	}
+
+	AddFila();
+	function AddFila(){
+		
+		var newRow = "";
+		var ind = $('#tblMedioPago tbody tr').length;
+		var tabindex = 11;
+		//var nuevalperiodo = "";
+
+		//var f = new Date();
+		var f = new Date();
+		var fecha_ = f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear();
+
+	
+		var item_producto 	= "";
+		$('#idMedioPagoTemp option').each(function(){
+			item_producto += "<option value="+$(this).val()+" ru='"+$(this).attr("ru")+"'>"+$(this).html()+"</option>"	
+		});
+	
+		newRow +='<tr>';
+		newRow +='<td><select class="form-control form-control-sm idMedio" id="idMedio'+ind+'" ind="'+ind+'" tabindex="'+tabindex+'" name="idMedio[]" >'+item_producto+'</select></td>';
+		
+		newRow +='<td><input onKeyPress="return soloNumerosMenosCero(event)" type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar el monto y presionar Enter para ingresar el nro operación" name="monto[]" required="" id="monto'+ind+'" class="limpia_text  monto input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		
+		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="nroOperacion[]" required="" id="nroOperacion'+ind+'" class="limpia_text nroOperacion input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		
+		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="descripcion[]" required="" id="descripcion'+ind+'" class="limpia_text  descripcion input-sm form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+
+		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="fecha[]" required="" id="fecha'+ind+'" class="form-control form-control-sm datepicker fecha input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
+		
+		newRow +='<td><button type="button" class="btn btn-danger deleteFila btn-xs" style="margin-left:4px"><i class="fa fa-times"></i> Eliminar</button></td>';
+
+		newRow +='</tr>';
+		$('#tblMedioPago tbody').append(newRow);
+
+		$("#idMedio"+ind).select2({max_selected_options: 4});
+		
+	
+		$("#idMedio"+ind).on("change", function (e) {
+			var flagx = 0;
+			cmb = $(this);
+			idMedio = $("#idMedio"+ind).val();
+			
+			//id_user={{Auth::user()->id}};
+		
+			$('.idMedio').each(function(){
+				var ind_tmp = $(this).val();
+				if($(this).val() == idMedio)flagx++;
+			});
+		
+			if(flagx > 1 && idMedio!='254'){
+				//alert(idMedio);
+				//if (idMedio!='254'){
+					bootbox.alert("El Medio de Pago ya ha sido ingresado");
+					$("#idMedio"+ind).val("").trigger("change");
+					return false;				
+				//}
+			}
+			else{
+				
+				if(ind==0){
+					monto = $("#total_fac_").val();
+					//$("#monto"+ind).val(monto);
+					$("#totalMedioPago").val(monto);
+
+					if(idMedio=='91'){
+						//monto = $("#total_fac_").val();
+						monto_r = redondeoContableAFavor(Number(monto), 1);
+
+						$("#monto"+ind).val(monto_r);
+
+						if(monto!=monto_r){
+							$("#tr_total_pagar").show();
+							$("#total_pagar").val(monto_r);
+						}
+	
+
+					}else if(idMedio=='254' || idMedio=='545' || idMedio=='543'){
+
+						$("#monto"+ind).val(monto);
+
+						
+						//$("#tr_total_pagar_abono").show();
+						//$("#total_pagar_abono").val(monto);
+						
+
+					}else{
+
+						$("#monto"+ind).val(monto);
+
+						$("#total_pagar").val("0");
+						$("#total_pagar_abono").val("0");
+						$("#tr_total_pagar").hide();
+					}
+					$("#tr_total_pagar_abono").show();
+					$("#total_pagar_abono").val(monto);
+				}
+
+				$("#fecha"+ind).val(fecha_);
+
+
+
+				
+			}
+					
+		});
+		
+
+		
+		$("#monto"+ind).on("keyup", function (e) {
+			monto = $("#monto"+ind).val();
+
+			var total = 0;
+			var val_total = 0;
+			
+			$(".monto").each(function (){
+				val_total = $(this).val();
+				
+				if(val_total!="")total += Number(val_total);
+			});
+
+			//alert(total);
+
+			
+			$("#totalMedioPago").val(total);
+			$("#total_pagar_abono").val(total);
+			
+			
+			//$("#precio_peso").val(total);
+					
+		});
+		
+	}
+
+	function redondeoContableAFavor(valor, decimales = 1) {
+		// Calcular el factor de redondeo según los decimales
+		const factor = Math.pow(10, decimales);
+		// Redondear hacia abajo al múltiplo más cercano según los decimales
+		const valorRedondeado = Math.floor(valor * factor) / factor;
+		// Calcular la diferencia (redondeo)
+		//const redondeo = valor - valorRedondeado;
+		return valorRedondeado;
+	}
+
+
+
+	function obtenerRepresentante(){
+
+		var tipo_documento = "";
+		var tipo_comprobante = $("#TipoF").val();
+
+		//alert(tipo_comprobante);
+		
+		if(tipo_comprobante=="FT") tipo_documento = '79';
+		if(tipo_comprobante=="BV") tipo_documento = '78';
+
+		var numero_documento = $("#numero_documento2").val();
+
+		$.ajax({
+			url: '/agremiado/obtener_representante/' + tipo_documento + '/' + numero_documento,
+			dataType: "json",
+			success: function (result) {
+
+				if (result) {
+					$('#razon_social2').val(result.agremiado.representante);
+					$('#direccion2').val(result.agremiado.direccion);
+					$('#email2').val(result.agremiado.email);
+					
+					if(tipo_comprobante=="FT") $('#ubicacion2').val(result.agremiado.id);
+					if(tipo_comprobante=="BV") $('#persona2').val(result.agremiado.id);
+
+					
+
+				}
+				else {						
+					Swal.fire("registro no encontrado!");
+				}
+
+			},
+			"error": function (msg, textStatus, errorThrown) {
+
+				Swal.fire("Numero de documento no fue registrado!");
+
+			}
+			
+			
+		});
+		
+	}
+	
+    function calcular_total(obj){
+        var imported=$("#imported").val();
+        var igv = imported*0.18;
+
+		alert(igv);
+		
+        $(".imported").each(function (){
+
+            alert(igv);
+
+            $(this).parent().parent().find('.igvd').html();
+
+        });
+       
+        
+    }
 

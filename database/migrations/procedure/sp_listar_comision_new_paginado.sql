@@ -1,4 +1,3 @@
-
 CREATE OR REPLACE FUNCTION public.sp_listar_comision_new_paginado(p_id_periodo_comisiones character varying, p_id_tipo_agrupacion character varying, p_comision character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -29,6 +28,18 @@ left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id ';
 	
 	v_where = ' Where 1=1  ';
 	
+	If p_id_periodo_comisiones<>'0' Then
+	 v_where:=v_where||'And mi.id_periodo_comision = '''||p_id_periodo_comisiones||''' ';
+	End If;
+
+	If p_comision<>'0' Then
+	 v_where:=v_where||'And c.id = '''||p_comision||''' ';
+	End If;
+
+	If p_id_tipo_agrupacion<>'0' Then
+	 v_where:=v_where||'And mi.id_tipo_agrupacion = '''||p_id_tipo_agrupacion||''' ';
+	End If;
+
 	/*
 	If p_denominacion<>'' Then
 	 v_where:=v_where||'And s.nombre ilike ''%'||p_denominacion||'%'' ';
@@ -55,4 +66,3 @@ End
 
 $function$
 ;
-

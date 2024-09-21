@@ -253,6 +253,7 @@ function guardarCita(id_medico,fecha_cita){
 
 function fn_save_parentesco(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_agremiado = $('#id_agremiado').val();
@@ -260,6 +261,16 @@ function fn_save_parentesco(){
 	var id_sexo = $('#id_sexo').val();
 	var apellido_nombre = $('#apellido_nombre').val();
 	var fecha_nacimiento = $('#fecha_nacimiento').val();
+	
+	if(id_parentesco == "0" || id_parentesco == "")msg+="Debe seleccionar un Parentesco <br>";
+	if(id_sexo == "0" || id_sexo == "")msg+="Debe seleccionar un Sexo <br>";
+	if(apellido_nombre == "")msg += "Debe ingresar el nombre y apellido <br>";
+	if(fecha_nacimiento == "")msg += "Debe ingresar la fecha de nacimiento <br>";
+	
+	if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
 	
     $.ajax({
 			url: "/agremiado/send_agremiado_parentesco",
@@ -437,7 +448,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Movimiento
+				Registro Familiares
 			</div>
 			
             <div class="card-body">

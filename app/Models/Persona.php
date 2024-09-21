@@ -50,6 +50,7 @@ class Persona extends Model
     }
 
     public function listar_persona2_ajax($p){
+        
 		return $this->readFunctionPostgres('sp_listar_persona_paginado',$p);
     }
 
@@ -80,10 +81,11 @@ class Persona extends Model
 
     function getPersona($tipo_documento,$numero_documento){
 
-        $cad = "select id, tipo_documento, numero_documento, apellido_paterno, apellido_materno, nombres, fecha_nacimiento, sexo
-		from personas 
-		Where tipo_documento='".$tipo_documento."' And numero_documento='".$numero_documento."'";
-		//echo $cad;
+        $cad = "select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, a.id_situacion, p.numero_celular, p.correo
+		from personas p 
+		left join agremiados a on p.id=a.id_persona
+		Where p.id_tipo_documento='".$tipo_documento."' And p.numero_documento='".$numero_documento."'";
+		
 		$data = DB::select($cad);
         return $data[0];
     }
@@ -156,6 +158,42 @@ class Persona extends Model
         order by id desc";
 		$data = DB::select($cad);
         return $data;
+    }
+
+    function getPersonaDni($numero_documento){
+
+        $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres
+		from personas p
+		Where p.numero_documento='".$numero_documento."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+
+    function getPersonaDniPropietario($numero_documento){
+
+        $cad = "select p.id, p.apellido_paterno|| ' ' ||p.apellido_materno || ', ' || p.nombres nombres, p.direccion, p.numero_celular, p.correo, p.correo, p.fecha_nacimiento 
+        from personas p
+        Where p.numero_documento='".$numero_documento."'";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data[0];
+    }
+
+    function getPersonaById($tipo_documento,$id_persona){
+
+        $cad = "select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, a.id_situacion, p.numero_celular, p.correo
+        from personas p 
+        left join agremiados a on p.id=a.id_persona
+        Where p.id_tipo_documento='".$tipo_documento."' And p.id='".$id_persona."'
+        union all
+        select p.id, p.id_tipo_documento, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.fecha_nacimiento, p.id_sexo, p.direccion, null, p.numero_celular, p.correo 
+        from profesion_otros po 
+        inner join personas p on po.id_persona = p.id
+        where p.id='".$id_persona."'";
+		
+		$data = DB::select($cad);
+        return $data[0];
     }
  
 }

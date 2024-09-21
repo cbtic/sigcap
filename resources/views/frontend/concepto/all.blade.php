@@ -168,10 +168,10 @@
 					</div>
                     <div class="col-lg-2">
                         <div class="form-group">
-                            <select name="tipo_afectacion" id="tipo_afectacion" class="form-control form-control-sm" onchange="">
+                            <select name="id_tipo_afectacion" id="id_tipo_afectacion" class="form-control form-control-sm" onchange="">
                                 <option value="">--Selecionar Tipo Afectaci&oacute;n--</option>
                                 <?php
-                                foreach ($tipo_afectacion as $row) {?>
+                                foreach ($id_tipo_afectacion as $row) {?>
                                 <option value="<?php echo $row->codigo?>" <?php if($row->codigo==$concepto->id_tipo_afectacion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
                                 <?php
                                 }
@@ -201,7 +201,7 @@
                     <table id="tblAfiliado" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
-                            <th>C&oacute;digo</th>
+                            <th>Codigo</th>
                             <th>Regional</th>
                             <th>Tipo Concepto</th>
                             <th>Concepto</th>

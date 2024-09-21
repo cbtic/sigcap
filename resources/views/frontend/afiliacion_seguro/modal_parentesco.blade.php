@@ -126,6 +126,7 @@ $(document).ready(function() {
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
+	
 });
 </script>
 
@@ -191,10 +192,13 @@ function datatablenewPlan(){
 	
 	
 	var id_agremiado =  $('#idagremiado_').val();
+	var id_afiliacion =  $('#id_afiliacion').val();
+	var id_seguro =  $('#id_seguro').val();
+	
 	
     $("#tblParentesco tbody").html("");
 	$.ajax({
-			url: "/afiliacion_seguro/obtener_parentesco/"+id_agremiado,
+			url: "/afiliacion_seguro/obtener_parentesco/"+id_afiliacion+"/"+id_agremiado+"/"+id_seguro,
 			type: "GET",
 			success: function (result) {  
 					$("#tblParentesco tbody").html(result);
@@ -444,15 +448,32 @@ function Guardar() {
 
 	var msg = "";
 	var mov = $('.mov:checked').length;
-	if(mov=="0")msg+="Debe seleccionar al menos un familiar <br>";
+	//if(mov=="0")msg+="Debe seleccionar al menos un familiar <br>";
 
 	if(msg!=""){
 		bootbox.alert(msg);
 	} else {
-		document.frmSeguroParentesco.submit();
+		//document.frmSeguroParentesco.submit();
+		guardar_seguro_afiliado_parentesco();
 	}
 	return false;
 }
+
+function guardar_seguro_afiliado_parentesco() {
+
+    $.ajax({
+        url: "/afiliacion_seguro/send_seguro_afiliado_parentesco",
+        type: "POST",
+        data: $("#frmSeguroParentesco").serialize(),
+        success: function(result) {
+			//Limpiar();
+            $('#openOverlayOpc').modal('hide');
+			datatablenew();
+			location.reload();
+        }
+    });
+}
+
 
 function fn_save_fila(id,idfamilia){
  
@@ -512,6 +533,7 @@ function fn_save_fila(id,idfamilia){
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id_afiliacion" id="id_afiliacion" value="<?php echo $id?>">
 					<input type="hidden" name="id" id="id" value="0">
+					<input type="hidden" name="id_seguro" id="id_seguro" value="<?php echo $datos_seguro_agremiado->id_seguro?>">
 					
 					<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
 							<label class="control-label">Agremiado Titular</label>
@@ -591,8 +613,10 @@ function fn_save_fila(id,idfamilia){
                             <th>Parentesco</th>
 							<th>Apellidos y nombres</th>
 							<th>sexo</th>
-							<th>Edad</th>                                                        
-							
+							<th>Edad</th>
+							<th>Plan</th>
+							<th>Monto</th>
+							<th>Moneda</th>
                             
                         </tr>
                         </thead>

@@ -198,7 +198,7 @@ $(document).ready(function() {
 
 	$('#ruc').blur(function () {
 		var id = $('#id').val();
-			if(id==0) {
+			if(id>=0) {
 				validaRuc(this.value);
 			}
 		//validaRuc(this.value);
@@ -280,7 +280,7 @@ function validaRuc(ruc){
 
 		}
 		else{
-			bootbox.alert("RUC Invalido,... revise el RUC digitado ¡");
+			Swal.fire("RUC Inv&aacute;lido. Revise el RUC digitado!");
 			return false;
 		}
 
@@ -362,30 +362,19 @@ function valida(){
 	var direccion = $('#direccion').val();
 	var email = $('#email').val();
 	var telefono = $('#telefono').val();
-	var representante = $('#representante').val();
 
 	if (ruc==""){
 		msg= "Falta ingresar el RUC";
 	}else if (email==""){
 		msg= "Falta ingresar el Email";
+	}else if (!validateEmail(email)) {
+		msg = "Ingrese un Correo Electr&oacute;nico V&aacute;lida";
 	}else if (telefono==""){
 		msg= "Falta ingresar el tel&eacute;fono";
-	}else if (representante==""){
-		msg= "Falta ingresar el representante";
+	}else if (!validarCelular(telefono)) { 
+		msg = "Ingrese un Número de Celular V&aacute;lido";
 	}
 	
-	
-	/*elseif (direccion==""){
-		msg= "Falta ingresar la direcci&oacuten";
-
-	}elseif (email==""){
-		msg= "Falta ingresar el Email";
-
-	}elseif (telefono==""){
-		msg= "Falta ingresar el tel&eacute;fono";
-
-	}*/
-
 	if (msg=="0"){
 		fn_save_empresa()		
 	}
@@ -395,6 +384,15 @@ function valida(){
 
 }
 
+function validateEmail(email) {
+	var re = /\S+@\S+\.\S+/;
+	return re.test(email);
+}
+
+function validarCelular(celular) {
+		var re = /^\d{7,9}$/;
+		return re.test(celular);
+	}
 
 function fn_save_empresa(){
     
@@ -408,11 +406,6 @@ function fn_save_empresa(){
 	var email = $('#email').val();
 	var telefono = $('#telefono').val();
 	var representante = $('#representante').val();
-	//var estado = $('#estado').val();
-	
-	//alert(id_agremiado);
-	//return false;
-
 	
     $.ajax({
 			url: "/empresa/send_empresa_nuevoEmpresa",
@@ -423,31 +416,17 @@ function fn_save_empresa(){
     
 				//alert("El RUC ingresado ya existe !!!");
 				if(result.sw==false){
-					Swal.fire({
-					icon: "error",
-					title: "Error",
-					text: "El RUC ingresado ya existe !!!",
-					})
+					Swal.fire("El RUC ingresado ya existe !!!");
+					
 					$('#openOverlayOpc').modal('hide');
-            //window.location.reload();
-
-            //footer: '<a href="#">Why do I have this issue?</a>'
-          /*
-					$('#openOverlayOpc').modal('hide');
-				}else{
+					//window.location.reload();
+           
+            	}else{
 					$('#openOverlayOpc').modal('hide');
 					window.location.reload();
-				}*/
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
-				}*/
-				
-            }}
+				}
+			
+		}
 			
     });
 }
@@ -624,21 +603,12 @@ container: '#myModal modal-body'
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
 					
-					
-					
-					
 					<div class="row"  style="padding-left:10px">
 
-
-						<div class="col-lg-12">
+						<div class="col-lg-5">
 							<div class="form-group">
 								<label for="ruc" class="control-label required-field form-control-sm">Ruc</label>
-								<input id="ruc" name="ruc" class="form-control form-control-sm" value="{{ old('ruc') }}" required type="text" >
-							    @error('ruc')
-								<small>
-									<strong>{{ $message }}</strong>
-								</small> 
-								@enderror
+								<input id="ruc" name="ruc" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" type="text" >
 							</div>
 						</div>
 						
@@ -663,19 +633,15 @@ container: '#myModal modal-body'
 							</div>
 						</div>
 
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label for="email" class="control-label form-control-sm">Email</label>
 								<input id="email" name="email" class="form-control form-control-sm "  value="<?php echo $empresa->email?>" required type="text">																				
-								@error('email')
-								<small>
-									<strong>{{$message}}</strong>
-								</small>
-								@enderror
+								
 							</div>
 						</div>
 
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tel&eacute;fono</label>
 								<input id="telefono" name="telefono" class="form-control form-control-sm"  value="<?php echo $empresa->telefono?>" required type="text">																				

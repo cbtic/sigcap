@@ -261,6 +261,7 @@ function guardarCita(id_medico,fecha_cita){
 
 function fn_save_estudio(){
     
+	var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var id_agremiado = $('#id_agremiado').val();
@@ -272,8 +273,18 @@ function fn_save_estudio(){
 	var libro = $('#libro').val();
 	var folio = $('#folio').val();
 	
-	//alert(id_agremiado);
-	//return false;
+	if(id_universidad == "0" || id_universidad == "")msg+="Debe seleccionar una Universidad <br>";
+	if(id_especialidad == "0" || id_especialidad == "")msg+="Debe seleccionar una Especialidad <br>";
+	if(tesis == "")msg += "Debe ingresar el numero de tesis <br>";
+	if(fecha_egresado == "")msg += "Debe ingresar la fecha de Egreso <br>";
+	if(fecha_graduado == "")msg += "Debe ingresar la fecha de Graduado <br>";
+	if(libro == "")msg += "Debe ingresar el numero de libro <br>";
+	if(folio == "")msg += "Debe ingresar el numero de folio <br>";
+	
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
 	
     $.ajax({
 			url: "/agremiado/send_agremiado_estudio",
@@ -451,7 +462,7 @@ container: '#myModal modal-body'
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-				Registro Movimiento
+				Registro Estudios
 			</div>
 			
             <div class="card-body">

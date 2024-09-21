@@ -210,7 +210,7 @@
 <script type="text/javascript">
 
 
-$("#profesion").select2();
+$("#profesion").select2({ width: '100%' });
 
 function obtener_profesional(){
 	
@@ -281,6 +281,35 @@ function modal_personaNuevo(){
 	});
 
 	//cargarConceptos();
+
+}
+
+function valida(){
+  var msg = "0";
+
+  var _token = $('#_token').val();
+  var id = $('#id').val();
+  var tipo_documento = $('#tipo_documento').val();
+  var numero_documento = $('#numero_documento').val();
+  var profesion = $('#profesion').val();
+  var colegiatura = $('#colegiatura').val();
+
+  if (tipo_documento==""){
+    msg= "Falta seleccionar un Tipo de Documento";
+  }else if (numero_documento==""){
+    msg= "Falta ingresar una N&uacute;mero de Documento";
+  }else if (profesion==""){
+    msg= "Falta seleccionar una Profesi&oacute;n";
+  }else if (colegiatura==""){
+    msg= "Falta ingresar una Colegiatura";
+  }
+
+  if (msg=="0"){
+    fn_save_profesionalesOtro()		
+  }
+  else {
+    Swal.fire(msg);
+  }
 
 }
 
@@ -455,7 +484,7 @@ function modal_personaNuevo(){
                           <option value="">--Selecionar--</option>
                           <?php
                           foreach ($profesion as $row) { ?>
-                            <option value="<?php echo $row->id ?>" <?php if ($row->id == $profesionalOtro->is_profesion) echo "selected='selected'" ?>><?php echo $row->nombre ?></option>
+                            <option value="<?php echo $row->id ?>" <?php if ($row->id == $profesionalOtro->id_profesion) echo "selected='selected'" ?>><?php echo $row->nombre ?></option>
                           <?php
                           }
                           ?>
@@ -487,7 +516,7 @@ function modal_personaNuevo(){
                   <div style="margin-top:15px" class="form-group">
                     <div class="col-sm-12 controls">
                       <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-                        <a href="javascript:void(0)" onClick="fn_save_profesionalesOtro()" class="btn btn-sm btn-success">Guardar</a>
+                        <a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
                       </div>
                     </div>
                   </div>

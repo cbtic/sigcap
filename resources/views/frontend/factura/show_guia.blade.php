@@ -242,7 +242,7 @@ br {
 																	<img class="logoimpresora" src="/img/logo_mmp.png">
 																</div>
 																<h3>
-																	FELMO SRLTDA
+																	CAP - Lima SRLTDA
 																</h3><br>
 																<p>AV. NESTOR GAMBETA Nº 6311 - CALLAO</p>
 															

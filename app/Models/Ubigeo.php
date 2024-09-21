@@ -55,5 +55,62 @@ order by desc_ubigeo ";
         return $data;
     }
 	
+    function getDistritoLima(){
+
+        $cad = "select id_ubigeo,id_distrito,desc_ubigeo 
+        from ubigeos u 
+        where id_departamento!='00'
+        and id_provincia!='00'
+        and id_distrito!='00'
+        and id_departamento='15'
+        and id_provincia in('01', '06')
+        and estado='1'
+        order by desc_ubigeo";
+    
+		$data = DB::select($cad);
+        return $data;
+    }
 	
+    function obtenerDepartamento($id_departamento){
+
+        $cad = "select u.desc_ubigeo 
+        from ubigeos u 
+        where id_departamento = '".$id_departamento."' and id_provincia ='00' and id_distrito ='00'
+        ";
+    
+        $data = DB::select($cad);
+		if (!empty($data)) {
+            return $data[0]->desc_ubigeo;
+        }
+        return null;
+    }
+
+    function obtenerProvincia($id_departamento,$id_provincia){
+
+        $cad = "select u.desc_ubigeo 
+        from ubigeos u 
+        where id_departamento = '".$id_departamento."' and id_provincia ='".$id_provincia."' and id_distrito ='00'
+        ";
+    
+		$data = DB::select($cad);
+        if (!empty($data)) {
+            return $data[0]->desc_ubigeo;
+        }
+        return null;
+    }
+
+    function obtenerDistrito($id_departamento,$id_provincia,$id_distrito){
+
+        $cad = "select u.desc_ubigeo 
+        from ubigeos u 
+        where id_departamento = '".$id_departamento."' and id_provincia ='".$id_provincia."' and id_distrito ='".$id_distrito."'
+        ";
+    
+		$data = DB::select($cad);
+        if (!empty($data)) {
+            return $data[0]->desc_ubigeo;
+        }
+        return null;
+    }
+
 }

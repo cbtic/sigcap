@@ -130,10 +130,13 @@
 	}
 
 
-	$(document).ready(function() {
-
-		if($id_tipo_documento=="78")
+	//$(document).ready(function() {
+		
+		var id_tipo_documento = "<?php echo $id_tipo_documento?>";
+		//alert(id_tipo_documento);
+		if(id_tipo_documento=="78")
 		{
+			//alert("ok");
 			validaDni();
 
 		}
@@ -154,14 +157,56 @@
 		*/
 
 
-	});
+	//});
 
+	function validaDni() {
+
+		var dni = $('#frmPersona #numero_documento').val();
+
+		var settings = {
+			"url": "https://apiperu.dev/api/dni/" + dni,
+			"method": "GET",
+			"timeout": 0,
+			"headers": {
+				"Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
+			},
+		};
+
+		$.ajax(settings).done(function(response) {
+			console.log(response);
+
+			if (response.success == true) {
+
+				var data = response.data;
+
+				$('#apellido_paterno').val('')
+				$('#apellido_materno').val('')
+				$('#nombres').val('')
+				//$('#codigo_').val('')
+				//$('#ocupacion_').val('')
+				//$('#telefono_').val('')
+				//$('#email_').val('')
+
+				$('#apellido_paterno').val(data.apellido_paterno);
+				$('#apellido_materno').val(data.apellido_materno);
+				$('#nombres').val(data.nombres);
+
+				//alert(data.nombre_o_razon_social);
+
+			} else {
+				bootbox.alert("DNI Invalido,... revise el DNI digitado ¡");
+				return false;
+			}
+
+		});
+	}
+	
 	function fn_save() {
 
 		var _token = $('#_token').val();
 		var id = $('#id').val();
 		var tipo_documento = $('#tipo_documento').val();
-		var numero_documento = $('#numero_documento').val();
+		var numero_documento = $('#frmPersona #numero_documento').val();
 		var apellido_paterno = $('#apellido_paterno').val();
 		var apellido_materno = $('#apellido_materno').val();
 		var nombres = $('#nombres').val();
@@ -237,7 +282,7 @@
 
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:10px">
 
-							<form method="post" action="#" enctype="multipart/form-data">
+							<form method="post" id="frmPersona" action="#" enctype="multipart/form-data">
 								<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 								<input type="hidden" name="id" id="id" value="0">
@@ -246,7 +291,7 @@
 									<div class="col-lg-12">
 										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 
-											<select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="validaTipoDocumento();" readonly>
+											<select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onChange="validaTipoDocumento();" readonly>
 												<?php
 												foreach ($tipo_documento as $row) { ?>
 													<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $id_tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
@@ -262,7 +307,7 @@
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:10px;margin-bottom:0px">
-											<input id="numero_documento" name="numero_documento" class="form-control form-control-sm" placeholder="Número Documento" onblur="validaDni()" value="<?php echo $numero_documento ?>" type="text" readonly>
+											<input id="numero_documento" name="numero_documento" class="form-control form-control-sm" placeholder="Número Documento" onBlur="validaDni()" value="<?php echo $numero_documento ?>" type="text" readonly>
 										</div>
 									</div>
 								</div>
@@ -334,47 +379,6 @@
 
 
 	<script type="text/javascript">
-		function validaDni() {
-
-			dni = $('#numero_documento').val();
-
-			var settings = {
-				"url": "https://apiperu.dev/api/dni/" + dni,
-				"method": "GET",
-				"timeout": 0,
-				"headers": {
-					"Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
-				},
-			};
-
-			$.ajax(settings).done(function(response) {
-				console.log(response);
-
-				if (response.success == true) {
-
-					var data = response.data;
-
-					$('#apellido_paterno').val('')
-					$('#apellido_materno').val('')
-					$('#nombres').val('')
-					//$('#codigo_').val('')
-					//$('#ocupacion_').val('')
-					//$('#telefono_').val('')
-					//$('#email_').val('')
-
-					$('#apellido_paterno').val(data.apellido_paterno);
-					$('#apellido_materno').val(data.apellido_materno);
-					$('#nombres').val(data.nombres);
-
-					//alert(data.nombre_o_razon_social);
-
-				} else {
-					bootbox.alert("DNI Invalido,... revise el DNI digitado ¡");
-					return false;
-				}
-
-			});
-		}
 
 		function validaTipoDocumento() {
 			var tipo_documento = $("#tipo_documento").val();

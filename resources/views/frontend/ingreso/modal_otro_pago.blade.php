@@ -1,4 +1,4 @@
-<title>Sistema de Felmo</title>
+<title>Sistema de CAP - Lima</title>
 
 <style>
 	/*
@@ -49,6 +49,17 @@
 		width: 98vw;
 		/*El ancho que necesitemos*/
 		border: 1px solid #c4c0c9;
+	}
+
+	#myInput1 {
+		background-image: url('/css/searchicon.png');
+		background-position: 10px 10px;
+		background-repeat: no-repeat;
+		width: 100%;
+		font-size: 16px;
+		padding: 12px 20px 12px 40px;
+		border: 1px solid #ddd;
+		margin-bottom: 12px;
 	}
 
 	#tablemodal thead {
@@ -240,6 +251,19 @@ legend.scheduler-border {
 <script type="text/javascript">
 	$(document).ready(function() {
 
+	//$('#tblConceptos tbody').html("");			
+	$('#tblConceptos').DataTable({
+		//"sPaginationType": "full_numbers",
+		"paging":false,
+		"dom": '<"top">rt<"bottom"flpi><"clear">',
+		"language": {"url": "/js/Spanish.json"},
+	});
+
+	$("#system-search").keyup(function() {
+			var dataTable = $('#tblConceptos').dataTable();
+			dataTable.fnFilter(this.value);
+		});
+
 	});
 
 	function cargar_calificacion() {
@@ -364,6 +388,35 @@ legend.scheduler-border {
 	}
 </script>
 
+<script>
+	function myFunction() {
+		var input, filter, table, tr, td, i, txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("tblConceptos");
+		tr = table.getElementsByTagName("tr");
+
+		
+
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			
+			if (td) {
+				txtValue = td.textContent || td.innerText;
+
+		
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+
+					tr[i].style.display = "";
+					//alert(tr);
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>
+
 
 <body class="hold-transition skin-blue sidebar-mini">
 
@@ -402,14 +455,15 @@ legend.scheduler-border {
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
 
 												<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
-											
 
-												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona?>">
-												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado?>">
-												<input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo?>">
+
+												<input type="hidden" name="id_persona" id="id_persona" value="<?php echo $id_persona ?>">
+												<input type="hidden" name="id_agremiado" id="id_agremiado" value="<?php echo $id_agremiado ?>">
+												<input type="hidden" name="periodo" id="periodo" value="<?php echo $periodo ?>">
+												<input type="hidden" name="tipo_documento" id="tipo_documento" value="<?php echo $tipo_documento ?>">
 
 												<div class="row" style="padding-left:10px">
-<!--
+													<!--
 													<div class="col-lg-12">
 														<div class="form-group">
 															<label class="control-label form-control-sm">N° Doc. / Nombre</label>
@@ -418,12 +472,20 @@ legend.scheduler-border {
 													</div>
 -->
 													<div class="card-body">
+														<div class="row">
 
-														<?php $seleccionar_todos = "style='display:block'"; ?>
-														<div class="table-responsive">
+															<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+																<div class="form-group">
+																	<input class="form-control" id="system-search" name="q" placeholder="Buscar ...">
+																</div>
+															</div>
+
+														</div>
+
+														<div class="table-responsive overflow-auto" style="max-height: 500px">
 															<table id="tblConceptos" class="table table-hover table-sm">
 																<thead>
-																	<tr style="font-size:13px">
+																	<tr style="font-size:13px ">
 																		<th style="text-align: center; padding-bottom:0px;padding-right:5px;margin-bottom: 0px; vertical-align: middle">
 																		</th>
 																		<th>Código</th>
@@ -481,13 +543,14 @@ legend.scheduler-border {
 																	//$total += $row->importe;	
 																	endforeach;
 																	?>
-
+																	<!--
 																	<tr>
 																		<th colspan="4" style="text-align:right;padding-right:55px!important;padding-bottom:0px;margin-bottom:0px"> Total</th>
 																		<td style="padding-bottom:0px;margin-bottom:0px">
 																			<input type="text" readonly name="total_concepto_" id="total_concepto_" value="" class="form-control form-control-sm text-right" />
 																		</td>
 																	</tr>
+																-->
 																</tbody>
 															</table>
 														</div>

@@ -1,4 +1,4 @@
-<title>Sistema de Felmo</title>
+<title>Sistema de CAP - Lima</title>
 
 <style>
 /*
@@ -1024,12 +1024,12 @@ function obtenerBeneficiario(){
 			success: function(result){
 				
 				if(result.sw==2){
-					bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+					bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 					//$('#telefono').attr("disabled",false);
 					//$('#email').attr("disabled",false);
 				}
 				if(result.sw==3){
-					bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+					bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 					//$('#numero_documento').val("");
 					
 					/*
@@ -1074,12 +1074,12 @@ function obtenerBeneficiario(){
 			success: function(result){
 				
 				if(result.sw==2){
-					bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+					bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 					//$('#telefono').attr("disabled",false);
 					//$('#email').attr("disabled",false);
 				}
 				if(result.sw==3){
-					bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+					bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 					//$('#numero_documento').val("");
 					
 					/*

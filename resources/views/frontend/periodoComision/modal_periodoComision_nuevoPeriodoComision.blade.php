@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Sistema SIGCAP</title>
 
 <style>
@@ -331,18 +332,51 @@ function fn_save_empresa(){
     });
 }
 
+function valida(){
+	var msg = "0";
+
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var fecha_inicio = $('#fecha_inicio').val();
+	var fecha_fin = $('#fecha_fin').val();
+
+	if (fecha_inicio==""){
+		msg= "Falta ingresar una Fecha Inicio";
+	}else if (fecha_fin==""){
+		msg= "Falta ingresar una Fecha Fin";
+	}
+
+	if (msg=="0"){
+		fn_save_periodoComision()		
+	}
+	else {
+		Swal.fire(msg);
+	}
+
+}
+
 function fn_save_periodoComision(){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();
 	var descripcion = $('#descripcion').val();
 	var fecha_inicio = $('#fecha_inicio').val();
+	var tipo = $('#id_tipo').val();
+	
+	var fijar_periodo;
+	if ($('#fijar_periodo').is(':checked')) {
+		fijar_periodo = $('#fijar_periodo').val();
+	} else {
+		fijar_periodo = 0;
+	}
+	
 	var fecha_fin = $('#fecha_fin').val();
 	
     $.ajax({
 			url: "/periodoComision/send_periodoComision_nuevoPeriodoComision",
             type: "POST",
-            data : {_token:_token,id:id,descripcion:descripcion,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin},
+            data : {_token:_token,id:id,
+				descripcion:descripcion,fijar_periodo:fijar_periodo,fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,tipo:tipo},
             success: function (result) {
 				
 				$('#openOverlayOpc').modal('hide');
@@ -384,7 +418,7 @@ function fn_save_periodoComision(){
 		<div class="card">
 			
 			<div class="card-header" style="padding:5px!important;padding-left:20px!important; font-weight: bold">
-				Registro de Periodo de Comisi&oacute;n
+				Registro de Periodo
 			</div>
 			
             <div class="card-body">
@@ -406,11 +440,37 @@ function fn_save_periodoComision(){
 							</div>
 						</div>-->
 						
+						
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Descripci&oacute;n</label>
 								<input id="descripcion" name="descripcion" class="form-control form-control-sm"  value="<?php echo $periodoComision->descripcion?>" type="text" readonly="readonly" >
 							
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Tipo</label>
+								<select name="id_tipo" id="id_tipo" class="form-control form-control-sm" onChange="">
+									<option value="">--Selecionar--</option>
+									<?php
+									foreach ($tipo_concurso as $row) {?>
+									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$periodoComision->id_tipo_concurso)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+									<?php
+									}
+									?>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-3" style="padding-top:40px">
+							<div class="form-group">
+
+							<input type="hidden" name="fijar_periodo" value="0"> <!-- Valor predeterminado -->
+							<input type="checkbox" name="fijar_periodo" value="1" id="fijar_periodo" <?php echo $periodoComision->activo ? 'checked' : '' ?>>
+
+							<!--<input type="checkbox" name="fijar_periodo" value="1" id="fijar_periodo" <?php echo $periodoComision->activo ? 'checked' :'' ?>>
+							<input type="checkbox" class="fijar_periodo" id="fijar_periodo" name="fijar_periodo" value="" <?php //if($row->id_aprobar_pago==2)echo "checked='checked'"?> />-->
+							<label class="control-label form-control-sm">Fijar Periodo</label>
 							</div>
 						</div>
 					</div>
@@ -455,11 +515,35 @@ function fn_save_periodoComision(){
 					<div style="margin-top:15px" class="form-group ">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_periodoComision()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 							</div>
 												
 						</div>
 					</div> 
+
+				<div class="card-body">				
+                    <div class="table-responsive">
+						<table id="tblPlan" class="table table-hover table-sm">
+							<thead>
+							<tr style="font-size:13px">
+								<th>Id</th>
+								<th>Periodo </th>
+								<th>Estado</th>                            
+							</tr>
+							</thead>
+							
+							<tbody style="font-size:13px">
+								<?php foreach($listaPeriodoComisionDetalle as $row){?>
+								<tr>
+									<th><?php echo $row->id?></th>
+									<th><?php echo $row->denominacion?></th>
+									<th><?php  if($row->estado=="1")echo("ACTIVO");?></th>
+								</tr>														
+								<?php }?>
+							</tbody>								
+						</table>
+					</div>
+                </div>				
 					
               </div>
 			  

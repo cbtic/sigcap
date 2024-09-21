@@ -340,7 +340,7 @@ $.mask.definitions['p'] = "[Mm]";
 				//alert(data.direccion_completa);
 
 			} else {
-				bootbox.alert("RUC Invalido,... revise el RUC digitado ¡");
+				Swal.fire("RUC Inv&aacute;lido. Revise el RUC digitado!");
 				return false;
 			}
 
@@ -427,6 +427,74 @@ $.mask.definitions['p'] = "[Mm]";
 		});
 	}
 
+	function valida(){
+		var msg = "0";
+
+		var _token = $('#_token').val();
+		var id = $('#id').val();
+		var tipo_documento = $('#tipo_documento').val();
+		var numero_documento = $('#numero_documento').val();
+		var ruc = $('#ruc').val();
+		var nombre = $('#nombre').val();
+		var apellido_paterno = $('#apellido_paterno').val();
+		var apellido_materno = $('#apellido_materno').val();
+		var fecha_nacimiento = $('#fecha_nacimiento').val();
+		var lugar_nacimiento = $('#lugar_nacimiento').val();
+		var nacionalidad = $('#nacionalidad').val();
+		var sexo = $('#sexo').val();
+		var numero_celular = $('#numero_celular').val();
+		var correo = $('#correo').val();
+		var direccion = $('#direccion').val();
+
+		if (tipo_documento==""){
+			msg= "Falta seleccionar un Tipo de Documento";
+		}else if (numero_documento==""){
+			msg= "Falta ingresar una N&uacute;mero de Documento";
+		}else if (nombre==""){
+			msg= "Falta ingresar un Nombre";
+		}else if (apellido_paterno==""){
+			msg= "Falta ingresar un Apellido Paterno";
+		}else if (apellido_materno==""){
+			msg= "Falta ingresar un Apellido Materno";
+		}/*else if (fecha_nacimiento==""){
+			msg= "Falta seleccionar una Fecha de Nacimiento";
+		}else if (lugar_nacimiento==""){
+			msg= "Falta ingresar un Lugar de Nacimiento";
+		}else if (nacionalidad==""){
+			msg= "Falta seleccionar una Nacionalidad";
+		}else if (sexo==""){
+			msg= "Falta seleccionar un Sexo";
+		}*/else if (numero_celular==""){
+			msg= "Falta ingresar un N&uacute;mero de Celular";
+		}else if (!validarCelular(numero_celular)) { 
+			msg = "Ingrese un Número de Celular V&aacute;lido";
+		}else if (correo==""){
+			msg= "Falta ingresar un Correo";
+		}else if (!validateEmail(correo)) {
+        	msg = "Ingrese un Correo Electr&oacute;nico V&aacute;lida";
+    	}else if (direccion==""){
+			msg= "Falta ingresar una Direcci&oacute;n";
+		}
+
+		if (msg=="0"){
+			fn_save_persona()		
+		}
+		else {
+			Swal.fire(msg);
+		}
+
+	}
+
+	function validateEmail(email) {
+		var re = /\S+@\S+\.\S+/;
+		return re.test(email);
+	}
+
+	function validarCelular(celular) {
+		var re = /^\d{7,9}$/;
+		return re.test(celular);
+	}
+
 	function fn_save_persona() {
 
 		var msg = "";
@@ -446,26 +514,11 @@ $.mask.definitions['p'] = "[Mm]";
 		var correo = $('#correo').val();
 		var direccion = $('#direccion').val();
 		var img_foto = $('#img_foto').val();
-		//var estado = $('#estado').val();
-
-		//alert(id_agremiado);
-		//return false;
-
-		/*if(tipo_documento == "")msg += "Debe ingresar el tipo de documento <br>";
-		if(numero_documento==""){msg+="Debe ingresar el numero de documento <br>";}
-		if(nombre==""){msg+="Debe ingresar un nombre <br>";}
-		if(apellido_paterno==""){msg+="Debe ingresar un apellido paterno <br>";}
-		if(apellido_materno == ""){msg += "Debe ingresar un apellido materno <br>";}
-		if(fecha_nacimiento==""){msg+="Debe ingresar una fecha de nacimiento <br>";}
-		if(lugar_nacimiento==""){msg+="Debe ingresar un lugar de nacimiento <br>";}
-		if(nacionalidad==""){msg+="Debe ingresar una nacionalidad<br>";}
-		if(sexo == ""){msg += "Debe ingresar el sexo <br>";}
-		if(numero_celular==""){msg+="Debe ingresar un numero de celular <br>";}
-		if(correo==""){msg+="Debe ingresar un correo <br>";}
-		if(direccion==""){msg+="Debe ingresar unaa direccion <br>";}*/
-
-		if(msg!=""){
-			bootbox.alert(msg);
+		var ruc = $('#ruc').val();
+		var id_ubigeo_nacimiento = $('#id_distrito_nacimiento').val();
+/*
+		if(result.sw==false){
+			bootbox.alert("El DNI ingresado ya existe !!!");
 			return false;
 		}
 		else{
@@ -501,9 +554,40 @@ $.mask.definitions['p'] = "[Mm]";
 				}
             }
 		});
-		}
-
-		
+		}*/
+		$.ajax({
+			url: "/persona/send_persona_nuevoPersona",
+			type: "POST",
+			data: {
+				_token: _token,
+				id: id,
+				tipo_documento: tipo_documento,
+				numero_documento: numero_documento,
+				nombre: nombre,
+				apellido_paterno: apellido_paterno,
+				apellido_materno: apellido_materno,
+				fecha_nacimiento: fecha_nacimiento,
+				grupo_sanguineo: grupo_sanguineo,
+				lugar_nacimiento: lugar_nacimiento,
+				nacionalidad: nacionalidad,
+				sexo: sexo,
+				numero_celular: numero_celular,
+				correo: correo,
+				direccion: direccion,
+				img_foto: img_foto,
+				ruc:ruc,
+				id_ubigeo_nacimiento:id_ubigeo_nacimiento
+			},
+			dataType: 'json',
+			success: function(result) {
+				if(result.sw==false){
+					Swal.fire("El DNI ingresado ya existe !!!");
+					$('#openOverlayOpc').modal('hide');
+				}else{
+					$('#openOverlayOpc').modal('hide');
+					window.location.reload();
+				}
+            }});
 	}
 
 	function fn_liberar(id) {
@@ -556,10 +640,10 @@ $.mask.definitions['p'] = "[Mm]";
 				}
 
 				if(result.sw==2){
-					bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+					bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 				}
 				if(result.sw==3){
-					bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+					bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 					return false;
 				}
 				
@@ -589,12 +673,12 @@ $.mask.definitions['p'] = "[Mm]";
 			success: function(result){
 				
 				if(result.sw==2){
-					bootbox.alert("No es colaborador de Felmo, los datos han sido obtenidos de Reniec");
+					bootbox.alert("No es colaborador de CAP - Lima, los datos han sido obtenidos de Reniec");
 					//$('#telefono').attr("disabled",false);
 					//$('#email').attr("disabled",false);
 				}
 				if(result.sw==3){
-					bootbox.alert("El numero de documento no se encontro en Felmo ni en Reniec");
+					bootbox.alert("El numero de documento no se encontro en CAP - Lima ni en Reniec");
 					//$('#numero_documento').val("");
 					
 					/*
@@ -730,6 +814,14 @@ $.mask.definitions['p'] = "[Mm]";
 	}
 
 	$(document).ready(function() {
+	
+		var id_ubigeo = "<?php echo $persona->id_ubigeo_nacimiento?>";
+		var idProvincia = id_ubigeo.substring(2,4);
+		var idDistrito = id_ubigeo.substring(4,6);
+				
+		obtenerProvinciaNacimientoEdit(idProvincia);	 
+		obtenerDistritoNacimientoEdit(idProvincia,idDistrito);
+	
 		$(".upload").on('click', function() {
 			var formData = new FormData();
 			var files = $('#image')[0].files[0];
@@ -765,6 +857,153 @@ $.mask.definitions['p'] = "[Mm]";
 		});
 
 	});
+
+	function obtenerProvinciaNacimiento(){
+	
+		var id = $('#id_departamento_nacimiento').val();
+		if(id=="")return false;
+		$('#id_provincia_nacimiento').attr("disabled",true);
+		$('#id_distrito_nacimiento').attr("disabled",true);
+		
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		var heightBrowser = $(window).width()/2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+		
+		$.ajax({
+			url: '/agremiado/obtener_provincia/'+id,
+			dataType: "json",
+			success: function(result){
+				var option = "<option value='' selected='selected'>Seleccionar</option>";
+				$('#id_provincia_nacimiento').html("");
+				$(result).each(function (ii, oo) {
+					option += "<option value='"+oo.id_provincia+"'>"+oo.desc_ubigeo+"</option>";
+				});
+				$('#id_provincia_nacimiento').html(option);
+				
+				var option2 = "<option value=''>Seleccionar</option>";
+				$('#id_distrito_nacimiento').html(option2);
+				
+				$('#id_provincia_nacimiento').attr("disabled",false);
+				$('#id_distrito_nacimiento').attr("disabled",false);
+				
+				$('.loader').hide();
+				
+			}
+			
+		});
+		
+	}
+
+	function obtenerDistritoNacimiento(){
+		
+		var id_departamento = $('#id_departamento_nacimiento').val();
+		var id = $('#id_provincia_nacimiento').val();
+		if(id=="")return false;
+		$('#id_distrito_nacimiento').attr("disabled",true);
+		
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		var heightBrowser = $(window).width()/2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+		
+		$.ajax({
+			url: '/agremiado/obtener_distrito/'+id_departamento+'/'+id,
+			dataType: "json",
+			success: function(result){
+				var option = "<option value=''>Seleccionar</option>";
+				$('#id_distrito_nacimiento').html("");
+				$(result).each(function (ii, oo) {
+					option += "<option value='"+oo.id_ubigeo+"'>"+oo.desc_ubigeo+"</option>";
+				});
+				$('#id_distrito_nacimiento').html(option);
+				
+				$('#id_distrito_nacimiento').attr("disabled",false);
+				$('.loader').hide();
+				
+			}
+			
+		});
+		
+	}
+
+	function obtenerProvinciaNacimientoEdit(idProvincia){
+	
+		var id = $('#id_departamento_nacimiento').val();
+		if(id=="")return false;
+		$('#id_provincia_nacimiento').attr("disabled",true);
+		$('#id_distrito_nacimiento').attr("disabled",true);
+		
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		var heightBrowser = $(window).width()/2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+		
+		$.ajax({
+			url: '/agremiado/obtener_provincia/'+id,
+			dataType: "json",
+			success: function(result){
+				var option = "<option value='' selected='selected'>Seleccionar</option>";
+				$('#id_provincia_nacimiento').html("");
+				var selected = "";
+				$(result).each(function (ii, oo) {
+					selected = "";
+					if(idProvincia == oo.id_provincia)selected = "selected='selected'";
+					option += "<option value='"+oo.id_provincia+"' "+selected+" >"+oo.desc_ubigeo+"</option>";
+				});
+				$('#id_provincia_nacimiento').html(option);
+				
+				//var option2 = "<option value=''>Seleccionar</option>";
+				//$('#id_distrito_nacimiento').html(option2);
+				
+				$('#id_provincia_nacimiento').attr("disabled",false);
+				//$('#id_distrito_nacimiento').attr("disabled",false);
+				
+				$('.loader').hide();
+				
+			}
+			
+		});
+		
+	}
+
+	function obtenerDistritoNacimientoEdit(idProvincia,idDistrito){
+		//alert("ok");
+		var id_departamento = $('#id_departamento_nacimiento').val();
+		var id = idProvincia;
+		if(id=="")return false;
+		$('#id_distrito_nacimiento').attr("disabled",true);
+		
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		var heightBrowser = $(window).width()/2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+		
+		$.ajax({
+			url: '/agremiado/obtener_distrito/'+id_departamento+'/'+id,
+			dataType: "json",
+			success: function(result){
+				var option = "<option value=''>Seleccionar</option>";
+				$('#id_distrito_nacimiento').html("");
+				var selected = "";
+				$(result).each(function (ii, oo) {
+					selected = "";
+					if(id_departamento+idProvincia+idDistrito == oo.id_ubigeo)selected = "selected='selected'";
+					option += "<option value='"+oo.id_ubigeo+"' "+selected+" >"+oo.desc_ubigeo+"</option>";
+				});
+				$('#id_distrito_nacimiento').html(option);
+				$('#id_distrito_nacimiento').attr("disabled",false);
+				$('.loader').hide();
+				
+			}
+			
+		});
+		
+	}
 
 	/*
 	$('#fecha_solicitud').datepicker({
@@ -842,7 +1081,7 @@ $.mask.definitions['p'] = "[Mm]";
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($tipo_documento as $row) { ?>
-														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '78') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
 													<?php
 													}
 													?>
@@ -861,7 +1100,7 @@ $.mask.definitions['p'] = "[Mm]";
 										<div class="col-lg-7">
 											<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 												<label class="control-label form-control-sm">RUC</label>
-												<input id="ruc" name="ruc" class="form-control form-control-sm" value="<?php echo $persona->numero_ruc ?>" type="text">
+												<input id="ruc" name="ruc" class="form-control form-control-sm" value="<?php echo $persona->numero_ruc?>" type="text">
 											</div>
 										</div>
 
@@ -957,12 +1196,13 @@ $.mask.definitions['p'] = "[Mm]";
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label class="control-label form-control-sm">Departamento</label>
-												<select name="departamento" id="departamento" class="form-control form-control-sm" onChange="">
+												<input type="hidden" name="id_ubigeo_nacimiento" id="id_ubigeo_nacimiento" value="<?php echo $persona->id_ubigeo_nacimiento?>">
+												<select name="id_departamento_nacimiento" id="id_departamento_nacimiento" class="form-control form-control-sm" onChange="obtenerProvinciaNacimiento()">
 													<option value="">--Selecionar--</option>
 													<?php
-													foreach ($nacionalidad as $row) { ?>
-														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_nacionalidad) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-													<?php
+													foreach ($departamento as $row) {?>
+													<option value="<?php echo $row->id_departamento?>" <?php if($row->id_departamento==substr($persona->id_ubigeo_nacimiento,0,2))echo "selected='selected'"?>><?php echo $row->desc_ubigeo ?></option>
+													<?php 
 													}
 													?>
 												</select>
@@ -971,28 +1211,16 @@ $.mask.definitions['p'] = "[Mm]";
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label class="control-label form-control-sm">Provincia</label>
-												<select name="provincia" id="provincia" class="form-control form-control-sm" onChange="">
+												<select name="id_provincia_nacimiento" id="id_provincia_nacimiento" class="form-control form-control-sm" onChange="obtenerDistritoNacimiento()">
 													<option value="">--Selecionar--</option>
-													<?php
-													foreach ($nacionalidad as $row) { ?>
-														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_nacionalidad) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-													<?php
-													}
-													?>
 												</select>
 											</div>
 										</div>
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label class="control-label form-control-sm">Distrito</label>
-												<select name="distrito" id="distrito" class="form-control form-control-sm" onChange="">
+												<select name="id_distrito_nacimiento" id="id_distrito_nacimiento" class="form-control form-control-sm" onChange="">
 													<option value="">--Selecionar--</option>
-													<?php
-													foreach ($nacionalidad as $row) { ?>
-														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_nacionalidad) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
-													<?php
-													}
-													?>
 												</select>
 											</div>
 										</div>
@@ -1039,7 +1267,7 @@ $.mask.definitions['p'] = "[Mm]";
 									<div style="margin-top:15px" class="form-group">
 										<div class="col-sm-12 controls">
 											<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-												<a href="javascript:void(0)" onClick="fn_save_persona()" class="btn btn-sm btn-success">Guardar</a>
+												<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
 											</div>
 
 										</div>
@@ -1243,7 +1471,7 @@ $.mask.definitions['p'] = "[Mm]";
 						//alert(data.nombre_o_razon_social);
 
 					} else {
-						bootbox.alert("DNI Invalido,... revise el DNI digitado ¡");
+						Swal.fire("DNI Inv&aacute;lido. Revise el DNI digitado!");
 						return false;
 					}
 
