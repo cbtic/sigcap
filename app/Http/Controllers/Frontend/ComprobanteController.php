@@ -2171,7 +2171,7 @@ class ComprobanteController extends Controller
                 'tipo' => $comprobante->tipo
             ])->get();
         }
-        print_r($comprobante); exit();
+      //  print_r($comprobante); exit();
 
         if ($comprobante->tipo=="BV"){
             $persona_model= new Comprobante;
