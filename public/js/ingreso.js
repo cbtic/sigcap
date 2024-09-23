@@ -1092,6 +1092,7 @@ function cargarValorizacion1(){
 function cargarValorizacion(){
 
 	
+	
 	var numero_documento =$("#numero_documento").val();
 	if (numero_documento=="")exit();
 

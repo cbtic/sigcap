@@ -50,7 +50,7 @@ class Valorizacione extends Model
                 and v.exonerado = '".$exonerado."' 
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
-            order by v.fecha asc
+            order by v.fecha desc
              ".$filas."
 			";
             //print_r($cad);exit();
@@ -76,7 +76,7 @@ class Valorizacione extends Model
                 and v.exonerado = '".$exonerado."' 
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
-            order by v.fecha asc
+            order by v.fecha desc
              ".$filas."
 			";
         }
