@@ -620,8 +620,8 @@ class AgremiadoController extends Controller
 		$agremiadoSituacion->save();
 		
 		$agremiado = Agremiado::find($request->id_agremiado);
-		$agremiado->id_ubicacion = 336;
-		$agremiado->id_situacion = 74;
+		$agremiado->id_ubicacion = 336; 
+		$agremiado->id_situacion = 267; 
 		$agremiado->save();
 		
 		$fecha_fin = "";
@@ -841,8 +841,12 @@ class AgremiadoController extends Controller
 			$persona->grupo_sanguineo = $this->equivalenciaGrupoSanguineo($solicitud->gruposanguineo);
 			$persona->id_ubigeo_nacimiento = "150101";
 			$persona->lugar_nacimiento = $solicitud->lugarnacimiento;
-			$persona->id_nacionalidad = 16;
 			
+			$persona->direccion = $solicitud->domicilio;
+			$persona->numero_celular = $solicitud->numerocelular;
+			$persona->correo = $solicitud->correoelectronico;
+			
+			$persona->id_nacionalidad = 16;
 			$persona->id_tipo_persona = 1;
 			$persona->estado = 1;
 			$persona->id_usuario_inserta = 1;

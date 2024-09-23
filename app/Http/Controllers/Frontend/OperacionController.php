@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\BancoInterconexione;
 use App\Models\BancoInterconexionDetalle;
+use App\Models\Comprobante;
 use Auth;
 
 class OperacionController extends Controller
@@ -357,6 +358,13 @@ class OperacionController extends Controller
 			$data_input[$row] = substr($input,($arr_indice_input[$key]-1),$arr_longitud_input[$key]);
 		}
 		
+		$comprobante_model = new Comprobante;
+		$p[]=strval($data_input["TipoConsulta"]);
+		$p[]=(int)$data_input["NumConsulta"];
+		$p[]="5";
+		$deuda_pendiente = $comprobante_model->lista_deuda_pendiente($p);
+		//print_r($deuda_pendiente);
+		
 		/**********RESP CONSULTA************/
 		/*
 		{
@@ -364,55 +372,84 @@ class OperacionController extends Controller
 }
 		*/
 		
-		$arr_var_igual = array("SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","APPROVAL CODE","RESPONSE CODE","CARD ACCEPTOR TERMINAL ID","TRANSACTION CURRENCY CODE","LONGITUD","CodigoEmpresa","TipoConsulta","NumConsulta","CodigoErrorOriginal","DescRespuesta","NombreCliente","NombreEmpresa","NumDocs");
+		$arr_var_igual = array("SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","CARD ACCEPTOR TERMINAL ID","TRANSACTION CURRENCY CODE","CodigoEmpresa","TipoConsulta","NumConsulta");
 		
 		$arr_var_output = array("MESSAGE TYPE IDENTIFICATION","PRIMARY BIT MAP","SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","AMOUNT TRANSACTION","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","APPROVAL CODE","RESPONSE CODE","CARD ACCEPTOR TERMINAL ID","TRANSACTION CURRENCY CODE","LONGITUD","CodigoEmpresa","TipoConsulta","NumConsulta","CodigoErrorOriginal","DescRespuesta","NombreCliente","NombreEmpresa","NumDocs");
 		
-		foreach($arr_var_input as $key=>$row){
+		foreach($arr_var_output as $key=>$row){
 			$data_output[$row] = "";
 			if(in_array($row, $arr_var_igual)){
 				$data_output[$row] = $data_input[$row];
 			}
 		}
 		
-		//constantes
+		//CONSTANTES
 		$data_output["MESSAGE TYPE IDENTIFICATION"] = "0210";//4
 		$data_output["PRIMARY BIT MAP"] = "F03804818E808000";//16
 		$data_output["RESPONSE CODE"] = "00"; //2-De uso interno de Interbank. La Empresa siempre debe devolver ceros
 		
-		//base de datos
-		$data_output["AMOUNT TRANSACTION"] = "000000005000"; //12-suma de los importes de las cuotas pendientes de pago enviadas
-		$data_output["APPROVAL CODE"] = "000301"; //6-Código creado por la Empresa,código único por transacción.,codigo generado 
-		$data_output["LONGITUD"] = "0634"; //4-Suma la longitud de las líneas desde P01 hasta el final
-		$data_output["NombreCliente"] = "GINOCCHIO MENDOZA PATRICIA MON"; //30-Contiene el Nombre del DEUDOR al que pertenece las deudas
-		$data_output["NombreEmpresa"] = "LA POSITIVA              "; //25-Empresa cliente de IBK (Recaudador)
-		$data_output["NumDocs"] = "03"; //2-Cantidad de documentos por cobrar.
+		//BASE DE DATOS
+		$nombreEmpresa = "COLEGIO ARQ PERU";
+		$nombreCliente = $deuda_pendiente[0]->destinatario;//"GINOCCHIO MENDOZA PATRICIA MON";
+		$numDocs = count($deuda_pendiente);
+		$suma_importes = 5000;
+		$correlativo = 301;
+		$suma_longitud = (174*count($deuda_pendiente))+112;//982//634;
 		
-		//codigo respuesta
+		$data_output["AMOUNT TRANSACTION"] = str_pad($suma_importes, 12, "0", STR_PAD_LEFT); //12-suma de los importes de las cuotas pendientes de pago enviadas
+		$data_output["APPROVAL CODE"] = str_pad($correlativo, 6, "0", STR_PAD_LEFT); //6-Código creado por la Empresa,código único por transacción, codigo generado 
+		$data_output["LONGITUD"] = str_pad($suma_longitud, 4, "0", STR_PAD_LEFT); //4-Suma la longitud de las líneas desde P01 hasta el final
+		$data_output["NombreCliente"] = str_pad($nombreCliente, 30, " ", STR_PAD_RIGHT); //30-Contiene el Nombre del DEUDOR al que pertenece las deudas
+		$data_output["NombreEmpresa"] = str_pad($nombreEmpresa, 25, " ", STR_PAD_RIGHT); //25-Empresa cliente de IBK (Recaudador)
+		$data_output["NumDocs"] = str_pad($numDocs, 2, "0", STR_PAD_LEFT); //2-Cantidad de documentos por cobrar.
+		
+		//RESPUESTA
+		$descRespuesta = "TRANSACCION PROCESADA OK";
 		$data_output["CodigoErrorOriginal"] = "000"; //3-Código de respuesta, utilizar los códigos de la hoja "RESPONSE CODE".
-		$data_output["DescRespuesta"] = "TRANSACCION PROCESADA OK      "; //30-descripción del código en la línea anterior (P04)
+		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripción del código en la línea anterior (P04)
 		
 		$data_output_detalle = array();
 		$output_detalle = "";
 		
-		for($key=0;$key<5;$key++){
-			$data_output_detalle[$key]["CodigoProducto"] = "sfsvfsv1";
-			$data_output_detalle[$key]["DescrProducto"] = "sfsvfsv2";
-			$data_output_detalle[$key]["NumDocumento"] = "sfsvfsv3";
-			$data_output_detalle[$key]["FILLER"] = "sfsvfsv4";
-			$data_output_detalle[$key]["DescDocumento"] = "sfsvfsv5";
-			$data_output_detalle[$key]["FechaVencimiento"] = "sfsvfsv6";
-			$data_output_detalle[$key]["FechaEmision"] = "sfsvfsv7";
-			$data_output_detalle[$key]["Deuda"] = "sfsvfsv8";
-			$data_output_detalle[$key]["Mora"] = "sfsvfsv9";
-			$data_output_detalle[$key]["GastosAdm"] = "sfsvfsv10";
-			$data_output_detalle[$key]["PagoMinimo"] = "sfsvfsv11";
-			$data_output_detalle[$key]["ImporteTotal"] = "sfsvfsv12";
-			$data_output_detalle[$key]["Periodo"] = "sfsvfsv13";
-			$data_output_detalle[$key]["Año"] = "sfsvfsv14";
-			$data_output_detalle[$key]["Cuota"] = "sfsvfsv15";
-			$data_output_detalle[$key]["MonedaDoc"] = "sfsvfsv16";
-			$data_output_detalle[$key]["Filler"] = "sfsvfsv17";
+		foreach($deuda_pendiente as $row){
+			
+			$codigoProducto = $row->codigo_producto;//12;
+			//echo $codigoProducto;echo "\n";
+			$descrProducto = substr($row->descr_producto,0,20);//"DEUDA CUOTA";
+			$numDocumento = $row->num_documento;//"FD221919437";
+			$descDocumento = substr($row->desc_documento,0,20);//"FACTURA DICIEMBRE";
+			
+			$fechaVencimiento = date("dmY", strtotime($row->fecha_vencimiento));//"25122019";
+			$fechaEmision = date("dmY", strtotime($row->fecha_emision));//"25122019";
+			
+			$deuda = $row->deuda;//16089;
+			$mora = $row->mora;//1000;
+			$gastosAdm = $row->gastos_adm;//600;
+			$pagoMinimo = $row->pago_minimo;//17689;
+			$importeTotal = $row->importe_total;//17689;
+			
+			$periodo = $row->periodo;//9;
+			$anio = $row->anio;//2024;
+			$cuota = $row->cuota;//1;
+			$monedaDoc = $row->moneda_doc;//1;
+			
+			$data_output_detalle[$key]["CodigoProducto"] = str_pad($codigoProducto, 3, "0", STR_PAD_LEFT);//3 - 17 o 19 servicios
+			$data_output_detalle[$key]["DescrProducto"] = str_pad($descrProducto, 20, " ", STR_PAD_RIGHT);//20 - Contiene el nombre del Servicio, DEUDA CUOTA
+			$data_output_detalle[$key]["NumDocumento"] = str_pad($numDocumento, 15, " ", STR_PAD_RIGHT);//15 - Número del documento de la deuda, se debe completar con espacios a la derecha, FD221919437
+			$data_output_detalle[$key]["FILLER"] = " ";//1
+			$data_output_detalle[$key]["DescDocumento"] = str_pad($descDocumento, 20, " ", STR_PAD_RIGHT);//20 - Descripción o referencia del documento de la deuda, FACTURA DICIEMBRE
+			$data_output_detalle[$key]["FechaVencimiento"] = $fechaVencimiento;//8 - Fecha de Vencimiento de la deuda, 25122019
+			$data_output_detalle[$key]["FechaEmision"] = $fechaEmision;//8 - Fecha de emisión de la deuda, debe ser menor o igual a la fecha de vencimiento, 25122019
+			$data_output_detalle[$key]["Deuda"] = str_pad($deuda, 12, "0", STR_PAD_LEFT);//12 - Monto de deuda a pagar, incluye 2 decimales sin, 000000016089
+			$data_output_detalle[$key]["Mora"] = str_pad($mora, 12, "0", STR_PAD_LEFT);//12 - Importe de la mora,  incluye 2 decimales sin punto, 000000001000
+			$data_output_detalle[$key]["GastosAdm"] = str_pad($gastosAdm, 12, "0", STR_PAD_LEFT);//12 - Gastos administrativos,  incluye 2 decimales sin punto, 000000000600
+			$data_output_detalle[$key]["PagoMinimo"] = str_pad($pagoMinimo, 12, "0", STR_PAD_LEFT);//12 - Este valor debe ser el mismo valor del importe total, 000000017689
+			$data_output_detalle[$key]["ImporteTotal"] = str_pad($importeTotal, 12, "0", STR_PAD_LEFT);//12 - Importe total a pagar del documento = Deuda + Mora + GatosAdm. Incluye 2 decimales sin punto, 000000017689
+			$data_output_detalle[$key]["Periodo"] = str_pad($periodo, 2, "0", STR_PAD_LEFT);//2 - Indica el periodo (Mes) al que pertenece la deuda. Si no tiene periodo enviar con 00, 12
+			$data_output_detalle[$key]["Año"] = $anio;//4 - Indica el año de la deuda, 2019
+			$data_output_detalle[$key]["Cuota"] = str_pad($cuota, 2, "0", STR_PAD_LEFT);//2 - Indica el número de cuota de la deuda, si no maneja cuotas enviar con 00, 01
+			$data_output_detalle[$key]["MonedaDoc"] = $monedaDoc;//1 - Indica la moneda en la que está expresado los importes de la deuda, 2
+			$data_output_detalle[$key]["Filler"] = "                              ";//30 - Campo libre no usado, completar con espacios
 			
 			$output_detalle .= implode('',$data_output_detalle[$key]);
 			
@@ -431,6 +468,185 @@ class OperacionController extends Controller
             );
 		return response()->json($data , $responsecode, $header, JSON_UNESCAPED_UNICODE);
 	
-	}	
+	}
+	
+	public function req_pago(Request $request){
+		
+		/**********REQ PAGO************/
+		/*
+		{
+        "input": "0200F038048188E080000000000000000080000000000000000000021000000000004045010171813565018062024010602000100820001000000090416408SAN0    898            SERV CLI X INTERNET                     6040160031510803563190       010000000000000100825807275        1507202416062024000000040450000000000000000000000000000000040450072024421                              "
+}
+		*/
+		
+		$input = $request->input('input');
+		
+		$arr_var_input = array("MESSAGE TYPE IDENTIFICATION","PRIMARY BIT MAP","SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","AMOUNT TRANSACTION","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","CARD ACCEPTOR TERMINAL ID","CARD ACCEPTOR ID CODE","CARD ACCEPTOR NAME LOCATION","TRANSACTION CURRENCY CODE","LONGITUD","CodigoEmpresa","TipoConsulta","NumConsulta","FormaPago","NumReferenciaOriginal","NumDocs");
+		
+		$arr_indice_input = array(1,5,21,37,56,62,74,80,86,94,97,99,107,115,127,135,150,190,193,197,204,205,219,221,233);
+		$arr_longitud_input = array(4,16,16,19,6,12,6,6,8,3,2,8,8,12,8,15,40,3,4,7,1,14,2,12,2);
+		
+		foreach($arr_var_input as $key=>$row){
+			$data_input[$row] = substr($input,($arr_indice_input[$key]-1),$arr_longitud_input[$key]);
+		}
+		
+		$arr_indice_input_detalle = array(235,238,253,254,262,270,282,294,306,318,320,324,326,327);
+		$arr_longitud_input_detalle = array(3,15,1,8,8,12,12,12,12,2,4,2,1,30);
+		$arr_var_input_detalle = array("CodigoProducto","NumDocumento","FILLER","FechaVencimiento","FechaEmision","Deuda","Mora","GastosAdm","ImporteTotal","Periodo","Anio","Cuota","MonedaDoc","Filler");
+		
+		for($i=0;$i<(int)$data_input["NumDocs"];$i++){
+			foreach($arr_var_input_detalle as $key=>$row){
+				$inicio = ($arr_indice_input_detalle[$key]-1)+(122*$i);
+				$data_input_detalle[$i][$row] = substr($input,$inicio,$arr_longitud_input_detalle[$key]);
+			}
+		}
+		
+		//print_r($data_input_detalle);exit();
+		
+		$p_mov ="";
+		$p_mov.="{";
+        foreach ($data_input_detalle as $key => $value) {
+			$p_mov.="{";
+			$p_mov.=$value["CodigoProducto"].",";
+			$p_mov.="0,";
+			$p_mov.=$value["NumDocumento"].",";
+			$p_mov.="0,";
+			$p_mov.=$value["FechaVencimiento"].",";
+			$p_mov.=$value["FechaEmision"].",";
+			$p_mov.=$value["Deuda"].",";
+			$p_mov.=$value["Mora"].",";
+			$p_mov.=$value["GastosAdm"].",";
+			$p_mov.="0,";
+			$p_mov.=$value["ImporteTotal"].",";
+			$p_mov.=(int)$value["Periodo"].",";
+			$p_mov.=$value["Anio"].",";
+			$p_mov.=$value["Cuota"].",";
+			$p_mov.=$value["MonedaDoc"].",";
+			$p_mov.="0,";
+			$p_mov.="0,";
+			$p_mov.="0";
+			$p_mov.="},";
+        }
+		if(strlen($p_mov)>1)$p_mov=substr($p_mov,0,-1);
+		$p_mov.="}";
+		
+		//echo $p_mov;exit();
+		
+		$comprobante_model = new Comprobante;
+		$p[]=strval($data_input["TipoConsulta"]);
+		$p[]=(int)$data_input["NumConsulta"];
+		$p[]=$p_mov;
+		
+		$actualiza_pago = $comprobante_model->actualiza_pago_pos($p);
+		
+		//exit();
+		
+		/**********RESP PAGO************/
+		/*
+		{
+		"output": "0210F03804818E808000000000000000008000000000000000000002100000000000404501017181356501806202401060200010082000100000009041640800183800SAN0    6040298031510803563190       000TRANSACCION PROCESADA OK      SULLON VILELA FRANK GUILLERMO COOPAC SANTA ISABEL PERUN00000122820301008CREDITO INDIVIDUAL  25807275        CUOTA 42 CREDITO EFE1507202416062024000000040450000000000000000000000000000000040450000000040450072024421                              "
+}
+		*/
+		
+		$arr_var_igual = array("SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","AMOUNT TRANSACTION","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","CARD ACCEPTOR TERMINAL ID","TRANSACTION CURRENCY CODE","CodigoEmpresa","TipoConsulta","NumConsulta");
+		
+		$arr_var_output = array("MESSAGE TYPE IDENTIFICATION","PRIMARY BIT MAP","SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","AMOUNT TRANSACTION","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","APPROVAL CODE","RESPONSE CODE","CARD ACCEPTOR TERMINAL ID","TRANSACTION CURRENCY CODE","LONGITUD","CodigoEmpresa","TipoConsulta","NumConsulta","CodigoErrorOriginal","DescRespuesta","NombreCliente","NombreEmpresa","NumOperacionERP","NumDocs");
+		
+		foreach($arr_var_output as $key=>$row){
+			$data_output[$row] = "";
+			if(in_array($row, $arr_var_igual)){
+				$data_output[$row] = $data_input[$row];
+			}
+		}
+		
+		//CONSTANTES
+		$data_output["MESSAGE TYPE IDENTIFICATION"] = "0210";//4
+		$data_output["PRIMARY BIT MAP"] = "F03804818E808000";//16
+		$data_output["RESPONSE CODE"] = "00"; //2-De uso interno de Interbank. La Empresa siempre debe devolver ceros
+		
+		//BASE DE DATOS
+		$nombreEmpresa = "COLEGIO ARQ PERU";
+		$nombreCliente = "GINOCCHIO MENDOZA PATRICIA MON";
+		$numDocs = "3";
+		$suma_importes = 5000;
+		$correlativo = 301;
+		$suma_longitud = 634;
+		$numOperacionERP = 89063;
+		
+		$data_output["AMOUNT TRANSACTION"] = str_pad($suma_importes, 12, "0", STR_PAD_LEFT); //12-suma de los importes de las cuotas pendientes de pago enviadas
+		$data_output["APPROVAL CODE"] = str_pad($correlativo, 6, "0", STR_PAD_LEFT); //6-Código creado por la Empresa,código único por transacción, codigo generado 
+		$data_output["LONGITUD"] = str_pad($suma_longitud, 4, "0", STR_PAD_LEFT); //4-Suma la longitud de las líneas desde P01 hasta el final
+		$data_output["NombreCliente"] = str_pad($nombreCliente, 30, " ", STR_PAD_RIGHT); //30-Contiene el Nombre del DEUDOR al que pertenece las deudas
+		$data_output["NombreEmpresa"] = str_pad($nombreEmpresa, 25, " ", STR_PAD_RIGHT); //25-Empresa cliente de IBK (Recaudador)
+		$data_output["NumOperacionERP"] = str_pad($numOperacionERP, 12, "0", STR_PAD_LEFT); //4-Suma la longitud de las líneas desde P01 hasta el final
+		$data_output["NumDocs"] = str_pad($numDocs, 2, "0", STR_PAD_LEFT); //2-Cantidad de documentos por cobrar.
+		
+		//RESPUESTA
+		$descRespuesta = "TRANSACCION PROCESADA OK";
+		$data_output["CodigoErrorOriginal"] = "000"; //3-Código de respuesta, utilizar los códigos de la hoja "RESPONSE CODE".
+		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripción del código en la línea anterior (P04)
+		
+		$data_output_detalle = array();
+		$output_detalle = "";
+		//print_r($actualiza_pago);exit();
+		foreach($actualiza_pago as $row){
+			
+			$codigoProducto = $row->codigo_producto;//12;
+			$descrProducto = substr($row->descr_producto,0,20);//"DEUDA CUOTA";
+			$numDocumento = $row->num_documento;//"FD221919437";
+			$descDocumento = substr($row->desc_documento,0,20);//"FACTURA DICIEMBRE";
+			
+			$fechaVencimiento = date("dmY", strtotime($row->fecha_vencimiento));//"25122019";
+			$fechaEmision = date("dmY", strtotime($row->fecha_emision));//"25122019";
+			
+			$deuda = $row->deuda;//16089;
+			$mora = $row->mora;//1000;
+			$gastosAdm = $row->gastos_adm;//600;
+			$pagoMinimo = $row->pago_minimo;//17689;
+			$importeTotal = $row->importe_total;//17689;
+			
+			$periodo = $row->periodo;//9;
+			$anio = $row->anio;//2024;
+			$cuota = $row->cuota;//1;
+			$monedaDoc = $row->moneda_doc;//1;
+			
+			$data_output_detalle[$key]["CodigoProducto"] = str_pad($codigoProducto, 3, "0", STR_PAD_LEFT);//3 - 17 o 19 servicios
+			$data_output_detalle[$key]["DescrProducto"] = str_pad($descrProducto, 20, " ", STR_PAD_RIGHT);//20 - Contiene el nombre del Servicio, DEUDA CUOTA
+			$data_output_detalle[$key]["NumDocumento"] = str_pad($numDocumento, 15, " ", STR_PAD_RIGHT);//15 - Número del documento de la deuda, se debe completar con espacios a la derecha, FD221919437
+			$data_output_detalle[$key]["FILLER"] = " ";//1
+			$data_output_detalle[$key]["DescDocumento"] = str_pad($descDocumento, 20, " ", STR_PAD_RIGHT);//20 - Descripción o referencia del documento de la deuda, FACTURA DICIEMBRE
+			$data_output_detalle[$key]["FechaVencimiento"] = $fechaVencimiento;//8 - Fecha de Vencimiento de la deuda, 25122019
+			$data_output_detalle[$key]["FechaEmision"] = $fechaEmision;//8 - Fecha de emisión de la deuda, debe ser menor o igual a la fecha de vencimiento, 25122019
+			$data_output_detalle[$key]["Deuda"] = str_pad($deuda, 12, "0", STR_PAD_LEFT);//12 - Monto de deuda a pagar, incluye 2 decimales sin, 000000016089
+			$data_output_detalle[$key]["Mora"] = str_pad($mora, 12, "0", STR_PAD_LEFT);//12 - Importe de la mora,  incluye 2 decimales sin punto, 000000001000
+			$data_output_detalle[$key]["GastosAdm"] = str_pad($gastosAdm, 12, "0", STR_PAD_LEFT);//12 - Gastos administrativos,  incluye 2 decimales sin punto, 000000000600
+			$data_output_detalle[$key]["PagoMinimo"] = str_pad($pagoMinimo, 12, "0", STR_PAD_LEFT);//12 - Este valor debe ser el mismo valor del importe total, 000000017689
+			$data_output_detalle[$key]["ImporteTotal"] = str_pad($importeTotal, 12, "0", STR_PAD_LEFT);//12 - Importe total a pagar del documento = Deuda + Mora + GatosAdm. Incluye 2 decimales sin punto, 000000017689
+			$data_output_detalle[$key]["Periodo"] = str_pad($periodo, 2, "0", STR_PAD_LEFT);//2 - Indica el periodo (Mes) al que pertenece la deuda. Si no tiene periodo enviar con 00, 12
+			$data_output_detalle[$key]["Año"] = $anio;//4 - Indica el año de la deuda, 2019
+			$data_output_detalle[$key]["Cuota"] = str_pad($cuota, 2, "0", STR_PAD_LEFT);//2 - Indica el número de cuota de la deuda, si no maneja cuotas enviar con 00, 01
+			$data_output_detalle[$key]["MonedaDoc"] = $monedaDoc;//1 - Indica la moneda en la que está expresado los importes de la deuda, 2
+			$data_output_detalle[$key]["Filler"] = "                              ";//30 - Campo libre no usado, completar con espacios
+			
+			$output_detalle .= implode('',$data_output_detalle[$key]);
+			
+		}
+		
+		$output = implode('',$data_output);
+		
+		$output .= $output_detalle;
+		
+		$data["output"] = $output;
+		
+		$responsecode = 200;
+        $header = array (
+                'Content-Type' => 'application/json; charset=UTF-8',
+                'charset' => 'utf-8'
+            );
+		return response()->json($data , $responsecode, $header, JSON_UNESCAPED_UNICODE);
+	
+	}
+	
+	
 			
 }
