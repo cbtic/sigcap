@@ -249,6 +249,41 @@ function generarPlanilla(){
 	
 }
 
+function eliminarRecibo(id,estado){
+
+	var act_estado = "";
+	if(estado==1){
+		act_estado = "Eliminar";
+		estado_=0;
+	}
+	if(estado==0){
+		act_estado = "Activar";
+		estado_=1;
+	}
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas "+act_estado+" el registro de Recibo por Honorario?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_recibo_honorario(id,estado_);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+}
+
+function fn_eliminar_recibo_honorario(id,estado){
+	
+    $.ajax({
+            url: "/planilla/eliminar_recibo_honorario/"+id+"/"+estado,
+            type: "GET",
+            success: function (result) {
+				datatablenew();
+            }
+    });
+}
+
+
 function eliminarPlanilla(){
 	
 	$.ajax({
@@ -556,7 +591,12 @@ function datatablenew(){
 						
 						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalRecibo('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarRecibo('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
-						//html += '<a href="javascript:void(0)" onclick=eliminarPrestamo('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						if(row.provision=="No"){
+							html += '<a href="javascript:void(0)" onclick=eliminarRecibo('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
+						}else{
+							html += '<a href="javascript:void(0)" onclick=eliminarRecibo('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px; pointer-events: none; opacity: 0.6; cursor: not-allowed;">'+estado+'</a>';
+						
+						}
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
 						
