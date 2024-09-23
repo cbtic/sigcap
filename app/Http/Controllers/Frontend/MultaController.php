@@ -362,7 +362,7 @@ class MultaController extends Controller
 					
 					if($agremiado){
 					
-						$agremiadoMultaExiste = AgremiadoMulta::where("id_agremiado",$agremiado->id)->where("id_multa",$id_multa)->where("periodo",$periodo)->where("id_concepto","29")->where("estado","1")->whereNotNull("id_estado_multa")->first();
+						$agremiadoMultaExiste = AgremiadoMulta::where("id_agremiado",$agremiado->id)->where("id_multa",$id_multa)->where("periodo",$periodo)->where("id_concepto","26461")->where("estado","1")->whereNotNull("id_estado_multa")->first();
 						if(!$agremiadoMultaExiste){
 						
 							$agremiadoMulta = new AgremiadoMulta;	
@@ -370,12 +370,13 @@ class MultaController extends Controller
 							$agremiadoMulta->id_multa = $id_multa;
 							$agremiadoMulta->fecha = Carbon::now()->format('Y-m-d');
 							$agremiadoMulta->id_estado_pago = 1;
-							$agremiadoMulta->id_concepto = 29;
+							$agremiadoMulta->id_concepto = 26461;
 							$agremiadoMulta->periodo = $periodo;
 							$agremiadoMulta->id_estado_multa = $id_estado_multa;
 							$agremiadoMulta->estado = 1;
 							$agremiadoMulta->id_usuario_inserta = $id_user;
 							$agremiadoMulta->save();
+
 							$id_multa_agremiado = $agremiadoMulta->id;
 		
 							$multa = Multa::find($id_multa);
@@ -394,6 +395,10 @@ class MultaController extends Controller
 							$valorizacion->descripcion = $concepto->denominacion ." - " . $periodo ." - ". $multa->denominacion;
 							$valorizacion->id_usuario_inserta = $id_user;
 							$valorizacion->save();
+
+							$agremiado_ = Agremiado::find($agremiado->id);
+							$agremiado_->id_situacion = 74;
+							$agremiado_->save();
 							
 						}
 					}
