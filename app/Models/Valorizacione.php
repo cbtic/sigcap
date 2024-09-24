@@ -145,7 +145,7 @@ class Valorizacione extends Model
                 and v.estado = '1'            
                 and v.pagado = '0'
                 --and v.exonerado = '0'
-            order by v.fecha desc
+            order by v.fecha asc
              ".$filas."
 			";
         }else{
@@ -165,7 +165,7 @@ class Valorizacione extends Model
                 and ((c.id = 26411 and  (case when v.fecha < now() then '1' else '0' end) = '1') or (c.id = 26412))
                 and v.estado = '1'            
                 and v.pagado = '0'                
-            order by v.fecha desc
+            order by v.fecha asc
              ".$filas."
 			";
             /*            

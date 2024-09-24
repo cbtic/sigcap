@@ -141,7 +141,7 @@ class Comprobante extends Model
         $cad = "select distinct u.name as usuario,a.numero_cap,v.id_persona  
         from comprobantes c
         inner join valorizaciones v on v.id_comprobante = c.id
-        left join agremiados a on a.id_persona = v.id_agremido 
+        left join agremiados a on a.id = v.id_agremido
         inner join users u on c.id_usuario_inserta =u.id 
                 where c.id='". $id . "'" ;
 
@@ -197,9 +197,9 @@ class Comprobante extends Model
 
     function getPersonaDni($numero_documento){
 
-        $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres,direccion_sunat,correo
-		from personas p
-		Where p.numero_documento='".$numero_documento."'";
+        $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres,direccion ,correo
+		        from personas p
+		        Where p.numero_documento='".$numero_documento."'";
 		//echo $cad;
 		$data = DB::select($cad);
         return $data[0];
@@ -207,7 +207,7 @@ class Comprobante extends Model
 
     function getPersonaRuc($numero_documento){
 
-        $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres,direccion_sunat direccion,correo email
+        $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, direccion,correo email
 		from personas p
 		Where p.numero_ruc='".$numero_documento."' or  p.numero_documento='".$numero_documento."'";
 		//echo $cad;
@@ -368,6 +368,30 @@ class Comprobante extends Model
         $data = DB::select($cad);
         return $data;        
     }
+
+	public function lista_deuda_pendiente($p){
+		return $this->readFunctionPostgres('sp_lista_deuda_pendiente',$p);
+    }
+	
+	public function actualiza_pago_pos($p){
+		return $this->readFunctionPostgres('sp_actualiza_pago_pos',$p);
+    }
+	
+	public function readFunctionPostgres($function, $parameters = null){
+
+      $_parameters = '';
+      if (count($parameters) > 0) {
+          $_parameters = implode("','", $parameters);
+          $_parameters = "'" . $_parameters . "',";
+      }
+	  $data = DB::select("BEGIN;");
+	  $cad = "select " . $function . "(" . $_parameters . "'ref_cursor');";
+	  //echo $cad;
+	  $data = DB::select($cad);
+	  $cad = "FETCH ALL IN ref_cursor;";
+	  $data = DB::select($cad);
+      return $data;
+   }
 
 	
 }

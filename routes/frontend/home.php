@@ -758,6 +758,7 @@ Route::post('operacion/anulacion', [OperacionController::class, 'anulacion'])->n
 Route::post('operacion/extorno_anulacion', [OperacionController::class, 'extorno_anulacion'])->name('operacion.extorno_anulacion');
 
 Route::post('operacion/req_consulta', [OperacionController::class, 'req_consulta'])->name('operacion.req_consulta');
+Route::post('operacion/req_pago', [OperacionController::class, 'req_pago'])->name('operacion.req_pago');
 
 Route::get('planilla/exportar_listar_recibo_honorario/{periodo}/{anio}/{mes}/{numero_cap}/{agremiado}/{municipalidad}/{fecha_inicio}/{fecha_fin}/{provision}/{cancelacion}/{ruc}', [PlanillaDelegadoController::class, 'exportar_listar_recibo_honorario'])->name('planilla.exportar_listar_recibo_honorario');
 Route::get('fondoComun/fondoComun_pdf/{id_ubigeo}/{anio}/{mes}', [FondoComunController::class, 'fondoComun_pdf'])->name('fondoComun.fondoComun_pdf');
@@ -792,3 +793,4 @@ Route::get('ingreso/obtener_detalle_factura/{id}/{forma_pago}/{estado_pago}/{med
 Route::get('reporte/exportar_lista_deuda/{id}/{fecha_fin}/{id_concepto}', [ReporteController::class, 'exportar_lista_deuda'])->name('reporte.exportar_lista_deuda');
 
 Route::get('ingreso/modal_concepto_reporte/{numero_cap}', [IngresoController::class, 'modal_concepto_reporte'])->name('ingreso.modal_concepto_reporte');
+Route::get('planilla/eliminar_recibo_honorario/{id}/{estado}', [PlanillaDelegadoController::class, 'eliminar_recibo_honorario'])->name('planilla.eliminar_recibo_honorario');

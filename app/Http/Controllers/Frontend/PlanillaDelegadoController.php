@@ -545,6 +545,22 @@ class PlanillaDelegadoController extends Controller
 		return $pdf->stream('ver_planilla_delegado.pdf');
 
 	}
+
+	public function eliminar_recibo_honorario($id,$estado)
+    {
+		$id_user = Auth::user()->id;
+		$planillaDelegadoDetalle = PlanillaDelegadoDetalle::find($id);
+		$planillaDelegadoDetalle->numero_comprobante = null;
+		$planillaDelegadoDetalle->fecha_comprobante = null;
+		$planillaDelegadoDetalle->cancelado = 0;
+		$planillaDelegadoDetalle->numero_operacion = null;
+		$planillaDelegadoDetalle->fecha_operacion = null;
+		$planillaDelegadoDetalle->id_usuario_inserta = $id_user;
+
+		$planillaDelegadoDetalle->save();
+
+		echo $planillaDelegadoDetalle->id;
+    }
 			    
 }
 

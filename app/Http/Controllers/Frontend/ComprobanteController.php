@@ -1072,8 +1072,11 @@ class ComprobanteController extends Controller
 
                 if ($total_ <= 2) {
                     $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
-                    $agremiado->id_situacion = "73";
-                    $agremiado->save();
+
+                    if($agremiado->id_actividad_gremial != 225){
+                        $agremiado->id_situacion = "73";
+                        $agremiado->save();
+                    }
                 }
                 else{
                     $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
@@ -2171,7 +2174,7 @@ class ComprobanteController extends Controller
                 'tipo' => $comprobante->tipo
             ])->get();
         }
-       // print_r($comprobante); exit();
+      //  print_r($comprobante); exit();
 
         if ($comprobante->tipo=="BV"){
             $persona_model= new Comprobante;
@@ -2179,7 +2182,7 @@ class ComprobanteController extends Controller
            // print_r($persona); exit();
             $idcliente=$persona->id;
             
-            $direccion=$persona->direccion_sunat;
+            $direccion=$persona->direccion;
             $correo=$persona->correo;
             
         }

@@ -279,9 +279,11 @@ function calcular_total(obj){
 	var id_concepto_actual="";
 
 	//alert(rol_exonera);
+
+	//alert(rol_exonera);
 	
 	//if(id_caja_usuario=="0" && rol_exonera=="0"){
-	if(id_caja_usuario=="0"){
+	if(id_caja_usuario=="0" && rol_exonera=="0"){
 		bootbox.alert("Debe seleccionar una Caja disponible");
 		$(obj).prop("checked",false);
 		return false;
@@ -1088,6 +1090,7 @@ function cargarValorizacion1(){
 
 function cargarValorizacion(){
 
+	
 	
 	var numero_documento =$("#numero_documento").val();
 	if (numero_documento=="")exit();

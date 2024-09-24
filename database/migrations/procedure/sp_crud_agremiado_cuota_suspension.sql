@@ -34,7 +34,7 @@ begin
 	
 		if p_fecha_fin='' then
 			
-			if(select count(*) from suspensiones s where id_agremiado=p_id_agremiado and estado='1' and now()>=p_fecha_ini::date) > 1 then 
+			if(select count(*) from suspensiones s where id_agremiado=p_id_agremiado and estado='1' and now()>=p_fecha_ini::date) >= 1 then 
 		
 			v_dia := to_char(p_fecha_ini::date,'dd')::int;
 			v_mes := to_char(p_fecha_ini::date,'mm')::int;
@@ -78,7 +78,7 @@ begin
 		if p_fecha_fin!='' then
 			
 			if(select count(*) from suspensiones s where id_agremiado=p_id_agremiado and estado='1' 
-			and now()>=p_fecha_ini::date and now()<=p_fecha_fin::date) > 1 then
+			and now()>=p_fecha_ini::date and now()<=p_fecha_fin::date) >= 1 then
 			--Raise Notice '%',p_fecha_fin;
 			v_dia := to_char(p_fecha_ini::date,'dd')::int;
 			v_mes := to_char(p_fecha_ini::date,'mm')::int;
@@ -151,5 +151,3 @@ begin
 end;
 $function$
 ;
-
-

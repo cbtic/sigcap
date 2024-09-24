@@ -1027,7 +1027,7 @@ label.form-control-sm{
 												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 												Act. Gremial
 												</div>
-												<div class="col-lg-1-5 col-md-12 col-sm-12 col-xs-12">
+												<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
 												<select name="id_actividad_gremial" id="id_actividad_gremial" class="form-control form-control-sm" onchange="validarSituacion()">
 													<option value="">--Selecionar--</option>
 													<?php

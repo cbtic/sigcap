@@ -111,7 +111,7 @@ and a.id=".$id;
         if($tipo_documento=="79"){  //RUC
             $cad = "select t1.id,razon_social,t1.direccion,t1.representante, t1.ruc, t1.email, 79 id_tipo_documento,  trim(t1.ruc) numero_documento_
                     from empresas t1                    
-                    Where trim(t1.ruc)='".$numero_documento."'";
+                    Where trim(t1.ruc)='".$numero_documento."' and t1.estado ='1' ";
 
         }elseif($tipo_documento=="85"){ //NRO_CAP
 			
