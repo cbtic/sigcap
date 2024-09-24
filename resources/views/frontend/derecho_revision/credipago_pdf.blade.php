@@ -139,12 +139,12 @@ $(document).ready(function() {
     <div>
         <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">
     </div>
-    <div class="container">
+    <!--<div class="container">
         <div class="vertical-text" style="position: absolute; top: 0; right: 0; writing-mode: vertical-lr;">
             <div style="display: inline-block; white-space: nowrap; font-weight: bold;">IMPORTANTE.-</div>
             <div style="display: inline-block; white-space: nowrap;">Esta liquidaci&oacute;n y su comprobante de pago adjuntarla al expediente</div>
         </div>
-    </div>
+    </div>-->
     <!--<div style="display: flex !important; width:100%">
         <span style="width: 50%; ">Div 1</span>
         <span style="width: 50%; float: right;">Div 2</span>

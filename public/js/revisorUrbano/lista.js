@@ -189,6 +189,12 @@ function obtenerAgremiado(){
 	
 }
 
+function verificarEnter(event){
+	if(event.key=='Enter'){
+		obtenerAgremiado();
+	}
+}
+
 function limpiar()
 {
 	$('#frmAfiliacion #id').val("0");
