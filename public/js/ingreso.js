@@ -6,7 +6,6 @@ $(document).ready(function () {
 
 	$('#example-select-all').on('click', function(){
 		//alert("ok");
-
 		//var tipo_documento_b = $("#tipo_documento_b").val();
 		//$("#tipo_documento").val(tipo_documento_b);
 

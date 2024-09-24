@@ -542,7 +542,7 @@
                                                             <option value="">--Selecionar--</option>
                                                             <?php
                                                             foreach ($tipooperacion as $row) { ?>
-                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == '1') echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                                <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
                                                             <?php
                                                             }
                                                             ?>

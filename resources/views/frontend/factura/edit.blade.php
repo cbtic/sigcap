@@ -331,7 +331,7 @@ br {
                                                 <div id="" class="row" style="display:none">
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
-                                                            <label class="form-control-sm">Tipo de Operación</label>
+                                                            <label class="form-control-sm">Tipo de Operación..</label>
                                                             <select name="tipo_documento" id="serieF"
                                                                 class="form-control form-control-sm"
                                                                 onchange="validaTipoDocumento()">
