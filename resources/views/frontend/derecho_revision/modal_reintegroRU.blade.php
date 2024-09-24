@@ -303,9 +303,51 @@ function limpiar(){
 }
 
 function valida(){
+    var id_solicitud=$("#id").val();
+
+    $.ajax({
+            url: "/derecho_revision/obtener_numero_revision/" + id_solicitud,
+            method: 'GET',
+            success: function(result) {
+
+                //alert(result);
+
+                var validaPago = true;
+
+                var numero_revision = result.numero_revision;
+
+                if (numero_revision == 1) {
+                    valida2();
+                    return;
+                }
+
+                if (!result.pago_liquidacion || result.pago_liquidacion.length === 0) {
+                    bootbox.alert("No se puede generar un credipago de revisi&oacute;n mayor");
+                    return;
+                }
+                
+                result.pago_liquidacion.forEach(function(res) {
+                    if(res.pagado!=1){
+                        validaPago = false;
+                    }
+                });
+
+                if (validaPago) {
+                    valida2();
+                } else {
+                    bootbox.alert("Existe un credipago de revisi&oacute;n menor por pagar");
+                }
+
+            },
+        });
+}
+
+
+function valida2(){
     
     var msg="";
     var situacion=$("#situacion").val();
+    var id_solicitud=$("#id").val();
     
     if(situacion=="FALLECIDO"){msg+="El agremiado est&aacute; FALLECIDO";}
 
@@ -315,7 +357,20 @@ function valida(){
         bootbox.alert(msg); 
         return false;
     }else if(situacion=="HABILITADO"){
-        fn_save_credipago();
+        $.ajax({
+            url: "/derecho_revision/valida_credipago_unico/" + id_solicitud,
+            method: 'GET',
+            success: function(result) {
+                
+                //alert(result[0].cantidad);
+                if(result[0].cantidad>0){
+                    bootbox.alert("Existe una liquidacion pendiente, no puede generar otra");
+                }else{
+                    fn_save_credipago();
+                }
+                
+            },
+        });
     } 
 }
 
@@ -436,7 +491,7 @@ function fn_save_requisito(){
                     </div>-->
                     <div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea del Terreno</label>
-                        <input id="area_terreno" name="area_terreno" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->area_total?>" type="text" readonly='readonly'>
+                        <input id="area_terreno" name="area_terreno" on class="form-control form-control-sm"  value="<?php echo number_format($liquidacion[0]->area_total, 2, '.', ',')?>" type="text" readonly='readonly'>
                     </div>
                     <!--<div class="col-lg-3">
                         <label class="control-label form-control-sm">&Aacute;rea Techada</label>
