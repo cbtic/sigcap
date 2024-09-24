@@ -125,7 +125,7 @@
                                         N&deg; CAP
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                        <input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> onChange="obtenerAgremiado()" >
+                                        <input type="text" name="numero_cap" id="numero_cap" value="<?php echo $agremiado->numero_cap?>" class="form-control form-control-sm" <?php "readonly='readonly'"?> onkeydown="verificarEnter(event)" >
                                     </div>
 
                                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">

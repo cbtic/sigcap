@@ -281,8 +281,8 @@ class DerechoRevision extends Model
 
         $cad = "select p.nombre, 
         CASE 
-            WHEN pr.id_tipo_propietario = '78' THEN (select p2.apellido_paterno||' '||p2.apellido_materno||' '||p2.nombres agremiado from personas p2 where p2.id = pr.id_persona)
-        WHEN pr.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = pr.id_empresa)
+            WHEN pr.id_tipo_propietario = '78' THEN (select p2.apellido_paterno||' '||p2.apellido_materno||' '||p2.nombres agremiado from personas p2 where p2.id = pr.id_persona and p2.estado ='1')
+        WHEN pr.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = pr.id_empresa and e.estado ='1')
         end as propietario,
         s.valor_obra, s.area_total, pre.area_techada, p.id_ubigeo, tm.denominacion tipo, p.direccion direccion_proyecto, 
         (SELECT numero_cap
@@ -327,14 +327,14 @@ class DerechoRevision extends Model
         WHERE po.id_solicitud = s.id and po.id_tipo_proyectista=1
         order by tipo_colegiatura limit 1) as tipo_colegiatura
         from solicitudes s 
-        left join proyectos p on s.id_proyecto = p.id
-        left join propietarios pr on pr.id_solicitud = s.id
-        left join empresas e on pr.id_empresa = e.id
-        left join presupuestos pre on pre.id_solicitud = s.id 
+        left join proyectos p on s.id_proyecto = p.id and p.estado ='1'
+        left join propietarios pr on pr.id_solicitud = s.id and pr.estado ='1'
+        left join empresas e on pr.id_empresa = e.id and e.estado ='1'
+        left join presupuestos pre on pre.id_solicitud = s.id and pre.estado ='1'
         left join tabla_maestras tm on p.id_tipo_direccion = tm.codigo::int And tm.tipo ='35'
-        left join proyectistas pro on pro.id_solicitud = s.id 
+        left join proyectistas pro on pro.id_solicitud = s.id and pro.estado ='1'
         left join agremiados a on pro.id_agremiado = a.id 
-        left join personas pe on a.id_persona = pe.id
+        left join personas pe on a.id_persona = pe.id and pe.estado ='1'
         left join tabla_maestras tm2 on a.id_ubicacion = tm2.codigo::int And tm2.tipo ='63'
         left join locales l on a.id_local = l.id
         left join regiones r on a.id_regional = r.id 

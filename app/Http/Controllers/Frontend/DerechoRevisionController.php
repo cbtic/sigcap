@@ -490,8 +490,12 @@ class DerechoRevisionController extends Controller
 			$valorizacion->pk_registro = $liquidacion->id;
 			$valorizacion->id_concepto = $concepto->id;
 			
-			if(isset($empresa->id))$valorizacion->id_empresa = $empresa->id;
-			if(isset($persona->id))$valorizacion->id_persona = $persona->id;
+			if(isset($empresa->id)){
+				$valorizacion->id_empresa = $empresa->id;
+			}
+			if(isset($persona->id)){
+				$valorizacion->id_persona = $persona->id;
+			}
 			
 			$valorizacion->monto = number_format($liquidacion->total, 2, '.', '');
 			$valorizacion->id_moneda = $concepto->id_moneda;
