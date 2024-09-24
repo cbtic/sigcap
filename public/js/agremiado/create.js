@@ -166,7 +166,65 @@ $(document).ready(function () {
         return false;
     });
 	
+	$('#numero_documento').blur(function() {
+		var id = $('#id_agremiado').val();
+		
+		if (id == 0) {
+			validaDni(this.value);
+		}
+	});
+	
 });
+
+function validaDni(dni) {
+
+	var numero_documento = $("#numero_documento").val();
+	var tipo_documento = $("#id_tipo_documento").val();
+	var msg = "";
+
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+
+	if (tipo_documento == "0" || numero_documento == "") {
+		bootbox.alert(msg);
+		return false;
+	}
+
+	var settings = {
+		"url": "https://apiperu.dev/api/dni/" + dni,
+		"method": "GET",
+		"timeout": 0,
+		"headers": {
+			"Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
+		},
+	};
+
+	$.ajax(settings).done(function(response) {
+		console.log(response);
+
+		if (response.success == true) {
+
+			var data = response.data;
+
+			$('#apellido_paterno').val('')
+			$('#apellido_materno').val('')
+			$('#nombres').val('')
+
+			$('#apellido_paterno').val(data.apellido_paterno);
+			$('#apellido_materno').val(data.apellido_materno);
+			$('#nombres').val(data.nombres);
+
+			//alert(data.nombre_o_razon_social);
+
+		} else {
+			Swal.fire("DNI Inv&aacute;lido. Revise el DNI digitado!");
+			return false;
+		}
+
+	});
+}
 
 function formato_miles(numero){
 	
@@ -210,8 +268,14 @@ function guardar_agremiado(){
 	var id_regional = $("#id_regional").val();
 	var fecha_colegiado = $("#fecha_colegiado").val();
 	
-	if(id_regional=="")msg += "Debe seleccionar una region<br>";
-	if(fecha_colegiado=="")msg += "Debe ingrear una fecha de colegiado<br>";
+	var id_tipo_documento = $("#id_tipo_documento").val();
+	var numero_documento = $("#numero_documento").val();
+	
+	if(id_tipo_documento=="")msg += "Debe seleccionar una Tipo de documento<br>";
+	if(numero_documento=="")msg += "Debe ingresar un Numero de documento<br>";
+	
+	if(id_regional=="")msg += "Debe seleccionar una Región<br>";
+	if(fecha_colegiado=="")msg += "Debe ingrear una Fecha de colegiado<br>";
 	
 	if (msg != "") {
 		bootbox.alert(msg);
