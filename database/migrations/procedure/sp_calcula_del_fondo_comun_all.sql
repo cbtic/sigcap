@@ -28,14 +28,10 @@ begin
 --	_anio:=(select EXTRACT(YEAR FROM fecha) anio from periodo_delegado_detalles where id = pIdDelPeriodoDetalle);
 	
 	
-	--_id_periodo_comision:=(select id_periodo_comision from periodo_comision_detalles where denominacion = p_anio||p_mes);
-	_id_periodo_comision:=(select id_periodo_comision from periodo_comision_detalles where denominacion = p_anio||p_mes and id_periodo_comision = p_id_periodo::int);
-	--_id_periodo_comision_detalle:=(select id from periodo_comision_detalles where denominacion = p_anio||p_mes);
-	_id_periodo_comision_detalle:=(select id from periodo_comision_detalles where denominacion = p_anio||p_mes and id_periodo_comision = p_id_periodo::int);
+	_id_periodo_comision:=(select id_periodo_comision from periodo_comision_detalles where denominacion = p_anio||p_mes);
+	_id_periodo_comision_detalle:=(select id from periodo_comision_detalles where denominacion = p_anio||p_mes);
 
 	--_total := to_number(total,'9999999999.99');
-
-
 
 CREATE TEMPORARY TABLE temp_fondo_comun (
   id_ubigeo	text,
@@ -47,15 +43,21 @@ CREATE TEMPORARY TABLE temp_fondo_comun (
   saldo numeric  
 );
 
+
+
 INSERT INTO temp_fondo_comun (id_ubigeo, distrito,importe_bruto,igv,comision,asistencia,saldo)
 select id_ubigeo, distrito, sum(importe_bruto)importe_bruto, sum(igv)igv, sum(comision)comision, sum(asistencia)asistencia, sum(saldo)saldo
 from (
 	select u.id_ubigeo, u.desc_ubigeo distrito, 
-	sum(l.total) importe_bruto, 
-	sum(l.igv) igv, 
-	sum((l.total-l.igv)*0.3) comision, 
-	Sum((l.total-l.igv)*0.02) asistencia, 
-	sum(l.total-l.igv-((l.total-l.igv)*0.3)-((l.total-l.igv)*0.02)) saldo
+	sum(l.total) importe_bruto,
+	sum(l.total-(l.total/1.18)) igv,
+	sum((l.total-(l.total-(l.total/1.18)))*0.3) comision,
+	sum((l.total-(l.total-(l.total/1.18)))*0.02) asistencia,
+ 	sum(l.total-(l.total-(l.total/1.18))-((l.total-(l.total-(l.total/1.18)))*0.3)-((l.total-(l.total-(l.total/1.18)))*0.02)) saldo
+	
+--	Sum(round((l.total-round(l.total-(l.total/1.18),2))*0.02,2)) asistencia, 
+--	sum(round(l.total-round(l.total-(l.total/1.18),2)-((l.total-round(l.total-(l.total/1.18),2))*0.3)-((l.total-round(l.total-(l.total/1.18),2))*0.02)),2) saldo
+
   -- select v.*
 	from 
 	--comision_sesion_dictamenes csd 
@@ -70,17 +72,17 @@ from (
 	inner join comprobantes c on c.id = v.id_comprobante
 	inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
 	
-	group by c.fecha_pago, u.id_ubigeo, u.desc_ubigeo,v.pagado, s2.id_tipo_solicitud --, id_aprobar_pago, cs.fecha_ejecucion, cs.id_periodo_comisione
-	having 
-	--where
+	--group by c.fecha, u.id_ubigeo, u.desc_ubigeo,v.pagado --, id_aprobar_pago, cs.fecha_ejecucion, cs.id_periodo_comisione
+	--having 
+	where
 	--to_char(cs.fecha_ejecucion,'yyyy') = '2024'
 	--And to_char(cs.fecha_ejecucion,'mm')= '03'
 	--and cs.id_periodo_comisione = 7
-	to_char(c.fecha_pago,'yyyy') = p_anio
-	And to_char(c.fecha_pago,'mm')= p_mes		
+	to_char(c.fecha,'yyyy') = p_anio
+	And to_char(c.fecha,'mm')= p_mes		
 	--and t6.id_aprobar_pago=2
 	and v.pagado = '1'
-	and s2.id_tipo_solicitud = '123'
+	group by c.id, u.id, v.id 
 
 
 /*
@@ -172,7 +174,6 @@ order by 2;
 DROP TABLE temp_fondo_comun; 
 
 --select * from delegado_fondo_comuns;
-
 
 
 idp:=1;
