@@ -199,8 +199,9 @@ function fn_eliminar_credipago(id,id_situacion){
             url: "/derecho_revision/eliminar_credipago/"+id+"/"+id_situacion,
             type: "GET",
             success: function (result) {
-				datatablenew();
                 $('#openOverlayOpc').modal('hide');
+                datatablenew();
+                datatablenew2();
             }
     });
 }

@@ -1790,8 +1790,20 @@ function guardar_solicitud_derecho_revision(){
 	var sublote = $('#sublote').val();
 	var fila = $('#fila').val();
 	var zonificacion = $('#zonificacion').val();
-	
-	$.ajax({
+
+	if(numero_cap==""){msg+="Ingrese el N&uacute;mero de CAP <br>";}
+	if(nombre_proyecto==""){msg+="Ingrese el Nombre del Proyecto<br>";}
+	if(municipalidad==""){msg+="Ingrese la Municipalidad<br>";}
+	if(n_revision==""){msg+="Ingrese el N&uacute;mero de Revisi&oacute;n<br>";}
+	if(departamento==""){msg+="Ingrese el Departamento<br>";}
+	if(provincia==""){msg+="Ingrese la Provincia<br>";}
+	if(distrito==""){msg+="Ingrese el Distrito<br>";}
+
+	if(msg!=""){
+        bootbox.alert(msg);
+        return false;
+    }else{
+		$.ajax({
 			url: "/derecho_revision/send_nuevo_registro_solicitud",
 			type: "POST",
 			data : {_token:_token,id:id,numero_cap:numero_cap,n_revision:n_revision,direccion_proyecto:direccion_proyecto,
@@ -1806,7 +1818,8 @@ function guardar_solicitud_derecho_revision(){
 				//window.location.reload();
 				
 			}
-	});
+		});
+	}
 }
 
 function valida_reintegro(){
