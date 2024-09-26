@@ -153,10 +153,10 @@ and a.id=".$id;
 		inner join propietarios pr on pr.id_solicitud = l.id_solicitud
 		left join personas p on p.id = pr.id_persona 
 		left join empresas e  on e.id = pr.id_empresa 
-		where 1=1 and
-		trim(l.credipago) = '".$numero_documento."'
-		limit 1
-		";
+		where 1=1 
+		and pr.estado ='1'
+		and trim(l.credipago) = '".$numero_documento."'
+		limit 1 ";
 
 		/*
 		$cad = "select s.id_persona, s.id_empresa, p.id_tipo_documento, p.numero_documento, e.ruc, e.razon_social 
