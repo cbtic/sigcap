@@ -1798,6 +1798,7 @@ function guardar_solicitud_derecho_revision(){
 	if(departamento==""){msg+="Ingrese el Departamento<br>";}
 	if(provincia==""){msg+="Ingrese la Provincia<br>";}
 	if(distrito==""){msg+="Ingrese el Distrito<br>";}
+	if(direccion_proyecto==""){msg+="Ingrese el Direcci&oacute;n<br>";}
 
 	if(msg!=""){
         bootbox.alert(msg);
