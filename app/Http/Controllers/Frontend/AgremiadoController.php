@@ -195,11 +195,16 @@ class AgremiadoController extends Controller
 		}
 		
 		if($id_persona==0){
+			
 			$personaExiste = Persona::where("numero_documento",$request->numero_documento)->where("estado",1)->get();
 			if(count($personaExiste)>0){
-				echo "2";
-				exit();
+				
+				$personaEx = Persona::where("numero_documento",$request->numero_documento)->where("estado",1)->first();
+				$id_persona = $personaEx->id;
+				//echo "2";
+				//exit();
 			}
+			
 		}
 		
 		
@@ -829,29 +834,42 @@ class AgremiadoController extends Controller
 			$id_distrito_sol = str_pad($solicitud->iddistrito, 2, "0", STR_PAD_LEFT);
 			$IdUbigeoDomicilio = $id_departamento_sol.$id_provincia_sol.$id_distrito_sol;
 			
-			$persona = new Persona;
-			$persona->id_tipo_documento = $this->equivalenciaTipoDocumento($solicitud->idtipodocumento);
-			$persona->numero_documento = $solicitud->numerodocumento;
-			$persona->apellido_paterno = $solicitud->apellidopaterno;
-			$persona->apellido_materno = $solicitud->apellidomaterno;
-			$persona->nombres = $solicitud->nombre;
-			$persona->fecha_nacimiento = $solicitud->fechanacimiento;
-			//$persona->sexo = $sexo;
-			$persona->id_sexo = $this->equivalenciaTipoSexo($solicitud->idsexo);
-			$persona->grupo_sanguineo = $this->equivalenciaGrupoSanguineo($solicitud->gruposanguineo);
-			$persona->id_ubigeo_nacimiento = "150101";
-			$persona->lugar_nacimiento = $solicitud->lugarnacimiento;
+			$id_persona = 0;
+			$personaExiste = Persona::where("numero_documento",$solicitud->numerodocumento)->where("estado",1)->get();
+			if(count($personaExiste)>0){
+				
+				$personaEx = Persona::where("numero_documento",$solicitud->numerodocumento)->where("estado",1)->first();
+				$id_persona = $personaEx->id;
+				
+			}
 			
-			$persona->direccion = $solicitud->domicilio;
-			$persona->numero_celular = $solicitud->numerocelular;
-			$persona->correo = $solicitud->correoelectronico;
+			if($id_persona == 0){
 			
-			$persona->id_nacionalidad = 16;
-			$persona->id_tipo_persona = 1;
-			$persona->estado = 1;
-			$persona->id_usuario_inserta = 1;
-			$persona->save();
-			$id_persona = $persona->id;
+				$persona = new Persona;
+				$persona->id_tipo_documento = $this->equivalenciaTipoDocumento($solicitud->idtipodocumento);
+				$persona->numero_documento = $solicitud->numerodocumento;
+				$persona->apellido_paterno = $solicitud->apellidopaterno;
+				$persona->apellido_materno = $solicitud->apellidomaterno;
+				$persona->nombres = $solicitud->nombre;
+				$persona->fecha_nacimiento = $solicitud->fechanacimiento;
+				//$persona->sexo = $sexo;
+				$persona->id_sexo = $this->equivalenciaTipoSexo($solicitud->idsexo);
+				$persona->grupo_sanguineo = $this->equivalenciaGrupoSanguineo($solicitud->gruposanguineo);
+				$persona->id_ubigeo_nacimiento = "150101";
+				$persona->lugar_nacimiento = $solicitud->lugarnacimiento;
+				
+				$persona->direccion = $solicitud->domicilio;
+				$persona->numero_celular = $solicitud->numerocelular;
+				$persona->correo = $solicitud->correoelectronico;
+				
+				$persona->id_nacionalidad = 16;
+				$persona->id_tipo_persona = 1;
+				$persona->estado = 1;
+				$persona->id_usuario_inserta = 1;
+				$persona->save();
+				$id_persona = $persona->id;
+			
+			}
 			
 			$agremiado = new Agremiado;
 			$agremiado->id_persona = $id_persona;
