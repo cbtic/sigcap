@@ -251,7 +251,7 @@ class DerechoRevision extends Model
         left join proyectistas p on p.id_solicitud = s.id
         left join agremiados a on p.id_agremiado = a.id
         left join personas pe on a.id_persona = pe.id
-        left join propietarios pr on pr.id_solicitud = s.id
+        left join propietarios pr on pr.id_solicitud = s.id and pr.estado ='1'
         left join empresas e on pr.id_empresa = e.id
         left join personas pe2 on pr.id_persona = pe2.id
         left join proyectos pro on s.id_proyecto = pro.id
