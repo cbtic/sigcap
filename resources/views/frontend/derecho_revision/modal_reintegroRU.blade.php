@@ -382,23 +382,32 @@ function fn_save_credipago(){
 	var id_regional = $('#id_regional').val();
 	var id_tipo_sesion = $('#id_tipo_sesion').val();
 	var observaciones = $('#observaciones').val();
+
+    var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
 	
     $.ajax({
 			url: "/derecho_revision/send_credipago_liquidacion",
             type: "POST",
 			data : $('#frmReintegroSolicitud').serialize(),
             success: function (result) {
+
+                $('.loader').hide();
                 
                 if(result[0].sw==true){
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
-                $.ajax({
-                    url: "/derecho_revision/correo_credipago_aprobado_hu/" + id,
-                    method: 'GET',
-                    success: function(result) {
-                    
-                    },
-                });
+                    $('#openOverlayOpc').modal('hide');
+                    datatablenew2();
+
+                    $.ajax({
+                        url: "/derecho_revision/correo_credipago_aprobado_hu/" + id,
+                        method: 'GET',
+                        success: function(result) {
+                        
+                        },
+                    });
                 }else{
 					//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
 					bootbox.alert({
