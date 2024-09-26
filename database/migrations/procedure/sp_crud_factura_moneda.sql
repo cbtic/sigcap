@@ -81,7 +81,8 @@ begin
 				if trunc(_total) = 0 Then
 					select substr(CAST(_total AS varchar),3) into _decimal_letras;
 				else
-					select substr(CAST(mod(_total,trunc(_total)) AS varchar),3) into _decimal_letras;
+					--select substr(CAST(mod(_total,trunc(_total)) AS varchar),3) into _decimal_letras;
+					select substr(TO_CHAR(mod(_total,trunc(_total)),'FM9.00'),2) into _decimal_letras;
 				End if;
 
 				if tipo = 'FT' and  ubicacion > 0  Then
