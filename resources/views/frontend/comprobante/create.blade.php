@@ -813,14 +813,14 @@
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
                                                                                             } else {
-                                                                                                echo $fac['pu'];
+                                                                                                echo number_format($fac['pu'],2);
                                                                                             }
                                                                                         }
                                                                                         if ($trans == 'FE') {
-                                                                                            echo number_format($fac['importe'], 2);
+                                                                                            echo number_format($fac['importe'], 2); 
                                                                                         } ?></td>
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                            echo $fac['descuento'];
+                                                                                            echo number_format($fac['descuento']);
                                                                                         }
                                                                                         if ($trans == 'FE') {
                                                                                             echo $fac['descuento'];
@@ -829,7 +829,7 @@
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
                                                                                             } else {
-                                                                                                echo $fac['pv'];
+                                                                                                echo number_format($fac['pv'],2);
                                                                                             }
                                                                                         }
                                                                                         if ($trans == 'FE') {
@@ -839,7 +839,7 @@
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd * 0.18);
                                                                                             } else {
-                                                                                                echo $fac['igv'];
+                                                                                                echo number_format($fac['igv'],2);
                                                                                             }
                                                                                         }
                                                                                         if ($trans == 'FE') {
@@ -849,7 +849,7 @@
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo $MonAd;
                                                                                             } else {
-                                                                                                echo $fac['total'];
+                                                                                                echo number_format($fac['total'],2);
                                                                                             }
                                                                                         }
                                                                                         if ($trans == 'FE') {

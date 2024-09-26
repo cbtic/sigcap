@@ -512,8 +512,8 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                         <td style="text-align: left;"> Abonar en Cta. Banco Interbank Soles : CCI:</td>
                                         </tr>
                                         <tr>
-                                        <td>COMENTARIOS LEGALES :</td>
-                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNATCta.Para Detacción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima ( Ruc: 20172977911).Tasa: S/ <span class="resaltado">{{ $factura->total * 12/100 }}</span> (12.0%)                                        
+                                        <td>COMENTARIOS TRIBUTARIOS :</td>
+                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNATCta.Para Detacción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima Ruc: 20172977911 .Tasa (12%): S/ <span class="resaltado">{{ $factura->total * 12/100 }}</span>                                         
                                             </td>
                                         </tr>
                                         </tbody>
