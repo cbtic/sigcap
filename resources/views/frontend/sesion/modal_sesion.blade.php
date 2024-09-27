@@ -626,6 +626,7 @@ function cargarDelegados(){
           </h1>
         </section>
 		-->
+		
 		<div class="justify-content-center">		
 
 		<div class="card">
@@ -634,7 +635,7 @@ function cargarDelegados(){
 				Registro Programacion de Sesi&oacute;n
 			</div>
 			
-            <div class="card-body">
+            <div class="card-body" style="max-height: 850px; overflow-y: auto;">
 
 			<div class="row">
 
