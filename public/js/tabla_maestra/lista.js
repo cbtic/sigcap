@@ -7,21 +7,21 @@ $(document).ready(function () {
 		fn_ListarBusqueda();
 	});
 
-	$('#denominacion').keypress(function(e){
+	$('#denominacion_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
 		}
 	});
 
-	$('#tipo_nombre').keypress(function(e){
+	$('#tipo_nombre_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 
 		}
 	});
 
-	$('#estado').keypress(function(e){
+	$('#estado_bus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
 			return false;
@@ -32,7 +32,7 @@ $(document).ready(function () {
 		modalTablaMaestra(0);
 	});
 
-	$("#tipo_nombre").select2({ width: '100%' });
+	$("#tipo_nombre_bus").select2({ width: '100%' });
 		
 	datatablenew();
 	/*	
@@ -462,9 +462,9 @@ function datatablenew(){
             var iNroPagina 	= parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed();
             var iCantMostrar 	= aoData[4].value;
 			
-			var denominacion = $('#denominacion').val();
-			var tipo_nombre = $('#tipo_nombre').val();
-			var estado = $('#estado').val();
+			var denominacion = $('#denominacion_bus').val();
+			var tipo_nombre = $('#tipo_nombre_bus').val();
+			var estado = $('#estado_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',

@@ -481,6 +481,7 @@
                                 <th>Tipo Comisi&oacute;n</th>
                                 <th>Coordinador</th>
                                 <th>Comisi&oacute;n</th>
+                                <th>Municipalidad</th>
                                 <th>Fecha Programada</th>
                                 <th>Fecha Ejecuci&oacute;n</th>
                                 <th>Sesi&oacute;n Programada</th>

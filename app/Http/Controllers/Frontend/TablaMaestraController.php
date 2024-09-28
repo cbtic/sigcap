@@ -80,9 +80,11 @@ class TablaMaestraController extends Controller
 		if($request->id == 0){
 			$tablaMaestra = new TablaMaestra;
 			$tablaMaestra->id = intval($ultimo_id) + 1;
+			$tablaMaestra->codigo = $codigo + 1;
+			$tablaMaestra->orden = $orden + 1;
 		}else{
 			$tablaMaestra = TablaMaestra::find($request->id);
-			$tablaMaestra->id = intval($ultimo_id);
+			//$tablaMaestra->id = $tablaMaestra-//intval($ultimo_id);
 		}
         
 		//dd($datos_tablaMaestra);
@@ -90,8 +92,7 @@ class TablaMaestraController extends Controller
         $tablaMaestra->tipo = $request->tipo_nombre;
 		$tablaMaestra->denominacion = $request->denominacion;
 		$tablaMaestra->tipo_nombre = $tipo_nombre;
-        $tablaMaestra->codigo = $codigo + 1;
-        $tablaMaestra->orden = $orden + 1;
+       
         $tablaMaestra->estado = 1;
 		//$tablaMaestra->id_usuario_inserta = $id_user;
 		$tablaMaestra->save();

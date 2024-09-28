@@ -95,7 +95,8 @@ and mi.estado='1'";
         from municipalidad_integradas mi
         where mi.estado='1'
         and mi.id_periodo_comision='".$id_periodo."'
-        and mi.id_tipo_comision='".$id_tipo_comision."'";
+        and mi.id_tipo_comision='".$id_tipo_comision."'
+        order by mi.denominacion ";
 
 		$data = DB::select($cad);
         return $data;
