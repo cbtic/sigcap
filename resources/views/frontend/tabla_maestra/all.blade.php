@@ -172,11 +172,11 @@
                                 <div class="row">
                             
                                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-                                        <input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominaci&oacute;n">
+                                        <input class="form-control form-control-sm" id="denominacion_bus" name="denominacion_bus" placeholder="Denominaci&oacute;n">
                                     </div>
 
                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                        <select name="tipo_nombre" id="tipo_nombre" class="form-control form-control-sm" onChange="">
+                                        <select name="tipo_nombre_bus" id="tipo_nombre_bus" class="form-control form-control-sm" onChange="">
                                             <option value="">--Selecionar Tipo Nombre--</option>
                                                 <?php
                                                 foreach ($tipo_nombre as $row) {?>
@@ -188,7 +188,7 @@
                                     </div>
                                 
                                     <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
-                                        <select name="estado" id="estado" class="form-control form-control-sm">
+                                        <select name="estado_bus" id="estado_bus" class="form-control form-control-sm">
                                             <option value="">Todos</option>
                                             <option value="1" selected="selected">Activo</option>
                                             <option value="0">Inactivo</option>

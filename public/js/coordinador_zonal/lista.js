@@ -907,12 +907,21 @@ function datatablenew2(){
 				},
 				{
 					"mRender": function (data, type, row) {
+						var municipalidad = "";
+						if(row.municipalidad!= null)municipalidad = row.municipalidad;
+						return municipalidad;
+					},
+					"bSortable": false,
+					"aTargets": [4]
+				},
+				{
+					"mRender": function (data, type, row) {
 						var fecha_programado = "";
 						if(row.fecha_programado!= null)fecha_programado = row.fecha_programado;
 						return fecha_programado;
 					},
 					"bSortable": false,
-					"aTargets": [4]
+					"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -921,7 +930,7 @@ function datatablenew2(){
 						return fecha_ejecucion;
 					},
 					"bSortable": false,
-					"aTargets": [5]
+					"aTargets": [6]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -930,7 +939,7 @@ function datatablenew2(){
 						return tipo_programacion;
 					},
 					"bSortable": false,
-					"aTargets": [6]
+					"aTargets": [7]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -939,7 +948,7 @@ function datatablenew2(){
 						return estado_sesion;
 					},
 					"bSortable": false,
-					"aTargets": [7]
+					"aTargets": [8]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -948,7 +957,7 @@ function datatablenew2(){
 						return estado_aprobacion;
 					},
 					"bSortable": false,
-					"aTargets": [8]
+					"aTargets": [9]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -967,7 +976,7 @@ function datatablenew2(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [9]
+					"aTargets": [10]
 				},
 				/*{
 					"mRender": function (data, type, row) {
@@ -1006,7 +1015,7 @@ function datatablenew2(){
 					return html;
 				},
 				"bSortable": false,
-				"aTargets": [10],
+				"aTargets": [11],
 				},
             ]
     });

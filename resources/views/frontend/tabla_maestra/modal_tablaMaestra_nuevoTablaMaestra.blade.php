@@ -305,8 +305,8 @@ function fn_save_(){
 				
 				//$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
-				//datatablenew();
-				datatableTablaMaestraTipo()
+				datatablenew();
+				datatableTablaMaestraTipo();
 				
             }
     });
