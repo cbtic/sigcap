@@ -272,6 +272,7 @@ function fn_save_requisito(){
                 <div class="card-body">				
 
                     <div class="table-responsive">
+					<input type="hidden" id="id_comision_sesion_delegado" name="id_comision_sesion_delegado" value="<?php echo $id?>" />
                     <table id="tblPuesto" class="table table-hover table-sm">
                         <thead>
                         <tr style="font-size:13px">
@@ -279,6 +280,7 @@ function fn_save_requisito(){
                             <th>CAP</th>
 							<th>Delegado</th>
 							<th>Situaci&oacute;n</th>
+							<th>Eliminar</th>
                         </tr>
                         </thead>
                         <tbody style="font-size:13px">
@@ -294,6 +296,7 @@ function fn_save_requisito(){
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->numero_cap?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></td>
 							<td class="text-left" style="vertical-align:middle"><?php echo $row->situacion?></td>
+							<td class='text-left'><button style='font-size:12px' type='button' class='btn btn-sm btn-danger' data-toggle='modal' onclick=eliminarHistorialDelegadoSesion('<?php echo $row->id?>') >Eliminar</button></td>
 						</tr>
 						<?php 
 							}	

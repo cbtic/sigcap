@@ -5,8 +5,11 @@ foreach($delegados as $row){
 	$id_tipo = ($row->id_delegado>0)?1:2;
 	
 	$btnDisabled="";
+	$btnDisabledEliminar="";
 	if($row->id_aprobar_pago==2)$btnDisabled="disabled='disabled'";
-
+	
+	if(str_contains($row->puesto,"TITULAR"))$btnDisabledEliminar="disabled='disabled'";
+	
 ?>
 <tr style='font-size:13px'>
 <input type='hidden' name='id_delegado[]' value='<?php echo $id_delegado?>'>
@@ -41,7 +44,9 @@ if($row->situacion=="INHABILITADO" || $row->situacion=="FALLECIDO")echo "disable
 
 
 <td class='text-left'><button <?php echo $btnDisabled?> style='font-size:12px' type='button' class='btn btn-sm btn-success edit_delegado' data-toggle='modal' onclick=modalAsignarDelegadoSesion('<?php echo $row->id?>') >Editar</button></td>
-<td class='text-left'><button <?php echo $btnDisabled?> style='font-size:12px' type='button' class='btn btn-sm btn-danger delete_delegado' data-toggle='modal' onclick=eliminarDelegadoSesion('<?php echo $row->id?>') >Eliminar</button></td>
+<td class='text-left'>
+	<button <?php echo $btnDisabled?> <?php echo $btnDisabledEliminar?> style='font-size:12px' type='button' class='btn btn-sm btn-danger delete_delegado' data-toggle='modal' onclick=eliminarDelegadoSesion('<?php echo $row->id?>') >Eliminar</button>
+</td>
 <?php 
 }
 ?>

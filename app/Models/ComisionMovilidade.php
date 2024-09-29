@@ -39,7 +39,7 @@ where 1=1 ";
 			$cad .= " And cm.id_periodo_comisiones=".$id_periodo;
 		}
 		
-		$cad .= " Order By cm.id Desc";
+		$cad .= " Order By mi.denominacion Asc";
 		
 		$data = DB::select($cad);
         return $data;

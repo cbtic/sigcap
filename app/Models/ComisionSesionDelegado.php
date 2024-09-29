@@ -132,7 +132,7 @@ order by t1.id_puesto::int asc";
 	
 	function getHistorialComisionSesionDelegadosByIdComisionSesionDelegado($id_comision_sesion_delegado){ 
 		
-		$cad = "select t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,t4.denominacion puesto,
+		$cad = "select csdh.id,t3.numero_documento,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap,t4.denominacion puesto,
 t5.denominacion situacion 
 from comision_sesion_delegados_historiales csdh
 left join comision_delegados t1 on csdh.id_delegado=t1.id
@@ -140,7 +140,8 @@ left join agremiados t2 on coalesce(t1.id_agremiado,csdh.id_agremiado)=t2.id
 inner join personas t3 on t2.id_persona=t3.id
 left join tabla_maestras t4 on t1.id_puesto::int = t4.codigo::int And t4.tipo ='94'
 left join tabla_maestras t5 on t2.id_situacion = t5.codigo::int And t5.tipo ='14'
-where csdh.id_comision_sesion_delegado=".$id_comision_sesion_delegado."
+where csdh.id_comision_sesion_delegado=".$id_comision_sesion_delegado." 
+and csdh.estado='1' 
 order by csdh.id desc";
 
 		

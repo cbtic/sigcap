@@ -1222,6 +1222,20 @@ function eliminarDelegadoSesion(id){
     //$(".modal-dialog").css("width","30%");
 }
 
+function eliminarHistorialDelegadoSesion(id){
+	
+    bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas Eliminar al delegado?", 
+        callback: function(result){
+            if (result==true) {
+                fn_eliminar_historial_delegado_sesion(id);
+            }
+        }
+    });
+    //$(".modal-dialog").css("width","30%");
+}
+
 function fn_eliminar_delegado_sesion(id){
 	
 	var msgLoader = "";
@@ -1238,6 +1252,32 @@ function fn_eliminar_delegado_sesion(id){
 				//$('#openOverlayOpc').modal('hide');
 				//datatablenew();
 				cargarDelegados();
+            }
+    });
+}
+
+function fn_eliminar_historial_delegado_sesion(id){
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+    $.ajax({
+            url: "/sesion/eliminar_historial_comision_sesion_delegados/"+id,
+            type: "GET",
+            success: function (result) {
+                $('.loader').hide();
+				$('#openOverlayOpc').modal('hide');
+				$('#openOverlayOpc2').modal('hide');
+				//datatablenew();
+				//cargarDelegados();
+				var id_comision_sesion_delegado = $("#id_comision_sesion_delegado").val();
+				var id = $("#id").val();
+				modalSesion(id);
+				cargarDelegados();
+				modalHistorialDelegadoSesion(id_comision_sesion_delegado);
             }
     });
 }
