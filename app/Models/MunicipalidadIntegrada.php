@@ -109,7 +109,8 @@ and mi.estado='1'";
         where mi.estado='1'
         and mi.id_periodo_comision='".$id_periodo."'
         and mi.id_tipo_comision='".$id_tipo_comision."'
-        and mi.id not in(select distinct id_comision from comision_delegados cd where estado='1')";
+        and mi.id not in(select distinct id_comision from comision_delegados cd where estado='1')
+        order by mi.denominacion asc";
 
 		$data = DB::select($cad);
         return $data;
