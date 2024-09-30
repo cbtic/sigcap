@@ -41,7 +41,6 @@ class MovilidadController extends Controller
 		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
 		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
 		
-
         return view('frontend.movilidad.all',compact('municipalidadIntegrada','comision_movilidades','periodoComision','tipoComision','periodo_ultimo','periodo_activo'));
     }
 
