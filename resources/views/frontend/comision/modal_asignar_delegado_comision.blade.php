@@ -271,12 +271,24 @@ function habilitar(obj){
 
 function fn_save_confirmar(){
 	
+	var msg = "";
 	var tipo_comision = $("#frmAfiliacion #tipo_comision").val();
 	var id_tipo_agrupacion = "<?php echo $id_tipo_agrupacion?>";
 	//alert(tipo_comision);
 	
+	
 	var coordinador = $('input[name=coordinador]:checked').val();
 	
+	var id_concurso_inscripcion = $('#id_concurso_inscripcion').val();
+	var id_concurso_inscripcion2 = $('#id_concurso_inscripcion2').val();
+	
+	if(id_concurso_inscripcion == "")msg += "Debe seleccionar un delegado titular 1 <br>";
+	if(id_concurso_inscripcion2 == "")msg += "Debe seleccionar un delegado titular 2 <br>";
+	
+	if(msg!=""){
+		bootbox.alert(msg);
+		return false;
+	}
 	//alert(coordinador);
 	
 	if(tipo_comision==1 && coordinador==undefined){

@@ -89,6 +89,7 @@ inner join personas p on a.id_persona=p.id
 where 1=1
 --And t0.id_aprobar_pago=2
 And t1.id_estado_sesion=290   
+and t1.estado='1'
 and t0.estado='1'
 and t4.denominacion in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
@@ -158,6 +159,8 @@ inner join personas p on a.id_persona=p.id
 where 1=1
 --And t0.id_aprobar_pago=2
 And t1.id_estado_sesion=290 
+and t1.estado='1'
+and t0.estado='1'
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and t4.id_municipalidad_integrada = ".$id_municipalidad_integrada." 
@@ -196,6 +199,8 @@ where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' 
 And t1.id_periodo_comisione = ".$id_periodo." 
+and t1.estado='1'
+and t0.estado='1'
 and t4.denominacion in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')";
 		$data = DB::select($cad);
         return $data;

@@ -210,7 +210,7 @@ class SesionController extends Controller
 		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
         $comisionSesionDelegadoHistorial = $comisionSesionDelegado_model->getHistorialComisionSesionDelegadosByIdComisionSesionDelegado($id);
 		
-        return view('frontend.sesion.modal_historial_sesion_delegado',compact('comisionSesionDelegadoHistorial'));
+        return view('frontend.sesion.modal_historial_sesion_delegado',compact('comisionSesionDelegadoHistorial','id'));
 		
     }
 	
@@ -1103,6 +1103,23 @@ class SesionController extends Controller
 		$comisionSesionDelegado->save();
 
 		echo $comisionSesionDelegado->id;
+
+    }
+	
+	public function eliminar_historial_comision_sesion_delegados($id)
+    {
+		$comisionSesionDelegadosHistorial = ComisionSesionDelegadosHistoriale::find($id);
+		$comisionSesionDelegadosHistorial->estado = 0;
+		$comisionSesionDelegadosHistorial->save();
+
+		$id_comision_sesion_delegado = $comisionSesionDelegadosHistorial->id_comision_sesion_delegado;
+		$comisionSesionDelegado = ComisionSesionDelegado::find($id_comision_sesion_delegado);
+		$comisionSesionDelegado->id_delegado_anterior = 0;
+		$comisionSesionDelegado->id_agremiado_anterior = 0;
+		$comisionSesionDelegado->save();
+		
+		echo $comisionSesionDelegadosHistorial->id;
+		
 
     }
 

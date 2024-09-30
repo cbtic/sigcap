@@ -90,8 +90,8 @@ $(document).ready(function () {
 		changeYear: true,
     });
 	
-	datatablenew();
-	datatablenewComputoCerrado();
+	//datatablenew();
+	//datatablenewComputoCerrado();
 
 	$(function() {
 		$('#modalSeguro #nombre_plan_').keyup(function() {
