@@ -46,6 +46,20 @@ class FondoComun extends Model
     ";
 */
 
+
+$cad = "select t3.denominacion municipalidad, sum(t1.importe_bruto::numeric)importe_bruto, sum(t1.importe_igv::numeric)importe_igv, 
+            sum(t1.importe_comision_cap::numeric)importe_comision_cap, sum(t1.importe_fondo_asistencia::numeric)importe_fondo_asistencia, 
+            sum(t1.saldo::numeric)saldo, t3.id_ubigeo 
+        from delegado_fondo_comuns t1
+            inner join municipalidades t3 on t1.id_ubigeo::int = t3.id
+            inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle
+        where 
+            EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
+            And to_char(t4.fecha,'mm') = '".$mes."' 
+            and t1.id_periodo_comision = ".$periodo." 
+        group by  t1.id, t3.id 
+        order by 1 asc";
+/*
 $cad = "select t3.desc_ubigeo municipalidad, sum(t1.importe_bruto::numeric)importe_bruto, sum(t1.importe_igv::numeric)importe_igv, 
 sum(t1.importe_comision_cap::numeric)importe_comision_cap, sum(t1.importe_fondo_asistencia::numeric)importe_fondo_asistencia, 
 sum(t1.saldo::numeric)saldo, t3.id_ubigeo 
@@ -57,6 +71,7 @@ having EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
 And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'  
 order by 1 asc  
 ";
+*/
     /*
         $cad = "select t3.desc_ubigeo municipalidad,round(t1.importe_bruto::numeric,2)importe_bruto, round(t1.importe_igv::numeric,2)importe_igv, round(t1.importe_comision_cap::numeric,2)importe_comision_cap, round(t1.importe_fondo_asistencia::numeric,2)importe_fondo_asistencia, round(t1.saldo::numeric,2)saldo
                 from delegado_fondo_comuns t1
