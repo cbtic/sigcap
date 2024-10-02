@@ -116,6 +116,7 @@ order by 1 asc
         and EXTRACT(MONTH FROM c.fecha_pago)::varchar = '".$mes."'
         and v.id_modulo ='7'
         order by c.fecha";
+        //echo($cad);        
 		$data = DB::select($cad);
         return $data;
     }

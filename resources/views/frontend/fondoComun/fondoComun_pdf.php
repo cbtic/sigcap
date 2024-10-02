@@ -149,7 +149,7 @@
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->serie?></td>
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->numero?></td>
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo date('d-m-Y', strtotime($r->fecha_pago));?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo number_format($r->monto, 2, '.', ',')?></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo number_format($r->monto, 2, '.', ',')?></td>
 				</tr>
 				<?php
 				} 
@@ -163,7 +163,7 @@
                 
                 <tr style="font-size:13px">
                     <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Total</th>
-                    <th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_monto, 2, '.', ',');?></span></th>
+                    <th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_monto, 2, '.', ',');?></span></th>
                 </tr>
 				
             </thead>
