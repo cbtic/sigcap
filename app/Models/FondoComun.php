@@ -55,7 +55,7 @@ $cad = "select t3.denominacion municipalidad, sum(t1.importe_bruto::numeric)impo
             inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle
         where 
             EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
-            And to_char(t4.fecha,'mm') = '".$mes."' 
+            And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."' 
             and t1.id_periodo_comision = ".$periodo." 
         group by  t1.id, t3.id 
         order by 1 asc";
@@ -82,7 +82,7 @@ order by 1 asc
             And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'           
             ";
 */
-		//echo $cad;
+		echo $cad;
 		$data = DB::select($cad);
         return $data;
     }
