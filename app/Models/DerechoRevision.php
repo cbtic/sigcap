@@ -518,7 +518,7 @@ class DerechoRevision extends Model
         $cad = "select count(*) cantidad from liquidaciones l 
         inner join solicitudes s on l.id_solicitud = s.id
         where s.id='".$id_solicitud."'
-        and l.id_situacion is distinct from 3";
+        and l.id_situacion not in (2,3)";
 
         $data = DB::select($cad);
         return $data;
