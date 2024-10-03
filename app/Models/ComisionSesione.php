@@ -17,7 +17,7 @@ inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion
 inner join solicitudes s2 on s2.id=csd.id_solicitud
 inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
 where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
@@ -35,7 +35,7 @@ inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion
 inner join solicitudes s2 on s2.id=csd.id_solicitud
 inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
 where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
@@ -55,7 +55,7 @@ inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion
 inner join solicitudes s2 on s2.id=csd.id_solicitud
 inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 left join comision_delegados cd on t0.id_delegado=cd.id  
 left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
 inner join personas p on a.id_persona=p.id 
@@ -81,7 +81,7 @@ order by tmp.orden /*tmp.denominacion*/
         $cad = "select distinct 'CZ' tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 left join comision_delegados cd on t0.id_delegado=cd.id  
 left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
 inner join coordinador_zonales cz on a.id=cz.id_agremiado and t4.id=cz.id_comision and t1.id_periodo_comisione=cz.id_periodo 
@@ -121,7 +121,7 @@ inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion
 inner join solicitudes s2 on s2.id=csd.id_solicitud
 inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 left join comision_delegados cd on t0.id_delegado=cd.id  
 left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
 inner join personas p on a.id_persona=p.id 
@@ -152,7 +152,7 @@ case
 end tipo_sesion 
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 left join comision_delegados cd on t0.id_delegado=cd.id  
 left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id
 inner join personas p on a.id_persona=p.id 
@@ -174,6 +174,7 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
 	public static function getMunicipalidadSesion($id_periodo,$anio,$mes){
 
         $cad = "select distinct mi.id,mi.denominacion municipalidad
+<<<<<<< HEAD
 		from comision_sesiones t1 
 		inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 		inner join comisiones t4 on t1.id_comision=t4.id and t4.estado = '1'
@@ -185,6 +186,18 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
 		and t4.denominacion not in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')
 		order by mi.denominacion";
 		
+=======
+from comision_sesiones t1 
+inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
+inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
+where t0.id_aprobar_pago=2
+And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' 
+And t1.id_periodo_comisione = ".$id_periodo." 
+and t4.denominacion not in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')
+order by mi.denominacion";
+>>>>>>> c32998d0ec83c9e02e54ca12593887182013330c
 		$data = DB::select($cad);
         return $data;
     }
@@ -194,7 +207,7 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
         $cad = "select distinct mi.id,mi.denominacion municipalidad
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
 where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
@@ -212,7 +225,7 @@ and t4.denominacion in(select denominacion from tabla_maestras tm where tipo='11
         $cad = "select distinct t4.id,t4.comision comision
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
 where t0.id_aprobar_pago=2
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
@@ -228,7 +241,7 @@ and t4.id_municipalidad_integrada = ".$id_municipalidad_integrada;
         $cad = "select distinct a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 inner join comision_delegados cd on t0.id_delegado=cd.id  
 inner join agremiados a on cd.id_agremiado=a.id 
 inner join personas p on a.id_persona=p.id 
@@ -247,7 +260,7 @@ and t1.id_comision=".$id_comision;
         $cad = "select count(*) cantidad 
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 inner join comision_delegados cd on t0.id_delegado=cd.id  
 inner join agremiados a on cd.id_agremiado=a.id 
 inner join personas p on a.id_persona=p.id 

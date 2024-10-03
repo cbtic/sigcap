@@ -22,7 +22,7 @@ class ComisionMovilidade extends Model
 ,(select count(distinct t4.id_municipalidad_integrada)
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-inner join comisiones t4 on t1.id_comision=t4.id
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 where t0.id_aprobar_pago=2 
 And t1.id_periodo_comisione = ".$id_periodo."
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
@@ -33,7 +33,8 @@ inner join municipalidad_integradas mi  on cm.id_municipalidad_integrada = mi.id
 inner join periodo_comisiones pc on cm.id_periodo_comisiones = pc.id
 inner join regiones r on cm.id_regional = r.id
 inner join tabla_maestras tm on cm.id_tipo_comision::int =tm.codigo::int and tm.tipo='102'
-where 1=1 ";
+where 1=1 
+and cm.estado='1' ";
 
 		if($id_periodo>0){
 			$cad .= " And cm.id_periodo_comisiones=".$id_periodo;
@@ -51,7 +52,7 @@ where 1=1 ";
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 inner join comisiones t4 on t1.id_comision=t4.id
-inner join comision_movilidades cm on cm.id_periodo_comisiones=t1.id_periodo_comisione and cm.id_municipalidad_integrada=t4.id_municipalidad_integrada
+inner join comision_movilidades cm on cm.id_periodo_comisiones=t1.id_periodo_comisione and cm.id_municipalidad_integrada=t4.id_municipalidad_integrada and cm.estado='1' 
 where t0.id_aprobar_pago=2 
 And t1.id_periodo_comisione = ".$id_periodo."
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
