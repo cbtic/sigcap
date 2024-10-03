@@ -174,19 +174,6 @@ and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
 	public static function getMunicipalidadSesion($id_periodo,$anio,$mes){
 
         $cad = "select distinct mi.id,mi.denominacion municipalidad
-<<<<<<< HEAD
-		from comision_sesiones t1 
-		inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
-		inner join comisiones t4 on t1.id_comision=t4.id and t4.estado = '1'
-		inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id and mi.estado = '1'
-		where t0.id_aprobar_pago=2
-		And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
-		And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' 
-		And t1.id_periodo_comisione = ".$id_periodo." 
-		and t4.denominacion not in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')
-		order by mi.denominacion";
-		
-=======
 from comision_sesiones t1 
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
@@ -197,7 +184,6 @@ And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 And t1.id_periodo_comisione = ".$id_periodo." 
 and t4.denominacion not in(select denominacion from tabla_maestras tm where tipo='117' and estado='1')
 order by mi.denominacion";
->>>>>>> c32998d0ec83c9e02e54ca12593887182013330c
 		$data = DB::select($cad);
         return $data;
     }

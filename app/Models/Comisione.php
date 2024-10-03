@@ -86,11 +86,7 @@ inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
 		from comisiones c
         inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
         inner join tabla_maestras tm on mi.id_tipo_agrupacion::int=tm.codigo::int and tm.tipo='99'
-<<<<<<< HEAD
-        left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id and cm.estado ='1'
-=======
         left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id and cm.estado='1' 
->>>>>>> c32998d0ec83c9e02e54ca12593887182013330c
 		inner join periodo_comisiones pc on c.id_periodo_comisiones=pc.id
 		left join tabla_maestras tmd on c.id_dia_semana::int=tmd.codigo::int and tmd.tipo='70'
         where c.estado ilike '%".$estado."'";
@@ -153,11 +149,7 @@ inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
 		from comisiones c
         inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
         inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
-<<<<<<< HEAD
-        left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id and cm.estado ='1'
-=======
         left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id and cm.estado='1' 
->>>>>>> c32998d0ec83c9e02e54ca12593887182013330c
 		inner join periodo_comisiones pc on c.id_periodo_comisiones=pc.id
         where c.estado='1' 
 		And c.id_periodo_comisiones=".$id_periodo;
