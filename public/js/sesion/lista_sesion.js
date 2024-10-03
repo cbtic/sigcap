@@ -81,6 +81,12 @@ function guardar_sesion_bloque(){
 	var _token = $('#_token').val();
 	var id_periodo = $('#id_periodo_bus').val();
 	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+
     $.ajax({
 			url: "/sesion/send_sesion_bloque",
             type: "POST",
@@ -88,7 +94,7 @@ function guardar_sesion_bloque(){
             success: function (result) {
 				$('#openOverlayOpc').modal('hide');
 				datatablenew();
-				
+				$('.loader').hide();
             }
     });
 }
