@@ -122,6 +122,7 @@ $.mask.definitions['p'] = "[Mm]";
 */
 $(document).ready(function() {
 	$("#concepto").select2({ width: '100%' });
+	$("#id_agremiado").select2({ width: '100%' });
 	datatableReintegroDetalle();
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
@@ -470,7 +471,8 @@ function calcular_importe(){
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="valida()" class="btn btn-sm btn-success" style="margin-right: 15px;">Guardar</a>
+								<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide');window.location.reload();" class="btn btn-md btn-warning">Cerrar</a>
 								
 							</div>
 												
