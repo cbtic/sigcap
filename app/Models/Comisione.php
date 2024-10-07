@@ -147,7 +147,7 @@ inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
 
         $cad = " select c.*,tm.denominacion tipo_agrupacion, cm.monto,pc.descripcion periodo 
 		from comisiones c
-        inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id
+        inner join municipalidad_integradas mi on c.id_municipalidad_integrada = mi.id and mi.estado='1' 
         inner join tabla_maestras tm on mi.id_tipo_agrupacion ::int =tm.codigo::int and tm.tipo='99'
         left join comision_movilidades cm on cm.id_municipalidad_integrada =mi.id and cm.estado='1' 
 		inner join periodo_comisiones pc on c.id_periodo_comisiones=pc.id

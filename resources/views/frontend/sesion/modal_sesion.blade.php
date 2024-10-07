@@ -811,7 +811,7 @@ function cargarDelegados(){
 							<div class="form-group">
 								<label class="control-label form-control-sm">Estado Sesi&oacute;n</label>
 								<select name="id_estado_sesion" id="id_estado_sesion" class="form-control form-control-sm" onChange="">
-									<option value="">--Selecionar--</option>
+									<!--<option value="">--Selecionar--</option>-->
 									<?php
 									foreach ($estado_sesion as $row) {?>
 									<option value="<?php echo $row->codigo?>" <?php if($row->codigo==$comisionSesion->id_estado_sesion)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
@@ -826,7 +826,7 @@ function cargarDelegados(){
 							<div class="form-group">
 								<label class="control-label form-control-sm">Aprobaci&oacute;n Sesi&oacute;n</label>
 								<select name="id_estado_aprobacion" id="id_estado_aprobacion" class="form-control form-control-sm" onChange="habilitarAprobarPago()">
-									<option value="">--Selecionar--</option>
+									<!--<option value="">--Selecionar--</option>-->
 									<?php
 									foreach ($estado_sesion_aprobado as $row) {?>
 									<option value="<?php echo $row->codigo?>" <?php 
