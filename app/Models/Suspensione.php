@@ -18,10 +18,12 @@ class Suspensione extends Model
 	
 	function actualizarSuspensionAgremiado(){
   
-        $cad = "update periodo_comisiones set estado = '0' where now() not between fecha_inicio and fecha_fin and estado = '1'";
+        //$cad = "update periodo_comisiones set estado = '0' where now() not between fecha_inicio and fecha_fin and estado = '1'";
+		$p=array();
+		return $this->readFunctionPostgresTransaction('sp_crud_agremiado_cuota_eliminar_suspension',$p);
         //echo $cad;
-        $data = DB::select($cad);
-        return $data;
+        //$data = DB::select($cad);
+        //return $data;
     }
 	
     public function readFuntionPostgres($function, $parameters = null){
@@ -39,6 +41,24 @@ class Suspensione extends Model
         return $data;
 
     }
+	
+	public function readFunctionPostgresTransaction($function, $parameters = null){
+	
+      $_parameters = '';
+      if (count($parameters) > 0) {
+	  		
+			foreach($parameters as $par){
+				if(is_string($par))$_parameters .= "'" . $par . "',";
+				else $_parameters .= "" . $par . ",";
+		  	}
+			if(strlen($_parameters)>1)$_parameters= substr($_parameters,0,-1);
+			
+      }
+
+	  $cad = "select " . $function . "(" . $_parameters . ");";
+	  $data = DB::select($cad);
+	  return $data[0]->$function;
+   }
 
     public function listar_suspension_agremiado($id_agremiado){
 

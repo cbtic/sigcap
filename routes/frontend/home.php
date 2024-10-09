@@ -63,6 +63,7 @@ use App\Http\Controllers\Frontend\ReporteController;
 
 use App\Http\Controllers\Frontend\TipoCambioController;
 use App\Http\Controllers\Frontend\CorreoController;
+use App\Http\Controllers\Frontend\SuspensionController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -796,3 +797,6 @@ Route::get('reporte/exportar_lista_deuda/{id}/{fecha_fin}/{id_concepto}', [Repor
 
 Route::get('ingreso/modal_concepto_reporte/{numero_cap}', [IngresoController::class, 'modal_concepto_reporte'])->name('ingreso.modal_concepto_reporte');
 Route::get('planilla/eliminar_recibo_honorario/{id}/{estado}', [PlanillaDelegadoController::class, 'eliminar_recibo_honorario'])->name('planilla.eliminar_recibo_honorario');
+
+Route::get('suspension/actualizarSuspensionAgremiado', [SuspensionController::class, 'actualizarSuspensionAgremiado'])->name('suspension.actualizarSuspensionAgremiado');
+

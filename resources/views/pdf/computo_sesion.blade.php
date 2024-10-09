@@ -63,7 +63,7 @@
 			footer{
 				margin-bottom:0px;
 				padding:0px;
-				position: fixed;
+				/*position: fixed;*/
 				height:60px;
 				line-height:60px;
 				text-align:left;

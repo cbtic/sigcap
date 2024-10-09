@@ -32,7 +32,7 @@ begin
 	
 	if p_op = 'i' then 
 	
-		if p_fecha_fin='' then
+		--if p_fecha_fin='' then
 			
 			if(select count(*) from suspensiones s where id_agremiado=p_id_agremiado and estado='1' and now()>=p_fecha_ini::date) >= 1 then 
 		
@@ -44,7 +44,8 @@ begin
 				v_mes:=v_mes+1;
 				p_fecha_ini='01-'||v_mes||'-'||v_anio;
 			end if;
-		
+			
+			/*
 			for entradas in 
 			select id from agremiado_cuotas where id_agremiado=p_id_agremiado
 			and fecha_venc_pago::date>=p_fecha_ini::date
@@ -55,7 +56,7 @@ begin
 			update agremiado_cuotas set estado=0 
 			where id_agremiado=p_id_agremiado
 			and fecha_venc_pago::date>=p_fecha_ini::date;	
-			
+			*/
 			update agremiados set 
 			id_situacion=74,
 			id_actividad_gremial=225
@@ -63,8 +64,8 @@ begin
 		
 			else
 			
-			update valorizaciones set estado='1' where /*id_modulo=2 and*/ pk_registro in(select id from agremiado_cuotas where id_agremiado=p_id_agremiado); 
-			update agremiado_cuotas set estado=1 where id_agremiado=p_id_agremiado;
+			--update valorizaciones set estado='1' where /*id_modulo=2 and*/ pk_registro in(select id from agremiado_cuotas where id_agremiado=p_id_agremiado); 
+			--update agremiado_cuotas set estado=1 where id_agremiado=p_id_agremiado;
 	
 			update agremiados set 
 			id_situacion=73,
@@ -73,8 +74,9 @@ begin
 			
 			end if;
 			
-		end if;
-	
+		--end if;
+		
+		/*
 		if p_fecha_fin!='' then
 			
 			if(select count(*) from suspensiones s where id_agremiado=p_id_agremiado and estado='1' 
@@ -133,6 +135,7 @@ begin
 			end if;
 		
 		end if;
+		*/
 	
 	end if;
 	
