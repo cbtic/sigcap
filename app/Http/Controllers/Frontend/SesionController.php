@@ -753,6 +753,9 @@ class SesionController extends Controller
 			$id_delegado_anterior_obj = $comisionSesionDelegadoObj->id_delegado;
 			$id_agremiado_anterior_obj = $comisionSesionDelegadoObj->id_agremiado;
 			
+			$comisionSesionDelegadoObj->id_delegado_anterior = $id_delegado_anterior_obj;
+			$comisionSesionDelegadoObj->id_agremiado_anterior = $id_agremiado_anterior_obj;
+			
 			$comisionSesionDelegadoObj->id_delegado = $id_delegado;
 			$comisionSesionDelegadoObj->save();
 			

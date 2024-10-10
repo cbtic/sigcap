@@ -302,7 +302,7 @@
 						<!--<input class="btn btn-info" value="Importar Dictamenes" id="btnImportarDictamenes" style="margin-left:10px"/>-->
 					</div>
 				</div>
-				
+				</form>
                 <div class="card-body">
 
                     <div class="table-responsive">
@@ -353,7 +353,7 @@
 					
 					
                 </div><!--table-responsive-->
-                </form>
+                
 
 
 

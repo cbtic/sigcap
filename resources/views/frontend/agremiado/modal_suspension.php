@@ -231,7 +231,7 @@ function fn_save_suspension(){
 	var ruta_documento = $('#ruta_documento').val();
 	
 	if(fecha_inicio == "")msg += "Debe ingresar una fecha de inicio <br>";
-	if(fecha_fin == "")msg += "Debe ingresar una fecha de fin <br>";
+	//if(fecha_fin == "")msg += "Debe ingresar una fecha de fin <br>";
 	if(ruta_documento == "")msg += "Debe ingresar una ruta de documento <br>";
 	
     if(msg!=""){
