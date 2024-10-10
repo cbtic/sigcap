@@ -356,9 +356,9 @@ function datatableSuspension(){
 										</div>
 															
 									</div>
-								</div> 
+								</div>
 							</form>
-							<div class="card-body">	
+							<div class="card-body">
 
 								<div class="table-responsive">
 								<table id="tblSuspension" class="table table-hover table-sm">
