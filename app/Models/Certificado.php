@@ -213,6 +213,11 @@ from certificados c where id_tipo=".$id_tipo;
         left join personas p2 on a.id_persona = p2.id
         left join tabla_maestras tm on pro.id_tipo_profesional = tm.codigo::int And tm.tipo ='41'
         where a.numero_cap ='".$numero_cap."'
+        union all
+        select ch.id, ch.fecha, '' credipago, ch.propietario, ch.nombre_proyecto, ch.distrito, ch.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.id_sexo, a.fecha_colegiado, ch.area_construida, ch.area_lote, ch.tip_proyectista, ch.tipo from certificado_historicos ch 
+        inner join agremiados a on ch.numero_cap = a.numero_cap 
+        inner join personas p on a.id_persona = p.id 
+        where a.numero_cap ='".$numero_cap."'
         order by fecha asc";
 
         $data = DB::select($cad);
