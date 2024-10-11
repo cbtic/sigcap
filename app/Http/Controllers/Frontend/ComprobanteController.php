@@ -1073,7 +1073,7 @@ class ComprobanteController extends Controller
                 if ($total_ <= 2) {
                     $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
 
-                    if($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83){
+                    if($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267){
                         $agremiado->id_situacion = "73";
                         $agremiado->save();
                     }
@@ -1595,7 +1595,7 @@ class ComprobanteController extends Controller
 
             if ($id_concepto == 26527 || $id_concepto == 26412 ) {
                 $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
-                if ($agremiado->id_situacion != "83"){                    
+                if ($agremiado->id_situacion != "83" && $agremiado->id_situacion != "267"){                    
                     $agremiado->id_situacion = "73";
                     $agremiado->save();
     
