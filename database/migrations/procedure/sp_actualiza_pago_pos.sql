@@ -1,4 +1,5 @@
-CREATE OR REPLACE FUNCTION public.sp_actualiza_pago_pos(p_tipo_doc character varying, p_numero_doc character varying, p_detalle character varying[], p_ref refcursor)
+
+CREATE OR REPLACE FUNCTION public.sp_actualiza_pago_pos(p_tipo_doc character varying, p_numero_doc character varying, p_cod_producto character varying, p_opcion character varying, p_detalle character varying[], p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -22,80 +23,87 @@ cuota character varying;
 moneda_doc character varying;
 id_forma_pago character varying;
 destinatario character varying;
-suma_total_deuda character varying;
-
-_id_valorizacion character varying;
 
 v_campos varchar;
 v_scad varchar;
+_id_valorizacion character varying;
+v_where varchar;
+
+/*
+0 pendiente 
+1 pagado -
+2 anulación de pago
+3 extorno de pago
+4 extorno de anulación -
+*/
 
 Begin
+	_id_valorizacion:= '';
 
-_id_valorizacion:= '';
+	v_where = ' ';
+	If p_cod_producto <> '' Then
+ 		v_where:=v_where||' And c.codigo = '''||p_cod_producto||''' '; 
+	End If;	
+
 
 	if array_length(p_detalle, 1)>0 then 
 		for i in array_lower(p_detalle, 1) .. array_upper(p_detalle, 1) loop 
-	
-			codigo_producto := p_detalle[i][1];				
-			descr_producto := p_detalle[i][2];
-			num_documento := p_detalle[i][3];			
-			desc_documento := p_detalle[i][4];
-			fecha_vencimiento := p_detalle[i][5];
-			fecha_emision := p_detalle[i][6]; 				 
-			deuda := p_detalle[i][7];
-			mora := p_detalle[i][8];
-			gastos_adm := p_detalle[i][9];
-			pago_minimo := p_detalle[i][10];
-			importe_total := p_detalle[i][11];
-			periodo:= p_detalle[i][12];
-			anio := p_detalle[i][13];
-			cuota := p_detalle[i][14]; 
-			moneda_doc := p_detalle[i][15];
-			id_forma_pago := p_detalle[i][16];
-			destinatario := p_detalle[i][17];
-			suma_total_deuda := p_detalle[i][18];
-	
-			_id_valorizacion:=_id_valorizacion || ',' || num_documento; 
-			/*	
-			update valorizaciones set pagado_post = '1'
-			where id = num_documento::int;			
-			*/
+
+			codigo_producto := p_detalle[i][1];
+			num_documento := p_detalle[i][2];
+			fecha_vencimiento := p_detalle[i][3];
+			fecha_emision := p_detalle[i][4];
+			deuda := p_detalle[i][5];
+			mora := p_detalle[i][6];
+			gastos_adm := p_detalle[i][7];
+			importe_total := p_detalle[i][8];
+			periodo := p_detalle[i][9];
+			anio := p_detalle[i][10];
+			cuota := p_detalle[i][11];
+			moneda_doc := p_detalle[i][12];
+
+			_id_valorizacion:=_id_valorizacion || ',' || num_documento;
+										
+			update valorizaciones set pagado_post = p_opcion
+			where id = num_documento::int;
+						
 		end loop;
 	end if;
 
-		_id_valorizacion:= RIGHT(_id_valorizacion, LENGTH(_id_valorizacion) - 1);
+	_id_valorizacion = SUBSTRING (_id_valorizacion, 2, LENGTH(_id_valorizacion));
 
-		 v_campos:='select 
-				c.codigo::int codigo_producto,				
+	v_campos:='select 
+				c.codigo codigo_producto,				
 				c.denominacion descr_producto,
 				v.id num_documento,				
 				(case when descripcion is null then c.denominacion else v.descripcion end) desc_documento,
 				v.fecha fecha_vencimiento,
 				v.fecha_proceso fecha_emision, 				 
-				f.total deuda,
+				v.monto deuda,
 				0 mora,
 				0 gastos_adm,
 				0 pago_minimo,
-				f.total importe_total,
-				12 periodo,
-				2024 anio,
+				v.monto importe_total,
+				DATE_PART(''month'', v.fecha_proceso) periodo,
+				DATE_PART(''year'', v.fecha_proceso) anio,
 				1 cuota, 
-				v.id_moneda moneda_doc,
-				id_forma_pago,
-				f.destinatario,
-				v.monto suma_total_deuda			 	           
-            from valorizaciones v
-                inner join conceptos c  on c.id = v.id_concepto
-				inner join comprobantes f  on  f.id = v.id_comprobante            
-            where v.id in ('''||_id_valorizacion||''')             			
-            order by v.fecha desc';  
+				v.id_moneda moneda_doc	,
+				1 id_forma_pago,
+				v.id_persona, 
+				p.apellido_paterno ||'' ''||p.apellido_materno||'' ''||p.nombres destinatario				           
+			from valorizaciones v
+				inner join conceptos c  on c.id = v.id_concepto
+				inner join personas p on p.id = v.id_persona 				 				                           
+             where v.id in ('''||_id_valorizacion||''') 
+				'||v_where||' 
+
+			';
+			
 
 
-
-	--v_scad:=v_campos; 
-	--Raise Notice '%',v_campos;
 	Open p_ref For Execute(v_campos);
 	Return p_ref;
 End
 $function$
 ;
+
