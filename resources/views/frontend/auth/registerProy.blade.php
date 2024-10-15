@@ -12,7 +12,7 @@
                     </x-slot>
 
                     <x-slot name="body">
-                        <x-forms.post :action="route('frontend.auth.register')">
+                        <x-forms.post :action="route('frontend.auth.registerProy')">
                             
 							
 							<div class="form-group row">
@@ -20,19 +20,19 @@
 								<label for="name" class="col-md-1 col-form-label text-md-right">N&deg; CAP</label>
 
                                 <div class="col-md-2">
-                                    <input type="text" name="numero_cap" id="numero_cap" class="form-control" placeholder="{{ __('Numero de CAP') }}" maxlength="100" required autofocus autocomplete="numero_documento" onblur="obtenerAgremiadoCoordinador();obtenerPersona()" />
+                                    <input type="text" name="numero_cap" id="numero_cap" class="form-control" placeholder="{{ __('Numero de CAP') }}" maxlength="100" required autofocus autocomplete="numero_documento" onblur="obtenerAgremiado()" />
                                 </div>
 								
                                 <label for="name" class="col-md-2 col-form-label text-md-right">Tipo Documento</label>
 
                                 <div class="col-md-3">
-                                    <input type="text" name="tipo_documento" id="tipo_documento" class="form-control" placeholder="Tipo Documento" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" readonly="readonly" name="tipo_documento" id="tipo_documento" class="form-control" placeholder="Tipo Documento" maxlength="100" required autofocus autocomplete="numero_documento" />
                                 </div>
 								
 								<label for="name" class="col-md-1 col-form-label text-md-right" style="padding-right:0px">N&deg; Documento</label>
 
                                 <div class="col-md-3">
-                                    <input type="text" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" required autofocus autocomplete="numero_documento" onblur="obtenerPersona()" />
+                                    <input type="text" readonly="readonly" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" required autofocus autocomplete="numero_documento" onblur="obtenerPersona()" />
                                 </div>
 								
                             </div><!--form-group-->
@@ -42,19 +42,19 @@
 								<label for="name" class="col-md-1 col-form-label text-md-right">Ap. Paterno</label>
 
                                 <div class="col-md-3">
-                                    <input type="text" name="apellido_paterno" id="apellido_paterno" class="form-control" placeholder="Ap. Paterno" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" readonly="readonly" name="apellido_paterno" id="apellido_paterno" class="form-control" placeholder="Ap. Paterno" maxlength="100" required autofocus autocomplete="numero_documento" />
                                 </div>
 								
 								<label for="name" class="col-md-1 col-form-label text-md-right">Ap. Materno</label>
 								
 								<div class="col-md-3">
-                                    <input type="text" name="apellido_materno" id="apellido_materno" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" readonly="readonly" name="apellido_materno" id="apellido_materno" class="form-control" placeholder="{{ __('Ap. Materno') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
                                 </div>
 								
-								<label for="name" class="col-md-1 col-form-label text-md-right">Nombre</label>
+								<label for="name" class="col-md-1 col-form-label text-md-right">Nombres</label>
 								
 								<div class="col-md-3">
-                                    <input type="text" name="nombre" id="nombre" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" readonly="readonly" name="nombre" id="nombre" class="form-control" placeholder="{{ __('Nombres') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
                                 </div>
 								
                             </div><!--form-group-->
@@ -170,12 +170,12 @@
 
 <script type="text/javascript">
 
-function obtenerAgremiadoCoordinador(){
+function obtenerAgremiado(){
 		
 	var numero_cap = $("#numero_cap").val();
 	var msg = "";
 	
-	if(numero_cap == "")msg += "Debe ingresar el numero de documento <br>";
+	if(numero_cap == "")msg += "Debe ingresar el numero de CAP <br>";
 	
 	if (msg != "") {
 		bootbox.alert(msg);
