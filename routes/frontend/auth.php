@@ -91,6 +91,10 @@ Route::group(['as' => 'auth.'], function () {
         Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
         Route::post('register', [RegisterController::class, 'register']);
 
+        // Registration Proy
+        Route::get('registerProy', [RegisterController::class, 'showRegistrationProyForm'])->name('registerProy');
+        Route::post('registerProy', [RegisterController::class, 'registerProy']);
+
         // Password Reset
         Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
         Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -103,5 +107,6 @@ Route::group(['as' => 'auth.'], function () {
     });
 	
 	Route::get('persona/obtener_persona_login/{tipo_documento}/{numero_documento}', [PersonaController::class, 'obtener_persona_login'])->name('persona.obtener_persona_login')->where('tipo_documento', '(.*)');
+    Route::get('persona/obtener_agremiado_login/{numero_cap}', [PersonaController::class, 'obtener_agremiado_login'])->name('persona.obtener_agremiado_login')->where('numero_cap', '(.*)');
 	
 });

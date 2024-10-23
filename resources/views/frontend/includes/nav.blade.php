@@ -49,6 +49,16 @@
                                 class="nav-link" />
 
                         </li>
+						
+						<li class="nav-item">
+                            <x-utils.link
+                                :href="route('frontend.auth.registerProy')"
+                                :active="activeClass(Route::is('frontend.auth.registerProy'))"
+                                :text="__('RegisterProy')"
+                                class="nav-link" />
+
+                        </li>
+						
                     @endif
                 @else
 					

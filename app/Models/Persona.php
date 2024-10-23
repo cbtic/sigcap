@@ -89,6 +89,20 @@ class Persona extends Model
 		$data = DB::select($cad);
         return $data[0];
     }
+
+    function getAgremiadoDatos($numero_cap){
+
+		$cad = "select a.numero_cap, pe.numero_documento, pe.apellido_paterno, pe.apellido_materno, pe.nombres,tm.denominacion tipo_documento
+        from agremiados a
+		inner join personas pe on a.id_persona = pe.id
+        left join tabla_maestras tm on pe.id_tipo_documento = tm.codigo::int And tm.tipo ='16'                    
+		where a.numero_cap =  '".$numero_cap."'";
+		
+        $data = DB::select($cad);
+        
+        return $data[0];
+    }
+
     function getPersonaExt($tipo_documento,$numero_documento){
 		
         if($tipo_documento=="RUC"){
