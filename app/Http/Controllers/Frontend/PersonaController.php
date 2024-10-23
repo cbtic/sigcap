@@ -152,6 +152,17 @@ class PersonaController extends Controller
 
     }
 
+	public function obtener_agremiado_login($numero_cap){
+
+        $persona_model = new Persona;
+        $sw = true;
+        $agremiado = $persona_model->getAgremiadoDatos($numero_cap);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
     public function send_persona(Request $request){
 		
 		if($request->id == 0){
