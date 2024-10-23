@@ -217,7 +217,7 @@
 					
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     	<select name="id_tipo_sesion_bus" id="id_tipo_sesion_bus" class="form-control form-control-sm" onChange="">
-							<option value="">--Tipo Programci&oacute;n--</option>
+							<option value="">--Tipo Programaci&oacute;n--</option>
 							<?php
 							foreach ($tipo_programacion as $row) {?>
 							<option value="<?php echo $row->codigo?>"><?php echo $row->denominacion?></option>
