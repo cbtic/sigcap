@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Sistema SIGCAP</title>
 
 <style>
@@ -159,6 +160,10 @@ $(document).ready(function() {
     $('#direccion_ruc_').hide();
     $('#telefono_ruc_').hide();
     $('#email_ruc_').hide();
+    $('#carne_propietario_').hide();
+    $('#nombre_carne_propietario_').hide();
+    $('#apellido_paterno_carne_propietario_').hide();
+    $('#apellido_materno_carne_propietario_').hide();
 	
 
 });
@@ -177,6 +182,10 @@ function obtenerPropietario(){
     $('#direccion_ruc_').hide();
     $('#telefono_ruc_').hide();
     $('#email_ruc_').hide();
+    $('#carne_propietario_').hide();
+    $('#nombre_carne_propietario_').hide();
+    $('#apellido_paterno_carne_propietario_').hide();
+    $('#apellido_materno_carne_propietario_').hide();
 	
 	if (id_tipo_documento == "")//SELECCIONAR
 	{
@@ -191,6 +200,10 @@ function obtenerPropietario(){
         $('#direccion_ruc_').hide();
         $('#telefono_ruc_').hide();
         $('#email_ruc_').hide();
+        $('#carne_propietario_').hide();
+        $('#nombre_carne_propietario_').hide();
+        $('#apellido_paterno_carne_propietario_').hide();
+        $('#apellido_materno_carne_propietario_').hide();
 
 	} else if (id_tipo_documento == "78")//DNI
 	{
@@ -205,6 +218,10 @@ function obtenerPropietario(){
         $('#direccion_ruc_').hide();
         $('#telefono_ruc_').hide();
         $('#email_ruc_').hide();
+        $('#carne_propietario_').hide();
+        $('#nombre_carne_propietario_').hide();
+        $('#apellido_paterno_carne_propietario_').hide();
+        $('#apellido_materno_carne_propietario_').hide();
 
 	} else if (id_tipo_documento == "79") //Responsable de Tramite
 	{
@@ -218,6 +235,30 @@ function obtenerPropietario(){
         $('#direccion_ruc_').show();
         $('#telefono_ruc_').show();
         $('#email_ruc_').show();
+        $('#carne_propietario_').hide();
+        $('#nombre_carne_propietario_').hide();
+        $('#apellido_paterno_carne_propietario_').hide();
+        $('#apellido_materno_carne_propietario_').hide();
+
+	} else if (id_tipo_documento == "84") //Carné extranjeria
+	{
+		$('#dni_propietario_').hide();
+        $('#nombre_propietario_').hide();
+        $('#direccion_dni_').show();
+        $('#celular_dni_').show();
+        $('#email_dni_').show();
+        $('#ruc_propietario_').hide();
+        $('#razon_social_propietario_').hide();
+        $('#direccion_ruc_').hide();
+        $('#telefono_ruc_').hide();
+        $('#email_ruc_').hide();
+        $('#carne_propietario_').show();
+        $('#nombre_carne_propietario_').show();
+        $('#apellido_paterno_carne_propietario_').show();
+        $('#apellido_materno_carne_propietario_').show();
+        $('#direccion_dni').attr("readonly",false);
+        $('#celular_dni').attr("readonly",false);
+        $('#email_dni').attr("readonly",false);
 
 	} 
 }
@@ -266,6 +307,18 @@ function obtenerProyectista(){
 
 function obtenerDatosDni(){
 		
+    var id_tipo_documento = $("#id_tipo_documento").val();
+    if(id_tipo_documento==84){
+        $('#nombre_propietario').val("");
+        $('#direccion_dni').val("");
+        $('#celular_dni').val("");
+        $('#email_dni').val("");
+        $('#nombre_propietario').attr("readonly",false);
+        $('#direccion_dni').attr("readonly",false);
+        $('#celular_dni').attr("readonly",false);
+        $('#email_dni').attr("readonly",false);
+        return;
+    }
     var dni_propietario = $("#dni_propietario").val();
     var msg = "";
     
@@ -457,8 +510,9 @@ function validaRuc(ruc){
 			//$('#razon_social_propietario').val('')
 			
 			$('#razon_social_propietario').val(data.nombre_o_razon_social).attr('readonly', true);
+            $('#direccion_ruc').val(data.direccion_completa).attr('readonly', true);
 
-			$('#direccion_ruc').attr("readonly",false);
+			//$('#direccion_ruc').attr("readonly",false);
             $('#telefono_ruc').attr("readonly",false);
             $('#email_ruc').attr("readonly",false);
 
@@ -577,20 +631,34 @@ function fn_save_propietario(){
     var ap_paterno = $('#ap_paterno').val();
     var ap_materno = $('#ap_materno').val();
     var nombres = $('#nombres').val();
+    var carne_propietario = $('#carne_propietario').val();
+    var nombre_carne_propietario = $('#nombre_carne_propietario').val();
+    var apellido_paterno_carne_propietario = $('#apellido_paterno_carne_propietario').val();
+    var apellido_materno_carne_propietario = $('#apellido_materno_carne_propietario').val();
+    
 	
 	$.ajax({
 			url: "/derecho_revision/send_nueno_propietario",
             type: "POST",
             data : {_token:_token,id:id,
-                    ruc_propietario:ruc_propietario,razon_social_propietario:razon_social_propietario,
-                    direccion_ruc:direccion_ruc,telefono_ruc:telefono_ruc,email_ruc:email_ruc,
-                    dni_propietario:dni_propietario,nombre_propietario:nombre_propietario,
-                    direccion_dni:direccion_dni,celular_dni:celular_dni,email_dni:email_dni,
-                    id_solicitud:id_solicitud,id_tipo_documento:id_tipo_documento,ap_paterno:ap_paterno,
-                    ap_materno:ap_materno,nombres:nombres},
+                ruc_propietario:ruc_propietario,razon_social_propietario:razon_social_propietario,
+                direccion_ruc:direccion_ruc,telefono_ruc:telefono_ruc,email_ruc:email_ruc,
+                dni_propietario:dni_propietario,nombre_propietario:nombre_propietario,
+                direccion_dni:direccion_dni,celular_dni:celular_dni,email_dni:email_dni,
+                id_solicitud:id_solicitud,id_tipo_documento:id_tipo_documento,ap_paterno:ap_paterno,
+                ap_materno:ap_materno,nombres:nombres,carne_propietario:carne_propietario,
+                nombre_carne_propietario:nombre_carne_propietario,apellido_paterno_carne_propietario:apellido_paterno_carne_propietario,
+                apellido_materno_carne_propietario:apellido_materno_carne_propietario},
+            dataType: 'json',
 			success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				window.location.reload();
+				if(result.sw==false){
+					//Swal.fire("El DNI ingresado ya existe !!!");
+					Swal.fire(result.msg);
+					$('#openOverlayOpc').modal('hide');
+				}else{
+					$('#openOverlayOpc').modal('hide');
+					window.location.reload();
+				}
 								
             }
     });
@@ -656,19 +724,44 @@ function fn_save_propietario(){
                                         <label class="control-label form-control-sm">RUC</label>
                                         <input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->ruc?>" type="text" onchange="obtenerDatosRuc()">
                                     </div>
-                                </div>
-
-                                <div class="col-lg-5" >
-                                <div class="form-group" id="nombre_propietario_">
-                                    <label class="control-label form-control-sm">Nombre</label>
-                                    <input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->desc_cliente_sunat?>" type="text" onchange="" readonly='readonly'>
-                                    <input id="nombres" name="nombres" on class="form-control form-control-sm" type="hidden">
-                                    <input id="ap_paterno" name="ap_paterno" on class="form-control form-control-sm" type="hidden">
-                                    <input id="ap_materno" name="ap_materno" on class="form-control form-control-sm" type="hidden">
+                                    <div class="form-group" id="carne_propietario_">
+                                        <label class="control-label form-control-sm">CARN&Eacute; DE EXTRANJER&Iacute;A</label>
+                                        <input id="carne_propietario" name="carne_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onchange="">
                                     </div>
-                                    <div class="form-group" id="razon_social_propietario_">
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left:10px;padding-top:25px">
+                                <div class="col-lg-10" >
+                                    <div class="form-group" id="nombre_propietario_">
+                                        <label class="control-label form-control-sm">Nombre</label>
+                                        <input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->desc_cliente_sunat?>" type="text" onchange="" readonly='readonly'>
+                                        <input id="nombres" name="nombres" on class="form-control form-control-sm" type="hidden">
+                                        <input id="ap_paterno" name="ap_paterno" on class="form-control form-control-sm" type="hidden">
+                                        <input id="ap_materno" name="ap_materno" on class="form-control form-control-sm" type="hidden">
+                                    </div>
+                                </div>
+                                <div class="col-lg-10" >
+                                     <div class="form-group" id="razon_social_propietario_">
                                         <label class="control-label form-control-sm">Raz&oacute;n Social</label>
                                         <input id="razon_social_propietario" name="razon_social_propietario" on class="form-control form-control-sm"  value="<?php echo $empresa->razon_social?>" type="text" onchange="" readonly='readonly'>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3" >
+                                    <div class="form-group" id="nombre_carne_propietario_">
+                                        <label class="control-label form-control-sm">Nombre</label>
+                                        <input id="nombre_carne_propietario" name="nombre_carne_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->nombres?>" type="text" onchange="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4" >
+                                    <div class="form-group" id="apellido_paterno_carne_propietario_">
+                                        <label class="control-label form-control-sm">Apellido Paterno</label>
+                                        <input id="apellido_paterno_carne_propietario" name="apellido_paterno_carne_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->apellido_paterno?>" type="text" onchange="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4" >
+                                    <div class="form-group" id="apellido_materno_carne_propietario_">
+                                        <label class="control-label form-control-sm">Apellido Materno</label>
+                                        <input id="apellido_materno_carne_propietario" name="apellido_materno_carne_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->apellido_materno?>" type="text" onchange="">
                                     </div>
                                 </div>
                             </div>

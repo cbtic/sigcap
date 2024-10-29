@@ -245,7 +245,8 @@ class DerechoRevision extends Model
         WHEN pr.id_persona is not null THEN (select p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres from personas p2 where p2.id = pr.id_persona)
         end as razon_social, pro.nombre, u.id_departamento departamento, u.id_provincia provincia,
         u.id_distrito distrito, pro.direccion, s.numero_revision, m.denominacion municipalidad, s.area_total total_area_techada, s.valor_obra, l.sub_total, l.igv, l.total, tm.denominacion tipo_proyectista, 
-        tm2.denominacion tipo_liquidacion, tm3.denominacion instancia, pro.codigo 
+        tm2.denominacion tipo_liquidacion, tm3.denominacion instancia, pro.codigo, tm5.denominacion tipo_tramite,
+        tm6.denominacion id_sitio, pro.sitio_descripcion, tm7.denominacion id_zona, pro.zona_descripcion, pro.parcela, pro.super_manzana, tm8.denominacion id_tipo, pro.direccion, pro.lote, pro.sub_lote, pro.fila, pro.zonificacion 
         from solicitudes s 
         inner join liquidaciones l on l.id_solicitud = s.id
         left join proyectistas p on p.id_solicitud = s.id
@@ -260,6 +261,10 @@ class DerechoRevision extends Model
         left join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41'
         left join tabla_maestras tm2 on s.id_tipo_liquidacion1 = tm2.codigo::int and  tm2.tipo ='27'
         left join tabla_maestras tm3 on s.id_instancia = tm3.codigo::int and  tm3.tipo ='47'
+        left join tabla_maestras tm5 on s.id_tipo_tramite = tm5.codigo::int and  tm5.tipo ='25'
+        left join tabla_maestras tm6 on pro.id_tipo_sitio = tm6.codigo::int and  tm6.tipo ='33'
+        left join tabla_maestras tm7 on pro.id_zona = tm7.codigo::int and  tm7.tipo ='34'
+        left join tabla_maestras tm8 on pro.id_tipo_direccion = tm8.codigo::int and  tm8.tipo ='35'
         where l.id='".$id."'";
 
 		//echo $cad;
@@ -282,7 +287,8 @@ class DerechoRevision extends Model
         $cad = "select p.nombre, 
         CASE 
             WHEN pr.id_tipo_propietario = '78' THEN (select p2.apellido_paterno||' '||p2.apellido_materno||' '||p2.nombres agremiado from personas p2 where p2.id = pr.id_persona and p2.estado ='1')
-        WHEN pr.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = pr.id_empresa and e.estado ='1')
+            WHEN pr.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = pr.id_empresa and e.estado ='1')
+            WHEN pr.id_tipo_propietario = '84' THEN (select p3.apellido_paterno||' '||p3.apellido_materno||' '||p3.nombres agremiado from personas p3 where p3.id = pr.id_persona and p3.estado ='1')
         end as propietario,
         s.valor_obra, s.area_total, pre.area_techada, p.id_ubigeo, tm.denominacion tipo, p.direccion direccion_proyecto, 
         (SELECT numero_cap
