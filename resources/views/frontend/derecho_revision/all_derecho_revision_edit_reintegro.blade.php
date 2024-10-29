@@ -313,8 +313,9 @@ if($('#instancia').val()==250){
 							</div>
 
 							<div class="col-lg-2">
+								<input type="hidden" name="departamento" id="departamento" value="<?php echo $derechoRevision_->id_ubigeo,0,2?>">
 								<label class="control-label form-control-sm">Departamento</label>
-								<select name="departamento" id="departamento" class="form-control form-control-sm" onChange="obtenerProvincia()" disabled='disabled'>
+								<select name="departamento_" id="departamento_" class="form-control form-control-sm" onChange="obtenerProvincia()" disabled>
 									<?php if($id>0){ ?>
 									<option value="">--Selecionar--</option>
 									<?php
@@ -336,16 +337,17 @@ if($('#instancia').val()==250){
 							</div>
 						
 							<div class="col-lg-2">
+								<input type="hidden" name="provincia" id="provincia" value=""></input>
 								<label class="control-label form-control-sm">Provincia</label>
-								<select name="provincia" id="provincia" class="form-control form-control-sm" onChange="obtenerDistrito()">
+								<select name="provincia_" id="provincia_" class="form-control form-control-sm" onChange="obtenerDistrito()">
 									<option value="">--Selecionar--</option>
 								</select>
 							</div>
-							
 
 							<div class="col-lg-2">
+								<input type="hidden" name="distrito" id="distrito" value=""></input>
 								<label class="control-label form-control-sm">Distrito</label>
-								<select name="distrito" id="distrito" class="form-control form-control-sm" onChange="">
+								<select name="distrito_" id="distrito_" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 								</select>
 							</div>

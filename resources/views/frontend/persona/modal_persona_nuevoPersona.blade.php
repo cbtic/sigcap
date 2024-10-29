@@ -580,8 +580,10 @@ $.mask.definitions['p'] = "[Mm]";
 			},
 			dataType: 'json',
 			success: function(result) {
+				//alert(result[0]);
 				if(result.sw==false){
-					Swal.fire("El DNI ingresado ya existe !!!");
+					//Swal.fire("El DNI ingresado ya existe !!!");
+					Swal.fire(result.msg);
 					$('#openOverlayOpc').modal('hide');
 				}else{
 					$('#openOverlayOpc').modal('hide');
@@ -1296,8 +1298,16 @@ $.mask.definitions['p'] = "[Mm]";
 
 				$('#numero_documento').blur(function() {
 					var id = $('#id').val();
-					if (id == 0) {
+					var tipo_documento = $('#tipo_documento').val();
+					if (id == 0 && tipo_documento!=84) {
 						validaDni(this.value);
+					}else if(tipo_documento==84){
+						$('#nombre').val('');
+						$('#apellido_paterno').val('');
+						$('#apellido_materno').val('');
+						$('#nombre').prop('readonly', false);
+						$('#apellido_paterno').prop('readonly', false);
+						$('#apellido_materno').prop('readonly', false);
 					}
 				});
 

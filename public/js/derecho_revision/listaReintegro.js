@@ -1,14 +1,17 @@
 $(document).ready(function () {
 	
 	obtenerProvincia();
+	obtenerProvinciaReintegro();
+	obtenerDatosUbigeoReintegro();
+	obtenerDistritoReintegro();
 
 	//calculoVistaPrevia();
 	$('#solicitante_solicitud').hide();
 
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
+		obtenerUbigeoReintegro();
 		obtenerDatosUbigeo();
-		
 	}
 
 	$('#fecha_registro_bus').datepicker({
@@ -392,6 +395,32 @@ function credipago_pdf(id){
 
 function obtenerUbigeo(){
 
+	var distrito = $("#distrito_").val();
+
+	$.ajax({
+		url: "/derecho_revision/obtener_ubigeo/"+distrito,
+		type: "GET",
+		success: function (result) {
+			
+			//var tipo_solicitud = result[0];
+			//var ubigeo = result.datos_formateados;
+			//var id = result.id;
+			//alert(result[0].id_distrito);
+
+			/*$("#provincia").val(result[0].id_provincia).promise().done(function(){
+				
+				});
+				obtenerDistrito_(function(){
+					$("#distrito").val(result[0].id_distrito);
+			});*/
+
+			$("#municipalidad").val(result[0].municipalidad);
+		}
+	});
+}
+
+function obtenerUbigeoReintegro(){
+
 	var distrito = $("#distrito").val();
 
 	$.ajax({
@@ -655,6 +684,46 @@ function obtenerPropietario(){
 
 function obtenerProvincia(){
 	
+	var id = $('#departamento_').val();
+	if(id=="")return false;
+	$('#provincia_').attr("disabled",true);
+	$('#distrito_').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_provincia/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#provincia_').html("");
+			$(result).each(function (ii, oo) {
+				
+				option += "<option value='"+oo.id_provincia+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			//$('#provincia').html(option);
+			$('#provincia_').html(option);
+			
+			var option2 = "<option value=''>Seleccionar</option>";
+			$('#distrito_').html(option2);
+			
+			$('#provincia_').attr("disabled",true);
+			$('#distrito_').attr("disabled",false);
+			
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerProvinciaReintegro(){
+	
 	var id = $('#departamento').val();
 	if(id=="")return false;
 	$('#provincia').attr("disabled",true);
@@ -673,14 +742,16 @@ function obtenerProvincia(){
 			var option = "<option value='' selected='selected'>Seleccionar</option>";
 			$('#provincia').html("");
 			$(result).each(function (ii, oo) {
+				
 				option += "<option value='"+oo.id_provincia+"'>"+oo.desc_ubigeo+"</option>";
 			});
+			//$('#provincia').html(option);
 			$('#provincia').html(option);
 			
 			var option2 = "<option value=''>Seleccionar</option>";
 			$('#distrito').html(option2);
 			
-			$('#provincia').attr("disabled",true);
+			$('#provincia').attr("disabled",false);
 			$('#distrito').attr("disabled",false);
 			
 			$('.loader').hide();
@@ -702,9 +773,34 @@ function obtenerDatosUbigeo(){
 			
 			//alert(result[0].provincia);
 
-			$('#provincia').val(result[0].provincia);
+			$('#provincia_').val(result[0].provincia);
 
 			obtenerDistrito_(function(){
+
+				$('#distrito_').val(result[0].distrito);
+
+			});
+			
+		}
+		
+	});
+
+}
+
+function obtenerDatosUbigeoReintegro(){
+
+	var id = $('#id_solicitud').val();
+	
+	$.ajax({
+		url: '/derecho_revision/obtener_provincia_distrito_solicitud/'+id,
+		dataType: "json",
+		success: function(result){
+			
+			//alert(result[0].provincia);
+
+			$('#provincia').val(result[0].provincia);
+
+			obtenerDistritoReintegro_(function(){
 
 				$('#distrito').val(result[0].distrito);
 
@@ -717,6 +813,40 @@ function obtenerDatosUbigeo(){
 }
 
 function obtenerDistrito(){
+		
+	var departamento = $('#departamento_').val();
+	var id = $('#provincia_').val();
+	if(id=="")return false;
+	$('#distrito_').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_distrito/'+departamento+'/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value=''>Seleccionar</option>";
+			$('#distrito_').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_ubigeo+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			//$('#distrito').html(option);
+			$('#distrito_').html(option);
+			
+			$('#distrito_').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerDistritoReintegro(){
 		
 	var departamento = $('#departamento').val();
 	var id = $('#provincia').val();
@@ -738,6 +868,7 @@ function obtenerDistrito(){
 			$(result).each(function (ii, oo) {
 				option += "<option value='"+oo.id_ubigeo+"'>"+oo.desc_ubigeo+"</option>";
 			});
+			//$('#distrito').html(option);
 			$('#distrito').html(option);
 			
 			$('#distrito').attr("disabled",false);
@@ -750,7 +881,41 @@ function obtenerDistrito(){
 }
 
 function obtenerDistrito_(callback){
+	
+	var departamento = $('#departamento_').val();
+	var id = $('#provincia_').val();
+	if(id=="")return false;
+	$('#distrito_').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_distrito/'+departamento+'/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value=''>Seleccionar</option>";
+			$('#distrito_').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_ubigeo+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#distrito_').html(option);
+			
+			$('#distrito_').attr("disabled",true);
+			$('.loader').hide();
+
+			callback();
 		
+		}
+		
+	});
+}
+
+function obtenerDistritoReintegro_(callback){
+	
 	var departamento = $('#departamento').val();
 	var id = $('#provincia').val();
 	if(id=="")return false;
@@ -782,6 +947,41 @@ function obtenerDistrito_(callback){
 		
 	});
 }
+
+function obtenerDistrito_(callback){
+		
+	var departamento = $('#departamento_').val();
+	var id = $('#provincia_').val();
+	if(id=="")return false;
+	$('#distrito_').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_distrito/'+departamento+'/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value=''>Seleccionar</option>";
+			$('#distrito_').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_ubigeo+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#distrito_').html(option);
+			
+			$('#distrito_').attr("disabled",true);
+			$('.loader').hide();
+
+			callback();
+		
+		}
+		
+	});
+}
+
 
 function obtenerProvinciaDomiciliario(){
 	
