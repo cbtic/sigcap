@@ -867,6 +867,15 @@ class DerechoRevisionController extends Controller
 		$id_user = Auth::user()->id;
 		$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
 		$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();
+		$persona_carne_extranjeria = Persona::where("numero_documento",$request->carne_propietario)->where("estado","1")->first();
+		
+		$buscaPersonaDni = Persona::where("numero_documento", $request->dni_propietario)->where("id_tipo_documento", $request->id_tipo_documento)->where("estado", "1")->get();
+		$buscaPersonaCarne = Persona::where("numero_documento", $request->carne_propietario)->where("id_tipo_documento", $request->id_tipo_documento)->where("estado", "1")->get();
+		$buscaEmpresaRuc = Empresa::where("ruc", $request->ruc_propietario)->where("estado", "1")->get();
+
+		$sw = true;
+		$msg = "";
+		//dd($persona);exit();
 		
 		if($request->id == 0){
 			$propietario = new Propietario;
@@ -874,29 +883,72 @@ class DerechoRevisionController extends Controller
 			$propietario = Propietario::find($request->id);
 		}
 
-		if($persona){
+		if($persona && $request->dni_propietario!=''){
 			//var_dump($persona);exit();
-			$propietario->id_tipo_propietario = 78;
-			$propietario->id_persona = $persona->id;
-			$propietario->celular = $request->celular_dni;
-			$propietario->email = $request->email_dni;
-			$propietario->id_solicitud = $request->id_solicitud;
-			//$proyectista->firma = $request->nombre;
-			//$profesion->estado = 1;
-			$propietario->id_usuario_inserta = $id_user;
-			$propietario->save();
-
-		}else if($empresa){
-			$propietario->id_tipo_propietario = 79;
-			$propietario->id_empresa = $empresa->id;
-			$propietario->celular = $request->telefono_ruc;
-			$propietario->email = $request->email_ruc;
-			$propietario->id_solicitud = $request->id_solicitud;
-			//$proyectista->firma = $request->nombre;
-			//$profesion->estado = 1;
-			$propietario->id_usuario_inserta = $id_user;
-			$propietario->save();
-		}else if(!$persona && $request->ruc_propietario==''){
+			$buscaPersonaDniPropietario = Propietario::where("id_tipo_propietario", $persona->id_tipo_documento)->where("id_persona", $persona->id)->where("id_solicitud", $request->id_solicitud)->where("estado", "1")->count();
+			if($buscaPersonaDniPropietario>0){
+				$sw = false;
+				$msg = "El propietario ingresado ya existe en esta solicitud!!!";
+			}else{
+				$propietario->id_tipo_propietario = 78;
+				$propietario->id_persona = $persona->id;
+				$propietario->celular = $request->celular_dni;
+				$propietario->email = $request->email_dni;
+				$propietario->id_solicitud = $request->id_solicitud;
+				//$proyectista->firma = $request->nombre;
+				//$profesion->estado = 1;
+				$propietario->id_usuario_inserta = $id_user;
+				$propietario->save();
+				/*if ($buscaPersonaDni->count()>0){
+					//dd($buscaPersonaDni);exit();
+					$tablaMaestra_model = new TablaMaestra;		
+					$tipo_documento = $tablaMaestra_model->getMaestroC(110,$request->id_tipo_documento);
+					$sw = false;
+					$msg = "El ".$tipo_documento[0]->denominacion." ingresado ya existe !!!";
+				}*/
+			}
+		}else if($empresa && $request->ruc_propietario!=''){
+			$buscaEmpresaRucPropietario = Propietario::where("id_tipo_propietario", $request->id_tipo_documento)->where("id_empresa", $empresa->id)->where("estado", "1")->count();
+			if($buscaEmpresaRucPropietario>0){
+				$sw = false;
+				$msg = "El propietario ingresado ya existe en esta solicitud!!!";
+			}else{
+				$propietario->id_tipo_propietario = 79;
+				$propietario->id_empresa = $empresa->id;
+				$propietario->celular = $request->telefono_ruc;
+				$propietario->email = $request->email_ruc;
+				$propietario->id_solicitud = $request->id_solicitud;
+				//$proyectista->firma = $request->nombre;
+				//$profesion->estado = 1;
+				$propietario->id_usuario_inserta = $id_user;
+				$propietario->save();
+			}
+			
+		}else if($persona_carne_extranjeria && $request->carne_propietario!=''){
+			$buscaPersonaCarnePropietario = Propietario::where("id_tipo_propietario", $request->id_tipo_documento)->where("id_persona", $persona_carne_extranjeria->id)->where("estado", "1")->count();
+			if($buscaPersonaCarnePropietario>0){
+				$sw = false;
+				$msg = "El propietario ingresado ya existe !!!";
+			}else{
+				$propietario->id_tipo_propietario = 84;
+				$propietario->id_persona = $persona_carne_extranjeria->id;
+				$propietario->celular = $request->celular_dni;
+				$propietario->email = $request->email_dni;
+				$propietario->id_solicitud = $request->id_solicitud;
+				//$proyectista->firma = $request->nombre;
+				//$profesion->estado = 1;
+				$propietario->id_usuario_inserta = $id_user;
+				$propietario->save();
+				if ($buscaPersonaCarne->count()>1){
+					//dd($buscaPersonaDni);exit();
+					$tablaMaestra_model = new TablaMaestra;
+					$tipo_documento = $tablaMaestra_model->getMaestroC(110,$request->id_tipo_documento);
+					$sw = false;
+					$msg = "El ".$tipo_documento[0]->denominacion." ingresado ya existe !!!";
+				}
+			}
+			
+		}else if(!$persona && $request->ruc_propietario=='' && $request->carne_propietario==''){
 			//var_dump($request->ruc_propietario);exit();
 
 			$persona = new Persona();
@@ -920,7 +972,14 @@ class DerechoRevisionController extends Controller
 			//$profesion->estado = 1;
 			$propietario->id_usuario_inserta = $id_user;
 			$propietario->save();
-		}else if(!$empresa && $request->ruc_propietario!=''){
+			/*if ($buscaPersonaDni->count()>0){
+				//dd($buscaPersonaDni);exit();
+				$tablaMaestra_model = new TablaMaestra;		
+				$tipo_documento = $tablaMaestra_model->getMaestroC(110,$request->id_tipo_documento);
+				$sw = false;
+				$msg = "El ".$tipo_documento[0]->denominacion." ingresado ya existe !!!";
+			}*/
+		}else if(!$empresa && $request->dni_propietario=='' && $request->carne_propietario==''){
 
 			$empresa = new Empresa();
 			$empresa->ruc = $request->ruc_propietario;
@@ -941,7 +1000,41 @@ class DerechoRevisionController extends Controller
 			//$profesion->estado = 1;
 			$propietario->id_usuario_inserta = $id_user;
 			$propietario->save();
+		}else if(!$persona_carne_extranjeria && $request->dni_propietario=='' && $request->ruc_propietario==''){
+
+			$persona = new Persona();
+			$persona->id_tipo_documento = $request->id_tipo_documento;
+			$persona->numero_documento = $request->carne_propietario;
+			$persona->apellido_paterno = $request->apellido_paterno_carne_propietario;
+			$persona->apellido_materno = $request->apellido_materno_carne_propietario;
+			$persona->nombres = $request->nombre_carne_propietario;
+			$persona->direccion = $request->direccion_dni;
+			$persona->numero_celular = $request->celular_dni;
+			$persona->correo = $request->email_dni;
+			$persona->id_usuario_inserta = $id_user;
+			$persona->save();
+
+			$propietario->id_tipo_propietario = 84;
+			$propietario->id_persona = $persona->id;
+			$propietario->celular = $request->celular_dni;
+			$propietario->email = $request->email_dni;
+			$propietario->id_solicitud = $request->id_solicitud;
+			//$proyectista->firma = $request->nombre;
+			//$profesion->estado = 1;
+			$propietario->id_usuario_inserta = $id_user;
+			$propietario->save();
+
+			/*if ($buscaPersonaCarne->count()>0){
+				//dd($buscaPersonaDni);exit();
+				$tablaMaestra_model = new TablaMaestra;		
+				$tipo_documento = $tablaMaestra_model->getMaestroC(110,$request->id_tipo_documento);
+				$sw = false;
+				$msg = "El ".$tipo_documento[0]->denominacion." ingresado ya existe !!!";
+			}*/
 		}
+		$array["sw"] = $sw;
+		$array["msg"] = $msg;
+		echo json_encode($array);
     }
 
 	public function modal_nuevo_infoProyecto($id){
@@ -1308,7 +1401,20 @@ class DerechoRevisionController extends Controller
 		//$tipo_uso = $datos[0]->tipo_uso;
 		$instancia = $datos[0]->instancia;
 		$codigo = $datos[0]->codigo;
-
+		$tipo_tramite = $datos[0]->tipo_tramite;
+		$id_sitio = $datos[0]->id_sitio;
+		$sitio_descripcion = $datos[0]->sitio_descripcion;
+		$id_zona = $datos[0]->id_zona;
+		$zona_descripcion = $datos[0]->zona_descripcion;
+		$parcela = $datos[0]->parcela;
+		$super_manzana = $datos[0]->super_manzana;
+		$id_tipo = $datos[0]->id_tipo;
+		$direccion = $datos[0]->direccion;
+		$lote = $datos[0]->lote;
+		$sub_lote = $datos[0]->sub_lote;
+		$fila = $datos[0]->fila;
+		$zonificacion = $datos[0]->zonificacion;
+		
 		$year = Carbon::now()->year;
 
 		$parametro = $parametro_model->getParametroAnio($year);
@@ -1333,9 +1439,7 @@ class DerechoRevisionController extends Controller
 		 $currentHour = Carbon::now()->format('H:i:s');
 
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','valor_minimo','valor_maximo','instancia','proyectista_nombres','codigo','proyectista_cap'));
-		
-
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','valor_minimo','valor_maximo','instancia','proyectista_nombres','codigo','proyectista_cap','tipo_tramite','id_sitio', 'sitio_descripcion', 'id_zona', 'zona_descripcion', 'parcela', 'super_manzana', 'id_tipo', 'direccion', 'lote', 'sub_lote', 'fila','zonificacion'));
 
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
 
@@ -1519,6 +1623,10 @@ class DerechoRevisionController extends Controller
 		$liquidacion = Liquidacione::find($id);
 		$liquidacion->id_situacion = $id_situacion;
 		$liquidacion->save();
+
+		/*$solicitud = DerechoRevision::find($liquidacion->id_solicitud);
+		$solicitud->id_resultado = 3;
+		$solicitud->save();*/
 
 		echo $liquidacion->id;
     }
