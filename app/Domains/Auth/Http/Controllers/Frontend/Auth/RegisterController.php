@@ -11,6 +11,12 @@ use LangleyFoxall\LaravelNISTPasswordRules\PasswordRules;
 use App\Models\Persona;
 use App\Models\TablaMaestra;
 use App\Exceptions\GeneralException;
+
+use Illuminate\Http\Request;
+use App\Domains\Auth\Models\User;
+use App\Models\Proyectista;
+use App\Models\Agremiado;
+
 /**
  * Class RegisterController.
  */
@@ -74,7 +80,7 @@ class RegisterController
         abort_unless(config('boilerplate.access.user.registration'), 404);
 		
 		$tablaMaestra_model = new TablaMaestra;
-		$tipo_documento = $tablaMaestra_model->getMaestroByTipo("16");
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo("86");
 
         return view('frontend.auth.registerProy',compact('tipo_documento'));
     }
@@ -133,4 +139,43 @@ class RegisterController
 		//exit();
         
     }
+
+    function registerProy(Request $request){
+        ini_set('memory_limit', '4400M');
+
+        /*******
+         * 'type' => $data['type'] ?? $this->model::TYPE_USER,
+            'name' => $data['name'] ?? null,
+            'email' => $data['email'] ?? null,
+            'password' => $data['password'] ?? null,
+            'provider' => $data['provider'] ?? null,
+            'provider_id' => $data['provider_id'] ?? null,
+            'email_verified_at' => $data['email_verified_at'] ?? null,
+            'active' => $data['active'] ?? true,
+			'id_persona' => (isset($data['id_persona']) && $data['id_persona']>0)?$data['id_persona']:null,
+         * 
+         ********/
+
+        //print_r($request);
+
+        $agremiado = Agremiado::where("numero_cap",$request->numero_cap)->first();
+
+        $user = new User;
+        $user->email = $request->email;
+        $user->name = $request->nombre;
+        $user->password = $request->password;
+        $user->save();
+        
+        $proyectista = new Proyectista;
+        $proyectista->id_tipo_profesional = $request->id_tipo_profesional;
+        $proyectista->id_agremiado = $agremiado->id;
+        $proyectista->estado = "1";
+        $proyectista->id_solicitud = NULL;
+        $proyectista->id_tipo_proyectista = 1;
+        $proyectista->id_usuario_inserta = 1;
+        $proyectista->save();
+
+        exit();
+    }
+
 }

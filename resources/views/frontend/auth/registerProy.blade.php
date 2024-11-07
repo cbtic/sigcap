@@ -12,7 +12,7 @@
                     </x-slot>
 
                     <x-slot name="body">
-                        <x-forms.post :action="route('frontend.auth.registerProy')">
+                        <x-forms.post :action="route('frontend.auth.registerProy')" onsubmit="return validacion()">
                             
 							
 							<div class="form-group row">
@@ -20,19 +20,19 @@
 								<label for="name" class="col-md-1 col-form-label text-md-right">N&deg; CAP</label>
 
                                 <div class="col-md-2">
-                                    <input type="text" name="numero_cap" id="numero_cap" class="form-control" placeholder="{{ __('Numero de CAP') }}" maxlength="100" required autofocus autocomplete="numero_documento" onblur="obtenerAgremiado()" />
+                                    <input type="text" name="numero_cap" id="numero_cap" class="form-control" placeholder="{{ __('Numero de CAP') }}" maxlength="100"  autofocus autocomplete="numero_documento" onblur="obtenerAgremiado()" />
                                 </div>
 								
                                 <label for="name" class="col-md-2 col-form-label text-md-right">Tipo Documento</label>
 
                                 <div class="col-md-3">
-                                    <input type="text" readonly="readonly" name="tipo_documento" id="tipo_documento" class="form-control" placeholder="Tipo Documento" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" readonly="readonly" name="tipo_documento" id="tipo_documento" class="form-control" placeholder="Tipo Documento" maxlength="100"  autofocus autocomplete="numero_documento" />
                                 </div>
 								
 								<label for="name" class="col-md-1 col-form-label text-md-right" style="padding-right:0px">N&deg; Documento</label>
 
                                 <div class="col-md-3">
-                                    <input type="text" readonly="readonly" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" required autofocus autocomplete="numero_documento" onblur="obtenerPersona()" />
+                                    <input type="text" readonly="readonly" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100"  autofocus autocomplete="numero_documento" onblur="obtenerPersona()" />
                                 </div>
 								
                             </div><!--form-group-->
@@ -42,19 +42,19 @@
 								<label for="name" class="col-md-1 col-form-label text-md-right">Ap. Paterno</label>
 
                                 <div class="col-md-3">
-                                    <input type="text" readonly="readonly" name="apellido_paterno" id="apellido_paterno" class="form-control" placeholder="Ap. Paterno" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" readonly="readonly" name="apellido_paterno" id="apellido_paterno" class="form-control" placeholder="Ap. Paterno" maxlength="100"  autofocus autocomplete="numero_documento" />
                                 </div>
 								
 								<label for="name" class="col-md-1 col-form-label text-md-right">Ap. Materno</label>
 								
 								<div class="col-md-3">
-                                    <input type="text" readonly="readonly" name="apellido_materno" id="apellido_materno" class="form-control" placeholder="{{ __('Ap. Materno') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" readonly="readonly" name="apellido_materno" id="apellido_materno" class="form-control" placeholder="{{ __('Ap. Materno') }}" maxlength="100"  autofocus autocomplete="numero_documento" />
                                 </div>
 								
 								<label for="name" class="col-md-1 col-form-label text-md-right">Nombres</label>
 								
 								<div class="col-md-3">
-                                    <input type="text" readonly="readonly" name="nombre" id="nombre" class="form-control" placeholder="{{ __('Nombres') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" readonly="readonly" name="nombre" id="nombre" class="form-control" placeholder="{{ __('Nombres') }}" maxlength="100"  autofocus autocomplete="numero_documento" />
                                 </div>
 								
                             </div><!--form-group-->
@@ -74,7 +74,7 @@
 								<label for="name" class="col-md-1 col-form-label text-md-right">Profesi&oacute;n</label>
 								
 								<div class="col-md-3">
-									<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" type="text">
+									<select name="id_tipo_profesional" id="id_tipo_profesional" class="form-control form-control-sm" type="text">
                             			<option value="">--Seleccionar--</option>
 										<?php
 										foreach ($tipo_documento as $row) {
@@ -89,29 +89,35 @@
 								<label for="name" class="col-md-1 col-form-label text-md-right">Celular</label>
 								
 								<div class="col-md-3">
-                                    <input type="text" name="celular" id="celular" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                    <input type="text" name="celular" id="celular" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100"  autofocus autocomplete="numero_documento" />
                                 </div>
-							
-                                <label for="name" class="col-md-1 col-form-label text-md-right">Correo</label>
-
-                                <div class="col-md-3">
-                                    <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') }}" maxlength="255" required autocomplete="email" />
+                                
+                                <label for="name" class="col-md-1 col-form-label text-md-right">Tel&eacute;fono</label>
+								
+								<div class="col-md-3">
+                                    <input type="text" name="telefono" id="telefono" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100"  autofocus autocomplete="numero_documento" />
                                 </div>
 								
                             </div><!--form-group-->
 
                             <div class="form-group row">
 							
-								<label for="name" class="col-md-1 col-form-label text-md-right">Tel&eacute;fono</label>
-								
-								<div class="col-md-3">
-                                    <input type="text" name="celular" id="celular" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" required autofocus autocomplete="numero_documento" />
+                                <label for="name" class="col-md-1 col-form-label text-md-right">Correo 1</label>
+
+                                <div class="col-md-3">
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') }}" maxlength="255"  autocomplete="email" />
+                                </div>
+
+                                <label for="name" class="col-md-1 col-form-label text-md-right">Correo 2</label>
+
+                                <div class="col-md-3">
+                                    <input type="email" name="email2" id="email2" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') }}" maxlength="255" autocomplete="email" />
                                 </div>
 							
                                 <label for="name" class="col-md-1 col-form-label text-md-right">Direcci&oacute;n</label>
 
                                 <div class="col-md-3">
-                                    <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') }}" maxlength="255" required autocomplete="email" />
+                                    <input type="text" name="direccion" id="direccion" class="form-control" placeholder="{{ __('Direccion') }}" value="{{ old('email') }}" maxlength="255"  autocomplete="email" />
                                 </div>
 							
 							
@@ -122,13 +128,13 @@
                                 <label for="name" class="col-md-1 col-form-label text-md-right">@lang('Password')</label>
 
                                 <div class="col-md-3">
-                                    <input type="password" name="password" id="password" class="form-control" placeholder="{{ __('Password') }}" maxlength="100" required autocomplete="new-password" />
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="{{ __('Password') }}" maxlength="100"  autocomplete="new-password" />
                                 </div>
                             
                                 <label for="name" class="col-md-1 col-form-label text-md-right">Confirmar</label>
 
                                 <div class="col-md-3">
-                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('Password Confirmation') }}" maxlength="100" required autocomplete="new-password" />
+                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('Password Confirmation') }}" maxlength="100"  autocomplete="new-password" />
                                 </div>
                             </div><!--form-group-->
 
@@ -170,6 +176,57 @@
 
 <script type="text/javascript">
 
+function validacion(){
+
+    var msg = "";
+    var numero_cap = $("#numero_cap").val();
+    var id_tipo_profesional = $("#id_tipo_profesional").val();
+	var celular = $("#celular").val();
+	var email = $("#email").val();
+    var email2 = $("#email2").val();
+    var direccion = $("#direccion").val();
+    var password = $("#password").val();
+    var password_confirmation = $("#password_confirmation").val();
+
+	if(numero_cap == "")msg += "Debe ingresar el numero de CAP <br>";
+    if(id_tipo_profesional == "")msg += "Debe ingresar la profesion <br>";
+    if(celular == "")msg += "Debe ingresar el celular <br>";
+    if(email == "")msg += "Debe ingresar el correo 1 <br>";
+    if(direccion == "")msg += "Debe ingresar la direccion <br>";
+    if(password == "")msg += "Debe ingresar la contraseña <br>";
+	if(password_confirmation == "")msg += "Debe ingresar la confirmacion de la contraseña <br>";
+
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+	
+	$.ajax({
+		url: '/persona/obtener_proyectista/' + numero_cap,
+		dataType: "json",
+		success: function(result){
+			
+            var cantidad = result.cantidad;
+            if (cantidad > 0) {
+                bootbox.alert("Usted ya se encuentra inscrito. En caso de haber olvidado su contraseña seguir los pasos dando clic en ¿Olvidaste tu contraseña?");
+                return false;
+            }
+			$('.loader').hide();
+
+		}
+		
+	});
+
+    return false;
+
+}
+
 function obtenerAgremiado(){
 		
 	var numero_cap = $("#numero_cap").val();
@@ -178,7 +235,7 @@ function obtenerAgremiado(){
 	if(numero_cap == "")msg += "Debe ingresar el numero de CAP <br>";
 	
 	if (msg != "") {
-		bootbox.alert(msg);
+		//bootbox.alert(msg);
 		return false;
 	}
 	

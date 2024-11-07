@@ -108,5 +108,8 @@ Route::group(['as' => 'auth.'], function () {
 	
 	Route::get('persona/obtener_persona_login/{tipo_documento}/{numero_documento}', [PersonaController::class, 'obtener_persona_login'])->name('persona.obtener_persona_login')->where('tipo_documento', '(.*)');
     Route::get('persona/obtener_agremiado_login/{numero_cap}', [PersonaController::class, 'obtener_agremiado_login'])->name('persona.obtener_agremiado_login')->where('numero_cap', '(.*)');
+
+    Route::get('persona/obtener_proyectista/{numero_cap}', [PersonaController::class, 'obtener_proyectista'])->name('persona.obtener_proyectista')->where('numero_cap', '(.*)');
+
 	
 });
