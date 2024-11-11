@@ -105,7 +105,7 @@ order by 1 asc
 
         //$mes= intval($mes);
 
-        $cad = "select m.denominacion municipalidad, c.serie, c.numero, c.fecha_pago, v.monto, l.credipago, v.descripcion   
+        $cad = "select m.denominacion municipalidad, c.serie, c.numero, c.fecha_pago, l.total monto, l.credipago, v.descripcion   
         from valorizaciones v
         inner join comprobantes c on v.id_comprobante = c.id
         inner join liquidaciones l on v.pk_registro = l.id
@@ -115,6 +115,7 @@ order by 1 asc
         and EXTRACT(YEAR FROM c.fecha_pago)::varchar = '".$anio."'
         and EXTRACT(MONTH FROM c.fecha_pago)::varchar = '".$mes."'
         and v.id_modulo ='7'
+        and l.id_situacion = 2
         order by c.fecha";
         //echo($cad);        
 		$data = DB::select($cad);
