@@ -152,6 +152,17 @@ class PersonaController extends Controller
 
     }
 
+	public function obtener_agremiado_login($numero_cap){
+
+        $persona_model = new Persona;
+        $sw = true;
+        $agremiado = $persona_model->getAgremiadoDatos($numero_cap);
+        $array["sw"] = $sw;
+        $array["agremiado"] = $agremiado;
+        echo json_encode($array);
+
+    }
+
     public function send_persona(Request $request){
 		
 		if($request->id == 0){
@@ -578,8 +589,11 @@ class PersonaController extends Controller
 				$persona->id_usuario_inserta = $id_user;
 				$persona->save();
 			}else{
+				
+				$tablaMaestra_model = new TablaMaestra;		
+				$tipo_documento = $tablaMaestra_model->getMaestroC(110,$request->tipo_documento);
 				$sw = false;
-				$msg = "El DNI ingresado ya existe !!!";
+				$msg = "El ".$tipo_documento[0]->denominacion." ingresado ya existe !!!";
 			}
 		}else {
 			$persona = Persona::find($request->id);
@@ -606,7 +620,7 @@ class PersonaController extends Controller
 			//$persona = Persona::find($request->id);
 
 			$array["sw"] = $sw;
-			//$array["msg"] = $msg;
+			$array["msg"] = $msg;
 			echo json_encode($array);
 		
     }

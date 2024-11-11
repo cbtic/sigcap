@@ -248,7 +248,7 @@ if($('#instancia').val()==250){
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-5">
 								<label class="control-label form-control-sm">Municipalidad</label>
-								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="obtenerUbigeo()"> 
+								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="obtenerUbigeoReintegro()"> 
 									<?php
 									$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
 									?>
@@ -301,7 +301,7 @@ if($('#instancia').val()==250){
 
 							<div class="col-lg-2">
 								<label class="control-label form-control-sm">Departamento</label>
-								<select name="departamento" id="departamento" class="form-control form-control-sm" onChange="obtenerProvincia()" disabled='disabled'>
+								<select name="departamento" id="departamento" class="form-control form-control-sm" onChange="obtenerProvinciaReintegro()">
 									<?php if($id>0){ ?>
 									<option value="">--Selecionar--</option>
 									<?php
@@ -324,7 +324,7 @@ if($('#instancia').val()==250){
 						
 							<div class="col-lg-2">
 								<label class="control-label form-control-sm">Provincia</label>
-								<select name="provincia" id="provincia" class="form-control form-control-sm" onChange="obtenerDistrito()">
+								<select name="provincia" id="provincia" class="form-control form-control-sm" onChange="obtenerDistritoReintegro()">
 									<option value="">--Selecionar--</option>
 								</select>
 							</div>

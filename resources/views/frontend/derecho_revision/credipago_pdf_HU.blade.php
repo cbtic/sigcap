@@ -199,7 +199,7 @@ $(document).ready(function() {
                         <td class="td" style ="text-align: left; width: 45%; height:25px"><?php echo $razon_social;?></td>
                     </tr>
                     <tr>
-                        <td class="td" style ="text-align: left; width: 35%; height:25px"><b>DENOMINACION DE H.U. NUEVA:</b></td>
+                        <td class="td" style ="text-align: left; width: 35%; height:25px"><b>DENOMINACION DE <?php echo $tipo_tramite;?>:</b></td>
                         <td class="td" style ="text-align: left; width: 45%; height:25px"><?php echo $nombre;?></td>
                     </tr>
                     <tr>
@@ -215,11 +215,11 @@ $(document).ready(function() {
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: left; width: 35%;"><b>COMISION TECNICA:</b></td>
-                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $distrito;?></td>
+                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $municipalidad;?></td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: left; width: 35%;"><b>DIRECCION:</b></td>
-                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $direccion;?></td>
+                        <td class="td" style ="text-align: left; width: 45%;"><?php echo $id_sitio.' '.$sitio_descripcion.' '.$id_zona.' '.$zona_descripcion.' '.($parcela ? 'PARCELA: ' . $parcela . ' ' : '') .' '.($super_manzana ? 'SUPER MANZANA: ' . $super_manzana . ' ' : '').' '.$id_tipo.' '.$direccion.' '.($lote ? 'LOTE: ' . $lote . ' ' : '').' '.($sub_lote ? 'SUB LOTE: ' . $sub_lote . ' ' : '').' '.($fila ? 'FILA: ' . $fila . ' ' : '').' '.($zonificacion ? 'ZONIFICACION: ' . $zonificacion . ' ' : '');?></td>
                     </tr>
                 </tbody>
             </table>

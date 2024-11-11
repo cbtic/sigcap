@@ -68,6 +68,16 @@ class RegisterController
 
         return view('frontend.auth.register',compact('tipo_documento'));
     }
+	
+	public function showRegistrationProyForm()
+    {
+        abort_unless(config('boilerplate.access.user.registration'), 404);
+		
+		$tablaMaestra_model = new TablaMaestra;
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo("16");
+
+        return view('frontend.auth.registerProy',compact('tipo_documento'));
+    }
 
     /**
      * Get a validator for an incoming registration request.
