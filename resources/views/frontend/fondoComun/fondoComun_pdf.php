@@ -129,6 +129,8 @@
                 
 				<tr>
 					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">N°</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Nombre/Razon Social</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">DNI/RUC</td>
                     <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Credipago</td>
                     <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">Glosa</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">Serie</td>
@@ -144,6 +146,8 @@
 				?>
 				<tr>
 					<td style="border:1px solid #A4A4A4;width:40px;text-align:center"><?php echo ($key+1)?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($r->destinatario_final)?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($r->destinatario_documento_final)?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($r->credipago)?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($r->descripcion)?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->serie?></td>
