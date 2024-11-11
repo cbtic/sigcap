@@ -103,6 +103,20 @@ class Persona extends Model
         return $data[0];
     }
 
+    function getProyectistaByNumCap($numero_cap){
+
+		$cad = "select p.id
+from agremiados a
+inner join proyectistas p on a.id=p.id_agremiado
+where a.numero_cap = '".$numero_cap."'
+and a.estado='1'
+and p.estado='1'";
+		
+        $data = DB::select($cad);
+        
+        return $data;
+    }
+
     function getPersonaExt($tipo_documento,$numero_documento){
 		
         if($tipo_documento=="RUC"){

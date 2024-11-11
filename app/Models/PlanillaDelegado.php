@@ -76,14 +76,28 @@ from parametros p where anio=(select to_char(fecha_fin,'yyyy') from periodo_comi
     }
 	
 	function getSaldoDelegadoFondoComun($id_periodo,$anio,$mes){
-
+		/*
         $cad = "select sum(t1.saldo)::decimal saldo
 	from delegado_fondo_comuns t1               
 	inner join ubigeos t3 on t3.id_ubigeo = t1.id_ubigeo
 	inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle 
 	Where EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
-	And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'::int::varchar
-	/*And t1.id_periodo_comision = '".$id_periodo."'::int*/";
+	And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."'::int::varchar;
+		*/
+
+		$cad = "select sum(saldo)::decimal saldo 
+from( 
+select t3.denominacion municipalidad, sum(t1.importe_bruto::numeric)importe_bruto, sum(t1.importe_igv::numeric)importe_igv, 
+sum(t1.importe_comision_cap::numeric)importe_comision_cap, sum(t1.importe_fondo_asistencia::numeric)importe_fondo_asistencia, 
+sum(t1.saldo::numeric)saldo, t3.id_ubigeo 
+from delegado_fondo_comuns t1
+inner join municipalidades t3 on t1.id_ubigeo::int = t3.id
+inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle
+where EXTRACT(YEAR FROM t4.fecha)::varchar = '2024'
+And EXTRACT(MONTH FROM t4.fecha)::varchar = '11'  
+group by  t1.id, t3.id 
+)R";
+
 		//echo $cad;
 		$data = DB::select($cad);
         return $data[0];
