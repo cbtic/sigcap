@@ -46,7 +46,7 @@ class FondoComun extends Model
     ";
 */
 
-
+ 
 $cad = "select t3.denominacion municipalidad, sum(t1.importe_bruto::numeric)importe_bruto, sum(t1.importe_igv::numeric)importe_igv, 
             sum(t1.importe_comision_cap::numeric)importe_comision_cap, sum(t1.importe_fondo_asistencia::numeric)importe_fondo_asistencia, 
             sum(t1.saldo::numeric)saldo, t3.id_ubigeo 
