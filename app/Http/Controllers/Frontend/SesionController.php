@@ -512,7 +512,7 @@ class SesionController extends Controller
 		$fecha_inicio = $comisionSesionUpd->fecha_programado;
 		$fecha_fin = $periodoComision->fecha_fin;
 		$fechaInicio=strtotime($fecha_inicio);
-		$fechaFin=strtotime($fecha_fin);
+		$fechaFin=strtotime($fecha_fin); 
 		
 		$id_dia_semana = $request->dia_semana_nuevo;
 		$dia_semana_maestro = $tablaMaestra_model->getMaestroC("70", $id_dia_semana);
