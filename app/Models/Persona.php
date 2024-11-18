@@ -92,7 +92,8 @@ class Persona extends Model
 
     function getAgremiadoDatos($numero_cap){
 
-		$cad = "select a.numero_cap, pe.numero_documento, pe.apellido_paterno, pe.apellido_materno, pe.nombres,tm.denominacion tipo_documento
+		$cad = "select a.numero_cap, pe.numero_documento, pe.apellido_paterno, pe.apellido_materno, pe.nombres,tm.denominacion tipo_documento,
+        a.celular1,a.celular2,a.email1,a.email2,a.direccion,a.clave
         from agremiados a
 		inner join personas pe on a.id_persona = pe.id
         left join tabla_maestras tm on pe.id_tipo_documento = tm.codigo::int And tm.tipo ='16'                    
@@ -103,14 +104,23 @@ class Persona extends Model
         return $data[0];
     }
 
-    function getProyectistaByNumCap($numero_cap){
+    function getProyectistaByProfesion($id_profesion,$buscar){
 
 		$cad = "select p.id
-from agremiados a
-inner join proyectistas p on a.id=p.id_agremiado
-where a.numero_cap = '".$numero_cap."'
-and a.estado='1'
-and p.estado='1'";
+from registro_proyectistas p 
+left join agremiados a on p.id_agremiado=a.id and a.estado='1'
+left join profesion_otros po on p.id_profesion_otro=po.id and po.estado='1'
+where 1=1 ";
+
+        if($id_profesion==1){
+            $cad .= " and a.numero_cap = '".$buscar."'";
+        }
+
+        if($id_profesion==2){
+            $cad .= " and po.colegiatura = '".$buscar."'";
+        }
+
+        $cad .= " and p.estado='1'";
 		
         $data = DB::select($cad);
         
