@@ -152,22 +152,23 @@ class PersonaController extends Controller
 
     }
 
-	public function obtener_agremiado_login($numero_cap){
+	public function obtener_agremiado_login($numero_cap, $id_secret_code){
 
         $persona_model = new Persona;
         $sw = true;
-        $agremiado = $persona_model->getAgremiadoDatos($numero_cap);
+        $agremiado = $persona_model->getAgremiadoDatos($numero_cap, $id_secret_code);
         $array["sw"] = $sw;
         $array["agremiado"] = $agremiado;
         echo json_encode($array);
 
     }
 
-	public function obtener_proyectista($numero_cap){
+	public function obtener_proyectista($id_profesion,$buscar){
 
         $persona_model = new Persona;
         $sw = true;
-        $proyectista = $persona_model->getProyectistaByNumCap($numero_cap);
+		$proyectista = $persona_model->getProyectistaByProfesion($id_profesion,$buscar);
+
         $array["sw"] = $sw;
         $array["cantidad"] = count($proyectista);
         echo json_encode($array);
