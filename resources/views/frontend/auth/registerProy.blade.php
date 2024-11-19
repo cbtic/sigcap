@@ -13,7 +13,9 @@
 
                     <x-slot name="body">
                         <x-forms.post :action="route('frontend.auth.registerProy')" id="frmUsuario" name="frmUsuario" onsubmit="return validacion(event)">
-                            
+
+                        <input type="hidden" name="id_agremiado" id="id_agremiado" value=""/>
+
                             <div class="form-row mb-2">
 
                                 <div class="col-md-3 " data-select2-id="4">
@@ -39,6 +41,12 @@
                                     <label id="tuition_title">CIP No.:</label>
                                     <input type="text" name="colegiatura" id="colegiatura" class="form-control" placeholder="{{ __('Colegiatura') }}" maxlength="100"  autocomplete="numero_documento" />
                                     
+                                </div>
+
+                                <div class="col-md-3 divCap">
+                                    <label>Código Secreto:</label>
+                                    <input type="number" name="secret_code" class="form-control" min="0" id="id_secret_code" onblur="obtenerAgremiado()">
+                                    <!--<span class="text-sm text-cap">Solo para Arquitectos</span>-->
                                 </div>
 
                                 
@@ -70,15 +78,10 @@
                                 <div class="col-md-3 ">
                                     <!-- <label>DNI:</label> -->
                                     <label for="">N° Doc:</label>
-                                    <input type="text" readonly="readonly" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" autocomplete="numero_documento" onblur="obtenerPersona()" />
+                                    <input type="text" readonly="readonly" name="numero_documento" id="numero_documento" class="form-control" placeholder="{{ __('Numero de documento') }}" maxlength="100" autocomplete="numero_documento" onchange="obtenerDatosDni()" />
                                     
                                 </div>
                                 
-                                <div class="col-md-3 ">
-                                    <label>Código Secreto:</label>
-                                    <input type="number" name="secret_code" class="form-control" min="0" id="id_secret_code">
-                                    <!--<span class="text-sm text-cap">Solo para Arquitectos</span>-->
-                                </div>
                             </div>
 
                             <div class="form-row mb-2" data-select2-id="5">
@@ -228,9 +231,9 @@ function validarProfesion(){
 
         //$('#tipo_documento').val(agremiado.tipo_documento);
         $('#numero_documento').prop("readonly",false);
-        $('#apellido_paterno').prop("readonly",false);
-        $('#apellido_materno').prop("readonly",false);
-        $('#nombre').prop("readonly",false);
+        $('#apellido_paterno').prop("readonly",true);
+        $('#apellido_materno').prop("readonly",true);
+        $('#nombre').prop("readonly",true);
         
     }
 
@@ -250,8 +253,10 @@ function validacion(evento){
     var direccion = $("#direccion").val();
     var password = $("#password").val();
     var password_confirmation = $("#password_confirmation").val();
+    var id_agremiado = $("#id_agremiado").val();
 
     if(id_profesion == "")msg += "Debe ingresar la profesion <br>";
+    if(id_agremiado == "" && id_profesion==1)msg += "El codigo secreto es incorrecto <br>";
     if(numero_cap == "" && id_profesion==1)msg += "Debe ingresar el numero de CAP <br>";
     if(colegiatura == "" && id_profesion==2)msg += "Debe ingresar el numero de Colegiatura <br>";
     if(celular == "")msg += "Debe ingresar el celular <br>";
@@ -303,14 +308,28 @@ function validacion(evento){
 function obtenerAgremiado(){
 		
 	var numero_cap = $("#numero_cap").val();
+    var id_secret_code = $("#id_secret_code").val();
 	var msg = "";
 	
 	if(numero_cap == "")msg += "Debe ingresar el numero de CAP <br>";
+    if(id_secret_code == "")msg += "Debe ingresar el codigo secreto <br>";
 	
 	if (msg != "") {
 		//bootbox.alert(msg);
 		return false;
 	}
+
+    $('#tipo_documento').val("");
+    $('#numero_documento').val("");
+    $('#apellido_paterno').val("");
+    $('#apellido_materno').val("");
+    $('#nombre').val("");
+    $('#celular').val("");
+    $('#telefono').val("");
+    $('#email').val("");
+    $('#email2').val("");
+    $('#direccion').val("");
+    $('#id_agremiado').val("");
 	
 	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
@@ -319,7 +338,7 @@ function obtenerAgremiado(){
     $('.loader').show();
 	
 	$.ajax({
-		url: '/persona/obtener_agremiado_login/' + numero_cap,
+		url: '/persona/obtener_agremiado_login/' + numero_cap + '/' + id_secret_code,
 		dataType: "json",
 		success: function(result){
 			
@@ -334,7 +353,8 @@ function obtenerAgremiado(){
 			$('#email').val(agremiado.email1);
             $('#email2').val(agremiado.email2);
             $('#direccion').val(agremiado.direccion);
-            $('#id_secret_code').val(agremiado.clave);
+            $('#id_agremiado').val(agremiado.id);
+            //$('#id_secret_code').val(agremiado.clave);
 
 			$('.loader').hide();
 
@@ -375,6 +395,128 @@ function obtenerPersona(){
 		
 	});
 	
+}
+
+function obtenerDatosDni(){
+    
+    var id_tipo_documento = $("#id_tipo_documento").val();
+    if(id_tipo_documento==84){
+        $('#nombre_propietario').val("");
+        $('#direccion_dni').val("");
+        $('#celular_dni').val("");
+        $('#email_dni').val("");
+        $('#nombre_propietario').attr("readonly",false);
+        $('#direccion_dni').attr("readonly",false);
+        $('#celular_dni').attr("readonly",false);
+        $('#email_dni').attr("readonly",false);
+        return;
+    }
+    var numero_documento = $("#numero_documento").val();
+    var msg = "";
+    
+    if(numero_documento == "")msg += "Debe ingresar el numero de documento <br>";
+    
+    if (msg != "") {
+        bootbox.alert(msg);
+        return false;
+    }
+    
+    var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+    
+    $.ajax({
+        url: '/persona/obtener_datos_persona/' + numero_documento,
+        dataType: "json",
+        success: function(result){
+            var persona = result.persona;
+
+            if(persona!="0")
+            {
+                $('#nombre').val(persona.nombre);
+                $('#apellido_paterno').val(persona.apellido_paterno);
+                $('#apellido_materno').val(persona.apellido_materno);
+                $('.loader').hide();
+                
+            }else{
+                //alert("ok");
+                $('#nombre').val("");
+                $('#apellido_paterno').val("");
+                $('#apellido_materno').val("");
+                $('.loader').hide();
+                validaDni(numero_documento);
+                
+            }
+
+            if (msg != "") {
+                bootbox.alert(msg);
+                return false;
+            }
+
+
+        }
+        
+    });
+    
+}
+
+
+function validaDni(dni) {
+
+    var numero_documento = $("#numero_documento").val();
+    var tipo_documento = 78;
+    var msg = "";
+
+    if (msg != "") {
+        bootbox.alert(msg);
+        return false;
+    }
+
+    if (tipo_documento == "0" || numero_documento == "") {
+        bootbox.alert(msg);
+        return false;
+    }
+
+    var settings = {
+        "url": "https://apiperu.dev/api/dni/" + dni,
+        "method": "GET",
+        "timeout": 0,
+        "headers": {
+            "Authorization": "Bearer 20b6666ddda099db4204cf53854f8ca04d950a4eead89029e77999b0726181cb"
+        },
+    };
+
+    $.ajax(settings).done(function(response) {
+        console.log(response);
+
+        if (response.success == true) {
+
+            var data = response.data;
+
+            //$('#nombre_propietario').val('')
+
+            var apellidoPaterno = data.apellido_paterno;
+            var apellidoMaterno = data.apellido_materno;
+            var nombres = data.nombres;
+
+            var nombreCompleto = apellidoPaterno + ' ' + apellidoMaterno + ', ' + nombres;
+
+            //$('#nombre_propietario').val(nombreCompleto);
+            $('#nombre').val(nombres);
+            $('#apellido_paterno').val(apellidoPaterno);
+            $('#apellido_materno').val(apellidoMaterno);
+            //$('#direccion_dni').attr("readonly",false);
+            //$('#celular_dni').attr("readonly",false);
+            //$('#email_dni').attr("readonly",false);
+
+        } else {
+            Swal.fire("DNI Inv&aacute;lido. Revise el DNI digitado!");
+            return false;
+        }
+
+    });
 }
 
 

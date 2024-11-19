@@ -90,14 +90,14 @@ class Persona extends Model
         return $data[0];
     }
 
-    function getAgremiadoDatos($numero_cap){
+    function getAgremiadoDatos($numero_cap, $id_secret_code){
 
-		$cad = "select a.numero_cap, pe.numero_documento, pe.apellido_paterno, pe.apellido_materno, pe.nombres,tm.denominacion tipo_documento,
+		$cad = "select a.id,a.numero_cap, pe.numero_documento, pe.apellido_paterno, pe.apellido_materno, pe.nombres,tm.denominacion tipo_documento,
         a.celular1,a.celular2,a.email1,a.email2,a.direccion,a.clave
         from agremiados a
 		inner join personas pe on a.id_persona = pe.id
         left join tabla_maestras tm on pe.id_tipo_documento = tm.codigo::int And tm.tipo ='16'                    
-		where a.numero_cap =  '".$numero_cap."'";
+		where a.numero_cap =  '".$numero_cap."' and a.clave='".$id_secret_code."'";
 		
         $data = DB::select($cad);
         
@@ -210,7 +210,7 @@ where 1=1 ";
 
     function getPersonaDniPropietario($numero_documento){
 
-        $cad = "select p.id, p.apellido_paterno|| ' ' ||p.apellido_materno || ', ' || p.nombres nombres, p.direccion, p.numero_celular, p.correo, p.correo, p.fecha_nacimiento 
+        $cad = "select p.id, p.apellido_paterno|| ' ' ||p.apellido_materno || ', ' || p.nombres nombres, p.direccion, p.numero_celular, p.correo, p.correo, p.fecha_nacimiento,p.apellido_paterno, p.apellido_materno, p.nombres nombre 
         from personas p
         Where p.numero_documento='".$numero_documento."'";
 		//echo $cad;
