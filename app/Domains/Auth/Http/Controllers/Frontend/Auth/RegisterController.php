@@ -146,24 +146,11 @@ class RegisterController
     function registerProy(Request $request){
 
         ini_set('memory_limit', '4400M');
-        //$id_user = Auth::user()->id;
-        /*******
-         * 'type' => $data['type'] ?? $this->model::TYPE_USER,
-            'name' => $data['name'] ?? null,
-            'email' => $data['email'] ?? null,
-            'password' => $data['password'] ?? null,
-            'provider' => $data['provider'] ?? null,
-            'provider_id' => $data['provider_id'] ?? null,
-            'email_verified_at' => $data['email_verified_at'] ?? null,
-            'active' => $data['active'] ?? true,
-			'id_persona' => (isset($data['id_persona']) && $data['id_persona']>0)?$data['id_persona']:null,
-         * 
-         ********/
-
-        //print_r($request);
-
+        
         if($request->id_profesion==1){
             $agremiado = Agremiado::where("numero_cap",$request->numero_cap)->first();
+            $persona = Persona::find($agremiado->id_persona);
+            $numero_documento_reg = $persona->numero_documento;
         }
 
         if($request->id_profesion==2){
@@ -178,24 +165,16 @@ class RegisterController
 				$persona->apellido_paterno = $request->apellido_paterno;
 				$persona->apellido_materno = $request->apellido_materno;
 				$persona->nombres = $request->nombre;
-				//$persona->fecha_nacimiento = $request->fecha_nacimiento;
-				//$persona->grupo_sanguineo = $request->grupo_sanguineo;
-				//$persona->id_ubigeo_nacimiento = $request->id_ubigeo_nacimiento;
-				//$persona->lugar_nacimiento = $request->lugar_nacimiento;
-				//$persona->id_nacionalidad = $request->nacionalidad;
-				//$persona->numero_ruc = $request->ruc;
-				//$persona->id_sexo = $request->sexo;
 				$persona->numero_celular = $request->celular;
 				$persona->correo = $request->email;
-				//$persona->foto = $request->img_foto;
 				$persona->direccion = $request->direccion;
 				$persona->id_usuario_inserta = 1;
 				$persona->save();
                 $id_persona = $persona->id;
+                $numero_documento_reg = $persona->numero_documento;
 			}else{
-                //print_r($buscapersona);
-                //echo $buscapersona[0]->id;
                 $id_persona = $buscapersona[0]->id;
+                $numero_documento_reg = $buscapersona[0]->numero_documento;
             }
 
             $profesionOtro = new ProfesionOtro;
@@ -223,8 +202,51 @@ class RegisterController
         $user->name = $request->nombre;
         $user->password = $request->password;
         $user->save();
-        
+
         $proyectista = new RegistroProyectista;
+
+        $numero_documento_reg = $request->numero_documento;
+
+        $path = "img/proyectista";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+        if (isset($_FILES["ruta_firma"]) && $_FILES["ruta_firma"]["error"] == UPLOAD_ERR_OK) {
+
+            $path = "img/proyectista/".$numero_documento_reg;
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+
+            $filepath = public_path($path.'/');
+
+            $filename = "firma_".date("YmdHis") . substr((string)microtime(), 1, 6);
+            $type=$this->extension($_FILES["ruta_firma"]["name"]);
+            $filenamefirma=$filename.".".$type;
+
+            move_uploaded_file($_FILES["ruta_firma"]["tmp_name"], $filepath.$filenamefirma);
+
+            $proyectista->ruta_firma = $path."/".$filenamefirma;
+        }
+
+        if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == UPLOAD_ERR_OK) {
+
+            $path = "img/proyectista/".$numero_documento_reg;
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+
+            $filepath = public_path($path.'/');
+
+            $filename = "foto_".date("YmdHis") . substr((string)microtime(), 1, 6);
+            $type=$this->extension($_FILES["foto"]["name"]);
+            $filenamefoto=$filename.".".$type;
+
+            move_uploaded_file($_FILES["foto"]["tmp_name"], $filepath.$filenamefoto);
+
+            $proyectista->foto = $path."/".$filenamefoto;
+        }
         
         if($request->id_profesion==1){
             $proyectista->id_agremiado = $agremiado->id;
@@ -238,11 +260,10 @@ class RegisterController
 
         $proyectista->id_profesion = $request->id_profesion;
         $proyectista->estado = "1";
-        $proyectista->ruta_firma = NULL;
-        $proyectista->foto = NULL;
         $proyectista->save();
 
-        exit();
     }
+
+    function extension($filename){$file = explode(".",$filename); return strtolower(end($file));}
 
 }
