@@ -12,7 +12,7 @@
                     </x-slot>
 
                     <x-slot name="body">
-                        <x-forms.post :action="route('frontend.auth.registerProy')" id="frmUsuario" name="frmUsuario" onsubmit="return validacion(event)">
+                        <x-forms.post :action="route('frontend.auth.registerProy')" id="frmUsuario" name="frmUsuario" enctype="multipart/form-data" onsubmit="return validacion(event)">
 
                         <input type="hidden" name="id_agremiado" id="id_agremiado" value=""/>
 
@@ -138,17 +138,17 @@
                                 </div>
 
                             </div>
-                            <!--
+                            
                             <div class="form-row mb-2">
                                 <div class="col-md-4 ">
                                     <label class="mb-3">Fotografía:</label>
-                                    <input type="file" name="photo" class="form-control-file" accept="image/*" id="id_photo">
+                                    <input type="file" name="foto" class="form-control-file" accept="image/*" id="foto">
                                     
                                 </div>
                                 
                                 <div class="col-md-4">
                                     <label>Firma:</label>
-                                    <input type="file" name="signature" class="form-control-file" accept="image/*" required="" id="id_signature">
+                                    <input type="file" name="ruta_firma" class="form-control-file" accept="image/*" required="" id="ruta_firma">
                                 </div>
                                 
                                 <div class="col-md-4 ">
@@ -163,7 +163,7 @@
                                     
                                 </div>
                             </div>
-                            -->
+                            
                             <div class="form-row mb-2">
                                 <div class="col-md-4 ">
                                     <label>@lang('Password'):</label>
