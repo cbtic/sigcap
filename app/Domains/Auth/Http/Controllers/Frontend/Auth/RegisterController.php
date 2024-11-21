@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use LangleyFoxall\LaravelNISTPasswordRules\PasswordRules;
 use App\Models\Persona;
+use App\Models\Empresa;
 use App\Models\TablaMaestra;
 use App\Exceptions\GeneralException;
 
@@ -18,7 +19,7 @@ use App\Models\Proyectista;
 use App\Models\Agremiado;
 use App\Models\RegistroProyectista;
 use App\Models\ProfesionOtro;
-
+use App\Models\PersonaResponsable;
 /**
  * Class RegisterController.
  */
@@ -86,6 +87,16 @@ class RegisterController
 		$profesion = $tablaMaestra_model->getMaestroByTipo("131");
 
         return view('frontend.auth.registerProy',compact('tipo_documento','profesion'));
+    }
+
+    public function showRegistrationRespForm()
+    {
+        abort_unless(config('boilerplate.access.user.registration'), 404);
+		
+		$tablaMaestra_model = new TablaMaestra;
+        $tipo_documento = $tablaMaestra_model->getMaestroByTipo("132");
+
+        return view('frontend.auth.registerResp',compact('tipo_documento'));
     }
 
     /**
@@ -265,5 +276,53 @@ class RegisterController
     }
 
     function extension($filename){$file = explode(".",$filename); return strtolower(end($file));}
+
+    function registerResp(Request $request){
+
+        ini_set('memory_limit', '4400M');
+        
+        if($request->id_tipo_documento==2){
+            $empresa = new Empresa;
+            $empresa->ruc = $request->numero_documento;
+            $empresa->nombre_comercial = $request->nombre;
+            $empresa->razon_social = $request->nombre;
+            $empresa->telefono = $request->celular;
+            $empresa->correo = $request->email;
+            $empresa->direccion = $request->direccion;
+            $empresa->id_usuario_inserta = 1;
+            $empresa->save();
+            $id_empresa = $empresa->id;
+            $id_persona = NULL;
+        }else{
+
+            $persona = new Persona;
+            $persona->id_tipo_documento = $request->id_tipo_documento;
+            $persona->numero_documento = $request->numero_documento;
+            $persona->apellido_paterno = $request->apellido_paterno;
+            $persona->apellido_materno = $request->apellido_materno;
+            $persona->nombres = $request->nombre;
+            $persona->numero_celular = $request->celular;
+            $persona->correo = $request->email;
+            $persona->direccion = $request->direccion;
+            $persona->id_usuario_inserta = 1;
+            $persona->save();
+            $id_persona = $persona->id;
+            $id_empresa = NULL;
+        }
+
+        $personaResponsable = new PersonaResponsable;
+        $personaResponsable->id_persona = $id_persona;
+        $personaResponsable->id_empresa = $id_empresa;
+        $personaResponsable->id_usuario_inserta = 1;
+        $personaResponsable->save();
+
+        $user = new User;
+        $user->email = $request->email;
+        $user->name = $request->nombre;
+        $user->password = $request->password;
+        $user->save();
+
+    }
+
 
 }

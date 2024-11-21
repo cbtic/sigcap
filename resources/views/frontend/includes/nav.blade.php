@@ -41,6 +41,7 @@
                     </li>
 
                     @if (config('boilerplate.access.user.registration'))
+						<!--
                         <li class="nav-item">
                             <x-utils.link
                                 :href="route('frontend.auth.register')"
@@ -58,7 +59,7 @@
                                 class="nav-link" />
 
                         </li>
-						
+						-->
                     @endif
                 @else
 					

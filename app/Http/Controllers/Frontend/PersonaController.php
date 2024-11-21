@@ -175,6 +175,18 @@ class PersonaController extends Controller
 
     }
 
+	public function obtener_responsable($id_profesion,$buscar){
+
+        $persona_model = new Persona;
+        $sw = true;
+		//$proyectista = $persona_model->getProyectistaByProfesion($id_profesion,$buscar);
+
+        $array["sw"] = $sw;
+        $array["cantidad"] = 0;//count($proyectista);
+        echo json_encode($array);
+
+    }
+
     public function send_persona(Request $request){
 		
 		if($request->id == 0){
