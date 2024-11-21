@@ -20,6 +20,7 @@ class AddUsers extends Migration
             $table->integer('validado')->nullable();
             $table->integer('id_usuario_valida')->nullable();
             $table->date('fecha_valida')->nullable();
+            $table->string('codigo_secreto',20)->nullable();
         });
     }
 
