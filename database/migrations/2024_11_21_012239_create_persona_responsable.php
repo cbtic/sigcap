@@ -14,7 +14,7 @@ class CreatePersonaResponsable extends Migration
     public function up()
     {
         Schema::create('persona_responsable', function (Blueprint $table) {
-        
+
             
                 $table->id();
                 $table->bigInteger('id_persona')->nullable()->unsigned()->index();
