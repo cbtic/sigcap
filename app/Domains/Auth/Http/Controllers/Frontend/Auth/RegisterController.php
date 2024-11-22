@@ -273,6 +273,8 @@ class RegisterController
         $proyectista->estado = "1";
         $proyectista->save();
 
+        return redirect()->route('frontend.auth.login')->withFlashSuccess(__('Se registro correctamente.'));
+
     }
 
     function extension($filename){$file = explode(".",$filename); return strtolower(end($file));}
@@ -281,13 +283,64 @@ class RegisterController
 
         ini_set('memory_limit', '4400M');
         
+        $numero_documento_reg = $request->numero_documento;
+
+        $ruta_firma="";
+        $foto="";
+
+        $path = "img/responsable";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+        if (isset($_FILES["ruta_firma"]) && $_FILES["ruta_firma"]["error"] == UPLOAD_ERR_OK) {
+
+            $path = "img/responsable/".$numero_documento_reg;
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+
+            $filepath = public_path($path.'/');
+
+            $filename = "firma_".date("YmdHis") . substr((string)microtime(), 1, 6);
+            $type=$this->extension($_FILES["ruta_firma"]["name"]);
+            $filenamefirma=$filename.".".$type;
+
+            move_uploaded_file($_FILES["ruta_firma"]["tmp_name"], $filepath.$filenamefirma);
+
+            $ruta_firma = $path."/".$filenamefirma;
+        }
+
+        if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == UPLOAD_ERR_OK) {
+
+            $path = "img/responsable/".$numero_documento_reg;
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+
+            $filepath = public_path($path.'/');
+
+            $filename = "foto_".date("YmdHis") . substr((string)microtime(), 1, 6);
+            $type=$this->extension($_FILES["foto"]["name"]);
+            $filenamefoto=$filename.".".$type;
+
+            move_uploaded_file($_FILES["foto"]["tmp_name"], $filepath.$filenamefoto);
+
+            $foto = $path."/".$filenamefoto;
+        }
+
+
         if($request->id_tipo_documento==2){
             $empresa = new Empresa;
+            if($ruta_firma!="")$empresa->ruta_firma = $ruta_firma;
+            //if($foto!="")$empresa->foto = $foto;
             $empresa->ruc = $request->numero_documento;
             $empresa->nombre_comercial = $request->nombre;
             $empresa->razon_social = $request->nombre;
             $empresa->telefono = $request->celular;
+            $empresa->telefono_fijo = $request->telefono;
             $empresa->correo = $request->email;
+            $empresa->correo2 = $request->email2;
             $empresa->direccion = $request->direccion;
             $empresa->id_usuario_inserta = 1;
             $empresa->save();
@@ -296,13 +349,17 @@ class RegisterController
         }else{
 
             $persona = new Persona;
+            if($ruta_firma!="")$persona->ruta_firma = $ruta_firma;
+            if($foto!="")$persona->foto = $foto;
             $persona->id_tipo_documento = $request->id_tipo_documento;
             $persona->numero_documento = $request->numero_documento;
             $persona->apellido_paterno = $request->apellido_paterno;
             $persona->apellido_materno = $request->apellido_materno;
             $persona->nombres = $request->nombre;
             $persona->numero_celular = $request->celular;
+            $persona->telefono_fijo = $request->telefono;
             $persona->correo = $request->email;
+            $persona->correo2 = $request->email2;
             $persona->direccion = $request->direccion;
             $persona->id_usuario_inserta = 1;
             $persona->save();
@@ -321,6 +378,8 @@ class RegisterController
         $user->name = $request->nombre;
         $user->password = $request->password;
         $user->save();
+
+        return redirect()->route('frontend.auth.login')->withFlashSuccess(__('Se registro correctamente.'));
 
     }
 

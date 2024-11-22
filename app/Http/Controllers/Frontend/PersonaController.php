@@ -860,7 +860,7 @@ class PersonaController extends Controller
 			$array["sw"] = $sw;
 			//$array["msg"] = $msg;
 			echo json_encode($array);
-		}
+		} 
 
     }
 
