@@ -968,7 +968,6 @@ class CertificadoController extends Controller
 		$fecha_actual = Carbon::now()->format('d-m-Y');
 		$fecha_colegiado = Carbon::createFromFormat('Y-m-d', $fecha_colegiado)->format('d-m-Y');
 
-
 		$pdf = Pdf::loadView('frontend.certificado.record_proyectos_pdf',compact('proyectos','tratodesc','numero_cap','agremiado','fecha_colegiado','fecha_actual'));
 		$pdf->getDomPDF()->set_option("enable_php", true);
 		
