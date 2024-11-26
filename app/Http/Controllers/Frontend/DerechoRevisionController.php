@@ -1624,9 +1624,9 @@ class DerechoRevisionController extends Controller
 		$liquidacion->id_situacion = $id_situacion;
 		$liquidacion->save();
 
-		/*$solicitud = DerechoRevision::find($liquidacion->id_solicitud);
+		$solicitud = DerechoRevision::find($liquidacion->id_solicitud);
 		$solicitud->id_resultado = 3;
-		$solicitud->save();*/
+		$solicitud->save();
 
 		echo $liquidacion->id;
     }
