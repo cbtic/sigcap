@@ -68,6 +68,12 @@
 	background: #3c8dbc;
 	color: #FFFFFF;
 }
+
+.color-letra {
+    color: #1538C8;
+}
+
+
 /*
 .form-control:disabled, .form-control[readonly]{
 	background-color:#fff3cd!important;
@@ -117,9 +123,9 @@ function modalVerFormato(){
 
             <div class="row">
                 <div class="col-sm-5">
-                    <h4 class="card-title mb-0 text-primary">
+                    <h2 class="card-title mb-0 " style="color: #1538C8;">
                         Registro de Solicitud de Derecho de Revisi&oacute;n - HU<!--<small class="text-muted">Usuarios activos</small>-->
-                    </h4>
+                    </h2>
                 </div><!--col-->
             </div>
 
@@ -128,7 +134,7 @@ function modalVerFormato(){
         <div class="col col-sm-12 align-self-center">
 
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="color: #1538C8;">
                     <strong>
                         Datos Generales del Proyecto
                     </strong>
@@ -148,7 +154,7 @@ function modalVerFormato(){
 
 						<div class="col-lg-2" id="solicitante_solicitud">
 							<div class="form-group" >
-								<label class="control-label form-control-sm">Solicitante</label>
+								<label class="control-label form-control-sm" style="color: #1538C8;">Solicitante</label>
 								<select name="tipo_solicitante" id="tipo_solicitante" class="form-control form-control-sm" onchange="obtenerSolicitante()">
 								<!--<option value="" selected="selected">--Seleccionar--</option>
 								<option value="1" <?php //if ($tipo_solicitante == 1) echo "selected='selected'" ?>>Proyectista</option>
@@ -173,83 +179,83 @@ function modalVerFormato(){
 					
 						<div class="col-lg-1">
 							<div class="form-group" id="numero_cap_">
-								<label class="control-label form-control-sm">N° CAP</label>
+								<label class="control-label form-control-sm color-letra">N° CAP</label>
 								<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_cap?>" type="text" onchange="obtenerProyectista()">
 							</div>
 							<div class="form-group" id="dni_">
-								<label class="control-label form-control-sm">DNI</label>
+								<label class="control-label form-control-sm color-letra">DNI</label>
 								<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_documento?>" type="text" onchange="obtenerPropietario()">
 							</div>
 						</div>
 
 						<div class="col-lg-3" >
 							<div class="form-group "id="agremiado_">
-								<label class="control-label form-control-sm">Nombre</label>
+								<label class="control-label form-control-sm color-letra">Nombre</label>
 								<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->apellido_paterno.' '. $datos_persona->apellido_materno.' '.$datos_persona->nombres?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="persona_">
-								<label class="control-label form-control-sm">Nombre/Raz&oacute;n Social</label>
+								<label class="control-label form-control-sm color-letra">Nombre/Raz&oacute;n Social</label>
 								<input id="persona" name="persona" on class="form-control form-control-sm"  value="<?php //echo $persona->nombres?>" type="text" readonly='readonly'>
 							</div>
 						</div>
 
 						<div class="col-lg-1">
 							<div class="form-group" id="situacion_">
-								<label class="control-label form-control-sm">Situaci&oacute;n</label>
+								<label class="control-label form-control-sm color-letra">Situaci&oacute;n</label>
 								<input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->situacion?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="fecha_nacimiento_">
-								<label class="control-label form-control-sm">Fecha de Nacimiento</label>
+								<label class="control-label form-control-sm color-letra">Fecha de Nacimiento</label>
 								<input id="fecha_nacimiento" name="fecha_nacimiento" on class="form-control form-control-sm"  value="<?php echo $datos_persona->fecha_nacimiento?>" type="text" readonly='readonly'>
 							</div>
 						</div>
 
 						<div class="col-lg-3">
 							<div class="form-group" id="direccion_agremiado_">
-								<label class="control-label form-control-sm">Direcci&oacute;n</label>
+								<label class="control-label form-control-sm color-letra">Direcci&oacute;n</label>
 								<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php echo $datos_persona->direccion?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="direccion_persona_">
-								<label class="control-label form-control-sm">Direcci&oacute;n</label>
+								<label class="control-label form-control-sm color-letra">Direcci&oacute;n</label>
 								<input id="direccion_persona" name="direccion_persona" on class="form-control form-control-sm"  value="<?php echo $datos_persona->direccion?>" type="text" readonly='readonly'>
 							</div>
 						</div>
 
 						<div class="col-lg-1-5">
 							<div class="form-group" id="n_regional_">
-								<label class="control-label form-control-sm">N° Regional</label>
+								<label class="control-label form-control-sm color-letra">N° Regional</label>
 								<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->numero_regional?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="celular_">
-								<label class="control-label form-control-sm">Celular</label>
+								<label class="control-label form-control-sm color-letra">Celular</label>
 								<input id="celular" name="celular" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->numero_celular?>" type="text" readonly='readonly'>
 							</div>
 						</div>
                     
 						<div class="col-lg-2">
 							<div class="form-group" id="act_gremial_">
-								<label class="control-label form-control-sm">Actividad Gremial</label>
+								<label class="control-label form-control-sm color-letra">Actividad Gremial</label>
 								<input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php echo $datos_agremiado->actividad?>" type="text" readonly='readonly'>
 							</div>
 							<div class="form-group" id="email_">
-								<label class="control-label form-control-sm">Email</label>
+								<label class="control-label form-control-sm color-letra">Email</label>
 								<input id="email" name="email" on class="form-control form-control-sm"  value="<?php //echo $persona->correo?>" type="text" readonly='readonly'>
 							</div>
 						</div>
 					</div>
 
-					<div style="padding: 0px 0px 15px 10px; font-weight: bold">
+					<div class="color-letra" style="padding: 0px 0px 15px 10px; font-weight: bold">
 						Datos del Proyecto
 					</div>
 					<div class="row" style="padding-left:10px">
 
 						<div class="col-lg-3">
-								<label class="control-label form-control-sm">Nombre del Proyecto</label>
+								<label class="control-label form-control-sm color-letra">Nombre del Proyecto</label>
 								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->nombre?>" type="text">
 						</div>
 
 						<div class="col-lg-2">
-								<label class="control-label form-control-sm">Municipalidad</label>
+								<label class="control-label form-control-sm color-letra">Municipalidad</label>
 								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange=""> 
 									<?php
 									$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
@@ -263,7 +269,7 @@ function modalVerFormato(){
 						</div>
 
 						<div class="col-lg-1">
-                            <label class="control-label form-control-sm">N° de Revisi&oacute;n</label>
+                            <label class="control-label form-control-sm color-letra">N° de Revisi&oacute;n</label>
                             <select name="n_revision" id="n_revision" class="form-control form-control-sm" value="<?php echo $derechoRevision_->numero_revision?>">
 							<?php
 							$valorSeleccionado = isset($derechoRevision_->numero_revision) ? $derechoRevision_->numero_revision : '';
@@ -276,7 +282,7 @@ function modalVerFormato(){
 						</div>
 
 						<div class="col-lg-2">
-                            <label class="control-label form-control-sm">Departamento</label>
+                            <label class="control-label form-control-sm color-letra">Departamento</label>
                             <select name="departamento" id="departamento" class="form-control form-control-sm" onChange="obtenerProvincia()">
                                 <?php if($id>0){ ?>
 								<option value="">--Seleccionar--</option>
@@ -302,14 +308,14 @@ function modalVerFormato(){
 						</div>
 					
 						<div class="col-lg-2">
-                            <label class="control-label form-control-sm">Provincia</label>
+                            <label class="control-label form-control-sm color-letra">Provincia</label>
                             <select name="provincia" id="provincia" class="form-control form-control-sm" onChange="obtenerDistrito()">
                                 <option value="">--Seleccionar--</option>
                             </select>
 						</div>
                         
 						<div class="col-lg-2">
-                            <label class="control-label form-control-sm">Distrito</label>
+                            <label class="control-label form-control-sm color-letra">Distrito</label>
                             <select name="distrito" id="distrito" class="form-control form-control-sm" onChange="obtenerUbigeo()">
                                 <option value="">--Seleccionar--</option>
                             </select>
@@ -317,7 +323,7 @@ function modalVerFormato(){
                     </div>
 					<div class="row" style="padding-left:10px">
 						<div class="col-lg-1" style=";padding-right:15px">
-                            <label class="control-label form-control-sm">Sitio</label>
+                            <label class="control-label form-control-sm color-letra">Sitio</label>
                             <select name="sitio" id="sitio" class="form-control form-control-sm" onChange="">
                                 <option value="">--Seleccionar--</option>
                                 <?php
@@ -330,12 +336,12 @@ function modalVerFormato(){
 						</div>
 
 						<div class="col-lg-2">
-                            <label class="control-label form-control-sm">Detalle Sitio</label>
+                            <label class="control-label form-control-sm color-letra">Detalle Sitio</label>
                             <input id="direccion_sitio" name="direccion_sitio" on class="form-control form-control-sm"  value="<?php echo $proyecto2->sitio_descripcion?>" type="text">
 						</div>
 
 						<div class="col-lg-1" style="padding-left:15px">
-                            <label class="control-label form-control-sm">Zona</label>
+                            <label class="control-label form-control-sm color-letra">Zona</label>
                             <select name="zona" id="zona" class="form-control form-control-sm" onChange="">
                                 <option value="">--Selecionar--</option>
                                 <?php
@@ -348,22 +354,22 @@ function modalVerFormato(){
 						</div>
 
 						<div class="col-lg-2">
-                            <label class="control-label form-control-sm">Detalle Zona</label>
+                            <label class="control-label form-control-sm color-letra">Detalle Zona</label>
                             <input id="direccion_zona" name="direccion_zona" on class="form-control form-control-sm"  value="<?php echo $proyecto2->zona_descripcion?>" type="text">
 						</div>
 
 						<div class="col-lg-1">
-                            <label class="control-label form-control-sm">Parcela</label>
+                            <label class="control-label form-control-sm color-letra">Parcela</label>
                             <input id="parcela" name="parcela" on class="form-control form-control-sm"  value="<?php echo $proyecto2->parcela?>" type="text">
 						</div>
 
 						<div class="col-lg-1">
-                            <label class="control-label form-control-sm">SuperManzana</label>
+                            <label class="control-label form-control-sm color-letra">SuperManzana</label>
                             <input id="superManzana" name="superManzana" on class="form-control form-control-sm"  value="<?php echo $proyecto2->super_manzana?>" type="text">
 						</div>
 					
 						<div class="col-lg-1">
-                            <label class="control-label form-control-sm">Tipo</label>
+                            <label class="control-label form-control-sm color-letra">Tipo</label>
                             <select name="tipo" id="tipo" class="form-control form-control-sm" onChange="">
                                 <option value="">--Selecionar--</option>
                                 <?php
@@ -376,27 +382,27 @@ function modalVerFormato(){
 						</div>
 					
 						<div class="col-lg-3">
-                            <label class="control-label form-control-sm">Direccion</label>
+                            <label class="control-label form-control-sm color-letra">Direccion</label>
                             <input id="direccion_proyecto" name="direccion_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->direccion?>" type="text">
 						</div>
 
 						<div class="col-lg-1">
-                            <label class="control-label form-control-sm">Lote</label>
+                            <label class="control-label form-control-sm color-letra">Lote</label>
                             <input id="lote" name="lote" on class="form-control form-control-sm"  value="<?php echo $proyecto2->lote?>" type="text">
 						</div>
 
 						<div class="col-lg-1">
-                            <label class="control-label form-control-sm">SubLote</label>
+                            <label class="control-label form-control-sm color-letra">SubLote</label>
                             <input id="sublote" name="sublote" on class="form-control form-control-sm"  value="<?php echo $proyecto2->sub_lote?>" type="text">
 						</div>
                        
 						<div class="col-lg-1">
-                            <label class="control-label form-control-sm">Fila</label>
+                            <label class="control-label form-control-sm color-letra">Fila</label>
                             <input id="fila" name="fila" on class="form-control form-control-sm"  value="<?php echo $proyecto2->fila?>" type="text">
 						</div>
 
 						<div class="col-lg-1">
-                            <label class="control-label form-control-sm">Zonificaci&oacute;n</label>
+                            <label class="control-label form-control-sm color-letra">Zonificaci&oacute;n</label>
                             <input id="zonificacion" name="zonificacion" on class="form-control form-control-sm"  value="<?php echo $proyecto2->zonificacion?>" type="text">
 						</div>
 
@@ -459,7 +465,7 @@ function modalVerFormato(){
 										<div class="card">
 											<div class="card-header">
 												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 color-letra">
 														<strong>
 															Proyectistas
 														</strong>
@@ -483,7 +489,7 @@ function modalVerFormato(){
 															<div class="table-responsive">
 															<table id="tblProyectista" class="table table-hover table-sm">
 															<thead>
-																<tr style="font-size:13px">
+																<tr class="color-letra" style="font-size:13px">
 																	<th>N° CAP</th>
 																	<th>Nombres</th>
 																	<th>Celular</th>
@@ -518,7 +524,7 @@ function modalVerFormato(){
 										<div class="card">
 											<div class="card-header">
 												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 color-letra">
 														<strong>
 															Propietario
 														</strong>
@@ -541,7 +547,7 @@ function modalVerFormato(){
 															<div class="table-responsive">
 															<table id="tblPropietario" class="table table-hover table-sm">
 															<thead>
-																<tr style="font-size:13px">
+																<tr class="color-letra" style="font-size:13px">
 																	<th>Tipo Persona</th>
 																	<th>N&uacute;mero Documento</th>
 																	<th>Nombres</th>
@@ -596,7 +602,7 @@ function modalVerFormato(){
 										<div class="card">
 											<div class="card-header">
 												<div id="" class="row">
-													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 color-letra">
 														<strong>
 															Informaci&oacute;n del Proyecto
 														</strong>
@@ -619,7 +625,7 @@ function modalVerFormato(){
 															<div class="table-responsive">
 															<table id="tblInfoProyecto" class="table table-hover table-sm">
 															<thead>
-																<tr style="font-size:13px">
+																<tr  class="color-letra" style="font-size:13px">
 																	<th>Tipo Tramite</th>
 																	<th>Tipo de Habilitacion Urbana</th>
 																	<!--<th>Etapas</th>-->
