@@ -19,6 +19,8 @@ use App\Models\ComprobanteCuotaPago;
 
 use App\Models\ComprobanteCuota;
 
+use App\Models\CajaIngreso;
+
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -35,7 +37,16 @@ class ComprobanteController extends Controller
 
         $formapago = $tabla_model->getMaestroByTipo('104');
 
-        return view('frontend.comprobante.all',compact('formapago'));
+        $caja = $tabla_model->getMaestroByTipoBySubcogioNull('91');
+
+        $medio_pago = $tabla_model->getMaestroByTipoBySubcogioNull('19');
+
+        $caja_model = new CajaIngreso;
+
+        $usuario_caja = $caja_model->getCajaUsuario_all();
+
+
+        return view('frontend.comprobante.all',compact('formapago','caja','medio_pago','usuario_caja'));
     }
 
     public function cuadre_caja(){
@@ -2091,6 +2102,9 @@ class ComprobanteController extends Controller
         $p[]=$request->anulado;
         $p[]=$request->formapago;
         $p[]=$request->total_b;
+        $p[]=$request->medio_pago;
+        $p[]=$request->caja_b;
+        $p[]=$request->usuario_b;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		

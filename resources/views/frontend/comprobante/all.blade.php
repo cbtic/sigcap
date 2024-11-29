@@ -178,7 +178,7 @@
                                         <input type="text" name="razon_social" id="razon_social" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label class="form-control-sm">Estado de Pago</label>
                                         <select name="estado_pago" id="estado_pago" class="form-control form-control-sm" onchange="validaTipoDocumento()">
@@ -191,7 +191,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label class="form-control-sm">Anulado</label>
                                         <select name="anulado" id="anulado" class="form-control form-control-sm" onchange="validaTipoDocumento()">
@@ -206,7 +206,32 @@
                                 </div>
 
                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="form-group">Caja</label>
+                                    <select name="id_caja" id="id_caja" class="form-control form-control-sm" onChange="">
+                                        <option value="">--Selecionar--</option>
+                                        <?php
+                                        foreach ($caja as $row) { ?>
+                                            <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
 
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="form-group">Usuario</label>
+                                    <select name="id_usuario" id="id_usuario" class="form-control form-control-sm" onChange="">
+                                        <option value="">--Selecionar--</option>
+                                        <?php
+                                        foreach ($usuario_caja as $row) { ?>
+                                            <option value="<?php echo $row->id ?>"><?php echo $row->denominacion ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                     <label class="form-group">Forma de pago</label>
                                     <select name="id_formapago" id="id_formapago" class="form-control form-control-sm" onChange="">
                                         <option value="">--Selecionar--</option>
@@ -218,6 +243,20 @@
                                         ?>
                                     </select>
                                 </div>
+
+                                <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="form-group">Medio de pago</label>
+                                    <select name="id_mediopago" id="id_mediopago" class="form-control form-control-sm" onChange="">
+                                        <option value="">--Selecionar--</option>
+                                        <?php
+                                        foreach ($medio_pago as $row) { ?>
+                                            <option value="<?php echo $row->codigo ?>"><?php echo $row->denominacion ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
 
                                 <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group">

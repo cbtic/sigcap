@@ -54,6 +54,17 @@ class CajaIngreso extends Model
         $data = DB::select($cad);
         return $data;
     }
+    function getCajaUsuario_all(){
+
+        $cad = "select u.id, u.name  denominacion
+                from users u 
+                where u.id in(select distinct  ci.id_usuario from caja_ingresos ci)
+        ";
+
+		//echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
     function getCajaUsuario_c($id){
 
         $cad = "select distinct t2.codigo id, t2.denominacion 
