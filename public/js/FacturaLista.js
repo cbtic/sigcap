@@ -160,6 +160,11 @@ function datatablenew(){
             var estado_pago = $('#estado_pago').val();
             var anulado = $('#anulado').val();
             var total_b = $('#total_b').val();
+
+            var caja_b = $('#id_caja').val();
+            var usuario_b = $('#id_usuario').val();
+            var medio_pago = $('#id_formapago').val();
+
             
             var sunat = $('#sunat').val();
             var formapago = $('#id_formapago').val();
@@ -173,7 +178,7 @@ function datatablenew(){
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
 						fecha_ini:fecha_ini,fecha_fin:fecha_fin,
 						tipo_documento:tipo_documento, serie:serie, numero:numero, razon_social:razon_social, estado_pago:estado_pago, anulado:anulado, formapago:formapago,
-                        sunat:sunat, pdf:pdf, total_b:total_b, _token:_token
+                        sunat:sunat, pdf:pdf, total_b:total_b, caja_b:caja_b, usuario_b:usuario_b, medio_pago:medio_pago,  _token:_token
                        },
                 "success": function (result) {
                     fnCallback(result);

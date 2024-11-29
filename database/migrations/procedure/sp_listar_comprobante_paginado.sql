@@ -1,5 +1,4 @@
-
-CREATE OR REPLACE FUNCTION public.sp_listar_comprobante_paginado(p_fecha_ini character varying, p_fecha_fin character varying, p_tipo character varying, p_serie character varying, p_numero character varying, p_razon_social character varying, p_estado_pago character varying, p_anulado character varying, p_forma_pago character varying,p_total character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_comprobante_paginado(p_fecha_ini character varying, p_fecha_fin character varying, p_tipo character varying, p_serie character varying, p_numero character varying, p_razon_social character varying, p_estado_pago character varying, p_anulado character varying, p_forma_pago character varying, p_total character varying, p_medio_pago character varying, p_caja character varying, p_usuario character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -85,6 +84,25 @@ Begin
 	If p_forma_pago<>'' then
 	 v_where:=v_where||' And f.id_forma_pago = '''||p_forma_pago||''' '; 
 	End If;
+
+	If p_medio_pago<>'' then
+	 v_where:=v_where||' And  '''||p_medio_pago||''' in 
+		(select distinct cp.id_medio 
+		from  comprobante_pagos cp 
+		where cp.id_comprobante = f.id 
+		) '; 
+	End If;
+
+
+
+	If p_caja <>'' then
+	 v_where:=v_where||' And f.id_caja = '''||p_caja||''' '; 
+	End If;
+
+	If p_usuario <>'' then
+	 v_where:=v_where||' And f.id_usuario_inserta = '''||p_usuario||''' '; 
+	End If;
+
 
 	If p_total<>'' then
 	 v_where:=v_where||' And f.total = '''||p_total||''' '; 
