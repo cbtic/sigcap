@@ -19,6 +19,8 @@ use App\Models\ComprobanteCuotaPago;
 
 use App\Models\ComprobanteCuota;
 
+use App\Models\CajaIngreso;
+
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -35,7 +37,16 @@ class ComprobanteController extends Controller
 
         $formapago = $tabla_model->getMaestroByTipo('104');
 
-        return view('frontend.comprobante.all',compact('formapago'));
+        $caja = $tabla_model->getMaestroByTipoBySubcogioNull('91');
+
+        $medio_pago = $tabla_model->getMaestroByTipoBySubcogioNull('19');
+
+        $caja_model = new CajaIngreso;
+
+        $usuario_caja = $caja_model->getCajaUsuario_all();
+
+
+        return view('frontend.comprobante.all',compact('formapago','caja','medio_pago','usuario_caja'));
     }
 
     public function cuadre_caja(){
@@ -838,6 +849,9 @@ class ComprobanteController extends Controller
 
 				$factura_upd = Comprobante::find($id_factura);
 				if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+
+
+
                 
                 if($total>700 and $tipoF=='FT' ) {
                     $factura_upd->porc_detrac = $request->porcentaje_detraccion;
@@ -861,6 +875,11 @@ class ComprobanteController extends Controller
                 //$factura_upd->id_persona = $request->id_tipooperacion_;
                 //$factura_upd->id_empresa = $request->id_tipooperacion_;
 
+                $id_persona = $request->persona;
+                $id_empresa = $request->ubicacion;
+
+                if($id_persona!="") $factura_upd->id_persona = $id_persona;
+                if($id_empresa!="") $factura_upd->id_empresa = $id_empresa;
 
 
 				$factura_upd->save();
@@ -2083,6 +2102,9 @@ class ComprobanteController extends Controller
         $p[]=$request->anulado;
         $p[]=$request->formapago;
         $p[]=$request->total_b;
+        $p[]=$request->medio_pago;
+        $p[]=$request->caja_b;
+        $p[]=$request->usuario_b;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		

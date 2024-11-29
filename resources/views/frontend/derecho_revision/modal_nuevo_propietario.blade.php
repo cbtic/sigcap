@@ -256,9 +256,12 @@ function obtenerPropietario(){
         $('#nombre_carne_propietario_').show();
         $('#apellido_paterno_carne_propietario_').show();
         $('#apellido_materno_carne_propietario_').show();
-        $('#direccion_dni').attr("readonly",false);
-        $('#celular_dni').attr("readonly",false);
-        $('#email_dni').attr("readonly",false);
+        $('#nombre_carne_propietario').attr("readonly",true);
+        $('#apellido_paterno_carne_propietario').attr("readonly",true);
+        $('#apellido_materno_carne_propietario').attr("readonly",true);
+        $('#direccion_dni').attr("readonly",true);
+        $('#celular_dni').attr("readonly",true);
+        $('#email_dni').attr("readonly",true);
 
 	} 
 }
@@ -374,6 +377,88 @@ function obtenerDatosDni(){
     });
     
 }
+
+function obtenerDatosCarneExtrangeria(){
+		
+        var id_tipo_documento = $("#carne_propietario").val();
+        /*if(id_tipo_documento==84){
+            $('#nombre_propietario').val("");
+            $('#direccion_dni').val("");
+            $('#celular_dni').val("");
+            $('#email_dni').val("");
+            $('#nombre_propietario').attr("readonly",false);
+            $('#direccion_dni').attr("readonly",false);
+            $('#celular_dni').attr("readonly",false);
+            $('#email_dni').attr("readonly",false);
+            return;
+        }*/
+        var carne_propietario = $("#carne_propietario").val();
+        var msg = "";
+        
+        if(carne_propietario == "")msg += "Debe ingresar el numero de documento <br>";
+        
+        if (msg != "") {
+            bootbox.alert(msg);
+            return false;
+        }
+        
+        var msgLoader = "";
+        msgLoader = "Procesando, espere un momento por favor";
+        var heightBrowser = $(window).width()/2;
+        $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+        $('.loader').show();
+        
+        $.ajax({
+            url: '/persona/obtener_datos_persona/' + carne_propietario,
+            dataType: "json",
+            success: function(result){
+                var persona = result.persona;
+    
+                if(persona!="0")
+                {
+                    $('#nombre_carne_propietario').val(persona.nombre);
+                    $('#apellido_paterno_carne_propietario').val(persona.apellido_paterno);
+                    $('#apellido_materno_carne_propietario').val(persona.apellido_materno);
+                    $('#direccion_dni').val(persona.direccion);
+                    $('#celular_dni').val(persona.numero_celular);
+                    $('#email_dni').val(persona.correo);
+                    
+                    $('.loader').hide();
+                    
+                }else{
+                    //alert("ok");
+                    $('#nombre_carne_propietario').attr("readonly",false);
+                    $('#apellido_paterno_carne_propietario').attr("readonly",false);
+                    $('#apellido_materno_carne_propietario').attr("readonly",false);
+                    $('#nombre_propietario').attr("readonly",false);
+                    $('#direccion_dni').attr("readonly",false);
+                    $('#celular_dni').attr("readonly",false);
+                    $('#email_dni').attr("readonly",false);
+                    $('#nombre_carne_propietario').val("");
+                    $('#apellido_paterno_carne_propietario').val("");
+                    $('#apellido_materno_carne_propietario').val("");
+                    $('#direccion_dni').val("");
+                    $('#celular_dni').val("");
+                    $('#email_dni').val("");
+                    
+                    $('.loader').hide();
+                    //validaDni(dni_propietario);
+                    /*msg += "La Persona no esta registrado en la Base de Datos de CAP <br>";
+                    */
+                    
+                }
+    
+                if (msg != "") {
+                    bootbox.alert(msg);
+                    return false;
+                }
+    
+    
+            }
+            
+        });
+        
+    }
 
 function validaDni(dni) {
 
@@ -726,7 +811,7 @@ function fn_save_propietario(){
                                     </div>
                                     <div class="form-group" id="carne_propietario_">
                                         <label class="control-label form-control-sm">CARN&Eacute; DE EXTRANJER&Iacute;A</label>
-                                        <input id="carne_propietario" name="carne_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onchange="">
+                                        <input id="carne_propietario" name="carne_propietario" on class="form-control form-control-sm"  value="<?php echo $persona->numero_documento?>" type="text" onchange="obtenerDatosCarneExtrangeria()">
                                     </div>
                                 </div>
                             </div>
