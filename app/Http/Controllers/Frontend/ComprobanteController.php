@@ -838,6 +838,9 @@ class ComprobanteController extends Controller
 
 				$factura_upd = Comprobante::find($id_factura);
 				if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+
+
+
                 
                 if($total>700 and $tipoF=='FT' ) {
                     $factura_upd->porc_detrac = $request->porcentaje_detraccion;
@@ -861,6 +864,11 @@ class ComprobanteController extends Controller
                 //$factura_upd->id_persona = $request->id_tipooperacion_;
                 //$factura_upd->id_empresa = $request->id_tipooperacion_;
 
+                $id_persona = $request->persona;
+                $id_empresa = $request->ubicacion;
+
+                if($id_persona!="") $factura_upd->id_persona = $id_persona;
+                if($id_empresa!="") $factura_upd->id_empresa = $id_empresa;
 
 
 				$factura_upd->save();
