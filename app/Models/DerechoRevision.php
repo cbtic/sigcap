@@ -261,7 +261,7 @@ class DerechoRevision extends Model
         left join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41'
         left join tabla_maestras tm2 on s.id_tipo_liquidacion1 = tm2.codigo::int and  tm2.tipo ='27'
         left join tabla_maestras tm3 on s.id_instancia = tm3.codigo::int and  tm3.tipo ='47'
-        left join tabla_maestras tm5 on s.id_tipo_tramite = tm5.codigo::int and  tm5.tipo ='25'
+        left join tabla_maestras tm5 on s.id_tipo_tramite = tm5.codigo::int and  tm5.tipo ='123'
         left join tabla_maestras tm6 on pro.id_tipo_sitio = tm6.codigo::int and  tm6.tipo ='33'
         left join tabla_maestras tm7 on pro.id_zona = tm7.codigo::int and  tm7.tipo ='34'
         left join tabla_maestras tm8 on pro.id_tipo_direccion = tm8.codigo::int and  tm8.tipo ='35'

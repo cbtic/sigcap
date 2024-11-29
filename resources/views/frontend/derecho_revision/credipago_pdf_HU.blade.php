@@ -196,7 +196,10 @@ $(document).ready(function() {
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: left; width: 35%; height:25px"><b>NOMBRE DEL PROPIETARIO:</b></td>
-                        <td class="td" style ="text-align: left; width: 45%; height:25px"><?php echo $razon_social;?></td>
+                        <td class="td" style ="text-align: left; width: 45%; height:25px"><?php foreach($propietario_nombres as $propietario):?>
+                                                                                                            <?= ($propietario) ?> <br>
+                                                                                                            <?php endforeach;?>
+                                                                                                            </td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: left; width: 35%; height:25px"><b>DENOMINACION DE <?php echo $tipo_tramite;?>:</b></td>
