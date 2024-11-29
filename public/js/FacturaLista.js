@@ -163,7 +163,7 @@ function datatablenew(){
 
             var caja_b = $('#id_caja').val();
             var usuario_b = $('#id_usuario').val();
-            var medio_pago = $('#id_formapago').val();
+            var medio_pago = $('#id_mediopago').val();
 
             
             var sunat = $('#sunat').val();
