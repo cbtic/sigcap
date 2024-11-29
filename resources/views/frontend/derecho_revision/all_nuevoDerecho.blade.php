@@ -641,7 +641,7 @@ function modalVerFormato(){
 																<tr>
 																	<th><?php echo $row->tipo_tramite?></th>
 																	<th><?php echo $row->tipo_uso?></th>
-																	<th><?php echo $row->area_techada?></th>
+																	<th><?php echo number_format($row->area_techada,2);?></th>
 																	<!--
 																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerFormato(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Formato</button></th>
 																	<th><button style="font-size:12px;" type="button" class="btn btn-sm btn-warning" data-toggle="modal" onclick="modalVerPlano(<?php //echo $row->id?>)"><i class="fa fa-edit" style="font-size:9px!important"></i>Plano</button></th>
