@@ -50,4 +50,21 @@ class Propietario extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getPropietarioSolicitudHULiq($id_solicitud){      
+      $cad = "select p.id, p.id_empresa, p.id_persona, 
+      CASE 
+            WHEN p.id_persona is not null THEN (select p2.nombres ||' '|| p2.apellido_paterno ||' '|| p2.apellido_materno from personas p2 where p2.id = p.id_persona)
+            WHEN p.id_empresa is not null THEN (select e.razon_social from empresas e where e.id = p.id_empresa)end as propietario_nombre
+      from propietarios p 
+      left join personas pe on p.id_persona = pe.id
+      left join empresas e on p.id_empresa = e.id
+      where p.id_solicitud = '".$id_solicitud."'
+      and p.estado='1'
+      order by p.id desc";
+
+      //echo $cad;
+          $data = DB::select($cad);
+      return $data;
+  }
 }

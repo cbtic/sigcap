@@ -1369,6 +1369,7 @@ class DerechoRevisionController extends Controller
 		$ubigeo_model = new Ubigeo;
 		$parametro_model = new Parametro;
 		$proyectista_model = new Proyectista;
+		$propietario_model = new Propietario;
 
 		$liquidacion = Liquidacione::find($id);
 
@@ -1378,6 +1379,12 @@ class DerechoRevisionController extends Controller
 		foreach($datos_proyectista as $proyectistas){
 			$proyectista_nombres[] = $proyectistas->agremiado;
 			$proyectista_cap[] = $proyectistas->numero_cap;
+		}
+
+		$datos_propietario = $propietario_model->getPropietarioSolicitudHULiq($liquidacion->id_solicitud);
+		$propietario_nombres = array();
+		foreach($datos_propietario as $propietario){
+			$propietario_nombres[] = $propietario->propietario_nombre;
 		}
 
 		$datos=$derecho_revision_model->getSolicitudPdfHU2($id);
@@ -1439,7 +1446,7 @@ class DerechoRevisionController extends Controller
 		 $currentHour = Carbon::now()->format('H:i:s');
 
 		
-		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','valor_minimo','valor_maximo','instancia','proyectista_nombres','codigo','proyectista_cap','tipo_tramite','id_sitio', 'sitio_descripcion', 'id_zona', 'zona_descripcion', 'parcela', 'super_manzana', 'id_tipo', 'direccion', 'lote', 'sub_lote', 'fila','zonificacion'));
+		$pdf = Pdf::loadView('frontend.derecho_revision.credipago_pdf_HU',compact('credipago','proyectista','numero_cap','razon_social','nombre','departamento','provincia','distrito','direccion','numero_revision','municipalidad','total_area_techada','valor_obra','sub_total','igv','total','carbonDate','currentHour','tipo_proyectista','valor_metro_cuadrado','valor_minimo','valor_maximo','instancia','proyectista_nombres','codigo','proyectista_cap','tipo_tramite','id_sitio', 'sitio_descripcion', 'id_zona', 'zona_descripcion', 'parcela', 'super_manzana', 'id_tipo', 'direccion', 'lote', 'sub_lote', 'fila','zonificacion','propietario_nombres'));
 
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
 

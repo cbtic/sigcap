@@ -883,5 +883,24 @@ class PersonaController extends Controller
 
 	}
 
+	public function obtener_datos_carne_extranjeria($carne_propietario){
+
+		$persona_model = new Persona;
+		$sw = true;
+
+		$persona2 = Persona::where('numero_documento',$carne_propietario)->where('estado','1')->first();
+
+		if($persona2)
+		{
+			$persona = $persona_model->getPersonaDniPropietario($carne_propietario);
+			$array["sw"] = $sw;
+			$array["persona"] = $persona;
+			echo json_encode($array);
+		}else {
+			$array["persona"] = "0";
+			echo json_encode($array);}
+
+	}
+
 
 }
