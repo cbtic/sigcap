@@ -175,7 +175,19 @@ And t0.estado='1'
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and t4.id_municipalidad_integrada=".$id_municipalidad_integrada." 
-and a.id=".$id_agremiado;
+and a.id=".$id_agremiado."
+and case 
+	when id_tipo_sesion='401' then
+		case 
+			when t1.id_estado_aprobacion=2 then 'O' 
+			else 'X'
+		end
+	when id_tipo_sesion='402' then 
+		case 
+			when t1.id_estado_aprobacion=2 then 'E' 
+			else 'X'
+		end 
+	end!='X'";
 
 		$data = DB::select($cad);
         //if(isset($data[0]))return $data[0];
