@@ -162,6 +162,7 @@ inner join comisiones t4 on t1.id_comision=t4.id
 where csd.estado='1' 
 and t1.estado='1' 
 and csd.coordinador='1'
+And t1.id_estado_sesion=290 
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and t1.id_periodo_comisione=".$id_periodo ; 
