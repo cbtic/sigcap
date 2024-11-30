@@ -1032,7 +1032,7 @@ class SesionController extends Controller
 		}
 		
 		$export = new InvoicesExport([$variable]);
-		return Excel::download($export, 'lista_agremiados.xlsx');
+		return Excel::download($export, 'lista_delegado_coordinadores.xlsx');
 
 	}
 
