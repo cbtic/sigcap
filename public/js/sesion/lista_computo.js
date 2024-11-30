@@ -59,6 +59,16 @@ $(document).ready(function () {
 		var href = '/sesion/ver_delegado_coordinador_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
 		window.open(href, '_blank');
 	});
+
+	$('#btnVistaPreviaCoordinadorExcel').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		var href = '/sesion/ver_delegado_coordinador_excel/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		location.href = href;
+		//window.open(href, '_blank');
+	});
 	
 	$('#btnVistaPreviaCalendarioCoordinadorZonal').click(function () {
 		//guardar_computo()

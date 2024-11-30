@@ -19,6 +19,9 @@ use App\Models\ComisionSesionDelegadosHistoriale;
 use Carbon\Carbon;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
+use stdClass;
 
 class SesionController extends Controller
 {
@@ -1009,6 +1012,30 @@ class SesionController extends Controller
 	
 	}
 	
+	public function ver_delegado_coordinador_excel($id_periodo,$anio,$mes){
+
+		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
+		$coordinador = $comisionSesionDelegado_model->getComisionSesionDelegadoCoordinadorByIdPeriodo($id_periodo,$anio,$mes);
+		
+		$dias = array('L','M','M','J','V','S','D');
+
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+	
+		$variable = [];
+		$n = 1;
+
+		array_push($variable, array("N","Municipalidad","CAP","Delegado"));
+		
+		foreach ($coordinador as $r) {
+			array_push($variable, array($n++,$r->comision, $r->numero_cap, $r->agremiado));
+		}
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'lista_agremiados.xlsx');
+
+	}
+
 	function mesesALetras($mes) { 
 		$meses = array('','ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SETIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'); 
 		return $meses[$mes];
@@ -1167,4 +1194,20 @@ class SesionController extends Controller
     }
 	
 			
+}
+
+class InvoicesExport implements FromArray
+{
+	protected $invoices;
+
+	public function __construct(array $invoices)
+	{
+		$this->invoices = $invoices;
+	}
+
+	public function array(): array
+	{
+		return $this->invoices;
+	}
+
 }
