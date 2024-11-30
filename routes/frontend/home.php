@@ -447,6 +447,7 @@ Route::get('sesion/obtener_dictamen/{id}', [SesionController::class, 'obtener_di
 Route::get('sesion/computo_sesion_pdf/{id}', [SesionController::class, 'computo_sesion_pdf'])->name('sesion.computo_sesion_pdf');
 Route::get('sesion/ver_computo_sesion_pdf/{id_periodo}/{id_comision}/{id_puesto}/{anio}/{mes}', [SesionController::class, 'ver_computo_sesion_pdf'])->name('sesion.ver_computo_sesion_pdf');
 Route::get('sesion/ver_delegado_coordinador_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_delegado_coordinador_pdf'])->name('sesion.ver_delegado_coordinador_pdf');
+Route::get('sesion/ver_delegado_coordinador_excel/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_delegado_coordinador_excel'])->name('sesion.ver_delegado_coordinador_excel');
 
 Route::get('sesion/calendario_sesion_pdf/{id}', [SesionController::class, 'calendario_sesion_pdf'])->name('sesion.calendario_sesion_pdf');
 Route::get('sesion/ver_calendario_sesion_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
