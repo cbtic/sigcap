@@ -446,6 +446,7 @@ Route::get('sesion/obtener_dictamen/{id}', [SesionController::class, 'obtener_di
 
 Route::get('sesion/computo_sesion_pdf/{id}', [SesionController::class, 'computo_sesion_pdf'])->name('sesion.computo_sesion_pdf');
 Route::get('sesion/ver_computo_sesion_pdf/{id_periodo}/{id_comision}/{id_puesto}/{anio}/{mes}', [SesionController::class, 'ver_computo_sesion_pdf'])->name('sesion.ver_computo_sesion_pdf');
+Route::get('sesion/ver_computo_sesion_excel/{id_periodo}/{id_comision}/{id_puesto}/{anio}/{mes}', [SesionController::class, 'ver_computo_sesion_excel'])->name('sesion.ver_computo_sesion_excel');
 Route::get('sesion/ver_delegado_coordinador_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_delegado_coordinador_pdf'])->name('sesion.ver_delegado_coordinador_pdf');
 Route::get('sesion/ver_delegado_coordinador_excel/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_delegado_coordinador_excel'])->name('sesion.ver_delegado_coordinador_excel');
 
@@ -604,6 +605,7 @@ Route::get('movilidad/obtener_comision/{periodo}/{tipo_comision}', [MovilidadCon
 Route::get('movilidad/obtener_comision_movilidad/{periodo}/{tipo_comision}', [MovilidadController::class, 'obtener_comision_movilidad'])->name('movilidad.obtener_comision_movilidad');
 
 Route::get('movilidad/ver_movilidad_pdf/{id_periodo}/{anio}/{mes}', [MovilidadController::class, 'ver_movilidad_pdf'])->name('movilidad.ver_movilidad_pdf');
+Route::get('movilidad/ver_movilidad_excel/{id_periodo}/{anio}/{mes}', [MovilidadController::class, 'ver_movilidad_excel'])->name('movilidad.ver_movilidad_excel');
 
 Route::get('ingreso/modal_beneficiario_/{periodo}/{idpersona}/{idagremiado}/{tipo_documento}', [IngresoController::class, 'modal_beneficiario_'])->name('ingreso.modal_beneficiario_');
 

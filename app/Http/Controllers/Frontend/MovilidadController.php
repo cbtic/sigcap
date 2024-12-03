@@ -13,6 +13,9 @@ use App\Models\TablaMaestra;
 use App\Models\Comisione;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
+use stdClass;
 
 class MovilidadController extends Controller
 {
@@ -105,6 +108,52 @@ class MovilidadController extends Controller
     	$pdf->setOption('margin-left', 100); // M�rgen izquierdo en mil�metros
 
 		return $pdf->stream('ver_movilidad.pdf');
+	
+	}
+
+	public function ver_movilidad_excel($id_periodo,$anio,$mes){
+		
+		$comisionMovilidad_model = new ComisionMovilidade;
+		$movilidad_model = new Movilidade;
+		
+		$periodo = PeriodoComisione::find($id_periodo);
+		
+		$movilidad = $comisionMovilidad_model->getMovilidadByPeriodo($id_periodo,$anio,$mes);
+		$meses = $movilidad_model->getMesByPeriodo($id_periodo);
+		
+		$dias = array('L','M','M','J','V','S','D');
+
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+		
+		//$pdf = Pdf::loadView('pdf.ver_movilidad',compact('movilidad','anio','mesEnLetras','mes','meses','id_periodo','periodo'));
+		
+		$variable = [];
+		$n = 1;
+
+		$array_cabecera = array("N","Municipalidad");
+
+		foreach($meses as $keym=>$m){
+			$array_cabecera[] = $m->mes;
+			
+		}
+		
+		array_push($variable, $array_cabecera);
+		
+		foreach ($movilidad as $key=>$r) {
+
+			$array_cuerpo = array(($key+1),$r->comision);
+
+			foreach($meses as $keym=>$m){
+				$movilidadMes = \App\Models\ComisionMovilidade::getMovilidadMesByPeriodoAndMunicipalidad($id_periodo,$anio,$m->mes_,$r->id_municipalidad_integrada);
+				$array_cuerpo[] = (isset($movilidadMes->monto))?$movilidadMes->monto:"0";
+			}
+
+			array_push($variable, $array_cuerpo);
+		}
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'lista_movilidad.xlsx');
 	
 	}
 
@@ -217,5 +266,21 @@ class MovilidadController extends Controller
 		echo $comision_movilidades->id;
 
     }
+
+}
+
+class InvoicesExport implements FromArray
+{
+	protected $invoices;
+
+	public function __construct(array $invoices)
+	{
+		$this->invoices = $invoices;
+	}
+
+	public function array(): array
+	{
+		return $this->invoices;
+	}
 
 }

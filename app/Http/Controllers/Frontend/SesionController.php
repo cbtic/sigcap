@@ -988,6 +988,211 @@ class SesionController extends Controller
 		return $pdf->stream('ver_computo_sesion.pdf');
 	
 	}
+
+	public function ver_computo_sesion_excel($id_periodo,$id_comision,$id_puesto,$anio,$mes){
+		
+		$comisionSesion_model = new ComisionSesione(); 
+		$p[]=$id_periodo;
+		$p[]=$id_comision;
+		$p[]=$id_puesto;
+		$p[]=$anio;//$request->anio;
+		$p[]=$mes;//$request->mes;
+		$p[]=1;
+		$p[]=10000;
+		$comisionSesion = $comisionSesion_model->lista_computo_sesion_ajax($p);
+
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+		
+		$calendarioSesion = $comisionSesion_model->getCalendarioSesion($id_periodo,$anio,$mes);
+		$calendarioCoordinadorZonalSesion = $comisionSesion_model->getCalendarioCoordinadorZonalSesion($id_periodo,$anio,$mes);
+		
+		$variable = [];
+		$n = 1;
+
+		array_push($variable, array("Municipalidad","Comisión","Delegado","Número CAP","Puesto","Coord.","Sesiones Comp.","Sesiones Adic.","Total"));
+		/*
+		foreach ($comisionSesion as $r) {
+			array_push($variable, array($n++,$r->comision, $r->numero_cap, $r->agremiado));
+		}
+		*/
+		
+
+		$n = 0;
+		$suma_computada = 0;
+		$suma_adicional = 0;
+		$suma_total = 0; 
+		$suma_computada_ = 0;
+		$suma_adicional_ = 0;
+		$suma_total_ = 0; 
+		$total_sesion_delegado = 0;
+		$total_sesion_suplente = 0;
+		$total_sesion_especialista = 0;
+		$total_sesion_coordinador_zonal = 0;
+		$total_sesion = 0;
+				
+		foreach($comisionSesion as $key=>$r){
+			if($key==0){
+				$municipalidad_old = $r->municipalidad;
+				$comision_old = $r->comision;
+				$total_sesion_delegado = $r->total_sesion_delegado;
+				$total_sesion_suplente = $r->total_sesion_suplente;
+				$total_sesion_especialista = $r->total_sesion_especialista;
+				$total_sesion_coordinador_zonal = $r->total_sesion_coordinador_zonal;
+				$total_sesion = $total_sesion_delegado + $total_sesion_coordinador_zonal + $total_sesion_suplente + $total_sesion_especialista;
+			}
+			
+			$n++;
+		
+			if($municipalidad_old!=$r->municipalidad){
+				unset($array_cuerpo);
+				$array_cuerpo[] = "Sub Total";
+				$array_cuerpo[] = "";
+				$array_cuerpo[] = "";
+				$array_cuerpo[] = "";
+				$array_cuerpo[] = "";
+				$array_cuerpo[] = "";
+				$array_cuerpo[] = $suma_computada_;
+				$array_cuerpo[] = "".$suma_adicional_;
+				$array_cuerpo[] = $suma_total_;
+				
+				array_push($variable, $array_cuerpo);
+				
+				$suma_computada_ = 0;
+				$suma_adicional_ = 0;
+				$suma_total_ = 0;
+				
+			}
+			
+			unset($array_cuerpo);
+			if($key==0 || $municipalidad_old!=$r->municipalidad){
+				$array_cuerpo[]=$r->municipalidad;
+			}else{
+				$array_cuerpo[]="";
+			}
+					 
+			if($key==0 || ($municipalidad_old."|".$comision_old!=$r->municipalidad."|".$r->comision)){
+				$array_cuerpo[]=$r->comision;
+			}else{
+				$array_cuerpo[]="";
+			}
+
+			$array_cuerpo[] = $r->delegado;
+			$array_cuerpo[] = $r->numero_cap;
+			$array_cuerpo[] = $r->puesto;
+			$array_cuerpo[] = $r->coordinador;
+			$array_cuerpo[] = $r->computada;
+			$array_cuerpo[] = "".$r->adicional;
+			$array_cuerpo[] = $r->total;
+			
+			array_push($variable, $array_cuerpo);
+				
+			$suma_computada += $r->computada;
+			$suma_adicional += $r->adicional;
+			$suma_total += $r->total;
+			
+			$suma_computada_ += $r->computada;
+			$suma_adicional_ += $r->adicional;
+			$suma_total_ += $r->total;
+			
+			$municipalidad_old = $r->municipalidad;
+			$comision_old = $r->comision;
+					
+		} 
+				
+		if(($key+1) == count($comisionSesion)){
+			
+			unset($array_cuerpo);
+			$array_cuerpo[] = "Sub Total";
+			$array_cuerpo[] = "";
+			$array_cuerpo[] = "";
+			$array_cuerpo[] = "";
+			$array_cuerpo[] = "";
+			$array_cuerpo[] = "";
+			$array_cuerpo[] = $suma_computada_;
+			$array_cuerpo[] = "".$suma_adicional_;
+			$array_cuerpo[] = $suma_total_;
+			
+			array_push($variable, $array_cuerpo);
+		
+			$suma_computada_ = 0;
+			$suma_adicional_ = 0;
+			$suma_total_ = 0;
+			
+		}
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "Total";
+		$array_cuerpo[] = "";
+		$array_cuerpo[] = "";
+		$array_cuerpo[] = "";
+		$array_cuerpo[] = "";
+		$array_cuerpo[] = "";
+		$array_cuerpo[] = $suma_computada;
+		$array_cuerpo[] = "".$suma_adicional;
+		$array_cuerpo[] = $suma_total;
+		
+		array_push($variable, $array_cuerpo);
+	
+		
+		unset($array_cuerpo);
+		$array_cuerpo[] = "";
+		$array_cuerpo[] = "";
+		array_push($variable, $array_cuerpo);
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "Sesiones delegados";
+		$array_cuerpo[] = $total_sesion_delegado;
+		array_push($variable, $array_cuerpo);
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "Sesiones suplentes";
+		$array_cuerpo[] = $total_sesion_suplente;
+		array_push($variable, $array_cuerpo);
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "Sesiones especialistas";
+		$array_cuerpo[] = $total_sesion_especialista;
+		array_push($variable, $array_cuerpo);
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "Sesiones coordinador zonal";
+		$array_cuerpo[] = $total_sesion_coordinador_zonal;
+		array_push($variable, $array_cuerpo);
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "Total de sesiones";
+		$array_cuerpo[] = $total_sesion;
+		array_push($variable, $array_cuerpo);
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "";
+		$array_cuerpo[] = "";
+		array_push($variable, $array_cuerpo);
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "Calendario de sesiones";
+		$array_cuerpo[] = $calendarioSesion;
+		array_push($variable, $array_cuerpo);
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "Sesiones coordinado zonal";
+		$array_cuerpo[] = $calendarioCoordinadorZonalSesion;
+		array_push($variable, $array_cuerpo);
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "(-) Diferencia de Reportes";
+		$array_cuerpo[] = $total_sesion - $calendarioSesion - $calendarioCoordinadorZonalSesion;
+		array_push($variable, $array_cuerpo);
+
+		unset($array_cuerpo);
+		$array_cuerpo[] = "Total de sesiones";
+		$array_cuerpo[] = $total_sesion;
+		array_push($variable, $array_cuerpo);
+
+		$export = new InvoicesExport([$variable]); 
+		return Excel::download($export, 'lista_computo_sesion.xlsx');
+	}
 	
 	public function ver_delegado_coordinador_pdf($id_periodo,$anio,$mes){
 		
