@@ -23,6 +23,11 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
 use stdClass;
 
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+
 class SesionController extends Controller
 {
 
@@ -989,7 +994,7 @@ class SesionController extends Controller
 	
 	}
 
-	public function ver_computo_sesion_excel($id_periodo,$id_comision,$id_puesto,$anio,$mes){
+	public function ver_computo_sesion_excel_old($id_periodo,$id_comision,$id_puesto,$anio,$mes){
 		
 		$comisionSesion_model = new ComisionSesione(); 
 		$p[]=$id_periodo;
@@ -1217,7 +1222,7 @@ class SesionController extends Controller
 	
 	}
 	
-	public function ver_delegado_coordinador_excel($id_periodo,$anio,$mes){
+	public function ver_delegado_coordinador_excel_old($id_periodo,$anio,$mes){
 
 		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
 		$coordinador = $comisionSesionDelegado_model->getComisionSesionDelegadoCoordinadorByIdPeriodo($id_periodo,$anio,$mes);
@@ -1398,7 +1403,36 @@ class SesionController extends Controller
 		echo $comisionSesion->id;
     }
 	
-			
+	public function test_excel(){
+
+		//echo "okkk";
+		return Excel::download(new UsersDataExport, 'users-data.xlsx');
+	}
+	
+	public function ver_computo_sesion_excel($id_periodo,$id_comision,$id_puesto,$anio,$mes){
+		
+		return Excel::download(new ComputoSesionDataExport($id_periodo,$id_comision,$id_puesto,$anio,$mes), 'computo_sesion.xlsx');
+
+	}
+
+	public function ver_delegado_coordinador_excel($id_periodo,$anio,$mes){
+
+		return Excel::download(new DelegadoCoordinadorDataExport($id_periodo,$anio,$mes), 'lista_delegado_coordinadores.xlsx');
+
+	}
+
+	public function ver_calendario_sesion_excel($id_periodo,$anio,$mes){
+		
+		return Excel::download(new CalendarioSesionDataExport($id_periodo,$anio,$mes), 'calendario_sesion.xlsx');
+	
+	}
+
+	public function ver_calendario_sesion_coordinador_zonal_excel($id_periodo,$anio,$mes){
+		
+		return Excel::download(new CalendarioSesionCoordinadorZonalDataExport($id_periodo,$anio,$mes), 'calendario_sesion_coordinador_zonal.xlsx');
+	
+	}
+
 }
 
 class InvoicesExport implements FromArray
@@ -1416,3 +1450,196 @@ class InvoicesExport implements FromArray
 	}
 
 }
+
+
+class UsersDataExport implements FromView, ShouldAutoSize{
+
+	use Exportable;
+
+	public function view() : View{
+
+		$id_periodo="1050";
+		$anio="2024";
+		$mes="01";
+		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
+		$coordinador = $comisionSesionDelegado_model->getComisionSesionDelegadoCoordinadorByIdPeriodo($id_periodo,$anio,$mes);
+		
+		$dias = array('L','M','M','J','V','S','D');
+
+		$mes_ = ltrim($mes, '0');
+		$mesEnLetras = "";
+
+		return view('pdf.ver_test',compact('coordinador','anio','mesEnLetras','mes'));
+	}
+
+}
+
+class ComputoSesionDataExport implements FromView, ShouldAutoSize{
+
+	use Exportable;
+
+	protected $id_periodo;
+	protected $id_comision;
+	protected $id_puesto;
+	protected $anio;
+	protected $mes;
+
+	public function __construct($id_periodo,$id_comision,$id_puesto,$anio,$mes)
+	{
+		$this->id_periodo = $id_periodo;
+		$this->id_comision = $id_comision;
+		$this->id_puesto = $id_puesto;
+		$this->anio = $anio;
+		$this->mes = $mes;
+	}
+	
+	function mesesALetras($mes) { 
+		$meses = array('','ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SETIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'); 
+		return $meses[$mes];
+	}
+
+	public function view() : View{
+
+		$comisionSesion_model = new ComisionSesione(); 
+		$anio = $this->anio;
+		$mes = $this->mes;
+		$p[]=$this->id_periodo;
+		$p[]=$this->id_comision;
+		$p[]=$this->id_puesto;
+		$p[]=$this->anio;//$request->anio;
+		$p[]=$this->mes;//$request->mes;
+		$p[]=1;
+		$p[]=10000;
+		$comisionSesion = $comisionSesion_model->lista_computo_sesion_ajax($p);
+
+		$mes_ = ltrim($this->mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+		
+		$calendarioSesion = $comisionSesion_model->getCalendarioSesion($this->id_periodo,$this->anio,$this->mes);
+		$calendarioCoordinadorZonalSesion = $comisionSesion_model->getCalendarioCoordinadorZonalSesion($this->id_periodo,$this->anio,$this->mes);
+
+		return view('pdf.ver_computo_sesion_excel',compact('comisionSesion','anio','mes','mesEnLetras','calendarioSesion','calendarioCoordinadorZonalSesion'));
+	}
+
+}
+
+class DelegadoCoordinadorDataExport implements FromView, ShouldAutoSize{
+
+	use Exportable;
+
+	protected $id_periodo;
+	protected $anio;
+	protected $mes;
+
+	public function __construct($id_periodo,$anio,$mes)
+	{
+		$this->id_periodo = $id_periodo;
+		$this->anio = $anio;
+		$this->mes = $mes;
+	}
+	
+	function mesesALetras($mes) { 
+		$meses = array('','ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SETIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'); 
+		return $meses[$mes];
+	}
+
+	public function view() : View{
+		
+		$comisionSesionDelegado_model = new ComisionSesionDelegado(); 
+		$anio = $this->anio;
+		$mes = $this->mes;
+		$coordinador = $comisionSesionDelegado_model->getComisionSesionDelegadoCoordinadorByIdPeriodo($this->id_periodo,$this->anio,$this->mes);
+		
+		$dias = array('L','M','M','J','V','S','D');
+
+		$mes_ = ltrim($this->mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+		return view('pdf.ver_delegado_coordinador_excel',compact('coordinador','anio','mesEnLetras','mes'));
+
+	}
+
+}
+
+class CalendarioSesionDataExport implements FromView, ShouldAutoSize{
+
+	use Exportable;
+
+	protected $id_periodo;
+	protected $anio;
+	protected $mes;
+
+	public function __construct($id_periodo,$anio,$mes)
+	{
+		$this->id_periodo = $id_periodo;
+		$this->anio = $anio;
+		$this->mes = $mes;
+	}
+	
+	function mesesALetras($mes) { 
+		$meses = array('','ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SETIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'); 
+		return $meses[$mes];
+	}
+
+	public function view() : View{
+		
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', '1200');
+		
+		$comisionSesion_model = new ComisionSesione(); 
+		$anio = $this->anio;
+		$mes = $this->mes;
+		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesion($this->id_periodo,$this->anio,$this->mes);
+		
+		$dias = array('L','M','M','J','V','S','D');
+		
+		$mes_ = ltrim($this->mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+		
+		return view('pdf.ver_calendario_sesion_excel',compact('municipalidadSesion','dias','anio','mes','mesEnLetras'));
+
+	}
+
+}
+
+class CalendarioSesionCoordinadorZonalDataExport implements FromView, ShouldAutoSize{
+
+	use Exportable;
+
+	protected $id_periodo;
+	protected $anio;
+	protected $mes;
+
+	public function __construct($id_periodo,$anio,$mes)
+	{
+		$this->id_periodo = $id_periodo;
+		$this->anio = $anio;
+		$this->mes = $mes;
+	}
+	
+	function mesesALetras($mes) { 
+		$meses = array('','ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SETIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'); 
+		return $meses[$mes];
+	}
+
+	public function view() : View{
+		
+		$comisionSesion_model = new ComisionSesione(); 
+		$anio = $this->anio;
+		$mes = $this->mes;
+		$id_periodo = $this->id_periodo;
+		$municipalidadSesion = $comisionSesion_model->getMunicipalidadSesionCoordinadorZonal($this->id_periodo,$this->anio,$this->mes);
+		$dias = array('L','M','M','J','V','S','D');
+		
+		$mes_ = ltrim($this->mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);		
+		
+		return view('pdf.ver_calendario_sesion_coordinador_zonal_excel',compact('municipalidadSesion','id_periodo','dias','anio','mes','mesEnLetras'));
+
+	}
+
+}
+
+

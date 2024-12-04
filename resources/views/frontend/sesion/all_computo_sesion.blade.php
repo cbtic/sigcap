@@ -303,9 +303,21 @@
 							</ul>
 						</div>
 
-
+						<!--
 						<input class="btn btn-secondary pull-rigth" value="Vista Previa Calendario" type="button" id="btnVistaPreviaCalendario" style="margin-left:15px" />
-						
+						-->
+
+						<div class="btn-group" >
+							<button type="button" class="btn btn-secondary">Vista Previa Calendario</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="btnVistaPreviaCalendario"><a href="javascript:void(0)">PDF</a></li>
+								<li id="btnVistaPreviaCalendarioExcel"><a href="javascript:void(0)">EXCEL</a></li>
+							</ul>
+						</div>
+
 						<!--
 						<input class="btn btn-secondary pull-rigth" value="Movilidad Delegados" type="button" id="btnVistaPreviaMovilidad" style="margin-left:15px" />
 						<input class="btn btn-secondary pull-rigth" value="Delegado Coordinadores" type="button" id="btnVistaPreviaCoordinador" style="margin-left:15px" />
@@ -332,8 +344,20 @@
 								<li id="btnVistaPreviaCoordinadorExcel"><a href="javascript:void(0)">EXCEL</a></li>
 							</ul>
 						</div>
-
+						<!--
 						<input class="btn btn-secondary pull-rigth" value="Calendario C Z" type="button" id="btnVistaPreviaCalendarioCoordinadorZonal" style="margin-left:15px" />
+						-->
+						<div class="btn-group" >
+							<button type="button" class="btn btn-secondary">Calendario C Z</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="btnVistaPreviaCalendarioCoordinadorZonal"><a href="javascript:void(0)">PDF</a></li>
+								<li id="btnVistaPreviaCalendarioCoordinadorZonalExcel"><a href="javascript:void(0)">EXCEL</a></li>
+							</ul>
+						</div>
+
 						<input class="btn btn-danger pull-rigth" value="Finalizar Computo" type="button" id="btnNuevo" style="margin-left:15px" />
 					</div>
 				</div>

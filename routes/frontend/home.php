@@ -452,7 +452,9 @@ Route::get('sesion/ver_delegado_coordinador_excel/{id_periodo}/{anio}/{mes}', [S
 
 Route::get('sesion/calendario_sesion_pdf/{id}', [SesionController::class, 'calendario_sesion_pdf'])->name('sesion.calendario_sesion_pdf');
 Route::get('sesion/ver_calendario_sesion_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
+Route::get('sesion/ver_calendario_sesion_excel/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_excel'])->name('sesion.ver_calendario_sesion_excel');
 Route::get('sesion/ver_calendario_sesion_coordinador_zonal_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_coordinador_zonal_pdf'])->name('sesion.ver_calendario_sesion_coordinador_zonal_pdf');
+Route::get('sesion/ver_calendario_sesion_coordinador_zonal_excel/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_coordinador_zonal_excel'])->name('sesion.ver_calendario_sesion_coordinador_zonal_excel');
 
 Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eliminar_computo_sesion'])->name('sesion.eliminar_computo_sesion');
 Route::get('sesion/eliminar_comision_sesion_delegados/{id}', [SesionController::class, 'eliminar_comision_sesion_delegados'])->name('sesion.eliminar_comision_sesion_delegados');
@@ -803,3 +805,4 @@ Route::get('planilla/eliminar_recibo_honorario/{id}/{estado}', [PlanillaDelegado
 
 Route::get('suspension/actualizarSuspensionAgremiado', [SuspensionController::class, 'actualizarSuspensionAgremiado'])->name('suspension.actualizarSuspensionAgremiado');
 
+Route::get('sesion/test_excel', [SesionController::class, 'test_excel'])->name('sesion.test_excel');
