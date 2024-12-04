@@ -21,17 +21,29 @@ $(document).ready(function () {
 	});
 	
 	$('#btnVistaPreviaComputo').click(function () {
-		//guardar_computo()
+		
 		var id_periodo_bus = $("#id_periodo_bus").val();
 		var id_comision_bus = $("#id_comision_bus").val();
 		var id_puesto_bus = $("#id_puesto_bus").val();
 		var anio = $("#anio").val();
 		var mes = $("#mes").val();
-		//if (fecha == "")fecha = 0;
+		
 		var href = '/sesion/ver_computo_sesion_pdf/'+id_periodo_bus+'/'+id_comision_bus+'/'+id_puesto_bus+'/'+ anio + '/' + mes;
 		window.open(href, '_blank');
 	});
 	
+	$('#btnVistaPreviaComputoExcel').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var id_comision_bus = $("#id_comision_bus").val();
+		var id_puesto_bus = $("#id_puesto_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+
+		var href = '/sesion/ver_computo_sesion_excel/'+id_periodo_bus+'/'+id_comision_bus+'/'+id_puesto_bus+'/'+ anio + '/' + mes;
+		location.href = href;
+	});
+
 	$('#btnVistaPreviaCalendario').click(function () {
 		//guardar_computo()
 		var id_periodo_bus = $("#id_periodo_bus").val();
@@ -51,6 +63,15 @@ $(document).ready(function () {
 		window.open(href, '_blank');
 	});
 	
+	$('#btnVistaPreviaMovilidadExcel').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		var href = '/movilidad/ver_movilidad_excel/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		location.href = href;
+	});
+
 	$('#btnVistaPreviaCoordinador').click(function () {
 		
 		var id_periodo_bus = $("#id_periodo_bus").val();

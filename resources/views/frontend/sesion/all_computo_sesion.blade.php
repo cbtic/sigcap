@@ -288,15 +288,40 @@
 
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
-						<input class="btn btn-secondary pull-rigth" value="Vista Previa Computo" type="button" id="btnVistaPreviaComputo" style="margin-left:15px" />
-						<input class="btn btn-secondary pull-rigth" value="Vista Previa Calendario" type="button" id="btnVistaPreviaCalendario" style="margin-left:15px" />
-						
-						<input class="btn btn-secondary pull-rigth" value="Movilidad Delegados" type="button" id="btnVistaPreviaMovilidad" style="margin-left:15px" />
 
 						<!--
+						<input class="btn btn-secondary pull-rigth" value="Vista Previa Computo" type="button" id="btnVistaPreviaComputo" style="margin-left:15px" />
+						-->
+						<div class="btn-group" >
+							<button type="button" class="btn btn-secondary">Vista Previa Computo</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="btnVistaPreviaComputo"><a href="javascript:void(0)">PDF</a></li>
+								<li id="btnVistaPreviaComputoExcel"><a href="javascript:void(0)">EXCEL</a></li>
+							</ul>
+						</div>
+
+
+						<input class="btn btn-secondary pull-rigth" value="Vista Previa Calendario" type="button" id="btnVistaPreviaCalendario" style="margin-left:15px" />
+						
+						<!--
+						<input class="btn btn-secondary pull-rigth" value="Movilidad Delegados" type="button" id="btnVistaPreviaMovilidad" style="margin-left:15px" />
 						<input class="btn btn-secondary pull-rigth" value="Delegado Coordinadores" type="button" id="btnVistaPreviaCoordinador" style="margin-left:15px" />
 						-->
 
+						<div class="btn-group" >
+							<button type="button" class="btn btn-secondary">Movilidad Delegados</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="btnVistaPreviaMovilidad"><a href="javascript:void(0)">PDF</a></li>
+								<li id="btnVistaPreviaMovilidadExcel"><a href="javascript:void(0)">EXCEL</a></li>
+							</ul>
+						</div>
+						
 						<div class="btn-group" >
 							<button type="button" class="btn btn-secondary">Delegado Coordinadores</button>
 							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
