@@ -54,7 +54,7 @@ class Propietario extends Model
     function getPropietarioSolicitudHULiq($id_solicitud){      
       $cad = "select p.id, p.id_empresa, p.id_persona, 
       CASE 
-            WHEN p.id_persona is not null THEN (select p2.nombres ||' '|| p2.apellido_paterno ||' '|| p2.apellido_materno from personas p2 where p2.id = p.id_persona)
+            WHEN p.id_persona is not null THEN (select p2.nombres ||' '|| p2.apellido_paterno ||' '|| COALESCE(p2.apellido_materno,'') from personas p2 where p2.id = p.id_persona)
             WHEN p.id_empresa is not null THEN (select e.razon_social from empresas e where e.id = p.id_empresa)end as propietario_nombre
       from propietarios p 
       left join personas pe on p.id_persona = pe.id
