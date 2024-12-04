@@ -21,7 +21,7 @@ class Propietario extends Model
       CASE 
             WHEN p.id_tipo_propietario = '78' THEN (select p3.apellido_paterno||' '||p3.apellido_materno||' '||p3.nombres agremiado from personas p3 where p3.id = p.id_persona)
             WHEN p.id_tipo_propietario = '79' THEN (select e2.razon_social from empresas e2 where e2.id = p.id_empresa)
-            WHEN p.id_tipo_propietario = '84' THEN (select p8.apellido_paterno||' '||p8.apellido_materno||' '||p8.nombres agremiado from personas p8 where p8.id = p.id_persona)
+            WHEN p.id_tipo_propietario = '84' THEN (select p8.apellido_paterno||' '||COALESCE(p8.apellido_materno,'')||' '||p8.nombres agremiado from personas p8 where p8.id = p.id_persona)
       end as propietario,
       CASE 
             WHEN p.id_tipo_propietario = '78' THEN (select p4.numero_celular from personas p4 where p4.id = p.id_persona)
