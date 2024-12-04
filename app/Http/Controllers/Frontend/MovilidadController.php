@@ -17,6 +17,11 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
 use stdClass;
 
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+
 class MovilidadController extends Controller
 {
     public function __construct(){
@@ -111,7 +116,7 @@ class MovilidadController extends Controller
 	
 	}
 
-	public function ver_movilidad_excel($id_periodo,$anio,$mes){
+	public function ver_movilidad_excel_old($id_periodo,$anio,$mes){
 		
 		$comisionMovilidad_model = new ComisionMovilidade;
 		$movilidad_model = new Movilidade;
@@ -267,6 +272,12 @@ class MovilidadController extends Controller
 
     }
 
+	public function ver_movilidad_excel($id_periodo,$anio,$mes){
+		
+		return Excel::download(new MovilidadDataExport($id_periodo,$anio,$mes), 'movilidad.xlsx');
+	
+	}
+
 }
 
 class InvoicesExport implements FromArray
@@ -281,6 +292,49 @@ class InvoicesExport implements FromArray
 	public function array(): array
 	{
 		return $this->invoices;
+	}
+
+}
+
+class MovilidadDataExport implements FromView, ShouldAutoSize{
+
+	use Exportable;
+
+	protected $id_periodo;
+	protected $anio;
+	protected $mes;
+
+	public function __construct($id_periodo,$anio,$mes)
+	{
+		$this->id_periodo = $id_periodo;
+		$this->anio = $anio;
+		$this->mes = $mes;
+	}
+	
+	function mesesALetras($mes) { 
+		$meses = array('','ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SETIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'); 
+		return $meses[$mes];
+	}
+
+	public function view() : View{
+
+		$comisionMovilidad_model = new ComisionMovilidade;
+		$movilidad_model = new Movilidade;
+		$anio = $this->anio;
+		$mes = $this->mes;
+		$id_periodo = $this->id_periodo;
+
+		$periodo = PeriodoComisione::find($this->id_periodo);
+		
+		$movilidad = $comisionMovilidad_model->getMovilidadByPeriodo($this->id_periodo,$this->anio,$this->mes);
+		$meses = $movilidad_model->getMesByPeriodo($this->id_periodo);
+		
+		$dias = array('L','M','M','J','V','S','D');
+
+		$mes_ = ltrim($this->mes, '0');
+		$mesEnLetras = $this->mesesALetras($mes_);
+
+		return view('pdf.ver_movilidad_excel',compact('movilidad','anio','mesEnLetras','mes','meses','id_periodo','periodo'));
 	}
 
 }

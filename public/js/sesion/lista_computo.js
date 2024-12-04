@@ -44,7 +44,7 @@ $(document).ready(function () {
 		location.href = href;
 	});
 
-	$('#btnVistaPreviaCalendario').click(function () {
+	$('#btnVistaPreviaCalendario').click(function () { 
 		//guardar_computo()
 		var id_periodo_bus = $("#id_periodo_bus").val();
 		var anio = $("#anio").val();
@@ -52,6 +52,16 @@ $(document).ready(function () {
 		//if (fecha == "")fecha = 0;
 		var href = '/sesion/ver_calendario_sesion_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
 		window.open(href, '_blank');
+	});
+
+	$('#btnVistaPreviaCalendarioExcel').click(function () {
+		
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		
+		var href = '/sesion/ver_calendario_sesion_excel/'+id_periodo_bus+'/'+ anio + '/' + mes;
+		location.href = href;
 	});
 
 	$('#btnVistaPreviaMovilidad').click(function () {
@@ -99,6 +109,16 @@ $(document).ready(function () {
 		//if (fecha == "")fecha = 0;
 		var href = '/sesion/ver_calendario_sesion_coordinador_zonal_pdf/' +id_periodo_bus+'/'+ anio + '/' + mes;
 		window.open(href, '_blank');
+	});
+
+	$('#btnVistaPreviaCalendarioCoordinadorZonalExcel').click(function () {
+		//guardar_computo()
+		var id_periodo_bus = $("#id_periodo_bus").val();
+		var anio = $("#anio").val();
+		var mes = $("#mes").val();
+		//if (fecha == "")fecha = 0;
+		var href = '/sesion/ver_calendario_sesion_coordinador_zonal_excel/' +id_periodo_bus+'/'+ anio + '/' + mes;
+		location.href = href;
 	});
 	
 	$('#denominacion').keypress(function(e){
@@ -1021,11 +1041,12 @@ function fn_ListarBusqueda() {
     datatablenew();
 	datatablenewComputoCerrado();
 };
-
+/*
 function fn_AbrirDetalle(pValor, piIdMovimientoCompra) {
     //fn_util_bloquearPantalla("Buscando");
     setTimeout(function () { fn_CargaSuGrilla(pValor, piIdMovimientoCompra) }, 001);//500
 }
+*/
 
 function fn_CargaSuGrilla(pValor, piIdMovimientoCompra) {
 
