@@ -329,8 +329,8 @@
                                                         <div class="form-group">
                                                             <label class="form-group">Afecta ingreso</label>
                                                             <select name="afecta_ingreso" id="afecta_ingreso" class="form-control form-control-sm" onChange="">
-                                                                <option value="C">Cambio</option>
-                                                                <option value="D">Devolucion</option>
+                                                                <option value="C">Afecta</option>
+                                                                <option value="D">No Afecta</option>
                                                                 
                                                             </select>
                                                         </div>
