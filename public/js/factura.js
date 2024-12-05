@@ -720,6 +720,12 @@ function obtenerTitular(){
 			idMedio = $("#idMedio"+ind).val();
 			
 			//id_user={{Auth::user()->id}};
+
+			$("#tr_total_pagar").hide();
+			$("#tr_total_pagar_abono").hide();
+			$("#total_pagar").val("0");
+			$("#total_pagar_abono").val("0");
+			
 		
 			$('.idMedio').each(function(){
 				var ind_tmp = $(this).val();
@@ -741,28 +747,38 @@ function obtenerTitular(){
 					//$("#monto"+ind).val(monto);
 					$("#totalMedioPago").val(monto);
 
+					//alert (idMedio);
+
 					if(idMedio=='91'){
 						//monto = $("#total_fac_").val();
 						monto_r = redondeoContableAFavor(Number(monto), 1);
 
-						$("#monto"+ind).val(monto_r);
+						$("#monto"+ind).val(monto_r.toFixed(2));
 
 						if(monto!=monto_r){
 							$("#tr_total_pagar").show();
-							$("#total_pagar").val(monto_r);
+							$("#total_pagar").val(monto_r.toFixed(2));
 						}
 	
 
-					}else if(idMedio=='254' || idMedio=='545' || idMedio=='543'){
+					}else{
+
+					//if(idMedio=='254' || idMedio=='545' || idMedio=='543'){
 
 						$("#monto"+ind).val(monto);
 
+						monto_r = Number(monto);
+
 						
-						//$("#tr_total_pagar_abono").show();
-						//$("#total_pagar_abono").val(monto);
+						$("#tr_total_pagar_abono").show();
+						$("#total_pagar_abono").val(monto_r);
+
+						//alert (monto.toFixed(2));
 						
 
-					}else{
+					}
+					/*
+					{
 
 						$("#monto"+ind).val(monto);
 
@@ -770,8 +786,11 @@ function obtenerTitular(){
 						$("#total_pagar_abono").val("0");
 						$("#tr_total_pagar").hide();
 					}
-					$("#tr_total_pagar_abono").show();
-					$("#total_pagar_abono").val(monto);
+						*/
+
+					//$("#tr_total_pagar_abono").show();
+					//$("#total_pagar_abono").val(monto);
+
 				}
 
 				$("#fecha"+ind).val(fecha_);
@@ -797,11 +816,11 @@ function obtenerTitular(){
 				if(val_total!="")total += Number(val_total);
 			});
 
-			//alert(total);
+			//alert(total.toFixed(2));
 
 			
-			$("#totalMedioPago").val(total);
-			$("#total_pagar_abono").val(total);
+			$("#totalMedioPago").val(total.toFixed(2));
+			$("#total_pagar_abono").val(total.toFixed(2));
 			
 			
 			//$("#precio_peso").val(total);

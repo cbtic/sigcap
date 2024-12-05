@@ -24,8 +24,8 @@ foreach($valorizacion as $key=>$row):
 		$igv_   = 0;
 	
 	}else{
-		$stotal = str_replace(",","",number_format($monto/1.18,1));
-		$igv_   = str_replace(",","",number_format($stotal * 0.18,1));	
+		$stotal = str_replace(",","",number_format($monto/1.18,2));
+		$igv_   = str_replace(",","",number_format($stotal * 0.18,2));	
 	}
 
 	$disabled = "";
