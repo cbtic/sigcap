@@ -572,7 +572,7 @@ class ComprobanteController extends Controller
 			$id_persona = $request->persona;
             $id_persona2 = $request->persona2;
 
-            if ($id_persona=='') $id_persona = 0;
+            if ($id_persona=='') $id_persona = '0';
             if ($id_persona2=='') $id_persona2 = '0';
 
             if ($ubicacion_id2=='') $ubicacion_id2 = '0';
@@ -634,7 +634,7 @@ class ComprobanteController extends Controller
             
             if ($id_persona2!='') {
                 $id_persona_act = $id_persona2;
-                $id_persona='';
+                //$id_persona='';
                 
             }else{
                 $id_persona_act = $id_persona;
@@ -643,7 +643,7 @@ class ComprobanteController extends Controller
 
             if ($ubicacion_id2!=''){
                 $id_ubicacion_act = $ubicacion_id2;
-                $ubicacion_id='';
+                //$ubicacion_id='';
 
             }else{
                 $id_ubicacion_act = $ubicacion_id;
@@ -672,8 +672,11 @@ class ComprobanteController extends Controller
 
             echo "ubicacion_id2 -> {$ubicacion_id2}\n ";
             echo "id_persona2 -> {$id_persona2}\n ";
-  */         
-   //         exit();
+           
+           exit();
+*/
+           
+
 /*
             direccion -> Av. candada 3394 
             correo -> frimacc@gmail.com 
@@ -754,6 +757,8 @@ class ComprobanteController extends Controller
                         $empresa->email = $correo;
                         $empresa->save();
                     }
+
+
                 }    
 
                 if ($tipoF == 'BV' &&  $id_persona2 != '') 
@@ -824,14 +829,15 @@ class ComprobanteController extends Controller
 
                 //if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
                 //if ($id_concepto!= 26411 && $id_concepto!= 26412) $id_tipo_afectacion_pp=0;
-
                 /*
+                echo("\n ");
+                echo("\n ");                
                 echo("ubicacion_id:".$ubicacion_id);
-                echo(" - ");
+                echo("\n ");
                 echo("id_persona_act:".$id_persona_act);
-                echo(" - ");
+                echo("\n");
                 echo("ubicacion_id2:".$ubicacion_id2);
-                echo(" - ");
+                echo("\n");
                 echo("id_persona2:".$id_persona2);
                 
                 exit();
