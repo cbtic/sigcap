@@ -654,7 +654,6 @@ function valida_certificado(id){
 		//}
 		}
 	});
-
 }
 
 function constancia_habilitacion_profesional_pdf(id){
