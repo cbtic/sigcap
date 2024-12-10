@@ -49,7 +49,7 @@ And t1.id_periodo_comisione = ".$id_periodo."
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and t1.estado='1'
-and t4.id_municipalidad_integrada=mi.id) > 0 ";
+and t4.id_municipalidad_integrada=mi.id) > 0 "; 
             
 		}
 
