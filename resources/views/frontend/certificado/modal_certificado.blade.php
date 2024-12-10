@@ -205,7 +205,7 @@ function obtenerTipoCertificado(){
 		$('#piso_nivel_').hide();
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
-	}else if (id_tipo == "1") { //CONSTANCIA
+	}else if (id_tipo == "7") { //CONSTANCIA
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
 		$('#vigencia_group').hide();
@@ -219,7 +219,7 @@ function obtenerTipoCertificado(){
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').hide();
-	}else if (id_tipo == "2") { //CERTIFICADO UNICO
+	}else if (id_tipo == "8") { //CERTIFICADO UNICO
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
 		$('#vigencia_group').show();
@@ -233,8 +233,8 @@ function obtenerTipoCertificado(){
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').show();
-	}else if (id_tipo == "3"){ //RECORD DE PROYECTOS
-		$('#nombre_proyecto_').hide(); 
+	}else if (id_tipo == "6"){ //RECORD DE PROYECTOS
+		$('#nombre_proyecto_').hide();
 		$('#tipo_tramite_').hide();
 		$('#nombre_proyecto').val('0');
 		$('#tipo_tramite').val('0');
