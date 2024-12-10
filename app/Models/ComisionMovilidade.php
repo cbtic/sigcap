@@ -27,6 +27,7 @@ where t0.id_aprobar_pago=2
 And t1.id_periodo_comisione = ".$id_periodo."
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+and t1.estado='1' 
 and t4.id_municipalidad_integrada=mi.id)cantidad
 from comision_movilidades cm 
 inner join municipalidad_integradas mi  on cm.id_municipalidad_integrada = mi.id
@@ -38,7 +39,20 @@ and cm.estado='1' ";
 
 		if($id_periodo>0){
 			$cad .= " And cm.id_periodo_comisiones=".$id_periodo;
+
+            $cad .= " And (select count(distinct t4.id_municipalidad_integrada)
+from comision_sesiones t1 
+inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
+where t0.id_aprobar_pago=2 
+And t1.id_periodo_comisione = ".$id_periodo."
+And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
+and t1.estado='1'
+and t4.id_municipalidad_integrada=mi.id) > 0 "; 
+            
 		}
+
 		
 		$cad .= " Order By mi.denominacion Asc";
 		
