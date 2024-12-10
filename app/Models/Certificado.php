@@ -224,5 +224,21 @@ from certificados c where id_tipo=".$id_tipo;
         return $data;
     }
 
+    public function datos_agremiado_certificado_unico($id){
+
+        $cad = "select c.id , a.numero_cap ,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres agremiado ,tm.denominacion Tipo_certificado,c.codigo,c.estado,  a.desc_cliente ,a.id_situacion , tms.denominacion situacion,a.fecha_colegiado,a.numero_regional,fecha_emision,p.id_sexo,c.dias_validez,a.email1, tm2.denominacion tipo_tramite  
+        from certificados c 
+        inner join agremiados a on c.id_agremiado =a.id 
+        inner join tabla_maestras tm on c.id_tipo =tm.codigo::int and tm.tipo ='100' 
+        inner join tabla_maestras tms on a.id_situacion= tms.codigo::int and  tms.tipo ='14' 
+        inner join personas p on p.id =a.id_persona
+        left join tabla_maestras tm2 on c.id_tipo_tramite= tm2.codigo::int and  tm2.tipo ='44' 
+        where c.id='". $id ."'";
+    
+		$data = DB::select($cad);
+        return $data;
+
+    }
+
 }
 

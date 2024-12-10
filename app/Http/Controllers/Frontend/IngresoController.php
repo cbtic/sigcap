@@ -1128,4 +1128,15 @@ class IngresoController extends Controller
 		return view('frontend.ingreso.modal_concepto_reporte',compact('numero_cap','concepto'));
 	}
 
+    public function valida_ultimo_pago($cap){
+		
+		$valorizacion_model = new Valorizacione;
+        
+        $año_actual = Carbon::now()->year;
+        
+		$pago_pronto_pago = $valorizacion_model->getProntoPago($cap, $año_actual);
+		
+		echo json_encode($pago_pronto_pago);
+	}
+
 }

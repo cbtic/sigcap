@@ -638,4 +638,16 @@ class Valorizacione extends Model
         return $data;
     }
 
+    function getProntoPago($cap, $año_actual){
+
+        $cad = "select v.id, v.id_pronto_pago from valorizaciones v 
+        inner join agremiados a on v.id_agremido = a.id 
+        inner join pronto_pagos pp on v.id_pronto_pago = pp.id
+        where a.numero_cap ='".$cap."' and pp.periodo ='".$año_actual."' 
+        limit 1 ";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        if($data)return $data[0];
+     }
 }

@@ -802,4 +802,6 @@ Route::get('ingreso/modal_concepto_reporte/{numero_cap}', [IngresoController::cl
 Route::get('planilla/eliminar_recibo_honorario/{id}/{estado}', [PlanillaDelegadoController::class, 'eliminar_recibo_honorario'])->name('planilla.eliminar_recibo_honorario');
 
 Route::get('suspension/actualizarSuspensionAgremiado', [SuspensionController::class, 'actualizarSuspensionAgremiado'])->name('suspension.actualizarSuspensionAgremiado');
+Route::get('certificado/certificado_tipo_unico_pdf/{id}', [CertificadoController::class, 'certificado_tipo_unico_pdf'])->name('certificado.certificado_tipo_unico_pdf');
+Route::get('ingreso/valida_ultimo_pago/{cap}', [IngresoController::class, 'valida_ultimo_pago'])->name('ingreso.valida_ultimo_pago');
 

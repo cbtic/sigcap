@@ -149,10 +149,10 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
 
-                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="cap_lista" name="cap_lista" placeholder="CAP">
 					</div>
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Apellidos y Nombres">
 					</div>
 
@@ -168,14 +168,13 @@
                         </select>
                     </div>
 					
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 						<select name="estado" id="estado" class="form-control form-control-sm">
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
 							<option value="0">Eliminado</option>
 						</select>
 					</div>
-
                     
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-right:0px">
 						<input class="btn btn-warning pull-rigth" value="Buscar" type="button" id="btnBuscar" />
