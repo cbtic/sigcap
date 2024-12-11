@@ -736,4 +736,41 @@ function valida_pago() {
 
 
 		});
+
+
+		function generarCuotas() {
+			
+			var idagremiado = $("#idagremiado_").val();
+			
+			//alert(idagremiado);return false;
+
+			var msgLoader = "";
+			msgLoader = "Procesando, espere un momento por favor";
+			var heightBrowser = $(window).width()/2;
+			$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+			$('.loader').show();
+			
+			$.ajax({
+					url: "/comision/send_generar_cuotas/"+idagremiado,
+					type: "GET",
+					//data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
+					//data : $("#frmComision").serialize(),
+					//data : {idagremiado:idagremiado}
+					success: function (result) {  
+						/*
+						bootbox.alert("Se cerro correctamente la asignaci&oacute;n de plaza"); 
+						cargarMunicipalidades();
+						cargarMunicipalidadesIntegradas();
+						cargarComisiones();
+						*/
+						$('#openOverlayOpc').modal('hide');
+						$('.loader').hide();
+						return false;
+					}
+			});
+
+
+		}
+
+
 	</script>

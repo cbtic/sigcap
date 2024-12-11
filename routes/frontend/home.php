@@ -379,6 +379,7 @@ Route::get('comision/obtener_municipalidadesIntegradas/{periodo}/{tipo_agrupacio
 Route::post('comision/listar_municipalidad_integrada_ajax', [ComisionController::class, 'listar_municipalidad_integrada_ajax'])->name('comision.listar_municipalidad_integrada_ajax');
 Route::get('comision/consulta_municipalidadIntegrada', [ComisionController::class, 'consulta_municipalidadIntegrada'])->name('comision.consulta_municipalidadIntegrada');
 Route::post('comision/send_asignar_agremiado_rol', [ComisionController::class, 'send_asignar_agremiado_rol'])->name('comision.send_asignar_agremiado_rol');
+Route::get('comision/send_generar_cuotas/{id_agremiado}', [ComisionController::class, 'send_generar_cuotas'])->name('comision.send_generar_cuotas');
 
 Route::get('comision/send_asignar_agremiado_rol2', [ComisionController::class, 'send_asignar_agremiado_rol2'])->name('comision.send_asignar_agremiado_rol2');
 
