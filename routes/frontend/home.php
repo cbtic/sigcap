@@ -809,3 +809,7 @@ Route::get('certificado/certificado_tipo_unico_pdf/{id}', [CertificadoController
 Route::get('ingreso/valida_ultimo_pago/{cap}', [IngresoController::class, 'valida_ultimo_pago'])->name('ingreso.valida_ultimo_pago');
 
 Route::get('sesion/test_excel', [SesionController::class, 'test_excel'])->name('sesion.test_excel');
+
+Route::get('ingreso/validar_pago/{cap}', [IngresoController::class, 'validar_pago'])->name('ingreso.validar_pago');
+Route::get('ingreso/validar_todos_pago/{cap}', [IngresoController::class, 'validar_todos_pago'])->name('ingreso.validar_todos_pago');
+

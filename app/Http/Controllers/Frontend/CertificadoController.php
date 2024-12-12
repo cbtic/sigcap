@@ -89,7 +89,7 @@ class CertificadoController extends Controller
 			$desc_cliente=$datos_agremiado[0]->agremiado;
 			$email1=$datos_agremiado[0]->email1;
 			$situacion=$datos_agremiado[0]->situacion;
-
+			$categoria=$datos_agremiado[0]->categoria;
 
 			//$situacion=$datos_agremiado[0]->tipo_certificado;
 			//$situacion=$datos_agremiado[0]->tipo_certificado;
@@ -114,14 +114,14 @@ class CertificadoController extends Controller
 			$tipo_tramite = $tablaMaestra_model->getMaestroByTipo(44);
 			$tipo_tramite_tipo3 = $tablaMaestra_model->getMaestroByTipo(38);
 			$nombre_proy="";
-			
+			$categoria="";
 		} 
         
 		//$regione_model = new Regione;
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_tramite_tipo3','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy'));
+		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_tramite_tipo3','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy','categoria'));
 
     }
 
@@ -1011,6 +1011,7 @@ class CertificadoController extends Controller
 		$trato=$datos[0]->id_sexo;
 		
 		$numero = $datos[0]->dias_validez;
+
 		$numeroEnLetras = $this->numeroALetras($numero); 
 		
 
@@ -1043,8 +1044,6 @@ class CertificadoController extends Controller
 		// Crear una instancia de Carbon a partir de la fecha
 		$carbonDate = new Carbon($fecha_emision);
 
-		// Formatear la fecha en un formato largo
-
 		$dia = $carbonDate->format('d');
 		$mes = ltrim($carbonDate->format('m'), '0');
 		$anio = $carbonDate->format('Y');
@@ -1053,9 +1052,17 @@ class CertificadoController extends Controller
 
 		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
 
+		$fecha_vigencia = $carbonDate->addMonths($numero);
+
+		$dia_vigencia = $fecha_vigencia->day;
+		$mes_vigencia = $this->mesesALetras($fecha_vigencia->month);
+		$anio_vigencia = $fecha_vigencia->year;
+
+		// Formatear la fecha en un formato largo
+
 		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
-		$pdf = Pdf::loadView('frontend.certificado.certificado_unico_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','habilita','fecha_detallada'));
+		$pdf = Pdf::loadView('frontend.certificado.certificado_unico_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','habilita','fecha_detallada','dia_vigencia','mes_vigencia','anio_vigencia'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros

@@ -163,7 +163,7 @@ $(document).ready(function() {
     <p style="text-align:center">  EL COLEGIO DE ARQUITECTOS DEL PER&Uacute; - REGIONAL LIMA, </p>
     <p style="text-align:left">  Deja constancia que: </p>
         <div class="contenido">
-            <h3 class="contenido_encabezado" > <b> ARQ. <?php echo $datos[0]->desc_cliente;?> </b></h3>
+            <h3 class="contenido_encabezado" > <b> ARQ. <?php echo $datos[0]->agremiado;?> </b></h3>
             <h3 class="contenido_encabezado_cap"> CAP <?php echo $datos[0]->numero_cap;?> </h3>
             <p class="contenido_cuerpo" >Se encuentra <?php echo $inscripcion;?> desde el <?php echo $fecha_inscripcion_detallada;?> en los registros de 
                             nuestra Institución como Miembro de la Orden con el n&uacute;mero de CAP  <?php echo $datos[0]->numero_cap;?> y
