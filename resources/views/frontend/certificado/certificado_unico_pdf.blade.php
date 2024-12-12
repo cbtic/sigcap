@@ -153,7 +153,7 @@ $(document).ready(function() {
     <h2 style="text-align:center">CERTIFICADO &Uacute;NICO DE HABILITACI&Oacute;N PROFESIONAL</h2>
     <p class="contenido_cuerpo">  Por el presente el Colegio de Arquitectos del Per&uacute; - Regional Lima certifica que <?php echo $articulo;?> </p>
         <div class="contenido">
-            <h3 style="text-align:center"> <b> ARQ. <?php echo $datos[0]->desc_cliente;?> </b></h3>
+            <h3 style="text-align:center"> <b> ARQ. <?php echo $datos[0]->agremiado;?> </b></h3>
             <p class="contenido_cuerpo">con colegiatura N° <?php echo $datos[0]->numero_cap;?> e incripci&oacute;n en la Regional Lima con el N°
                             <?php echo $datos[0]->numero_regional;?> se encuentra <?php echo $habilita;?> PARA EL EJERCICIO
                             PROFESIONAL de acuerdo con lo establecido en el art.°. 3 del Reglamento
@@ -172,7 +172,7 @@ $(document).ready(function() {
             <div>
             
             <p class="contenido_cuerpo" style="text-align: center !important;margin-bottom: 50px; ">FIRMA Y SELLO DEL DECANO REGIONAL</p>
-            <p class="contenido_cuerpo">Vigencia: Hasta el X de X del 2024.
+            <p class="contenido_cuerpo">Vigencia: Hasta el <?php echo $dia_vigencia; ?> de <?php echo $mes_vigencia; ?> del <?php echo $anio_vigencia; ?>.
             <p class="contenido_pie"><b>Nota:</b>
             <p class="contenido_pie" style="margin-bottom: 0;"><b>1.	 El presente certificado es obligatorio para demostrar la habilitación profesional
                             del titular en todos los casos que requiera acreditarse para realizar actividades propias del

@@ -1139,4 +1139,22 @@ class IngresoController extends Controller
 		echo json_encode($pago_pronto_pago);
 	}
 
+    public function validar_pago($cap){
+		
+		$valorizacion_model = new Valorizacione;
+        
+		$ultimo_pago = $valorizacion_model->getUltimoPago($cap);
+		
+		echo json_encode($ultimo_pago);
+	}
+
+    public function validar_todos_pago($cap){
+		
+		$valorizacion_model = new Valorizacione;
+        
+		$ultima_cuota = $valorizacion_model->getUltimaCuota($cap);
+		
+		echo json_encode($ultima_cuota);
+	}
+
 }

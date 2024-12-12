@@ -233,6 +233,7 @@ function obtenerTipoCertificado(){
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').show();
+		$('#boton_agregar_cuotas button').attr('disabled', true);
 	}else if (id_tipo == "6"){ //RECORD DE PROYECTOS
 		$('#nombre_proyecto_').hide();
 		$('#tipo_tramite_').hide();
@@ -284,6 +285,53 @@ function valida_ultimo_pago(){
 
 			}
 		});
+	}else if(id_tipo==8){
+
+		var categoria = $('#categoria_').val();
+
+		if(categoria!='VITALICIO'){
+			var vigencia = $('#vigencia_').val();
+
+			var fecha_actual = new Date();
+
+			var fecha_con_vigencia = new Date(fecha_actual);
+			fecha_con_vigencia.setMonth(fecha_con_vigencia.getMonth() + parseInt(vigencia));
+
+			var mes = fecha_con_vigencia.getMonth() + 1;
+
+			var anio = fecha_con_vigencia.getFullYear();
+			
+			$.ajax({
+				url: "/ingreso/validar_pago/"+cap,
+				dataType: "json",
+				success: function(result) {
+					
+					//alert(result)
+					if(result == null){
+						Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
+					}else{
+						var fecha_pagada = new Date(result.fecha);
+						var mes_pagado = fecha_pagada.getMonth() +1;
+						var anio_pagado = fecha_pagada.getFullYear();
+
+						if(anio<=anio_pagado){
+							if(mes<=mes_pagado){
+								fn_save();
+							}else{
+								Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
+							}
+
+						}else{
+							Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
+						}
+					}
+					
+				}
+			});
+		}else{
+			fn_save();
+		}
+	
 	}else{
 		fn_save();
 	}
@@ -335,7 +383,53 @@ function fn_save() {
 		}
 	});
 }
+
+function validarFecha(){
+
+	var vigencia = $('#vigencia_').val();
+	var cap = $('#cap_').val();
+	var categoria = $('#categoria_').val();
+
+	var fecha_actual = new Date();
+
+    var fecha_con_vigencia = new Date(fecha_actual);
+	//alert(fecha_con_vigencia.getMonth()+1+1);
+    fecha_con_vigencia.setMonth(fecha_con_vigencia.getMonth() + parseInt(vigencia));
 	
+    var mismo_anio = fecha_actual.getFullYear() == fecha_con_vigencia.getFullYear();
+
+	if (mismo_anio) {
+        $('#boton_agregar_cuotas button').attr('disabled', true);
+    }else {
+		$.ajax({
+			url: "/ingreso/validar_todos_pago/"+cap,
+			dataType: "json",
+			success: function(result) {
+
+				var fecha_ultima_cuota = new Date(result.fecha);
+				var mes_ultima_cuota = fecha_ultima_cuota.getMonth() +1;
+				var anio_ultima_cuota = fecha_ultima_cuota.getFullYear();
+
+				if(fecha_con_vigencia.getFullYear()==parseInt(anio_ultima_cuota)){
+					$('#boton_agregar_cuotas button').attr('disabled', true);
+				}else{
+					if(categoria=='VITALICIO'){
+						Swal.fire("El agremiado esta HABILITADO pero es VITALICIO")
+					$('#boton_agregar_cuotas button').attr('disabled', true);
+					}else{
+
+						Swal.fire("El agremiado no cuenta con cuotas generadas para la vigencia solicitada, por favor, genere sus cuotas y debe ser canceladas previamente")
+						$('#boton_agregar_cuotas button').attr('disabled', false);
+
+					}
+				}
+
+			}
+		});
+        
+    }
+}
+
 function obtenerNombreProyecto() {
 
 	var ncap = $('#cap_').val();
@@ -378,12 +472,14 @@ function obtenerAgremiado() {
 				$('#nombre_').val('');
 				$('#situacion_').val('');
 				$('#email_').val('');
+				$('#categoria_').val('');
 			//alert(result.situacion).exit();
 			if(result.situacion=='HABILITADO'){
 				$('#idagremiado_').val(result.id);
 				$('#nombre_').val(result.nombre_completo);
 				$('#situacion_').val(result.situacion);
 				$('#email_').val(result.email);
+				$('#categoria_').val(result.categoria);
 				obtenerNombreProyecto();
 			}else if (result.situacion=='FALLECIDO'){
 				bootbox.alert("El Agremiado est&aacute; FALLECIDO");
@@ -463,14 +559,14 @@ function valida_pago() {
 									<input type="text" name="cap_" id="cap_" value="<?php echo $cap_numero ?>" placeholder="" class="form-control form-control-sm">
 								</div>
 							</div>
-							<div class="col-lg-2" style="padding-top:12px;padding-left:0px;padding-right:0px">
+							<div class="col-lg-1" style="padding-top:12px;padding-left:0px;padding-right:0px">
 								<br>
 								<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onClick="obtenerAgremiado('<?php echo $id ?>')">
 									Buscar
 								</button>
 							</div>
 
-							<div class="col-lg-6">
+							<div class="col-lg-5">
 								<div class="form-group">
 									<label class="control-label">Apellidos y Nombres</label>
 									<input id="nombre_" name="nombre_" class="form-control form-control-sm" value="<?php echo $desc_cliente ?>" type="text" readonly>
@@ -482,6 +578,12 @@ function valida_pago() {
 								<div class="form-group">
 									<label class="control-label">Situaci&oacute;n</label>
 									<input id="situacion_" name="situacion_" class="form-control form-control-sm" value="<?php echo $situacion ?>" type="text" readonly>
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<label class="control-label">Categor&iacute;a</label>
+									<input id="categoria_" name="categoria_" class="form-control form-control-sm" value="<?php echo $categoria ?>" type="text" readonly>
 								</div>
 							</div>
 						</div>
@@ -640,7 +742,7 @@ function valida_pago() {
 							<div class="form-group" id="vigencia_group">
 								<div class="col-lg-12">
 									<label class="control-label">Meses Vigencia</label>
-									<select name="vigencia_" id="vigencia_" class="form-control form-control-sm">
+									<select name="vigencia_" id="vigencia_" class="form-control form-control-sm" onchange="validarFecha()">
 										<?php
 										$valorSeleccionado = isset($certificado->dias_validez) ? $certificado->dias_validez : '30';
 										?>
@@ -657,7 +759,7 @@ function valida_pago() {
 							<div style="margin-top:10px" class="form-group" id="boton_agregar_cuotas">
 								<div class="col-sm-12 controls">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-										<a href="javascript:void(0)" onClick="generarCuotas()" class="btn btn-sm btn-danger" style="margin-top:20px">Generar Cuota Proximo Periodo</a>
+										<button type="button" onClick="generarCuotas()" class="btn btn-sm btn-danger" style="margin-top:20px" disabled>Generar Cuota Proximo Periodo</button>
 
 									</div>
 								</div>
