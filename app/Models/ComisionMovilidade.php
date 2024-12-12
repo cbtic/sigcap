@@ -68,6 +68,7 @@ inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion
 inner join comisiones t4 on t1.id_comision=t4.id
 inner join comision_movilidades cm on cm.id_periodo_comisiones=t1.id_periodo_comisione and cm.id_municipalidad_integrada=t4.id_municipalidad_integrada and cm.estado='1' 
 where t0.id_aprobar_pago=2 
+and t1.estado='1' 
 And t1.id_periodo_comisione = ".$id_periodo."
 And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
