@@ -185,7 +185,10 @@
 					
 					<?php 
 					foreach($meses as $keym=>$m){
-						$movilidadMes = \App\Models\ComisionMovilidade::getMovilidadMesByPeriodoAndMunicipalidad($id_periodo,$anio,$m->mes_,$r->id_municipalidad_integrada);
+						
+						if($m->mes_==$mes){
+							$movilidadMes = \App\Models\ComisionMovilidade::getMovilidadMesByPeriodoAndMunicipalidad($id_periodo,$anio,$m->mes_,$r->id_municipalidad_integrada);
+						}
 					?>
 					<td class="td_right" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo (isset($movilidadMes->monto))?$movilidadMes->monto:"0"?></td>
 					<?php
