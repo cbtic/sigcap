@@ -89,7 +89,7 @@ class CertificadoController extends Controller
 			$desc_cliente=$datos_agremiado[0]->agremiado;
 			$email1=$datos_agremiado[0]->email1;
 			$situacion=$datos_agremiado[0]->situacion;
-
+			$categoria=$datos_agremiado[0]->categoria;
 
 			//$situacion=$datos_agremiado[0]->tipo_certificado;
 			//$situacion=$datos_agremiado[0]->tipo_certificado;
@@ -114,14 +114,14 @@ class CertificadoController extends Controller
 			$tipo_tramite = $tablaMaestra_model->getMaestroByTipo(44);
 			$tipo_tramite_tipo3 = $tablaMaestra_model->getMaestroByTipo(38);
 			$nombre_proy="";
-			
+			$categoria="";
 		} 
         
 		//$regione_model = new Regione;
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_tramite_tipo3','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy'));
+		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_tramite_tipo3','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy','categoria'));
 
     }
 
@@ -355,12 +355,12 @@ class CertificadoController extends Controller
 		$certificado->id_solicitud = $request->id_proyecto;
 		$certificado->dias_validez = $request->validez;
 		$certificado->especie_valorada = $request->ev;
-		$certificado->id_tipo_tramite_tipo3 = $request->tipo_tramite_tipo3;
+		//$certificado->id_tipo_tramite_tipo3 = $request->tipo_tramite_tipo3;
 		//$certificado->codigo = getCodigoCertificado($request->tipo);//$request->codigo; 
 		$certificado->observaciones =$request->observaciones;
 		$certificado->estado =1;
 		$certificado->id_tipo =$request->tipo;
-		if($request->tipo==1 || $request->tipo==2 || $request->tipo==3){
+		/*if($request->tipo==1 || $request->tipo==2 || $request->tipo==3){
 			$certificado->id_solicitud = $request->nombre_proyecto;
 			
 			$solicitud = Solicitude::find($certificado->id_solicitud);
@@ -373,86 +373,64 @@ class CertificadoController extends Controller
 			$solicitud->otro_piso_nivel_m2 = $request->otro_piso_nivel_m2;
 			$solicitud->total_area_techada_m2 = $request->total_area_techada_m2;
 			$solicitud->save();
-		}
+		}*/
 		$certificado->id_usuario_inserta = $id_user;
 		
 		$certificado->save();
-
-		if($request->tipo==1){
-			$concepto = Concepto::find(26471);
-			$monto_certificado=$request->total_area_techada_m2*0.1;
-			$solicitud_ = Solicitude::find($certificado->id_solicitud);
-			$presupuesto = Presupuesto::where("id_solicitud",$solicitud_->id)->where("estado","1")->first();
-
-			//var_dump($presupuesto->id_tipo_obra);exit();
-			if($monto_certificado<350 && $monto_certificado>30){
-				$monto_certificado=$monto_certificado;
-			}else if($monto_certificado>350){
-				$monto_certificado=350;
-			}else if($monto_certificado<30){
-				$monto_certificado=30;
+		
+		if($request->tipo==8){
+			$concepto = Concepto::find(26536);
+			if($request->validez==1){
+				$monto_certificado=50;
+			}else if($request->validez==3){
+				$monto_certificado=65;
+			}else if($request->validez==6){
+				$monto_certificado=75;
+			}else if($request->validez==9){
+				$monto_certificado=85;
+			}else if($request->validez==12){
+				$monto_certificado=120;
 			}
 
-			if($presupuesto->id_tipo_obra==151){
-				$monto_certificado=30;
-			}
-		}else if($request->tipo==2){
-			$concepto = Concepto::find(26473);
-			$solicitud_ = Solicitude::find($certificado->id_solicitud);
-			$presupuesto = Presupuesto::where("id_solicitud",$solicitud_->id)->where("estado","1")->first();
-			//var_dump($presupuesto->id_tipo_obra);exit();
-			$monto_certificado=$solicitud->area_total*0.05;
-			if($monto_certificado<350 && $monto_certificado>60){
-				$monto_certificado=$monto_certificado;
-			}else if($monto_certificado>350){
-				$monto_certificado=350;
-			}else if($monto_certificado<60){
-				$monto_certificado=60;
-			}
-			if($presupuesto->id_tipo_obra==4){
-				$monto_certificado=60;
-			}
-			if($presupuesto->id_tipo_obra==5){
-				$monto_certificado=30;
-			}
-		}else if($request->tipo==3){
-			$concepto = Concepto::find(26470);
-			$metraje=$solicitud->area_total;
-			if($metraje<=10500 && $metraje>1){
-				$monto_certificado=100;
-			}else if($metraje>=10501 && $metraje<=50000){
-				$monto_certificado=150;
-			}else if($metraje>50000){
-				$monto_certificado=200;
-			}
-		}else if($request->tipo==4){
-			$concepto = Concepto::find(26472);
-			$monto_certificado=50;
-		}else if($request->tipo==5){
-			$concepto = Concepto::find(26472);
-			$monto_certificado=0;
+			$agremiado = Agremiado::where("id",$request->idagremiado)->where("estado","1")->first();
+
+			$valorizacion = new Valorizacione;
+			$valorizacion->id_modulo = 10;
+			$valorizacion->pk_registro = $certificado->id;
+			$valorizacion->id_concepto = $concepto->id;
+			$valorizacion->id_agremido = $request->idagremiado;
+			$valorizacion->id_persona = $agremiado->id_persona;
+			$valorizacion->monto = $monto_certificado;
+			$valorizacion->id_moneda = $concepto->id_moneda;
+			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+			$valorizacion->descripcion = $concepto->denominacion ." N° ". $certificado->codigo;
+			//$valorizacion->estado = 1;
+			//print_r($valorizacion->descripcion).exit();
+			$valorizacion->id_usuario_inserta = $id_user;
+			$valorizacion->save();
+
 		}else if($request->tipo==6){
 			$concepto = Concepto::find(26506);
 			$monto_certificado=50;
+			$agremiado = Agremiado::where("id",$request->idagremiado)->where("estado","1")->first();
+
+			$valorizacion = new Valorizacione;
+			$valorizacion->id_modulo = 10;
+			$valorizacion->pk_registro = $certificado->id;
+			$valorizacion->id_concepto = $concepto->id;
+			$valorizacion->id_agremido = $request->idagremiado;
+			$valorizacion->id_persona = $agremiado->id_persona;
+			$valorizacion->monto = $monto_certificado;
+			$valorizacion->id_moneda = $concepto->id_moneda;
+			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+			$valorizacion->descripcion = $concepto->denominacion ." N° ". $certificado->codigo;
+			//$valorizacion->estado = 1;
+			//print_r($valorizacion->descripcion).exit();
+			$valorizacion->id_usuario_inserta = $id_user;
+			$valorizacion->save();
 		}
-
-		$agremiado = Agremiado::where("id",$request->idagremiado)->where("estado","1")->first();
-
-		$valorizacion = new Valorizacione;
-		$valorizacion->id_modulo = 10;
-		$valorizacion->pk_registro = $certificado->id;
-		$valorizacion->id_concepto = $concepto->id;
-		$valorizacion->id_agremido = $request->idagremiado;
-		$valorizacion->id_persona = $agremiado->id_persona;
-		$valorizacion->monto = $monto_certificado;
-		$valorizacion->id_moneda = $concepto->id_moneda;
-		$valorizacion->fecha = Carbon::now()->format('Y-m-d');
-		$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-		$valorizacion->descripcion = $concepto->denominacion ." N° ". $certificado->codigo;
-		//$valorizacion->estado = 1;
-		//print_r($valorizacion->descripcion).exit();
-		$valorizacion->id_usuario_inserta = $id_user;
-		$valorizacion->save();
     }
 	
 	public function eliminar_certificado($id){
@@ -820,23 +798,23 @@ class CertificadoController extends Controller
 		$tramite = $datos[0]->tipo_tramite;
 		
 		//$numeroEnLetras = $this->numeroALetras($numero); 
-		$agremiado_ = Agremiado::where("numero_cap",$nombre)->where("estado","1")->first();
-		$mes_minimo_=$datos_model->getMinMes($agremiado_->id,$año);
-		$mes_maximo_=$datos_model->getMaxMes($agremiado_->id,$año);
+		//$agremiado_ = Agremiado::where("numero_cap",$nombre)->where("estado","1")->first();
+		//$mes_minimo_=$datos_model->getMinMes($agremiado_->id,$año);
+		//$mes_maximo_=$datos_model->getMaxMes($agremiado_->id,$año);
 		//var_dump($agremiado_->id);exit;
-		$mes_minimo = $mes_minimo_[0]->min;
-		$mes_maximo = $mes_maximo_[0]->max;
+		//$mes_minimo = $mes_minimo_[0]->min;
+		//$mes_maximo = $mes_maximo_[0]->max;
 		//var_dump($mes_minimo);exit;
-		$mes_min = ltrim($mes_minimo,'0');
-		$mes_max = ltrim($mes_maximo,'0');
+		//$mes_min = ltrim($mes_minimo,'0');
+		//$mes_max = ltrim($mes_maximo,'0');
 		//var_dump($mes_minimo);exit;
 		/*if($mes_minimo == NULL)
 		{
 			return back()->with('mensaje', 'No hay datos disponibles');
 		}else {*/
-			$mes_minimoEnLetras = $this->mesesALetras($mes_min); 
+			//$mes_minimoEnLetras = $this->mesesALetras($mes_min); 
 
-			$mes_maximoEnLetras = $this->mesesALetras($mes_max); 
+			//$mes_maximoEnLetras = $this->mesesALetras($mes_max); 
 			
 		/*}*/
 		//var_dump($mes_maximoEnLetras);exit;
@@ -849,6 +827,8 @@ class CertificadoController extends Controller
 			$habilita="habilitado";
 			$articulo="EL";
 			$inscripcion="inscrito";
+			$colegia="COLEGIADO";
+			$habilita_mayus="HABILITADO";
 		}
 		else{
 			$tratodesc="LA ARQUITECTA ";
@@ -857,6 +837,8 @@ class CertificadoController extends Controller
 			$habilita="habilitada";
 			$articulo="LA";
 			$inscripcion="inscrita";
+			$colegia="COLEGIADA";
+			$habilita_mayus="HABILITADA";
 		}
 
 		Carbon::setLocale('es');
@@ -889,7 +871,7 @@ class CertificadoController extends Controller
 
 		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
 
-		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita','mes_minimoEnLetras','mes_maximoEnLetras','año','fecha_detallada','fecha_inscripcion_detallada'));
+		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita','año','fecha_detallada','fecha_inscripcion_detallada','colegia','habilita_mayus'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -1006,6 +988,92 @@ class CertificadoController extends Controller
 		}
 		
 		echo json_encode($sw);
+	}
+
+	public function certificado_tipo_unico_pdf($id){
+		
+		$datos_model=new Certificado;
+		$solicitud_model = new DerechoRevision;
+		$tablaMaestra_model=new TablaMaestra;
+		$ubigeo_model=new Ubigeo;
+
+		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(41);
+
+		$certificado = Certificado::where("id",$id)->where("estado","1")->first();
+
+		$agremiado = Agremiado::where("id",$certificado->id_agremiado)->where("estado","1")->first();
+
+		//$tipo_proyectista=$proyectista->tipo_proyectista;
+
+		$datos=$datos_model->datos_agremiado_certificado($id);
+		$nombre=$datos[0]->numero_cap;
+		$fecha_emision=$datos[0]->fecha_emision;
+		$trato=$datos[0]->id_sexo;
+		
+		$numero = $datos[0]->dias_validez;
+
+		$numeroEnLetras = $this->numeroALetras($numero); 
+		
+
+		if ($trato==3) {
+			$tratodesc="EL ARQUITECTO ";
+			$tratodesc_minuscula="el arquitecto ";
+			$faculta="facultado";
+			$habilita="HABILITADO";
+			$articulo="el";
+			$inscripcion="inscrito";
+		}
+		else{
+			$tratodesc="LA ARQUITECTA ";
+			$tratodesc_minuscula="la arquitecta ";
+			$faculta="facultada";
+			$habilita="HABILITADA";
+			$articulo="la";
+			$inscripcion="inscrita";
+		}
+
+		/*$departamento = $ubigeo_model->obtenerDepartamento($id_departamento);
+		$provincia = $ubigeo_model->obtenerProvincia($id_departamento,$id_provincia);
+		$distrito = $ubigeo_model->obtenerDistrito($id_departamento,$id_provincia,$id_distrito);*/
+		//$departamento=$ubigeo_model->obtenerDepartamento($tipo_proyectistas[0]->id_departamento);
+		//$departamento_numero=$tipo_proyectistas[0]->id_departamento;
+		//$departamento=$ubigeo_model->obtenerDepartamento($departamento_numero);
+
+		Carbon::setLocale('es');
+
+		// Crear una instancia de Carbon a partir de la fecha
+		$carbonDate = new Carbon($fecha_emision);
+
+		$dia = $carbonDate->format('d');
+		$mes = ltrim($carbonDate->format('m'), '0');
+		$anio = $carbonDate->format('Y');
+
+		$mesEnLetras = $this->mesesALetras($mes);
+
+		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
+
+		$fecha_vigencia = $carbonDate->addMonths($numero);
+
+		$dia_vigencia = $fecha_vigencia->day;
+		$mes_vigencia = $this->mesesALetras($fecha_vigencia->month);
+		$anio_vigencia = $fecha_vigencia->year;
+
+		// Formatear la fecha en un formato largo
+
+		$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
+		
+		$pdf = Pdf::loadView('frontend.certificado.certificado_unico_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','habilita','fecha_detallada','dia_vigencia','mes_vigencia','anio_vigencia'));
+		
+		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream();
+    	//return $pdf->download('invoice.pdf');
+		//return view('frontend.certificado.certificado_pdf');
+
 	}
 
 }

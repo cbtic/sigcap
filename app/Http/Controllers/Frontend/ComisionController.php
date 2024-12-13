@@ -907,6 +907,17 @@ class ComisionController extends Controller
 		*/
 		
 	}
+
+	public function send_generar_cuotas($id_agremiado){
+	
+		$agremiado_model = new Agremiado;
+		$p[]="".(date("Y")+1);
+		$p[]=$id_agremiado;
+		$data = $agremiado_model->crud_automatico_agremiado_cuota_fecha_individual($p);
+		
+		
+	}
+
 	
 	public function send_asignar_agremiado_rol(Request $request){
 		

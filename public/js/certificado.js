@@ -644,32 +644,25 @@ function valida_certificado(id){
 
 			//var tipo_certificado=tipo_certificado2.toString();
 
-			if(tipo_certificado=="1"){
-				certificado_tipo1_pdf(id);
-			}else if(tipo_certificado=="2"){
-				certificado_tipo2_pdf(id);
-			}else if(tipo_certificado=="3"){
-				certificado_tipo3_pdf(id);
-			}else if(tipo_certificado=="4"){
-				certificado_pdf(id);
-			}else if(tipo_certificado=="5"){
-				validez_constancia(id);
+			if(tipo_certificado=="7"){
+				constancia_habilitacion_profesional_pdf(id);
+			}else if(tipo_certificado=="8"){
+				certificado_unico_pdf(id);
 			}else if(tipo_certificado=="6"){
 				record_proyecto(id);
 			}
 		//}
 		}
 	});
-
 }
 
-function certificado_tipo1_pdf(id){
-	var href = '/certificado/certificado_tipo1_pdf/'+id;
+function constancia_habilitacion_profesional_pdf(id){
+	var href = '/certificado/constancia_pdf/'+id;
 	window.open(href, '_blank');
 }
 
-function certificado_tipo2_pdf(id){
-	var href = '/certificado/certificado_tipo2_pdf/'+id;
+function certificado_unico_pdf(id){
+	var href = '/certificado/certificado_tipo_unico_pdf/'+id;
 	window.open(href, '_blank');
 }
 

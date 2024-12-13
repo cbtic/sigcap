@@ -179,7 +179,7 @@ $.mask.definitions['p'] = "[Mm]";
 		}
 	}
 
-	function obtenerTipoCertificado(){
+function obtenerTipoCertificado(){
 	
 	var id_tipo = $("#id_tipo").val();
 
@@ -191,6 +191,8 @@ $.mask.definitions['p'] = "[Mm]";
 	$('#semisotanos_').hide();
 	$('#piso_nivel_').hide();
 	$('#total_area_techada_').hide();
+	$('#vigencia_group').hide();
+	$('#boton_agregar_cuotas').hide();
 	
 	if (id_tipo == "0")//SELECCIONAR
 	{
@@ -203,60 +205,7 @@ $.mask.definitions['p'] = "[Mm]";
 		$('#piso_nivel_').hide();
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
-	}else if (id_tipo == "1")//CERTIFICADO TIPO 1
-	{
-		$('#nombre_proyecto_').show();
-		$('#tipo_tramite_').hide();
-		//$('#nombre_proyecto_').show();
-		$('#tipo_tramite').val('0');
-		$('#tipo_tramite_certificado3_').hide();
-		$('#n_pisos_').show();
-		$('#sotanos_').show();
-		$('#semisotanos_').show();
-		$('#piso_nivel_').show();
-		$('#otro_piso_nivel_').show();
-		$('#total_area_techada_').show();
-
-	}else if (id_tipo == "2") //CERTIFICADO TIPO 2
-	{
-		$('#nombre_proyecto_').show();
-		$('#tipo_tramite_').hide();
-		//$('#nombre_proyecto_').show();
-		$('#tipo_tramite').val('0');
-		$('#tipo_tramite_certificado3_').hide();
-		$('#n_pisos_').hide();
-		$('#sotanos_').hide();
-		$('#semisotanos_').hide();
-		$('#piso_nivel_').hide();
-		$('#otro_piso_nivel_').hide();
-		$('#total_area_techada_').hide();
-	}else if (id_tipo == "3") //CERTIFICADO TIPO 3
-	{
-		$('#nombre_proyecto_').show();
-		$('#tipo_tramite_').hide();
-		//$('#nombre_proyecto_').show();
-		$('#tipo_tramite').val('0');
-		$('#tipo_tramite_certificado3_').show();
-		$('#n_pisos_').hide();
-		$('#sotanos_').hide();
-		$('#semisotanos_').hide();
-		$('#piso_nivel_').hide();
-		$('#otro_piso_nivel_').hide();
-		$('#total_area_techada_').hide();
-	}else if (id_tipo == "4") { //CERTIFICADO TIPO 4
-		$('#nombre_proyecto_').hide(); 
-		$('#tipo_tramite_').show();
-		$('#vigencia_group').show();
-		$('#nombre_proyecto').val('0');
-		$('#tipo_tramite_certificado3_').hide();
-		$('#n_pisos_').hide();
-		$('#sotanos_').hide();
-		$('#semisotanos_').hide();
-		$('#piso_nivel_').hide();
-		$('#otro_piso_nivel_').hide();
-		$('#total_area_techada_').hide();
-		//$('#tipo_tramite_').val('');
-	}else if (id_tipo == "5") { //CONSTANCIA
+	}else if (id_tipo == "7") { //CONSTANCIA
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
 		$('#vigencia_group').hide();
@@ -269,8 +218,24 @@ $.mask.definitions['p'] = "[Mm]";
 		$('#piso_nivel_').hide();
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
-	}else if (id_tipo == "6"){ //RECORD DE PROYECTOS
+		$('#boton_agregar_cuotas').hide();
+	}else if (id_tipo == "8") { //CERTIFICADO UNICO
 		$('#nombre_proyecto_').hide(); 
+		$('#tipo_tramite_').hide();
+		$('#vigencia_group').show();
+		$('#nombre_proyecto').val('0');
+		$('#tipo_tramite').val('');
+		$('#tipo_tramite_certificado3_').hide();
+		$('#n_pisos_').hide();
+		$('#sotanos_').hide();
+		$('#semisotanos_').hide();
+		$('#piso_nivel_').hide();
+		$('#otro_piso_nivel_').hide();
+		$('#total_area_techada_').hide();
+		$('#boton_agregar_cuotas').show();
+		$('#boton_agregar_cuotas button').attr('disabled', true);
+	}else if (id_tipo == "6"){ //RECORD DE PROYECTOS
+		$('#nombre_proyecto_').hide();
 		$('#tipo_tramite_').hide();
 		$('#nombre_proyecto').val('0');
 		$('#tipo_tramite').val('0');
@@ -282,6 +247,7 @@ $.mask.definitions['p'] = "[Mm]";
 		$('#piso_nivel_').hide();
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
+		$('#boton_agregar_cuotas').hide();
 	}else{ //seleccionar
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
@@ -294,76 +260,177 @@ $.mask.definitions['p'] = "[Mm]";
 		$('#piso_nivel_').hide();
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
+		$('#boton_agregar_cuotas').hide();
 	}
 }
 
+function valida_ultimo_pago(){
 
-	function fn_save() {
+	var cap = $('#cap_').val();
+	var id_tipo = $('#id_tipo').val();
 
-		var _token = $('#_token').val();
-		var id = $('#id').val();
-		var id_regional = 5;
-		var idagremiado = $('#idagremiado_').val();
-		var fecha_sol = $('#fecha_r_').val();
-		var fecha_emi = $('#fecha_e_').val();
-		var validez = $('#vigencia_').val();
-		var ev = "";
-		var codigo = $('#codigo_').val();
-		var observaciones = $('#observacion_').val();
-		var estado = 1;
-		var tipo = $('#id_tipo').val();
-		var nombre_proyecto = $('#nombre_proyecto').val();
-		var id_proyecto = $('#id_proyecto').val();
-		var tipo_tramite = $('#tipo_tramite').val();
-		var tipo_tramite_tipo3 = $('#tipo_tramite_certificado3').val();
-		var n_pisos = $('#n_pisos').val();
-		var sotanos_m2 = $('#sotanos').val();
-		var semisotano_m2 = $('#semisotanos').val();
-		var piso_nivel_m2 = $('#piso_nivel').val();
-		var otro_piso_nivel_m2 = $('#otro_piso_nivel').val();
-		var total_area_techada_m2 = $('#total_area_techada').val();
+	if(id_tipo==7){
 
 		$.ajax({
-			url: "/certificado/send_certificado",
-			type: "POST",
-			data: {
-				_token: _token,
-				id: id,
-				id_regional: id_regional,
-				observaciones: observaciones,
-				estado: estado,
-				observaciones: observaciones,
-				codigo: codigo,
-				ev: ev,
-				fecha_emi: fecha_emi,
-				validez: validez,
-				fecha_sol: fecha_sol,
-				tipo: tipo,
-				tipo_tramite:tipo_tramite,
-				id_proyecto:id_proyecto,
-				nombre_proyecto:nombre_proyecto,
-				idagremiado: idagremiado,
-				tipo_tramite_tipo3:tipo_tramite_tipo3,
-				n_pisos:n_pisos,
-				sotanos_m2:sotanos_m2,
-				semisotano_m2:semisotano_m2,
-				piso_nivel_m2:piso_nivel_m2,
-				otro_piso_nivel_m2:otro_piso_nivel_m2,
-				total_area_techada_m2:total_area_techada_m2
-			},
-			//dataType: 'json',
+			url: "/ingreso/valida_ultimo_pago/"+cap,
+			dataType: 'json',
 			success: function(result) {
-					Swal.fire("Se gener&oacute; el certificado correctamente. Puede imprimirlo en el bot&oacute;n Ver Certificado")
-					$('#openOverlayOpc').modal('hide');
-					//window.location.reload();
-					datatablenew();
-				//});
+
+				//alert(result)
+				if(result!=null){
+					fn_save();
+				}else{
+					Swal.fire("El agremiado no ha realizado el pronto pago, por lo tanto no puede acceder a la constancia")
+				}
 
 			}
 		});
-	}
+	}else if(id_tipo==8){
+
+		var categoria = $('#categoria_').val();
+
+		if(categoria!='VITALICIO'){
+			var vigencia = $('#vigencia_').val();
+
+			var fecha_actual = new Date();
+
+			var fecha_con_vigencia = new Date(fecha_actual);
+			fecha_con_vigencia.setMonth(fecha_con_vigencia.getMonth() + parseInt(vigencia));
+
+			var mes = fecha_con_vigencia.getMonth() + 1;
+
+			var anio = fecha_con_vigencia.getFullYear();
+			
+			$.ajax({
+				url: "/ingreso/validar_pago/"+cap,
+				dataType: "json",
+				success: function(result) {
+					
+					//alert(result)
+					if(result == null){
+						Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
+					}else{
+						var fecha_pagada = new Date(result.fecha);
+						var mes_pagado = fecha_pagada.getMonth() +1;
+						var anio_pagado = fecha_pagada.getFullYear();
+
+						if(anio<=anio_pagado){
+							if(mes<=mes_pagado){
+								fn_save();
+							}else{
+								Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
+							}
+
+						}else{
+							Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
+						}
+					}
+					
+				}
+			});
+		}else{
+			fn_save();
+		}
 	
-	function obtenerNombreProyecto() {
+	}else{
+		fn_save();
+	}
+}
+
+function fn_save() {
+
+	var _token = $('#_token').val();
+	var id = $('#id').val();
+	var id_regional = 5;
+	var idagremiado = $('#idagremiado_').val();
+	var fecha_sol = $('#fecha_r_').val();
+	var fecha_emi = $('#fecha_e_').val();
+	var validez = $('#vigencia_').val();
+	var ev = "";
+	var codigo = $('#codigo_').val();
+	var observaciones = $('#observacion_').val();
+	var estado = 1;
+	var tipo = $('#id_tipo').val();
+	var tipo_tramite = $('#tipo_tramite').val();
+
+	$.ajax({
+		url: "/certificado/send_certificado",
+		type: "POST",
+		data: {
+			_token: _token,
+			id: id,
+			id_regional: id_regional,
+			observaciones: observaciones,
+			estado: estado,
+			observaciones: observaciones,
+			codigo: codigo,
+			ev: ev,
+			fecha_emi: fecha_emi,
+			validez: validez,
+			fecha_sol: fecha_sol,
+			tipo: tipo,
+			tipo_tramite:tipo_tramite,
+			idagremiado: idagremiado,
+		},
+		//dataType: 'json',
+		success: function(result) {
+				Swal.fire("Se gener&oacute; el certificado correctamente. Puede imprimirlo en el bot&oacute;n Ver Certificado")
+				$('#openOverlayOpc').modal('hide');
+				//window.location.reload();
+				datatablenew();
+			//});
+
+		}
+	});
+}
+
+function validarFecha(){
+
+	var vigencia = $('#vigencia_').val();
+	var cap = $('#cap_').val();
+	var categoria = $('#categoria_').val();
+
+	var fecha_actual = new Date();
+
+    var fecha_con_vigencia = new Date(fecha_actual);
+	//alert(fecha_con_vigencia.getMonth()+1+1);
+    fecha_con_vigencia.setMonth(fecha_con_vigencia.getMonth() + parseInt(vigencia));
+	
+    var mismo_anio = fecha_actual.getFullYear() == fecha_con_vigencia.getFullYear();
+
+	if (mismo_anio) {
+        $('#boton_agregar_cuotas button').attr('disabled', true);
+    }else {
+		$.ajax({
+			url: "/ingreso/validar_todos_pago/"+cap,
+			dataType: "json",
+			success: function(result) {
+
+				var fecha_ultima_cuota = new Date(result.fecha);
+				var mes_ultima_cuota = fecha_ultima_cuota.getMonth() +1;
+				var anio_ultima_cuota = fecha_ultima_cuota.getFullYear();
+
+				if(fecha_con_vigencia.getFullYear()==parseInt(anio_ultima_cuota)){
+					$('#boton_agregar_cuotas button').attr('disabled', true);
+				}else{
+					if(categoria=='VITALICIO'){
+						Swal.fire("El agremiado esta HABILITADO pero es VITALICIO")
+					$('#boton_agregar_cuotas button').attr('disabled', true);
+					}else{
+
+						Swal.fire("El agremiado no cuenta con cuotas generadas para la vigencia solicitada, por favor, genere sus cuotas y debe ser canceladas previamente")
+						$('#boton_agregar_cuotas button').attr('disabled', false);
+
+					}
+				}
+
+			}
+		});
+        
+    }
+}
+
+function obtenerNombreProyecto() {
 
 	var ncap = $('#cap_').val();
 
@@ -388,68 +455,72 @@ $.mask.definitions['p'] = "[Mm]";
 			$("#id_proyecto").html(option);
 		}
 	});
-	}
+}
 
-	function obtenerAgremiado() {
+function obtenerAgremiado() {
 
-		var ncap = $('#cap_').val();
+	var ncap = $('#cap_').val();
 
-		$.ajax({
-			url: '/afiliacion_seguro/obtener_agremiado/' + ncap,
-			dataType: "json",
-			success: function(result) {
-				//alert(result);
-				console.log(result);
+	$.ajax({
+		url: '/afiliacion_seguro/obtener_agremiado/' + ncap,
+		dataType: "json",
+		success: function(result) {
+			//alert(result);
+			console.log(result);
 
-					$('#idagremiado_').val('');
-					$('#nombre_').val('');
-					$('#situacion_').val('');
-					$('#email_').val('');
-				//alert(result.situacion).exit();
-				if(result.situacion=='HABILITADO'){
-					$('#idagremiado_').val(result.id);
-					$('#nombre_').val(result.nombre_completo);
-					$('#situacion_').val(result.situacion);
-					$('#email_').val(result.email);
-					obtenerNombreProyecto();
-				}else if (result.situacion=='FALLECIDO'){
-					bootbox.alert("El Agremiado est&aacute; FALLECIDO");
-				}else if (result.situacion=='REGIONAL'){
-					bootbox.alert("El Agremiado pertenece a otra REGIONAL");
-				}else if (result.situacion=='INHABILITADO'){
-					bootbox.alert("El Agremiado est&aacute; INHABILITADO");
-				}else if (result.situacion=='PROVINCIA'){
-					bootbox.alert("El Agremiado est&aacute; en otra PROVINCIA");
-				}else if (result.situacion=='EXTRANJERO'){
-					bootbox.alert("El Agremiado est&aacute; en el EXTRANJERO");
-				}
-				
+				$('#idagremiado_').val('');
+				$('#nombre_').val('');
+				$('#situacion_').val('');
+				$('#email_').val('');
+				$('#categoria_').val('');
+			//alert(result.situacion).exit();
+			if(result.situacion=='HABILITADO'){
+				$('#idagremiado_').val(result.id);
+				$('#nombre_').val(result.nombre_completo);
+				$('#situacion_').val(result.situacion);
+				$('#email_').val(result.email);
+				$('#categoria_').val(result.categoria);
+				obtenerNombreProyecto();
+			}else if (result.situacion=='FALLECIDO'){
+				bootbox.alert("El Agremiado est&aacute; FALLECIDO");
+			}else if (result.situacion=='REGIONAL'){
+				bootbox.alert("El Agremiado pertenece a otra REGIONAL");
+			}else if (result.situacion=='INHABILITADO'){
+				bootbox.alert("El Agremiado est&aacute; INHABILITADO");
+			}else if (result.situacion=='PROVINCIA'){
+				bootbox.alert("El Agremiado est&aacute; en otra PROVINCIA");
+			}else if (result.situacion=='EXTRANJERO'){
+				bootbox.alert("El Agremiado est&aacute; en el EXTRANJERO");
 			}
-		});
-	}
+			
+		}
+	});
+}
 
-	function valida_pago() {
-		var idagremiado = $('#idagremiado_').val();
-		var serie = $('#serie_').val();
-		var numero = $('#numero_').val();
-		var concepto = 1;
+function valida_pago() {
 
-		$.ajax({
-			url: '/certificado/valida_pago/' + idagremiado + "/" + serie + "/" + numero + "/" + concepto,
-			dataType: "json",
-			success: function(result) {
-				//alert(result);
-				console.log(result);
+	var idagremiado = $('#idagremiado_').val();
+	var serie = $('#serie_').val();
+	var numero = $('#numero_').val();
+	var concepto = 1;
 
-				$('#fecha_e_').val(result.fecha_e);
-				$('#vigencia_').val(result.vigencia);
-				$('#codigo_').val(result.codigo);
+	$.ajax({
+		url: '/certificado/valida_pago/' + idagremiado + "/" + serie + "/" + numero + "/" + concepto,
+		dataType: "json",
+		success: function(result) {
+			//alert(result);
+			console.log(result);
 
-			}
+			$('#fecha_e_').val(result.fecha_e);
+			$('#vigencia_').val(result.vigencia);
+			$('#codigo_').val(result.codigo);
 
-		});
+		}
 
-	}
+	});
+
+}
+
 </script>
 
 
@@ -488,14 +559,14 @@ $.mask.definitions['p'] = "[Mm]";
 									<input type="text" name="cap_" id="cap_" value="<?php echo $cap_numero ?>" placeholder="" class="form-control form-control-sm">
 								</div>
 							</div>
-							<div class="col-lg-2" style="padding-top:12px;padding-left:0px;padding-right:0px">
+							<div class="col-lg-1" style="padding-top:12px;padding-left:0px;padding-right:0px">
 								<br>
 								<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onClick="obtenerAgremiado('<?php echo $id ?>')">
 									Buscar
 								</button>
 							</div>
 
-							<div class="col-lg-6">
+							<div class="col-lg-5">
 								<div class="form-group">
 									<label class="control-label">Apellidos y Nombres</label>
 									<input id="nombre_" name="nombre_" class="form-control form-control-sm" value="<?php echo $desc_cliente ?>" type="text" readonly>
@@ -507,6 +578,12 @@ $.mask.definitions['p'] = "[Mm]";
 								<div class="form-group">
 									<label class="control-label">Situaci&oacute;n</label>
 									<input id="situacion_" name="situacion_" class="form-control form-control-sm" value="<?php echo $situacion ?>" type="text" readonly>
+								</div>
+							</div>
+							<div class="col-lg-2">
+								<div class="form-group">
+									<label class="control-label">Categor&iacute;a</label>
+									<input id="categoria_" name="categoria_" class="form-control form-control-sm" value="<?php echo $categoria ?>" type="text" readonly>
 								</div>
 							</div>
 						</div>
@@ -648,34 +725,46 @@ $.mask.definitions['p'] = "[Mm]";
 									</select>
 								</div>
 							</div>
-							<div class="form-group" id="tipo_tramite_certificado3_">
+							<!--<div class="form-group" id="tipo_tramite_certificado3_">
 								<div class="col-lg-12">
 									<label class="control-label">Tipo de Tramite</label>
 									<select name="tipo_tramite_certificado3" id="tipo_tramite_certificado3" class="form-control form-control-sm" onChange="obtenerTipoCertificado">
 										<option value="0">--Selecionar--</option>
 										<?php
-										foreach ($tipo_tramite_tipo3 as $row) { ?>
-											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $certificado->id_tipo_tramite) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+										//foreach ($tipo_tramite_tipo3 as $row) { ?>
+											<option value="<?php //echo $row->codigo ?>" <?php //if ($row->codigo == $certificado->id_tipo_tramite) echo "selected='selected'" ?>><?php //echo $row->denominacion ?></option>
 										<?php
-										}
+										//}
 										?>
 									</select>
 								</div>
-							</div>
+							</div>-->
 							<div class="form-group" id="vigencia_group">
 								<div class="col-lg-12">
-									<label class="control-label">D&iacute;as Vigencia</label>
-									<select name="vigencia_" id="vigencia_" class="form-control form-control-sm">
+									<label class="control-label">Meses Vigencia</label>
+									<select name="vigencia_" id="vigencia_" class="form-control form-control-sm" onchange="validarFecha()">
 										<?php
 										$valorSeleccionado = isset($certificado->dias_validez) ? $certificado->dias_validez : '30';
 										?>
-									<option value="" <?php echo ($valorSeleccionado == '') ? 'selected="selected"' : ''; ?>>--Dias Vigencia--</option>
-									<option value="30" <?php echo ($valorSeleccionado == '30') ? 'selected="selected"' : ''; ?>>30 D&iacute;as</option>
-									<option value="60" <?php echo ($valorSeleccionado == '60') ? 'selected="selected"' : ''; ?>>60 D&iacute;as</option>
-									<option value="90" <?php echo ($valorSeleccionado == '90') ? 'selected="selected"' : ''; ?>>90 D&iacute;as</option>
+									<option value="" <?php echo ($valorSeleccionado == '') ? 'selected="selected"' : ''; ?>>--Meses Vigencia--</option>
+									<option value="1" <?php echo ($valorSeleccionado == '1') ? 'selected="selected"' : ''; ?>>1 Mes</option>
+									<option value="3" <?php echo ($valorSeleccionado == '3') ? 'selected="selected"' : ''; ?>>3 Meses</option>
+									<option value="6" <?php echo ($valorSeleccionado == '6') ? 'selected="selected"' : ''; ?>>6 Meses</option>
+									<option value="9" <?php echo ($valorSeleccionado == '9') ? 'selected="selected"' : ''; ?>>9 Meses</option>
+									<option value="12" <?php echo ($valorSeleccionado == '12') ? 'selected="selected"' : ''; ?>>12 Meses</option>
 									</select>
 								</div>
 							</div>
+
+							<div style="margin-top:10px" class="form-group" id="boton_agregar_cuotas">
+								<div class="col-sm-12 controls">
+									<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+										<button type="button" onClick="generarCuotas()" class="btn btn-sm btn-danger" style="margin-top:20px" disabled>Generar Cuota Proximo Periodo</button>
+
+									</div>
+								</div>
+							</div>
+
 							<div class="form-group">
 								<div class="col-lg-12">
 									<label class="control-label">Codigo</label>
@@ -697,7 +786,7 @@ $.mask.definitions['p'] = "[Mm]";
 							<div style="margin-top:10px" class="form-group">
 								<div class="col-sm-12 controls">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-										<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>
+										<a href="javascript:void(0)" onClick="valida_ultimo_pago()" class="btn btn-sm btn-success">Guardar</a>
 
 									</div>
 								</div>
@@ -749,4 +838,41 @@ $.mask.definitions['p'] = "[Mm]";
 
 
 		});
+
+
+		function generarCuotas() {
+			
+			var idagremiado = $("#idagremiado_").val();
+			
+			//alert(idagremiado);return false;
+
+			var msgLoader = "";
+			msgLoader = "Procesando, espere un momento por favor";
+			var heightBrowser = $(window).width()/2;
+			$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+			$('.loader').show();
+			
+			$.ajax({
+					url: "/comision/send_generar_cuotas/"+idagremiado,
+					type: "GET",
+					//data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
+					//data : $("#frmComision").serialize(),
+					//data : {idagremiado:idagremiado}
+					success: function (result) {  
+						/*
+						bootbox.alert("Se cerro correctamente la asignaci&oacute;n de plaza"); 
+						cargarMunicipalidades();
+						cargarMunicipalidadesIntegradas();
+						cargarComisiones();
+						*/
+						$('#openOverlayOpc').modal('hide');
+						$('.loader').hide();
+						return false;
+					}
+			});
+
+
+		}
+
+
 	</script>
