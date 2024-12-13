@@ -277,12 +277,75 @@ function valida_ultimo_pago(){
 			success: function(result) {
 
 				//alert(result)
-				if(result!=null){
-					fn_save();
-				}else{
-					Swal.fire("El agremiado no ha realizado el pronto pago, por lo tanto no puede acceder a la constancia")
+				
+				let mesesInhabilitados = [];
+
+				var msg = "";
+
+				var tiene_msg = false;
+
+				$(result).each(function (ii, oo) {
+
+					if(oo.fecha_pago!=null){
+						const meses = [
+							"Ene", "Feb", "Mar", "Abr", "May", "Jun", 
+							"Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
+						];
+						
+						const fechaVencimiento = new Date(oo.fecha_vencimiento);
+						const fechaPago = new Date(oo.fecha_pago);
+						var excede_meses = false;
+
+						/*const fechaLimite = new Date(fechaVencimiento);
+						//fechaLimite.setMonth(fechaLimite.getMonth() + 2);
+
+						const fechaOriginal = fechaLimite.getDate();
+						fechaLimite.setMonth(fechaLimite.getMonth() + 2);
+
+						if(fechaLimite.getDate() < fechaOriginal){
+							fechaLimite.setDate(0);
+						}*/
+
+						let fechaLimite = new Date(fechaVencimiento);
+
+						let mes = fechaLimite.getMonth() + 2; 
+						let año = fechaLimite.getFullYear();
+
+						if (mes > 11) { 
+							mes -= 12;
+							año += 1;
+						}
+
+						fechaLimite = new Date(año, mes + 1, 0); 
+
+						if (fechaPago > fechaLimite) {
+							excede_meses=true;
+							const mesVencimiento = meses[fechaVencimiento.getMonth()];
+							mesesInhabilitados.push(mesVencimiento);
+						} else {
+							excede_meses=false;
+						}
+					}else{
+						tiene_msg=true;
+						//msg+="El agremiado no ha realizado los pagos, por lo tanto no puede acceder a la constancia<br>";
+					}
+					//alert(oo.fecha_vencimiento +"-"+excede_meses)
+
+				});
+
+				if(tiene_msg==true){
+					msg+="El agremiado no ha realizado los pagos, por lo tanto no puede acceder a la constancia<br>";
 				}
 
+				if(mesesInhabilitados.length > 0 && !tiene_msg){
+					msg+="El agremiado estuvo INHABILITADO por no pagar a tiempo en los siguientes meses: " + mesesInhabilitados.join(", ") + ". Por lo que no se puede emitir la constancia.<br>";
+				}
+
+				bootbox.alert(msg);
+
+				if(msg==""){
+					fn_save();
+				}
 			}
 		});
 	}else if(id_tipo==8){

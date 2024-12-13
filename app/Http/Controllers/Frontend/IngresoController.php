@@ -1134,9 +1134,11 @@ class IngresoController extends Controller
         
         $año_actual = Carbon::now()->year;
         
-		$pago_pronto_pago = $valorizacion_model->getProntoPago($cap, $año_actual);
+		$fecha_vencimiento_pago = $valorizacion_model->getFechaVencimientoPagos($cap, $año_actual);
 		
-		echo json_encode($pago_pronto_pago);
+        //dd($fecha_vencimiento_pago).exit();
+
+		echo json_encode($fecha_vencimiento_pago);
 	}
 
     public function validar_pago($cap){
