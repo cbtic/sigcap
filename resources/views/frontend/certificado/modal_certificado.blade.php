@@ -271,18 +271,32 @@ function valida_ultimo_pago(){
 
 	if(id_tipo==7){
 
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		var heightBrowser = $(window).width()/2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+
 		$.ajax({
 			url: "/ingreso/valida_ultimo_pago/"+cap,
 			dataType: 'json',
 			success: function(result) {
-
-				//alert(result)
 				
 				let mesesInhabilitados = [];
 
 				var msg = "";
 
 				var tiene_msg = false;
+
+				var cantidad_meses = result.length;
+
+				//alert(cantidad_meses);
+
+				if(cantidad_meses!=12){
+					$('.loader').hide();
+					bootbox.alert("El agremiado no tiene 12 cuotas del año en curso, no puede acceder a la constancia");
+					return;
+				}
 
 				$(result).each(function (ii, oo) {
 
@@ -295,16 +309,6 @@ function valida_ultimo_pago(){
 						const fechaVencimiento = new Date(oo.fecha_vencimiento);
 						const fechaPago = new Date(oo.fecha_pago);
 						var excede_meses = false;
-
-						/*const fechaLimite = new Date(fechaVencimiento);
-						//fechaLimite.setMonth(fechaLimite.getMonth() + 2);
-
-						const fechaOriginal = fechaLimite.getDate();
-						fechaLimite.setMonth(fechaLimite.getMonth() + 2);
-
-						if(fechaLimite.getDate() < fechaOriginal){
-							fechaLimite.setDate(0);
-						}*/
 
 						let fechaLimite = new Date(fechaVencimiento);
 
@@ -327,9 +331,7 @@ function valida_ultimo_pago(){
 						}
 					}else{
 						tiene_msg=true;
-						//msg+="El agremiado no ha realizado los pagos, por lo tanto no puede acceder a la constancia<br>";
 					}
-					//alert(oo.fecha_vencimiento +"-"+excede_meses)
 
 				});
 
@@ -341,13 +343,19 @@ function valida_ultimo_pago(){
 					msg+="El agremiado estuvo INHABILITADO por no pagar a tiempo en los siguientes meses: " + mesesInhabilitados.join(", ") + ". Por lo que no se puede emitir la constancia.<br>";
 				}
 
-				bootbox.alert(msg);
+				
 
 				if(msg==""){
+					$('.loader').hide();
 					fn_save();
+				}else {
+					$('.loader').hide();
+					bootbox.alert(msg);
 				}
+
 			}
 		});
+
 	}else if(id_tipo==8){
 
 		var categoria = $('#categoria_').val();
@@ -363,6 +371,12 @@ function valida_ultimo_pago(){
 			var mes = fecha_con_vigencia.getMonth() + 1;
 
 			var anio = fecha_con_vigencia.getFullYear();
+
+			var msgLoader = "";
+			msgLoader = "Procesando, espere un momento por favor";
+			var heightBrowser = $(window).width()/2;
+			$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+			$('.loader').show();
 			
 			$.ajax({
 				url: "/ingreso/validar_pago/"+cap,
@@ -371,6 +385,7 @@ function valida_ultimo_pago(){
 					
 					//alert(result)
 					if(result == null){
+						$('.loader').hide();
 						Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
 					}else{
 						var fecha_pagada = new Date(result.fecha);
@@ -379,12 +394,15 @@ function valida_ultimo_pago(){
 
 						if(anio<=anio_pagado){
 							if(mes<=mes_pagado){
+								$('.loader').hide();
 								fn_save();
 							}else{
+								$('.loader').hide();
 								Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
 							}
 
 						}else{
+							$('.loader').hide();
 							Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
 						}
 					}
