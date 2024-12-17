@@ -806,7 +806,7 @@ Route::get('planilla/eliminar_recibo_honorario/{id}/{estado}', [PlanillaDelegado
 
 Route::get('suspension/actualizarSuspensionAgremiado', [SuspensionController::class, 'actualizarSuspensionAgremiado'])->name('suspension.actualizarSuspensionAgremiado');
 Route::get('certificado/certificado_tipo_unico_pdf/{id}', [CertificadoController::class, 'certificado_tipo_unico_pdf'])->name('certificado.certificado_tipo_unico_pdf');
-Route::get('ingreso/valida_ultimo_pago/{cap}', [IngresoController::class, 'valida_ultimo_pago'])->name('ingreso.valida_ultimo_pago');
+Route::get('ingreso/valida_ultimo_pago/{cap}/{anio}', [IngresoController::class, 'valida_ultimo_pago'])->name('ingreso.valida_ultimo_pago');
 
 Route::get('sesion/test_excel', [SesionController::class, 'test_excel'])->name('sesion.test_excel');
 

@@ -168,10 +168,10 @@ $(document).ready(function() {
             <p class="contenido_cuerpo" >Se encuentra <?php echo $inscripcion;?> desde el <?php echo $fecha_inscripcion_detallada;?> en los registros de 
                             nuestra Institución como Miembro de la Orden con el n&uacute;mero de CAP  <?php echo $datos[0]->numero_cap;?> y
                             n&uacute;mero de registro <?php echo $datos[0]->numero_regional;?> en la Regional Lima y ha cancelado sus cuotas
-                            institucionales de enero a diciembre de 2024.</p>
+                            institucionales de enero a diciembre de <?php echo $anio_certificado?>.</p>
 
             <p class="contenido_cuerpo">Por lo tanto, se encuentra <?php echo $colegia;?> y <?php echo $habilita_mayus;?> para ejercer la profesi&oacute;n
-                hasta el 31 de diciembre del 2024</p>
+                hasta el 31 de diciembre del <?php echo $anio_certificado?></p>
             <p></p>
             
             <p class="contenido_cuerpo">Extendemos la presente constancia, para los fines que estime pertinentes.</p>
