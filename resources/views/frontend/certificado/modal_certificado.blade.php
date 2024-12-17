@@ -132,6 +132,10 @@ $.mask.definitions['p'] = "[Mm]";
 		//$('#hora_solicitud').focus();
 		//$('#hora_solicitud').mask('00:00');
 		//$("#id_empresa").select2({ width: '100%' });
+		if($("#id").val()>0){
+			$("#cap_").attr('readonly',true)
+			$("#observacion_").attr('readonly',true)
+		}
 	});
 </script>
 
@@ -193,6 +197,7 @@ function obtenerTipoCertificado(){
 	$('#total_area_techada_').hide();
 	$('#vigencia_group').hide();
 	$('#boton_agregar_cuotas').hide();
+	$('#anios').hide();
 	
 	if (id_tipo == "0")//SELECCIONAR
 	{
@@ -205,6 +210,7 @@ function obtenerTipoCertificado(){
 		$('#piso_nivel_').hide();
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
+		$('#anios').hide();
 	}else if (id_tipo == "7") { //CONSTANCIA
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
@@ -219,6 +225,7 @@ function obtenerTipoCertificado(){
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').hide();
+		$('#anios').show();
 	}else if (id_tipo == "8") { //CERTIFICADO UNICO
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
@@ -234,6 +241,7 @@ function obtenerTipoCertificado(){
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').show();
 		$('#boton_agregar_cuotas button').attr('disabled', true);
+		$('#anios').hide();
 	}else if (id_tipo == "6"){ //RECORD DE PROYECTOS
 		$('#nombre_proyecto_').hide();
 		$('#tipo_tramite_').hide();
@@ -248,6 +256,7 @@ function obtenerTipoCertificado(){
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').hide();
+		$('#anios').hide();
 	}else{ //seleccionar
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
@@ -261,6 +270,7 @@ function obtenerTipoCertificado(){
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').hide();
+		$('#anios').hide();
 	}
 }
 
@@ -268,6 +278,7 @@ function valida_ultimo_pago(){
 
 	var cap = $('#cap_').val();
 	var id_tipo = $('#id_tipo').val();
+	var anio = $('#anio_certificado').val();
 
 	if(id_tipo==7){
 
@@ -278,7 +289,7 @@ function valida_ultimo_pago(){
 		$('.loader').show();
 
 		$.ajax({
-			url: "/ingreso/valida_ultimo_pago/"+cap,
+			url: "/ingreso/valida_ultimo_pago/"+cap+"/"+anio,
 			dataType: 'json',
 			success: function(result) {
 				
@@ -342,8 +353,6 @@ function valida_ultimo_pago(){
 				if(mesesInhabilitados.length > 0 && !tiene_msg){
 					msg+="El agremiado estuvo INHABILITADO por no pagar a tiempo en los siguientes meses: " + mesesInhabilitados.join(", ") + ". Por lo que no se puede emitir la constancia.<br>";
 				}
-
-				
 
 				if(msg==""){
 					$('.loader').hide();
@@ -433,6 +442,7 @@ function fn_save() {
 	var estado = 1;
 	var tipo = $('#id_tipo').val();
 	var tipo_tramite = $('#tipo_tramite').val();
+	var anio = $('#anio_certificado').val();
 
 	$.ajax({
 		url: "/certificado/send_certificado",
@@ -452,6 +462,7 @@ function fn_save() {
 			tipo: tipo,
 			tipo_tramite:tipo_tramite,
 			idagremiado: idagremiado,
+			anio:anio,
 		},
 		//dataType: 'json',
 		success: function(result) {
@@ -642,9 +653,11 @@ function valida_pago() {
 							</div>
 							<div class="col-lg-1" style="padding-top:12px;padding-left:0px;padding-right:0px">
 								<br>
+								<?php if($id==0){?>
 								<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onClick="obtenerAgremiado('<?php echo $id ?>')">
 									Buscar
 								</button>
+								<?php }?>
 							</div>
 
 							<div class="col-lg-5">
@@ -836,6 +849,24 @@ function valida_pago() {
 									</select>
 								</div>
 							</div>
+							<div class="form-group" id="anios">
+								<div class="col-lg-12">
+									<label class="control-label">Año</label>
+									<?php if($id==0 || $certificado->anio_certificado >= $anioActual){?>
+									<select name="anio_certificado" id="anio_certificado" class="form-control form-control-sm">
+										<option value="0">--Selecionar--</option>
+										<?php
+										foreach ($anios as $row) { ?>
+											<option value="<?php echo $row['id'] ?>" <?php if ($row['id'] == $certificado->anio_certificado) echo "selected='selected'" ?>><?php echo $row['anio'] ?></option>
+										<?php
+										}
+										?>
+									</select>
+									<?php }else{?>
+										<input id="anio_certificado" name="anio_certificado" class="form-control form-control-sm" value="<?php echo $certificado->anio_certificado?>" type="text" readonly>
+									<?php }?>
+								</div>
+							</div>
 
 							<div style="margin-top:10px" class="form-group" id="boton_agregar_cuotas">
 								<div class="col-sm-12 controls">
@@ -867,8 +898,11 @@ function valida_pago() {
 							<div style="margin-top:10px" class="form-group">
 								<div class="col-sm-12 controls">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+										<?php if($id==0){?>
 										<a href="javascript:void(0)" onClick="valida_ultimo_pago()" class="btn btn-sm btn-success">Guardar</a>
-
+										<?php }else {?>
+											<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide');window.location.reload();" class="btn btn-md btn-warning">Cerrar</a>
+										<?php }?>
 									</div>
 								</div>
 							</div>
