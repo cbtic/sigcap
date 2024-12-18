@@ -135,6 +135,8 @@ $.mask.definitions['p'] = "[Mm]";
 		if($("#id").val()>0){
 			$("#cap_").attr('readonly',true)
 			$("#observacion_").attr('readonly',true)
+			$("#anio_certificado").attr('disabled',true)
+			
 		}
 	});
 </script>
