@@ -379,6 +379,7 @@ Route::get('comision/obtener_municipalidadesIntegradas/{periodo}/{tipo_agrupacio
 Route::post('comision/listar_municipalidad_integrada_ajax', [ComisionController::class, 'listar_municipalidad_integrada_ajax'])->name('comision.listar_municipalidad_integrada_ajax');
 Route::get('comision/consulta_municipalidadIntegrada', [ComisionController::class, 'consulta_municipalidadIntegrada'])->name('comision.consulta_municipalidadIntegrada');
 Route::post('comision/send_asignar_agremiado_rol', [ComisionController::class, 'send_asignar_agremiado_rol'])->name('comision.send_asignar_agremiado_rol');
+Route::get('comision/send_generar_cuotas/{id_agremiado}', [ComisionController::class, 'send_generar_cuotas'])->name('comision.send_generar_cuotas');
 
 Route::get('comision/send_asignar_agremiado_rol2', [ComisionController::class, 'send_asignar_agremiado_rol2'])->name('comision.send_asignar_agremiado_rol2');
 
@@ -452,7 +453,9 @@ Route::get('sesion/ver_delegado_coordinador_excel/{id_periodo}/{anio}/{mes}', [S
 
 Route::get('sesion/calendario_sesion_pdf/{id}', [SesionController::class, 'calendario_sesion_pdf'])->name('sesion.calendario_sesion_pdf');
 Route::get('sesion/ver_calendario_sesion_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_pdf'])->name('sesion.ver_calendario_sesion_pdf');
+Route::get('sesion/ver_calendario_sesion_excel/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_excel'])->name('sesion.ver_calendario_sesion_excel');
 Route::get('sesion/ver_calendario_sesion_coordinador_zonal_pdf/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_coordinador_zonal_pdf'])->name('sesion.ver_calendario_sesion_coordinador_zonal_pdf');
+Route::get('sesion/ver_calendario_sesion_coordinador_zonal_excel/{id_periodo}/{anio}/{mes}', [SesionController::class, 'ver_calendario_sesion_coordinador_zonal_excel'])->name('sesion.ver_calendario_sesion_coordinador_zonal_excel');
 
 Route::get('sesion/eliminar_computo_sesion/{id}', [SesionController::class, 'eliminar_computo_sesion'])->name('sesion.eliminar_computo_sesion');
 Route::get('sesion/eliminar_comision_sesion_delegados/{id}', [SesionController::class, 'eliminar_comision_sesion_delegados'])->name('sesion.eliminar_comision_sesion_delegados');
@@ -802,4 +805,11 @@ Route::get('ingreso/modal_concepto_reporte/{numero_cap}', [IngresoController::cl
 Route::get('planilla/eliminar_recibo_honorario/{id}/{estado}', [PlanillaDelegadoController::class, 'eliminar_recibo_honorario'])->name('planilla.eliminar_recibo_honorario');
 
 Route::get('suspension/actualizarSuspensionAgremiado', [SuspensionController::class, 'actualizarSuspensionAgremiado'])->name('suspension.actualizarSuspensionAgremiado');
+Route::get('certificado/certificado_tipo_unico_pdf/{id}', [CertificadoController::class, 'certificado_tipo_unico_pdf'])->name('certificado.certificado_tipo_unico_pdf');
+Route::get('ingreso/valida_ultimo_pago/{cap}/{anio}', [IngresoController::class, 'valida_ultimo_pago'])->name('ingreso.valida_ultimo_pago');
+
+Route::get('sesion/test_excel', [SesionController::class, 'test_excel'])->name('sesion.test_excel');
+
+Route::get('ingreso/validar_pago/{cap}', [IngresoController::class, 'validar_pago'])->name('ingreso.validar_pago');
+Route::get('ingreso/validar_todos_pago/{cap}', [IngresoController::class, 'validar_todos_pago'])->name('ingreso.validar_todos_pago');
 

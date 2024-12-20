@@ -49,8 +49,8 @@ class IngresoController extends Controller
         $tipo_documento = $caja_model->getMaestroByTipo(16);
         $pronto_pago = ProntoPago::where("estado","1")->first();
                 
-        //$concepto = Concepto::find(26411); //CUOTA GREMIAL
-        $concepto = Concepto::find(-1);
+        $concepto = Concepto::where("id","26411")->first(); //CUOTA GREMIAL
+        //$concepto = Concepto::find(-1);
 
         $mes = [
             '' => 'Todos Meses','01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
@@ -1126,6 +1126,38 @@ class IngresoController extends Controller
         $concepto = $conceptos_model->getConceptoAllDenominacion2();
 
 		return view('frontend.ingreso.modal_concepto_reporte',compact('numero_cap','concepto'));
+	}
+
+    public function valida_ultimo_pago($cap, $anio){
+		
+		$valorizacion_model = new Valorizacione;
+        
+        //$año_actual = Carbon::now()->year;
+
+        
+		$fecha_vencimiento_pago = $valorizacion_model->getFechaVencimientoPagos($cap, $anio);
+		
+        //dd($fecha_vencimiento_pago).exit();
+
+		echo json_encode($fecha_vencimiento_pago);
+	}
+
+    public function validar_pago($cap){
+		
+		$valorizacion_model = new Valorizacione;
+        
+		$ultimo_pago = $valorizacion_model->getUltimoPago($cap);
+		
+		echo json_encode($ultimo_pago);
+	}
+
+    public function validar_todos_pago($cap){
+		
+		$valorizacion_model = new Valorizacione;
+        
+		$ultima_cuota = $valorizacion_model->getUltimaCuota($cap);
+		
+		echo json_encode($ultima_cuota);
 	}
 
 }

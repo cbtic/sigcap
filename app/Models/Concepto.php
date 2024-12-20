@@ -52,7 +52,7 @@ class Concepto extends Model
 
         $cad = "select *
                 from conceptos
-                where estado='1'and codigo = '00002'
+                where estado='1'and codigo = '00006'
                 order by denominacion ";
     
 		$data = DB::select($cad);
