@@ -469,7 +469,13 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                             </tr>
                                                             @endforeach
                                                             <tr id="fila_sub_total">
-                                                                <td class="text-right" colspan="4">OP.GRAVADAS <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                <td class="text-right" colspan="4">
+                                                                    @if($factura->impuesto!=0)
+                                                                        {{"  OP.GRAVADAS "}}
+                                                                    @else
+                                                                        {{"  OP.INAFECTAS "}}
+                                                                    @endif                                                        
+                                                                <span class="moneda"><?php echo $modeda?></span> </td>
                                                                 <td class="text-right">{{ number_format($factura->subtotal,2)  }}</td>
                                                             </tr>
                                                             <tr id="fila_igv">
