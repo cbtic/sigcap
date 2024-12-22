@@ -805,6 +805,8 @@ class ComprobanteController extends Controller
 
                 ///redondeo///
                 $total_pagar = $request->total_pagar;
+                //print_r("total_pagar="); 
+                //print_r($total_pagar); 
                 if ($total_pagar!="0"){                         
                     $total_pagar = $request->total_pagar;
                     $total_g = $request->totalF;
@@ -817,6 +819,9 @@ class ComprobanteController extends Controller
 
                 $total_pagar_abono = $request->total_pagar_abono;
                 $total_abono= 0;
+
+                //print_r("total_pagar_abono="); 
+                //print_r($total_pagar_abono); 
 
                 if ($total_pagar_abono!="0"){                         
                     $total_pagar_abono = $request->total_pagar_abono;
