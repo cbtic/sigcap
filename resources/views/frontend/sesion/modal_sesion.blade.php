@@ -256,14 +256,17 @@ function importarDatalicenciaDictamenes(){
 		type: "GET",
 		success: function(result){
 
+			//$('.loader').hide();
+			//cargarDictamenNuevo(id_sesion);
+			//bootbox.alert("Se import&oacute; exitosamente los datos"); 
+			//datatablenew();
+			
 			$('.loader').hide();
-			
-			//cargarDelegados();
+			var id = $("#id").val();
+			modalSesion(id);
+			cargarDelegados();
 			cargarDictamenNuevo(id_sesion);
-			
 			bootbox.alert("Se import&oacute; exitosamente los datos"); 
-			
-			datatablenew();
 			
 		}
 	});

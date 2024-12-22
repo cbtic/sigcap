@@ -85,22 +85,12 @@
 	
 }
 
-.contenido_encabezado{
-    font-family: 'Arial MT', Arial, sans-serif;
-    text-align: center;
-    font-size: 18px !important;
-}
-
-.contenido_encabezado_cap{
-    font-family: 'Arial MT', Arial, sans-serif;
-    text-align: center;
-    font-size: 16px !important;
-}
-
 .contenido_cuerpo{
     font-family: 'Arial MT', Arial, sans-serif;
     text-align: justify;
     font-size: 16px;
+    margin-left:60px; 
+    margin-right:20px;
 }
 
 .contenido_pie{
@@ -159,32 +149,36 @@ $(document).ready(function() {
         <div style="text-align: center; height: 100px; position: relative;">
             <img width="196px" height="58px" style="margin-top:50px;" src="img/logo_cap.jpg">
         <div>
-    <h2 style="text-align:center">CONSTANCIA</h2>
-    <p style="text-align:center">  EL COLEGIO DE ARQUITECTOS DEL PER&Uacute; - REGIONAL LIMA, </p>
-    <p style="text-align:left">  Deja constancia que: </p>
+    <p class="contenido_cuerpo" style="text-align: right !important;">N° <?php echo $datos[0]->codigo;?></p>
+    <h2 style="text-align:center">CERTIFICADO &Uacute;NICO DE HABILITACI&Oacute;N PROFESIONAL</h2>
+    <p class="contenido_cuerpo">  Por el presente el Colegio de Arquitectos del Per&uacute; - Regional Lima certifica que <?php echo $articulo;?> </p>
         <div class="contenido">
-            <h3 class="contenido_encabezado" > <b> ARQ. <?php echo $datos[0]->agremiado;?> </b></h3>
-            <h3 class="contenido_encabezado_cap"> CAP <?php echo $datos[0]->numero_cap;?> </h3>
-            <p class="contenido_cuerpo" >Se encuentra <?php echo $inscripcion;?> desde el <?php echo $fecha_inscripcion_detallada;?> en los registros de 
-                            nuestra Institución como Miembro de la Orden con el n&uacute;mero de CAP  <?php echo $datos[0]->numero_cap;?> y
-                            n&uacute;mero de registro <?php echo $datos[0]->numero_regional;?> en la Regional Lima y ha cancelado sus cuotas
-                            institucionales de enero a diciembre de <?php echo $anio_certificado?>.</p>
+            <h3 style="text-align:center"> <b> ARQ. <?php echo $datos[0]->agremiado;?> </b></h3>
+            <p class="contenido_cuerpo">con colegiatura N° <?php echo $datos[0]->numero_cap;?> e incripci&oacute;n en la Regional Lima con el N°
+                            <?php echo $datos[0]->numero_regional;?> se encuentra <?php echo $habilita;?> PARA EL EJERCICIO
+                            PROFESIONAL de acuerdo con lo establecido en el art.°. 3 del Reglamento
+                            de la Ley Nº 28966 (Ley que complementa el marco legal vigente referido al
+                            ejercicio profesional del Arquitecto aprobado por el D.S. N.º 005-2011-
+                            VIVIENDA) y en el Art. N.º 4 del Estatuto del Colegio de Arquitectos del
+                            Perú.</p>
 
-            <p class="contenido_cuerpo">Por lo tanto, se encuentra <?php echo $colegia;?> y <?php echo $habilita_mayus;?> para ejercer la profesi&oacute;n
-                hasta el 31 de diciembre del <?php echo $anio_certificado?></p>
-            <p></p>
-            
-            <p class="contenido_cuerpo">Extendemos la presente constancia, para los fines que estime pertinentes.</p>
-            
-            <p></p>
+            <p class="contenido_cuerpo">Se expide el presente certificado a solicitud del interesado para los
+                            fines que estime pertinentes.
+
             <p class="contenido_cuerpo" style="text-align: right !important;">Lima, <?php echo $fecha_detallada;?></p>
-           
+            
             <div style="text-align: center; position: relative; height: 100px;">
                 <img width="200px" height="80px" src="img/firma_sello_decano_Jorge_Ruiz.jpeg">
             <div>
             
             <p class="contenido_cuerpo" style="text-align: center !important;margin-bottom: 50px; ">FIRMA Y SELLO DEL DECANO REGIONAL</p>
-            <br></br>
+            <p class="contenido_cuerpo">Vigencia: Hasta el <?php echo $dia_vigencia; ?> de <?php echo $mes_vigencia; ?> del <?php echo $anio_vigencia; ?>.
+            <p class="contenido_pie"><b>Nota:</b>
+            <p class="contenido_pie" style="margin-bottom: 0;"><b>1.	 El presente certificado es obligatorio para demostrar la habilitación profesional
+                            del titular en todos los casos que requiera acreditarse para realizar actividades propias del
+                            ejercicio profesional del arquitecto.</b></p>
+            <p class="contenido_pie" style="margin-top: 0;"><b>2.	 El presente certificado queda nulo cuando, durante el periodo de vigencia de este, el
+                            arquitecto obtiene una sanción de ética en última instancia.</b></p>
             <p class="info_pie" style="margin-bottom: 0; margin-top: 0;"> Av. San Felipe 999 - Jesús María 15072. Teléfono (01) 6271200 / 6271201, e-mail:</p>
             <p class="info_pie" style="margin-bottom: 0; margin-top: 0;"><a href="mailto:mesadepartesvirtual@limacap.org">mesadepartesvirtual@limacap.org</a></p>
             <p class="info_pie" style="margin-bottom: 0; margin-top: 0;"><a href="https://www.limacap.org" target="_blank">www.limacap.org</a></p>

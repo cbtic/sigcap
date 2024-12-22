@@ -638,4 +638,57 @@ class Valorizacione extends Model
         return $data;
     }
 
+    function getProntoPago($cap, $año_actual){
+
+        $cad = "select v.id, v.id_pronto_pago from valorizaciones v 
+        inner join agremiados a on v.id_agremido = a.id 
+        inner join pronto_pagos pp on v.id_pronto_pago = pp.id
+        where a.numero_cap ='".$cap."' and pp.periodo ='".$año_actual."' 
+        limit 1 ";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        if($data)return $data[0];
+    }
+
+    function getFechaVencimientoPagos($cap, $anio){
+
+        $cad = "select v.id, to_char(v.fecha,'yyyy-mm-dd') fecha_vencimiento, to_char(c.fecha_pago,'yyyy-mm-dd') fecha_pago from valorizaciones v 
+        inner join agremiados a on v.id_agremido = a.id 
+        left join comprobantes c on v.id_comprobante = c.id
+        where a.numero_cap ='".$cap."' and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$anio."' 
+        and id_modulo ='2'
+        order by id desc";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        //if($data)return $data[0];
+        return $data;
+    }
+
+    function getUltimoPago($cap){
+
+        $cad = "select v.id, v.fecha, v.pagado from valorizaciones v 
+        inner join agremiados a on v.id_agremido = a.id 
+        where a.numero_cap ='".$cap."' and id_modulo ='2' and pagado ='1'
+        order by v.id desc
+        limit 1";
+
+        //echo $cad;
+        $data = DB::select($cad);
+        if($data)return $data[0];
+    }
+
+    function getUltimaCuota($cap){
+
+        $cad = "select v.id, v.fecha, v.pagado from valorizaciones v 
+        inner join agremiados a on v.id_agremido = a.id 
+        where a.numero_cap ='".$cap."' and id_modulo ='2'
+        order by v.id desc
+        limit 1";
+
+        //echo $cad;
+        $data = DB::select($cad);
+        if($data)return $data[0];
+    }
 }
