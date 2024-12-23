@@ -1435,13 +1435,13 @@ function validar(tipo) {
 
 	if(cboPeriodo_b!="" ){
 		if(anio!=cboPeriodo_b){
-			msg += "Tiene Deudas Vencidas en el periodo " + anio + " que tiene que cancelar para continuar <br>";	
+			//msg += "Tiene Deudas Vencidas en el periodo " + anio + " que tiene que cancelar para continuar <br>";	
 		}
 	}
 
 	if(cboMes_b!=""){
 		if(mes!=cboMes_b){
-			msg += "Tiene Deudas Vencidas en el mes " + mes + " que tiene que cancelar para continuar <br>";	
+			//msg += "Tiene Deudas Vencidas en el mes " + mes + " que tiene que cancelar para continuar <br>";	
 		}
 	}
 
