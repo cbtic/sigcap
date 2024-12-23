@@ -221,19 +221,19 @@ class ComprobanteController extends Controller
                     "chek" => 1, 
                     "id" => 0, 
                     "fecha" => date('d/m/Y'), 
-                    "denominacion" => "PAGO CUOTA GREMIAL - DESCUENTO CUOTA GREMIAL PRONTOPAGO",
+                    "denominacion" => "PAGO CUOTA GREMIAL PRONTOPAGO ENE-2025 - DIC 2025",
                     "monto" => $stotal,
-                    "pu" =>$deudaTotal, 
+                    "pu" =>$deudaTotal/12, 
                     "igv" => $igv, 
                     "pv" =>  $total, 
                     "total" => $total, 
                     "moneda" => "SOLES", 
                     "id_moneda" => 1, 
                     "abreviatura" => "SOLES", 
-                    "cantidad" => 1, 
+                    "cantidad" => 12, 
                     "descuento" => $request->totalDescuento,
                     "cod_contable" =>"", 
-                    "descripcion" => 'PAGO CUOTA GREMIAL - DESCUENTO CUOTA GREMIAL PRONTOPAGO', 
+                    "descripcion" => 'PAGO CUOTA GREMIAL PRONTOPAGO ENE-2025 - DIC 2025', 
                     "vencio" => 0, 
                     "id_concepto" => $request->id_concepto_pp,
                     "item" => 1, 
@@ -805,6 +805,8 @@ class ComprobanteController extends Controller
 
                 ///redondeo///
                 $total_pagar = $request->total_pagar;
+                //print_r("total_pagar="); 
+                //print_r($total_pagar); 
                 if ($total_pagar!="0"){                         
                     $total_pagar = $request->total_pagar;
                     $total_g = $request->totalF;
@@ -817,6 +819,9 @@ class ComprobanteController extends Controller
 
                 $total_pagar_abono = $request->total_pagar_abono;
                 $total_abono= 0;
+
+                //print_r("total_pagar_abono="); 
+                //print_r($total_pagar_abono); 
 
                 if ($total_pagar_abono!="0"){                         
                     $total_pagar_abono = $request->total_pagar_abono;
