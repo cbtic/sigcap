@@ -524,10 +524,10 @@
                                                                     </td>
 
                                                                     <td class="text-left"><?php if ($trans == 'FA') {
-                                                                                                echo $fac['importe'];
+                                                                                                echo $importe;
                                                                                             }
                                                                                             if ($trans == 'FE' || $trans == 'FN') {
-                                                                                                echo number_format($fac['importe'], 2);
+                                                                                                echo number_format($importe, 2);
                                                                                             } ?></td>
 
                                                                   <!--  <td class="text-right"></td>
