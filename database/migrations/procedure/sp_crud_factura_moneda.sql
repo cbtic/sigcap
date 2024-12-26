@@ -164,8 +164,8 @@ begin
 					_subtotal := CAST(total AS numeric);
 					_igv_total := 0;
 				else					
-					_subtotal := _total/1.18;
-					_igv_total := (_total/1.18)*0.18;				
+					_subtotal := round(_total/1.18,2);
+					_igv_total := round((_total/1.18)*0.18,2);				
 				end if;
 
 				Insert Into comprobantes (serie, numero, fecha, destinatario, direccion, cod_tributario, serie_guia,nro_guia, total_grav, total_inaf, total_exo, impuesto,
@@ -212,9 +212,9 @@ begin
 					_pu_con_igv := _pu + _igv_total;
 					
 				else
-					_pu := _total/1.18;
-					_igv_total := (_total/1.18)*0.18;
-					_pu_con_igv := _total/1.18;
+					_pu := round(_total/1.18,2);
+					_igv_total := round((_total/1.18)*0.18,2);
+					_pu_con_igv := round(_total/1.18);
 					
 					_id_tipo_afectacion := 10;
 				end if;

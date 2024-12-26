@@ -2194,7 +2194,8 @@ class ComprobanteController extends Controller
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
-            ])->get();
+            ])->where('descripcion', '<>', 'REDONDEO')->get();
+
            
             $afectacion=$facturad[0]->afect_igv;
 
@@ -2354,7 +2355,7 @@ class ComprobanteController extends Controller
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
-            ])->get();
+            ])->where('descripcion', '<>', 'REDONDEO')->get();
         }
 
         
