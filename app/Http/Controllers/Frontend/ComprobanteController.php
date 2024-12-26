@@ -2196,20 +2196,28 @@ class ComprobanteController extends Controller
                 'tipo' => $comprobante->tipo
             ])->where('descripcion', '<>', 'REDONDEO')->get();
 
-           
             $afectacion=$facturad[0]->afect_igv;
 
-       
+            $facturad1=$comprobante_model->getComprobanteDetalleById($id_origen);
+            //$facturad= json_encode($facturad1);
+            //$afectacion=$facturad[0]->afect_igv;
+            $importe=$facturad1->importe;
+
+            
+
+
         }
         else {
             $comprobante_model=new Comprobante;
             $comprobante=$comprobante_model->getComprobanteById($id);
-
+/*
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
             ])->get();
+*/
+            $facturad=$comprobante_model->getComprobanteDetalleById($id_origen);
         }
       //  print_r($comprobante); exit();
 
@@ -2288,7 +2296,7 @@ class ComprobanteController extends Controller
 
         //print_r($comprobante); exit();
 
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion'));
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion', 'importe'));
         
     }
 
@@ -2333,14 +2341,17 @@ class ComprobanteController extends Controller
 
             //$id_comprobante_ncnd = $comprobante->tiene_nd;
             //$comprobante_ncnd=$comprobante_model->getComprobanteById($id_comprobante_ncnd);
-
+/*
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
             ])->get();
-
-            $afectacion=$facturad[0]->afect_igv;
+*/
+            $facturad=$comprobante_model->getComprobanteDetalleById($id_origen);
+            
+            //$afectacion=$facturad[0]->afect_igv;
+            $afectacion=$facturad->afect_igv;
 
             //print_r($comprobante); exit();
         }
@@ -2350,12 +2361,14 @@ class ComprobanteController extends Controller
 
             //$id_comprobante_ncnd = $comprobante->tiene_nd;
             //$comprobante_ncnd=$comprobante_model->getComprobanteById($id_comprobante_ncnd);
-
+/*
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
             ])->where('descripcion', '<>', 'REDONDEO')->get();
+*/
+            $facturad=$comprobante_model->getComprobanteDetalleById($id_origen);
         }
 
         
