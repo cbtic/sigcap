@@ -106,7 +106,9 @@ order by 1 asc
         //$mes= intval($mes);
 
        // $cad = "select m.denominacion municipalidad, c.serie, c.numero, c.fecha_pago, l.total monto, l.credipago, v.descripcion   
-        $cad = "select m.denominacion municipalidad, c.serie, c.numero, c.fecha_pago, l.total monto, l.credipago, v.descripcion,
+        $cad = "select m.denominacion municipalidad, c.serie, c.numero, c.fecha_pago, l.credipago, v.descripcion, c.tipo,
+        case 
+            when c.tipo='NC' then l.total * -1 else l.total end as monto, 
         CASE 
             WHEN c.destinatario_2 IS NOT NULL AND c.destinatario_2 <> '' THEN c.destinatario_2
             ELSE c.destinatario
