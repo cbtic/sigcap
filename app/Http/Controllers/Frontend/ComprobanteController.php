@@ -2346,11 +2346,13 @@ class ComprobanteController extends Controller
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
-            ])->get();
-
-            //$facturad=$comprobante_model->getComprobanteDetalleById($id_origen);
-            
+            ])->where('descripcion', '<>', 'REDONDEO')->get();
             $afectacion=$facturad[0]->afect_igv;
+
+            $facturad1=$comprobante_model->getComprobanteDetalleById($id_origen);
+            $importe=$facturad1->importe;
+            
+            
             //$afectacion=$facturad->afect_igv;
 
             //print_r($comprobante); exit();
@@ -2432,7 +2434,7 @@ class ComprobanteController extends Controller
         $medio_pago = $tabla_model->getMaestroByTipo('19');
 
 
-        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','direccion','correo','medio_pago','afectacion'));
+        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','direccion','correo','medio_pago','afectacion','importe'));
         
 
     }
