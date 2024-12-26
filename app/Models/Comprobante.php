@@ -195,6 +195,19 @@ class Comprobante extends Model
         if(isset($data[0]))return $data[0];
     }
 
+    function getComprobanteDetalleById($numero_comprobante){
+
+        $cad = "SELECT id, serie, numero, tipo, item, descripcion, pu, pu_con_igv, igv_total, afect_igv, unidad, cod_contable, descuento, valor_gratu, estado, id_comprobante, cantidad, id_concepto,
+                    (select sum(x.importe) from comprobante_detalles x where x.id_comprobante =  cd.id_comprobante) importe
+                FROM comprobante_detalles cd
+                where cd.descripcion <> 'REDONDEO' 
+                    and cd.id_comprobante='".$numero_comprobante."'";
+
+        //echo ($cad);
+		$data = DB::select($cad);
+        if(isset($data[0]))return $data[0];
+    }
+
     function getPersonaDni($numero_documento){
 
         $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres,direccion ,correo
