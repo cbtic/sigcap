@@ -127,7 +127,24 @@ order by 1 asc
         and EXTRACT(MONTH FROM c.fecha_pago)::varchar = '".$mes."'
         and v.id_modulo ='7'
         and l.id_situacion = 2
-        order by c.fecha";
+        --order by c.fecha
+        UNION
+       select '' municipalidad, c.serie, c.numero, c.fecha_pago, '' credipago, '' descripcion, c.tipo,
+        case 
+            when c.tipo='NC' then c.total * -1 else c.total end as monto, 
+        CASE 
+            WHEN c.destinatario_2 IS NOT NULL AND c.destinatario_2 <> '' THEN c.destinatario_2
+            ELSE c.destinatario
+        END AS destinatario_final,
+        CASE 
+            WHEN c.destinatario_2 IS NOT NULL AND c.destinatario_2 <> '' THEN c.cod_tributario_2 
+            ELSE c.cod_tributario 
+        END AS destinatario_documento_final
+        from  comprobantes c 
+        where EXTRACT(YEAR FROM c.fecha)::varchar = '".$anio."'
+        and EXTRACT(MONTH FROM c.fecha)::varchar = '".$mes."'
+        and c.tipo  in('NC')
+        ";
         //echo($cad);        
 		$data = DB::select($cad);
         return $data;
