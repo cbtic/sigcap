@@ -31,11 +31,39 @@ where id_comision=".$id_comision;
 	function getComisionDelegadosByIdPeriodo($id_periodo){
 
         $cad = "select distinct t1.id_agremiado,t3.nombres,t3.apellido_paterno,t3.apellido_materno,t2.numero_cap   
-from comision_delegados t1
-inner join comisiones t0 on t1.id_comision = t0.id 
-inner join agremiados t2 on t1.id_agremiado=t2.id
-inner join personas t3 on t2.id_persona=t3.id 
-where t0.id_periodo_comisiones=".$id_periodo;
+        from comision_delegados t1
+        inner join comisiones t0 on t1.id_comision = t0.id 
+        inner join agremiados t2 on t1.id_agremiado=t2.id
+        inner join personas t3 on t2.id_persona=t3.id 
+        where t0.id_periodo_comisiones=".$id_periodo;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getComisionDelegadosByIdPeriodoReintegro($id_periodo){
+
+        $cad = "select * from (
+        select p.apellido_paterno, p.apellido_materno, p.nombres, a.id id_agremiado, a.numero_cap,coalesce(tmp.denominacion,'ASESOR / ESPECIALISTA') puesto,
+        t5.descripcion periodo,
+        (case when t0.coordinador='1' then 'COORDINADOR' else '' end) coordinador
+        from comision_sesiones t1 
+        inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
+        inner join tabla_maestras t2 on t1.id_tipo_sesion::int = t2.codigo::int And t2.tipo ='71'
+        inner join tabla_maestras t3 on t1.id_estado_sesion::int = t3.codigo::int And t3.tipo ='56'
+        left join tabla_maestras t7 on t1.id_estado_aprobacion::int = t7.codigo::int And t7.tipo ='109' 
+        inner join comisiones t4 on t1.id_comision=t4.id
+        inner join periodo_comisiones t5 on t1.id_periodo_comisione=t5.id
+        inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id and mi.estado='1'
+        /*inner join comision_delegados cd on t0.id_delegado=cd.id  
+        inner join agremiados a on cd.id_agremiado=a.id*/
+        left join comision_delegados cd on t0.id_delegado=cd.id  
+        left join agremiados a on coalesce(cd.id_agremiado,t0.id_agremiado)=a.id 
+        inner join personas p on a.id_persona=p.id 
+        inner join tabla_maestras tmts on t1.id_tipo_sesion::int = tmts.codigo::int And tmts.tipo ='71'
+        left join tabla_maestras tmp  on cd.id_puesto::int = tmp.codigo::int And tmp.tipo ='94'
+        where t1.estado='1' and t0.estado='1' /*and t0.id_aprobar_pago=2 and*/  and t1.id_periodo_comisione = '".$id_periodo."'
+        group by t0.coordinador,mi.denominacion, a.id,t4.comision,p.apellido_paterno, p.apellido_materno, p.nombres,a.numero_cap,tmp.denominacion,cd.id_puesto::int, t5.descripcion)R";
 
 		$data = DB::select($cad);
         return $data;
@@ -81,12 +109,37 @@ and cs.estado='1' ";
 	function getComisionDelegadosByIdPeriodoAgremiado($id_periodo,$id_agremiado){
 
         $cad = "select t1.id id_delegado,t1.id_comision,t0.denominacion comision  
-from comision_delegados t1
-inner join comisiones t0 on t1.id_comision = t0.id 
-inner join agremiados t2 on t1.id_agremiado=t2.id
-inner join personas t3 on t2.id_persona=t3.id 
-where t0.id_periodo_comisiones=".$id_periodo."
-and t1.id_agremiado=".$id_agremiado;
+        from comision_delegados t1
+        inner join comisiones t0 on t1.id_comision = t0.id 
+        inner join agremiados t2 on t1.id_agremiado=t2.id
+        inner join personas t3 on t2.id_persona=t3.id 
+        where t0.id_periodo_comisiones=".$id_periodo."
+        and t1.id_agremiado=".$id_agremiado;
+
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getComisionDelegadosByIdPeriodoAgremiado2($id_periodo,$id_agremiado){
+
+        $cad = "select id_delegado, id_comision, comision
+        from (select cd.id as id_delegado, t4.id as id_comision, t4.denominacion as comision, row_number() over (partition by t4.id, t4.denominacion order by cd.id) as row_num
+        from comision_sesiones t1 
+        inner join comision_sesion_delegados t0 on t1.id = t0.id_comision_sesion 
+        inner join tabla_maestras t2 on t1.id_tipo_sesion::int = t2.codigo::int and t2.tipo = '71'
+        inner join tabla_maestras t3 on t1.id_estado_sesion::int = t3.codigo::int and t3.tipo = '56'
+        left join tabla_maestras t7 on t1.id_estado_aprobacion::int = t7.codigo::int and t7.tipo = '109' 
+        inner join comisiones t4 on t1.id_comision = t4.id
+        inner join periodo_comisiones t5 on t1.id_periodo_comisione = t5.id
+        inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id and mi.estado = '1'
+        left join comision_delegados cd on t0.id_delegado = cd.id  
+        left join agremiados a on coalesce(cd.id_agremiado, t0.id_agremiado) = a.id 
+        inner join personas p on a.id_persona = p.id 
+        inner join tabla_maestras tmts on t1.id_tipo_sesion::int = tmts.codigo::int and tmts.tipo = '71'
+        left join tabla_maestras tmp on cd.id_puesto::int = tmp.codigo::int and tmp.tipo = '94'
+        where t1.estado = '1' and t0.estado = '1' and t1.id_periodo_comisione = '".$id_periodo."' and cd.id_agremiado = '".$id_agremiado."'
+        ) R
+        where row_num = 1";
 
 		$data = DB::select($cad);
         return $data;
