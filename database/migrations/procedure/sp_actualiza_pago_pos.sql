@@ -3,7 +3,7 @@ CREATE OR REPLACE FUNCTION public.sp_actualiza_pago_pos(p_tipo_doc character var
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
-
+ 
 Declare
 
 codigo_producto character varying;				
