@@ -131,7 +131,7 @@ order by 1 asc
         and l.id_situacion = 2
         --order by c.fecha
         UNION
-       select '' municipalidad, c.serie, c.numero, c.fecha_pago, '' credipago, '' descripcion, c.tipo,
+        select m.denominacion municipalidad, c.serie, c.numero, c.fecha_pago, '' credipago, '' descripcion, c.tipo,
         case 
             when c.tipo='NC' then c.total * -1 else c.total end as monto, 
         CASE 
@@ -142,8 +142,13 @@ order by 1 asc
             WHEN c.destinatario_2 IS NOT NULL AND c.destinatario_2 <> '' THEN c.cod_tributario_2 
             ELSE c.cod_tributario 
         END AS destinatario_documento_final
-        from  comprobantes c 
-        where EXTRACT(YEAR FROM c.fecha)::varchar = '".$anio."'
+        from  comprobantes c         
+    	inner join valorizaciones v on v.id_comprobante = c.id_comprobante_ncnd
+    	inner join liquidaciones l on l.id = v.pk_registro and v.id_modulo = 7
+    	inner join solicitudes s on s.id = l.id_solicitud
+    	inner join municipalidades m on m.id = s.id_municipalidad
+        where m.id_ubigeo = '".$id_ubigeo."' 
+        and EXTRACT(YEAR FROM c.fecha)::varchar = '".$anio."'
         and EXTRACT(MONTH FROM c.fecha)::varchar = '".$mes."'
         and c.tipo  in('NC')
         ";
