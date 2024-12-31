@@ -692,6 +692,16 @@ function obtenerAnioPerido(){
 function fn_calcular(){
 	//var anio = $('#anio').val();
 	//var mes = $('#mes').val();
+    var msg = "";
+    var periodo = $('#id_periodo').val();
+	
+	if(periodo == "")msg += "Debe seleccionar el Periodo a Generar <br>";
+	
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }
+
 	var p = {};
 	p.anio =  $('#anio').val();
 	p.mes = $('#mes').val();
