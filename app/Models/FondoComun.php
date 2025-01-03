@@ -129,6 +129,7 @@ order by 1 asc
         and EXTRACT(MONTH FROM c.fecha_pago)::varchar = '".$mes."'
         and v.id_modulo ='7'
         and l.id_situacion = 2
+        and v.estado = '1'
         --order by c.fecha
         UNION
         select m.denominacion municipalidad, c.serie, c.numero, c.fecha_pago, '' credipago, '' descripcion, c.tipo,
