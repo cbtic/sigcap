@@ -535,7 +535,7 @@
                                                                     </td>
                                                                     
                                                                     <td class="text-right">                                                                        
-                                                                        <input type="text" readonly name="importeantd[]"  id="importeantd<?php echo $key?>" value="<?php echo number_format($fac['importe'], 2)?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                        <input type="text" readonly name="importeantd[]"  id="importeantd<?php echo $key?>" value="<?php echo number_format($importe, 2)?>" placeholder="" class="form-control form-control-sm text-center"  >
                                                                     
                                                                     </td>
 

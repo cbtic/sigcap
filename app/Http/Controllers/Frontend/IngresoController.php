@@ -49,7 +49,7 @@ class IngresoController extends Controller
         $tipo_documento = $caja_model->getMaestroByTipo(16);
         $pronto_pago = ProntoPago::where("estado","1")->first();
                 
-        $concepto = Concepto::where("id","26411")->first(); //CUOTA GREMIAL
+        $concepto = Concepto::find(26411); //CUOTA GREMIAL
         //$concepto = Concepto::find(-1);
 
         $mes = [
