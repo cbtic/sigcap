@@ -106,7 +106,7 @@ class DelegadoTributoController extends Controller
 
         $comisionDelegado_model = new ComisionDelegado;
         //$valorizaciones_model = new Valorizacione;
-        $concurso_inscripcion = $comisionDelegado_model->getConcursoInscripcionDelegadoTributo($periodo);
+        $concurso_inscripcion = $comisionDelegado_model->getComisionesDelegadoTributo($periodo);
         //var_dump($concurso_inscripcion);exit();
         $agremiados = array();
         foreach ($concurso_inscripcion as $registro) {

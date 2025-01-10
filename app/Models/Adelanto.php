@@ -49,8 +49,8 @@ class Adelanto extends Model
         (select c.denominacion from comision_delegados cd 
         left join comisiones c on cd.id_comision = c.id 
         where cd.id_agremiado = '".$id_agremiado."' order by cd.id desc limit 1) comision
-        from adelantos a
-        where a.estado='1'
+        from comision_delegados cd2
+        where cd2.estado='1'
         limit 1 ";
 
 		$data = DB::select($cad);

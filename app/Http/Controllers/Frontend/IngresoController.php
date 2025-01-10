@@ -1068,9 +1068,9 @@ class IngresoController extends Controller
         $numero_cap=$datos_agremiado->numero_cap;
         $nombre_completo=$datos_agremiado->nombre_completo;
         //var_dump($datos_agremiado);exit();
-		$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id);
+		/*$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id);
         $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id);
-        $tipo_cambio=$tipo_cambio_model->getTipoCambio();
+        $tipo_cambio=$tipo_cambio_model->getTipoCambio();*/
 
         $deuda_cuota_fraccionamiento=$caja_ingreso_model->getDeudaCuotaFraccionamiento($datos_agremiado->id_p);
 
@@ -1084,7 +1084,7 @@ class IngresoController extends Controller
         $fecha_actual = Carbon::now()->format('d/m/Y');
         $hora_actual = Carbon::now()->format('H:i:s');
 		
-		$pdf = Pdf::loadView('frontend.ingreso.reporte_fraccionamiento_pdf',compact('datos_agremiado','numero_cap','nombre_completo','fecha_actual','hora_actual','tipo_cambio','deuda_cuota_fraccionamiento','cronograma_fraccionamiento'));
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_fraccionamiento_pdf',compact('datos_agremiado','numero_cap','nombre_completo','fecha_actual','hora_actual',/*'tipo_cambio',*/'deuda_cuota_fraccionamiento','cronograma_fraccionamiento'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
