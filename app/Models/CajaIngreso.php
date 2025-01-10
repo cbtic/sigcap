@@ -509,7 +509,7 @@ class CajaIngreso extends Model
         and v.fecha < now()
         ".$concepto." 
         union all 
-        select c.denominacion
+        select distinct c.denominacion
         from valorizaciones v2 
         inner join conceptos c on v2.id_concepto =c.id
         where v2.id_agremido = ".$id."
