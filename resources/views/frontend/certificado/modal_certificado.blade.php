@@ -132,6 +132,12 @@ $.mask.definitions['p'] = "[Mm]";
 		//$('#hora_solicitud').focus();
 		//$('#hora_solicitud').mask('00:00');
 		//$("#id_empresa").select2({ width: '100%' });
+		if($("#id").val()>0){
+			$("#cap_").attr('readonly',true)
+			$("#observacion_").attr('readonly',true)
+			$("#anio_certificado").attr('disabled',true)
+			
+		}
 	});
 </script>
 
@@ -193,6 +199,7 @@ function obtenerTipoCertificado(){
 	$('#total_area_techada_').hide();
 	$('#vigencia_group').hide();
 	$('#boton_agregar_cuotas').hide();
+	$('#anios').hide();
 	
 	if (id_tipo == "0")//SELECCIONAR
 	{
@@ -205,6 +212,7 @@ function obtenerTipoCertificado(){
 		$('#piso_nivel_').hide();
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
+		$('#anios').hide();
 	}else if (id_tipo == "7") { //CONSTANCIA
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
@@ -219,6 +227,7 @@ function obtenerTipoCertificado(){
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').hide();
+		$('#anios').show();
 	}else if (id_tipo == "8") { //CERTIFICADO UNICO
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
@@ -234,6 +243,7 @@ function obtenerTipoCertificado(){
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').show();
 		$('#boton_agregar_cuotas button').attr('disabled', true);
+		$('#anios').hide();
 	}else if (id_tipo == "6"){ //RECORD DE PROYECTOS
 		$('#nombre_proyecto_').hide();
 		$('#tipo_tramite_').hide();
@@ -248,6 +258,7 @@ function obtenerTipoCertificado(){
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').hide();
+		$('#anios').hide();
 	}else{ //seleccionar
 		$('#nombre_proyecto_').hide(); 
 		$('#tipo_tramite_').hide();
@@ -261,6 +272,7 @@ function obtenerTipoCertificado(){
 		$('#otro_piso_nivel_').hide();
 		$('#total_area_techada_').hide();
 		$('#boton_agregar_cuotas').hide();
+		$('#anios').hide();
 	}
 }
 
@@ -268,23 +280,93 @@ function valida_ultimo_pago(){
 
 	var cap = $('#cap_').val();
 	var id_tipo = $('#id_tipo').val();
+	var anio = $('#anio_certificado').val();
 
 	if(id_tipo==7){
 
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		var heightBrowser = $(window).width()/2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+
 		$.ajax({
-			url: "/ingreso/valida_ultimo_pago/"+cap,
+			url: "/ingreso/valida_ultimo_pago/"+cap+"/"+anio,
 			dataType: 'json',
 			success: function(result) {
+				
+				let mesesInhabilitados = [];
 
-				//alert(result)
-				if(result!=null){
+				var msg = "";
+
+				var tiene_msg = false;
+
+				var cantidad_meses = result.length;
+
+				//alert(cantidad_meses);
+
+				if(cantidad_meses!=12){
+					$('.loader').hide();
+					bootbox.alert("El agremiado no tiene 12 cuotas del año en curso, no puede acceder a la constancia");
+					return;
+				}
+
+				$(result).each(function (ii, oo) {
+
+					if(oo.fecha_pago!=null){
+						const meses = [
+							"Ene", "Feb", "Mar", "Abr", "May", "Jun", 
+							"Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
+						];
+						
+						const fechaVencimiento = new Date(oo.fecha_vencimiento);
+						const fechaPago = new Date(oo.fecha_pago);
+						var excede_meses = false;
+
+						let fechaLimite = new Date(fechaVencimiento);
+
+						let mes = fechaLimite.getMonth() + 2; 
+						let año = fechaLimite.getFullYear();
+
+						if (mes > 11) { 
+							mes -= 12;
+							año += 1;
+						}
+
+						fechaLimite = new Date(año, mes + 1, 0); 
+
+						if (fechaPago > fechaLimite) {
+							excede_meses=true;
+							const mesVencimiento = meses[fechaVencimiento.getMonth()];
+							mesesInhabilitados.push(mesVencimiento);
+						} else {
+							excede_meses=false;
+						}
+					}else{
+						tiene_msg=true;
+					}
+
+				});
+
+				if(tiene_msg==true){
+					msg+="El agremiado no ha realizado los pagos, por lo tanto no puede acceder a la constancia<br>";
+				}
+
+				if(mesesInhabilitados.length > 0 && !tiene_msg){
+					msg+="El agremiado estuvo INHABILITADO por no pagar a tiempo en los siguientes meses: " + mesesInhabilitados.join(", ") + ". Por lo que no se puede emitir la constancia.<br>";
+				}
+
+				if(msg==""){
+					$('.loader').hide();
 					fn_save();
-				}else{
-					Swal.fire("El agremiado no ha realizado el pronto pago, por lo tanto no puede acceder a la constancia")
+				}else {
+					$('.loader').hide();
+					bootbox.alert(msg);
 				}
 
 			}
 		});
+
 	}else if(id_tipo==8){
 
 		var categoria = $('#categoria_').val();
@@ -300,6 +382,12 @@ function valida_ultimo_pago(){
 			var mes = fecha_con_vigencia.getMonth() + 1;
 
 			var anio = fecha_con_vigencia.getFullYear();
+
+			var msgLoader = "";
+			msgLoader = "Procesando, espere un momento por favor";
+			var heightBrowser = $(window).width()/2;
+			$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+			$('.loader').show();
 			
 			$.ajax({
 				url: "/ingreso/validar_pago/"+cap,
@@ -308,6 +396,7 @@ function valida_ultimo_pago(){
 					
 					//alert(result)
 					if(result == null){
+						$('.loader').hide();
 						Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
 					}else{
 						var fecha_pagada = new Date(result.fecha);
@@ -316,12 +405,15 @@ function valida_ultimo_pago(){
 
 						if(anio<=anio_pagado){
 							if(mes<=mes_pagado){
+								$('.loader').hide();
 								fn_save();
 							}else{
+								$('.loader').hide();
 								Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
 							}
 
 						}else{
+							$('.loader').hide();
 							Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
 						}
 					}
@@ -352,6 +444,7 @@ function fn_save() {
 	var estado = 1;
 	var tipo = $('#id_tipo').val();
 	var tipo_tramite = $('#tipo_tramite').val();
+	var anio = $('#anio_certificado').val();
 
 	$.ajax({
 		url: "/certificado/send_certificado",
@@ -371,6 +464,7 @@ function fn_save() {
 			tipo: tipo,
 			tipo_tramite:tipo_tramite,
 			idagremiado: idagremiado,
+			anio:anio,
 		},
 		//dataType: 'json',
 		success: function(result) {
@@ -561,9 +655,11 @@ function valida_pago() {
 							</div>
 							<div class="col-lg-1" style="padding-top:12px;padding-left:0px;padding-right:0px">
 								<br>
+								<?php if($id==0){?>
 								<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#vehiculoModal" onClick="obtenerAgremiado('<?php echo $id ?>')">
 									Buscar
 								</button>
+								<?php }?>
 							</div>
 
 							<div class="col-lg-5">
@@ -755,6 +851,24 @@ function valida_pago() {
 									</select>
 								</div>
 							</div>
+							<div class="form-group" id="anios">
+								<div class="col-lg-12">
+									<label class="control-label">Año</label>
+									<?php if($id==0 || $certificado->anio_certificado >= $anioActual){?>
+									<select name="anio_certificado" id="anio_certificado" class="form-control form-control-sm">
+										<option value="0">--Selecionar--</option>
+										<?php
+										foreach ($anios as $row) { ?>
+											<option value="<?php echo $row['id'] ?>" <?php if ($row['id'] == $certificado->anio_certificado) echo "selected='selected'" ?>><?php echo $row['anio'] ?></option>
+										<?php
+										}
+										?>
+									</select>
+									<?php }else{?>
+										<input id="anio_certificado" name="anio_certificado" class="form-control form-control-sm" value="<?php echo $certificado->anio_certificado?>" type="text" readonly>
+									<?php }?>
+								</div>
+							</div>
 
 							<div style="margin-top:10px" class="form-group" id="boton_agregar_cuotas">
 								<div class="col-sm-12 controls">
@@ -786,8 +900,11 @@ function valida_pago() {
 							<div style="margin-top:10px" class="form-group">
 								<div class="col-sm-12 controls">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+										<?php if($id==0){?>
 										<a href="javascript:void(0)" onClick="valida_ultimo_pago()" class="btn btn-sm btn-success">Guardar</a>
-
+										<?php }else {?>
+											<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide');window.location.reload();" class="btn btn-md btn-warning">Cerrar</a>
+										<?php }?>
 									</div>
 								</div>
 							</div>

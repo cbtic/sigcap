@@ -221,19 +221,19 @@ class ComprobanteController extends Controller
                     "chek" => 1, 
                     "id" => 0, 
                     "fecha" => date('d/m/Y'), 
-                    "denominacion" => "PAGO CUOTA GREMIAL - DESCUENTO CUOTA GREMIAL PRONTOPAGO",
+                    "denominacion" => "PAGO CUOTA GREMIAL PRONTOPAGO ENE-2025 - DIC 2025",
                     "monto" => $stotal,
-                    "pu" =>$deudaTotal, 
+                    "pu" =>$deudaTotal/12, 
                     "igv" => $igv, 
                     "pv" =>  $total, 
                     "total" => $total, 
                     "moneda" => "SOLES", 
                     "id_moneda" => 1, 
                     "abreviatura" => "SOLES", 
-                    "cantidad" => 1, 
+                    "cantidad" => 12, 
                     "descuento" => $request->totalDescuento,
                     "cod_contable" =>"", 
-                    "descripcion" => 'PAGO CUOTA GREMIAL - DESCUENTO CUOTA GREMIAL PRONTOPAGO', 
+                    "descripcion" => 'PAGO CUOTA GREMIAL PRONTOPAGO ENE-2025 - DIC 2025', 
                     "vencio" => 0, 
                     "id_concepto" => $request->id_concepto_pp,
                     "item" => 1, 
@@ -805,6 +805,8 @@ class ComprobanteController extends Controller
 
                 ///redondeo///
                 $total_pagar = $request->total_pagar;
+                //print_r("total_pagar="); 
+                //print_r($total_pagar); 
                 if ($total_pagar!="0"){                         
                     $total_pagar = $request->total_pagar;
                     $total_g = $request->totalF;
@@ -817,6 +819,9 @@ class ComprobanteController extends Controller
 
                 $total_pagar_abono = $request->total_pagar_abono;
                 $total_abono= 0;
+
+                //print_r("total_pagar_abono="); 
+                //print_r($total_pagar_abono); 
 
                 if ($total_pagar_abono!="0"){                         
                     $total_pagar_abono = $request->total_pagar_abono;
@@ -2189,21 +2194,30 @@ class ComprobanteController extends Controller
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
-            ])->get();
-           
+            ])->where('descripcion', '<>', 'REDONDEO')->get();
+
             $afectacion=$facturad[0]->afect_igv;
 
-       
+            $facturad1=$comprobante_model->getComprobanteDetalleById($id_origen);
+            //$facturad= json_encode($facturad1);
+            //$afectacion=$facturad[0]->afect_igv;
+            $importe=$facturad1->importe;
+
+            
+
+
         }
         else {
             $comprobante_model=new Comprobante;
             $comprobante=$comprobante_model->getComprobanteById($id);
-
+/*
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
             ])->get();
+*/
+            $facturad=$comprobante_model->getComprobanteDetalleById($id_origen);
         }
       //  print_r($comprobante); exit();
 
@@ -2282,7 +2296,7 @@ class ComprobanteController extends Controller
 
         //print_r($comprobante); exit();
 
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion'));
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion', 'importe'));
         
     }
 
@@ -2332,9 +2346,14 @@ class ComprobanteController extends Controller
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
-            ])->get();
-
+            ])->where('descripcion', '<>', 'REDONDEO')->get();
             $afectacion=$facturad[0]->afect_igv;
+
+            $facturad1=$comprobante_model->getComprobanteDetalleById($id_origen);
+            $importe=$facturad1->importe;
+            
+            
+            //$afectacion=$facturad->afect_igv;
 
             //print_r($comprobante); exit();
         }
@@ -2344,12 +2363,14 @@ class ComprobanteController extends Controller
 
             //$id_comprobante_ncnd = $comprobante->tiene_nd;
             //$comprobante_ncnd=$comprobante_model->getComprobanteById($id_comprobante_ncnd);
-
+/*
             $facturad = ComprobanteDetalle::where([
                 'serie' => $comprobante->serie,
                 'numero' => $comprobante->numero,
                 'tipo' => $comprobante->tipo
-            ])->get();
+            ])->where('descripcion', '<>', 'REDONDEO')->get();
+*/
+            $facturad=$comprobante_model->getComprobanteDetalleById($id_origen);
         }
 
         
@@ -2413,7 +2434,7 @@ class ComprobanteController extends Controller
         $medio_pago = $tabla_model->getMaestroByTipo('19');
 
 
-        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','direccion','correo','medio_pago','afectacion'));
+        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','direccion','correo','medio_pago','afectacion','importe'));
         
 
     }

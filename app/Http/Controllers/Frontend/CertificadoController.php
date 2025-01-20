@@ -78,6 +78,14 @@ class CertificadoController extends Controller
 
 		$proyecto_model = new Proyecto();
 		$sw=true;
+		$anioActual = date('Y');
+		$anioSiguiente = date('Y', strtotime('+1 year'));
+
+		$anios = [
+			['id' => $anioActual, 'anio' => $anioActual],
+			['id' => $anioSiguiente, 'anio' => $anioSiguiente]
+		];
+
 		//$nombre_proyecto = $proyecto_model->obtenerNombreProyecto();
         
         if($id>0)  {
@@ -121,7 +129,9 @@ class CertificadoController extends Controller
 		//$region = $regione_model->getRegionAll();
 		//print_r ($unidad_trabajo);exit();
 
-		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_tramite_tipo3','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy','categoria'));
+		//dd($id);exit();
+
+		return view('frontend.certificado.modal_certificado',compact('id','certificado','tipo_tramite_tipo3','tipo_certificado','cap_numero','desc_cliente','situacion','email1','proyecto','tipo_tramite','nombre_proy','categoria','anios','anioActual'));
 
     }
 
@@ -360,6 +370,7 @@ class CertificadoController extends Controller
 		$certificado->observaciones =$request->observaciones;
 		$certificado->estado =1;
 		$certificado->id_tipo =$request->tipo;
+		$certificado->anio_certificado =$request->anio;
 		/*if($request->tipo==1 || $request->tipo==2 || $request->tipo==3){
 			$certificado->id_solicitud = $request->nombre_proyecto;
 			
@@ -793,6 +804,7 @@ class CertificadoController extends Controller
 		$fecha_emision=$datos[0]->fecha_emision;
 		$trato=$datos[0]->id_sexo;
 		$fecha_colegiado=$datos[0]->fecha_colegiado;
+		$anio_certificado=$datos[0]->anio_certificado;
 
 		$numero = $datos[0]->dias_validez;
 		$tramite = $datos[0]->tipo_tramite;
@@ -871,7 +883,7 @@ class CertificadoController extends Controller
 
 		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
 
-		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita','año','fecha_detallada','fecha_inscripcion_detallada','colegia','habilita_mayus'));
+		$pdf = Pdf::loadView('frontend.certificado.constancia_pdf',compact('datos','nombre','inscripcion','formattedDate','tratodesc','faculta','articulo','formattedDate_colegiado','tratodesc_minuscula','habilita','año','fecha_detallada','fecha_inscripcion_detallada','colegia','habilita_mayus','anio_certificado'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros

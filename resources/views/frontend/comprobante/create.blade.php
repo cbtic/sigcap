@@ -934,7 +934,15 @@
                                                     </tr>
                                                     <tr>
                                                         <th></th>
-                                                        <th>Ope Gravadas</th>
+                                                        <th>
+                                                        @if($igv!=0)
+                                                            {{"  OP.GRAVADAS "}}
+                                                        @else
+                                                            {{"  OP.INAFECTAS "}}
+                                                        @endif 
+                                                            
+                                                        
+                                                        </th>
                                                         <th></th>
                                                         <th></th>
                                                         <th class="text-right"><span id="gravadas"></span> <?php if ($trans == 'FA') {

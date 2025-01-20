@@ -129,9 +129,9 @@ class PlanillaDelegadoController extends Controller
     }
 	
 	public function obtener_delegado_periodo($id_periodo){
-			
+		
 		$comisionSesionDelegado_model = new ComisionSesionDelegado;
-		$comision = $comisionSesionDelegado_model->getComisionDelegadosByIdPeriodo($id_periodo);
+		$comision = $comisionSesionDelegado_model->getComisionDelegadosByIdPeriodoReintegro($id_periodo);
 		echo json_encode($comision);
 		
 	}
@@ -139,7 +139,7 @@ class PlanillaDelegadoController extends Controller
 	public function obtener_comision_delegado_periodo($id_periodo,$id_agremiado){
 			
 		$comisionSesionDelegado_model = new ComisionSesionDelegado;
-		$comision = $comisionSesionDelegado_model->getComisionDelegadosByIdPeriodoAgremiado($id_periodo,$id_agremiado);
+		$comision = $comisionSesionDelegado_model->getComisionDelegadosByIdPeriodoAgremiado2($id_periodo,$id_agremiado);
 		echo json_encode($comision);
 		
 	}
