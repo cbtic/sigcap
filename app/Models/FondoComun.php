@@ -43,7 +43,8 @@ class FondoComun extends Model
         where 
             EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."'
             And EXTRACT(MONTH FROM t4.fecha)::varchar = '".$mes."' 
-        group by  t3.denominacion, t3.id_ubigeo
+            And t4.id_periodo_comision=".$periodo." 
+        group by  t3.denominacion, t3.id_ubigeo 
         order by 1 asc";
 
  /*
