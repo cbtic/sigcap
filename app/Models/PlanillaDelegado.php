@@ -93,8 +93,8 @@ sum(t1.saldo::numeric)saldo, t3.id_ubigeo
 from delegado_fondo_comuns t1
 inner join municipalidades t3 on t1.id_ubigeo::int = t3.id
 inner join periodo_comision_detalles t4 on t4.id_periodo_comision = t1.id_periodo_comision and t4.id = t1.id_periodo_comision_detalle
-where EXTRACT(YEAR FROM t4.fecha)::varchar = '2024'
-And EXTRACT(MONTH FROM t4.fecha)::varchar = '11'  
+where EXTRACT(YEAR FROM t4.fecha)::varchar = '".$anio."' 
+And EXTRACT(MONTH FROM t4.fecha)::int = '".$mes."'::int 
 group by  t1.id, t3.id 
 )R";
 
