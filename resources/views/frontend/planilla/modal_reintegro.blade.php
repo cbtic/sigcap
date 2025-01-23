@@ -453,6 +453,12 @@ function calcular_importe(){
 								<input id="cantidad" name="cantidad" class="form-control form-control-sm" value="<?php //echo $delegadoReintegro->cantidad?>" type="text" onKeyUp="calcular_importe()"/>
 							</div>
 						</div>
+						<div class="col-lg-1">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Porcentaje %</label>
+								<input id="porcentaje" name="porcentaje" class="form-control form-control-sm" value="<?php echo !empty($delegadoReintegro->porcentaje) ? $delegadoReintegro->porcentaje : 10; ?>" type="text"/>
+							</div>
+						</div>
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Importe</label>

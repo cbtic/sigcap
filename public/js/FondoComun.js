@@ -15,6 +15,11 @@ $(document).ready(function () {
 	
 	$("#plan_id").select2();
 	$("#ubicacion_id").select2();
+
+	$('#btnDescargar').on('click', function () {
+		DescargarPdfFondoComun()
+
+	});
 	
 	/*
 	$('#fecha_inicio').datepicker({
@@ -771,6 +776,21 @@ function validarComprobanteSunat() {
 		}
 	});
 
+
+}
+
+function DescargarPdfFondoComun(){
+
+	var periodo = $('#id_periodo_').val();
+	var anio = $('#anio').val();
+	var mes = $('#mes').val();
+
+	if (periodo == "")periodo = 0;
+	if (anio == "")anio = 0;
+	if (mes == "")mes = 0;
+
+	var href = '/fondoComun/descargar_pdf_fondo_comun/'+periodo+'/'+anio+'/'+mes;
+	window.open(href, '_blank');
 
 }
 

@@ -330,7 +330,7 @@ function obtenerDelegado(){
     success: function(result){
       
       var agremiado = result.agremiado;
-      var option = "";
+      var option = "<option value='0'>--Seleccionar--</option>";
       $('#delegado').html("");
       $(agremiado).each(function (ii, oo) {
         

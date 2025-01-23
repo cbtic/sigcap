@@ -162,6 +162,7 @@ class PlanillaDelegadoController extends Controller
 		$delegadoReintegro->id_mes_ejecuta_reintegro = $request->id_mes_ejecuta_reintegro;
 		$delegadoReintegro->id_comision = $request->id_comision;
 		$delegadoReintegro->id_delegado = $request->id_delegado;
+		$delegadoReintegro->porcentaje = $request->porcentaje;
 		//$delegadoReintegro->importe_total = $request->id_delegado;
 		//$delegadoReintegro->id_tipo_reintegro = $request->id_tipo_reintegro;
 		//$delegadoReintegro->cantidad = $request->cantidad;

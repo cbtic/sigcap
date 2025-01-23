@@ -813,3 +813,5 @@ Route::get('sesion/test_excel', [SesionController::class, 'test_excel'])->name('
 Route::get('ingreso/validar_pago/{cap}', [IngresoController::class, 'validar_pago'])->name('ingreso.validar_pago');
 Route::get('ingreso/validar_todos_pago/{cap}', [IngresoController::class, 'validar_todos_pago'])->name('ingreso.validar_todos_pago');
 
+Route::get('adelanto/descargar_pdf_adelanto/{periodo}/{numero_cap}/{agremiado}/{mes_reintegro}/{estado}', [AdelantoController::class, 'descargar_pdf_adelanto'])->name('adelanto.descargar_pdf_adelanto');
+Route::get('fondoComun/descargar_pdf_fondo_comun/{periodo}/{anio}/{mes}', [FondoComunController::class, 'descargar_pdf_fondo_comun'])->name('fondoComun.descargar_pdf_fondo_comun');
