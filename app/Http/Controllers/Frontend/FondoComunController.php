@@ -154,6 +154,36 @@ class FondoComunController extends Controller
 		return $pdf->stream('fondoComun_pdf.pdf');
 	}
 
+	public function descargar_pdf_fondo_comun($periodo,$anio,$mes)
+	{
+
+		if($periodo==0)$periodo = "";
+		if($anio==0)$anio = "";
+		if($mes==0)$mes = "";
+
+		$fondo_comun_model = new FondoComun;
+		$fondoComun = $fondo_comun_model->ListarFondoComun($anio, $mes, $periodo);
+
+		$periodo_actual = PeriodoComisione::find($periodo);
+
+		$denominacion_periodo = $periodo_actual->descripcion;
+
+		$mes = ltrim($mes,'0');
+
+		$mesEnLetras = $this->mesesALetras($mes);
+		
+		$pdf = Pdf::loadView('frontend.fondoComun.descargar_pdf_fondo_comun',compact('fondoComun','denominacion_periodo','mesEnLetras','anio'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream('descargar_pdf_fondo_comun.pdf');
+	}
+
 	function mesesALetras($mes) { 
 		$meses = array('','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'setiembre','octubre','noviembre','diciembre'); 
 		return $meses[$mes];

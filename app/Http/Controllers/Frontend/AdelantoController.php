@@ -10,7 +10,9 @@ use App\Models\TablaMaestra;
 use App\Models\Agremiado;
 use App\Models\Adelanto_detalle;
 use App\Models\PeriodoComisione;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Auth;
 
 class AdelantoController extends Controller
@@ -29,11 +31,18 @@ class AdelantoController extends Controller
 
 		$tablaMaestra_model = new TablaMaestra;
 		$persona = new Persona;
+		$periodoComisione_model = new PeriodoComisione;
+
         $sexo = $tablaMaestra_model->getMaestroByTipo(2);
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
 		$grupo_sanguineo = $tablaMaestra_model->getMaestroByTipo(90);
 		$nacionalidad = $tablaMaestra_model->getMaestroByTipo(5);
-        return view('frontend.adelanto.all_lista_adelanto',compact('persona','sexo','tipo_documento','grupo_sanguineo','nacionalidad'));
+		$mes = $tablaMaestra_model->getMaestroByTipo(116);
+		$periodo = $periodoComisione_model->getPeriodoAll();
+		$periodo_ultimo = PeriodoComisione::where("estado",1)->orderBy("id","desc")->first();
+		$periodo_activo = PeriodoComisione::where("estado",1)->where("activo",1)->orderBy("id","desc")->first();
+		
+        return view('frontend.adelanto.all_lista_adelanto',compact('persona','sexo','tipo_documento','grupo_sanguineo','nacionalidad','mes','periodo','periodo_ultimo','periodo_activo'));
 
     }
 
@@ -42,8 +51,8 @@ class AdelantoController extends Controller
 		$adelanto_model = new Adelanto;
 		$p[]=$request->numero_cap;
 		$p[]=$request->agremiado;//$request->numero_documento;
-		$p[]="";
-		$p[]="";
+		$p[]=$request->periodo;
+		$p[]=$request->mes_reintegro;
 		$p[]="";
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
@@ -284,5 +293,75 @@ class AdelantoController extends Controller
 		$datos_adelanto = $adelanto_model->getDatosAdelanto($id_agremiado);
 		
 		return response()->json($datos_adelanto);
+	}
+
+	public function descargar_pdf_adelanto($periodo,$numero_cap,$agremiado,$mes_reintegro,$estado)
+	{
+
+		if($periodo==0)$periodo = "";
+		if($numero_cap=="0")$numero_cap = "";
+		if($agremiado=="0")$agremiado = "";
+		if($mes_reintegro==0)$mes_reintegro = "";
+		if($estado==0)$estado = "";
+
+		$adelanto_model = new Adelanto;
+		$p[]=$numero_cap;
+		$p[]=$agremiado;
+		$p[]=$periodo;
+		$p[]=$mes_reintegro;
+		$p[]="";
+        $p[]=$estado;
+		$p[]=1;
+		$p[]=10000;
+		$data = $adelanto_model->listar_adelanto_ajax($p);
+
+		$periodo_actual = PeriodoComisione::find($periodo);
+
+		$denominacion_periodo = $periodo_actual->descripcion;
+		$incio_periodo = Carbon::parse($periodo_actual->fecha_inicio);
+		$fin_periodo = Carbon::parse($periodo_actual->fecha_fin);
+		$mesesEnLetras ="";
+
+			if($mes_reintegro==""){
+
+			$period = CarbonPeriod::create($incio_periodo,'1 month', $fin_periodo);
+
+			$meses = [];
+
+			foreach($period as $date){
+				$meses[] = $date->format('n');
+			}
+
+			$meses_unicos = array_values(array_unique($meses));
+
+			sort($meses_unicos);
+
+			foreach($meses_unicos as $meses_numero){
+				$mesEnLetras = $this->mesesALetras($meses_numero);
+				$mesesEnLetras .= $mesEnLetras . ",";
+			}
+
+			$mesEnLetras = rtrim($mesesEnLetras,',');
+
+		}else{
+			$mesEnLetras = $this->mesesALetras($mes_reintegro);
+		}
+		
+
+		$pdf = Pdf::loadView('frontend.adelanto.descargar_pdf_adelanto',compact('data','denominacion_periodo','mesEnLetras'));
+		$pdf->getDomPDF()->set_option("enable_php", true);
+		
+		//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream('descargar_pdf_adelanto.pdf');
+	}
+
+	function mesesALetras($mes) { 
+		$meses = array('','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'setiembre','octubre','noviembre','diciembre'); 
+		return $meses[$mes];
 	}
 }

@@ -35,6 +35,11 @@ $(document).ready(function () {
 	$('#btnNuevo').click(function () {
 		modalAdelanto(0);
 	});
+
+	$('#btnDescargar').on('click', function () {
+		DescargarPdfAdelanto()
+
+	});
 		
 	datatablenew();
 	/*	
@@ -467,6 +472,8 @@ function datatablenew(){
 			var id = $('#id').val();
 			var numero_cap = $('#numero_cap').val();
             var agremiado = $('#agremiado').val();
+            var periodo = $('#id_periodo_bus_').val();
+            var mes_reintegro = $('#mes_reintegro_bus').val();
 			var estado = $('#estado').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
@@ -475,7 +482,7 @@ function datatablenew(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						id:id,numero_cap:numero_cap,agremiado:agremiado,estado:estado,
+						id:id,numero_cap:numero_cap,agremiado:agremiado,periodo:periodo,estado:estado,mes_reintegro:mes_reintegro,
 						_token:_token
                        },
                 "success": function (result) {
@@ -679,5 +686,24 @@ function fn_eliminar_adelanto(id,estado){
 				datatablenew();
             }
     });
+}
+
+function DescargarPdfAdelanto(){
+
+	var periodo = $('#id_periodo_bus_').val();
+	var numero_cap = $('#numero_cap').val();
+	var agremiado = $('#agremiado').val();
+	var mes_reintegro = $('#mes_reintegro_bus').val();
+	var estado = $('#estado').val();
+
+	if (periodo == "")periodo = 0;
+	if (numero_cap == "")numero_cap = "0";
+	if (agremiado == "")agremiado = "0";
+	if (mes_reintegro == "")mes_reintegro = 0;
+	if (estado == "")estado = 0;
+
+	var href = '/adelanto/descargar_pdf_adelanto/'+periodo+'/'+numero_cap+'/'+agremiado+'/'+mes_reintegro+'/'+estado;
+	window.open(href, '_blank');
+
 }
 

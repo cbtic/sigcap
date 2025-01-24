@@ -44,7 +44,7 @@ where id_comision=".$id_comision;
     function getComisionDelegadosByIdPeriodoReintegro($id_periodo){
 
         $cad = "select * from (
-        select p.apellido_paterno, p.apellido_materno, p.nombres, a.id id_agremiado, a.numero_cap,coalesce(tmp.denominacion,'ASESOR / ESPECIALISTA') puesto,
+        select distinct p.apellido_paterno, p.apellido_materno, p.nombres, a.id id_agremiado, a.numero_cap,coalesce(tmp.denominacion,'ASESOR / ESPECIALISTA') puesto,
         t5.descripcion periodo,
         (case when t0.coordinador='1' then 'COORDINADOR' else '' end) coordinador
         from comision_sesiones t1 

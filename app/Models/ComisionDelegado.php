@@ -209,7 +209,7 @@ and id_puesto not in(22)";
 	function getComisionesDelegadoTributo($periodo){
 
         $cad = "select * from (
-		select mi.denominacion municipalidad,t4.comision comision,
+		select distinct /*mi.denominacion municipalidad,t4.comision comision,*/
 		p.apellido_paterno, p.apellido_materno, p.nombres, a.id id_agremiado, a.numero_cap,coalesce(tmp.denominacion,'ASESOR / ESPECIALISTA') puesto,cd.id_puesto::int id_puesto, 
 		t5.descripcion periodo,
 		(case when t0.coordinador='1' then 'COORDINADOR' else '' end) coordinador

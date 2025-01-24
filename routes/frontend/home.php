@@ -553,7 +553,7 @@ Route::get('planillaDelegado/consulta_reintegro', [PlanillaDelegadoController::c
 Route::post('planillaDelegado/obtener_planilla_delegado', [PlanillaDelegadoController::class, 'obtener_planilla_delegado'])->name('planillaDelegado.obtener_planilla_delegado');
 Route::post('planilla/send_planilla_delegado', [PlanillaDelegadoController::class, 'send_planilla_delegado'])->name('planilla.send_planilla_delegado');
 Route::post('planilla/eliminar_planilla_delegado', [PlanillaDelegadoController::class, 'eliminar_planilla_delegado'])->name('planilla.eliminar_planilla_delegado');
-Route::get('planilla/obtener_monto/{id_tipo_reintegro}/{id_comision}/{id_periodo}/{mes}', [PlanillaDelegadoController::class, 'obtener_monto'])->name('planillaDelegado.obtener_monto');
+Route::get('planilla/obtener_monto/{id_tipo_reintegro}/{id_comision}/{id_periodo}/{anio}/{mes}/{porcentaje}', [PlanillaDelegadoController::class, 'obtener_monto'])->name('planillaDelegado.obtener_monto');
 
 Route::post('planilla/listar_reintegro_ajax', [PlanillaDelegadoController::class, 'listar_reintegro_ajax'])->name('planilla.listar_reintegro_ajax');
 Route::get('planilla/modal_reintegro/{id}', [PlanillaDelegadoController::class, 'modal_reintegro'])->name('planilla.modal_reintegro');
@@ -813,3 +813,6 @@ Route::get('sesion/test_excel', [SesionController::class, 'test_excel'])->name('
 Route::get('ingreso/validar_pago/{cap}', [IngresoController::class, 'validar_pago'])->name('ingreso.validar_pago');
 Route::get('ingreso/validar_todos_pago/{cap}', [IngresoController::class, 'validar_todos_pago'])->name('ingreso.validar_todos_pago');
 
+Route::get('adelanto/descargar_pdf_adelanto/{periodo}/{numero_cap}/{agremiado}/{mes_reintegro}/{estado}', [AdelantoController::class, 'descargar_pdf_adelanto'])->name('adelanto.descargar_pdf_adelanto');
+Route::get('fondoComun/descargar_pdf_fondo_comun/{periodo}/{anio}/{mes}', [FondoComunController::class, 'descargar_pdf_fondo_comun'])->name('fondoComun.descargar_pdf_fondo_comun');
+Route::get('planilla/obtener_anio_reintegro/{periodo}', [PlanillaDelegadoController::class, 'obtener_anio_reintegro'])->name('planilla.obtener_anio_reintegro');
