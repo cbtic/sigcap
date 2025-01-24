@@ -19,6 +19,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
 use App\Models\ComputoSesione;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class PlanillaDelegadoController extends Controller
 {
@@ -163,6 +165,7 @@ class PlanillaDelegadoController extends Controller
 		$delegadoReintegro->id_comision = $request->id_comision;
 		$delegadoReintegro->id_delegado = $request->id_delegado;
 		$delegadoReintegro->porcentaje = $request->porcentaje;
+		$delegadoReintegro->anio_reintegro = $request->anio;
 		//$delegadoReintegro->importe_total = $request->id_delegado;
 		//$delegadoReintegro->id_tipo_reintegro = $request->id_tipo_reintegro;
 		//$delegadoReintegro->cantidad = $request->cantidad;
@@ -562,6 +565,26 @@ class PlanillaDelegadoController extends Controller
 
 		echo $planillaDelegadoDetalle->id;
     }
+	
+	public function obtener_anio_reintegro($periodo){
+
+		$periodo_actual = PeriodoComisione::find($periodo);
+
+		$incio_periodo = Carbon::parse($periodo_actual->fecha_inicio);
+		$fin_periodo = Carbon::parse($periodo_actual->fecha_fin);
+
+		$period = CarbonPeriod::create($incio_periodo,'1 year', $fin_periodo);
+
+		$anios = [];
+
+		foreach($period as $anio){
+			$anios[] = $anio->year;
+		}
+
+		//dd($anios);exit();
+		echo json_encode($anios);
+
+	}
 			    
 }
 

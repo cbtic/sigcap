@@ -815,3 +815,4 @@ Route::get('ingreso/validar_todos_pago/{cap}', [IngresoController::class, 'valid
 
 Route::get('adelanto/descargar_pdf_adelanto/{periodo}/{numero_cap}/{agremiado}/{mes_reintegro}/{estado}', [AdelantoController::class, 'descargar_pdf_adelanto'])->name('adelanto.descargar_pdf_adelanto');
 Route::get('fondoComun/descargar_pdf_fondo_comun/{periodo}/{anio}/{mes}', [FondoComunController::class, 'descargar_pdf_fondo_comun'])->name('fondoComun.descargar_pdf_fondo_comun');
+Route::get('planilla/obtener_anio_reintegro/{periodo}', [PlanillaDelegadoController::class, 'obtener_anio_reintegro'])->name('planilla.obtener_anio_reintegro');

@@ -124,6 +124,7 @@ $(document).ready(function() {
 	$("#concepto").select2({ width: '100%' });
 	$("#id_agremiado").select2({ width: '100%' });
 	datatableReintegroDetalle();
+	obtenerAnioReintegro();
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
@@ -226,11 +227,16 @@ function fn_save(){
 	var cantidad = $('#cantidad').val();
 	var id_tipo_reintegro = $('#id_tipo_reintegro').val();
 	var observacion = $('#observacion').val();
+	var porcentaje = $('#porcentaje').val();
+	var anio = $('#anio').val();
 	
     $.ajax({
 			url: "/planilla/send_reintegro",
             type: "POST",
-            data : {_token:_token,id:id,id_regional:id_regional,id_periodo:id_periodo,id_mes:id_mes,id_mes_ejecuta_reintegro:id_mes_ejecuta_reintegro,id_comision:id_comision,id_delegado:id_delegado,importe:importe,cantidad:cantidad,id_tipo_reintegro:id_tipo_reintegro,observacion:observacion},
+            data : {_token:_token,id:id,id_regional:id_regional,id_periodo:id_periodo,id_mes:id_mes,
+				id_mes_ejecuta_reintegro:id_mes_ejecuta_reintegro,id_comision:id_comision,
+				id_delegado:id_delegado,importe:importe,cantidad:cantidad,id_tipo_reintegro:id_tipo_reintegro,
+				observacion:observacion,porcentaje:porcentaje,anio:anio},
             success: function (result) {
 				//$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
@@ -304,6 +310,27 @@ function calcular_importe(){
 	
 }
 
+function obtenerAnioReintegro(){
+
+	var periodo = $('#id_periodo').val();
+
+	$.ajax({
+		url: "/planilla/obtener_anio_reintegro/"+periodo,
+		dataType: "json",
+		success: function (result) {  
+
+			var option = "";
+			$('#anio').html("");
+			result.forEach(function (anio) {
+				option += "<option value='"+anio+"'>"+anio+"</option>";
+			});
+			$('#anio').html(option);
+
+		}
+	});
+
+}
+
 </script>
 
 
@@ -342,7 +369,7 @@ function calcular_importe(){
 							$readonly_=$id>0?'':"readonly='readonly'";
 						?>
 						
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Regional</label>
 								<select name="id_regional" readonly id="id_regional" class="form-control form-control-sm" onChange="" disabled>
@@ -357,7 +384,7 @@ function calcular_importe(){
 							</div>
 						</div>
 						
-						<div class="col-lg-4">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
 								<input type="hidden" name="id_periodo_" id="id_periodo_" value="" />
@@ -375,7 +402,15 @@ function calcular_importe(){
 							</div>
 						</div>
 
-						<div class="col-lg-3">
+						<div class="col-lg-2">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Año a Reintegrar</label>
+								<select name="anio" id="anio" class="form-control form-control-sm">
+								</select>
+							</div>
+						</div>
+
+						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Mes a Reintegrar</label>
 								<select name="mes" id="mes" class="form-control form-control-sm">
