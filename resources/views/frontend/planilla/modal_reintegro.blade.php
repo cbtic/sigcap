@@ -270,14 +270,18 @@ function obtener_monto(){
 	var id_tipo_reintegro = $("#id_tipo_reintegro").val();
 	var id_comision = $("#id_comision").val();
 	var id_periodo = $('#id_periodo').val();
+	var anio = $('#anio').val();
 	var mes = $('#mes').val();
-	
+	var porcentaje = $('#porcentaje').val();
+
 	$.ajax({
-		url: '/planilla/obtener_monto/' + id_tipo_reintegro + '/' + id_comision + '/' + id_periodo + '/' + mes,
+		url: '/planilla/obtener_monto/' + id_tipo_reintegro + '/' + id_comision + '/' + id_periodo + '/' + anio + '/' + mes + '/' + porcentaje,
 		dataType: "json",
 		success: function(result){
 			console.log(result);
 			$('#monto').val(Number(result).toFixed(2));
+
+			calcular_importe();
 
 		},
 		error: function(data) {
@@ -302,7 +306,7 @@ function datatableReintegroDetalle(){
 }
 
 function calcular_importe(){
-	
+
 	var monto = $('#monto').val();
 	var cantidad = $('#cantidad').val();
 	var importe = cantidad * monto;
@@ -405,7 +409,7 @@ function obtenerAnioReintegro(){
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Año a Reintegrar</label>
-								<select name="anio" id="anio" class="form-control form-control-sm">
+								<select name="anio" id="anio" class="form-control form-control-sm" onChange="obtener_monto()">
 								</select>
 							</div>
 						</div>
@@ -491,7 +495,7 @@ function obtenerAnioReintegro(){
 						<div class="col-lg-1">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Porcentaje %</label>
-								<input id="porcentaje" name="porcentaje" class="form-control form-control-sm" value="<?php echo !empty($delegadoReintegro->porcentaje) ? $delegadoReintegro->porcentaje : 10; ?>" type="text"/>
+								<input id="porcentaje" name="porcentaje" class="form-control form-control-sm" value="<?php echo !empty($delegadoReintegro->porcentaje) ? $delegadoReintegro->porcentaje : 10; ?>" type="text" onKeyUp="obtener_monto()" />
 							</div>
 						</div>
 						<div class="col-lg-2">

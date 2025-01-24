@@ -162,6 +162,8 @@ class PlanillaDelegadoController extends Controller
 		$delegadoReintegro->id_periodo = $request->id_periodo;
 		//$delegadoReintegro->id_mes = $request->id_mes;
 		$delegadoReintegro->id_mes_ejecuta_reintegro = $request->id_mes_ejecuta_reintegro;
+		//$delegadoReintegro->anio_reintegro = $request->anio;
+		//$delegadoReintegro->porcentaje = $request->porcentaje;
 		$delegadoReintegro->id_comision = $request->id_comision;
 		$delegadoReintegro->id_delegado = $request->id_delegado;
 		$delegadoReintegro->porcentaje = $request->porcentaje;
@@ -217,10 +219,10 @@ class PlanillaDelegadoController extends Controller
 
     }
 	
-	public function obtener_monto($id_tipo_reintegro,$id_comision,$id_periodo,$mes){
+	public function obtener_monto($id_tipo_reintegro,$id_comision,$id_periodo,$anio,$mes,$porcentaje){
 		
 		$planillaDelegado_model = new PlanillaDelegado;
-		$monto = $planillaDelegado_model->getMonto($id_tipo_reintegro,$id_comision,$id_periodo,$mes);
+		$monto = $planillaDelegado_model->getMonto($id_tipo_reintegro,$id_comision,$id_periodo,$anio,$mes,$porcentaje);
 		
 		echo json_encode($monto);
 	}

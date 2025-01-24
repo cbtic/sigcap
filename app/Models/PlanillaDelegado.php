@@ -39,7 +39,7 @@ where pd.id=".$id;
         return $data;
     }
 	
-	function getMonto($id_tipo_reintegro,$id_comision,$id_periodo,$mes){
+	function getMonto($id_tipo_reintegro,$id_comision,$id_periodo,$anio,$mes,$porcentaje){
 
 		if($id_tipo_reintegro==438){
         	$cad = "select monto 
@@ -59,8 +59,9 @@ where pd.id=".$id;
 		}
 		
 		if($id_tipo_reintegro==437){
-			$cad = "select ((0.10)*valor_uit::decimal)monto 
-		from parametros p where anio=(select to_char(fecha_fin,'yyyy') from periodo_comisiones pc where id=".$id_periodo.") and estado='1';";
+			$cad = "select ((".$porcentaje."::decimal/100::decimal)*valor_uit::decimal)monto 
+		from parametros p where anio='".$anio."' 
+		and estado='1'";
 			//echo $cad;
 		}
 		//echo $cad;
