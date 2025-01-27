@@ -651,7 +651,54 @@
 
                                                 </div>
 
+                                                <div id="fsFiltro" class="card-body">
+                                            <div id="" class="row">
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Serie</label>
+                                                        <select readonly name="serieF" id="serieF" class="form-control form-control-sm">
+                                                            <?php if ($trans == 'FA') { ?>
+                                                                <?php foreach ($serie as $row) : ?>
+                                                                    <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
+                                                                    
+                                                                <?php endforeach; ?>
+                                                            <?php } ?>
+                                                            <?php if ($trans == 'FE') { ?>
+                                                                <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie_ncnd ?></option>
+                                                            <?php } ?>
 
+                                                            <?php if ($trans == 'FN') { ?>
+                                                                <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie ?></option>
+                                                            <?php } ?>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Número</label>
+                                                        <input type="text" name="numerof1"  id="numerof1" value="<?php if ($trans == 'FN') {
+                                                                                                                            echo $comprobante->numero;
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $comprobante->id_numero_ncnd;
+                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                    <div class="form-group">
+                                                        
+                                                        <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FN') {
+                                                                                                                            echo $comprobante->id;
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $comprobante->id;
+                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                                                                                
 
                                                 <div id="" class="row" style="display:none">
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
