@@ -42,10 +42,27 @@ $(document).ready(function () {
 	});
 		
 	datatablenew();
-	
+	/*
+	datatablenew({
+		sAjaxSource: "/tipo_cambio/listar_tipo_cambio_ajax",
+		extraData: {
+			id: $('#id').val(),
+			denominacion: $('#denominacion_muni').val(),
+			tipo_municipalidad: $('#tipo_municipalidad').val(),
+			estado: $('#estado').val()
+		},
+		columns: [
+			'fecha', // Nombre de la propiedad
+			'valor_venta',
+			'valor_compra',
+			'estado',
+			'estado'
+		]
+	});
+	*/
 });
 
-function datatablenew(){
+function datatablenew(){ 
     var oTable1 = $('#tblTipoCambio').dataTable({
         "bServerSide": true,
         "sAjaxSource": "/tipo_cambio/listar_tipo_cambio_ajax",
@@ -219,3 +236,92 @@ function fn_eliminar_tipo_cambio(id,estado){
     });
 }
 
+function datatablenew(options) {
+    // Valores predeterminados
+    var defaults = {
+        sAjaxSource: "/comision/listar_comision_ajax", // URL predeterminada
+        bFilter: false,
+        bSort: false,
+        info: true,
+        language: {"url": "/js/Spanish.json"},
+        autoWidth: false,
+        bLengthChange: true,
+        destroy: true,
+        lengthMenu: [[10, 50, 100, 200, 60000], [10, 50, 100, 200, "Todos"]],
+        dom: '<"top">rt<"bottom"flpi><"clear">',
+        extraData: {}, // Datos extra para la petición
+        columns: [] // Solo los nombres de las propiedades que se desean mostrar
+    };
+
+    // Combina las configuraciones personalizadas con los valores predeterminados
+    var config = $.extend(true, {}, defaults, options);
+
+    // Llenar `columns` dinámicamente
+    var columns = [];
+	for (let i = 0; i < config.columns.length; i++) {
+		let field = config.columns[i]; // Usamos `let` para que `field` tenga un ámbito local a cada iteración
+		
+		columns.push({
+			"mRender": function(data, type, row) {
+				return row[field] !== null ? row[field] : ''; // Devuelve el valor de la propiedad de cada fila
+			},
+			"bSortable": false, // Predeterminado en false
+			"className": "", // Predeterminado en vacío
+			"aTargets": [i] // Índice de la columna
+		});
+	}
+	//console.log(columns);
+    // Llenar `extraData` dinámicamente, si existe en las opciones
+    var extraData = {};
+    for (var key in config.extraData) {
+        if (config.extraData.hasOwnProperty(key)) {
+            extraData[key] = config.extraData[key];
+        }
+    }
+
+    var oTable1 = $('#tblTipoCambio').dataTable({
+        "bServerSide": true,
+        "sAjaxSource": config.sAjaxSource,
+        "bProcessing": true,
+        "sPaginationType": "full_numbers",
+        "bFilter": config.bFilter,
+        "bSort": config.bSort,
+        "info": config.info,
+        "language": config.language,
+        "autoWidth": config.autoWidth,
+        "bLengthChange": config.bLengthChange,
+        "destroy": config.destroy,
+        "lengthMenu": config.lengthMenu,
+        "dom": config.dom,
+        "fnDrawCallback": function(json) {
+            $('[data-toggle="tooltip"]').tooltip();
+        },
+
+        "fnServerData": function(sSource, aoData, fnCallback, oSettings) {
+            // Construir datos dinámicamente
+            var data = {
+                NumeroPagina: parseFloat(fn_util_obtieneNroPagina(aoData[3].value, aoData[4].value)).toFixed(),
+                NumeroRegistros: aoData[4].value,
+                _token: $('#_token').val()
+            };
+
+            // Agregar los parámetros adicionales si existen
+            data = $.extend(data, extraData);
+
+            oSettings.jqXHR = $.ajax({
+                "dataType": 'json',
+                "type": "POST",
+                "url": sSource,
+                "data": data,
+                "success": function(result) {
+                    fnCallback(result);
+                },
+                "error": function(msg, textStatus, errorThrown) {
+                    console.error("Error en la solicitud AJAX:", msg, textStatus, errorThrown);
+                }
+            });
+        },
+
+        "aoColumnDefs": columns // Usar las columnas configuradas
+    });
+}
