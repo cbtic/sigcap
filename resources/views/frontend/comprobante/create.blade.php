@@ -656,7 +656,7 @@
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                     <div class="form-group">
                                                         <label class="form-control-sm">Serie</label>
-                                                        <select readonly name="serieF" id="serieF" class="form-control form-control-sm">
+                                                        <select readonly name="serieNC" id="serieNC" class="form-control form-control-sm">
                                                             <?php if ($trans == 'FA') { ?>
                                                                 <?php foreach ($serie as $row) : ?>
                                                                     <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
@@ -677,13 +677,30 @@
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                     <div class="form-group">
                                                         <label class="form-control-sm">Número</label>
-                                                        <input type="text" name="numerof1"  id="numerof1" value="<?php if ($trans == 'FN') {
+                                                        <input type="text" name="numeroNC"  id="numeroNC" value="<?php if ($trans == 'FN') {
                                                                                                                             echo $comprobante->numero;
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
                                                                                                                             echo $comprobante->id_numero_ncnd;
                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                            
                                                     </div>
+                                                     
+                                                    
+                                                </div>
+                                                
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm"></label>
+                                                        <span class="input-group-btn">
+                                                                <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerNC()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
+                                                            </span>
+                                                            
+                                                    </div>
+                                                    <div>
+                                                            
+                                                        </div>   
+                                                    
                                                 </div>
 
                                                 <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
@@ -694,9 +711,10 @@
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
                                                                                                                             echo $comprobante->id;
-                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
                                                     </div>
                                                 </div>
+                                                
                                             </div>
                                         </div>                                                                                                
 

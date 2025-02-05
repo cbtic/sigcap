@@ -884,6 +884,55 @@ function obtenerTitular(){
 		});
 		
 	}
+
+	function obtenerNC(){
+
+		var tipo_documento = "NC";
+		var serie = $("#serieNC").val();
+		var numero = $("#numeroNC").val();
+		var hoy = new Date().toISOString().split("T")[0];
+		//alert(tipo_comprobante);
+		
+	
+		$.ajax({
+			url: '/comprobante/obtener_nc/' + tipo_documento + '/' + serie + '/' + numero,
+			dataType: "json",
+			success: function (result) {
+
+				if (result.nc===null  ) {
+					
+					alert("Nota de credito no encontrado!");
+				}
+				else {
+					$('#id_comprobante_ncdc').val(result.nc.id);
+					
+					if	(result.nc.cod_tributario===$("#numero_documento").val() ) {
+						if	(result.nc.fecha===hoy ) {
+							alert("Fecha Hoy!");
+						}	
+						else {
+							alert("Fecha Pasada!");
+						}
+					}	
+					else {
+						alert("La nota ce credito no le pertenece al cliente!");
+					}
+
+									
+					
+				}
+
+			},
+			"error": function (msg, textStatus, errorThrown) {
+
+				alert("Nota de credito no encontrado!");
+
+			}
+			
+			
+		});
+		
+	}
 	
     function calcular_total(obj){
         var imported=$("#imported").val();

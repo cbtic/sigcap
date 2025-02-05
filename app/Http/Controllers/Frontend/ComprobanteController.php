@@ -3200,6 +3200,19 @@ class ComprobanteController extends Controller
 		echo json_encode($credito_pago);
 	}
 
+    public function obtener_nc($tipo,$serie,$numero){
+
+        $comprobante_model = new Comprobante;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $nc = $comprobante_model->getncById($tipo,$serie,$numero);
+        $array["sw"] = $sw;
+        $array["nc"] = $nc;
+        echo json_encode($array);
+
+    }
+
+
     public function eliminar_credito_pago($id){
 
 		$cuotaPago = ComprobanteCuotaPago::find($id);		

@@ -134,7 +134,16 @@ class Comprobante extends Model
         return $data[0];
     }
 
-   
+    function getncById($tipo,$serie,$numero){
+
+        $cad = "select id,fecha,cod_tributario,total 
+                from comprobantes c 
+                where c.serie ='". $serie ."' and numero =". $numero ." and tipo ='". $tipo ."'";
+    
+		$data = DB::select($cad);
+                           
+        if(isset($data[0]))return $data[0];
+    }
 
     function getDatosByComprobante($id){
 
