@@ -13,6 +13,7 @@ use App\Models\Regione;
 use App\Models\ComisionSesionDelegado;
 use App\Models\TablaMaestra;
 use App\Models\Agremiado;
+use App\Models\Comisione;
 use App\Models\DelegadoReintegroDetalle;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -100,6 +101,8 @@ class PlanillaDelegadoController extends Controller
 		$regione_model = new Regione;
 		$comisionSesionDelegado_model = new ComisionSesionDelegado;
 		$tablaMaestra_model = new TablaMaestra;
+		$agremiado_model = new Agremiado;
+		//$comision_model = new Comisione;
 		
 		$periodo = $periodoComision_model->getPeriodoAll();
 		$periodo_ultimo = PeriodoComisione::where("activo",1)->orderBy("id","desc")->first();
@@ -114,6 +117,8 @@ class PlanillaDelegadoController extends Controller
         ];
 		
 		//$delegados = $comisionSesionDelegado_model->getComisionDelegadosByIdComision(0);
+		$agremiados = $agremiado_model->getAgremiadoRLAll();
+		//$comisiones = $comision_model->getComisionByPeriodo();
 		
 		$comisionDelegado = NULL;
 		
@@ -126,7 +131,7 @@ class PlanillaDelegadoController extends Controller
 
 		$tipo_reintegro = $tablaMaestra_model->getMaestroByTipo(74);
 
-		return view('frontend.planilla.modal_reintegro',compact('id','delegadoReintegro','region','id_regional','periodo','mes','comisionDelegado','periodo_ultimo','tipo_reintegro'/*,'delegados'*/));
+		return view('frontend.planilla.modal_reintegro',compact('id','delegadoReintegro','region','id_regional','periodo','mes','comisionDelegado','periodo_ultimo','tipo_reintegro'/*,'delegados'*/,'agremiados'));
 
     }
 	
@@ -587,7 +592,17 @@ class PlanillaDelegadoController extends Controller
 		echo json_encode($anios);
 
 	}
-			    
+	
+	public function obtener_comisiones($periodo){
+
+		$comision_model = new Comisione;
+
+		$comisiones = $comision_model->getComisionByPeriodo($periodo, '1');
+
+		//dd($anios);exit();
+		echo json_encode($comisiones);
+
+	}
 }
 
 class InvoicesExport implements FromArray
