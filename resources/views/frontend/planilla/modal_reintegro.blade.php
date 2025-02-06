@@ -225,7 +225,7 @@ function fn_save(){
 	var id_mes = $('#mes').val();
 	var id_mes_ejecuta_reintegro = $('#id_mes_ejecuta_reintegro').val();
 	var id_comision = $('#id_comision').val();
-	var id_delegado = $('#id_comision option:selected').attr("id_delegado");
+	var id_delegado = $('#id_delegado').val();
 	var importe = $('#importe').val();
 	var cantidad = $('#cantidad').val();
 	var id_tipo_reintegro = $('#id_tipo_reintegro').val();
