@@ -714,6 +714,17 @@
                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                    <div class="form-group">
+                                                        
+                                                        <input type="hidden" name="afecta_ingreso" readonly id="afecta_ingreso" value="<?php if ($trans == 'FN') {
+                                                                                                                            echo $comprobante->id;
+                                                                                                                        }  
+                                                                                                                            if ($trans == 'FE') {
+                                                                                                                            echo $comprobante->id;
+                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                    </div>
+                                                </div>
                                                 
                                             </div>
                                         </div>                                                                                                

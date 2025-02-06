@@ -905,14 +905,26 @@ function obtenerTitular(){
 				}
 				else {
 					$('#id_comprobante_ncdc').val(result.nc.id);
+
+		
 					
 					if	(result.nc.cod_tributario===$("#numero_documento").val() ) {
-						if	(result.nc.fecha===hoy ) {
-							alert("Fecha Hoy!");
+						if	(result.nc.fecha.split(" ")[0]===hoy) {
+							
+							$('#afecta_ingreso').val("C");
+							$("#idMedio0").val(result.nc.id_medio).trigger("change");
+							$("#nroOperacion0").val(result.nc.nro_operacion);
+							$("#monto0").val(result.nc.monto * -1);
+							
 						}	
 						else {
-							alert("Fecha Pasada!");
+							
+							$('#afecta_ingreso').val("C");
+							$("#idMedio0").val("91").trigger("change");
+						
 						}
+						
+						
 					}	
 					else {
 						alert("La nota ce credito no le pertenece al cliente!");

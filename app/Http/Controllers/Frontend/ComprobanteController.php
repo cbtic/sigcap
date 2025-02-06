@@ -1144,7 +1144,7 @@ class ComprobanteController extends Controller
             }
             
 
-
+            
             if(isset($request->idMedio)):
                 foreach ($request->idMedio as $key => $value):
                     if($request->idMedio[$key]!=""){
@@ -1160,7 +1160,7 @@ class ComprobanteController extends Controller
                         $fecha = date('d/m/Y');
 
                         if($monto!="0"){
-
+                            
                             $comprobantePago = new ComprobantePago;                        
                             $comprobantePago->id_medio = $idMedio;
                             $comprobantePago->fecha = $fecha;
@@ -1178,6 +1178,8 @@ class ComprobanteController extends Controller
                     }
                 endforeach;
             endif;
+
+        
 
 
             $estado_ws = $ws_model->getMaestroByTipo('96');
