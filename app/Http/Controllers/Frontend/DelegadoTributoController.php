@@ -141,6 +141,7 @@ class DelegadoTributoController extends Controller
         $delegadoTributo->numero_cuenta = $request->numero_cuenta;
         $delegadoTributo->cci = $request->cci;
         $delegadoTributo->fecha_solicitud = $request->fecha_solicitud;
+        $delegadoTributo->fecha_recepcion = $request->fecha_recepcion;
         $delegadoTributo->fecha_inicio = $request->fecha_inicio;
         $delegadoTributo->fecha_fin = $request->fecha_fin;
 		$delegadoTributo->id_usuario_inserta = $id_user;

@@ -1144,7 +1144,7 @@ class ComprobanteController extends Controller
             }
             
 
-
+            
             if(isset($request->idMedio)):
                 foreach ($request->idMedio as $key => $value):
                     if($request->idMedio[$key]!=""){
@@ -1160,7 +1160,7 @@ class ComprobanteController extends Controller
                         $fecha = date('d/m/Y');
 
                         if($monto!="0"){
-
+                            
                             $comprobantePago = new ComprobantePago;                        
                             $comprobantePago->id_medio = $idMedio;
                             $comprobantePago->fecha = $fecha;
@@ -1178,6 +1178,8 @@ class ComprobanteController extends Controller
                     }
                 endforeach;
             endif;
+
+        
 
 
             $estado_ws = $ws_model->getMaestroByTipo('96');
@@ -3199,6 +3201,19 @@ class ComprobanteController extends Controller
 		
 		echo json_encode($credito_pago);
 	}
+
+    public function obtener_nc($tipo,$serie,$numero){
+
+        $comprobante_model = new Comprobante;
+        //$valorizaciones_model = new Valorizacione;
+        $sw = true;
+        $nc = $comprobante_model->getncById($tipo,$serie,$numero);
+        $array["sw"] = $sw;
+        $array["nc"] = $nc;
+        echo json_encode($array);
+
+    }
+
 
     public function eliminar_credito_pago($id){
 

@@ -227,6 +227,14 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 });
 
 $('#openOverlayOpc').on('shown.bs.modal', function() {
+	$('#fecha_recepcion').datepicker({
+		format: "dd-mm-yyyy",
+		autoclose: true,
+		container: '#openOverlayOpc modal-body'
+	});
+});
+
+$('#openOverlayOpc').on('shown.bs.modal', function() {
 	$('#fecha_fin').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
@@ -593,14 +601,21 @@ container: '#myModal modal-body'
 
 						<div class="col-lg-2">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha Inicio</label>
+								<label class="control-label form-control-sm">Fecha Recepci&oacute;n CAP</label>
+								<input id="fecha_recepcion" name="fecha_recepcion" class="form-control form-control-sm"  value="<?php if($delegadoTributo->fecha_recepcion!="")echo date("d-m-Y", strtotime($delegadoTributo->fecha_recepcion))?>" type="text">																				
+							</div>
+						</div>
+
+						<div class="col-lg-2">
+							<div class="form-group">
+								<label class="control-label form-control-sm">Fecha Inicio Pago</label>
 								<input id="fecha_inicio" name="fecha_inicio" class="form-control form-control-sm"  value="<?php if($delegadoTributo->fecha_inicio!="")echo date("d-m-Y", strtotime($delegadoTributo->fecha_inicio))?>" type="text">																				
 							</div>
 						</div>
 
 						<div class="col-lg-2">
 							<div class="form-group">
-								<label class="control-label form-control-sm">Fecha de Fin</label>
+								<label class="control-label form-control-sm">Fecha de Fin Pago</label>
 								<input id="fecha_fin" name="fecha_fin" class="form-control form-control-sm"  value="<?php if($delegadoTributo->fecha_fin!="")echo date("d-m-Y", strtotime($delegadoTributo->fecha_fin))?>" type="text">																				
 							</div>
 						</div>
