@@ -816,3 +816,6 @@ Route::get('ingreso/validar_todos_pago/{cap}', [IngresoController::class, 'valid
 Route::get('adelanto/descargar_pdf_adelanto/{periodo}/{numero_cap}/{agremiado}/{mes_reintegro}/{estado}', [AdelantoController::class, 'descargar_pdf_adelanto'])->name('adelanto.descargar_pdf_adelanto');
 Route::get('fondoComun/descargar_pdf_fondo_comun/{periodo}/{anio}/{mes}', [FondoComunController::class, 'descargar_pdf_fondo_comun'])->name('fondoComun.descargar_pdf_fondo_comun');
 Route::get('planilla/obtener_anio_reintegro/{periodo}', [PlanillaDelegadoController::class, 'obtener_anio_reintegro'])->name('planilla.obtener_anio_reintegro');
+
+Route::get('comprobante/obtener_nc/{tipo}/{serie}/{numero}', [ComprobanteController::class, 'obtener_nc'])->name('comprobante.obtener_nc');
+Route::get('planilla/obtener_comisiones/{periodo}', [PlanillaDelegadoController::class, 'obtener_comisiones'])->name('planilla.obtener_comisiones');
