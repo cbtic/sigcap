@@ -16,7 +16,7 @@ class DelegadoReintegroDetalle extends Model
         from delegado_reintegro_detalles drd 
         inner join delegado_reintegros dr on drd.id_delegado_reintegro = dr.id
         inner join comision_delegados cd on dr.id_delegado=cd.id
-        inner join agremiados a on cd.id_agremiado = a.id
+        inner join agremiados a on dr.id_delegado = a.id
         inner join personas p on a.id_persona = p.id
         inner join tabla_maestras tm on drd.id_tipo_reintegro = tm.codigo::int and  tm.tipo ='74'
         inner join tabla_maestras tm2 on drd.id_mes = tm2.codigo::int and  tm2.tipo ='116'
