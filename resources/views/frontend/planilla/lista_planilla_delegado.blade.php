@@ -109,7 +109,8 @@
 				
 				$total_movilidad+=$row->total_movilidad;
 				$reintegro_asesor+=$row->reintegro_asesor;
-				$total_bruto+=$row->total_bruto;
+				//$total_bruto+=$row->total_bruto;
+				$total_bruto+=number_format($row->total_bruto,2);
 				$ir_cuarta+=$row->ir_cuarta;
 				$total_honorario+=$row->total_honorario;
 				$descuento+=$row->descuento;
