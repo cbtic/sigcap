@@ -111,10 +111,10 @@
 				$reintegro_asesor+=$row->reintegro_asesor;
 				//$total_bruto+=$row->total_bruto;
 				$total_bruto+=round($row->total_bruto,2);
-				$ir_cuarta+=$row->ir_cuarta;
-				$total_honorario+=$row->total_honorario;
-				$descuento+=$row->descuento;
-				$saldo+=$row->saldo;
+				$ir_cuarta+=round($row->ir_cuarta,2);
+				$total_honorario+=round($row->total_honorario,2);
+				$descuento+=round($row->descuento,2);
+				$saldo+=round($row->saldo,2);
 				
 				if($row->reintegro_asesor>0){
 					//$sesiones_asesor++;
