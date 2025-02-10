@@ -170,7 +170,7 @@ class PlanillaDelegadoController extends Controller
 		//$delegadoReintegro->anio_reintegro = $request->anio;
 		//$delegadoReintegro->porcentaje = $request->porcentaje;
 		$delegadoReintegro->id_comision = $request->id_comision;
-		$delegadoReintegro->id_delegado = $request->id_delegado;
+		$delegadoReintegro->id_delegado = $request->id_delegado; //Se envia el id_agremiado a la columna id_delegado de reintegro
 		$delegadoReintegro->porcentaje = $request->porcentaje;
 		$delegadoReintegro->anio_reintegro = $request->anio;
 		//$delegadoReintegro->importe_total = $request->id_delegado;
@@ -603,6 +603,59 @@ class PlanillaDelegadoController extends Controller
 		echo json_encode($comisiones);
 
 	}
+
+	public function exportar_listar_recibo_honorario($periodo, $anio, $mes, $numero_cap, $agremiado, $municipalidad, $fecha_inicio, $fecha_fin, $provision, $cancelacion, $ruc) {
+		if($periodo==0)$periodo = "";
+		if($anio==0)$anio = "";
+		if($mes==0)$mes = "";
+		if($numero_cap==0)$numero_cap = "";
+		if($agremiado=="0")$agremiado = "";
+		if($municipalidad=="0")$municipalidad = "";
+		if($fecha_inicio=="0")$fecha_inicio = "";
+		if($fecha_fin=="0")$fecha_fin = "";
+		if($provision=="0")$provision = "";
+		if($cancelacion=="0")$cancelacion = "";
+		if($ruc=="0")$ruc = "";
+		//if($estado==0)$estado = "";
+		//var_dump($agremiado);exit();
+		$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle();
+		$p[]=$periodo;
+		$p[]=$anio;
+		$p[]=$mes;
+		$p[]=$numero_cap;
+		$p[]=$agremiado;
+		$p[]=$municipalidad;
+		$p[]="";
+		$p[]="";
+		$p[]=$fecha_inicio;
+		$p[]=$fecha_fin;
+		$p[]=$provision;
+		$p[]=$cancelacion;
+		$p[]="";
+		$p[]=$ruc;
+		$p[]=1;
+		$p[]=1;
+		$p[]=10000;
+		$data = $planillaDelegadoDetalle_model->listar_recibo_honorario_ajax($p);
+	
+		$variable = [];
+		$n = 1;
+		//array_push($variable, array("SISTEMA CAP"));
+		//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+		array_push($variable, array("N","Numero CAP","Nombre","RUC","Municipalidad","Situacion", "Numero Comprobante", "Fecha Comprobante", "Fecha Vencimiento", "Abonado", "N° Operacion", "Fecha Operacion", "Grupo", "Asiento Provision", "Asiento Cancelacion"));
+		
+		foreach ($data as $r) {
+			//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+			if($r->cancelado==0)$cancelado='No';
+			if($r->cancelado==1)$cancelado='Si';
+			array_push($variable, array($n++,$r->numero_cap, $r->agremiado, $r->ruc, $r->municipalidad,$r->situacion,$r->numero_comprobante, $r->fecha_comprobante, $r->fecha_vencimiento, $cancelado, $r->numero_operacion, $r->fecha_operacion, $r->id_grupo, $r->provision, $r->cancelacion));
+		}
+		
+		
+		$export = new InvoicesExport([$variable]);
+		return Excel::download($export, 'reporte_recibo_honorarios_delegados.xlsx');
+		
+    }
 }
 
 class InvoicesExport implements FromArray
