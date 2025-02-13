@@ -165,8 +165,9 @@ if(id>0){
 	var id_periodo = "<?php echo $delegadoReintegro->id_periodo?>";
 	var id_agremiado = "<?php echo (isset($comisionDelegado->id_agremiado))?$comisionDelegado->id_agremiado:0?>";
 	var id_comision = "<?php echo $delegadoReintegro->id_comision?>";
-	obtenerDelegadoPeridoEdit(id_periodo,id_agremiado);
-	obtenerComisionDelegadoPeridoEdit(id_periodo,id_agremiado,id_comision);
+	obtenerComisiones();
+	//obtenerDelegadoPeridoEdit(id_periodo,id_agremiado);
+	//obtenerComisionDelegadoPeridoEdit(id_periodo,id_agremiado,id_comision);
 }
 
 //obtenerDelegadoPeridoEdit
@@ -225,7 +226,7 @@ function fn_save(){
 	var id_mes = $('#mes').val();
 	var id_mes_ejecuta_reintegro = $('#id_mes_ejecuta_reintegro').val();
 	var id_comision = $('#id_comision').val();
-	var id_delegado = $('#id_delegado').val();
+	var id_delegado = $('#id_agremiado').val(); //Se envia el id_agremiado a la columna id_delegado de reintegro
 	var importe = $('#importe').val();
 	var cantidad = $('#cantidad').val();
 	var id_tipo_reintegro = $('#id_tipo_reintegro').val();
@@ -341,16 +342,23 @@ function obtenerAnioReintegro(){
 function obtenerComisiones(){
 
 	var periodo = $('#id_periodo').val();
+	var comisionSeleccionada = "<?php echo isset($delegadoReintegro->id_comision) ? $delegadoReintegro->id_comision : ''; ?>";
 
 	$.ajax({
 		url: "/planilla/obtener_comisiones/"+periodo,
 		dataType: "json",
-		success: function (result) {  
+		success: function (result) {
 
-			var option = "";
+			var option = "<option value=''>--Seleccionar--</option>";
 			$('#id_comision').html("");
 			result.forEach(function (comision) {
-				option += "<option value='"+comision.id+"'>"+comision.denominacion+" - "+comision.comision+"</option>";
+				//var selected = (comision.id == delegadoReintegro->id_delegado) ? "selected='selected'" : "";
+				//option += "<option value='"+comision.id+"'>"+comision.denominacion+" - "+comision.comision+"</option>";
+				if (comision.id == comisionSeleccionada) {
+                    option += "<option value='" + comision.id + "' selected='selected'>" + comision.denominacion + " - "+comision.comision+"</option>";
+                }else {
+                    option += "<option value='"+comision.id+"'>"+comision.denominacion+" - "+comision.comision+"</option>";
+                }
 			});
 			$('#id_comision').html(option);
 
