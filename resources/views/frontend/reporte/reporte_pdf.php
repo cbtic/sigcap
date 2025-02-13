@@ -440,7 +440,50 @@
 				
             </thead>
 		</table>
+        
 
+        <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
+			<tbody>
+                <tr>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">NOTAS DE CREDITO QUE NO AFECTA</td>
+                    
+				</tr>  
+            </tbody>
+        </table>        
+        <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
+			<tbody>
+                <tr>
+                <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="10%">Tipo</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">Comprobante</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">Destinatario</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">REF US$</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">Total</td>
+                    
+				</tr>   
+                <!--             
+                <tr>
+                <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">DESCRIPCIÓN DE LOS INGRESOS</td>
+				</tr>
+            -->
+				<?php 
+                $total_monto_d = 0;
+				foreach($nc_no_afecta as $key=>$d){
+                $total_monto_d += $d->total;
+				?>
+				<tr>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->tipo_documento)?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->numero)?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->destinatario)?></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->us,2)?></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->total,2)?></td>
+
+				</tr>
+				<?php
+				} 
+				?>
+				
+			</tbody>
+		</table>
 
         <table class="table table-hover table-sm" style="width:100%!important;padding-top:15px" align="center">
             <thead>
