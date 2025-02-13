@@ -653,7 +653,7 @@
 
                                                 <div id="fsFiltro" class="card-body">
                                             
-                                            <div id="" class="row"   style="display: none;">
+                                            <div id="" class="row"   >
                                             
                                             <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF"> 
                                                     <div class="form-group">
