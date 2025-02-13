@@ -1316,8 +1316,7 @@ function ValidarDeudasVencidas(tipo){
 
 	}
 		
-
-
+	
 
 
 			//$('#empresa_razon_social').val(result.agremiado.razon_social);
@@ -1342,6 +1341,7 @@ function ValidarDeudasVencidas(tipo){
 
 
 }
+
 
 
 
