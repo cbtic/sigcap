@@ -208,7 +208,7 @@ class CajaIngreso extends Model
                     ".$usuario_sel."
                     and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                     and c.id_forma_pago = 1
-                    and c.anulado = 'N'
+                    --and c.anulado = 'N'
 
                 ) as reporte
                 group by situacion, tipo_,tipo";
@@ -235,7 +235,7 @@ class CajaIngreso extends Model
                 ".$usuario_sel."
                 and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                 and c.id_forma_pago = '1'
-                and c.anulado = 'N'
+                --and c.anulado = 'N'
             ) as reporte
             group by condicion";
 
