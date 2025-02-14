@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE FUNCTION public.sp_planilla_delegado(p_id_periodo_comision character varying, p_anio character varying, p_mes character varying)
  RETURNS character varying
  LANGUAGE plpgsql
@@ -83,18 +84,24 @@ begin
 	from (
 	select id_comision,id_agremiado,sesion_mes_actual
 	,(case when coordinador='1' then v_adicional_coordinador else 0 end) coordinador
-	,(case when asesor='1' then sesion_mes_actual else 0 end) asesor_sesion_mes_actual
+	--,(case when asesor='1' then sesion_mes_actual else 0 end) asesor_sesion_mes_actual
+	,(case when zonal=1 then 0 else (case when asesor='1' then sesion_mes_actual else 0 end) end) asesor_sesion_mes_actual
 	--,(case when sesion_meses_anteriores>0 then (p_importe_por_sesion_anterior*sesion_meses_anteriores) else 0 end)+(case when coordinador='1' then v_adicional_coordinador else 0 end) reintegro
 	,reintegro
 	,(movilidad_sesion*sesion_mes_actual) total_movilidad
 	from (
-	select coalesce(cd.id_agremiado,csd.id_agremiado)id_agremiado,(case when csd.id_agremiado>0 then 1 else 0 end)asesor,cs.id_comision,csd.coordinador,
+	select 
+	(case when trim(c.denominacion) in(select trim(denominacion) from tabla_maestras tm where tipo='117' and estado='1') then 1 else 0 end)zonal,
+	coalesce(cd.id_agremiado,csd.id_agremiado)id_agremiado,(case when csd.id_agremiado>0 then 1 else 0 end)asesor,cs.id_comision,csd.coordinador,
 	--sum(case when to_char(cs.fecha_programado,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	--sum(case when to_char(cs.fecha_programado,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
 	--coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,
-	coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
+	--coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
+	--coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and dr.id_delegado=cd.id_agremiado and dr.id_comision=cs.id_comision and dr.estado='1'),0) reintegro,
+	--coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and dr.id_delegado=coalesce(cd.id_agremiado,csd.id_agremiado) and dr.id_comision=cs.id_comision and dr.estado='1'),0) reintegro,
+	coalesce((select importe_total from delegado_reintegros dr inner join comisiones c2_ on dr.id_comision=c2_.id where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and dr.id_delegado=coalesce(cd.id_agremiado,csd.id_agremiado) and c2_.id_municipalidad_integrada=c.id_municipalidad_integrada and dr.estado='1'),0) reintegro,
 	--coalesce((select id_tipo_tributo from delegado_tributos dt where id_agremiado=cd.id_agremiado and id_periodo_comision=cs.id_periodo_comisione and anio=p_anio::int and ('01-'||p_mes||'-'||p_anio)::date between fecha_inicio and fecha_fin and estado='1'),0)id_tipo_tributo,
 	coalesce((select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and cm.id_periodo_comisiones=p_id_periodo_comision::int and estado='1'),0)movilidad_sesion
 	from comision_sesiones cs 
@@ -103,8 +110,10 @@ begin
 	inner join computo_sesiones cs2 on cs.id_computo_sesion=cs2.id
 	inner join comisiones c on c.id=cs.id_comision 
 	where id_computo_sesion=p_id_computo_sesion
+	and csd.estado='1' 
+	and cs.estado='1'
 	and (id_aprobar_pago=2 /*or coalesce(csd.id_agremiado,0)!=0*/) 
-	group by csd.id_agremiado,cd.id_agremiado,cs.id_comision,c.id_municipalidad_integrada,csd.coordinador,csd.id_delegado,cs.id_periodo_comisione
+	group by c.denominacion,csd.id_agremiado,cd.id_agremiado,cs.id_comision,c.id_municipalidad_integrada,csd.coordinador,/*csd.id_delegado,*/cs.id_periodo_comisione
 	)R
 	)S;
 	
@@ -158,28 +167,42 @@ begin
 	,(movilidad_sesion*sesion_mes_actual) total_movilidad
 	--,(case when asesor='1' then (case when sesion_mes_actual>0 then (p_importe_por_sesion*sesion_mes_actual) else 0 end) else 0 end) reintegro_asesor
 	,id_tipo_tributo
-	,(case when asesor='1' then (case when asesor='1' then 0.5 * (case when sesion_mes_actual>0 then (p_importe_por_sesion*sesion_mes_actual) else 0 end) else (case when sesion_mes_actual>0 then (p_importe_por_sesion*sesion_mes_actual) else 0 end) end) else 0 end) reintegro_asesor
+	--,(case when asesor='1' then (case when asesor='1' then 0.5 * (case when sesion_mes_actual>0 then (p_importe_por_sesion*sesion_mes_actual) else 0 end) else (case when sesion_mes_actual>0 then (p_importe_por_sesion*sesion_mes_actual) else 0 end) end) else 0 end) reintegro_asesor
+	,(case when zonal=1 then 0
+	else (case when asesor='1' then (case when asesor='1' then 0.5 * (case when sesion_mes_actual>0 then (p_importe_por_sesion*sesion_mes_actual) else 0 end) else (case when sesion_mes_actual>0 then (p_importe_por_sesion*sesion_mes_actual) else 0 end) end) else 0 end)
+	end) reintegro_asesor
 	,descuento
 	from (
-	select coalesce(cd.id_agremiado,csd.id_agremiado)id_agremiado,(case when csd.id_agremiado>0 then 1 else 0 end)asesor,cs.id_comision,csd.coordinador,
+	select coalesce(cd.id_agremiado,csd.id_agremiado)id_agremiado,
+	(case when csd.id_agremiado>0 
+	and trim(c.denominacion) not in(select trim(denominacion) from tabla_maestras tm where tipo='117' and estado='1') 
+	then 1 else 0 end)asesor,
+	(case when trim(c.denominacion) in(select trim(denominacion) from tabla_maestras tm where tipo='117' and estado='1') then 1 else 0 end)zonal,
+	cs.id_comision,csd.coordinador,
 	--sum(case when to_char(cs.fecha_programado,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	--sum(case when to_char(cs.fecha_programado,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm')=cs2.anio||'-'||cs2.mes then 1 else 0 end)sesion_mes_actual,
 	sum(case when to_char(cs.fecha_ejecucion,'yyyy-mm-dd')::date<(cs2.anio||'-'||cs2.mes||'-01')::date then 1 else 0 end)sesion_meses_anteriores,
 	coalesce((select sum(total_adelanto) from adelantos a where id_agremiado=cd.id_agremiado and coalesce(a.id_tiene_recibo,0)=1 and fecha between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)adelanto,
 	--coalesce((select importe from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes=p_mes::int and id_delegado=csd.id_delegado and id_comision=cs.id_comision),0) reintegro,	
-	coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
+	--coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and id_delegado=csd.id_delegado and estado='1'),0) reintegro,
+	--coalesce((select importe_total from delegado_reintegros dr inner join comision_delegados cd_ on dr.id_delegado=cd_.id where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and cd_.id_agremiado=cd.id_agremiado and dr.estado='1'),0) reintegro,
+	--coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and dr.id_delegado=cd.id_agremiado and dr.id_comision=cs.id_comision and dr.estado='1'),0) reintegro,
+	--coalesce((select importe_total from delegado_reintegros dr where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and dr.id_delegado=coalesce(cd.id_agremiado,csd.id_agremiado) and dr.id_comision=cs.id_comision and dr.estado='1'),0) reintegro,
+	coalesce((select importe_total from delegado_reintegros dr inner join comisiones c2_ on dr.id_comision=c2_.id where id_periodo=cs.id_periodo_comisione and id_mes_ejecuta_reintegro=p_mes::int and dr.id_delegado=coalesce(cd.id_agremiado,csd.id_agremiado) and c2_.id_municipalidad_integrada=c.id_municipalidad_integrada and dr.estado='1'),0) reintegro,
 	coalesce((select id_tipo_tributo from delegado_tributos dt where id_agremiado=cd.id_agremiado and id_periodo_comision=cs.id_periodo_comisione and anio=p_anio::int and ('01-'||p_mes||'-'||p_anio)::date between fecha_inicio and fecha_fin and estado='1'),0)id_tipo_tributo,
 	coalesce((select sum(monto) from comision_movilidades cm where id_municipalidad_integrada=c.id_municipalidad_integrada and cm.id_periodo_comisiones=p_id_periodo_comision::int and estado='1'),0)movilidad_sesion,
-	coalesce((select sum(adelanto_pagar) from adelanto_detalles ad inner join adelantos a on ad.id_adelento=a.id where a.id_agremiado=cd.id_agremiado and fecha_pago between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)descuento
+	coalesce((select sum(adelanto_pagar) from adelanto_detalles ad inner join adelantos a on ad.id_adelento=a.id where ad.estado='1' and a.estado='1' and a.id_agremiado=cd.id_agremiado and fecha_pago between ('01-'||p_mes||'-'||p_anio)::date and (v_dia||'-'||p_mes||'-'||p_anio)::date),0)descuento
 	from comision_sesiones cs 
 	inner join comision_sesion_delegados csd on cs.id=csd.id_comision_sesion
 	left join comision_delegados cd on csd.id_delegado=cd.id
 	inner join computo_sesiones cs2 on cs.id_computo_sesion=cs2.id
 	inner join comisiones c on c.id=cs.id_comision
 	where id_computo_sesion=p_id_computo_sesion
+	and csd.estado='1' 
+	and cs.estado='1'
 	and (id_aprobar_pago=2 /*or coalesce(csd.id_agremiado,0)!=0*/)
-	group by csd.id_agremiado,cd.id_agremiado,cs.id_comision,c.id_municipalidad_integrada,csd.coordinador,csd.id_delegado,cs.id_periodo_comisione
+	group by csd.id_agremiado,cd.id_agremiado,c.denominacion,cs.id_comision,c.id_municipalidad_integrada,csd.coordinador,/*csd.id_delegado,*/cs.id_periodo_comisione
 	)R
 	)S;
 	
