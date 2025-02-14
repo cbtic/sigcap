@@ -393,6 +393,29 @@ class CajaIngreso extends Model
         return $data;
     }
 
+    function getAllComprobantencnd_noafecta($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
+
+        $usuario_sel = "";
+        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+
+        $cad = "
+                  select tm.denominacion tipo_documento, c.serie ||'-'|| c.numero::varchar(20) numero, c.destinatario,  0 us , case when afecta_caja ='C' then -1* c.total 
+              																											    when afecta_caja ='D' then - c.total
+              																											    else c.total end  
+                    from comprobantes c inner join tabla_maestras tm on c.tipo =tm.abreviatura  and tm.tipo='126'
+                    where 1=1 
+                    ".$usuario_sel."
+                    and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'
+                    and (c.tipo ='NC' or c.tipo ='ND') and afecta_caja='D' 
+                    order by tm.denominacion,c.id  ;  ;
+
+        ";
+
+		//echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
+
     function getAllIngressComp($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";

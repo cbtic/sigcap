@@ -104,6 +104,7 @@ and a.id=".$id;
 		left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'                    
 		Where  t1.estado='1' 
 		and t2.id_situacion not in(74,83)
+		and t2.id_regional ='5'
 		order by (t1.apellido_paterno||' '||t1.apellido_materno||' '||t1.nombres) asc";
 		$data = DB::select($cad);
 		

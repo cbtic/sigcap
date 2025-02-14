@@ -25,6 +25,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ComprobanteController extends Controller
 {
@@ -306,9 +307,21 @@ class ComprobanteController extends Controller
 
             //echo $TipoF; exit();
 
-          
+            if ($tipoDocP=="79"){
+                $id_cliente=$ubicacion;
+            }
+            else{
+                $id_cliente=$persona;
+            }
 
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago'));
+            $comprobante_model = new Comprobante;
+            //$valorizaciones_model = new Valorizacione;
+            
+            $nc = $comprobante_model->getncById($id_cliente,$tipoDocP,$id_concepto_pp);
+            
+            //print_r($nc); exit();
+
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago','nc'));
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -435,6 +448,22 @@ class ComprobanteController extends Controller
             $tipoDocP = $request->tipo_documento;
             //echo $$tipoDocP;exit();
 
+            //Valida si tiene NC
+
+            if ($tipoDocP=="79"){
+                $id_cliente=$ubicacion;
+            }
+            else{
+                $id_cliente=$persona;
+            }
+
+            $comprobante_model = new Comprobante;
+            //$valorizaciones_model = new Valorizacione;
+            
+            $nc = $comprobante_model->getncById($id_cliente,$tipoDocP);
+           
+
+
             if($tipoDocP == "DNI" && $TipoF == 'FT'){
                 $ubicacion = $request->id_ubicacion_p;
             }
@@ -445,7 +474,7 @@ class ComprobanteController extends Controller
             else{
                 $empresa = $empresa_model->getEmpresaId($ubicacion);
             }
-            return view('frontend.factura.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd'));
+            return view('frontend.factura.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd', 'nc'));
         }
         if ($trans == 'FN'){
             $serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -829,9 +858,9 @@ class ComprobanteController extends Controller
                     $total_abono= $total_pagar_abono - $total_g;
 
                     $total = $total+$total_abono;
-                }
-
-
+                }           
+                                   
+                $id_nc = $request->id_comprobante_ncdc;
                 //if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
                 //if ($id_concepto!= 26411 && $id_concepto!= 26412) $id_tipo_afectacion_pp=0;
                 /*
@@ -848,7 +877,7 @@ class ComprobanteController extends Controller
                 exit();
                 */
                 
-				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona_act, round($total,2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
+				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona_act, round($total,2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda, $id_nc);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
                 
@@ -985,7 +1014,7 @@ class ComprobanteController extends Controller
 					}
 					$descuento = $value['descuento'];
 					if ($value['descuento']=='') $descuento = 0;
-					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
+					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda,0);
 					
                     
                     //(  serie,      numero,   tipo,      ubicacion,               persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
@@ -1490,7 +1519,7 @@ class ComprobanteController extends Controller
 
                 if ($id_concepto!= 26411) $id_tipo_afectacion_pp=0;
 
-				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
+				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda,0);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
                 
@@ -1554,7 +1583,7 @@ class ComprobanteController extends Controller
 					}
 					$descuento = $value['descuento'];
 					if ($value['descuento']=='') $descuento = 0;
-					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
+					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda,0);
 					
                     
                     //(  serie,      numero,   tipo,      ubicacion,               persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
@@ -3202,12 +3231,12 @@ class ComprobanteController extends Controller
 		echo json_encode($credito_pago);
 	}
 
-    public function obtener_nc($tipo,$serie,$numero){
+    public function obtener_nc($cod_tributario){
 
         $comprobante_model = new Comprobante;
         //$valorizaciones_model = new Valorizacione;
         $sw = true;
-        $nc = $comprobante_model->getncById($tipo,$serie,$numero);
+        $nc = $comprobante_model->getncById($cod_tributario);
         $array["sw"] = $sw;
         $array["nc"] = $nc;
         echo json_encode($array);
