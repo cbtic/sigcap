@@ -380,14 +380,14 @@ function send_recibo_honorario(){
 					<div class="col-lg-4">
 						<div class="form-group">
 							<label class="control-label form-control-sm">Fecha Comprobante</label>
-							<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php echo $datosRecibo[0]->fecha_comprobante?>" type="text"  >							
+							<input id="fecha_comprobante" name="fecha_comprobante" class="form-control form-control-sm"  value="<?php if(isset($datosRecibo[0]->fecha_comprobante))echo date("d-m-Y", strtotime($datosRecibo[0]->fecha_comprobante))?>" type="text"  >							
 						</div>
 					</div>
 
 					<div class="col-lg-4">
 						<div class="form-group">
 							<label class="control-label form-control-sm">Fecha Vencimiento</label>
-							<input type="text" id="fecha_vencimiento" name="fecha_vencimiento"  value="<?php echo $datosRecibo[0]->fecha_vencimiento?>" class="form-control form-control-sm"  >
+							<input type="text" id="fecha_vencimiento" name="fecha_vencimiento"  value="<?php if(isset($datosRecibo[0]->fecha_vencimiento))echo date("d-m-Y", strtotime($datosRecibo[0]->fecha_vencimiento))?>" class="form-control form-control-sm"  >
 						</div>
 					</div>
 									
@@ -413,7 +413,7 @@ function send_recibo_honorario(){
 					<div class="col-lg-4">
 						<div class="form-group">
 							<label class="control-label form-control-sm">Fecha Operación</label>
-							<input type="text" id="fecha_operacion" name="fecha_operacion"  value="<?php echo $datosRecibo[0]->fecha_operacion?>"  class="form-control form-control-sm" readonly="readonly">
+							<input type="text" id="fecha_operacion" name="fecha_operacion"  value="<?php if(isset($datosRecibo[0]->fecha_operacion))echo date("d-m-Y", strtotime($datosRecibo[0]->fecha_operacion))?>"  class="form-control form-control-sm" readonly="readonly">
 						</div>
 					</div>
 									
