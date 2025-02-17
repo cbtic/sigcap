@@ -137,7 +137,7 @@ and cs.estado='1' ";
         inner join personas p on a.id_persona = p.id 
         inner join tabla_maestras tmts on t1.id_tipo_sesion::int = tmts.codigo::int and tmts.tipo = '71'
         left join tabla_maestras tmp on cd.id_puesto::int = tmp.codigo::int and tmp.tipo = '94'
-        where t1.estado = '1' and t0.estado = '1' and t1.id_periodo_comisione = '".$id_periodo."' and cd.id_agremiado = '".$id_agremiado."'
+        where t1.estado = '1' and t0.estado = '1' and t1.id_periodo_comisione = '".$id_periodo."' and cd.id = '".$id_agremiado."'
         ) R
         where row_num = 1";
 

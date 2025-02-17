@@ -284,6 +284,14 @@ class AdelantoController extends Controller
 		$adelanto->estado = $estado;
 		$adelanto->save();
 
+		$adelanto_detalle = Adelanto_detalle::where('id_adelento', $id)->get();
+
+		foreach($adelanto_detalle as $key => $row){
+			$detalle = Adelanto_detalle::find($row->id);
+			$detalle->estado = $estado;
+			$detalle->save();
+		}
+
 		echo $adelanto->id;
     }
 

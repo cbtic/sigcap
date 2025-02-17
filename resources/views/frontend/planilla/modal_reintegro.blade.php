@@ -123,8 +123,10 @@ $.mask.definitions['p'] = "[Mm]";
 $(document).ready(function() {
 	$("#concepto").select2({ width: '100%' });
 	$("#id_agremiado").select2({ width: '100%' });
+	$("#id_comision").select2({ width: '100%' });
 	datatableReintegroDetalle();
 	obtenerAnioReintegro();
+	activarPorcentaje();
 	//$('#hora_solicitud').focus();
 	//$('#hora_solicitud').mask('00:00');
 	//$("#id_empresa").select2({ width: '100%' });
@@ -155,15 +157,17 @@ var id = "<?php echo $id?>";
 
 if(id==0){
 	var id_periodo = $("#id_periodo").val();
-	obtenerDelegadoPerido_(id_periodo);
+	obtenerComisiones();
+	//obtenerDelegadoPerido_(id_periodo);
 }
 
 if(id>0){
 	var id_periodo = "<?php echo $delegadoReintegro->id_periodo?>";
 	var id_agremiado = "<?php echo (isset($comisionDelegado->id_agremiado))?$comisionDelegado->id_agremiado:0?>";
 	var id_comision = "<?php echo $delegadoReintegro->id_comision?>";
-	obtenerDelegadoPeridoEdit(id_periodo,id_agremiado);
-	obtenerComisionDelegadoPeridoEdit(id_periodo,id_agremiado,id_comision);
+	obtenerComisiones();
+	//obtenerDelegadoPeridoEdit(id_periodo,id_agremiado);
+	//obtenerComisionDelegadoPeridoEdit(id_periodo,id_agremiado,id_comision);
 }
 
 //obtenerDelegadoPeridoEdit
@@ -222,7 +226,7 @@ function fn_save(){
 	var id_mes = $('#mes').val();
 	var id_mes_ejecuta_reintegro = $('#id_mes_ejecuta_reintegro').val();
 	var id_comision = $('#id_comision').val();
-	var id_delegado = $('#id_comision option:selected').attr("id_delegado");
+	var id_delegado = $('#id_agremiado').val(); //Se envia el id_agremiado a la columna id_delegado de reintegro
 	var importe = $('#importe').val();
 	var cantidad = $('#cantidad').val();
 	var id_tipo_reintegro = $('#id_tipo_reintegro').val();
@@ -335,6 +339,44 @@ function obtenerAnioReintegro(){
 
 }
 
+function obtenerComisiones(){
+
+	var periodo = $('#id_periodo').val();
+	var comisionSeleccionada = "<?php echo isset($delegadoReintegro->id_comision) ? $delegadoReintegro->id_comision : ''; ?>";
+
+	$.ajax({
+		url: "/planilla/obtener_comisiones/"+periodo,
+		dataType: "json",
+		success: function (result) {
+
+			var option = "<option value=''>--Seleccionar--</option>";
+			$('#id_comision').html("");
+			result.forEach(function (comision) {
+				//var selected = (comision.id == delegadoReintegro->id_delegado) ? "selected='selected'" : "";
+				//option += "<option value='"+comision.id+"'>"+comision.denominacion+" - "+comision.comision+"</option>";
+				if (comision.id == comisionSeleccionada) {
+                    option += "<option value='" + comision.id + "' selected='selected'>" + comision.denominacion + " - "+comision.comision+"</option>";
+                }else {
+                    option += "<option value='"+comision.id+"'>"+comision.denominacion+" - "+comision.comision+"</option>";
+                }
+			});
+			$('#id_comision').html(option);
+
+		}
+	});
+
+}
+
+function activarPorcentaje(){
+	var tipo_reintegro = $('#id_tipo_reintegro').val();
+
+	if(tipo_reintegro!=437){
+		$('#porcentajeCoordinador').hide();
+	}else{
+		$('#porcentajeCoordinador').show();
+	}
+}
+
 </script>
 
 
@@ -430,13 +472,13 @@ function obtenerAnioReintegro(){
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Delegado</label>
-								<select name="id_agremiado" id="id_agremiado" class="form-control form-control-sm" onChange="obtenerComisionDelegadoPerido()" <?php if($id>0) {?>disabled<?php } ?>>
+								<select name="id_agremiado" id="id_agremiado" class="form-control form-control-sm" onChange="" <?php if($id>0) {?><?php } ?>>
 								<option value="">--Selecionar--</option>
 									<?php
-										/*foreach ($delegados as $row) {?>
-									<option value="<?php echo $row->id?>" <?php //if($row->codigo==$seguro->id_concepto)echo "selected='selected'"?>><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></option>
+										foreach ($agremiados as $row) {?>
+									<option value="<?php echo $row->id?>" <?php if($row->id==$delegadoReintegro->id_delegado)echo "selected='selected'"?>><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></option>
 									<?php 
-										}*/
+										}
 									?>
 								</select>
 							</div>
@@ -445,21 +487,21 @@ function obtenerAnioReintegro(){
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Comisi&oacute;n</label>
-								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="" <?php if($id>0) {?>disabled<?php } ?>>
-								<option value="">--Selecionar--</option>
+								<select name="id_comision" id="id_comision" class="form-control form-control-sm" onChange="" <?php if($id>0) {?><?php } ?>>
+								<!--<option value="">--Selecionar--</option>
 									<?php
-										/*foreach ($delegados as $row) {?>
-									<option value="<?php echo $row->id?>" <?php //if($row->codigo==$seguro->id_concepto)echo "selected='selected'"?>><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres?></option>
+										//foreach ($comisiones as $row) {?>
+									<option value="<?php //echo $row->id?>" <?php //if($row->id==$delegadoReintegro->id_comision)echo "selected='selected'"?>><?php //echo $row->denominacion." - ".$row->comision?></option>
 									<?php 
-										}*/
+										//}
 									?>
-								</select>
+								--></select>
 							</div>
 						</div>
 						
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 							<label class="control-label form-control-sm">Tipo Reintegro</label>
-							<select name="id_tipo_reintegro" id="id_tipo_reintegro" class="form-control form-control-sm" onChange="obtener_monto()">
+							<select name="id_tipo_reintegro" id="id_tipo_reintegro" class="form-control form-control-sm" onChange="obtener_monto();activarPorcentaje()">
 								<option value="">--Selecionar--</option>
                                 <?php
                                 foreach ($tipo_reintegro as $row) {
@@ -492,7 +534,7 @@ function obtenerAnioReintegro(){
 								<input id="cantidad" name="cantidad" class="form-control form-control-sm" value="<?php //echo $delegadoReintegro->cantidad?>" type="text" onKeyUp="calcular_importe()"/>
 							</div>
 						</div>
-						<div class="col-lg-1">
+						<div class="col-lg-1" id="porcentajeCoordinador">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Porcentaje %</label>
 								<input id="porcentaje" name="porcentaje" class="form-control form-control-sm" value="<?php echo !empty($delegadoReintegro->porcentaje) ? $delegadoReintegro->porcentaje : 10; ?>" type="text" onKeyUp="obtener_monto()" />

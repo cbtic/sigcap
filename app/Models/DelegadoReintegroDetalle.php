@@ -14,9 +14,9 @@ class DelegadoReintegroDetalle extends Model
 
         $cad = "select drd.id, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, tm.denominacion tipo_reintegro, tm2.denominacion mes_reintegrar, tm3.denominacion mes_ejecuta_reintegro, drd.cantidad, drd.importe, drd.estado 
         from delegado_reintegro_detalles drd 
-        inner join delegado_reintegros dr on drd.id_delegado_reintegro = dr.id
-        inner join comision_delegados cd on dr.id_delegado=cd.id
-        inner join agremiados a on cd.id_agremiado = a.id
+        left join delegado_reintegros dr on drd.id_delegado_reintegro = dr.id
+        left join comision_delegados cd on dr.id_delegado=cd.id
+        inner join agremiados a on dr.id_delegado = a.id
         inner join personas p on a.id_persona = p.id
         inner join tabla_maestras tm on drd.id_tipo_reintegro = tm.codigo::int and  tm.tipo ='74'
         inner join tabla_maestras tm2 on drd.id_mes = tm2.codigo::int and  tm2.tipo ='116'

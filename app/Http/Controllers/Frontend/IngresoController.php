@@ -47,11 +47,16 @@ class IngresoController extends Controller
         $caja = $caja_model->getCaja('91');
         $caja_usuario = $caja_ingreso_model->getCajaIngresoByusuario($id_user,'91');
         $tipo_documento = $caja_model->getMaestroByTipo(16);
-        $pronto_pago = ProntoPago::where("estado","1")->first();
-                
-        $concepto = Concepto::find(26411); //CUOTA GREMIAL
-        //$concepto = Concepto::find(-1);
 
+        //$date = (new DateTime)->format("Y");
+        $anio_actual = date("Y");
+
+
+        $pronto_pago = ProntoPago::where("estado","1")->where("periodo",$anio_actual)->first();                
+        //$concepto = Concepto::where("id","26411")->first(); //CUOTA GREMIAL
+        $concepto = Concepto::where("codigo","00006")->where("estado","1")->where("periodo",$anio_actual)->first(); 
+
+        
         $mes = [
             '' => 'Todos Meses','01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
             '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
@@ -1068,9 +1073,9 @@ class IngresoController extends Controller
         $numero_cap=$datos_agremiado->numero_cap;
         $nombre_completo=$datos_agremiado->nombre_completo;
         //var_dump($datos_agremiado);exit();
-		/*$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id);
+		$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id);
         $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id);
-        $tipo_cambio=$tipo_cambio_model->getTipoCambio();*/
+        $tipo_cambio=$tipo_cambio_model->getTipoCambio();
 
         $deuda_cuota_fraccionamiento=$caja_ingreso_model->getDeudaCuotaFraccionamiento($datos_agremiado->id_p);
 
@@ -1084,7 +1089,7 @@ class IngresoController extends Controller
         $fecha_actual = Carbon::now()->format('d/m/Y');
         $hora_actual = Carbon::now()->format('H:i:s');
 		
-		$pdf = Pdf::loadView('frontend.ingreso.reporte_fraccionamiento_pdf',compact('datos_agremiado','numero_cap','nombre_completo','fecha_actual','hora_actual',/*'tipo_cambio',*/'deuda_cuota_fraccionamiento','cronograma_fraccionamiento'));
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_fraccionamiento_pdf',compact('datos_agremiado','numero_cap','nombre_completo','fecha_actual','hora_actual','tipo_cambio','deuda_cuota_fraccionamiento','cronograma_fraccionamiento'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -1128,18 +1133,15 @@ class IngresoController extends Controller
 		return view('frontend.ingreso.modal_concepto_reporte',compact('numero_cap','concepto'));
 	}
 
-    public function valida_ultimo_pago($cap, $anio){
+    public function valida_ultimo_pago($cap){
 		
 		$valorizacion_model = new Valorizacione;
         
-        //$año_actual = Carbon::now()->year;
-
+        $año_actual = Carbon::now()->year;
         
-		$fecha_vencimiento_pago = $valorizacion_model->getFechaVencimientoPagos($cap, $anio);
+		$pago_pronto_pago = $valorizacion_model->getProntoPago($cap, $año_actual);
 		
-        //dd($fecha_vencimiento_pago).exit();
-
-		echo json_encode($fecha_vencimiento_pago);
+		echo json_encode($pago_pronto_pago);
 	}
 
     public function validar_pago($cap){

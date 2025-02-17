@@ -22,15 +22,15 @@ class Comprobante extends Model
 		
 	}
 
-	public function registrar_factura_moneda($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda) {
+	public function registrar_factura_moneda($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$id_nc) {
                                           //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
-             //print_r($serie .",". $numero.",".$tipo.",".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$id_v.",". $id_caja.",".$descuento.",".$accion.",".$id_user.",".$id_moneda);exit();
-        $cad = "Select sp_crud_factura_moneda(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        //echo "Select sp_crud_factura(".$serie.",".$numero.", ".$tipo.", ".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$codigo_v.",".$estab_v.",".$modulo.",".$smodulo.",".$descuento.",".$accion.",".$id_user.")";
+           // print_r($serie .",". $numero.",".$tipo.",".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$id_v.",". $id_caja.",".$descuento.",".$accion.",".$id_user.",".$id_moneda.",".$id_nc);exit();
+        $cad = "Select sp_crud_factura_moneda(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        //echo "Select sp_crud_factura(".$serie.",".$numero.", ".$tipo.", ".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$codigo_v.",".$estab_v.",".$modulo.",".$smodulo.",".$descuento.",".$accion.",".$id_user.",".$id_nc.")";
 
-		$data = DB::select($cad, array($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,     $id_user,  $id_moneda));
+		$data = DB::select($cad, array($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,     $id_user,  $id_moneda,$id_nc));
                                     //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
-       // print_r($data); exit();
+        //print_r($data); exit();
         return $data[0]->sp_crud_factura_moneda;
     }                   
 
@@ -134,12 +134,27 @@ class Comprobante extends Model
         return $data[0];
     }
 
-    function getncById($tipo,$serie,$numero){
-
-        $cad = "select id,fecha,cod_tributario,total 
-                from comprobantes c 
-                where c.serie ='". $serie ."' and numero =". $numero ." and tipo ='". $tipo ."'";
-    
+    function getncById($id_cliente,$tipo_documento,$id_concepto){
+        if ($tipo_documento=='79'){
+                $cad = "select c.id,c.fecha,c.cod_tributario,c.total, nro_operacion ,cp.monto ,cp.id_medio, c2.id_comprobante_ncnd id_comprobante,c2.id id_nc,c2.id id_nc,c2.tipo,c2.numero,c2.serie 
+                        from comprobantes c inner join comprobante_pagos cp on c.id =cp.id_comprobante
+                					inner join valorizaciones v on c.id =v.id_comprobante
+                					inner join comprobantes c2 on c2.id_comprobante_ncnd=c.id 
+                        where c.id_empresa ='". $id_cliente ."' and v.id_concepto='". $id_concepto ."'  and v.estado ='0' and c2.tipo ='NC' and c2.id_numero_ncnd =0
+                        order by c.id desc
+                        limit 1";
+            }
+            else {
+                $cad = "select c.id,c.fecha,c.cod_tributario,c.total, nro_operacion ,cp.monto ,cp.id_medio, c2.id_comprobante_ncnd id_comprobante,c2.id id_nc,c2.id id_nc,c2.tipo,c2.numero,c2.serie 
+                        from comprobantes c inner join comprobante_pagos cp on c.id =cp.id_comprobante
+                					inner join valorizaciones v on c.id =v.id_comprobante
+                					inner join comprobantes c2 on c2.id_comprobante_ncnd=c.id 
+                        where c.id_persona ='". $id_cliente ."' and v.id_concepto='". $id_concepto ."'  and v.estado ='0' and c2.tipo ='NC' and c2.id_numero_ncnd =0               
+                        order by c.id desc
+                        limit 1";
+            }
+            
+            //echo($cad); exit();
 		$data = DB::select($cad);
                            
         if(isset($data[0]))return $data[0];
