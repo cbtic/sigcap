@@ -691,8 +691,9 @@
                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm text-center">
                                                          
                                                     </div>
-
-                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                </div>
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                    <div class="form-group">
                                                         <label class="form-control-sm">Número</label>
                                                         <input type="text" name="numeroNC"  id="numeroNC" value="<?php if ($trans == 'FA') {
                                                                                                                             if ($nc) {
@@ -702,6 +703,23 @@
                                                                                                                             if ($trans == 'FE') {
                                                                                                                             echo $nc->numero;;
                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                            
+                                                    </div>
+                                                     
+                                                    
+                                                </div>
+                                                
+                                                
+                                            
+
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                    <div class="form-group">
+                                                        
+                                                        <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FA') {
+                                                                                                                            if ($nc) {
+                                                                                                                             echo $nc->id_nc;
+                                                                                                                            }
+                                                                                                                            else
                                                                                                                             {
                                                                                                                                 echo 0;
 
@@ -768,22 +786,10 @@
                                                                                                                             echo $comprobante->id;
                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
                                                     </div>
-
-                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
-                                                        <label class="form-control-sm">_</label>
-                                                        <div class="form-group">
-                                                            
-                                                            <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FN') {
-                                                                                                                                echo $comprobante->id;
-                                                                                                                            }  
-                                                                                                                                if ($trans == 'FE') {
-                                                                                                                                echo $comprobante->id;
-                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
-                                                        </div>
-                                                    </div>
-                                                    
                                                 </div>
-                                                                                                                                       
+                                                
+                                            </div>
+                                        </div>                                                                                                
 
                                                 <div id="" class="row" style="display:none">
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -791,6 +797,7 @@
                                                             <label class="form-control-sm">Tipo de Operación</label>
                                                             <select name="tipo_documento" id="serieF" class="form-control form-control-sm" onchange="">
                                                                 <option value="ft">
+                                                                    <?php echo "Venta Interna" ?></option>
                                                                 <option value="bl">
                                                                     <?php echo "Exportación" ?></option>
                                                             </select>
@@ -809,7 +816,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div id="" class="row" style="display:none">
                                                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
