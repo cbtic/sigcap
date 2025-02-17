@@ -651,72 +651,64 @@
 
                                                 </div>
 
-                                                <div id="fsFiltro" class="card-body">
-                                            <div id="" class="row">
-                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm">Serie</label>
-                                                        <select readonly name="serieNC" id="serieNC" class="form-control form-control-sm">
-                                                            <?php if ($trans == 'FA') { ?>
-                                                                <?php foreach ($serie as $row) : ?>
-                                                                    <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
-                                                                    
-                                                                <?php endforeach; ?>
-                                                            <?php } ?>
-                                                            <?php if ($trans == 'FE') { ?>
-                                                                <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie_ncnd ?></option>
-                                                            <?php } ?>
+                                                
+                                                <div id="" class="row">
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-control-sm">Serie</label>
+                                                            <select readonly name="serieNC" id="serieNC" class="form-control form-control-sm">
+                                                                <?php if ($trans == 'FA') { ?>
+                                                                    <?php foreach ($serie as $row) : ?>
+                                                                        <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
+                                                                        
+                                                                    <?php endforeach; ?>
+                                                                <?php } ?>
+                                                                <?php if ($trans == 'FE') { ?>
+                                                                    <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie_ncnd ?></option>
+                                                                <?php } ?>
 
-                                                            <?php if ($trans == 'FN') { ?>
-                                                                <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie ?></option>
-                                                            <?php } ?>
+                                                                <?php if ($trans == 'FN') { ?>
+                                                                    <option value="<?php echo $comprobante->serie ?>"><?php echo $comprobante->serie ?></option>
+                                                                <?php } ?>
 
-                                                        </select>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
-                                                    <div class="form-group">
+
+                                                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
                                                         <label class="form-control-sm">Número</label>
-                                                        <input type="text" name="numeroNC"  id="numeroNC" value="<?php if ($trans == 'FN') {
-                                                                                                                            echo $comprobante->numero;
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $comprobante->id_numero_ncnd;
-                                                                                                                        } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        <div class="form-group">                                                        
+                                                            <input class="form-control input-sm text-uppercase" type="text" name="numeroNC"  id="numeroNC" value="<?php if ($trans == 'FN') {
+                                                                                                                                echo $comprobante->numero;
+                                                                                                                            }  
+                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                echo $comprobante->id_numero_ncnd;
+                                                                                                                            } ?>" placeholder="" autocomplete="OFF" maxlength="12" required="" tabindex="0" >
                                                             
-                                                    </div>
-                                                     
-                                                    
-                                                </div>
-                                                
-                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
-                                                    <div class="form-group">
-                                                        <label class="form-control-sm"></label>
-                                                        <span class="input-group-btn">
-                                                                <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerNC()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
-                                                            </span>
                                                             
-                                                    </div>
-                                                    <div>
                                                             
-                                                        </div>   
-                                                    
-                                                </div>
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-success btn-sm" type="button" id="btnCon" onClick="obtenerNC()" tabindex="0"><i class="glyphicon glyphicon-search"></i> Buscar </button>
+                                                                </span>
 
-                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
-                                                    <div class="form-group">
-                                                        
-                                                        <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FN') {
-                                                                                                                            echo $comprobante->id;
-                                                                                                                        }  
-                                                                                                                            if ($trans == 'FE') {
-                                                                                                                            echo $comprobante->id;
-                                                                                                                           } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        </div>                                                                                                    
                                                     </div>
+
+                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                        <label class="form-control-sm">_</label>
+                                                        <div class="form-group">
+                                                            
+                                                            <input type="hidden" name="id_comprobante_ncdc" readonly id="id_comprobante_ncdc" value="<?php if ($trans == 'FN') {
+                                                                                                                                echo $comprobante->id;
+                                                                                                                            }  
+                                                                                                                                if ($trans == 'FE') {
+                                                                                                                                echo $comprobante->id;
+                                                                                                                            } ?>" placeholder="" class="form-control form-control-sm text-center">
+                                                        </div>
+                                                    </div>
+                                                    
                                                 </div>
-                                                
-                                            </div>
-                                        </div>                                                                                                
+                                                                                                                                       
 
                                                 <div id="" class="row" style="display:none">
                                                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -743,6 +735,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div id="" class="row" style="display:none">
                                                     <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">

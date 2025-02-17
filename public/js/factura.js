@@ -718,6 +718,9 @@ function obtenerTitular(){
 			var flagx = 0;
 			cmb = $(this);
 			idMedio = $("#idMedio"+ind).val();
+
+			//alert(idMedio);
+			//alert(ind);
 			
 			//id_user={{Auth::user()->id}};
 
@@ -918,6 +921,9 @@ function obtenerTitular(){
 						alert("La nota ce credito no le pertenece al cliente!");
 					}
 
+					
+					
+
 									
 					
 				}
@@ -926,8 +932,13 @@ function obtenerTitular(){
 			"error": function (msg, textStatus, errorThrown) {
 
 				alert("Nota de credito no encontrado!");
+				
+				//$("#idMedio0").val("91").trigger("change");
+
+				//alert ($("#idMedio0").val());
 
 			}
+			
 			
 			
 		});
