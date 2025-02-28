@@ -325,12 +325,23 @@
 
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-group">Afecta ingreso</label>
                                                             <select name="afecta_ingreso" id="afecta_ingreso" class="form-control form-control-sm" onChange="">
                                                                 <option value="C">Afecta</option>
                                                                 <option value="D">No Afecta</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="form-group">Devolución</label>
+                                                            <select name="devolucion_nc" id="devolucion_nc" class="form-control form-control-sm" onChange="">
+                                                                <option value="S">Si</option>
+                                                                <option value="N">No</option>
                                                                 
                                                             </select>
                                                         </div>
@@ -513,17 +524,22 @@
                                                                 <input type="hidden" id="facturad_pu" name="facturad[<?php echo $key ?>][importe]" value="<?php echo $fac['pu'] ?>" />
                                                                 <input type="hidden" id="facturad_igv" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac['igv_total'] ?>" />
                                                                 <input type="hidden" id="facturad_total" name="facturad[<?php echo $key ?>][total]" value="<?php echo $fac['importe'] ?>" />
+                                                                
 
 
                                                                 <tr>
                                                                     <td class="text-right"><?php $n = $n + 1;
                                                                                             echo $n; ?></td>
+
+                                                                    <                   
                                                                     <td class="text-center"><?php if ($trans == 'FA') {
                                                                                                 echo $fac['cantidad'];
                                                                                             }
                                                                                             if ($trans == 'FE' || $trans == 'FN') {
                                                                                                 echo $fac['cantidad'];
-                                                                                            } ?></td>
+                                                                                            } ?>
+                                                                                            <input type="hidden" readonly name="cantidad[]"  id="cantidad<?php echo $key?>" value="<?php echo $fac['cantidad']; ?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                                            </td>
                                                                     <td class="text-left">
                                                                         <?php
                                                                         if ($trans == 'FA') {

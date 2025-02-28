@@ -108,9 +108,10 @@ class ProntoPagoController extends Controller
 		$periodo2 = date("Y", strtotime($request->fecha_fin));
 		$separacion = " - ";
 		if ($periodo1 == $periodo2){
-			$prontoPago->periodo = $periodo1;
+			$prontoPago->periodo = $periodo2;
 		}else{
-			$prontoPago->periodo = $periodo1.$separacion.$periodo2;}
+			//$prontoPago->periodo = $periodo1.$separacion.$periodo2;}
+			$prontoPago->periodo = $periodo2;}
 		
 		$prontoPago->fecha_inicio = $request->fecha_inicio;
 		$prontoPago->fecha_fin = $request->fecha_fin;
