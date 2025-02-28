@@ -404,6 +404,15 @@
                                             </div>
                                         </div>
 
+                                        <div class="row" id="divDniP">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Documento de Identidad</label>
+                                                    <input type="text" readonly name="dni_p" id="dni_p" value="{{old('clinom')}}" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="row" id="divRucP">
                                             <div class="col">
                                                 <div class="form-group">
