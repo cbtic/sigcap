@@ -1,4 +1,4 @@
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["/js/vendor"],{ 
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["/js/vendor"],{
 
 /***/ "./node_modules/alpinejs/dist/alpine.js":
 /*!**********************************************!*\

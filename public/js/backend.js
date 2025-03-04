@@ -1,4 +1,4 @@
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["/js/backend"],{ 
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["/js/backend"],{
 
 /***/ "./node_modules/@coreui/coreui/dist/js/coreui.esm.js":
 /*!***********************************************************!*\

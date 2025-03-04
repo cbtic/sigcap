@@ -2319,7 +2319,7 @@ __webpack_require__.r(__webpack_exports__);
   \***************************************************************/
 /***/ (() => {
 
-throw new Error("Module build failed (from ./node_modules/vue-loader/dist/index.js):\nTypeError: Cannot read properties of undefined (reading 'styles')\n    at Object.loader (D:\\repo\\sigcap\\node_modules\\vue-loader\\dist\\index.js:95:34)");
+throw new Error("Module build failed (from ./node_modules/vue-loader/dist/index.js):\nTypeError: Cannot read properties of undefined (reading 'styles')\n    at Object.loader (D:\\proyectos_laravel\\sigcap\\node_modules\\vue-loader\\dist\\index.js:95:34)");
 
 /***/ }),
 
