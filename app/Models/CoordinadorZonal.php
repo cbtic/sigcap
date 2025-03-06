@@ -64,4 +64,16 @@ class CoordinadorZonal extends Model
         return $data;
     }
 
+    function getUltimoMesUsado($id_comision){
+
+        $cad = "select cs.id, extract ('MONTH' from cs.fecha_ejecucion) mes
+        from comision_sesiones cs 
+        where id_comision ='".$id_comision."' 
+        order by 1 desc
+        limit 1";
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }

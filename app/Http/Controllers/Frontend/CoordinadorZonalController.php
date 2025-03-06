@@ -429,4 +429,15 @@ class CoordinadorZonalController extends Controller
         return view('frontend.coordinador_zonal.modal_informes',compact('informe'));
 		
     }
+
+	public function obtener_ultimo_mes()
+	{
+		$coordinador_zonal_ultimo = CoordinadorZonal::orderBy('id','desc')->first();
+		$coordinador_zonal_model = new CoordinadorZonal;
+		$coordinador_zonal_ultimo_mes = $coordinador_zonal_model->getUltimoMesUsado($coordinador_zonal_ultimo->id_comision);
+
+		//dd($coordinador_zonal_ultimo_mes);exit();
+		
+		echo json_encode($coordinador_zonal_ultimo_mes);
+	}
 }

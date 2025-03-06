@@ -214,16 +214,16 @@ $("#profesion").select2();
 
 $('#fecha_programada_').datepicker({
   autoclose: true,
-  dateFormat: 'dd/mm/yy',
-  changeMonth: true,
-  changeYear: true,
+  format: 'dd-mm-yyyy',
+  todayHighlight: true,
+  language: 'es',
 });
 
 $('#fecha_ejecucion_').datepicker({
   autoclose: true,
-  dateFormat: 'dd/mm/yy',
-  changeMonth: true,
-  changeYear: true,
+  format: 'dd-mm-yyyy',
+  todayHighlight: true,
+  language: 'es',
 });
 
 function obtenerAgremiadoCoordinador(){
@@ -720,13 +720,13 @@ function modal_personaNuevo(){
                     <div class="col-lg-3">
                       <div class="form-group">
                         <label class="control-label form-control-sm">Fecha Programada</label>
-                        <input id="fecha_programada_" name="fecha_programada_" class="form-control form-control-sm datepicker2"  value="<?php echo $comision_sesion->fecha_programado?>" type="text">
+                        <input id="fecha_programada_" name="fecha_programada_" class="form-control form-control-sm datepicker"  value="<?php echo date('d-m-Y', strtotime($comision_sesion->fecha_programado));?>" type="text">
                         </div>
                     </div>
                     <div class="col-lg-3">
                       <div class="form-group">
                         <label class="control-label form-control-sm">Fecha Ejecuci&oacute;n</label>
-                        <input id="fecha_ejecucion_" name="fecha_ejecucion_" class="form-control form-control-sm datepicker2"  value="<?php echo $comision_sesion->fecha_ejecucion?>" type="text">
+                        <input id="fecha_ejecucion_" name="fecha_ejecucion_" class="form-control form-control-sm datepicker"  value="<?php echo date('d-m-Y', strtotime($comision_sesion->fecha_ejecucion));?>" type="text">
                         </div>
                     </div>
                   </div>
