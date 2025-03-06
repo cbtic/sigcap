@@ -186,7 +186,7 @@
 						   </div>
 					</li>
 					@endif
-
+ 
 					@if(Gate::check('Fondo Comun Planilla') || Gate::check('Adelantos y Descuentos Delegados') || Gate::check('Consulta Reintegro') || Gate::check('Asignacion de Cuentas') || Gate::check('Planilla Delegados') || Gate::check('Registro Recibos por Honorarios') || Gate::check('Asiento Planilla Delegados'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"

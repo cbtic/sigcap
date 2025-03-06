@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 <link media="all" type="text/css" rel="stylesheet" href="https://app-gsf.saludpol.gob.pe:29692/css/datatables/dataTables.bootstrap.min.css">
 <script src="https://app-gsf.saludpol.gob.pe:29692/js/datatables/datatables.min.js"></script>
-
+-->
 <!--<script src="<?php echo URL::to('/') ?>/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>-->
 <!--<script src="<?php echo URL::to('/') ?>/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>-->
 
@@ -360,7 +360,7 @@
         box-shadow: 0 0 1px #2196F3;
     }
 
-    input:checked+.slider:before {
+    inpu        t:checked+.slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);
