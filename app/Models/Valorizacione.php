@@ -651,6 +651,21 @@ class Valorizacione extends Model
         if($data)return $data[0];
     }
 
+    function getPagosCuotaConstancia($cap, $año_actual){
+
+        $cad = "select v.id, to_char(v.fecha,'yyyy-mm-dd') fecha_vencimiento, to_char(c.fecha_pago,'yyyy-mm-dd') fecha_pago from valorizaciones v 
+        inner join agremiados a on v.id_agremido = a.id 
+        left join comprobantes c on v.id_comprobante = c.id
+        where a.numero_cap ='".$cap."' and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$año_actual."' 
+        --and v.pagado ='1'
+        and id_modulo ='2'
+        order by id desc";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
     function getFechaVencimientoPagos($cap, $anio){
 
         $cad = "select v.id, to_char(v.fecha,'yyyy-mm-dd') fecha_vencimiento, to_char(c.fecha_pago,'yyyy-mm-dd') fecha_pago from valorizaciones v 

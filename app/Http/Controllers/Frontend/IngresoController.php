@@ -1139,7 +1139,7 @@ class IngresoController extends Controller
         
         $año_actual = Carbon::now()->year;
         
-		$pago_pronto_pago = $valorizacion_model->getProntoPago($cap, $año_actual);
+		$pago_pronto_pago = $valorizacion_model->getPagosCuotaConstancia($cap, $año_actual);
 		
 		echo json_encode($pago_pronto_pago);
 	}
