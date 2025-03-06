@@ -18,15 +18,24 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' ceb.id,  e.ruc, e.razon_social, p.numero_documento, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, tm.denominacion sexo, p.fecha_nacimiento, ceb.periodo, c.denominacion concepto, tm2.denominacion estado_beneficiario, ceb.estado ';
+	v_campos=' ceb.id,  
+	case when ceb.id_empresa is not null 
+	then (select e2.ruc from empresas e2 where e2.id = ceb.id_empresa) 
+	else (select p2.numero_documento from personas p2 where p2.id = ceb.id_persona_paga) 
+	end ruc, 
+	case when ceb.id_empresa is not null 
+	then (select e2.razon_social from empresas e2 where e2.id = ceb.id_empresa) 
+	else (select p2.nombres ||'' ''|| p2.apellido_paterno ||'' ''|| p2.apellido_materno from personas p2 where p2.id = ceb.id_persona_paga) 
+	end razon_social,
+	p.numero_documento, p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres agremiado, tm.denominacion sexo, p.fecha_nacimiento, ceb.periodo, c.denominacion concepto, tm2.denominacion estado_beneficiario, ceb.estado ';
 
 	v_tabla='from concepto_empresa_beneficiarios ceb 
 	inner join personas p on ceb.id_persona = p.id 
-	inner join empresas e on ceb.id_empresa = e.id 
+	left join empresas e on ceb.id_empresa = e.id 
 	inner join conceptos c on ceb.id_concepto = c.id 
 	left join tabla_maestras tm on p.id_sexo ::int =tm.codigo:: int and tm.tipo = ''2''
-	left join tabla_maestras tm2 on ceb.estado_beneficiario ::int =tm2.codigo:: int and tm2.tipo = ''120''';
-	
+	left join tabla_maestras tm2 on ceb.estado_beneficiario ::int =tm2.codigo:: int and tm2.tipo = ''120'' ';
+		
 	v_where = ' Where 1=1  ';
 	
 

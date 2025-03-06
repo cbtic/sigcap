@@ -830,7 +830,7 @@ function obtenerNumeroDocumento(){
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($tipo_documento as $row) { ?>
-														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $beneficiario->tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
 													<?php
 													}
 													?>
@@ -840,7 +840,7 @@ function obtenerNumeroDocumento(){
                     <div class="col-lg-2" id="numero_documento_">
 											<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
 												<label class="control-label form-control-sm">DNI</label>
-												<input id="numero_documento" name="numero_documento" class="form-control form-control-sm" value="<?php echo $persona->numero_documento ?>"  type="text" onBlur="obtener_persona()">
+												<input id="numero_documento" name="numero_documento" class="form-control form-control-sm" value="<?php if($beneficiario->tipo_documento==78)echo $persona_paga->numero_documento ?>"  type="text" onBlur="obtener_persona()">
 											</div>
 										</div>
                     <div class="col-lg-2" id="ruc_">
@@ -854,7 +854,7 @@ function obtenerNumeroDocumento(){
                     <div class="col-lg-5" id="nombres_apellidos_">
                       <div class="form-group">
                         <label class="control-label form-control-sm">Nombres y Apellidos</label>
-                        <input name="nombres_apellidos" id="nombres_apellidos" type="text" class="form-control form-control-sm" value="<?php echo $persona->nombres?>" onBlur="" readonly='readonly'>
+                        <input name="nombres_apellidos" id="nombres_apellidos" type="text" class="form-control form-control-sm" value="<?php if($beneficiario->tipo_documento==78)echo $persona_paga->nombres?>" onBlur="" readonly='readonly'>
                           
                       </div>
                     </div>
@@ -1025,6 +1025,7 @@ $(document).ready(function () {
   }else{
     $('#numero_beneficiario_').hide();
     obtener_profesional();
+    obtenerNumeroDocumento();
   }
 	
 });

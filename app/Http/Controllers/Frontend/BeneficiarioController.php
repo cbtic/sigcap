@@ -74,8 +74,15 @@ class BeneficiarioController extends Controller
 			$persona = Persona::find($id_persona);
 			$persona_buscar = Persona::where("id",$id_persona)->where("estado","1")->first();
             $dni = $persona_buscar->numero_documento;
-            $id_empresa = $beneficiario->id_empresa;
-            $empresa = Empresa::find($id_empresa);
+			if($beneficiario->id_empresa){
+				$id_empresa = $beneficiario->id_empresa;
+				$empresa = Empresa::find($id_empresa);
+				$persona_paga = null;
+			}else{
+				$id_persona_paga = $beneficiario->id_persona;
+				$persona_paga = Persona::find($id_persona_paga);
+			}
+            
 			//var_dump($dni);exit;
             
 		}else{
@@ -96,7 +103,7 @@ class BeneficiarioController extends Controller
        
 		//$beneficiario = new Beneficiario;
 		//$valorizacion = $valorizaciones_model->getValorizacionFactura($id);
-		return view('frontend.beneficiario.modal_beneficiario_',compact('id','persona','empresa','dni','estado_beneficiario'/*,'id_persona','id_agremiado','tipo_documento'*/,'beneficiario','concepto','estado_concepto','tipo_documento'));
+		return view('frontend.beneficiario.modal_beneficiario_',compact('id','persona','empresa','dni','estado_beneficiario'/*,'id_persona','id_agremiado','tipo_documento'*/,'beneficiario','concepto','estado_concepto','tipo_documento','persona_paga'));
 	
 	}
 
