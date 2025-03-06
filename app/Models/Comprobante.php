@@ -30,7 +30,7 @@ class Comprobante extends Model
 
 		$data = DB::select($cad, array($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,     $id_user,  $id_moneda,$id_nc));
                                     //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
-        //print_r($data); exit();
+       // print_r($data); 
         return $data[0]->sp_crud_factura_moneda;
     }                   
 
@@ -48,7 +48,7 @@ class Comprobante extends Model
        
     }
 
-    public function registrar_comprobante_ncnd($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$razon_social,$direccion,$id_comprobante_origen,$correo,$id_afecta,$tiponota,  $motivo,$afecta_ingreso) {
+    public function registrar_comprobante_ncnd($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$razon_social,$direccion,$id_comprobante_origen,$correo,$id_afecta,$tiponota,  $motivo,$afecta_ingreso,$devolucion_nc) {
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
        //print_r($serie ." numero". $numero." tipo". $tipo." ubicacion". $cod_tributario."persona ". $cod_tributario.
          //           " total". $total."descripcion ". $descripcion." ". $cod_contable." ". $id_v." ". $id_caja." ". $descuento.
@@ -57,13 +57,15 @@ class Comprobante extends Model
        $cad = "Select sp_crud_comprobante_ncnd(?,?,?,?,?,
                                                 ?,?,?,?,?,
                                                 ?,?,?,?,?,
-                                                ?,?,?,?,?,?)";
+                                                ?,?,?,?,?,
+                                                ?,?)";
         //echo "Select sp_crud_factura(".$serie.",".$numero.", ".$tipo.", ".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$codigo_v.",".$estab_v.",".$modulo.",".$smodulo.",".$descuento.",".$accion.",".$id_user.")";
        
         $data = DB::select($cad, array($serie, $numero, $tipo, $cod_tributario, $total, 
                                        $descripcion, $cod_contable, $id_comprobante_origen, $id_caja, $descuento, 
                                        $accion,     $id_user,  $id_moneda, $razon_social, $direccion,
-                                       $id_comprobante_origen,$correo,$id_afecta,$tiponota,  $motivo,$afecta_ingreso));
+                                       $id_comprobante_origen,$correo,$id_afecta,$tiponota,  $motivo,
+                                       $afecta_ingreso,$devolucion_nc));
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
         //print_r($data );exit();
        
@@ -140,7 +142,7 @@ class Comprobante extends Model
                         from comprobantes c inner join comprobante_pagos cp on c.id =cp.id_comprobante
                 					inner join valorizaciones v on c.id =v.id_comprobante
                 					inner join comprobantes c2 on c2.id_comprobante_ncnd=c.id 
-                        where c.id_empresa ='". $id_cliente ."' and v.id_concepto='". $id_concepto ."'  and v.estado ='0' and c2.tipo ='NC' and c2.id_numero_ncnd =0
+                        where c.id_empresa ='". $id_cliente ."' and v.id_concepto='". $id_concepto ."'  and v.estado ='0' and c2.tipo ='NC' and c2.devolucion_nc ='N' and c2.id_numero_ncnd =0
                         order by c.id desc
                         limit 1";
             }
@@ -149,7 +151,7 @@ class Comprobante extends Model
                         from comprobantes c inner join comprobante_pagos cp on c.id =cp.id_comprobante
                 					inner join valorizaciones v on c.id =v.id_comprobante
                 					inner join comprobantes c2 on c2.id_comprobante_ncnd=c.id 
-                        where c.id_persona ='". $id_cliente ."' and v.id_concepto='". $id_concepto ."'  and v.estado ='0' and c2.tipo ='NC' and c2.id_numero_ncnd =0               
+                        where c.id_persona ='". $id_cliente ."' and v.id_concepto='". $id_concepto ."'  and v.estado ='0' and c2.tipo ='NC' and c2.devolucion_nc ='N' and c2.id_numero_ncnd =0               
                         order by c.id desc
                         limit 1";
             }

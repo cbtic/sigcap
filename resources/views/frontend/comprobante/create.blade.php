@@ -360,7 +360,7 @@
         box-shadow: 0 0 1px #2196F3;
     }
 
-    input:checked+.slider:before {
+    inpu        t:checked+.slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);

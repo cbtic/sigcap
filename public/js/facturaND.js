@@ -876,7 +876,7 @@ function obtenerTitular(){
 		importeantd=$('#importeantd'+fila).val()
 		importeantd=parseFloat(importeantd.replace(/,/g, ""));
 
-		
+		cantidad =  $('#cantidad'+fila).val();
 		
 		if (totald <=importeantd )  {
 
@@ -900,14 +900,14 @@ function obtenerTitular(){
 
 
 			};
-				//alert(imported);		
+				
 				
 
 			$("#igvd"+fila).val(igv.toFixed(2));
 
 			$("#imported"+fila).val(imported.toFixed(2));
 			
-			$("#totald"+fila).val(totald.toFixed(2));
+			$("#totald"+fila).val(totald.toFixed(2)  );
 			//$("#imported"+fila).val(pu.toFixed(2));
 			
 			var gravadas=0;

@@ -236,7 +236,7 @@ function fn_eliminar_tipo_cambio(id,estado){
     });
 }
 
-function datatablenew(options) {
+/*function datatablenew(options) {
     // Valores predeterminados
     var defaults = {
         sAjaxSource: "/comision/listar_comision_ajax", // URL predeterminada
@@ -325,3 +325,4 @@ function datatablenew(options) {
         "aoColumnDefs": columns // Usar las columnas configuradas
     });
 }
+*/

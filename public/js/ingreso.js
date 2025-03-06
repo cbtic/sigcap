@@ -939,6 +939,7 @@ function obtenerBeneficiario(){
 					$('#id_persona').val(result.agremiado.id_p);
 					$('#id_agremiado').val(result.agremiado.id);
 					$('#ruc_p').val(result.agremiado.numero_ruc);
+					$('#dni_p').val(result.agremiado.numero_documento);
 					$('#id_ubicacion_p').val("0");
 
 					$('#email').val(result.agremiado.email);
@@ -970,6 +971,7 @@ function obtenerBeneficiario(){
 					$('#ruc_p').val(result.agremiado.numero_ruc);
 					$('#id_ubicacion_p').val("0");
 					$('#email').val(result.agremiado.email);
+					$('#dni_p').val(result.agremiado.numero_documento);
 
 					$('#numero_documento_').val(numero_documento);
 					$('#id_tipo_documento_').val(tipo_documento);
