@@ -168,7 +168,7 @@
 								<a href="/certificado/consultar_certificado_tipo3" class="dropdown-item">Registro de Proyectos</a>
 								@endcan
 								@can('Consulta de Facturas')
-                                <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas </a>
+                                <a href="/comprobante" class="dropdown-item">Consulta de Facturas </a>
 								@endcan
 
 								@can('Liquidacion de Caja')
