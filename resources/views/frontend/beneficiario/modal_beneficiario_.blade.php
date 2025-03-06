@@ -447,9 +447,24 @@ function obtener_empresa(){
       dataType: "json",
       success: function(result){
 
-					$('#razon_social').val(result.empresa.razon_social);
-		}
+				$('#razon_social').val(result.empresa.razon_social);
+		  }
     });
+
+}
+
+function obtener_persona(){
+
+var numero_documento = $('#numero_documento').val();
+
+$.ajax({
+    url: '/persona/obtenerPersona/'+numero_documento,
+    dataType: "json",
+    success: function(result){
+
+      $('#nombres_apellidos').val(result.persona.nombres +' '+ result.persona.apellido_paterno +' '+result.persona.apellido_materno);
+    }
+  });
 
 }
 
@@ -611,6 +626,8 @@ function save_beneficiario(){
     var numero_vigente = $('#numero_vigente').val();
     var concepto = $('#concepto').val();
     var estado_beneficiario = $('#estado_beneficiario').val();
+    var numero_documento = $('#numero_documento').val();
+    var tipo_documento = $('#tipo_documento').val();
     var observacion = $('#observacion').val();
     
     //if(dni == "")msg += "Debe ingresar un DNI <br>";
@@ -736,32 +753,47 @@ function modal_personaNuevoBeneficiario($dni,$i){
 
 function modal_personaNuevoBeneficiarioEdit($numero_documento_){
 
+  var dni = $('#dni_beneficiario_edit').val();
 
-var dni = $('#dni_beneficiario_edit').val();
+  $('#dni_').val(dni);
 
-$('#dni_').val(dni);
+  //alert(dni);exit();
+  $(".modal-dialog").css("width","85%");
+  $('#openOverlayOpc').modal('show');
+  $('#openOverlayOpc .modal-body').css('height', 'auto');
 
-
-//alert(dni);exit();
-$(".modal-dialog").css("width","85%");
-$('#openOverlayOpc').modal('show');
-$('#openOverlayOpc .modal-body').css('height', 'auto');
-
-$.ajax({
-    url: "/persona/modal_personaNuevoBeneficiario",
-    type: "get",
-    data : $("#frmEmpresaBeneficiario").serialize(),
-    success: function (result) {
-        
-        $("#diveditpregOpc").html(result);
-
-        
-        //$('#openOverlayOpc').modal('show');
-        
-    }
-});
-
+  $.ajax({
+      url: "/persona/modal_personaNuevoBeneficiario",
+      type: "get",
+      data : $("#frmEmpresaBeneficiario").serialize(),
+      success: function (result) {
+          
+          $("#diveditpregOpc").html(result);
+          //$('#openOverlayOpc').modal('show');
+      }
+  });
 //cargarConceptos();
+}
+
+function obtenerNumeroDocumento(){
+
+  var tipo_documento = $('#tipo_documento').val();
+  $('#ruc_').hide();
+  $('#razon_social_').hide();
+  $('#numero_documento_').hide();
+  $('#nombres_apellidos_').hide();
+
+  if(tipo_documento==78){
+    $('#ruc_').hide();
+    $('#razon_social_').hide();
+    $('#numero_documento_').show();
+    $('#nombres_apellidos_').show();
+  }else if(tipo_documento==79){
+    $('#ruc_').show();
+    $('#razon_social_').show();
+    $('#numero_documento_').hide();
+    $('#nombres_apellidos_').hide();
+  }
 
 }
 
@@ -791,8 +823,27 @@ $.ajax({
                 
                 
                   <div class="row">
-
                     <div class="col-lg-2">
+											<div class="form-group">
+												<label class="control-label form-control-sm">Tipo Documento</label>
+												<select name="tipo_documento" id="tipo_documento" class="form-control form-control-sm" onchange="obtenerNumeroDocumento()">
+													<option value="">--Selecionar--</option>
+													<?php
+													foreach ($tipo_documento as $row) { ?>
+														<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $persona->id_tipo_documento) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+													<?php
+													}
+													?>
+												</select>
+											</div>
+										</div>
+                    <div class="col-lg-2" id="numero_documento_">
+											<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
+												<label class="control-label form-control-sm">DNI</label>
+												<input id="numero_documento" name="numero_documento" class="form-control form-control-sm" value="<?php echo $persona->numero_documento ?>"  type="text" onBlur="obtener_persona()">
+											</div>
+										</div>
+                    <div class="col-lg-2" id="ruc_">
                       <div class="form-group">
                         <label class="control-label form-control-sm">RUC</label>
                         <input name="ruc" id="ruc" type="text" class="form-control form-control-sm" value="<?php echo $empresa->ruc?>" onBlur="obtener_empresa()">
@@ -800,7 +851,15 @@ $.ajax({
                       </div>
                     </div>
 
-                    <div class="col-lg-5">
+                    <div class="col-lg-5" id="nombres_apellidos_">
+                      <div class="form-group">
+                        <label class="control-label form-control-sm">Nombres y Apellidos</label>
+                        <input name="nombres_apellidos" id="nombres_apellidos" type="text" class="form-control form-control-sm" value="<?php echo $persona->nombres?>" onBlur="" readonly='readonly'>
+                          
+                      </div>
+                    </div>
+
+                    <div class="col-lg-5" id="razon_social_">
                       <div class="form-group">
                         <label class="control-label form-control-sm">Raz&oacute;n Social</label>
                         <input name="razon_social" id="razon_social" type="text" class="form-control form-control-sm" value="<?php echo $empresa->razon_social?>" onBlur="" readonly='readonly'>
@@ -958,11 +1017,15 @@ $(document).ready(function () {
     $('#apellidoM_beneficiario_edit_').hide();
     $('#nombres_beneficiario_edit_').hide();
     $('#estado_beneficiario_edit_').hide();
+
+    $('#ruc_').hide();
+    $('#razon_social_').hide();
+    $('#numero_documento_').hide();
+    $('#nombres_apellidos_').hide();
   }else{
     $('#numero_beneficiario_').hide();
     obtener_profesional();
   }
-  
 	
 });
 
