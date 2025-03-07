@@ -1182,7 +1182,7 @@ function cargarValorizacion(){
 			}
 
 			//if ((cboTipoConcepto_b==26411 && cboTipoCuota_b==1)||(cboTipoConcepto_b==26412)) {			
-			if ((cboTipoConcepto_b==26411)||(cboTipoConcepto_b==26412)||(cboTipoCuota_b==1)) {
+			if ((cboTipoConcepto_b=="26411")||(cboTipoConcepto_b=="26541")||(cboTipoConcepto_b=="26412")||(cboTipoCuota_b==1)) {
 
 				$("#btnFracciona").prop('disabled', false);
 
@@ -1193,7 +1193,7 @@ function cargarValorizacion(){
 			}
 
 			//if (cboTipoCuota_b==1 &&  cboTipoConcepto_b=="") {
-			if (cboTipoConcepto_b=="26412" || cboTipoConcepto_b=="26411") {				
+			if (cboTipoConcepto_b=="26412" ||(cboTipoConcepto_b=="26541")|| cboTipoConcepto_b=="26411") {				
 				$('#cbox2').show();
 				$('#lblFrac').show();
 				
@@ -1885,7 +1885,7 @@ function modal_fraccionamiento(){
 			$(this).parent().parent().parent().find('.chek').val("1");
 
 			
-			if(id_concepto==26411 || id_concepto==26412) {				
+			if(id_concepto==26411 || id_concepto==26541 || id_concepto==26412) {				
 				total += Number(val_total);
 				stotal += Number(val_sub_total);
 				igv += Number(val_igv);								
