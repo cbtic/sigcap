@@ -11,6 +11,7 @@ use App\Models\TablaMaestra;
 use App\Models\Valorizacione;
 use App\Models\Persona;
 use App\Models\Guia;
+use App\Models\Concepto;
 
 use App\Models\Agremiado;
 use App\Models\ComprobantePago;
@@ -1038,7 +1039,7 @@ class ComprobanteController extends Controller
 
                     $id_concepto = $value['id_concepto'];
 
-                    if ($id_concepto=='26474' || $id_concepto=='26483'){
+                    if ($id_concepto=='26474' || $id_concepto=='26483'){ //DERECHO DE REVISION COMISIONES REVISORAS  Y  DERECHO DE REVISION HABILITACIONES URBANAS DE OBRA
     
                         $valorizaciones_model = new Valorizacione; 
     
@@ -1106,8 +1107,13 @@ class ComprobanteController extends Controller
                 }  
 */
 
+            
+            $Concepto = Concepto::where('id', $id_concepto)->get()[0];
+            $codigo_concepto = $Concepto->codigo;
+            
 
-            if ($id_concepto == 26527 || $id_concepto == 26412 ) {                
+            //if ($id_concepto == 26527 || $id_concepto == 26412 ) {     // FRACCIONAMIENTO Y REFRACCIONAMIENTO           
+            if ($codigo_concepto == '00001' || $codigo_concepto == '00062' ) {     // FRACCIONAMIENTO Y REFRACCIONAMIENTO           
                 $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
                 $agremiado->id_situacion = "73";
                 $agremiado->save();
@@ -1121,9 +1127,8 @@ class ComprobanteController extends Controller
             $ubicacion_id = $request->ubicacion;
 
 
-
-            if ($id_concepto == 26411) {
-
+            //if ($id_concepto == 26411) {  // CUOTA GREMIAL
+            if ($codigo_concepto == '00006') {  // CUOTA GREMIAL
                 $id_persona = $request->persona;
                 $valorizaciones_model = new Valorizacione;
                 $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
@@ -1652,7 +1657,6 @@ class ComprobanteController extends Controller
                 
                 }  
 */
-
 
             if ($id_concepto == 26527 || $id_concepto == 26412 ) {
                 $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
