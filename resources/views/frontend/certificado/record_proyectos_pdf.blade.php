@@ -163,7 +163,7 @@
 					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->distrito?></td>
                     <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right"><?php echo $r->area_total !== null ? number_format($r->area_total,2,'.',',') : '-';?></td>
                     <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right"><?php echo $r->total_area_techada_m2 !== null ? number_format($r->total_area_techada_m2,2,'.',',') : '-';?></td>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php //echo $r->area_remodelada?></td>
+                    <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right"><?php echo $r->area_remodelada?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->tipo_profesional?></td>
 				</tr>
 				<?php
