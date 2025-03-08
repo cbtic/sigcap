@@ -186,7 +186,14 @@ from certificados c where id_tipo=".$id_tipo;
     function getRecordProyecto($numero_cap){
 
         $cad = "select s.id, s.fecha_registro fecha, l.credipago, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres propietario, pr.nombre nombreProyecto, 
-        m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, null total_area_techada_m2, null area_total, tm.denominacion tipo_profesional, 'Derecho Revision' tipo
+        m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, 
+        (select sum(pre.area_techada) area_techada from presupuestos pre 
+        where id_solicitud = s.id) total_area_techada_m2,
+        s.area_total area_total, tm.denominacion tipo_profesional, 'Derecho Revision' tipo,
+        (select sum(pre2.area_techada) from solicitudes s2
+        inner join presupuestos pre2 on pre2.id_solicitud = s2.id 
+        where pre2.id_tipo_obra ='10' and pre2.id_solicitud = s.id
+        group by pre2.area_techada ) area_remodelada
         --case when exists (select 1 from solicitudes s2 where id=s.id) then 'Derecho Revision' else null end tipo
         from solicitudes s --where id_proyectista ='6725'
         left join liquidaciones l on l.id_solicitud = s.id 
@@ -201,7 +208,11 @@ from certificados c where id_tipo=".$id_tipo;
         where a.numero_cap ='".$numero_cap."'
         union all
         select s.id, s.fecha_registro fecha, l.credipago, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres propietario, pr.nombre nombreProyecto, 
-        m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, s.total_area_techada_m2::float, s.area_total, tm.denominacion tipo_profesional, 'Certificado' tipo
+        m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, s.total_area_techada_m2::float, s.area_total, tm.denominacion tipo_profesional, 'Certificado' tipo, 
+        (select sum(pre2.area_techada) from solicitudes s2
+        inner join presupuestos pre2 on pre2.id_solicitud = s2.id 
+        where pre2.id_tipo_obra ='10' and pre2.id_solicitud = s.id
+        group by pre2.area_techada) area_remodelada
         from certificados c 
         inner join solicitudes s on c.id_solicitud = s.id
         left join liquidaciones l on l.id_solicitud = s.id 
@@ -215,7 +226,7 @@ from certificados c where id_tipo=".$id_tipo;
         left join tabla_maestras tm on pro.id_tipo_profesional = tm.codigo::int And tm.tipo ='41'
         where a.numero_cap ='".$numero_cap."'
         union all
-        select ch.id, ch.fecha, ch.numero_certificado credipago, ch.propietario, ch.nombre_proyecto, ch.distrito, ch.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.id_sexo, a.fecha_colegiado, ch.area_construida, ch.area_lote, ch.tip_proyectista, ch.tipo from certificado_historicos ch 
+        select ch.id, ch.fecha, ch.numero_certificado credipago, ch.propietario, ch.nombre_proyecto, ch.distrito, ch.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.id_sexo, a.fecha_colegiado, ch.area_construida, ch.area_lote, ch.tip_proyectista, ch.tipo, ch.area_remodelada from certificado_historicos ch 
         inner join agremiados a on ch.numero_cap = a.numero_cap 
         inner join personas p on a.id_persona = p.id 
         where a.numero_cap ='".$numero_cap."'

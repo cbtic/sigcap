@@ -367,14 +367,30 @@ function fn_save(){
 			data : $('#frmSesion').serialize(),
             //data : {_token:_token,id:id,id_comision:id_comision,id_regional:id_regional,id_tipo_sesion:id_tipo_sesion,fecha_programado:fecha_programado,hora_inicio:hora_inicio,hora_fin:hora_fin,fecha_ejecucion:fecha_ejecucion,observaciones:observaciones,id_estado_sesion:id_estado_sesion},
             success: function (result) {
-				$('#openOverlayOpc').modal('hide');
-				datatablenew();
+				
+				if(id>0){
+					$('.loader').hide();
+					//var id = $("#id").val();
+					modalSesion(id);
+					cargarDelegados();
+					cargarDictamenNuevo(id);
+					bootbox.alert("Se guardaron exitosamente los datos");
+				}else{
+					$('#openOverlayOpc').modal('hide');
+					datatablenew();	
+				}
+
 				//obtenerInversionista(0);
 				//obtenerDetalleInversionista(0);
 				//window.location.reload();
 				
             }
     });
+}
+
+function cerrar(){
+	$('#openOverlayOpc').modal('hide');
+	datatablenew();	
 }
 
 function fn_save_dia(){
@@ -1000,7 +1016,10 @@ function cargarDelegados(){
 									if(count($delegados)==0)$btnDisabledGuardar = "disabled='disabled'";
 								?>
 								
-								<button <?php echo $btnDisabledGuardar ?> style="font-size:12px;" type="button" onClick="fn_save()" class="btn btn-sm btn-success" id="btnSesionGuardar">Guardar</button>
+								<button <?php echo $btnDisabledGuardar ?> style="font-size:12px;font-weight:bold" type="button" onClick="fn_save()" class="btn btn-sm btn-success" id="btnSesionGuardar">Guardar</button>
+
+								<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide')" class="btn btn-sm btn-warning" style="margin-left:15px;font-weight:bold">Cerrar</a>
+
 								<!--<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-success">Guardar</a>-->
 								<?php //}else{?>
 								<!--<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide')" class="btn btn-sm btn-warning">Cerrar</a>-->

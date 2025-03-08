@@ -56,6 +56,7 @@ class IngresoController extends Controller
         //$concepto = Concepto::where("id","26411")->first(); //CUOTA GREMIAL
         $concepto = Concepto::where("codigo","00006")->where("estado","1")->where("periodo",$anio_actual)->first(); 
 
+
         
         $mes = [
             '' => 'Todos Meses','01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
@@ -392,14 +393,10 @@ class IngresoController extends Controller
 
         //print_r($comprobanted); exit();
 
-        if ($id_concepto=="")$id_concepto=26411;
-
-        $concepto = Concepto::find($id_concepto);
-
-        
-
+        //if ($id_concepto=="")$id_concepto=26411;
         //$concepto = Concepto::find(26411);
 
+        $concepto = Concepto::where("codigo","00006")->first();
         
         
         //$comprobanted = json_encode($comprobanted_);
@@ -1139,7 +1136,7 @@ class IngresoController extends Controller
         
         $año_actual = Carbon::now()->year;
         
-		$pago_pronto_pago = $valorizacion_model->getProntoPago($cap, $año_actual);
+		$pago_pronto_pago = $valorizacion_model->getPagosCuotaConstancia($cap, $año_actual);
 		
 		echo json_encode($pago_pronto_pago);
 	}

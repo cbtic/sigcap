@@ -210,6 +210,12 @@
 <script type="text/javascript">
 
 
+$(document).ready(function () {
+
+  obtenerUltimoMes();
+
+});
+
 $("#profesion").select2();
 
 function obtener_profesional(){
@@ -280,20 +286,18 @@ function guardarSesion(){
 	*/
   //alert($('#tblConceptos'));
 
-$.ajax({
-  		url: "/coordinador_zonal/send_coordinador_sesion",
-        type: "POST",
-        data : $("#frmCoordinador").serialize(),
-        //data: dataToSend,
-        //dataType: 'json', 
-        success: function (result) {				
-    		$('#openOverlayOpc').modal('hide');
-        window.location.reload();
-        }
-});
+  $.ajax({
+        url: "/coordinador_zonal/send_coordinador_sesion",
+          type: "POST",
+          data : $("#frmCoordinador").serialize(),
+          //data: dataToSend,
+          //dataType: 'json', 
+          success: function (result) {				
+          $('#openOverlayOpc').modal('hide');
+          window.location.reload();
+          }
+  });
 }
-
-
 
 function AddFila(){
 	
@@ -417,14 +421,18 @@ function AddFila(){
 	
 	const fechaInicio = obtenerFechaInicioDeMes();
 	const fechaFin = obtenerFechaFinDeMes();
-	
+	var anio = new Date().getFullYear(); // Año actual
+
+  const fechaPredeterminada = new Date(anio, mes, 1);
+
+
 	$('.datepicker2').datepicker({
 	  format: "dd-mm-yyyy",
 	  autoclose: true,
 	  container: '#openOverlayOpc modal-body',
-	  startDate: fechaInicio,
-	  endDate: fechaFin 
-	});
+	  //startDate: fechaInicio,
+	  //endDate: fechaFin 
+	}).datepicker('update', fechaPredeterminada);
 	
 	
 	/*
@@ -669,6 +677,22 @@ function modal_personaNuevo(){
       }
     });
   }
+
+  function obtenerUltimoMes(){
+
+  $.ajax({
+      url: '/coordinador_zonal/obtener_ultimo_mes',
+      dataType: "json",
+      success: function(result){
+
+        var ultimo_mes = result[0].mes;
+        //alert(ultimo_mes);
+
+        $('#mes').val(ultimo_mes); 
+		  }
+    });
+  }
+
 </script>
 
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\Frontend\ComprobanteController;
 
 /*
  * Global Routes
@@ -25,4 +26,9 @@ Route::group(['as' => 'frontend.'], function () {
  */
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
     includeRouteFiles(__DIR__.'/backend/');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/comprobante', [ComprobanteController::class, 'index']);
+    Route::post('/comprobante', [ComprobanteController::class, 'create']);
 });

@@ -168,7 +168,7 @@
 								<a href="/certificado/consultar_certificado_tipo3" class="dropdown-item">Registro de Proyectos</a>
 								@endcan
 								@can('Consulta de Facturas')
-                                <a href="{{route('frontend.comprobante.all')}}" class="dropdown-item">Consulta de Facturas </a>
+                                <a href="/comprobante" class="dropdown-item">Consulta de Facturas </a>
 								@endcan
 
 								@can('Liquidacion de Caja')
@@ -186,7 +186,7 @@
 						   </div>
 					</li>
 					@endif
-
+ 
 					@if(Gate::check('Fondo Comun Planilla') || Gate::check('Adelantos y Descuentos Delegados') || Gate::check('Consulta Reintegro') || Gate::check('Asignacion de Cuentas') || Gate::check('Planilla Delegados') || Gate::check('Registro Recibos por Honorarios') || Gate::check('Asiento Planilla Delegados'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"

@@ -74,8 +74,15 @@ class BeneficiarioController extends Controller
 			$persona = Persona::find($id_persona);
 			$persona_buscar = Persona::where("id",$id_persona)->where("estado","1")->first();
             $dni = $persona_buscar->numero_documento;
-            $id_empresa = $beneficiario->id_empresa;
-            $empresa = Empresa::find($id_empresa);
+			if($beneficiario->id_empresa){
+				$id_empresa = $beneficiario->id_empresa;
+				$empresa = Empresa::find($id_empresa);
+				$persona_paga = null;
+			}else{
+				$id_persona_paga = $beneficiario->id_persona;
+				$persona_paga = Persona::find($id_persona_paga);
+			}
+            
 			//var_dump($dni);exit;
             
 		}else{
@@ -88,6 +95,7 @@ class BeneficiarioController extends Controller
 
         $concepto = $concepto_model->getConceptoAllDenominacion2();
         $estado_concepto = $tablaMaestra_model->getMaestroByTipo(120);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
         
         
         //$empresa = $empresa_model->getEmpresaId();
@@ -95,7 +103,7 @@ class BeneficiarioController extends Controller
        
 		//$beneficiario = new Beneficiario;
 		//$valorizacion = $valorizaciones_model->getValorizacionFactura($id);
-		return view('frontend.beneficiario.modal_beneficiario_',compact('id','persona','empresa','dni','estado_beneficiario'/*,'id_persona','id_agremiado','tipo_documento'*/,'beneficiario','concepto','estado_concepto'));
+		return view('frontend.beneficiario.modal_beneficiario_',compact('id','persona','empresa','dni','estado_beneficiario'/*,'id_persona','id_agremiado','tipo_documento'*/,'beneficiario','concepto','estado_concepto','tipo_documento','persona_paga'));
 	
 	}
 
@@ -105,7 +113,17 @@ class BeneficiarioController extends Controller
 		$dni_beneficiario = $request->dni_beneficiario;
 		$estado_beneficiario = $request->estado_beneficiario;
         $n_beneficiario = $request->numero_vigente;
-		$empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
+
+		$empresa = null;
+		$persona_paga = null;
+		
+		if($request->ruc){
+			$empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
+		}
+		if($request->numero_documento){
+			$persona_paga = Persona::where("numero_documento",$request->numero_documento)->where("estado","1")->first();
+		}
+		
 		$concepto = Concepto::find($request->concepto);
 		$cadena_persona = "";
 
@@ -113,9 +131,15 @@ class BeneficiarioController extends Controller
 			$persona = Persona::where("numero_documento",$request->dni_beneficiario_edit)->where("estado","1")->first();
 				$beneficiario = Beneficiario::find($request->id_edit);
 				$beneficiario->id_persona = $persona->id;
-				$beneficiario->id_empresa = $empresa->id;
+				if($empresa){
+					$beneficiario->id_empresa = $empresa->id;
+				}
+				if($persona_paga){
+					$beneficiario->id_persona_paga = $persona_paga->id;
+				}
 				$beneficiario->id_concepto = $request->concepto;
 				$beneficiario->estado_beneficiario = $request->estado_beneficiario_edit;
+				$beneficiario->tipo_documento = $request->tipo_documento;
 				$beneficiario->observacion = $request->observacion;
 				$beneficiario->id_usuario_inserta = $id_user;
 				$beneficiario->save();
@@ -128,9 +152,15 @@ class BeneficiarioController extends Controller
 				$persona = Persona::where("numero_documento",$row)->where("estado","1")->first();
 				$beneficiario = new Beneficiario;
 				$beneficiario->id_persona = $persona->id;
-				$beneficiario->id_empresa = $empresa->id;
+				if($empresa){
+					$beneficiario->id_empresa = $empresa->id;
+				}
+				if($persona_paga){
+					$beneficiario->id_persona_paga = $persona_paga->id;
+				}
 				$beneficiario->id_concepto = $request->concepto;
 				$beneficiario->estado_beneficiario = $estado_beneficiario[$key];
+				$beneficiario->tipo_documento = $request->tipo_documento;
 				$beneficiario->observacion = $request->observacion;
 				$beneficiario->id_usuario_inserta = $id_user;
 				$beneficiario->save();
@@ -140,18 +170,20 @@ class BeneficiarioController extends Controller
 				$persona = Persona::where("numero_documento",$request->dni_beneficiario_edit)->where("estado","1")->first();
 				$beneficiario = Beneficiario::find($request->id);
 				$beneficiario->id_persona = $persona->id;
-				$beneficiario->id_empresa = $empresa->id;
+				if($empresa){
+					$beneficiario->id_empresa = $empresa->id;
+				}
+				if($persona_paga){
+					$beneficiario->id_persona_paga = $persona_paga->id;
+				}
 				$beneficiario->id_concepto = $request->concepto;
 				$beneficiario->estado_beneficiario = $request->estado_beneficiario_edit;
+				$beneficiario->tipo_documento = $request->tipo_documento;
 				$beneficiario->observacion = $request->observacion;
 				$beneficiario->id_usuario_inserta = $id_user;
 				$beneficiario->save();
 				$id_beneficiario = $beneficiario->id;
 			}
-			
-			
-			
-			
 			
 			$cadena_persona .= $persona->nombres." ". $persona->apellido_paterno." ". $persona->apellido_materno.", ";
 			/*
@@ -179,11 +211,16 @@ class BeneficiarioController extends Controller
 			$valorizacion = new Valorizacione;
 			$valorizacion->id_modulo = 9;
 			$valorizacion->pk_registro = $id_beneficiario;
-			$valorizacion->id_empresa = $empresa->id;
+			if($empresa){
+				$valorizacion->id_empresa = $empresa->id;
+			}
+			if($persona_paga){
+				$valorizacion->id_persona = $persona_paga->id;
+			}
 			$valorizacion->id_concepto = $concepto->id;
-			$valorizacion->id_persona = $persona->id;
+			//$valorizacion->id_persona = $persona->id;
 			$valorizacion->monto = $concepto->importe;
-            $valorizacion->cantidad = 4;
+            $valorizacion->cantidad = count($dni_beneficiario);
             //$valorizacion->cantidad = 3;
 			$valorizacion->id_moneda = $concepto->id_moneda;
 			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
