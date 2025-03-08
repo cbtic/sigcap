@@ -2623,7 +2623,7 @@ class ComprobanteController extends Controller
 		$data["sumatoriaIGV"] = str_replace(",","",number_format($factura->impuesto,2)); //"22.88";
 		$data["sumatoriaISC"] = "0.00";
 		$data["ubigeoEmisor"] = "150139";
-		$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
+		//$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
 		$data["tipoDocumento"] = $this->getTipoDocumento($factura->tipo);
 		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
 		$data["distritoEmisor"] = "LIMA";
