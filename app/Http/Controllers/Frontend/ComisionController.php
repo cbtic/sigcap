@@ -915,7 +915,6 @@ class ComisionController extends Controller
 		$p[]=$id_agremiado;
 		$data = $agremiado_model->crud_automatico_agremiado_cuota_fecha_individual($p);
 		
-		
 	}
 
 	
