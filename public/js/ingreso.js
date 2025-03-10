@@ -1473,7 +1473,7 @@ function validar(tipo) {
 			//document.frmPagos.submit();
 		}
 
-		if(tipo = 8){
+		if(tipo == 8){
 
 			modal_fraccionamiento();
 		}
