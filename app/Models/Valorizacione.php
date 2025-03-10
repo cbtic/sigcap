@@ -94,7 +94,13 @@ class Valorizacione extends Model
         return $data;
     }
 
-    function getValidaValorizacion($tipo_documento,$id_persona){  
+    function getValidaValorizacion($tipo_documento,$id_persona,$concepto){  
+
+        $id_concepto_="";
+        if($concepto!=""){
+            $id_concepto_ = "and v.id_concepto = ".$concepto." ";
+        }
+
         
         if($tipo_documento=="79"){  //RUC
             $cad = "
@@ -103,7 +109,8 @@ class Valorizacione extends Model
             where v.id_empresa = ".$id_persona."            
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado = '0'               
+                and v.exonerado = '0'
+                ".$id_concepto_."             
             order by v.fecha 
             limit 1            
 			";
@@ -114,7 +121,8 @@ class Valorizacione extends Model
             where v.id_persona = ".$id_persona."
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado = '0'               
+                and v.exonerado = '0' 
+                  ".$id_concepto_."               
             order by v.fecha 
             limit 1             
 			";
