@@ -21,7 +21,11 @@ class Valorizacione extends Model
             $tlb_liquidacion = "left join liquidaciones l  on l.id = v.pk_registro and v.id_modulo = 7";
 
         }
-        
+        $exonerado_="";
+        if($exonerado!=""){
+            $exonerado_ = "and v.exonerado = '".$exonerado."'";
+        }
+
         //if($exonerado=="0")$exonerado="";
         
     //echo($tipo_documento);
@@ -47,7 +51,8 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado = '".$exonerado."' 
+                --and v.exonerado = '".$exonerado."' 
+                ".$exonerado_."
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
             order by v.fecha desc
@@ -73,7 +78,8 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado = '".$exonerado."' 
+                --and v.exonerado = '".$exonerado."' 
+                ".$exonerado_."
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
             order by v.fecha desc

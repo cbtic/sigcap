@@ -1473,12 +1473,9 @@ function validar(tipo) {
 			//document.frmPagos.submit();
 		}
 
-		if(tipo = 5){
+		if(tipo = 8){
 
-			
-
-
-			//fn_nota_credito();
+			modal_fraccionamiento();
 		}
 	}
 

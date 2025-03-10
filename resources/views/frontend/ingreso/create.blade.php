@@ -650,8 +650,10 @@
                                                     <input class="btn btn-danger pull-rigth" value="ANULAR VAL" type="button" id="btnAnulaVal" disabled="disabled" onclick="anular_valorizacion()" />
                                                 
                                                     <input class="btn btn-warning pull-right" value="PRONTO PAGO" type="button" id="btnDescuento" disabled="disabled" onclick="AplicarDescuento()" />
-
+<!--
                                                     <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="modal_fraccionamiento()" />
+                                                    -->
+                                                    <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="enviarTipo(8)" />
 
                                                     <input style="display:none" class="btn btn-danger pull-rigth" value="ANULAR FRAC" type="button" id="btnAnulaFrac" disabled="disabled" onclick="anular_fraccionamiento()" />
                                                 </div>
