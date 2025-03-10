@@ -53,7 +53,7 @@ class IngresoController extends Controller
 
 
         $pronto_pago = ProntoPago::where("estado","1")->where("periodo",$anio_actual)->first();                
-        $concepto = Concepto::where("id","26411")->where("periodo",$anio_actual)->first(); //CUOTA GREMIAL
+        $concepto = Concepto::where("id","26411")->first(); //CUOTA GREMIAL
        // $concepto = Concepto::where("codigo","00006")->where("estado","1")->where("periodo",$anio_actual)->first(); 
 
 
