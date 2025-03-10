@@ -190,35 +190,18 @@
 				?>
                 <tr>
                     <!--<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"></td>-->
-                    <td colspan="7"  class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 12px"><b>TOTAL</b></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 12px"><b><?php echo number_format($total_area_total,2,'.',',') ?></b></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 12px"><b><?php echo number_format($total_area_techada,2,'.',',') ?></b></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 12px"><b><?php echo number_format($total_area_remodelada,2,'.',',') ?></b></td>
+                    <td colspan="7"  class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 11px"><b>TOTAL</b></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 10px"><b><?php echo number_format($total_area_total,2,'.',',') ?></b></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 10px"><b><?php echo number_format($total_area_techada,2,'.',',') ?></b></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 10px"><b><?php echo number_format($total_area_remodelada,2,'.',',') ?></b></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"></td>
                 </tr>
 			</tbody>
 		</table>
-                <br></br>
-        <table>
-            <tbody>
-                
-            </tbody>
-        </table>
-
         <br></br>
-
         <div style="text-align: center; position: relative; height: 100px;">
             <img width="200px" height="80px" src="img/firma_sello_gerente_Fernando_Costa.png">
         <div>
-        <!--<p class="contenido_cuerpo" style="text-align: center !important;margin-bottom: 50px; ">FIRMA Y SELLO DEL GERENTE GENERAL</p>-->
-                
-		
-		<!--<table style="margin-top: 10px">
-            <tr>
-                <td class="td_ancho_espacios"></td>
-                <td class="td_ancho_espacios"></td>
-            </tr>
-        </table>-->
         <footer>
         <script type="text/php">
             if (isset($pdf)) {
