@@ -168,7 +168,7 @@ class OperacionController extends Controller
 				//$bancoInterconexionRequerimientoDetalleEnvio->pagominimo = $request->input('TRACE');
 				$bancoInterconexionRequerimientoDetalleEnvio->importetotal = $row["ImporteTotal"];
 				$bancoInterconexionRequerimientoDetalleEnvio->periodo = $row["Periodo"];
-				//$bancoInterconexionRequerimientoDetalleEnvio->anio = $row["Año"];
+				//$bancoInterconexionRequerimientoDetalleEnvio->anio = $row["Aï¿½o"];
 				$bancoInterconexionRequerimientoDetalleEnvio->cuota = $row["Cuota"];
 				$bancoInterconexionRequerimientoDetalleEnvio->monedadoc = $row["MonedaDoc"];
 				$bancoInterconexionRequerimientoDetalleEnvio->filler = $row["Filler"];
@@ -262,7 +262,7 @@ class OperacionController extends Controller
 			//$bancoInterconexionDetalle->pagominimo = $request->input('TRACE');
 			$bancoInterconexionRequerimientoDetalleRespuesta->importetotal = "123";//$row["ImporteTotal"];
 			$bancoInterconexionRequerimientoDetalleRespuesta->periodo = "123";//$row["Periodo"];
-			//$bancoInterconexionDetalle->anio = $row["Año"];
+			//$bancoInterconexionDetalle->anio = $row["Aï¿½o"];
 			$bancoInterconexionRequerimientoDetalleRespuesta->cuota = "123";//$row["Cuota"];
 			$bancoInterconexionRequerimientoDetalleRespuesta->monedadoc = "123";//$row["MonedaDoc"];
 			$bancoInterconexionRequerimientoDetalleRespuesta->filler = "123";//$row["Filler"];
@@ -397,16 +397,16 @@ class OperacionController extends Controller
 		$suma_longitud = (174*count($deuda_pendiente))+112;//982//634;
 		
 		$data_output["AMOUNT TRANSACTION"] = str_pad($suma_importes, 12, "0", STR_PAD_LEFT); //12-suma de los importes de las cuotas pendientes de pago enviadas
-		$data_output["APPROVAL CODE"] = str_pad($correlativo, 6, "0", STR_PAD_LEFT); //6-Código creado por la Empresa,código único por transacción, codigo generado 
-		$data_output["LONGITUD"] = str_pad($suma_longitud, 4, "0", STR_PAD_LEFT); //4-Suma la longitud de las líneas desde P01 hasta el final
+		$data_output["APPROVAL CODE"] = str_pad($correlativo, 6, "0", STR_PAD_LEFT); //6-Cï¿½digo creado por la Empresa,cï¿½digo ï¿½nico por transacciï¿½n, codigo generado 
+		$data_output["LONGITUD"] = str_pad($suma_longitud, 4, "0", STR_PAD_LEFT); //4-Suma la longitud de las lï¿½neas desde P01 hasta el final
 		$data_output["NombreCliente"] = str_pad($nombreCliente, 30, " ", STR_PAD_RIGHT); //30-Contiene el Nombre del DEUDOR al que pertenece las deudas
 		$data_output["NombreEmpresa"] = str_pad($nombreEmpresa, 25, " ", STR_PAD_RIGHT); //25-Empresa cliente de IBK (Recaudador)
 		$data_output["NumDocs"] = str_pad($numDocs, 2, "0", STR_PAD_LEFT); //2-Cantidad de documentos por cobrar.
 		
 		//RESPUESTA
 		$descRespuesta = "TRANSACCION PROCESADA OK";
-		$data_output["CodigoErrorOriginal"] = "000"; //3-Código de respuesta, utilizar los códigos de la hoja "RESPONSE CODE".
-		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripción del código en la línea anterior (P04)
+		$data_output["CodigoErrorOriginal"] = "000"; //3-Cï¿½digo de respuesta, utilizar los cï¿½digos de la hoja "RESPONSE CODE".
+		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripciï¿½n del cï¿½digo en la lï¿½nea anterior (P04)
 		
 		$data_output_detalle = array();
 		$output_detalle = "";
@@ -435,20 +435,20 @@ class OperacionController extends Controller
 			
 			$data_output_detalle[$key]["CodigoProducto"] = str_pad($codigoProducto, 3, "0", STR_PAD_LEFT);//3 - 17 o 19 servicios
 			$data_output_detalle[$key]["DescrProducto"] = str_pad($descrProducto, 20, " ", STR_PAD_RIGHT);//20 - Contiene el nombre del Servicio, DEUDA CUOTA
-			$data_output_detalle[$key]["NumDocumento"] = str_pad($numDocumento, 15, " ", STR_PAD_RIGHT);//15 - Número del documento de la deuda, se debe completar con espacios a la derecha, FD221919437
+			$data_output_detalle[$key]["NumDocumento"] = str_pad($numDocumento, 15, " ", STR_PAD_RIGHT);//15 - Nï¿½mero del documento de la deuda, se debe completar con espacios a la derecha, FD221919437
 			$data_output_detalle[$key]["FILLER"] = " ";//1
-			$data_output_detalle[$key]["DescDocumento"] = str_pad($descDocumento, 20, " ", STR_PAD_RIGHT);//20 - Descripción o referencia del documento de la deuda, FACTURA DICIEMBRE
+			$data_output_detalle[$key]["DescDocumento"] = str_pad($descDocumento, 20, " ", STR_PAD_RIGHT);//20 - Descripciï¿½n o referencia del documento de la deuda, FACTURA DICIEMBRE
 			$data_output_detalle[$key]["FechaVencimiento"] = $fechaVencimiento;//8 - Fecha de Vencimiento de la deuda, 25122019
-			$data_output_detalle[$key]["FechaEmision"] = $fechaEmision;//8 - Fecha de emisión de la deuda, debe ser menor o igual a la fecha de vencimiento, 25122019
+			$data_output_detalle[$key]["FechaEmision"] = $fechaEmision;//8 - Fecha de emisiï¿½n de la deuda, debe ser menor o igual a la fecha de vencimiento, 25122019
 			$data_output_detalle[$key]["Deuda"] = str_pad($deuda, 12, "0", STR_PAD_LEFT);//12 - Monto de deuda a pagar, incluye 2 decimales sin, 000000016089
 			$data_output_detalle[$key]["Mora"] = str_pad($mora, 12, "0", STR_PAD_LEFT);//12 - Importe de la mora,  incluye 2 decimales sin punto, 000000001000
 			$data_output_detalle[$key]["GastosAdm"] = str_pad($gastosAdm, 12, "0", STR_PAD_LEFT);//12 - Gastos administrativos,  incluye 2 decimales sin punto, 000000000600
 			$data_output_detalle[$key]["PagoMinimo"] = str_pad($pagoMinimo, 12, "0", STR_PAD_LEFT);//12 - Este valor debe ser el mismo valor del importe total, 000000017689
 			$data_output_detalle[$key]["ImporteTotal"] = str_pad($importeTotal, 12, "0", STR_PAD_LEFT);//12 - Importe total a pagar del documento = Deuda + Mora + GatosAdm. Incluye 2 decimales sin punto, 000000017689
 			$data_output_detalle[$key]["Periodo"] = str_pad($periodo, 2, "0", STR_PAD_LEFT);//2 - Indica el periodo (Mes) al que pertenece la deuda. Si no tiene periodo enviar con 00, 12
-			$data_output_detalle[$key]["Año"] = $anio;//4 - Indica el año de la deuda, 2019
-			$data_output_detalle[$key]["Cuota"] = str_pad($cuota, 2, "0", STR_PAD_LEFT);//2 - Indica el número de cuota de la deuda, si no maneja cuotas enviar con 00, 01
-			$data_output_detalle[$key]["MonedaDoc"] = $monedaDoc;//1 - Indica la moneda en la que está expresado los importes de la deuda, 2
+			$data_output_detalle[$key]["Aï¿½o"] = $anio;//4 - Indica el aï¿½o de la deuda, 2019
+			$data_output_detalle[$key]["Cuota"] = str_pad($cuota, 2, "0", STR_PAD_LEFT);//2 - Indica el nï¿½mero de cuota de la deuda, si no maneja cuotas enviar con 00, 01
+			$data_output_detalle[$key]["MonedaDoc"] = $monedaDoc;//1 - Indica la moneda en la que estï¿½ expresado los importes de la deuda, 2
 			$data_output_detalle[$key]["Filler"] = "                              ";//30 - Campo libre no usado, completar con espacios
 			
 			$output_detalle .= implode('',$data_output_detalle[$key]);
@@ -573,17 +573,17 @@ class OperacionController extends Controller
 		$numOperacionERP = 89063;
 		
 		$data_output["AMOUNT TRANSACTION"] = str_pad($suma_importes, 12, "0", STR_PAD_LEFT); //12-suma de los importes de las cuotas pendientes de pago enviadas
-		$data_output["APPROVAL CODE"] = str_pad($correlativo, 6, "0", STR_PAD_LEFT); //6-Código creado por la Empresa,código único por transacción, codigo generado 
-		$data_output["LONGITUD"] = str_pad($suma_longitud, 4, "0", STR_PAD_LEFT); //4-Suma la longitud de las líneas desde P01 hasta el final
+		$data_output["APPROVAL CODE"] = str_pad($correlativo, 6, "0", STR_PAD_LEFT); //6-Cï¿½digo creado por la Empresa,cï¿½digo ï¿½nico por transacciï¿½n, codigo generado 
+		$data_output["LONGITUD"] = str_pad($suma_longitud, 4, "0", STR_PAD_LEFT); //4-Suma la longitud de las lï¿½neas desde P01 hasta el final
 		$data_output["NombreCliente"] = str_pad($nombreCliente, 30, " ", STR_PAD_RIGHT); //30-Contiene el Nombre del DEUDOR al que pertenece las deudas
 		$data_output["NombreEmpresa"] = str_pad($nombreEmpresa, 25, " ", STR_PAD_RIGHT); //25-Empresa cliente de IBK (Recaudador)
-		$data_output["NumOperacionERP"] = str_pad($numOperacionERP, 12, "0", STR_PAD_LEFT); //4-Suma la longitud de las líneas desde P01 hasta el final
+		$data_output["NumOperacionERP"] = str_pad($numOperacionERP, 12, "0", STR_PAD_LEFT); //4-Suma la longitud de las lï¿½neas desde P01 hasta el final
 		$data_output["NumDocs"] = str_pad($numDocs, 2, "0", STR_PAD_LEFT); //2-Cantidad de documentos por cobrar.
 		
 		//RESPUESTA
 		$descRespuesta = "TRANSACCION PROCESADA OK";
-		$data_output["CodigoErrorOriginal"] = "000"; //3-Código de respuesta, utilizar los códigos de la hoja "RESPONSE CODE".
-		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripción del código en la línea anterior (P04)
+		$data_output["CodigoErrorOriginal"] = "000"; //3-Cï¿½digo de respuesta, utilizar los cï¿½digos de la hoja "RESPONSE CODE".
+		$data_output["DescRespuesta"] = str_pad($descRespuesta, 30, " ", STR_PAD_RIGHT); //30-descripciï¿½n del cï¿½digo en la lï¿½nea anterior (P04)
 		
 		$data_output_detalle = array();
 		$output_detalle = "";
@@ -611,20 +611,20 @@ class OperacionController extends Controller
 			
 			$data_output_detalle[$key]["CodigoProducto"] = str_pad($codigoProducto, 3, "0", STR_PAD_LEFT);//3 - 17 o 19 servicios
 			$data_output_detalle[$key]["DescrProducto"] = str_pad($descrProducto, 20, " ", STR_PAD_RIGHT);//20 - Contiene el nombre del Servicio, DEUDA CUOTA
-			$data_output_detalle[$key]["NumDocumento"] = str_pad($numDocumento, 15, " ", STR_PAD_RIGHT);//15 - Número del documento de la deuda, se debe completar con espacios a la derecha, FD221919437
+			$data_output_detalle[$key]["NumDocumento"] = str_pad($numDocumento, 15, " ", STR_PAD_RIGHT);//15 - Nï¿½mero del documento de la deuda, se debe completar con espacios a la derecha, FD221919437
 			$data_output_detalle[$key]["FILLER"] = " ";//1
-			$data_output_detalle[$key]["DescDocumento"] = str_pad($descDocumento, 20, " ", STR_PAD_RIGHT);//20 - Descripción o referencia del documento de la deuda, FACTURA DICIEMBRE
+			$data_output_detalle[$key]["DescDocumento"] = str_pad($descDocumento, 20, " ", STR_PAD_RIGHT);//20 - Descripciï¿½n o referencia del documento de la deuda, FACTURA DICIEMBRE
 			$data_output_detalle[$key]["FechaVencimiento"] = $fechaVencimiento;//8 - Fecha de Vencimiento de la deuda, 25122019
-			$data_output_detalle[$key]["FechaEmision"] = $fechaEmision;//8 - Fecha de emisión de la deuda, debe ser menor o igual a la fecha de vencimiento, 25122019
+			$data_output_detalle[$key]["FechaEmision"] = $fechaEmision;//8 - Fecha de emisiï¿½n de la deuda, debe ser menor o igual a la fecha de vencimiento, 25122019
 			$data_output_detalle[$key]["Deuda"] = str_pad($deuda, 12, "0", STR_PAD_LEFT);//12 - Monto de deuda a pagar, incluye 2 decimales sin, 000000016089
 			$data_output_detalle[$key]["Mora"] = str_pad($mora, 12, "0", STR_PAD_LEFT);//12 - Importe de la mora,  incluye 2 decimales sin punto, 000000001000
 			$data_output_detalle[$key]["GastosAdm"] = str_pad($gastosAdm, 12, "0", STR_PAD_LEFT);//12 - Gastos administrativos,  incluye 2 decimales sin punto, 000000000600
 			$data_output_detalle[$key]["PagoMinimo"] = str_pad($pagoMinimo, 12, "0", STR_PAD_LEFT);//12 - Este valor debe ser el mismo valor del importe total, 000000017689
 			$data_output_detalle[$key]["ImporteTotal"] = str_pad($importeTotal, 12, "0", STR_PAD_LEFT);//12 - Importe total a pagar del documento = Deuda + Mora + GatosAdm. Incluye 2 decimales sin punto, 000000017689
 			$data_output_detalle[$key]["Periodo"] = str_pad($periodo, 2, "0", STR_PAD_LEFT);//2 - Indica el periodo (Mes) al que pertenece la deuda. Si no tiene periodo enviar con 00, 12
-			$data_output_detalle[$key]["Año"] = $anio;//4 - Indica el año de la deuda, 2019
-			$data_output_detalle[$key]["Cuota"] = str_pad($cuota, 2, "0", STR_PAD_LEFT);//2 - Indica el número de cuota de la deuda, si no maneja cuotas enviar con 00, 01
-			$data_output_detalle[$key]["MonedaDoc"] = $monedaDoc;//1 - Indica la moneda en la que está expresado los importes de la deuda, 2
+			$data_output_detalle[$key]["Aï¿½o"] = $anio;//4 - Indica el aï¿½o de la deuda, 2019
+			$data_output_detalle[$key]["Cuota"] = str_pad($cuota, 2, "0", STR_PAD_LEFT);//2 - Indica el nï¿½mero de cuota de la deuda, si no maneja cuotas enviar con 00, 01
+			$data_output_detalle[$key]["MonedaDoc"] = $monedaDoc;//1 - Indica la moneda en la que estï¿½ expresado los importes de la deuda, 2
 			$data_output_detalle[$key]["Filler"] = "                              ";//30 - Campo libre no usado, completar con espacios
 			
 			$output_detalle .= implode('',$data_output_detalle[$key]);

@@ -70,6 +70,18 @@
         /* CSS */
         width: 100%;
     }
+
+    /* Estilo para el select múltiple */
+.form-control-sm {
+    height: auto; /* Ajusta la altura automáticamente */
+    padding: 5px;
+}
+
+/* Estilo para el checkbox y label */
+#cbox2, #lblFrac {
+    margin-top: 10px;
+}
+
 </style>
 @stack('before-scripts')
 @stack('after-scripts')
@@ -502,6 +514,7 @@
 
 
 
+
                                             <div class="col-lg-5 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     
@@ -510,15 +523,21 @@
                                                     <input type="checkbox" id="cbox2" value="1" style="display:none" onchange="cargarValorizacion()"/>
                                                     <label for="cbox2" id="lblFrac" style="display:none">Incluir Fraccionamiento y Cuota Gremial Vencido</label>
 
-                                                    
-                                                    
-                                                    <!--
-                                                    <select class="form-control form-control-sm" id="cboTipoConcepto_b" data-placeholder="Seleccionar Concepto" onchange="cargarValorizacion()" multiple >
-                                                    -->
-
                                                     </select>
                                                 </div>
                                             </div>
+
+<!--                                                    
+                                            <div class="col-lg-5 col-md-3 col-sm-12 col-xs-12">
+                                                <div class="form-group form-group-sm">
+                                                    <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" multiple onchange="cargarValorizacion()">
+                                                    </select>
+
+                                                    <input type="checkbox" id="cbox2" value="1" style="display:none" onchange="cargarValorizacion()"/>
+                                                    <label for="cbox2" id="lblFrac" style="display:none">Incluir Fraccionamiento y <br> Cuota Gremial Vencido</label>
+                                                </div>
+                                            </div>
+                                                    -->
 
                                             <div class="col-lg-1 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
