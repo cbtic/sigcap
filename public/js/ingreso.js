@@ -601,10 +601,11 @@ function calcular_total_otros(obj){
 		total += Number(val_total);
 		stotal += Number(val_sub_total);
 		igv += Number(val_igv);
-
+/*
 		$(this).parent().parent().parent().find('#comprobante_detalle_cantidad').val(val_cantidad)
 		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(igv)
 		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(val_total)
+*/
 
 		//alert(val_total);
 		//$("#comprobante_detalle_cantidad").val(5000);
@@ -614,7 +615,80 @@ function calcular_total_otros(obj){
 		//comprobante_detalle[0][total]
 		//comprobante_detalle[0][igv]
 
+		var PrecioVenta_ = $(this).parent().parent().parent().find('.val_precio').html();
+		var Descuento_ = 0;
+		var Cantidad_ =  $(this).parent().parent().parent().find('#cantidad').val();
+
+		var ValorUnitario_ = PrecioVenta_ /(1+tasa_igv_);
+		//ValorUnitario_ = Number(ValorUnitario_ .toFixed(2));		
+		var ValorVB_ = ValorUnitario_ * Cantidad_;
+
+		var ValorVenta_ = ValorVB_ - Descuento_;
+
+		var Igv_ = ValorVenta_ * tasa_igv_;
+		//Igv_ = Number(Igv_.toFixed(2));
+		var Total_ = ValorVenta_ + Igv_;
+		//Total_ =Number(Total_.toFixed(2));
+
+		ValorUnitario_ = Number(ValorUnitario_ .toFixed(2));
+		
+		ValorVB_ = Number(ValorVB_ .toFixed(2));
+		
+		ValorVenta_ = Number(ValorVenta_ .toFixed(2));
+
+		Igv_ = Number(Igv_ .toFixed(2));
+		
+		Total_ = Number(Total_ .toFixed(2));
+
+		$(this).parent().parent().parent().find('#comprobante_detalle_cantidad').val(Cantidad_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(Igv_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(Total_);
+
+		$(this).parent().parent().parent().find('#comprobante_detalle_precio_unitario').val(ValorUnitario_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_sub_total').val(ValorVenta_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_valor_venta_bruto').val(ValorVB_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_monto').val(Total_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_pu').val(ValorUnitario_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_pv').val(PrecioVenta_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_vv').val(ValorVenta_);
+
 	});
+
+	function calcular() {
+
+		PrecioVenta_ = $('#txtPrecioVenta').val();
+		Descuento_ = $('#txtDescuento').val();
+		Cantidad_ = $('#txtCantidad').val();
+
+		//alert(PrecioVenta_);
+
+
+		ValorUnitario_ = PrecioVenta_ /(1+tasa_igv_);
+		//ValorUnitario_ = Number(ValorUnitario_ .toFixed(2));		
+		ValorVB_ = ValorUnitario_ * Cantidad_;
+		ValorVenta_ = ValorVB_ - Descuento_;
+		Igv_ = ValorVenta_ * tasa_igv_;
+		//Igv_ = Number(Igv_.toFixed(2));
+		Total_ = ValorVenta_ + Igv_;
+		//Total_ =Number(Total_.toFixed(2));
+
+
+		ValorUnitario_ = Number(ValorUnitario_ .toFixed(2));
+		$('#txtValorUnitario').val(ValorUnitario_);
+		
+		ValorVB_ = Number(ValorVB_ .toFixed(2));
+		$('#txtValorVB').val(ValorVB_);
+		
+		ValorVenta_ = Number(ValorVenta_ .toFixed(2));
+		$('#txtValorVenta').val(ValorVenta_);
+
+		Igv_ = Number(Igv_ .toFixed(2));
+		$('#txtIgv').val(Igv_);
+		
+		Total_ = Number(Total_ .toFixed(2));
+		$('#txtTotal').val(Total_);
+
+	}
 
 	if (!String.prototype.includes) {
 		String.prototype.includes = function (search, start) {
@@ -1586,7 +1660,7 @@ function modal_otro_pago(){
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
-	var perido = "2023";
+	var perido = "2025";
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
 

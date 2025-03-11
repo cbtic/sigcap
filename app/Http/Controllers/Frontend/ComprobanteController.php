@@ -323,6 +323,7 @@ class ComprobanteController extends Controller
             //print_r($nc); exit();
 
             return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago','nc'));
+            
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -664,7 +665,7 @@ class ComprobanteController extends Controller
             
             if ($id_persona2!='') {
                 $id_persona_act = $id_persona2;
-                //$id_persona='';
+                $id_persona='';
                 
             }else{
                 $id_persona_act = $id_persona;
@@ -673,7 +674,7 @@ class ComprobanteController extends Controller
 
             if ($ubicacion_id2!=''){
                 $id_ubicacion_act = $ubicacion_id2;
-                //$ubicacion_id='';
+                $ubicacion_id='';
 
             }else{
                 $id_ubicacion_act = $ubicacion_id;
@@ -837,7 +838,7 @@ class ComprobanteController extends Controller
                 $total_pagar = $request->total_pagar;
                 //print_r("total_pagar="); 
                 //print_r($total_pagar); 
-                if ($total_pagar!="0"){                         
+                if ($total_pagar!="0" && $total_pagar!=""){                           
                     $total_pagar = $request->total_pagar;
                     $total_g = $request->totalF;
                     $total_redondeo = $total_pagar - $total_g;
@@ -853,7 +854,8 @@ class ComprobanteController extends Controller
                 //print_r("total_pagar_abono="); 
                 //print_r($total_pagar_abono); 
 
-                if ($total_pagar_abono!="0"){                         
+                if ($total_pagar_abono!="0" && $total_pagar_abono!=""){ 
+
                     $total_pagar_abono = $request->total_pagar_abono;
                     $total_g = $request->totalF;
                     $total_abono= $total_pagar_abono - $total_g;
@@ -892,8 +894,6 @@ class ComprobanteController extends Controller
 				if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
 
 
-
-                
                 if($total>700 and $tipoF=='FT' ) {
                     $factura_upd->porc_detrac = $request->porcentaje_detraccion;
                     $factura_upd->monto_detrac = $request->monto_detraccion;
@@ -950,21 +950,23 @@ class ComprobanteController extends Controller
 				}
                 */
                 
-
+                $fecha_hoy = date('Y-m-d');
     
-                if ($total_pagar!="0"){
+                if ($total_pagar!="0" && $total_pagar!=""){
                     $total_pagar = $request->total_pagar;
                     $total_g = $request->totalF;
                     $total_redondeo = $total_pagar - $total_g;
-                    $fecha_hoy = date('Y-m-d');
+                    //$fecha_hoy = date('Y-m-d');
 
                     $items1 = array(
-                        "id" => 1081517, 
+                        "id" => 0, 
                         "fecha" => $fecha_hoy,
                         "denominacion" => "REDONDEO",
+                        "codigo_producto" => "",
                         "descripcion" => "REDONDEO",
                         "monto" => round($total_redondeo,2),
                         "moneda" => "SOLES" ,
+                        "abreviatura" => "NIU" ,
                         "id_moneda" => 1 ,
                         "descuento" => 0 ,
                         "cod_contable" => "",
@@ -978,20 +980,22 @@ class ComprobanteController extends Controller
                     $tarifa[999]=$items1;
                 }
 
-                if ($total_abono!="0"){
+                if ($total_abono!="0" && $total_abono!=""){
                     $total_pagar_abono = $request->total_pagar_abono;
                     $total_g = $request->totalF;
                     $total_abono = $total_pagar_abono - $total_g;
-                    $fecha_hoy = date('Y-m-d');
+                    //$fecha_hoy = date('Y-m-d');
 
                     $items1 = array(
-                        "id" => 1081517, 
+                        "id" => 0, 
                         "fecha" => $fecha_hoy,
                         "denominacion" => "REDONDEO",
+                        "codigo_producto" => "",
                         "descripcion" => "REDONDEO",
                         "monto" => round($total_abono,2),
                         "moneda" => "SOLES" ,
                         "id_moneda" => 1 ,
+                        "abreviatura" => "NIU" ,
                         "descuento" => 0 ,
                         "cod_contable" => "",
                         "id_concepto" => 26464 ,
@@ -1016,7 +1020,21 @@ class ComprobanteController extends Controller
 					$descuento = $value['descuento'];
 					if ($value['descuento']=='') $descuento = 0;
 					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda,0);
-					
+
+                    if($value['id_concepto']!='26464'){
+                        $facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
+                        
+                        $facturaDet_upd->pu=$value['pu'];
+                        $facturaDet_upd->importe=$value['total'];                
+                        $facturaDet_upd->igv_total=$value['igv'];
+                        $facturaDet_upd->precio_venta=$value['pv'];
+                        $facturaDet_upd->valor_venta_bruto=$value['valor_venta_bruto'];
+                        $facturaDet_upd->valor_venta=$value['valor_venta'];
+                       // $facturaDet_upd->codigo=$value['codigo_producto'];
+                        $facturaDet_upd->unidad=$value['abreviatura'];
+                        $facturaDet_upd->save();  
+
+                    }
                     
                     //(  serie,      numero,   tipo,      ubicacion,               persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
 					

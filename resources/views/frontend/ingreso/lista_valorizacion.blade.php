@@ -47,12 +47,25 @@ foreach ($valorizacion as $key => $row):
 	} else {
 		$stotal = str_replace(",", "", number_format($monto / 1.18, 2));
 		$igv_   = str_replace(",", "", number_format($stotal * 0.18, 2));
-
+/*
 		$ValorUnitario_ = str_replace(",", "", number_format($PrecioVenta_ /(1+$tasa_igv_), 2));
 		$ValorVB_ = str_replace(",", "", number_format($ValorUnitario_ * $Cantidad_, 2));
 		$ValorVenta_ = str_replace(",", "", number_format($ValorVB_ - $Descuento_, 2));
 		$Igv_ = str_replace(",", "", number_format($ValorVenta_ * $tasa_igv_, 2));		
-		$Total_ = str_replace(",", "", number_format($ValorVenta_ + $Igv_, 2));
+		$Total_ = str_replace(",", "", number_format($ValorVenta_ + $Igv_, 2));		
+*/
+
+		$ValorUnitario_ = $PrecioVenta_ /(1+$tasa_igv_);
+		$ValorVB_ = $ValorUnitario_ * $Cantidad_;
+		$ValorVenta_ = $ValorVB_ - $Descuento_;
+		$Igv_ = $ValorVenta_ * $tasa_igv_;		
+		$Total_ = $ValorVenta_ + $Igv_;	
+		
+		$ValorUnitario_ = str_replace(",", "", number_format($ValorUnitario_, 2));
+		$ValorVB_ = str_replace(",", "", number_format($ValorVB_, 2));
+		$ValorVenta_ = str_replace(",", "", number_format($ValorVenta_, 2));
+		$Igv_ = str_replace(",", "", number_format($Igv_, 2));		
+		$Total_ = str_replace(",", "", number_format($Total_, 2));	
 
 	}
 
@@ -73,9 +86,9 @@ foreach ($valorizacion as $key => $row):
 				<input type="hidden" id="comprobante_detalle_id" name="comprobante_detalle[<?php echo $key ?>][id]" value="<?php echo $row->id ?>" />
 				<input type="hidden" name="comprobante_detalle[<?php echo $key ?>][fecha]" value="<?php echo $row->fecha ?>" />
 				<input type="hidden" name="comprobante_detalle[<?php echo $key ?>][denominacion]" value="<?php echo $row->concepto ?>" />
-		
-
+		<!--
 				<input type="hidden" id="comprobante_detalle_total" name="comprobante_detalle[<?php echo $key ?>][total]" value="<?php echo $row->monto ?>" />
+-->
 				<input type="hidden" name="comprobante_detalle[<?php echo $key ?>][moneda]" value="<?php echo $row->moneda ?>" />
 				<input type="hidden" name="comprobante_detalle[<?php echo $key ?>][id_moneda]" value="<?php echo $row->id_moneda ?>" />
 				<input type="hidden" name="comprobante_detalle[<?php echo $key ?>][abreviatura]" value="<?php echo $row->abreviatura ?>" />
@@ -98,16 +111,16 @@ foreach ($valorizacion as $key => $row):
 -->
 
 			
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][precio_unitario]" value="<?php echo $ValorUnitario_?>" />
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][sub_total]" value="<?php echo $ValorVenta_?>" />
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][valor_venta_bruto]" value="<?php echo $ValorVB_?>" />
+			<input type="hidden" id="comprobante_detalle_precio_unitario" name="comprobante_detalle[<?php echo $key?>][precio_unitario]" value="<?php echo $ValorUnitario_?>" />
+			<input type="hidden" id="comprobante_detalle_sub_total" name="comprobante_detalle[<?php echo $key?>][sub_total]" value="<?php echo $ValorVenta_?>" />
+			<input type="hidden" id="comprobante_detalle_valor_venta_bruto" name="comprobante_detalle[<?php echo $key?>][valor_venta_bruto]" value="<?php echo $ValorVB_?>" />
 
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][monto]" value="<?php echo $Total_?>" />
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][pu]" value="<?php echo $ValorUnitario_?>" />
+			<input type="hidden" id="comprobante_detalle_monto" name="comprobante_detalle[<?php echo $key?>][monto]" value="<?php echo $Total_?>" />
+			<input type="hidden" id="comprobante_detalle_pu" name="comprobante_detalle[<?php echo $key?>][pu]" value="<?php echo $ValorUnitario_?>" />
 			<input type="hidden" id="comprobante_detalle_igv" name="comprobante_detalle[<?php echo $key?>][igv]" value="<?php echo $Igv_?>" />
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][pv]" value="<?php echo $PrecioVenta_?>" />
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][vv]" value="<?php echo $ValorVenta_?>" />			
-			<input type="hidden" name="comprobante_detalle[<?php echo $key?>][total]" value="<?php echo $Total_?>" />
+			<input type="hidden" id="comprobante_detalle_pv" name="comprobante_detalle[<?php echo $key?>][pv]" value="<?php echo $PrecioVenta_?>" />
+			<input type="hidden" id="comprobante_detalle_vv" name="comprobante_detalle[<?php echo $key?>][vv]" value="<?php echo $ValorVenta_?>" />			
+			<input type="hidden" id="comprobante_detalle_total" name="comprobante_detalle[<?php echo $key?>][total]" value="<?php echo $Total_?>" />
 
 
 
@@ -139,10 +152,15 @@ foreach ($valorizacion as $key => $row):
 		<td class="text-right val_total_">
 			<span class="val_descuento" style="float:left"></span>
 
+			<!--
 			<span class="val_total"><?php echo number_format($monto * $row->cantidad, 2) ?></span>
 			<span hidden class="val_sub_total"><?php echo number_format($stotal, 2) ?></span>
 			<span hidden class="val_igv"><?php echo number_format($igv_, 2) ?></span>
+		-->
 
+			<span class="val_total"><?php echo $Total_ ?></span>
+			<span hidden class="val_sub_total"><?php echo $ValorVenta_ ?></span>
+			<span hidden class="val_igv"><?php echo $Igv_ ?></span>
 
 			<span hidden class="id_concepto_modal_sel"><?php echo $row->id_concepto ?></span>
 			<span hidden class="id_concepto"><?php echo $row->id_concepto ?></span>

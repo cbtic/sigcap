@@ -454,7 +454,7 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                                     {{ $factura_detalle->descripcion }}
                                                                 </td>
 
-                                                                <td class="text-right">{{ number_format(($factura_detalle->pu+$factura_detalle->igv_total)/$factura_detalle->cantidad,2)  }}
+                                                                <td class="text-right">{{ $factura_detalle->pu  }}
                                                                 </td>
 
                                                                 <td class="text-right">{{ $factura_detalle->descuento }}
