@@ -1516,6 +1516,7 @@ function validar(tipo) {
 	
 	if(msg!=""){
 		bootbox.alert(msg);
+		$('#DescuentoPP').val("N"); 
 		//return false;
 	} else{
 
@@ -2134,6 +2135,8 @@ function AplicarDescuento(){
 			$('.mov').prop('checked', true);
 			//calcular_total();
 
+			
+
 			var val_total = $(this).parent().parent().parent().find('.val_total').html();
 			val_total =val_total.toString().replace(',','');
 			var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
@@ -2151,6 +2154,28 @@ function AplicarDescuento(){
 			igv += Number(val_igv);	
 
 		});
+		var cont_ = 0;
+		var tot_reg_ = $(".mov:checked").length;
+		var txt_ini = "";
+		var txt_fin = "";
+
+		$(".mov").each(function (){
+
+			cont_++;
+			//alert(cont_);
+			var descripcion = $(this).parent().parent().parent().find('#descripcion').val();
+			if (cont_==1) txt_fin= descripcion.replace("CUOTA GREMIAL ", "");
+			if (cont_==tot_reg_) txt_ini = descripcion.replace("CUOTA GREMIAL ", "");
+			//alert(descripcion);
+
+		});
+
+		//alert(txt_ini + " al " + txt_fin);
+
+		txt_ini = txt_ini + " AL " + txt_fin;
+
+		
+		$('#texto_detalle').val("PAGO CUOTA GREMIAL PRONTOPAGO " + txt_ini); 
 
 //		return false;
 		
