@@ -564,6 +564,7 @@ function calcular_total_otros(obj){
 
 	$(".mov:checked").each(function (){
 
+		
 		var val_precio = $(this).parent().parent().parent().find('.val_precio').html();
 
 		val_precio =val_precio.toString().replace(',','');
@@ -602,9 +603,14 @@ function calcular_total_otros(obj){
 		stotal += Number(val_sub_total);
 		igv += Number(val_igv);
 
+
+
+
 		$(this).parent().parent().parent().find('#comprobante_detalle_cantidad').val(val_cantidad)
 		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(igv)
-		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(val_total)
+		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(total)
+
+
 
 		//alert(val_total);
 		//$("#comprobante_detalle_cantidad").val(5000);
@@ -613,6 +619,50 @@ function calcular_total_otros(obj){
 
 		//comprobante_detalle[0][total]
 		//comprobante_detalle[0][igv]
+
+
+		var tasa_igv_ = 0.18;
+
+		var PrecioVenta_ = $(this).parent().parent().parent().find('.val_precio').html();		
+		PrecioVenta_ =PrecioVenta_.toString().replace(',','');
+
+		var Descuento_ = 0;
+		var Cantidad_ =  $(this).parent().parent().parent().find('#cantidad').val();
+
+		var ValorUnitario_ = PrecioVenta_ /(1+tasa_igv_);	
+		var ValorVB_ = ValorUnitario_ * Cantidad_;
+		var ValorVenta_ = ValorVB_ - Descuento_;
+		var Igv_ = ValorVenta_ * tasa_igv_;
+		var Total_ = ValorVenta_ + Igv_;
+		
+		ValorUnitario_ += Number(ValorUnitario_ );		
+		ValorVB_ += Number(ValorVB_ );		
+		ValorVenta_ += Number(ValorVenta_ );
+		Igv_ += Number(Igv_ );		
+		Total_ += Number(Total_ );
+
+
+/*
+		alert(ValorUnitario_);
+		alert(ValorVB_);
+		alert(ValorVenta_);
+		alert(Igv_);
+		alert(Total_);
+*/
+/*
+		$(this).parent().parent().parent().find('#comprobante_detalle_cantidad').val(Cantidad_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(Igv_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(Total_);
+*/
+		$(this).parent().parent().parent().find('#comprobante_detalle_precio_unitario').val(ValorUnitario_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_sub_total').val(ValorVenta_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_valor_venta_bruto').val(ValorVB_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_monto').val(Total_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_pu').val(ValorUnitario_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_pv').val(PrecioVenta_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_vv').val(ValorVenta_);
+
+		
 
 	});
 
@@ -1586,7 +1636,7 @@ function modal_otro_pago(){
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
-	var perido = "2023";
+	var perido = "2025";
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
 
