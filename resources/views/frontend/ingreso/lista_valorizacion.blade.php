@@ -35,7 +35,7 @@ foreach ($valorizacion as $key => $row):
 
 
 	if ($id_tipo_afectacion == '30') {
-		$stotal = str_replace(",", "", number_format($monto));
+		//$stotal = str_replace(",", "", number_format($monto));
 		$igv_   = 0;
 
 		$ValorUnitario_ = str_replace(",", "", number_format($PrecioVenta_,  2));
@@ -44,9 +44,11 @@ foreach ($valorizacion as $key => $row):
 		$Igv_ = 0;		
 		$Total_ = str_replace(",", "", number_format($ValorVenta_ + $Igv_, 2));
 
+		$stotal = $Total_;
+
 	} else {
-		$stotal = str_replace(",", "", number_format($monto / 1.18, 2));
-		$igv_   = str_replace(",", "", number_format($stotal * 0.18, 2));
+		//$stotal = str_replace(",", "", number_format($monto / 1.18, 2));
+		//$igv_   = str_replace(",", "", number_format($stotal * 0.18, 2));
 /*
 		$ValorUnitario_ = str_replace(",", "", number_format($PrecioVenta_ /(1+$tasa_igv_), 2));
 		$ValorVB_ = str_replace(",", "", number_format($ValorUnitario_ * $Cantidad_, 2));
@@ -65,7 +67,10 @@ foreach ($valorizacion as $key => $row):
 		$ValorVB_ = str_replace(",", "", number_format($ValorVB_, 2));
 		$ValorVenta_ = str_replace(",", "", number_format($ValorVenta_, 2));
 		$Igv_ = str_replace(",", "", number_format($Igv_, 2));		
-		$Total_ = str_replace(",", "", number_format($Total_, 2));	
+		$Total_ = str_replace(",", "", number_format($Total_, 2));
+		
+		$stotal = $Total_;
+		$igv_   = $Igv_;
 
 	}
 
