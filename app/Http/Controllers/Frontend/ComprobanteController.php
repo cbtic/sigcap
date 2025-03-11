@@ -227,8 +227,11 @@ class ComprobanteController extends Controller
                     "monto" => $stotal,
                     "pu" =>$deudaTotal/12, 
                     "igv" => $igv, 
-                    "pv" =>  $total, 
-                    "total" => $total, 
+                    "pv" =>  $total,
+                    "vv" =>  $stotal, 
+                    "total" => $total,
+                    "valor_venta_bruto" => $total,
+                    "valor_venta" => $stotal,
                     "moneda" => "SOLES", 
                     "id_moneda" => 1, 
                     "abreviatura" => "SOLES", 
@@ -1015,11 +1018,12 @@ class ComprobanteController extends Controller
 						$total   = $request->MonAd;
 					}
 					else{
-						$total   = $value['monto'];
+						$total = $value['monto'];
+                        $pu_   = $value['pu'];
 					}
 					$descuento = $value['descuento'];
 					if ($value['descuento']=='') $descuento = 0;
-					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda,0);
+					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $pu_, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda, 0);
 
                     if($value['id_concepto']!='26464'){
                         $facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
