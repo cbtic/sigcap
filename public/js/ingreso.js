@@ -635,15 +635,11 @@ function calcular_total_otros(obj){
 		var Igv_ = ValorVenta_ * tasa_igv_;
 		var Total_ = ValorVenta_ + Igv_;
 		
-		total += Number(Total_);
-		stotal += Number(ValorVenta_);
-		igv += Number(Igv_);
-
-		ValorUnitario_ += Number(ValorUnitario_ .toFixed(2));		
-		ValorVB_ += Number(ValorVB_ .toFixed(2));		
-		ValorVenta_ += Number(ValorVenta_ .toFixed(2));
-		Igv_ += Number(Igv_ .toFixed(2));		
-		Total_ += Number(Total_ .toFixed(2));
+		ValorUnitario_ += Number(ValorUnitario_ );		
+		ValorVB_ += Number(ValorVB_ );		
+		ValorVenta_ += Number(ValorVenta_ );
+		Igv_ += Number(Igv_ );		
+		Total_ += Number(Total_ );
 
 
 /*
