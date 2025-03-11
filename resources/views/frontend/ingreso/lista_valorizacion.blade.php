@@ -101,7 +101,7 @@ foreach ($valorizacion as $key => $row):
 				<input type="hidden" id="comprobante_detalle_cantidad" name="comprobante_detalle[<?php echo $key ?>][cantidad]" value="1" />
 				<input type="hidden" name="comprobante_detalle[<?php echo $key ?>][descuento]" value="0" />
 				<input type="hidden" name="comprobante_detalle[<?php echo $key ?>][cod_contable]" value="" />
-				<input type="hidden" name="comprobante_detalle[<?php echo $key ?>][descripcion]" value="<?php echo $row->descripcion ?>" />
+				<input type="hidden" id="descripcion" name="comprobante_detalle[<?php echo $key ?>][descripcion]" value="<?php echo $row->descripcion ?>" />
 				<input type="hidden" id="vencio" name="comprobante_detalle[<?php echo $key ?>][vencio]" value="<?php echo $row->vencio ?>" />
 				<input type="hidden" name="comprobante_detalle[<?php echo $key ?>][id_concepto]" value="<?php echo $row->id_concepto ?>" />
 				<input type="hidden" name="comprobante_detalle[<?php echo $key ?>][id_tipo_afectacion]" value="<?php echo $row->id_tipo_afectacion ?>" />
