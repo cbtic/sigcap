@@ -626,10 +626,14 @@ function calcular_total_otros(obj){
 		var PrecioVenta_ = $(this).parent().parent().parent().find('.val_precio').html();		
 		PrecioVenta_ =PrecioVenta_.toString().replace(',','');
 
+		//alert(PrecioVenta_);
+
 		var Descuento_ = 0;
 		var Cantidad_ =  $(this).parent().parent().parent().find('#cantidad').val();
 
 		var ValorUnitario_ = PrecioVenta_ /(1+tasa_igv_);	
+		//alert(ValorUnitario_);
+
 		var ValorVB_ = ValorUnitario_ * Cantidad_;
 		var ValorVenta_ = ValorVB_ - Descuento_;
 		var Igv_ = ValorVenta_ * tasa_igv_;
@@ -649,6 +653,7 @@ function calcular_total_otros(obj){
 		alert(Igv_);
 		alert(Total_);
 */
+
 /*
 		$(this).parent().parent().parent().find('#comprobante_detalle_cantidad').val(Cantidad_);
 		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(Igv_);
