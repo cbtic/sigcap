@@ -953,6 +953,8 @@ class ComprobanteController extends Controller
 				}
                 */
                 
+
+
                 $fecha_hoy = date('Y-m-d');
     
                 if ($total_pagar!="0" && $total_pagar!=""){
@@ -974,7 +976,10 @@ class ComprobanteController extends Controller
                         "descuento" => 0 ,
                         "cod_contable" => "",
                         "id_concepto" => 26464 ,
+                        "pu" => round($total_redondeo,2),
                         "igv" => 0 ,
+                        "pv" =>  0,
+                        "vv" =>  0, 
                         "cantidad" => 1, 
                         "total" => round($total_redondeo,2), 
                         "item" => 999 ,
@@ -1002,7 +1007,10 @@ class ComprobanteController extends Controller
                         "descuento" => 0 ,
                         "cod_contable" => "",
                         "id_concepto" => 26464 ,
+                        "pu" => round($total_abono,2),
                         "igv" => 0 ,
+                        "pv" =>  0,
+                        "vv" =>  0, 
                         "cantidad" => 1, 
                         "total" => round($total_abono,2), 
                         "item" => 999 ,

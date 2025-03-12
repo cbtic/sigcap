@@ -909,7 +909,7 @@
                                                         <th width="35%">Descripción</th>
                                                         <th class="text-right" width="10%">PU</th>
                                                         <th class="text-right" width="10%">Dscto.</th>
-                                                        <th class="text-right" width="10%">P.Venta</th>
+                                                        <th class="text-right" width="10%">V.Venta</th>
                                                         <th class="text-right" width="10%">IGV</th>
                                                         <th class="text-right" width="10%">Total</th>
                                                     </tr>
@@ -984,7 +984,7 @@
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
                                                                                             } else {
-                                                                                                echo number_format($fac['pv'],2);
+                                                                                                echo number_format($fac['vv'],2);
                                                                                             }
                                                                                         }
                                                                                         if ($trans == 'FE') {
