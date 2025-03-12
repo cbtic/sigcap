@@ -32,8 +32,7 @@ foreach ($valorizacion as $key => $row):
 	$PrecioVenta_= $row->valor_unitario;
 	$Descuento_  = $row->descuento_porcentaje;
 	$Cantidad_ = $row->cantidad;
-
-
+	
 	if ($id_tipo_afectacion == '30') {
 		//$stotal = str_replace(",", "", number_format($monto));
 		$igv_   = 0;

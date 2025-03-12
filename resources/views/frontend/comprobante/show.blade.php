@@ -431,8 +431,9 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                                 <th class="text-center" width="8%">Cant.</th>
                                                                 <th width="37%">Descripción</th>
                                                                 <th class="text-right" width="15%">PU</th>
-                                                                <th class="text-right" width="10%">Dcto.</th>                                                                
-                                                                <!--<th class="text-right" width="15%">IGV</th> -->
+                                                                <th class="text-right" width="10%">Dcto.</th>
+                                                                <th class="text-right" width="10%">Val.Venta</th>                                                                
+                                                                <th class="text-right" width="15%">IGV</th> 
                                                                 <th class="text-right" width="15%">Monto</th>
                                                             </tr>
                                                         </thead>
@@ -454,22 +455,24 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                                     {{ $factura_detalle->descripcion }}
                                                                 </td>
 
-                                                                <td class="text-right">{{ $factura_detalle->pu  }}
+                                                                <td class="text-right">{{ number_format($factura_detalle->pu,2)  }}
                                                                 </td>
 
                                                                 <td class="text-right">{{ $factura_detalle->descuento }}
                                                                 </td>
 
-                                                                <!--
-                                                                <td class="text-right">
-                                                                    {{ number_format($factura_detalle->facd_igv_total,2) }}</td>
-                                                                -->
-                                                                <td class="text-right">
-                                                                    {{ number_format($factura_detalle->importe,2) }}</td>
+                                                                <td class="text-right">{{ number_format($factura_detalle->valor_venta,2) }}
+                                                                </td>
+                                                                
+                                                                <td class="text-right">{{ number_format($factura_detalle->igv_total,2) }}
+                                                                </td>
+                                                                
+                                                                <td class="text-right">{{ number_format($factura_detalle->importe,2) }}
+                                                                </td>
                                                             </tr>
                                                             @endforeach
                                                             <tr id="fila_sub_total">
-                                                                <td class="text-right" colspan="4">
+                                                                <td class="text-right" colspan="6">
                                                                     @if($factura->impuesto!=0)
                                                                         {{"  OP.GRAVADAS "}}
                                                                     @else
@@ -479,11 +482,11 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                                 <td class="text-right">{{ number_format($factura->subtotal,2)  }}</td>
                                                             </tr>
                                                             <tr id="fila_igv">
-                                                                <td class="text-right" colspan="4">IGV(18%) <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                <td class="text-right" colspan="6">IGV(18%) <span class="moneda"><?php echo $modeda?></span> </td>
                                                                 <td class="text-right">{{ number_format($factura->impuesto,2) }}</td>
                                                             </tr>
                                                             <tr id="fila_total">
-                                                                <td class="text-right" colspan="4">IMPORTE TOTAL <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                <td class="text-right" colspan="6">IMPORTE TOTAL <span class="moneda"><?php echo $modeda?></span> </td>
                                                                 <td class="text-right"><span class="resaltado">{{ number_format($factura->total,2) }}</span></td>
 
 

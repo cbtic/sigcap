@@ -569,6 +569,8 @@ function calcular_total_otros(obj){
 
 		val_precio =val_precio.toString().replace(',','');
 
+		//alert(val_precio);
+
 		var val_cantidad = $(this).parent().parent().parent().find('#cantidad').val();
 
 
@@ -595,20 +597,21 @@ function calcular_total_otros(obj){
 		val_igv =val_igv.toString().replace(',','');
 
 		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
+
 		var val_descuento =$('#DescuentoPP').val("");
 		var numero_cuotas_pp =$('#numero_cuotas_pp').val("");
 		var importe_pp =$('#importe_pp').val("");
-				
+				/*
 		total += Number(val_total);
 		stotal += Number(val_sub_total);
 		igv += Number(val_igv);
-
+*/
 
 
 
 		$(this).parent().parent().parent().find('#comprobante_detalle_cantidad').val(val_cantidad)
-		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(igv)
-		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(total)
+		//$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(igv)
+		//$(this).parent().parent().parent().find('#comprobante_detalle_total').val(total)
 
 
 
@@ -638,12 +641,19 @@ function calcular_total_otros(obj){
 		var ValorVenta_ = ValorVB_ - Descuento_;
 		var Igv_ = ValorVenta_ * tasa_igv_;
 		var Total_ = ValorVenta_ + Igv_;
+
+		total += Number(Total_);
+		stotal += Number(ValorVenta_);
+		igv += Number(Igv_);
+
 		
-		ValorUnitario_ += Number(ValorUnitario_ );		
-		ValorVB_ += Number(ValorVB_ );		
-		ValorVenta_ += Number(ValorVenta_ );
-		Igv_ += Number(Igv_ );		
-		Total_ += Number(Total_ );
+		ValorUnitario_ = Number(ValorUnitario_ );		
+		ValorVB_ = Number(ValorVB_ );		
+		ValorVenta_ = Number(ValorVenta_ );
+		Igv_ = Number(Igv_ );		
+		Total_ = Number(Total_ );
+
+
 
 
 /*
@@ -664,10 +674,15 @@ function calcular_total_otros(obj){
 		$(this).parent().parent().parent().find('#comprobante_detalle_valor_venta_bruto').val(ValorVB_);
 		$(this).parent().parent().parent().find('#comprobante_detalle_monto').val(Total_);
 		$(this).parent().parent().parent().find('#comprobante_detalle_pu').val(ValorUnitario_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(Igv_);
+
 		$(this).parent().parent().parent().find('#comprobante_detalle_pv').val(PrecioVenta_);
 		$(this).parent().parent().parent().find('#comprobante_detalle_vv').val(ValorVenta_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(Total_);
 
-		
+
+
+
 
 	});
 
