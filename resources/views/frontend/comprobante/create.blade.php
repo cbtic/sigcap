@@ -968,7 +968,7 @@
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
                                                                                             } else {
-                                                                                                echo number_format($fac['pu'],2);
+                                                                                                echo number_format($fac['pv'],2);
                                                                                             }
                                                                                         }
                                                                                         if ($trans == 'FE') {

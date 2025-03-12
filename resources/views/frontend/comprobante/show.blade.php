@@ -432,7 +432,7 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                                 <th width="37%">Descripción</th>
                                                                 <th class="text-right" width="15%">P.Unitario</th>
                                                                 <th class="text-right" width="10%">Dcto.</th>
-                                                                <th class="text-right" width="10%">V.Unitario</th>                                                                                                                        
+                                                                <!--<th class="text-right" width="10%">V.Unitario</th>   -->                                                                                                                     
                                                                 <th class="text-right" width="15%">Monto</th>
                                                             </tr>
                                                         </thead>
@@ -459,16 +459,16 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
 
                                                                 <td class="text-right">{{ $factura_detalle->descuento }}
                                                                 </td>
-
+<!--
                                                                 <td class="text-right">{{ number_format($factura_detalle->pu,2) }}
                                                                 </td>
-                                                                                                                                
+                                                    -->                                                                                                                     
                                                                 <td class="text-right">{{ number_format($factura_detalle->importe,2) }}
                                                                 </td>
                                                             </tr>
                                                             @endforeach
                                                             <tr id="fila_sub_total">
-                                                                <td class="text-right" colspan="5">
+                                                                <td class="text-right" colspan="4">
                                                                     @if($factura->impuesto!=0)
                                                                         {{"  OP.GRAVADAS "}}
                                                                     @else
@@ -478,11 +478,11 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                                 <td class="text-right">{{ number_format($factura->subtotal,2)  }}</td>
                                                             </tr>
                                                             <tr id="fila_igv">
-                                                                <td class="text-right" colspan="5">IGV(18%) <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                <td class="text-right" colspan="4">IGV(18%) <span class="moneda"><?php echo $modeda?></span> </td>
                                                                 <td class="text-right">{{ number_format($factura->impuesto,2) }}</td>
                                                             </tr>
                                                             <tr id="fila_total">
-                                                                <td class="text-right" colspan="5">IMPORTE TOTAL <span class="moneda"><?php echo $modeda?></span> </td>
+                                                                <td class="text-right" colspan="4">IMPORTE TOTAL <span class="moneda"><?php echo $modeda?></span> </td>
                                                                 <td class="text-right"><span class="resaltado">{{ number_format($factura->total,2) }}</span></td>
 
 
