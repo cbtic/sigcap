@@ -2192,6 +2192,10 @@ function AplicarDescuento(){
 		
 		$('#texto_detalle').val("PAGO CUOTA GREMIAL PRONTOPAGO " + txt_ini); 
 
+		$('#cantidad_descuento').val(tot_reg_); 
+
+		
+
 //		return false;
 		
 

@@ -907,9 +907,9 @@
                                                         <th class="text-right" width="5%">#</th>
                                                         <th class="text-center" width="10%">Cant.</th>
                                                         <th width="35%">Descripción</th>
-                                                        <th class="text-right" width="10%">PU</th>
-                                                        <th class="text-right" width="10%">Dscto.</th>
+                                                        <th class="text-right" width="10%">PU</th>                                                        
                                                         <th class="text-right" width="10%">V.Venta</th>
+                                                        <th class="text-right" width="10%">Dscto.</th>
                                                         <th class="text-right" width="10%">IGV</th>
                                                         <th class="text-right" width="10%">Total</th>
                                                     </tr>
@@ -974,12 +974,7 @@
                                                                                         if ($trans == 'FE') {
                                                                                             echo number_format($fac['importe'], 2); 
                                                                                         } ?></td>
-                                                                <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                            echo number_format($fac['descuento']);
-                                                                                        }
-                                                                                        if ($trans == 'FE') {
-                                                                                            echo $fac['descuento'];
-                                                                                        } ?></td>
+
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
@@ -990,6 +985,12 @@
                                                                                         if ($trans == 'FE') {
                                                                                             echo number_format($fac['pu'], 2);
                                                                                         } ?></td>
+                                                                <td class="text-right"><?php if ($trans == 'FA') {
+                                                                                            echo number_format($fac['descuento']);
+                                                                                        }
+                                                                                        if ($trans == 'FE') {
+                                                                                            echo $fac['descuento'];
+                                                                                        } ?></td>                                                                                        
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd * 0.18);

@@ -285,6 +285,8 @@
 
                                                     <input type="hidden" readonly name="DescuentoPP" id="DescuentoPP" value="" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="texto_detalle" id="texto_detalle" value="" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="cantidad_descuento" id="cantidad_descuento" value="" class="form-control form-control-sm">
+
 
                                                     <input type="hidden" readonly name="id_pronto_pago" id="id_pronto_pago" value="<?php echo !empty($pronto_pago->id) ? $pronto_pago->id : '0'  ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo !empty($pronto_pago->periodo) ? $pronto_pago->periodo : '0'  ?>" class="form-control form-control-sm">
