@@ -91,6 +91,7 @@ class BeneficiarioController extends Controller
             $beneficiario = new Beneficiario();
 			$dni='';
 			$estado_beneficiario='';
+			$persona_paga='';
 		}
 
         $concepto = $concepto_model->getConceptoAllDenominacion2();
