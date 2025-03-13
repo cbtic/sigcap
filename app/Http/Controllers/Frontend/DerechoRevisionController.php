@@ -2544,6 +2544,62 @@ class DerechoRevisionController extends Controller
         return response()->json(['pago_liquidacion'=>$pago_liquidacion,'numero_revision'=>$numero_revision]);
 	}
 
+	function create_solicitud(){
 
+		$agremiado_model = new Agremiado;
+		$persona_model = new Persona;
+		//$derechoRevision_ = DerechoRevision::find($id);
+		$proyectista_model = new Proyectista();
+		//$proyecto_ = Proyecto::where("id",$derechoRevision_->id_proyecto)->where("estado","1")->first();
+		//$proyecto2 = Proyecto::find($proyecto_->id);
+		//$proyectista_ = $proyectista_model->getProyectistaIngeniero($id);
+		//$proyectista = Proyectista::find($proyectista_[0]->id_profesional);
+		//$profesionales_otro = ProfesionalesOtro::find($proyectista_[0]->id_profesional);
+
+		//$datos_proyectista = $proyectista_model->getDatosProyectistaIngeniero($id);
+
+		//$datos_usoEdificaciones = UsoEdificacione::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
+		//$datos_presupuesto = Presupuesto::where("id_solicitud",$derechoRevision_->id)->where("estado","1")->orderBy('id')->get();
+		$tipo_solicitante = 1;
+		
+		$proyectista_model = new Proyectista;
+		$propietario_model = new Propietario;
+		$derechoRevision_model = new DerechoRevision;
+		$derechoRevision = new DerechoRevision;
+		$agremiado = new Agremiado;
+		$persona = new Persona;
+		$proyecto = new Proyecto;
+		$tablaMaestra_model = new TablaMaestra; 
+		$ubigeo_model = new Ubigeo;
+		$municipalidad_model = new Municipalidade;
+		$presupuesto_model = new Presupuesto;
+		$usoEdificacione_model = new UsoEdificacione;
+		$parametro_model = new Parametro;
+		$empresa = new Empresa;
+
+		$departamento = $ubigeo_model->getDepartamento();
+        $sitio = $tablaMaestra_model->getMaestroByTipo(33);
+        $zona = $tablaMaestra_model->getMaestroByTipo(34);
+		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
+		$tipo_proyectista = $tablaMaestra_model->getMaestroByTipo(41);
+		$principal_asociado = $tablaMaestra_model->getMaestroByTipo(130);
+		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
+		$tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'TIPO USO');
+		
+		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(112);
+		$tipo_liquidacion = $tablaMaestra_model->getMaestroByTipo(27);
+		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
+		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
+		//$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud_($id);
+		//$propietario_solicitud = $propietario_model->getPropietarioSolicitud($id);
+		//$info_solicitud = $presupuesto_model->getInfoSolicitud($id);
+		//$info_uso_solicitud = $usoEdificacione_model->getInfoSolicitudUso2($id);
+		$anio_actual = Carbon::now()->year;
+		$parametro = $parametro_model->getParametroAnio($anio_actual);
+		//$liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
+
+        return view('frontend.derecho_revision.create_solicitud',compact(/*'id',*/'derechoRevision',/*'proyectista',*/'agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad',/*'proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2',*/'tipo_solicitante',/*'datos_agremiado','datos_persona',*//*'info_solicitud','info_uso_solicitud',*/'tipo_proyecto','tipo_uso',/*'datos_usoEdificaciones',*//*'sub_tipo_uso',*/'tipo_obra',/*'datos_presupuesto',*/'tipo_liquidacion','instancia','parametro',/*'liquidacion',*/'tipo','tipo_documento','empresa','tipo_proyectista',/*'profesionales_otro','datos_proyectista',*/'principal_asociado'));
+    }
 
 }

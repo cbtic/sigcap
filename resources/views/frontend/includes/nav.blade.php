@@ -100,6 +100,18 @@
 					</li>
 					@endif
 
+					@if(Gate::check('Licencias'))
+					<li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
+						   aria-haspopup="true" aria-expanded="false">Licencias</a>
+						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
+						   		@can('Licencias')
+								<a href="/derecho_revision/create_solicitud" class="dropdown-item">Registro de Solicitud</a>
+								@endcan
+						   </div>
+					</li>
+					@endif
+
                     @if(Gate::check('Concurso') || Gate::check('Resultado de Concurso') || Gate::check('Consulta de Resultado de Concurso') || Gate::check('Coordinador Zonal') || Gate::check('Comisiones') || Gate::check('Consulta de Comisiones') || Gate::check('Programacion de Sesiones') || Gate::check('Derecho de Revision') || Gate::check('Registro Revisor Urbano') || Gate::check('Computo de Sesiones') || Gate::check('Consulta Derecho de Revision') || Gate::check('Registro Derecho de Revision') || Gate::check('Agremiado Rol'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"

@@ -820,3 +820,4 @@ Route::get('planilla/obtener_anio_reintegro/{periodo}', [PlanillaDelegadoControl
 Route::get('comprobante/obtener_nc/{cod_tributario}', [ComprobanteController::class, 'obtener_nc'])->name('comprobante.obtener_nc');
 Route::get('planilla/obtener_comisiones/{periodo}', [PlanillaDelegadoController::class, 'obtener_comisiones'])->name('planilla.obtener_comisiones');
 Route::get('coordinador_zonal/obtener_ultimo_mes', [CoordinadorZonalController::class, 'obtener_ultimo_mes'])->name('coordinador_zonal.obtener_ultimo_mes');
+Route::get('derecho_revision/create_solicitud', [DerechoRevisionController::class, 'create_solicitud'])->name('derecho_revision.create_solicitud');

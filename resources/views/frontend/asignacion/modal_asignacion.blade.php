@@ -300,7 +300,7 @@ $.mask.definitions['p'] = "[Mm]";
 									<select name="tipo_planilla" id="tipo_planilla" class="form-control form-control-sm">
 										<option value="0">Seleccionar</option>
 										<?php foreach ($tipo_planilla as $row) { ?>
-											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $asignacion->id_tipo_cuenta) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+											<option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == $asignacion->id_tipo_planilla) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
 										<?php } ?>
 										@error('tipo_planilla') <span ...>Dato requerido</span> @enderror
 									</select>
