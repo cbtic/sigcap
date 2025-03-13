@@ -46,6 +46,7 @@ class IngresoController extends Controller
 
         $caja = $caja_model->getCaja('91');
         $caja_usuario = $caja_ingreso_model->getCajaIngresoByusuario($id_user,'91');
+        
         $tipo_documento = $caja_model->getMaestroByTipo(16);
 
         //$date = (new DateTime)->format("Y");

@@ -790,7 +790,8 @@
 
 @push('after-scripts')
 <script type="text/javascript">
-    var id_caja_usuario = "<?php echo ($caja_usuario) ? $caja_usuario->id_caja : 0 ?>";
+    var id_caja_usuario = "<?php echo ($caja_usuario)?$caja_usuario->id_caja:0?>";
+    
     //alert(id_caja_usuario);
 
     function auto_height(elem) {
