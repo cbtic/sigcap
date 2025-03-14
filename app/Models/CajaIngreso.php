@@ -192,9 +192,14 @@ class CajaIngreso extends Model
 
     function getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
-        $usuario_sel = "";
-        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+         //echo $tipo; exit(); 
 
+        $usuario_sel = "";
+        if ($tipo=='S') {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+        }
+        
         $cad = "
         		select situacion, tipo, tipo_, sum(total)total, count(*) cantidad 
                 from( 
@@ -221,7 +226,7 @@ class CajaIngreso extends Model
     function getAllCajaComprobante_por_cobrar($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";
-        if ($tipo==1) {
+        if ($tipo=="S") {
             
             $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
         }
@@ -244,7 +249,10 @@ class CajaIngreso extends Model
     function getAllCajaCondicionPago($id_usuario,  $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";
-        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+        }
 
         $cad = "
             select condicion, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
@@ -323,7 +331,10 @@ class CajaIngreso extends Model
     function getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";
-        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+        }
 
         $cad = "
             select denominacion, sum(importe) importe
@@ -351,7 +362,10 @@ class CajaIngreso extends Model
     function getAllComprobanteConteo($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";
-        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+        }
 
         $cad = "
             select denominacion tipo_documento, count(*) cantidad 
@@ -374,7 +388,11 @@ class CajaIngreso extends Model
     function getAllComprobanteLista($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";
-        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+        }
+
 
         $cad = "
                     select tm.denominacion tipo_documento, c.serie ||'-'|| c.numero::varchar(20) numero 
@@ -396,7 +414,11 @@ class CajaIngreso extends Model
     function getAllComprobantencnd($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";
-        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+        }
+
 
         $cad = "
                     select tm.denominacion tipo_documento, c.serie ||'-'|| c.numero::varchar(20) numero, c.destinatario,  0 us , case when afecta_caja ='C' then -1* c.total 
@@ -419,7 +441,11 @@ class CajaIngreso extends Model
     function getAllComprobantencnd_noafecta($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";
-        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+        }
+
 
         $cad = "
                   select tm.denominacion tipo_documento, c.serie ||'-'|| c.numero::varchar(20) numero, c.destinatario,  0 us , case when afecta_caja ='C' then -1* c.total 
@@ -442,7 +468,11 @@ class CajaIngreso extends Model
     function getAllIngressComp($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";
-        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+        }
+
 
         $cad = "
                     select cp.fecha, c.tipo || '-' || c.serie || '-' || c.numero || '-' || c.destinatario || '-' || m.denominacion || '- S/ ' || cp.monto  || case when cp.nro_operacion<>'' then   '-Nro Oper. ' ||  cp.nro_operacion else '' end     comprobante ,0 usd, cp.monto importe
@@ -469,7 +499,10 @@ class CajaIngreso extends Model
     function getAllMovimientoComprobantes($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
         $usuario_sel = "";
-        if ($tipo==1) $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario; 
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
+        }
 
         $cad = "
                     select  concepto, fecha,	 tipo_documento,  serie,  numero,fecha_ncd,tipo_documento_ncd,  serie_ncd,  numero_ncd, cod_tributario,  destinatario , imp_afecto, imp_inafecto,igv , total
