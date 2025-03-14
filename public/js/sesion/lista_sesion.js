@@ -1218,7 +1218,7 @@ function eliminarDelegadoSesion(id){
 	
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas Eliminar al delegado?", 
+        message: "Se va a eliminar un miembro de comision, verificar que debe haber 2 miembros como minimo", 
         callback: function(result){
             if (result==true) {
                 fn_eliminar_delegado_sesion(id);
