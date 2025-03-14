@@ -907,9 +907,9 @@
                                                         <th class="text-right" width="5%">#</th>
                                                         <th class="text-center" width="10%">Cant.</th>
                                                         <th width="35%">Descripción</th>
-                                                        <th class="text-right" width="10%">PU</th>
+                                                        <th class="text-right" width="10%">PU</th>                                                        
+                                                        <th class="text-right" width="10%">V.Venta</th>
                                                         <th class="text-right" width="10%">Dscto.</th>
-                                                        <th class="text-right" width="10%">P.Venta</th>
                                                         <th class="text-right" width="10%">IGV</th>
                                                         <th class="text-right" width="10%">Total</th>
                                                     </tr>
@@ -938,6 +938,13 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][cantidad]" value="<?php echo $fac['cantidad'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][total]" value="<?php echo $fac['total'] ?>" />
 
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][pu]" value="<?php echo $fac['pu'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][pv]" value="<?php echo $fac['pv'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][valor_venta_bruto]" value="<?php echo $fac['valor_venta_bruto'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][valor_venta]" value="<?php echo $fac['vv'] ?>" />
+                                                           
+
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][abreviatura]" value="<?php echo $fac['abreviatura'] ?>" />
 
                                                             <tr>
                                                                 <td class="text-right"><?php $n = $n + 1;
@@ -961,28 +968,29 @@
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd - $MonAd * 0.18);
                                                                                             } else {
-                                                                                                echo number_format($fac['pu'],2);
+                                                                                                echo number_format($fac['pv'],2);
                                                                                             }
                                                                                         }
                                                                                         if ($trans == 'FE') {
                                                                                             echo number_format($fac['importe'], 2); 
+                                                                                        } ?></td>
+
+                                                                <td class="text-right"><?php if ($trans == 'FA') {
+                                                                                            if ($adelanto == 'S') {
+                                                                                                echo ($MonAd - $MonAd * 0.18);
+                                                                                            } else {
+                                                                                                echo number_format($fac['vv'],2);
+                                                                                            }
+                                                                                        }
+                                                                                        if ($trans == 'FE') {
+                                                                                            echo number_format($fac['pu'], 2);
                                                                                         } ?></td>
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             echo number_format($fac['descuento']);
                                                                                         }
                                                                                         if ($trans == 'FE') {
                                                                                             echo $fac['descuento'];
-                                                                                        } ?></td>
-                                                                <td class="text-right"><?php if ($trans == 'FA') {
-                                                                                            if ($adelanto == 'S') {
-                                                                                                echo ($MonAd - $MonAd * 0.18);
-                                                                                            } else {
-                                                                                                echo number_format($fac['pv'],2);
-                                                                                            }
-                                                                                        }
-                                                                                        if ($trans == 'FE') {
-                                                                                            echo number_format($fac['pu'], 2);
-                                                                                        } ?></td>
+                                                                                        } ?></td>                                                                                        
                                                                 <td class="text-right"><?php if ($trans == 'FA') {
                                                                                             if ($adelanto == 'S') {
                                                                                                 echo ($MonAd * 0.18);

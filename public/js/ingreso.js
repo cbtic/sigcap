@@ -278,12 +278,12 @@ function calcular_total(obj){
 	var id_concepto="";
 	var id_concepto_actual="";
 
-	//alert(rol_exonera);
+	//alert(id_caja_usuario);
 
 	//alert(rol_exonera);
 	
 	//if(id_caja_usuario=="0" && rol_exonera=="0"){
-	if(id_caja_usuario=="0" && rol_exonera=="0"){
+	if(id_caja_usuario=="0" ){
 		bootbox.alert("Debe seleccionar una Caja disponible");
 		$(obj).prop("checked",false);
 		return false;
@@ -564,9 +564,12 @@ function calcular_total_otros(obj){
 
 	$(".mov:checked").each(function (){
 
+		
 		var val_precio = $(this).parent().parent().parent().find('.val_precio').html();
 
 		val_precio =val_precio.toString().replace(',','');
+
+		//alert(val_precio);
 
 		var val_cantidad = $(this).parent().parent().parent().find('#cantidad').val();
 
@@ -594,17 +597,23 @@ function calcular_total_otros(obj){
 		val_igv =val_igv.toString().replace(',','');
 
 		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
+
 		var val_descuento =$('#DescuentoPP').val("");
 		var numero_cuotas_pp =$('#numero_cuotas_pp').val("");
 		var importe_pp =$('#importe_pp').val("");
-				
+				/*
 		total += Number(val_total);
 		stotal += Number(val_sub_total);
 		igv += Number(val_igv);
+*/
+
+
 
 		$(this).parent().parent().parent().find('#comprobante_detalle_cantidad').val(val_cantidad)
-		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(igv)
-		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(val_total)
+		//$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(igv)
+		//$(this).parent().parent().parent().find('#comprobante_detalle_total').val(total)
+
+
 
 		//alert(val_total);
 		//$("#comprobante_detalle_cantidad").val(5000);
@@ -613,6 +622,67 @@ function calcular_total_otros(obj){
 
 		//comprobante_detalle[0][total]
 		//comprobante_detalle[0][igv]
+
+
+		var tasa_igv_ = 0.18;
+
+		var PrecioVenta_ = $(this).parent().parent().parent().find('.val_precio').html();		
+		PrecioVenta_ =PrecioVenta_.toString().replace(',','');
+
+		//alert(PrecioVenta_);
+
+		var Descuento_ = 0;
+		var Cantidad_ =  $(this).parent().parent().parent().find('#cantidad').val();
+
+		var ValorUnitario_ = PrecioVenta_ /(1+tasa_igv_);	
+		//alert(ValorUnitario_);
+
+		var ValorVB_ = ValorUnitario_ * Cantidad_;
+		var ValorVenta_ = ValorVB_ - Descuento_;
+		var Igv_ = ValorVenta_ * tasa_igv_;
+		var Total_ = ValorVenta_ + Igv_;
+
+		total += Number(Total_);
+		stotal += Number(ValorVenta_);
+		igv += Number(Igv_);
+
+		
+		ValorUnitario_ = Number(ValorUnitario_ );		
+		ValorVB_ = Number(ValorVB_ );		
+		ValorVenta_ = Number(ValorVenta_ );
+		Igv_ = Number(Igv_ );		
+		Total_ = Number(Total_ );
+
+
+
+
+/*
+		alert(ValorUnitario_);
+		alert(ValorVB_);
+		alert(ValorVenta_);
+		alert(Igv_);
+		alert(Total_);
+*/
+
+/*
+		$(this).parent().parent().parent().find('#comprobante_detalle_cantidad').val(Cantidad_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(Igv_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(Total_);
+*/
+		$(this).parent().parent().parent().find('#comprobante_detalle_precio_unitario').val(ValorUnitario_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_sub_total').val(ValorVenta_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_valor_venta_bruto').val(ValorVB_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_monto').val(Total_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_pu').val(ValorUnitario_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(Igv_);
+
+		$(this).parent().parent().parent().find('#comprobante_detalle_pv').val(PrecioVenta_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_vv').val(ValorVenta_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(Total_);
+
+
+
+
 
 	});
 
@@ -1182,7 +1252,7 @@ function cargarValorizacion(){
 			}
 
 			//if ((cboTipoConcepto_b==26411 && cboTipoCuota_b==1)||(cboTipoConcepto_b==26412)) {			
-			if ((cboTipoConcepto_b==26411)||(cboTipoConcepto_b==26412)||(cboTipoCuota_b==1)) {
+			if ((cboTipoConcepto_b=="26411")||(cboTipoConcepto_b=="26541")||(cboTipoConcepto_b=="26412")||(cboTipoCuota_b==1)) {
 
 				$("#btnFracciona").prop('disabled', false);
 
@@ -1193,7 +1263,7 @@ function cargarValorizacion(){
 			}
 
 			//if (cboTipoCuota_b==1 &&  cboTipoConcepto_b=="") {
-			if (cboTipoConcepto_b=="26412" || cboTipoConcepto_b=="26411") {				
+			if (cboTipoConcepto_b=="26412" ||(cboTipoConcepto_b=="26541")|| cboTipoConcepto_b=="26411") {				
 				$('#cbox2').show();
 				$('#lblFrac').show();
 				
@@ -1437,13 +1507,13 @@ function validar(tipo) {
 
 	if(cboPeriodo_b!="" ){
 		if(anio!=cboPeriodo_b){
-			//msg += "Tiene Deudas Vencidas en el periodo " + anio + " que tiene que cancelar para continuar <br>";	
+			msg += "Tiene Deudas Vencidas en el periodo " + anio + " que tiene que cancelar para continuar <br>";	
 		}
 	}
 
 	if(cboMes_b!=""){
 		if(mes!=cboMes_b){
-			//msg += "Tiene Deudas Vencidas en el mes " + mes + " que tiene que cancelar para continuar <br>";	
+			msg += "Tiene Deudas Vencidas en el mes " + mes + " que tiene que cancelar para continuar <br>";	
 		}
 	}
 
@@ -1461,6 +1531,7 @@ function validar(tipo) {
 	
 	if(msg!=""){
 		bootbox.alert(msg);
+		$('#DescuentoPP').val("N"); 
 		//return false;
 	} else{
 
@@ -1473,12 +1544,9 @@ function validar(tipo) {
 			//document.frmPagos.submit();
 		}
 
-		if(tipo = 5){
+		if(tipo == 8){
 
-			
-
-
-			//fn_nota_credito();
+			modal_fraccionamiento();
 		}
 	}
 
@@ -1589,7 +1657,7 @@ function modal_otro_pago(){
 	$(".modal-dialog").css("width","85%");
 	$('#openOverlayOpc').modal('show');
 	$('#openOverlayOpc .modal-body').css('height', 'auto');
-	var perido = "2023";
+	var perido = "2025";
 	var idPersona = $('#id_persona').val();
 	var idAgremiado = $('#id_agremiado').val();
 
@@ -1885,7 +1953,7 @@ function modal_fraccionamiento(){
 			$(this).parent().parent().parent().find('.chek').val("1");
 
 			
-			if(id_concepto==26411 || id_concepto==26412) {				
+			if(id_concepto==26411 || id_concepto==26541 || id_concepto==26412) {				
 				total += Number(val_total);
 				stotal += Number(val_sub_total);
 				igv += Number(val_igv);								
@@ -2082,6 +2150,8 @@ function AplicarDescuento(){
 			$('.mov').prop('checked', true);
 			//calcular_total();
 
+			
+
 			var val_total = $(this).parent().parent().parent().find('.val_total').html();
 			val_total =val_total.toString().replace(',','');
 			var val_sub_total = $(this).parent().parent().parent().find('.val_sub_total').html();
@@ -2099,6 +2169,32 @@ function AplicarDescuento(){
 			igv += Number(val_igv);	
 
 		});
+		var cont_ = 0;
+		var tot_reg_ = $(".mov:checked").length;
+		var txt_ini = "";
+		var txt_fin = "";
+
+		$(".mov").each(function (){
+
+			cont_++;
+			//alert(cont_);
+			var descripcion = $(this).parent().parent().parent().find('#descripcion').val();
+			if (cont_==1) txt_fin= descripcion.replace("CUOTA GREMIAL ", "");
+			if (cont_==tot_reg_) txt_ini = descripcion.replace("CUOTA GREMIAL ", "");
+			//alert(descripcion);
+
+		});
+
+		//alert(txt_ini + " al " + txt_fin);
+
+		txt_ini = txt_ini + " AL " + txt_fin;
+
+		
+		$('#texto_detalle').val("PAGO CUOTA GREMIAL PRONTOPAGO " + txt_ini); 
+
+		$('#cantidad_descuento').val(tot_reg_); 
+
+		
 
 //		return false;
 		

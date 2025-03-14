@@ -21,7 +21,11 @@ class Valorizacione extends Model
             $tlb_liquidacion = "left join liquidaciones l  on l.id = v.pk_registro and v.id_modulo = 7";
 
         }
-        
+        $exonerado_="";
+        if($exonerado!=""){
+            $exonerado_ = "and v.exonerado = '".$exonerado."'";
+        }
+
         //if($exonerado=="0")$exonerado="";
         
     //echo($tipo_documento);
@@ -33,7 +37,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto, 
-                codigo_fraccionamiento, v.exonerado,v.exonerado_motivo                 
+                codigo_fraccionamiento, v.exonerado,v.exonerado_motivo, c.codigo cod_concepto, coalesce(v.descuento_porcentaje, '0') descuento_porcentaje                 
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -47,7 +51,8 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado = '".$exonerado."' 
+                --and v.exonerado = '".$exonerado."' 
+                ".$exonerado_."
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
             order by v.fecha desc
@@ -61,7 +66,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto,
-                codigo_fraccionamiento, v.exonerado,v.exonerado_motivo               
+                codigo_fraccionamiento, v.exonerado,v.exonerado_motivo, c.codigo cod_concepto, coalesce(v.descuento_porcentaje, '0') descuento_porcentaje               
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto            
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
@@ -73,7 +78,8 @@ class Valorizacione extends Model
                 and c.id::varchar ilike '%".$concepto."'
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado = '".$exonerado."' 
+                --and v.exonerado = '".$exonerado."' 
+                ".$exonerado_."
                 ".$credipago."
                 --and v.descripcion ilike '%".$numero_documento_b."' 
             order by v.fecha desc
@@ -88,7 +94,13 @@ class Valorizacione extends Model
         return $data;
     }
 
-    function getValidaValorizacion($tipo_documento,$id_persona){  
+    function getValidaValorizacion($tipo_documento,$id_persona,$concepto){  
+
+        $id_concepto_="";
+        if($concepto!=""){
+            $id_concepto_ = "and v.id_concepto = ".$concepto." ";
+        }
+
         
         if($tipo_documento=="79"){  //RUC
             $cad = "
@@ -97,7 +109,8 @@ class Valorizacione extends Model
             where v.id_empresa = ".$id_persona."            
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado = '0'               
+                and v.exonerado = '0'
+                ".$id_concepto_."             
             order by v.fecha 
             limit 1            
 			";
@@ -108,7 +121,8 @@ class Valorizacione extends Model
             where v.id_persona = ".$id_persona."
                 and v.estado = '1'            
                 and v.pagado = '0'
-                and v.exonerado = '0'               
+                and v.exonerado = '0' 
+                  ".$id_concepto_."               
             order by v.fecha 
             limit 1             
 			";
@@ -131,7 +145,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto, 
-                codigo_fraccionamiento, v.exonerado, v.exonerado_motivo                
+                codigo_fraccionamiento, v.exonerado, v.exonerado_motivo, c.codigo cod_concepto                
                 --, v.id_tipo_concepto
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
@@ -141,7 +155,8 @@ class Valorizacione extends Model
                 --and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
                 --and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
                 --and c.id in (26411, 26412)
-                and ((c.id = 26411 and  (case when v.fecha < now() then '1' else '0' end) = '0') or (c.id = 26412))
+                --and ((c.id = 26411 and  (case when v.fecha < now() then '1' else '0' end) = '0') or (c.id = 26412))
+                and ((c.codigo = '00006' and  (case when v.fecha < now() then '1' else '0' end) = '0') or (c.codigo = '00001'))
                 and v.estado = '1'            
                 and v.pagado = '0'
                 --and v.exonerado = '0'
@@ -154,7 +169,7 @@ class Valorizacione extends Model
                 (case when descripcion is null then c.denominacion else v.descripcion end) descripcion, t.abreviatura,
                 (case when v.fecha < now() then '1' else '0' end) vencio, v.id_concepto, c.id_tipo_afectacion,
                 coalesce(v.cantidad, '1') cantidad, coalesce(v.valor_unitario, v.monto) valor_unitario, otro_concepto,
-                codigo_fraccionamiento, v.exonerado, v.exonerado_motivo            
+                codigo_fraccionamiento, v.exonerado, v.exonerado_motivo, c.codigo cod_concepto            
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto                
                 inner join tabla_maestras t  on t.codigo::int = v.id_moneda and t.tipo = '1'
@@ -162,7 +177,8 @@ class Valorizacione extends Model
                 --and DATE_PART('YEAR', v.fecha)::varchar ilike '%".$periodo."'
                 --and (case when v.fecha < now() then '1' else '0' end) ilike '%".$cuota."'
                 --and c.id in (26411, 26412)
-                and ((c.id = 26411 and  (case when v.fecha < now() then '1' else '0' end) = '1') or (c.id = 26412))
+                --and ((c.id = 26411 and  (case when v.fecha < now() then '1' else '0' end) = '1') or (c.id = 26412))
+                and ((c.codigo = '00006' and  (case when v.fecha < now() then '1' else '0' end) = '1') or (c.codigo = '00001'))
                 and v.estado = '1'            
                 and v.pagado = '0'                
             order by v.fecha asc
@@ -203,23 +219,27 @@ class Valorizacione extends Model
     function getValorizacion_total($tipo_documento,$id_persona, $id_concepto){        
         if($tipo_documento=="79"){  //RUC
             $cad = "
-            select  sum(monto) as monto
-            from valorizaciones                       
-            where id_empresa = ".$id_persona."                              
-                and (case when fecha < now() then '1' else '0' end) ilike '1'
-                and id_concepto in (26412, 26411)
-                and estado = '1'            
-                and pagado = '0'
+            select  sum(v.monto) as monto
+            from valorizaciones v
+            inner join conceptos c  on c.id = v.id_concepto                       
+            where v.id_empresa = ".$id_persona."                              
+                and (case when v.fecha < now() then '1' else '0' end) ilike '1'
+                --and id_concepto in (26412, 26411)
+                and c.codigo in ('00006', '00001')
+                and v.estado = '1'            
+                and v.pagado = '0'
 			";
         }else{
             $cad = "
-            select  sum(monto) as monto
-            from valorizaciones                       
-            where id_persona = ".$id_persona."                              
-                and (case when fecha < now() then '1' else '0' end) ilike '1'
-                and id_concepto in (26412, 26411)
-                and estado = '1'            
-                and pagado = '0'
+            select  sum(v.monto) as monto
+            from valorizaciones v
+             inner join conceptos c  on c.id = v.id_concepto                       
+            where v.id_persona = ".$id_persona."                              
+                and (case when v.fecha < now() then '1' else '0' end) ilike '1'
+                --and id_concepto in (26412, 26411)
+                and c.codigo in ('00006', '00001')
+                and v.estado = '1'            
+                and v.pagado = '0'
 			";
         }
 

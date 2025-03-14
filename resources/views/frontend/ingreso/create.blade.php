@@ -70,6 +70,18 @@
         /* CSS */
         width: 100%;
     }
+
+    /* Estilo para el select múltiple */
+.form-control-sm {
+    height: auto; /* Ajusta la altura automáticamente */
+    padding: 5px;
+}
+
+/* Estilo para el checkbox y label */
+#cbox2, #lblFrac {
+    margin-top: 10px;
+}
+
 </style>
 @stack('before-scripts')
 @stack('after-scripts')
@@ -272,6 +284,9 @@
                                                     <input type="hidden" readonly name="id_concepto_sel" id="id_concepto_sel" value="" class="form-control form-control-sm">
 
                                                     <input type="hidden" readonly name="DescuentoPP" id="DescuentoPP" value="" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="texto_detalle" id="texto_detalle" value="" class="form-control form-control-sm">
+                                                    <input type="hidden" readonly name="cantidad_descuento" id="cantidad_descuento" value="" class="form-control form-control-sm">
+
 
                                                     <input type="hidden" readonly name="id_pronto_pago" id="id_pronto_pago" value="<?php echo !empty($pronto_pago->id) ? $pronto_pago->id : '0'  ?>" class="form-control form-control-sm">
                                                     <input type="hidden" readonly name="periodo_pp" id="periodo_pp" value="<?php echo !empty($pronto_pago->periodo) ? $pronto_pago->periodo : '0'  ?>" class="form-control form-control-sm">
@@ -502,6 +517,7 @@
 
 
 
+
                                             <div class="col-lg-5 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
                                                     
@@ -510,15 +526,21 @@
                                                     <input type="checkbox" id="cbox2" value="1" style="display:none" onchange="cargarValorizacion()"/>
                                                     <label for="cbox2" id="lblFrac" style="display:none">Incluir Fraccionamiento y Cuota Gremial Vencido</label>
 
-                                                    
-                                                    
-                                                    <!--
-                                                    <select class="form-control form-control-sm" id="cboTipoConcepto_b" data-placeholder="Seleccionar Concepto" onchange="cargarValorizacion()" multiple >
-                                                    -->
-
                                                     </select>
                                                 </div>
                                             </div>
+
+<!--                                                    
+                                            <div class="col-lg-5 col-md-3 col-sm-12 col-xs-12">
+                                                <div class="form-group form-group-sm">
+                                                    <select id="cboTipoConcepto_b" name="cboTipoConcepto_b" class="form-control form-control-sm" multiple onchange="cargarValorizacion()">
+                                                    </select>
+
+                                                    <input type="checkbox" id="cbox2" value="1" style="display:none" onchange="cargarValorizacion()"/>
+                                                    <label for="cbox2" id="lblFrac" style="display:none">Incluir Fraccionamiento y <br> Cuota Gremial Vencido</label>
+                                                </div>
+                                            </div>
+                                                    -->
 
                                             <div class="col-lg-1 col-md-3 col-sm-12 col-xs-12">
                                                 <div class="form-group form-group-sm">
@@ -631,8 +653,10 @@
                                                     <input class="btn btn-danger pull-rigth" value="ANULAR VAL" type="button" id="btnAnulaVal" disabled="disabled" onclick="anular_valorizacion()" />
                                                 
                                                     <input class="btn btn-warning pull-right" value="PRONTO PAGO" type="button" id="btnDescuento" disabled="disabled" onclick="AplicarDescuento()" />
-
+<!--
                                                     <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="modal_fraccionamiento()" />
+                                                    -->
+                                                    <input class="btn btn-primary pull-rigth" value="FRACCIONAR" type="button" id="btnFracciona" disabled="disabled" onclick="enviarTipo(8)" />
 
                                                     <input style="display:none" class="btn btn-danger pull-rigth" value="ANULAR FRAC" type="button" id="btnAnulaFrac" disabled="disabled" onclick="anular_fraccionamiento()" />
                                                 </div>
@@ -766,7 +790,8 @@
 
 @push('after-scripts')
 <script type="text/javascript">
-    var id_caja_usuario = "<?php echo ($caja_usuario) ? $caja_usuario->id_caja : 0 ?>";
+    var id_caja_usuario = "<?php echo ($caja_usuario)?$caja_usuario->id_caja:0?>";
+    
     //alert(id_caja_usuario);
 
     function auto_height(elem) {

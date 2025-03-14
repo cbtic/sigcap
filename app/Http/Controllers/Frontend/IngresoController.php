@@ -46,6 +46,7 @@ class IngresoController extends Controller
 
         $caja = $caja_model->getCaja('91');
         $caja_usuario = $caja_ingreso_model->getCajaIngresoByusuario($id_user,'91');
+        
         $tipo_documento = $caja_model->getMaestroByTipo(16);
 
         //$date = (new DateTime)->format("Y");
@@ -53,8 +54,9 @@ class IngresoController extends Controller
 
 
         $pronto_pago = ProntoPago::where("estado","1")->where("periodo",$anio_actual)->first();                
-        //$concepto = Concepto::where("id","26411")->first(); //CUOTA GREMIAL
-        $concepto = Concepto::where("codigo","00006")->where("estado","1")->where("periodo",$anio_actual)->first(); 
+        $concepto = Concepto::where("id","26411")->first(); //CUOTA GREMIAL
+       // $concepto = Concepto::where("codigo","00006")->where("estado","1")->where("periodo",$anio_actual)->first(); 
+
 
         
         $mes = [
@@ -159,7 +161,8 @@ class IngresoController extends Controller
         $tipo_documento = $request->tipo_documento;
         if($tipo_documento=="79")$id_persona = $request->empresa_id;
         $valorizaciones_model = new Valorizacione;
-        $resultado = $valorizaciones_model->getValidaValorizacion($tipo_documento,$id_persona);
+        $concepto = $request->cboTipoConcepto_b;
+        $resultado = $valorizaciones_model->getValidaValorizacion($tipo_documento,$id_persona,$concepto);
 
         echo json_encode($resultado);
 
@@ -392,14 +395,10 @@ class IngresoController extends Controller
 
         //print_r($comprobanted); exit();
 
-        if ($id_concepto=="")$id_concepto=26411;
-
-        $concepto = Concepto::find($id_concepto);
-
-        
-
+        //if ($id_concepto=="")$id_concepto=26411;
         //$concepto = Concepto::find(26411);
 
+        $concepto = Concepto::where("codigo","00006")->first();
         
         
         //$comprobanted = json_encode($comprobanted_);

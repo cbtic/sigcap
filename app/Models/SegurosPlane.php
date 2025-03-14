@@ -58,7 +58,7 @@ class SegurosPlane extends Model
         $cad = "select sp.id id_plan,extract(year from Age(p.fecha_nacimiento))edad,p.id_sexo 
 from  agremiados a
 inner join personas p on a.id_persona=p.id 
-inner join seguros_planes sp on sp.id=(select id from seguros_planes where id_seguro=".$id_seguro." and id_parentesco=119 and extract(year from Age(p.fecha_nacimiento)) between edad_minima and edad_maxima limit 1) 
+inner join seguros_planes sp on sp.id=(select id from seguros_planes where id_seguro=".$id_seguro." and id_parentesco in('119','121') and extract(year from Age(p.fecha_nacimiento)) between edad_minima and edad_maxima limit 1) 
 where a.id=".$id_agremiado;
     	//echo $cad;
 		$data = DB::select($cad);

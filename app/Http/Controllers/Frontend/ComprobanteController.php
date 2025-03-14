@@ -11,6 +11,7 @@ use App\Models\TablaMaestra;
 use App\Models\Valorizacione;
 use App\Models\Persona;
 use App\Models\Guia;
+use App\Models\Concepto;
 
 use App\Models\Agremiado;
 use App\Models\ComprobantePago;
@@ -222,19 +223,22 @@ class ComprobanteController extends Controller
                     "chek" => 1, 
                     "id" => 0, 
                     "fecha" => date('d/m/Y'), 
-                    "denominacion" => "PAGO CUOTA GREMIAL PRONTOPAGO ENE-2025 - DIC 2025",
+                    "denominacion" =>  $request->texto_detalle, //"PAGO CUOTA GREMIAL PRONTOPAGO ENE-2025 - DIC 2025",
                     "monto" => $stotal,
-                    "pu" =>$deudaTotal/12, 
-                    "igv" => $igv, 
-                    "pv" =>  $total, 
-                    "total" => $total, 
+                    "pu" =>$deudaTotal/$request->cantidad_descuento, 
+                    "igv" => 0, 
+                    "pv" =>  $deudaTotal/$request->cantidad_descuento, 
+                    "vv" =>  $stotal, 
+                    "total" => $total,
+                    "valor_venta_bruto" => $deudaTotal,
+                    "valor_venta" => $stotal,
                     "moneda" => "SOLES", 
                     "id_moneda" => 1, 
                     "abreviatura" => "SOLES", 
-                    "cantidad" => 12, 
+                    "cantidad" => $request->cantidad_descuento, 
                     "descuento" => $request->totalDescuento,
                     "cod_contable" =>"", 
-                    "descripcion" => 'PAGO CUOTA GREMIAL PRONTOPAGO ENE-2025 - DIC 2025', 
+                    "descripcion" =>  $request->texto_detalle, //'PAGO CUOTA GREMIAL PRONTOPAGO ENE-2025 - DIC 2025', 
                     "vencio" => 0, 
                     "id_concepto" => $request->id_concepto_pp,
                     "item" => 1, 
@@ -322,6 +326,7 @@ class ComprobanteController extends Controller
             //print_r($nc); exit();
 
             return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago','nc'));
+            
         }
         if ($trans == 'FN'){
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
@@ -663,7 +668,7 @@ class ComprobanteController extends Controller
             
             if ($id_persona2!='') {
                 $id_persona_act = $id_persona2;
-                //$id_persona='';
+                $id_persona='';
                 
             }else{
                 $id_persona_act = $id_persona;
@@ -672,7 +677,7 @@ class ComprobanteController extends Controller
 
             if ($ubicacion_id2!=''){
                 $id_ubicacion_act = $ubicacion_id2;
-                //$ubicacion_id='';
+                $ubicacion_id='';
 
             }else{
                 $id_ubicacion_act = $ubicacion_id;
@@ -836,7 +841,7 @@ class ComprobanteController extends Controller
                 $total_pagar = $request->total_pagar;
                 //print_r("total_pagar="); 
                 //print_r($total_pagar); 
-                if ($total_pagar!="0"){                         
+                if ($total_pagar!="0" && $total_pagar!=""){                           
                     $total_pagar = $request->total_pagar;
                     $total_g = $request->totalF;
                     $total_redondeo = $total_pagar - $total_g;
@@ -852,7 +857,8 @@ class ComprobanteController extends Controller
                 //print_r("total_pagar_abono="); 
                 //print_r($total_pagar_abono); 
 
-                if ($total_pagar_abono!="0"){                         
+                if ($total_pagar_abono!="0" && $total_pagar_abono!=""){ 
+
                     $total_pagar_abono = $request->total_pagar_abono;
                     $total_g = $request->totalF;
                     $total_abono= $total_pagar_abono - $total_g;
@@ -891,8 +897,6 @@ class ComprobanteController extends Controller
 				if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
 
 
-
-                
                 if($total>700 and $tipoF=='FT' ) {
                     $factura_upd->porc_detrac = $request->porcentaje_detraccion;
                     $factura_upd->monto_detrac = $request->monto_detraccion;
@@ -950,25 +954,32 @@ class ComprobanteController extends Controller
                 */
                 
 
+
+                $fecha_hoy = date('Y-m-d');
     
-                if ($total_pagar!="0"){
+                if ($total_pagar!="0" && $total_pagar!=""){
                     $total_pagar = $request->total_pagar;
                     $total_g = $request->totalF;
                     $total_redondeo = $total_pagar - $total_g;
-                    $fecha_hoy = date('Y-m-d');
+                    //$fecha_hoy = date('Y-m-d');
 
                     $items1 = array(
-                        "id" => 1081517, 
+                        "id" => 0, 
                         "fecha" => $fecha_hoy,
                         "denominacion" => "REDONDEO",
+                        "codigo_producto" => "",
                         "descripcion" => "REDONDEO",
                         "monto" => round($total_redondeo,2),
                         "moneda" => "SOLES" ,
+                        "abreviatura" => "NIU" ,
                         "id_moneda" => 1 ,
                         "descuento" => 0 ,
                         "cod_contable" => "",
                         "id_concepto" => 26464 ,
+                        "pu" => round($total_redondeo,2),
                         "igv" => 0 ,
+                        "pv" =>  0,
+                        "vv" =>  0, 
                         "cantidad" => 1, 
                         "total" => round($total_redondeo,2), 
                         "item" => 999 ,
@@ -977,24 +988,29 @@ class ComprobanteController extends Controller
                     $tarifa[999]=$items1;
                 }
 
-                if ($total_abono!="0"){
+                if ($total_abono!="0" && $total_abono!=""){
                     $total_pagar_abono = $request->total_pagar_abono;
                     $total_g = $request->totalF;
                     $total_abono = $total_pagar_abono - $total_g;
-                    $fecha_hoy = date('Y-m-d');
+                    //$fecha_hoy = date('Y-m-d');
 
                     $items1 = array(
-                        "id" => 1081517, 
+                        "id" => 0, 
                         "fecha" => $fecha_hoy,
                         "denominacion" => "REDONDEO",
+                        "codigo_producto" => "",
                         "descripcion" => "REDONDEO",
                         "monto" => round($total_abono,2),
                         "moneda" => "SOLES" ,
                         "id_moneda" => 1 ,
+                        "abreviatura" => "NIU" ,
                         "descuento" => 0 ,
                         "cod_contable" => "",
                         "id_concepto" => 26464 ,
+                        "pu" => round($total_abono,2),
                         "igv" => 0 ,
+                        "pv" =>  0,
+                        "vv" =>  0, 
                         "cantidad" => 1, 
                         "total" => round($total_abono,2), 
                         "item" => 999 ,
@@ -1010,12 +1026,27 @@ class ComprobanteController extends Controller
 						$total   = $request->MonAd;
 					}
 					else{
-						$total   = $value['monto'];
+						$total = $value['monto'];
+                        $pu_   = $value['pu'];
 					}
 					$descuento = $value['descuento'];
 					if ($value['descuento']=='') $descuento = 0;
-					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $total, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda,0);
-					
+					$id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $pu_, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda, 0);
+
+                    if($value['id_concepto']!='26464'){
+                        $facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
+                        
+                        $facturaDet_upd->pu=$value['pu'];
+                        $facturaDet_upd->importe=$value['total'];                
+                        $facturaDet_upd->igv_total=$value['igv'];
+                        $facturaDet_upd->precio_venta=$value['pv'];
+                        $facturaDet_upd->valor_venta_bruto=$value['valor_venta_bruto'];
+                        $facturaDet_upd->valor_venta=$value['valor_venta'];
+                       // $facturaDet_upd->codigo=$value['codigo_producto'];
+                        $facturaDet_upd->unidad=$value['abreviatura'];
+                        $facturaDet_upd->save();  
+
+                    }
                     
                     //(  serie,      numero,   tipo,      ubicacion,               persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
 					
@@ -1038,7 +1069,7 @@ class ComprobanteController extends Controller
 
                     $id_concepto = $value['id_concepto'];
 
-                    if ($id_concepto=='26474' || $id_concepto=='26483'){
+                    if ($id_concepto=='26474' || $id_concepto=='26483'){ //DERECHO DE REVISION COMISIONES REVISORAS  Y  DERECHO DE REVISION HABILITACIONES URBANAS DE OBRA
     
                         $valorizaciones_model = new Valorizacione; 
     
@@ -1106,8 +1137,13 @@ class ComprobanteController extends Controller
                 }  
 */
 
+            
+            $Concepto = Concepto::where('id', $id_concepto)->get()[0];
+            $codigo_concepto = $Concepto->codigo;
+            
 
-            if ($id_concepto == 26527 || $id_concepto == 26412 ) {                
+            //if ($id_concepto == 26527 || $id_concepto == 26412 ) {     // FRACCIONAMIENTO Y REFRACCIONAMIENTO           
+            if ($codigo_concepto == '00001' || $codigo_concepto == '00062' ) {     // FRACCIONAMIENTO Y REFRACCIONAMIENTO           
                 $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
                 $agremiado->id_situacion = "73";
                 $agremiado->save();
@@ -1121,9 +1157,8 @@ class ComprobanteController extends Controller
             $ubicacion_id = $request->ubicacion;
 
 
-
-            if ($id_concepto == 26411) {
-
+            //if ($id_concepto == 26411) {  // CUOTA GREMIAL
+            if ($codigo_concepto == '00006') {  // CUOTA GREMIAL
                 $id_persona = $request->persona;
                 $valorizaciones_model = new Valorizacione;
                 $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
@@ -1652,7 +1687,6 @@ class ComprobanteController extends Controller
                 
                 }  
 */
-
 
             if ($id_concepto == 26527 || $id_concepto == 26412 ) {
                 $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
@@ -2623,7 +2657,7 @@ class ComprobanteController extends Controller
 		$data["sumatoriaIGV"] = str_replace(",","",number_format($factura->impuesto,2)); //"22.88";
 		$data["sumatoriaISC"] = "0.00";
 		$data["ubigeoEmisor"] = "150139";
-		$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
+		//$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
 		$data["tipoDocumento"] = $this->getTipoDocumento($factura->tipo);
 		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
 		$data["distritoEmisor"] = "LIMA";

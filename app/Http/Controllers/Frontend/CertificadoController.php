@@ -940,6 +940,14 @@ class CertificadoController extends Controller
 
 	public function record_proyectos_pdf($id){
 
+		//ini_set('memory_limit', '4400M');
+
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', '1200');
+
 		$certificado_model = new Certificado();
 
 		$datos=$certificado_model->datos_agremiado_certificado($id);
