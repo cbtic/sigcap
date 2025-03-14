@@ -668,7 +668,7 @@ class ComprobanteController extends Controller
             
             if ($id_persona2!='') {
                 $id_persona_act = $id_persona2;
-                $id_persona='';
+                $id_persona='0';
                 
             }else{
                 $id_persona_act = $id_persona;
@@ -677,7 +677,7 @@ class ComprobanteController extends Controller
 
             if ($ubicacion_id2!=''){
                 $id_ubicacion_act = $ubicacion_id2;
-                $ubicacion_id='';
+                $ubicacion_id='0';
 
             }else{
                 $id_ubicacion_act = $ubicacion_id;
@@ -881,12 +881,16 @@ class ComprobanteController extends Controller
                 echo("id_persona2:".$id_persona2);
                 
                 exit();
-                */
+*/
+                if($ubicacion_id=='0')$ubicacion_id=$ubicacion_id2;
+
+                
+                
                 
 				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona_act, round($total,2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda, $id_nc);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
 
-                
+                                                                     //exit();
 
 				$factura = Comprobante::where('id', $id_factura)->get()[0];
             

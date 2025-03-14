@@ -131,11 +131,22 @@
 
 
 	$(document).ready(function() {
+		
+		//$dni = $('#id_numero_documento').val();
 
-		if ($id_tipo_documento == "78") {
+	
+		$tipo =  $('#id_tipo_documento').val();
+		
+
+		//alert(tipo);
+
+		if ($tipo == "78") {
 			validaDni();
 
 		} else {
+			$dni = $('#numero_documento').val();
+
+			$('#numero_documento_1').val($dni);
 			$('#apellido_paterno').attr('readonly', false);
 			$('#apellido_materno').attr('readonly', false);
 			$('#nombres').attr('readonly', false);
@@ -243,6 +254,13 @@
 
 								<input type="hidden" name="id" id="id" value="0">
 
+								<input type="hidden" name="id_tipo_documento" id="id_tipo_documento" value="<?php echo $id_tipo_documento ?>">
+							
+								<input type="hidden"  name="id_numero_documento" id="id_numero_documento" value="<?php echo $numero_documento ?>" class="form-control form-control-sm">
+								
+
+								
+
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:0px;margin-bottom:0px">
@@ -263,7 +281,10 @@
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="form-group" style="padding-top:0px;padding-bottom:0px;margin-top:10px;margin-bottom:0px">
-											<input id="numero_documento" name="numero_documento" class="form-control form-control-sm" placeholder="Número Documento" onblur="validaDni()" value="<?php echo $numero_documento ?>" type="text" readonly>
+											<!--
+											<input id="numero_documento" name="numero_documento" class="form-control form-control-sm" placeholder="Número Documento" onblur="validaDni()" value="<?//php echo $numero_documento ?>" type="text" readonly>
+											-->
+											<input id="numero_documento_1" name="numero_documento_1" class="form-control form-control-sm" placeholder="Número Documento"  value="" type="text" readonly>
 										</div>
 									</div>
 								</div>
@@ -341,10 +362,14 @@
 	<script type="text/javascript">
 		function validaDni() {
 
-			dni = $('#numero_documento').val();
+			$dni = $('#numero_documento').val();
 
+			//$dni = $('#numero_documento_1').val();
+			//alert($dni);
+
+			
 			var settings = {
-				"url": "https://apiperu.dev/api/dni/" + dni,
+				"url": "https://apiperu.dev/api/dni/" + $dni,
 				"method": "GET",
 				"timeout": 0,
 				"headers": {
@@ -358,7 +383,8 @@
 				if (response.success == true) {
 
 					var data = response.data;
-
+					//print_r(data);
+					$('#numero_documento_1').val('');
 					$('#apellido_paterno').val('')
 					$('#apellido_materno').val('')
 					$('#nombres').val('')
@@ -367,6 +393,7 @@
 					//$('#telefono_').val('')
 					//$('#email_').val('')
 
+					$('#numero_documento_1').val(data.numero);
 					$('#apellido_paterno').val(data.apellido_paterno);
 					$('#apellido_materno').val(data.apellido_materno);
 					$('#nombres').val(data.nombres);
@@ -374,6 +401,7 @@
 					//alert(data.nombre_o_razon_social);
 
 				} else {
+					$('#numero_documento_1').val($dni);
 					bootbox.alert("DNI Invalido,... revise el DNI digitado ¡");
 					return false;
 				}
@@ -384,7 +412,7 @@
 		function validaTipoDocumento() {
 			var tipo_documento = $("#tipo_documento").val();
 
-			$('#numero_documento').val("");
+			//$('#numero_documento').val("");
 			$('#apellido_paterno').val("");
 			$('#apellido_materno').val("");
 			$('#nombres').val("");
