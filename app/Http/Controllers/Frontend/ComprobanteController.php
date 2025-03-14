@@ -14,6 +14,7 @@ use App\Models\Guia;
 use App\Models\Concepto;
 
 use App\Models\Agremiado;
+use App\Models\AgremiadoCuota;
 use App\Models\ComprobantePago;
 
 use App\Models\ComprobanteCuotaPago;
@@ -1084,7 +1085,8 @@ class ComprobanteController extends Controller
                     
                 } 
 
-
+                $Concepto = Concepto::where('id', $id_concepto)->get()[0];
+                $codigo_concepto = $Concepto->codigo;
 
 
 
@@ -1109,18 +1111,36 @@ class ComprobanteController extends Controller
                         
                         $valoriza_upd = Valorizacione::find($id_val);
 
-                       
+                        $pk_registro = $valoriza_upd->pk_registro;
+
 
                         $valoriza_upd->id_comprobante = $id_factura;
                         $valoriza_upd->pagado = "1";
 
+                        //$valoriza_upd->valor_unitario = $value['monto'];
                         $valoriza_upd->valor_unitario = $value['monto'];
+                        $valoriza_upd->monto = $value['monto'];
+
                         $valoriza_upd->cantidad = $value['cantidad'];    
 
 
                         if ($descuentopp =="S")$valoriza_upd->id_pronto_pago = $id_pronto_pago;
 
                         $valoriza_upd->save();
+
+                       
+
+                        if ($codigo_concepto == '00006'){
+
+                            $agremiado_cuota_upd = AgremiadoCuota::find($pk_registro);
+
+                            $agremiado_cuota_upd->id_situacion = "62";
+
+                            $agremiado_cuota_upd->save();
+
+                        }
+
+                        
                         
                     } 
 
@@ -1142,8 +1162,7 @@ class ComprobanteController extends Controller
 */
 
             
-            $Concepto = Concepto::where('id', $id_concepto)->get()[0];
-            $codigo_concepto = $Concepto->codigo;
+
             
 
             //if ($id_concepto == 26527 || $id_concepto == 26412 ) {     // FRACCIONAMIENTO Y REFRACCIONAMIENTO           
