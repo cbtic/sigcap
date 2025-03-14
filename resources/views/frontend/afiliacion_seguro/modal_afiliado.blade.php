@@ -202,11 +202,17 @@ $.mask.definitions['p'] = "[Mm]";
 				fecha: fecha,
 				observaciones: observaciones
 			},
-			//dataType: 'json',
+			dataType: 'json',
 			success: function(result) {
-				$('#openOverlayOpc').modal('hide');
-				//window.location.reload();
-				datatablenew();
+				var msg = result.msg;
+				if(msg!=""){
+					bootbox.alert(msg);
+					return false;
+				}
+				if(msg==""){
+					$('#openOverlayOpc').modal('hide');
+					datatablenew();
+				}
 
 			}
 		});

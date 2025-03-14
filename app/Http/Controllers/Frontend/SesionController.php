@@ -1367,6 +1367,10 @@ class SesionController extends Controller
 	
 		//var_dump($fecha_ejecucion);exit();
 
+		$comisionSesion = ComisionSesione::find($id_sesion);
+		$comisionSesion->fecha_ejecucion = $fecha_ejecucion;
+		$comisionSesion->save();
+		
 		$sesion_model = new ComisionSesione;
 
 		$data = [];
