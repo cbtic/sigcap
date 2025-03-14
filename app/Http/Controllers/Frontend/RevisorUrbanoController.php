@@ -39,7 +39,7 @@ class RevisorUrbanoController extends Controller
         $tipo_documento = $tablaMaestra_model->getMaestroByTipo(110);
         $ubicacion_cliente = $tablaMaestra_model->getMaestroByTipo(63);
         $situacion_cliente = $tablaMaestra_model->getMaestroByTipo(14);
-		$situacion_venta = $tablaMaestra_model->getMaestroByTipo(92);
+		$situacion_venta = $tablaMaestra_model->getMaestroByTipo(11);
 
         return view('frontend.revisorUrbano.all',compact('agremiado','persona','tipo_documento','region','ubicacion_cliente','situacion_cliente','situacion_venta'));
     }

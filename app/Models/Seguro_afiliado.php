@@ -37,8 +37,10 @@ class Seguro_afiliado extends Model
         inner join seguros s on sp.id_seguro = s.id
         inner join conceptos c on s.id_concepto::int = c.id 
         inner join tabla_maestras tm2 on c.id_moneda = tm2.codigo::int and  tm2.tipo ='1'
-        Where  ap.id_agremiado = " .$id_agremiado. "
+        Where  ap.id_agremiado = " .$id_agremiado. " 
+        and (select fecha from seguro_afiliados sa where id=".$id_afiliacion.") between sp.fecha_inicio and sp.fecha_fin 
         Order By id_familia ";
+        
     	//echo $cad;
 		$data = DB::select($cad);
         return $data;
