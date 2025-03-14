@@ -48,7 +48,7 @@ class Comprobante extends Model
        
     }
 
-    public function registrar_comprobante_ncnd($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$razon_social,$direccion,$id_comprobante_origen,$correo,$id_afecta,$tiponota,  $motivo,$afecta_ingreso,$devolucion_nc) {
+    public function registrar_comprobante_ncnd($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$razon_social,$direccion,$id_comprobante_origen,$correo,$id_afecta,$tiponota,  $motivo,$afecta_ingreso,$devolucion_nc,$id_concepto,$item,$cantidad) {
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
        //print_r($serie ." numero". $numero." tipo". $tipo." ubicacion". $cod_tributario."persona ". $cod_tributario.
          //           " total". $total."descripcion ". $descripcion." ". $cod_contable." ". $id_v." ". $id_caja." ". $descuento.
@@ -58,14 +58,14 @@ class Comprobante extends Model
                                                 ?,?,?,?,?,
                                                 ?,?,?,?,?,
                                                 ?,?,?,?,?,
-                                                ?,?)";
+                                                ?,?,?,?,?)";
         //echo "Select sp_crud_factura(".$serie.",".$numero.", ".$tipo.", ".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$codigo_v.",".$estab_v.",".$modulo.",".$smodulo.",".$descuento.",".$accion.",".$id_user.")";
        
         $data = DB::select($cad, array($serie, $numero, $tipo, $cod_tributario, $total, 
                                        $descripcion, $cod_contable, $id_comprobante_origen, $id_caja, $descuento, 
                                        $accion,     $id_user,  $id_moneda, $razon_social, $direccion,
                                        $id_comprobante_origen,$correo,$id_afecta,$tiponota,  $motivo,
-                                       $afecta_ingreso,$devolucion_nc));
+                                       $afecta_ingreso,$devolucion_nc,$id_concepto,$item,$cantidad));
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
         //print_r($data );exit();
        
@@ -164,39 +164,14 @@ class Comprobante extends Model
 
     function getDatosByComprobante($id){
 
-        $cad = "select distinct u.name as usuario,a.numero_cap,v.id_persona  
-        from comprobantes c
-        inner join valorizaciones v on v.id_comprobante = c.id
-        left join agremiados a on a.id = v.id_agremido
-        inner join users u on c.id_usuario_inserta =u.id 
+        $cad = "select distinct u.name as usuario,a.numero_cap,a.id_persona  
+                from comprobantes c
+                left join personas p on p.id =c.id_persona 
+                left join agremiados a on a.id_persona = p.id 
+                inner join users u on c.id_usuario_inserta =u.id  
                 where c.id='". $id . "'" ;
 
-		$data = DB::select($cad);
-
-        if ( empty($data)){
-            $cad = "select distinct u.name as usuario,a.numero_cap,a.id_persona  
-                    from comprobantes c
-                    inner join personas p on c.cod_tributario =p.numero_documento 
-                    inner join agremiados a on a.id_persona = p.id  
-                    inner join users u on c.id_usuario_inserta =u.id 
-                    where c.id='". $id . "'" ;
-
-            $data = DB::select($cad);
-            
-        }
-
-        if ( empty($data)){
-            $cad = "select distinct u.name as usuario,a.numero_cap,a.id_persona  
-                    from comprobantes c
-                    left join personas p on c.cod_tributario =p.numero_ruc 
-                    left join agremiados a on a.id_persona = p.id  
-                    inner join users u on c.id_usuario_inserta =u.id 
-                    where c.id='". $id . "'" ;
-
-            $data = DB::select($cad);
-            
-        }
-       
+		$data = DB::select($cad);   
 
         if(isset($data[0]))return $data[0];
     }
