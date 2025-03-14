@@ -769,6 +769,8 @@ class PersonaController extends Controller
 	
 		$persona->save();
 
+		echo $persona;
+
 		/*$persona = Persona::where("numero_documento",$request->numero_documento)->where("estado","1")->first();
         $empresa = Empresa::where("ruc",$request->ruc)->where("estado","1")->first();
 

@@ -14,11 +14,16 @@
 		height: 250px;
 	}
 
+	.modal-persona .modal-dialog {
+		width: 100%;
+		max-width:30%!important
+	}
 
-	.modal-dialog {
+
+	/*.modal-dialog {
 		width: 100%;
 		max-width: 25% !important
-	}
+	}*/
 
 	#tablemodal {
 		border-spacing: 0;
@@ -253,10 +258,16 @@
 					bootbox.alert(result.msg);
 				}
 				*/
+				//alert(result);
+				$('#openOverlayOpc2').modal('hide');
 
-				$('#openOverlayOpc').modal('hide');
+				var numeroGuardado = localStorage.getItem('numeroBeneficiario');
+
+				obtener_profesional_(numeroGuardado);
+
+				localStorage.removeItem('numeroBeneficiario');
+				
 				//window.location.reload();
-
 
 				//datatablenew();
 			}

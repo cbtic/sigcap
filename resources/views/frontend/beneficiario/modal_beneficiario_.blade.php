@@ -15,6 +15,14 @@
     max-width: 70% !important
   }
 
+  .modal-persona .modal-dialog {
+    width: 30% !important;
+}
+
+  .modal-persona .modal-body {
+      height: auto !important;
+  }
+
   #tablemodal {
     border-spacing: 0;
     display: flex;
@@ -468,7 +476,6 @@ $.ajax({
 
 }
 
-
 function obtener_profesional_($i){
 	
   var numero_ = $i;
@@ -727,11 +734,12 @@ function modal_personaNuevoBeneficiario($dni,$i){
 
   $('#dni_').val(dni);
 
+  localStorage.setItem('numeroBeneficiario', numero_);
   
   //alert(dni);exit();
 	$(".modal-dialog").css("width","85%");
-	$('#openOverlayOpc').modal('show');
-	$('#openOverlayOpc .modal-body').css('height', 'auto');
+	$('#openOverlayOpc2').modal('show');
+	$('#openOverlayOpc2 .modal-body').css('height', 'auto');
 
 	$.ajax({
 			url: "/persona/modal_personaNuevoBeneficiario",
@@ -739,7 +747,7 @@ function modal_personaNuevoBeneficiario($dni,$i){
 			data : $("#frmEmpresaBeneficiario").serialize(),
 			success: function (result) {  
 					
-          $("#diveditpregOpc").html(result);
+          $("#diveditpregOpc2").html(result);
 
           
 					//$('#openOverlayOpc').modal('show');
@@ -1005,6 +1013,22 @@ function obtenerNumeroDocumento(){
         </section>
       </div>
 
+      <div id="openOverlayOpc2" class="modal fade modal-persona" tabindex="-1" role="dialog">
+    <div class="modal-dialog" >
+
+    <div id="id_content_OverlayoneOpc" class="modal-content" style="padding: 0px;margin: 0px">
+
+        <div class="modal-body" style="padding: 0px;margin: 0px">
+
+            <div id="diveditpregOpc2"></div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+</div>
 <script type="text/javascript">
 
 $(document).ready(function () {

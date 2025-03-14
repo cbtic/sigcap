@@ -165,16 +165,16 @@
 				?>
 				<tr>
 					<td style="border:1px solid #A4A4A4;width:40px;text-align:center"><?php echo ($key+1)?></td>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->tipo?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo date('d-m-Y', strtotime($r->fecha));?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->credipago?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->propietario?></td>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->nombreproyecto?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $r->distrito?></td>
-                    <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right"><?php echo $r->area_total !== null ? number_format($r->area_total,2,'.',',') : '-';?></td>
-                    <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right"><?php echo $r->total_area_techada_m2 !== null ? number_format($r->total_area_techada_m2,2,'.',',') : '-';?></td>
-                    <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right"><?php echo $r->area_remodelada?></td>
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->tipo_profesional!== 'NULL' ? $r->tipo_profesional : ''; ?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size:7px"><?php echo $r->tipo?></td>
+					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size:7px"><?php echo date('d-m-Y', strtotime($r->fecha));?></td>
+					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important; font-size:7px"><?php echo $r->credipago?></td>
+					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important; font-size:7px"><?php echo $r->propietario?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size:7px"><?php echo $r->nombreproyecto?></td>
+					<td class="td_left" style="border:1px solid #A4A4A4;padding-right:10px!important; font-size:7px"><?php echo $r->distrito?></td>
+                    <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right; font-size:7px"><?php echo $r->area_total !== null ? number_format($r->area_total,2,'.',',') : '-';?></td>
+                    <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right; font-size:7px"><?php echo $r->total_area_techada_m2 !== null ? number_format($r->total_area_techada_m2,2,'.',',') : '-';?></td>
+                    <td class="" style="border:1px solid #A4A4A4;padding-left:5px!important;text-align:right; font-size:7px"><?php echo $r->area_remodelada?></td>
+                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size:7px"><?php echo $r->tipo_profesional!== 'NULL' ? $r->tipo_profesional : ''; ?></td>
 
                     <?php 
                     
@@ -190,10 +190,10 @@
 				?>
                 <tr>
                     <!--<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"></td>-->
-                    <td colspan="7"  class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 11px"><b>TOTAL</b></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 10px"><b><?php echo number_format($total_area_total,2,'.',',') ?></b></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 10px"><b><?php echo number_format($total_area_techada,2,'.',',') ?></b></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 10px"><b><?php echo number_format($total_area_remodelada,2,'.',',') ?></b></td>
+                    <td colspan="7"  class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 7px"><b>TOTAL</b></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 7px"><b><?php echo number_format($total_area_total,2,'.',',') ?></b></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 7px"><b><?php echo number_format($total_area_techada,2,'.',',') ?></b></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important; font-size: 7px"><b><?php echo number_format($total_area_remodelada,2,'.',',') ?></b></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"></td>
                 </tr>
 			</tbody>
