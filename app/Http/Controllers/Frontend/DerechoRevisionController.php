@@ -908,7 +908,7 @@ class DerechoRevisionController extends Controller
 				}*/
 			}
 		}else if($empresa && $request->ruc_propietario!=''){
-			$buscaEmpresaRucPropietario = Propietario::where("id_tipo_propietario", $request->id_tipo_documento)->where("id_empresa", $empresa->id)->where("estado", "1")->count();
+			$buscaEmpresaRucPropietario = Propietario::where("id_tipo_propietario", $request->id_tipo_documento)->where("id_empresa", $empresa->id)->where("id_solicitud",$request->id_solicitud)->where("estado", "1")->count();
 			if($buscaEmpresaRucPropietario>0){
 				$sw = false;
 				$msg = "El propietario ingresado ya existe en esta solicitud!!!";
@@ -925,7 +925,7 @@ class DerechoRevisionController extends Controller
 			}
 			
 		}else if($persona_carne_extranjeria && $request->carne_propietario!=''){
-			$buscaPersonaCarnePropietario = Propietario::where("id_tipo_propietario", $request->id_tipo_documento)->where("id_persona", $persona_carne_extranjeria->id)->where("estado", "1")->count();
+			$buscaPersonaCarnePropietario = Propietario::where("id_tipo_propietario", $request->id_tipo_documento)->where("id_persona", $persona_carne_extranjeria->id)->where("id_solicitud",$request->id_solicitud)->where("estado", "1")->count();
 			if($buscaPersonaCarnePropietario>0){
 				$sw = false;
 				$msg = "El propietario ingresado ya existe !!!";
