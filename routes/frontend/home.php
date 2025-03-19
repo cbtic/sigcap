@@ -821,3 +821,13 @@ Route::get('comprobante/obtener_nc/{cod_tributario}', [ComprobanteController::cl
 Route::get('planilla/obtener_comisiones/{periodo}', [PlanillaDelegadoController::class, 'obtener_comisiones'])->name('planilla.obtener_comisiones');
 Route::get('coordinador_zonal/obtener_ultimo_mes', [CoordinadorZonalController::class, 'obtener_ultimo_mes'])->name('coordinador_zonal.obtener_ultimo_mes');
 Route::get('derecho_revision/create_solicitud', [DerechoRevisionController::class, 'create_solicitud'])->name('derecho_revision.create_solicitud');
+
+Route::get('ingreso/create_efectivo', [IngresoController::class, 'create_efectivo'])->name('ingreso.create_efectivo');
+Route::post('ingreso/listar_consulta_efectivo_ajax', [IngresoController::class, 'listar_consulta_efectivo_ajax'])->name('ingreso.listar_consulta_efectivo_ajax');
+Route::get('ingreso/modal_efectivo_nuevoEfectivo/{id}', [IngresoController::class, 'modal_efectivo_nuevoEfectivo'])->name('ingreso.modal_efectivo_nuevoEfectivo');
+Route::post('ingreso/send_efectivo_nuevoEfectivo', [IngresoController::class, 'send_efectivo_nuevoEfectivo'])->name('ingreso.send_efectivo_nuevoEfectivo');
+Route::get('ingreso/reporte_efectivo_caja_pdf/{fecha}/{caja}', [IngresoController::class, 'reporte_efectivo_caja_pdf'])->name('ingreso.reporte_efectivo_caja_pdf');
+
+
+
+
