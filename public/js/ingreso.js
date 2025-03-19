@@ -557,8 +557,8 @@ function calcular_total_otros(obj){
 		}else
 		{
 			$("#btnBoleta").prop('disabled', false);
-			
-			if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
+			$("#btnFactura").prop('disabled', false);
+			//if(ruc_p!= "") $("#btnFactura").prop('disabled', false);
 		}
 	}
 

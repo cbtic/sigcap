@@ -2669,8 +2669,8 @@ class ComprobanteController extends Controller
 		$data["esFicticio"] = false;
 		$data["keepNumber"] = "false";
 		$data["tipoCorreo"] = "1";
-        $data["formaPago"] = "CONTADO";        
-		$data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";
+        $data["formaPago"] = "CONTADO";        		
+        $data["tipoMoneda"] = ($factura->id_moneda=="2")?"USD":"PEN"; //"PEN";
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
 		$data["serieNumero"] = $factura->serie."-".$factura->numero; // "F001-000002";
@@ -2990,7 +2990,7 @@ class ComprobanteController extends Controller
 		$data["keepNumber"] = "false";
 		$data["tipoCorreo"] = "1";
        // $data["formaPago"] = "CONTADO";
-		$data["tipoMoneda"] = ($factura->id_moneda=="2")?"PEN":"USD"; //"PEN";
+		$data["tipoMoneda"] = ($factura->id_moneda=="2")?"PEN":"USD"; //"PEN";        
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
 		$data["serieNumero"] = $factura->serie."-".$factura->numero; // "F001-000002";
@@ -3048,11 +3048,11 @@ class ComprobanteController extends Controller
 
         //$data["direccionReceptor"] = $factura->direccion;
 
-       // print_r($data); exit();
+        //print_r($data); exit();
 
 		$databuild_string = json_encode($data);
        
-        //print_r($databuild_string);exit();
+        print_r($databuild_string);//exit();
 
 		//$chbuild = curl_init("https://easyfact.tk/see/rest/01");
         $chbuild = curl_init(config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo));
