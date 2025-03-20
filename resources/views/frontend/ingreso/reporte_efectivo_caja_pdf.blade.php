@@ -176,19 +176,25 @@ $(document).ready(function() {
                     <?php 
                     $total_soles=0;
                     $total_dolares=0;
-                    foreach($datos as $key=>$r) { ?>
+                    foreach($datos as $key=>$r) { 
+                        ?>
                         <tr>
                             <td class="td" style ="text-align: left; width: 5%; height:25px"><?php echo $r->denominacion;?></td>
+                            <?php if($r->moneda=="SOLES"){?>
                             <td class="td" style ="text-align: left; width: 5%; height:25px"><?php echo $r->cantidad;?></td>
                             <td class="td" style ="text-align: left; width: 10%; height:25px"><?php echo number_format($r->total,2,'.',',');?></td>
+                            <?php }else if($r->moneda=="DOLARES AMERICANOS"){?>
                             <td class="td" style ="text-align: left; width: 5%; height:25px"><?php echo $r->cantidad;?></td>
                             <td class="td" style ="text-align: left; width: 5%; height:25px"><?php echo number_format($r->total,2,'.',',');?></td>
+                            <?php }?>
                             <?php 
                             $total_soles+=$r->total;
                             $total_dolares+=$r->total;
                             ?>
                         </tr>
-                    <?php } ?>
+                    <?php 
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
