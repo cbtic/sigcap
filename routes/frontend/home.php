@@ -827,6 +827,7 @@ Route::post('ingreso/listar_consulta_efectivo_ajax', [IngresoController::class, 
 Route::get('ingreso/modal_efectivo_nuevoEfectivo/{id}', [IngresoController::class, 'modal_efectivo_nuevoEfectivo'])->name('ingreso.modal_efectivo_nuevoEfectivo');
 Route::post('ingreso/send_efectivo_nuevoEfectivo', [IngresoController::class, 'send_efectivo_nuevoEfectivo'])->name('ingreso.send_efectivo_nuevoEfectivo');
 Route::get('ingreso/reporte_efectivo_caja_pdf/{fecha}/{caja}', [IngresoController::class, 'reporte_efectivo_caja_pdf'])->name('ingreso.reporte_efectivo_caja_pdf');
+Route::get('ingreso/reporte_efectivo_consolidado_pdf/{fecha}', [IngresoController::class, 'reporte_efectivo_consolidado_pdf'])->name('ingreso.reporte_efectivo_consolidado_pdf');
 
 
 

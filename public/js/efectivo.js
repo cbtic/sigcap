@@ -293,9 +293,21 @@ function generarPdfCaja(){
 
 function generarPdfConsolidado(){
 
+	var msg = "";
+
 	var fecha = $('#fecha_bus').val();
 
-	var href = '/ingreso/reporte_efectivo_consolidado_pdf/'+fecha;
-	window.open(href, '_blank');
+	if(fecha==""){msg+="Ingrese una Fecha <br>";}
+
+	if(msg!=""){
+        bootbox.alert(msg);
+        return false;
+	}else{
+
+		var href = '/ingreso/reporte_efectivo_consolidado_pdf/'+fecha;
+		window.open(href, '_blank');
+
+	}
+
 
 }

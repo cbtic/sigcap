@@ -1263,32 +1263,9 @@ class IngresoController extends Controller
 		$moneda_soles=$datos[0]->moneda_soles;
 		$moneda_dolares=$datos[0]->moneda_dolares;
 		$cajero=$datos[0]->cajero;
-
-		//$numeroEnLetras = $this->numeroALetras($numero); 
 		
 		Carbon::setLocale('es');
 
-		// Crear una instancia de Carbon a partir de la fecha
-		/*$carbonDate = new Carbon($fecha_emision);
-
-		$dia = $carbonDate->format('d');
-		$mes = ltrim($carbonDate->format('m'), '0');
-		$anio = $carbonDate->format('Y');
-
-		$mesEnLetras = $this->mesesALetras($mes);
-
-		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
-
-		$fecha_vigencia = $carbonDate->addMonths($numero);
-
-		$dia_vigencia = $fecha_vigencia->day;
-		$mes_vigencia = $this->mesesALetras($fecha_vigencia->month);
-		$anio_vigencia = $fecha_vigencia->year;*/
-
-		// Formatear la fecha en un formato largo
-
-		//$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
-		
 		$pdf = Pdf::loadView('frontend.ingreso.reporte_efectivo_caja_pdf',compact('datos','caja','fecha','moneda_dolares','moneda_soles','cajero'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
@@ -1298,8 +1275,29 @@ class IngresoController extends Controller
     	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
 
 		return $pdf->stream();
-    	//return $pdf->download('invoice.pdf');
-		//return view('frontend.certificado.certificado_pdf');
+
+	}
+
+    public function reporte_efectivo_consolidado_pdf($fecha){
+		
+		$efectivo_model=new Efectivo;
+
+		$datos=$efectivo_model->datos_efectivo_consolidado($fecha);
+		$fecha=$datos[0]->fecha;
+		$moneda_soles=$datos[0]->moneda_soles;
+		$moneda_dolares=$datos[0]->moneda_dolares;
+		
+		Carbon::setLocale('es');
+
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_efectivo_consolidado_pdf',compact('datos','fecha','moneda_dolares','moneda_soles'));
+		
+		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream();
 
 	}
 
