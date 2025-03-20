@@ -20,6 +20,8 @@ use App\Models\Beneficiario;
 use App\Models\Comprobante;
 use App\Models\AgremiadoMulta;
 use App\Models\TipoCambio;
+use App\Models\Efectivo;
+use App\Models\EfectivoDetalle;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
 
@@ -1159,6 +1161,144 @@ class IngresoController extends Controller
 		$ultima_cuota = $valorizacion_model->getUltimaCuota($cap);
 		
 		echo json_encode($ultima_cuota);
+	}
+
+    public function create_efectivo(){
+
+        $caja_model = new TablaMaestra;
+        $caja = $caja_model->getMaestroByTipo("91");
+
+        return view('frontend.ingreso.create_efectivo',compact('caja'));
+
+    }
+
+    public function listar_consulta_efectivo_ajax(Request $request){
+	
+		$efectivo_model = new Efectivo;
+		$p[]=$request->fecha;
+		$p[]=$request->caja;
+        $p[]=1;
+		$p[]=$request->NumeroPagina;
+		$p[]=$request->NumeroRegistros;
+		$data = $efectivo_model->listar_consulta_efectivo_ajax($p);
+		$iTotalDisplayRecords = isset($data[0]->totalrows)?$data[0]->totalrows:0;
+
+		$result["PageStart"] = $request->NumeroPagina;
+		$result["pageSize"] = $request->NumeroRegistros;
+		$result["SearchText"] = "";
+		$result["ShowChildren"] = true;
+		$result["iTotalRecords"] = $iTotalDisplayRecords;
+		$result["iTotalDisplayRecords"] = $iTotalDisplayRecords;
+		$result["aaData"] = $data;
+
+		echo json_encode($result);
+	}
+
+    public function modal_efectivo_nuevoEfectivo($id){
+
+        $caja_model = new TablaMaestra;
+
+		if($id>0){
+			$efectivo_detalle = EfectivoDetalle::find($id);
+			$efectivo = Efectivo::find($efectivo_detalle->id_efectivo);
+		}else{
+			$efectivo = new Efectivo;
+            $efectivo_detalle = new EfectivoDetalle;
+		}
+
+        $caja = $caja_model->getMaestroByTipo("91");
+        $moneda = $caja_model->getMaestroByTipo("1");
+        $tipo_monedas = $caja_model->getMaestroByTipo("133");
+
+        //dd($efectivo_detalle);exit();
+		return view('frontend.ingreso.modal_efectivo_nuevoEfectivo',compact('id','efectivo','caja','moneda','tipo_monedas','efectivo_detalle'));
+	
+	}
+
+    public function send_efectivo_nuevoEfectivo(Request $request){
+		
+		$id_user = Auth::user()->id;
+
+		if($request->id == 0){
+			$efectivo = new Efectivo;
+            $efectivo_detalle = new EfectivoDetalle;
+		}else{
+			$efectivo = Efectivo::find($request->id);
+			$efectivo_detalle = EfectivoDetalle::where('id_efectivo',$efectivo->id);
+		}
+		
+		$efectivo->id_caja = $request->caja;
+		$efectivo->fecha = $request->fecha;
+		$efectivo->importe_soles = $request->importe_soles;
+		$efectivo->importe_dolares = $request->importe_dolares;
+        $efectivo->id_moneda = $request->moneda;
+        $efectivo->estado = 1;
+		$efectivo->id_usuario_inserta = $id_user;
+		$efectivo->save();
+
+        foreach ($request->except(['_token', 'id', 'caja', 'fecha', 'importe_soles', 'importe_dolares', 'moneda']) as $key => $value) {
+            if (strpos($key, '_') === false) {
+                $codigo = $key;
+                $cantidad = $value;
+                $total = $request->input($codigo . '_');
+    
+                $efectivo_detalle = new EfectivoDetalle;
+                $efectivo_detalle->id_efectivo = $efectivo->id;
+                $efectivo_detalle->id_tipo_efectivo = $codigo;
+                $efectivo_detalle->cantidad = $cantidad;
+                $efectivo_detalle->total = $total;
+                //$efectivo_detalle->estado = 1;
+                $efectivo_detalle->save();
+            }
+        }
+    }
+
+    public function reporte_efectivo_caja_pdf($fecha, $caja){
+		
+		$efectivo_model=new Efectivo;
+
+		$datos=$efectivo_model->datos_efectivo_caja($fecha, $caja);
+		$caja=$datos[0]->caja;
+		$fecha=$datos[0]->fecha;
+		$moneda=$datos[0]->moneda;
+
+		//$numeroEnLetras = $this->numeroALetras($numero); 
+		
+		Carbon::setLocale('es');
+
+		// Crear una instancia de Carbon a partir de la fecha
+		/*$carbonDate = new Carbon($fecha_emision);
+
+		$dia = $carbonDate->format('d');
+		$mes = ltrim($carbonDate->format('m'), '0');
+		$anio = $carbonDate->format('Y');
+
+		$mesEnLetras = $this->mesesALetras($mes);
+
+		$fecha_detallada = $dia .' de '. $mesEnLetras .' del '.$anio;
+
+		$fecha_vigencia = $carbonDate->addMonths($numero);
+
+		$dia_vigencia = $fecha_vigencia->day;
+		$mes_vigencia = $this->mesesALetras($fecha_vigencia->month);
+		$anio_vigencia = $fecha_vigencia->year;*/
+
+		// Formatear la fecha en un formato largo
+
+		//$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
+		
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_efectivo_caja_pdf',compact('datos','caja','fecha','moneda'));
+		
+		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
+    	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
+   		$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
+    	$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
+    	$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+
+		return $pdf->stream();
+    	//return $pdf->download('invoice.pdf');
+		//return view('frontend.certificado.certificado_pdf');
+
 	}
 
 }

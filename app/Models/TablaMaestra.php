@@ -12,7 +12,7 @@ class TablaMaestra extends Model
 	
 	function getMaestroByTipo($tipo){
 
-        $cad = "select codigo,denominacion 
+        $cad = "select codigo,denominacion,abreviatura
                 from tabla_maestras 
                 where tipo='".$tipo."' 
 				and estado='1' 
