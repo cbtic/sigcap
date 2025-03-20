@@ -195,6 +195,10 @@
                                 <a href="/ingreso/caja_total" class="dropdown-item">Resumen de Caja</a>
 								@endcan	
 
+								@can('Resumen Efectivo')
+                                <a href="/ingreso/create_efectivo" class="dropdown-item">Resumen de Efectivo</a>
+								@endcan	
+
 						   </div>
 					</li>
 					@endif
