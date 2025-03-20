@@ -1260,7 +1260,9 @@ class IngresoController extends Controller
 		$datos=$efectivo_model->datos_efectivo_caja($fecha, $caja);
 		$caja=$datos[0]->caja;
 		$fecha=$datos[0]->fecha;
-		$moneda=$datos[0]->moneda;
+		$moneda_soles=$datos[0]->moneda_soles;
+		$moneda_dolares=$datos[0]->moneda_dolares;
+		$cajero=$datos[0]->cajero;
 
 		//$numeroEnLetras = $this->numeroALetras($numero); 
 		
@@ -1287,7 +1289,7 @@ class IngresoController extends Controller
 
 		//$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
-		$pdf = Pdf::loadView('frontend.ingreso.reporte_efectivo_caja_pdf',compact('datos','caja','fecha','moneda'));
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_efectivo_caja_pdf',compact('datos','caja','fecha','moneda_dolares','moneda_soles','cajero'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros

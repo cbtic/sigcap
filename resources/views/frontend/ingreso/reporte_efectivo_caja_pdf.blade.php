@@ -156,45 +156,65 @@ $(document).ready(function() {
 <body class="hold-transition skin-blue sidebar-mini">
 
     <div>
-        <div style="text-align: center; height: 100px; position: relative;">
+        <div style="text-align: right; height: 100px; position: relative;">
             <img width="196px" height="58px" style="margin-top:50px;" src="img/logo_cap.jpg">
             <div>
                 <h2 style="text-align:center">RECAUDACIÓN EN EFECTIVO - <?php echo $caja;?></h2>
                 <p style="text-align:center">Recaudación del día <?php echo $fecha;?></p>
-                <p style="text-align:left">Cajero: </p>
+                <p style="text-align:center">Cajero: <?php echo $cajero?></p>
             </div>
             <table class="data" style="border-collapse: separate; border-spacing: 0; background-color:white !important; width: 100%; border-radius: 8px; font-size:11px">
                 <tbody>
                     <tr class="data">
-                        <td class="td" style ="text-align: left; width: 5%; height:25px; border-bottom: 1px solid black;"><b>DENOMINACI&Oacute;N</b></td>
-                        <td class="td" style ="text-align: left; width: 5%; height:25px; border-bottom: 1px solid black;"><b>CANTIDAD</b></td>
-                        <td class="td" style ="text-align: left; width: 20%; height:25px; border-bottom: 1px solid black;"><b>IMPORTE S/.</b></td>
-                        <td class="td" style ="text-align: left; width: 5%; height:25px; border-bottom: 1px solid black;"><b>CANTIDAD</b></td>
-                        <td class="td" style ="text-align: left; width: 5%; height:25px; border-bottom: 1px solid black;"><b>IMPORTE US$</b></td>
+                        <td class="td" style ="text-align: left; width: 30%; height:25px; border-bottom: 1px solid black;"><b>INGRESOS EN EFECTIVO</b></td>
+                        <td class="td" colspan ="2" style ="text-align: center; width: 15%; height:25px; border-bottom: 1px solid black;"><b>NUEVOS SOLES S/.</b></td>
+                        <td class="td" colspan ="2" style ="text-align: center; width: 15%; height:25px; border-bottom: 1px solid black;"><b>DOLARES AMERICANOS US$</b></td>
+                    </tr>
+                    <tr class="data">
+                        <td class="td" style ="text-align: left; width: 30%; height:25px; border-bottom: 1px solid black;"><b>DENOMINACI&Oacute;N</b></td>
+                        <td class="td" style ="text-align: right; width: 15%; height:25px; border-bottom: 1px solid black;"><b>CANTIDAD</b></td>
+                        <td class="td" style ="text-align: right; width: 15%; height:25px; border-bottom: 1px solid black;"><b>IMPORTE S/.</b></td>
+                        <td class="td" style ="text-align: right; width: 15%; height:25px; border-bottom: 1px solid black;"><b>CANTIDAD</b></td>
+                        <td class="td" style ="text-align: right; width: 15%; height:25px; border-bottom: 1px solid black;"><b>IMPORTE US$</b></td>
                     </tr>
                     
                     <?php 
-                    $total_soles=0;
-                    $total_dolares=0;
+                    $total_general_soles=0;
+                    $total_general_dolares=0;
                     foreach($datos as $key=>$r) { 
                         ?>
                         <tr>
-                            <td class="td" style ="text-align: left; width: 5%; height:25px"><?php echo $r->denominacion;?></td>
-                            <?php if($r->moneda=="SOLES"){?>
-                            <td class="td" style ="text-align: left; width: 5%; height:25px"><?php echo $r->cantidad;?></td>
-                            <td class="td" style ="text-align: left; width: 10%; height:25px"><?php echo number_format($r->total,2,'.',',');?></td>
-                            <?php }else if($r->moneda=="DOLARES AMERICANOS"){?>
-                            <td class="td" style ="text-align: left; width: 5%; height:25px"><?php echo $r->cantidad;?></td>
-                            <td class="td" style ="text-align: left; width: 5%; height:25px"><?php echo number_format($r->total,2,'.',',');?></td>
-                            <?php }?>
+                            <td class="td" style ="text-align: left; width: 30%; height:25px"><?php echo $r->descripcion_soles;?></td>
+                            <td class="td" style ="text-align: right; width: 15%; height:25px"><?php echo $r->cantidad_soles;?></td>
+                            <td class="td" style ="text-align: right; width: 12%; height:25px"><?php echo number_format($r->total_soles,2,'.',',');?></td>
+                            <td class="td" style ="text-align: right; width: 15%; height:25px"><?php echo $r->cantidad_dolares;?></td>
+                            <td class="td" style ="text-align: right; width: 15%; height:25px"><?php echo number_format($r->total_dolares,2,'.',',');?></td>
                             <?php 
-                            $total_soles+=$r->total;
-                            $total_dolares+=$r->total;
+                            $total_general_soles+=$r->total_soles;
+                            $total_general_dolares+=$r->total_dolares;
                             ?>
                         </tr>
                     <?php 
                     }
                     ?>
+                    <tr>
+                        <td class="td" style ="text-align: center; width: 30%; height:25px"><b>TOTAL GENERAL</b></td>
+                        <td class="td" colspan="2" style ="text-align: right; width: 12%; height:25px"><b><?php echo number_format($total_general_soles,2,'.',',');?></b></td>
+                        <td class="td" colspan="2" style ="text-align: right; width: 12%; height:25px"><b><?php echo number_format($total_general_dolares,2,'.',',');?></b></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br><br><br><br><br>
+            <table class="data" style="border-collapse: separate; border-spacing: 25px 0px; background-color:white !important; width: 100%; border-radius: 8px; font-size:11px">
+                <tbody>
+                    <tr>
+                        <td class="td" style ="text-align: center; width: 50%; height:25px; font-size:12px; border-top:1px solid #000000;">AREVALO IPANAQUE MELLANY GLEENDA</td>
+                        <td class="td" style ="text-align: center; width: 50%; height:25px; font-size:12px; border-top:1px solid #000000;">ENTREGADO POR: <?php echo $cajero?></td>
+                    </tr>
+                    <tr>
+                        <td class="td" style ="text-align: center; width: 50%; height:25px; font-size:12px">ENCARGADO (A) DE CAJA</td>
+                        <td class="td" style ="text-align: center; width: 50%; height:25px; font-size:12px"><?php echo $caja;?></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
