@@ -419,12 +419,12 @@ function calcularTotalGeneral() {
 				Registro de Efectivo
 			</div>
 			
-            <div class="card-body">
+            <div class="card-body" style="max-height: 850px; overflow-y: auto;">
 			<form method="post" action="#" id="frmEfectivo" name="frmEfectivo" enctype="multipart/form-data">
 
 			<div class="row">
 
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:0px;padding-bottom:0px">
 					
 					<input type="hidden" name="_token" id="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="id" id="id" value="<?php echo $id?>">
@@ -455,8 +455,6 @@ function calcularTotalGeneral() {
 								<input id="fecha" name="fecha" on class="form-control form-control-sm"  value="<?php echo ($id > 0) ? $efectivo->fecha : date('d-m-Y'); ?>" type="text" paceholder="Fecha">
 							</div>
 						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
 						<div class="col-lg-3">
 							Importe Soles
 						</div>
@@ -521,186 +519,6 @@ function calcularTotalGeneral() {
 						</div>
 					<?php }?>
 					
-					<!--<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Billetes S/ 20
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="billetes20" name="billetes20" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_billetes_20 : '0'; ?>" type="text" oninput="calculartotal(20,2)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="billetes20_" name="billetes20_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Billetes S/ 50
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="billetes50" name="billetes50" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_billetes_50 : '0'; ?>" type="text" oninput="calculartotal(50,3)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="billetes50_" name="billetes50_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Billetes S/ 100
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="billetes100" name="billetes100" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_billetes_100 : '0'; ?>" type="text" oninput="calculartotal(100,4)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="billetes100_" name="billetes100_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Billetes S/ 200
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="billetes200" name="billetes200" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_billetes_200 : '0'; ?>" type="text" oninput="calculartotal(200,5)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="billetes200_" name="billetes200_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Monedas S/ 0.01
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda001" name="moneda001" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_moneda_0_01 : '0'; ?>" type="text" oninput="calculartotal(0.01,6)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda001_" name="moneda001_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Monedas S/ 0.05
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda005" name="moneda005" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_moneda_0_05 : '0'; ?>" type="text" oninput="calculartotal(0.05,7)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda005_" name="moneda005_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Monedas S/ 0.10
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda010" name="moneda010" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_moneda_0_10 : '0'; ?>" type="text" oninput="calculartotal(0.10,8)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda010_" name="moneda010_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Monedas S/ 0.20
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda020" name="moneda020" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_moneda_0_20 : '0'; ?>" type="text" oninput="calculartotal(0.20,9)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda020_" name="moneda020_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Monedas S/ 0.50
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda050" name="moneda050" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_moneda_0_50 : '0'; ?>" type="text" oninput="calculartotal(0.50,10)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda050_" name="moneda050_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Monedas S/ 1.00
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda1" name="moneda1" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_moneda_1 : '0'; ?>" type="text" oninput="calculartotal(1,11)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda1_" name="moneda1_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Monedas S/ 2.00
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda2" name="moneda2" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_moneda_2 : '0'; ?>" type="text" oninput="calculartotal(2,12)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda2_" name="moneda2_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>
-					<div class="row" style="padding-left:15px; padding-right:15px">
-						<div class="col-lg-4">
-							Monedas S/ 5.00
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda5" name="moneda5" on class="form-control form-control-sm"  value="<?php //echo ($id > 0) ? $efectivo->cantidad_moneda_5 : '0'; ?>" type="text" oninput="calculartotal(5,13)">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<input id="moneda5_" name="moneda5_" on class="form-control form-control-sm"  value="0" type="text" >
-							</div>
-						</div>
-					</div>-->
 					<div class="row" style="padding-left:15px; padding-right:15px">
 						<div class="col-lg-4">
 						</div>
@@ -712,7 +530,7 @@ function calcularTotalGeneral() {
 							</div>
 						</div>
 					</div>
-					<div style="margin-top:15px" class="form-group">
+					<div style="margin-top:0px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
 								<a href="javascript:void(0)" onClick="validaCaja()" class="btn btn-sm btn-success">Guardar</a>
@@ -745,124 +563,13 @@ function calcularTotalGeneral() {
 $(document).ready(function () {
 	
 	
-	$('#tblReservaEstacionamiento').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-search").keyup(function() {
-		var dataTable = $('#tblReservaEstacionamiento').dataTable();
-		dataTable.fnFilter(this.value);
-	}); 
-	
-	$('#tblReservaEstacionamientoPreferente').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-searchp").keyup(function() {
-		var dataTable = $('#tblReservaEstacionamientoPreferente').dataTable();
-		dataTable.fnFilter(this.value);
-	});
-	
-	$('#tblSinReservaEstacionamiento').DataTable({
-		"dom": '<"top">rt<"bottom"flpi><"clear">'
-		});
-	$("#system-search2").keyup(function() {
-		var dataTable = $('#tblSinReservaEstacionamiento').dataTable();
-		dataTable.fnFilter(this.value);
-	}); 
-	
-	
 });
 
 </script>
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	$('#persona_').keyup(function() {
-		this.value = this.value.toLocaleUpperCase();
-	});
 		
-	$('#persona_').focusin(function() { $('#persona_').select(); });
-	/*
-	$('#usuario_').autocomplete({
-		appendTo: "#usuario_busqueda",
-		source: function(request, response) {
-			$.ajax({
-			url: '/empresa/list_usuario/'+$('#usuario_').val(),
-			dataType: "json",
-			success: function(data){
-			   var resp = $.map(data,function(obj){
-					var hash = {key: obj.id, value: obj.usuario};
-					return hash;
-			   }); 
-			   response(resp);
-			},
-			error: function() {
-			}
-		});
-		},
-		select: function (event, ui) {
-			$("#user_id").val(ui.item.key);
-		},
-			minLength: 2,
-			delay: 100
-	  });
-	*/
-	
-	$('#empresa_').keyup(function() {
-		this.value = this.value.toLocaleUpperCase();
-	});
-		
-	$('#empresa_').focusin(function() { $('#empresa_').select(); });
-	
-	$('#empresa_').autocomplete({
-		appendTo: "#empresa_busqueda",
-		source: function(request, response) {
-			$.ajax({
-			url: '/empresa/list_empresa/'+$('#empresa_').val(),
-			dataType: "json",
-			success: function(data){
-			   var resp = $.map(data,function(obj){
-					var hash = {key: obj.id, value: obj.razon_social, ruc: obj.ruc};
-					return hash;
-			   }); 
-			   response(resp);
-			},
-			error: function() {
-			}
-		});
-		},
-		select: function (event, ui) {
-			$("#id_empresa").val(ui.item.key);
-		},
-			minLength: 1,
-			delay: 100
-	  });
-	  
-	  $('#persona_').autocomplete({
-		appendTo: "#persona_busqueda",
-		source: function(request, response) {
-			$.ajax({
-			url: '/persona/list_persona/'+$('#persona_').val(),
-			dataType: "json",
-			success: function(data){
-			   var resp = $.map(data,function(obj){
-					var hash = {key: obj.id, value: obj.persona};
-					return hash;
-			   }); 
-			   response(resp);
-			},
-			error: function() {
-			}
-		});
-		},
-		select: function (event, ui) {
-			$("#id_persona").val(ui.item.key);
-		},
-			minLength: 1,
-			delay: 100
-	  });
-	  
-	
 });
 
 </script>

@@ -1280,6 +1280,8 @@ class IngresoController extends Controller
 
     public function reporte_efectivo_consolidado_pdf($fecha){
 		
+        $id_user = Auth::user()->id;
+
 		$efectivo_model=new Efectivo;
 
 		$datos=$efectivo_model->datos_efectivo_consolidado($fecha);
@@ -1289,12 +1291,15 @@ class IngresoController extends Controller
         }
         
 		$fecha=$datos[0]->fecha;
+        
+        $nombre_usuario = Auth::user()->name;
+
 		//$moneda_soles=$datos[0]->moneda_soles;
 		//$moneda_dolares=$datos[0]->moneda_dolares;
 		
 		Carbon::setLocale('es');
 
-		$pdf = Pdf::loadView('frontend.ingreso.reporte_efectivo_consolidado_pdf',compact('datos','fecha'));
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_efectivo_consolidado_pdf',compact('datos','fecha','nombre_usuario'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
