@@ -230,7 +230,7 @@
                         <th>Denominaci&oacute;n</th>
                         <th>Cantidad</th>
                         <th>Total</th>
-                        <th>Estado</th>
+                        <!--<th>Estado</th>-->
                     </tr>
                     </thead>
                     <tbody>

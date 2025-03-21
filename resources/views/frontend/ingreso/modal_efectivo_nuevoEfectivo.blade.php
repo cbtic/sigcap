@@ -223,6 +223,31 @@ $(document).ready(function() {
 
 });
 
+function validaCaja(){
+
+	var caja = $('#caja').val();
+	var fecha = $('#fecha').val();
+	var moneda = $('#moneda').val();
+
+	$.ajax({
+			url: "/ingreso/validarCaja/"+caja+"/"+fecha+"/"+moneda,
+            type: "get",
+			dataType: "json",
+            success: function (result) {
+				
+				var cantidad_ingresos = result[0].cantidad;
+
+				if(cantidad_ingresos>0){
+					bootbox.alert("Ya se hizo un registro de Efectivo de esta caja");
+				}else{
+					fn_save_efectivo();
+				}
+				
+				
+            }
+    });
+
+}
 
 function fn_save_efectivo(){
 	
@@ -254,7 +279,7 @@ function limpiar(){
 	//$('#caja').val("");
 	$('#importe_soles').val("0");
 	$('#importe_dolares').val("0");
-	$('#moneda').val(1);
+	//$('#moneda').val(1);
 	$('#total_').text("0");
 
 }
@@ -690,7 +715,7 @@ function calcularTotalGeneral() {
 					<div style="margin-top:15px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save_efectivo()" class="btn btn-sm btn-success">Guardar</a>
+								<a href="javascript:void(0)" onClick="validaCaja()" class="btn btn-sm btn-success">Guardar</a>
 								<a href="javascript:void(0)" onClick="$('#openOverlayOpc').modal('hide');window.location.reload();" class="btn btn-md btn-warning" style="margin-left: 15px">Cerrar</a>
 							</div>
 												

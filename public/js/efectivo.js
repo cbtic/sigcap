@@ -180,7 +180,7 @@ function datatablenew(){
 				},
 				"bSortable": false,
 				"aTargets": [5]
-				},*/
+				},
 				{
 					"mRender": function (data, type, row) {
 						var estado = "";
@@ -205,7 +205,7 @@ function datatablenew(){
 					},
 					"bSortable": false,
 					"aTargets": [7],
-				},
+				},*/
 
             ]
 
