@@ -15,16 +15,14 @@ v_col_count varchar;
 --v_perfil varchar;
 
 begin
-
+	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 	
-	v_campos=' ed.id, tm2.denominacion caja, e.fecha, tm3.denominacion moneda, tm.denominacion, ed.cantidad, ed.total ';
+	v_campos=' e.id, tm2.denominacion caja, e.fecha, e.importe_soles, e.importe_dolares, e.estado ';
 
 	v_tabla=' from efectivos e 
-	inner join efectivo_detalles ed on ed.id_efectivo = e.id 
-	inner join tabla_maestras tm on ed.id_tipo_efectivo::int = tm.codigo::int and tm.tipo =''133''
-	inner join tabla_maestras tm2 on e.id_caja ::int = tm2.codigo::int and tm2.tipo =''91''
-	inner join tabla_maestras tm3 on e.id_moneda ::int = tm3.codigo::int and tm3.tipo =''1'' ';
+	inner join tabla_maestras tm2 on e.id_caja::int = tm2.codigo::int and tm2.tipo = ''91''
+	inner join tabla_maestras tm3 on e.id_moneda::int = tm3.codigo::int and tm3.tipo = ''1'' ';
 		
 	v_where = ' Where 1=1  ';
 	
