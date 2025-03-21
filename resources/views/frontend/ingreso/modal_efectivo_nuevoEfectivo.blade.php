@@ -247,14 +247,15 @@ var tipo_monedas = <?php echo json_encode(array_column($tipo_monedas, 'codigo'))
 function limpiar(){
 
 	tipo_monedas.forEach(codigo => {
-		$(`#${codigo}`).val("");
-        $(`#${codigo}_`).val("");
+		$(`#${codigo}`).val("0");
+        $(`#${codigo}_`).val("0");
     });
 
-	$('#caja').val("");
-	$('#importe_soles').val("");
-	$('#importe_dolares').val("");
+	//$('#caja').val("");
+	$('#importe_soles').val("0");
+	$('#importe_dolares').val("0");
 	$('#moneda').val(1);
+	$('#total_').text("0");
 
 }
 
@@ -454,7 +455,7 @@ function calcularTotalGeneral() {
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<select name="moneda" id="moneda" class="form-control form-control-sm" onchange="cambiarMoneda()">
+								<select name="moneda" id="moneda" class="form-control form-control-sm" onchange="limpiar()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($moneda as $row) {?>

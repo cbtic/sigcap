@@ -174,27 +174,23 @@
 						<!--<div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
 							<input class="form-control form-control-sm" id="denominacion" name="denominacion" placeholder="Denominaci&oacute;n">
 						</div>-->
-						<div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
+						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 							<input class="form-control form-control-sm" id="fecha_bus" name="fecha_bus" placeholder="Fecha">
 						</div>
 
-                        <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
-							<input class="form-control form-control-sm" id="caja_bus" name="caja_bus" placeholder="Caja">
-						</div>
-
-                        <!--<div class="col-lg-2">
+                        <div class="col-lg-2">
                             <div class="form-group">
-                                <select name="moneda" id="moneda" class="form-control form-control-sm" onchange="">
-                                    <option value="">--Selecionar Moneda--</option>
+                                <select name="caja_bus" id="caja_bus" class="form-control form-control-sm" onchange="">
+                                    <option value="">--Selecionar Caja--</option>
                                     <?php
-                                    //foreach ($moneda as $row) {?>
-                                    <option value="<?php //echo $row->codigo?>" <?php //if($row->codigo==$multa->id_moneda)echo "selected='selected'"?>><?php //echo $row->denominacion?></option>
+                                    foreach ($caja as $row) {?>
+                                    <option value="<?php echo $row->codigo?>" > <?php echo $row->denominacion?></option>
                                     <?php
-                                    //}
+                                    }
                                     ?>
                                 </select>
                             </div>
-                        </div>-->
+                        </div>
 					
 						<!--<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
 							<select name="estado" id="estado" class="form-control form-control-sm">
