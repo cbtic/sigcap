@@ -184,7 +184,7 @@ $(document).ready(function() {
                     foreach($datos as $key=>$r) { 
                         ?>
                         <tr>
-                            <td class="td" style ="text-align: left; width: 30%; height:25px"><?php echo $r->descripcion_soles;?></td>
+                            <td class="td" style ="text-align: left; width: 30%; height:25px"><?php echo $r->tipo_efectivo;?></td>
                             <td class="td" style ="text-align: right; width: 15%; height:25px"><?php echo $r->cantidad_soles;?></td>
                             <td class="td" style ="text-align: right; width: 12%; height:25px"><?php echo number_format($r->total_soles,2,'.',',');?></td>
                             <td class="td" style ="text-align: right; width: 15%; height:25px"><?php echo $r->cantidad_dolares;?></td>

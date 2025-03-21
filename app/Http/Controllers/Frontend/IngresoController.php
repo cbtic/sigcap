@@ -1284,12 +1284,12 @@ class IngresoController extends Controller
 
 		$datos=$efectivo_model->datos_efectivo_consolidado($fecha);
 		$fecha=$datos[0]->fecha;
-		$moneda_soles=$datos[0]->moneda_soles;
-		$moneda_dolares=$datos[0]->moneda_dolares;
+		//$moneda_soles=$datos[0]->moneda_soles;
+		//$moneda_dolares=$datos[0]->moneda_dolares;
 		
 		Carbon::setLocale('es');
 
-		$pdf = Pdf::loadView('frontend.ingreso.reporte_efectivo_consolidado_pdf',compact('datos','fecha','moneda_dolares','moneda_soles'));
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_efectivo_consolidado_pdf',compact('datos','fecha'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -1300,5 +1300,15 @@ class IngresoController extends Controller
 		return $pdf->stream();
 
 	}
+
+    public function validarCaja($caja, $fecha, $moneda){
+
+        $efectivo_model = new Efectivo;
+
+        $resultado = $efectivo_model->valida_caja($caja, $fecha, $moneda);
+
+        echo json_encode($resultado);
+
+    } 
 
 }
