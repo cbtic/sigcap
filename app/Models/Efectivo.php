@@ -77,7 +77,7 @@ class Efectivo extends Model
         inner join efectivo_detalles ed on ed.id_efectivo = e.id
         inner join tabla_maestras tm on ed.id_tipo_efectivo::int = tm.codigo::int and tm.tipo = '133'
         inner join tabla_maestras tm3 on e.id_moneda::int = tm3.codigo::int and tm3.tipo = '1'
-        where e.fecha = '2025-03-21'
+        where e.fecha = '".$fecha."'
         group by e.fecha, ed.id_tipo_efectivo, tm.denominacion
         order by e.fecha, ed.id_tipo_efectivo";
 

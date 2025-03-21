@@ -304,10 +304,20 @@ function generarPdfConsolidado(){
         return false;
 	}else{
 
-		var href = '/ingreso/reporte_efectivo_consolidado_pdf/'+fecha;
-		window.open(href, '_blank');
-
+		$.ajax({
+            url: "/ingreso/reporte_efectivo_consolidado_pdf/" + fecha,
+            type: "get",
+            success: function () {
+                window.open('/ingreso/reporte_efectivo_consolidado_pdf/' + fecha, '_blank');
+            },
+            error: function (xhr) {
+                if (xhr.status == 404) {
+                    bootbox.alert("No hay datos para la fecha seleccionada.");
+                } else {
+                    bootbox.alert("Ocurrió un error al generar el PDF.");
+                }
+            }
+        });
 	}
-
 
 }
