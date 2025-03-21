@@ -1283,6 +1283,11 @@ class IngresoController extends Controller
 		$efectivo_model=new Efectivo;
 
 		$datos=$efectivo_model->datos_efectivo_consolidado($fecha);
+
+        if (empty($datos)) {
+            return response()->json(['error' => 'No hay datos para la fecha seleccionada'], 404);
+        }
+        
 		$fecha=$datos[0]->fecha;
 		//$moneda_soles=$datos[0]->moneda_soles;
 		//$moneda_dolares=$datos[0]->moneda_dolares;
