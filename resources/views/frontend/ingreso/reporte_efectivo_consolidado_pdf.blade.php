@@ -161,7 +161,7 @@ $(document).ready(function() {
             <div>
                 <h2 style="text-align:center">RECAUDACIÓN EN EFECTIVO - CONSOLIDADO</h2>
                 <p style="text-align:center">Recaudación del día <?php echo $fecha;?></p>
-                <p style="text-align:center">Cajero: AREVALO IPANAQUE MELLANY GLEENDA</p>
+                <p style="text-align:center">Cajero: <?php echo $nombre_usuario?></p>
             </div>
             <table class="data" style="border-collapse: separate; border-spacing: 0; background-color:white !important; width: 100%; border-radius: 8px; font-size:11px">
                 <tbody>
@@ -209,7 +209,7 @@ $(document).ready(function() {
                 <tbody>
                     <tr>
                         <td class="td" style ="text-align: center; width: 50%; height:25px"></td>
-                        <td class="td" style ="text-align: center; width: 50%; height:25px; font-size:12px; border-top:1px solid #000000;">ENTREGADO POR: AREVALO IPANAQUE MELLANY GLEENDA</td>
+                        <td class="td" style ="text-align: center; width: 50%; height:25px; font-size:12px; border-top:1px solid #000000;">ENTREGADO POR: <?php echo $nombre_usuario?></td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: center; width: 50%; height:25px"></td>
