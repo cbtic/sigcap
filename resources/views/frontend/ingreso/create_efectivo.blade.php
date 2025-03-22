@@ -227,10 +227,10 @@
                         <th>Caja</th>
                         <th>Fecha</th>
                         <th>Moneda</th>
-                        <th>Denominaci&oacute;n</th>
-                        <th>Cantidad</th>
-                        <th>Total</th>
-                        <!--<th>Estado</th>-->
+                        <th>Importe Soles</th>
+                        <th>Importe Solares</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -238,8 +238,6 @@
                     </table>
                     </div><!--table-responsive-->
                 </form>
-
-
 
                 </div><!--card-body-->
             </div><!--card-->

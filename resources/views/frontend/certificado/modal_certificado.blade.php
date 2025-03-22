@@ -556,39 +556,54 @@ function obtenerAgremiado() {
 	var ncap = $('#cap_').val();
 
 	$.ajax({
-		url: '/afiliacion_seguro/obtener_agremiado/' + ncap,
+		url: '/agremiado/validar_agremiado_multa/' + ncap,
 		dataType: "json",
 		success: function(result) {
-			//alert(result);
-			console.log(result);
 
-				$('#idagremiado_').val('');
-				$('#nombre_').val('');
-				$('#situacion_').val('');
-				$('#email_').val('');
-				$('#categoria_').val('');
-			//alert(result.situacion).exit();
-			if(result.situacion=='HABILITADO'){
-				$('#idagremiado_').val(result.id);
-				$('#nombre_').val(result.nombre_completo);
-				$('#situacion_').val(result.situacion);
-				$('#email_').val(result.email);
-				$('#categoria_').val(result.categoria);
-				obtenerNombreProyecto();
-			}else if (result.situacion=='FALLECIDO'){
-				bootbox.alert("El Agremiado est&aacute; FALLECIDO");
-			}else if (result.situacion=='REGIONAL'){
-				bootbox.alert("El Agremiado pertenece a otra REGIONAL");
-			}else if (result.situacion=='INHABILITADO'){
-				bootbox.alert("El Agremiado est&aacute; INHABILITADO");
-			}else if (result.situacion=='PROVINCIA'){
-				bootbox.alert("El Agremiado est&aacute; en otra PROVINCIA");
-			}else if (result.situacion=='EXTRANJERO'){
-				bootbox.alert("El Agremiado est&aacute; en el EXTRANJERO");
+			var cantidad_multa = result[0].cantidad;
+
+			if(cantidad_multa > 0){
+				bootbox.alert("El agremiado tiene multas pendientes");
+			}else {
+				$.ajax({
+					url: '/afiliacion_seguro/obtener_agremiado/' + ncap,
+					dataType: "json",
+					success: function(result) {
+						//alert(result);
+						console.log(result);
+
+							$('#idagremiado_').val('');
+							$('#nombre_').val('');
+							$('#situacion_').val('');
+							$('#email_').val('');
+							$('#categoria_').val('');
+						//alert(result.situacion).exit();
+						if(result.situacion=='HABILITADO'){
+							$('#idagremiado_').val(result.id);
+							$('#nombre_').val(result.nombre_completo);
+							$('#situacion_').val(result.situacion);
+							$('#email_').val(result.email);
+							$('#categoria_').val(result.categoria);
+							obtenerNombreProyecto();
+						}else if (result.situacion=='FALLECIDO'){
+							bootbox.alert("El Agremiado est&aacute; FALLECIDO");
+						}else if (result.situacion=='REGIONAL'){
+							bootbox.alert("El Agremiado pertenece a otra REGIONAL");
+						}else if (result.situacion=='INHABILITADO'){
+							bootbox.alert("El Agremiado est&aacute; INHABILITADO");
+						}else if (result.situacion=='PROVINCIA'){
+							bootbox.alert("El Agremiado est&aacute; en otra PROVINCIA");
+						}else if (result.situacion=='EXTRANJERO'){
+							bootbox.alert("El Agremiado est&aacute; en el EXTRANJERO");
+						}
+						
+					}
+				});
 			}
 			
 		}
 	});
+
 }
 
 function valida_pago() {

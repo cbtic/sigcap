@@ -1965,6 +1965,19 @@ class AgremiadoController extends Controller
 		return $resultado;
 
     }
+
+	public function validar_agremiado_multa($numero_cap){
+
+		$agremiado_model = new Agremiado;
+
+		$agremiado = $agremiado_model->getAgremiado('85',$numero_cap);
+
+		$valorizaciones_model = new Valorizacione();
+		$agremiado_multa = $valorizaciones_model->getAgremiadoMulta($agremiado->id);
+
+		echo json_encode($agremiado_multa);
+
+	}
 }
 
 class InvoicesExport implements FromArray

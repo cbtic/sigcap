@@ -308,14 +308,13 @@ class Comprobante extends Model
         where cp.id_comprobante = f.id
         
         ) descripcion
- FROM comprobantes f
+  FROM comprobantes f
         inner join tabla_maestras m on m.codigo = f.id_caja::varchar and m.tipo = '91'
         inner join tabla_maestras fp on fp.codigo = f.id_forma_pago::varchar and fp.tipo = '104'
         Inner Join users u On u.id = f.id_usuario_inserta        
-        left join valorizaciones val on val.id_comprobante = f.id 
-        left join personas per on val.id_persona = per.id
-        left join empresas emp on emp.id=val.id_empresa 
-        where f.id_caja=".$id_caja."  
+        left join personas per on f.id_persona = per.id
+        left join empresas emp on f.id_empresa=emp.id 
+   where f.id_caja=".$id_caja."  
         And f.fecha >= '".$fecha_inicio."' 
         And f.fecha <= '".$fecha_fin."' 
         Order By f.fecha Desc";
