@@ -623,8 +623,11 @@ function calcular_total_otros(obj){
 		//comprobante_detalle[0][total]
 		//comprobante_detalle[0][igv]
 
-
+		var id_tipo_afectacion  = $(this).parent().parent().parent().find('.id_tipo_afectacion_sel').html();
+		
 		var tasa_igv_ = 0.18;
+
+		if (id_tipo_afectacion=="30")tasa_igv_ = 0;
 
 		var PrecioVenta_ = $(this).parent().parent().parent().find('.val_precio').html();		
 		PrecioVenta_ =PrecioVenta_.toString().replace(',','');
