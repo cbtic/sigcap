@@ -1301,10 +1301,14 @@ $.mask.definitions['p'] = "[Mm]";
 					var tipo_documento = $('#tipo_documento').val();
 					if (id == 0 && tipo_documento!=84) {
 						validaDni(this.value);
-					}else if(tipo_documento==84){
+					}else if(id == 0 && tipo_documento==84){
 						$('#nombre').val('');
 						$('#apellido_paterno').val('');
 						$('#apellido_materno').val('');
+						$('#nombre').prop('readonly', false);
+						$('#apellido_paterno').prop('readonly', false);
+						$('#apellido_materno').prop('readonly', false);
+					}else if(tipo_documento==84){
 						$('#nombre').prop('readonly', false);
 						$('#apellido_paterno').prop('readonly', false);
 						$('#apellido_materno').prop('readonly', false);

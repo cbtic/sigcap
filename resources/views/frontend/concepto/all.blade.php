@@ -152,23 +152,23 @@
 				<div class="row" style="padding:20px 20px 0px 20px;">
 				
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="denominacionBus" name="denominacionBus" placeholder="Nombre de Concepto">
+						<input class="form-control form-control-sm" id="denominacion_bus" name="denominacion_bus" placeholder="Nombre de Concepto">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="cuenta_contable_debe" name="cuenta_contable_debe" placeholder="Cuenta Contable Debe">
+						<input class="form-control form-control-sm" id="cuenta_contable_debe_bus" name="cuenta_contable_debe_bus" placeholder="Cuenta Contable Debe">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="cuenta_contable_al_haber1" name="cuenta_contable_al_haber1" placeholder="Cuenta Contable al Haber 1">
+						<input class="form-control form-control-sm" id="cuenta_contable_al_haber1_bus" name="cuenta_contable_al_haber1_bus" placeholder="Cuenta Contable al Haber 1">
 					</div>
                     <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="cuenta_contable_al_haber2" name="cuenta_contable_al_haber2" placeholder="Cuenta Contable al Haber 2">
+						<input class="form-control form-control-sm" id="cuenta_contable_al_haber2_bus" name="cuenta_contable_al_haber2_bus" placeholder="Cuenta Contable al Haber 2">
 					</div>
                     <div class="col-lg-1-5 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="partida_presupuestalBus" name="partida_presupuestalBus" placeholder="Partida Presupuestal">
+						<input class="form-control form-control-sm" id="partida_presupuestal_bus" name="partida_presupuestal_bus" placeholder="Partida Presupuestal">
 					</div>
                     <div class="col-lg-2">
                         <div class="form-group">
-                            <select name="id_tipo_afectacion" id="id_tipo_afectacion" class="form-control form-control-sm" onchange="">
+                            <select name="id_tipo_afectacion_bus" id="id_tipo_afectacion_bus" class="form-control form-control-sm" onchange="">
                                 <option value="">--Selecionar Tipo Afectaci&oacute;n--</option>
                                 <?php
                                 foreach ($id_tipo_afectacion as $row) {?>
@@ -180,7 +180,7 @@
                         </div>
 					</div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						<select name="estado" id="estado" class="form-control form-control-sm">
+						<select name="estado_bus" id="estado_bus" class="form-control form-control-sm">
 							<option value="">Todos</option>
 							<option value="1" selected="selected">Activo</option>
 							<option value="0">Eliminado</option>

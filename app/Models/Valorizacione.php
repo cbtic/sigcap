@@ -726,4 +726,16 @@ class Valorizacione extends Model
         $data = DB::select($cad);
         if($data)return $data[0];
     }
+
+    function getAgremiadoMulta($id_agremiado){
+
+        $cad = "select count(*) cantidad from valorizaciones v 
+        where id_modulo ='3'
+        and id_agremido ='".$id_agremiado."'
+        and pagado ='0'";
+
+        //echo $cad;
+        $data = DB::select($cad);
+        return $data;
+    }
 }
