@@ -211,7 +211,7 @@ class Comprobante extends Model
 
     function getPersonaDni($numero_documento){
 
-        $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres,direccion ,correo
+        $cad = "select p.id, p.numero_documento, p.apellido_paterno, p.apellido_materno, p.nombres, p.direccion, p.correo, p.direccion_sunat
 		        from personas p
 		        Where p.numero_documento='".$numero_documento."'";
 		//echo $cad;

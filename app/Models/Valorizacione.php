@@ -546,7 +546,7 @@ class Valorizacione extends Model
                 and v.estado = '1'            
                 and v.pagado = '0'
                 and v.fecha < now() 
-                and v.id_concepto = 26411
+                and v.id_concepto in(26411, 26461)
             ) AS total;
 
 			";
@@ -555,6 +555,24 @@ class Valorizacione extends Model
         if($data)return $data[0];
     }
     
+    function getBuscaMultaAgremido($id_persona){
+        $cad = "    
+            select  count(*) total from (
+                select  count(*)  total          
+                from valorizaciones v
+                group by v.fecha,v.id_persona,v.estado,v.pagado,v.id_concepto
+                having v.id_persona =  ".$id_persona."
+                and v.estado = '1'            
+                and v.pagado = '0'                
+                and v.id_concepto in (26461)
+            ) AS total;
+
+			";
+    
+		$data = DB::select($cad);
+        if($data)return $data[0];
+    }
+
     function ActualizaValorizacionCredipago($id_val){        
        
         $cad = "
