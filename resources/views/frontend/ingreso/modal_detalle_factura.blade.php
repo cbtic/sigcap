@@ -145,7 +145,7 @@ function buscarDetalleFactura(){
             success: function (result) {  
 
                 result.forEach(factura => {
-
+                    
                     const cod_tributario = factura.cod_tributario || factura.ruc;
                     const destinatario = factura.destinatario || factura.nombre_comercial;
 
@@ -164,6 +164,7 @@ function buscarDetalleFactura(){
                         <td class="text-left">${factura.forma_pago}</td>
                         <td class="text-left">${factura.estado_pago}</td>
                         <td class="text-left">${factura.medio_pago}</td>
+                        <td class="text-left">${factura.descripcion}</td>
                         <td class="text-left">${factura.usuario}</td>
                         <td class="text-center">
                             <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
@@ -401,6 +402,7 @@ function validarDecimal(input) {
 									<th>Forma Pago</th>
                                     <th>Estado Pago</th>
                                     <th>Medio Pago</th>
+                                    <th>descripción</th>
 									<th>Usuario</th>
 									<th class="text-right">Factura</th>
 								</tr>
@@ -408,6 +410,7 @@ function validarDecimal(input) {
 								<tbody id="tblValorizacionFactura_">
 								<?php 
                                 $total_acumulado = 0;
+                                
 								foreach($factura as $key=>$row):
 									$cod_tributario=$row->cod_tributario;
 									$destinatario=$row->destinatario;
@@ -428,7 +431,7 @@ function validarDecimal(input) {
 									<td class="text-left"><?php echo $row->forma_pago?></td>
                                     <td class="text-left"><?php echo $row->estado_pago?></td>
                                     <td class="text-left"><?php echo $row->medio_pago?></td>
-
+                                    <td class="text-left"><?php echo $row->descripcion?></td>    
 									<td class="text-left"><?php echo $row->usuario?></td>
 									<td class="text-center">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
