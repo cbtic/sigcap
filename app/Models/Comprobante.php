@@ -300,7 +300,14 @@ class Comprobante extends Model
 		--having cp.id_comprobante = f.id
         where cp.id_comprobante = f.id
         --order by cp.id
-) medio_pago
+) medio_pago,
+        (select cp.descripcion  
+		from comprobante_pagos cp 
+		inner join tabla_maestras tm on tm.codigo = cp.id_medio::varchar and tm.tipo = '19'
+		
+        where cp.id_comprobante = f.id
+        
+        ) descripcion
  FROM comprobantes f
         inner join tabla_maestras m on m.codigo = f.id_caja::varchar and m.tipo = '91'
         inner join tabla_maestras fp on fp.codigo = f.id_forma_pago::varchar and fp.tipo = '104'
@@ -345,14 +352,19 @@ class Comprobante extends Model
 
         $cad ="select distinct f.id, f.serie, f.numero, f.tipo, f.fecha, f.cod_tributario, f.destinatario, f.subtotal, f.impuesto, f.total, f.estado_pago, f.anulado, m.denominacion caja,
         'plan A'plan_denominacion, 
-        replace(replace(u.email, '@felmo.pe', ''), '@felmo.com', '') usuario
+        replace(replace(u.email, '@limacap.org', ''), '@limacap.org', '') usuario
         ,f.destinatario pac_nombre, per.id_tipo_documento tipo_documento,per.numero_documento,emp.ruc,emp.nombre_comercial, 1 val_aten_estab, 1 val_aten_codigo, '' placa,
         f.id_forma_pago,  fp.denominacion forma_pago, (case when f.estado_pago='P' then 'PENDIENTE' else 'CANCELADO'end) estado_pago, 
         (select string_agg(DISTINCT coalesce(tm.denominacion||'->'||cp.monto), ', ')  
         from comprobante_pagos cp 
         inner join tabla_maestras tm on tm.codigo = cp.id_medio::varchar and tm.tipo = '19'
         where cp.id_comprobante = f.id
-        ) medio_pago
+        ) medio_pago,
+         (select cp.descripcion  
+        from comprobante_pagos cp 
+        inner join tabla_maestras tm on tm.codigo = cp.id_medio::varchar and tm.tipo = '19'
+        where cp.id_comprobante = f.id
+        ) descripcion 
         FROM comprobantes f
         inner join tabla_maestras m on m.codigo = f.id_caja::varchar and m.tipo = '91'
         inner join tabla_maestras fp on fp.codigo = f.id_forma_pago::varchar and fp.tipo = '104'
