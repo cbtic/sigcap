@@ -219,21 +219,37 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 
 $(document).ready(function() {
 	 
+	if($('#id').val() > 0){
 
+		document.addEventListener("DOMContentLoaded", function() {
+			<?php foreach ($tipo_monedas as $row): ?>
+				calculartotal('<?php echo $row->abreviatura; ?>', '<?php echo $row->codigo; ?>');
+			<?php endforeach; ?>
+		});
 
+	}
+	
 });
 
 function validaCaja(){
 
-	var caja = $('#caja').val();
-	var fecha = $('#fecha').val();
-	var moneda = $('#moneda').val();
+	var id = $('#fecha').val();
 
-	$.ajax({
+	if(id > 0){
+
+		fn_save_efectivo();
+
+	}else{
+
+		var caja = $('#caja').val();
+		var fecha = $('#fecha').val();
+		var moneda = $('#moneda').val();
+
+		$.ajax({
 			url: "/ingreso/validarCaja/"+caja+"/"+fecha+"/"+moneda,
-            type: "get",
+			type: "get",
 			dataType: "json",
-            success: function (result) {
+			success: function (result) {
 				
 				var cantidad_ingresos = result[0].cantidad;
 
@@ -242,26 +258,31 @@ function validaCaja(){
 				}else{
 					fn_save_efectivo();
 				}
-				
-				
-            }
-    });
-
+			}
+		});
+	}
 }
 
 function fn_save_efectivo(){
 	
+	//var id = $('#id').val();
+
     $.ajax({
 			url: "/ingreso/send_efectivo_nuevoEfectivo",
             type: "POST",
             data : $("#frmEfectivo").serialize(),
             success: function (result) {
 				
+				//alert(result);
+
 				//$('#openOverlayOpc').modal('hide');
 				//window.location.reload();
 				datatablenew();
 				bootbox.alert("Guardado exitosamente");
-				limpiar();
+				if (result.id>0) {
+					modalEfectivo(result.id);
+				}	
+				//limpiar();
 				
             }
     });
@@ -277,92 +298,12 @@ function limpiar(){
     });
 
 	//$('#caja').val("");
-	$('#importe_soles').val("0");
-	$('#importe_dolares').val("0");
+	//$('#importe_soles').val("0");
+	//$('#importe_dolares').val("0");
 	//$('#moneda').val(1);
 	$('#total_').text("0");
 
 }
-
-/*function calculartotal(valor, posicion){
-
-	var valor;
-	var posicion;
-	var total = 0;
-	
-	if(posicion == 1){
-		cantidad = parseFloat($('#billetes10').val()) || 0;
-		total = valor * cantidad;
-		$('#billetes10_').val(total.toFixed(2));
-	}
-	if(posicion == 2){
-		cantidad = parseFloat($('#billetes20').val()) || 0;
-		total = valor * cantidad;
-		$('#billetes20_').val(total.toFixed(2));
-	}
-	if(posicion == 3){
-		cantidad = parseFloat($('#billetes50').val()) || 0;
-		total = valor * cantidad;
-		$('#billetes50_').val(total.toFixed(2));
-	}
-	if(posicion == 4){
-		cantidad = parseFloat($('#billetes100').val()) || 0;
-		total = valor * cantidad;
-		$('#billetes100_').val(total.toFixed(2));
-	}
-	if(posicion == 5){
-		cantidad = parseFloat($('#billetes200').val()) || 0;
-		total = valor * cantidad;
-		$('#billetes200_').val(total.toFixed(2));
-	}
-	if(posicion == 6){
-		cantidad = parseFloat($('#moneda001').val()) || 0;
-		total = valor * cantidad;
-		$('#moneda001_').val(total.toFixed(2));
-	}
-	if(posicion == 7){
-		cantidad = parseFloat($('#moneda005').val()) || 0;
-		total = valor * cantidad;
-		$('#moneda005_').val(total.toFixed(2));
-	}
-	if(posicion == 8){
-		cantidad = parseFloat($('#moneda010').val()) || 0;
-		total = valor * cantidad;
-		$('#moneda010_').val(total.toFixed(2));
-	}
-	if(posicion == 9){
-		cantidad = parseFloat($('#moneda020').val()) || 0;
-		total = valor * cantidad;
-		$('#moneda020_').val(total.toFixed(2));
-	}
-	if(posicion == 10){
-		cantidad = parseFloat($('#moneda050').val()) || 0;
-		total = valor * cantidad;
-		$('#moneda050_').val(total.toFixed(2));
-	}
-	if(posicion == 11){
-		cantidad = parseFloat($('#moneda1').val()) || 0;
-		total = valor * cantidad;
-		$('#moneda1_').val(total.toFixed(2));
-	}
-	if(posicion == 12){
-		cantidad = parseFloat($('#moneda2').val()) || 0;
-		total = valor * cantidad;
-		$('#moneda2_').val(total.toFixed(2));
-	}
-	if(posicion == 13){
-		cantidad = parseFloat($('#moneda5').val()) || 0;
-		total = valor * cantidad;
-		$('#moneda5_').val(total.toFixed(2));
-	}
-
-}
-
-function calcularTotalGeneral(){
-
-	$('#total_').val();
-
-}*/
 
 function calculartotal(valor, codigo) {
 	
@@ -411,7 +352,7 @@ function calcularTotalGeneral() {
           </h1>
         </section>
 		-->
-		<div class="justify-content-center">		
+		<div class="justify-content-center">
 
 		<div class="card">
 			
@@ -460,7 +401,7 @@ function calcularTotalGeneral() {
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<input id="importe_soles" name="importe_soles" on class="form-control form-control-sm"  value="0" type="text" >
+								<input id="importe_soles" name="importe_soles" on class="form-control form-control-sm"  value="<?php echo $id>0 ? $efectivo->importe_soles : '0' ?>" type="text" >
 							</div>
 						</div>
 						<div class="col-lg-3">
@@ -468,7 +409,7 @@ function calcularTotalGeneral() {
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<input id="importe_dolares" name="importe_dolares" on class="form-control form-control-sm"  value="0" type="text" >
+								<input id="importe_dolares" name="importe_dolares" on class="form-control form-control-sm"  value="<?php echo $id>0 ? $efectivo->importe_dolares : '0' ?>" type="text" >
 							</div>
 						</div>
 					</div>
@@ -508,7 +449,18 @@ function calcularTotalGeneral() {
 							</div>
 							<div class="col-lg-4">
 								<div class="form-group">
-									<input id="<?php echo $row->codigo?>" name="<?php echo $row->codigo?>" on class="form-control form-control-sm"  value="<?php echo ($id > 0 && isset($efectivo_detalle->id_tipo_efectivo) && $efectivo_detalle->id_tipo_efectivo == $row->codigo) ? $efectivo_detalle->cantidad : '0'; ?>" type="text" oninput="calculartotal(<?php echo $row->abreviatura; ?>, <?php echo $row->codigo; ?>)">
+								<?php 
+								$cantidad = '0';
+								if ($id > 0) {
+									foreach ($efectivo_detalle as $detalle) {
+										if ($detalle->id_tipo_efectivo == $row->codigo) {
+											$cantidad = $detalle->cantidad;
+											break;
+										}
+									}
+								}
+								?>
+								<input id="<?php echo $row->codigo ?>" name="<?php echo $row->codigo ?>" class="form-control form-control-sm" value="<?php echo $cantidad; ?>" type="text" oninput="calculartotal(<?php echo $row->abreviatura; ?>, <?php echo $row->codigo; ?>)">
 								</div>
 							</div>
 							<div class="col-lg-4">
@@ -517,8 +469,13 @@ function calcularTotalGeneral() {
 								</div>
 							</div>
 						</div>
+						<?php if ($id > 0): ?>
+							<script>
+								calculartotal('<?php echo $row->abreviatura; ?>', '<?php echo $row->codigo; ?>');
+							</script>
+						<?php endif; ?>
 					<?php }?>
-					
+
 					<div class="row" style="padding-left:15px; padding-right:15px">
 						<div class="col-lg-4">
 						</div>
