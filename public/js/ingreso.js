@@ -629,6 +629,7 @@ function calcular_total_otros(obj){
 
 		if (id_tipo_afectacion=="30")tasa_igv_ = 0;
 
+		
 		var PrecioVenta_ = $(this).parent().parent().parent().find('.val_precio').html();		
 		PrecioVenta_ =PrecioVenta_.toString().replace(',','');
 
