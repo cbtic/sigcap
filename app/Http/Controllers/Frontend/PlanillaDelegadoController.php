@@ -403,6 +403,21 @@ class PlanillaDelegadoController extends Controller
 		$planillaDelegadoDetalle->fecha_comprobante = $request->fecha_comprobante;
 		$planillaDelegadoDetalle->fecha_vencimiento = $request->fecha_vencimiento;			
 		$planillaDelegadoDetalle->cancelado = $request->cancelado;
+
+		//echo($planillaDelegadoDetalle->secuencua_vou);
+
+
+		if ($planillaDelegadoDetalle->secuencua_vou==Null){			
+			$planillaDelegadoDetalle_model = new PlanillaDelegadoDetalle();
+			$data = $planillaDelegadoDetalle_model->secuencua_vou($request->id_periodo_comision, $request->periodo, $request->mes);
+			
+			//echo($data[0]->secuencia);
+			$planillaDelegadoDetalle->secuencua_vou = $data[0]->secuencia;
+			
+		}
+		//exit();
+
+
 		$planillaDelegadoDetalle->save();
 
 		if ($request->selTipo=='S'){

@@ -50,8 +50,16 @@ class PlanillaDelegadoDetalle extends Model
     function actualizarReciboHonorario($id_periodo,$anio,$mes,$grupo,$cancelado,$numero_operacion,$fecha_operacion,$id_usuario){
   
         $cad = "
-            update planilla_delegado_detalles set numero_operacion= '".$numero_operacion."', cancelado= '".$cancelado."',fecha_operacion= '".$fecha_operacion."', id_usuario_actualiza= '".$id_usuario."'
-            where id in (
+            update planilla_delegado_detalles a set a.numero_operacion= '".$numero_operacion."', a.cancelado= '".$cancelado."', a.fecha_operacion= '".$fecha_operacion."', a.id_usuario_actualiza= '".$id_usuario."',
+                a.secuencua_vou = (
+                    select  coalesce(max(pdd_.secuencua_vou),'0') 
+                    from planilla_delegados pd_ 
+                        inner join planilla_delegado_detalles pdd_ on pdd_.id_planilla = pd_.id
+                    where pd_.id_periodo_comision = '".$id_periodo."' 
+                            and pd_.periodo = '".$anio."' 
+                            and pd_.mes = '".$mes."'
+                            pdd_.id = a.id)
+            where a.id in (
                 select pdd.id
                 from planilla_delegados pd 
                     inner join planilla_delegado_detalles pdd on pdd.id_planilla = pd.id
@@ -59,32 +67,29 @@ class PlanillaDelegadoDetalle extends Model
                     and pd.periodo = '".$anio."' 
                     and pd.mes = '".$mes."' 
                     and pdd.estado = '1'
-                    and pdd.id_grupo = '".$grupo."'
-                    --and pdd.numero_comprobante <> '' 
+                    and pdd.id_grupo = '".$grupo."'            
                 )
+                   
         ";
-/*
-        $cad = "
-        update planilla_delegado_detalles set 
-        tipo_comprobante= '".$tipo_comprobante."',
-        numero_comprobante= '".$numero_comprobante."',
-        fecha_comprobante= '".$fecha_comprobante."',
-        fecha_vencimiento= '".$fecha_vencimiento."',
-        numero_operacion= '".$numero_operacion."',
-        cancelado= '".$cancelado."',
-        id_usuario_actualiza= '".$id_usuario."'
-        from planilla_delegados pd 
-            inner join planilla_delegado_detalles pdd on pdd.id_planilla = pd.id
-        where pd.id_periodo_comision = '".$id_periodo."' 
-            and pd.periodo = '".$anio."' 
-            and pd.mes = '".$mes."' 
-            and pdd.estado = '1'
-            and pdd.id_grupo = '".$grupo."' 
-    ";
-    */
+
       //  echo $cad; exit();
         $data = DB::select($cad);
         return $data;
+    }
+
+    Function secuencua_vou($id_periodo,$anio,$mes){
+        $cad = "
+        select  coalesce(max(secuencua_vou),'0')+1 secuencia
+        from planilla_delegados pd 
+            inner join planilla_delegado_detalles pdd on pdd.id_planilla = pd.id
+        where pd.id_periodo_comision = '".$id_periodo."' 
+                and pd.periodo = '".$anio."' 
+                and pd.mes = '".$mes."' ";
+
+  //  echo $cad; exit();
+    $data = DB::select($cad);
+    return $data;
+
     }
 
 }
