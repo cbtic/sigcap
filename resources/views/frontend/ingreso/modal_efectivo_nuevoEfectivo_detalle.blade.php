@@ -33,7 +33,7 @@
 								</div>
 								<div class="col-lg-4">
 									<div class="form-group">
-										<input id="total_<?php echo $index?>" name="total[]" on class="form-control form-control-sm"  value="0" type="text" >
+										<input id="total_<?php echo $index?>" name="total[]" on class="form-control form-control-sm"  value="0" type="text" readonly="readonly" >
 									</div>
 								</div>
 							</div>
@@ -60,7 +60,7 @@
 								</div>
 								<div class="col-lg-4">
 									<div class="form-group">
-										<input id="total_<?php echo $index?>" name="total[]" on class="form-control form-control-sm"  value="<?php echo $row->total ?>" type="text" >
+										<input id="total_<?php echo $index?>" name="total[]" on class="form-control form-control-sm"  value="<?php echo $row->total ?>" readonly="readonly" type="text" >
 									</div>
 								</div>
 							</div>
