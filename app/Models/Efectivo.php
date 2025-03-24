@@ -87,14 +87,15 @@ class Efectivo extends Model
         
     }
 
-    public function valida_caja($caja, $fecha, $moneda){
+    public function valida_caja($caja, $fecha, $moneda, $id_efectivo){
 
         $cad="select count(*) cantidad from efectivos e 
         inner join efectivo_detalles ed on e.id = ed.id_efectivo 
         where e.id_caja = '".$caja."'
         and e.fecha ='".$fecha."'
         and ed.id_moneda ='".$moneda."'
-        and e.estado='1' ";
+        and e.estado='1' 
+        and e.id!=".$id_efectivo;
 
         $data = DB::select($cad);
 

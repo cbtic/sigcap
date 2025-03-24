@@ -244,9 +244,9 @@ function validaCaja(){
 		var caja = $('#caja').val();
 		var fecha = $('#fecha').val();
 		var moneda = $('#moneda').val();
-
+		var id_efectivo = $('#id').val();
 		$.ajax({
-			url: "/ingreso/validarCaja/"+caja+"/"+fecha+"/"+moneda,
+			url: "/ingreso/validarCaja/"+caja+"/"+fecha+"/"+moneda+"/"+id_efectivo,
 			type: "get",
 			dataType: "json",
 			success: function (result) {
@@ -305,24 +305,35 @@ function limpiar(){
 
 }
 
-function calculartotal(valor, codigo) {
+function calculartotal(valor, index) {
 	
-    if (codigo) {
+    //if (codigo) {
+		/*
         let cantidad = parseFloat($(`#${codigo}`).val()) || 0;
         let total = valor * cantidad;
         $(`#${codigo}_`).val(total.toFixed(2));
         calcularTotalGeneral();
-    }
+		*/
+		let cantidad = parseFloat($(`#cantidad_`+index).val()) || 0;
+        let total = valor * cantidad;
+        $(`#total_`+index).val(total.toFixed(2));
+        calcularTotalGeneral();
+    //}
 }
 
 function calcularTotalGeneral() {
     
 	let totalGeneral = 0;
 	//var moneda = 0;
-
+	/*
     tipo_monedas.forEach(codigo => {
         totalGeneral += parseFloat($(`#${codigo}_`).val()) || 0;
     });
+	*/
+	$('input[name="total[]"]').each(function () {
+        totalGeneral += parseFloat($(this).val()) || 0;
+    });
+	console.log(totalGeneral);
 
 	$('#total_').text(totalGeneral.toFixed(2));
 
@@ -333,6 +344,33 @@ function calcularTotalGeneral() {
 	}else{
 		$('#importe_dolares').val(totalGeneral.toFixed(2));
 	}
+	
+}
+
+var id = "<?php echo $id?>";
+//if(id==0)
+cargarEfectivoDetalleMoneda(id,1);
+
+function cargar_moneda(){
+	
+	var moneda = $("#moneda").val();
+	var id = $("#id").val();
+	cargarEfectivoDetalleMoneda(id,moneda);
+
+}
+
+function cargarEfectivoDetalleMoneda(id,id_moneda){
+
+	$.ajax({
+			url: "/ingreso/modal_efectivo_detalle/"+id+"/"+id_moneda,
+			type: "GET",
+			success: function (result) {  
+					$("#efectivoDetalle").html(result);
+					//$('[data-toggle="tooltip"]').tooltip();
+							
+			}
+	});
+
 }
 
 </script>
@@ -419,7 +457,7 @@ function calcularTotalGeneral() {
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<select name="moneda" id="moneda" class="form-control form-control-sm" onchange="limpiar()">
+								<select name="moneda" id="moneda" class="form-control form-control-sm" onchange="limpiar();cargar_moneda();">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($moneda as $row) {?>
@@ -431,6 +469,9 @@ function calcularTotalGeneral() {
 							</div>
 						</div>
 					</div>
+
+					<div id="efectivoDetalle">
+					<!--
 					<div class="row" style="padding-left:15px; padding-right:15px">
 						<div class="col-lg-4">
 							<b>Denominaci&oacute;n</b>
@@ -442,15 +483,15 @@ function calcularTotalGeneral() {
 							<b>Total</b>
 						</div>
 					</div>
-					<?php foreach($tipo_monedas as $index => $row){?>
+					<?php //foreach($tipo_monedas as $index => $row){?>
 						<div class="row" style="padding-left:15px; padding-right:15px">
 							<div class="col-lg-4">
-								<?php echo $row->denominacion?>
+								<?php //echo $row->denominacion?>
 							</div>
 							<div class="col-lg-4">
 								<div class="form-group">
 								<?php 
-								$cantidad = '0';
+								/*$cantidad = '0';
 								if ($id > 0) {
 									foreach ($efectivo_detalle as $detalle) {
 										if ($detalle->id_tipo_efectivo == $row->codigo) {
@@ -458,23 +499,25 @@ function calcularTotalGeneral() {
 											break;
 										}
 									}
-								}
+								}*/
 								?>
-								<input id="<?php echo $row->codigo ?>" name="<?php echo $row->codigo ?>" class="form-control form-control-sm" value="<?php echo $cantidad; ?>" type="text" oninput="calculartotal(<?php echo $row->abreviatura; ?>, <?php echo $row->codigo; ?>)">
+								<input id="<?php //echo $row->codigo ?>" name="<?php //echo $row->codigo ?>" class="form-control form-control-sm" value="<?php //echo $cantidad; ?>" type="text" oninput="calculartotal(<?php //echo $row->abreviatura; ?>, <?php //echo $row->codigo; ?>)">
 								</div>
 							</div>
 							<div class="col-lg-4">
 								<div class="form-group">
-									<input id="<?php echo $row->codigo?>_" name="<?php echo $row->codigo?>_" on class="form-control form-control-sm"  value="0" type="text" >
+									<input id="<?php //echo $row->codigo?>_" name="<?php //echo $row->codigo?>_" on class="form-control form-control-sm"  value="0" type="text" >
 								</div>
 							</div>
 						</div>
-						<?php if ($id > 0): ?>
+						<?php //if ($id > 0): ?>
 							<script>
-								calculartotal('<?php echo $row->abreviatura; ?>', '<?php echo $row->codigo; ?>');
+								calculartotal('<?php //echo $row->abreviatura; ?>', '<?php //echo $row->codigo; ?>');
 							</script>
-						<?php endif; ?>
-					<?php }?>
+						<?php //endif; ?>
+					<?php 
+					//}
+					?>
 
 					<div class="row" style="padding-left:15px; padding-right:15px">
 						<div class="col-lg-4">
@@ -487,6 +530,10 @@ function calcularTotalGeneral() {
 							</div>
 						</div>
 					</div>
+					-->
+
+					</div>
+
 					<div style="margin-top:0px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">

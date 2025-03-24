@@ -1216,6 +1216,21 @@ class IngresoController extends Controller
 	
 	}
 
+    public function modal_efectivo_detalle($id,$id_moneda){
+
+        $caja_model = new TablaMaestra;
+        $tipo_monedas = $caja_model->getMaestroByTipo("133");
+        if($id>0){
+            //$efectivo_detalle = EfectivoDetalle::where('id_efectivo',$id)->where('id_moneda',$id_moneda)->get();
+            $efectivo_detalle_model = new EfectivoDetalle;
+            $efectivo_detalle = $efectivo_detalle_model->getEfectivoDetalleByIdMonedaAndIdEfectivo($id,$id_moneda);
+        }else{
+            $efectivo_detalle = new EfectivoDetalle;
+        }
+        return view('frontend.ingreso.modal_efectivo_nuevoEfectivo_detalle',compact('id','id_moneda','tipo_monedas','efectivo_detalle'));
+
+    }
+
     public function send_efectivo_nuevoEfectivo(Request $request){
 		
 		$id_user = Auth::user()->id;
@@ -1242,7 +1257,29 @@ class IngresoController extends Controller
         }else{
 			//$efectivo_detalle = EfectivoDetalle::where('id_efectivo',$efectivo->id);
 		}
+        
+        $cantidad = $request->cantidad;
+        $total = $request->total;
+        $iddetalle = $request->iddetalle;
+        $id_tipo_efectivo = $request->id_tipo_efectivo;
 
+        foreach($iddetalle as $key=>$row){
+            if($row==0){
+                $efectivo_detalle = new EfectivoDetalle;
+                $efectivo_detalle->id_moneda = $request->moneda;
+                $efectivo_detalle->id_tipo_efectivo = $id_tipo_efectivo[$key];
+            }else{
+                $efectivo_detalle = EfectivoDetalle::find($row);
+            }
+            //$efectivo_detalle = new EfectivoDetalle;
+            $efectivo_detalle->id_efectivo = $efectivo->id;
+            $efectivo_detalle->cantidad = $cantidad[$key];
+            $efectivo_detalle->total = $total[$key];
+            //$efectivo_detalle->estado = 1;
+            $efectivo_detalle->save();
+
+        }
+        /*
         foreach ($request->except(['_token', 'id', 'caja', 'fecha', 'importe_soles', 'importe_dolares', 'moneda']) as $key => $value) {
             if (strpos($key, '_') === false) {
                 $codigo = $key;
@@ -1259,7 +1296,7 @@ class IngresoController extends Controller
                 $efectivo_detalle->save();
             }
         }
-
+        */
         return response()->json(['id' => $efectivo->id]); 
 
     }
@@ -1322,11 +1359,11 @@ class IngresoController extends Controller
 
 	}
 
-    public function validarCaja($caja, $fecha, $moneda){
+    public function validarCaja($caja, $fecha, $moneda, $id_efectivo){
 
         $efectivo_model = new Efectivo;
 
-        $resultado = $efectivo_model->valida_caja($caja, $fecha, $moneda);
+        $resultado = $efectivo_model->valida_caja($caja, $fecha, $moneda,$id_efectivo);
 
         echo json_encode($resultado);
 

@@ -825,10 +825,11 @@ Route::get('derecho_revision/create_solicitud', [DerechoRevisionController::clas
 Route::get('ingreso/create_efectivo', [IngresoController::class, 'create_efectivo'])->name('ingreso.create_efectivo');
 Route::post('ingreso/listar_consulta_efectivo_ajax', [IngresoController::class, 'listar_consulta_efectivo_ajax'])->name('ingreso.listar_consulta_efectivo_ajax');
 Route::get('ingreso/modal_efectivo_nuevoEfectivo/{id}', [IngresoController::class, 'modal_efectivo_nuevoEfectivo'])->name('ingreso.modal_efectivo_nuevoEfectivo');
+Route::get('ingreso/modal_efectivo_detalle/{id}/{id_moneda}', [IngresoController::class, 'modal_efectivo_detalle'])->name('ingreso.modal_efectivo_detalle');
 Route::post('ingreso/send_efectivo_nuevoEfectivo', [IngresoController::class, 'send_efectivo_nuevoEfectivo'])->name('ingreso.send_efectivo_nuevoEfectivo');
 Route::get('ingreso/reporte_efectivo_caja_pdf/{fecha}/{caja}', [IngresoController::class, 'reporte_efectivo_caja_pdf'])->name('ingreso.reporte_efectivo_caja_pdf');
 Route::get('ingreso/reporte_efectivo_consolidado_pdf/{fecha}', [IngresoController::class, 'reporte_efectivo_consolidado_pdf'])->name('ingreso.reporte_efectivo_consolidado_pdf');
-Route::get('ingreso/validarCaja/{caja}/{fecha}/{moneda}', [IngresoController::class, 'validarCaja'])->name('ingreso.validarCaja');
+Route::get('ingreso/validarCaja/{caja}/{fecha}/{moneda}/{id_efectivo}', [IngresoController::class, 'validarCaja'])->name('ingreso.validarCaja');
 Route::get('agremiado/validar_agremiado_multa/{ncap}', [AgremiadoController::class, 'validar_agremiado_multa'])->name('agremiado.validar_agremiado_multa');
 
 
