@@ -68,6 +68,10 @@
 	background: #3c8dbc;
 	color: #FFFFFF;
 }
+
+.color-letra {
+    color: #1538C8;
+}
 /*
 .form-control:disabled, .form-control[readonly]{
 	background-color:#fff3cd!important;
@@ -216,7 +220,7 @@ if($('#instancia').val()==250){
 
             <div class="row">
                 <div class="col-sm-5">
-                    <h4 class="card-title mb-0 text-primary">
+                    <h4 class="card-title mb-0" style="color: #1538C8;">
                         Solicitud de Reintegro de Derecho de Revisi&oacute;n<!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
@@ -227,7 +231,7 @@ if($('#instancia').val()==250){
         <div class="col col-sm-12 align-self-center">
 
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="color: #1538C8;">
                     <strong>
                         Datos Generales del Proyecto
                     </strong>
@@ -247,7 +251,7 @@ if($('#instancia').val()==250){
 					<div class="row" style="padding-left:10px">
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-5">
-								<label class="control-label form-control-sm">Municipalidad</label>
+								<label class="control-label form-control-sm color-letra">Municipalidad</label>
 								<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="obtenerUbigeoReintegro()"> 
 									<?php
 									$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
@@ -261,7 +265,7 @@ if($('#instancia').val()==250){
 							</div>
 					
 							<div class="col-lg-4">
-								<label class="control-label form-control-sm">N° de Revisi&oacute;n</label>
+								<label class="control-label form-control-sm color-letra">N° de Revisi&oacute;n</label>
 								<select name="n_revision" id="n_revision" class="form-control form-control-sm" value="<?php //echo $derechoRevision_->numero_revision?>">
 								<?php
 								$valorSeleccionado = isset($derechoRevision_->numero_revision) ? $derechoRevision_->numero_revision : '';
@@ -277,13 +281,13 @@ if($('#instancia').val()==250){
 						<div class="row" style="padding-left:10px">
 
 							<div class="col-lg-5">
-								<label class="control-label form-control-sm">Nombre del Proyecto</label>
-								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->nombre?>" type="text" readonly='readonly'>
+								<label class="control-label form-control-sm color-letra">Nombre del Proyecto</label>
+								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->nombre?>" type="text">
 							</div>
 
 							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Tipo</label>
-								<select name="tipo_direccion" id="tipo_direccion" class="form-control form-control-sm" onChange="" disabled='disabled'>
+								<label class="control-label form-control-sm color-letra">Tipo</label>
+								<select name="tipo_direccion" id="tipo_direccion" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo as $row) {?>
@@ -295,12 +299,12 @@ if($('#instancia').val()==250){
 							</div>
 						
 							<div class="col-lg-5">
-								<label class="control-label form-control-sm">Direccion</label>
-								<input id="direccion_proyecto" name="direccion_proyecto" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->direccion?>" type="text" readonly='readonly'>
+								<label class="control-label form-control-sm color-letra">Direccion</label>
+								<input id="direccion_proyecto" name="direccion_proyecto" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->direccion?>" type="text">
 							</div>
 
 							<div class="col-lg-2">
-								<label class="control-label form-control-sm">Departamento</label>
+								<label class="control-label form-control-sm color-letra">Departamento</label>
 								<select name="departamento" id="departamento" class="form-control form-control-sm" onChange="obtenerProvinciaReintegro()">
 									<?php //if($id>0){ ?>
 									<option value="">--Selecionar--</option>
@@ -323,7 +327,7 @@ if($('#instancia').val()==250){
 							</div>
 						
 							<div class="col-lg-2">
-								<label class="control-label form-control-sm">Provincia</label>
+								<label class="control-label form-control-sm color-letra">Provincia</label>
 								<select name="provincia" id="provincia" class="form-control form-control-sm" onChange="obtenerDistritoReintegro()">
 									<option value="">--Selecionar--</option>
 								</select>
@@ -331,18 +335,18 @@ if($('#instancia').val()==250){
 							
 
 							<div class="col-lg-2">
-								<label class="control-label form-control-sm">Distrito</label>
+								<label class="control-label form-control-sm color-letra">Distrito</label>
 								<select name="distrito" id="distrito" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 								</select>
 							</div>
 						</div>
-						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold; color: #1538C8;">
 							Proyectista Principal
 						</div>	
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-1" hidden>
-								<label class="control-label form-control-sm">Tipo Proyectista</label>
+								<label class="control-label form-control-sm color-letra">Tipo Proyectista</label>
 								<select name="tipo_proyectista" id="tipo_proyectista" class="form-control form-control-sm" onChange="">
 									<option value="">--Selecionar--</option>
 									<?php
@@ -356,69 +360,69 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-3" >
 								<div class="form-group "id="agremiado_">
-									<label class="control-label form-control-sm">Nombre</label>
+									<label class="control-label form-control-sm color-letra">Nombre</label>
 									<input id="agremiado" name="agremiado" on class="form-control form-control-sm"  value="<?php //echo $datos_proyectista[0]->nombres?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="persona_">
-									<label class="control-label form-control-sm">Nombre/Raz&oacute;n Social</label>
+									<label class="control-label form-control-sm color-letra">Nombre/Raz&oacute;n Social</label>
 									<input id="persona" name="persona" on class="form-control form-control-sm"  value="<?php //echo $persona->nombres?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="numero_cap_">
-									<label class="control-label form-control-sm">N° <?php //echo $datos_proyectista[0]->tipo_colegiatura?></label>
+									<label class="control-label form-control-sm color-letra">N° <?php //echo $datos_proyectista[0]->tipo_colegiatura?></label>
 									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php //echo $datos_proyectista[0]->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
 									<input id="tipo_colegiatura" name="tipo_colegiatura" value="<?php //echo $datos_proyectista[0]->tipo_colegiatura?>" type="hidden" >
 								</div>
 								<div class="form-group" id="dni_">
-									<label class="control-label form-control-sm">DNI</label>
+									<label class="control-label form-control-sm color-letra">DNI</label>
 									<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_documento?>" type="text" onchange="obtenerPropietario()">
 								</div>
 							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="situacion_">
-									<label class="control-label form-control-sm">Situaci&oacute;n</label>
+									<label class="control-label form-control-sm color-letra">Situaci&oacute;n</label>
 									<input id="situacion" name="situacion" on class="form-control form-control-sm"  value="<?php //echo $datos_proyectista[0]->situacion?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="fecha_nacimiento_">
-									<label class="control-label form-control-sm">Fecha de Nacimiento</label>
+									<label class="control-label form-control-sm color-letra">Fecha de Nacimiento</label>
 									<input id="fecha_nacimiento" name="fecha_nacimiento" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->fecha_nacimiento?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 
 							<div class="col-lg-1">
 								<div class="form-group" id="direccion_agremiado_">
-									<label class="control-label form-control-sm">T&eacute;lefono</label>
+									<label class="control-label form-control-sm color-letra">T&eacute;lefono</label>
 									<input id="direccion_agremiado" name="direccion_agremiado" on class="form-control form-control-sm"  value="<?php //echo $datos_proyectista[0]->numero_celular?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="direccion_persona_">
-									<label class="control-label form-control-sm">Direcci&oacute;n</label>
+									<label class="control-label form-control-sm color-letra">Direcci&oacute;n</label>
 									<input id="direccion_persona" name="direccion_persona" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->direccion?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 
 							<div class="col-lg-3">
 								<div class="form-group" id="n_regional_">
-									<label class="control-label form-control-sm">Email</label>
+									<label class="control-label form-control-sm color-letra">Email</label>
 									<input id="n_regional" name="n_regional" on class="form-control form-control-sm"  value="<?php //echo $datos_proyectista[0]->correo?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="celular_">
-									<label class="control-label form-control-sm">Celular</label>
+									<label class="control-label form-control-sm color-letra">Celular</label>
 									<input id="celular" name="celular" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->numero_celular?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 							<div class="col-lg-2">
 								<div class="form-group" id="act_gremial_">
-									<label class="control-label form-control-sm">Actividad Gremial</label>
+									<label class="control-label form-control-sm color-letra">Actividad Gremial</label>
 									<input id="act_gremial" name="act_gremial" on class="form-control form-control-sm"  value="<?php //echo $datos_proyectista[0]->actividad?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="email_">
-									<label class="control-label form-control-sm">Email</label>
+									<label class="control-label form-control-sm color-letra">Email</label>
 									<input id="email" name="email" on class="form-control form-control-sm"  value="<?php //echo $persona->correo?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 							<div class="col-lg-1" hidden>
-								<label class="control-label form-control-sm">Principal_asociado</label>
+								<label class="control-label form-control-sm color-letra">Principal_asociado</label>
 								<select name="principal_asociado" id="principal_asociado" class="form-control form-control-sm" onChange="">
 									<option value="0">--Selecionar--</option>
 									<?php
@@ -433,7 +437,7 @@ if($('#instancia').val()==250){
 						</div>
 						
 						<?php //if(count($proyectista_solicitud)>1){?>
-						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold; color: #1538C8;">
 							Proyectista Asociados
 						</div>
 						
@@ -517,13 +521,13 @@ if($('#instancia').val()==250){
 						?>
 						
 						
-						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold; color: #1538C8;">
 							Propietario/Administrado
 						</div>	
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-1">
-								<label class="control-label form-control-sm">Tipo Documento</label>
-								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="obtenerPropietario_()" disabled='disabled'>
+								<label class="control-label form-control-sm color-letra">Tipo Documento</label>
+								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="obtenerPropietario_()">
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_documento as $row) {?>
@@ -536,18 +540,18 @@ if($('#instancia').val()==250){
 
 							<div class="col-lg-1">
 								<div class="form-group" id="dni_propietario_">
-								<label class="control-label form-control-sm">DNI</label>
-								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm" value="<?php //echo isset($propietario_solicitud) && $propietario_solicitud[0]->id_tipo_propietario=='78' ? $propietario_solicitud[0]->numero_documento : '';?>" type="text" onchange="obtenerDatosDni()" readonly='readonly'>
+								<label class="control-label form-control-sm color-letra">DNI</label>
+								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm" value="<?php //echo isset($propietario_solicitud) && $propietario_solicitud[0]->id_tipo_propietario=='78' ? $propietario_solicitud[0]->numero_documento : '';?>" type="text" onchange="obtenerDatosDni()">
 								</div>
 								<div class="form-group" id="ruc_propietario_">
-									<label class="control-label form-control-sm">RUC</label>
+									<label class="control-label form-control-sm color-letra">RUC</label>
 									<input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php //if($propietario_solicitud[0]->id_tipo_propietario=='79') echo $propietario_solicitud[0]->numero_documento;?>" type="text" onchange="obtenerDatosRuc()">
 								</div>
 							</div>
 
 							<div class="col-lg-3" >
 							<div class="form-group" id="nombre_propietario_">
-								<label class="control-label form-control-sm">Nombre</label>
+								<label class="control-label form-control-sm color-letra">Nombre</label>
 								<input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php //echo $propietario_solicitud[0]->propietario?>" type="text" onchange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="razon_social_propietario_">
@@ -557,44 +561,44 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-3" >
 								<div class="form-group" id="direccion_dni_">
-									<label class="control-label form-control-sm">Direcci&oacute;n</label>
+									<label class="control-label form-control-sm color-letra">Direcci&oacute;n</label>
 									<input id="direccion_dni" name="direccion_dni" on class="form-control form-control-sm"  value="<?php //echo $propietario_solicitud[0]->direccion?>" type="text" onchange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="direccion_ruc_">
-									<label class="control-label form-control-sm">Direcci&oacute;n</label>
+									<label class="control-label form-control-sm color-letra">Direcci&oacute;n</label>
 									<input id="direccion_ruc" name="direccion_ruc" on class="form-control form-control-sm"  value="<?php //echo $propietario_solicitud[0]->direccion?>" type="text" onchange="" readonly='readonly'>
 								</div>
 							</div>
 							
 							<div class="col-lg-1" >
 								<div class="form-group" id="celular_dni_">
-									<label class="control-label form-control-sm">Celular</label>
+									<label class="control-label form-control-sm color-letra">Celular</label>
 									<input id="celular_dni" name="celular_dni" on class="form-control form-control-sm"  value="<?php //echo $propietario_solicitud[0]->numero_celular?>" type="text" onchange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="telefono_ruc_">
-									<label class="control-label form-control-sm">Tel&eacute;fono</label>
+									<label class="control-label form-control-sm color-letra">Tel&eacute;fono</label>
 									<input id="telefono_ruc" name="telefono_ruc" on class="form-control form-control-sm"  value="<?php //echo $propietario_solicitud[0]->numero_celular?>" type="text" onchange="" readonly='readonly'>
 								</div>
 							</div>
 
 							<div class="col-lg-2" >
 								<div class="form-group" id="email_dni_">
-									<label class="control-label form-control-sm">Email</label>
+									<label class="control-label form-control-sm color-letra">Email</label>
 									<input id="email_dni" name="email_dni" on class="form-control form-control-sm"  value="<?php //echo $propietario_solicitud[0]->correo?>" type="text" onchange="" readonly='readonly'>
 								</div>
 								<div class="form-group" id="email_ruc_">
-									<label class="control-label form-control-sm">Email</label>
+									<label class="control-label form-control-sm color-letra">Email</label>
 									<input id="email_ruc" name="email_ruc" on class="form-control form-control-sm"  value="<?php //echo $propietario_solicitud[0]->correo?>" type="text" onchange="" readonly='readonly'>
 								</div>
 							</div>
 						</div>
 
-						<div style="padding: 0px 0px 15px 10px; font-weight: bold">
+						<div style="padding: 0px 0px 15px 10px; font-weight: bold; color: #1538C8;">
 							Datos del Proyecto
 						</div>
 
 						<div class="col-lg-3" style=";padding-right:15px">
-							<label class="control-label form-control-sm">Datos T&eacute;cnicos del proyecto</label>
+							<label class="control-label form-control-sm color-letra">Datos T&eacute;cnicos del proyecto</label>
 							<select name="tipo_proyecto" id="tipo_proyecto" class="form-control form-control-sm" onChange="">
 								<option value="">--Selecionar--</option>
 								<?php
@@ -605,7 +609,7 @@ if($('#instancia').val()==250){
 								?>
 							</select>
 						</div>
-						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold; color: #1538C8;">
 							Uso de la Edificaci&oacute;n
 						</div>
 						
@@ -615,12 +619,12 @@ if($('#instancia').val()==250){
 									<div class="col-lg-12" id="uso-container">
 									
 						<?php 
-							/*foreach($datos_usoEdificaciones as $key=>$row){
-							$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
+							//foreach($datos_usoEdificaciones as $key=>$row){
+							//$sub_tipo_uso = App\Models\TablaMaestra::getMaestroByTipoAndSubTipo(111,$row->id_tipo_uso);
 						?>
 										<div class="row uso-row">
 											<div class="col-lg-4" style=";padding-right:15px">
-											<label class="control-label form-control-sm">Tipo de Uso</label>
+											<label class="control-label form-control-sm color-letra">Tipo de Uso</label>
 											<select name="tipo_uso[]" id="tipo_uso" class="form-control form-control-sm" onChange="obtenerSubTipoUso(this)">
 												<option value="">--Seleccionar--</option>
 												<?php
@@ -632,19 +636,19 @@ if($('#instancia').val()==250){
 											</select>
 										</div>
 										<div class="col-lg-4" style=";padding-right:15px">
-											<label class="control-label form-control-sm">Sub-Tipo de Uso</label>
+											<label class="control-label form-control-sm color-letra">Sub-Tipo de Uso</label>
 											<select name="sub_tipo_uso[]" id="sub_tipo_uso" class="form-control form-control-sm" onChange="">
 												<option value="">--Seleccionar--</option>
 												<?php
-												foreach ($sub_tipo_uso as $row_) {?>
+												/*foreach ($sub_tipo_uso as $row_) {?>
 												<option value="<?php echo $row_->codigo?>" <?php //if($row_->codigo==$row->id_sub_tipo_uso)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
 												<?php
-												}
+												}*/
 												?>
 											</select>
 										</div>
 										<div class="col-lg-2">
-											<label class="control-label form-control-sm">&Aacute;rea Techada</label>
+											<label class="control-label form-control-sm color-letra">&Aacute;rea Techada</label>
 											<input id="area_techada" name="area_techada[]" on class="form-control form-control-sm"  value="<?php //echo number_format($row->area_techada, 2, '.', ',');?>" type="text" onchange="">
 										</div>
 										<div style="margin-top:37px" class="form-group">
@@ -658,25 +662,16 @@ if($('#instancia').val()==250){
 											</div>
 										</div>
 										
-										
-										<?php if($key!=0){?>
-											
 											<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
-											
-										<?php } ?>
 										
 									</div>
-						<?php 
-								//}
-							} */
-						?>
 						
 						</div>
 								</div>
 							</div>
 						</div>
 
-						<div style="padding: 10px 0px 15px 10px; font-weight: bold">
+						<div style="padding: 10px 0px 15px 10px; font-weight: bold; color: #1538C8;">
 							Presupuesto
 						</div>
 						
@@ -686,66 +681,52 @@ if($('#instancia').val()==250){
 								
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-12" id="presupuesto-container">
-									
-								<?php 
-									/*foreach($datos_presupuesto as $key=>$row){	
-								?>
 								
-								
-										<div class="row presupuesto-row">
-											<div class="col-lg-4" style=";padding-right:15px">
-												<label class="control-label form-control-sm">Tipo de Obra</label>
-												<select name="tipo_obra[]" id="tipo_obra" class="form-control form-control-sm" onChange="">
-													<option value="">--Selecionar--</option>
-													<?php
-													foreach ($tipo_obra as $row_) {?>
-													<option value="<?php echo $row_->codigo?>" <?php //if($row_->codigo==$row->id_tipo_obra)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
-													<?php
-													}
-													?>
-												</select>
+								<div class="row presupuesto-row">
+									<div class="col-lg-4" style=";padding-right:15px">
+										<label class="control-label form-control-sm color-letra">Tipo de Obra</label>
+										<select name="tipo_obra[]" id="tipo_obra" class="form-control form-control-sm" onChange="">
+											<option value="">--Selecionar--</option>
+											<?php
+											foreach ($tipo_obra as $row_) {?>
+											<option value="<?php echo $row_->codigo?>" <?php //if($row_->codigo==$row->id_tipo_obra)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+											<?php
+											}
+											?>
+										</select>
+									</div>
+									<div class="col-lg-2">
+										<label class="control-label form-control-sm color-letra">&Aacute;rea Techada m2</label>
+										<input id="area_techada_presupuesto" name="area_techada_presupuesto[]" on class="form-control form-control-sm"  value="<?php //echo number_format($row->area_techada, 2, '.', ',');?>" type="text">
+									</div>
+									<div class="col-lg-2">
+										<label class="control-label form-control-sm color-letra">Valor Unitario S/</label>
+										<input id="valor_unitario" name="valor_unitario[]" on class="form-control form-control-sm"  value="<?php //echo number_format($row->valor_unitario, 2, '.', ',');?>" type="text">
+									</div>
+									<div class="col-lg-2">
+										<label class="control-label form-control-sm color-letra">Presupuesto</label>
+										<input id="presupuesto" name="presupuesto[]" on class="form-control form-control-sm"  value="<?php //echo number_format($row->total_presupuesto, 2, '.', ',');?>" type="text" readonly='readonly'>
+									</div>
+									<div style="margin-top:37px" class="form-group">
+										<div class="col-sm-12 controls">
+											<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
+												<a href="javascript:void(0)" onClick="AddFilaPresupuesto()" class="btn btn-sm btn-success">Agregar</a>
+												<!--<button class="btn btn-sm btn-danger" style="margin-left:10px" onclick="removeFilaPresupuesto(event,this.parentNode)">Eliminar</button>
+												<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
 											</div>
-											<div class="col-lg-2">
-												<label class="control-label form-control-sm">&Aacute;rea Techada m2</label>
-												<input id="area_techada_presupuesto" name="area_techada_presupuesto[]" on class="form-control form-control-sm"  value="<?php //echo number_format($row->area_techada, 2, '.', ',');?>" type="text">
-											</div>
-											<div class="col-lg-2">
-												<label class="control-label form-control-sm">Valor Unitario S/</label>
-												<input id="valor_unitario" name="valor_unitario[]" on class="form-control form-control-sm"  value="<?php //echo number_format($row->valor_unitario, 2, '.', ',');?>" type="text">
-											</div>
-											<div class="col-lg-2">
-												<label class="control-label form-control-sm">Presupuesto</label>
-												<input id="presupuesto" name="presupuesto[]" on class="form-control form-control-sm"  value="<?php //echo number_format($row->total_presupuesto, 2, '.', ',');?>" type="text" readonly='readonly'>
-											</div>
-											<div style="margin-top:37px" class="form-group">
-												<div class="col-sm-12 controls">
-													<div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-														<a href="javascript:void(0)" onClick="AddFilaPresupuesto()" class="btn btn-sm btn-success">Agregar</a>
-														<!--<button class="btn btn-sm btn-danger" style="margin-left:10px" onclick="removeFilaPresupuesto(event,this.parentNode)">Eliminar</button>
-														<button type="button" id="btnAgregar" class="btn btn-sm btn-success" onclick="AddFila()">Agregar</button>-->
-													</div>
-												</div>
-											</div>
-											
-											<?php if($key!=0){?>
-											
-											<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
-											
-											<?php } ?>
-											
 										</div>
+									</div>
 									
-								
-								<?php 
-									} */
-								?>		
+									<button class="btn btn-sm btn-danger" onclick="removeFilaPresupuestoEdit(this)" style="margin-top: 37px; margin-bottom: 37px;">Eliminar</button>
+									
+								</div>
 								
 								</div>
 								</div>
 								
 								<div class="row" style="padding-left:10px;padding-top:10px; display:flex; justify-content:flex-end">
 									<div class="col-lg-3">
-										<label class="control-label form-control-sm">Valor Total de Obra S/</label>
+										<label class="control-label form-control-sm color-letra">Valor Total de Obra S/</label>
 										<input id="valor_total_obra" name="valor_total_obra" on class="form-control form-control-sm"  value="<?php //echo number_format($derechoRevision_->valor_obra, 2, '.', ',');?>" type="text" readonyl="readonly">
 									</div>
 								</div>
@@ -753,19 +734,19 @@ if($('#instancia').val()==250){
 							<div class="col-lg-2" style=";padding-right:15px; border-left:2px solid #ccc;">
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
-										<label class="control-label form-control-sm">&Aacute;rea Techada Total</label>
+										<label class="control-label form-control-sm color-letra">&Aacute;rea Techada Total</label>
 										<input id="area_techada_total" name="area_techada_total" on class="form-control form-control-sm"  value="<?php //echo number_format($derechoRevision_->area_total, 2, '.', ',');?>" type="text" readonly='readonly'>
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
-										<label class="control-label form-control-sm">Azotea</label>
+										<label class="control-label form-control-sm color-letra">Azotea</label>
 										<input id="azotea" name="azotea" on class="form-control form-control-sm"  value="<?php //echo $derechoRevision_->azotea?>" type="text">
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
-										<label class="control-label form-control-sm">N° de Pisos</label>
+										<label class="control-label form-control-sm color-letra">N° de Pisos</label>
 										<input id="n_pisos" name="n_pisos" on class="form-control form-control-sm"  value="<?php //echo $derechoRevision_->numero_piso?>" type="text">
 									</div>
 								</div>
@@ -774,19 +755,19 @@ if($('#instancia').val()==250){
 							<div class="col-lg-2" style=";padding-right:15px">
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
-										<label class="control-label form-control-sm">N° S&oacute;tanos</label>
+										<label class="control-label form-control-sm color-letra">N° S&oacute;tanos</label>
 										<input id="n_sotanos" name="n_sotanos" on class="form-control form-control-sm"  value="<?php //echo $derechoRevision_->numero_sotano?>" type="text">
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
-										<label class="control-label form-control-sm">Semis&oacute;tano</label>
+										<label class="control-label form-control-sm color-letra">Semis&oacute;tano</label>
 										<input id="semisotano" name="semisotano" on class="form-control form-control-sm"  value="<?php //echo $derechoRevision_->semisotano?>" type="text">
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
-										<label class="control-label form-control-sm">Fecha Registro</label>
+										<label class="control-label form-control-sm color-letra">Fecha Registro</label>
 										<input id="fecha_registro" name="fecha_registro" on class="form-control form-control-sm"  value="<?php //echo date('Y-m-d', strtotime($derechoRevision_->fecha_registro)); ?>" type="text" readonly='readonly'>
 									</div>
 								</div>
@@ -794,13 +775,13 @@ if($('#instancia').val()==250){
 						</div>
 						
 						
-						<div style="padding: 15px 0px 15px 10px; font-weight: bold">
+						<div style="padding: 15px 0px 15px 10px; font-weight: bold; color: #1538C8;">
 							C&aacute;lculo Liquidaci&oacute;n
 						</div>
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-3">
 								<div class="form-group">
-									<label class="control-label form-control-sm">Tipo Liquidaci&oacute;n 1</label>
+									<label class="control-label form-control-sm color-letra">Tipo Liquidaci&oacute;n 1</label>
 									<select name="tipo_liquidacion1" id="tipo_liquidacion1" class="form-control form-control-sm">
 										<option value="">--Selecionar--</option>
 										<?php
@@ -817,7 +798,7 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-3">
 								<div class="form-group">
-									<label class="control-label form-control-sm">Instancia</label>
+									<label class="control-label form-control-sm color-letra">Instancia</label>
 									<select name="instancia" id="instancia" class="form-control form-control-sm" onChange="habilitar_reintegro()">
 										<option value="">--Selecionar--</option>
 										<?php
@@ -831,7 +812,7 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-3">
 								<div class="form-group">
-									<label class="control-label form-control-sm">Tipo Liquidaci&oacute;n 2</label>
+									<label class="control-label form-control-sm color-letra">Tipo Liquidaci&oacute;n 2</label>
 									<select name="tipo_liquidacion2" id="tipo_liquidacion2" class="form-control form-control-sm">
 										<option value="">--Selecionar--</option>
 										<?php
@@ -848,7 +829,7 @@ if($('#instancia').val()==250){
 							</div>
 							<div class="col-lg-2">
 								<div id="valor_reintegro_" name="valor_reintegro_">
-									<label class="control-label form-control-sm">Valor Reintegro S/.</label>
+									<label class="control-label form-control-sm color-letra">Valor Reintegro S/.</label>
 									<input id="valor_reintegro" name="valor_reintegro" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" onChange="calcularReintegro()">
 								</div>
 							</div>
@@ -857,29 +838,29 @@ if($('#instancia').val()==250){
 							<div class="col-lg-4" style="padding:10px; border:1px solid #ccc;">
 								<div class="row" style="padding-left:10px;">
 									<div class="col-lg-6">
-										<label class="control-label form-control-sm">Factor</label>
+										<label class="control-label form-control-sm color-letra">Factor</label>
 										<input id="factor" name="factor" on class="form-control form-control-sm"  value="<?php echo $parametro[0]->porcentaje_calculo_edificacion?>" type="text" readonly='readonly'>
 									</div>
 									<div class="col-lg-6">
-										<label class="control-label form-control-sm">M&iacute;mino</label>
+										<label class="control-label form-control-sm color-letra">M&iacute;mino</label>
 										
 										<input id="minimo" name="minimo" on class="form-control form-control-sm"  value="<?php //echo $total_minimo?>" type="text" readonly='readonly'>
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;">
 									<div class="col-lg-6">
-										<label class="control-label form-control-sm">% IGV</label>
+										<label class="control-label form-control-sm color-letra">% IGV</label>
 										
 										<input id="igv" name="igv" on class="form-control form-control-sm"  value="<?php //echo $igv_valor . '%'?>" type="text" readonly='readonly'>
 									</div>
 									<div class="col-lg-6">
-										<label class="control-label form-control-sm">M&aacute;ximo</label>
+										<label class="control-label form-control-sm color-letra">M&aacute;ximo</label>
 										<input id="maximo" name="maximo" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;">
 									<div class="col-lg-12">
-										<label class="control-label form-control-sm">Observaci&oacute;n</label>
+										<label class="control-label form-control-sm color-letra">Observaci&oacute;n</label>
 										<input id="observacion" name="observacion" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text" readonly='readonly'>
 									</div>
 								</div>
@@ -887,18 +868,18 @@ if($('#instancia').val()==250){
 							<div class="col-lg-4" style="padding:10px; border:1px solid #ccc;">
 								<div class="row" style="padding-left:10px;">
 									<div class="col-lg-6">
-										<label class="control-label form-control-sm">Sub Total</label>
+										<label class="control-label form-control-sm color-letra">Sub Total</label>
 										
 										<input id="sub_total" name="sub_total" on class="form-control form-control-sm"  value="<?php //echo $sub_total_formateado?>" type="text" readonly='readonly'>
 									</div>
 									<div class="col-lg-6">
-										<label class="control-label form-control-sm">Sub Total</label>
+										<label class="control-label form-control-sm color-letra">Sub Total</label>
 										<input id="sub_total2" name="sub_total2" on class="form-control form-control-sm"  value="<?php //echo $sub_total_formateado_?>" type="text" readonly='readonly'>
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;">
 									<div class="col-lg-6">
-										<label class="control-label form-control-sm">IGV</label>
+										<label class="control-label form-control-sm color-letra">IGV</label>
 										<?php
 										
 										
@@ -906,20 +887,20 @@ if($('#instancia').val()==250){
 										<input id="igv_" name="igv_" on class="form-control form-control-sm"  value="<?php //echo $igv_total_formateado?>" type="text" readonly='readonly'>
 									</div>
 									<div class="col-lg-6">
-										<label class="control-label form-control-sm">IGV</label>
+										<label class="control-label form-control-sm color-letra">IGV</label>
 										<input id="igv2" name="igv2" on class="form-control form-control-sm"  value="<?php //echo $igv_total_formateado_?>" type="text" readonly='readonly'>
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;">
 									<div class="col-lg-6">
-										<label class="control-label form-control-sm">Total</label>
+										<label class="control-label form-control-sm color-letra">Total</label>
 										<?php
 										
 										?>
 										<input id="total" name="total" on class="form-control form-control-sm"  value="<?php //echo $total_formateado?>" type="text" readonly='readonly'>
 									</div>
 									<div class="col-lg-6">
-										<label class="control-label form-control-sm">Total a Pagar Soles</label>
+										<label class="control-label form-control-sm color-letra">Total a Pagar Soles</label>
 										<input id="total2" name="total2" on class="form-control form-control-sm"  value="<?php //echo $total_formateado_?>" type="text" onchange="cambioPlantaTipica()">
 									</div>
 								</div>

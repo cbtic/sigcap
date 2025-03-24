@@ -226,7 +226,7 @@
                         <th>Id</th>
                         <th>Caja</th>
                         <th>Fecha</th>
-                        <th>Moneda</th>
+                        <!--<th>Moneda</th>-->
                         <th>Importe Soles</th>
                         <th>Importe Solares</th>
                         <th>Estado</th>

@@ -1237,6 +1237,12 @@ class IngresoController extends Controller
 		$efectivo->id_usuario_inserta = $id_user;
 		$efectivo->save();
 
+        if($request->id == 0){
+            
+        }else{
+			//$efectivo_detalle = EfectivoDetalle::where('id_efectivo',$efectivo->id);
+		}
+
         foreach ($request->except(['_token', 'id', 'caja', 'fecha', 'importe_soles', 'importe_dolares', 'moneda']) as $key => $value) {
             if (strpos($key, '_') === false) {
                 $codigo = $key;

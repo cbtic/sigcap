@@ -122,7 +122,7 @@ function datatablenew(){
                 "aTargets": [2],
 				"className": "dt-center",
                 },
-				{
+				/*{
 				"mRender": function (data, type, row) {
 					var moneda = "";
 					if(row.moneda!= null)moneda = row.moneda;
@@ -130,7 +130,7 @@ function datatablenew(){
 				},
 				"bSortable": false,
 				"aTargets": [3]
-				},
+				},*/
 				{
 					"mRender": function (data, type, row) {
 						var importe_soles = "";
@@ -138,7 +138,7 @@ function datatablenew(){
 						return importe_soles;
 					},
 					"bSortable": false,
-					"aTargets": [4]
+					"aTargets": [3]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -147,7 +147,7 @@ function datatablenew(){
 						return importe_dolares;
 					},
 					"bSortable": false,
-					"aTargets": [5]
+					"aTargets": [4]
 				},
 				{
 				"mRender": function (data, type, row) {
@@ -161,7 +161,7 @@ function datatablenew(){
 					return estado;
 				},
 				"bSortable": false,
-				"aTargets": [6]
+				"aTargets": [5]
 				},
 				{
 					"mRender": function (data, type, row) {
@@ -177,7 +177,7 @@ function datatablenew(){
 						}
 						
 						var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-						html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEfectivo('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+						//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="modalEfectivo('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
 						html += '<a href="javascript:void(0)" onclick=eliminarEfectivo('+row.id+','+row.estado+') class="btn btn-sm '+clase+'" style="font-size:12px;margin-left:10px">'+estado+'</a>';
 						
 						//html += '<a href="javascript:void(0)" onclick=modalResponsable('+row.id+') class="btn btn-sm btn-info" style="font-size:12px;margin-left:10px">Detalle Responsable</a>';
@@ -186,7 +186,7 @@ function datatablenew(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [7],
+					"aTargets": [6],
 				},
 
             ]

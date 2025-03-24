@@ -123,7 +123,7 @@ function modalVerFormato(){
 
             <div class="row">
                 <div class="col-sm-5">
-                    <h2 class="card-title mb-0 " style="color: #1538C8;">
+                    <h2 class="card-title mb-0" style="color: #1538C8;">
                         Registro de Solicitud de Derecho de Revisi&oacute;n - HU<!--<small class="text-muted">Usuarios activos</small>-->
                     </h2>
                 </div><!--col-->
