@@ -53,6 +53,39 @@ class PartidaPresupuestalController extends Controller
 				$partidaPresupuestal->id_usuario_inserta = 1;
 				$partidaPresupuestal->save();
 			}
+
+			$partidaPresupuestaleExiste = PartidaPresupuestale::where("codigo",$row->CODIGO)->where("denominacion",$row->NOMBRE)->where("estado",1)->get();
+
+			if(count($partidaPresupuestaleExiste)==0){
+
+				$partidaPresupuestalAnt = PartidaPresupuestale::where("codigo",$row->CODIGO)->where("estado",1)->first();
+				if($partidaPresupuestalAnt){
+					$partidaPresupuestalAnt->estado = 0;
+					$partidaPresupuestalAnt->save();
+				}
+
+				$partidaPresupuestal = new PartidaPresupuestale;
+				$partidaPresupuestal->id_regional=5;
+				$partidaPresupuestal->periodo=date("Y");
+				$partidaPresupuestal->codigo = $row->CODIGO;
+				$partidaPresupuestal->denominacion = $row->NOMBRE;
+				$partidaPresupuestal->total_01 = $row->PRE01;
+				$partidaPresupuestal->total_02 = $row->PRE02;
+				$partidaPresupuestal->total_03 = $row->PRE03;
+				$partidaPresupuestal->total_04 = $row->PRE04;
+				$partidaPresupuestal->total_05 = $row->PRE05;
+				$partidaPresupuestal->total_06 = $row->PRE06;
+				$partidaPresupuestal->total_07 = $row->PRE07;
+				$partidaPresupuestal->total_08 = $row->PRE08;
+				$partidaPresupuestal->total_09 = $row->PRE09;
+				$partidaPresupuestal->total_10 = $row->PRE10;
+				$partidaPresupuestal->total_11 = $row->PRE11;
+				$partidaPresupuestal->total_12 = $row->PRE12;
+				$partidaPresupuestal->estado = 1;
+				$partidaPresupuestal->id_usuario_inserta = 1;
+				$partidaPresupuestal->save();
+
+			}
 			
 		}
 		

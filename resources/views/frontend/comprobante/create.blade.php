@@ -1473,10 +1473,12 @@
                                                     <select name="afecta_a" id="afecta_a" class="form-control form-control-sm" onchange="validaTipoDocumento()">
                                                         <option value="">
                                                             <?php echo "" ?></option>
-                                                        <option value="022">
-                                                            <?php echo "Otro servicios empresariales" ?></option>
-                                                        <option value="017">
-                                                            <?php echo "Contratos de construcción" ?></option>
+                                                            <option value="037">
+                                                            <?php echo "Demás servicios gravados con el IGV" ?></option>
+                                                            <option value="022">
+                                                                <?php echo "Otro servicios empresariales" ?></option>
+                                                            <option value="017">
+                                                                <?php echo "Contratos de construcción" ?></option>
                                                     </select>
                                                 </div>
                                             </div>

@@ -1122,7 +1122,7 @@ class IngresoController extends Controller
 		if($cajaIngreso->fecha_fin=="")$fecha_fin=$factura_model->fecha_hora_actual(); 
         
         $factura = $factura_model->getFacturaByCajaFiltro($cajaIngreso->id_caja, $fecha_inicio, $fecha_fin, $forma_pago, $estado_pago, $medio_pago,$total);
-        //print_r($factura);
+        print_r($factura);exit();
         return response()->json($factura);
     }
 
@@ -1199,8 +1199,9 @@ class IngresoController extends Controller
         $caja_model = new TablaMaestra;
 
 		if($id>0){
-			$efectivo_detalle = EfectivoDetalle::find($id);
-			$efectivo = Efectivo::find($efectivo_detalle->id_efectivo);
+            $efectivo = Efectivo::find($id);
+			$efectivo_detalle = EfectivoDetalle::where('id_efectivo',$efectivo->id)->get();
+			
 		}else{
 			$efectivo = new Efectivo;
             $efectivo_detalle = new EfectivoDetalle;
@@ -1231,10 +1232,16 @@ class IngresoController extends Controller
 		$efectivo->fecha = $request->fecha;
 		$efectivo->importe_soles = $request->importe_soles;
 		$efectivo->importe_dolares = $request->importe_dolares;
-        $efectivo->id_moneda = $request->moneda;
+        //$efectivo->id_moneda = $request->moneda;
         $efectivo->estado = 1;
 		$efectivo->id_usuario_inserta = $id_user;
 		$efectivo->save();
+
+        if($request->id == 0){
+            
+        }else{
+			//$efectivo_detalle = EfectivoDetalle::where('id_efectivo',$efectivo->id);
+		}
 
         foreach ($request->except(['_token', 'id', 'caja', 'fecha', 'importe_soles', 'importe_dolares', 'moneda']) as $key => $value) {
             if (strpos($key, '_') === false) {
@@ -1244,6 +1251,7 @@ class IngresoController extends Controller
     
                 $efectivo_detalle = new EfectivoDetalle;
                 $efectivo_detalle->id_efectivo = $efectivo->id;
+                $efectivo_detalle->id_moneda = $request->moneda;
                 $efectivo_detalle->id_tipo_efectivo = $codigo;
                 $efectivo_detalle->cantidad = $cantidad;
                 $efectivo_detalle->total = $total;
@@ -1251,6 +1259,9 @@ class IngresoController extends Controller
                 $efectivo_detalle->save();
             }
         }
+
+        return response()->json(['id' => $efectivo->id]); 
+
     }
 
     public function reporte_efectivo_caja_pdf($fecha, $caja){
