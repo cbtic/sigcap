@@ -55,11 +55,11 @@
             // console.log('Opción seleccionada:', $(this).val());
             //print_r($(this).val());
             if ($(this).val() == 1) {
-
                 OcultarTarjeta();
-                MostrarMedioPago();
-                
+                MostrarMedioPago();                
             }
+
+            //alert($(this).val());
 
             if ($(this).val() == 2) {
                 MostrarTarjeta();
@@ -68,17 +68,18 @@
                 var id_tipooperacion = $('#id_tipooperacion_').val();
                 var monto_detraccion = $('#monto_detraccion').val();
 
-
                 $('#numcuota_').val("1");
                 var $total = $('#total_fac_').val();
-
                 //alert($total);
-
 
                 if(id_tipooperacion=='2')$total = Number($total) - Number(monto_detraccion);
 
-
+                if($("#chkRetencion").is(':checked')) {
+                    var retencion = $('#monto_retencion').val();
+                    total = total- Number(retencion);
+	            }
                 //alert($('#totalP').val());
+
                 $('#totalcredito_').val($total)
                 $('#plazo_ ').val("30");
                 generarCuotas();
