@@ -22,7 +22,7 @@ begin
 
 	v_tabla=' from efectivos e 
 	inner join tabla_maestras tm2 on e.id_caja::int = tm2.codigo::int and tm2.tipo = ''91''
-	inner join tabla_maestras tm3 on e.id_moneda::int = tm3.codigo::int and tm3.tipo = ''1'' ';
+	--inner join tabla_maestras tm3 on e.id_moneda::int = tm3.codigo::int and tm3.tipo = ''1'' ';
 		
 	v_where = ' Where 1=1  ';
 	

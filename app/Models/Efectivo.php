@@ -39,12 +39,12 @@ class Efectivo extends Model
             e.fecha, 
             max(case when tm3.denominacion = 'SOLES' then tm3.denominacion end) as moneda_soles,
             max(case when tm3.denominacion = 'SOLES' then tm.denominacion end) as descripcion_soles,
-            sum(case when tm3.denominacion = 'SOLES' then ed.cantidad::float end) as cantidad_soles,
-            sum(case when tm3.denominacion = 'SOLES' then ed.total::float end) as total_soles,
+            coalesce(sum(case when tm3.denominacion = 'SOLES' then ed.cantidad::float end), 0) as cantidad_soles,
+            coalesce(sum(case when tm3.denominacion = 'SOLES' then ed.total::float end), 0) as total_soles,
             max(case when tm3.denominacion = 'DOLARES AMERICANOS' then tm3.denominacion end) as moneda_dolares,
             max(case when tm3.denominacion = 'DOLARES AMERICANOS' then tm.denominacion end) as descripcion_dolares,
-            sum(case when tm3.denominacion = 'DOLARES AMERICANOS' then ed.cantidad::float end) as cantidad_dolares,
-            sum(case when tm3.denominacion = 'DOLARES AMERICANOS' then ed.total::float end) as total_dolares,
+            coalesce(sum(case when tm3.denominacion = 'DOLARES AMERICANOS' then ed.cantidad::float end), 0) as cantidad_dolares,
+            coalesce(sum(case when tm3.denominacion = 'DOLARES AMERICANOS' then ed.total::float end), 0) as total_dolares,
             u.name as cajero
         from efectivos e 
         inner join efectivo_detalles ed on ed.id_efectivo = e.id 

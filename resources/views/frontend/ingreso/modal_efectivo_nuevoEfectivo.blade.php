@@ -213,7 +213,8 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 	$('#fecha').datepicker({
 		format: "dd-mm-yyyy",
 		autoclose: true,
-		container: '#openOverlayOpc modal-body'
+		container: '#openOverlayOpc modal-body',
+		language:'es'
 	});
 });
 
@@ -415,7 +416,7 @@ function cargarEfectivoDetalleMoneda(id,id_moneda){
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<select name="caja" id="caja" class="form-control form-control-sm" onChange="">
+								<select name="caja" id="caja" class="form-control form-control-sm" onChange="" <?php if($id>0){ ?> disabled <?php }?>>
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($caja as $row) {?>
@@ -424,6 +425,9 @@ function cargarEfectivoDetalleMoneda(id,id_moneda){
 									}
 									?>
 								</select>
+								<?php if ($id > 0) { ?>
+									<input type="hidden" name="caja" value="<?php echo $efectivo->id_caja; ?>">
+								<?php } ?>
 							</div>
 						</div>
 						<div class="col-lg-3">
@@ -431,7 +435,7 @@ function cargarEfectivoDetalleMoneda(id,id_moneda){
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<input id="fecha" name="fecha" on class="form-control form-control-sm"  value="<?php echo ($id > 0) ? $efectivo->fecha : date('d-m-Y'); ?>" type="text" paceholder="Fecha">
+								<input id="fecha" name="fecha" on class="form-control form-control-sm"  value="<?php echo ($id > 0) ? date('d-m-Y', strtotime($efectivo->fecha)) : date('Y-m-d'); ?>" type="text" paceholder="Fecha">
 							</div>
 						</div>
 						<div class="col-lg-3">

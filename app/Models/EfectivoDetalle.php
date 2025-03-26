@@ -13,10 +13,11 @@ class EfectivoDetalle extends Model
     function getEfectivoDetalleByIdMonedaAndIdEfectivo($id,$id_moneda){ 
 
         $cad = "select ed.id,id_efectivo,id_tipo_efectivo,cantidad,total,id_moneda,tm.denominacion,abreviatura,codigo 
-from efectivo_detalles ed
-inner join tabla_maestras tm on ed.id_tipo_efectivo=tm.codigo::int and tm.tipo='133'
-where id_efectivo=".$id." 
-and ed.id_moneda=".$id_moneda;
+        from efectivo_detalles ed
+        inner join tabla_maestras tm on ed.id_tipo_efectivo=tm.codigo::int and tm.tipo='133'
+        where id_efectivo= '".$id."' 
+        and ed.id_moneda= '".$id_moneda."'
+        order by 1 asc";
 
         $data = DB::select($cad);
         return $data;
