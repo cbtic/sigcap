@@ -246,7 +246,7 @@ function fn_eliminar_efectivo(id,estado){
             url: "/ingreso/eliminar_efectivo/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
-                //if(result="success")obtenerPlanDetalle(id_plan);
+                
 				datatablenew();
             }
     });
