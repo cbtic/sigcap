@@ -1175,23 +1175,27 @@ class ComprobanteController extends Controller
 
             $id_persona = $request->persona;
             $ubicacion_id = $request->ubicacion;
+            $tipo_documento_b = $request->ipo_documento_b;
 
-            //$id_persona = $request->persona;
-            $valorizaciones_model = new Valorizacione;
-            $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
-            $total_ = $totalDeuda->total;
+            if ($tipo_documento_b=="85"){
 
-            if ($total_ <= 2) {
-                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                //$id_persona = $request->persona;
+                $valorizaciones_model = new Valorizacione;
+                $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+                $total_ = $totalDeuda->total;
 
-                if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
-                        $agremiado->id_situacion = "73";
-                        $agremiado->save();                    
+                if ($total_ <= 2) {
+                    $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+
+                    if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
+                            $agremiado->id_situacion = "73";
+                            $agremiado->save();                    
+                    }
+                } else {
+                    $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                    $agremiado->id_situacion = "74";
+                    $agremiado->save();
                 }
-            } else {
-                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
-                $agremiado->id_situacion = "74";
-                $agremiado->save();
             }
 
             
