@@ -1905,10 +1905,9 @@ class ComprobanteController extends Controller
            /**********RUC***********/
 
            $tarifa = $request->facturad;
-
           // print_r($request); exit();
-
-           $total = $request->totalF;
+           $total = $request->totalP;
+           //print_r($total); exit();
            $serieF = $request->serieF;
            $tipoF = $request->tipoF;
 
@@ -1949,9 +1948,8 @@ class ComprobanteController extends Controller
 
                     ///redondeo///
                     $total_pagar = $request->total_pagar;
-                    //print_r($total_pagar);
-                    //print_r('-');
-
+                   // print_r($total_pagar); 
+                  
                     if ($total_pagar!="0"){                         
                         $total_pagar = $request->total_pagar;
                         $total_g = $request->totalP;
@@ -1959,6 +1957,8 @@ class ComprobanteController extends Controller
     
                         $total = $total+$total_redondeo;
                     }
+                    //print_r("-");
+                    //print_r($total); exit();
 
                     
     
@@ -1977,11 +1977,9 @@ class ComprobanteController extends Controller
                         $total = $total+$total_abono;
                     }
 
-                   // print_r($total_abono);
-              
-               
+                    //print_r($total); exit();
+                             
                $id_moneda=1;
-
                $descuento = $value['descuento'];
        
               $id_factura = $facturas_model->registrar_comprobante_ncnd($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',     $id_user,  1,$razon_social,$direccion,$id_comprobante_ncdc,$correo,$afecta,$tiponota,   $motivo,$afecta_ingreso,0,0,0,0);              
@@ -2063,7 +2061,7 @@ class ComprobanteController extends Controller
                 $tarifa[999]=$items1;
             }
 
-               //print_r($tarifa); exit();
+               print_r($tarifa); exit();
                foreach ($tarifa as $key => $value) {
                    //echo "denominacion=>".$value['denominacion']."<br>";
                    if ($adelanto == 'S'){
@@ -2072,6 +2070,8 @@ class ComprobanteController extends Controller
                    else{
                        //$total   = ;
                        $total   =$value['importe'];
+                       //$total   =$value['totald'];
+                       
                    }
                    $descuento = $value['descuento'];
                    if ($value['descuento']=='') $descuento = 0;

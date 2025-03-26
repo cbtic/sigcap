@@ -503,6 +503,8 @@
                                                                 <input type="hidden" id="facturad_igv" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac['igv_total'] ?>" />
                                                                 <input type="hidden" id="facturad_total" name="facturad[<?php echo $key ?>][total]" value="<?php echo $fac['importe'] ?>" />
 
+                                                                <input type="hidden" id="afectacion" name="facturad[<?php echo $key ?>][afectacion]" value="<?php echo $afectacion ?>" />
+
 
                                                                 <tr>
                                                                     <td class="text-right"><?php $n = $n + 1;
@@ -533,29 +535,38 @@
                                                                   <!--  <td class="text-right"></td>
                                                                                             -->
                                                                     <td>
-                                                                    <input type="text" name="importeantd[]"  id="importeantd<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>,<?php echo $afectacion?>)" value="<?php if ($trans == 'FN') {
+                                                                        <!--
+                                                                        <input type="text" name="importeantd[]"  id="importeantd<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>,<?php echo $afectacion?>)" value="<?php if ($trans == 'FN') {
                                                                                                                             echo number_format($fac['pu'], 2);
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
                                                                                                                                 echo number_format($fac['pu'], 2);
                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm text-center"  >
-                                                                                        
-                                                                                        </td>
+-->
+                                                                        <input type="text"   id="importeantd" onkeyup="calcular_total(this)" value="<?php echo number_format($fac['pu'], 2) ?>" placeholder="" class="form-control form-control-sm text-center">         
+                                                                    </td>
 
-                                                                    <td class="text-right">                                                                        
+                                                                    <td class="text-right">  
+                                                                        <!--                                                                      
                                                                         <input type="text" readonly name="igvd[]"  id="igvd<?php echo $key?>" value="<?php echo number_format(0,2)?>" placeholder="" class="form-control form-control-sm text-center"  >
+                                                                                                                    -->
+                                                                        <input type="text" readonly   id="igvd" value="<?php echo number_format(0,2)?>" placeholder="" class="form-control form-control-sm text-center"  >
                                                                     
                                                                     </td>
 
                                                                     <td>
-                                                                    <input type="text" name="totald[]"  id="totald<?php echo $key?>" onkeyup="calcular_total_2(<?php echo $key?>,<?php echo $afectacion?>)" value="<?php if ($trans == 'FN') {
+                                                                        <input type="text"  id="totald" onkeyup="calcular_total_x(this)" value="0" placeholder="" class="form-control form-control-sm text-center"  >
+
+                                                                        <!--
+                                                                        <input type="text" name="totald[]"  id="totald<?php echo $key?>" onkeyup="calcular_total_2(<?php echo $key?>,<?php echo $afectacion?>)" value="<?php if ($trans == 'FN') {
                                                                                                                             echo 0;
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
                                                                                                                                 echo number_format($fac['importe'], 2);
                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm text-center"  >
-                                                                                        
-                                                                                        </td>
+                                                                                         -->
+                                                                    </td>
+                                                                                                                   
                                                                     
                                                                 </tr>
                                                                 
