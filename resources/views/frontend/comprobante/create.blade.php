@@ -180,7 +180,7 @@
 
             fecha_cuota = FormatFecha(sumarDias(d, 30));
 
-            total_frac = parseFloat((total) / (nroCuotas)).toFixed(1);
+            total_frac = parseFloat((total) / (nroCuotas)).toFixed(2);
 
             newRow = "";
             if (i == 0) {
