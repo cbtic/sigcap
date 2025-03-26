@@ -404,6 +404,7 @@ function validarDecimal(input) {
                                     <th>Medio Pago</th>
                                     <th>descripción</th>
 									<th>Usuario</th>
+                                    
 									<th class="text-right">Factura</th>
 								</tr>
 								</thead>

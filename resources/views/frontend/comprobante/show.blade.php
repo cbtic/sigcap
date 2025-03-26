@@ -508,17 +508,17 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                         <table>
                                         <tbody>
                                         <tr>
-                                        <td>BENEFICIARIO :</td>
+                                        <td style="vertical-align: top;">BENEFICIARIO :</td>
                                         <td style="text-align: left;">COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA</td>
                                         </tr>
                                         <div class="separador">&nbsp;</div>
                                         <tr>
-                                        <td>CUENTAS:</td>
+                                        <td style="vertical-align: top;">CUENTAS:</td>
                                         <td style="text-align: left;"> Abonar en Cta. Banco Interbank Soles : CCI:</td>
                                         </tr>
                                         <tr>
-                                        <td>COMENTARIOS TRIBUTARIOS :</td>
-                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNATCta.Para Detacción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima,  Ruc: 20172977911. Porcentaje: 12%, Código 037, Detracción: S/ <span class="resaltado">{{   number_format( round($factura->total * 12/100,2), 2, '.', '') }}</span>                                         
+                                        <td style="vertical-align: top;">COMENTARIOS TRIBUTARIOS :</td>
+                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNATCta. Para Detacción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima,  Ruc: 20172977911. Porcentaje: 12%, Código 037, Detracción: S/ <span class="resaltado">{{   number_format( round($factura->total * 12/100,2), 2, '.', '') }}</span>                                         
                                             </td>
                                         </tr>
                                         </tbody>

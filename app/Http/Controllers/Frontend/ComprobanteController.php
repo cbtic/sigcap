@@ -3304,6 +3304,7 @@ class ComprobanteController extends Controller
         $array["sw"] = $sw;
         $array["nc"] = $nc;
         echo json_encode($array);
+        
 
     }
 

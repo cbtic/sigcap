@@ -137,6 +137,7 @@ class Comprobante extends Model
     }
 
     function getncById($id_cliente,$tipo_documento,$id_concepto){
+        
         if ($tipo_documento=='79'){
                 $cad = "select c.id,c.fecha,c.cod_tributario,c.total, nro_operacion ,cp.monto ,cp.id_medio, c2.id_comprobante_ncnd id_comprobante,c2.id id_nc,c2.id id_nc,c2.tipo,c2.numero,c2.serie 
                         from comprobantes c inner join comprobante_pagos cp on c.id =cp.id_comprobante
