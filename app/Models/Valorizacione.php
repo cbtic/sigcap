@@ -750,7 +750,9 @@ class Valorizacione extends Model
         $cad = "select count(*) cantidad from valorizaciones v 
         where id_modulo ='3'
         and id_agremido ='".$id_agremiado."'
-        and pagado ='0'";
+        and pagado ='0'
+        and estado ='1'
+        and exonerado ='0'";
 
         //echo $cad;
         $data = DB::select($cad);
