@@ -380,6 +380,12 @@ function cargarEfectivoDetalleMoneda(id,id_moneda){
 
 }
 
+function validarNumeroPositivo(input) {
+    if (input.value < 0) {
+        input.value = "";
+    }
+}
+
 </script>
 
 
@@ -441,7 +447,8 @@ function cargarEfectivoDetalleMoneda(id,id_moneda){
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<input id="fecha" name="fecha" on class="form-control form-control-sm"  value="<?php echo ($id > 0) ? date('d-m-Y', strtotime($efectivo->fecha)) : date('d-m-Y'); ?>" type="text" paceholder="Fecha">
+								<input id="fecha" name="fecha" on class="form-control form-control-sm"  value="<?php echo ($id > 0) ? date('d-m-Y', strtotime($efectivo->fecha)) : date('d-m-Y'); ?>" type="text" paceholder="Fecha" disabled>
+								<input type="hidden" name="fecha" value="<?php echo ($id > 0) ? date('d-m-Y', strtotime($efectivo->fecha)) : date('d-m-Y'); ?>">
 							</div>
 						</div>
 						<div class="col-lg-3">
@@ -449,7 +456,7 @@ function cargarEfectivoDetalleMoneda(id,id_moneda){
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<input id="importe_soles" name="importe_soles" on class="form-control form-control-sm"  value="<?php echo $id>0 ? $efectivo->importe_soles : '0' ?>" type="text" >
+								<input id="importe_soles" name="importe_soles" on class="form-control form-control-sm"  value="<?php echo $id>0 ? $efectivo->importe_soles : '0' ?>" type="text" readonly="readonly">
 							</div>
 						</div>
 						<div class="col-lg-3">
@@ -457,7 +464,7 @@ function cargarEfectivoDetalleMoneda(id,id_moneda){
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<input id="importe_dolares" name="importe_dolares" on class="form-control form-control-sm"  value="<?php echo $id>0 ? $efectivo->importe_dolares : '0' ?>" type="text" >
+								<input id="importe_dolares" name="importe_dolares" on class="form-control form-control-sm"  value="<?php echo $id>0 ? $efectivo->importe_dolares : '0' ?>" type="text" readonly="readonly">
 							</div>
 						</div>
 					</div>

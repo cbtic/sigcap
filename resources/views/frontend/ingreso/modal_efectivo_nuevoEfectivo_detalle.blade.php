@@ -28,7 +28,7 @@
 								<input id="id_tipo_efectivo" name="id_tipo_efectivo[]" class="form-control form-control-sm" value="<?php echo $row->codigo?>" type="hidden"/>
 								<div class="col-lg-4">
 									<div class="form-group">
-									<input id="cantidad_<?php echo $index?>" name="cantidad[]" class="form-control form-control-sm" value="" type="text" oninput="calculartotal(<?php echo $row->abreviatura; ?>, <?php echo $index; ?>)">
+									<input id="cantidad_<?php echo $index?>" name="cantidad[]" class="form-control form-control-sm" value="" type="number" min="0" oninput="validarNumeroPositivo(this),calculartotal(<?php echo $row->abreviatura; ?>, <?php echo $index; ?>)">
 									</div>
 								</div>
 								<div class="col-lg-4">
@@ -55,7 +55,7 @@
 								<input id="iddetalle" name="iddetalle[]" class="form-control form-control-sm" value="<?php echo $row->id ?>" type="hidden"/>
 								<div class="col-lg-4">
 									<div class="form-group">
-									<input id="cantidad_<?php echo $index?>" name="cantidad[]" class="form-control form-control-sm" value="<?php echo $row->cantidad ?>" type="text" oninput="calculartotal(<?php echo $row->abreviatura; ?>, <?php echo $index; ?>)">
+									<input id="cantidad_<?php echo $index?>" name="cantidad[]" class="form-control form-control-sm" value="<?php echo $row->cantidad ?>" type="number" min="0" oninput="validarNumeroPositivo(this),calculartotal(<?php echo $row->abreviatura; ?>, <?php echo $index; ?>)">
 									</div>
 								</div>
 								<div class="col-lg-4">

@@ -533,7 +533,7 @@
                                                                   <!--  <td class="text-right"></td>
                                                                                             -->
                                                                     <td>
-                                                                    <input type="text" name="imported[]"  id="imported<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>,<?php echo $afectacion?>)" value="<?php if ($trans == 'FN') {
+                                                                    <input type="text" name="importeantd[]"  id="importeantd<?php echo $key?>" onkeyup="calcular_total(<?php echo $key?>,<?php echo $afectacion?>)" value="<?php if ($trans == 'FN') {
                                                                                                                             echo number_format($fac['pu'], 2);
                                                                                                                         }  
                                                                                                                             if ($trans == 'FE') {
@@ -566,6 +566,7 @@
                                                         <input type="hidden" name="smodulo_guia" id="smodulo_guia" value="<?php echo $smodulo ?>" />
                                                         <input type="hidden" name="totalMedioPago" id="totalMedioPago" value="">
                                                         
+                                                        <input type="hidden" name="importe_" id="importe_" value="<?php echo $importe ?>">
 
                                                     </tbody>
                                                 </table>
@@ -716,6 +717,7 @@
                                                             </th>
 
                                                         </tr> 
+                                                        
                                                         <input type="hidden" name="total_fac_" id="total_fac_" value="<?php if ($trans == 'FN') {
                                                                                                                                 echo number_format( $comprobante->total,2);
                                                                                                                             } ?>">

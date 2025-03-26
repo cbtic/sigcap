@@ -721,7 +721,7 @@ function calcular_total_otros(obj){
 
 	
 
-	total_deuda();
+	//total_deuda();
 }
 
 

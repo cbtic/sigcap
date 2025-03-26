@@ -1375,7 +1375,7 @@ class IngresoController extends Controller
 		$efectivo->estado = $estado;
 		$efectivo->save();
 
-		echo $multa->id;
+		echo $efectivo->id;
     }
 
 }
