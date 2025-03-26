@@ -108,31 +108,6 @@ function guardarFactura(){
 
 }
 
-function guardarnd(){
-
-	
-    var msg = "";
-    var tiponota = $('#tiponota_').val();
-	var motivo = $('#motivo_').val();
-	
-
-		if(tiponota=="")msg+="Debe ingresar un el tipo de nota<br>";	
-		if(motivo=="")msg+="Debe ingresar el motivo<br>";	
-		
-
-    if(msg!=""){
-		
-        Swal.fire(msg);
-        return false;
-    }
-    else{
-		
-        fn_save_nd();
-	}
-	
-
-}
-
 function guardarnc(){
 
 	
@@ -157,7 +132,7 @@ function guardarnc(){
 	
 
 }
-
+ 
 
 function fn_save(){
 
@@ -199,35 +174,6 @@ function fn_save(){
     });
 }
 
-function fn_save_nd(){
-
-    /*
-	var msgLoader = "";
-	msgLoader = "Procesando, espere un momento por favor";
-	var heightBrowser = $(window).width()/2;
-	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-    $('.loader').show();
-	$('#guardar').hide();
-	*/
-    $.ajax({
-			url: "/comprobante/send_nd",
-            type: "POST",
-
-			//data : $("#frmCita").serialize()+"&id_medico="+id_medico+"&fecha_cita="+fecha_cita,
-            data : $("#frmND").serialize(),
-			dataType: 'json',
-            success: function (result) {
-				
-			//	$('.loader').hide();
-				
-				$('#numerof').val(result.id_factura);
-				$('#divNumeroF').show();
-				location.href=urlApp+"/comprobante/"+result.id_factura;
-
-            }
-    });
-}
-
 function fn_save_nc(){
 
     /*
@@ -238,7 +184,6 @@ function fn_save_nc(){
     $('.loader').show();
 	$('#guardar').hide();
 	*/
-	
     $.ajax({
 			url: "/comprobante/send_nc",
             type: "POST",
@@ -249,21 +194,14 @@ function fn_save_nc(){
             success: function (result) {
 				
 			//	$('.loader').hide();
-			
+				
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
 				location.href=urlApp+"/comprobante/"+result.id_factura;
 
-            }
-    });
-}
+				enviar_comprobante(result.id_factura);
 
-function ActualizaDetalle(){
-	
-	var campos = document.querySelectorAll('input[name^="importe"]');
-    campos.forEach(function(campo) {
-		
-        campo.readOnly = true;
+            }
     });
 }
 
@@ -619,7 +557,6 @@ function obtenerTitular(){
 
 	}
 
-	/*
 	AddFila();
 	function AddFila(){
 		
@@ -711,7 +648,6 @@ function obtenerTitular(){
 		});
 		
 	}
-	*/
 
 	function obtenerRepresentante(){
 
@@ -759,17 +695,11 @@ function obtenerTitular(){
 	
     function calcular_total(fila,afectacion){
 
+		
         var imported=0;    
 		imported = $('#imported'+fila).val();
 
-		if (afectacion==30){
-			var igv = 0;	
-		}
-		else{
-			var igv = imported*0.18;	
-		};
-
-		//var igv = imported*0.18;
+		var igv = imported*0.18;
 
 
 		var totald = Number(imported) + Number(igv);
@@ -779,6 +709,61 @@ function obtenerTitular(){
 		$("#igvd"+fila).val(igv.toFixed(2));
 
 		$("#totald"+fila).val(totald.toFixed(2));
+
+		
+		var gravadas=0;
+		igv=0;
+		var total=0;
+
+		$("input[name^='imported']").each(function(i, obj) {
+			//alert(obj.value);
+			gravadas = Number(obj.value) + Number(gravadas);
+
+			//contador += parseInt(obj.value);
+		});
+
+		$("#gravadas").val(gravadas.toFixed(2));
+
+		$("input[name^='igvd']").each(function(i, obj) {
+			//alert(obj.value);
+			igv = Number(obj.value) + Number(igv);
+
+			//contador += parseInt(obj.value);
+		});
+
+		$("#igv").val(igv.toFixed(2));
+
+		
+		$("input[name^='totald']").each(function(i, obj) {
+			//alert(obj.value);
+			total = Number(obj.value) + Number(total);
+
+			
+		});
+
+		$("#totalP").val(total.toFixed(2));
+
+		//$("#igvd"+fila).val(igv);       
+        
+    }
+
+
+	function calcular_total_2(fila,afectacion){
+
+        var totald=0;    
+		totald = $('#totald'+fila).val();
+
+		var imported =totald/1.18;  
+		var igv =  Number(totaldd) - Number(imported);
+
+
+		
+
+		alert(totald);
+
+		$("#igvd"+fila).val(igv.toFixed(2));
+
+		$("#imported"+fila).val(imported.toFixed(2));
 
 		
 		var gravadas=0;
@@ -822,322 +807,32 @@ function obtenerTitular(){
 
 		$("#totalP").val(total.toFixed(2));
 
-		$("#total_pagar_abono").val(total.toFixed(2));
-
-		$("#total_fac_").val(total.toFixed(2));
-
-		
-
 		//$("#igvd"+fila).val(igv);       
         
     }
 
-	function actualizaimportes(afectacion){
-		var i=0;
-		
-		
-	
-		if ($('#tiponota_').val()==270){	
-			i=0;
-			$("input[name^='importeantd']").each(function(i, obj) {
-				
-				$("#totald"+i).val(obj.value);
-				calcular_total_2(i,afectacion);
-				i++;
-				//total = Number(obj.value) + Number(total);
+	function enviar_comprobante(id){
 
-				
-			});
+		$.ajax({
+			url: '/comprobante/firmar_nc/' + id ,
+			dataType: "json",
+			success: function (result) {
 
-			
-			}
-		else {
-			i=0;
-			$("input[name^='totald']").each(function(i, obj) {
-				//alert(obj.value);
-				$("#totald"+i).val(0);
-				calcular_total_2(i,afectacion);
+				if (result) {
+					Swal.fire("Enviado al Facturador Electrónica!");
 
-				//total = Number(obj.value) + Number(total);
-
-				
-			});
-						/*
-			for (i=0 ;i<('#totald').length;i++){
-				$("#totald"+i).val(0);
-				calcular_total_2(i);
-				
-			} */
-		}
-
-	}
-
-	function calcular_total_2(fila,afectacion){
-				
-        var totald=0;
-		var importeantd=0;
-
-		totald =  $('#totald'+fila).val();
-		totald= parseFloat(totald.replace(/,/g, ""));		
-		importeantd=$('#importeantd'+fila).val();	
-		importeantd=parseFloat(importeantd.replace(/,/g, ""));
-	
-		cantidad =  $('#cantidad'+fila).val();
-
-		var facturad_total=0;
-		facturad_total=$("#importe_").val();
-		facturad_total=parseFloat(facturad_total.replace(/,/g, ""));
-		//alert(facturad_total);	
-
-		
-		//if (totald <=importeantd )  {
-		if (totald <=facturad_total)  {
-		
-			var imported =0;
-			var igv =  0;
-			var pu =0;
-
-			if (afectacion==30){
-				imported =totald;
-				igv =  0;
-				pu =totald;
-			}
-			else{
-				
-				imported =totald/1.18;  
-				igv =  Number(totald) - Number(imported);	
-				
-
-
-			};
-				
-				
-
-			$("#igvd"+fila).val(igv.toFixed(2));
-
-			$("#importeantd"+fila).val(imported.toFixed(2));
-			
-			
-			//$("#totald"+fila).val(totald.toFixed(2)  );
-			
-			
-			var gravadas=0;
-			igv=0;
-			var total=0;
-
-
-			//	$("input[name^='imported']").each(function(i, obj) {			
-			//		$(this).parent().parent().parent().find('#facturad_pu').val(Number(obj.value));
-			//	});
-
-			
-
-			$("input[name^='importeantd']").each(function(i, obj) {
-				//alert(obj.value);
-				gravadas = Number(obj.value) + Number(gravadas);
-
-				//contador += parseInt(obj.value);
-			});
-
-			$("#gravadas").val(gravadas.toFixed(2));
-
-			$("input[name^='igvd']").each(function(i, obj) {
-				//alert(obj.value);
-				igv = Number(obj.value) + Number(igv);
-
-				//contador += parseInt(obj.value);
-			});
-
-			$("#igv").val(igv.toFixed(2));
-
-			
-			$("input[name^='totald']").each(function(i, obj) {
-				//alert(obj.value);
-				total = Number(obj.value) + Number(total);
-
-				
-			});
-
-		
-
-			$("#totalP").val(total.toFixed(2));
-			
-			$("#total_pagar_abono").val(total.toFixed(2));
-
-			$("#total_fac_").val(total.toFixed(2));
-
-
-
-
-		} 
-		else {
-			$("#totald"+fila).val(0);
-			$("#igvd"+fila).val(0);
-
-			$("#imported"+fila).val(0);
-			alert("El valor no debe ser mayor al total de la factura")
-		}
-	
-
-		//$("#igvd"+fila).val(igv);       
-        
-    }
-
-	$('#addRow1').on('click', function () {
-		AddFila();
-	});
-
-	AddFila();
-	function AddFila(){
-		
-		var newRow = "";
-		var ind = $('#tblMedioPago tbody tr').length;
-		var tabindex = 11;
-		//var nuevalperiodo = "";
-
-		//var f = new Date();
-		var f = new Date();
-		var fecha_ = f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear();
-
-	
-		var item_producto 	= "";
-		$('#idMedioPagoTemp option').each(function(){
-			item_producto += "<option value="+$(this).val()+" ru='"+$(this).attr("ru")+"'>"+$(this).html()+"</option>"	
-		});
-	
-		newRow +='<tr>';
-		newRow +='<td><select class="form-control form-control-sm idMedio" id="idMedio'+ind+'" ind="'+ind+'" tabindex="'+tabindex+'" name="idMedio[]" >'+item_producto+'</select></td>';
-		
-		newRow +='<td><input onKeyPress="return soloNumerosMenosCero(event)" type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar el monto y presionar Enter para ingresar el nro operación" name="monto[]" required="" id="monto'+ind+'" class="limpia_text  monto input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
-		
-		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="nroOperacion[]" required="" id="nroOperacion'+ind+'" class="limpia_text nroOperacion input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
-		
-		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="descripcion[]" required="" id="descripcion'+ind+'" class="limpia_text  descripcion input-sm form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
-
-		newRow +='<td><input  type="text" tabindex="'+(tabindex+2)+'" data-toggle="tooltip" data-placement="top" title="Ingresar " name="fecha[]" required="" id="fecha'+ind+'" class="form-control form-control-sm datepicker fecha input-sm   form-control form-control-sm text-right" style="margin-left:4px; width:100px" /></td>';
-		
-		newRow +='<td><button type="button" class="btn btn-danger deleteFila btn-xs" style="margin-left:4px"><i class="fa fa-times"></i> Eliminar</button></td>';
-
-		newRow +='</tr>';
-		$('#tblMedioPago tbody').append(newRow);
-
-		$("#idMedio"+ind).select2({max_selected_options: 4});
-		
-	
-		$("#idMedio"+ind).on("change", function (e) {
-			var flagx = 0;
-			cmb = $(this);
-			idMedio = $("#idMedio"+ind).val();
-			
-			//id_user={{Auth::user()->id}};
-			$("#tr_total_pagar").hide();
-			$("#tr_total_pagar_abono").hide();
-		
-			$('.idMedio').each(function(){
-				var ind_tmp = $(this).val();
-				if($(this).val() == idMedio)flagx++;
-			});
-		
-			if(flagx > 1 && idMedio!='254'){
-				//alert(idMedio);
-				//if (idMedio!='254'){
-					bootbox.alert("El Medio de Pago ya ha sido ingresado");
-					$("#idMedio"+ind).val("").trigger("change");
-					return false;				
-				//}
-			}
-			else{
-				
-				if(ind==0){
-					monto = $("#total_fac_").val();
-					//$("#monto"+ind).val(monto);
-					$("#totalMedioPago").val(monto);
-
-					if(idMedio=='91'){
-						//monto = $("#total_fac_").val();
-						monto_r = redondeoContableAFavor(Number(monto), 1);
-
-						
-						$("#monto"+ind).val(monto_r.toFixed(2));
-
-						if(monto!=monto_r){
-							$("#tr_total_pagar").show();
-							$("#total_pagar").val(monto_r);
-						}
-	
-
-					}else {
-						//if(idMedio=='254' || idMedio=='545' || idMedio=='543'){
-
-						$("#monto"+ind).val(monto);
-						monto_r = Number(monto);
-
-						$("#tr_total_pagar_abono").show();
-						$("#total_pagar_abono").val(monto_r);
-
-						
-						//$("#tr_total_pagar_abono").show();
-						//$("#total_pagar_abono").val(monto);
-					}
-
-					
-					/*
-					else{
-
-						$("#monto"+ind).val(monto);
-
-						$("#total_pagar").val("0");
-						$("#total_pagar_abono").val("0");
-						$("#tr_total_pagar").hide();
-					}
-					$("#tr_total_pagar_abono").show();
-					$("#total_pagar_abono").val(monto);
-					*/
+				}
+				else {						
+					Swal.fire("registro no encontrado!");
 				}
 
-				$("#fecha"+ind).val(fecha_);
+			},
+			"error": function (msg, textStatus, errorThrown) {
 
+				Swal.fire("Numero de documento no fue registrado!");
 
-
-				
 			}
-					
-		});
-		
-
-		
-		$("#monto"+ind).on("keyup", function (e) {
-			monto = $("#monto"+ind).val();
-
-			var total = 0;
-			var val_total = 0;
-			
-			$(".monto").each(function (){
-				val_total = $(this).val();
-				
-				if(val_total!="")total += Number(val_total);
-			});
-
-			//alert(total);
-
-			
-			$("#totalMedioPago").val(total);
-			$("#total_pagar_abono").val(total);
-			
-			
-			//$("#precio_peso").val(total);
-					
+	
 		});
 		
 	}
-
-	function redondeoContableAFavor(valor, decimales = 1) {
-		// Calcular el factor de redondeo según los decimales
-		const factor = Math.pow(10, decimales);
-		// Redondear hacia abajo al múltiplo más cercano según los decimales
-		const valorRedondeado = Math.floor(valor * factor) / factor;
-		// Calcular la diferencia (redondeo)
-		//const redondeo = valor - valorRedondeado;
-		return valorRedondeado;
-	}
-
