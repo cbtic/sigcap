@@ -1173,13 +1173,30 @@ class ComprobanteController extends Controller
             }
             
 
-
-			
-
             $id_persona = $request->persona;
             $ubicacion_id = $request->ubicacion;
 
+            //$id_persona = $request->persona;
+            $valorizaciones_model = new Valorizacione;
+            $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
+            $total_ = $totalDeuda->total;
 
+            if ($total_ <= 2) {
+                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+
+                if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
+                        $agremiado->id_situacion = "73";
+                        $agremiado->save();                    
+                }
+            } else {
+                $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
+                $agremiado->id_situacion = "74";
+                $agremiado->save();
+            }
+
+            
+
+/*
             //if ($id_concepto == 26411) {  // CUOTA GREMIAL
             if ($codigo_concepto == '00006') {  // CUOTA GREMIAL
                 $id_persona = $request->persona;
@@ -1208,7 +1225,7 @@ class ComprobanteController extends Controller
                 }
 
             }
-
+*/
             if($request->id_formapago_=='2'){
                 $credito = $request->credito;
                 //print_r($credito); 
@@ -1887,9 +1904,10 @@ class ComprobanteController extends Controller
 
           // print_r($request); exit();
 
-           $total = $request->totalP;
+           $total = $request->totalF;
            $serieF = $request->serieF;
            $tipoF = $request->tipoF;
+
            $ubicacion_id = $request->ubicacion;
            $cod_tributario = $request->numero_documento;
            $razon_social=$request->razon_social;
