@@ -831,6 +831,7 @@ Route::get('ingreso/reporte_efectivo_caja_pdf/{fecha}/{caja}', [IngresoControlle
 Route::get('ingreso/reporte_efectivo_consolidado_pdf/{fecha}', [IngresoController::class, 'reporte_efectivo_consolidado_pdf'])->name('ingreso.reporte_efectivo_consolidado_pdf');
 Route::get('ingreso/validarCaja/{caja}/{fecha}/{moneda}/{id_efectivo}', [IngresoController::class, 'validarCaja'])->name('ingreso.validarCaja');
 Route::get('agremiado/validar_agremiado_multa/{ncap}', [AgremiadoController::class, 'validar_agremiado_multa'])->name('agremiado.validar_agremiado_multa');
+Route::get('ingreso/eliminar_efectivo/{id}/{estado}', [IngresoController::class, 'eliminar_efectivo'])->name('ingreso.eliminar_efectivo');
 
 
 

@@ -1177,7 +1177,7 @@ class IngresoController extends Controller
 		$efectivo_model = new Efectivo;
 		$p[]=$request->fecha;
 		$p[]=$request->caja;
-        $p[]=1;
+        $p[]="1";
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $efectivo_model->listar_consulta_efectivo_ajax($p);
@@ -1368,5 +1368,14 @@ class IngresoController extends Controller
         echo json_encode($resultado);
 
     } 
+
+    public function eliminar_efectivo($id,$estado)
+    {
+		$efectivo = Efectivo::find($id);
+		$efectivo->estado = $estado;
+		$efectivo->save();
+
+		echo $multa->id;
+    }
 
 }

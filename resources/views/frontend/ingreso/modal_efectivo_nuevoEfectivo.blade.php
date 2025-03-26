@@ -218,6 +218,12 @@ $('#openOverlayOpc').on('shown.bs.modal', function() {
 	});
 });
 
+$('#fecha').datepicker({
+		format: "dd-mm-yyyy",
+		autoclose: true,
+		language:'es'
+	});
+
 $(document).ready(function() {
 	 
 	if($('#id').val() > 0){
@@ -282,7 +288,7 @@ function fn_save_efectivo(){
 				bootbox.alert("Guardado exitosamente");
 				if (result.id>0) {
 					modalEfectivo(result.id);
-				}	
+				}
 				//limpiar();
 				
             }
@@ -435,7 +441,7 @@ function cargarEfectivoDetalleMoneda(id,id_moneda){
 						</div>
 						<div class="col-lg-3">
 							<div class="form-group">
-								<input id="fecha" name="fecha" on class="form-control form-control-sm"  value="<?php echo ($id > 0) ? date('d-m-Y', strtotime($efectivo->fecha)) : date('Y-m-d'); ?>" type="text" paceholder="Fecha">
+								<input id="fecha" name="fecha" on class="form-control form-control-sm"  value="<?php echo ($id > 0) ? date('d-m-Y', strtotime($efectivo->fecha)) : date('d-m-Y'); ?>" type="text" paceholder="Fecha">
 							</div>
 						</div>
 						<div class="col-lg-3">

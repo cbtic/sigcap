@@ -217,7 +217,7 @@ function modalEfectivo(id){
 
 }
 
-function eliminarMultaMantenimiento(id,estado){
+function eliminarEfectivo(id,estado){
 	var act_estado = "";
 	if(estado==1){
 		act_estado = "Eliminar";
@@ -229,21 +229,21 @@ function eliminarMultaMantenimiento(id,estado){
 	}
     bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas "+act_estado+" la Multa?", 
+        message: "&iquest;Deseas "+act_estado+" el registro?", 
         callback: function(result){
             if (result==true) {
-                fn_eliminar_multa_mantenimiento(id,estado_);
+                fn_eliminar_efectivo(id,estado_);
             }
         }
     });
     $(".modal-dialog").css("width","30%");
 }
 
-function fn_eliminar_multa_mantenimiento(id,estado){
+function fn_eliminar_efectivo(id,estado){
 	
 	//alert(id,estado);
     $.ajax({
-            url: "/multa/eliminar_multa_mantenimiento/"+id+"/"+estado,
+            url: "/ingreso/eliminar_efectivo/"+id+"/"+estado,
             type: "GET",
             success: function (result) {
                 //if(result="success")obtenerPlanDetalle(id_plan);
