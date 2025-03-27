@@ -1074,8 +1074,8 @@ class IngresoController extends Controller
         $numero_cap=$datos_agremiado->numero_cap;
         $nombre_completo=$datos_agremiado->nombre_completo;
         //var_dump($datos_agremiado);exit();
-		$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id);
-        $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id);
+		//$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id);
+        //$denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id);
         $tipo_cambio=$tipo_cambio_model->getTipoCambio();
 
         $deuda_cuota_fraccionamiento=$caja_ingreso_model->getDeudaCuotaFraccionamiento($datos_agremiado->id_p);
