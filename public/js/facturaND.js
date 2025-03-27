@@ -1,6 +1,8 @@
  //alert("ok");
 //jQuery.noConflict(true);
 
+//const { Alert } = require("bootstrap");
+
 $(document).ready(function () {
 
 	$('#fechaF').datepicker({
@@ -877,6 +879,8 @@ function obtenerTitular(){
 		var totald=0;
 		var importeantd=0;
 
+		var afectacion=$(obj).parent().parent().parent().find('#afectacion').val();
+
 		totald = $(obj).parent().parent().parent().find('#totald').val();
 		totald= parseFloat(totald.replace(/,/g, ""));
 		
@@ -888,6 +892,8 @@ function obtenerTitular(){
 		var facturad_total=0;
 		facturad_total=$("#importe_").val();
 		facturad_total=parseFloat(facturad_total.replace(/,/g, ""));
+
+		//alert(afectacion);
 		
 		if (totald <=facturad_total)  {		
 			var imported =0;
@@ -903,67 +909,70 @@ function obtenerTitular(){
 				igv =  Number(totald) - Number(imported);				
 			};
 
+			
+
 			$(obj).parent().parent().parent().find('#igvd').val(igv.toFixed(2));								
 			//$("#igvd"+fila).val(igv.toFixed(2));
 			$(obj).parent().parent().parent().find('#importeantd').val(imported.toFixed(2));
 			//$("#importeantd"+fila).val(imported.toFixed(2));
-						
+			
+			
+			
+			var total=totald;
+			$(obj).parent().parent().parent().find('#facturad_pu').val(imported.toFixed(2));
+			$(obj).parent().parent().parent().find('#facturad_igv').val(igv.toFixed(2)); 
+			$(obj).parent().parent().parent().find('#facturad_total').val(total.toFixed(2)); 
 
 
-			/*
-			var gravadas=0;
-			igv=0;
-			var total=0;
-
+/*
 			$("input[name^='importeantd']").each(function(i, obj) {
 				//alert(obj.value);
 				gravadas = Number(obj.value) + Number(gravadas);
 
 				//contador += parseInt(obj.value);
 			});
+*/
+			let gravadas=0;
+			let input=0;
+			$(".mov_:checked").each(function (){
+				input = $(this).parent().parent().parent().find('#facturad_pu').val();
+				input= parseFloat(input.replace(/,/g, ""));
+				gravadas += input; 
+			});
 
 			$("#gravadas").val(gravadas.toFixed(2));
 
-			$("input[name^='igvd']").each(function(i, obj) {
-				//alert(obj.value);
-				igv = Number(obj.value) + Number(igv);
+			//alert(gravadas);
 
-				//contador += parseInt(obj.value);
+			igv=0;
+			input=0;
+			$(".mov_:checked").each(function (){
+				input = $(this).parent().parent().parent().find('#facturad_igv').val();				
+				input= parseFloat(input.replace(/,/g, ""));
+				igv += input; 
 			});
-
 			$("#igv").val(igv.toFixed(2));
 
-			
-			$("input[name^='totald']").each(function(i, obj) {
-				//alert(obj.value);
-				total = Number(obj.value) + Number(total);
-
-				
+			total=0;
+			input=0;
+			$(".mov_:checked").each(function (){
+				input = $(this).parent().parent().parent().find('#facturad_total').val();				
+				input= parseFloat(input.replace(/,/g, ""));
+				total += input; 
 			});
 
+
+			//alert(total);
+
 			$("#totalP").val(total.toFixed(2));
-
-			*/
-
-
-			
-			var total_=parseFloat(total.replace(/,/g, ""));
-			$("#totalP").val(total_.toFixed(2));
-
 			$("#total_pagar_abono").val(total.toFixed(2));
 			$("#total_fac_").val(total.toFixed(2));
 			$("#tr_total_pagar").hide();
 			$("#total_pagar").val("0");
 
-
-
-			$(obj).parent().parent().parent().find('#facturad_pu').val(imported.toFixed(2));
-			$(obj).parent().parent().parent().find('#facturad_igv').val(igv.toFixed(2)); 
-			$(obj).parent().parent().parent().find('#facturad_total').val(total.toFixed(2));  
-			
-			//alert($(fila).parent().parent().parent().find('#facturad_total').val());
 	
 			var cantidad = $("#tblMedioPago tr").length;
+			//alert(cantidad);
 			if (cantidad >= 1) $("#tblMedioPago tr").remove();
 
 
@@ -1060,12 +1069,10 @@ function obtenerTitular(){
 				
 			});
 
-		
-
 			$("#totalP").val(total.toFixed(2));
+
 			
 			$("#total_pagar_abono").val(total.toFixed(2));
-
 			$("#total_fac_").val(total.toFixed(2));
 			$("#tr_total_pagar").hide();
 			$("#total_pagar").val("0");
@@ -1160,6 +1167,8 @@ function obtenerTitular(){
 				
 				if(ind==0){
 					monto = $("#total_fac_").val();
+					monto= parseFloat(monto.replace(/,/g, ""));		
+					//alert(monto);
 					//$("#monto"+ind).val(monto);
 					$("#totalMedioPago").val(monto);
 
