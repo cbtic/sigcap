@@ -550,7 +550,7 @@ class CajaIngreso extends Model
 
         $cad = "select  c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, descripcion, ac.importe, to_char(ac.fecha_venc_pago, 'dd-mm-yyyy' )  fecha_vencimiento
         from agremiado_cuotas ac
-        inner join valorizaciones v on ac.id =v.pk_registro
+        inner join valorizaciones v on ac.id =v.pk_registro and v.pagado ='0'
         inner join conceptos c on ac.id_concepto =c.id
         where id_agremiado = ".$id."  
         and id_situacion in (59) 
