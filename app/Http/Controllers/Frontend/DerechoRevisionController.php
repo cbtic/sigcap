@@ -2546,6 +2546,9 @@ class DerechoRevisionController extends Controller
 
 	function create_solicitud(){
 
+		$id_persona = Auth::user()->id_persona;
+		//dd($id_persona);exit();
+
 		$agremiado_model = new Agremiado;
 		$persona_model = new Persona;
 		//$derechoRevision_ = DerechoRevision::find($id);
@@ -2598,8 +2601,11 @@ class DerechoRevisionController extends Controller
 		$anio_actual = Carbon::now()->year;
 		$parametro = $parametro_model->getParametroAnio($anio_actual);
 		//$liquidacion = $derechoRevision_model->getReintegroByIdSolicitud($id);
-
-        return view('frontend.derecho_revision.create_solicitud',compact(/*'id',*/'derechoRevision',/*'proyectista',*/'agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad',/*'proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2',*/'tipo_solicitante',/*'datos_agremiado','datos_persona',*//*'info_solicitud','info_uso_solicitud',*/'tipo_proyecto','tipo_uso',/*'datos_usoEdificaciones',*//*'sub_tipo_uso',*/'tipo_obra',/*'datos_presupuesto',*/'tipo_liquidacion','instancia','parametro',/*'liquidacion',*/'tipo','tipo_documento','empresa','tipo_proyectista',/*'profesionales_otro','datos_proyectista',*/'principal_asociado'));
+		$persona_princ = Persona::find($id_persona);
+		$agremiado_princ = Agremiado::where('id_persona',$id_persona)->where('estado',1)->first();
+		$agremiado_principal = $agremiado_model->getAgremiado('85',$agremiado_princ->numero_cap);
+		//dd($agremiado_principal);exit();
+        return view('frontend.derecho_revision.create_solicitud',compact(/*'id',*/'derechoRevision',/*'proyectista',*/'agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad',/*'proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2',*/'tipo_solicitante',/*'datos_agremiado','datos_persona',*//*'info_solicitud','info_uso_solicitud',*/'tipo_proyecto','tipo_uso',/*'datos_usoEdificaciones',*//*'sub_tipo_uso',*/'tipo_obra',/*'datos_presupuesto',*/'tipo_liquidacion','instancia','parametro',/*'liquidacion',*/'tipo','tipo_documento','empresa','tipo_proyectista',/*'profesionales_otro','datos_proyectista',*/'principal_asociado','agremiado_principal'));
     }
 
 }
