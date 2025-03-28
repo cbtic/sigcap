@@ -2454,6 +2454,61 @@ function removeFilaArchivoAdicional(event, row) {
     }
 }
 
+function AddProyectistaAsociado() {
+    var container = document.getElementById('proyectista_asociado_container');
+    var newRow = container.children[0].cloneNode(true); // Clona la primera fila
+	var index = container.children.length;
+
+    // Limpia los valores de los inputs en la nueva fila
+    newRow.querySelectorAll('input, select').forEach(function(element) {
+        if (element.id) {
+            element.id = element.id + '_' + index; // Asigna un nuevo ID único
+        }
+        if (element.name) {
+            element.name = element.name.replace('[]', '[' + index + ']'); // Ajusta el name
+        }
+        if (element.type === 'text') {
+            element.value = ''; // Limpia los valores de los inputs de texto
+        }
+    });
+
+	var numeroCapInput = newRow.querySelector('[id^="numero_cap_row"]');
+    if (numeroCapInput) {
+        numeroCapInput.setAttribute("onchange", "obtenerProyectista()");
+    }
+
+    // Asegurar que el botón tenga su value correcto
+    /*var btnArchivo = newRow.querySelector('input[type="button"]');
+    if (btnArchivo) {
+        btnArchivo.value = "Seleccionar Archivo";
+    }*/
+
+    // Crear botón de eliminar
+    var removeButton = document.createElement('button');
+    removeButton.className = 'btn btn-sm btn-danger';
+    removeButton.style.marginTop = '37px';
+    removeButton.style.marginBottom = '37px';
+    removeButton.innerHTML = 'Eliminar';
+
+    removeButton.onclick = function() {
+        removeFilaProyectistaAsociado(event, newRow);
+    };
+
+    newRow.appendChild(removeButton);
+
+    container.appendChild(newRow);
+}
+
+function removeFilaProyectistaAsociado(event, row) {
+    event.preventDefault();
+    var container = document.getElementById('proyectista_asociado_container');
+    if (container.children.length > 1) {
+        container.removeChild(row);
+    } else {
+        bootbox.alert("Debe haber al menos una fila.");
+    }
+}
+
 
 function AddFilaUso() {
 

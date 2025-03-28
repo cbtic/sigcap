@@ -542,85 +542,78 @@ $(document).ready(function () {
 						</div>
 						
 						<?php //} ?>
-							
-						<div class="row" style="padding-left:10px">
-							<div class="col-lg-1" hidden>
-								<label class="control-label form-control-sm">Tipo Proyectista</label>
-								<select name="tipo_proyectista_row[]" id="tipo_proyectista_row" class="form-control form-control-sm" onChange="">
-									<option value="0">--Selecionar--</option>
-									<?php
-									foreach ($tipo_proyectista as $row_) {?>
-									<option value="<?php echo $row_->codigo?>" <?php //if($row_->codigo==$row->id_tipo_profesional)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
-							</div>
-							<div class="col-lg-3" >
-								<div class="form-group "id="agremiado_">
-									<label class="control-label form-control-sm color-letra">Nombre</label>
-									<input id="agremiado_row" name="agremiado_row" on class="form-control form-control-sm"  value="<?php //echo $row->agremiado?>" type="text" readonly='readonly'>
+						<div id="proyectista_asociado_container">
+							<div class="row" style="padding-left:10px">
+								<div class="col-lg-1" hidden>
+									<label class="control-label form-control-sm">Tipo Proyectista</label>
+									<select name="tipo_proyectista_row[]" id="tipo_proyectista_row" class="form-control form-control-sm" onChange="">
+										<option value="0">--Selecionar--</option>
+										<?php
+										foreach ($tipo_proyectista as $row_) {?>
+										<option value="<?php echo $row_->codigo?>" <?php //if($row_->codigo==$row->id_tipo_profesional)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
+										<?php
+										}
+										?>
+									</select>
 								</div>
-							</div>
-							<div class="col-lg-1">
-								<div class="form-group" id="numero_cap_">
-									<label class="control-label form-control-sm color-letra">N° CAP<?php //echo $row->tipo_colegiatura?></label>
-									<input id="numero_cap_row" name="numero_cap_row[]" on class="form-control form-control-sm"  value="<?php //echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()">
-									<input id="tipo_colegiatura_row" name="tipo_colegiatura_row[]" value="<?php //echo $row->tipo_colegiatura?>" type="hidden">
+								<div class="col-lg-3" >
+									<div class="form-group "id="agremiado_">
+										<label class="control-label form-control-sm color-letra">Nombre</label>
+										<input id="agremiado_row" name="agremiado_row" on class="form-control form-control-sm"  value="<?php //echo $row->agremiado?>" type="text" readonly='readonly'>
+									</div>
 								</div>
-							</div>
-							<!--<div class="col-lg-1">
-								<div class="form-group" id="situacion_">
-									<label class="control-label form-control-sm color-letra">Situaci&oacute;n</label>
-									<input id="situacion_row" name="situacion_row" on class="form-control form-control-sm"  value="<?php //echo $row->situacion?>" type="text" readonly='readonly'>
+								<div class="col-lg-1">
+									<div class="form-group" id="numero_cap_">
+										<label class="control-label form-control-sm color-letra">N° CAP<?php //echo $row->tipo_colegiatura?></label>
+										<input id="numero_cap_row" name="numero_cap_row[]" on class="form-control form-control-sm"  value="<?php //echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()">
+										<input id="tipo_colegiatura_row" name="tipo_colegiatura_row[]" value="<?php //echo $row->tipo_colegiatura?>" type="hidden">
+									</div>
 								</div>
-							</div>-->
-							<div class="col-lg-1">
-								<label class="control-label form-control-sm color-letra">Profesi&oacute;n</label>
-								<select name="principal_asociado_row" id="principal_asociado_row" class="form-control form-control-sm" onChange="">
-									<option value="0">--Selecionar--</option>
-									<?php
-									foreach ($principal_asociado as $row_) {?>
-									<option value="<?php echo $row_->codigo?>" <?php //if($row_->codigo==$row->id_tipo_proyectista)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
-							</div>
+								<!--<div class="col-lg-1">
+									<label class="control-label form-control-sm color-letra">Profesi&oacute;n</label>
+									<select name="principal_asociado_row" id="principal_asociado_row" class="form-control form-control-sm" onChange="">
+										<option value="0">--Selecionar--</option>
+										<?php
+										//foreach ($principal_asociado as $row_) {?>
+										<option value="<?php //echo $row_->codigo?>" <?php //if($row_->codigo==$row->id_tipo_proyectista)echo "selected='selected'"?>><?php //echo $row_->denominacion?></option>
+										<?php
+										//}
+										?>
+									</select>
+								</div>-->
 
-							<div class="col-lg-1">
-								<div class="form-group" id="direccion_agremiado_">
-									<label class="control-label form-control-sm color-letra">T&eacute;lefono</label>
-									<input id="telefono_row" name="telefono_row" on class="form-control form-control-sm"  value="<?php //echo $row->celular1?>" type="text" readonly='readonly'>
+								<div class="col-lg-1">
+									<div class="form-group" id="direccion_agremiado_">
+										<label class="control-label form-control-sm color-letra">T&eacute;lefono</label>
+										<input id="telefono_row" name="telefono_row" on class="form-control form-control-sm"  value="<?php //echo $row->celular1?>" type="text" readonly='readonly'>
+									</div>
 								</div>
-							</div>
 
-							<div class="col-lg-3">
-								<div class="form-group" id="n_regional_">
-									<label class="control-label form-control-sm color-letra">Email</label>
-									<input id="email_row" name="email_row" on class="form-control form-control-sm"  value="<?php //echo $row->email1?>" type="text" readonly='readonly'>
+								<div class="col-lg-3">
+									<div class="form-group" id="n_regional_">
+										<label class="control-label form-control-sm color-letra">Email</label>
+										<input id="email_row" name="email_row" on class="form-control form-control-sm"  value="<?php //echo $row->email1?>" type="text" readonly='readonly'>
+									</div>
 								</div>
-							</div>
-							<div class="col-lg-2">
-								<div class="form-group" id="act_gremial_">
-									<label class="control-label form-control-sm color-letra">Actividad Gremial</label>
-									<input id="act_gremial_row" name="act_gremial_row" on class="form-control form-control-sm"  value="<?php //echo $row->actividad?>" type="text" readonly='readonly'>
-								</div>
-							</div>
-							<div class="col-lg-1" hidden>
-								<label class="control-label form-control-sm color-letra">Principal_asociado</label>
-								<select name="principal_asociado_row" id="principal_asociado_row" class="form-control form-control-sm" onChange="">
-									<option value="0">--Selecionar--</option>
-									<?php
-									foreach ($principal_asociado as $row_) {?>
-									<option value="<?php echo $row_->codigo?>" <?php //if($row_->codigo==$row->id_tipo_proyectista)echo "selected='selected'"?>><?php echo $row_->denominacion?></option>
-									<?php
-									}
-									?>
-								</select>
+								<!--<div class="col-lg-1" hidden>
+									<label class="control-label form-control-sm color-letra">Principal_asociado</label>
+									<select name="principal_asociado_row" id="principal_asociado_row" class="form-control form-control-sm" onChange="">
+										<option value="0">--Selecionar--</option>
+										<?php
+										//foreach ($principal_asociado as $row_) {?>
+										<option value="<?php //echo $row_->codigo?>" <?php //if($row_->codigo==$row->id_tipo_proyectista)echo "selected='selected'"?>><?php //echo $row_->denominacion?></option>
+										<?php
+										//}
+										?>
+									</select>
+								</div>-->
 							</div>
 						</div>
-
+						<div class="col-lg-4">
+								<div class="row" style="padding-left:10px">
+									<a href="javascript:void(0)" onClick="AddProyectistaAsociado()" class="btn btn-sm btn-success">Agregar</a>	
+								</div>
+							</div>
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold; color: #1538C8;">
 							Profesional del Proyecto de Seguridad
 						</div>
