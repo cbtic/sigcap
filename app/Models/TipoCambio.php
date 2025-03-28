@@ -42,4 +42,14 @@ class TipoCambio extends Model
         return $data;
     }
 
+    function validarFecha($fecha){
+
+        $cad = "select count(*) cantidad from tipo_cambios tc 
+        where fecha ='".$fecha."'";
+
+		//echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }

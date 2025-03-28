@@ -775,7 +775,7 @@ Route::get('fondoComun/fondoComun_pdf/{id_ubigeo}/{anio}/{mes}', [FondoComunCont
 Route::get('tipo_cambio/consulta_tipo_cambio', [TipoCambioController::class, 'consulta_tipo_cambio'])->name('tipo_cambio.consulta_tipo_cambio');
 Route::post('tipo_cambio/listar_tipo_cambio_ajax', [TipoCambioController::class, 'listar_tipo_cambio_ajax'])->name('tipo_cambio.listar_tipo_cambio_ajax');
 Route::get('tipo_cambio/modal_tipo_cambio_nuevoTipoCambio/{id}', [TipoCambioController::class, 'modal_tipo_cambio_nuevoTipoCambio'])->name('tipo_cambio.modal_tipo_cambio_nuevoTipoCambio');
-Route::get('tipo_cambio/eliminar_tipo_cambio/{id}', [TipoCambioController::class, 'eliminar_tipo_cambio'])->name('tipo_cambio.eliminar_tipo_cambio');
+Route::get('tipo_cambio/eliminar_tipo_cambio/{id}/{estado}', [TipoCambioController::class, 'eliminar_tipo_cambio'])->name('tipo_cambio.eliminar_tipo_cambio');
 Route::post('tipo_cambio/send_tipo_cambio_nuevoTipoCambio', [TipoCambioController::class, 'send_tipo_cambio_nuevoTipoCambio'])->name('tipo_cambio.send_tipo_cambio_nuevoTipoCambio');
 
 //Route::get('reporte', [ReporteController::class, 'index'])->name('reporte');}
@@ -832,6 +832,7 @@ Route::get('ingreso/reporte_efectivo_consolidado_pdf/{fecha}', [IngresoControlle
 Route::get('ingreso/validarCaja/{caja}/{fecha}/{moneda}/{id_efectivo}', [IngresoController::class, 'validarCaja'])->name('ingreso.validarCaja');
 Route::get('agremiado/validar_agremiado_multa/{ncap}', [AgremiadoController::class, 'validar_agremiado_multa'])->name('agremiado.validar_agremiado_multa');
 Route::get('ingreso/eliminar_efectivo/{id}/{estado}', [IngresoController::class, 'eliminar_efectivo'])->name('ingreso.eliminar_efectivo');
+Route::get('tipo_cambio/validar_fecha/{fecha}', [TipoCambioController::class, 'validar_fecha'])->name('tipo_cambio.validar_fecha');
 
 
 
