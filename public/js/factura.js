@@ -288,10 +288,11 @@ function fn_save(){
 				//location.href=urlApp+"/factura/"+result;
 				$('.loader').hide();
 				
+				
+
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
 				location.href=urlApp+"/comprobante/"+result.id_factura;
-
 				enviar_comprobante(result.id_factura);
 
             }
