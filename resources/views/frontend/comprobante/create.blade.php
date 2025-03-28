@@ -455,6 +455,9 @@
                         <input type="hidden" name="descuentopp" id="descuentopp" value="<?php echo $descuentopp; ?>">
                         <input type="hidden" name="id_pronto_pago" id="id_pronto_pago" value="<?php echo $id_pronto_pago; ?>">
                         <input type="hidden" name="totalMedioPago" id="totalMedioPago" value="">
+                        <input type="hidden" name="tipo_documento_b" id="tipo_documento_b" value="<?php echo $tipo_documento_b; ?>">
+
+                        
 
                         <input type="hidden" name="persona2" id="persona2" value="">
                         <input type="hidden" name="ubicacion2" id="ubicacion2" value="">
