@@ -77,6 +77,7 @@ class ComprobanteController extends Controller
         $id_tipo_afectacion_pp=$request->id_tipo_afectacion_pp;
 
         $email=$request->email;
+        $tipo_documento_b=$request->tipo_documento_b;
 
         
         //print_r($id_tipo_afectacion_pp); exit();
@@ -326,7 +327,7 @@ class ComprobanteController extends Controller
             
             //print_r($nc); exit();
 
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago','nc'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago','nc','tipo_documento_b'));
             
         }
         if ($trans == 'FN'){
@@ -1175,7 +1176,11 @@ class ComprobanteController extends Controller
 
             $id_persona = $request->persona;
             $ubicacion_id = $request->ubicacion;
-            $tipo_documento_b = $request->ipo_documento_b;
+            $tipo_documento_b = $request->tipo_documento_b;
+
+            //echo("HI");
+            //echo($tipo_documento_b);
+            //exit();
 
             if ($tipo_documento_b=="85"){
 
@@ -1184,16 +1189,19 @@ class ComprobanteController extends Controller
                 $totalDeuda = $valorizaciones_model->getBuscaDeudaAgremido($id_persona);
                 $total_ = $totalDeuda->total;
 
+                //echo($total_);
+                //exit();
+
                 if ($total_ <= 2) {
                     $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
 
                     if ($agremiado->id_actividad_gremial != 225 && $agremiado->id_situacion != 83 && $agremiado->id_situacion != 267) {
-                            $agremiado->id_situacion = "73";
+                            $agremiado->id_situacion = "73"; //habilitado
                             $agremiado->save();                    
                     }
                 } else {
                     $agremiado = Agremiado::where('id_persona', $id_persona)->get()[0];
-                    $agremiado->id_situacion = "74";
+                    $agremiado->id_situacion = "74"; //inhabilitado
                     $agremiado->save();
                 }
             }
@@ -1904,11 +1912,10 @@ class ComprobanteController extends Controller
 
            /**********RUC***********/
 
-           $tarifa = $request->facturad;
-
+           //$tarifa = $request->facturad;
           // print_r($request); exit();
-
-           $total = $request->totalF;
+           $total = $request->totalP;
+           //print_r($total); exit();
            $serieF = $request->serieF;
            $tipoF = $request->tipoF;
 
@@ -1940,18 +1947,20 @@ class ComprobanteController extends Controller
                
                /*************************************/
                
+               /*
                foreach ($tarifa as $key => $value) {
                    //$vestab = $value['vestab'];
                    //$vcodigo = $value['vcodigo'];
                    $id_val = $value['id'];
 
                }
+                   */
+
 
                     ///redondeo///
                     $total_pagar = $request->total_pagar;
-                    //print_r($total_pagar);
-                    //print_r('-');
-
+                   // print_r($total_pagar); 
+                  
                     if ($total_pagar!="0"){                         
                         $total_pagar = $request->total_pagar;
                         $total_g = $request->totalP;
@@ -1959,6 +1968,8 @@ class ComprobanteController extends Controller
     
                         $total = $total+$total_redondeo;
                     }
+                    //print_r("-");
+                    //print_r($total); exit();
 
                     
     
@@ -1977,12 +1988,11 @@ class ComprobanteController extends Controller
                         $total = $total+$total_abono;
                     }
 
-                   // print_r($total_abono);
-              
-               
+                    //print_r($total); exit();
+                             
                $id_moneda=1;
-
-               $descuento = $value['descuento'];
+               //$descuento = $value['descuento'];
+               $descuento = 0;               
        
               $id_factura = $facturas_model->registrar_comprobante_ncnd($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',     $id_user,  1,$razon_social,$direccion,$id_comprobante_ncdc,$correo,$afecta,$tiponota,   $motivo,$afecta_ingreso,0,0,0,0);              
              //  $id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona, $total,          '',           '',    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda);
@@ -2000,6 +2010,15 @@ class ComprobanteController extends Controller
                $factura_upd->save();
 
 
+               $factura_detalle = $request->facturad;              
+               $ind = 0;
+
+               foreach($request->facturads as $key=>$det){
+                    $tarifa[$ind] = $factura_detalle[$key];
+                    $ind++;
+                }
+
+                
 
                if ($total_pagar!="0"){
                 $total_pagar = $request->total_pagar;
@@ -2063,23 +2082,41 @@ class ComprobanteController extends Controller
                 $tarifa[999]=$items1;
             }
 
-               //print_r($tarifa); exit();
-               foreach ($tarifa as $key => $value) {
-                   //echo "denominacion=>".$value['denominacion']."<br>";
-                   if ($adelanto == 'S'){
-                       $total   = $request->MonAd;
-                   }
-                   else{
-                       //$total   = ;
-                       $total   =$value['importe'];
-                   }
-                   $descuento = $value['descuento'];
-                   if ($value['descuento']=='') $descuento = 0;
-                   $id_factura_detalle = $facturas_model->registrar_comprobante($serieF, $fac_numero, $tipoF, $value['item'], $total, $value['descripcion'], "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
-                                                                                //(  serie,      numero,   tipo,      ubicacion, persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
-                   
-               
-               }
+            //print_r($tarifa); exit();
+
+
+
+
+
+            foreach ($tarifa as $key => $value) {
+                //echo "denominacion=>".$value['denominacion']."<br>";
+                if ($adelanto == 'S') {
+                    $total   = $request->MonAd;
+                } else {
+                    //$total   = ;
+                    $total   = $value['total'];
+                    //$total   =$value['totald'];
+
+                }
+                $descuento = $value['descuento'];
+                if ($value['descuento'] == '') $descuento = 0;
+                $id_factura_detalle = $facturas_model->registrar_comprobante($serieF, $fac_numero, $tipoF, $value['item'], $total, $value['descripcion'], "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda);
+                //(  serie,      numero,   tipo,      ubicacion, persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
+
+
+                $facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
+
+                $facturaDet_upd->pu = $value['pu'];
+                $facturaDet_upd->importe = $value['total'];
+                $facturaDet_upd->igv_total = $value['igv'];
+                $facturaDet_upd->precio_venta = $value['pv'];
+                $facturaDet_upd->valor_venta_bruto = $value['valor_venta_bruto'];
+                $facturaDet_upd->valor_venta = $value['valor_venta'];
+                // $facturaDet_upd->codigo=$value['codigo_producto'];
+                //$facturaDet_upd->unidad = $value['abreviatura'];
+                $facturaDet_upd->save();
+            }
+
 
                if(isset($request->idMedio)):
                 foreach ($request->idMedio as $key => $value):

@@ -578,8 +578,10 @@ function calcular_total_otros(obj){
 		var val_total = val_precio * val_cantidad;
 		
 
-		$(this).parent().parent().parent().find('.val_total').html(val_total);
+		$(this).parent().parent().parent().find('.val_total').html(val_total.toFixed(2));
 		val_total =val_total.toString().replace(',','');
+
+		//alert(val_total);
 		
 		//var val_total = $(this).parent().parent().parent().find('.val_total').html();
 
@@ -587,13 +589,13 @@ function calcular_total_otros(obj){
 		//var val_igv = $(this).parent().parent().parent().find('.val_igv').html();
 		var val_sub_total = (val_total/1.18);
 		var val_igv = (val_total* 0.18);
-		$(this).parent().parent().parent().find('.val_sub_total').html(val_sub_total);
+		$(this).parent().parent().parent().find('.val_sub_total').html(val_sub_total.toFixed(2));
 		
 		//alert(val_sub_total.toString().replace(".",','));
 		
 		val_sub_total =val_sub_total.toString().replace(/(,)/,'');
 
-		$(this).parent().parent().parent().find('.val_igv').html(val_igv);
+		$(this).parent().parent().parent().find('.val_igv').html(val_igv.toFixed(2));
 		val_igv =val_igv.toString().replace(',','');
 
 		id_concepto = $(this).parent().parent().parent().find('.id_concepto_modal_sel').val();
@@ -656,6 +658,7 @@ function calcular_total_otros(obj){
 		ValorVenta_ = Number(ValorVenta_ );
 		Igv_ = Number(Igv_ );		
 		Total_ = Number(Total_ );
+		PrecioVenta_ = Number(PrecioVenta_ );
 
 
 
@@ -673,20 +676,16 @@ function calcular_total_otros(obj){
 		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(Igv_);
 		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(Total_);
 */
-		$(this).parent().parent().parent().find('#comprobante_detalle_precio_unitario').val(ValorUnitario_);
-		$(this).parent().parent().parent().find('#comprobante_detalle_sub_total').val(ValorVenta_);
-		$(this).parent().parent().parent().find('#comprobante_detalle_valor_venta_bruto').val(ValorVB_);
-		$(this).parent().parent().parent().find('#comprobante_detalle_monto').val(Total_);
-		$(this).parent().parent().parent().find('#comprobante_detalle_pu').val(ValorUnitario_);
-		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(Igv_);
+		$(this).parent().parent().parent().find('#comprobante_detalle_precio_unitario').val(ValorUnitario_.toFixed(2));
+		$(this).parent().parent().parent().find('#comprobante_detalle_sub_total').val(ValorVenta_.toFixed(2));
+		$(this).parent().parent().parent().find('#comprobante_detalle_valor_venta_bruto').val(ValorVB_.toFixed(2));
+		$(this).parent().parent().parent().find('#comprobante_detalle_monto').val(Total_.toFixed(2));
+		$(this).parent().parent().parent().find('#comprobante_detalle_pu').val(ValorUnitario_.toFixed(2));
+		$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(Igv_.toFixed(2));
 
-		$(this).parent().parent().parent().find('#comprobante_detalle_pv').val(PrecioVenta_);
-		$(this).parent().parent().parent().find('#comprobante_detalle_vv').val(ValorVenta_);
-		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(Total_);
-
-
-
-
+		$(this).parent().parent().parent().find('#comprobante_detalle_pv').val(PrecioVenta_.toFixed(2));
+		$(this).parent().parent().parent().find('#comprobante_detalle_vv').val(ValorVenta_.toFixed(2));
+		$(this).parent().parent().parent().find('#comprobante_detalle_total').val(Total_.toFixed(2));
 
 	});
 
