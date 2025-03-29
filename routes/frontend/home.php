@@ -833,7 +833,6 @@ Route::get('ingreso/validarCaja/{caja}/{fecha}/{moneda}/{id_efectivo}', [Ingreso
 Route::get('agremiado/validar_agremiado_multa/{ncap}', [AgremiadoController::class, 'validar_agremiado_multa'])->name('agremiado.validar_agremiado_multa');
 Route::get('ingreso/eliminar_efectivo/{id}/{estado}', [IngresoController::class, 'eliminar_efectivo'])->name('ingreso.eliminar_efectivo');
 Route::get('tipo_cambio/validar_fecha/{fecha}', [TipoCambioController::class, 'validar_fecha'])->name('tipo_cambio.validar_fecha');
-
-
+Route::post('derecho_revision/send_nuevo_registro_solicitud_edificacion', [DerechoRevisionController::class, 'send_nuevo_registro_solicitud_edificacion'])->name('derecho_revision.send_nuevo_registro_solicitud_edificacion');
 
 

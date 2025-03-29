@@ -97,8 +97,8 @@ $(document).ready(function () {
 		guardar_credipago_()
 	});
 
-	$('#btnSolicitudDerechoRevision').click(function () {
-		guardar_solicitud_derecho_revision()
+	$('#btnSolicitudEdificacion').click(function () {
+		guardar_solicitud_derecho_revision_edificacion()
 		//Limpiar();
 		//window.location.reload();
 	});
@@ -607,22 +607,84 @@ function obtenerProyectista(){
 		success: function(result){
 			
 			var agremiado = result.agremiado;
-			//var tipo_documento = parseInt(agremiado.tipo_documento);
-			//var nombre = persona.apellido_paterno+" "+persona.apellido_materno+", "+persona.nombres;
-			//alert(agremiado.situacion);
+
+			if (agremiado.firma) {
+				$('#firma_row').attr('src', '/img/agremiado/' + agremiado.firma).show();
+				$('.firma-no-registrada').hide();
+			} else {
+				$('#firma_row').hide();
+				if ($('.firma-no-registrada').length == 0) {
+					$('#firma_agremiado_').append('<p class="firma-no-registrada">No Registrada</p>');
+				} else {
+					$('.firma-no-registrada').show();
+				}
+			}
 
 			if (agremiado.situacion=="HABILITADO"){
 				$('#frmRegistroSolicitudDerechoRevision #agremiado_row').val(agremiado.agremiado);
 				$('#frmRegistroSolicitudDerechoRevision #situacion_row').val(agremiado.situacion);
 				$('#frmRegistroSolicitudDerechoRevision #telefono_row').val(agremiado.celular);
 				$('#frmRegistroSolicitudDerechoRevision #email_row').val(agremiado.email);
+				$('#frmRegistroSolicitudDerechoRevision #situacion_row').val(agremiado.situacion);
 				$('#frmRegistroSolicitudDerechoRevision #act_gremial_row').val(agremiado.actividad_gremial);
 			}else{
-				$('#frmRegistroSolicitudDerechoRevision #agremiado').val('');
-				$('#frmRegistroSolicitudDerechoRevision #situacion').val('');
-				$('#frmRegistroSolicitudDerechoRevision #direccion_agremiado').val('');
-				$('#frmRegistroSolicitudDerechoRevision #n_regional').val('');
-				$('#frmRegistroSolicitudDerechoRevision #act_gremial').val('');
+				$('#frmRegistroSolicitudDerechoRevision #agremiado_row').val('');
+				$('#frmRegistroSolicitudDerechoRevision #situacion_row').val('');
+				$('#frmRegistroSolicitudDerechoRevision #telefono_row').val('');
+				$('#frmRegistroSolicitudDerechoRevision #email_row').val('');
+				$('#frmRegistroSolicitudDerechoRevision #situacion_row').val('');
+				$('#frmRegistroSolicitudDerechoRevision #act_gremial_row').val('');
+				bootbox.alert("El agremiado no esta HABILITADO");
+			}
+						
+			$('.loader').hide();
+
+		}
+		
+	});
+	
+}
+
+function obtenerProyectistaSeguridad(){
+		
+	var numero_cap = $("#numero_cap_seguridad").val();
+	var msg = "";
+	
+	if(numero_cap == "")msg += "Debe ingresar un n&uacute;mero CAP <br>";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_datos_agremiado/' + numero_cap,
+		dataType: "json",
+		success: function(result){
+			
+			var agremiado = result.agremiado;
+			//var tipo_documento = parseInt(agremiado.tipo_documento);
+			//var nombre = persona.apellido_paterno+" "+persona.apellido_materno+", "+persona.nombres;
+			//alert(agremiado.situacion);
+
+			if (agremiado.situacion=="HABILITADO"){
+				$('#frmRegistroSolicitudDerechoRevision #agremiado_seguridad').val(agremiado.agremiado);
+				$('#frmRegistroSolicitudDerechoRevision #situacion_seguridad').val(agremiado.situacion);
+				$('#frmRegistroSolicitudDerechoRevision #telefono_seguridad').val(agremiado.celular);
+				$('#frmRegistroSolicitudDerechoRevision #email_seguridad').val(agremiado.email);
+				$('#frmRegistroSolicitudDerechoRevision #act_gremial_seguridad').val(agremiado.actividad_gremial);
+			}else{
+				$('#frmRegistroSolicitudDerechoRevision #agremiado_seguridad').val('');
+				$('#frmRegistroSolicitudDerechoRevision #situacion_seguridad').val('');
+				$('#frmRegistroSolicitudDerechoRevision #telefono_seguridad').val('');
+				$('#frmRegistroSolicitudDerechoRevision #email_seguridad').val('');
+				$('#frmRegistroSolicitudDerechoRevision #act_gremial_seguridad').val('');
 				bootbox.alert("El agremiado no esta HABILITADO");
 			}
 			
@@ -1968,44 +2030,25 @@ function modalComprobante(id){
 
 }
 
-function guardar_solicitud_derecho_revision(){
+function guardar_solicitud_derecho_revision_edificacion(){
     
-	var msg = "";
-	var _token = $('#_token').val();
-	var id = "0";
-	var id_solicitud = $('#id_solicitud').val();
-	var numero_cap = $('#numero_cap').val();
-	var n_revision = $('#n_revision').val();
-	var direccion_proyecto = $('#direccion_proyecto').val();
-	var departamento = $('#departamento').val();
-	var provincia = $('#provincia').val();
-	var distrito = $('#distrito').val();
-	var municipalidad = $('#municipalidad').val();
-	var nombre_proyecto = $('#nombre_proyecto').val();
-	var parcela = $('#parcela').val();
-	var superManzana = $('#superManzana').val();
-	var lote = $('#lote').val();
-	var sitio = $('#sitio').val();
-	var direccion_sitio = $('#direccion_sitio').val();
-	var zona = $('#zona').val();
-	var direccion_zona = $('#direccion_zona').val();
-	var tipo = $('#tipo').val();
-	var sublote = $('#sublote').val();
-	var fila = $('#fila').val();
-	var zonificacion = $('#zonificacion').val();
-	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+
 	$.ajax({
-			url: "/derecho_revision/send_nuevo_registro_solicitud",
+			url: "/derecho_revision/send_nuevo_registro_solicitud_edificacion",
 			type: "POST",
-			data : {_token:_token,id:id,numero_cap:numero_cap,n_revision:n_revision,direccion_proyecto:direccion_proyecto,
-				departamento:departamento,provincia:provincia,distrito:distrito,municipalidad:municipalidad,nombre_proyecto:nombre_proyecto,
-				parcela:parcela,superManzana:superManzana,lote:lote,fila:fila,sitio:sitio,zona:zona,tipo:tipo,sublote:sublote,zonificacion:zonificacion,
-				direccion_sitio:direccion_sitio,direccion_zona:direccion_zona,id_solicitud:id_solicitud},
+            data : $("#frmRegistroSolicitudDerechoRevision").serialize(),
 			success: function (result) {
 				
 				//alert();
-				var href = '/derecho_revision/editar_derecho_revision_nuevo/'+result;
-				window.location.href = href;
+				$('.loader').hide();
+				bootbox.alert("Guardado Exitosamente");
+				//var href = '/derecho_revision/send_solicitud_edificacion/'+result;
+				//window.location.href = href;
 				//window.location.reload();
 				
 			}
@@ -2456,19 +2499,18 @@ function removeFilaArchivoAdicional(event, row) {
 
 function AddProyectistaAsociado() {
     var container = document.getElementById('proyectista_asociado_container');
-    var newRow = container.children[0].cloneNode(true); // Clona la primera fila
+    var newRow = container.children[0].cloneNode(true);
 	var index = container.children.length;
 
-    // Limpia los valores de los inputs en la nueva fila
     newRow.querySelectorAll('input, select').forEach(function(element) {
         if (element.id) {
-            element.id = element.id + '_' + index; // Asigna un nuevo ID único
+            element.id = element.id + '_' + index;
         }
         if (element.name) {
-            element.name = element.name.replace('[]', '[' + index + ']'); // Ajusta el name
+            element.name = element.name.replace('[]', '[' + index + ']');
         }
-        if (element.type === 'text') {
-            element.value = ''; // Limpia los valores de los inputs de texto
+        if (element.type == 'text') {
+            element.value = '';
         }
     });
 
@@ -2477,13 +2519,6 @@ function AddProyectistaAsociado() {
         numeroCapInput.setAttribute("onchange", "obtenerProyectista()");
     }
 
-    // Asegurar que el botón tenga su value correcto
-    /*var btnArchivo = newRow.querySelector('input[type="button"]');
-    if (btnArchivo) {
-        btnArchivo.value = "Seleccionar Archivo";
-    }*/
-
-    // Crear botón de eliminar
     var removeButton = document.createElement('button');
     removeButton.className = 'btn btn-sm btn-danger';
     removeButton.style.marginTop = '37px';
