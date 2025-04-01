@@ -141,7 +141,7 @@
 			<tbody>
                 <tr>
                     <td style="font-size : 8.5px;padding-left:5px!important" width="60%">
-                        *** Las deudas que est&aacute;n registradas en D&oacute;lares se muestra en Soles con el tipo de cambio S/. <?php echo number_format($tipo_cambio[0]->valor_venta, 3, '.', ',')?> del dia <?php echo $tipo_cambio[0]->fecha?>.
+                        *** Las deudas que est&aacute;n registradas en D&oacute;lares se muestra en Soles con el tipo de cambio S/. <?php echo number_format($tipo_cambio_valor_venta, 3, '.', ',')?> del dia <?php echo $tipo_cambio_fecha?>.
                     </td>
                 </tr>
 			</tbody>
