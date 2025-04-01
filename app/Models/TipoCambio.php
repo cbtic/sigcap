@@ -33,13 +33,14 @@ class TipoCambio extends Model
 
     function getTipoCambio(){
 
-        $cad = "select tc.id, to_char(tc.fecha,'dd-mm-yyyy')fecha, tc.valor_venta,tc.estado from tipo_cambios tc 
+        $cad = "select tc.id, to_char(tc.fecha,'dd-mm-yyyy')fecha, tc.valor_venta,tc.estado, to_char(now(),'dd-mm-yyyy') fecha_act 
+                from tipo_cambios tc 
                 order by tc.fecha desc
                 limit 1";
 
 		//echo $cad;
-		$data = DB::select($cad);
-        return $data;
+        $data = DB::select($cad);
+        if($data)return $data[0];
     }
 
     function validarFecha($fecha){
