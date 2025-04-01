@@ -12,7 +12,7 @@ class AgremiadoTrabajo extends Model
 	
 	function getAgremiadoTrabajo($id_agremiado){
 
-        $cad = "select at2.id,numero_documento,razon_social,coalesce(tm.denominacion,'SIN DEGINIR') cargo,rubro_negocio,
+        $cad = "select at2.id,numero_documento,razon_social,coalesce(tm.denominacion,'SIN DEFINIR') cargo,rubro_negocio,
 at2.id_ubigeo,ud.desc_ubigeo departamento,udi.desc_ubigeo distrito,up.desc_ubigeo provincia,at2.direccion,at2.codigo_postal,at2.referencia,at2.telefono,at2.celular,at2.email  
 from agremiado_trabajos at2
 left join tabla_maestras tm on at2.id_cliente_cargo=tm.codigo::int and tm.tipo='4'
