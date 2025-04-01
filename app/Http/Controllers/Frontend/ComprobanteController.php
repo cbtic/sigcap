@@ -12,6 +12,7 @@ use App\Models\Valorizacione;
 use App\Models\Persona;
 use App\Models\Guia;
 use App\Models\Concepto;
+use App\Models\TipoCambio;
 
 use App\Models\Agremiado;
 use App\Models\AgremiadoCuota;
@@ -78,6 +79,20 @@ class ComprobanteController extends Controller
 
         $email=$request->email;
         $tipo_documento_b=$request->tipo_documento_b;
+        
+        $tipo_cambio_model= new TipoCambio;
+        $tipo_cambio_act=$tipo_cambio_model->getTipoCambio();
+        $tipo_cambio = (isset($tipo_cambio_act->valor_venta))?$tipo_cambio_act->valor_venta:0;
+        $fecha_tc = $tipo_cambio_act->fecha;
+        $fecha_act = $tipo_cambio_act->fecha_act;
+
+        if($fecha_tc==$fecha_act){
+            $tipo_cambio = (isset($tipo_cambio_act->valor_venta))?$tipo_cambio_act->valor_venta:0;
+        }else{
+            $tipo_cambio = "";
+        }
+
+
 
         
         //print_r($id_tipo_afectacion_pp); exit();
@@ -118,7 +133,11 @@ class ComprobanteController extends Controller
         if ($trans == 'FA'){
 
             //$serie = $serie_model->getMaestro('SERIES',$TipoF);
-            $serie = $serie_model->getMaestroC('95',$TipoF);            
+            $serie = $serie_model->getMaestroC('95',$TipoF); 
+            
+            $serie_default = $serie[0]->predeterminado;
+
+            //print ($serie_default); exit();
 
             //$MonAd = $request->MonAd;
             $MonAd = 0;
@@ -327,7 +346,7 @@ class ComprobanteController extends Controller
             
             //print_r($nc); exit();
 
-            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago','nc','tipo_documento_b'));
+            return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago','nc','tipo_documento_b', 'tipo_cambio'));
             
         }
         if ($trans == 'FN'){
@@ -930,6 +949,8 @@ class ComprobanteController extends Controller
 
                 if($id_persona!="") $factura_upd->id_persona = $id_persona;
                 if($id_empresa!="") $factura_upd->id_empresa = $id_empresa;
+
+                $factura_upd->observacion = $request->observacion;
 
 
 				$factura_upd->save();
@@ -2445,6 +2466,8 @@ class ComprobanteController extends Controller
         $formapago = $tabla_model->getMaestroByTipo('104');
 
         $serie = $serie_model->getMaestro('95');
+
+       // $serie = $serie_model->getMaestroC('95',$TipoF); 
         //print_r($tipoF); exit();
 
         //print_r($facturad); exit();
