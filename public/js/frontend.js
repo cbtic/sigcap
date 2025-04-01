@@ -2513,7 +2513,7 @@ process.umask = function() { return 0; };
   \***************************************************************/
 /***/ (() => {
 
-throw new Error("Module build failed (from ./node_modules/vue-loader/dist/index.js):\nTypeError: Cannot read properties of undefined (reading 'styles')\n    at Object.loader (/var/www/html/sigcap/node_modules/vue-loader/dist/index.js:96:34)");
+throw new Error("Module build failed (from ./node_modules/vue-loader/dist/index.js):\nTypeError: Cannot read properties of undefined (reading 'styles')\n    at Object.loader (C:\\proyectos\\sigcap\\node_modules\\vue-loader\\dist\\index.js:96:34)");
 
 /***/ }),
 
