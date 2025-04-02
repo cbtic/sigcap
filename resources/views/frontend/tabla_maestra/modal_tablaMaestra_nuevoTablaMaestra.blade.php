@@ -296,11 +296,12 @@ function fn_save_(){
 	var id = $('#id').val();
 	var denominacion = $('#denominacion').val();
 	var tipo_nombre = $('#tipo_nombre').val();
+	var predeterminado = $('#predeterminado').val();
 	
     $.ajax({
 			url: "/tabla_maestra/send_tablaMaestra_nuevoTablaMaestra",
             type: "POST",
-            data : {_token:_token,id:id,denominacion:denominacion,tipo_nombre:tipo_nombre},
+            data : {_token:_token,id:id,denominacion:denominacion,tipo_nombre:tipo_nombre,predeterminado:predeterminado,},
             success: function (result) {
 				
 				//$('#openOverlayOpc').modal('hide');
@@ -374,6 +375,14 @@ function datatableTablaMaestraTipo(){
 									?>
 							</select>
 						</div>
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+							<label class="control-label form-control-sm">Predeterminado</label>
+							<select name="predeterminado" id="predeterminado" class="form-control form-control-sm" onChange="">
+								<option value="">--Selecionar--</option>
+								<option value="1" <?php if(isset($tablaMaestra->predeterminado) && $tablaMaestra->predeterminado=='1') echo "selected='selected'"?>>SI</option>
+								<option value="0" <?php if(isset($tablaMaestra->predeterminado) && $tablaMaestra->predeterminado=='0') echo "selected='selected'"?>>NO</option>	
+							</select>
+						</div>
 						<div class="col-lg-10">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Denominaci&oacute;n</label>
@@ -404,6 +413,8 @@ function datatableTablaMaestraTipo(){
 								<th>Denominaci&oacute;n</th>
 								<th>C&oacute;digo</th>
 								<th>Tipo Nombre</th>
+								<th>Predeterminado</th>
+								<th>Estado</th>
 							</tr>
 							</thead>
 							<tbody>

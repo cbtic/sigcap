@@ -92,6 +92,7 @@ class TablaMaestraController extends Controller
         $tablaMaestra->tipo = $request->tipo_nombre;
 		$tablaMaestra->denominacion = $request->denominacion;
 		$tablaMaestra->tipo_nombre = $tipo_nombre;
+		$tablaMaestra->predeterminado = $request->predeterminado;
        
         $tablaMaestra->estado = 1;
 		//$tablaMaestra->id_usuario_inserta = $id_user;

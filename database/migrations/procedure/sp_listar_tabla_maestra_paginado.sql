@@ -18,7 +18,7 @@ begin
 	
 	p_pagina=(p_pagina::Integer-1)*p_limit::Integer;
 
-	v_campos=' tm.id, tm.tipo, tm.denominacion, tm.codigo, tm.tipo_nombre, tm.orden, tm.estado ';
+	v_campos=' tm.id, tm.tipo, tm.denominacion, tm.codigo, tm.tipo_nombre, tm.orden, tm.predeterminado, tm.estado ';
 
 	v_tabla=' from tabla_maestras tm ';
 	
