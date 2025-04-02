@@ -548,23 +548,25 @@ class CajaIngreso extends Model
 
         if ($id_concepto!="") $concepto = " and c.id = ".$id_concepto; 
 
-        $cad = "select  c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, descripcion, ac.importe, to_char(ac.fecha_venc_pago, 'dd-mm-yyyy' )  fecha_vencimiento
+        $cad = "/*select c.id,c.denominacion , ROW_NUMBER() OVER (PARTITION BY c.id order by ac.fecha_venc_pago asc ) AS row_num, descripcion, ac.importe, to_char(ac.fecha_venc_pago, 'dd-mm-yyyy' )  fecha_vencimiento
         from agremiado_cuotas ac
         inner join valorizaciones v on ac.id =v.pk_registro and v.pagado ='0'
         inner join conceptos c on ac.id_concepto =c.id
-        where id_agremiado = ".$id."  
+        where id_agremiado =".$id."
         and id_situacion in (59) 
-        and v.codigo_fraccionamiento is null 
+        and (v.codigo_fraccionamiento is null or v.codigo_fraccionamiento =0)
         and v.fecha < now()
+        and v.estado ='1'
         ".$concepto."
-        union all 
-        select v2.id, c.denominacion, ROW_NUMBER() OVER (PARTITION BY v2.id order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto,to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento
+        union all */
+        select v2.id, c.denominacion, ROW_NUMBER() OVER (PARTITION BY v2.id order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto importe,to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento
         from valorizaciones v2 
         inner join conceptos c on v2.id_concepto =c.id
-        where v2.id_agremido = ".$id." 
+        where v2.id_agremido = ".$id."
         and v2.pagado = '0'
-        and v2.id_modulo = 6
+        /*and v2.id_modulo = 6*/
         and v2.fecha < now()
+        and v2.estado ='1'
         ".$concepto." ";
 
 		//echo $cad;
@@ -578,7 +580,7 @@ class CajaIngreso extends Model
 
         if ($id_concepto!="") $concepto = " and c.id = ".$id_concepto; 
 
-        $cad = "select distinct c.denominacion 
+        $cad = "/*select distinct c.denominacion 
         from agremiado_cuotas ac
         inner join valorizaciones v ON ac.id = v.pk_registro
         inner join conceptos c ON ac.id_concepto = c.id
@@ -587,14 +589,15 @@ class CajaIngreso extends Model
         and v.codigo_fraccionamiento is null 
         and v.fecha < now()
         ".$concepto." 
-        union all 
+        union all */
         select distinct c.denominacion
         from valorizaciones v2 
         inner join conceptos c on v2.id_concepto =c.id
         where v2.id_agremido = ".$id."
         and v2.pagado = '0'
-        and v2.id_modulo = 6
+        /*and v2.id_modulo = 6*/
         and v2.fecha < now()
+        and v2.estado ='1'
         ".$concepto." 
         order by denominacion asc";
 

@@ -1,6 +1,8 @@
  //alert("ok");
 //jQuery.noConflict(true);
 
+//const { Alert } = require("bootstrap");
+
 $(document).ready(function () {
 
 	$('#fechaF').datepicker({
@@ -220,7 +222,7 @@ function fn_save_nd(){
 				
 			//	$('.loader').hide();
 				
-				$('#numerof').val(result.id_factura);
+				$('#numerof').val(result.id_factura);				
 				$('#divNumeroF').show();
 				location.href=urlApp+"/comprobante/"+result.id_factura;
 
@@ -757,7 +759,27 @@ function obtenerTitular(){
 		
 	}
 	
-    function calcular_total(fila,afectacion){
+	function calcular_total(obj){
+
+
+
+
+		if($(obj).is(':checked')){						
+			$(obj).parent().parent().parent().find('#totald').attr("readonly",false);
+		}
+
+		/*
+
+		$(".mov_:checked").each(function (){
+			input = $(this).parent().parent().parent().find('#facturad_total').val();				
+			input= parseFloat(input.replace(/,/g, ""));
+			total += input; 
+		});
+*/
+
+	}
+
+    function calcular_total_(fila,afectacion){
 
         var imported=0;    
 		imported = $('#imported'+fila).val();
@@ -872,6 +894,179 @@ function obtenerTitular(){
 
 	}
 
+	function calcular_total_x(obj){	
+		//alert($(obj).parent().parent().parent().find('#totald').val());
+		var totald=0;
+		var importeantd=0;
+		var facturad_total=0;
+		var gravadas=0;
+		var input=0;
+		var cantidad=0;
+		var afectacion=0;
+		
+		var imported =0;
+		var igv =  0;
+		var pu =0;
+		var total=0;
+
+		var tasa_igv_=0.18;
+		var ValorUnitario_=0;
+		var PrecioVenta_=0;
+		var ValorVB_=0;
+		var Cantidad_=1;
+		var ValorVenta_=0;
+		var Descuento_=0;
+		var Igv_=0;
+		var Total_=0;
+		
+
+		/*
+		$(".mov_:checked").each(function (){
+			importeantd = $(this).parent().parent().parent().find('#importeantd').val();
+			importeantd=parseFloat(importeantd.replace(/,/g, ""));
+			alert(importeantd);
+
+		});
+
+		exit();
+*/
+
+		$(".mov_:checked").each(function (){
+
+		//alert(this);
+		
+		afectacion=$(this).parent().parent().parent().find('#afectacion').val();
+
+		totald = $(this).parent().parent().parent().find('#totald').val();
+		totald= parseFloat(totald.replace(/,/g, ""));
+
+		//alert(totald);
+		
+		importeantd = $(this).parent().parent().parent().find('#importeantd').val();
+		importeantd=parseFloat(importeantd.replace(/,/g, ""));
+	
+		cantidad = $(this).parent().parent().parent().find('#cantidad').val(); 
+
+		
+		facturad_total=$("#importe_").val();
+		facturad_total=parseFloat(facturad_total.replace(/,/g, ""));
+
+		//alert(importeantd);
+		
+		if (totald <=facturad_total)  {		
+			imported =0;
+			igv =  0;
+			pu =0;
+
+			//cantidad = 1;
+			//descuento = 0;
+
+			tasa_igv_=0.18;
+			ValorUnitario_=0;
+			PrecioVenta_=0;
+			ValorVB_=0;
+			Cantidad_=1;
+			ValorVenta_=0;
+			Descuento_=0;
+			Igv_=0;
+			Total_=0;
+			PrecioVenta_= totald;
+
+			
+			if (afectacion==30){
+				imported =totald;
+				igv =  0;
+				pu =totald;
+				
+			}else{				
+				imported =totald/1.18;				
+				igv =  Number(totald) - Number(imported);				
+
+
+				ValorUnitario_ = PrecioVenta_ /(1+tasa_igv_);
+				ValorVB_ = ValorUnitario_ * Cantidad_;
+				ValorVenta_ = ValorVB_ - Descuento_;
+				Igv_ = ValorVenta_ * tasa_igv_;		
+				Total_ = ValorVenta_ + Igv_;
+				
+				//alert(Total_);
+
+
+			};
+
+			
+			$(this).parent().parent().parent().find('#igvd').val(igv.toFixed(2));								
+			//$("#igvd"+fila).val(igv.toFixed(2));
+			$(this).parent().parent().parent().find('#importeantd').val(imported.toFixed(2));
+			//$("#importeantd"+fila).val(imported.toFixed(2));
+
+			total=totald;
+			$(this).parent().parent().parent().find('#facturad_pu').val(imported.toFixed(2));
+			$(this).parent().parent().parent().find('#facturad_igv').val(igv.toFixed(2)); 
+			$(this).parent().parent().parent().find('#facturad_total').val(total.toFixed(2)); 
+
+			$(this).parent().parent().parent().find('#pu').val(ValorUnitario_.toFixed(2));
+			$(this).parent().parent().parent().find('#valor_venta_bruto').val(ValorVB_.toFixed(2));
+			$(this).parent().parent().parent().find('#pv').val(PrecioVenta_.toFixed(2));
+			$(this).parent().parent().parent().find('#valor_venta').val(ValorVenta_.toFixed(2));
+
+
+
+			gravadas=0;
+			input=0;
+			$(".mov_:checked").each(function (){
+				input = $(this).parent().parent().parent().find('#facturad_pu').val();
+				input= parseFloat(input.replace(/,/g, ""));
+				gravadas += input; 
+			});
+			$("#gravadas").val(gravadas.toFixed(2));
+
+
+			igv=0;
+			input=0;
+			$(".mov_:checked").each(function (){
+				input = $(this).parent().parent().parent().find('#facturad_igv').val();				
+				input= parseFloat(input.replace(/,/g, ""));
+				igv += input; 
+			});
+			$("#igv").val(igv.toFixed(2));
+
+			total=0;
+			input=0;
+			$(".mov_:checked").each(function (){
+				input = $(this).parent().parent().parent().find('#facturad_total').val();				
+				input= parseFloat(input.replace(/,/g, ""));
+				total += input; 
+			});
+
+
+			//alert(total);
+
+			$("#totalP").val(total.toFixed(2));
+			$("#total_pagar_abono").val(total.toFixed(2));
+			$("#total_fac_").val(total.toFixed(2));
+			$("#tr_total_pagar").hide();
+			$("#total_pagar").val("0");
+
+	
+			var cantidad = $("#tblMedioPago tr").length;
+			//alert(cantidad);
+			if (cantidad >= 1) $("#tblMedioPago tr").remove();
+
+
+		} 
+		else {
+			$("#totald"+fila).val(0);
+			$("#igvd"+fila).val(0);
+
+			$("#imported"+fila).val(0);
+			alert("El valor no debe ser mayor al total de la factura")
+		}
+
+	});
+
+	}
+
 	function calcular_total_2(fila,afectacion){
 				
         var totald=0;
@@ -902,13 +1097,9 @@ function obtenerTitular(){
 				igv =  0;
 				pu =totald;
 			}
-			else{
-				
+			else{				
 				imported =totald/1.18;  
-				igv =  Number(totald) - Number(imported);	
-				
-
-
+				igv =  Number(totald) - Number(imported);				
 			};
 				
 				
@@ -958,15 +1149,21 @@ function obtenerTitular(){
 				
 			});
 
-		
-
 			$("#totalP").val(total.toFixed(2));
+
 			
 			$("#total_pagar_abono").val(total.toFixed(2));
-
 			$("#total_fac_").val(total.toFixed(2));
+			$("#tr_total_pagar").hide();
+			$("#total_pagar").val("0");
 
-
+			
+			$(fila).parent().parent().parent().find('#facturad_total').val(total.toFixed(2));
+	
+			alert($(fila).parent().parent().parent().find('#facturad_total').val());
+	
+			var cantidad = $("#tblMedioPago tr").length;
+			if (cantidad >= 1) $("#tblMedioPago tr").remove();
 
 
 		} 
@@ -1050,6 +1247,8 @@ function obtenerTitular(){
 				
 				if(ind==0){
 					monto = $("#total_fac_").val();
+					monto= parseFloat(monto.replace(/,/g, ""));		
+					//alert(monto);
 					//$("#monto"+ind).val(monto);
 					$("#totalMedioPago").val(monto);
 

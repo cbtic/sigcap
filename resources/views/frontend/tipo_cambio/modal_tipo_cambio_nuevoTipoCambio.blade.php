@@ -147,6 +147,33 @@ input:checked + .slider:before {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
 <script type="text/javascript">
 
+function validaFecha(){
+
+  var fecha = $('#fecha').val();
+  var id = $('#id').val();
+  
+  if(id==0){
+    $.ajax({
+      url: "/tipo_cambio/validar_fecha/"+fecha,
+      dataType: "json",
+      success: function (result) {
+
+        var cantidad = result[0].cantidad;
+        //alert(cantidad);
+        if(cantidad>0){
+          bootbox.alert("Ya existe un tipo de cambio para esta fecha")
+        }else{
+          fn_save_tipo_cambio();
+        }
+
+      }
+    });
+  }else{
+    fn_save_tipo_cambio();
+  }
+  
+
+}
 
 function fn_save_tipo_cambio(){
     
@@ -179,6 +206,13 @@ $(document).ready(function () {
   });
 
 });
+
+
+function validarNumeroPositivo(input) {
+    if (input.value < 0) {
+        input.value = "";
+    }
+}
 </script>
 
 
@@ -220,14 +254,14 @@ $(document).ready(function () {
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label class="control-label form-control-sm">Valor Venta</label>
-                          <input id="valor_venta" name="valor_venta" on class="form-control form-control-sm"  value="<?php echo isset($tipo_cambio->valor_venta) ? number_format($tipo_cambio->valor_venta, 3, '.', ',') : ''?>" type="text" >
+                          <input id="valor_venta" name="valor_venta" on class="form-control form-control-sm"  type="number" min="0" value="<?php echo isset($tipo_cambio->valor_venta) ? number_format($tipo_cambio->valor_venta, 3, '.', ',') : ''?>" type="text" oninput="validarNumeroPositivo(this)">
                         
                         </div>
                       </div>
                       <div class="col-lg-6">
                         <div class="form-group">
                           <label class="control-label form-control-sm">Valor Compra</label>
-                          <input id="valor_compra" name="valor_compra" on class="form-control form-control-sm"  value="<?php echo isset($tipo_cambio->valor_compra) ? number_format($tipo_cambio->valor_compra, 3, '.', ',') : ''?>" type="text" >
+                          <input id="valor_compra" name="valor_compra" on class="form-control form-control-sm"  type="number" min="0" value="<?php echo isset($tipo_cambio->valor_compra) ? number_format($tipo_cambio->valor_compra, 3, '.', ',') : ''?>" type="text" oninput="validarNumeroPositivo(this)">
                         
                         </div>
                       </div>
@@ -236,7 +270,7 @@ $(document).ready(function () {
                     <div style="margin-top:15px" class="form-group">
                       <div class="col-sm-12 controls">
                         <div class="btn-group btn-group-sm float-right" role="group" aria-label="Log Viewer Actions">
-                          <a href="javascript:void(0)" onClick="fn_save_tipo_cambio()" class="btn btn-sm btn-success">Guardar</a>
+                          <a href="javascript:void(0)" onClick="validaFecha()" class="btn btn-sm btn-success">Guardar</a>
                         </div>
                                   
                       </div>

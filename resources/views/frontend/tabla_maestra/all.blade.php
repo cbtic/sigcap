@@ -216,6 +216,7 @@
                                         <th>Codigo</th>
                                         <th>Tipo Nombre</th>
                                         <th>Orden</th>
+                                        <th>Predeterminado</th>
                                         <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
