@@ -129,7 +129,8 @@ class TablaMaestra extends Model
 
     function getTipoTablaMaestra($tipo_nombre){
 
-        $cad = "select tm.tipo, tm.denominacion, tm.codigo, tm.tipo_nombre from tabla_maestras tm 
+        $cad = "select tm.tipo, tm.denominacion, tm.codigo, tm.tipo_nombre, tm.estado, tm.predeterminado 
+        from tabla_maestras tm 
         where tm.tipo ='".$tipo_nombre."'";
     
 		$data = DB::select($cad);
