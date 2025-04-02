@@ -2246,7 +2246,7 @@ class ComprobanteController extends Controller
         $cronograma=  $datos_model->getCronogramaPagos($id);
        
 
-		if($factura->nro_guia!=""){
+		if($factura->nro_guia!="" && $factura->nro_guia!=0){
 			$fac_serie_guia = $factura->serie_guia;
 			$fac_nro_guia = $factura->nro_guia;
 			$fac_tipo_guia = $factura->tipo_guia;
