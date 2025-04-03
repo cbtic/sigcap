@@ -150,7 +150,7 @@
 				
 				<div class="row" style="padding:20px 20px 0px 20px;">
                     <div class="col-lg-1 col-md-4 col-sm-12 col-xs-12">
-						<input class="form-control form-control-sm" id="cap_" name="cap_" placeholder="CAP">
+						<input class="form-control form-control-sm" id="numero_cap_bus" name="numero_cap_bus" placeholder="CAP">
 					</div>
 
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">

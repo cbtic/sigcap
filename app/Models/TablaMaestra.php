@@ -60,7 +60,7 @@ class TablaMaestra extends Model
     }
     function getMaestroC($tipo, $codigo){
 
-        $cad = "select id,denominacion,codigo  
+        $cad = "select id,denominacion,codigo, predeterminado  
                 from tabla_maestras 
                 where tipo='".$tipo."' 
                 and codigo ='".$codigo."'
@@ -68,6 +68,8 @@ class TablaMaestra extends Model
     
 		$data = DB::select($cad);
         return $data;
+        
+        //if($data)return $data[0];
     }
 
     
@@ -127,7 +129,8 @@ class TablaMaestra extends Model
 
     function getTipoTablaMaestra($tipo_nombre){
 
-        $cad = "select tm.tipo, tm.denominacion, tm.codigo, tm.tipo_nombre from tabla_maestras tm 
+        $cad = "select tm.tipo, tm.denominacion, tm.codigo, tm.tipo_nombre, tm.estado, tm.predeterminado 
+        from tabla_maestras tm 
         where tm.tipo ='".$tipo_nombre."'";
     
 		$data = DB::select($cad);

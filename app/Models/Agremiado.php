@@ -122,7 +122,7 @@ and a.id=".$id;
 			
 			$cad = "select t2.id,t1.id id_p,t1.numero_documento,t1.nombres,t1.apellido_paterno,t1.apellido_materno,t2.numero_cap,t1.foto,
 			t1.numero_ruc,t2.fecha_colegiado,t3.denominacion situacion, t1.apellido_paterno|| ' ' ||t1.apellido_materno || ', ' || t1.nombres as nombre_completo,85 id_tipo_documento,email1 email, 
-			t4.denominacion actividad, t2.numero_regional, r.denominacion regional, t5.denominacion autoriza_tramite, t6.denominacion ubicacion, t7.denominacion categoria, t2.celular1, trim(t2.numero_cap) numero_documento_
+			t4.denominacion actividad, t2.numero_regional, r.denominacion regional, t5.denominacion autoriza_tramite, t6.denominacion ubicacion, t7.denominacion categoria, t2.celular1, trim(t2.numero_cap) numero_documento_, t2.celular1 celular, t2.firma 
 			from personas t1 
 			inner join agremiados  t2 on t1.id = t2.id_persona And t2.estado='1'
 			left join tabla_maestras t3 on t2.id_situacion = t3.codigo::int And t3.tipo ='14'
@@ -207,12 +207,13 @@ and a.id=".$id;
 	function getAgremiadoDatos($numero_cap){
 
 
-			$cad = "select a.numero_cap, pe.apellido_paterno || ' ' || pe.apellido_materno ||' '|| pe.nombres agremiado, tm.denominacion situacion, pe.direccion, a.numero_regional, tm2.denominacion actividad_gremial, a.celular1 celular, a.email1 email from agremiados a
-					inner join personas pe on a.id_persona = pe.id
-					inner join tabla_maestras tm on a.id_situacion ::int=tm.codigo::int and tm.tipo='14'
-					inner join tabla_maestras tm2 on a.id_actividad_gremial ::int=tm2.codigo::int and tm2.tipo='46'
-					where a.numero_cap = '".$numero_cap."'";
-			
+			$cad = "select a.numero_cap, pe.apellido_paterno || ' ' || pe.apellido_materno ||' '|| pe.nombres agremiado, tm.denominacion situacion, pe.direccion, a.numero_regional, tm2.denominacion actividad_gremial, a.celular1 celular, a.email1 email, a.firma 
+			from agremiados a
+			inner join personas pe on a.id_persona = pe.id
+			inner join tabla_maestras tm on a.id_situacion ::int=tm.codigo::int and tm.tipo='14'
+			inner join tabla_maestras tm2 on a.id_actividad_gremial ::int=tm2.codigo::int and tm2.tipo='46'
+			where a.numero_cap ='".$numero_cap."'";
+						
 		//echo $cad;
 		$data = DB::select($cad);
 		

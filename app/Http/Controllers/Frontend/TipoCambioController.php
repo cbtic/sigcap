@@ -89,4 +89,14 @@ class TipoCambioController extends Controller
 
 		echo $tipo_cambio->id;
     }
+
+	public function validar_fecha($fecha){
+
+		$tipo_cambio_model = new TipoCambio;
+
+		$tipo_cambio = $tipo_cambio_model->validarFecha($fecha);
+		
+		echo json_encode($tipo_cambio);
+
+	}
 }

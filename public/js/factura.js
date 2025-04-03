@@ -215,7 +215,8 @@ function guardarFactura(){
 		if(guia_llegada_direccion=="")msg+="Debe ingresar un direcci&oacute;n de punto de llegada<br>";	
 	}
 	
-	if (tipo_cambio==""&& forma_pago=="EFECTIVO DOLARES"){msg+="Debe ingresar el tipo de cambio<br>";	}
+	//if (tipo_cambio==""&& forma_pago=="EFECTIVO DOLARES"){msg+="Debe ingresar el tipo de cambio<br>";	}
+	if (tipo_cambio==""){msg+="Debe ingresar el tipo de cambio actual<br>";	}
 
 
     if(msg!=""){
@@ -288,10 +289,11 @@ function fn_save(){
 				//location.href=urlApp+"/factura/"+result;
 				$('.loader').hide();
 				
+				
+
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
 				location.href=urlApp+"/comprobante/"+result.id_factura;
-
 				enviar_comprobante(result.id_factura);
 
             }
