@@ -122,12 +122,21 @@ br {
 */
 @page {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 @media print {
   html, body {
+    /*
     width: 80mm;
     height: 297mm;
+*/
+    width: 80mm !important;   /* Ancho del rollo */
+    min-height: 100vh;        /* Altura dinámica para papel continuo */
+    margin: 0 !important;
+    padding: 0 !important;
+
   }
 
     *, :after, :before {
@@ -183,6 +192,11 @@ br {
 
     .flotante,.flotanteC {
         display: none !important
+    }
+
+    .no-divider {
+        page-break-inside: avoid;
+        break-inside: avoid;
     }
 }
 </style>
