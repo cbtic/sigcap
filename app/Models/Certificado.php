@@ -20,8 +20,8 @@ class Certificado extends Model
 
 	public function getCodigoCertificado($id_tipo){
 		
-		$cad = "select lpad((count(*)+1)::varchar,5,'0') codigo 
-from certificados c where id_tipo=".$id_tipo;
+		$cad = "select lpad((max(codigo::int)+1)::varchar,6,'0') codigo 
+        from certificados c where id_tipo".$id_tipo;
         
 		$data = DB::select($cad);
         return $data[0]->codigo;
