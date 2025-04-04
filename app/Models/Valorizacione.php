@@ -724,7 +724,7 @@ class Valorizacione extends Model
         $cad = "select v.id, v.fecha, v.pagado from valorizaciones v 
         inner join agremiados a on v.id_agremido = a.id 
         where a.numero_cap ='".$cap."' and id_modulo ='2' and pagado ='1'
-        order by v.id desc
+        order by v.fecha desc
         limit 1";
 
         //echo $cad;
@@ -737,7 +737,7 @@ class Valorizacione extends Model
         $cad = "select v.id, v.fecha, v.pagado from valorizaciones v 
         inner join agremiados a on v.id_agremido = a.id 
         where a.numero_cap ='".$cap."' and id_modulo ='2'
-        order by v.id desc
+        order by v.fecha desc
         limit 1";
 
         //echo $cad;
