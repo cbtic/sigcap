@@ -2770,7 +2770,7 @@ class ComprobanteController extends Controller
 		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
 		$data["distritoEmisor"] = "LIMA";
 		$data["esContingencia"] = false;
-		$data["telefonoEmisor"] = "511 4710739";
+		$data["telefonoEmisor"] = "(01) 6271200";
 		$data["totalAnticipos"] = "0.00";
 		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["provinciaEmisor"] = "LIMA";
@@ -3094,7 +3094,7 @@ class ComprobanteController extends Controller
 		$data["distritoEmisor"] = "LIMA";
 		$data["esContingencia"] = false;
         $data["motivoSustento"] = "DESCUENTO GLOBAL";
-		//$data["telefonoEmisor"] = "511 4710739";
+		//$data["telefonoEmisor"] = "(01) 6271200";
 		$data["totalAnticipos"] = "0.00";
 		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["provinciaEmisor"] = "LIMA";
