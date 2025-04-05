@@ -2217,20 +2217,17 @@ class ComprobanteController extends Controller
 
         $factura = Comprobante::where('id', $id)->get()[0];
 
-        if (is_null($factura->id_comprobante_ncnd) ){
+        if (is_null($factura->id_comprobante_ncnd) || $factura->id_comprobante_ncnd==0){
             $factura_referencia = Comprobante::where('id', -1)->get();
             $ref_comprobante="";
             $ref_tipo="";
         }   
-        else{
+        else {
             $factura_referencia = Comprobante::where('id', $factura->id_comprobante_ncnd)->get()[0];
             $ref_comprobante=  $factura_referencia->serie . " - " .$factura_referencia->numero ;
             $ref_tipo=$factura_referencia->tipo;
-        }
-
-        ;
+        };
         
-
 
         $facd_serie = $factura->serie;
         $facd_numero = $factura->numero;
@@ -2249,7 +2246,7 @@ class ComprobanteController extends Controller
         $cronograma=  $datos_model->getCronogramaPagos($id);
        
 
-		if($factura->nro_guia!=""){
+		if($factura->nro_guia!="" && $factura->nro_guia!=0){
 			$fac_serie_guia = $factura->serie_guia;
 			$fac_nro_guia = $factura->nro_guia;
 			$fac_tipo_guia = $factura->tipo_guia;

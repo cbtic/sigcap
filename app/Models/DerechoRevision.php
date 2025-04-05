@@ -25,7 +25,7 @@ class DerechoRevision extends Model
     }
 	
 	function getCodigoSolicitud($id_tipo_solicitud){
-		
+		/*
 		if($id_tipo_solicitud==123){
 			$cad = "select '1'||lpad(max(numero+1)::varchar,7,'0')codigo,max(numero+1)numero from numeracion_documentos nd where id_tipo_documento='20'";
 		}
@@ -33,8 +33,16 @@ class DerechoRevision extends Model
 		if($id_tipo_solicitud==124){
 			$cad = "select '2'||lpad(max(numero+1)::varchar,7,'0') codigo,max(numero+1)numero from numeracion_documentos nd where id_tipo_documento='22'";
 		}
-		
+		*/
         
+        if($id_tipo_solicitud==123){
+			$cad = "select '222'||lpad(max(numero+1)::varchar,5,'0')codigo,max(numero+1)numero from numeracion_documentos nd where id_tipo_documento='20'";
+		}
+		
+		if($id_tipo_solicitud==124){
+			$cad = "select '444'||lpad(max(numero+1)::varchar,5,'0') codigo,max(numero+1)numero from numeracion_documentos nd where id_tipo_documento='22'";
+		}
+
 		$data = DB::select($cad);
         return $data[0];
     }
