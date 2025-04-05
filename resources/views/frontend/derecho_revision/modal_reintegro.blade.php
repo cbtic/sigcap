@@ -161,9 +161,9 @@ function formatoMoneda(num) {
     return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
 
-function redondear_dos_decimal($valor) {
-    $float_redondeado= Math.ceil($valor * 100) / 100;
-    return $float_redondeado;
+function redondear_dos_decimal(valor) {
+    //$float_redondeado= Math.ceil($valor * 100) / 100;
+    return (Math.round((valor + 0.0000001) * 100) / 100).toFixed(2);
 }
 
 function calculoVistaPrevia(){
