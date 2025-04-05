@@ -1322,15 +1322,16 @@ class ComprobanteController extends Controller
                 endforeach;
             endif;
 
-        
-
-
+        /*
+            $id_factura_=$id_factura;
             $estado_ws = $ws_model->getMaestroByTipo('96');
             $flagWs = isset($estado_ws[0]->codigo) ? $estado_ws[0]->codigo : 1;
 
-            if ($flagWs == 2 && $id_factura > 0 && ($tipoF == "FT" || $tipoF == "BV")) {
-                $this->firmar($id_factura);
+            if ($flagWs == 2 && $id_factura_ > 0 && ($tipoF == "FT" || $tipoF == "BV")) {
+                $this->firmar($id_factura_);
             }
+            $id_factura=$id_factura_;
+*/
 
             //echo $id_factura;
 
