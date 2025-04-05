@@ -2856,7 +2856,7 @@ class ComprobanteController extends Controller
             $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::WARNING);
             $facturaLog->info('FacturaLog', $log);
 		}
-		print_r($results); 
+		//print_r($results); 
         curl_close($chbuild);
 
         
@@ -2867,6 +2867,8 @@ class ComprobanteController extends Controller
 		//print_r($respbuild); exit();
             
         $body = $respbuild["body"];
+
+        $result_ ="";
             
         if(count($body)>0){
             //print_r($body);
@@ -2879,6 +2881,8 @@ class ComprobanteController extends Controller
             $result = $single["result"];
             $hash = $single[ "hash"];
             //$signature = $single["signature"];
+
+            $result_ = $result;
 
             if($result == "FIRMADO"){
 
@@ -2913,6 +2917,8 @@ class ComprobanteController extends Controller
                 }
             }
         }
+
+        echo $result_;
 
         //$respbuild->result;
 
