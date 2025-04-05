@@ -575,9 +575,12 @@ label.form-control-sm{
 													<input type="button" class="btn btn-sm btn-primary upload" value="Subir" style="margin-left:0px">
 													<?php
 														$img = "/img/logo-sin-fondo2.png";
-								if($persona->foto!="")$img="/img/agremiado/".$persona->foto;
+								if($persona->foto!=""){
+									//$img="/img/agremiado/".$persona->foto;
+									$img="/".$persona->foto;
+								}
 													?>
-													<a href="/img/agremiado/<?php echo $persona->foto?>" target="_blank" class="btn btn-sm btn-secondary"><img src="<?php echo $img?>" id="img_ruta" width="80" height="50" alt="" style="margin-top:10px" /></a>
+													<a href="<?php echo "/".$persona->foto?>" target="_blank" class="btn btn-sm btn-secondary"><img src="<?php echo $img?>" id="img_ruta" width="80" height="50" alt="" style="margin-top:10px" /></a>
 													<input type="hidden" id="img_foto" name="img_foto" value="" />
 													
 													<!--

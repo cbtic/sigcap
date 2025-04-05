@@ -212,13 +212,28 @@ class AgremiadoController extends Controller
 			$persona = Persona::find($id_persona);
 			
 			if($request->img_foto!=""){
+				
+				/*
 				$filepath_tmp = public_path('img/frontend/tmp_agremiado/');
 				$filepath_nuevo = public_path('img/agremiado/');
 				if (file_exists($filepath_tmp.$request->img_foto)) {
 					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
 				}
-				
-				$persona->foto = $request->img_foto;
+				*/
+				$path = "img/agremiado/".$request->numero_cap;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				$filepath_tmp = public_path('img/frontend/tmp_agremiado/');
+				$filepath_nuevo = public_path('img/agremiado/'.$request->numero_cap.'/');
+
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+
+				$persona->foto = 'img/agremiado/'.$request->numero_cap.'/'.$request->img_foto;
+				//$persona->foto = $request->img_foto;
 			}
 			
 		}else{
@@ -227,13 +242,28 @@ class AgremiadoController extends Controller
 			$persona->id_usuario_inserta = 1;
 			
 			if($request->img_foto!="" && $persona->foto!=$request->img_foto){
+				/*
 				$filepath_tmp = public_path('img/frontend/persona/');
 				$filepath_nuevo = public_path('img/agremiado/');
 				if (file_exists($filepath_tmp.$request->img_foto)) {
 					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
 				}
+				*/
+				$path = "img/agremiado/".$request->numero_cap;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				$filepath_tmp = public_path('img/frontend/tmp_agremiado/');
+				$filepath_nuevo = public_path('img/agremiado/'.$request->numero_cap.'/');
+
+				if (file_exists($filepath_tmp.$request->img_foto)) {
+					copy($filepath_tmp.$request->img_foto, $filepath_nuevo.$request->img_foto);
+				}
+
+				$persona->foto = 'img/agremiado/'.$request->numero_cap.'/'.$request->img_foto;
+				//$persona->foto = $request->img_foto;
 				
-				$persona->foto = $request->img_foto;
 			}
 		}
 		

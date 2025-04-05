@@ -599,7 +599,7 @@ $(document).ready(function () {
 								<div class="col-lg-1">
 									<div class="form-group" id="numero_cap_">
 										<label class="control-label form-control-sm color-letra">N° CAP<?php //echo $row->tipo_colegiatura?></label>
-										<input id="numero_cap_row" name="numero_cap_row[]" on class="form-control form-control-sm"  value="<?php //echo $row->numero_cap?>" type="text" onchange="obtenerProyectista()">
+										<input id="numero_cap_row" name="numero_cap_row[]" on class="form-control form-control-sm"  value="<?php //echo $row->numero_cap?>" type="text" onchange="obtenerProyectista(this)">
 										<input id="tipo_colegiatura_row" name="tipo_colegiatura_row[]" value="<?php //echo $row->tipo_colegiatura?>" type="hidden">
 									</div>
 								</div>

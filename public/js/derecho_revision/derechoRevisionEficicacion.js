@@ -583,9 +583,12 @@ function obtenerSolicitante(){
 
 }
 
-function obtenerProyectista(){
-		
-	var numero_cap = $("#numero_cap_row").val();
+function obtenerProyectista(obj){
+		//alert(obj);
+	//var numero_cap = $(obj).parent().parent().find("#numero_cap_row").val();	
+	var numero_cap = $(obj).val();
+	console.log(numero_cap);
+	//return false;
 	var msg = "";
 	
 	if(numero_cap == "")msg += "Debe ingresar un n&uacute;mero CAP <br>";
@@ -621,19 +624,33 @@ function obtenerProyectista(){
 			}
 
 			if (agremiado.situacion=="HABILITADO"){
+				/*
 				$('#frmRegistroSolicitudDerechoRevision #agremiado_row').val(agremiado.agremiado);
 				$('#frmRegistroSolicitudDerechoRevision #situacion_row').val(agremiado.situacion);
 				$('#frmRegistroSolicitudDerechoRevision #telefono_row').val(agremiado.celular);
 				$('#frmRegistroSolicitudDerechoRevision #email_row').val(agremiado.email);
 				$('#frmRegistroSolicitudDerechoRevision #situacion_row').val(agremiado.situacion);
 				$('#frmRegistroSolicitudDerechoRevision #act_gremial_row').val(agremiado.actividad_gremial);
+				*/
+				$(obj).parent().parent().parent().find("#agremiado_row").val(agremiado.agremiado);
+				$(obj).parent().parent().parent().find("#situacion_row").val(agremiado.situacion);
+				$(obj).parent().parent().parent().find("#telefono_row").val(agremiado.celular);
+				$(obj).parent().parent().parent().find("#email_row").val(agremiado.email);
+				$(obj).parent().parent().parent().find("#act_gremial_row").val(agremiado.actividad_gremial);
 			}else{
+				/*
 				$('#frmRegistroSolicitudDerechoRevision #agremiado_row').val('');
 				$('#frmRegistroSolicitudDerechoRevision #situacion_row').val('');
 				$('#frmRegistroSolicitudDerechoRevision #telefono_row').val('');
 				$('#frmRegistroSolicitudDerechoRevision #email_row').val('');
 				$('#frmRegistroSolicitudDerechoRevision #situacion_row').val('');
 				$('#frmRegistroSolicitudDerechoRevision #act_gremial_row').val('');
+				*/
+				$(obj).parent().parent().parent().find("#agremiado_row").val("");
+				$(obj).parent().parent().parent().find("#situacion_row").val("");
+				$(obj).parent().parent().parent().find("#telefono_row").val("");
+				$(obj).parent().parent().parent().find("#email_row").val("");
+				$(obj).parent().parent().parent().find("#act_gremial_row").val("");
 				bootbox.alert("El agremiado no esta HABILITADO");
 			}
 						
@@ -2504,10 +2521,11 @@ function AddProyectistaAsociado() {
 
     newRow.querySelectorAll('input, select').forEach(function(element) {
         if (element.id) {
-            element.id = element.id + '_' + index;
+            //element.id = element.id + '_' + index;
         }
         if (element.name) {
-            element.name = element.name.replace('[]', '[' + index + ']');
+            //element.name = element.name.replace('[]', '[' + index + ']');
+			//element.name = element.name.replace('[]', '[' + index + ']');
         }
         if (element.type == 'text') {
             element.value = '';
@@ -2516,7 +2534,7 @@ function AddProyectistaAsociado() {
 
 	var numeroCapInput = newRow.querySelector('[id^="numero_cap_row"]');
     if (numeroCapInput) {
-        numeroCapInput.setAttribute("onchange", "obtenerProyectista()");
+        numeroCapInput.setAttribute("onchange", "obtenerProyectista(this)");
     }
 
     var removeButton = document.createElement('button');
