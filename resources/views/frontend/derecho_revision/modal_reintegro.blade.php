@@ -161,6 +161,11 @@ function formatoMoneda(num) {
     return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
 
+function redondear_dos_decimal(valor) {
+    //$float_redondeado= Math.ceil($valor * 100) / 100;
+    return (Math.round((valor + 0.0000001) * 100) / 100).toFixed(2);
+}
+
 function calculoVistaPrevia(){
     var igv_valor_ = {{$parametro[0]->igv}} * 100;
     var valor_minimo_edificaciones = {{$parametro[0]->valor_minimo_edificaciones}};
@@ -169,7 +174,10 @@ function calculoVistaPrevia(){
     var igv_valor = {{$parametro[0]->igv}};
     var igv_minimo	= igv_valor * sub_total_minimo;
     var total_minimo = sub_total_minimo + igv_minimo;
-    $('#minimo').val(formatoMoneda(total_minimo));
+    
+    var total_minimo_redondeado = redondear_dos_decimal(total_minimo);
+    //alert(total_minimo_redondeado);
+    $('#minimo').val(total_minimo_redondeado);
     $('#igv').val(igv_valor_+"%");
     //var_dump($total_minimo);exit;
     

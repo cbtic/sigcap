@@ -146,10 +146,10 @@ $(document).ready(function() {
 <body class="hold-transition skin-blue sidebar-mini">
 
     <div>
-        <div style="text-align: center; height: 100px; position: relative;">
-            <img width="196px" height="58px" style="margin-top:50px;" src="img/logo_cap.jpg">
-        <div>
-    <p class="contenido_cuerpo" style="text-align: right !important;">N° <?php echo $datos[0]->codigo;?></p>
+         <!--<div style="text-align: center; height: 100px; position: relative;margin-top:50px;">
+           <img width="196px" height="58px" style="" src="img/logo_cap.jpg">
+        <div>-->
+    <p class="contenido_cuerpo" style="text-align: right !important; margin-top:130px">N° <?php echo $datos[0]->codigo;?></p>
     <h2 style="text-align:center">CERTIFICADO &Uacute;NICO DE HABILITACI&Oacute;N PROFESIONAL</h2>
     <p class="contenido_cuerpo">  Por el presente el Colegio de Arquitectos del Per&uacute; - Regional Lima certifica que <?php echo $articulo;?> </p>
         <div class="contenido">

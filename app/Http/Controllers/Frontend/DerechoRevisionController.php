@@ -2619,6 +2619,11 @@ class DerechoRevisionController extends Controller
 		$id_ubi = Ubigeo::where("id_ubigeo",$ubigeo)->where("estado","1")->first();
 		$tipo_uso = $request->tipo_uso;
 		$tipo_obra = $request->tipo_obra;
+		$sub_tipo_uso = $request->sub_tipo_uso;
+		$area_techada = $request->area_techada;
+		$area_techada_presupuesto = $request->area_techada_presupuesto;
+		$valor_unitario = $request->valor_unitario;
+		$presupuesto_ = $request->presupuesto;
 		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		
 		if($request->id == 0){
@@ -2645,8 +2650,8 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->semisotano = $request->semisotano;
 		$derecho_revision->numero_piso = $request->n_pisos;
 		//$derecho_revision->valor_unitario = $request->municipalidad;// calcularlo despues
-		$derecho_revision->valor_obra = $request->valor_total_obra;
-		$derecho_revision->area_total = $request->area_techada_total;
+		$derecho_revision->valor_obra = str_replace(',', '', $request->valor_total_obra);
+		$derecho_revision->area_total = str_replace(',', '', $request->area_techada_total);
 		//$derecho_revision->id_proyecto = $request->municipalidad;
 		//$derecho_revision->id_usuario_revisa = $request->municipalidad;
 		//$derecho_revision->fecha_revisado = $request->municipalidad;
