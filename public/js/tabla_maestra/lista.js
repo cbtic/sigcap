@@ -553,6 +553,20 @@ function datatablenew(){
 			"aTargets": [5]
 			},
 			{
+				"mRender": function (data, type, row) {
+					var predeterminado = "";
+					if(row.predeterminado == 1){
+						predeterminado = "SI";
+					}
+					if(row.predeterminado == 0){
+						predeterminado = "NO";
+					}
+					return predeterminado;
+				},
+				"bSortable": false,
+				"aTargets": [6]
+			},
+			{
 			"mRender": function (data, type, row) {
 				var estado = "";
 				if(row.estado == 1){
@@ -564,7 +578,7 @@ function datatablenew(){
 				return estado;
 			},
 			"bSortable": false,
-			"aTargets": [6]
+			"aTargets": [7]
 			},
 			{
 			"mRender": function (data, type, row) {
@@ -589,7 +603,7 @@ function datatablenew(){
 				return html;
 				},
 				"bSortable": false,
-				"aTargets": [7],
+				"aTargets": [8],
 			},
 
 		]

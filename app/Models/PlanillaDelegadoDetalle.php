@@ -50,16 +50,16 @@ class PlanillaDelegadoDetalle extends Model
     function actualizarReciboHonorario($id_periodo,$anio,$mes,$grupo,$cancelado,$numero_operacion,$fecha_operacion,$id_usuario){
   
         $cad = "
-            update planilla_delegado_detalles a set a.numero_operacion= '".$numero_operacion."', a.cancelado= '".$cancelado."', a.fecha_operacion= '".$fecha_operacion."', a.id_usuario_actualiza= '".$id_usuario."',
-                a.secuencua_vou = (
+            update planilla_delegado_detalles set numero_operacion= '".$numero_operacion."', cancelado= '".$cancelado."', fecha_operacion= '".$fecha_operacion."', id_usuario_actualiza= '".$id_usuario."',
+                secuencua_vou = (
                     select  coalesce(max(pdd_.secuencua_vou),'0') 
                     from planilla_delegados pd_ 
                         inner join planilla_delegado_detalles pdd_ on pdd_.id_planilla = pd_.id
                     where pd_.id_periodo_comision = '".$id_periodo."' 
                             and pd_.periodo = '".$anio."' 
                             and pd_.mes = '".$mes."'
-                            pdd_.id = a.id)
-            where a.id in (
+                            and pdd_.id = planilla_delegado_detalles.id)
+            where id in (
                 select pdd.id
                 from planilla_delegados pd 
                     inner join planilla_delegado_detalles pdd on pdd.id_planilla = pd.id

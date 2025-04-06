@@ -999,6 +999,9 @@ class IngresoController extends Controller
 		$datos_reporte_deudas=$caja_ingreso_model->datos_reporte_deudas($datos_agremiado->id, $id_concepto);
         $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeuda($datos_agremiado->id, $id_concepto);
         $tipo_cambio=$tipo_cambio_model->getTipoCambio();
+        //var_dump($tipo_cambio);exit();
+        $tipo_cambio_fecha=$tipo_cambio->fecha;  
+        $tipo_cambio_valor_venta=$tipo_cambio->valor_venta;
 		//$nombre=$datos[0]->numero_cap;
 		//var_dump($denominacion_reporte_deudas);exit();
 		//$numeroEnLetras = $this->numeroALetras($numero);
@@ -1012,7 +1015,7 @@ class IngresoController extends Controller
 	
 		//$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
-		$pdf = Pdf::loadView('frontend.ingreso.reporte_deudas_pdf',compact('datos_agremiado','numero_cap','nombre_completo','datos_reporte_deudas','fecha_actual','hora_actual','denominacion_reporte_deudas','tipo_cambio'));
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_deudas_pdf',compact('datos_agremiado','numero_cap','nombre_completo','datos_reporte_deudas','fecha_actual','hora_actual','denominacion_reporte_deudas','tipo_cambio_fecha','tipo_cambio_valor_venta'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
@@ -1039,6 +1042,9 @@ class IngresoController extends Controller
 		$datos_reporte_deudas=$caja_ingreso_model->getReporteDeudasTotal($datos_agremiado->id, $id_concepto);
         $denominacion_reporte_deudas=$caja_ingreso_model->getDenominacionDeudaTotal($datos_agremiado->id, $id_concepto);
         $tipo_cambio=$tipo_cambio_model->getTipoCambio();
+        //var_dump($tipo_cambio);exit();
+        $tipo_cambio_fecha=$tipo_cambio->fecha;  
+        $tipo_cambio_valor_venta=$tipo_cambio->valor_venta;
 		//$nombre=$datos[0]->numero_cap;
 		//var_dump($denominacion_reporte_deudas);exit();
 		//$numeroEnLetras = $this->numeroALetras($numero);
@@ -1052,7 +1058,7 @@ class IngresoController extends Controller
 	
 		//$formattedDate = $carbonDate->timezone('America/Lima')->formatLocalized(' %d de %B %Y'); //->format('l, j F Y ');
 		
-		$pdf = Pdf::loadView('frontend.ingreso.reporte_deudas_total_pdf',compact('datos_agremiado','numero_cap','nombre_completo','datos_reporte_deudas','fecha_actual','hora_actual','denominacion_reporte_deudas','tipo_cambio'));
+		$pdf = Pdf::loadView('frontend.ingreso.reporte_deudas_total_pdf',compact('datos_agremiado','numero_cap','nombre_completo','datos_reporte_deudas','fecha_actual','hora_actual','denominacion_reporte_deudas','tipo_cambio_fecha','tipo_cambio_valor_venta'));
 		
 		$pdf->setPaper('A4'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
     	$pdf->setOption('margin-top', 20); // Márgen superior en milímetros

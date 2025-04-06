@@ -1322,15 +1322,16 @@ class ComprobanteController extends Controller
                 endforeach;
             endif;
 
-        
-
-
+        /*
+            $id_factura_=$id_factura;
             $estado_ws = $ws_model->getMaestroByTipo('96');
             $flagWs = isset($estado_ws[0]->codigo) ? $estado_ws[0]->codigo : 1;
 
-            if ($flagWs == 2 && $id_factura > 0 && ($tipoF == "FT" || $tipoF == "BV")) {
-                $this->firmar($id_factura);
+            if ($flagWs == 2 && $id_factura_ > 0 && ($tipoF == "FT" || $tipoF == "BV")) {
+                $this->firmar($id_factura_);
             }
+            $id_factura=$id_factura_;
+*/
 
             //echo $id_factura;
 
@@ -2217,20 +2218,17 @@ class ComprobanteController extends Controller
 
         $factura = Comprobante::where('id', $id)->get()[0];
 
-        if (is_null($factura->id_comprobante_ncnd) ){
+        if (is_null($factura->id_comprobante_ncnd) || $factura->id_comprobante_ncnd==0){
             $factura_referencia = Comprobante::where('id', -1)->get();
             $ref_comprobante="";
             $ref_tipo="";
         }   
-        else{
+        else {
             $factura_referencia = Comprobante::where('id', $factura->id_comprobante_ncnd)->get()[0];
             $ref_comprobante=  $factura_referencia->serie . " - " .$factura_referencia->numero ;
             $ref_tipo=$factura_referencia->tipo;
-        }
-
-        ;
+        };
         
-
 
         $facd_serie = $factura->serie;
         $facd_numero = $factura->numero;
@@ -2249,7 +2247,7 @@ class ComprobanteController extends Controller
         $cronograma=  $datos_model->getCronogramaPagos($id);
        
 
-		if($factura->nro_guia!=""){
+		if($factura->nro_guia!="" && $factura->nro_guia!=0){
 			$fac_serie_guia = $factura->serie_guia;
 			$fac_nro_guia = $factura->nro_guia;
 			$fac_tipo_guia = $factura->tipo_guia;
@@ -2784,7 +2782,7 @@ class ComprobanteController extends Controller
 		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
 		$data["distritoEmisor"] = "LIMA";
 		$data["esContingencia"] = false;
-		$data["telefonoEmisor"] = "511 4710739";
+		$data["telefonoEmisor"] = "(01) 6271200";
 		$data["totalAnticipos"] = "0.00";
 		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["provinciaEmisor"] = "LIMA";
@@ -2869,7 +2867,7 @@ class ComprobanteController extends Controller
             $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::WARNING);
             $facturaLog->info('FacturaLog', $log);
 		}
-		print_r($results); 
+		//print_r($results); 
         curl_close($chbuild);
 
         
@@ -2880,6 +2878,8 @@ class ComprobanteController extends Controller
 		//print_r($respbuild); exit();
             
         $body = $respbuild["body"];
+
+        $result_ ="";
             
         if(count($body)>0){
             //print_r($body);
@@ -2892,6 +2892,8 @@ class ComprobanteController extends Controller
             $result = $single["result"];
             $hash = $single[ "hash"];
             //$signature = $single["signature"];
+
+            $result_ = $result;
 
             if($result == "FIRMADO"){
 
@@ -2926,6 +2928,8 @@ class ComprobanteController extends Controller
                 }
             }
         }
+
+        echo $result_;
 
         //$respbuild->result;
 
@@ -3108,7 +3112,7 @@ class ComprobanteController extends Controller
 		$data["distritoEmisor"] = "LIMA";
 		$data["esContingencia"] = false;
         $data["motivoSustento"] = "DESCUENTO GLOBAL";
-		//$data["telefonoEmisor"] = "511 4710739";
+		//$data["telefonoEmisor"] = "(01) 6271200";
 		$data["totalAnticipos"] = "0.00";
 		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["provinciaEmisor"] = "LIMA";

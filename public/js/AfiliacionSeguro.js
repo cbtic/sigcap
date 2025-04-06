@@ -15,6 +15,12 @@ $(document).ready(function () {
 		}
 	});
 
+	$('#numero_cap_bus').keypress(function(e){
+		if(e.which == 13) {
+			fn_ListarBusqueda();
+		}
+	});
+
     $('#modal_afiliado #cap_').keypress(function(e){
 		if(e.which == 13) {
             print_r("CAP"); exit();
@@ -380,7 +386,7 @@ function datatablenew(){
 
 			//var id = $('#id').val();
 			var id = "";
-            var cap = $('#frmSeguroParentesco #cap_').val();
+            var cap = $('#numero_cap_bus').val();
 
 			var nombre = $('#nombre').val();
             var seguro= $('#seguro_').val();
