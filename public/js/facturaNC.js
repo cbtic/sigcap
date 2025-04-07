@@ -1326,7 +1326,7 @@ function fn_save_nc(){
 				$('#divNumeroF').show();
 				location.href=urlApp+"/comprobante/"+result.id_factura;
 
-				enviar_comprobante(result.id_factura);
+				//enviar_comprobante(result.id_factura);
 
             }
     });
