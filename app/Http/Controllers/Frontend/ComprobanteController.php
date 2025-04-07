@@ -2858,7 +2858,7 @@ class ComprobanteController extends Controller
 		$data["codigoPaisReceptor"] = "PE";
 		$data["departamentoEmisor"] = "JESUS MARIA";
 		$data["descuentosGlobales"] = "0.00";
-		$data["codigoTipoOperacion"] = "0101";
+		$data["codigoTipoOperacion"] =  $factura->tipo_operacion;
 		$data["razonSocialReceptor"] = $factura->destinatario;//"Freddy Rimac Coral";
 		$data["nombreComercialEmisor"] = "CAP";
 		$data["tipoDocIdentidadEmisor"] = "6";
