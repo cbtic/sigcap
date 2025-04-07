@@ -103,7 +103,7 @@ function calculoDetraccion(){
 	
 	var total_fac = $('#total_fac_').val();
 	var total_detraccion =total_fac*12/100;
-	var nc_detraccion = "111-111-111-11";
+	var nc_detraccion = "00-000-488801";
 	var tipo_detraccion = "004";
 	var afecta_a = "037";
 	var medio_pago = "001";

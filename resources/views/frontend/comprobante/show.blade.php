@@ -518,7 +518,7 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                         </tr>
                                         <tr>
                                         <td style="vertical-align: top;">COMENTARIOS TRIBUTARIOS :</td>
-                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNAT Cta. Para Detracción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima,  Ruc: 20172977911. Porcentaje: 12%, Código 037, Detracción: S/ <span class="resaltado">{{   number_format( round($factura->total * 12/100,2), 2, '.', '') }}</span>                                         
+                                        <td style="text-align: left;"> OPERACIÓN SUJETA A DETRACCIÓN R.S. - 183- 2004/SUNAT Cta. para Detracción Banco de la Nación Cta. Cte.M.N. No. 00-000-488801 a nombre del Colegio de Arquitectos del Perú Regional Lima,  Ruc: 20172977911. Porcentaje: 12%, Código 037, Detracción: S/ <span class="resaltado">{{   number_format( round($factura->total * 12/100,2), 2, '.', '') }}</span>                                         
                                             </td>
                                         </tr>
                                         </tbody>
