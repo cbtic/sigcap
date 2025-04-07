@@ -126,6 +126,11 @@ foreach ($valorizacion as $key => $row):
 			<input type="hidden" id="comprobante_detalle_vv" name="comprobante_detalle[<?php echo $key?>][vv]" value="<?php echo $ValorVenta_?>" />			
 			<input type="hidden" id="comprobante_detalle_total" name="comprobante_detalle[<?php echo $key?>][total]" value="<?php echo $Total_?>" />
 
+			<input type="hidden" id="comprobante_detalle_unidad_medida_item" name="comprobante_detalle[<?php echo $key?>][unidad_medida_item]" value="ZZ" />
+			<input type="hidden" id="comprobante_detalle_unidad_medida_comercial" name="comprobante_detalle[<?php echo $key?>][unidad_medida_comercial]" value="SERV" />
+
+
+
 
 
 			</div>

@@ -955,10 +955,11 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][pu]" value="<?php echo $fac['pu'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][pv]" value="<?php echo $fac['pv'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][valor_venta_bruto]" value="<?php echo $fac['valor_venta_bruto'] ?>" />
-                                                            <input type="hidden" name="facturad[<?php echo $key ?>][valor_venta]" value="<?php echo $fac['vv'] ?>" />
-                                                           
-
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][valor_venta]" value="<?php echo $fac['vv'] ?>" />                                                           
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][abreviatura]" value="<?php echo $fac['abreviatura'] ?>" />
+
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][unidad_medida_item]" value="<?php echo $fac['unidad_medida_item'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][unidad_medida_comercial]" value="<?php echo $fac['unidad_medida_comercial'] ?>" />
 
                                                             <tr>
                                                                 <td class="text-right"><?php $n = $n + 1;
