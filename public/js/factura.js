@@ -107,7 +107,7 @@ function calculoDetraccion(){
 	var tipo_detraccion = "004";
 	var afecta_a = "037";
 	var medio_pago = "001";
-	var tipo_operacion = "2";
+	var tipo_operacion = "1001";
 	//var d = new Date();
 
 	//alert(Math.round(total_fac));
@@ -130,7 +130,7 @@ function calculoDetraccion(){
 		$('#nc_detraccion').val("");
 		$('#tipo_detraccion').val("");
 		$('#afecta_a').val("");
-		$('#id_tipooperacion_').val("1");
+		$('#id_tipooperacion_').val("0101");
 		
 		//$('#medio_pago').value("");
 	}
