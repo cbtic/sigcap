@@ -91,6 +91,11 @@ function formatoMoneda_(num) {
     return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
 
+function redondear_dos_decimal(valor) {
+    //$float_redondeado= Math.ceil($valor * 100) / 100;
+    return (Math.round((valor + 0.0000001) * 100) / 100).toFixed(2);
+}
+
 function calculoVistaPrevia(){
     var igv_valor_ = <?php echo $parametro[0]->igv?> * 100;
     var valor_minimo_edificaciones = <?php echo $parametro[0]->valor_minimo_edificaciones?>;
@@ -99,7 +104,10 @@ function calculoVistaPrevia(){
     var igv_valor = <?php echo $parametro[0]->igv?>;
     var igv_minimo	= igv_valor * sub_total_minimo;
     var total_minimo = sub_total_minimo + igv_minimo;
-    $('#minimo').val(formatoMoneda_(total_minimo));
+
+	var total_minimo_redondeado = redondear_dos_decimal(total_minimo);
+
+    $('#minimo').val(total_minimo_redondeado);
     $('#igv').val(igv_valor_+"%");
     //var_dump($total_minimo);exit;
     
@@ -130,7 +138,7 @@ function calculoVistaPrevia(){
         $('#total').val(formatoMoneda_(total));
         $('#sub_total2').val(formatoMoneda_(sub_total_minimo));
         $('#igv2').val(formatoMoneda_(igv_minimo));
-        $('#total2').val(formatoMoneda_(total_minimo));
+        $('#total2').val(formatoMoneda_(total_minimo_redondeado));
     }else{
 		$('#sub_total').val(formatoMoneda_(sub_total));
         $('#igv_').val(formatoMoneda_(igv_total));
@@ -523,7 +531,7 @@ if($('#instancia').val()==250){
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm">Tipo Documento</label>
-								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm" onchange="obtenerPropietario_()" disabled='disabled'>
+								<select name="id_tipo_documento_" id="id_tipo_documento_" class="form-control form-control-sm" onchange="obtenerPropietario_()" disabled='disabled'>
 									<option value="">--Selecionar--</option>
 									<?php
 									foreach ($tipo_documento as $row) {?>
@@ -532,6 +540,7 @@ if($('#instancia').val()==250){
 									}
 									?>
 								</select>
+								<input id="id_tipo_documento" name="id_tipo_documento" value="<?php echo $propietario_solicitud[0]->id_tipo_propietario?>" type="hidden">
 							</div>
 
 							<div class="col-lg-1">
@@ -541,7 +550,7 @@ if($('#instancia').val()==250){
 								</div>
 								<div class="form-group" id="ruc_propietario_">
 									<label class="control-label form-control-sm">RUC</label>
-									<input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php if($propietario_solicitud[0]->id_tipo_propietario=='79') echo $propietario_solicitud[0]->numero_documento;?>" type="text" onchange="obtenerDatosRuc()">
+									<input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php echo isset($propietario_solicitud) && $propietario_solicitud[0]->id_tipo_propietario=='79'? $propietario_solicitud[0]->numero_documento : '';?>" type="text" onchange="obtenerDatosRuc()">
 								</div>
 							</div>
 
