@@ -541,7 +541,7 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                     </div>
                                     @endif
 
-                                   
+                                
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" id="divListaCredito" style="display:none">
                                     
                                         <div class="card">
