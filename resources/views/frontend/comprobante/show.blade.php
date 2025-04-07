@@ -517,7 +517,7 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <p>Son: <span class="resaltado">{{ $factura->letras }}</span></p>
                                     </div>
-                                    @if($factura->tipo_operacion =="2")
+                                    @if($factura->tipo_operacion =="1001")
                                     <div class="separador">&nbsp;</div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                                         <table>
