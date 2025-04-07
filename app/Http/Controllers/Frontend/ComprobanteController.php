@@ -2267,7 +2267,9 @@ class ComprobanteController extends Controller
 		
         $datos=  $datos_model->getDatosByComprobante($id);
         
-        $cronograma=  $datos_model->getCronogramaPagos($id);
+        $cronograma =  $datos_model->getCronogramaPagos($id);
+
+        $usuario_caja =  $datos_model->getComprobanteCajaUsuario($id);
        
 
 		if($factura->nro_guia!="" && $factura->nro_guia!=0){
@@ -2296,7 +2298,7 @@ class ComprobanteController extends Controller
 
 
 
-        return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo'));
+        return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo','usuario_caja'));
     }
 
 	public function listar_comprobante(Request $request){
@@ -2858,7 +2860,7 @@ class ComprobanteController extends Controller
 		$data["codigoPaisReceptor"] = "PE";
 		$data["departamentoEmisor"] = "JESUS MARIA";
 		$data["descuentosGlobales"] = "0.00";
-		$data["codigoTipoOperacion"] = "0101";
+		$data["codigoTipoOperacion"] =  $factura->tipo_operacion;
 		$data["razonSocialReceptor"] = $factura->destinatario;//"Freddy Rimac Coral";
 		$data["nombreComercialEmisor"] = "CAP";
 		$data["tipoDocIdentidadEmisor"] = "6";
@@ -2872,13 +2874,13 @@ class ComprobanteController extends Controller
         {
             
             $data["dtmontoDetraccion"] = $factura->monto_detrac;
-           // $data["descripcionLeyenda"] = "OPERACIÓN SUJETA A DETRACCIÓN";
-            $data["dtporcentajeDetraccion"] = $factura->porc_detrac;
-            $data["dtnumeroCuentaBancoNacion"] = $factura->cuenta_detrac;
-            $data["dtmontoTotalIncluidoDetraccion"] = $factura->total;
-
-            $data["dtmedioPagoDetraccion"] = $factura->medio_pago_detrac;
-            $data["dtcodigoBienServicio"] = $factura->afecta_detrac;
+            // $data["descripcionLeyenda"] = "OPERACIÓN SUJETA A DETRACCIÓN";
+             $data["dtporcentajeDetraccion"] = $factura->porc_detrac;
+             $data["dtnumeroCuentaBancoNacion"] = $factura->cuenta_detrac;
+             $data["dtmontoTotalIncluidoDetraccion"] = $factura->total - $factura->monto_detrac;
+ 
+             $data["dtmedioPagoDetraccion"] = $factura->medio_pago_detrac;
+             $data["dtcodigoBienServicio"] = $factura->afecta_detrac;
         }
         
         if ($factura->porc_retencion!=""){

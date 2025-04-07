@@ -116,7 +116,7 @@ function calculoDetraccion(){
 
 	if (Math.round(total_fac) > 700 && tipo=='FT' ){
 
-		$('#porcentaje_detraccion').val("12%");		
+		$('#porcentaje_detraccion').val("12");		
 		$('#monto_detraccion').val(total_detraccion.toFixed(2));
 		$('#nc_detraccion').val(nc_detraccion);
 		$('#tipo_detraccion').val(tipo_detraccion);

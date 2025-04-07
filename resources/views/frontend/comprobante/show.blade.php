@@ -329,7 +329,8 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                                 <p>No esta identificado el tipo de documento</p>
                                                                 @endswitch
                                                             </p>
-                                                            <p><a href="/{{ $factura->ruta_comprobante }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>                                                        
+                                                           <!-- <p><a href="/{{ $factura->ruta_comprobante }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>    -->
+                                                           <p>{{ $factura->serie }}-{{ $factura->numero }}</p>
                                                         </strong>
 
                                                     </div>
