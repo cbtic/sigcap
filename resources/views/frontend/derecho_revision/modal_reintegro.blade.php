@@ -175,7 +175,9 @@ function calculoVistaPrevia(){
     var igv_minimo	= igv_valor * sub_total_minimo;
     var total_minimo = sub_total_minimo + igv_minimo;
     
+
     var total_minimo_redondeado = redondear_dos_decimal(total_minimo);
+    //alert(total_minimo_redondeado);
     //alert(total_minimo_redondeado);
     $('#minimo').val(total_minimo_redondeado);
     $('#igv').val(igv_valor_+"%");
@@ -208,7 +210,7 @@ function calculoVistaPrevia(){
         $('#total').val(formatoMoneda(total));
         $('#sub_total2').val(formatoMoneda(sub_total_minimo));
         $('#igv2').val(formatoMoneda(igv_minimo));
-        $('#total2').val(formatoMoneda(total_minimo));
+        $('#total2').val(total_minimo_redondeado);
     }else{
         $('#sub_total').val(formatoMoneda(sub_total));
         $('#igv_').val(formatoMoneda(igv_total));
@@ -255,6 +257,8 @@ function calcularReintegro(){
                 var total_minimo = parseFloat($('#minimo').val());
                 var igv_minimo = total_minimo*igv_/100;
                 var sub_total_minimo = total_minimo - igv_minimo;
+
+                //alert(sub_total_minimo);
 
                 var sub_totalR=reintegro*valor_edificaciones;
                 var igv_totalR=sub_totalR*igv_/100;
