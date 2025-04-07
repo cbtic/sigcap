@@ -2267,7 +2267,9 @@ class ComprobanteController extends Controller
 		
         $datos=  $datos_model->getDatosByComprobante($id);
         
-        $cronograma=  $datos_model->getCronogramaPagos($id);
+        $cronograma =  $datos_model->getCronogramaPagos($id);
+
+        $usuario_caja =  $datos_model->getComprobanteCajaUsuario($id);
        
 
 		if($factura->nro_guia!="" && $factura->nro_guia!=0){
@@ -2296,7 +2298,7 @@ class ComprobanteController extends Controller
 
 
 
-        return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo'));
+        return view('frontend.comprobante.show',compact('factura','factura_detalles','id_guia','datos','cronograma','ref_comprobante','ref_tipo','usuario_caja'));
     }
 
 	public function listar_comprobante(Request $request){
