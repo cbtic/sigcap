@@ -256,7 +256,7 @@ function guardarnc(){
 
 }
  
-/*
+
 function fn_save(){
 	 //var fecha_atencion_original = $('#fecha_atencion').val();
 	//var id_user = $('#id_user').val();
@@ -295,7 +295,9 @@ function fn_save(){
             }
     });
 }
-*/
+
+
+/*
 function fn_save() {
     var id_factura = 0;
 	var conf = "";
@@ -310,52 +312,15 @@ function fn_save() {
                       </div>`).show();
     $('#guardar').hide();
 
-    // Función para enviar el comprobante (debe retornar una promesa)
-	/*
-    function enviar_comprobante(id_factura) {
-        return $.ajax({
-            url: "/comprobante/enviar", // Ajusta la URL según tu endpoint
-			type: "POST",
-            data: { id_factura: id_factura },
-            dataType: 'json'            
-        });
-    }
-		*/
 
 		function enviar_comprobante(id){
-			var msg_ = "";
-
 			$.ajax({
 				url: '/comprobante/firmar/' + id ,
 				dataType: "json",
-				success: function (result) {
-
-					alert(result);
-	
-					if (result) {
-						//Swal.fire("Enviado al Facturador Electrónica!");
-						msg_ = "Enviado al Facturador Electrónica!";
-	
-					}
-					else {						
-						//Swal.fire("registro no encontrado!");
-						msg_ = "registro no encontrado!!";
-					}
-	
-				},
-				"error": function (msg, textStatus, errorThrown) {
-
-					msg_ = msg;
-	
-					//Swal.fire("Numero de documento no fue registrado!");
-	
-				}
-		
 			});
-			return msg_;
-			
-		}
-	
+		}				
+
+
 		
 
     // Primero guarda el comprobante
@@ -372,14 +337,14 @@ function fn_save() {
         
         // Luego envía el comprobante y espera a que termine
          //return enviar_comprobante(id_factura);
-		 conf = enviar_comprobante(id_factura);
-		 alert(conf);
-		 exit();
+		enviar_comprobante(id_factura);
+		 //alert(conf);
+		 //exit();
 		 
 		//enviar_comprobante(id_factura);
     })
     .then(function (result) {
-		alert(result);
+		//alert(result);
         // Redirige solo después de que ambas operaciones tengan éxito
         location.href = urlApp + "/comprobante/" + id_factura;
     })
@@ -393,7 +358,7 @@ function fn_save() {
         $('#guardar').show();
     });
 }
-
+*/
 
 function fn_save_nc(){
 
@@ -1072,7 +1037,7 @@ function obtenerTitular(){
        
         
     }
-/*
+
 	function enviar_comprobante(id){
 
 		$.ajax({
@@ -1098,4 +1063,3 @@ function obtenerTitular(){
 		});
 		
 	}
-*/
