@@ -2915,7 +2915,7 @@ class ComprobanteController extends Controller
 
 
 		$databuild_string = json_encode($data);
-        //print_r($databuild_string);exit();
+        print_r($databuild_string."<br>");//exit();
 
 		//$chbuild = curl_init("https://easyfact.tk/see/rest/01");
         $chbuild = curl_init(config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo));
@@ -2935,7 +2935,7 @@ class ComprobanteController extends Controller
 		curl_setopt($chbuild, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_setopt($chbuild, CURLOPT_POSTFIELDS, $databuild_string);
         $results = curl_exec($chbuild);
-        //print_r($results);
+        print_r($results."<br>");
         //exit();
         $facturaLog = new Logger('factura_sunat');
 
@@ -3243,7 +3243,8 @@ class ComprobanteController extends Controller
 
 		$databuild_string = json_encode($data);
        
-        print_r($databuild_string);//exit();
+        print_r($databuild_string."<br>");//exit();
+        
 
 		//$chbuild = curl_init("https://easyfact.tk/see/rest/01");
         $chbuild = curl_init(config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo));
@@ -3263,7 +3264,7 @@ class ComprobanteController extends Controller
 		curl_setopt($chbuild, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_setopt($chbuild, CURLOPT_POSTFIELDS, $databuild_string);
         $results = curl_exec($chbuild);
-        //print_r($results);
+        print_r($results."<br>");
         //exit();
         $facturaLog = new Logger('factura_sunat');
 
