@@ -455,9 +455,11 @@
                         <input type="hidden" name="descuentopp" id="descuentopp" value="<?php echo $descuentopp; ?>">
                         <input type="hidden" name="id_pronto_pago" id="id_pronto_pago" value="<?php echo $id_pronto_pago; ?>">
                         <input type="hidden" name="totalMedioPago" id="totalMedioPago" value="">
-
+                        <input type="hidden" name="tipo_documento_b" id="tipo_documento_b" value="<?php echo $tipo_documento_b; ?>">
+                        
                         <input type="hidden" name="persona2" id="persona2" value="">
                         <input type="hidden" name="ubicacion2" id="ubicacion2" value="">
+
 
                         <input type="hidden" name="TipoF" id="TipoF" value="<?php if ($trans == 'FA') {
                                                                         echo $TipoF;
@@ -516,7 +518,7 @@
                                                             <select name="serieF" id="serieF" class="form-control form-control-sm">
                                                                 <?php if ($trans == 'FA' || $trans == 'FN') { ?>
                                                                     <?php foreach ($serie as $row) : ?>
-                                                                        <option value="<?php echo $row->denominacion ?>"><?php echo $row->denominacion ?></option>
+                                                                        <option value="<?php echo $row->denominacion ?>" <?php if($row->predeterminado == '1')echo "selected='selected'"?>><?php echo $row->denominacion ?></option>                                                                        
                                                                     <?php endforeach; ?>
                                                                 <?php } ?>
                                                                 <?php if ($trans == 'FE') { ?>
@@ -687,7 +689,7 @@
                                                     
                                                 </div>
 
-                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="display:none">
                                                     <div class="form-group">
                                                         <label class="form-control-sm">Serie</label>
                                                         
@@ -704,7 +706,7 @@
                                                          
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF">
+                                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" name="divNumeroF" id="divNumeroF" style="display:none">
                                                     <div class="form-group">
                                                         <label class="form-control-sm">Número</label>
                                                         <input type="text" name="numeroNC"  id="numeroNC" value="<?php if ($trans == 'FA') {
@@ -953,10 +955,11 @@
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][pu]" value="<?php echo $fac['pu'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][pv]" value="<?php echo $fac['pv'] ?>" />
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][valor_venta_bruto]" value="<?php echo $fac['valor_venta_bruto'] ?>" />
-                                                            <input type="hidden" name="facturad[<?php echo $key ?>][valor_venta]" value="<?php echo $fac['vv'] ?>" />
-                                                           
-
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][valor_venta]" value="<?php echo $fac['vv'] ?>" />                                                           
                                                             <input type="hidden" name="facturad[<?php echo $key ?>][abreviatura]" value="<?php echo $fac['abreviatura'] ?>" />
+
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][unidad_medida_item]" value="<?php echo $fac['unidad_medida_item'] ?>" />
+                                                            <input type="hidden" name="facturad[<?php echo $key ?>][unidad_medida_comercial]" value="<?php echo $fac['unidad_medida_comercial'] ?>" />
 
                                                             <tr>
                                                                 <td class="text-right"><?php $n = $n + 1;
@@ -1416,22 +1419,29 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="display:none">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Monto de Percepción</label>
                                                     <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="display:none">
                                                 <div class="form-group">
                                                     <label class="form-control-sm"></label>
                                                     <input type="text" name="numero_documento" id="numero_documento" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="display:none">
                                                 <div class="form-group">
                                                     <label class="form-control-sm">Monto Total</label>
                                                     <input type="text" name="monto_total" id="monto_total" value="{{old('clinum')}}" placeholder="" class="form-control form-control-sm">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+                                                <div class="form-group">
+                                                    <label class="form-control-sm">Tipo de Cambio</label>
+                                                    <input type="text" name="tipo_cambio" id="tipo_cambio" value="<?php echo $tipo_cambio; ?>" placeholder="" class="form-control form-control-sm" readonly;>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1500,6 +1510,15 @@
                                             </div>
 
                                         </div>
+                                        <div id="" class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="control-label form-control-sm">Observaciones</label>
+                                                    <textarea id="observacion" name="observacion" class="form-control form-control-sm"><?php //echo $->observacion?></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <!--card-body-->
                                 </div>
