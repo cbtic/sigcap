@@ -291,7 +291,7 @@
 										<tr style="font-size:13px">
 											<th>id</th>
 											<th>Reporte</th>
-											<th>.</th>
+											<th>Acciones</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -315,8 +315,8 @@
 														</form>
 													
 													</td>
-											-->
-
+													-->
+													
 												<?php if($row->id_tipo!=3){ ?>
 													<td class="text-left" style="vertical-align:middle">
 														<a href="javascript:void(0);"  

@@ -1782,6 +1782,8 @@ class DerechoRevisionController extends Controller
 
 	public function send_nuevo_reintegro(Request $request){
 		
+		//dd($request->id_tipo_documento);exit();
+
 		$tipo_uso = $request->tipo_uso;
 		$sub_tipo_uso = $request->sub_tipo_uso;
 		$area_techada = $request->area_techada;
@@ -1992,8 +1994,14 @@ class DerechoRevisionController extends Controller
 		
 		/***********************************/
 		
-		$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
-		$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();
+		if($request->id_tipo_documento=='78'){
+			$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
+			$empresa = null;
+		}
+		if($request->id_tipo_documento=='79'){
+			$persona = null;
+			$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();
+		}
 		
 		if($id_solicitud == 0){
 			$propietario = new Propietario;
@@ -2024,8 +2032,6 @@ class DerechoRevisionController extends Controller
 			$propietario->id_usuario_inserta = $id_user;
 			$propietario->save();
 		}
-
-
 
 		$propietario = Propietario::where("id_solicitud",$derecho_revision->id)->where("estado","1")->first();
 		
