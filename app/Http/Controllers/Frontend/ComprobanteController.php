@@ -247,8 +247,8 @@ class ComprobanteController extends Controller
                     "pu" =>$deudaTotal/$request->cantidad_descuento, 
                     "igv" => 0, 
                     "pv" =>  $deudaTotal/$request->cantidad_descuento, 
-                    "vv" =>  $stotal, 
-                    "total" => $total,
+                    "vv" =>  $deudaTotal-$request->totalDescuento, 
+                    "total" => $deudaTotal-$request->totalDescuento, 
                     "valor_venta_bruto" => $deudaTotal,
                     "valor_venta" => $stotal,
                     "moneda" => "SOLES", 
@@ -2807,9 +2807,9 @@ class ComprobanteController extends Controller
 							);
 
                             if ($row->afect_igv=='10'){
-                                $totalOPGravadas = $totalOPGravadas + str_replace(",","",$row->importe);
+                                $totalOPGravadas = $totalOPGravadas + str_replace(",","",$row->valor_venta);
                             }else{
-                                $totalOPNoGravadas = $totalOPNoGravadas + str_replace(",","",$row->importe);
+                                $totalOPNoGravadas = $totalOPNoGravadas + str_replace(",","",$row->valor_venta);
                             }
 
                             
