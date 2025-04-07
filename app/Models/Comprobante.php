@@ -105,6 +105,20 @@ class Comprobante extends Model
         return $data;
     }
 
+    function getComprobanteCajaUsuario($id){
+
+        $cad = "select u.* 
+            from caja_ingresos ci 
+            inner join comprobantes c on c.id_caja = ci.id
+            inner join users u on u.id = ci.id_usuario
+            where c.id ='". $id . "' " ;
+
+                //print_r($cad); exit();
+		$data = DB::select($cad);
+        //print_r($data); exit();
+        return $data;
+    }
+
     function listar_credito_pago($id){
 
         $cad = "select  c.id, c.id_comprobante, c.item, c.fecha, c.id_medio, c.nro_operacion, c.descripcion, c.monto, c.fecha_vencimiento fecha, c.estado, cp.denominacion
