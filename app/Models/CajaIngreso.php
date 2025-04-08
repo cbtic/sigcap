@@ -562,7 +562,7 @@ class CajaIngreso extends Model
         and v.estado ='1'
         ".$concepto."
         union all */
-        select v2.id, c.denominacion, ROW_NUMBER() OVER (PARTITION BY v2.id order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto importe,to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento
+        select v2.id, c.denominacion, ROW_NUMBER() OVER (PARTITION BY v2.id_concepto order by v2.fecha asc ) AS row_num, v2.descripcion, v2.monto importe,to_char(v2.fecha, 'dd-mm-yyyy' ) fecha_vencimiento
         from valorizaciones v2 
         inner join conceptos c on v2.id_concepto =c.id
         where v2.id_agremido = ".$id."
@@ -570,7 +570,8 @@ class CajaIngreso extends Model
         /*and v2.id_modulo = 6*/
         and v2.fecha < now()
         and v2.estado ='1'
-        ".$concepto." ";
+        ".$concepto." 
+        order by v2.fecha asc";
 
 		//echo $cad;
 		$data = DB::select($cad);
