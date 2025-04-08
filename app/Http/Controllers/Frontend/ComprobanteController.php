@@ -2829,7 +2829,7 @@ class ComprobanteController extends Controller
 		$data["keepNumber"] = "false";
 		$data["tipoCorreo"] = "1";
         $data["formaPago"] = "CONTADO";        		
-        $data["tipoMoneda"] = ($factura->id_moneda=="2")?"USD":"PEN"; //"PEN";
+        $data["tipoMoneda"] = ($factura->id_moneda=="2")?"PEN":"USD"; //"PEN";
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
 		$data["serieNumero"] = $factura->serie."-".$factura->numero; // "F001-000002";
@@ -3232,7 +3232,7 @@ class ComprobanteController extends Controller
 		//$data["nombreComercialEmisor"] = "CAP";		       
         $data["nombreComercialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
         $data["tipoDocumentoModifica"] = "01";
-        $data["fechaDocumentoAfectado"] = "2023-11-13";
+        $data["fechaDocumentoAfectado"] = date("Y-m-d",strtotime($factura->fecha));
         $data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
 		$data["numeroDocIdentidadEmisor"] = "20172977911";//"20160453908";        
