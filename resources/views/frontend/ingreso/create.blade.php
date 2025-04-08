@@ -700,6 +700,8 @@
 
                                         <input type="hidden" name="rol_exonera" id="rol_exonera" value="<?php echo $rol_exonera?>" />
 
+
+
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group mb-0 clearfix">

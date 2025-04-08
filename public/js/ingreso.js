@@ -9,7 +9,9 @@ $(document).ready(function () {
 		//var tipo_documento_b = $("#tipo_documento_b").val();
 		//$("#tipo_documento").val(tipo_documento_b);
 
-		if(id_caja_usuario=="0"){
+		var rol_exonera = $('#rol_exonera').val();
+
+		if(id_caja_usuario=="0" && rol_exonera=="0"){
 			bootbox.alert("Debe seleccionar una Caja disponible");
 			//$(obj).prop("checked",false);
 			return false;
@@ -282,8 +284,8 @@ function calcular_total(obj){
 
 	//alert(rol_exonera);
 	
-	//if(id_caja_usuario=="0" && rol_exonera=="0"){
-	if(id_caja_usuario=="0" ){
+	if(id_caja_usuario=="0" && rol_exonera=="0"){
+	//if(id_caja_usuario=="0" ){
 		bootbox.alert("Debe seleccionar una Caja disponible");
 		$(obj).prop("checked",false);
 		return false;
