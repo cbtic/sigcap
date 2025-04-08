@@ -471,9 +471,149 @@ class ReporteController extends Controller
 		return Excel::download($export, 'lista_deuda_detallado.xlsx');*/
 		
     }
+
+	public function exportar_reporte_caja($id, $f_inicio, $f_fin, $opc1, $opc2, $opc3)
+{
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    ini_set('memory_limit', '-1');
+    ini_set('max_execution_time', '1200');
+
+    $reporte = Reporte::find($id);
+
+    $id_tipo = $reporte->id_tipo;
+    $funcion = $reporte->funcion;
+    $por_usuario = $reporte->por_usuario;
+
+    $titulo = "Reporte";
+    $datos = [];
+
+    if ($id_tipo == '1') {
+        $id_usuario = $opc1;
+        $id_caja = $opc2;
+
+        $caja_ingreso_model = new CajaIngreso();
+        $caja_ingresos = $caja_ingreso_model->getCajaById($id_caja);
+        $usuario_ingresos = $caja_ingreso_model->getUsuarioById($id_usuario);
+
+        if ($funcion == 'ccu' || $funcion == 'cct') {
+            $titulo = ($funcion == 'ccu') 
+                ? "CONSOLIDADO " . $usuario_ingresos[0]->usuario . " - " . $caja_ingresos[0]->denominacion
+                : "CONSOLIDADO DE TODAS LAS CAJAS";
+
+            $datos = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_fin, $por_usuario);
+        }
+
+        if ($funcion == 'mcu' || $funcion == 'mct') {
+            $titulo = ($funcion == 'mcu') 
+                ? "REPORTE DE MOVIMIENTOS DE " . $usuario_ingresos[0]->usuario . " - " . $caja_ingresos[0]->denominacion
+                : "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS";
+
+            $datos = $caja_ingreso_model->getAllMovimientoComprobantes($id_usuario, $id_caja, $f_inicio, $f_fin, $por_usuario);
+        }
+    }
+
+    if ($id_tipo == '2') {
+        $concepto = $opc1;
+        $forma_pago = $opc2;
+        $estado_pago = $opc3;
+
+        if ($funcion == 'rv' || $funcion == 'rvm') {
+            $titulo = ($funcion == 'rv') ? "REPORTE DE VENTAS POR CONCEPTOS" : "REPORTE DE REGISTRO VENTAS MENSUAL";
+
+            $caja_ingreso_model = new CajaIngreso();
+            $datos = $caja_ingreso_model->getAllReporteVentas($f_inicio, $f_fin, $concepto, $forma_pago, $estado_pago);
+        }
+    }
+
+    if ($id_tipo == '3' && $funcion == 'rt') {
+        $titulo = "REPORTE DE DEUDA TOTAL";
+        $valorizacion_model = new Valorizacione;
+        $datos = $valorizacion_model->getDeudaReporte($f_fin);
+    }
+
+	$export = new InvoicesExport($datos, $titulo);
+	return Excel::download($export, 'reporte.xlsx');
+
+    //return Excel::download(new ReporteExport($datos, $titulo), 'reporte.xlsx');
+}
 }
 
 class InvoicesExport implements FromArray, WithHeadings, WithStyles
+{
+	protected $invoices;
+	protected $fechaFin;
+
+	public function __construct(array $invoices, $fechaFin)
+	{
+		$this->invoices = $invoices;
+		$this->fechaFin = $fechaFin;
+	}
+
+	public function array(): array
+	{
+		return $this->invoices;
+	}
+
+	public function headings(): array
+    {
+        return ["N", "Numero CAP", "Apellidos y Nombres", "Monto Total"];
+    }
+
+	public function styles(Worksheet $sheet)
+    {
+
+		$sheet->mergeCells('A1:D1');
+        
+		$fecha_actual = date('d-m-Y');
+
+        $sheet->setCellValue('A1', "LISTA DE LA DEUDA ACTUAL DE CUOTA INSTITUCIONAL DE \n ARQUITECTOS AL $fecha_actual (Fecha de cierre: {$this->fechaFin})");
+        $sheet->getStyle('A1:D1')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => '000000'],
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => 'A6C9EC'],
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+            ],
+        ]);
+
+		$sheet->getStyle('A1')->getAlignment()->setWrapText(true);
+		$sheet->getRowDimension(1)->setRowHeight(30);
+
+        $sheet->getStyle('A2:D2')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => '000000'],
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['rgb' => 'C1F0C8'],
+            ],
+			'alignment' => [
+			'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+    		],
+        ]);
+
+		$sheet->fromArray($this->headings(), NULL, 'A2');
+
+		$sheet->getStyle('D3:D'.$sheet->getHighestRow())
+		->getNumberFormat()
+		->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00);
+        
+        foreach (range('A', 'D') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+    }
+
+}
+
+class InvoicesExport2 implements FromArray, WithHeadings, WithStyles
 {
 	protected $invoices;
 	protected $fechaFin;
