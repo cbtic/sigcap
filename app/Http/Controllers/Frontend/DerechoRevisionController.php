@@ -1230,6 +1230,11 @@ class DerechoRevisionController extends Controller
 		$proyectista->id_usuario_inserta = $id_user;
 		$proyectista->save();
     }
+	
+	function redondear_dos_decimal($valor) {
+		//$float_redondeado= Math.ceil($valor * 100) / 100;
+		return number_format(round($valor + 0.0000001, 2), 2, '.', '');
+	}
 
 	public function credipago_pdf($id){
 		
@@ -1282,9 +1287,12 @@ class DerechoRevisionController extends Controller
 		$municipalidad = $datos[0]->municipalidad;
 		$total_area_techada=$datos[0]->total_area_techada;
 		$valor_obra=$datos[0]->valor_obra;
-		$sub_total=$datos[0]->sub_total;
-		$igv = $datos[0]->igv;
-		$total = $datos[0]->total;
+		$sub_total_ = $datos[0]->sub_total;
+		$igv_ = $datos[0]->igv;
+		$total_ = $datos[0]->total;
+		$sub_total =  number_format(round($sub_total_ + 0.0000001, 2), 2, '.', '');
+		$igv =  number_format(round($igv_ + 0.0000001, 2), 2, '.', '');
+		$total =  number_format(round($total_ + 0.0000001, 2), 2, '.', '');
 		$tipo_proyectista = $datos[0]->tipo_proyectista;
 		$tipo_liquidacion = $datos[0]->tipo_liquidacion;
 		$instancia = $datos[0]->instancia;

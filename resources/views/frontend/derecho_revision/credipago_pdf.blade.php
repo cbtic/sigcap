@@ -284,13 +284,13 @@ $(document).ready(function() {
                         <td class="td" style ="text-align: right; width: 20%; font-size:11px"></td>
                         <td class="td" style ="text-align: right; width: 60%; font-size:11px"><b>PORCENTAJE A APLICAR SOBRE VALOR DE OBRA <?php echo $porcentaje;?>%:</b></td>
                         <td class="td" style ="text-align: left; width: 5%; font-size:11px">&nbsp;&nbsp;S/.</td>
-                        <td class="td" style ="text-align: right; width: 15%; font-size:11px"><?php echo number_format($sub_total,2,'.',',');?></td>
+                        <td class="td" style ="text-align: right; width: 15%; font-size:11px"><?php echo $sub_total;?></td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: right; width: 20%; font-size:11px"></td>
                         <td class="td" style ="text-align: right; width: 60%; font-size:11px"><b>+IGV:</b></td>
                         <td class="td" style ="text-align: left; width: 5%; font-size:11px">&nbsp;&nbsp;S/.</td>
-                        <td class="td" style ="text-align: right; width: 15%; font-size:11px"><?php echo number_format($igv,2,'.',',');?></td>
+                        <td class="td" style ="text-align: right; width: 15%; font-size:11px"><?php echo $igv;?></td>
                         
                     </tr>
                 </tbody>
@@ -303,13 +303,13 @@ $(document).ready(function() {
                         <td class="td" style ="text-align: left; width: 55%;"><?php echo $tipo_liquidacion;?></td>
                         <td class="td" style ="text-align: right; width: 25%;"><b>TOTAL:</b></td>
                         <td class="td" style ="text-align: left; width: 5%; border-top: 1px solid black;">&nbsp;&nbsp;S/.</td>
-                        <td class="td" style ="text-align: right; width: 15%; border-top: 1px solid black;"><?php echo number_format($total,2,'.',',');?></td>
+                        <td class="td" style ="text-align: right; width: 15%; border-top: 1px solid black;"><?php echo $total;?></td>
                     </tr>
                     <tr>
                         <td class="td" style ="text-align: right; width: 55%;"></td>
                         <td class="td" style ="text-align: right; width: 25%; font-size:14px"><b>TOTAL A PAGAR:</b></td>
                         <td class="td" style ="text-align: left; width: 5%;">&nbsp;&nbsp;S/.</td>
-                        <td class="td" style ="text-align: right; width: 15%;"><?php echo number_format($total,2,'.',',');?></td>
+                        <td class="td" style ="text-align: right; width: 15%;"><?php echo $total;?></td>
                     </tr>
                 </tbody>
             </table>
@@ -334,6 +334,11 @@ $(document).ready(function() {
 @endpush
 
 <script>
+
+function redondear_dos_decimal(valor) {
+    //$float_redondeado= Math.ceil($valor * 100) / 100;
+    return (Math.round((valor + 0.0000001) * 100) / 100).toFixed(2);
+}
 
 function showMessage() {
     return "hola";
