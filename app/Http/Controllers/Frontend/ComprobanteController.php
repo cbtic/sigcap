@@ -2751,7 +2751,6 @@ class ComprobanteController extends Controller
     public function firmar($id_factura){
 
         //echo $this->getTipoDocumento("BV");exit();
-
 		$factura = Comprobante::where('id', $id_factura)->get()[0];
         $factura_detalles = ComprobanteDetalle::where([
             'serie' => $factura->serie,
@@ -3070,6 +3069,16 @@ class ComprobanteController extends Controller
 
     }
 
+    public function getTipoDocPersona_nc($td){
+        $tipoDoc = "";
+        if ($td == 'FT') {
+            $tipoDoc = "6";
+        } else {
+            $tipoDoc = "0";
+        }
+        return $tipoDoc;
+    }
+
     public function getTipoDocPersona($td, $dni){
 
         $tipoDoc = "";
@@ -3127,6 +3136,9 @@ class ComprobanteController extends Controller
         //echo $this->getTipoDocumento("BV");exit();
 
 		$factura = Comprobante::where('id', $id_factura)->get()[0];
+
+        $factura_nc = Comprobante::where('id', $factura->id_comprobante_ncnd)->get()[0];
+
 		$factura_detalles = ComprobanteDetalle::where([
             'serie' => $factura->serie,
             'numero' => $factura->numero,
@@ -3151,7 +3163,8 @@ class ComprobanteController extends Controller
                     "valorUnitarioSinIgv" => str_replace(",", "", number_format($row->pu_con_igv, 2)), //"42.3728813559",
                     "precioUnitarioConIgv" => str_replace(",", "", number_format($row->importe, 2)), //"50.0000000000",
                     "unidadMedidaComercial" => "SERV",
-                    "codigoAfectacionIGVItem" => "10",
+                    //"codigoAfectacionIGVItem" => "10",
+                    "codigoAfectacionIGVItem"=> $row->afect_igv,
                     //"porcentajeDescuentoItem"=> "0.00",
                     "codTipoPrecioVtaUnitarioItem" => "01"
                 );
@@ -3224,8 +3237,8 @@ class ComprobanteController extends Controller
 		//$data["descuentosGlobales"] = "0.00";
 		//$data["codigoTipoOperacion"] = "0101";
 		$data["razonSocialReceptor"] = $factura->destinatario;//"Freddy Rimac Coral";
-        $data["serieNumeroAfectado"] = $factura->serie."-".$factura->numero;
-        $data["serieNumeroModifica"] = $factura->serie."-".$factura->numero;
+        $data["serieNumeroAfectado"] = $factura_nc->serie."-".$factura_nc->numero;
+        $data["serieNumeroModifica"] = $factura_nc->serie."-".$factura_nc->numero;
 
         $data["sumatoriaOtrosCargos"] = "0";
 
@@ -3236,7 +3249,7 @@ class ComprobanteController extends Controller
         $data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
 		$data["numeroDocIdentidadEmisor"] = "20172977911";//"20160453908";        
-		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona($factura->tipo, $factura->cod_tributario);//"6";                
+		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona_nc($factura_nc->tipo);//"6";                
 		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
 
         //$data["direccionReceptor"] = $factura->direccion;

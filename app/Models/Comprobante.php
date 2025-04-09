@@ -74,6 +74,20 @@ class Comprobante extends Model
     }
     
 
+    function getComprobanteNCId($id){
+
+        $cad = "select c.*,  oc.numero_orden_compra_cliente, 
+                            (select string_agg(gi.guia_serie||'-'||gi.guia_numero ,', ') from salida_productos sp 
+                            left join guia_internas gi on gi.numero_documento::int = sp.id 
+                            where sp.tipo_devolucion='3'
+                            and sp.id_orden_compra=oc.id) guia
+                from comprobantes c                     
+                where c.id = '".$id."' ";
+            
+        $data = DB::select($cad);
+        if($data)return $data[0];
+    }
+
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';
