@@ -2829,7 +2829,7 @@ class ComprobanteController extends Controller
 		$data["keepNumber"] = "false";
 		$data["tipoCorreo"] = "1";
         $data["formaPago"] = "CONTADO";        		
-        $data["tipoMoneda"] = ($factura->id_moneda=="2")?"PEN":"USD"; //"PEN";
+        $data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
 		$data["serieNumero"] = $factura->serie."-".$factura->numero; // "F001-000002";
@@ -3180,10 +3180,10 @@ class ComprobanteController extends Controller
 		$data["adjuntos"] = [];
 		//$data["anticipos"] = [];
 		$data["esFicticio"] = false;
-		$data["keepNumber"] = "false";
+		$data["keepNumber"] = "true";
 		$data["tipoCorreo"] = "1";
        // $data["formaPago"] = "CONTADO";
-		$data["tipoMoneda"] = ($factura->id_moneda=="2")?"PEN":"USD"; //"PEN";        
+		$data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";        
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
 		$data["serieNumero"] = $factura->serie."-".$factura->numero; // "F001-000002";
@@ -3199,7 +3199,7 @@ class ComprobanteController extends Controller
 		//$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
 		$data["tipoDocumento"] = $this->getTipoDocumento($factura->tipo);
 		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
-		$data["distritoEmisor"] = "LIMA";
+		$data["distritoEmisor"] = "JESUS MARIA";
 		$data["esContingencia"] = false;
         $data["motivoSustento"] = "DESCUENTO GLOBAL";
 		//$data["telefonoEmisor"] = "(01) 6271200";
