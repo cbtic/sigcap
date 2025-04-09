@@ -3225,12 +3225,12 @@ class ComprobanteController extends Controller
 		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
 		$data["distritoEmisor"] = "JESUS MARIA";
 		$data["esContingencia"] = false;
-        $data["motivoSustento"] = "DESCUENTO GLOBAL";
+        $data["motivoSustento"] = $factura->motivo_ncnd;
 		//$data["telefonoEmisor"] = "(01) 6271200";
 		$data["totalAnticipos"] = "0.00";
 		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["provinciaEmisor"] = "LIMA";
-        $data["tipoNotaCredito"] = "04";
+        $data["tipoNotaCredito"] = $factura->codtipo_ncnd;
 		$data["totalDescuentos"] = "0.00";
 		$data["totalOPGravadas"] = $totalOPGravadas; //"127.12";
 
@@ -3400,7 +3400,7 @@ class ComprobanteController extends Controller
             $id_caja = $request->id_caja;
             $adelanto   = $request->adelanto;
             $afecta=$request->_afecta;            
-            $tiponota=$request->_afecta;            
+            $tiponota=$request->tiponota_;            
         	$motivo=$request->motivo_;
             $afecta_ingreso=$request->afecta_ingreso;
             $devolucion_nc=$request->devolucion_nc;
