@@ -291,7 +291,8 @@
 										<tr style="font-size:13px">
 											<th>id</th>
 											<th>Reporte</th>
-											<th>Acciones</th>
+											<th>PDF</th>
+											<th>Excel</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -323,6 +324,13 @@
 																					   onclick="abrirPdfReporte('<?php echo addslashes($row->id); ?>', '<?php echo addslashes($row->por_usuario); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
 														style="font-size: 12px; text-decoration: underline; color: blue;">
 															Ver Informe
+														</a>
+													</td>
+													<td>
+														<a href="javascript:void(0);"  
+																					   onclick="descargarReporte('<?php echo addslashes($row->id); ?>', '<?php echo addslashes($row->por_usuario); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
+														style="font-size: 12px; text-decoration: underline; color: blue;">
+															Descargar Excel
 														</a>
 													</td>
 												<?php }else{ ?>
