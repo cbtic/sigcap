@@ -3174,9 +3174,9 @@ class ComprobanteController extends Controller
                 );
 
                 if ($row->afect_igv=='10'){
-                    $totalOPGravadas = $totalOPGravadas + str_replace(",","",$row->valor_venta);
+                    $totalOPGravadas = $totalOPGravadas + str_replace(",","",$row->importe);
                 }else{
-                    $totalOPNoGravadas = $totalOPNoGravadas + str_replace(",","",$row->valor_venta);
+                    $totalOPNoGravadas = $totalOPNoGravadas + str_replace(",","",$row->importe);
                 }
 
             $items[$index] = $items1;
