@@ -3148,6 +3148,10 @@ class ComprobanteController extends Controller
         //print_r($factura_detalles); exit();		
 		$cabecera = array("valor1","valor2");
 		$detalle = array("valor1","valor2");
+
+        $totalOPGravadas = 0;
+        $totalOPNoGravadas = 0;
+
         foreach ($factura_detalles as $index => $row) {
             $items1 = array(
                     "ordenItem" => $row->item, //"2",
@@ -3168,6 +3172,13 @@ class ComprobanteController extends Controller
                     //"porcentajeDescuentoItem"=> "0.00",
                     "codTipoPrecioVtaUnitarioItem" => "01"
                 );
+
+                if ($row->afect_igv=='10'){
+                    $totalOPGravadas = $totalOPGravadas + str_replace(",","",$row->valor_venta);
+                }else{
+                    $totalOPNoGravadas = $totalOPNoGravadas + str_replace(",","",$row->valor_venta);
+                }
+
             $items[$index] = $items1;
         }
 /*
@@ -3221,7 +3232,8 @@ class ComprobanteController extends Controller
 		$data["provinciaEmisor"] = "LIMA";
         $data["tipoNotaCredito"] = "04";
 		$data["totalDescuentos"] = "0.00";
-		$data["totalOPGravadas"] = str_replace(",","",number_format($factura->subtotal,2)); //"127.12";
+		$data["totalOPGravadas"] = $totalOPGravadas; //"127.12";
+
 		$data["codigoPaisEmisor"] = "PE";
 		$data["totalOPGratuitas"] = "0.00";
         $data["direccionReceptor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
@@ -3231,7 +3243,7 @@ class ComprobanteController extends Controller
 		//$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
 		$data["razonSocialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
 		$data["totalOPExoneradas"] = "0.00";
-		$data["totalOPNoGravadas"] = "0.00";
+		$data["totalOPNoGravadas"] = $totalOPNoGravadas;
 		$data["codigoPaisReceptor"] = "PE";
 		$data["departamentoEmisor"] = "JESUS MARIA";
 		//$data["descuentosGlobales"] = "0.00";
@@ -3244,7 +3256,7 @@ class ComprobanteController extends Controller
 
 		//$data["nombreComercialEmisor"] = "CAP";		       
         $data["nombreComercialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
-        $data["tipoDocumentoModifica"] = "01";
+        $data["tipoDocumentoModifica"] = $this->getTipoDocumento($factura_nc->tipo);  //"01"; 
         $data["fechaDocumentoAfectado"] = date("Y-m-d",strtotime($factura->fecha));
         $data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
