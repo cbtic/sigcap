@@ -288,10 +288,9 @@ function fn_save(){
 				$('#divNumeroF').show();
 
 				enviar_comprobante(result.id_factura);
-
 				location.href=urlApp+"/comprobante/"+id_factura;
-				//enviar_comprobante(result.id_factura);
-
+				
+				
             }
     });
 }

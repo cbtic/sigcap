@@ -853,7 +853,12 @@ class ComprobanteController extends Controller
 				
                 //print_r($serieF); exit();
 
-                if($ubicacion_id=="")$ubicacion_id=$id_persona;
+                if($ubicacion_id==""){
+                    $ubicacion_id=$id_persona;
+                    $ubicacion_id=$id_persona_act;
+                }
+                
+                
 
                 $descuento =  $request->totalDescuento; 
                 if ($request->totalDescuento=='') $descuento = 0;
@@ -902,11 +907,10 @@ class ComprobanteController extends Controller
                 echo("id_persona2:".$id_persona2);
                 
                 exit();
-*/
+                */
+
                 if($ubicacion_id=='0')$ubicacion_id=$ubicacion_id2;
 
-                
-                
                 
 				$id_factura = $facturas_model->registrar_factura_moneda($serieF,     $id_tipo_afectacion_pp, $tipoF, $ubicacion_id, $id_persona_act, round($total,2),   $ubicacion_id2,      $id_persona2,    0, $id_caja,          $descuento,    'f',     $id_user,  $id_moneda, $id_nc);
 																	 //(serie,  numero,   tipo,     ubicacion,     persona,  total, descripcion, cod_contable, id_v,   id_caja, descuento, accion, p_id_usuario, p_id_moneda)
