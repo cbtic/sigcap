@@ -687,6 +687,7 @@ class CajaIngreso extends Model
         where 1=1
         and v.id_modulo in ('2','6')
         and v.id_persona = '".$id."'
+        and v.estado <> '1'
         and v.codigo_fraccionamiento is not null
         order by c.codigo, v.fecha";
 
