@@ -681,14 +681,14 @@ class CajaIngreso extends Model
     function getDeudaCuotaFraccionamiento($id){
 
         $cad = "select c.codigo, c.denominacion, v.descripcion, v.monto, v.fecha, v.codigo_fraccionamiento 
-                from valorizaciones v 
-                inner join fraccionamientos f on f.id= v.codigo_fraccionamiento 
-                inner join conceptos c on c.id = v.id_concepto
-                where 1=1
-                and v.id_modulo = 2
-                and v.id_persona = ".$id." 
-                and v.codigo_fraccionamiento is not null
-                order by c.codigo, v.fecha ";
+        from valorizaciones v 
+        inner join fraccionamientos f on f.id= v.codigo_fraccionamiento 
+        inner join conceptos c on c.id = v.id_concepto
+        where 1=1
+        and v.id_modulo in ('2','6')
+        and v.id_persona = '".$id."'
+        and v.codigo_fraccionamiento is not null
+        order by c.codigo, v.fecha";
 
 		//echo $cad; exit();
 		$data = DB::select($cad);
@@ -705,6 +705,7 @@ class CajaIngreso extends Model
                 and v.id_modulo = 6
                 and v.id_persona = ".$id." 
                 and v.codigo_fraccionamiento is not null
+                and v.estado ='1'
                 order by c.codigo, v.fecha ";
 
 		//echo $cad;
