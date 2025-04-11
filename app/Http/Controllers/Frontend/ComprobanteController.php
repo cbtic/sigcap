@@ -3167,7 +3167,7 @@ class ComprobanteController extends Controller
                     "valorVentaItem" => str_replace(",", "", number_format($row->pu, 2)), //"42.37",
                     "descripcionItem" => $row->descripcion, //"TRANSBORDO",
                     "unidadMedidaItem" => $row->unidad,
-                    //"codigoProductoItem"=> ($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
+                    "codigoProductoItem"=> "0000000",  //($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
                     "valorUnitarioSinIgv" => str_replace(",", "", number_format($row->pu_con_igv, 2)), //"42.3728813559",
                     "precioUnitarioConIgv" => str_replace(",", "", number_format($row->importe, 2)), //"50.0000000000",
                     "unidadMedidaComercial" => "SERV",
@@ -3206,11 +3206,9 @@ class ComprobanteController extends Controller
 		$data["declare"] = "0"; // 0->dechlare 1>declare instante
 		$data["version"] = "2.1";
 		$data["adjuntos"] = [];
-		//$data["anticipos"] = [];
 		$data["esFicticio"] = false;
-		$data["keepNumber"] = "true";
+		$data["keepNumber"] = "false";
 		$data["tipoCorreo"] = "1";
-       // $data["formaPago"] = "CONTADO";
 		$data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";        
 		$data["adicionales"] = [];
 		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
