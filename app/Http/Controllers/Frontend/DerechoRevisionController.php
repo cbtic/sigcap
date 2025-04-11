@@ -2638,6 +2638,12 @@ class DerechoRevisionController extends Controller
 		$area_techada_presupuesto = $request->area_techada_presupuesto;
 		$valor_unitario = $request->valor_unitario;
 		$presupuesto_ = $request->presupuesto;
+		$tipo_proyectista_row = $request->tipo_proyectista_row;
+		$agremiado_row = $request->agremiado_row;
+		$numero_cap_row = $request->numero_cap_row;
+		$situacion_row = $request->situacion_row;
+		$telefono_row = $request->telefono_row;
+		$email_row = $request->email_row;
 		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		
 		if($request->id == 0){
@@ -2805,6 +2811,55 @@ class DerechoRevisionController extends Controller
 				
 			}
 		}
+
+		if(isset($tipo_proyectista_row)){
+		
+			foreach($tipo_proyectista_row as $key=>$row){
+				
+				$agremiado_secundario = Agremiado::where("numero_cap",$numero_cap_row[$key])->where("estado","1")->first();
+				
+				$proyectista_secundario = New Proyectista;
+				$proyectista_secundario->id_agremiado = $agremiado_secundario->id;
+				$proyectista_secundario->celular = $telefono_row[$key];
+				$proyectista_secundario->email = $email_row[$key];
+				$proyectista_secundario->id_tipo_profesional = 212;
+				$proyectista_secundario->id_tipo_proyectista = 2;
+				$proyectista_secundario->id_usuario_inserta = $id_user;
+				$proyectista_secundario->save();
+
+			}
+
+			$proyectista_principal_ = Proyectista::find($id_proyectista_principal);
+			$proyectista_principal_->id_tipo_proyectista = 2;
+			$proyectista_principal_->id_usuario_inserta = $id_user;
+			$proyectista_principal_->save();
+		}
+
+		$solicitud_imagen = Derecho_revision::find($id_derecho_revision);
+
+		$path = "img/solicitud_derecho_revision_edificaciones";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+        if (isset($_FILES["btnPlanoUbicacion"]) && $_FILES["btnPlanoUbicacion"]["error"] == UPLOAD_ERR_OK) {
+
+            $path = "img/solicitud_derecho_revision_edificaciones/".$id_derecho_revision;
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+
+            $filepath = public_path($path.'/');
+
+            $filename = "plano_ubicacion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+            $type=$this->extension($_FILES["btnPlanoUbicacion"]["name"]);
+            $filenamefirma=$filename.".".$type;
+
+            move_uploaded_file($_FILES["btnPlanoUbicacion"]["tmp_name"], $filepath.$filenamefirma);
+
+            $solicitud_imagen->plano_ubicacion = $path."/".$filenamefirma;
+        	$solicitud_imagen->save();
+        }
 
 		return $derecho_revision->id;
     }
