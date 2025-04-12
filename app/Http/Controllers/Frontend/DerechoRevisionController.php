@@ -2625,7 +2625,7 @@ class DerechoRevisionController extends Controller
 
 	public function send_nuevo_registro_solicitud_edificacion(Request $request){
 
-		//var_dump($request->id_solicitud);exit();
+
 		$id_user = Auth::user()->id;
 		$id = $request->id;
 		$agremiado_principal = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
@@ -2825,6 +2825,7 @@ class DerechoRevisionController extends Controller
 				$proyectista_secundario->id_tipo_profesional = 212;
 				$proyectista_secundario->id_tipo_proyectista = 2;
 				$proyectista_secundario->id_usuario_inserta = $id_user;
+				$proyectista_secundario->id_solicitud = $id_derecho_revision;
 				$proyectista_secundario->save();
 
 			}
@@ -2835,16 +2836,16 @@ class DerechoRevisionController extends Controller
 			$proyectista_principal_->save();
 		}
 
-		$solicitud_imagen = Derecho_revision::find($id_derecho_revision);
+		$solicitud_documento_plano = new SolicitudDocumento;
 
-		$path = "img/solicitud_derecho_revision_edificaciones";
+		$path = "img/solicitud_derecho_revision_edificaciones/plano_ubicacion";
         if (!is_dir($path)) {
             mkdir($path);
         }
 
         if (isset($_FILES["btnPlanoUbicacion"]) && $_FILES["btnPlanoUbicacion"]["error"] == UPLOAD_ERR_OK) {
 
-            $path = "img/solicitud_derecho_revision_edificaciones/".$id_derecho_revision;
+            $path = "img/solicitud_derecho_revision_edificaciones/plano_ubicacion/".$id_derecho_revision;
             if (!is_dir($path)) {
                 mkdir($path);
             }
@@ -2857,8 +2858,75 @@ class DerechoRevisionController extends Controller
 
             move_uploaded_file($_FILES["btnPlanoUbicacion"]["tmp_name"], $filepath.$filenamefirma);
 
-            $solicitud_imagen->plano_ubicacion = $path."/".$filenamefirma;
-        	$solicitud_imagen->save();
+            $solicitud_documento_plano->id_tipo_documento = 4;
+            $solicitud_documento_plano->descripcion = "Plano Ubicacion";
+            $solicitud_documento_plano->ruta_archivo = $path."/".$filenamefirma;
+            $solicitud_documento_plano->estado = 1;
+            $solicitud_documento_plano->id_usuario_inserta = $id_user;
+            $solicitud_documento_plano->id_solicitud = $id_derecho_revision;
+        	$solicitud_documento_plano->save();
+        }
+
+		$solicitud_documento_fue = new SolicitudDocumento;
+
+		$path = "img/solicitud_derecho_revision_edificaciones/fue";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+        if (isset($_FILES["btnFue"]) && $_FILES["btnFue"]["error"] == UPLOAD_ERR_OK) {
+
+            $path = "img/solicitud_derecho_revision_edificaciones/fue/".$id_derecho_revision;
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+
+            $filepath = public_path($path.'/');
+
+            $filename = "fue_".date("YmdHis") . substr((string)microtime(), 1, 6);
+            $type=$this->extension($_FILES["btnFue"]["name"]);
+            $filenamefirma=$filename.".".$type;
+
+            move_uploaded_file($_FILES["btnFue"]["tmp_name"], $filepath.$filenamefirma);
+
+            $solicitud_documento_fue->id_tipo_documento = 5;
+            $solicitud_documento_fue->descripcion = "FUE";
+            $solicitud_documento_fue->ruta_archivo = $path."/".$filenamefirma;
+            $solicitud_documento_fue->estado = 1;
+            $solicitud_documento_fue->id_usuario_inserta = $id_user;
+            $solicitud_documento_fue->id_solicitud = $id_derecho_revision;
+        	$solicitud_documento_fue->save();
+        }
+
+		$solicitud_documento_presupuesto = new SolicitudDocumento;
+
+		$path = "img/solicitud_derecho_revision_edificaciones/presupuesto";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+        if (isset($_FILES["btnPresupuesto"]) && $_FILES["btnPresupuesto"]["error"] == UPLOAD_ERR_OK) {
+
+            $path = "img/solicitud_derecho_revision_edificaciones/presupuesto/".$id_derecho_revision;
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+
+            $filepath = public_path($path.'/');
+
+            $filename = "presupuesto_".date("YmdHis") . substr((string)microtime(), 1, 6);
+            $type=$this->extension($_FILES["btnPresupuesto"]["name"]);
+            $filenamefirma=$filename.".".$type;
+
+            move_uploaded_file($_FILES["btnPresupuesto"]["tmp_name"], $filepath.$filenamefirma);
+
+            $solicitud_documento_presupuesto->id_tipo_documento = 6;
+            $solicitud_documento_presupuesto->descripcion = "Presupuesto";
+            $solicitud_documento_presupuesto->ruta_archivo = $path."/".$filenamefirma;
+            $solicitud_documento_presupuesto->estado = 1;
+            $solicitud_documento_presupuesto->id_usuario_inserta = $id_user;
+            $solicitud_documento_presupuesto->id_solicitud = $id_derecho_revision;
+        	$solicitud_documento_presupuesto->save();
         }
 
 		return $derecho_revision->id;

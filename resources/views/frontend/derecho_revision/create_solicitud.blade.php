@@ -275,7 +275,7 @@ $(document).ready(function () {
 					</div>
 					
 					<div class="card-body">
-					<form method="post" action="#" id="frmRegistroSolicitudDerechoRevision" name="frmRegistroSolicitudDerechoRevision">
+					<form method="post" action="#" enctype="multipart/form-data" id="frmRegistroSolicitudDerechoRevision" name="frmRegistroSolicitudDerechoRevision">
 					<div class="row">
 
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:5px;padding-bottom:20px">
@@ -1009,17 +1009,17 @@ $(document).ready(function () {
 						<div class="row" style="padding-left:10px">
 							<div class="col-sm-4">
 								<label class="control-label form-control-sm color-letra">Plano de Ubicaci&oacute;n</label>
-								<input type="file" class="form-control-file btn btn-sm btn-success" style="background-color: #FFFFFF !important; border: none !important; padding: 0 !important; box-shadow: none !important; color:black" id="btnPlanoUbicacion" name="archivo">
+								<input type="file" class="form-control-file btn btn-sm btn-success" style="background-color: #FFFFFF !important; border: none !important; padding: 0 !important; box-shadow: none !important; color:black" id="btnPlanoUbicacion" name="btnPlanoUbicacion">
 								<label class="control-label form-control-sm" style="font-size:10px">*Archivo Obligatorio de Plano de Ubicaci&oacute;n</label>
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label form-control-sm color-letra">FUE</label>
-								<input type="file" class="form-control-file btn btn-sm btn-success" style="background-color: #FFFFFF !important; border: none !important; padding: 0 !important; box-shadow: none !important; color:black" id="btnFue" name="archivo">
+								<input type="file" class="form-control-file btn btn-sm btn-success" style="background-color: #FFFFFF !important; border: none !important; padding: 0 !important; box-shadow: none !important; color:black" id="btnFue" name="btnFue">
 								<label class="control-label form-control-sm" style="font-size:10px">*Archivo Obligatorio del Formulario &Uacute;nico de Edificaciones</label>
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label form-control-sm color-letra">Presupuesto</label>
-								<input type="file" class="form-control-file btn btn-sm btn-success" style="background-color: #FFFFFF !important; border: none !important; padding: 0 !important; box-shadow: none !important; color:black" id="btnPresupuesto" name="archivo">
+								<input type="file" class="form-control-file btn btn-sm btn-success" style="background-color: #FFFFFF !important; border: none !important; padding: 0 !important; box-shadow: none !important; color:black" id="btnPresupuesto" name="btnPresupuesto">
 								<label class="control-label form-control-sm" style="font-size:10px">*Archivo Obligatorio del Presupuesto</label>
 								<label class="control-label form-control-sm" style="font-size:12px; color:red">La validaci&oacute;n del presupuesto va a ser nuevamente revisado y confirmado con los planos completos ingresados a la municipalidad por la Comisi&oacute;n.</label>
 							</div>
@@ -1032,12 +1032,12 @@ $(document).ready(function () {
 							<div class="row" style="padding-left:10px">
 								<div class="col-lg-5">
 									<label class="control-label form-control-sm color-letra">Descripci&oacute;n del Archivo</label>
-									<input id="descripcion_archivo" name="descripcion_archivo" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text">
+									<input id="descripcion_archivo" name="descripcion_archivo[]" on class="form-control form-control-sm"  value="<?php //echo $liquidacion[0]->situacion?>" type="text">
 								</div>
 								<div class="col-lg-3" style="background-color: #F6F6F6 !important;">
 									<div class="form-group">
 										<label class="control-label form-control-sm color-letra">Archivo</label>
-										<input type="file" class="form-control-file btn btn-sm btn-success" style="background-color: #F6F6F6 !important; border: none !important; padding: 0 !important; box-shadow: none !important; color:black" id="btnArchivoAdicional" name="archivo">
+										<input type="file" class="form-control-file btn btn-sm btn-success" style="background-color: #F6F6F6 !important; border: none !important; padding: 0 !important; box-shadow: none !important; color:black" id="btnArchivoAdicional" name="btnArchivoAdicional[]">
 									</div>
 								</div>
 
