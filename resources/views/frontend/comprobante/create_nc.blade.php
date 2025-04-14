@@ -349,7 +349,10 @@
                                                     <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="form-group">
                                                             <label class="form-group">Tipo de Nota</label>                               
-                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" onChange="actualizaimportes(<?php echo $afectacion?>)" >
+<!--
+                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" onChange="actualizaimportes(<//?php echo $afectacion?>)" >
+                                                            -->
+                                                            <select name="tiponota_" id="tiponota_" class="form-control form-control-sm" onChange="" >
                                                                 <option value="">--Selecionar--</option>
                                                                 <?php
                                                                 foreach ($tipooperacion as $row) { ?>
@@ -513,20 +516,29 @@
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][fecha]" value="<?php echo $fac['fecha'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][denominacion]" value="<?php echo $fac['denominacion'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][descripcion]" value="<?php echo $fac['descripcion'] ?>" />
-                                                                <input type="hidden" name="facturad[<?php echo $key ?>][tipoF]" value="ND" />
-                                                                
-                                                                <input type="hidden" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
+                                                                <input type="hidden" name="facturad[<?php echo $key ?>][tipoF]" value="NC" />                                                                
+                                                                <input type="hidden"  id="monto<?php echo $key?>" name="facturad[<?php echo $key ?>][monto]" value="<?php echo $fac['monto'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][moneda]" value="<?php echo $fac['moneda'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][id_moneda]" value="<?php echo $fac['id_moneda'] ?>" />
-                                                                <input type="hidden" name="facturad[<?php echo $key ?>][descuento]" value="<?php echo $fac['descuento'] ?>" />
+                                                                <input type="hidden" id="descuento<?php echo $key?>" name="facturad[<?php echo $key ?>][descuento]" value="<?php echo $fac['descuento'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][cod_contable]" value="<?php echo $fac['cod_contable'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][id_concepto]" value="<?php echo $fac['id_concepto'] ?>" />
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][cantidad]" value="<?php echo $fac['cantidad'] ?>" />
-
-                                                                <input type="hidden" id="facturad_pu" name="facturad[<?php echo $key ?>][importe]" value="<?php echo $fac['pu'] ?>" />
-                                                                <input type="hidden" id="facturad_igv" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac['igv_total'] ?>" />
-                                                                <input type="hidden" id="facturad_total" name="facturad[<?php echo $key ?>][total]" value="<?php echo $fac['importe'] ?>" />
                                                                 
+                                                                <!--
+                                                                <input type="hidden" id="facturad_pu" name="facturad[<//?php echo $key ?>][importe]" value="<//?php echo $fac['pu'] ?>" />
+                                                                <input type="hidden" id="facturad_igv" name="facturad[<//?php echo $key ?>][igv]" value="<//?php echo $fac['igv_total'] ?>" />
+                                                                <input type="hidden" id="facturad_total" name="facturad[<//?php echo $key ?>][total]" value="<//?php echo $fac['importe'] ?>" />
+                                                                -->
+
+                                                                <input type="hidden" id="afect_igv<?php echo $key?>" name="facturad[<?php echo $key ?>][afect_igv]" value="<?php echo $fac['afect_igv'] ?>" />                                            
+                                                                <input type="hidden" id="igv<?php echo $key?>" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac['igv_total'] ?>" />                                                            
+                                                                <input type="hidden" id="total<?php echo $key?>" name="facturad[<?php echo $key ?>][total]" value="<?php echo $fac['importe'] ?>" />
+                                                                <input type="hidden" id="pu<?php echo $key?>" name="facturad[<?php echo $key ?>][pu]" value="<?php echo $fac['pu'] ?>" />
+                                                                <input type="hidden" id="pv<?php echo $key?>" name="facturad[<?php echo $key ?>][pv]" value="<?php echo $fac['precio_venta'] ?>" />
+                                                                <input type="hidden" id="valor_venta_bruto<?php echo $key?>" name="facturad[<?php echo $key ?>][valor_venta_bruto]" value="<?php echo $fac['valor_venta_bruto'] ?>" />
+                                                                <input type="hidden" id="valor_venta<?php echo $key?>" name="facturad[<?php echo $key ?>][valor_venta]" value="<?php echo $fac['valor_venta'] ?>" />                                                                                                                          
+                                                                <input type="hidden" id="unidad_medida" name="facturad[<?php echo $key ?>][unidad_medida]" value="<?php echo $fac['unidad'] ?>" />
 
 
                                                                 <tr>
@@ -567,7 +579,7 @@
                                                                                                                                 echo number_format($fac['pu'], 2);
                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm text-center"  >
                                                                                         
-                                                                                        </td>
+                                                                    </td>
 
                                                                     <td class="text-right">                                                                        
                                                                         <input type="text" readonly name="igvd[]"  id="igvd<?php echo $key?>" value="<?php echo number_format(0,2)?>" placeholder="" class="form-control form-control-sm text-center"  >
@@ -583,7 +595,7 @@
                                                                                                                                 echo number_format($fac['importe'], 2);
                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm text-center"  >
                                                                                         
-                                                                                        </td>
+                                                                    </td>
                                                                     
                                                                 </tr>
                                                                 <input type="hidden" name="facturad[<?php echo $key ?>][item]" value="<?php echo $n ?>" />
