@@ -2852,14 +2852,14 @@ class ComprobanteController extends Controller
 		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["provinciaEmisor"] = "LIMA";
 		$data["totalDescuentos"] = str_replace(",","",number_format($factura->total_descuentos,2));
-		$data["totalOPGravadas"] =  $totalOPGravadas;  //str_replace(",","",$factura->subtotal); //"127.12";
+		$data["totalOPGravadas"] =  str_replace(",","",number_format($totalOPGravadas,2)); //"127.12";
 		$data["codigoPaisEmisor"] = "PE";
 		$data["totalOPGratuitas"] = "0.00";        
 		$data["docAfectadoFisico"] = false;
 		$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
 		$data["razonSocialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
 		$data["totalOPExoneradas"] = "0.00";
-		$data["totalOPNoGravadas"] =  $totalOPNoGravadas; //"0.00"; //str_replace(",","",number_format($factura->subtotal,2));
+		$data["totalOPNoGravadas"] =  str_replace(",","",number_format($totalOPNoGravadas,2)); //"0.00"; 
 		$data["codigoPaisReceptor"] = "PE";
 		$data["departamentoEmisor"] = "JESUS MARIA";
 		$data["descuentosGlobales"] = "0.00";
@@ -3164,12 +3164,13 @@ class ComprobanteController extends Controller
                     //"descuentoItem"=> $row->descuento,
                     "importeIGVItem" => str_replace(",", "", number_format($row->igv_total, 2)), //"7.63",
                     "montoTotalItem" => str_replace(",", "", number_format($row->importe, 2)), //"50.00",
-                    "valorVentaItem" => str_replace(",", "", number_format($row->pu, 2)), //"42.37",
+                    "valorVentaItem" => str_replace(",", "", number_format($row->valor_venta, 2)), //"42.37",
                     "descripcionItem" => $row->descripcion, //"TRANSBORDO",
                     "unidadMedidaItem" => $row->unidad,
-                    "codigoProductoItem"=> "0000000",  //($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
-                    "valorUnitarioSinIgv" => str_replace(",", "", number_format($row->pu_con_igv, 2)), //"42.3728813559",
-                    "precioUnitarioConIgv" => str_replace(",", "", number_format($row->importe, 2)), //"50.0000000000",
+                    //" "codigoProductoItem": "0000000",($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
+                    "codigoProductoItem" => "0000000",
+                    "valorUnitarioSinIgv" => str_replace(",", "", number_format($row->pu, 2)), //"42.3728813559",
+                    "precioUnitarioConIgv" => str_replace(",", "", number_format($row->precio_venta, 2)), //"50.0000000000",
                     "unidadMedidaComercial" => "SERV",
                     //"codigoAfectacionIGVItem" => "10",
                     "codigoAfectacionIGVItem"=> $row->afect_igv,
@@ -3178,9 +3179,9 @@ class ComprobanteController extends Controller
                 );
 
                 if ($row->afect_igv=='10'){
-                    $totalOPGravadas = $totalOPGravadas + str_replace(",","",$row->importe);
+                    $totalOPGravadas = $totalOPGravadas + str_replace(",","",$row->valor_venta);
                 }else{
-                    $totalOPNoGravadas = $totalOPNoGravadas + str_replace(",","",$row->importe);
+                    $totalOPNoGravadas = $totalOPNoGravadas + str_replace(",","",$row->valor_venta);
                 }
 
             $items[$index] = $items1;
@@ -3229,12 +3230,12 @@ class ComprobanteController extends Controller
 		$data["esContingencia"] = false;
         $data["motivoSustento"] = $factura->motivo_ncnd;
 		//$data["telefonoEmisor"] = "(01) 6271200";
-		$data["totalAnticipos"] = "0.00";
+		//$data["totalAnticipos"] = "0.00";
 		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
 		$data["provinciaEmisor"] = "LIMA";
         $data["tipoNotaCredito"] = $factura->codtipo_ncnd;
 		$data["totalDescuentos"] = "0.00";
-		$data["totalOPGravadas"] = $totalOPGravadas; //"127.12";
+		$data["totalOPGravadas"] = str_replace(",","",number_format($totalOPGravadas,2)); //$totalOPGravadas; //"127.12";
 
 		$data["codigoPaisEmisor"] = "PE";
 		$data["totalOPGratuitas"] = "0.00";
@@ -3245,7 +3246,7 @@ class ComprobanteController extends Controller
 		//$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
 		$data["razonSocialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
 		$data["totalOPExoneradas"] = "0.00";
-		$data["totalOPNoGravadas"] = $totalOPNoGravadas;
+		$data["totalOPNoGravadas"] = str_replace(",","",number_format($totalOPNoGravadas,2));
 		$data["codigoPaisReceptor"] = "PE";
 		$data["departamentoEmisor"] = "JESUS MARIA";
 		//$data["descuentosGlobales"] = "0.00";
@@ -3385,12 +3386,10 @@ class ComprobanteController extends Controller
         $facturas_model = new Comprobante;
         $guia_model = new Guia;
  
-            /**********RUC***********/
-            
-
+            /**********RUC***********/            
             $tarifa = $request->facturad;
+            //print_r($tarifa); exit();
  
-            
             $total = $request->totalP;
             $serieF = $request->serieF;
             $tipoF = $request->tipoF;
@@ -3406,7 +3405,6 @@ class ComprobanteController extends Controller
         	$motivo=$request->motivo_;
             $afecta_ingreso=$request->afecta_ingreso;
             $devolucion_nc=$request->devolucion_nc;
- 
             $id_comprobante_ncdc = $request->id_comprobante_ncdc;
             $id_comprobante = $request->id_comprobante;
 
@@ -3414,8 +3412,7 @@ class ComprobanteController extends Controller
 
             //echo("id_comprobante_origen: ".$id_comprobante_origen);
             
-            
-
+        
             $trans = $request->trans;
             
             //1	DOLARES
@@ -3433,10 +3430,8 @@ class ComprobanteController extends Controller
                     $id_val = $value['id'];
  
                 }
-               
                 
                 $id_moneda=1;
- 
                 $descuento = $value['descuento'];
                 
                $id_factura = $facturas_model->registrar_comprobante_ncnd($serieF,     0, $tipoF,  $cod_tributario, $total,          '',           '',    $id_comprobante, $id_caja,          0,    'f',      $id_user,  1,$razon_social,$direccion,$id_comprobante_ncdc,$correo,$afecta,$tiponota,   $motivo,$afecta_ingreso,$devolucion_nc,0,0,0);
@@ -3463,7 +3458,7 @@ class ComprobanteController extends Controller
                     }
                     else{
                         //$total   = $value['importe'];
-                        $total   =$value['importe'];
+                        $total   =$value['total'];
                     }
                     $descuento = $value['descuento'];
                     if ($value['descuento']=='') $descuento = 0;
@@ -3471,6 +3466,18 @@ class ComprobanteController extends Controller
                     $id_factura_detalle = $facturas_model->registrar_comprobante_ncnd($serieF, $fac_numero, $tipoF, $value['item'], $total, $value['descripcion'], "", $value['id'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda,$razon_social,$direccion,$id_comprobante_ncdc,$correo,$afecta,$tiponota,   $motivo,$afecta_ingreso,$devolucion_nc,$value['id_concepto'],$value['item'],$value['cantidad']);
                                                                                  //(  serie,      numero,   tipo,      ubicacion, persona,  total,            descripcion,           cod_contable,         id_v,     id_caja,  descuento, accion, p_id_usuario, p_id_moneda)
                     
+
+                    $facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
+
+                    $facturaDet_upd->pu=$value['pu'];
+                    $facturaDet_upd->importe=$value['total'];                
+                    $facturaDet_upd->igv_total=$value['igv'];
+                    $facturaDet_upd->precio_venta=$value['pv'];
+                    $facturaDet_upd->valor_venta_bruto=$value['valor_venta_bruto'];
+                    $facturaDet_upd->valor_venta=$value['valor_venta'];
+                    $facturaDet_upd->unidad=$value['unidad_medida'];
+                   
+                    $facturaDet_upd->save();                                                                                  
                 
                 }
  
