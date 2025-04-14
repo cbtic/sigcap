@@ -2625,7 +2625,6 @@ class DerechoRevisionController extends Controller
 
 	public function send_nuevo_registro_solicitud_edificacion(Request $request){
 
-
 		$id_user = Auth::user()->id;
 		$id = $request->id;
 		$agremiado_principal = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
@@ -2928,6 +2927,44 @@ class DerechoRevisionController extends Controller
             $solicitud_documento_presupuesto->id_solicitud = $id_derecho_revision;
         	$solicitud_documento_presupuesto->save();
         }
+
+		if(isset($descripcion_archivo)){
+		
+			foreach($descripcion_archivo as $key=>$row){
+				
+				$solicitud_documento_plano = new SolicitudDocumento;
+
+				$path = "img/solicitud_derecho_revision_edificaciones/archivos_adicionales";
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				if (isset($_FILES["btnPlanoUbicacion"]) && $_FILES["btnPlanoUbicacion"]["error"] == UPLOAD_ERR_OK) {
+
+					$path = "img/solicitud_derecho_revision_edificaciones/archivos_adicionales/".$id_derecho_revision;
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
+
+					$filepath = public_path($path.'/');
+
+					$filename = "plano_ubicacion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnPlanoUbicacion"]["name"]);
+					$filenamefirma=$filename.".".$type;
+
+					move_uploaded_file($_FILES["btnPlanoUbicacion"]["tmp_name"], $filepath.$filenamefirma);
+
+					$solicitud_documento_plano->id_tipo_documento = 4;
+					$solicitud_documento_plano->descripcion = "Plano Ubicacion";
+					$solicitud_documento_plano->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_plano->estado = 1;
+					$solicitud_documento_plano->id_usuario_inserta = $id_user;
+					$solicitud_documento_plano->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_plano->save();
+				}
+
+			}
+		}
 
 		return $derecho_revision->id;
     }

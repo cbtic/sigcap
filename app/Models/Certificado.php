@@ -185,7 +185,12 @@ class Certificado extends Model
 
     function getRecordProyecto($numero_cap){
 
-        $cad = "select s.id, s.fecha_registro fecha, l.credipago, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres propietario, pr.nombre nombreProyecto, 
+        $cad = "select s.id, s.fecha_registro fecha, l.credipago, 
+        --pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres propietario, 
+        CASE 
+        WHEN p.id_tipo_propietario = '78' THEN (select p2.apellido_paterno||' '||p2.apellido_materno||' '||p2.nombres agremiado from personas p2 where p2.id = p.id_persona)
+        WHEN p.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = p.id_empresa) end as propietario,
+        pr.nombre nombreProyecto, 
         m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, 
         (select sum(pre.area_techada) area_techada from presupuestos pre 
         where id_solicitud = s.id) total_area_techada_m2,
@@ -198,14 +203,14 @@ class Certificado extends Model
         from solicitudes s --where id_proyectista ='6725'
         left join liquidaciones l on l.id_solicitud = s.id 
         left join propietarios p on p.id_solicitud = s.id 
-        left join personas pe on p.id_persona = pe.id
+        --left join personas pe on p.id_persona = pe.id
         left join proyectos pr on s.id_proyecto = pr.id 
         left join municipalidades m on s.id_municipalidad = m.id 
         left join proyectistas pro on pro.id_solicitud = s.id
         left join agremiados a on pro.id_agremiado = a.id
         left join personas p2 on a.id_persona = p2.id
         left join tabla_maestras tm on pro.id_tipo_profesional = tm.codigo::int And tm.tipo ='41'
-        where a.numero_cap ='".$numero_cap."'
+        where a.numero_cap ='".$numero_cap."' and a.fecha > '10-03-2025'
         union all
         select s.id, s.fecha_registro fecha, l.credipago, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres propietario, pr.nombre nombreProyecto, 
         m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, s.total_area_techada_m2::float, s.area_total, tm.denominacion tipo_profesional, 'Certificado' tipo, 
@@ -226,7 +231,8 @@ class Certificado extends Model
         left join tabla_maestras tm on pro.id_tipo_profesional = tm.codigo::int And tm.tipo ='41'
         where a.numero_cap ='".$numero_cap."'
         union all
-        select ch.id, ch.fecha, ch.numero_certificado credipago, ch.propietario, ch.nombre_proyecto, ch.distrito, ch.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.id_sexo, a.fecha_colegiado, ch.area_construida, ch.area_lote, ch.tip_proyectista, ch.tipo, ch.area_remodelada from certificado_historicos ch 
+        select ch.id, ch.fecha, ch.numero_certificado credipago, ch.propietario, ch.nombre_proyecto, ch.distrito, ch.numero_cap, p.apellido_paterno ||' '|| p.apellido_materno ||' '|| p.nombres agremiado, p.id_sexo, a.fecha_colegiado, ch.area_construida, ch.area_lote, ch.tip_proyectista, ch.tipo, ch.area_remodelada 
+        from certificado_historicos ch 
         inner join agremiados a on ch.numero_cap = a.numero_cap 
         inner join personas p on a.id_persona = p.id 
         where a.numero_cap ='".$numero_cap."'

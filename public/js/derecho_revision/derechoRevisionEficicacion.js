@@ -2201,52 +2201,6 @@ function guardar_editar_solicitud_reintegro(){
 	});
 }
 
-function cargarPeriodo(){
-
-	$.ajax({
-		url: "/derecho_revision/listar_solicitud_periodo",
-		type: "POST",
-		data : $("#frmExpediente").serialize(),
-		success: function(result){
-			var option = "<option value='' selected='selected'>--Año--</option>";
-			var currentYear = new Date().getFullYear();
-			$('#anio_bus').html("");
-			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
-			});
-			$('#anio_bus').html(option);
-			$('#anio_bus').val(currentYear);
-			//$('#anio_bus').select2();
-			
-			//$('.loader').hide();			
-		}
-		
-	});
-}
-
-function cargarPeriodoHu(){
-
-	$.ajax({
-		url: "/derecho_revision/listar_solicitud_periodo_hu",
-		type: "POST",
-		data : $("#frmAfiliacion").serialize(),
-		success: function(result){
-			var option = "<option value='' selected='selected'>--Año--</option>";
-			var currentYear = new Date().getFullYear();
-			$('#anio_hu_bus').html("");
-			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
-			});
-			$('#anio_hu_bus').html(option);
-			$('#anio_hu_bus').val(currentYear);
-			//$('#anio_bus').select2();
-			
-			//$('.loader').hide();			
-		}
-		
-	});
-}
-
 function importarDatalicencia(){
 
 	$.ajax({
