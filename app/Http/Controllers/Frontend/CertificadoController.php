@@ -422,8 +422,9 @@ class CertificadoController extends Controller
 			$valorizacion->save();
 
 		}else if($request->tipo==6){
-			$concepto = Concepto::find(26506);
-			$monto_certificado=50;
+			$concepto = Concepto::find(26667);
+			$monto_certificado=$concepto->importe;
+			//dd($monto_certificado);exit();
 			$agremiado = Agremiado::where("id",$request->idagremiado)->where("estado","1")->first();
 
 			$valorizacion = new Valorizacione;

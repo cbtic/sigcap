@@ -1312,6 +1312,83 @@ function descargarExcel(id, por_usuario, tipo){
 	
 }
 
+function descargarReporte(id, por_usuario, tipo){
+	
+	var fechaIni = document.getElementById('fecha_ini').value;
+	var partesFecha = fechaIni.split('-');
+	var dia = partesFecha[0];
+	var mes = partesFecha[1];
+	var anio = partesFecha[2];
+	var fechaFormateada = anio + '-' + mes + '-' + dia;
+	var date = new Date(fechaFormateada); // Or your date here
+	$fini= ((date.getFullYear() + '-' + zfill(date.getMonth() + 1,2) + '-'+ zfill(date.getDate()+1,2)));
+
+	var fechaFin = document.getElementById('fecha_fin').value;
+	var partesFechaf = fechaFin.split('-');
+	 dia = partesFechaf[0];
+	 mes = partesFechaf[1];
+	 anio = partesFechaf[2];
+	 fechaFormateada = anio + '-' + mes + '-' + dia;
+	 date = new Date(fechaFormateada); // Or your date here
+	$ffin= ((date.getFullYear() + '-' + zfill(date.getMonth() + 1,2) + '-'+ zfill(date.getDate()+1,2)));
+
+	
+	if(tipo=='1'){
+		$opc1 = $('#id_usuario').val();
+		$opc2 = $('#id_caja').val();
+		$opc3 =-1
+	}
+
+	if(tipo=='2'){
+		$opc1 = $('#id_concepto').val();
+		$opc2 = $('#id_formapago').val();
+		$opc3 = $('#id_estadopago').val();
+	}
+
+	if(tipo=='3'){
+		$opc1 = $('#id_concepto').val();
+		$fini = -1;
+		//$ffin = 0;
+		$opc2 = -1;
+		$opc3 = -1;
+	}
+
+	if (por_usuario =='S'){
+		if($opc2!=''){
+			var href = '/reporte/exportar_reporte_caja/'+id+'/'+$fini+'/'+$ffin+'/'+$opc1+'/'+$opc2 +'/'+$opc3;
+			window.open(href, '_blank');		
+		}else{
+			alert('Requiere seleccionar un usuario')
+		}
+	}
+	if (por_usuario =='N'){
+
+		
+		if ($opc1==""){
+			$opc1=-1
+		}
+
+		if ($opc2==""){
+			$opc2=-1
+		}
+
+		if ($opc3==""){
+			$opc3=-1
+		}
+
+	var fecha_fin = $('#fecha_fin').val();
+	var id_usuario = $('#id_usuario').val();
+	var id_caja = $('#id_caja').val();
+	//var concepto = $('#concepto').val();
+	
+	if (fecha_fin == "")fecha_fin = 0;
+	if (id_usuario == "")id_usuario = 0;
+	if (id_caja == "")id_caja = 0;
+
+	location.href = '/reporte/exportar_reporte_caja/' + id + '/'+$fini+'/'+$ffin+'/'+$opc1+'/'+$opc2 +'/'+$opc3;
+	}
+}
+
 
 function abrirPdfReporte1(funcion, tipo) {
 
