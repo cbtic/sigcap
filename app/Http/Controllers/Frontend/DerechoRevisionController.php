@@ -2172,7 +2172,7 @@ class DerechoRevisionController extends Controller
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
 			
-			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",20)->where("estado",1)->first();			
+			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",20)->where("estado",1)->first();
 			$numeracionDocumento->numero = $numero_correlativo;
 			$numeracionDocumento->save();
 			
@@ -2625,7 +2625,6 @@ class DerechoRevisionController extends Controller
 
 	public function send_nuevo_registro_solicitud_edificacion(Request $request){
 
-		//var_dump($request->id_solicitud);exit();
 		$id_user = Auth::user()->id;
 		$id = $request->id;
 		$agremiado_principal = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
@@ -2638,6 +2637,12 @@ class DerechoRevisionController extends Controller
 		$area_techada_presupuesto = $request->area_techada_presupuesto;
 		$valor_unitario = $request->valor_unitario;
 		$presupuesto_ = $request->presupuesto;
+		$tipo_proyectista_row = $request->tipo_proyectista_row;
+		$agremiado_row = $request->agremiado_row;
+		$numero_cap_row = $request->numero_cap_row;
+		$situacion_row = $request->situacion_row;
+		$telefono_row = $request->telefono_row;
+		$email_row = $request->email_row;
 		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		
 		if($request->id == 0){
@@ -2698,7 +2703,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->piso_nivel_m2 = $request->municipalidad;
 		$derecho_revision->otro_piso_nivel_m2 = $request->municipalidad;*/
 		////////////
-		$derecho_revision->total_area_techada_m2 = $request->area_techada_total;
+		//$derecho_revision->area_total = $request->area_techada_total;
 		//$derecho_revision->codigo_solicitud = $request->municipalidad;
 		$derecho_revision->id_instancia = 246;
 		//$derecho_revision->id_tipo_liquidacion1 = $request->municipalidad;
@@ -2803,6 +2808,161 @@ class DerechoRevisionController extends Controller
 				$presupuesto1->id_usuario_inserta = $id_user;
 				$presupuesto1->save();
 				
+			}
+		}
+
+		if(isset($tipo_proyectista_row)){
+		
+			foreach($tipo_proyectista_row as $key=>$row){
+				
+				$agremiado_secundario = Agremiado::where("numero_cap",$numero_cap_row[$key])->where("estado","1")->first();
+				
+				$proyectista_secundario = New Proyectista;
+				$proyectista_secundario->id_agremiado = $agremiado_secundario->id;
+				$proyectista_secundario->celular = $telefono_row[$key];
+				$proyectista_secundario->email = $email_row[$key];
+				$proyectista_secundario->id_tipo_profesional = 212;
+				$proyectista_secundario->id_tipo_proyectista = 2;
+				$proyectista_secundario->id_usuario_inserta = $id_user;
+				$proyectista_secundario->id_solicitud = $id_derecho_revision;
+				$proyectista_secundario->save();
+
+			}
+
+			$proyectista_principal_ = Proyectista::find($id_proyectista_principal);
+			$proyectista_principal_->id_tipo_proyectista = 2;
+			$proyectista_principal_->id_usuario_inserta = $id_user;
+			$proyectista_principal_->save();
+		}
+
+		$solicitud_documento_plano = new SolicitudDocumento;
+
+		$path = "img/solicitud_derecho_revision_edificaciones/plano_ubicacion";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+        if (isset($_FILES["btnPlanoUbicacion"]) && $_FILES["btnPlanoUbicacion"]["error"] == UPLOAD_ERR_OK) {
+
+            $path = "img/solicitud_derecho_revision_edificaciones/plano_ubicacion/".$id_derecho_revision;
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+
+            $filepath = public_path($path.'/');
+
+            $filename = "plano_ubicacion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+            $type=$this->extension($_FILES["btnPlanoUbicacion"]["name"]);
+            $filenamefirma=$filename.".".$type;
+
+            move_uploaded_file($_FILES["btnPlanoUbicacion"]["tmp_name"], $filepath.$filenamefirma);
+
+            $solicitud_documento_plano->id_tipo_documento = 4;
+            $solicitud_documento_plano->descripcion = "Plano Ubicacion";
+            $solicitud_documento_plano->ruta_archivo = $path."/".$filenamefirma;
+            $solicitud_documento_plano->estado = 1;
+            $solicitud_documento_plano->id_usuario_inserta = $id_user;
+            $solicitud_documento_plano->id_solicitud = $id_derecho_revision;
+        	$solicitud_documento_plano->save();
+        }
+
+		$solicitud_documento_fue = new SolicitudDocumento;
+
+		$path = "img/solicitud_derecho_revision_edificaciones/fue";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+        if (isset($_FILES["btnFue"]) && $_FILES["btnFue"]["error"] == UPLOAD_ERR_OK) {
+
+            $path = "img/solicitud_derecho_revision_edificaciones/fue/".$id_derecho_revision;
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+
+            $filepath = public_path($path.'/');
+
+            $filename = "fue_".date("YmdHis") . substr((string)microtime(), 1, 6);
+            $type=$this->extension($_FILES["btnFue"]["name"]);
+            $filenamefirma=$filename.".".$type;
+
+            move_uploaded_file($_FILES["btnFue"]["tmp_name"], $filepath.$filenamefirma);
+
+            $solicitud_documento_fue->id_tipo_documento = 5;
+            $solicitud_documento_fue->descripcion = "FUE";
+            $solicitud_documento_fue->ruta_archivo = $path."/".$filenamefirma;
+            $solicitud_documento_fue->estado = 1;
+            $solicitud_documento_fue->id_usuario_inserta = $id_user;
+            $solicitud_documento_fue->id_solicitud = $id_derecho_revision;
+        	$solicitud_documento_fue->save();
+        }
+
+		$solicitud_documento_presupuesto = new SolicitudDocumento;
+
+		$path = "img/solicitud_derecho_revision_edificaciones/presupuesto";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+        if (isset($_FILES["btnPresupuesto"]) && $_FILES["btnPresupuesto"]["error"] == UPLOAD_ERR_OK) {
+
+            $path = "img/solicitud_derecho_revision_edificaciones/presupuesto/".$id_derecho_revision;
+            if (!is_dir($path)) {
+                mkdir($path);
+            }
+
+            $filepath = public_path($path.'/');
+
+            $filename = "presupuesto_".date("YmdHis") . substr((string)microtime(), 1, 6);
+            $type=$this->extension($_FILES["btnPresupuesto"]["name"]);
+            $filenamefirma=$filename.".".$type;
+
+            move_uploaded_file($_FILES["btnPresupuesto"]["tmp_name"], $filepath.$filenamefirma);
+
+            $solicitud_documento_presupuesto->id_tipo_documento = 6;
+            $solicitud_documento_presupuesto->descripcion = "Presupuesto";
+            $solicitud_documento_presupuesto->ruta_archivo = $path."/".$filenamefirma;
+            $solicitud_documento_presupuesto->estado = 1;
+            $solicitud_documento_presupuesto->id_usuario_inserta = $id_user;
+            $solicitud_documento_presupuesto->id_solicitud = $id_derecho_revision;
+        	$solicitud_documento_presupuesto->save();
+        }
+
+		if(isset($descripcion_archivo)){
+		
+			foreach($descripcion_archivo as $key=>$row){
+				
+				$solicitud_documento_plano = new SolicitudDocumento;
+
+				$path = "img/solicitud_derecho_revision_edificaciones/archivos_adicionales";
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				if (isset($_FILES["btnPlanoUbicacion"]) && $_FILES["btnPlanoUbicacion"]["error"] == UPLOAD_ERR_OK) {
+
+					$path = "img/solicitud_derecho_revision_edificaciones/archivos_adicionales/".$id_derecho_revision;
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
+
+					$filepath = public_path($path.'/');
+
+					$filename = "plano_ubicacion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnPlanoUbicacion"]["name"]);
+					$filenamefirma=$filename.".".$type;
+
+					move_uploaded_file($_FILES["btnPlanoUbicacion"]["tmp_name"], $filepath.$filenamefirma);
+
+					$solicitud_documento_plano->id_tipo_documento = 4;
+					$solicitud_documento_plano->descripcion = "Plano Ubicacion";
+					$solicitud_documento_plano->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_plano->estado = 1;
+					$solicitud_documento_plano->id_usuario_inserta = $id_user;
+					$solicitud_documento_plano->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_plano->save();
+				}
+
 			}
 		}
 

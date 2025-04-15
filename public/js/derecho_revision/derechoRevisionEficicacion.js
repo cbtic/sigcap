@@ -2054,11 +2054,16 @@ function guardar_solicitud_derecho_revision_edificacion(){
 	var heightBrowser = $(window).width()/2;
 	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
 	$('.loader').show();
+	let form = document.getElementById('frmRegistroSolicitudDerechoRevision');
+	let formData = new FormData(form);
 
 	$.ajax({
 			url: "/derecho_revision/send_nuevo_registro_solicitud_edificacion",
 			type: "POST",
-            data : $("#frmRegistroSolicitudDerechoRevision").serialize(),
+			data: formData,
+			contentType: false, // <-- importante
+			processData: false, 
+            //data : $("#frmRegistroSolicitudDerechoRevision").serialize(),
 			success: function (result) {
 				
 				//alert();
@@ -2193,52 +2198,6 @@ function guardar_editar_solicitud_reintegro(){
 				}
 				*/
 			}
-	});
-}
-
-function cargarPeriodo(){
-
-	$.ajax({
-		url: "/derecho_revision/listar_solicitud_periodo",
-		type: "POST",
-		data : $("#frmExpediente").serialize(),
-		success: function(result){
-			var option = "<option value='' selected='selected'>--Año--</option>";
-			var currentYear = new Date().getFullYear();
-			$('#anio_bus').html("");
-			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
-			});
-			$('#anio_bus').html(option);
-			$('#anio_bus').val(currentYear);
-			//$('#anio_bus').select2();
-			
-			//$('.loader').hide();			
-		}
-		
-	});
-}
-
-function cargarPeriodoHu(){
-
-	$.ajax({
-		url: "/derecho_revision/listar_solicitud_periodo_hu",
-		type: "POST",
-		data : $("#frmAfiliacion").serialize(),
-		success: function(result){
-			var option = "<option value='' selected='selected'>--Año--</option>";
-			var currentYear = new Date().getFullYear();
-			$('#anio_hu_bus').html("");
-			$(result).each(function (ii, oo) {
-				option += "<option value='"+oo.anio+"'>"+oo.anio+"</option>";
-			});
-			$('#anio_hu_bus').html(option);
-			$('#anio_hu_bus').val(currentYear);
-			//$('#anio_bus').select2();
-			
-			//$('.loader').hide();			
-		}
-		
 	});
 }
 

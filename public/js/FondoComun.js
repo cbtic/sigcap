@@ -668,7 +668,6 @@ function cargarFondoComun() {
 			$("#divPlanilla").html(result);
 		}
 	});
-
 }
 
 //obtenerAnioPerido();
