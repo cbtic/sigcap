@@ -1998,6 +1998,9 @@ class ComprobanteController extends Controller
                         $total_redondeo = $total_pagar - $total_g;
     
                         $total = $total+$total_redondeo;
+
+                        //print_r("total_pagar");
+
                     }
                     //print_r("-");
                     //print_r($total); exit();
@@ -2017,7 +2020,11 @@ class ComprobanteController extends Controller
                         $total_abono= $total_pagar_abono - $total_g;
     
                         $total = $total+$total_abono;
+
+                        //print_r("total_pagar_abono");
                     }
+
+                    $total = str_replace(",","",$total);
 
                     //print_r($total); exit();
                              
@@ -2067,7 +2074,7 @@ class ComprobanteController extends Controller
                     "id_moneda" => 1 ,
                     "descuento" => 0 ,
                     "cod_contable" => "",
-                    //"id_concepto" => 26464 ,
+                    "id_concepto" => 26464 ,
                     "importe" => round($total_redondeo,2),
                     "igv" => 0 ,
                     //"cantidad" => 1, 
@@ -2104,7 +2111,7 @@ class ComprobanteController extends Controller
                     "id_moneda" => 1 ,
                     "descuento" => 0 ,
                     "cod_contable" => "",
-                    //"id_concepto" => 26464 ,
+                    "id_concepto" => 26464 ,
                     "importe" => round($total_abono,2),
                     "igv" => 0 ,
                     "total" => round($total_abono,2), 
@@ -2143,6 +2150,8 @@ class ComprobanteController extends Controller
                 $facturaDet_upd->precio_venta = $value['pv'];
                 $facturaDet_upd->valor_venta_bruto = $value['valor_venta_bruto'];
                 $facturaDet_upd->valor_venta = $value['valor_venta'];
+                $facturaDet_upd->unidad=$value['unidad_medida'];
+                $facturaDet_upd->id_concepto=$value['id_concepto'];
                 // $facturaDet_upd->codigo=$value['codigo_producto'];
                 //$facturaDet_upd->unidad = $value['abreviatura'];
                 $facturaDet_upd->save();
@@ -2375,6 +2384,21 @@ class ComprobanteController extends Controller
             $trans = "FE";
         }
         
+
+        $tipo_cambio_model= new TipoCambio;
+        $tipo_cambio_act=$tipo_cambio_model->getTipoCambio();
+        $tipo_cambio = (isset($tipo_cambio_act->valor_venta))?$tipo_cambio_act->valor_venta:0;
+        $fecha_tc = $tipo_cambio_act->fecha;
+        $fecha_act = $tipo_cambio_act->fecha_act;
+
+        //echo($fecha_tc);
+        //echo($fecha_act);
+
+        if($fecha_tc==$fecha_act){
+            $tipo_cambio = (isset($tipo_cambio_act->valor_venta))?$tipo_cambio_act->valor_venta:0;
+        }else{
+            $tipo_cambio = "";
+        }
         
 		if($id_caja==""){
 			$valorizaciones_model = new Valorizacione;
@@ -2513,7 +2537,7 @@ class ComprobanteController extends Controller
 
         //print_r($facturad); exit();
 
-        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion', 'importe'));
+        return view('frontend.comprobante.create_nc',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','forma_pago','direccion','correo','afectacion', 'importe','tipo_cambio'));
         
     }
 
@@ -2539,6 +2563,21 @@ class ComprobanteController extends Controller
             $trans = "FE";
         }
         
+        $tipo_cambio_model= new TipoCambio;
+        $tipo_cambio_act=$tipo_cambio_model->getTipoCambio();
+        $tipo_cambio = (isset($tipo_cambio_act->valor_venta))?$tipo_cambio_act->valor_venta:0;
+        $fecha_tc = $tipo_cambio_act->fecha;
+        $fecha_act = $tipo_cambio_act->fecha_act;
+
+        //echo($fecha_tc);
+        //echo($fecha_act);
+
+        if($fecha_tc==$fecha_act){
+            $tipo_cambio = (isset($tipo_cambio_act->valor_venta))?$tipo_cambio_act->valor_venta:0;
+        }else{
+            $tipo_cambio = "";
+        }
+
         
 		if($id_caja==""){
 			$valorizaciones_model = new Valorizacione;
@@ -2651,7 +2690,7 @@ class ComprobanteController extends Controller
         $medio_pago = $tabla_model->getMaestroByTipo('19');
 
 
-        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','direccion','correo','medio_pago','afectacion','importe'));
+        return view('frontend.comprobante.create_nd',compact('trans', 'comprobante','tipooperacion','serie','facturad','id_caja','direccion','correo','medio_pago','afectacion','importe','tipo_cambio'));
         
 
     }
@@ -3426,6 +3465,247 @@ class ComprobanteController extends Controller
 
     }
 
+    public function firmar_nd($id_factura){
+
+        //echo $this->getTipoDocumento("BV");exit();
+
+		$factura = Comprobante::where('id', $id_factura)->get()[0];
+
+        $factura_nd = Comprobante::where('id', $factura->id_comprobante_ncnd)->get()[0];
+
+		$factura_detalles = ComprobanteDetalle::where([
+            'serie' => $factura->serie,
+            'numero' => $factura->numero,
+            'tipo' => $factura->tipo
+        ])->get();
+		//print_r($factura); exit();
+        //print_r($factura_detalles); exit();		
+		$cabecera = array("valor1","valor2");
+		$detalle = array("valor1","valor2");
+
+        $totalOPGravadas = 0;
+        $totalOPNoGravadas = 0;
+
+        foreach ($factura_detalles as $index => $row) {
+            $items1 = array(
+                    "ordenItem" => $row->item, //"2",
+                    "adicionales" => [],
+                    "cantidadItem" => $row->cantidad, //"1",
+                    //"descuentoItem"=> $row->descuento,
+                    "importeIGVItem" => str_replace(",", "", number_format($row->igv_total, 2)), //"7.63",
+                    "montoTotalItem" => str_replace(",", "", number_format($row->importe, 2)), //"50.00",
+                    "valorVentaItem" => str_replace(",", "", number_format($row->valor_venta, 2)), //"42.37",
+                    "descripcionItem" => $row->descripcion, //"TRANSBORDO",
+                    "unidadMedidaItem" => $row->unidad,
+                    //" "codigoProductoItem": "0000000",($row->cod_contable!="")?$row->cod_contable:"0000000", //"002",
+                    "codigoProductoItem" => "0000000",
+                    "valorUnitarioSinIgv" => str_replace(",", "", number_format($row->pu, 2)), //"42.3728813559",
+                    "precioUnitarioConIgv" => str_replace(",", "", number_format($row->precio_venta, 2)), //"50.0000000000",
+                    "unidadMedidaComercial" => "SERV",
+                    //"codigoAfectacionIGVItem" => "10",
+                    "codigoAfectacionIGVItem"=> $row->afect_igv,
+                    //"porcentajeDescuentoItem"=> "0.00",
+                    "codTipoPrecioVtaUnitarioItem" => "01"
+                );
+
+                if ($row->afect_igv=='10'){
+                    $totalOPGravadas = $totalOPGravadas + str_replace(",","",$row->valor_venta);
+                }else{
+                    $totalOPNoGravadas = $totalOPNoGravadas + str_replace(",","",$row->valor_venta);
+                }
+
+            $items[$index] = $items1;
+        }
+/*
+        $items2 = array(
+            "serie"=>$factura->serie,
+            "numero"=> $factura->numero,
+            "idEmpresa"=> 1034,
+            "idUsuario"=> 2564,
+            "noValidar"=> false,
+            "idPuntoventa"=> 1700,
+            "idListaPrecio"=> 0,
+            "enviarAdjuntoDescomprimido"=> false
+        );
+        $items2[$index]=$items2;
+ */
+		$data["items"] = $items;
+       // $data["server"] = $items2;
+
+       
+		$data["anulado"] = false;
+		$data["declare"] = "0"; // 0->dechlare 1>declare instante
+		$data["version"] = "2.1";
+		$data["adjuntos"] = [];
+		$data["esFicticio"] = false;
+		$data["keepNumber"] = "false";
+		$data["tipoCorreo"] = "1";
+		$data["tipoMoneda"] = ($factura->id_moneda=="1")?"PEN":"USD"; //"PEN";        
+		$data["adicionales"] = [];
+		$data["horaEmision"] = date("h:i:s", strtotime($factura->fecha)); // "12:12:04";//$cabecera->fecha
+		$data["serieNumero"] = $factura->serie."-".$factura->numero; // "F001-000002";
+		$data["fechaEmision"] = date("Y-m-d",strtotime($factura->fecha)); //"2021-03-18";
+		$data["importeTotal"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
+		$data["notification"] = "1";
+		$data["sumatoriaIGV"] = str_replace(",","",number_format($factura->impuesto,2)); //"22.88";
+		$data["sumatoriaISC"] = "0.00";
+		$data["ubigeoEmisor"] = "150139";
+        $data["creditoCuotas"] = [];
+
+        
+		//$data["montoEnLetras"] = $factura->letras; //"CIENTO CINCUENTA Y 00/100";
+		$data["tipoDocumento"] = $this->getTipoDocumento($factura->tipo);
+		$data["correoReceptor"] = $factura->correo_des; //"frimacc@gmail.com";
+		$data["distritoEmisor"] = "JESUS MARIA";
+		$data["esContingencia"] = false;
+        $data["motivoSustento"] = $factura->motivo_ncnd;
+		//$data["telefonoEmisor"] = "(01) 6271200";
+		//$data["totalAnticipos"] = "0.00";
+		$data["direccionEmisor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
+		$data["provinciaEmisor"] = "LIMA";
+        $data["tipoNotaCredito"] = $factura->codtipo_ncnd;
+		$data["totalDescuentos"] = "0.00";
+		$data["totalOPGravadas"] = str_replace(",","",number_format($totalOPGravadas,2)); //$totalOPGravadas; //"127.12";
+
+		$data["codigoPaisEmisor"] = "PE";
+		$data["totalOPGratuitas"] = "0.00";
+        $data["direccionReceptor"] = "AV. SAN FELIPE NRO. 999 LIMA - LIMA - JESUS MARIA ";
+		$data["docAfectadoFisico"] = false;
+
+
+		//$data["importeTotalVenta"] = str_replace(",","",number_format($factura->total,2)); //"150.00";
+		$data["razonSocialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
+		$data["totalOPExoneradas"] = "0.00";
+		$data["totalOPNoGravadas"] = str_replace(",","",number_format($totalOPNoGravadas,2));
+		$data["codigoPaisReceptor"] = "PE";
+		$data["departamentoEmisor"] = "JESUS MARIA";
+		//$data["descuentosGlobales"] = "0.00";
+		//$data["codigoTipoOperacion"] = "0101";
+		$data["razonSocialReceptor"] = $factura->destinatario;//"Freddy Rimac Coral";
+        $data["serieNumeroAfectado"] = $factura_nd->serie."-".$factura_nd->numero;
+        $data["serieNumeroModifica"] = $factura_nd->serie."-".$factura_nd->numero;
+
+        $data["sumatoriaOtrosCargos"] = "0";
+
+		//$data["nombreComercialEmisor"] = "CAP";		       
+        $data["nombreComercialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
+        $data["tipoDocumentoModifica"] = $this->getTipoDocumento($factura_nd->tipo);  //"01"; 
+        $data["fechaDocumentoAfectado"] = date("Y-m-d",strtotime($factura->fecha));
+        $data["tipoDocIdentidadEmisor"] = "6";
+		$data["sumatoriaImpuestoBolsas"] = "0.00";
+		$data["numeroDocIdentidadEmisor"] = "20172977911";//"20160453908";        
+		$data["tipoDocIdentidadReceptor"] = $this->getTipoDocPersona_nc($factura_nd->tipo);//"6";                
+		$data["numeroDocIdentidadReceptor"] = $factura->cod_tributario; //"10040834643";
+
+        //$data["direccionReceptor"] = $factura->direccion;
+
+        //print_r($data); exit();
+
+		$databuild_string = json_encode($data);
+       
+        print_r($databuild_string."<br>");//exit();
+        
+
+		//$chbuild = curl_init("https://easyfact.tk/see/rest/01");
+        $chbuild = curl_init(config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo));
+        //echo config('values.ws_fac_host')."/see/rest/".$this->getTipoDocumento($factura->tipo);exit();
+
+		$username = config('values.ws_fac_user');
+		$password = config('values.ws_fac_clave');
+
+        curl_setopt($chbuild, CURLOPT_HEADER, true);
+        curl_setopt($chbuild, CURLOPT_HTTPHEADER, array(
+            'Accept: application/json',
+            'Content-Type: application/json',
+			'Authorization: Basic '. base64_encode("$username:$password")
+			)
+        );
+        curl_setopt($chbuild, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($chbuild, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($chbuild, CURLOPT_POSTFIELDS, $databuild_string);
+        $results = curl_exec($chbuild);
+        print_r($results."<br>");
+        //exit();
+        $facturaLog = new Logger('factura_sunat');
+
+        $log = ['Resultados' => $results,
+        'description' => 'Resultados devueltos'];
+        //first parameter passed to Monolog\Logger sets the logging channel name
+        $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::INFO);
+        $facturaLog->info('FacturaLog', $log);
+
+		if (curl_errno($chbuild)) {
+			$error_msg = curl_error($chbuild);
+			echo $error_msg;
+
+            $log = ['Error' => $error_msg,
+            'description' => 'Errores'];
+            //first parameter passed to Monolog\Logger sets the logging channel name
+            $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::WARNING);
+            $facturaLog->info('FacturaLog', $log);
+		}
+		print_r($results); 
+        curl_close($chbuild);
+
+        
+		//$results = substr($results,strpos($results,'{'),strlen($results));
+        $results = substr($results,strpos($results,'{'),strlen($results));
+        $respbuild = json_decode($results, true);
+		//echo "<br>";
+		//print_r($respbuild); exit();
+            
+        $body = $respbuild["body"];
+            
+        if(count($body)>0){
+            //print_r($body);
+            //echo "******<br>";
+            $single = $body["single"];
+            //print_r($single);
+            //echo "********<br>";
+            $id = $single["id"];
+            $_number = $single["_number"];
+            $result = $single["result"];
+            $hash = $single[ "hash"];
+            //$signature = $single["signature"];
+
+            if($result == "FIRMADO"){
+
+                $fecha = $factura->fecha;
+                //echo $fecha;
+
+                //$fecha = "2021-03-24";
+                //$porciones = explode("/", $fecha);
+                $dia = substr($fecha, 8, 2); //$porciones[2];
+                $mes = substr($fecha, 5, 2); //$porciones[1];
+                $anio = substr($fecha, 0, 4);
+                //$anio = $fecha; //$porciones[0];
+
+
+
+
+                $fac_ruta_comprobante = config('values.ws_fac_host')."/see/server/consult/pdf?nde=20172977911&td=" .$this->getTipoDocumento($factura->tipo) ."&se=" .$factura->serie. "&nu=" .$factura->numero. "&fe=".date("Y-m-d",strtotime($factura->fecha))."&am=" .$factura->total;
+                //$fac_ruta_comprobante = config('values.ws_fac_host')."/see/server/consult/pdf?nde=20601973759&td=" .$this->getTipoDocumento($factura->tipo) ."&se=" .$factura->serie. "&nu=" .$factura->numero. "&fe=".date("Y-m-d",strtotime($factura->fecha))."&am=" .$factura->total;
+
+                if (
+					//test.easyfact.tk
+                    $this->download_pdf(config('values.ws_fac_dominio'), $fac_ruta_comprobante, $this->getTipoDocumento($factura->tipo)."_".$factura->serie."_".$factura->numero."_".$anio.$mes.$dia.".pdf") =="OK"
+                    ) {
+                    // Guardar nombre del pdf en la base de datos.
+                    $factura = Comprobante::find($id_factura);
+                    $factura->estado_sunat = "FIRMADO";
+                    // Nueva ruta del PDF descargado
+                    //$factura->fac_ruta_comprobante = "storage/factura_".$data["serieNumero"].".pdf";
+                    $factura->ruta_comprobante = "storage/".$this->getTipoDocumento($factura->tipo)."_".$factura->serie."_".$factura->numero."_".$anio.$mes.$dia.".pdf";
+                    $factura->save();
+
+                }
+            }
+        }
+
+        //$respbuild->result;
+
+    }
+
     public function send_nc(Request $request)
     {
         $sw = true;
@@ -3496,6 +3776,7 @@ class ComprobanteController extends Controller
  
                 $factura_upd = Comprobante::find($id_factura);
                 if(isset($factura_upd->tipo_cambio)) $factura_upd->tipo_cambio = $request->tipo_cambio;
+                
                 //print_r($tarifa); exit();
 
                 $factura_upd->save();
@@ -3526,6 +3807,8 @@ class ComprobanteController extends Controller
                     $facturaDet_upd->valor_venta_bruto=$value['valor_venta_bruto'];
                     $facturaDet_upd->valor_venta=$value['valor_venta'];
                     $facturaDet_upd->unidad=$value['unidad_medida'];
+
+                    $facturaDet_upd->id_concepto=$value['id_concepto'];
                    
                     $facturaDet_upd->save();                                                                                  
                 

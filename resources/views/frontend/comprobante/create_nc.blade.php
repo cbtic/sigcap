@@ -356,7 +356,7 @@
                                                                 <option value="">--Selecionar--</option>
                                                                 <?php
                                                                 foreach ($tipooperacion as $row) { ?>
-                                                                    <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == 1) echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
+                                                                    <option value="<?php echo $row->codigo ?>" <?php if ($row->codigo == "01") echo "selected='selected'" ?>><?php echo $row->denominacion ?></option>
                                                                 <?php
                                                                 }
                                                                 ?>
@@ -469,6 +469,16 @@
                                                                                                                         } ?>" placeholder="" class="form-control form-control-sm text-center">
                                                     </div>
                                                 </div>
+
+                                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+                                                    <div class="form-group">
+                                                        <label class="form-control-sm">Tipo de Cambio</label>
+                                                        <input type="text" name="tipo_cambio" id="tipo_cambio" value="<?php echo $tipo_cambio; ?>" placeholder="" class="form-control form-control-sm" readonly;>
+
+                                                    </div>
+                                                </div>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -530,6 +540,7 @@
                                                                 <input type="hidden" id="facturad_igv" name="facturad[<//?php echo $key ?>][igv]" value="<//?php echo $fac['igv_total'] ?>" />
                                                                 <input type="hidden" id="facturad_total" name="facturad[<//?php echo $key ?>][total]" value="<//?php echo $fac['importe'] ?>" />
                                                                 -->
+                                                                <input type="hidden" id="afectacion" name="facturad[<?php echo $key ?>][afectacion]" value="<?php echo $fac['afect_igv']?>" />
 
                                                                 <input type="hidden" id="afect_igv<?php echo $key?>" name="facturad[<?php echo $key ?>][afect_igv]" value="<?php echo $fac['afect_igv'] ?>" />                                            
                                                                 <input type="hidden" id="igv<?php echo $key?>" name="facturad[<?php echo $key ?>][igv]" value="<?php echo $fac['igv_total'] ?>" />                                                            
@@ -545,7 +556,7 @@
                                                                     <td class="text-right"><?php $n = $n + 1;
                                                                                             echo $n; ?></td>
 
-                                                                    <                   
+                                                                                       
                                                                     <td class="text-center"><?php if ($trans == 'FA') {
                                                                                                 echo $fac['cantidad'];
                                                                                             }
