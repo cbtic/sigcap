@@ -248,14 +248,14 @@ function fn_save_nd(){
 
 function fn_save_nc(){
 
-    /*
+    
 	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
 	var heightBrowser = $(window).width()/2;
 	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
     $('.loader').show();
 	$('#guardar').hide();
-	*/
+	
 	
     $.ajax({
 			url: "/comprobante/send_nc",
@@ -266,11 +266,13 @@ function fn_save_nc(){
 			dataType: 'json',
             success: function (result) {
 				
-			//	$('.loader').hide();
+				$('.loader').hide();
 			
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
 				location.href=urlApp+"/comprobante/"+result.id_factura;
+
+				enviar_comprobante(result.id_factura);
 
             }
     });
@@ -1135,11 +1137,13 @@ function guardarnc(){
     var msg = "";
     var tiponota = $('#tiponota_').val();
 	var motivo = $('#motivo_').val();
+	var tipo_cambio = $('#tipo_cambio').val();
 	
+	if(tiponota=="")msg+="Debe ingresar un el tipo de nota<br>";	
+	
+	if(motivo=="")msg+="Debe ingresar el motivo<br>";	
 
-		if(tiponota=="")msg+="Debe ingresar un el tipo de nota<br>";	
-		if(motivo=="")msg+="Debe ingresar el motivo<br>";	
-		
+	if (tipo_cambio==""){msg+="Debe ingresar el tipo de cambio actual<br>";	}		
 
     if(msg!=""){
 		
@@ -1197,14 +1201,13 @@ function fn_save(){
 
 function fn_save_nc(){
 
-    /*
 	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
 	var heightBrowser = $(window).width()/2;
 	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
     $('.loader').show();
 	$('#guardar').hide();
-	*/
+
     $.ajax({
 			url: "/comprobante/send_nc",
             type: "POST",
@@ -1214,7 +1217,7 @@ function fn_save_nc(){
 			dataType: 'json',
             success: function (result) {
 				
-			//	$('.loader').hide();
+				$('.loader').hide();
 				
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();

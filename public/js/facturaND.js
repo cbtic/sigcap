@@ -111,19 +111,18 @@ function guardarFactura(){
 }
 
 function guardarnd(){
-
-	
     var msg = "";
     var tiponota = $('#tiponota_').val();
 	var motivo = $('#motivo_').val();
+	var tipo_cambio = $('#tipo_cambio').val();
 	
-
-		if(tiponota=="")msg+="Debe ingresar un el tipo de nota<br>";	
-		if(motivo=="")msg+="Debe ingresar el motivo<br>";	
+	if(tiponota=="")msg+="Debe ingresar un el tipo de nota<br>";	
+	
+	if(motivo=="")msg+="Debe ingresar el motivo<br>";
 		
-
-    if(msg!=""){
+	if (tipo_cambio==""){msg+="Debe ingresar el tipo de cambio actual<br>";	}
 		
+    if(msg!=""){		
         Swal.fire(msg);
         return false;
     }
@@ -136,16 +135,16 @@ function guardarnd(){
 }
 
 function guardarnc(){
-
-	
     var msg = "";
     var tiponota = $('#tiponota_').val();
 	var motivo = $('#motivo_').val();
+	var tipo_cambio = $('#tipo_cambio').val();
 	
+	if(tiponota=="")msg+="Debe ingresar un el tipo de nota<br>";	
 
-		if(tiponota=="")msg+="Debe ingresar un el tipo de nota<br>";	
-		if(motivo=="")msg+="Debe ingresar el motivo<br>";	
+	if(motivo=="")msg+="Debe ingresar el motivo<br>";	
 		
+	if (tipo_cambio==""){msg+="Debe ingresar el tipo de cambio actual<br>";	}
 
     if(msg!=""){
 		
@@ -203,14 +202,14 @@ function fn_save(){
 
 function fn_save_nd(){
 
-    /*
 	var msgLoader = "";
 	msgLoader = "Procesando, espere un momento por favor";
 	var heightBrowser = $(window).width()/2;
 	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
     $('.loader').show();
 	$('#guardar').hide();
-	*/
+	
+
     $.ajax({
 			url: "/comprobante/send_nd",
             type: "POST",
@@ -220,14 +219,42 @@ function fn_save_nd(){
 			dataType: 'json',
             success: function (result) {
 				
-			//	$('.loader').hide();
+				$('.loader').hide();
 				
 				$('#numerof').val(result.id_factura);				
 				$('#divNumeroF').show();
 				location.href=urlApp+"/comprobante/"+result.id_factura;
 
+				enviar_comprobante(result.id_factura);
+
             }
     });
+}
+
+function enviar_comprobante(id){
+
+	$.ajax({
+		url: '/comprobante/firmar_nd/' + id ,
+		dataType: "json",
+		success: function (result) {
+
+			if (result) {
+				Swal.fire("Enviado al Facturador Electrónica!");
+
+			}
+			else {						
+				Swal.fire("registro no encontrado!");
+			}
+
+		},
+		"error": function (msg, textStatus, errorThrown) {
+
+			Swal.fire("Numero de documento no fue registrado!");
+
+		}
+
+	});
+	
 }
 
 function fn_save_nc(){
@@ -991,6 +1018,13 @@ function obtenerTitular(){
 				
 				//alert(Total_);
 
+				ValorUnitario_ = Number(ValorUnitario_ );		
+				ValorVB_ = Number(ValorVB_ );		
+				ValorVenta_ = Number(ValorVenta_ );
+				Igv_ = Number(Igv_ );		
+				Total_ = Number(Total_ );
+				PrecioVenta_ = Number(PrecioVenta_ );
+
 
 			};
 
@@ -1001,21 +1035,24 @@ function obtenerTitular(){
 			//$("#importeantd"+fila).val(imported.toFixed(2));
 
 			total=totald;
-			$(this).parent().parent().parent().find('#facturad_pu').val(imported.toFixed(2));
-			$(this).parent().parent().parent().find('#facturad_igv').val(igv.toFixed(2)); 
-			$(this).parent().parent().parent().find('#facturad_total').val(total.toFixed(2)); 
 
-			$(this).parent().parent().parent().find('#pu').val(ValorUnitario_.toFixed(2));
-			$(this).parent().parent().parent().find('#valor_venta_bruto').val(ValorVB_.toFixed(2));
-			$(this).parent().parent().parent().find('#pv').val(PrecioVenta_.toFixed(2));
-			$(this).parent().parent().parent().find('#valor_venta').val(ValorVenta_.toFixed(2));
+			//$(this).parent().parent().parent().find('#nd_pu').val(imported.toFixed(2));
+			$(this).parent().parent().parent().find('#nd_igv').val(igv.toFixed(2)); 
+			$(this).parent().parent().parent().find('#nd_total').val(total.toFixed(2));
+			$(this).parent().parent().parent().find('#nd_monto').val(total.toFixed(2)); 
+			$(this).parent().parent().parent().find('#descuento').val(Descuento_.toFixed(2)); 
+
+			$(this).parent().parent().parent().find('#nd_pu').val(ValorUnitario_.toFixed(2));
+			$(this).parent().parent().parent().find('#nd_valor_venta_bruto').val(ValorVB_.toFixed(2));
+			$(this).parent().parent().parent().find('#nd_pv').val(PrecioVenta_.toFixed(2));
+			$(this).parent().parent().parent().find('#nd_valor_venta').val(ValorVenta_.toFixed(2));
 
 
 
 			gravadas=0;
 			input=0;
 			$(".mov_:checked").each(function (){
-				input = $(this).parent().parent().parent().find('#facturad_pu').val();
+				input = $(this).parent().parent().parent().find('#nd_valor_venta').val();
 				input= parseFloat(input.replace(/,/g, ""));
 				gravadas += input; 
 			});
@@ -1025,7 +1062,7 @@ function obtenerTitular(){
 			igv=0;
 			input=0;
 			$(".mov_:checked").each(function (){
-				input = $(this).parent().parent().parent().find('#facturad_igv').val();				
+				input = $(this).parent().parent().parent().find('#nd_igv').val();				
 				input= parseFloat(input.replace(/,/g, ""));
 				igv += input; 
 			});
@@ -1034,13 +1071,14 @@ function obtenerTitular(){
 			total=0;
 			input=0;
 			$(".mov_:checked").each(function (){
-				input = $(this).parent().parent().parent().find('#facturad_total').val();				
+				input = $(this).parent().parent().parent().find('#nd_total').val();				
 				input= parseFloat(input.replace(/,/g, ""));
 				total += input; 
 			});
 
 
 			//alert(total);
+			total = Number(total );
 
 			$("#totalP").val(total.toFixed(2));
 			$("#total_pagar_abono").val(total.toFixed(2));
