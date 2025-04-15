@@ -2643,6 +2643,9 @@ class DerechoRevisionController extends Controller
 		$situacion_row = $request->situacion_row;
 		$telefono_row = $request->telefono_row;
 		$email_row = $request->email_row;
+		$descripcion_archivo = $request->descripcion_archivo;
+		$btnArchivoAdicional = $request->btnArchivoAdicional;
+		
 		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		
 		if($request->id == 0){
@@ -2932,14 +2935,14 @@ class DerechoRevisionController extends Controller
 		
 			foreach($descripcion_archivo as $key=>$row){
 				
-				$solicitud_documento_plano = new SolicitudDocumento;
+				$solicitud_documento_adicional = new SolicitudDocumento;
 
 				$path = "img/solicitud_derecho_revision_edificaciones/archivos_adicionales";
 				if (!is_dir($path)) {
 					mkdir($path);
 				}
 
-				if (isset($_FILES["btnPlanoUbicacion"]) && $_FILES["btnPlanoUbicacion"]["error"] == UPLOAD_ERR_OK) {
+				if (isset($_FILES["btnArchivoAdicional"]) && $_FILES["btnArchivoAdicional"]["error"][$key] == UPLOAD_ERR_OK) {
 
 					$path = "img/solicitud_derecho_revision_edificaciones/archivos_adicionales/".$id_derecho_revision;
 					if (!is_dir($path)) {
@@ -2948,19 +2951,19 @@ class DerechoRevisionController extends Controller
 
 					$filepath = public_path($path.'/');
 
-					$filename = "plano_ubicacion_".date("YmdHis") . substr((string)microtime(), 1, 6);
-					$type=$this->extension($_FILES["btnPlanoUbicacion"]["name"]);
+					$filename = "archivos_adicionales_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnArchivoAdicional"]["name"][$key]);
 					$filenamefirma=$filename.".".$type;
 
-					move_uploaded_file($_FILES["btnPlanoUbicacion"]["tmp_name"], $filepath.$filenamefirma);
+					move_uploaded_file($_FILES["btnArchivoAdicional"]["tmp_name"][$key], $filepath.$filenamefirma);
 
-					$solicitud_documento_plano->id_tipo_documento = 4;
-					$solicitud_documento_plano->descripcion = "Plano Ubicacion";
-					$solicitud_documento_plano->ruta_archivo = $path."/".$filenamefirma;
-					$solicitud_documento_plano->estado = 1;
-					$solicitud_documento_plano->id_usuario_inserta = $id_user;
-					$solicitud_documento_plano->id_solicitud = $id_derecho_revision;
-					$solicitud_documento_plano->save();
+					$solicitud_documento_adicional->id_tipo_documento = 7;
+					$solicitud_documento_adicional->descripcion = $descripcion_archivo[$key];
+					$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_adicional->estado = 1;
+					$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_adicional->save();
 				}
 
 			}
