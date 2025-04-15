@@ -2656,7 +2656,7 @@ class ComprobanteController extends Controller
 
     }
 
-    public function envio_factura_sunat_automatico($fecha){
+    public function envio_comprobante_sunat_automatico($fecha){
 
         $factura_model = new Comprobante;
         //$fecha = str_replace("-","/",$fecha);
@@ -2679,6 +2679,21 @@ class ComprobanteController extends Controller
 
             $facturaLog->pushHandler(new StreamHandler(storage_path('logs/factura_sunat.log')), Logger::INFO);
             $facturaLog->info('FacturaLog', $log);
+		}
+    }
+
+    public function envio_comprobante_sunat_automatico_pdf($fecha){
+
+        $factura_model = new Comprobante;
+        //$fecha = str_replace("-","/",$fecha);
+        $facturas = $factura_model->get_envio_pendiente_factura_sunat_pdf($fecha);
+
+
+		foreach($facturas as $row){
+			//echo $row->id."<br>";
+			$this->firmar_pdf($row->id);
+
+
 		}
     }
 
@@ -3027,6 +3042,40 @@ class ComprobanteController extends Controller
 
         //$respbuild->result;
 
+    }
+
+    public function firmar_pdf($id_factura){
+
+        //echo $this->getTipoDocumento("BV");exit();
+		$factura = Comprobante::where('id', $id_factura)->get()[0];
+        $fecha = $factura->fecha;
+        //echo $fecha;
+
+        //$fecha = "2021-03-24";
+        //$porciones = explode("/", $fecha);
+        $dia = substr($fecha, 8, 2); //$porciones[2];
+        $mes = substr($fecha, 5, 2); //$porciones[1];
+        $anio = substr($fecha, 0, 4);
+        //$anio = $fecha; //$porciones[0];
+
+        $fac_ruta_comprobante = config('values.ws_fac_host')."/see/server/consult/pdf?nde=20172977911&td=" .$this->getTipoDocumento($factura->tipo) ."&se=" .$factura->serie. "&nu=" .$factura->numero. "&fe=".date("Y-m-d",strtotime($factura->fecha))."&am=" .$factura->total;                
+       //print_r("fac_ruta_comprobante : ".$fac_ruta_comprobante."<br>");
+        //$fac_ruta_comprobante = config('values.ws_fac_host')."/see/server/consult/pdf?nde=20601973759&td=" .$this->getTipoDocumento($factura->tipo) ."&se=" .$factura->serie. "&nu=" .$factura->numero. "&fe=".date("Y-m-d",strtotime($factura->fecha))."&am=" .$factura->total;
+
+        if (
+            //test.easyfact.tk
+            $this->download_pdf(config('values.ws_fac_dominio'), $fac_ruta_comprobante, $this->getTipoDocumento($factura->tipo)."_".$factura->serie."_".$factura->numero."_".$anio.$mes.$dia.".pdf") =="OK"
+            ) {
+            // Guardar nombre del pdf en la base de datos.
+            $factura = Comprobante::find($id_factura);
+            $factura->estado_sunat = "FIRMADO";
+            // Nueva ruta del PDF descargado
+            //$factura->fac_ruta_comprobante = "storage/factura_".$data["serieNumero"].".pdf";
+            $factura->ruta_comprobante = "storage/".$this->getTipoDocumento($factura->tipo)."_".$factura->serie."_".$factura->numero."_".$anio.$mes.$dia.".pdf";
+            print_r("ruta_comprobante : "."storage/".$this->getTipoDocumento($factura->tipo)."_".$factura->serie."_".$factura->numero."_".$anio.$mes.$dia.".pdf"."<br>");
+            $factura->save();
+
+        }
     }
 
     public function download_pdf($host_name, $input_url, $output_filename) {
