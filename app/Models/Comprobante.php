@@ -291,6 +291,18 @@ class Comprobante extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function get_envio_pendiente_factura_sunat_pdf($fecha){
+		
+        $cad = "select id, anulado 
+                from comprobantes
+                where to_char(fecha,'yyyy-mm-dd')='".$fecha."'
+                and tipo<>'TK' 
+                order by id";
+		
+		$data = DB::select($cad);
+        return $data;
+    }
     
     function getFacturaByCaja($id_caja,$fecha_inicio,$fecha_fin){
 /*
