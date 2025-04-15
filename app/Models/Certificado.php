@@ -192,8 +192,8 @@ class Certificado extends Model
         WHEN p.id_tipo_propietario = '79' THEN (select e.razon_social from empresas e where e.id = p.id_empresa) end as propietario,
         pr.nombre nombreProyecto, 
         m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, 
-        (select sum(pre.area_techada) area_techada from presupuestos pre 
-        where id_solicitud = s.id) total_area_techada_m2,
+        (select sum(pre.area_techada) area_techada from presupuestos pre inner join solicitudes s3 on pre.id_solicitud = s3.id
+        where id_solicitud = s.id and pre.id_tipo_obra <> '10' and s3.id_tipo_tramite in ('125','126','130') ) total_area_techada_m2,
         s.area_total area_total, tm.denominacion tipo_profesional, 'Derecho Revision' tipo,
         (select sum(pre2.area_techada) from solicitudes s2
         inner join presupuestos pre2 on pre2.id_solicitud = s2.id 

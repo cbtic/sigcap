@@ -2172,7 +2172,7 @@ class DerechoRevisionController extends Controller
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
 			
-			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",20)->where("estado",1)->first();			
+			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",20)->where("estado",1)->first();
 			$numeracionDocumento->numero = $numero_correlativo;
 			$numeracionDocumento->save();
 			
@@ -2703,7 +2703,7 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->piso_nivel_m2 = $request->municipalidad;
 		$derecho_revision->otro_piso_nivel_m2 = $request->municipalidad;*/
 		////////////
-		$derecho_revision->total_area_techada_m2 = $request->area_techada_total;
+		//$derecho_revision->area_total = $request->area_techada_total;
 		//$derecho_revision->codigo_solicitud = $request->municipalidad;
 		$derecho_revision->id_instancia = 246;
 		//$derecho_revision->id_tipo_liquidacion1 = $request->municipalidad;
