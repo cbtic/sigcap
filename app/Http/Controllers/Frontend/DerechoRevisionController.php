@@ -2965,8 +2965,187 @@ class DerechoRevisionController extends Controller
 					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
 					$solicitud_documento_adicional->save();
 				}
-
 			}
+		}
+
+		//dd($request->respuesta);exit();
+
+		if($request->respuesta==0){
+			$derecho_revision = DerechoRevision::find($id_derecho_revision);
+			$derecho_revision->planta_tipica = $request->respuesta;
+			$derecho_revision->save();
+		}else{
+			$derecho_revision = DerechoRevision::find($id_derecho_revision);
+			$derecho_revision->planta_tipica = $request->respuesta;
+			$derecho_revision->save();
+
+			if ($request->hasFile('btnPlanoDistribucion1') && $request->file('btnPlanoDistribucion1')->isValid()) {
+				
+				$solicitud_documento_adicional = new SolicitudDocumento;
+
+				$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/";
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				if (isset($_FILES["btnPlanoDistribucion1"]) && $_FILES["btnPlanoDistribucion1"]["error"] == UPLOAD_ERR_OK) {
+
+					$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/".$id_derecho_revision;
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
+
+					$filepath = public_path($path.'/');
+
+					$filename = "planos_distribucion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnPlanoDistribucion1"]["name"]);
+					$filenamefirma=$filename.".".$type;
+
+					move_uploaded_file($_FILES["btnPlanoDistribucion1"]["tmp_name"], $filepath.$filenamefirma);
+
+					$solicitud_documento_adicional->id_tipo_documento = 8;
+					$solicitud_documento_adicional->descripcion = "Planos de Distribucion de Plantas Tipicas";
+					$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_adicional->estado = 1;
+					$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_adicional->save();
+				}
+			}
+			
+			if ($request->hasFile('btnPlanoDistribucion2') && $request->file('btnPlanoDistribucion2')->isValid()) {
+				
+				$solicitud_documento_adicional = new SolicitudDocumento;
+
+				$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/";
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				if (isset($_FILES["btnPlanoDistribucion2"]) && $_FILES["btnPlanoDistribucion2"]["error"] == UPLOAD_ERR_OK) {
+
+					$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/".$id_derecho_revision;
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
+
+					$filepath = public_path($path.'/');
+
+					$filename = "planos_distribucion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnPlanoDistribucion2"]["name"]);
+					$filenamefirma=$filename.".".$type;
+
+					move_uploaded_file($_FILES["btnPlanoDistribucion2"]["tmp_name"], $filepath.$filenamefirma);
+
+					$solicitud_documento_adicional->id_tipo_documento = 8;
+					$solicitud_documento_adicional->descripcion = "Planos de Distribucion de Plantas Tipicas";
+					$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_adicional->estado = 1;
+					$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_adicional->save();
+				}
+			}
+
+			if ($request->hasFile('btnPlanoDistribucion3') && $request->file('btnPlanoDistribucion3')->isValid()) {
+				
+				$solicitud_documento_adicional = new SolicitudDocumento;
+
+				$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/";
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				if (isset($_FILES["btnPlanoDistribucion3"]) && $_FILES["btnPlanoDistribucion3"]["error"] == UPLOAD_ERR_OK) {
+
+					$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/".$id_derecho_revision;
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
+
+					$filepath = public_path($path.'/');
+
+					$filename = "planos_distribucion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnPlanoDistribucion3"]["name"]);
+					$filenamefirma=$filename.".".$type;
+
+					move_uploaded_file($_FILES["btnPlanoDistribucion3"]["tmp_name"], $filepath.$filenamefirma);
+
+					$solicitud_documento_adicional->id_tipo_documento = 8;
+					$solicitud_documento_adicional->descripcion = "Planos de Distribucion de Plantas Tipicas";
+					$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_adicional->estado = 1;
+					$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_adicional->save();
+				}
+			}
+
+			if ($request->hasFile('btnPlanoDistribucion4') && $request->file('btnPlanoDistribucion4')->isValid()) {
+				
+				$solicitud_documento_adicional = new SolicitudDocumento;
+
+				$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/";
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				if (isset($_FILES["btnPlanoDistribucion4"]) && $_FILES["btnPlanoDistribucion4"]["error"] == UPLOAD_ERR_OK) {
+
+					$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/".$id_derecho_revision;
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
+
+					$filepath = public_path($path.'/');
+
+					$filename = "planos_distribucion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnPlanoDistribucion4"]["name"]);
+					$filenamefirma=$filename.".".$type;
+
+					move_uploaded_file($_FILES["btnPlanoDistribucion4"]["tmp_name"], $filepath.$filenamefirma);
+
+					$solicitud_documento_adicional->id_tipo_documento = 8;
+					$solicitud_documento_adicional->descripcion = "Planos de Distribucion de Plantas Tipicas";
+					$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_adicional->estado = 1;
+					$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_adicional->save();
+				}
+			}
+
+			$solicitud_documento_adicional = new SolicitudDocumento;
+
+			$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/declaracion_jurada/";
+			if (!is_dir($path)) {
+				mkdir($path);
+			}
+
+			if (isset($_FILES["btnDeclaracion"]) && $_FILES["btnDeclaracion"]["error"] == UPLOAD_ERR_OK) {
+
+				$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/declaracion_jurada/".$id_derecho_revision;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				$filepath = public_path($path.'/');
+
+				$filename = "declaracion_jurada_".date("YmdHis") . substr((string)microtime(), 1, 6);
+				$type=$this->extension($_FILES["btnDeclaracion"]["name"]);
+				$filenamefirma=$filename.".".$type;
+
+				move_uploaded_file($_FILES["btnDeclaracion"]["tmp_name"], $filepath.$filenamefirma);
+
+				$solicitud_documento_adicional->id_tipo_documento = 9;
+				$solicitud_documento_adicional->descripcion = "Declaracion Jurada Firmada";
+				$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+				$solicitud_documento_adicional->estado = 1;
+				$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+				$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+				$solicitud_documento_adicional->save();
+			}
+
 		}
 
 		return $derecho_revision->id;
