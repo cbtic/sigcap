@@ -23,6 +23,7 @@ use App\Models\NumeracionDocumento;
 use App\Models\UsoEdificacione;
 use App\Models\Presupuesto;
 use App\Models\SolicitudDocumento;
+use App\Models\User;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\ProfesionalesOtro;
@@ -704,7 +705,6 @@ class DerechoRevisionController extends Controller
 
 	public function editar_derecho_revision_nuevo($id){
 
-		
 		$agremiado_model = new Agremiado;
 		$persona_model = new Persona;
 		$derechoRevision_ = DerechoRevision::find($id);
@@ -2022,6 +2022,12 @@ class DerechoRevisionController extends Controller
 			$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
 			$empresa = null;
 		}
+
+		if($request->id_tipo_documento=='84'){
+			$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
+			$empresa = null;
+		}
+		
 		if($request->id_tipo_documento=='79'){
 			$persona = null;
 			$empresa = Empresa::where("ruc",$request->ruc_propietario)->where("estado","1")->first();
@@ -2035,7 +2041,7 @@ class DerechoRevisionController extends Controller
 
 		if($persona){
 			//var_dump($persona);exit();
-			$propietario->id_tipo_propietario = 78;
+			$propietario->id_tipo_propietario = $request->id_tipo_documento;
 			$propietario->id_persona = $persona->id;
 			$propietario->celular = $request->celular_dni;
 			$propietario->email = $request->email_dni;
@@ -2586,6 +2592,8 @@ class DerechoRevisionController extends Controller
 	function create_solicitud(){
 
 		$id_persona = Auth::user()->id_persona;
+		$id_user = Auth::user()->id;
+		$user_model = new User;
 		//dd($id_persona);exit();
 
 		$agremiado_model = new Agremiado;
@@ -2627,11 +2635,14 @@ class DerechoRevisionController extends Controller
 		$principal_asociado = $tablaMaestra_model->getMaestroByTipo(130);
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_uso = $tablaMaestra_model->getMaestroByTipoByTipoNombre(111,'TIPO USO');
+
+		$tipo_obra = $tablaMaestra_model->getMaestroByTipoByTipoNombre(112,'TIPO OBRA');
 		
-		$tipo_obra = $tablaMaestra_model->getMaestroByTipo(112);
+		//$tipo_obra = $tablaMaestra_model->getMaestroByTipo(112);
 		$tipo_liquidacion = $tablaMaestra_model->getMaestroByTipo(27);
 		$instancia = $tablaMaestra_model->getMaestroByTipo(47);
 		$tipo_documento = $tablaMaestra_model->getMaestroByTipo(16);
+		$numero_revision = $tablaMaestra_model->getMaestroByTipo(134);
 		$municipalidad = $municipalidad_model->getMunicipalidadOrden();
 		//$proyectista_solicitud = $proyectista_model->getProyectistaSolicitud_($id);
 		//$propietario_solicitud = $propietario_model->getPropietarioSolicitud($id);
@@ -2644,8 +2655,31 @@ class DerechoRevisionController extends Controller
 		$agremiado_princ = Agremiado::where('id_persona',$id_persona)->where('estado',1)->first();
 		$agremiado_principal = $agremiado_model->getAgremiado('85',$agremiado_princ->numero_cap);
 		$id="0";
-		//dd($agremiado_principal);exit();
-        return view('frontend.derecho_revision.create_solicitud',compact('id','derechoRevision',/*'proyectista',*/'agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad',/*'proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2',*/'tipo_solicitante',/*'datos_agremiado','datos_persona',*//*'info_solicitud','info_uso_solicitud',*/'tipo_proyecto','tipo_uso',/*'datos_usoEdificaciones',*//*'sub_tipo_uso',*/'tipo_obra',/*'datos_presupuesto',*/'tipo_liquidacion','instancia','parametro',/*'liquidacion',*/'tipo','tipo_documento','empresa','tipo_proyectista',/*'profesionales_otro','datos_proyectista',*/'principal_asociado','agremiado_principal'));
+		$rol_proyectista = $user_model->getRolByUser($id_user);
+		//dd($rol_proyectista);exit();
+        return view('frontend.derecho_revision.create_solicitud',compact('id','derechoRevision',/*'proyectista',*/'agremiado','persona','proyecto','sitio','zona','tipo','departamento','municipalidad',/*'proyectista_solicitud','propietario_solicitud','derechoRevision_','proyecto2',*/'tipo_solicitante',/*'datos_agremiado','datos_persona',*//*'info_solicitud','info_uso_solicitud',*/'tipo_proyecto','tipo_uso',/*'datos_usoEdificaciones',*//*'sub_tipo_uso',*/'tipo_obra',/*'datos_presupuesto',*/'tipo_liquidacion','instancia','parametro',/*'liquidacion',*/'tipo','tipo_documento','empresa','tipo_proyectista',/*'profesionales_otro','datos_proyectista',*/'principal_asociado','agremiado_principal','numero_revision','rol_proyectista'));
+    }
+
+	public function editar_derecho_revision_edificaciones($id){
+
+		$agremiado_model = new Agremiado;
+		$persona_model = new Persona;
+		$derechoRevision = DerechoRevision::find($id);
+		$proyecto_ = Proyecto::where("id",$derechoRevision->id_proyecto)->where("estado","1")->first();
+		$proyecto2 = Proyecto::find($proyecto_->id);
+
+		$proyectista_principal = Proyectista::where("id_solicitud",$derechoRevision->id)->where('id_tipo_profesional',211)->where("estado","1")->orderBy('id')->first();
+
+		//var_dump($derechoRevision->id);exit();
+		$proyectista_asociado = Proyectista::where("id_solicitud",$derechoRevision->id)->where('id_tipo_profesional',212)->where("estado","1")->orderBy('id')->get();
+
+		$agremiado_principal = Agremiado::find($proyectista_principal->id_agremiado);
+		$datos_agremiado_principal = $agremiado_model->getAgremiado(85,$agremiado_principal->numero_cap);
+		
+		$persona_principal = Persona::where("id",$agremiado_principal->id_persona)->where("estado","1")->first();
+		$datos_persona_principal = $persona_model->getPersona(78,$persona_principal->numero_documento);
+
+        return view('frontend.derecho_revision.visualizar_solicitud',compact('id', 'derechoRevision', 'agremiado_principal', 'persona_principal', 'proyecto2', 'datos_agremiado_principal', 'datos_persona_principal', 'proyectista_asociado'));
     }
 
 	public function send_nuevo_registro_solicitud_edificacion(Request $request){
@@ -2668,6 +2702,9 @@ class DerechoRevisionController extends Controller
 		$situacion_row = $request->situacion_row;
 		$telefono_row = $request->telefono_row;
 		$email_row = $request->email_row;
+		$descripcion_archivo = $request->descripcion_archivo;
+		$btnArchivoAdicional = $request->btnArchivoAdicional;
+		
 		//$ubigeo = Ubigeo::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		
 		if($request->id == 0){
@@ -2957,14 +2994,14 @@ class DerechoRevisionController extends Controller
 		
 			foreach($descripcion_archivo as $key=>$row){
 				
-				$solicitud_documento_plano = new SolicitudDocumento;
+				$solicitud_documento_adicional = new SolicitudDocumento;
 
 				$path = "img/solicitud_derecho_revision_edificaciones/archivos_adicionales";
 				if (!is_dir($path)) {
 					mkdir($path);
 				}
 
-				if (isset($_FILES["btnPlanoUbicacion"]) && $_FILES["btnPlanoUbicacion"]["error"] == UPLOAD_ERR_OK) {
+				if (isset($_FILES["btnArchivoAdicional"]) && $_FILES["btnArchivoAdicional"]["error"][$key] == UPLOAD_ERR_OK) {
 
 					$path = "img/solicitud_derecho_revision_edificaciones/archivos_adicionales/".$id_derecho_revision;
 					if (!is_dir($path)) {
@@ -2973,22 +3010,201 @@ class DerechoRevisionController extends Controller
 
 					$filepath = public_path($path.'/');
 
-					$filename = "plano_ubicacion_".date("YmdHis") . substr((string)microtime(), 1, 6);
-					$type=$this->extension($_FILES["btnPlanoUbicacion"]["name"]);
+					$filename = "archivos_adicionales_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnArchivoAdicional"]["name"][$key]);
 					$filenamefirma=$filename.".".$type;
 
-					move_uploaded_file($_FILES["btnPlanoUbicacion"]["tmp_name"], $filepath.$filenamefirma);
+					move_uploaded_file($_FILES["btnArchivoAdicional"]["tmp_name"][$key], $filepath.$filenamefirma);
 
-					$solicitud_documento_plano->id_tipo_documento = 4;
-					$solicitud_documento_plano->descripcion = "Plano Ubicacion";
-					$solicitud_documento_plano->ruta_archivo = $path."/".$filenamefirma;
-					$solicitud_documento_plano->estado = 1;
-					$solicitud_documento_plano->id_usuario_inserta = $id_user;
-					$solicitud_documento_plano->id_solicitud = $id_derecho_revision;
-					$solicitud_documento_plano->save();
+					$solicitud_documento_adicional->id_tipo_documento = 7;
+					$solicitud_documento_adicional->descripcion = $descripcion_archivo[$key];
+					$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_adicional->estado = 1;
+					$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_adicional->save();
+				}
+			}
+		}
+
+		//dd($request->respuesta);exit();
+
+		if($request->respuesta==0){
+			$derecho_revision = DerechoRevision::find($id_derecho_revision);
+			$derecho_revision->planta_tipica = $request->respuesta;
+			$derecho_revision->save();
+		}else{
+			$derecho_revision = DerechoRevision::find($id_derecho_revision);
+			$derecho_revision->planta_tipica = $request->respuesta;
+			$derecho_revision->save();
+
+			if ($request->hasFile('btnPlanoDistribucion1') && $request->file('btnPlanoDistribucion1')->isValid()) {
+				
+				$solicitud_documento_adicional = new SolicitudDocumento;
+
+				$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/";
+				if (!is_dir($path)) {
+					mkdir($path);
 				}
 
+				if (isset($_FILES["btnPlanoDistribucion1"]) && $_FILES["btnPlanoDistribucion1"]["error"] == UPLOAD_ERR_OK) {
+
+					$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/".$id_derecho_revision;
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
+
+					$filepath = public_path($path.'/');
+
+					$filename = "planos_distribucion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnPlanoDistribucion1"]["name"]);
+					$filenamefirma=$filename.".".$type;
+
+					move_uploaded_file($_FILES["btnPlanoDistribucion1"]["tmp_name"], $filepath.$filenamefirma);
+
+					$solicitud_documento_adicional->id_tipo_documento = 8;
+					$solicitud_documento_adicional->descripcion = "Planos de Distribucion de Plantas Tipicas";
+					$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_adicional->estado = 1;
+					$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_adicional->save();
+				}
 			}
+			
+			if ($request->hasFile('btnPlanoDistribucion2') && $request->file('btnPlanoDistribucion2')->isValid()) {
+				
+				$solicitud_documento_adicional = new SolicitudDocumento;
+
+				$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/";
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				if (isset($_FILES["btnPlanoDistribucion2"]) && $_FILES["btnPlanoDistribucion2"]["error"] == UPLOAD_ERR_OK) {
+
+					$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/".$id_derecho_revision;
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
+
+					$filepath = public_path($path.'/');
+
+					$filename = "planos_distribucion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnPlanoDistribucion2"]["name"]);
+					$filenamefirma=$filename.".".$type;
+
+					move_uploaded_file($_FILES["btnPlanoDistribucion2"]["tmp_name"], $filepath.$filenamefirma);
+
+					$solicitud_documento_adicional->id_tipo_documento = 8;
+					$solicitud_documento_adicional->descripcion = "Planos de Distribucion de Plantas Tipicas";
+					$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_adicional->estado = 1;
+					$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_adicional->save();
+				}
+			}
+
+			if ($request->hasFile('btnPlanoDistribucion3') && $request->file('btnPlanoDistribucion3')->isValid()) {
+				
+				$solicitud_documento_adicional = new SolicitudDocumento;
+
+				$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/";
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				if (isset($_FILES["btnPlanoDistribucion3"]) && $_FILES["btnPlanoDistribucion3"]["error"] == UPLOAD_ERR_OK) {
+
+					$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/".$id_derecho_revision;
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
+
+					$filepath = public_path($path.'/');
+
+					$filename = "planos_distribucion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnPlanoDistribucion3"]["name"]);
+					$filenamefirma=$filename.".".$type;
+
+					move_uploaded_file($_FILES["btnPlanoDistribucion3"]["tmp_name"], $filepath.$filenamefirma);
+
+					$solicitud_documento_adicional->id_tipo_documento = 8;
+					$solicitud_documento_adicional->descripcion = "Planos de Distribucion de Plantas Tipicas";
+					$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_adicional->estado = 1;
+					$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_adicional->save();
+				}
+			}
+
+			if ($request->hasFile('btnPlanoDistribucion4') && $request->file('btnPlanoDistribucion4')->isValid()) {
+				
+				$solicitud_documento_adicional = new SolicitudDocumento;
+
+				$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/";
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				if (isset($_FILES["btnPlanoDistribucion4"]) && $_FILES["btnPlanoDistribucion4"]["error"] == UPLOAD_ERR_OK) {
+
+					$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/planos_distribucion/".$id_derecho_revision;
+					if (!is_dir($path)) {
+						mkdir($path);
+					}
+
+					$filepath = public_path($path.'/');
+
+					$filename = "planos_distribucion_".date("YmdHis") . substr((string)microtime(), 1, 6);
+					$type=$this->extension($_FILES["btnPlanoDistribucion4"]["name"]);
+					$filenamefirma=$filename.".".$type;
+
+					move_uploaded_file($_FILES["btnPlanoDistribucion4"]["tmp_name"], $filepath.$filenamefirma);
+
+					$solicitud_documento_adicional->id_tipo_documento = 8;
+					$solicitud_documento_adicional->descripcion = "Planos de Distribucion de Plantas Tipicas";
+					$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+					$solicitud_documento_adicional->estado = 1;
+					$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+					$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+					$solicitud_documento_adicional->save();
+				}
+			}
+
+			$solicitud_documento_adicional = new SolicitudDocumento;
+
+			$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/declaracion_jurada/";
+			if (!is_dir($path)) {
+				mkdir($path);
+			}
+
+			if (isset($_FILES["btnDeclaracion"]) && $_FILES["btnDeclaracion"]["error"] == UPLOAD_ERR_OK) {
+
+				$path = "img/solicitud_derecho_revision_edificaciones/planta_tipica/declaracion_jurada/".$id_derecho_revision;
+				if (!is_dir($path)) {
+					mkdir($path);
+				}
+
+				$filepath = public_path($path.'/');
+
+				$filename = "declaracion_jurada_".date("YmdHis") . substr((string)microtime(), 1, 6);
+				$type=$this->extension($_FILES["btnDeclaracion"]["name"]);
+				$filenamefirma=$filename.".".$type;
+
+				move_uploaded_file($_FILES["btnDeclaracion"]["tmp_name"], $filepath.$filenamefirma);
+
+				$solicitud_documento_adicional->id_tipo_documento = 9;
+				$solicitud_documento_adicional->descripcion = "Declaracion Jurada Firmada";
+				$solicitud_documento_adicional->ruta_archivo = $path."/".$filenamefirma;
+				$solicitud_documento_adicional->estado = 1;
+				$solicitud_documento_adicional->id_usuario_inserta = $id_user;
+				$solicitud_documento_adicional->id_solicitud = $id_derecho_revision;
+				$solicitud_documento_adicional->save();
+			}
+
 		}
 
 		return $derecho_revision->id;

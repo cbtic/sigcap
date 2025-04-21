@@ -103,10 +103,10 @@
 					@if(Gate::check('Licencias'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">Licencias</a>
+						   aria-haspopup="true" aria-expanded="false">Data Licencias</a>
 						   <div class="dropdown-menu" aria-labelledby="navbarDropdownPrueba">
 						   		@can('Licencias')
-								<a href="/derecho_revision/create_solicitud" class="dropdown-item">Registro de Solicitud</a>
+								<a href="/derecho_revision/create_solicitud" class="dropdown-item">Registrar Solicitud de Derecho de Revisi&oacute;n</a>
 								@endcan
 						   </div>
 					</li>
