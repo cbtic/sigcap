@@ -277,7 +277,7 @@ $(document).ready(function () {
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Solicitud de Derecho de Revisi&oacute;n - Reintegro</li>
+            <li class="breadcrumb-item active">Solicitud de Derecho de Revisi&oacute;n</li>
         </li>
     </ol>
 @endsection
@@ -295,7 +295,7 @@ $(document).ready(function () {
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0" style="color: #1538C8;">
-                        Solicitud de Reintegro de Derecho de Revisi&oacute;n<!--<small class="text-muted">Usuarios activos</small>-->
+                        Solicitud de Derecho de Revisi&oacute;n<!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -973,7 +973,7 @@ $(document).ready(function () {
 										<div class="row presupuesto-row">
 											<div class="col-lg-4" style=";padding-right:15px">
 												<label class="control-label form-control-sm color-letra">Tipo de Obra</label>
-												<select name="tipo_obra[]" id="tipo_obra" class="form-control form-control-sm" onChange="">
+												<select name="tipo_obra[]" id="tipo_obra" class="form-control form-control-sm" onChange="activarSubTipoObra(this);obtenerSubTipoObra(this)">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($tipo_obra as $row_) {?>
@@ -983,6 +983,16 @@ $(document).ready(function () {
 													?>
 												</select>
 											</div>
+
+											<div class="col-lg-2" style=";padding-right:15px; display: none;" id="div_sub_tipo_obra">
+												<label class="control-label form-control-sm color-letra">Sub-Tipo Obra</label>
+												<select name="sub_tipo_obra[]" id="sub_tipo_obra" class="form-control form-control-sm" onChange="">
+													<option value="">--Seleccionar--</option>
+													<?php
+													?>
+												</select>
+											</div>
+
 											<div class="col-lg-2">
 												<label class="control-label form-control-sm color-letra">&Aacute;rea Techada m2</label>
 												<input id="area_techada_presupuesto" name="area_techada_presupuesto[]" on class="form-control form-control-sm"  value="<?php //echo number_format($row->area_techada, 2, '.', ',');?>" type="text">

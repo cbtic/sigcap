@@ -1952,38 +1952,75 @@ function obtenerSubTipoUso(obj){
 	var valorSeleccionado = $(obj).val();
 		//alert(valorSeleccionado);
 		
-		$.ajax({
-			url: '/concurso/listar_maestro_by_tipo_subtipo/111/'+valorSeleccionado,
-			dataType: "json",
-			success: function(result){
-				var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
-				$(obj).parent().parent().find("#sub_tipo_uso").html("");
-                $(result).each(function (ii, oo) {
-                    option += "<option value='" + oo.codigo + "'>" + oo.denominacion + "</option>";
-                });
-                //$("#sub_tipo_uso").html(option);
-				$(obj).parent().parent().find("#sub_tipo_uso").html(option);
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/111/'+valorSeleccionado,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
+			$(obj).parent().parent().find("#sub_tipo_uso").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='" + oo.codigo + "'>" + oo.denominacion + "</option>";
+			});
+			//$("#sub_tipo_uso").html(option);
+			$(obj).parent().parent().find("#sub_tipo_uso").html(option);
 
-				setTimeout(function() {
-					const subTipoSelect = $(obj).parent().parent().find("#sub_tipo_uso");
+			setTimeout(function() {
+				const subTipoSelect = $(obj).parent().parent().find("#sub_tipo_uso");
 
-					subTipoSelect.off('change').on('change', function() {
-						
-						if ($(this).val() == '5') {
-							const toggleButton = document.getElementById('toggleButton');
-							const respuestaInput = document.getElementById('respuesta');
-							const fileInputs = document.getElementById('fileInputs');
+				subTipoSelect.off('change').on('change', function() {
+					
+					if ($(this).val() == '5') {
+						const toggleButton = document.getElementById('toggleButton');
+						const respuestaInput = document.getElementById('respuesta');
+						const fileInputs = document.getElementById('fileInputs');
 
-							toggleButton.classList.remove('no');
-							toggleButton.textContent = 'Si';
-							respuestaInput.value = 1;
-							if (fileInputs) fileInputs.style.display = 'block';
-						}
-					});
-				}, 100);
-			}
-			
-		});
+						toggleButton.classList.remove('no');
+						toggleButton.textContent = 'Si';
+						respuestaInput.value = 1;
+						if (fileInputs) fileInputs.style.display = 'block';
+					}
+				});
+			}, 100);
+		}
+		
+	});
+	
+}
+
+function activarSubTipoObra(obj){
+
+	var valorSeleccionado = $(obj).val();
+
+	var divSubTipoObra = $(obj).closest('.row').find('#div_sub_tipo_obra');
+
+	if(valorSeleccionado==6 || valorSeleccionado==7 || valorSeleccionado==8){
+		divSubTipoObra.show();
+	}else{
+		divSubTipoObra.hide();
+	}
+
+}
+
+function obtenerSubTipoObra(obj){
+	//var valorSeleccionado = document.getElementById("tipo_uso").value;
+	var valorSeleccionado = $(obj).val();
+		//alert(valorSeleccionado);
+		
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/112/'+valorSeleccionado,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
+			$(obj).parent().parent().find("#sub_tipo_obra").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='" + oo.codigo + "'>" + oo.denominacion + "</option>";
+			});
+			//$("#sub_tipo_uso").html(option);
+			$(obj).parent().parent().find("#sub_tipo_obra").html(option);
+
+		}
+		
+	});
 	
 }
 

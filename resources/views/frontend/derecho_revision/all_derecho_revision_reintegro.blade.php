@@ -546,7 +546,7 @@ if($('#instancia').val()==250){
 							<div class="col-lg-1">
 								<div class="form-group" id="dni_propietario_">
 								<label class="control-label form-control-sm">DNI</label>
-								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm" value="<?php echo isset($propietario_solicitud) && $propietario_solicitud[0]->id_tipo_propietario=='78' ? $propietario_solicitud[0]->numero_documento : '';?>" type="text" onchange="obtenerDatosDni()" readonly='readonly'>
+								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm" value="<?php echo isset($propietario_solicitud) && $propietario_solicitud[0]->id_tipo_propietario=='78' || $propietario_solicitud[0]->id_tipo_propietario=='84' ? $propietario_solicitud[0]->numero_documento : '';?>" type="text" onchange="obtenerDatosDni()" readonly='readonly'>
 								</div>
 								<div class="form-group" id="ruc_propietario_">
 									<label class="control-label form-control-sm">RUC</label>
