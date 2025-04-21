@@ -2011,6 +2011,16 @@ class DerechoRevisionController extends Controller
 			$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
 			$empresa = null;
 		}
+
+		if($request->id_tipo_documento=='83'){
+			$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
+			$empresa = null;
+		}
+
+		if($request->id_tipo_documento=='259'){
+			$persona = Persona::where("numero_documento",$request->dni_propietario)->where("estado","1")->first();
+			$empresa = null;
+		}
 		
 		if($request->id_tipo_documento=='79'){
 			$persona = null;
