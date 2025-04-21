@@ -24,6 +24,7 @@ use App\Models\Efectivo;
 use App\Models\EfectivoDetalle;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
+use PhpOffice\PhpSpreadsheet\Calculation\TextData\Replace;
 
 class IngresoController extends Controller
 {
@@ -914,7 +915,11 @@ class IngresoController extends Controller
 
     }
     public function exonerar_valorizacion(Request $request,$motivo){
-        $msg = "";
+        $msg = "";        
+        $motivo_ = str_replace(['&', '/', '$', '\'', '\\'], '', $motivo);
+
+        echo($motivo_);exit();
+
         $id_user = Auth::user()->id;
         $nombre_user= Auth::user()->name;  //user::find ($id_user);
         //print_r($request->comprobante_detalle); exit();
@@ -930,7 +935,7 @@ class IngresoController extends Controller
                     $valorizacion = Valorizacione::find($id);            
                     $valorizacion-> exonerado = "1";
                     $valorizacion-> id_usuario_actualiza = $id_user;                    
-                    $valorizacion-> exonerado_motivo = $motivo .  " usuario: ". $nombre_user . " Fecha: " . Carbon::now()->format('Y-m-d'); ;                    
+                    $valorizacion-> exonerado_motivo = $motivo_ .  " usuario: ". $nombre_user . " Fecha: " . Carbon::now()->format('Y-m-d'); ;                    
                     $valorizacion->save();  
                    
                     //$agremiado_ = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();

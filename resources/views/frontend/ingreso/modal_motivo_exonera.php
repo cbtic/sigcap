@@ -251,6 +251,11 @@ legend.scheduler-border {
 <script type="text/javascript">
 	$(document).ready(function() {
 
+	document.getElementById('motivo_').addEventListener('input', function(e) {
+    	// Elimina los caracteres no permitidos: /, \t (tabulación), 0, $
+		this.value = this.value.replace(/[\/\$&]/g, '');
+	});
+
 	//$('#tblConceptos tbody').html("");			
 	$('#tblConceptos').DataTable({
 		//"sPaginationType": "full_numbers",

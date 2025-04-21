@@ -236,6 +236,8 @@ class DerechoRevisionController extends Controller
 			/*****Edificaciones*********/
 			if($id_tipo_solicitud == 123){
 				
+				$id_tipo_documento = 20;
+
 				$sub_total 	= (0.0005*$valor_obra);
 				$igv		= (0.18*$sub_total);
 				$total		= $sub_total + $igv;
@@ -256,6 +258,8 @@ class DerechoRevisionController extends Controller
 			
 			/*****Habilitaciones urbanas*********/
 			if($id_tipo_solicitud == 124){
+				
+				$id_tipo_documento = 22;
 				
 				$m2 = 0.23405;
 				
@@ -287,7 +291,14 @@ class DerechoRevisionController extends Controller
 				
 			}
 			
-			$codigo1 = $derechoRevision_model->getCodigoSolicitud($id_tipo_solicitud);
+			$codigoSolicitud = $derechoRevision_model->getCodigoSolicitud($id_tipo_solicitud);
+			$codigo1 = $codigoSolicitud->codigo;
+			$numero_correlativo = $codigoSolicitud->numero;
+
+			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",$id_tipo_documento)->where("estado",1)->first();			
+			$numeracionDocumento->numero = $numero_correlativo;
+			$numeracionDocumento->save();
+
 			$codigo2 = $derechoRevision_model->getCountProyectoTipoSolicitud($solicitud->id_proyecto,$id_tipo_solicitud);
 			$codigo = $codigo1.$codigo2;
 			
@@ -467,9 +478,14 @@ class DerechoRevisionController extends Controller
 			$codigoSolicitud = $derechoRevision_model->getCodigoSolicitud($id_tipo_solicitud);
 			$codigo1 = $codigoSolicitud->codigo;
 			$numero_correlativo = $codigoSolicitud->numero;
+
+			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",$id_tipo_documento)->where("estado",1)->first();			
+			$numeracionDocumento->numero = $numero_correlativo;
+			$numeracionDocumento->save();
+
 			$codigo2 = $derechoRevision_model->getCountProyectoTipoSolicitud($solicitud->id_proyecto,$id_tipo_solicitud);
 			$codigo = $codigo1.$codigo2;
-			
+
 			$id_user = Auth::user()->id;
 			$liquidacion = new Liquidacione;
 			$liquidacion->id_solicitud = $request->id;
@@ -485,7 +501,7 @@ class DerechoRevisionController extends Controller
 			
 			$id_liquidacion = $liquidacion->id;
 			//echo $id_liquidacion;
-			
+
 			$valorizacion = new Valorizacione;
 			$valorizacion->id_modulo = 7;
 			$valorizacion->pk_registro = $liquidacion->id;
@@ -511,9 +527,9 @@ class DerechoRevisionController extends Controller
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
 			
-			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",$id_tipo_documento)->where("estado",1)->first();			
-			$numeracionDocumento->numero = $numero_correlativo;
-			$numeracionDocumento->save();
+			//$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",$id_tipo_documento)->where("estado",1)->first();			
+			//$numeracionDocumento->numero = $numero_correlativo;
+			//$numeracionDocumento->save();
 			
 			$sw = true;
 		}else{
@@ -2080,6 +2096,8 @@ class DerechoRevisionController extends Controller
 			/*****Edificaciones*********/
 			if($solicitud_matriz->id_tipo_solicitud == 123){
 				
+				$id_tipo_documento = 20;
+
 				if($request->tipo_liquidacion1==136){
 					//$valor_obra = $request->total2;
 					$sub_total 	= $request->sub_total2;
@@ -2114,6 +2132,8 @@ class DerechoRevisionController extends Controller
 			
 			if($solicitud_matriz->id_tipo_solicitud == 124){
 				
+				$id_tipo_documento = 22;
+
 				$m2 = $parametro->valor_metro_cuadrado_habilitacion_urbana;
 				
 				$sub_total 	= ($m2*$area_total);
@@ -2149,6 +2169,11 @@ class DerechoRevisionController extends Controller
 			$codigoSolicitud = $derecho_revision->getCodigoSolicitud($solicitud_matriz->id_tipo_solicitud);
 			$codigo1 = $codigoSolicitud->codigo;
 			$numero_correlativo = $codigoSolicitud->numero;
+
+			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",$id_tipo_documento)->where("estado",1)->first();
+			$numeracionDocumento->numero = $numero_correlativo;
+			$numeracionDocumento->save();
+
 			$codigo2 = $derecho_revision->getCountProyectoTipoSolicitud($solicitud_matriz->id_proyecto,$solicitud_matriz->id_tipo_solicitud);
 			$codigo = $codigo1.$codigo2;
 			
@@ -2188,9 +2213,9 @@ class DerechoRevisionController extends Controller
 			$valorizacion->id_usuario_inserta = $id_user;
 			$valorizacion->save();
 			
-			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",20)->where("estado",1)->first();
-			$numeracionDocumento->numero = $numero_correlativo;
-			$numeracionDocumento->save();
+			//$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",20)->where("estado",1)->first();
+			//$numeracionDocumento->numero = $numero_correlativo;
+			//$numeracionDocumento->save();
 			
 			$sw = true;
 		}
