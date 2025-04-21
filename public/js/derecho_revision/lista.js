@@ -1044,38 +1044,6 @@ function datatablenew(){
 				"aTargets": [9],
 				"className": "dt-center",
 				},
-				/*
-				{
-				"mRender": function (data, type, row) {
-					var nombre_agremiado = "";
-					if(row.desc_cliente!= null)nombre_agremiado = row.desc_cliente;
-					return nombre_agremiado;
-				},
-				"bSortable": false,
-				"aTargets": [5],
-				"className": "dt-center",
-				},
-				{
-				"mRender": function (data, type, row) {
-					var numero_documento = "";
-					if(row.numero_documento!= null)numero_documento = row.numero_documento;
-					return numero_documento;
-				},
-				"bSortable": false,
-				"aTargets": [6],
-				"className": "dt-center",
-				},
-				{
-				"mRender": function (data, type, row) {
-					var nombre_propietario = "";
-					if(row.propietario!= null)nombre_propietario = row.propietario;
-					return nombre_propietario;
-				},
-				"bSortable": false,
-				"aTargets": [7],
-				"className": "dt-center",
-				},
-				*/
 				{
 				"mRender": function (data, type, row) {
 					var credipago = "";
@@ -1134,7 +1102,8 @@ function datatablenew(){
 					}
 				
 					var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-					//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarSolicitud('+row.id+')" ><i class="fa fa-edit"></i> Editar</button>';
+					html += '<a href="/derecho_revision/editar_derecho_revision_edificaciones/'+row.id+'" onclick="" class="btn btn-sm btn-success" style="font-size:12px;margin-left:10px" id=""><i class="fa fa-edit"></i> Editar</a>';
+					//html += '<button style="font-size:12px" type="button" class="btn btn-sm btn-success" data-toggle="modal" onclick="editarSolicitud('+row.id+')" ><i class="fa fa-edit"></i>Editar</button>';
 					
 					html += '<button style="font-size:12px;color:#FFFFFF;margin-left:10px" type="button" class="btn btn-sm btn-info" data-toggle="modal" onclick="modalVerCredipago('+row.id+')"><i class="fa fa-edit" style="font-size:9px!important"></i> Ver Credipago</button>';
 					if (row.id_resultado == 1 && row.estado != 0) {
@@ -1533,8 +1502,6 @@ function fn_eliminar_solicitud_hu(id,estado){
 }
 
 function editarSolicitud(id){
-	
-	//$("#divDocumentos").hide();
 	
 	$.ajax({
 		url: '/derecho_revision/obtener_solicitud/'+id,

@@ -837,5 +837,7 @@ Route::get('ingreso/eliminar_efectivo/{id}/{estado}', [IngresoController::class,
 Route::get('tipo_cambio/validar_fecha/{fecha}', [TipoCambioController::class, 'validar_fecha'])->name('tipo_cambio.validar_fecha');
 Route::post('derecho_revision/send_nuevo_registro_solicitud_edificacion', [DerechoRevisionController::class, 'send_nuevo_registro_solicitud_edificacion'])->name('derecho_revision.send_nuevo_registro_solicitud_edificacion');
 Route::get('reporte/exportar_reporte_caja/{id}/{fini}/{ffin}/{opc1}/{opc2}/{opc3}', [ReporteController::class, 'exportar_reporte_caja'])->name('reporte.exportar_reporte_caja');
+Route::get('agremiado/obtener_datos_agremiado_proyectista/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_proyectista'])->name('agremiado.obtener_datos_agremiado_proyectista');
+Route::get('derecho_revision/editar_derecho_revision_edificaciones/{id}', [DerechoRevisionController::class, 'editar_derecho_revision_edificaciones'])->name('derecho_revision.editar_derecho_revision_edificaciones');
 
 
