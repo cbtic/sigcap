@@ -411,7 +411,6 @@ function valida_ultimo_pago(){
 								$('.loader').hide();
 								Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
 							}
-
 						}else{
 							$('.loader').hide();
 							Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")

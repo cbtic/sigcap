@@ -259,13 +259,13 @@ function calcularReintegro(){
 
 $(document).ready(function () {
 	$('#id_review_request-is_typical_plants').on('change', function () {
-			if ($(this).prop('checked')) {
-				$('#switch-container').removeClass('btn-danger off').addClass('btn-success on');
-			} else {
-				$('#switch-container').removeClass('btn-success on').addClass('btn-danger off');
-			}
-		});
+		if ($(this).prop('checked')) {
+			$('#switch-container').removeClass('btn-danger off').addClass('btn-success on');
+		} else {
+			$('#switch-container').removeClass('btn-success on').addClass('btn-danger off');
+		}
 	});
+});
 
 </script>
 
@@ -277,7 +277,7 @@ $(document).ready(function () {
 @section('breadcrumb')
 <ol class="breadcrumb" style="padding-left:130px;margin-top:0px;background-color:#283659">
         <li class="breadcrumb-item text-primary">Inicio</li>
-            <li class="breadcrumb-item active">Solicitud de Derecho de Revisi&oacute;n - Reintegro</li>
+            <li class="breadcrumb-item active">Solicitud de Derecho de Revisi&oacute;n</li>
         </li>
     </ol>
 @endsection
@@ -295,7 +295,7 @@ $(document).ready(function () {
             <div class="row">
                 <div class="col-sm-5">
                     <h4 class="card-title mb-0" style="color: #1538C8;">
-                        Solicitud de Reintegro de Derecho de Revisi&oacute;n<!--<small class="text-muted">Usuarios activos</small>-->
+                        Solicitud de Derecho de Revisi&oacute;n<!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
             </div>
@@ -323,10 +323,9 @@ $(document).ready(function () {
 						<!--<input type="hidden" name="codigo_proyecto" id="codigo_proyecto" value="<?php //echo $proyecto2->codigo?>">-->
 
 						<div class="row" style="padding-left:10px">
-							<div class="row" style="padding-left:10px">
-								<div class="col-lg-5">
+								<div class="col-lg-3">
 									<label class="control-label form-control-sm color-letra">Municipalidad</label>
-									<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onChange="obtenerUbigeoReintegro()"> 
+									<select name="municipalidad" id="municipalidad" class="form-control form-control-sm"> 
 										<?php
 										$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
 										?>
@@ -338,19 +337,29 @@ $(document).ready(function () {
 									</select>
 								</div>
 						
-								<div class="col-lg-4">
+								<div class="col-lg-2">
 									<label class="control-label form-control-sm color-letra">N° de Revisi&oacute;n</label>
-									<select name="n_revision" id="n_revision" class="form-control form-control-sm" value="<?php //echo $derechoRevision_->numero_revision?>">
+									<select name="n_revision" id="n_revision" class="form-control form-control-sm" onChange="obtenerSolicitud()" value="<?php //echo $derechoRevision_->numero_revision?>">
 									<?php
-									$valorSeleccionado = isset($derechoRevision_->numero_revision) ? $derechoRevision_->numero_revision : '';
-									?>
-									<option value="" <?php echo ($valorSeleccionado == '') ? 'selected="selected"' : ''; ?>>--Seleccionar--</option>
-									<option value="1" <?php echo ($valorSeleccionado == '1') ? 'selected="selected"' : ''; ?>>1</option>
-									<option value="3" <?php echo ($valorSeleccionado == '3') ? 'selected="selected"' : ''; ?>>3</option>
-									<option value="5" <?php echo ($valorSeleccionado == '5') ? 'selected="selected"' : ''; ?>>5</option>
+										$valorSeleccionado = isset($derechoRevision_->numero_revision) ? $derechoRevision_->numero_revision : '';
+										?>
+										<option value="">--Selecionar--</option>
+										<?php
+											foreach ($numero_revision as $row) {
+										?>
+										<option value="<?php echo $row->codigo ?>" <?php echo ($valorSeleccionado == $row->codigo) ? 'selected="selected"' : ''; ?>><?php echo $row->denominacion ?></option> <?php } ?>
 									</select>
 								</div>
-							</div>
+
+								<div class="col-lg-3" id="div_numero_expediente">
+									<label class="control-label form-control-sm color-letra">N&uacute;mero de Expediente</label>
+									<input id="numero_expediente" name="numero_expediente" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->nombre?>" type="text" onchange="buscarSolicitudbyNumeroExpediente()">
+								</div>
+
+								<div class="col-lg-3" id="div_codigo_proyecto">
+									<label class="control-label form-control-sm color-letra">C&oacute;digo de Proyecto</label>
+									<input id="codigo_proyecto" name="codigo_proyecto" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->nombre?>" type="text" onchange="buscarSolicitudbyCodigoProyecto()">
+								</div>
 						</div>
 						<div class="row" style="padding-left:10px">
 
@@ -517,14 +526,11 @@ $(document).ready(function () {
 									?>
 								</select>
 							</div>
+							<?php if ($rol_proyectista[0]->nombre_rol == 'Proyectista' || $rol_proyectista[0]->nombre_rol == 'Administrator') : ?>
 							<div class="col-lg-3" >
 								<div class="form-group "id="agremiado_">
 									<label class="control-label form-control-sm color-letra">Nombre</label>
 									<input id="agremiado_principal" name="agremiado_principal" on class="form-control form-control-sm"  value="<?php echo $agremiado_principal->nombres.' '. $agremiado_principal->apellido_paterno.' '. $agremiado_principal->apellido_materno?>" type="text" readonly='readonly'>
-								</div>
-								<div class="form-group" id="persona_">
-									<label class="control-label form-control-sm color-letra">Nombre/Raz&oacute;n Social</label>
-									<input id="persona" name="persona" on class="form-control form-control-sm"  value="<?php //echo $persona->nombres?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 							<div class="col-lg-1">
@@ -533,19 +539,11 @@ $(document).ready(function () {
 									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="<?php echo $agremiado_principal->numero_cap?>" type="text" onchange="obtenerProyectista()"readonly='readonly'>
 									<input id="tipo_colegiatura_principal" name="tipo_colegiatura_principal" value="<?php //echo $datos_proyectista[0]->tipo_colegiatura?>" type="hidden" >
 								</div>
-								<div class="form-group" id="dni_">
-									<label class="control-label form-control-sm color-letra">DNI</label>
-									<input id="dni" name="dni" on class="form-control form-control-sm"  value="<?php //echo $persona->numero_documento?>" type="text" onchange="obtenerPropietario()">
-								</div>
 							</div>
 							<div class="col-lg-1">
 								<div class="form-group" id="situacion_">
 									<label class="control-label form-control-sm color-letra">Situaci&oacute;n</label>
 									<input id="situacion_principal" name="situacion_principal" on class="form-control form-control-sm"  value="<?php echo $agremiado_principal->situacion?>" type="text" readonly='readonly'>
-								</div>
-								<div class="form-group" id="fecha_nacimiento_">
-									<label class="control-label form-control-sm color-letra">Fecha de Nacimiento</label>
-									<input id="fecha_nacimiento" name="fecha_nacimiento" on class="form-control form-control-sm"  value="<?php //echo $agremiado_principal->fecha_colegiado?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 
@@ -554,20 +552,12 @@ $(document).ready(function () {
 									<label class="control-label form-control-sm color-letra">T&eacute;lefono</label>
 									<input id="direccion_agremiado_principal" name="direccion_agremiado_principal" on class="form-control form-control-sm"  value="<?php echo $agremiado_principal->celular?>" type="text" readonly='readonly'>
 								</div>
-								<div class="form-group" id="direccion_persona_">
-									<label class="control-label form-control-sm color-letra">Direcci&oacute;n</label>
-									<input id="direccion_persona" name="direccion_persona" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->direccion?>" type="text" readonly='readonly'>
-								</div>
 							</div>
 
 							<div class="col-lg-3">
 								<div class="form-group" id="n_regional_">
 									<label class="control-label form-control-sm color-letra">Email</label>
 									<input id="email_agremiado_principal" name="email_agremiado_principal" on class="form-control form-control-sm"  value="<?php echo $agremiado_principal->email?>" type="text" readonly='readonly'>
-								</div>
-								<div class="form-group" id="celular_">
-									<label class="control-label form-control-sm color-letra">Celular</label>
-									<input id="celular" name="celular" on class="form-control form-control-sm"  value="<?php //echo $datos_persona->numero_celular?>" type="text" readonly='readonly'>
 								</div>
 							</div>
 							<div class="col-lg-3">
@@ -582,10 +572,59 @@ $(document).ready(function () {
 									<?php endif; ?>
 								</div>
 							</div>
+							<?php elseif ($rol_proyectista[0]->nombre_rol == 'Administrado') : ?>
+
+								<div class="col-lg-3" >
+								<div class="form-group "id="agremiado_">
+									<label class="control-label form-control-sm color-letra">Nombre</label>
+									<input id="agremiado_principal" name="agremiado_principal" on class="form-control form-control-sm"  value="" type="text" readonly="readonly">
+								</div>
+							</div>
+							<div class="col-lg-1">
+								<div class="form-group" id="numero_cap_">
+									<label class="control-label form-control-sm color-letra">N° CAP<?php //echo $datos_proyectista[0]->tipo_colegiatura?></label>
+									<input id="numero_cap" name="numero_cap" on class="form-control form-control-sm"  value="" type="text" onchange="obtenerProyectista()">
+									<input id="tipo_colegiatura_principal" name="tipo_colegiatura_principal" value="<?php //echo $datos_proyectista[0]->tipo_colegiatura?>" type="hidden" >
+								</div>
+							</div>
+							<div class="col-lg-1">
+								<div class="form-group" id="situacion_">
+									<label class="control-label form-control-sm color-letra">Situaci&oacute;n</label>
+									<input id="situacion_principal" name="situacion_principal" on class="form-control form-control-sm"  value="" type="text" readonly='readonly'>
+								</div>
+							</div>
+
+							<div class="col-lg-1">
+								<div class="form-group" id="direccion_agremiado_">
+									<label class="control-label form-control-sm color-letra">T&eacute;lefono</label>
+									<input id="direccion_agremiado_principal" name="direccion_agremiado_principal" on class="form-control form-control-sm"  value="" type="text" readonly='readonly'>
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<div class="form-group" id="n_regional_">
+									<label class="control-label form-control-sm color-letra">Email</label>
+									<input id="email_agremiado_principal" name="email_agremiado_principal" on class="form-control form-control-sm"  value="" type="text" readonly='readonly'>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group" id="n_regional_">
+									<label class="control-label form-control-sm color-letra">Firma</label>
+									<?php if (!empty($agremiado_principal->firma)) : ?>
+										<img src="<?php echo asset('img/agremiado/' . $agremiado_principal->firma); ?>" 
+											alt="Firma del agremiado" 
+											class="firma-imagen">
+									<?php else : ?>
+										<p class="firma-no-registrada">No Registrada</p>
+									<?php endif; ?>
+								</div>
+							</div>
+
+							<?php endif; ?>
 							<!--<div class="col-lg-2">
 								<div class="form-group" id="act_gremial_">
 									<label class="control-label form-control-sm color-letra">Actividad Gremial</label>
-									<input id="act_gremial_agremiado_principal" name="act_gremial_agremiado_principal" on class="form-control form-control-sm"  value="<?php echo $agremiado_principal->actividad?>" type="text" readonly='readonly'>
+									<input id="act_gremial_agremiado_principal" name="act_gremial_agremiado_principal" on class="form-control form-control-sm"  value="<?php //echo $agremiado_principal->actividad?>" type="text" readonly='readonly'>
 								</div>
 								<div class="form-group" id="email_">
 									<label class="control-label form-control-sm color-letra">Email</label>
@@ -934,7 +973,7 @@ $(document).ready(function () {
 										<div class="row presupuesto-row">
 											<div class="col-lg-4" style=";padding-right:15px">
 												<label class="control-label form-control-sm color-letra">Tipo de Obra</label>
-												<select name="tipo_obra[]" id="tipo_obra" class="form-control form-control-sm" onChange="">
+												<select name="tipo_obra[]" id="tipo_obra" class="form-control form-control-sm" onChange="activarSubTipoObra(this);obtenerSubTipoObra(this)">
 													<option value="">--Selecionar--</option>
 													<?php
 													foreach ($tipo_obra as $row_) {?>
@@ -944,6 +983,16 @@ $(document).ready(function () {
 													?>
 												</select>
 											</div>
+
+											<div class="col-lg-2" style=";padding-right:15px; display: none;" id="div_sub_tipo_obra">
+												<label class="control-label form-control-sm color-letra">Sub-Tipo Obra</label>
+												<select name="sub_tipo_obra[]" id="sub_tipo_obra" class="form-control form-control-sm" onChange="">
+													<option value="">--Seleccionar--</option>
+													<?php
+													?>
+												</select>
+											</div>
+
 											<div class="col-lg-2">
 												<label class="control-label form-control-sm color-letra">&Aacute;rea Techada m2</label>
 												<input id="area_techada_presupuesto" name="area_techada_presupuesto[]" on class="form-control form-control-sm"  value="<?php //echo number_format($row->area_techada, 2, '.', ',');?>" type="text">
@@ -980,20 +1029,20 @@ $(document).ready(function () {
 							<div class="col-lg-2" style=";padding-right:15px; border-left:2px solid #ccc;">
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
-										<label class="control-label form-control-sm color-letra">&Aacute;rea Techada Total</label>
+										<label class="control-label form-control-sm color-letra">&Aacute;rea Techada Total de la Edificaci&oacute;n</label>
 										<input id="area_techada_total" name="area_techada_total" on class="form-control form-control-sm"  value="<?php //echo number_format($derechoRevision_->area_total, 2, '.', ',');?>" type="text" readonly='readonly'>
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
 										<label class="control-label form-control-sm color-letra">Azotea</label>
-										<input id="azotea" name="azotea" on class="form-control form-control-sm"  value="<?php //echo $derechoRevision_->azotea?>" type="text">
+										<input id="azotea" name="azotea" on class="form-control form-control-sm"  value="<?php echo isset($derechoRevision_->azotea) && $derechoRevision_->azotea !== '' ? $derechoRevision_->azotea : 0; ?>" type="text">
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
 										<label class="control-label form-control-sm color-letra">N° de Pisos</label>
-										<input id="n_pisos" name="n_pisos" on class="form-control form-control-sm"  value="<?php //echo $derechoRevision_->numero_piso?>" type="text">
+										<input id="n_pisos" name="n_pisos" on class="form-control form-control-sm"  value="<?php echo isset($derechoRevision_->numero_piso) && $derechoRevision_->numero_piso !== '' ? $derechoRevision_->numero_piso : 0; ?>" type="text">
 									</div>
 								</div>
 							</div>
@@ -1001,13 +1050,13 @@ $(document).ready(function () {
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
 										<label class="control-label form-control-sm color-letra">N° S&oacute;tanos</label>
-										<input id="n_sotanos" name="n_sotanos" on class="form-control form-control-sm"  value="<?php //echo $derechoRevision_->numero_sotano?>" type="text">
+										<input id="n_sotanos" name="n_sotanos" on class="form-control form-control-sm"  value="<?php echo isset($derechoRevision_->numero_sotano) && $derechoRevision_->numero_sotano !== '' ? $derechoRevision_->numero_sotano : 0; ?>" type="text">
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;padding-top:10px">
 									<div class="col-lg-8">
 										<label class="control-label form-control-sm color-letra">Semis&oacute;tano</label>
-										<input id="semisotano" name="semisotano" on class="form-control form-control-sm"  value="<?php //echo $derechoRevision_->semisotano?>" type="text">
+										<input id="semisotano" name="semisotano" on class="form-control form-control-sm"  value="<?php echo isset($derechoRevision_->semisotano) && $derechoRevision_->semisotano !== '' ? $derechoRevision_->semisotano : 0; ?>" type="text">
 									</div>
 								</div>
 								<div class="row" style="padding-left:10px;padding-top:10px">
@@ -1050,9 +1099,10 @@ $(document).ready(function () {
 								<label class="control-label form-control-sm" style="font-size:10px">*Archivo Obligatorio de Plano de Ubicaci&oacute;n</label>
 							</div>
 							<div class="col-sm-4">
-								<label class="control-label form-control-sm color-letra">FUE</label>
+								<label class="control-label form-control-sm color-letra">FUE COMPLETO</label>
 								<input type="file" class="form-control-file btn btn-sm btn-success" style="background-color: #FFFFFF !important; border: none !important; padding: 0 !important; box-shadow: none !important; color:black" id="btnFue" name="btnFue">
-								<label class="control-label form-control-sm" style="font-size:10px">*Archivo Obligatorio del Formulario &Uacute;nico de Edificaciones</label>
+								<label class="control-label form-control-sm" style="font-size:10px;">*Archivo Obligatorio del Formulario &Uacute;nico de Edificaciones</label>
+								<label class="control-label form-control-sm" style="font-size:12px; color:red; display: block;">Firmado por el/los proyectistas arquitectos</label>
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label form-control-sm color-letra">Presupuesto</label>

@@ -5,8 +5,11 @@ $(document).ready(function () {
 	obtenerDatosUbigeoReintegro();
 	obtenerDistritoReintegro();
 
+	obtenerSolicitud();
+	obtenerPropietario_();
 	//calculoVistaPrevia();
 	$('#solicitante_solicitud').hide();
+
 
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
@@ -113,7 +116,7 @@ $(document).ready(function () {
 	
 	$("#id_municipalidad_bus").select2();
 	$("#municipalidad_bus_hu").select2();
-	
+	$("#municipalidad").select2({ widht : "100%"});
 	
 	/*$('#numero_cap_').hide();
 	$('#agremiado_').hide();
@@ -127,9 +130,7 @@ $(document).ready(function () {
 	$('#direccion_persona_').hide();
 	$('#celular_').hide();
 	$('#email_').hide();
-
 	
-
 	$('#area_techada_presupuesto, #valor_unitario, #valor_reintegro').on('blur', function() {
         var input = $(this).val().replace(/[^0-9.]/g, '');
         $(this).val(formatoMoneda(input));
@@ -146,7 +147,6 @@ $(document).ready(function () {
 	cargarPeriodoHu();
 	datatablenew();
 	datatablenew2();
-	obtenerPropietario_();
 	//if($('#valor_reintegro').val()==0){
 		//calculoVistaPrevia();
 	//}
@@ -715,6 +715,64 @@ function obtenerProyectistaSeguridad(){
 		
 	});
 	
+}
+
+function obtenerProyectista(){
+
+	var numero_cap = $("#numero_cap").val();
+	var msg = "";
+	
+	if(numero_cap == "")msg += "Debe ingresar un n&uacute;mero CAP <br>";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_datos_agremiado_proyectista/' + numero_cap,
+		dataType: "json",
+		success: function(result){
+			
+			var agremiado = result.agremiado;
+			var sw = result.sw;
+			//alert(agremiado);
+			//var tipo_documento = parseInt(agremiado.tipo_documento);
+			//var nombre = persona.apellido_paterno+" "+persona.apellido_materno+", "+persona.nombres;
+			//alert(agremiado.situacion);
+			if(sw==true){
+				if (agremiado.situacion=="HABILITADO"){
+					$('#agremiado_principal').val(agremiado.agremiado);
+					$('#situacion_principal').val(agremiado.situacion);
+					$('#direccion_agremiado_principal').val(agremiado.celular);
+					$('#email_agremiado_principal').val(agremiado.email);
+				}else{
+					$('#agremiado_principal').val('');
+					$('#situacion_principal').val('');
+					$('#direccion_agremiado_principal').val('');
+					$('#email_agremiado_principal').val('');
+					bootbox.alert("El agremiado no esta HABILITADO");
+				}
+			}else{
+				$('#agremiado_principal').val('');
+				$('#situacion_principal').val('');
+				$('#direccion_agremiado_principal').val('');
+				$('#email_agremiado_principal').val('');
+				bootbox.alert("Arquitecto /Ingeniero no se encuentra registrado en la plataforma Data Licencias debiendo realizar dicho registro antes del envío de la solicitud de derecho de revisión de edificaciones");
+			}
+			
+			$('.loader').hide();
+
+		}
+		
+	});
+
 }
 
 function obtenerPropietario(){
@@ -1894,20 +1952,75 @@ function obtenerSubTipoUso(obj){
 	var valorSeleccionado = $(obj).val();
 		//alert(valorSeleccionado);
 		
-		$.ajax({
-			url: '/concurso/listar_maestro_by_tipo_subtipo/111/'+valorSeleccionado,
-			dataType: "json",
-			success: function(result){
-				var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
-				$(obj).parent().parent().find("#sub_tipo_uso").html("");
-                $(result).each(function (ii, oo) {
-                    option += "<option value='" + oo.codigo + "'>" + oo.denominacion + "</option>";
-                });
-                //$("#sub_tipo_uso").html(option);
-				$(obj).parent().parent().find("#sub_tipo_uso").html(option);
-			}
-			
-		});
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/111/'+valorSeleccionado,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
+			$(obj).parent().parent().find("#sub_tipo_uso").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='" + oo.codigo + "'>" + oo.denominacion + "</option>";
+			});
+			//$("#sub_tipo_uso").html(option);
+			$(obj).parent().parent().find("#sub_tipo_uso").html(option);
+
+			setTimeout(function() {
+				const subTipoSelect = $(obj).parent().parent().find("#sub_tipo_uso");
+
+				subTipoSelect.off('change').on('change', function() {
+					
+					if ($(this).val() == '5') {
+						const toggleButton = document.getElementById('toggleButton');
+						const respuestaInput = document.getElementById('respuesta');
+						const fileInputs = document.getElementById('fileInputs');
+
+						toggleButton.classList.remove('no');
+						toggleButton.textContent = 'Si';
+						respuestaInput.value = 1;
+						if (fileInputs) fileInputs.style.display = 'block';
+					}
+				});
+			}, 100);
+		}
+		
+	});
+	
+}
+
+function activarSubTipoObra(obj){
+
+	var valorSeleccionado = $(obj).val();
+
+	var divSubTipoObra = $(obj).closest('.row').find('#div_sub_tipo_obra');
+
+	if(valorSeleccionado==6 || valorSeleccionado==7 || valorSeleccionado==8){
+		divSubTipoObra.show();
+	}else{
+		divSubTipoObra.hide();
+	}
+
+}
+
+function obtenerSubTipoObra(obj){
+	//var valorSeleccionado = document.getElementById("tipo_uso").value;
+	var valorSeleccionado = $(obj).val();
+		//alert(valorSeleccionado);
+		
+	$.ajax({
+		url: '/concurso/listar_maestro_by_tipo_subtipo/112/'+valorSeleccionado,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
+			$(obj).parent().parent().find("#sub_tipo_obra").html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='" + oo.codigo + "'>" + oo.denominacion + "</option>";
+			});
+			//$("#sub_tipo_uso").html(option);
+			$(obj).parent().parent().find("#sub_tipo_obra").html(option);
+
+		}
+		
+	});
 	
 }
 
@@ -2610,3 +2723,16 @@ document.querySelectorAll('#area_techada').forEach(function(input) {
     });
 });
 
+function obtenerSolicitud(){
+
+	var numero_revision = $('#n_revision').val();
+
+	if(numero_revision==1 || numero_revision==""){
+		$('#div_codigo_proyecto').hide();
+		$('#div_numero_expediente').hide();
+	}else{
+		$('#div_codigo_proyecto').show();
+		$('#div_numero_expediente').show();
+	}
+
+}
