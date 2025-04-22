@@ -213,7 +213,7 @@ class CajaIngreso extends Model
                     ".$usuario_sel."
                     and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                     and c.id_forma_pago = 1
-                    --and c.anulado = 'N'
+                    and c.anulado = 'N'
 
                 ) as reporte
                 group by situacion, tipo_,tipo";
@@ -266,7 +266,7 @@ class CajaIngreso extends Model
                 ".$usuario_sel."
                 and TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                 and c.id_forma_pago = '1'
-                --and c.anulado = 'N'
+                and c.anulado = 'N'
             ) as reporte
             group by condicion";
 
@@ -374,7 +374,8 @@ class CajaIngreso extends Model
                     from comprobantes c inner join tabla_maestras tm on c.tipo =tm.abreviatura  and tm.tipo='126'
                     where 1=1 
                     ".$usuario_sel."
-                    and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'                     
+                    and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'   
+                    and anulado='N'                  
             ) as reporte_cantidad group by denominacion;    
        
     
@@ -400,6 +401,7 @@ class CajaIngreso extends Model
                     where 1=1 
                     ".$usuario_sel."
                     and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'
+                    and anulado='N'
                     order by tm.denominacion,c.id                     
                     ;    
        
@@ -410,6 +412,37 @@ class CajaIngreso extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+    function getAllComprobantePorSerie($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
+
+        $usuario_sel = "";
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+        }
+
+
+        $cad = "
+                    
+                select case when tipo='FT' then 'FACTURA'
+                            when tipo='BV' then 'BOLETA DE VENTA'
+                            when tipo='NC' then 'NOTA DE CREDITO'
+                            when tipo='ND' then 'NOTA DE DEBITO' end  tipo,serie, min(numero) inicio ,max(numero) fin 
+                from comprobantes c
+                where 1=1 
+                      ".$usuario_sel."
+                      and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' and anulado='N'
+                 group by tipo,serie
+                 ;    
+       
+    
+        ";
+
+		//echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
+    
 
     function getAllComprobantencnd($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
 
@@ -429,6 +462,7 @@ class CajaIngreso extends Model
                     ".$usuario_sel."
                     and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'
                     and (c.tipo ='NC' or c.tipo ='ND') and afecta_caja='C' 
+                    and anulado='N'
                     order by tm.denominacion,c.id  ;
 
         ";
@@ -456,6 +490,7 @@ class CajaIngreso extends Model
                     ".$usuario_sel."
                     and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."'
                     and (c.tipo ='NC' or c.tipo ='ND') and afecta_caja='D' 
+                    and anulado='N'
                     order by tm.denominacion,c.id  ;  ;
 
         ";
@@ -518,6 +553,7 @@ class CajaIngreso extends Model
                             where 1=1 
                                 ".$usuario_sel."
                                 and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                                and c.anulado='N'
                             group by co.denominacion ,c.fecha ,	 c.tipo , c.serie , c.numero,c2.fecha ,c2.tipo , c2.serie ,c2.fecha, c2.numero, c.cod_tributario, c.destinatario  , co.id_tipo_afectacion, c.subtotal,c.id  
                             order by concepto, tipo_documento,c.id  
                     ) as reporte_movimiento group by concepto, fecha,	 tipo_documento,  serie,  numero,fecha_ncd,tipo_documento_ncd,  serie_ncd,  numero_ncd, cod_tributario,  destinatario , imp_afecto, imp_inafecto,igv , total 

@@ -404,6 +404,50 @@
 			<tbody>
                 <tr>
                     <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">TIPO DOCUMENTO</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">SERIE</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">INICIO</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">FIN</td>
+					
+				</tr>   
+                <!--             
+                <tr>
+                <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important">DESCRIPCIÓN DE LOS INGRESOS</td>
+				</tr>
+            -->
+				<?php 
+                 $total_cuenta = 0;
+                 foreach($por_serie as $key=>$d){
+                 $total_cuenta += 1;
+                 ?>
+                 <tr>
+ 
+                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->tipo)?></td>
+                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->serie)?></td>
+                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->inicio)?></td>
+                     <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->fin?></td>
+                 </tr>
+				<?php
+				} 
+				?>
+				
+			</tbody>
+		</table>
+        <table class="table table-hover table-sm" style="width:35%!important;padding-top:15px" align="right">
+            <thead>
+                
+                <tr style="font-size:13px">
+                    <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Total</th>
+                    <th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_cuenta, 0, '.', ',');?></span></th>
+                </tr>
+				
+            </thead>
+		</table>
+		
+        @if ($usuario>0)
+        <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
+			<tbody>
+                <tr>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">TIPO DOCUMENTO</td>
                     <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">NUMERO</td>
 					
 				</tr>   
@@ -438,11 +482,12 @@
 				
             </thead>
 		</table>
-		
+        @endif
+
         <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
 			<tbody>
                 <tr>
-                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">INGREOSS COMPLEMENTARIOS DEL DIA</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">INGRESOS COMPLEMENTARIOS DEL DIA</td>
                     
 				</tr>  
             </tbody>
