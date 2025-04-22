@@ -210,7 +210,7 @@ class Certificado extends Model
         left join agremiados a on pro.id_agremiado = a.id
         left join personas p2 on a.id_persona = p2.id
         left join tabla_maestras tm on pro.id_tipo_profesional = tm.codigo::int And tm.tipo ='41'
-        where a.numero_cap ='".$numero_cap."' and a.fecha > '10-03-2025'
+        where a.numero_cap ='".$numero_cap."' and s.fecha_registro > '10-03-2025'
         union all
         select s.id, s.fecha_registro fecha, l.credipago, pe.apellido_paterno ||' '|| pe.apellido_materno ||' '|| pe.nombres propietario, pr.nombre nombreProyecto, 
         m.denominacion distrito, a.numero_cap, p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres agremiado, p2.id_sexo, a.fecha_colegiado, s.total_area_techada_m2::float, s.area_total, tm.denominacion tipo_profesional, 'Certificado' tipo, 
