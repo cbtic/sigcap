@@ -565,5 +565,28 @@ class DerechoRevision extends Model
         $data = DB::select($cad);
         return $data;
     }
+
+    function getSolicitudEdificaciones($id){
+
+        $cad = "select s.id, tm.denominacion estado_solicitud,
+        (select case when exists (select 1 from liquidaciones l where l.id_solicitud = s.id) then 'Aprobado' else 'Pendiente' end) estado_liquidacion,
+        tm2.denominacion tipo_solicitud, tm3.denominacion instancia, p.nombre nombre_proyecto,
+        tm6.denominacion id_sitio, p.sitio_descripcion, tm7.denominacion id_zona, p.zona_descripcion, p.parcela, p.super_manzana, tm8.denominacion id_tipo, p.direccion, p.lote, p.sub_lote, p.fila, p.id_ubigeo ubigeo,
+        m.denominacion municipalidad, to_char(s.fecha_registro,'dd-mm-yyyy') fecha_registro, to_char(s.created_at,'HH24:MI:SS') hora_registro, tm4.denominacion numero_revision, s.numero_piso, s.numero_sotano, s.azotea, s.semisotano
+        from solicitudes s 
+        inner join proyectos p on s.id_proyecto = p.id
+        inner join tabla_maestras tm on s.id_resultado = tm.codigo::int and tm.tipo ='118'
+        inner join tabla_maestras tm2 on s.id_tipo_tramite = tm2.codigo::int and tm2.tipo ='113'
+        inner join tabla_maestras tm3 on s.id_instancia  = tm3.codigo::int and tm3.tipo ='47'
+        inner join tabla_maestras tm4 on s.numero_revision   = tm4.codigo::int and tm4.tipo ='134'
+        left join tabla_maestras tm6 on p.id_tipo_sitio = tm6.codigo::int and  tm6.tipo ='33'
+        left join tabla_maestras tm7 on p.id_zona = tm7.codigo::int and  tm7.tipo ='34'
+        left join tabla_maestras tm8 on p.id_tipo_direccion = tm8.codigo::int and  tm8.tipo ='35'
+        inner join municipalidades m on s.id_municipalidad = m.id 
+        where s.id='".$id."'";
+
+        $data = DB::select($cad);
+        return $data;
+    }
     
 }
