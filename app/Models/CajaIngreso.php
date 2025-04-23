@@ -553,7 +553,7 @@ class CajaIngreso extends Model
                             where 1=1 
                                 ".$usuario_sel."
                                 and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
-                                and c.anulado='N'
+                                and c.anulado='N' and c.estado_sunat<>'TERCERO'
                             group by co.denominacion ,c.fecha ,	 c.tipo , c.serie , c.numero,c2.fecha ,c2.tipo , c2.serie ,c2.fecha, c2.numero, c.cod_tributario, c.destinatario  , co.id_tipo_afectacion, c.subtotal,c.id  
                             order by concepto, tipo_documento,c.id  
                     ) as reporte_movimiento group by concepto, fecha,	 tipo_documento,  serie,  numero,fecha_ncd,tipo_documento_ncd,  serie_ncd,  numero_ncd, cod_tributario,  destinatario , imp_afecto, imp_inafecto,igv , total 
