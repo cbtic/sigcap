@@ -899,6 +899,24 @@ class AgremiadoController extends Controller
 				$persona->save();
 				$id_persona = $persona->id;
 			
+			}else{
+				$persona = Persona::find($id_persona);
+				$persona->apellido_paterno = $solicitud->apellidopaterno;
+				$persona->apellido_materno = $solicitud->apellidomaterno;
+				$persona->nombres = $solicitud->nombre;
+				$persona->fecha_nacimiento = $solicitud->fechanacimiento;
+				$persona->id_sexo = $this->equivalenciaTipoSexo($solicitud->idsexo);
+				$persona->grupo_sanguineo = $this->equivalenciaGrupoSanguineo($solicitud->gruposanguineo);
+				$persona->id_ubigeo_nacimiento = "150101";
+				$persona->lugar_nacimiento = $solicitud->lugarnacimiento;
+				$persona->direccion = $solicitud->domicilio;
+				$persona->numero_celular = $solicitud->numerocelular;
+				$persona->correo = $solicitud->correoelectronico;
+				$persona->id_nacionalidad = 16;
+				$persona->id_tipo_persona = 1;
+				$persona->estado = 1;
+				$persona->id_usuario_inserta = 1;
+				$persona->save();
 			}
 			
 			$agremiado = new Agremiado;
