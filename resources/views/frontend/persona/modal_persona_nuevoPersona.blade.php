@@ -1299,7 +1299,8 @@ $.mask.definitions['p'] = "[Mm]";
 				$('#numero_documento').blur(function() {
 					var id = $('#id').val();
 					var tipo_documento = $('#tipo_documento').val();
-					if (id == 0 && tipo_documento!=84) {
+					var nombre = $('#nombre').val();
+					if ((id == 0 && tipo_documento!=84) || (id > 0 && tipo_documento!=84 && nombre=="")) {
 						validaDni(this.value);
 					}else if(id == 0 && tipo_documento==84){
 						$('#nombre').val('');
