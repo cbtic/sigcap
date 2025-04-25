@@ -227,10 +227,10 @@ class ReporteController extends Controller
 				//$tipo= '';
 				$movimiento_comprobante = $caja_ingreso_model->getAllMovimientoComprobantes($id_usuario, $id_caja, $f_inicio, $f_inicio ,$por_usuario);
 				//print_r($venta);exit();
+				$movimiento_comprobante_noafecta = $caja_ingreso_model->getAllMovimientoComprobantes_noafecta($id_usuario, $id_caja, $f_inicio, $f_inicio ,$por_usuario);
 		
 		
-		
-				$pdf = Pdf::loadView('frontend.reporte.reporte_mov_pdf',compact('titulo','movimiento_comprobante','forma_pago','f_inicio','f_inicio'));
+				$pdf = Pdf::loadView('frontend.reporte.reporte_mov_pdf',compact('titulo','movimiento_comprobante','forma_pago','f_inicio','f_inicio','movimiento_comprobante_noafecta'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
 				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)

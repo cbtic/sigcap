@@ -28,11 +28,19 @@ class Seguro_afiliado extends Model
      public function listar_parentesco_agremiado($id_afiliacion,$id_agremiado,$id_seguro){
 
         $cad = "select sap.id id_seguro_afiliado_parentesco,ap.id,0  id_afiliacion,ap.id_agremiado,ap.id id_familia, 
-		extract(year from Age(ap.fecha_nacimiento)) edad,tms.denominacion sexo,ap.estado, tm.denominacion parentesco,
+		extract(year from Age(ap.fecha_nacimiento)) edad,tms.denominacion sexo,ap.estado, 
+        tm.denominacion parentesco,
+        tmp.denominacion dependencia,
 		ap.apellido_nombre nombre,sp.id id_plan,sp.nombre plan, monto, tm2.denominacion moneda, tms.codigo id_sexo 
-        from  agremiado_parentecos ap inner join tabla_maestras tm on cast(tm.codigo as integer)=ap.id_parentesco and tm.tipo ='12' 
+        from  agremiado_parentecos ap 
+        inner join parentesco_seguros ps on ps.id_parentesco_agremiado=ap.id_parentesco
+        inner join tabla_maestras tm on cast(tm.codigo as integer)=ps.id_parentesco_agremiado and tm.tipo ='12'
+        inner join tabla_maestras tmp on cast(tmp.codigo as integer)=ps.id_parentesco_seguro and tmp.tipo ='23'
         inner join tabla_maestras tms on cast(tms.codigo as integer)=ap.id_sexo  and tms.tipo ='2'
-		inner join seguros_planes sp on sp.id=(select id from seguros_planes where id_seguro='".$id_seguro."' and extract(year from Age(ap.fecha_nacimiento)) between edad_minima and edad_maxima order by 1 desc limit 1) 
+		inner join seguros_planes sp on sp.id=(select id from seguros_planes where id_seguro='".$id_seguro."' 
+        and extract(year from Age(ap.fecha_nacimiento)) between edad_minima and edad_maxima 
+        and id_parentesco=ps.id_parentesco_seguro 
+        order by 1 desc limit 1) 
 		left join seguro_afiliado_parentescos sap on ap.id=sap.id_familia and sap.id_afiliacion=".$id_afiliacion." 
         inner join seguros s on sp.id_seguro = s.id
         inner join conceptos c on s.id_concepto::int = c.id 

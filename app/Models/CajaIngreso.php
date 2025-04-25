@@ -554,6 +554,44 @@ class CajaIngreso extends Model
                                 ".$usuario_sel."
                                 and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                                 and c.anulado='N' and c.estado_sunat<>'TERCERO'
+                                
+
+                            group by co.denominacion ,c.fecha ,	 c.tipo , c.serie , c.numero,c2.fecha ,c2.tipo , c2.serie ,c2.fecha, c2.numero, c.cod_tributario, c.destinatario  , co.id_tipo_afectacion, c.subtotal,c.id  
+                            order by concepto, tipo_documento,c.id  
+                    ) as reporte_movimiento group by concepto, fecha,	 tipo_documento,  serie,  numero,fecha_ncd,tipo_documento_ncd,  serie_ncd,  numero_ncd, cod_tributario,  destinatario , imp_afecto, imp_inafecto,igv , total 
+    
+                    
+                ";
+
+		//echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
+
+    function getAllMovimientoComprobantes_noafecta($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
+
+        $usuario_sel = "";
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
+        }
+
+        $cad = "
+                    select  concepto, fecha,	 tipo_documento,  serie,  numero,fecha_ncd,tipo_documento_ncd,  serie_ncd,  numero_ncd, cod_tributario,  destinatario , imp_afecto, imp_inafecto,igv , total
+                    from (
+                            select  co.denominacion concepto,c.fecha fecha,	 c.tipo tipo_documento, c.serie serie, c.numero::varchar(20)  numero, c2.fecha fecha_ncd,c2.tipo tipo_documento_ncd, c2.serie serie_ncd, c2.numero::varchar(20)  numero_ncd, c.cod_tributario cod_tributario, c.destinatario destinatario ,case when co.id_tipo_afectacion=30 then 0 else sum((cd.pu * cd.cantidad)-cd.descuento) end * case when c.tipo='NC' then -1 else 1 end  imp_afecto,case when co.id_tipo_afectacion=30 then sum((cd.pu_con_igv*cd.cantidad)-cd.descuento) else 0  end * case when c.tipo='NC' then -1 else 1 end imp_inafecto,sum(cd.igv_total) * case when c.tipo='NC' then -1 else 1 end igv  ,sum(cd.importe) * case when c.tipo='NC' then -1 else 1 end total,c.id 
+                            																																																																																		 															
+                            from comprobantes c 
+                               inner join comprobante_detalles cd on cd.id_comprobante =c.id
+                                inner join tabla_maestras tm on c.tipo =tm.abreviatura  and tm.tipo='126'
+                                inner join conceptos co on co.id=cd.id_concepto
+                                left join comprobantes c2 on c.id=c2.id_comprobante_ncnd
+                        
+                            where 1=1 
+                                ".$usuario_sel."
+                                and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+                                and c.anulado='N' 
+                                and c.afecta_caja='D'
                             group by co.denominacion ,c.fecha ,	 c.tipo , c.serie , c.numero,c2.fecha ,c2.tipo , c2.serie ,c2.fecha, c2.numero, c.cod_tributario, c.destinatario  , co.id_tipo_afectacion, c.subtotal,c.id  
                             order by concepto, tipo_documento,c.id  
                     ) as reporte_movimiento group by concepto, fecha,	 tipo_documento,  serie,  numero,fecha_ncd,tipo_documento_ncd,  serie_ncd,  numero_ncd, cod_tributario,  destinatario , imp_afecto, imp_inafecto,igv , total 
