@@ -479,7 +479,7 @@ class DerechoRevisionController extends Controller
 			$codigo1 = $codigoSolicitud->codigo;
 			$numero_correlativo = $codigoSolicitud->numero;
 
-			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",$id_tipo_documento)->where("estado",1)->first();			
+			$numeracionDocumento = NumeracionDocumento::where("id_tipo_documento",$id_tipo_documento)->where("estado",1)->first();
 			$numeracionDocumento->numero = $numero_correlativo;
 			$numeracionDocumento->save();
 
