@@ -1,5 +1,3 @@
--- DROP FUNCTION public.sp_listar_comprobante_cuota_pago_paginado(varchar, varchar, varchar, varchar, refcursor);
-
 CREATE OR REPLACE FUNCTION public.sp_listar_comprobante_cuota_pago_paginado(p_id character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
@@ -26,12 +24,14 @@ select  c.id, c.id_comprobante, c.item, c.fecha, c.id_medio, c.nro_operacion, c.
                 where c.id_comprobante='360'
                 order by c.id 
 */
-	v_campos=' c.id, c.id_comprobante, c.item, c.fecha, c.id_medio, c.nro_operacion, c.descripcion, c.monto, c.fecha_vencimiento fecha, c.estado, cp.denominacion ';
+	v_campos=' c.id, c.id_comprobante, c.item, c.fecha, c.id_medio, c.nro_operacion, c.descripcion, c.monto, c.fecha_vencimiento fecha, c.estado, cp.denominacion, t2.denominacion caja, t3.name usuario ';
 
 	v_tabla=' from comprobante_cuota_pagos c
-                inner join tabla_maestras cp on cp.tipo = ''19'' and cp.codigo::int = c.id_medio ';
-	
-	
+	inner join tabla_maestras cp on cp.tipo = ''19'' and cp.codigo::int = c.id_medio
+	left join caja_ingresos ci on c.id_caja = ci.id_caja and ci.estado =''1''
+	left join tabla_maestras t2 on ci.id_caja=t2.codigo::int and t2.tipo =''91''
+	left join users t3 on ci.id_usuario = t3.id ';
+		
 	v_where = ' Where 1=1  ';
 	
 	If p_id<>'' Then
