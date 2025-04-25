@@ -22,6 +22,7 @@ foreach($parentesco_lista as $key=>$row):
 	
     <td class="text-left"><?php echo $row->id?> </td>
 	<td class="text-left"><?php echo $row->parentesco?> </td>
+	<td class="text-left"><?php echo $row->dependencia?> </td>
 	<td class="text-left"><?php echo $row->nombre?> </td>
 	<td class="text-left"><?php echo $row->sexo?> </td>
 	<td class="text-left"><?php echo $row->edad?> </td>

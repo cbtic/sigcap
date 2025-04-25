@@ -611,6 +611,7 @@ function fn_save_fila(id,idfamilia){
 							<th>Sel.</th>
 							<th>Id</th>
                             <th>Parentesco</th>
+							<th>Dependencia</th>
 							<th>Apellidos y nombres</th>
 							<th>sexo</th>
 							<th>Edad</th>
