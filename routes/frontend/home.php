@@ -102,7 +102,7 @@ Route::post('persona/upload', [PersonaController::class, 'upload'])->name('perso
 Route::get('persona/buscar_persona2/{numero_documento}', [PersonaController::class, 'buscar_persona2'])->name('persona.buscar_persona2');
 Route::get('persona/buscar_numero_documento/{numero_documento}', [PersonaController::class, 'buscar_numero_documento'])->name('persona.buscar_numero_documento');
 Route::get('persona/modal_personaNuevo', [PersonaController::class, 'modal_personaNuevo'])->name('persona.modal_personaNuevo');
-
+Route::get('comprobante/validar_caja_abierta', [ComprobanteController::class, 'validar_caja_abierta'])->name('comprobante.validar_caja_abierta');
 Route::get('agremiado', [AgremiadoController::class, 'index'])->name('agremiado');
 Route::get('agremiado/editar_agremiado/{id}', [AgremiadoController::class, 'editar_agremiado'])->name('agremiado.editar_agremiado');
 Route::get('agremiado/importar_agremiado/{fecha}', [AgremiadoController::class, 'importar_agremiado'])->name('agremiado.importar_agremiado');
@@ -839,5 +839,6 @@ Route::post('derecho_revision/send_nuevo_registro_solicitud_edificacion', [Derec
 Route::get('reporte/exportar_reporte_caja/{id}/{fini}/{ffin}/{opc1}/{opc2}/{opc3}', [ReporteController::class, 'exportar_reporte_caja'])->name('reporte.exportar_reporte_caja');
 Route::get('agremiado/obtener_datos_agremiado_proyectista/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_proyectista'])->name('agremiado.obtener_datos_agremiado_proyectista');
 Route::get('derecho_revision/editar_derecho_revision_edificaciones/{id}', [DerechoRevisionController::class, 'editar_derecho_revision_edificaciones'])->name('derecho_revision.editar_derecho_revision_edificaciones');
+
 
 

@@ -261,8 +261,24 @@ function datatablenewPago(){
 				"className": "text-right",
                 "aTargets": [4]
                 },
-
-
+				{
+                "mRender": function (data, type, row) {
+                	var caja = "";
+					if(row.caja!= null)caja = row.caja;
+					return caja;
+                },
+                "bSortable": true,
+                "aTargets": [5]
+                },
+				{
+                "mRender": function (data, type, row) {
+                	var usuario = "";
+					if(row.usuario!= null)usuario = row.usuario;
+					return usuario;
+                },
+                "bSortable": true,
+                "aTargets": [6]
+                },
 				{
 					"mRender": function (data, type, row) {
 						
@@ -275,7 +291,7 @@ function datatablenewPago(){
 						return html;
 					},
 					"bSortable": false,
-					"aTargets": [5],
+					"aTargets": [7],
 				},
 
             ]
@@ -362,7 +378,24 @@ function limpiar(){
 	$('#monto').val("");
 }
 
-function fn_save(){
+function validarCajaAbierta(){
+
+	$.ajax({
+		url: "/comprobante/validar_caja_abierta",
+		type: "GET",
+		success: function (result) {
+
+			if(result.opc==1){
+				fn_save(result.id_caja);
+			}else{
+				bootbox.alert("No esta abierta ninguna caja");
+			}
+		}
+    });
+
+}
+
+function fn_save(id_caja){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();	
@@ -385,7 +418,6 @@ function fn_save(){
 	//if(nro_operacion==""){msg+="Ingrese el número de operación <br>";}
 	if(fecha==""){msg+="Ingrese la fecha del pago <br>";}
 
-
     if(resta_total.toFixed(2)<0){msg+="El monto a pagar no be exceder a la Diferencia a cancelar <br>";}
 
     
@@ -397,7 +429,7 @@ function fn_save(){
     $.ajax({
 			url: "/comprobante/send_credito_pago",
             type: "POST",
-            data : {_token:_token,id:id,id_comprobante:id_comprobante,id_medio:id_medio,fecha:fecha,nro_operacion:nro_operacion,monto:monto },
+            data : {_token:_token,id:id,id_comprobante:id_comprobante,id_medio:id_medio,fecha:fecha,nro_operacion:nro_operacion,monto:monto,id_caja: id_caja },
 			success: function (result) {
 				//alert(result);
 				//$('#openOverlayOpc').modal('hide');
@@ -498,7 +530,7 @@ function fn_save(){
 					<div style="margin-top:10px" class="form-group">
 						<div class="col-sm-12 controls">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-								<a href="javascript:void(0)" onClick="fn_save()" class="btn btn-sm btn-primary">Guardar</a>
+								<a href="javascript:void(0)" onClick="validarCajaAbierta()" class="btn btn-sm btn-primary">Guardar</a>
 								
 								<a href="javascript:void(0)" onClick="limpiar()" class="btn btn-sm btn-warning" style="margin-left:10px">Limpiar</a>
 								
@@ -515,9 +547,11 @@ function fn_save(){
                         <tr style="font-size:13px">
                             <th>Id</th>
 							<th>Fecha </th>
-							<th>Medio Pago</th>                            
-							<th>Nro Operacion</th>							
+							<th>Medio Pago</th>
+							<th>Nro Operacion</th>
 							<th>Monto</th>
+							<th>Caja</th>
+							<th>Usuario</th>
                             <th>Acciones</th>
                         </tr>
                         </thead>

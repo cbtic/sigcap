@@ -2785,7 +2785,7 @@ class ComprobanteController extends Controller
         $comprobante_model = new Comprobante;
 
 		$p[]=$request->id;
-		$p[]=1;          
+		$p[]=1;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $comprobante_model->listar_credito_pago_paginado($p);
@@ -3922,10 +3922,8 @@ class ComprobanteController extends Controller
         $cuotaPago->id_comprobante = $request->id_comprobante;
         $cuotaPago->nro_operacion = $request->nro_operacion;
         $cuotaPago->monto = $request->monto;
+        $cuotaPago->id_caja = $request->id_caja;
         $cuotaPago->save();
-
-
-
 
        // $comprobante = Comprobante::find($request->id_comprobante);
 
@@ -3985,6 +3983,34 @@ class ComprobanteController extends Controller
 
         echo $monto;
 		
+    }
+
+    public function validar_caja_abierta(){
+
+        //var_dump("ok");exit();
+
+        $id_user = Auth::user()->id;
+
+        $opc = 0;
+
+        $valorizaciones_model = new Valorizacione;
+
+        $caja_usuario = $valorizaciones_model->getCajaIngresoByusuario($id_user,'91');
+
+        //dd($caja_usuario->id_caja);exit();
+        if($caja_usuario == null){
+            return response()->json([
+                'opc' => 0
+            ]);
+        }else{
+            return response()->json([
+                'opc' => 1,
+                'id_caja' => $caja_usuario->id_caja
+            ]);
+        }
+
+        //return response()->json($opc);
+
     }
 
 }
