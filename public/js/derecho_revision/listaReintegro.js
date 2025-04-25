@@ -2029,48 +2029,70 @@ function valida_reintegro(){
 }
 
 function guardar_solicitud_reintegro(){
-	
-	var msgLoader = "";
-    msgLoader = "Procesando, espere un momento por favor";
-    //var heightBrowser = $(window).width()/2;
-	var heightBrowser = $(window).width()*2;
-    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-    $('.loader').show();
-	
-	$.ajax({
-			url: "/derecho_revision/send_nuevo_reintegro",
-			type: "POST",
-			data : $("#frmSolicitudDerechoRevisionReintegroall").serialize(),
-			success: function (result) {
-				//alert(result);
-				//$('#openOverlayOpc').modal('hide');
-				//modalSituacion(id_agremiado);
-				//datatableSuspension();
-				$('.loader').hide();
-				//window.location.reload();
-				consulta_derecho_revision();
-				$.ajax({
-                    url: "/derecho_revision/correo_credipago_aprobado_reintegro/" + result,
-                    method: 'GET',
-                    success: function(result) {
-                    
-                    },
-                });
 
-				
+	var msg="";
 
-				//$('#openOverlayOpc').modal('hide');
-				
-				/*
-				$('#openOverlayOpc').modal('hide');
-				if(result==1){
-					bootbox.alert("La persona o empresa ya se encuentra registrado");
-				}else{
-					window.location.reload();
+	var municipalidad=$("#frmSolicitudDerechoRevisionReintegroall #municipalidad").val();
+	var nombre_proyecto=$("#frmSolicitudDerechoRevisionReintegroall #nombre_proyecto").val();
+	var distrito=$("#frmSolicitudDerechoRevisionReintegroall #distrito").val();
+	var numero_cap=$("#frmSolicitudDerechoRevisionReintegroall #numero_cap").val();
+	var valor_total_obra=$("#frmSolicitudDerechoRevisionReintegroall #valor_total_obra").val();
+	var total2=$("#frmSolicitudDerechoRevisionReintegroall #total2").val();
+
+
+	if(municipalidad==""){msg+="Debe ingresar la Municipalidad";}
+	if(nombre_proyecto==""){msg+="Debe ingresar el Nombre del Proyecto";}
+	if(distrito==""){msg+="Debe ingresar el Distrito";}
+	if(numero_cap==""){msg+="Debe ingresar el Proyectista Principal";}
+	if(valor_total_obra==""){msg+="Debe ingresar el Valor Total de Obra";}
+	if(total2==""){msg+="Debe ingresar el Total";}
+	
+	if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }else {
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		//var heightBrowser = $(window).width()/2;
+		var heightBrowser = $(window).width()*2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+		
+		$.ajax({
+				url: "/derecho_revision/send_nuevo_reintegro",
+				type: "POST",
+				data : $("#frmSolicitudDerechoRevisionReintegroall").serialize(),
+				success: function (result) {
+					//alert(result);
+					//$('#openOverlayOpc').modal('hide');
+					//modalSituacion(id_agremiado);
+					//datatableSuspension();
+					$('.loader').hide();
+					//window.location.reload();
+					consulta_derecho_revision();
+					$.ajax({
+						url: "/derecho_revision/correo_credipago_aprobado_reintegro/" + result,
+						method: 'GET',
+						success: function(result) {
+						
+						},
+					});
+
+					
+
+					//$('#openOverlayOpc').modal('hide');
+					
+					/*
+					$('#openOverlayOpc').modal('hide');
+					if(result==1){
+						bootbox.alert("La persona o empresa ya se encuentra registrado");
+					}else{
+						window.location.reload();
+					}
+					*/
 				}
-				*/
-			}
-	});
+		});
+	}
 }
 
 function consulta_derecho_revision(){
