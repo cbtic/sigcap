@@ -549,12 +549,13 @@ class CajaIngreso extends Model
                                 inner join tabla_maestras tm on c.tipo =tm.abreviatura  and tm.tipo='126'
                                 inner join conceptos co on co.id=cd.id_concepto
                                 left join comprobantes c2 on c.id=c2.id_comprobante_ncnd
+                                
                         
                             where 1=1 
                                 ".$usuario_sel."
                                 and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
                                 and c.anulado='N' and c.estado_sunat<>'TERCERO'
-                                
+                                and (c.afecta_caja='C' or  c.afecta_caja is null)
 
                             group by co.denominacion ,c.fecha ,	 c.tipo , c.serie , c.numero,c2.fecha ,c2.tipo , c2.serie ,c2.fecha, c2.numero, c.cod_tributario, c.destinatario  , co.id_tipo_afectacion, c.subtotal,c.id  
                             order by concepto, tipo_documento,c.id  
