@@ -204,7 +204,7 @@ class DerechoRevision extends Model
         left join personas pe2 on pr.id_persona = pe2.id
         left join proyectos pro on s.id_proyecto = pro.id
         left join ubigeos u on pro.id_ubigeo::varchar = u.id_ubigeo
-        left join municipalidades m on s.id_municipalidad = m.id
+        left join municipalidades m on s.id_municipalidad = m.id and m.estado='1'
         left join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41'
         left join tabla_maestras tm2 on s.id_tipo_liquidacion1 = tm2.codigo::int and  tm2.tipo ='27'
         left join tabla_maestras tm3 on s.id_instancia = tm3.codigo::int and  tm3.tipo ='47'
@@ -235,7 +235,7 @@ class DerechoRevision extends Model
         left join personas pe2 on pr.id_persona = pe2.id
         left join proyectos pro on s.id_proyecto = pro.id
         left join ubigeos u on pro.id_ubigeo::varchar = u.id_ubigeo
-        left join municipalidades m on s.id_municipalidad = m.id
+        left join municipalidades m on s.id_municipalidad = m.id and m.estado='1'
         left join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41'
         left join tabla_maestras tm2 on s.id_tipo_liquidacion1 = tm2.codigo::int and  tm2.tipo ='27'
         left join tabla_maestras tm3 on s.id_instancia = tm3.codigo::int and  tm3.tipo ='47'
@@ -265,7 +265,7 @@ class DerechoRevision extends Model
         left join personas pe2 on pr.id_persona = pe2.id
         left join proyectos pro on s.id_proyecto = pro.id
         left join ubigeos u on pro.id_ubigeo::varchar = u.id_ubigeo
-        left join municipalidades m on s.id_municipalidad = m.id
+        left join municipalidades m on s.id_municipalidad = m.id and m.estado='1'
         left join tabla_maestras tm on p.id_tipo_profesional = tm.codigo::int and  tm.tipo ='41'
         left join tabla_maestras tm2 on s.id_tipo_liquidacion1 = tm2.codigo::int and  tm2.tipo ='27'
         left join tabla_maestras tm3 on s.id_instancia = tm3.codigo::int and  tm3.tipo ='47'
@@ -355,7 +355,7 @@ class DerechoRevision extends Model
         left join tabla_maestras tm3 on a.id_autoriza_tramite = tm3.codigo::int And tm3.tipo ='45'
         left join tabla_maestras tm4 on a.id_actividad_gremial = tm4.codigo::int And tm4.tipo ='46'
         left join tabla_maestras tm5 on a.id_situacion = tm5.codigo::int And tm5.tipo ='14'
-        left join municipalidades m on s.id_municipalidad = m.id
+        left join municipalidades m on s.id_municipalidad = m.id and m.estado = '1'
         where s.id='".$id."'";
 		//echo $cad;
 		$data = DB::select($cad);

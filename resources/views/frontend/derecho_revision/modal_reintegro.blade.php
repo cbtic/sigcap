@@ -491,45 +491,71 @@ function valida2(){
 
 function fn_save_credipago(){
     
+    var msg = "";
 	var _token = $('#_token').val();
 	var id = $('#id').val();
-	var id_comision = $('#id_comision').val();
-	var id_regional = $('#id_regional').val();
-	var id_tipo_sesion = $('#id_tipo_sesion').val();
+	var nombre_proyecto = $('#nombre_proyecto').val();
+	var propietario = $('#propietario').val();
+	var valor_total_obra = $('#valor_total_obra').val();
+	var area_techada = $('#area_techada').val();
+	var direccion_proyecto = $('#direccion_proyecto').val();
+	var numero_cap = $('#numero_cap').val();
+	var municipalidad = $('#municipalidad').val();
+	var total2 = $('#total2').val();
+	var presupuesto = $('#presupuesto').val();
+	var area_techada_total = $('#area_techada_total').val();
 	var observaciones = $('#observacion').val();
-	
-	var msgLoader = "";
-	msgLoader = "Procesando, espere un momento por favor";
-	var heightBrowser = $(window).width()/2;
-	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-    $('.loader').show();
-	
-    $.ajax({
-			url: "/derecho_revision/send_credipago_liquidacion",
-            type: "POST",
-			data : $('#frmReintegroSolicitud').serialize(),
-            success: function (result) {
+    
+	if(nombre_proyecto == ""){msg += "Debe ingresar el Nombre del Proyecto <br>";}
+	if(propietario == ""){msg += "Debe ingresar el Propietario <br>";}
+	if(valor_total_obra == ""){msg += "Debe ingresar el Valor Total de Obra <br>";}
+	if(area_techada == ""){msg += "Debe ingresar el Area Techada <br>";}
+	if(direccion_proyecto == ""){msg += "Debe ingresar la Direccion del Proyecto <br>";}
+	if(numero_cap == ""){msg += "Debe ingresar el Numero de CAP <br>";}
+	if(municipalidad == ""){msg += "Debe ingresar la Municipalidad <br>";}
+	if(total2 == ""){msg += "Debe ingresar el Total <br>";}
+	if(presupuesto == ""){msg += "Debe ingresar el Presupuesto <br>";}
+	if(area_techada_total == ""){msg += "Debe ingresar el Area Techada Total <br>";}
 
-				//alert(result[0].sw);
-				//datatablenew();
-				$('.loader').hide();
-				
-                if(result[0].sw==true){
-                    $('#openOverlayOpc').modal('hide');
-                    //window.location.reload();
-                    datatablenew();
-				}else{
-					//var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
-					bootbox.alert({
-						message: "Existe más de un registro de propietario con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.",
-						//className: "alert_style"
-                   
-					});
-                    $('#openOverlayOpc').modal('hide');
-					//datatablenew();
-				}
-            }
-    });
+    if(msg!=""){
+        bootbox.alert(msg); 
+        return false;
+    }else {
+
+        var msgLoader = "";
+        msgLoader = "Procesando, espere un momento por favor";
+        var heightBrowser = $(window).width()/2;
+        $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+        $('.loader').show();
+        
+        $.ajax({
+                url: "/derecho_revision/send_credipago_liquidacion",
+                type: "POST",
+                data : $('#frmReintegroSolicitud').serialize(),
+                success: function (result) {
+
+                    //alert(result[0].sw);
+                    //datatablenew();
+                    $('.loader').hide();
+                    
+                    if(result[0].sw==true){
+                        $('#openOverlayOpc').modal('hide');
+                        //window.location.reload();
+                        datatablenew();
+                    }else{
+                        //var mensaje ="Existe más de un registro con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.";
+                        bootbox.alert({
+                            message: "Existe más de un registro de propietario con el mismo DNI o RUC, debe de solicitar a sistemas que actualice la Base de Datos.",
+                            //className: "alert_style"
+                    
+                        });
+                        $('#openOverlayOpc').modal('hide');
+                        //datatablenew();
+                    }
+                }
+        });
+        
+    }
 }
 
 
