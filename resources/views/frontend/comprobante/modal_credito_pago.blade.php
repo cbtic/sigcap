@@ -385,8 +385,8 @@ function validarCajaAbierta(){
 		type: "GET",
 		success: function (result) {
 
-			if(result==1){
-				fn_save();
+			if(result.opc==1){
+				fn_save(result.id_caja);
 			}else{
 				bootbox.alert("No esta abierta ninguna caja");
 			}
@@ -395,7 +395,7 @@ function validarCajaAbierta(){
 
 }
 
-function fn_save(){
+function fn_save(id_caja){
     
 	var _token = $('#_token').val();
 	var id = $('#id').val();	
@@ -429,7 +429,7 @@ function fn_save(){
     $.ajax({
 			url: "/comprobante/send_credito_pago",
             type: "POST",
-            data : {_token:_token,id:id,id_comprobante:id_comprobante,id_medio:id_medio,fecha:fecha,nro_operacion:nro_operacion,monto:monto },
+            data : {_token:_token,id:id,id_comprobante:id_comprobante,id_medio:id_medio,fecha:fecha,nro_operacion:nro_operacion,monto:monto,id_caja: id_caja },
 			success: function (result) {
 				//alert(result);
 				//$('#openOverlayOpc').modal('hide');

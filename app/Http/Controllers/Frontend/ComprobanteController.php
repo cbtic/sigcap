@@ -3922,10 +3922,8 @@ class ComprobanteController extends Controller
         $cuotaPago->id_comprobante = $request->id_comprobante;
         $cuotaPago->nro_operacion = $request->nro_operacion;
         $cuotaPago->monto = $request->monto;
+        $cuotaPago->id_caja = $request->id_caja;
         $cuotaPago->save();
-
-
-
 
        // $comprobante = Comprobante::find($request->id_comprobante);
 
@@ -3999,14 +3997,19 @@ class ComprobanteController extends Controller
 
         $caja_usuario = $valorizaciones_model->getCajaIngresoByusuario($id_user,'91');
 
-        //dd($caja_usuario);exit();
+        //dd($caja_usuario->id_caja);exit();
         if($caja_usuario == null){
-            $opc=0;
+            return response()->json([
+                'opc' => 0
+            ]);
         }else{
-            $opc=1;
+            return response()->json([
+                'opc' => 1,
+                'id_caja' => $caja_usuario->id_caja
+            ]);
         }
 
-        return response()->json($opc);
+        //return response()->json($opc);
 
     }
 
