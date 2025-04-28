@@ -548,6 +548,369 @@ class ComprobanteController extends Controller
             return view('frontend.factura.create',compact('trans', 'titulo','TipoF', 'facturas','facturad'));
         }
     }
+    
+    
+    public function send_nuevo(Request $request)
+    {
+		$sw = true;
+		$msg = "";
+
+		$id_user = Auth::user()->id;
+        $facturas_model = new Comprobante;
+		
+		/**********RUC***********/
+
+		$tarifa = $request->facturad;
+
+		$total = $request->totalF;
+		$serieF = $request->serieF;
+		$tipoF = $request->TipoF;
+		$ubicacion_id = $request->ubicacion;
+		$persona_id = $request->persona;
+		$id_caja = $request->id_caja;
+		$adelanto = $request->adelanto;
+
+        $ubicacion_id = $request->ubicacion;
+        $ubicacion_id2 = $request->ubicacion2;
+        $id_persona = $request->persona;
+        $id_persona2 = $request->persona2;
+
+        if ($id_persona=='') $id_persona = '0';
+        if ($id_persona2=='') $id_persona2 = '0';
+        if ($ubicacion_id2=='') $ubicacion_id2 = '0';
+
+        $id_caja = $request->id_caja;
+        $adelanto   = $request->adelanto;
+        $id_concepto = 0;
+
+
+		$trans = $request->trans;
+
+		if ($trans == 'FA' || $trans == 'FN'){
+
+			$ws_model = new TablaMaestra;
+				
+            /*************************************/
+            $id_moneda=1;
+
+            foreach ($tarifa as $key => $value) {
+                $id_val = $value['id'];
+                $id_concepto = $value['id_concepto'];
+                $id_moneda = $value['id_moneda'];
+            }
+
+            $ubicacion_id = $request->ubicacion;        
+            $ubicacion_id2 = $request->ubicacion2;
+            $id_persona = $request->persona;
+            $id_persona2 = $request->persona2;
+            $id_persona_act = 0;
+            $id_ubicacion_act = 0;
+            $id_persona_act = 0;
+            $id_ubicacion_act = 0;
+           
+            
+            if ($id_persona2!='') {
+                $id_persona_act = $id_persona2;
+                $id_persona='0';
+                
+            }else{
+                $id_persona_act = $id_persona;
+            }
+            
+
+            if ($ubicacion_id2!=''){
+                $id_ubicacion_act = $ubicacion_id2;
+                $ubicacion_id='0';
+
+            }else{
+                $id_ubicacion_act = $ubicacion_id;
+
+            }
+             
+            $direccion=$request->direccion;
+            $correo=$request->email;
+
+            if ($request->direccion2!=''){
+                $direccion=$request->direccion2;
+                $correo=$request->email2;
+            }
+
+            if ($id_persona_act != 0 || $id_ubicacion_act != 0) {
+                if ($tipoF == 'FT' &&  $ubicacion_id != '') {
+                    $empresa = Empresa::where('id', $id_ubicacion_act)->first();
+                    if ($empresa) {
+
+                        $empresa->direccion = $direccion;
+                        $empresa->email = $correo;
+                        $empresa->save();
+                    }
+                }
+
+                if ($tipoF == 'FT' &&  $id_persona != '') {
+                    $persona = Persona::where('id', $id_persona_act)->first();
+                    if ($persona) {
+                        $persona->direccion = $direccion;
+                        $persona->correo = $correo;
+                        $persona->save();
+                    }
+
+                    $persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
+                    if ($persona2) {
+                        $persona2->direccion = $direccion;
+                        $persona2->email1 = $correo;
+                        $persona2->save();
+                    }
+                }
+
+                if ($tipoF == 'BV' &&  $id_persona != '') {
+                    //exit($id_persona);
+
+
+                    $persona = Persona::where('id', $id_persona_act)->first();
+                    if ($persona) {
+                        $persona->direccion = $direccion;
+                        $persona->correo = $correo;
+                        $persona->save();
+                    }
+
+                    $persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
+                    if ($persona2) {
+                        $persona2->direccion = $direccion;
+                        $persona2->email1 = $correo;
+                        $persona2->save();
+                    }
+                }
+
+                if ($tipoF == 'FT' &&  $ubicacion_id2 != '') {
+                    $empresa = Empresa::where('id', $id_ubicacion_act)->first();
+                    if ($empresa) {
+                        $empresa->direccion = $direccion;
+                        $empresa->email = $correo;
+                        $empresa->save();
+                    }
+                }
+
+                if ($tipoF == 'BV' &&  $id_persona2 != '') {
+                    $persona = Persona::where('id', $id_persona_act)->first();
+                    if ($persona) {
+                        $persona->direccion = $direccion;
+                        $persona->correo = $correo;
+                        $persona->save();
+                    }
+
+                    $persona2 = Agremiado::where('id_persona', $id_persona_act)->first();
+                    if ($persona2) {
+                        $persona2->direccion = $direccion;
+                        $persona2->email1 = $correo;
+                        $persona2->save();
+                    }
+                }
+            }
+            if($ubicacion_id==""){
+                $ubicacion_id=$id_persona;
+                $ubicacion_id=$id_persona_act;
+            }
+
+            if($ubicacion_id=='0')$ubicacion_id=$ubicacion_id2;
+
+            $descuento =  $request->totalDescuento; 
+            if ($request->totalDescuento=='') $descuento = 0;
+
+            ///redondeo///
+            $total_pagar = $request->total_pagar;
+
+            if ($total_pagar!="0" && $total_pagar!=""){                           
+                $total_pagar = $request->total_pagar;
+                $total_g = $request->totalF;
+                $total_redondeo = $total_pagar - $total_g;
+
+                $total = $total+$total_redondeo;
+            }
+
+            ///Abono Directo///
+
+            $total_pagar_abono = $request->total_pagar_abono;
+            $total_abono= 0;
+
+            if ($total_pagar_abono!="0" && $total_pagar_abono!=""){ 
+
+                $total_pagar_abono = $request->total_pagar_abono;
+                $total_g = $request->totalF;
+                $total_abono= $total_pagar_abono - $total_g;
+
+                $total = $total+$total_abono;
+            }           
+                               
+            $id_nc = $request->id_comprobante_ncdc;
+     		
+			/*****Detalle*********/
+
+            $fecha_hoy = date('Y-m-d');
+    
+            if ($total_pagar!="0" && $total_pagar!=""){
+                $total_pagar = $request->total_pagar;
+                $total_g = $request->totalF;
+                $total_redondeo = $total_pagar - $total_g;
+                //$fecha_hoy = date('Y-m-d');
+
+                $items1 = array(
+                    "id" => 0, 
+                    "fecha" => $fecha_hoy,
+                    "denominacion" => "REDONDEO",
+                    "codigo_producto" => "",
+                    "descripcion" => "REDONDEO",
+                    "monto" => round($total_redondeo,2),
+                    "moneda" => "SOLES" ,
+                    "abreviatura" => "SOLES" ,
+                    "unidad_medida_item" => "NIU" ,
+                    "unidad_medida_comercial" => "UND" ,                        
+                    "id_moneda" => 1 ,
+                    "descuento" => 0 ,
+                    "cod_contable" => "",
+                    "id_concepto" => 26464 ,
+                    "pu" => round($total_redondeo,2),
+                    "igv" => 0 ,
+                    "pv" =>  0,
+                    "vv" =>  0, 
+                    "cantidad" => 1, 
+                    "total" => round($total_redondeo,2), 
+                    "item" => 999 ,
+
+                    );
+                $tarifa[999]=$items1;
+            }
+
+            if ($total_abono!="0" && $total_abono!=""){
+                $total_pagar_abono = $request->total_pagar_abono;
+                $total_g = $request->totalF;
+                $total_abono = $total_pagar_abono - $total_g;
+                //$fecha_hoy = date('Y-m-d');
+
+                $items1 = array(
+                    "id" => 0, 
+                    "fecha" => $fecha_hoy,
+                    "denominacion" => "REDONDEO",
+                    "codigo_producto" => "",
+                    "descripcion" => "REDONDEO",
+                    "monto" => round($total_abono,2),
+                    "moneda" => "SOLES" ,
+                    "id_moneda" => 1 ,
+                    "abreviatura" => "SOLES" ,
+                    "unidad_medida_item" => "NIU" ,
+                    "unidad_medida_comercial" => "UND" ,
+                    "descuento" => 0 ,
+                    "cod_contable" => "",
+                    "id_concepto" => 26464 ,
+                    "pu" => round($total_abono,2),
+                    "igv" => 0 ,
+                    "pv" =>  0,
+                    "vv" =>  0, 
+                    "cantidad" => 1, 
+                    "total" => round($total_abono,2), 
+                    "item" => 999 ,
+
+                    );
+                $tarifa[999]=$items1;
+            }
+           
+            
+            foreach ($tarifa as $key => $value) {
+                //echo "denominacion=>".$value['denominacion']."<br>";
+                if ($adelanto == 'S'){
+                    $total   = $request->MonAd;
+                }
+                else{
+                    $total = $value['monto'];
+                    $pu_   = $value['pu'];
+                }
+                $descuento = $value['descuento'];
+                if ($value['descuento']=='') $descuento = 0;
+                $id_factura_detalle = $facturas_model->registrar_factura_moneda($serieF, $fac_numero, $tipoF, $value['cantidad'], $value['id_concepto'], $pu_, $value['descripcion'], $value['cod_contable'], $value['item'], $id_factura, $descuento,    'd',     $id_user,  $id_moneda, 0);
+
+                if($value['id_concepto']!='26464'){
+                    $facturaDet_upd = ComprobanteDetalle::find($id_factura_detalle);
+                    
+                    $facturaDet_upd->pu=$value['pu'];
+                    $facturaDet_upd->importe=$value['total'];                
+                    $facturaDet_upd->igv_total=$value['igv'];
+                    $facturaDet_upd->precio_venta=$value['pv'];
+                    $facturaDet_upd->valor_venta_bruto=$value['valor_venta_bruto'];
+                    $facturaDet_upd->valor_venta=$value['valor_venta'];
+                   // $facturaDet_upd->codigo=$value['codigo_producto'];
+                    $facturaDet_upd->unidad=$value['unidad_medida_item'];
+                    //$facturaDet_upd->moneda=$value['abreviatura'];
+                    $facturaDet_upd->save();  
+
+                }
+            }
+
+
+
+
+
+			
+			$p_detalle ="";
+			$p_detalle.="{";
+			if(isset($tarifa)):
+				foreach ($tarifa as $key => $value){
+					if($tarifa[$key]!=""){
+					
+						if ($adelanto == 'S')$total_sm = $request->MonAd;
+						else $total_sm = $value['total'];
+						
+						$descuento = $value['descuento'];
+						if ($value['descuento']=='')$descuento = 0;
+						
+						$p_detalle.="{";
+						$p_detalle.=$value['item'].",";
+						$p_detalle.=$total_sm.",";
+						
+						$p_detalle.=$descuento.",";
+						$p_detalle.=$value['denominacion'].",";
+						$p_detalle.=(($value['plancontable']!="")?$value['plancontable']:0).",";
+						$p_detalle.=$value['vcodigo'].",";
+						$p_detalle.=$value['vestab'].",";
+						$p_detalle.=$value['modulo'].",";
+						$p_detalle.=$value['smodulo'];
+						$p_detalle.="},";
+						
+					}
+				}
+				if(strlen($p_detalle)>1)$p_detalle= substr($p_detalle,0,-1);
+			endif;
+			$p_detalle.="}";
+			
+			/*****FACTURA*********/	
+			
+			$id_factura = $facturas_model->registrar_factura_moneda_v2($serieF,$tipoF,$ubicacion_id,$persona_id,$total,$id_user,$id_caja,$id_moneda,$p_detalle);				
+			//echo "id_factura:".$id_factura;
+			$factura = Factura::find($id_factura);
+			$fac_serie = $factura->fac_serie;
+			$fac_numero = $factura->fac_numero;
+			
+			
+			$estado_ws = $ws_model->getCajaAllTipo('ESTADO ENVIO WS');
+			$flagWs = isset($estado_ws[0]->codigo)?$estado_ws[0]->codigo:1;
+
+			if ($flagWs==2 && $id_factura>0 && ($tipoF=="FT" || $tipoF=="BV")){
+				$this->firmar($id_factura);
+			}
+
+		}
+			
+		if ($trans == 'FE') {
+			$id_factura = $request->id_factura;
+		}
+
+		$array["sw"] = $sw;
+        $array["msg"] = $msg;
+		$array["id_factura"] = $id_factura;
+        echo json_encode($array);
+
+    }
+
+    
+    
     public function send(Request $request)
     {
 
@@ -668,9 +1031,9 @@ class ComprobanteController extends Controller
 				}
 				
                 $ubicacion_id = $request->ubicacion;        
-            $ubicacion_id2 = $request->ubicacion2;
-			$id_persona = $request->persona;
-            $id_persona2 = $request->persona2;
+                $ubicacion_id2 = $request->ubicacion2;
+                $id_persona = $request->persona;
+                $id_persona2 = $request->persona2;
 
 /*
             echo "ubicacion_id -> {$ubicacion_id}\n ";
@@ -1135,7 +1498,7 @@ class ComprobanteController extends Controller
 
                 $valorizad = $request->valorizad;
 
-                //print_r($tarifa); exit();
+                print_r($tarifa); exit();
 
                     foreach ($valorizad as $key => $value) {
                         $id_val = $value['id'];
@@ -1368,6 +1731,8 @@ class ComprobanteController extends Controller
 
         //return redirect()->back()->withFlashSuccess(__('alerts.frontend.contact.sent'));
     }
+
+
     public function send_1(Request $request)
     {
 
