@@ -68,21 +68,21 @@ class Proyectista extends Model
 
     function getProyectistaSolicitud2($id_solicitud){      
         $cad = "select 'CAP' tipo_colegiatura, p4.id, a2.numero_cap AS numero_cap, pe.apellido_paterno||' '||pe.apellido_materno||' '||pe.nombres agremiado, a2.celular1, a2.email1, 
-t3.denominacion situacion,t4.denominacion actividad, p4.id_tipo_profesional, id_tipo_proyectista 
-FROM proyectistas p4
-INNER JOIN agremiados a2 ON p4.id_agremiado = a2.id 
-inner join personas pe on a2.id_persona = pe.id
-left join tabla_maestras t3 on a2.id_situacion = t3.codigo::int And t3.tipo ='14'
-left join tabla_maestras t4 on a2.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
-WHERE p4.id_solicitud = '".$id_solicitud."'
-UNION
-SELECT 'CIP' tipo_colegiatura, po.id, po.colegiatura AS numero_cap, pe2.apellido_paterno||' '||pe2.apellido_materno||' '||pe2.nombres agremiado, pe2.numero_celular, pe2.correo, 
-'' situacion,'' actividad, null id_tipo_profesional, id_tipo_proyectista 
-FROM profesion_otros po 
-INNER JOIN solicitudes s2 ON po.id_solicitud = s2.id
-inner join personas pe2 on po.id_persona = pe2.id
-WHERE po.id_solicitud = '".$id_solicitud."'
-order by id_tipo_proyectista";
+        t3.denominacion situacion,t4.denominacion actividad, p4.id_tipo_profesional, id_tipo_proyectista 
+        FROM proyectistas p4
+        INNER JOIN agremiados a2 ON p4.id_agremiado = a2.id 
+        inner join personas pe on a2.id_persona = pe.id
+        left join tabla_maestras t3 on a2.id_situacion = t3.codigo::int And t3.tipo ='14'
+        left join tabla_maestras t4 on a2.id_actividad_gremial = t4.codigo::int And t4.tipo ='46'
+        WHERE p4.id_solicitud = '".$id_solicitud."'
+        UNION
+        SELECT 'CIP' tipo_colegiatura, po.id, po.colegiatura AS numero_cap, pe2.apellido_paterno||' '||pe2.apellido_materno||' '||pe2.nombres agremiado, pe2.numero_celular, pe2.correo, 
+        '' situacion,'' actividad, null id_tipo_profesional, id_tipo_proyectista 
+        FROM profesion_otros po 
+        INNER JOIN solicitudes s2 ON po.id_solicitud = s2.id
+        inner join personas pe2 on po.id_persona = pe2.id
+        WHERE po.id_solicitud = '".$id_solicitud."'
+        order by id_tipo_proyectista";
 
         //echo $cad;
 		$data = DB::select($cad);
@@ -203,6 +203,7 @@ order by id_tipo_proyectista";
     }
 
     function datos_proyectista_editar($id_solicitud){      
+
         $cad = "select p.id, a.numero_cap, pe.apellido_paterno||' '||pe.apellido_materno||' '||pe.nombres agremiado, a.celular1, a.email1, 
         t3.denominacion situacion,t4.denominacion actividad, p.id_tipo_profesional, 'CAP' tipo_colegiatura
         from proyectistas p 
@@ -225,9 +226,22 @@ order by id_tipo_proyectista";
     }
 
     function getProyectistaPrincipal($id){      
+
         $cad = "select * from proyectistas p where id='".$id."'";
 
         //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
+    function getProyectistaPrincipalEdificaciones($id){
+
+        $cad = "select p.id, p2.nombres ||' '|| p2.apellido_paterno ||' '|| p2.apellido_materno nombres, a.numero_cap, a.celular1, a.email1, a.firma from proyectistas p
+        inner join solicitudes s on p.id_solicitud = s.id 
+        inner join agremiados a on p.id_agremiado = a.id 
+        inner join personas p2 on a.id_persona = p2.id 
+        where p.id='".$id."'";
+
 		$data = DB::select($cad);
         return $data;
     }

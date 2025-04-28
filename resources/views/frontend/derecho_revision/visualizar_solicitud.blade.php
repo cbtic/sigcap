@@ -480,68 +480,68 @@ $(document).ready(function () {
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Estado de la Solicitud</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $datos_derecho_revision[0]->estado_solicitud }}</b></label>
 									</div>
 
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Liquidaci&oacute;n</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $datos_derecho_revision[0]->estado_liquidacion }}</b></label>
 									</div>
 
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Tipo de Solicitud</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $datos_derecho_revision[0]->tipo_solicitud }}</b></label>
 									</div>
 								</div>
 
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Revisi&oacute;n</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $datos_derecho_revision[0]->instancia }}</b></label>
 									</div>
 
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Nombre del Proyecto</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $datos_derecho_revision[0]->nombre_proyecto }}</b></label>
 									</div>
 
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Direcci&oacute;n</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $datos_derecho_revision[0]->estado_solicitud }}</b></label>
 									</div>
 								</div>
 
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Departamento</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $departamento }}</b></label>
 									</div>
 
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Provincia</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $provincia }}</b></label>
 									</div>
 
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Distrito</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $distrito }}</b></label>
 									</div>
 								</div>
 
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Municipalidad</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $datos_derecho_revision[0]->municipalidad }}</b></label>
 									</div>
 
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Fecha de Registro</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $datos_derecho_revision[0]->fecha_registro }}</b></label>
 									</div>
 
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Hora de Registro</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm"><b>{{ $datos_derecho_revision[0]->hora_registro }}</b></label>
 									</div>
 								</div>
 
@@ -565,7 +565,7 @@ $(document).ready(function () {
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-3" style ="border: solid 1px #DEE2E6">
 										<label class="control-label form-control-sm color-letra" style="text-align: center; display: block">Instancia</label>
-										<label class="control-label form-control-sm" style="text-align: center; display: block"><b>Estado de la Solicitud</b></label>
+										<label class="control-label form-control-sm" style="text-align: center; display: block"><b>{{ $datos_derecho_revision[0]->numero_revision }}</b></label>
 									</div>
 
 									<div class="col-lg-2" style ="border: solid 1px #DEE2E6">
@@ -636,16 +636,17 @@ $(document).ready(function () {
 												</tr>
 											</thead>
 											<tbody>
-												<td>asd</td>
-												<td>asd</td>
-												<td>asd</td>
-												<td>asd</td>
-												<td>asd</td>
+												<td>{{ $datos_proyectista_principal[0]->nombres }}</td>
+												<td>{{ $datos_proyectista_principal[0]->numero_cap }}</td>
+												<td>{{ $datos_proyectista_principal[0]->celular1 }}</td>
+												<td>{{ $datos_proyectista_principal[0]->email1 }}</td>
+												<td>@if(!empty($datos_proyectista_principal[0]->firma)) <span class="text-success">Validada</span> @else <span class="text-danger">No Validada</span> @endif</td>
 											</tbody>
 										</table>
 									</div>
 								</div>
-
+								@if (!empty($datos_proyectista_asociado) && count($datos_proyectista_asociado) > 0)
+									
 								<div class="row" style="margin-top: 15px; background: #203A73; color: white;">
 									<div class="col-lg-12 text-center">
 										<strong>Proyectistas Adjuntos</strong>
@@ -664,16 +665,24 @@ $(document).ready(function () {
 													<th style="color: white; width: 10%">Firma</th>
 												</tr>
 											</thead>
+											
 											<tbody>
-												<td>asd</td>
-												<td>asd</td>
-												<td>asd</td>
-												<td>asd</td>
-												<td>asd</td>
+												@foreach ($datos_proyectista_asociado as $proyectista_asociado)
+													@foreach ($proyectista_asociado as $proyectista)
+												<tr>
+													<td>{{ $proyectista->nombres ?? '-'  }}</td>
+													<td>{{ $proyectista->numero_cap ?? '-'  }}</td>
+													<td>{{ $proyectista->celular1 ?? '-'  }}</td>
+													<td>{{ $proyectista->email1 ?? '-'  }}</td>
+													<td>@if(!empty($proyectista->firma)) <span class="text-success">Validada</span> @else <span class="text-danger">No Validada</span> @endif</td>
+												</tr>
+													@endforeach
+												@endforeach
 											</tbody>
 										</table>
 									</div>
 								</div>
+								@endif
 
 								<div class="row" style="margin-top: 15px; background: #203A73; color: white;">
 									<div class="col-lg-12 text-center">
@@ -741,22 +750,22 @@ $(document).ready(function () {
 								<div class="row" style="padding-left:10px; margin-top: 15px">
 									<div class="col-lg-3" style ="border: solid 1px #DEE2E6">
 										<label class="control-label form-control-sm color-letra" style="text-align: center; display: block">N° de Pisos</label>
-										<label class="control-label form-control-sm" style="text-align: center; display: block"><b>7</b></label>
+										<label class="control-label form-control-sm" style="text-align: center; display: block"><b>{{ $datos_derecho_revision[0]->numero_piso }}</b></label>
 									</div>
 
 									<div class="col-lg-3" style ="border: solid 1px #DEE2E6">
 										<label class="control-label form-control-sm color-letra" style="text-align: center; display: block">N° de S&oacute;tanos</label>
-										<label class="control-label form-control-sm" style="text-align: center; display: block"><b>2</b></label>
+										<label class="control-label form-control-sm" style="text-align: center; display: block"><b>{{ $datos_derecho_revision[0]->numero_sotano }}</b></label>
 									</div>
 
 									<div class="col-lg-3" style ="border: solid 1px #DEE2E6">
 										<label class="control-label form-control-sm color-letra" style="text-align: center; display: block">Azoteas</label>
-										<label class="control-label form-control-sm" style="text-align: center; display: block"><b>1</b></label>
+										<label class="control-label form-control-sm" style="text-align: center; display: block"><b>{{ $datos_derecho_revision[0]->azotea }}</b></label>
 									</div>
 
 									<div class="col-lg-3" style ="border: solid 1px #DEE2E6">
 										<label class="control-label form-control-sm color-letra" style="text-align: center; display: block">Semis&oacute;tano</label>
-										<label class="control-label form-control-sm" style="text-align: center; display: block"><b>1</b></label>
+										<label class="control-label form-control-sm" style="text-align: center; display: block"><b>{{ $datos_derecho_revision[0]->semisotano }}</b></label>
 									</div>
 
 								</div>
@@ -767,7 +776,7 @@ $(document).ready(function () {
 										<label class="control-label form-control-sm"><b>No sujeto a Repetición por Plantas Típicas</b></label>
 									</div>
 								</div>
-								
+								@if (!empty($datos_uso_edificacion) && count($datos_uso_edificacion) > 0)
 								<div class="row" style="margin-top: 15px; background: #203A73; color: white;">
 									<div class="col-lg-12 text-center">
 										<strong>Uso de la Edificaci&oacute;n</strong>
@@ -786,10 +795,14 @@ $(document).ready(function () {
 												</tr>
 											</thead>
 											<tbody>
-												<td class="color-letra">asd</td>
-												<td class="color-letra">asd</td>
-												<td class="color-letra">asd</td>
-												<td class="color-letra">asd</td>
+											@foreach ($datos_uso_edificacion as $uso_edificacion)
+												<tr>
+													<td class="color-letra">{{ $uso_edificacion->row_num ?? '-'  }}</td>
+													<td class="color-letra">{{ $uso_edificacion->uso_edificacion ?? '-'  }}</td>
+													<td class="color-letra">{{ $uso_edificacion->sub_tipo_edificacion ?? '-'  }}</td>
+													<td class="color-letra">{{ $uso_edificacion->area_techada ?? '-'  }}</td>
+												</tr>
+											@endforeach
 											</tbody>
 											<tfoot>
 												<tr style="font-size:13px">
@@ -800,7 +813,7 @@ $(document).ready(function () {
 										</table>
 									</div>
 								</div>
-
+								@endif
 								<div class="row" style="margin-top: 15px; background: #203A73; color: white;">
 									<div class="col-lg-12 text-center">
 										<strong>Presupuesto</strong>
