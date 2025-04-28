@@ -2692,7 +2692,7 @@ class DerechoRevisionController extends Controller
 		//var_dump($proyectista_asociado);
 		foreach($proyectista_asociado as $proyectista){
 
-			$datos  = $proyectista_model->getProyectistaPrincipalEdificaciones($proyectista->id); 
+			$datos  = $proyectista_model->getProyectistaPrincipalEdificaciones($proyectista->id);
 			foreach ($datos as $item) {
 				$datos_proyectista_asociado[] = $item;
 			}

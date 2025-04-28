@@ -42,7 +42,7 @@ $(document).ready(function () {
 		else modalDiaSemana(0);
 		//fn_guardarMunicipalidadIntegrada();
 	});
-		
+	
 	//datatablenew();
 	cargarMunicipalidades();
 

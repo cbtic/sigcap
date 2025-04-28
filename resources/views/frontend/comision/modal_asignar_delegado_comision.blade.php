@@ -333,6 +333,7 @@ function fn_save(){
 				cargarMunicipalidades();
 				cargarMunicipalidadesIntegradas();
 				cargarComisiones();
+				//alert();
 				//obtenerInversionista(0);
 				//obtenerDetalleInversionista(0);
 				//window.location.reload();
@@ -535,14 +536,14 @@ container: '#myModal modal-body'
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Periodo</label>
-								<input type="text" id="periodo" name="periodo" class="form-control form-control-sm" value="<?php echo $periodo->descripcion?>" readonly="readonly">
+								<input type="text" id="_periodo" name="_periodo" class="form-control form-control-sm" value="<?php echo $periodo->descripcion?>" readonly="readonly">
 							</div>
 						</div>
 					
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label class="control-label form-control-sm">Tipo Comisi&oacute;n</label>
-								<input type="text" id="tipo_comision" name="tipo_comision" class="form-control form-control-sm" value="<?php echo $tipo_comision->denominacion?>" readonly="readonly">
+								<input type="text" id="_tipo_comision" name="_tipo_comision" class="form-control form-control-sm" value="<?php echo $tipo_comision->denominacion?>" readonly="readonly">
 							</div>
 						</div>
 						
