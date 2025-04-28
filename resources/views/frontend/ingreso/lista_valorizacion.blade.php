@@ -1,4 +1,5 @@
 <input type="hidden" name="id_concepto_modal_sel" id="id_concepto_modal_sel" value="" />
+<input type="hidden" name="obligatorio_ultimo_pago" id="obligatorio_ultimo_pago" value="" />
 <?php
 $total = 0;
 $descuento = 0;
@@ -74,9 +75,12 @@ foreach ($valorizacion as $key => $row):
 	}
 
 	$disabled = "";
-	if ($tot_reg != $n) {
+	$obligatorio = $row->obligatorio_ultimo_pago;
 
-		$disabled = "disabled";
+	//echo($obligatorio);
+
+	if ($tot_reg != $n) {
+		if ($obligatorio =="1")$disabled = "disabled";
 	}
 
 
@@ -174,6 +178,7 @@ foreach ($valorizacion as $key => $row):
 			<span hidden class="id_concepto_modal_sel"><?php echo $row->id_concepto ?></span>
 			<span hidden class="id_concepto"><?php echo $row->id_concepto ?></span>
 			<span hidden class="id_tipo_afectacion_sel"><?php echo $row->id_tipo_afectacion ?></span>
+			<span hidden class="obligatorio_ultimo_pago"><?php echo $row->obligatorio_ultimo_pago ?></span>
 
 		</td>
 
