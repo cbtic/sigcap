@@ -32,4 +32,16 @@ class Presupuesto extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getPresupuesto($id){      
+        $cad = "select p.id, ROW_NUMBER() OVER (PARTITION BY p.id_solicitud) AS row_num, tm.denominacion tipo_obra, p.area_techada, p.valor_unitario , p.estado 
+        from presupuestos p 
+        left join tabla_maestras tm on p.id_tipo_obra = tm.codigo::int and tm.tipo ='112'
+        where p.estado ='1'
+        and p.id = '".$id."'";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
 }

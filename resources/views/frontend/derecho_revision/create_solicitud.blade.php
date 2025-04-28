@@ -351,15 +351,16 @@ $(document).ready(function () {
 									</select>
 								</div>
 
-								<div class="col-lg-3" id="div_numero_expediente">
-									<label class="control-label form-control-sm color-letra">N&uacute;mero de Expediente</label>
-									<input id="numero_expediente" name="numero_expediente" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->nombre?>" type="text" onchange="buscarSolicitudbyNumeroExpediente()">
-								</div>
-
 								<div class="col-lg-3" id="div_codigo_proyecto">
 									<label class="control-label form-control-sm color-letra">C&oacute;digo de Proyecto</label>
 									<input id="codigo_proyecto" name="codigo_proyecto" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->nombre?>" type="text" onchange="buscarSolicitudbyCodigoProyecto()">
 								</div>
+
+								<div class="col-lg-3" id="div_numero_expediente">
+									<label class="control-label form-control-sm color-letra">N&uacute;mero de Liquidaci&oacute;n</label>
+									<input id="numero_liquidacion" name="numero_liquidacion" on class="form-control form-control-sm"  value="<?php //echo $proyecto2->nombre?>" type="text" onchange="buscarSolicitudbyNumeroLiquidacion()">
+								</div>
+								
 						</div>
 						<div class="row" style="padding-left:10px">
 

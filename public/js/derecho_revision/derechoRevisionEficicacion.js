@@ -1,9 +1,9 @@
 $(document).ready(function () {
 	
-	obtenerProvincia();
-	obtenerProvinciaReintegro();
-	obtenerDatosUbigeoReintegro();
-	obtenerDistritoReintegro();
+	//obtenerProvincia();
+	//obtenerProvinciaReintegro();
+	//obtenerDatosUbigeoReintegro();
+	//obtenerDistritoReintegro();
 
 	obtenerSolicitud();
 	obtenerPropietario_();
@@ -14,7 +14,7 @@ $(document).ready(function () {
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
 		obtenerUbigeoReintegro();
-		obtenerDatosUbigeo();
+		//obtenerDatosUbigeo();
 	}
 
 	$('#fecha_registro_bus').datepicker({
@@ -143,8 +143,6 @@ $(document).ready(function () {
         $(this).val(formatoMoneda(input));
     });
 
-	cargarPeriodo();
-	cargarPeriodoHu();
 	datatablenew();
 	datatablenew2();
 	//if($('#valor_reintegro').val()==0){
@@ -2734,5 +2732,102 @@ function obtenerSolicitud(){
 		$('#div_codigo_proyecto').show();
 		$('#div_numero_expediente').show();
 	}
+
+}
+
+function buscarSolicitudbyCodigoProyecto(){
+
+	var codigo_proyecto = $('#codigo_proyecto').val();
+	var msg = "";
+	
+	var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+    
+    $.ajax({
+        url: '/derecho_revision/obtener_datos_solicitud_codigo_proyecto/' + codigo_proyecto,
+        dataType: "json",
+        success: function(result){
+
+            var solicitud = result.solicitud;
+			
+			//bootbox.alert(solicitud[0].nombre_proyecto)
+
+            if(solicitud[0])
+            {
+                $('#nombre_proyecto').val(solicitud[0].nombre_proyecto);
+				/*var id_ubigeo = solicitud[0].ubigeo;
+				alert(id_ubigeo);
+				var id_departamento = id_ubigeo.substring(0,2);
+				var id_provincia = id_ubigeo.substring(2,4);
+				var id_distrito = id_ubigeo.substring(4,6);
+
+				$('#departamento').val(id_departamento).trigger('change');
+
+				obtenerProvinciaReintegro(id_provincia, id_distrito);
+                */
+                $('.loader').hide();
+                
+            }else{
+                msg += "La Solicitud no esta registrada en la Base de Datos de CAP <br>";
+                $('.loader').hide();
+                
+            }
+
+            if (msg != "") {
+                bootbox.alert(msg);
+                return false;
+            }
+
+        }
+        
+    });
+
+}
+
+function buscarSolicitudbyNumeroLiquidacion(){
+
+	var msgLoader = "";
+    msgLoader = "Procesando, espere un momento por favor";
+    var heightBrowser = $(window).width()/2;
+    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+    $('.loader').show();
+    
+    $.ajax({
+        url: '/empresa/obtener_datos_empresa/' + ruc_propietario,
+        dataType: "json",
+        success: function(result){
+            var empresa = result.empresa;
+
+            if(empresa!="0")
+            {
+                $('#razon_social_propietario').val(empresa.razon_social);
+                $('#direccion_ruc').val(empresa.direccion);
+                $('#telefono_ruc').val(empresa.telefono);
+                $('#email_ruc').val(empresa.email);
+                
+                $('.loader').hide();
+                
+            }else{
+                msg += "La Empresa no esta registrada en la Base de Datos de CAP <br>";
+                $('#razon_social_propietario').val("");
+                $('#direccion_ruc').val("");
+                $('#telefono_ruc').val("");
+                $('#email_ruc').val("");
+                $('.loader').hide();
+                
+            }
+
+            if (msg != "") {
+                bootbox.alert(msg);
+                return false;
+            }
+
+
+        }
+        
+    });
 
 }
