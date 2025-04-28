@@ -306,23 +306,37 @@ function calcular_total(obj){
 	}else{
 		var key = $(obj).attr("key");
 		var key2 = 0;
+		var obligatorio = "";
 		$(".mov:checked").each(function (i){
-			if(i==0)key2 = $(this).attr("key")-1;
+			if(i==0)key2 = $(this).attr("key")-1;			
 		});
 		
+		$(".mov:checked").each(function (){
+			obligatorio = $(this).parent().parent().parent().find('.obligatorio_ultimo_pago').html();
+		});
+		
+		//var obligatorio = $(obj).parent().parent().parent().find('.obligatorio_ultimo_pago').val();
+
+		//alert(obligatorio);
+
 		if(key!=key2){
-			bootbox.alert("Debe seleccionar el ultimo registro");
-			$(obj).prop("checked",true);
-			return false;
+			if (obligatorio=='1'){
+				bootbox.alert("Debe seleccionar el ultimo registro");
+				$(obj).prop("checked",true);
+				return false;
+			}
+
 		}
 		
+		if (obligatorio=='1'){
 		$(obj).parent().parent().parent().prev().find(".mov").prop('disabled',true);
+		}
 
 		$(obj).parent().parent().parent().find('.chek').val("");
 
 		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",true);
 		
-		
+		//}
 		
 		//alert(key2);
 		//var key2 = $(obj).parent().parent().parent().prev().find(".mov").attr("key");
@@ -351,6 +365,7 @@ function calcular_total(obj){
 	//alert("id_concepto->"+id_concepto);
 	
 	id_concepto_actual = $(obj).parent().parent().parent().find('.id_concepto_modal_sel').val();
+
 	//alert(id_concepto_actual);
 	//alert("id_concepto_actual->"+id_concepto_actual)
 	//$('#id_concepto_sel').val(id_concepto);
