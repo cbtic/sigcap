@@ -3270,7 +3270,7 @@ class DerechoRevisionController extends Controller
     }
 
 	public function obtener_datos_solicitud_codigo_proyecto($codigo_proyecto){
-
+		
 		$derecho_revision_model = new DerechoRevision;
 		$sw = true;
 

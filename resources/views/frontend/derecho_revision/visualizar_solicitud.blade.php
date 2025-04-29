@@ -406,6 +406,8 @@ $(document).ready(function () {
 							<!--<button id="btnHome" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 30px; height: 30px;">
 								<i class="fas fa-home"></i>
 							</button>-->
+							
+							@if ( $datos_derecho_revision[0]->id_resultado == 1)
 
 							<a href="/account/" onclick="" style="border: solid 1px; color:#28A745; margin-top:0px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnHome">
 								<i class="fas fa-home"></i>
@@ -448,7 +450,95 @@ $(document).ready(function () {
 								<i class="fas fa-arrow-left"> Regresar</i>
 							</a>
 							<!--</button>-->
+							@endif
+							@if ( $datos_derecho_revision[0]->id_resultado == 2)
 
+							<a href="/account/" onclick="" style="border: solid 1px; color:#28A745; margin-top:0px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnHome">
+								<i class="fas fa-home"></i>
+							</a>
+
+							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
+								<i class="fas fa-print"></i>
+							</button>
+
+							<button id="btnReintegro" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-history icono-rojo">  Solicitar Reintegro</i>
+							</button>
+
+							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-times icono-rojo">  Solicitar Anulaci&oacute;n</i>
+							</button>
+
+							<!--<button id="btnSolicitudes" type="button" class="btn btn-outline btn-sm btn-celeste" data-toggle="modal" style="border: solid 1px; color:#17A2B8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
+								<i class="fas fa-pencil-ruler">  Solicitudes</i>
+							</button>-->
+
+							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#17A2B8; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-celeste" id="btnSolicitudes">
+								<i class="fas fa-pencil-ruler"> Solicitudes</i>
+							</a>
+
+							<button id="btnLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" data-toggle="modal" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
+								<i class="fas fa-file-pdf">  Liquidaci&oacute;n</i>
+							</button>
+
+							<button id="btnEnviarLiquidacion" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-at">  Enviar Liquidaci&oacute;n</i>
+							</button>
+
+							<button id="btnAsignarComision" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 190px; height: 30px; margin-left: 10px">
+								<i class="fas fa-book-reader">  Asignar a Comisi&oacute;n T&eacute;cnica</i>
+							</button>
+
+							<!--<button id="btnRegresar" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 100px; height: 30px; margin-left: 10px">-->
+							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnRegresar">
+								<i class="fas fa-arrow-left"> Regresar</i>
+							</a>
+							<!--</button>-->
+							@endif
+							@if ( $datos_derecho_revision[0]->id_resultado == 3)
+
+							<a href="/account/" onclick="" style="border: solid 1px; color:#28A745; margin-top:0px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnHome">
+								<i class="fas fa-home"></i>
+							</a>
+
+							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
+								<i class="fas fa-print"></i>
+							</button>
+
+							<button id="btnReintegro" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-history icono-rojo">  Solicitar Reintegro</i>
+							</button>
+
+							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-times icono-rojo">  Solicitar Anulaci&oacute;n</i>
+							</button>
+
+							<!--<button id="btnSolicitudes" type="button" class="btn btn-outline btn-sm btn-celeste" data-toggle="modal" style="border: solid 1px; color:#17A2B8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
+								<i class="fas fa-pencil-ruler">  Solicitudes</i>
+							</button>-->
+
+							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#17A2B8; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-celeste" id="btnSolicitudes">
+								<i class="fas fa-pencil-ruler"> Solicitudes</i>
+							</a>
+
+							<button id="btnLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" data-toggle="modal" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
+								<i class="fas fa-file-pdf">  Liquidaci&oacute;n</i>
+							</button>
+
+							<button id="btnEnviarLiquidacion" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-at">  Enviar Liquidaci&oacute;n</i>
+							</button>
+
+							<button id="btnAsignarComision" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 190px; height: 30px; margin-left: 10px">
+								<i class="fas fa-book-reader">  Asignar a Comisi&oacute;n T&eacute;cnica</i>
+							</button>
+
+							<!--<button id="btnRegresar" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 100px; height: 30px; margin-left: 10px">-->
+							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnRegresar">
+								<i class="fas fa-arrow-left"> Regresar</i>
+							</a>
+							<!--</button>-->
+							@endif
 						</div>
 						
 					</div>
