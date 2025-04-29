@@ -404,12 +404,17 @@ function valida_ultimo_pago(){
 						var anio_pagado = fecha_pagada.getFullYear();
 
 						if(anio<=anio_pagado){
-							if(mes<=mes_pagado){
-								$('.loader').hide();
-								fn_save();
+							if(anio == anio_pagado){
+								if(mes<=mes_pagado){
+									$('.loader').hide();
+									fn_save();
+								}else{
+									$('.loader').hide();
+									Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
+								}
 							}else{
 								$('.loader').hide();
-								Swal.fire("El agremiado no ha realizado el pago hasta la fecha de vigencia del certificado, por lo tanto no se puede generar")
+								fn_save();
 							}
 						}else{
 							$('.loader').hide();

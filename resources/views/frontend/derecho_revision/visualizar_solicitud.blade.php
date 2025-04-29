@@ -773,7 +773,11 @@ $(document).ready(function () {
 								<div class="row" style="padding-left:10px; margin-top: 15px">
 									<div class="col-lg-3">
 										<label class="control-label form-control-sm color-letra">Repetici&oacute;n por plantas T&iacute;picas</label>
-										<label class="control-label form-control-sm"><b>No sujeto a Repetición por Plantas Típicas</b></label>
+										@if ($datos_derecho_revision != 0)
+											<label class="control-label form-control-sm"><b>No sujeto a Repetición por Plantas Típicas</b></label>
+										@else
+											<label class="control-label form-control-sm"><b>Sujeto a Repetición por Plantas Típicas</b></label>
+										@endif
 									</div>
 								</div>
 								@if (!empty($datos_uso_edificacion) && count($datos_uso_edificacion) > 0)
@@ -795,7 +799,14 @@ $(document).ready(function () {
 												</tr>
 											</thead>
 											<tbody>
+											@php 
+												$total_area_techada = 0;
+											@endphp
 											@foreach ($datos_uso_edificacion as $uso_edificacion)
+												@php
+													$subtotal = $uso_edificacion->area_techada ?? 0;
+													$total_area_techada += $subtotal;
+												@endphp
 												<tr>
 													<td class="color-letra">{{ $uso_edificacion->row_num ?? '-'  }}</td>
 													<td class="color-letra">{{ $uso_edificacion->uso_edificacion ?? '-'  }}</td>
@@ -807,13 +818,15 @@ $(document).ready(function () {
 											<tfoot>
 												<tr style="font-size:13px">
 													<td colspan="3"></td>
-													<td class="color-letra"><b>&Aacute;rea Techada Total: 3,775.74 m2<b></td>
+													<td class="color-letra" style ="font-size: 18px"><b>&Aacute;rea Techada Total: {{ number_format($total_area_techada, 2) }} m<sup>2</sup><b></td>
 												</tr>
 											</tfoot>
 										</table>
 									</div>
 								</div>
 								@endif
+
+								@if (!empty($datos_uso_edificacion) && count($datos_uso_edificacion) > 0)
 								<div class="row" style="margin-top: 15px; background: #203A73; color: white;">
 									<div class="col-lg-12 text-center">
 										<strong>Presupuesto</strong>
@@ -833,22 +846,32 @@ $(document).ready(function () {
 												</tr>
 											</thead>
 											<tbody>
-												<td class="color-letra">asd</td>
-												<td class="color-letra">asd</td>
-												<td class="color-letra">asd</td>
-												<td class="color-letra">asd</td>
-												<td class="color-letra">asd</td>
+											@php 
+												$total_presupuesto = 0;
+											@endphp
+											@foreach ($datos_presupuesto as $presupuesto)
+												@php
+													$subtotal = ($presupuesto->area_techada ?? 0) * ($presupuesto->valor_unitario ?? 0);
+													$total_presupuesto += $subtotal;
+												@endphp
+												<?	$presupuesto = ?>
+												<td class="color-letra">{{ $presupuesto->row_num ?? '-'  }}</td>
+												<td class="color-letra">{{ $presupuesto->tipo_obra ?? '-'  }}</td>
+												<td class="color-letra">{{ $presupuesto->area_techada ?? '-'  }}</td>
+												<td class="color-letra">{{ $presupuesto->valor_unitario ?? '-'  }}</td>
+												<td class="color-letra">{{ number_format($subtotal, 2) }}</td>
+											@endforeach
 											</tbody>
 											<tfoot>
 												<tr style="font-size:13px">
 													<td colspan="4"></td>
-													<td class="color-letra"><b>Valor Total de Obra: S/25,406.91</b></td>
+													<td class="color-letra" style ="font-size: 18px"><b>Valor Total de Obra: S/ {{ number_format($total_presupuesto, 2) }}</b></td>
 												</tr>
 											</tfoot>
 										</table>
 									</div>
 								</div>
-
+								@endif
 								<div class="row" style="text-align: center; display: block; margin-top: 15px">
 									<strong>
 										Datos del Comprobante de Pago

@@ -839,6 +839,6 @@ Route::post('derecho_revision/send_nuevo_registro_solicitud_edificacion', [Derec
 Route::get('reporte/exportar_reporte_caja/{id}/{fini}/{ffin}/{opc1}/{opc2}/{opc3}', [ReporteController::class, 'exportar_reporte_caja'])->name('reporte.exportar_reporte_caja');
 Route::get('agremiado/obtener_datos_agremiado_proyectista/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_proyectista'])->name('agremiado.obtener_datos_agremiado_proyectista');
 Route::get('derecho_revision/editar_derecho_revision_edificaciones/{id}', [DerechoRevisionController::class, 'editar_derecho_revision_edificaciones'])->name('derecho_revision.editar_derecho_revision_edificaciones');
-
+Route::get('derecho_revision/obtener_datos_solicitud_codigo_proyecto/{codigo_proyecto}', [DerechoRevisionController::class, 'obtener_datos_solicitud_codigo_proyecto'])->name('derecho_revision.obtener_datos_solicitud_codigo_proyecto');
 
 
