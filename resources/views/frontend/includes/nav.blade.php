@@ -297,8 +297,8 @@
 						   </div>	
 					</li>
 					@endif
-
-                    @if(Gate::check('Pronto Pago') || Gate::check('Parametros') || Gate::check('Tipo Cambio'))
+ 
+                    @if(Gate::check('Pronto Pago') || Gate::check('Parametros') || Gate::check('Tipo Cambio') || Gate::check('Reporte Ventas') || Gate::check('Reporte Cajas') || Gate::check('Reporte Deudas Gestion'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Gesti&oacute;n</a>
@@ -309,9 +309,15 @@
 								@can('Parametros')
 								<a href="/parametro/consulta_parametro" class="dropdown-item">Par&aacute;metros</a>
 								@endcan
+								@can('Reporte Ventas')
 								<a href="/reporte/1" class="dropdown-item">Reportes Ventas</a>
-								<a href="/reporte/2" class="dropdown-item">Reportes Cajas</a>			
-								<a href="/reporte/3" class="dropdown-item">Reportes Deudas</a>						
+								@endcan
+								@can('Reporte Cajas')
+								<a href="/reporte/2" class="dropdown-item">Reportes Cajas</a>	
+								@endcan	
+								@can('Reporte Deudas Gestion')	
+								<a href="/reporte/3" class="dropdown-item">Reportes Deudas</a>	
+								@endcan					
 								@can('Tipo Cambio')
 								<a href="/tipo_cambio/consulta_tipo_cambio" class="dropdown-item">Tipo Cambio</a>
 								@endcan
