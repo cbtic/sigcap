@@ -251,6 +251,8 @@ Route::get('ingreso/caja_total', [IngresoController::class, 'caja_total'])->name
 Route::post('ingreso/obtener_caja_condicion_pago', [IngresoController::class, 'obtener_caja_condicion_pago'])->name('ingreso.obtener_caja_condicion_pago');
 Route::post('ingreso/obtener_caja_venta', [IngresoController::class, 'obtener_caja_venta'])->name('ingreso.obtener_caja_ventañ');
 
+Route::get('ingreso/modal_valoriza/{id}', [IngresoController::class, 'modal_valoriza'])->name('ingreso.modal_valoriza');
+
 
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
