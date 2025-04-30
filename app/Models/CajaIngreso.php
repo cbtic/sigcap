@@ -505,7 +505,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=="S") {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja= " . $id_caja; 
         }
 
 
