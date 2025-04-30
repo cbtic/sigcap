@@ -2757,7 +2757,25 @@ function buscarSolicitudbyCodigoProyecto(){
 
             if(solicitud[0])
             {
+                $('#municipalidad').val(solicitud[0].municipalidad);
                 $('#nombre_proyecto').val(solicitud[0].nombre_proyecto);
+                $('#sitio').val(solicitud[0].id_sitio);
+                $('#direccion_sitio').val(solicitud[0].sitio_descripcion);
+                $('#zona').val(solicitud[0].id_zona);
+                $('#direccion_zona').val(solicitud[0].zona_descripcion);
+                $('#parcela').val(solicitud[0].parcela);
+                $('#superManzana').val(solicitud[0].super_manzana);
+                $('#tipo').val(solicitud[0].id_tipo);
+                $('#direccion_proyecto').val(solicitud[0].direccion);
+                $('#lote').val(solicitud[0].lote);
+                $('#sublote').val(solicitud[0].sub_lote);
+                $('#fila').val(solicitud[0].fila);
+                $('#n_sotanos').val(solicitud[0].numero_sotano);
+                $('#azotea').val(solicitud[0].azotea);
+                $('#semisotano').val(solicitud[0].semisotano);
+                $('#n_pisos').val(solicitud[0].numero_piso);
+                //$('#fecha_registro').val(solicitud[0].fila);
+                //$('#zonificacion').val(solicitud[0].nombre_proyecto);
 				/*var id_ubigeo = solicitud[0].ubigeo;
 				alert(id_ubigeo);
 				var id_departamento = id_ubigeo.substring(0,2);

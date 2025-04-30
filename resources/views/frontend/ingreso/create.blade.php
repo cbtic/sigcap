@@ -694,6 +694,19 @@
                                                     </div><!--form-group-->
                                                 </div><!--col-->
                                             </div><!--row-->
+                                            <div class="row" style="padding-top:20px">
+                                            <div class="col">
+                                                <div class="form-group mb-0 clearfix">
+
+                                                    <input class="btn btn-success pull-rigth" value="REPORTE DEUDAS" type="button" id="btnReporteDeuda" disabled="disabled" onclick="reporte_deudas()" />
+
+                                                    <input class="btn btn-success pull-rigth" value="HISTORIAL DE PAGOS" type="button" id="btnReporteDeudaTotal" disabled="disabled" onclick="reporte_deudas_total()" />
+
+                                                    <input class="btn btn-success pull-rigth" value="REPORTE FRACCIONAMIENTO" type="button" id="btnReporteFraccionamiento" disabled="disabled" onclick="reporte_fraccionamiento()" />
+
+                                                </div><!--form-group-->
+                                            </div><!--col-->
+                                        </div><!--row-->
                                         @else
                                             <?php $rol_exonera = 0;?>
                                         @endhasanyrole
