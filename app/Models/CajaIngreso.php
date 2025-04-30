@@ -197,7 +197,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=='S') {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
         }
         
         $cad = "
@@ -228,7 +228,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=="S") {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
         }
         $cad = "
         		select tm.denominacion tipo_documento, c.serie ||'-'|| c.numero::varchar(20) numero, c.destinatario,  0 us , case when afecta_caja ='C' then -1* c.total 
@@ -251,7 +251,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=="S") {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
         }
 
         $cad = "
@@ -333,7 +333,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=="S") {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
         }
 
         $cad = "
@@ -364,7 +364,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=="S") {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
         }
 
         $cad = "
@@ -391,7 +391,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=="S") {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
         }
 
 
@@ -418,7 +418,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=="S") {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
         }
 
 
@@ -449,7 +449,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=="S") {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
         }
 
 
@@ -477,7 +477,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=="S") {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
         }
 
 
@@ -505,7 +505,7 @@ class CajaIngreso extends Model
         $usuario_sel = "";
         if ($tipo=="S") {
             
-            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and id_caja=" . $id_caja; 
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
         }
 
 
