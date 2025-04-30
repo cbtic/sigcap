@@ -182,9 +182,16 @@ foreach ($valorizacion as $key => $row):
 
 		</td>
 
-		<td>
 
 
+		<td class="text-left">
+			<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
+
+			<button style="font-size:12px" type="button" class="btn btn-sm btn-primary" data-toggle="modal" onclick="edita_val(<?php echo $row->id?>)" >
+				<i class="fa fa-edit" style="font-size:9px!important"></i>
+			</button>
+
+			</div>
 		</td>
 
 
