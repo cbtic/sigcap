@@ -1391,10 +1391,9 @@ class IngresoController extends Controller
 
     public function modal_valoriza($id){
 		
-        $valorizacion = Valorizacione::find($id);
+        $valoriza = Valorizacione::find($id);
 
-        		
-		return view('frontend.ingresos.modal_valoriza',compact('valorizacion'));
+        return view('frontend.ingreso.modal_valoriza',compact('valoriza'));
 
 	}
 

@@ -266,7 +266,9 @@
 			if (e.keyCode == 13) {
 				calcular();
 			}
-		});												
+		});	
+		
+		calcular();
 																					
 	});
 
@@ -289,7 +291,7 @@
 	var origen_ = $('#origen').val();
 	if(id_empresa_==""){id_empresa_="0";}
 	
-	$('#txtProducto').autocomplete({
+	$('#txtProducto_').autocomplete({
 		appendTo: "#producto_list1",
 		source: function(request, response) {
 			$.ajax({
@@ -480,7 +482,7 @@
 			<div class="card">
 
 				<div class="card-header" style="padding:5px!important;padding-left:20px!important">
-					Registro de Papeleta
+					Edita la Valorización
 				</div>
 
 				<div class="card-body">
@@ -504,32 +506,12 @@
 									<div class="row" style="padding-left:10px">
 										<div class="card-body">
 											<div class="row">
-												
-												<input type="checkbox" id="origen" name="origen" value="2" class="estado-checkbox" checked ?>
-												<label for="cbox2" id="lblOrigen" > Origen interno</label>
-
 												<div class="col-lg-12">
-													<div class="form-group form-group-sm">
-														<label class="form-control-sm">Producto</label>
-
-														<td>
-														<input type="text" name="txtProducto" id="txtProducto"
-																class="form-control form-control-sm">
-															
-															<div class="input-group" style="position: absolute;"
-																id="producto_list1"></div>
-
-														</td>
-
+													<div class="form-group">
+														<label class="form-control-sm">Denominacion</label>
+														<input type="text" name="txtDenominacion" id="txtDenominacion"value="<?php echo $valoriza["descripcion"] ?>" class="form-control form-control-sm">
+														
 													</div>
-
-													<div class="col-lg-3">
-														<div class="form-group">
-															<label class="form-control-sm">id</label>
-															<input type="text" name="id_producto" id="id_producto" value="" placeholder="" class="form-control form-control-sm">
-														</div>
-													</div>
-
 												</div>
 											</div>
 
@@ -537,13 +519,13 @@
 												<div class="col-lg-6">
 													<div class="form-group">
 														<label class="form-control-sm">Cantidad</label>
-														<input type="text" name="txtCantidad" id="txtCantidad" value="1" placeholder="" class="form-control form-control-sm" oninput="calcular()">
+														<input type="text" name="txtCantidad" id="txtCantidad" value="<?php echo $valoriza["cantidad"] ?>" placeholder="" class="form-control form-control-sm" oninput="calcular()">
 													</div>
 												</div>
 												<div class="col-lg-6">
 													<div class="form-group">
 														<label class="form-control-sm">Unidad Medida</label>
-														<input type="text" name="txtUM" id="txtUM" value="" placeholder="" class="form-control form-control-sm" readonly="readonly">
+														<input type="text" name="txtUM" id="txtUM" value="SERVICIOS" placeholder="" class="form-control form-control-sm" readonly="readonly">
 													</div>
 												</div>
 
@@ -553,7 +535,7 @@
 												<div class="col-lg-6">
 													<div class="form-group">
 														<label class="form-control-sm">Precio Venta</label>
-														<input type="text" name="txtPrecioVenta" id="txtPrecioVenta" value="" placeholder="" class="form-control form-control-sm" oninput="calcular()">
+														<input type="text" name="txtPrecioVenta" id="txtPrecioVenta" value="<?php echo $valoriza["valor_unitario"] ?>" placeholder="" class="form-control form-control-sm" oninput="calcular()">
 													</div>
 												</div>
 												<div class="col-lg-6">

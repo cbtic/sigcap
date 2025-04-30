@@ -300,6 +300,7 @@ function calcular_total(obj){
 		$(obj).parent().parent().parent().find('.chek').val("1");
 
 		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",false);
+		$(obj).parent().parent().parent().find('#precio').attr("readonly",false);
 		
 
 
@@ -335,6 +336,7 @@ function calcular_total(obj){
 		$(obj).parent().parent().parent().find('.chek').val("");
 
 		$(obj).parent().parent().parent().find('#cantidad').attr("readonly",true);
+		$(obj).parent().parent().parent().find('#precio').attr("readonly",true);
 		
 		//}
 		
@@ -582,8 +584,8 @@ function calcular_total_otros(obj){
 	$(".mov:checked").each(function (){
 
 		
-		var val_precio = $(this).parent().parent().parent().find('.val_precio').html();
-
+		//var val_precio = $(this).parent().parent().parent().find('.val_precio').html();
+		var val_precio = $(this).parent().parent().parent().find('#precio').val();
 		val_precio =val_precio.toString().replace(',','');
 
 		//alert(val_precio);
@@ -649,7 +651,8 @@ function calcular_total_otros(obj){
 		if (id_tipo_afectacion=="30")tasa_igv_ = 0;
 
 		
-		var PrecioVenta_ = $(this).parent().parent().parent().find('.val_precio').html();		
+		//var PrecioVenta_ = $(this).parent().parent().parent().find('.val_precio').html();
+		var PrecioVenta_ =  $(this).parent().parent().parent().find('#precio').val();	
 		PrecioVenta_ =PrecioVenta_.toString().replace(',','');
 
 		//alert(PrecioVenta_);
@@ -676,9 +679,6 @@ function calcular_total_otros(obj){
 		Igv_ = Number(Igv_ );		
 		Total_ = Number(Total_ );
 		PrecioVenta_ = Number(PrecioVenta_ );
-
-
-
 
 /*
 		alert(ValorUnitario_);
@@ -2802,4 +2802,85 @@ function edita_val(id){
 					$('#openOverlayOpc').modal('show');
 			}
 	});
+}
+
+function actualizar_val(id){
+	var id_tipo_afectacion  = $(this).parent().parent().parent().find('.id_tipo_afectacion_sel').html();
+		
+	var tasa_igv_ = 0.18;
+
+	if (id_tipo_afectacion=="30")tasa_igv_ = 0;
+
+	
+	var PrecioVenta_ = $(this).parent().parent().parent().find('.val_precio').html();		
+	PrecioVenta_ =PrecioVenta_.toString().replace(',','');
+
+	//alert(PrecioVenta_);
+
+	var Descuento_ = 0;
+	var Cantidad_ =  $(this).parent().parent().parent().find('#cantidad').val();
+
+	var ValorUnitario_ = PrecioVenta_ /(1+tasa_igv_);	
+	//alert(ValorUnitario_);
+
+	var ValorVB_ = ValorUnitario_ * Cantidad_;
+	var ValorVenta_ = ValorVB_ - Descuento_;
+	var Igv_ = ValorVenta_ * tasa_igv_;
+	var Total_ = ValorVenta_ + Igv_;
+
+	total += Number(Total_);
+	stotal += Number(ValorVenta_);
+	igv += Number(Igv_);
+
+	
+	ValorUnitario_ = Number(ValorUnitario_ );		
+	ValorVB_ = Number(ValorVB_ );		
+	ValorVenta_ = Number(ValorVenta_ );
+	Igv_ = Number(Igv_ );		
+	Total_ = Number(Total_ );
+	PrecioVenta_ = Number(PrecioVenta_ );
+
+
+	$(this).parent().parent().parent().find('#comprobante_detalle_precio_unitario').val(ValorUnitario_.toFixed(2));
+	$(this).parent().parent().parent().find('#comprobante_detalle_sub_total').val(ValorVenta_.toFixed(2));
+	$(this).parent().parent().parent().find('#comprobante_detalle_valor_venta_bruto').val(ValorVB_.toFixed(2));
+	$(this).parent().parent().parent().find('#comprobante_detalle_monto').val(Total_.toFixed(2));
+	$(this).parent().parent().parent().find('#comprobante_detalle_pu').val(ValorUnitario_.toFixed(2));
+	$(this).parent().parent().parent().find('#comprobante_detalle_igv').val(Igv_.toFixed(2));
+
+	$(this).parent().parent().parent().find('#comprobante_detalle_pv').val(PrecioVenta_.toFixed(2));
+	$(this).parent().parent().parent().find('#comprobante_detalle_vv').val(ValorVenta_.toFixed(2));
+	$(this).parent().parent().parent().find('#comprobante_detalle_total').val(Total_.toFixed(2));
+
+
+
+	if (!String.prototype.includes) {
+		String.prototype.includes = function (search, start) {
+		"use strict";
+	
+		if (search instanceof RegExp) {
+			throw TypeError("first argument must not be a RegExp");
+		}
+		if (start === undefined) {
+			start = 0;
+		}
+		return this.indexOf(search, start) !== -1;
+		};
+	}
+
+	descuento = 0;
+	//alert(total);
+	$('#total').val(total.toFixed(2));
+	$('#stotal').val(stotal.toFixed(2));
+	$('#igv').val(igv.toFixed(2));
+	$('#totalDescuento').val(descuento.toFixed(2));
+
+	if(cantidad > 1){
+		$('#MonAd').attr("readonly",true);
+		$('#MonAd').val("0");
+	}else{
+		$('#MonAd').attr("readonly",false);
+		$('#MonAd').val(total.toFixed(2));
+	}	
+
 }

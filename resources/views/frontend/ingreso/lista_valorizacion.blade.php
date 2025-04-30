@@ -148,8 +148,19 @@ foreach ($valorizacion as $key => $row):
 		<?php } else { ?>
 			<td class="text-left"><?php echo date("d/m/Y", strtotime($row->fecha)) ?></td>
 		<?php } ?>
+<!--
+		<td class="text-right"><span class="val_precio"><//?php echo number_format($row->valor_unitario, 2) ?></span></td>
+		-->
+		<?php if ($row->otro_concepto == "1") { ?>
+			<td>
+				<input type="text" value="<?php echo number_format($row->valor_unitario, 2) ?>" data-toggle="tooltip" data-placement="top" title="Ingresar la Precio"
+					name="precio[]" id="precio" onkeyup="calcular_total_otros(this)" readonly
+					class="precio input-sm  form-control form-control-sm text-center" style="margin-left:4px; width:80px" />
+			</td>
+		<?php } else { ?>			
+			<td class="text-center"><?php echo number_format($row->valor_unitario, 2) ?></td>		
+		<?php } ?>
 
-		<td class="text-right"><span class="val_precio"><?php echo number_format($row->valor_unitario, 2) ?></span></td>
 
 		<?php if ($row->otro_concepto == "1") { ?>
 			<td>
@@ -183,17 +194,17 @@ foreach ($valorizacion as $key => $row):
 		</td>
 
 
-
+<!--
 		<td class="text-left">
 			<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
 
-			<button style="font-size:12px" type="button" class="btn btn-sm btn-primary" data-toggle="modal" onclick="edita_val(<?php echo $row->id?>)" >
+			<button style="font-size:12px" type="button" class="btn btn-sm btn-primary" data-toggle="modal" onclick="edita_val(<//?php echo $row->id?>)" >
 				<i class="fa fa-edit" style="font-size:9px!important"></i>
 			</button>
 
 			</div>
 		</td>
-
+		-->
 
 	</tr>
 <?php
