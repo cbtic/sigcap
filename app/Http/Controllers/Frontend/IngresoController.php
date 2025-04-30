@@ -1389,4 +1389,14 @@ class IngresoController extends Controller
 		echo $efectivo->id;
     }
 
+    public function modal_productos($id){
+
+		$id_user = Auth::user()->id;
+
+        
+		
+		return view('frontend.ingresos.modal_productos',compact('persona','tipo_documento', 'producto','marca','estado_bien','unidad','descuento' ));
+
+	}
+
 }

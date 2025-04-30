@@ -2789,3 +2789,17 @@ function reporte_fraccionamiento(){
 	var href = '/ingreso/reporte_fraccionamiento_pdf/'+numero_cap;
 	window.open(href, '_blank');
 }
+
+function edita_val(id){
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc.modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/ingreso/modal_valoriza/"+id,
+			type: "GET",
+			success: function (result) {  
+					$("#diveditpregOpc").html(result);					
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+}
