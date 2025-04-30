@@ -1389,4 +1389,12 @@ class IngresoController extends Controller
 		echo $efectivo->id;
     }
 
+    public function modal_valoriza($id){
+		
+        $valoriza = Valorizacione::find($id);
+
+        return view('frontend.ingreso.modal_valoriza',compact('valoriza'));
+
+	}
+
 }
