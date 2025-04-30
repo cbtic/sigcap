@@ -297,8 +297,8 @@
 						   </div>	
 					</li>
 					@endif
-
-                    @if(Gate::check('Pronto Pago') || Gate::check('Parametros') || Gate::check('Tipo Cambio') || Gate::check('Reporte Ventas') || Gate::check('Reporte Cajas') || Gate::check('Reporte Deudas'))
+ 
+                    @if(Gate::check('Pronto Pago') || Gate::check('Parametros') || Gate::check('Tipo Cambio') || Gate::check('Reporte Ventas') || Gate::check('Reporte Cajas') || Gate::check('Reporte Deudas Gestion'))
 					<li class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdownPrueba" data-toggle="dropdown"
 						   aria-haspopup="true" aria-expanded="false">Gesti&oacute;n</a>
@@ -315,7 +315,7 @@
 								@can('Reporte Cajas')
 								<a href="/reporte/2" class="dropdown-item">Reportes Cajas</a>	
 								@endcan	
-								@can('Reporte Deudas')	
+								@can('Reporte Deudas Gestion')	
 								<a href="/reporte/3" class="dropdown-item">Reportes Deudas</a>	
 								@endcan					
 								@can('Tipo Cambio')
