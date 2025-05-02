@@ -956,6 +956,16 @@ class CertificadoController extends Controller
 		
 		$proyectos = $certificado_model->getRecordProyecto($nombre);
 		
+		if (empty($proyectos)) {
+			// Retorna HTML con un alert JS y redirección opcional
+			return response()->make("
+				<script>
+					alert('El agremiado no tiene datos de proyectos.');
+					window.close(); // Cierra la pestaña si fue abierta con window.open
+				</script>
+			", 200, ['Content-Type' => 'text/html']);
+		}
+
 		$trato=$proyectos[0]->id_sexo;
 		$numero_cap=$proyectos[0]->numero_cap;
 		$agremiado=$proyectos[0]->agremiado;
