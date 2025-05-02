@@ -313,11 +313,11 @@
 								<a href="/reporte/1" class="dropdown-item">Reportes Ventas</a>
 								@endcan
 								@can('Reporte Cajas')
-								<a href="/reporte/2" class="dropdown-item">Reportes Cajas</a>	
+								<a href="/reporte/2" class="dropdown-item">Reportes Cajas</a>
 								@endcan	
-								@can('Reporte Deudas Gestion')	
-								<a href="/reporte/3" class="dropdown-item">Reportes Deudas</a>	
-								@endcan					
+								@can('Reporte Deudas Gestion')
+								<a href="/reporte/3" class="dropdown-item">Reportes Deudas</a>
+								@endcan	
 								@can('Tipo Cambio')
 								<a href="/tipo_cambio/consulta_tipo_cambio" class="dropdown-item">Tipo Cambio</a>
 								@endcan
