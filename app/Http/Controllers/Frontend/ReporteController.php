@@ -468,6 +468,35 @@ class ReporteController extends Controller
 			$export = new InvoicesExport([$variable], $fecha_fin);
 			return Excel::download($export, 'lista_deuda.xlsx');
 			
+		}else if($funcion=='rvm'){
+
+			$valorizacion_model = new Valorizacione;
+			$p[]=$fecha_fin;
+			$p[]=$id_concepto;
+			$p[]=1;
+			$p[]=1;
+			$p[]=20000;
+			$data = $valorizacion_model->listar_deuda_caja_ajax($p);
+		
+			$variable = [];
+			$total_monto=0;
+			$n = 0;
+			//array_push($variable, array("SISTEMA CAP"));
+			//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
+			//array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto Total"));
+			
+			foreach ($data as $r) {
+				//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
+				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, number_format($r->monto_total, 2,'.','')));
+
+				$total_monto+=$r->monto_total;
+			}
+
+			array_push($variable,array('','','Total',$total_monto));
+			
+			$export = new InvoicesExport([$variable], $fecha_fin);
+			return Excel::download($export, 'lista_deuda.xlsx');
+			
 		}
 		/*$export = new InvoicesExport([$variable]);
 		return Excel::download($export, 'lista_deuda_detallado.xlsx');*/
@@ -767,13 +796,13 @@ class ReporteController extends Controller
 
 
 			if ($funcion=='rv' || $funcion=='mct' ){
-				$titulo = "REPORTE REPORTES DE VENTAS POR CONCEPTOS  ";
-								
+				$titulo = "REPORTE DE VENTAS POR CONCEPTOS";
+				
 				$caja_ingreso_model = new CajaIngreso();
 
 				$reporte_ventas = $caja_ingreso_model->getAllReporteVentas($f_inicio, $f_fin, $concepto,$forma_pago,$estado_pago);
 				
-				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_pdf',compact('titulo','reporte_ventas','f_inicio','f_inicio'));
+				/*$pdf = Pdf::loadView('frontend.reporte.reporte_venta_pdf',compact('titulo','reporte_ventas','f_inicio','f_inicio'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
 				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
@@ -781,9 +810,50 @@ class ReporteController extends Controller
 				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
 				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
 				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+				*/
+				$variable = [];
+				$n = 1;
+				$total_cuenta = 0;
+				$suma_total=0;
+				$suma_total_parcial=0;
+				
+				array_push($variable, array("Emision","TD","Serie","Numero","Codigo Tributario","Destinatario","Cantidad","Descripcion","Total"));
 
+				foreach($reporte_ventas as $r) {
+					$total_cuenta += 1;
+					
+					if ($total_cuenta==1) {
+						
+						array_push($variable, array($r->concepto,"", "", "", "", "", "", "",""));
+						$concepto_tmp=$r->concepto;
+					}else{
+						if ($concepto_tmp!=$r->concepto) {
+							array_push($variable, array("", "", "", "", "", "", "","Total",number_format($suma_total_parcial, 2, '.', ',')));
+							
+							array_push($variable, array($r->concepto,"", "", "", "", "", "", "",""));
+							$suma_total_parcial =0;
+							$concepto_tmp=$r->concepto;
+						}
+					}
+					
+					array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, $r->cantidad, $r->descripcion, number_format($r->importe, 2, '.', ',')));
+
+					$suma_total+=$r->importe;
+					$suma_total_parcial += $r->importe;
+
+					if ($total_cuenta==count($reporte_ventas)) {
+						
+						array_push($variable, array("", "", "", "", "", "", "","Total",number_format($suma_total_parcial, 2, '.', ',')));
+						
+					}
+				}
+
+				array_push($variable, array("", "", "", "", "", "", "","Total General",number_format($suma_total, 2, '.', ',')));
+				
+				$export = new InvoicesExport5([$variable], $titulo, $f_inicio);
+				return Excel::download($export, 'reporte_ventas_concepto.xlsx');
 			}
-
+			
 			if ($funcion=='rvm' || $funcion=='mct' ){
 				$titulo = "REPORTE DE REGISTRO VENTAS MENSUAL";
 
@@ -791,14 +861,35 @@ class ReporteController extends Controller
 				//$tipo= '';			
 				$reporte_ventas = $caja_ingreso_model->getAllReporteVentasMensual($f_inicio, $f_fin, $concepto,$forma_pago,$estado_pago);
 						
-				$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_fin'));
+				/*$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_fin'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
 				$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
 				$pdf->setOption('margin-top', 20); // Márgen superior en milímetros
 				$pdf->setOption('margin-right', 50); // Márgen derecho en milímetros
 				$pdf->setOption('margin-bottom', 20); // Márgen inferior en milímetros
-				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros
+				$pdf->setOption('margin-left', 100); // Márgen izquierdo en milímetros*/
+
+				$variable = [];
+				$n = 1;
+				$total_cuenta = 0;
+				$suma_total=0;
+				$suma_total_parcial=0;
+				
+				array_push($variable, array("Emision","TD","Serie","Numero","Codigo Tributario","Destinatario","Sub Total","IGV","Total","Condicion Pago","Estado Pago"));
+
+				foreach($reporte_ventas as $r) {
+					$total_cuenta += 1;
+					
+					array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, number_format($r->subtotal, 2, '.', ','), number_format($r->impuesto, 2, '.', ','), number_format($r->total, 2, '.', ','), $r->forma_pago, $r->estado_pago));
+					
+					$suma_total+=$r->total;
+				}
+
+				array_push($variable, array("", "", "", "", "", "", "", "Total General",number_format($suma_total, 2, '.', ','), "", ""));
+				
+				$export = new InvoicesExport6([$variable], $titulo, $f_inicio);
+				return Excel::download($export, 'reporte_ventas.xlsx');
 
 			}
 		}
@@ -844,7 +935,7 @@ class ReporteController extends Controller
 		}
 	
 		return $pdf->stream('reporte.pdf');
-}
+	}
 }
 
 class InvoicesExport implements FromArray, WithHeadings, WithStyles
@@ -1133,6 +1224,156 @@ class InvoicesExport4 implements FromArray, WithHeadings, WithStyles
 		->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00);
         
         foreach (range('A', 'N') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+    }
+
+}
+
+class InvoicesExport5 implements FromArray, WithHeadings, WithStyles
+{
+	protected $invoices;
+	protected $titulo;
+	protected $f_inicio;
+
+	public function __construct(array $invoices, $titulo, $f_inicio)
+	{
+		$this->invoices = $invoices;
+		$this->titulo = $titulo;
+		$this->f_inicio = $f_inicio;
+	}
+
+	public function array(): array
+	{
+		return $this->invoices;
+	}
+
+	public function headings(): array
+    {
+        return ["Emision","TD","Serie","Numero","Codigo Tributario","Destinatario","Cantidad","Descripcion","Total"];
+    }
+
+	public function styles(Worksheet $sheet)
+    {
+
+		$sheet->mergeCells('A1:I1');
+        
+		//$fecha_actual = date('d-m-Y');
+
+        $sheet->setCellValue('A1', "{$this->titulo} - DÍA {$this->f_inicio}");
+        $sheet->getStyle('A1:I1')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => '000000'],
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => 'A6C9EC'],
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+            ],
+        ]);
+
+		$sheet->getStyle('A1')->getAlignment()->setWrapText(true);
+		$sheet->getRowDimension(1)->setRowHeight(30);
+
+        $sheet->getStyle('A2:I2')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => '000000'],
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['rgb' => 'C1F0C8'],
+            ],
+			'alignment' => [
+			'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+    		],
+        ]);
+
+		$sheet->fromArray($this->headings(), NULL, 'A2');
+
+		$sheet->getStyle('I3:I'.$sheet->getHighestRow())
+		->getNumberFormat()
+		->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00);
+        
+        foreach (range('A', 'I') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+    }
+
+}
+
+class InvoicesExport6 implements FromArray, WithHeadings, WithStyles
+{
+	protected $invoices;
+	protected $titulo;
+	protected $f_inicio;
+
+	public function __construct(array $invoices, $titulo, $f_inicio)
+	{
+		$this->invoices = $invoices;
+		$this->titulo = $titulo;
+		$this->f_inicio = $f_inicio;
+	}
+
+	public function array(): array
+	{
+		return $this->invoices;
+	}
+
+	public function headings(): array
+    {
+        return ["Emision","TD","Serie","Numero","Codigo Tributario","Destinatario","Sub Total","IGV","Total","Condicion Pago","Estado Pago"];
+    }
+
+	public function styles(Worksheet $sheet)
+    {
+
+		$sheet->mergeCells('A1:K1');
+        
+		//$fecha_actual = date('d-m-Y');
+
+        $sheet->setCellValue('A1', "{$this->titulo} - DÍA {$this->f_inicio}");
+        $sheet->getStyle('A1:I1')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => '000000'],
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => 'A6C9EC'],
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+            ],
+        ]);
+
+		$sheet->getStyle('A1')->getAlignment()->setWrapText(true);
+		$sheet->getRowDimension(1)->setRowHeight(30);
+
+        $sheet->getStyle('A2:K2')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => '000000'],
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['rgb' => 'C1F0C8'],
+            ],
+			'alignment' => [
+			'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+    		],
+        ]);
+
+		$sheet->fromArray($this->headings(), NULL, 'A2');
+
+		$sheet->getStyle('K3:K'.$sheet->getHighestRow())
+		->getNumberFormat()
+		->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00);
+        
+        foreach (range('A', 'K') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
     }

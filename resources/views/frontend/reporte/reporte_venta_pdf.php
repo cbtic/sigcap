@@ -117,7 +117,6 @@
 			
         </header>
         
-    	
 		<table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
 			<tbody>
 				<tr>
@@ -154,7 +153,7 @@
 				 
 				<?php 
                 if ($total_cuenta==1) {  ?> 
-					<tr>				
+					<tr>
 						<td colspan="9" class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->concepto)?></td>
 						
 					</tr>

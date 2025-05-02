@@ -283,15 +283,26 @@
 								
 							
 						</div>
-
+						
 						<div class="card-body">
 							<div id="divReporte" class="table-responsive">
 								<table id="tblReporte" class="table table-hover table-sm">
+									<?php
+										$mostrarPdf = false;
+										foreach ($reporte as $row) {
+											if ($row->id_tipo != 3) {
+												$mostrarPdf = true;
+												break;
+											}
+										}
+									?>
 									<thead>
 										<tr style="font-size:13px">
 											<th>id</th>
 											<th>Reporte</th>
-											<th>PDF</th>
+											<?php if($mostrarPdf){ ?>
+												<th>PDF</th>
+											<?php } ?>
 											<th>Excel</th>
 										</tr>
 									</thead>
