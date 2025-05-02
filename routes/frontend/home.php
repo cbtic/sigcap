@@ -377,6 +377,7 @@ Route::post('comision/listar_municipalidad_ajax', [ComisionController::class, 'l
 Route::post('comision/send_comision_fila', [ComisionController::class, 'send_comision_fila'])->name('tipoConcepto.send_comision_fila');
 
 Route::post('comision/send_comision', [ComisionController::class, 'send_comision'])->name('comision.send_comision');
+Route::post('comision/send_comision_nuevo', [ComisionController::class, 'send_comision_nuevo'])->name('comision.send_comision_nuevo');
 Route::post('comision/send_municipalidad_detalle', [ComisionController::class, 'send_municipalidad_detalle'])->name('comision.send_municipalidad_detalle');
 Route::get('comision/obtener_municipalidades', [ComisionController::class, 'obtener_municipalidades'])->name('comision.obtener_municipalidades');
 Route::get('comision/obtener_municipalidadesIntegradas/{periodo}/{tipo_agrupacion}/{tipo_comision}', [ComisionController::class, 'obtener_municipalidadesIntegradas'])->name('comision.obtener_municipalidadesIntegradas');
