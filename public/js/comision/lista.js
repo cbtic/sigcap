@@ -921,14 +921,29 @@ function fn_guardar(){
             success: function (result) {
 				
 					if(result.obs!=""){
-						bootbox.alert("Las Municipalidad "+result.obs+" ya tiene una comisi&oacute;n registrada");
-						return false;
-					}
+
+						//bootbox.alert("Las Municipalidad "+result.obs+" ya tiene una comisi&oacute;n registrada");
+						//return false;
+
+						bootbox.confirm({ 
+							size: "small",
+							message: "Las Municipalidad "+result.obs+" ya tiene una comisi&oacute;n registrada, desea volver a registrar", 
+							callback: function(result){
+								if (result==true) {
+									fn_guardar_nuevo();
+								}
+							}
+						});
+
+
+					}else{
+
+						cargarMunicipalidades();
+						cargarMunicipalidadesIntegradas();
+						cargarComisiones();
+
+					}	
 				
-					//datatablenew();
-					cargarMunicipalidades();
-					cargarMunicipalidadesIntegradas();
-					cargarComisiones();
 					
 				if(result.sw=='false'){
 					Swal.fire("El RUC ingresado ya existe !!!")
@@ -937,6 +952,45 @@ function fn_guardar(){
             }
     });
 }
+
+function fn_guardar_nuevo(){
+
+	var msg = "";
+    var periodo = $("#periodo").val();
+	var tipo_comision = $("#tipo_comision").val();
+	
+	if(periodo=="")msg += "Debe seleccionar un periodo<br>";
+	if(tipo_comision=="")msg += "Debe seleccionar un tipo de comision<br>";
+	
+	if (msg != "") {
+		bootbox.alert(msg);
+		return false;
+	}
+	
+    $.ajax({
+			url: "/comision/send_comision_nuevo",
+            type: "POST",
+            data : $("#frmComision").serialize()+"&periodo="+periodo+"&tipo_comision="+tipo_comision,
+			dataType: 'json',
+            success: function (result) {
+				
+					/*
+					if(result.obs!=""){
+
+						bootbox.alert("Las Municipalidad "+result.obs+" ya tiene una comisi&oacute;n registrada");
+						return false;
+
+					}
+					*/
+				
+					cargarMunicipalidades();
+					cargarMunicipalidadesIntegradas();
+					cargarComisiones();
+						
+            }
+    });
+}
+
 
 
 function fn_guardarMunicipalidadIntegrada(){

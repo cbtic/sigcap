@@ -653,6 +653,98 @@ class ComisionController extends Controller
 
     }
 
+	public function send_comision_nuevo(Request $request){
+		
+		//print_r($request->periodo).exit();
+		$id_user = Auth::user()->id;
+		$sw = true;
+		//$msg = "";
+
+		$municipalidades = $request->check_;
+		$denominacion = "";
+		
+		/*******************/
+		$obs = "";
+		/*
+		$arrayMunicipalidad = array();
+		$municipalidadIntegrada_model = new MunicipalidadIntegrada();
+		foreach($municipalidades as $row){	
+			$municipalidad = Municipalidade::find($row);
+			//$denominacion .= $municipalidad->denominacion." - ";
+			$municipalidadIntegrada = MunicipalidadIntegrada::where("id_periodo_comision",$request->periodo)->where("id_tipo_comision",$request->tipo_comision)->where("denominacion",$municipalidad->denominacion)->where("estado","1")->first();
+			if($municipalidadIntegrada){
+				$obs .= $municipalidad->denominacion.",";
+				$arrayMunicipalidad[] = $municipalidad->denominacion;
+			}
+			
+			$municipalidadIntegrada2 = $municipalidadIntegrada_model->getMunicipalidadDetalle($request->periodo,$request->tipo_comision,$municipalidad->denominacion);
+			if($municipalidadIntegrada2){
+				if(!in_array($municipalidad->denominacion, $arrayMunicipalidad)){
+					$obs .= $municipalidad->denominacion.",";
+				}
+			}
+			
+		}
+		
+		if(strlen($obs)>1)$obs=substr($obs,0,-1);	
+		*/
+		
+		/*******************/
+		
+		if($obs==""){
+		
+			foreach($municipalidades as $row){	
+				$municipalidad = Municipalidade::find($row);
+				$denominacion .= $municipalidad->denominacion." - ";
+			}
+	
+			if($denominacion!=""){
+	
+				if($request->periodo!="")
+				{
+					$denominacion = substr($denominacion,0,strlen($denominacion)-3);
+			
+					$municipalidadIntegrada = new MunicipalidadIntegrada();
+					$municipalidadIntegrada->denominacion = $denominacion;
+					$municipalidadIntegrada->id_vigencia = 374;
+					if(count($municipalidades)>1){
+						$municipalidadIntegrada->id_tipo_agrupacion = 1;
+					}else{
+						$municipalidadIntegrada->id_tipo_agrupacion = 2;}
+					/*}*/
+					$municipalidadIntegrada->id_tipo_comision = $request->tipo_comision;
+					$municipalidadIntegrada->id_regional = 5;
+					$municipalidadIntegrada->id_periodo_comision = $request->periodo;
+					//$municipalidadIntegrada->id_coodinador = 1;
+					$municipalidadIntegrada->id_usuario_inserta = $id_user;
+	
+					$municipalidadIntegrada->save();
+					$id_municipalidad_integrada = $municipalidadIntegrada->id;
+		
+					foreach($municipalidades as $row){	
+						$mucipalidadDetalle = new MucipalidadDetalle();
+						$mucipalidadDetalle->id_municipalidad = $row;
+						$mucipalidadDetalle->id_municipalidad_integrada = $id_municipalidad_integrada;
+						$mucipalidadDetalle->id_usuario_inserta = $id_user;
+						//$mucipalidadDetalle->estado = "1";
+						$mucipalidadDetalle->save();
+					}
+				}
+				else {
+					$sw = false;
+					//$msg = "Debe ingresar el periodo !!!";
+				}
+			}
+		
+		}
+		
+		$array["obs"] = $obs;
+		$array["sw"] = $sw;
+			//$array["msg"] = $msg;
+		echo json_encode($array);
+
+    }
+
 	public function send_municipalidad_integrada(Request $request){
 		
 		$id_user = Auth::user()->id;
