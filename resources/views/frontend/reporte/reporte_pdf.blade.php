@@ -208,7 +208,7 @@
         <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
 			<tbody>
                 <tr>
-                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">DESCRIPCIÓN DE LOS INGRESOS</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">DESCRIPCI&Oacute;N DE LOS INGRESOS</td>
                     <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">REF US$</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="5%">Total S.</td>
 				</tr>   
@@ -219,14 +219,18 @@
             -->
 				<?php 
                 $total_monto_d = 0;
-				foreach($detalle_venta as $key=>$d){
+                $total_igv_d = 0;
+                $total_sub_total_d = 0;
+				foreach($detalle_venta2 as $key=>$d){
                 $total_monto_d += $d->importe;
+                $total_igv_d += $d->igv_total;
+                $total_sub_total_d += $d->pu;
 				?>
 				<tr>
 
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->denominacion)?></td>
                     <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important">0.00<?php //echo ($f->total_us)?></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->importe,2)?></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->pu,2)?></td>
 				</tr>
 				<?php
 				} 
@@ -234,13 +238,19 @@
 				
 			</tbody>
 		</table>
-
-
+        
         <table class="table table-hover table-sm" style="width:35%!important;padding-top:15px" align="right">
             <thead>
-                
                 <tr style="font-size:13px">
-                    <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Total</th>
+                    <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">DESCRIPCI&Oacute;N DE LOS INGRESOS</th>
+                    <th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_sub_total_d, 2, '.', ',');?></span></th>
+                </tr>
+                <tr style="font-size:13px">
+                    <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">I.G.V 18%</th>
+                    <th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_igv_d, 2, '.', ',');?></span></th>
+                </tr>
+                <tr style="font-size:13px">
+                    <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">MONTO TOTAL RECAUDADO</th>
                     <th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_monto_d, 2, '.', ',');?></span></th>
                 </tr>
 				

@@ -165,8 +165,6 @@ class ReporteController extends Controller
 					$usuario=0;
 				}
 
-				
-
 				$caja_ingreso_model = new CajaIngreso();
 				//$tipo= '1';
 				$venta = $caja_ingreso_model->getAllCajaComprobante($id_usuario, $id_caja, $f_inicio, $f_inicio ,$por_usuario);
@@ -179,6 +177,8 @@ class ReporteController extends Controller
 				$caja_ingreso_model = new CajaIngreso();
 				//$tipo= '';
 				$detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
+
+				$detalle_venta2 = $caja_ingreso_model->getAllCajaComprobanteDet2($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
 
 				//$tipo= '';
 				$comprobante_conteo=$caja_ingreso_model->getAllComprobanteConteo($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
@@ -196,7 +196,7 @@ class ReporteController extends Controller
 				$por_serie=$caja_ingreso_model->getAllComprobantePorSerie($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
 				
 		
-				$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio','comprobante_conteo','comprobante_lista','usuario','comprobante_ncnd','ingresos_complementarios','nc_no_afecta','por_cobrar','por_serie'));
+				$pdf = Pdf::loadView('frontend.reporte.reporte_pdf',compact('titulo','venta','forma_pago','detalle_venta','f_inicio','f_inicio','comprobante_conteo','comprobante_lista','usuario','comprobante_ncnd','ingresos_complementarios','nc_no_afecta','por_cobrar','por_serie','detalle_venta2'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
 				//$pdf->setPaper('A4', 'landscape'); // Tamaño de papel (puedes cambiarlo según tus necesidades)
@@ -553,6 +553,8 @@ class ReporteController extends Controller
 				
 				$detalle_venta = $caja_ingreso_model->getAllCajaComprobanteDet($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
 
+				$detalle_venta2 = $caja_ingreso_model->getAllCajaComprobanteDet2($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
+
 				$comprobante_conteo=$caja_ingreso_model->getAllComprobanteConteo($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
 				
 				$comprobante_lista=$caja_ingreso_model->getAllComprobanteLista($id_usuario, $id_caja, $f_inicio, $f_inicio, $por_usuario);
@@ -596,18 +598,26 @@ class ReporteController extends Controller
 
 				array_push($variable, array("","TOTAL",$total_monto_forma_pago));
 
-				array_push($variable, array("DESCRIPCIPN DE LOS INGRESOS","REF US$","TOTAL S."));
+				array_push($variable, array("DESCRIPCION DE LOS INGRESOS","REF US$","TOTAL S."));
 				$total_monto_d = 0;
+				$total_igv_d = 0;
+				$total_sub_total_d = 0;
 
-				foreach ($detalle_venta as $r) {
+				foreach ($detalle_venta2 as $r) {
 
-					array_push($variable, array($r->denominacion, "0.00", number_format($r->importe, 2,'.','')));
+					array_push($variable, array($r->denominacion, "0.00", number_format($r->pu, 2,'.','')));
 
 					$total_monto_d+=$r->importe;
+					$total_igv_d+=$r->igv_total;
+					$total_sub_total_d+=$r->pu;
 					
 				}
 
-				array_push($variable, array("","TOTAL",$total_monto_d));
+				array_push($variable, array("","DESCRIPCION DE LOS INGRESOS",$total_sub_total_d));
+				
+				array_push($variable, array("","I.G.V 18%",$total_igv_d));
+				
+				array_push($variable, array("","MONTO TOTAL RECAUDADO",$total_monto_d));
 
 				array_push($variable, array("NOTAS DE CREDITO Y OTROS"));
 
