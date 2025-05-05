@@ -134,7 +134,7 @@ br {
 */
     width: 80mm !important;   /* Ancho del rollo */
     min-height: 100vh;        /* Altura dinámica para papel continuo */
-    margin: 0 !important;
+    margin: 1 !important;
     padding: 0 !important;
 
   }
