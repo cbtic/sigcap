@@ -788,4 +788,34 @@ class CajaIngreso extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function getAllCajaComprobanteDet2($id_usuario, $id_caja, $f_inicio, $f_fin, $tipo){
+
+        $usuario_sel = "";
+        if ($tipo=="S") {
+            
+            $usuario_sel = " and c.id_usuario_inserta = ".$id_usuario . " and c.id_caja=" . $id_caja; 
+        }
+
+        $cad = "
+            select denominacion, sum(importe) importe, sum(pu) pu, sum(igv_total) igv_total
+            from(
+            select co.denominacion, case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.importe)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.importe  end importe,
+            case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.pu)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.pu  end pu,
+            case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.igv_total)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.igv_total  end igv_total
+            from comprobantes c                                
+            inner join comprobante_detalles cd on cd.id_comprobante = c.id
+            inner join conceptos co  on co.id  = cd.id_concepto    
+            where 1=1 
+            ".$usuario_sel."
+            and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
+            and c.id_forma_pago = '1'
+            and c.anulado = 'N'
+            ) as reporte
+            group by denominacion ";
+
+		//echo $cad; exit();
+        $data = DB::select($cad);
+        return $data;
+    }
 }
