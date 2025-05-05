@@ -190,7 +190,7 @@ class ComprobanteController extends Controller
                 //$stotal = 0;
                 //$igv = 0;
 
-                foreach($request->comprobante_detalles as $key=>$det){
+                foreach($request->comprobante_detalles ?? [] as $key=>$det){
                     $facturad[$ind] = $factura_detalle[$key];
                    
                     //print_r($factura_detalle['id_concepto']);
@@ -201,10 +201,11 @@ class ComprobanteController extends Controller
 
                     $ind++;
                 }
+
             }
 
             $ind = 0;
-            foreach($request->comprobante_detalles as $key=>$det){
+            foreach($request->comprobante_detalles ?? [] as $key=>$det){
                 $valorizad[$ind] = $factura_detalle[$key];
                 $ind++;
             }
@@ -267,7 +268,7 @@ class ComprobanteController extends Controller
                     $facturad[1]=$items1;
 
                     $ind = 0;
-                    foreach($request->comprobante_detalles as $key=>$det){                    
+                    foreach($request->comprobante_detalles ?? [] as $key=>$det){                    
                         $valorizad[$ind] = $factura_detalle[$key];    
                         $ind++;
                     }
