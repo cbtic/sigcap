@@ -282,17 +282,20 @@
             -->
 				<?php 
                 $total_monto_d = 0;
-				foreach($comprobante_ncnd as $key=>$d){
+                $total_igv_d = 0;
+                $total_sub_total_d = 0;
+				foreach($comprobante_ncnd2 as $key=>$d){
                 $total_monto_d += $d->total;
+                $total_igv_d += $d->impuesto;
+                $total_sub_total_d += $d->subtotal;
 				?>
 				<tr>
-                 
-
+                
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->tipo_documento)?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->numero)?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->destinatario)?></td>
                     <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->us,2)?></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->total,2)?></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->subtotal,2)?></td>
 
 				</tr>
 				<?php
@@ -306,6 +309,14 @@
         <table class="table table-hover table-sm" style="width:35%!important;padding-top:15px" align="right">
             <thead>
                 
+                <tr style="font-size:13px">
+                    <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Sub Total</th>
+                    <th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_sub_total_d, 2, '.', ',');?></span></th>
+                </tr>
+                <tr style="font-size:13px">
+                    <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">IGV</th>
+                    <th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_igv_d, 2, '.', ',');?></span></th>
+                </tr>
                 <tr style="font-size:13px">
                     <th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Total</th>
                     <th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo number_format($total_monto_d, 2, '.', ',');?></span></th>
