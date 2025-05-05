@@ -828,7 +828,7 @@ class ReporteController extends Controller
 						$concepto_tmp=$r->concepto;
 					}else{
 						if ($concepto_tmp!=$r->concepto) {
-							array_push($variable, array("", "", "", "", "", "", "","Total",number_format($suma_total_parcial, 2, '.', ',')));
+							array_push($variable, array("", "", "", "", "", "", "","Total",(float)$suma_total_parcial));
 							
 							array_push($variable, array($r->concepto,"", "", "", "", "", "", "",""));
 							$suma_total_parcial =0;
@@ -836,19 +836,19 @@ class ReporteController extends Controller
 						}
 					}
 					
-					array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, $r->cantidad, $r->descripcion, number_format($r->importe, 2, '.', ',')));
+					array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, $r->cantidad, $r->descripcion, (float)$r->importe));
 
 					$suma_total+=$r->importe;
 					$suma_total_parcial += $r->importe;
 
 					if ($total_cuenta==count($reporte_ventas)) {
 						
-						array_push($variable, array("", "", "", "", "", "", "","Total",number_format($suma_total_parcial, 2, '.', ',')));
+						array_push($variable, array("", "", "", "", "", "", "","Total", (float)$suma_total_parcial));
 						
 					}
 				}
 
-				array_push($variable, array("", "", "", "", "", "", "","Total General",number_format($suma_total, 2, '.', ',')));
+				array_push($variable, array("", "", "", "", "", "", "","Total General", (float)$suma_total));
 				
 				$export = new InvoicesExport5([$variable], $titulo, $f_inicio);
 				return Excel::download($export, 'reporte_ventas_concepto.xlsx');
@@ -881,12 +881,12 @@ class ReporteController extends Controller
 				foreach($reporte_ventas as $r) {
 					$total_cuenta += 1;
 					
-					array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, number_format($r->subtotal, 2, '.', ','), number_format($r->impuesto, 2, '.', ','), number_format($r->total, 2, '.', ','), $r->forma_pago, $r->estado_pago));
+					array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, (float)$r->subtotal, (float)$r->impuesto, (float)$r->total, $r->forma_pago, $r->estado_pago));
 					
 					$suma_total+=$r->total;
 				}
 
-				array_push($variable, array("", "", "", "", "", "", "", "Total General",number_format($suma_total, 2, '.', ','), "", ""));
+				array_push($variable, array("", "", "", "", "", "", "", "Total General",(float)$suma_total, "", ""));
 				
 				$export = new InvoicesExport6([$variable], $titulo, $f_inicio);
 				return Excel::download($export, 'reporte_ventas.xlsx');
@@ -1369,7 +1369,7 @@ class InvoicesExport6 implements FromArray, WithHeadings, WithStyles
 
 		$sheet->fromArray($this->headings(), NULL, 'A2');
 
-		$sheet->getStyle('K3:K'.$sheet->getHighestRow())
+		$sheet->getStyle('G3:I'.$sheet->getHighestRow())
 		->getNumberFormat()
 		->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00);
         
