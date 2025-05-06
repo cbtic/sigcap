@@ -278,12 +278,11 @@ class ReporteController extends Controller
 			if ($funcion=='rvm' || $funcion=='mct' ){
 				//if ($funcion=='mcu')$titulo = "REPORTE DE ventas ".$usuario_ingresos[0] ->usuario." - ".$caja_ingresos[0] ->denominacion ;
 				$titulo = "REPORTE DE REGISTRO VENTAS MENSUAL";
-
 				
 				//$usuario=$usuario_ingresos[0] ->usuario;
 
 				//print_r($venta);exit();
-		
+				
 				$caja_ingreso_model = new CajaIngreso();
 				//$tipo= '';			
 				$reporte_ventas = $caja_ingreso_model->getAllReporteVentasMensual($f_inicio, $f_fin, $concepto,$forma_pago,$estado_pago);
@@ -895,20 +894,75 @@ class ReporteController extends Controller
 				$variable = [];
 				$n = 1;
 				$total_cuenta = 0;
+				$suma_total_boleta=0;
+				$suma_total_factura=0;
+				$suma_total_nota_credito=0;
+				$suma_sub_total_boleta=0;
+				$suma_sub_total_factura=0;
+				$suma_sub_total_nota_credito=0;
+				$suma_igv_total_boleta=0;
+				$suma_igv_total_factura=0;
+				$suma_igv_total_nota_credito=0;
+				$suma_sub_total=0;
+				$suma_igv_total=0;
 				$suma_total=0;
 				$suma_total_parcial=0;
 				
 				array_push($variable, array("Emision","TD","Serie","Numero","Codigo Tributario","Destinatario","Sub Total","IGV","Total","Condicion Pago","Estado Pago"));
 
+				array_push($variable, array("Boletas","","","","","","","","","",""));
 				foreach($reporte_ventas as $r) {
 					$total_cuenta += 1;
+					if($r->tipo=="BV"){
 					
-					array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, (float)$r->subtotal, (float)$r->impuesto, (float)$r->total, $r->forma_pago, $r->estado_pago));
+						array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, (float)$r->subtotal, (float)$r->impuesto, (float)$r->total, $r->forma_pago, $r->estado_pago));
 					
-					$suma_total+=$r->total;
+						$suma_sub_total_boleta += $r->subtotal;
+						$suma_igv_total_boleta += $r->impuesto;
+						$suma_total_boleta += $r->total;
+						$suma_sub_total += $r->subtotal;
+						$suma_igv_total += $r->impuesto;
+						$suma_total+=$r->total;
+					}
 				}
 
-				array_push($variable, array("", "", "", "", "", "", "", "Total General",(float)$suma_total, "", ""));
+				array_push($variable, array("","","","","","Total Boletas",$suma_sub_total_boleta,$suma_igv_total_boleta,$suma_total_boleta,"",""));
+				array_push($variable, array("Facturas","","","","","","","","","",""));
+				foreach($reporte_ventas as $r) {
+					$total_cuenta += 1;
+					if($r->tipo=="FT"){
+					
+						array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, (float)$r->subtotal, (float)$r->impuesto, (float)$r->total, $r->forma_pago, $r->estado_pago));
+					
+						$suma_sub_total_factura += $r->subtotal;
+						$suma_igv_total_factura += $r->impuesto;
+						$suma_total_factura += $r->total;
+						$suma_sub_total += $r->subtotal;
+						$suma_igv_total += $r->impuesto;
+						$suma_total+=$r->total;
+					}
+				}
+
+				array_push($variable, array("","","","","","Total Boletas",$suma_sub_total_factura,$suma_igv_total_factura,$suma_total_factura,"",""));
+				array_push($variable, array("Notas de Credito","","","","","","","","","",""));
+				foreach($reporte_ventas as $r) {
+					$total_cuenta += 1;
+					if($r->tipo=="NC"){
+					
+						array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, -1*(float)$r->subtotal, -1*(float)$r->impuesto, -1*(float)$r->total, $r->forma_pago, $r->estado_pago));
+					
+						$suma_sub_total_nota_credito += -1*$r->subtotal;
+						$suma_igv_total_nota_credito += -1*$r->impuesto;
+						$suma_total_nota_credito += -1*$r->total;
+						$suma_sub_total -= $r->subtotal;
+						$suma_igv_total -= $r->impuesto;
+						$suma_total -=$r->total;
+					}
+				}
+
+				array_push($variable, array("","","","","","Total Boletas",$suma_sub_total_nota_credito,$suma_igv_total_nota_credito,$suma_total_nota_credito,"",""));
+
+				array_push($variable, array("", "", "", "", "", "Total General", $suma_sub_total, $suma_igv_total,(float)$suma_total, "", ""));
 				
 				$export = new InvoicesExport6([$variable], $titulo, $f_inicio);
 				return Excel::download($export, 'reporte_ventas.xlsx');
