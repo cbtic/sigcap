@@ -800,12 +800,13 @@ class CajaIngreso extends Model
         $cad = "
             select denominacion, sum(importe) importe, sum(pu) pu, sum(igv_total) igv_total
             from(
-            select co.denominacion, case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.importe)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.importe  end importe,
-            case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.pu)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.pu  end pu,
+            select tc.denominacion, case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.importe)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.importe  end importe,
+            case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.valor_venta_bruto)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else case when cd.id_concepto=26464 then cd.pu else  cd.valor_venta_bruto-cd.descuento end  end pu,
             case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.igv_total)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.igv_total  end igv_total
             from comprobantes c                                
-            inner join comprobante_detalles cd on cd.id_comprobante = c.id
-            inner join conceptos co  on co.id  = cd.id_concepto    
+	            inner join comprobante_detalles cd on cd.id_comprobante = c.id
+	            inner join conceptos co  on co.id  = cd.id_concepto
+	            inner join tipo_conceptos tc on co.id_tipo_concepto=tc.id   
             where 1=1 
             ".$usuario_sel."
             and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
