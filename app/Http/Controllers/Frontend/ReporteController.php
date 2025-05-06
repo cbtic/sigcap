@@ -216,9 +216,6 @@ class ReporteController extends Controller
 			    }
 				if ($funcion=='mct')$titulo = "REPORTE DE MOVIMIENTOS DE TODAS LAS CAJAS ";$usuario=0;
 
-				
-				
-
 				//print_r($venta);exit();
 		
 				$caja_ingreso_model = new CajaIngreso();
@@ -881,7 +878,7 @@ class ReporteController extends Controller
 				$caja_ingreso_model = new CajaIngreso();
 				//$tipo= '';			
 				$reporte_ventas = $caja_ingreso_model->getAllReporteVentasMensual($f_inicio, $f_fin, $concepto,$forma_pago,$estado_pago);
-						
+				
 				/*$pdf = Pdf::loadView('frontend.reporte.reporte_venta_mensual_pdf',compact('titulo','reporte_ventas','f_inicio','f_fin'));
 				$pdf->getDomPDF()->set_option("enable_php", true);
 				
@@ -897,72 +894,82 @@ class ReporteController extends Controller
 				$suma_total_boleta=0;
 				$suma_total_factura=0;
 				$suma_total_nota_credito=0;
-				$suma_sub_total_boleta=0;
-				$suma_sub_total_factura=0;
-				$suma_sub_total_nota_credito=0;
+				$suma_imponible_afecto_boleta=0;
+				$suma_imponible_afecto_factura=0;
+				$suma_imponible_afecto_nota_credito=0;
+				$suma_imponible_inafecto_boleta=0;
+				$suma_imponible_inafecto_factura=0;
+				$suma_imponible_inafecto_nota_credito=0;
 				$suma_igv_total_boleta=0;
 				$suma_igv_total_factura=0;
 				$suma_igv_total_nota_credito=0;
-				$suma_sub_total=0;
+				$suma_imponible_afecto=0;
+				$suma_imponible_inafecto=0;
 				$suma_igv_total=0;
 				$suma_total=0;
 				$suma_total_parcial=0;
 				
-				array_push($variable, array("Emision","TD","Serie","Numero","Codigo Tributario","Destinatario","Sub Total","IGV","Total","Condicion Pago","Estado Pago"));
+				array_push($variable, array("Emision","TD","Serie","Numero","Codigo Tributario","Destinatario","Imponible Afecto","Imponible Inafecto","IGV","Total","Condicion Pago","Estado Pago"));
 
-				array_push($variable, array("Boletas","","","","","","","","","",""));
+				array_push($variable, array("Boletas","","","","","","","","","","",""));
 				foreach($reporte_ventas as $r) {
 					$total_cuenta += 1;
 					if($r->tipo=="BV"){
 					
-						array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, (float)$r->subtotal, (float)$r->impuesto, (float)$r->total, $r->forma_pago, $r->estado_pago));
+						array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, (float)$r->imp_afecto, (float)$r->imp_inafecto, (float)$r->impuesto, (float)$r->total, $r->forma_pago, $r->estado_pago));
 					
-						$suma_sub_total_boleta += $r->subtotal;
+						$suma_imponible_afecto_boleta += $r->imp_afecto;
+						$suma_imponible_inafecto_boleta += $r->imp_inafecto;
 						$suma_igv_total_boleta += $r->impuesto;
 						$suma_total_boleta += $r->total;
-						$suma_sub_total += $r->subtotal;
+						$suma_imponible_afecto += $r->imp_afecto;
+						$suma_imponible_inafecto += $r->imp_inafecto;
 						$suma_igv_total += $r->impuesto;
 						$suma_total+=$r->total;
 					}
 				}
 
-				array_push($variable, array("","","","","","Total Boletas",$suma_sub_total_boleta,$suma_igv_total_boleta,$suma_total_boleta,"",""));
-				array_push($variable, array("Facturas","","","","","","","","","",""));
+				array_push($variable, array("","","","","","Total Boletas",$suma_imponible_afecto_boleta,$suma_imponible_inafecto_boleta,$suma_igv_total_boleta,$suma_total_boleta,"",""));
+				array_push($variable, array("Facturas","","","","","","","","","","",""));
 				foreach($reporte_ventas as $r) {
 					$total_cuenta += 1;
 					if($r->tipo=="FT"){
 					
-						array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, (float)$r->subtotal, (float)$r->impuesto, (float)$r->total, $r->forma_pago, $r->estado_pago));
+						array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, (float)$r->imp_afecto, (float)$r->imp_inafecto, (float)$r->impuesto, (float)$r->total, $r->forma_pago, $r->estado_pago));
 					
-						$suma_sub_total_factura += $r->subtotal;
+						$suma_imponible_afecto_factura += $r->imp_afecto;
+						$suma_imponible_inafecto_factura += $r->imp_inafecto;
 						$suma_igv_total_factura += $r->impuesto;
 						$suma_total_factura += $r->total;
-						$suma_sub_total += $r->subtotal;
+						$suma_imponible_afecto += $r->imp_afecto;
+						$suma_imponible_inafecto += $r->imp_inafecto;
 						$suma_igv_total += $r->impuesto;
 						$suma_total+=$r->total;
 					}
 				}
 
-				array_push($variable, array("","","","","","Total Boletas",$suma_sub_total_factura,$suma_igv_total_factura,$suma_total_factura,"",""));
-				array_push($variable, array("Notas de Credito","","","","","","","","","",""));
+				array_push($variable, array("","","","","","Total Boletas",$suma_imponible_afecto_factura,$suma_imponible_inafecto_factura,$suma_igv_total_factura,$suma_total_factura,"",""));
+				array_push($variable, array("Notas de Credito","","","","","","","","","","",""));
 				foreach($reporte_ventas as $r) {
 					$total_cuenta += 1;
 					if($r->tipo=="NC"){
 					
-						array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, -1*(float)$r->subtotal, -1*(float)$r->impuesto, -1*(float)$r->total, $r->forma_pago, $r->estado_pago));
+						array_push($variable, array($r->fecha, $r->tipo, $r->serie, $r->numero, $r->cod_tributario, $r->destinatario, (float)$r->imp_afecto, (float)$r->imp_inafecto, -1*(float)$r->impuesto, -1*(float)$r->total, $r->forma_pago, $r->estado_pago));
 					
-						$suma_sub_total_nota_credito += -1*$r->subtotal;
+						$suma_imponible_afecto_nota_credito += $r->imp_afecto;
+						$suma_imponible_inafecto_nota_credito += $r->imp_inafecto;
 						$suma_igv_total_nota_credito += -1*$r->impuesto;
 						$suma_total_nota_credito += -1*$r->total;
-						$suma_sub_total -= $r->subtotal;
+						$suma_imponible_afecto += $r->imp_afecto;
+						$suma_imponible_inafecto += $r->imp_inafecto;
 						$suma_igv_total -= $r->impuesto;
 						$suma_total -=$r->total;
 					}
 				}
 
-				array_push($variable, array("","","","","","Total Boletas",$suma_sub_total_nota_credito,$suma_igv_total_nota_credito,$suma_total_nota_credito,"",""));
+				array_push($variable, array("","","","","","Total Boletas",$suma_imponible_afecto_nota_credito,$suma_imponible_inafecto_nota_credito,$suma_igv_total_nota_credito,$suma_total_nota_credito,"",""));
 
-				array_push($variable, array("", "", "", "", "", "Total General", $suma_sub_total, $suma_igv_total,(float)$suma_total, "", ""));
+				array_push($variable, array("", "", "", "", "", "Total General", $suma_imponible_afecto, $suma_imponible_inafecto, $suma_igv_total,(float)$suma_total, "", ""));
 				
 				$export = new InvoicesExport6([$variable], $titulo, $f_inicio);
 				return Excel::download($export, 'reporte_ventas.xlsx');
@@ -1401,18 +1408,18 @@ class InvoicesExport6 implements FromArray, WithHeadings, WithStyles
 
 	public function headings(): array
     {
-        return ["Emision","TD","Serie","Numero","Codigo Tributario","Destinatario","Sub Total","IGV","Total","Condicion Pago","Estado Pago"];
+        return ["Emision","TD","Serie","Numero","Codigo Tributario","Destinatario","Imponible Afecto","Imponible Inafecto","IGV","Total","Condicion Pago","Estado Pago"];
     }
 
 	public function styles(Worksheet $sheet)
     {
 
-		$sheet->mergeCells('A1:K1');
+		$sheet->mergeCells('A1:L1');
         
 		//$fecha_actual = date('d-m-Y');
 
         $sheet->setCellValue('A1', "{$this->titulo} - DÍA {$this->f_inicio}");
-        $sheet->getStyle('A1:I1')->applyFromArray([
+        $sheet->getStyle('A1:L1')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'color' => ['rgb' => '000000'],
@@ -1429,7 +1436,7 @@ class InvoicesExport6 implements FromArray, WithHeadings, WithStyles
 		$sheet->getStyle('A1')->getAlignment()->setWrapText(true);
 		$sheet->getRowDimension(1)->setRowHeight(30);
 
-        $sheet->getStyle('A2:K2')->applyFromArray([
+        $sheet->getStyle('A2:L2')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'color' => ['rgb' => '000000'],
@@ -1445,11 +1452,11 @@ class InvoicesExport6 implements FromArray, WithHeadings, WithStyles
 
 		$sheet->fromArray($this->headings(), NULL, 'A2');
 
-		$sheet->getStyle('G3:I'.$sheet->getHighestRow())
+		$sheet->getStyle('G3:J'.$sheet->getHighestRow())
 		->getNumberFormat()
 		->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_00);
         
-        foreach (range('A', 'K') as $col) {
+        foreach (range('A', 'L') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
     }

@@ -309,21 +309,21 @@ class CajaIngreso extends Model
         $forma_pago_sel="";
         $estado_pago_sel = "";
 
-
         if ($id_concepto!="-1") $concepto_sel = " and cd.id_concepto  = ".$id_concepto; 
         if ($forma_pago!="-1") $forma_pago_sel = " and c.id_forma_pago  = '". $forma_pago . "' "; 
         if ($estado_pago!="-1") $estado_pago_sel = " and c.estado_pago  = '". $estado_pago . "' "; 
       
-        $cad = "
-                        select fecha,c.tipo, c.serie,c.numero, cod_tributario, destinatario,subtotal ,impuesto ,total , case when id_forma_pago=1 then 'CONTADO' else 'CREDITO' end as forma_pago, case when estado_pago='P' then 'PENDIENTE' else 'CANCELADO' end as estado_pago 
-                        from comprobantes c
-                       where 1=1 "
-                      .  $forma_pago_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin." '  
-                      
-                      order by  fecha";
-
+        $cad = "select fecha,c.tipo, c.serie,c.numero, cod_tributario, destinatario,subtotal ,impuesto ,total , case when id_forma_pago=1 then 'CONTADO' else 'CREDITO' end as forma_pago, case when estado_pago='P' then 'PENDIENTE' else 'CANCELADO' end as estado_pago,
+        case when co.id_tipo_afectacion=30 then 0 else sum((cd.pu * cd.cantidad)-cd.descuento) end * case when c.tipo='NC' then -1 else 1 end  imp_afecto,case when co.id_tipo_afectacion=30 then sum((cd.pu_con_igv*cd.cantidad)-cd.descuento) else 0  end * case when c.tipo='NC' then -1 else 1 end imp_inafecto
+        from comprobantes c
+        inner join comprobante_detalles cd on cd.id_comprobante =c.id
+        inner join conceptos co on co.id=cd.id_concepto
+        where 1=1 "
+        .  $forma_pago_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin." '
+        GROUP BY fecha, c.tipo, c.serie, c.numero, cod_tributario, destinatario, subtotal, impuesto, total, id_forma_pago, estado_pago, c.tipo, co.id_tipo_afectacion
+        order by  fecha";
         
-       $data = DB::select($cad);
+        $data = DB::select($cad);
         
         return $data;
     }
