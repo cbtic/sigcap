@@ -809,9 +809,9 @@ class CajaIngreso extends Model
         }
 
         $cad = "
-            select upper( denominacion) denominacion, sum(importe) importe, sum(pu) pu, sum(igv_total) igv_total
+             select   upper( denominacion) denominacion, sum(importe) importe, sum(pu) pu, sum(igv_total) igv_total
             from(
-            select cc.denominacion || '- '|| pp.denominacion denominacion, case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.importe)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.importe  end importe,
+            select  cc.denominacion   || case when (cc.id=19 or cc.id=23 or cc.id=6 or cc.id=240  or cc.id=46 or cc.id=43) then ' ' else  ' - '|| trim(REGEXP_REPLACE(co.denominacion,'- DELEGADOS|- ARQUITECTOS HABILITADOS|- ESTUDIANTES Y BACHILLERES|- PUBLICO EN GENERAL','','g')) end  denominacion, case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.importe)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.importe  end importe,
             case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.valor_venta_bruto)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else case when cd.id_concepto=26464 then cd.pu else  cd.valor_venta_bruto-cd.descuento end  end pu,
             case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.igv_total)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.igv_total  end igv_total
             from comprobantes c                                
@@ -819,7 +819,7 @@ class CajaIngreso extends Model
 	            inner join conceptos co  on co.id  = cd.id_concepto
 	            inner join tipo_conceptos tc on co.id_tipo_concepto=tc.id
 	            inner join centro_costos cc on cc.id=co.centro_costo
-	            inner join partida_presupuestales pp on pp.id=co.partida_presupuestal   
+	            inner join partida_presupuestales pp on pp.id=co.partida_presupuestal  
             where 1=1 
             ".$usuario_sel."
             and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
