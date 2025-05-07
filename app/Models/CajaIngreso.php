@@ -314,14 +314,25 @@ class CajaIngreso extends Model
         if ($estado_pago!="-1") $estado_pago_sel = " and c.estado_pago  = '". $estado_pago . "' "; 
       
         $cad = "select fecha,c.tipo, c.serie,c.numero, cod_tributario, destinatario,subtotal ,impuesto ,total , case when id_forma_pago=1 then 'CONTADO' else 'CREDITO' end as forma_pago, case when estado_pago='P' then 'PENDIENTE' else 'CANCELADO' end as estado_pago,
-        case when co.id_tipo_afectacion=30 then 0 else sum((cd.pu * cd.cantidad)-cd.descuento) end * case when c.tipo='NC' then -1 else 1 end  imp_afecto,case when co.id_tipo_afectacion=30 then sum((cd.pu_con_igv*cd.cantidad)-cd.descuento) else 0  end * case when c.tipo='NC' then -1 else 1 end imp_inafecto
-        from comprobantes c
-        inner join comprobante_detalles cd on cd.id_comprobante =c.id
-        inner join conceptos co on co.id=cd.id_concepto
-        where 1=1 "
-        .  $forma_pago_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin." '
-        GROUP BY fecha, c.tipo, c.serie, c.numero, cod_tributario, destinatario, subtotal, impuesto, total, id_forma_pago, estado_pago, c.tipo, co.id_tipo_afectacion
-        order by  fecha";
+                case when c.impuesto >0 then subtotal * case when c.tipo='NC' then -1 else 1 end else 0 end imp_afecto,
+                case when c.impuesto =0 then subtotal * case when c.tipo='NC' then -1 else 1 end else 0 end imp_inafecto
+                from comprobantes c
+                where 1=1 "
+                .  $forma_pago_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin." '
+                and c.anulado='N' and c.estado_sunat<>'TERCERO'
+                and tipo in ('FT','BV','ND')
+            
+                union
+                select fecha,c.tipo, c.serie,c.numero, cod_tributario, destinatario,subtotal ,impuesto ,total , case when id_forma_pago=1 then 'CONTADO' else 'CREDITO' end as forma_pago, case when estado_pago='P' then 'PENDIENTE' else 'CANCELADO' end as estado_pago,
+                case when c.impuesto >0 then subtotal * case when c.tipo='NC' then -1 else 1 end else 0 end imp_afecto,
+                case when c.impuesto =0 then subtotal * case when c.tipo='NC' then -1 else 1 end else 0 end imp_inafecto
+                from comprobantes c
+                where 1=1 "
+                .  $forma_pago_sel . $estado_pago_sel. " and  TO_CHAR(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin." ' 
+                and c.anulado='N' --and c.estado_sunat<>'TERCERO'
+                and tipo in ('NC') --and c.afecta_caja='C'
+                
+                order by  fecha";
         
         $data = DB::select($cad);
         
@@ -798,19 +809,21 @@ class CajaIngreso extends Model
         }
 
         $cad = "
-            select denominacion, sum(importe) importe, sum(pu) pu, sum(igv_total) igv_total
+            select upper( denominacion) denominacion, sum(importe) importe, sum(pu) pu, sum(igv_total) igv_total
             from(
-            select tc.denominacion, case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.importe)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.importe  end importe,
+            select cc.denominacion || '- '|| pp.denominacion denominacion, case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.importe)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.importe  end importe,
             case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.valor_venta_bruto)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else case when cd.id_concepto=26464 then cd.pu else  cd.valor_venta_bruto-cd.descuento end  end pu,
             case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.igv_total)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.igv_total  end igv_total
             from comprobantes c                                
 	            inner join comprobante_detalles cd on cd.id_comprobante = c.id
 	            inner join conceptos co  on co.id  = cd.id_concepto
-	            inner join tipo_conceptos tc on co.id_tipo_concepto=tc.id   
+	            inner join tipo_conceptos tc on co.id_tipo_concepto=tc.id
+	            inner join centro_costos cc on cc.id=co.centro_costo
+	            inner join partida_presupuestales pp on pp.id=co.partida_presupuestal   
             where 1=1 
             ".$usuario_sel."
             and to_char(c.fecha, 'yyyy-mm-dd') BETWEEN '".$f_inicio."' AND '".$f_fin."' 
-            and c.id_forma_pago = '1'
+            
             and c.anulado = 'N'
             ) as reporte
             group by denominacion ";
