@@ -164,9 +164,9 @@
 					</tr>
                 <?php 
 					$concepto_tmp=$d->concepto;
-                 } else {
+                }else {
 					if ($concepto_tmp!=$d->concepto) {
-				 ?>
+				?>
 				 			<tr>
 								<th colspan="10" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important">Total </th>
 								<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_afecto_parcial, 2, '.', ',');?></th>
@@ -187,11 +187,10 @@
 
 					$concepto_tmp=$d->concepto;
 					}
-                 }
-				 ?>
+                }
+				?>
 				
-
-                 <tr>
+                <tr>
  
                      <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->fecha)?></td>
                      <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->tipo_documento?></td>

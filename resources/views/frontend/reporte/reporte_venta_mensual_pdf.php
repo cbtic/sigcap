@@ -129,7 +129,8 @@
 					
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="2%">Cod. Tributario</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="10%">Destinatario</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="2%">Sub Total</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="2%">Imponible Afecto</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="2%">Imponible Inafecto</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="2%">IGV</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="2%">Total</td>
 					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px" width="1%">Condicion Pago</td>
@@ -137,55 +138,190 @@
 				</tr>
 				
 				<?php 
-                 $total_cuenta = 0;
-				 
-				 $suma_afecto=0;
-				 $suma_inafecto=0;
-				 $suma_igv=0;
-				 $suma_total=0;
-
-				 $suma_afecto_parcial=0;
-				 $suma_inafecto_parcial=0;
-				 $suma_igv_parcial=0;
-				 $suma_total_parcial=0;
-
-                 foreach($reporte_ventas as $key=>$d){
-					$total_cuenta += 1;
-
-					
-                 ?>
-				 
-
-                 <tr>
-       
-                    <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->fecha)?></td>  
-                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->tipo)?></td>
-                    
-					 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->serie?></td>
-					 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->numero?></td>
+                $total_cuenta = 0;
 				
-					 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->cod_tributario?></td>
-					 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->destinatario?></td>
-					 <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->subtotal, 2, '.', ',');   ?></td>
-					 <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->impuesto, 2, '.', ',');   ?></td>
-					 <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->total, 2, '.', ',');   ?></td>
-					 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->forma_pago?></td>
-					 <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->estado_pago?></td>
+				$suma_afecto=0;
+				$suma_inafecto=0;
+				$suma_igv=0;
+				$suma_total_boleta=0;
+				$suma_total_factura=0;
+				$suma_total_nota_credito=0;
+				$suma_imponible_afecto_boleta=0;
+				$suma_imponible_afecto_factura=0;
+				$suma_imponible_afecto_nota_credito=0;
+				$suma_imponible_inafecto_boleta=0;
+				$suma_imponible_inafecto_factura=0;
+				$suma_imponible_inafecto_nota_credito=0;
+				$suma_igv_total_boleta=0;
+				$suma_igv_total_factura=0;
+				$suma_igv_total_nota_credito=0;
+				$suma_imponible_afecto=0;
+				$suma_imponible_inafecto=0;
+				$suma_igv_total=0;
+				$suma_total=0;
 
-					 
-                 </tr>
-				<?php
-					
-					$suma_total += $d->total;
-				 }
+				$suma_afecto_parcial=0;
+				$suma_inafecto_parcial=0;
+				$suma_igv_parcial=0;
+				$suma_total_parcial=0;
 				?>
+
+				<tr>
+					<td class="td_left" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px" colspan="12" width="100%">Boletas</td>
+				</tr>
+				<?php
+				
+                foreach($reporte_ventas as $key=>$d){
+					$total_cuenta += 1;
+					if($d->tipo=="BV"){
+                ?>
+				
+					<tr>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->fecha)?></td>  
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->tipo)?></td>
+						
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->serie?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->numero?></td>
+					
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->cod_tributario?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->destinatario?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->imp_afecto, 2, '.', ',');   ?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->imp_inafecto, 2, '.', ',');   ?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->impuesto, 2, '.', ',');   ?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->total, 2, '.', ',');   ?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->forma_pago?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->estado_pago?></td>
+					</tr>
+				<?php
+					$suma_imponible_afecto_boleta += $d->imp_afecto;
+					$suma_imponible_inafecto_boleta += $d->imp_inafecto;
+					$suma_igv_total_boleta += $d->impuesto;
+					$suma_total_boleta += $d->total;
+					$suma_imponible_afecto += $d->imp_afecto;
+					$suma_imponible_inafecto += $d->imp_inafecto;
+					$suma_igv_total += $d->impuesto;
+					$suma_total += $d->total;
+					}
+					?>
+				<?php
+				}
+				?>
+				<tr>
+					<td colspan="6" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b>Total Boletas</b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_imponible_afecto_boleta, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_imponible_inafecto_boleta, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_igv_total_boleta, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_total_boleta, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important" colspan="2"></td>
+				</tr>
+				
+				<tr>
+					<td class="td_left" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px" colspan="12" width="100%">Facturas</td>
+				</tr>
+				<?php
+				
+                foreach($reporte_ventas as $key=>$d){
+					$total_cuenta += 1;
+					if($d->tipo=="FT"){
+                ?>
+				
+					<tr>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->fecha)?></td>  
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->tipo)?></td>
+						
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->serie?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->numero?></td>
+					
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->cod_tributario?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->destinatario?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->imp_afecto, 2, '.', ',');?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->imp_inafecto, 2, '.', ',');?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->impuesto, 2, '.', ',');?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->total, 2, '.', ',');?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->forma_pago?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->estado_pago?></td>
+					</tr>
+				<?php
+					$suma_imponible_afecto_factura += $d->imp_afecto;
+					$suma_imponible_inafecto_factura += $d->imp_inafecto;
+					$suma_igv_total_factura += $d->impuesto;
+					$suma_total_factura += $d->total;
+					$suma_imponible_afecto += $d->imp_afecto;
+					$suma_imponible_inafecto += $d->imp_inafecto;
+					$suma_igv_total += $d->impuesto;
+					$suma_total += $d->total;
+					}
+					?>
+				<?php
+				}
+				?>
+				<tr>
+					<td colspan="6" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b>Total Facturas</b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_imponible_afecto_factura, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_imponible_inafecto_factura, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_igv_total_factura, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_total_factura, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important" colspan="2"></td>
+				</tr>
+
+				<tr>
+					<td class="td_left" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;padding-top:5px;padding-bottom:5px" colspan="12" width="100%">Notas de Credito</td>
+				</tr>
+				<?php
+				
+                foreach($reporte_ventas as $key=>$d){
+					$total_cuenta += 1;
+					if($d->tipo=="NC"){
+                ?>
+				 
+					<tr>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->fecha)?></td>  
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->tipo)?></td>
+						
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->serie?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->numero?></td>
+					
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->cod_tributario?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->destinatario?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->imp_afecto, 2, '.', ',');   ?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->imp_inafecto, 2, '.', ',');   ?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format(-1*$d->impuesto, 2, '.', ',');   ?></td>
+						<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format(-1*$d->total, 2, '.', ',');   ?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->forma_pago?></td>
+						<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $d->estado_pago?></td>
+					</tr>
+				<?php
+					$suma_imponible_afecto_nota_credito += $d->imp_afecto;
+					$suma_imponible_inafecto_nota_credito += $d->imp_inafecto;
+					$suma_igv_total_nota_credito += -1*$d->impuesto;
+					$suma_total_nota_credito += -1*$d->total;
+					$suma_imponible_afecto += $d->imp_afecto;
+					$suma_imponible_inafecto += $d->imp_inafecto;
+					$suma_igv_total -= $d->impuesto;
+					$suma_total -= $d->total;
+					}
+					?>
+				<?php
+				}
+				?>
+				<tr>
+					<td colspan="6" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b>Total Nota de Credito</b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_imponible_afecto_nota_credito, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_imponible_inafecto_nota_credito, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_igv_total_nota_credito, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_total_nota_credito, 2, '.', ',');?></b></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important" colspan="2"></td>
+				</tr>
 				
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="8" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important">Total General</th>
-					
-					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($suma_total, 2, '.', ',');?></th>
+					<th colspan="6" class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b>Total General</b></th>
+					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_imponible_afecto, 2, '.', ',');?></b></th>
+					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_imponible_inafecto, 2, '.', ',');?></b></th>
+					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_igv_total, 2, '.', ',');?></b></th>
+					<th class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><b><?php echo number_format($suma_total, 2, '.', ',');?></b></th>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important" colspan="2"></td>
 				</tr>
 			</tfoot>
 		</table>
