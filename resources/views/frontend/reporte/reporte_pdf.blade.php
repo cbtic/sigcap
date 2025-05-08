@@ -260,7 +260,7 @@
         <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
 			<tbody>
                 <tr>
-                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">NOTAS DE CREDITO Y OTROS</td>
+                    <td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="25%">NOTAS DE CREDITO QUE AFECTAN</td>
                     
 				</tr>  
             </tbody>
