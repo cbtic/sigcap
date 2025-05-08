@@ -1,6 +1,6 @@
 -- DROP FUNCTION public.sp_lista_deuda_pendiente(varchar, varchar, varchar, varchar, refcursor);
 
-CREATE OR REPLACE FUNCTION public.sp_lista_deuda_pendiente(p_tipo_doc character varying, p_numero_doc character varying, p_cod_producto character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_lista_deuda_pendiente(p_tipo_doc character varying, p_numero_doc character varying, p_codigo_concepto character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -10,10 +10,8 @@ _id_persona bigint;
 _id_empresa bigint;
 v_campos varchar;
 v_scad varchar;
-v_where varchar;
 
 Begin
-
 
 --- LIQUIDACION  $tipo_documento=="87"
 	if p_tipo_doc = '87' then 
@@ -80,172 +78,150 @@ Cuota		:1
 MonedaDoc	:1(1: Soles,2: Dólares)
 */		
 
-	v_where = ' ';
-	If p_cod_producto <> '' Then
- 		v_where:=v_where||' And c.codigo = '''||p_cod_producto||''' '; 
-	End If;	
+
 
 
 --- VALORIZACION RUC
 	if p_tipo_doc = '2' then		
-
-			v_campos:='select 
+		 v_campos:='select 
 				c.codigo::int codigo_producto,				
 				c.denominacion descr_producto,
 				v.id num_documento,				
 				(case when descripcion is null then c.denominacion else v.descripcion end) desc_documento,
 				v.fecha fecha_vencimiento,
 				v.fecha_proceso fecha_emision, 				 
-				v.monto deuda,
+				f.total deuda,
 				0 mora,
 				0 gastos_adm,
 				0 pago_minimo,
-				v.monto importe_total,
-				DATE_PART(''month'', v.fecha_proceso) periodo,
-				DATE_PART(''year'', v.fecha_proceso) anio,
+				f.total importe_total,
+				12 periodo,
+				2024 anio,
 				1 cuota, 
 				v.id_moneda moneda_doc	,
-				1 id_forma_pago,
-				e.razon_social destinatario,
+				id_forma_pago,
+				f.destinatario,
 				v.monto suma_total_deuda
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
-                --left join personas p on p.id = v.id_persona 
-                left join empresas e on e.id = v.id_empresa 				                           
-                where 1=1
-                and v.id_empresa = '''||_id_empresa||'''           
+				inner join comprobantes f  on  f.id = v.id_comprobante                               
+                where v.id_empresa = '''||_id_empresa||'''            
                 and v.estado = ''1''            
-                and v.pagado_post = ''0''
-                and v.exonerado = ''0''               
-                and (case when v.id_comprobante is null 
-					then ''P'' 
-				else 
-					(select co.estado_pago from comprobantes co where co.id=v.id_comprobante limit 1)
-				end) = ''P''                
-            order by v.fecha desc			 
+                and f.estado_pago = ''P''
+                and v.exonerado = ''0''                 
+            order by v.fecha desc
+			group by v.id, f.id, c.id 
 			limit '''||p_limit||''' '; 
 
 --- VALORIZACION RUC , LIQUIDACION            
 	elseif p_tipo_doc = '87' and _id_empresa <> 0 then
-
-			v_campos:='select 
+		 v_campos:='select 
 				c.codigo::int codigo_producto,				
 				c.denominacion descr_producto,
 				v.id num_documento,				
 				(case when descripcion is null then c.denominacion else v.descripcion end) desc_documento,
 				v.fecha fecha_vencimiento,
 				v.fecha_proceso fecha_emision, 				 
-				v.monto deuda,
+				f.total deuda,
 				0 mora,
 				0 gastos_adm,
 				0 pago_minimo,
-				v.monto importe_total,
-				DATE_PART(''month'', v.fecha_proceso) periodo,
-				DATE_PART(''year'', v.fecha_proceso) anio,
+				f.total importe_total,
+				12 periodo,
+				2024 anio,
 				1 cuota, 
 				v.id_moneda moneda_doc	,
-				1 id_forma_pago,
-				e.razon_social destinatario,
-				v.monto suma_total_deuda
-            from valorizaciones v
-                inner join conceptos c  on c.id = v.id_concepto
+				id_forma_pago,
+				f.destinatario,
+				v.monto suma_total_deuda           
+			from valorizaciones v
+                inner join conceptos c  on c.id = v.id_concepto 
+				inner join comprobantes f  on  f.id = v.id_comprobante 1               
                 left join liquidaciones l  on l.id = v.pk_registro and v.id_modulo = 7
-                left join empresas e on e.id = v.id_empresa 				                           
-                where 1=1
-                and v.id_empresa = '''||_id_empresa||'''           
+           where 1=1
+				and v.id_empresa = '''||_id_empresa||'''           
                 and v.estado = ''1''            
-                and v.pagado_post = ''0''
+                and f.estado_pago = ''P''
                 and v.exonerado = ''0''
 				and l.estado = ''1''
-                and l.credipago = '''||p_numero_doc||'''               
-                and (case when v.id_comprobante is null 
-					then ''P'' 
-				else 
-					(select co.estado_pago from comprobantes co where co.id=v.id_comprobante limit 1)
-				end) = ''P''                
-            order by v.fecha desc			 
-			limit '''||p_limit||''' '; 
-
+                and l.credipago = '''||p_numero_doc||'''				               
+            order by v.fecha desc
+			group by v.id, f.id, c.id 
+			limit '''||p_limit||''' ';
             
 --- VALORIZACION DNI , LIQUIDACION 
 	elseif p_tipo_doc = '87' and _id_persona <> 0 then  
-			v_campos:='select 
-				c.codigo codigo_producto,				
+		 v_campos:='select 
+				c.codigo::int codigo_producto,				
 				c.denominacion descr_producto,
 				v.id num_documento,				
 				(case when descripcion is null then c.denominacion else v.descripcion end) desc_documento,
 				v.fecha fecha_vencimiento,
 				v.fecha_proceso fecha_emision, 				 
-				v.monto deuda,
+				f.total deuda,
 				0 mora,
 				0 gastos_adm,
 				0 pago_minimo,
-				v.monto importe_total,
-				DATE_PART(''month'', v.fecha_proceso) periodo,
-				DATE_PART(''year'', v.fecha_proceso) anio,
+				f.total importe_total,
+				12 periodo,
+				2024 anio,
 				1 cuota, 
 				v.id_moneda moneda_doc	,
-				1 id_forma_pago,
-				v.id_persona, 
-				p.apellido_paterno ||'' ''||p.apellido_materno||'' ''||p.nombres destinatario,
-				v.monto suma_total_deuda
+				id_forma_pago,
+				f.destinatario,
+				v.monto suma_total_deuda              
             from valorizaciones v
                 inner join conceptos c  on c.id = v.id_concepto
-                left join personas p on p.id = v.id_persona
-				left join liquidaciones l  on l.id = v.pk_registro and v.id_modulo = 7                  				                           
-                where 1=1            
-                and  v.id_persona = = '''||_id_persona||'''
+				inner join comprobantes f  on  f.id = v.id_comprobante                               
+                left join liquidaciones l  on l.id = v.pk_registro and v.id_modulo = 7
+            where v.id_persona = '''||_id_persona||'''            
                 and v.estado = ''1''            
-                and v.pagado_post = ''0''
-                and v.exonerado = ''0''  
+                and f.estado_pago = ''P''
+                and v.exonerado = ''0''
+                and l.credipago = '''||p_numero_doc||''' 
 				and l.estado = ''1''
-                and l.credipago = '''||p_numero_doc||'''               
-                and (case when v.id_comprobante is null 
-					then ''P'' 
-				else 
-					(select co.estado_pago from comprobantes co where co.id=v.id_comprobante limit 1)
-				end) = ''P''                
-            order by v.fecha desc			 
+            order by v.fecha desc
+			group by v.id, f.id, c.id
 			limit '''||p_limit||''' '; 
 
 --- VALORIZACION DNI
 	else 
-
 		 v_campos:='select 
-				c.codigo codigo_producto,				
-				c.denominacion descr_producto,
-				v.id num_documento,				
-				(case when descripcion is null then c.denominacion else v.descripcion end) desc_documento,
-				v.fecha fecha_vencimiento,
-				v.fecha_proceso fecha_emision, 				 
-				v.monto deuda,
-				0 mora,
-				0 gastos_adm,
-				0 pago_minimo,
-				v.monto importe_total,
-				DATE_PART(''month'', v.fecha_proceso) periodo,
-				DATE_PART(''year'', v.fecha_proceso) anio,
-				1 cuota, 
-				v.id_moneda moneda_doc	,
-				1 id_forma_pago,
-				v.id_persona, 
-				p.apellido_paterno ||'' ''||p.apellido_materno||'' ''||p.nombres destinatario				           
+			v.fecha,
+			c.codigo codigo_producto,
+			c.denominacion descr_producto,
+			v.id num_documento,				
+			(case when descripcion is null then c.denominacion else v.descripcion end) desc_documento,
+			v.fecha fecha_vencimiento,
+			v.fecha_proceso fecha_emision, 				 
+			v.valor_unitario deuda,
+			0 mora,
+			0 gastos_adm,
+			0 pago_minimo,
+			v.monto importe_total,
+			12 periodo,
+			2024 anio,
+			1 cuota, 
+			v.id_moneda moneda_doc	,
+			1 id_forma_pago,
+			p.apellido_paterno||'' ''||p.apellido_materno||'' ''||p.nombres destinatario,
+			v.monto suma_total_deuda			 	           
 			from valorizaciones v
-				inner join conceptos c  on c.id = v.id_concepto
-				inner join personas p on p.id = v.id_persona 
-				left join comprobantes co on v.id_comprobante=co.id and co.estado_pago=''C'' 				                           
-            where 1=1
-				and co.id is null            
-                and  v.id_persona =  '''||_id_persona||'''
-                and v.estado = ''1''                         
-                and v.exonerado =  ''0''
-				and v.pagado_post in (''0'',''2'',''3'')
-				'||v_where||'
-            order by v.fecha desc
-			limit '''||p_limit||''' ';  
+			inner join personas p on v.id_persona=p.id
+			inner join conceptos c  on c.id = v.id_concepto
+			where v.id_persona = '''||_id_persona||'''            
+			and v.estado = ''1''  
+			and v.pagado = ''0''
+			and v.exonerado = ''0''
+			and v.id_concepto in (26411,26536,26461,26444,26446,26447)';
 
-
-
+			if p_codigo_concepto!='' then
+				v_campos:=v_campos||' and c.codigo='''||p_codigo_concepto||''' ';
+			end if;
+			
+			v_campos:=v_campos||' order by v.fecha asc
+			limit '''||p_limit||''' ';
+    
 	end if;
 		
 	--v_scad:=v_campos; 
