@@ -918,7 +918,7 @@ class IngresoController extends Controller
         $msg = "";        
         $motivo_ = str_replace(['&', '/', '$', '\'', '\\'], '', $motivo);
 
-        echo($motivo_);exit();
+        //echo($motivo_);exit();
 
         $id_user = Auth::user()->id;
         $nombre_user= Auth::user()->name;  //user::find ($id_user);
