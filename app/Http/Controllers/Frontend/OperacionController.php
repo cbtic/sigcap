@@ -361,6 +361,7 @@ class OperacionController extends Controller
 		$comprobante_model = new Comprobante;
 		$p[]=strval($data_input["TipoConsulta"]);
 		$p[]=(int)$data_input["NumConsulta"];
+		$p[]="";
 		$p[]="5";
 		$deuda_pendiente = $comprobante_model->lista_deuda_pendiente($p);
 		//print_r($deuda_pendiente);
