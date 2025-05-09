@@ -211,13 +211,14 @@
 						</select>
 					</div>
                     
-					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-left:0px;padding-right:0px">
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="padding-left:0px;padding-right:0px">
                         <input class="btn btn-warning" value="Buscar" type="button" id="btnBuscar" />
 							
 						<a class="btn btn-success" href="/agremiado" style="margin-left:0px">Nuevo</a>
 
-                        <input class="btn btn-sm btn-secondary float-rigth" value="Descargar" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;margin-right:10px;" /> 
+                        <input class="btn btn-sm btn-secondary float-rigth" value="Descargar" name="descargar" type="button" id="btnDescargar" style="padding-left:15px;padding-right:15px;" /> 
 														
+						<input class="btn btn-success" value="Cuotas excepcional" type="button" id="btnGenerarCuotas" style=""/>
 	
 					</div>
 				</div>
