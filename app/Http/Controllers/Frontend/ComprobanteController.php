@@ -346,6 +346,7 @@ class ComprobanteController extends Controller
             $nc = $comprobante_model->getncById($id_cliente,$tipoDocP,$id_concepto_pp);
             
             //print_r($nc); exit();
+            //print_r($empresa); exit();
 
             return view('frontend.comprobante.create',compact('trans', 'titulo','empresa', 'facturad', 'total', 'igv', 'stotal','TipoF','ubicacion', 'persona','id_caja','serie', 'adelanto','MonAd','forma_pago','tipooperacion','formapago', 'totalDescuento','id_tipo_afectacion_pp', 'valorizad','descuentopp','id_pronto_pago', 'medio_pago','nc','tipo_documento_b', 'tipo_cambio'));
             
