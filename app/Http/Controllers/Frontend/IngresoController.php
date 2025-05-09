@@ -944,8 +944,10 @@ class IngresoController extends Controller
                     if($valorizacion->id_modulo=='3'){
                         echo $valorizacion->pk_registro;//exit();
                         $agremiado_multa = AgremiadoMulta::find($valorizacion->pk_registro);
-                        $agremiado_multa->id_estado_multa="2";
-                        $agremiado_multa->save();
+                        if($agremiado_multa){
+                            $agremiado_multa->id_estado_multa="2";
+                            $agremiado_multa->save();    
+                        }
                     }
                     $valorizacion_model = new Valorizacione;
                     $valorizacion_ = $valorizacion_model->getExonerado($valorizacion->id_agremido);
