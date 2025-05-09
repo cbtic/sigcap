@@ -2490,8 +2490,13 @@ function fn_exonerar_valorizacion(motivo){
 	var exonerado = $('#Exonerado').val();
 	var mensaje = "";
 
+		
 	let motivo_ = motivo;
-	motivo = motivo_.replace(/[&\/$\\']/g, '');
+	//alert(motivo_);
+
+	if (motivo!=''){
+		motivo = motivo_.replace(/[&\/$\\']/g, '');
+	}
 
 	if(exonerado==0){
 		mensaje = "¿Esta seguro de exonerar la cuenta?"
