@@ -19,6 +19,10 @@ $(document).ready(function () {
 		DescargarArchivos()
 
 	});
+
+	$('#btnGenerarCuotas').click(function () {
+		modalGenerarCuotas(0);
+	});
 		
 	datatablenew();
 	/*	
@@ -718,3 +722,18 @@ function DescargarArchivos(){
 	
 }
 
+function modalGenerarCuotas(id){
+
+	$(".modal-dialog").css("width","85%");
+	$('#openOverlayOpc .modal-body').css('height', 'auto');
+
+	$.ajax({
+			url: "/agremiado/modal_generar_cuota_agremiado/"+id,
+			type: "GET",
+			success: function (result) {
+					$("#diveditpregOpc").html(result);
+					$('#openOverlayOpc').modal('show');
+			}
+	});
+
+}
