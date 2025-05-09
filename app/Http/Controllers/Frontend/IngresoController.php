@@ -942,9 +942,9 @@ class IngresoController extends Controller
                     //$valorizacion_ = Valorizacione::where("id_concepto",26461)->where("id_agremido",$valorizacion->id_agremiado)->where("pagado",0)->where("exonerado",0)->where("id_modulo",3)->first();  
                     //echo $valorizacion->id_modulo;exit();
                     if($valorizacion->id_modulo=='3'){
-                        //echo $valorizacion->pk_registro;exit();
+                        echo $valorizacion->pk_registro;//exit();
                         $agremiado_multa = AgremiadoMulta::find($valorizacion->pk_registro);
-                        $agremiado_multa->id_estado_multa='2';
+                        $agremiado_multa->id_estado_multa="2";
                         $agremiado_multa->save();
                     }
                     $valorizacion_model = new Valorizacione;
