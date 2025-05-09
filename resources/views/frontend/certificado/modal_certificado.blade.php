@@ -377,7 +377,7 @@ function valida_ultimo_pago(){
 			var fecha_actual = new Date();
 
 			var fecha_con_vigencia = new Date(fecha_actual);
-			fecha_con_vigencia.setMonth(fecha_con_vigencia.getMonth() + parseInt(vigencia));
+			fecha_con_vigencia.setMonth(fecha_con_vigencia.getMonth() + parseInt(vigencia)-1);
 
 			var mes = fecha_con_vigencia.getMonth() + 1;
 
