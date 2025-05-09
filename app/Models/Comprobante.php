@@ -468,6 +468,7 @@ class Comprobante extends Model
         }
         DB::select("BEGIN;");
         $cad = "select " . $function . "(" . $_parameters . "'ref_cursor');";
+        //echo $cad;exit();
         DB::select($cad);
         $cad = "FETCH ALL IN ref_cursor;";
         $data = DB::select($cad);

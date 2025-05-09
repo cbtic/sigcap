@@ -53,6 +53,7 @@ _pu numeric;
 _pu_con_igv numeric;
 _importe_total numeric;
 _id_tipo_afectacion integer;
+_id_persona integer;
 
 idp integer;
 _id_caja integer;
@@ -83,17 +84,17 @@ Begin
 			--descr_producto := p_detalle[i][2];
 			num_documento := p_detalle[i][2];			
 			--desc_documento := p_detalle[i][4];
-			fecha_vencimiento := p_detalle[i][4];
-			fecha_emision := p_detalle[i][5]; 				 
-			deuda := p_detalle[i][6];
-			mora := p_detalle[i][7];
-			gastos_adm := p_detalle[i][8];
+			fecha_vencimiento := p_detalle[i][3];
+			fecha_emision := p_detalle[i][4]; 				 
+			deuda := p_detalle[i][5];
+			mora := p_detalle[i][6];
+			gastos_adm := p_detalle[i][7];
 			--pago_minimo := p_detalle[i][10];
-			importe_total := p_detalle[i][9];
-			periodo:= p_detalle[i][10];
-			anio := p_detalle[i][11];
-			cuota := p_detalle[i][12]; 
-			moneda_doc := p_detalle[i][13];
+			importe_total := p_detalle[i][8];
+			periodo:= p_detalle[i][9];
+			anio := p_detalle[i][10];
+			cuota := p_detalle[i][11]; 
+			moneda_doc := p_detalle[i][12];
 			--id_forma_pago := p_detalle[i][16];
 			--destinatario := p_detalle[i][17];
 			--suma_total_deuda := p_detalle[i][18];
@@ -108,8 +109,8 @@ Begin
 
 
 
-		SELECT p.numero_documento, p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres, p.direccion, v.monto, m.abreviatura, v.id_moneda, p.correo, c.id_tipo_afectacion 
-			   into _ruc, _razon_social, _direccion, _monto, _moneda, _id_moneda, _correo, _id_tipo_afectacion
+		SELECT p.numero_documento, p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres, p.direccion, v.monto, m.abreviatura, v.id_moneda, p.correo, c.id_tipo_afectacion, v.id_persona 
+			   into _ruc, _razon_social, _direccion, _monto, _moneda, _id_moneda, _correo, _id_tipo_afectacion, _id_persona 
 		FROM valorizaciones v
 		inner join personas p on p.id = v.id_persona
 		left join tabla_maestras m on m.codigo::int = v.id_moneda and m.tipo='1'
@@ -147,12 +148,12 @@ Begin
 				 fecha_programado, observacion, id_moneda, tipo, id_forma_pago, afecta, cerrado, id_tipo_documento,serie_ncnd ,id_numero_ncnd ,tipo_ncnd,
 				 solictante,orden_compra,  total_anticipo, total_descuentos, desc_globales,monto_perce, monto_detrac, porc_detrac, totalconperce, tipo_guia,
 				 serie_refer, nro_refer, tipo_refer, codtipo_ncnd, motivo_ncnd, correo_des, tipo_operacion, base_perce, tipo_emision, ope_gratuitas,
-				 subtotal, codigo_bbss_detrac, cuenta_detrac, notas, cond_pago, id_caja, id_usuario_inserta)					
+				 subtotal, codigo_bbss_detrac, cuenta_detrac, notas, cond_pago, id_caja, id_usuario_inserta,id_persona)					
 				Values (_serie, _numero, now(), _razon_social, _direccion, _ruc,'', '',CAST(_total AS numeric),0.00,0.00,_igv, 
 				 CAST(_total AS numeric),_total_letras,_moneda,18,0.000,'P','N',now(),now(),
 				 now(),now(),'',_id_moneda, _tipo, 1, '', 'S',6,'',0,'','','',0.00, _descuento, 0.00, 0.00, 0.00, 0, CAST(_total AS numeric), '', '', '', '', '', '', _correo, '01',CAST(_total AS numeric), 'SINCRONO', 0, 
 				 _subtotal, 
-				 '', '', '', '', _id_caja, _id_usuario) RETURNING id into idp;
+				 '', '', '', '', _id_caja, _id_usuario, _id_persona) RETURNING id into idp;
 
 			update valorizaciones set id_comprobante = idp, pagado='1' where id = num_documento::int;
 
@@ -175,17 +176,17 @@ Begin
 					--descr_producto := p_detalle[i][2];
 					num_documento := p_detalle[i][2];			
 					--desc_documento := p_detalle[i][4];
-					fecha_vencimiento := p_detalle[i][4];
-					fecha_emision := p_detalle[i][5]; 				 
-					deuda := p_detalle[i][6];
-					mora := p_detalle[i][7];
-					gastos_adm := p_detalle[i][8];
+					fecha_vencimiento := p_detalle[i][3];
+					fecha_emision := p_detalle[i][4]; 				 
+					deuda := p_detalle[i][5];
+					mora := p_detalle[i][6];
+					gastos_adm := p_detalle[i][7];
 					--pago_minimo := p_detalle[i][10];
-					importe_total := p_detalle[i][9];
-					periodo:= p_detalle[i][10];
-					anio := p_detalle[i][11];
-					cuota := p_detalle[i][12]; 
-					moneda_doc := p_detalle[i][13];
+					importe_total := p_detalle[i][8];
+					periodo:= p_detalle[i][9];
+					anio := p_detalle[i][10];
+					cuota := p_detalle[i][11]; 
+					moneda_doc := p_detalle[i][12];
 					--id_forma_pago := p_detalle[i][16];
 					--destinatario := p_detalle[i][17];
 					--suma_total_deuda := p_detalle[i][18];
@@ -214,7 +215,7 @@ Begin
 				Insert Into comprobante_detalles (serie, numero, tipo, item, cantidad, descripcion,
 					pu,  pu_con_igv,  igv_total, descuento, importe,afect_igv, cod_contable, valor_gratu, unidad,id_usuario_inserta,id_comprobante)
 					Values (_serie, _numero, _tipo, 1,_cantidad,desc_documento,
-					_pu, _pu_con_igv,_igv, _descuento, (_cantidad *_total - _descuento)  ,_id_tipo_afectacion,_cod_contable,0,'ZZ',1, 1);
+					_pu, _pu_con_igv,_igv, _descuento, (_cantidad *_total - _descuento)  ,_id_tipo_afectacion,_cod_contable,0,'ZZ',_id_usuario, idp);
 
 									
 				end loop;
