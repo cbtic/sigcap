@@ -443,7 +443,7 @@ class Comprobante extends Model
 		return $this->readFunctionPostgres('sp_actualiza_pago_pos',$p);
     }
 	
-	public function readFunctionPostgres($function, $parameters = null){
+	public function readFunctionPostgres__($function, $parameters = null){
 
       $_parameters = '';
       if (count($parameters) > 0) {
@@ -452,12 +452,28 @@ class Comprobante extends Model
       }
 	  $data = DB::select("BEGIN;");
 	  $cad = "select " . $function . "(" . $_parameters . "'ref_cursor');";
-	  //echo $cad;
+	  //echo $cad;exit();
 	  $data = DB::select($cad);
 	  $cad = "FETCH ALL IN ref_cursor;";
 	  $data = DB::select($cad);
       return $data;
    }
+
+   public function readFunctionPostgres($function, $parameters = null){
+        
+        $_parameters = '';
+        if (count($parameters) > 0) {
+            $_parameters = implode("','", $parameters);
+            $_parameters = "'" . $_parameters . "',";
+        }
+        DB::select("BEGIN;");
+        $cad = "select " . $function . "(" . $_parameters . "'ref_cursor');";
+        DB::select($cad);
+        $cad = "FETCH ALL IN ref_cursor;";
+        $data = DB::select($cad);
+        DB::select("END;");
+        return $data;
+    }
 
 	
 }
