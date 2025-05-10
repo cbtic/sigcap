@@ -568,7 +568,7 @@ class DerechoRevision extends Model
 
     function getSolicitudEdificaciones($id){
 
-        $cad = "select s.id, tm.denominacion estado_solicitud,
+        $cad = "select s.id, tm.denominacion estado_solicitud, s.codigo_solicitud, p.codigo,
         (select case when exists (select 1 from liquidaciones l where l.id_solicitud = s.id) then 'Aprobado' else 'Pendiente' end) estado_liquidacion,
         tm2.denominacion tipo_solicitud, tm3.denominacion instancia, p.nombre nombre_proyecto,
         tm6.denominacion id_sitio, p.sitio_descripcion, tm7.denominacion id_zona, p.zona_descripcion, p.parcela, p.super_manzana, tm8.denominacion id_tipo, p.direccion, p.lote, p.sub_lote, p.fila, p.id_ubigeo ubigeo,

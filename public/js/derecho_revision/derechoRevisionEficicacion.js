@@ -2849,3 +2849,9 @@ function buscarSolicitudbyNumeroLiquidacion(){
     });
 
 }
+
+function imprimirSolicitudPdf(){
+
+    window.print();
+
+}
