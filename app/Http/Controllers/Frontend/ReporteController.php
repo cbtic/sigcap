@@ -438,8 +438,8 @@ class ReporteController extends Controller
 
 			}
 			
-			return Response::make($output,200,[
-				'Content-Type' => 'text/csv',
+			return Response::make("\xEF\xBB\xBF" . $output,200,[
+				'Content-Type' => 'text/csv; charset=UTF-8',
 				'Content-Disposition' =>'attachment; filename="Lista Deuda Detallado.csv"',
 			]);
 			
