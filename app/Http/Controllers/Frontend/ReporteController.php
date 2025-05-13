@@ -419,9 +419,9 @@ class ReporteController extends Controller
 			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
-			$p[]=200000;
+			$p[]=300000;
 			$data = $valorizacion_model->listar_deuda_detallado_caja_ajax($p);
-		
+			
 			$output='';
 			$output.="N,Numero_CAP,Apellidos_Nombres,Monto,Concepto,Periodo,Fecha_Vencimiento\n";
 			$n = 1;
@@ -433,8 +433,8 @@ class ReporteController extends Controller
 			}
 			
 			return Response::make($output,200,[
-				'Content-Type' => 'text/plain',
-				'Content-Disposition' =>'attachment; filename="lista_deuda_detallado.txt"',
+				'Content-Type' => 'text/csv',
+				'Content-Disposition' =>'attachment; filename="Lista Deuda Detallado.csv"',
 			]);
 			
 		}else if($funcion=='rt'){

@@ -52,6 +52,7 @@ class Propietario extends Model
     }
 
     function getPropietarioSolicitudHULiq($id_solicitud){      
+      
       $cad = "select p.id, p.id_empresa, p.id_persona, 
       CASE 
             WHEN p.id_persona is not null THEN (select p2.nombres ||' '|| p2.apellido_paterno ||' '|| COALESCE(p2.apellido_materno,'') from personas p2 where p2.id = p.id_persona)
@@ -67,4 +68,41 @@ class Propietario extends Model
           $data = DB::select($cad);
       return $data;
   }
+
+   function getPropietario($id){      
+      
+      $cad = "select p.id, ROW_NUMBER() OVER (PARTITION BY p.id_solicitud) AS row_num, 
+      case
+            when p.id_tipo_propietario = 78 then (select p2.apellido_paterno ||' '|| p2.apellido_materno ||' '|| p2.nombres nombre from personas p2 where p2.id = p.id_persona)
+            when p.id_tipo_propietario = 79 then (select e.razon_social from empresas e where e.id = p.id_empresa)
+      end propietario, 
+      case
+            when p.id_tipo_propietario = 78 then (select p2.numero_documento from personas p2 where p2.id = p.id_persona)
+            when p.id_tipo_propietario = 79 then (select e.ruc from empresas e where e.id = p.id_empresa)
+      end numero_documento_propietario,
+      case
+            when p.id_tipo_propietario = 78 then 'NATURAL'
+            when p.id_tipo_propietario = 79 then 'JURIDICA'
+      end tipo_propietario, 
+      case
+            when p.id_tipo_propietario = 78 then (select p2.numero_celular from personas p2 where p2.id = p.id_persona)
+            when p.id_tipo_propietario = 79 then (select e.telefono from empresas e where e.id = p.id_empresa)
+      end celular_propietario,
+      case
+            when p.id_tipo_propietario = 78 then (select p2.correo from personas p2 where p2.id = p.id_persona)
+            when p.id_tipo_propietario = 79 then (select e.email from empresas e where e.id = p.id_empresa)
+      end correo_propietario,
+      case
+            when p.id_tipo_propietario = 78 then (select p2.direccion  from personas p2 where p2.id = p.id_persona)
+            when p.id_tipo_propietario = 79 then (select e.direccion  from empresas e where e.id = p.id_empresa)
+      end direccion_propietario, p.estado 
+      from propietarios p 
+      where p.estado ='1' 
+      and p.id = '".$id."'";
+
+        //echo $cad;
+		$data = DB::select($cad);
+        return $data;
+    }
+
 }
