@@ -401,7 +401,7 @@ class ReporteController extends Controller
 		
     }*/
 
-	public function exportar_lista_deuda($id, $fecha_fin, $id_concepto) {
+	public function exportar_lista_deuda($id, $fecha_cierre, $fecha_consulta, $id_concepto) {
 		
 		ini_set('display_errors', 1);
 		ini_set('display_startup_errors', 1);
@@ -409,7 +409,7 @@ class ReporteController extends Controller
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', '300');
 
-		if($fecha_fin==0)$fecha_fin = "";
+		if($fecha_cierre==0)$fecha_cierre = "";
 		if($id_concepto==0)$id_concepto = "";
 
 		$reporte = Reporte::find($id);
@@ -446,7 +446,7 @@ class ReporteController extends Controller
 		}else if($funcion=='rt'){
 
 			$valorizacion_model = new Valorizacione;
-			$p[]=$fecha_fin;
+			$p[]=$fecha_cierre;
 			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
@@ -469,13 +469,13 @@ class ReporteController extends Controller
 
 			array_push($variable,array('','','Total',$total_monto));
 			
-			$export = new InvoicesExport([$variable], $fecha_fin);
+			$export = new InvoicesExport([$variable], $fecha_cierre);
 			return Excel::download($export, 'lista_deuda.xlsx');
 			
 		}else if($funcion=='rvm'){
 
 			$valorizacion_model = new Valorizacione;
-			$p[]=$fecha_fin;
+			$p[]=$fecha_cierre;
 			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
@@ -498,7 +498,7 @@ class ReporteController extends Controller
 
 			array_push($variable,array('','','Total',$total_monto));
 			
-			$export = new InvoicesExport([$variable], $fecha_fin);
+			$export = new InvoicesExport([$variable], $fecha_cierre);
 			return Excel::download($export, 'lista_deuda.xlsx');
 			
 		}

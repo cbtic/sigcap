@@ -209,6 +209,19 @@
 									</div>
 								</div>
 
+								<div id="div_fecha_cierre" class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Fecha Cierre</label>
+										<input class="form-control form-control-sm" id="fecha_cierre" name="fecha_cierre" value="<?php echo "31-12-".(date("Y")-1)?>" placeholder="Fecha Cierre">
+									</div>
+								</div>
+								
+								<div id="div_fecha_consulta" class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Fecha Consulta</label>
+										<input class="form-control form-control-sm" id="fecha_consulta" name="fecha_consulta" value="<?php echo date("d-m-Y")?>" placeholder="Fecha Consulta">
+									</div>
+								</div>
 
 								<div id="div_usuario" class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
@@ -352,7 +365,7 @@
 															<?php if($row->funcion=='rt'){?>
 															Descargar Excel
 															<?php }else if($row->funcion=='rd'){?>
-															Descargar txt
+															Descargar CSV
 															<?php }?>
 														</a>
 													</td>
