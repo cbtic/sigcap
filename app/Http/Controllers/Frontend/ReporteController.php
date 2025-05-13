@@ -421,7 +421,7 @@ class ReporteController extends Controller
 		if($funcion=='rd'){
 
 			$valorizacion_model = new Valorizacione;
-			$p[]=$fecha_fin;
+			$p[]=$fecha_cierre;
 			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
