@@ -689,7 +689,7 @@
                                                     <div class="form-group mb-0 clearfix">
 
                                                         <input style="display:none" class="btn btn-warning pull-rigth" value="EXONERAR" type="button" id="btnExonerarS" disabled="disabled" onclick="modal_exonerar()"/>
-                                                        <input style="display:none" class="btn btn-success pull-rigth" value="NO EXONERAR" type="button" id="btnExonerarN" disabled="disabled" onclick="fn_exonerar_valorizacion()"/>
+                                                        <input style="display:none" class="btn btn-success pull-rigth" value="NO EXONERAR" type="button" id="btnExonerarN" disabled="disabled" onclick="fn_exonerar_valorizacion('quitar exoneracion')"/>
                                                         
                                                     </div><!--form-group-->
                                                 </div><!--col-->

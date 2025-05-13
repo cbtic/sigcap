@@ -2044,6 +2044,27 @@ class AgremiadoController extends Controller
 		echo json_encode($agremiado_multa);
 
 	}
+
+	public function modal_generar_cuota_agremiado($id){
+
+		$agremiado = new Agremiado;
+		//dd($id);exit();
+
+		return view('frontend.agremiado.modal_generar_cuota_agremiado',compact('id','agremiado'));
+	
+	}
+
+	public function send_generar_cuotas($id_agremiado, $anio_inicio, $mes_inicio ,$fecha_fin){
+	
+		$agremiado_model = new Agremiado;
+		$p[]=$anio_inicio;
+		$p[]=$mes_inicio;
+		$p[]=$fecha_fin;
+		$p[]=$id_agremiado;
+		$data = $agremiado_model->crud_automatico_agremiado_cuota_fecha_inicio_individual($p);
+		
+	}
+
 }
 
 class InvoicesExport implements FromArray

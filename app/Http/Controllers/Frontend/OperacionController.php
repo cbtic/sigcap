@@ -491,13 +491,15 @@ class OperacionController extends Controller
 			$data_input[$row] = substr($input,($arr_indice_input[$key]-1),$arr_longitud_input[$key]);
 		}
 		
-		$arr_indice_input_detalle = array(235,238,253,254,262,270,282,294,306,318,320,324,326,327);
-		$arr_longitud_input_detalle = array(3,15,1,8,8,12,12,12,12,2,4,2,1,30);
-		$arr_var_input_detalle = array("CodigoProducto","NumDocumento","FILLER","FechaVencimiento","FechaEmision","Deuda","Mora","GastosAdm","ImporteTotal","Periodo","Anio","Cuota","MonedaDoc","Filler");
+		//$arr_indice_input_detalle = array(235,238,253,254,262,270,282,294,306,318,320,324,326,327);
+		$arr_indice_input_detalle = array(235,240,255,263,271,283,295,307,319,321,325,327);
+		//$arr_longitud_input_detalle = array(5,15,1,8,8,12,12,12,12,2,4,2,1,30);
+		$arr_longitud_input_detalle = array(5,15,8,8,12,12,12,12,2,4,2,1);
+		$arr_var_input_detalle = array("CodigoProducto","NumDocumento","FechaVencimiento","FechaEmision","Deuda","Mora","GastosAdm","ImporteTotal","Periodo","Anio","Cuota","MonedaDoc");
 		
 		for($i=0;$i<(int)$data_input["NumDocs"];$i++){
 			foreach($arr_var_input_detalle as $key=>$row){
-				$inicio = ($arr_indice_input_detalle[$key]-1)+(122*$i);
+				$inicio = ($arr_indice_input_detalle[$key]-1)+(124*$i);
 				$data_input_detalle[$i][$row] = substr($input,$inicio,$arr_longitud_input_detalle[$key]);
 			}
 		}
@@ -509,9 +511,15 @@ class OperacionController extends Controller
         foreach ($data_input_detalle as $key => $value) {
 			$p_mov.="{";
 			$p_mov.=$value["CodigoProducto"].",";
+			
 			//$p_mov.="0,";
 			$p_mov.=trim($value["NumDocumento"]).",";
+			
+			//$p_mov.="NULL,";
+			//$p_mov.=str_pad(" ", 30, " ", STR_PAD_RIGHT).",";
+
 			$p_mov.=$value["FechaVencimiento"].",";
+			//echo $p_mov;exit();
 			$p_mov.=$value["FechaEmision"].",";
 			$p_mov.=$value["Deuda"].",";
 			$p_mov.=$value["Mora"].",";
@@ -522,7 +530,11 @@ class OperacionController extends Controller
 			$p_mov.=$value["Anio"].",";
 			$p_mov.=$value["Cuota"].",";
 			$p_mov.=$value["MonedaDoc"];
+			
 			//$p_mov.=str_pad(" ", 30, " ", STR_PAD_RIGHT).",";
+			//$p_mov.="NULL";
+			//$p_mov .= "                              ";
+
 			//$p_mov.="0,";
 			//$p_mov.="0";
 			$p_mov.="},";

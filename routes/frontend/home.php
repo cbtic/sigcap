@@ -843,5 +843,7 @@ Route::get('reporte/exportar_reporte_caja/{id}/{fini}/{ffin}/{opc1}/{opc2}/{opc3
 Route::get('agremiado/obtener_datos_agremiado_proyectista/{numero_cap}', [AgremiadoController::class, 'obtener_datos_agremiado_proyectista'])->name('agremiado.obtener_datos_agremiado_proyectista');
 Route::get('derecho_revision/editar_derecho_revision_edificaciones/{id}', [DerechoRevisionController::class, 'editar_derecho_revision_edificaciones'])->name('derecho_revision.editar_derecho_revision_edificaciones');
 Route::get('derecho_revision/obtener_datos_solicitud_codigo_proyecto/{codigo_proyecto}', [DerechoRevisionController::class, 'obtener_datos_solicitud_codigo_proyecto'])->name('derecho_revision.obtener_datos_solicitud_codigo_proyecto');
+Route::get('agremiado/modal_generar_cuota_agremiado/{id}', [AgremiadoController::class, 'modal_generar_cuota_agremiado'])->name('agremiado.modal_generar_cuota_agremiado');
+Route::get('agremiado/send_generar_cuotas/{id_agremiado}/{anio_inicio}/{mes_inicio}/{fecha_fin}', [AgremiadoController::class, 'send_generar_cuotas'])->name('agremiado.send_generar_cuotas');
 
 
