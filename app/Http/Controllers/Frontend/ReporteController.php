@@ -403,6 +403,12 @@ class ReporteController extends Controller
 
 	public function exportar_lista_deuda($id, $fecha_fin, $id_concepto) {
 		
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', '300');
+
 		if($fecha_fin==0)$fecha_fin = "";
 		if($id_concepto==0)$id_concepto = "";
 
@@ -419,16 +425,16 @@ class ReporteController extends Controller
 			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
-			$p[]=300000;
+			$p[]=500000;
 			$data = $valorizacion_model->listar_deuda_detallado_caja_ajax($p);
 			
 			$output='';
-			$output.="N,Numero_CAP,Apellidos_Nombres,Monto,Concepto,Periodo,Fecha_Vencimiento\n";
+			$output.="N;Numero_CAP;Apellidos_Nombres;Monto;Concepto;Periodo;Fecha_Vencimiento\n";
 			$n = 1;
 
 			foreach($data as $r){
 
-				$output.= $n++.",".$r->numero_cap.",".$r->apellidos_nombre.",". $r->monto.",".$r->descripcion.",".$r->periodo.",".$r->fecha_vencimiento."\n";
+				$output.= $n++.";".$r->numero_cap.";".$r->apellidos_nombre.";". $r->monto.";".$r->descripcion.";".$r->periodo.";".$r->fecha_vencimiento."\n";
 
 			}
 			
