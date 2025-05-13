@@ -9,12 +9,13 @@ $(document).ready(function () {
 	obtenerPropietario_();
 	//calculoVistaPrevia();
 	$('#solicitante_solicitud').hide();
-
+	$('#denegar_liquidacion').hide();
 
 	if($('#id_solicitud').val()>0){
 		obtenerUbigeo();
 		obtenerUbigeoReintegro();
 		//obtenerDatosUbigeo();
+		
 	}
 
 	$('#fecha_registro_bus').datepicker({
@@ -2854,4 +2855,44 @@ function imprimirSolicitudPdf(){
 
     window.print();
 
+}
+
+function activarBotonDenegar(){
+
+	$('#denegar_liquidacion').show();
+
+}
+
+function save_denegacion_solicitud(){
+
+	var id_solicitud = $('#id').val();
+	var observaciones = $('#observaciones').val();
+
+	bootbox.confirm({ 
+        size: "small",
+        message: "&iquest;Deseas denegar esta solicitud de derechos de revision?", 
+        callback: function(result){
+            if (result==true) {
+                fn_denegar_solicitud(id_solicitud, obsevaciones);
+            }
+        }
+    });
+    $(".modal-dialog").css("width","30%");
+
+}
+
+function fn_denegar_solicitud(id_solicitud, obsevaciones){
+	
+	$.ajax({
+		url: "/derecho_revision/denegar_solicitud",
+		type: "POST",
+		data: {
+			_token:_token,
+			id_solicitud: id_solicitud,
+			observaciones: observaciones
+		},
+		success: function (result) {
+			window.location.reload();
+		}
+	});
 }

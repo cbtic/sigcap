@@ -576,7 +576,7 @@ class DerechoRevision extends Model
         from solicitudes s 
         left join proyectos p on s.id_proyecto = p.id
         left join tabla_maestras tm on s.id_resultado = tm.codigo::int and tm.tipo ='118'
-        left join tabla_maestras tm2 on s.id_tipo_tramite = tm2.codigo::int and tm2.tipo ='113'
+        left join tabla_maestras tm2 on s.id_tipo_tramite = tm2.codigo::int and tm2.tipo ='25'
         left join tabla_maestras tm3 on s.id_instancia  = tm3.codigo::int and tm3.tipo ='47'
         inner join tabla_maestras tm4 on s.numero_revision   = tm4.codigo::int and tm4.tipo ='134'
         left join tabla_maestras tm6 on p.id_tipo_sitio = tm6.codigo::int and  tm6.tipo ='33'

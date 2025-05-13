@@ -605,9 +605,9 @@ function calcularReintegro(){
 								<i class="fas fa-file-pdf">  Aprobar Liquidaci&oacute;n</i>
 							</button>
 
-							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 150px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnDenegarSolicitud">
-								<i class="fas fa-exclamation-circle"> Denegar Solicitud</i>
-							</a>
+							<button id="btnDenegarSolicitud" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 150px; height: 30px; display: inline-flex; align-items: center; justify-content: center" onclick="activarBotonDenegar()">
+								<i class="fas fa-exclamation-circle">  Denegar Solicitud</i>
+							</button>
 
 							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnRegresar">
 								<i class="fas fa-arrow-left"> Regresar</i>
@@ -749,8 +749,27 @@ function calcularReintegro(){
 			</div>
 
         <div class="row justify-content-center">
+
+			<div class="col col-sm-12 align-self-left" id="denegar_liquidacion">
+				<h4 style="color:rgb(255, 0, 0)">Denegar Liquidaci&oacute;n</h4>
+				<div class="row">
+					<div class="col-lg-9">
+						<label class="control-label form-control-sm color-letra">Observaciones</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-9">
+						<textarea name="observaciones" cols="40" rows="4" class="form-control upper-case" id="observaciones" style="height: 126px;"></textarea>
+					</div>
+					<div class="col-lg-3" style="padding-bottom:20px">
+						<button id="btnDenegarLiquidacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 190px; height: 30px; margin-left: 5px" onClick="save_denegacion_solicitud()">
+							<i class="fas fa-times icono-rojo" style="font-size:16px">  Denegar Liquidaci&oacute;n</i>
+						</button>
+					</div>
+				</div>
+			</div>
         
-			<div class="col col-sm-12 align-self-center">
+			<div class="col col-sm-12 align-self-center" style="padding-top:15px">
 
 				<div class="card">
 					<div class="card-header" style="color: white; background: #1538C8;">
