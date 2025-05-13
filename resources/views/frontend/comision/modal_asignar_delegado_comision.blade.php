@@ -611,7 +611,7 @@ container: '#myModal modal-body'
 									<option value="">--Seleccionar--</option>
 									<?php
 									foreach ($concurso_inscripcion as $row) {?>
-									<option value="<?php echo $row->id?>" <?php if(isset($comisionDelegado[1]->id_agremiado) && $row->id_agremiado==$comisionDelegado[1]->id_agremiado)echo "selected='selected'"?> ><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto?></option>
+									<option value="<?php echo $row->id?>" <?php if(isset($comisionDelegado[1]->id_agremiado) && $row->id_agremiado==$comisionDelegado[1]->id_agremiado)echo "selected='selected'"?> ><?php echo $row->numero_cap." - ".$row->apellido_paterno." ".$row->apellido_materno." ".$row->nombres." - ".$row->puesto_asignado?></option>
 									<?php 
 									}
 									?>
