@@ -9,7 +9,6 @@ $(document).ready(function () {
 	$("#div_fecha_ini").hide();
 	$("#div_fecha_fin").hide();
 	$("#div_fecha_cierre").hide();
-	$("#div_fecha_consulta").hide();
 	$("#div_usuario").hide();
 	$("#div_caja").hide();
 	$("#div_forma_pago").hide();
@@ -32,7 +31,6 @@ $(document).ready(function () {
 	}
 	else if(tipo_reporte=="3"){
 		$("#div_fecha_cierre").show();
-		$("#div_fecha_consulta").show();
 		$("#div_concepto").show();
 		$("#div_forma_pago").hide();
 	}
@@ -77,13 +75,6 @@ $(document).ready(function () {
     });
 	
 	$('#fecha_cierre').datepicker({
-        autoclose: true,
-        format: 'dd-mm-yyyy',
-		changeMonth: true,
-		changeYear: true,
-    });
-
-	$('#fecha_consulta').datepicker({
         autoclose: true,
         format: 'dd-mm-yyyy',
 		changeMonth: true,
@@ -1319,15 +1310,13 @@ function abrirPdfReporte(id, por_usuario, tipo) {
 function descargarExcel(id, por_usuario, tipo){
 		
 	var fecha_cierre = $('#fecha_cierre').val();
-	var fecha_consulta = $('#fecha_consulta').val();
 	var id_concepto = $('#id_concepto').val();
 	//var concepto = $('#concepto').val();
 	
 	if (fecha_cierre == "")fecha_cierre = 0;
-	if (fecha_consulta == "")fecha_consulta = 0;
 	if (id_concepto == "")id_concepto = 0;
 
-	location.href = '/reporte/exportar_lista_deuda/' + id + '/' + fecha_cierre + '/' + fecha_consulta + '/' +id_concepto;
+	location.href = '/reporte/exportar_lista_deuda/' + id + '/' + fecha_cierre + '/' +id_concepto;
 	
 }
 
