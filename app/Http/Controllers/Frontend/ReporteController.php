@@ -456,11 +456,11 @@ class ReporteController extends Controller
 		
 			$variable = [];
 			$total_monto=0;
-			$n = 0;
+			$n = 1;
 			//array_push($variable, array("SISTEMA CAP"));
 			//array_push($variable, array("CONSULTA DE CONCURSO","","","",""));
 			//array_push($variable, array("N","Numero CAP","Apellidos y Nombres","Monto Total"));
-			
+			array_push($variable, array("N°","Numero CAP","Apellidos y Nombres","Monto"));
 			foreach ($data as $r) {
 				//$nombres = $r->apellido_paterno." ".$r->apellido_materno." ".$r->nombres;
 				array_push($variable, array($n++,$r->numero_cap, $r->apellidos_nombre, number_format($r->monto_total, 2,'.','')));
