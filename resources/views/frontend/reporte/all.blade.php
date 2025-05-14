@@ -209,7 +209,13 @@
 									</div>
 								</div>
 
-
+								<div id="div_fecha_cierre" class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Fecha Cierre</label>
+										<input class="form-control form-control-sm" id="fecha_cierre" name="fecha_cierre" value="<?php echo "31-12-".(date("Y")-1)?>" placeholder="Fecha Cierre">
+									</div>
+								</div>
+								
 								<div id="div_usuario" class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Usuario</label>
@@ -349,10 +355,10 @@
 														<a href="javascript:void(0);"  
 															onclick="descargarExcel('<?php echo addslashes($row->id); ?>', '<?php echo addslashes($row->por_usuario); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
 														style="font-size: 12px; text-decoration: underline; color: blue;">
-															<?php if($row->funcion=='rt'){?>
+															<?php if($row->funcion=='rt' || $row->funcion=='ra' ){?>
 															Descargar Excel
 															<?php }else if($row->funcion=='rd'){?>
-															Descargar txt
+															Descargar CSV
 															<?php }?>
 														</a>
 													</td>
