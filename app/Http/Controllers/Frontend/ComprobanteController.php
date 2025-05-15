@@ -3710,7 +3710,7 @@ class ComprobanteController extends Controller
 		//$data["nombreComercialEmisor"] = "CAP";		       
         $data["nombreComercialEmisor"] = "COLEGIO DE ARQUITECTOS DEL PERU-REGIONAL LIMA";
         $data["tipoDocumentoModifica"] = $this->getTipoDocumento($factura_nc->tipo);  //"01"; 
-        $data["fechaDocumentoAfectado"] = date("Y-m-d",strtotime($factura->fecha));
+        $data["fechaDocumentoAfectado"] = date("Y-m-d",strtotime($factura_nc->fecha));
         $data["tipoDocIdentidadEmisor"] = "6";
 		$data["sumatoriaImpuestoBolsas"] = "0.00";
 		$data["numeroDocIdentidadEmisor"] = "20172977911";//"20160453908";        
