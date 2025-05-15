@@ -427,7 +427,7 @@ function datatableZonalDetalle(){
 					
 					<div class="card-body">	
 
-						<div class="table-responsive">
+						<div class="table-responsive" style="overflow-y: visible; height:400px;width:100%;">
 						<table id="tblZonalDetalle" class="table table-hover table-sm">
 							<thead>
 							<tr style="font-size:13px">

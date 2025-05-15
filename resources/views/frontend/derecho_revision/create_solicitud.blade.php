@@ -611,13 +611,13 @@ $(document).ready(function () {
 							<div class="col-lg-3">
 								<div class="form-group" id="n_regional_">
 									<label class="control-label form-control-sm color-letra">Firma</label>
-									<?php if (!empty($agremiado_principal->firma)) : ?>
+									<?php /*if (!empty($agremiado_principal->firma)) : ?>
 										<img src="<?php echo asset('img/agremiado/' . $agremiado_principal->firma); ?>" 
 											alt="Firma del agremiado" 
 											class="firma-imagen">
 									<?php else : ?>
 										<p class="firma-no-registrada">No Registrada</p>
-									<?php endif; ?>
+									<?php endif; */?>
 								</div>
 							</div>
 
@@ -814,10 +814,11 @@ $(document).ready(function () {
 								</select>
 							</div>
 						</div>
-							
+						
 						<div style="padding: 10px 0px 15px 10px; font-weight: bold; color: #1538C8;">
 							Propietario/Administrado
 						</div>	
+						<?php if ($rol_proyectista[0]->nombre_rol == 'Proyectista' || $rol_proyectista[0]->nombre_rol == 'Administrator') : ?>
 						<div class="row" style="padding-left:10px">
 							<div class="col-lg-1">
 								<label class="control-label form-control-sm color-letra">Tipo Documento</label>
@@ -886,6 +887,84 @@ $(document).ready(function () {
 								</div>
 							</div>
 						</div>
+
+						<?php elseif ($rol_proyectista[0]->nombre_rol == 'Administrado') : ?>
+						<div class="row" style="padding-left:10px">
+							<div class="col-lg-1">
+								<label class="control-label form-control-sm color-letra">Tipo Documento</label>
+								<select name="id_tipo_documento" id="id_tipo_documento" class="form-control form-control-sm">
+									<option value="">--Seleccionar--</option>
+									<?php
+									foreach ($tipo_documento as $row) {
+										$selected = '';
+										if (isset($id_persona) && $row->codigo == 78) {
+											$selected = "selected='selected'";
+										} elseif (isset($id_empresa) && $row->codigo == 79) {
+											$selected = "selected='selected'";
+										}
+										?>
+										<option value="<?php echo $row->codigo ?>" <?php echo $selected ?>><?php echo $row->denominacion ?></option>
+										<?php
+									}
+									?>
+								</select>
+							</div>
+
+							<div class="col-lg-1">
+								<div class="form-group" id="dni_propietario_">
+								<label class="control-label form-control-sm color-letra">DNI</label>
+								<input id="dni_propietario" name="dni_propietario" on class="form-control form-control-sm" value="<?php echo isset($id_persona) ? $numero_documento_administrado : '';?>" type="text" onchange="">
+								</div>
+								<div class="form-group" id="ruc_propietario_">
+									<label class="control-label form-control-sm color-letra">RUC</label>
+									<input id="ruc_propietario" name="ruc_propietario" on class="form-control form-control-sm"  value="<?php echo isset($id_empresa) ? $numero_documento_administrado : '';?>" type="text" onchange="">
+								</div>
+							</div>
+
+							<div class="col-lg-3" >
+							<div class="form-group" id="nombre_propietario_">
+								<label class="control-label form-control-sm color-letra">Nombre</label>
+								<input id="nombre_propietario" name="nombre_propietario" on class="form-control form-control-sm"  value="<?php echo isset($id_persona) ? $datos_administrado->nombres : '';?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="razon_social_propietario_">
+									<label class="control-label form-control-sm">Raz&oacute;n Social</label>
+									<input id="razon_social_propietario" name="razon_social_propietario" on class="form-control form-control-sm"  value="<?php echo isset($id_empresa) ? $datos_administrado->razon_social : '';?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+							<div class="col-lg-3" >
+								<div class="form-group" id="direccion_dni_">
+									<label class="control-label form-control-sm color-letra">Direcci&oacute;n</label>
+									<input id="direccion_dni" name="direccion_dni" on class="form-control form-control-sm"  value="<?php echo isset($id_persona) ? $datos_administrado->direccion : '';?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="direccion_ruc_">
+									<label class="control-label form-control-sm color-letra">Direcci&oacute;n</label>
+									<input id="direccion_ruc" name="direccion_ruc" on class="form-control form-control-sm"  value="<?php echo isset($id_empresa) ? $datos_administrado->direccion : '';?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+							
+							<div class="col-lg-1" >
+								<div class="form-group" id="celular_dni_">
+									<label class="control-label form-control-sm color-letra">Celular</label>
+									<input id="celular_dni" name="celular_dni" on class="form-control form-control-sm"  value="<?php echo isset($id_persona) ? $datos_administrado->numero_celular : '';?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="telefono_ruc_">
+									<label class="control-label form-control-sm color-letra">Tel&eacute;fono</label>
+									<input id="telefono_ruc" name="telefono_ruc" on class="form-control form-control-sm"  value="<?php echo isset($id_empresa) ? $datos_administrado->telefono : '';?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+
+							<div class="col-lg-2" >
+								<div class="form-group" id="email_dni_">
+									<label class="control-label form-control-sm color-letra">Email</label>
+									<input id="email_dni" name="email_dni" on class="form-control form-control-sm"  value="<?php echo isset($id_persona) ? $datos_administrado->correo : '';?>" type="text" onchange="" readonly='readonly'>
+								</div>
+								<div class="form-group" id="email_ruc_">
+									<label class="control-label form-control-sm color-letra">Email</label>
+									<input id="email_ruc" name="email_ruc" on class="form-control form-control-sm"  value="<?php echo isset($id_empresa) ? $datos_administrado->email : '';?>" type="text" onchange="" readonly='readonly'>
+								</div>
+							</div>
+						</div>
+						<?php endif;?>
 
 						<div style="padding: 0px 0px 15px 10px; font-weight: bold; color: #1538C8;">
 							Datos del Proyecto
