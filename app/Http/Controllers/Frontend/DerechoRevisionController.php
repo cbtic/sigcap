@@ -2679,12 +2679,14 @@ class DerechoRevisionController extends Controller
 		$proyectista_model = new Proyectista;
 		$uso_edificacion_model = new UsoEdificacione;
 		$presupuesto_model = new Presupuesto;
+		$propietario_model = new Propietario;
 		$derechoRevision = DerechoRevision::find($id);
 		$proyecto_ = Proyecto::where("id",$derechoRevision->id_proyecto)->where("estado","1")->first();
 		$proyecto2 = Proyecto::find($proyecto_->id);
 		$datos_proyectista_asociado = [];
 		$datos_uso_edificacion = [];
-		$datos_presupuesto = [];
+		$datos_presupuesto_array = [];
+		$datos_propietario_array = [];
 
 		$proyectista_principal = Proyectista::where("id_solicitud",$derechoRevision->id)->where('id_tipo_proyectista',1)->where("estado","1")->orderBy('id')->first();
 		$datos_proyectista_principal = $proyectista_model->getProyectistaPrincipalEdificaciones($proyectista_principal->id); 
@@ -2717,10 +2719,20 @@ class DerechoRevisionController extends Controller
 
 			$datos  = $presupuesto_model->getPresupuesto($presupuesto->id); 
 			foreach ($datos as $item) {
-				$datos_presupuesto[] = $item;
+				$datos_presupuesto_array[] = $item;
 			}
 		}
 		//var_dump($datos_uso_edificacion);exit();
+
+		$datos_propietario = Propietario::where("id_solicitud",$derechoRevision->id)->where("estado","1")->orderBy('id')->get();
+		//var_dump($datos_uso_edificaciones);exit();
+		foreach($datos_propietario as $propietario){
+
+			$datos  = $propietario_model->getPropietario($propietario->id);
+			foreach ($datos as $item) {
+				$datos_propietario_array[] = $item;
+			}
+		}
 		
 		$proyectista_asociado = Proyectista::where("id_solicitud",$derechoRevision->id)->where('id_tipo_profesional',212)->where("estado","1")->orderBy('id')->get();
 
@@ -2738,7 +2750,7 @@ class DerechoRevisionController extends Controller
 		$distrito = $ubigeo_model->obtenerDistrito(substr($id_ubigeo, 0, 2),substr($id_ubigeo, 2, 2),substr($id_ubigeo, 4, 2));
 		//dd($datos_proyectista_asociado);
 
-        return view('frontend.derecho_revision.visualizar_solicitud',compact('id', 'derechoRevision', 'agremiado_principal', 'persona_principal', 'proyecto2', 'datos_agremiado_principal', 'datos_persona_principal', 'proyectista_asociado','datos_derecho_revision','departamento','provincia','distrito','datos_proyectista_principal','datos_proyectista_asociado','datos_uso_edificacion','datos_presupuesto'));
+        return view('frontend.derecho_revision.visualizar_solicitud',compact('id', 'derechoRevision', 'agremiado_principal', 'persona_principal', 'proyecto2', 'datos_agremiado_principal', 'datos_persona_principal', 'proyectista_asociado','datos_derecho_revision','departamento','provincia','distrito','datos_proyectista_principal','datos_proyectista_asociado','datos_uso_edificacion','datos_presupuesto_array','datos_propietario_array'));
     }
 
 	public function send_nuevo_registro_solicitud_edificacion(Request $request){
