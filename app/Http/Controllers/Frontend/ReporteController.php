@@ -434,12 +434,15 @@ class ReporteController extends Controller
 			$output='';
 			$output.="N;Numero_CAP;Apellidos_Nombres;Monto;Concepto;Periodo;Fecha_Vencimiento\n";
 			$n = 1;
+			$total_monto=0;
 
 			foreach($data as $r){
 
 				$output.= $n++.";".$r->numero_cap.";".$r->apellidos_nombre.";". $r->monto.";".$r->descripcion.";".$r->periodo.";".$r->fecha_vencimiento."\n";
-
+				$total_monto+=$r->monto;
 			}
+
+			$output.=";;TOTAL;".$total_monto.";;;";
 			
 			return Response::make("\xEF\xBB\xBF" . $output,200,[
 				'Content-Type' => 'text/csv; charset=UTF-8',
