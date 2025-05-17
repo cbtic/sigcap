@@ -231,6 +231,178 @@
 	color: white;
 }
 
+/*
+ VERSION PARA IMPRESORAS
+*/
+@page {
+  margin: 0;
+}
+
+@media print {
+	/*
+  html, body {
+    width: 80mm;
+    height: 297mm;
+  }
+  */
+	
+    *, :after, :before {
+        color: #FFF!important;
+        text-shadow: none!important;
+        background: blue!important;
+        -webkit-box-shadow: none!important;
+        box-shadow: none!important;
+        font-family:sans-serif;
+    }
+	
+    p,table, th, td {
+        color: black !important;
+        font-size: 16px !important;
+        font-family:sans-serif;
+    }
+	
+    .resaltado {
+        color: black !important;
+        font-size: 36px !important;
+        font-weight: bold;
+    }
+	
+    .divlogoimpresora {
+        display: block !important;
+    }
+	
+    .logoimpresora {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 0px;
+        margin-bottom: 5px;
+        display: block;
+        width: 250px !important;
+        height: 55px !important;
+    }
+	
+    h3{
+        color: black !important;
+        font-size: 52px !important;
+        text-align: center;
+        font-family:sans-serif;
+    }
+	
+    .separador {
+        display: block;
+        margin-top: 20px;
+    }
+
+    .navbar.navbar-expand-lg.navbar-dark.bg-primary.mb-0 {
+        display: none
+    }
+    h4,ol{
+        display: none !important
+    }
+
+    .flotante,.flotanteC {
+        display: none !important
+    }
+	
+	#div_solicitud{
+		display: none !important
+	}
+	
+	.c-header.c-header-light.c-header-fixed{
+		display: none !important
+	}
+	
+	#btnHome{
+		display: none !important
+	}
+
+	#btnPrint{
+		display: none !important
+	}
+
+	#btnModificarSolicitud{
+		display: none !important
+	}
+
+	#btnAnulacion{
+		display: none !important
+	}
+
+	#btnSolicitudes{
+		display: none !important
+	}
+
+	#btnLiquidacion{
+		display: none !important
+	}
+
+	#btnAprobarPago{
+		display: none !important
+	}
+
+	#btnAprobarLiquidacion{
+		display: none !important
+	}
+
+	#btnDenegarSolicitud{
+		display: none !important
+	}
+
+	#btnRegresar{
+		display: none !important
+	}
+	
+	#btnPrint{
+		display: none !important
+	}
+	
+	.bottom{
+		display: none !important
+	}
+	
+	.cubicaje{
+		display: none !important
+	}
+	.form-control{
+		border:0px !important;
+		font-weight:bold !important;
+		color:#000000 !important;
+	}
+	
+	.card-header strong{
+		padding: 10px 10px !important;
+		font-weight:bold !important;
+		color:#000000 !important;
+		font-size: 22px !important;
+		border:0px !important;
+	}
+	
+	.card-header{
+		border:0px !important;
+	}
+	.card{
+		border:0px !important;
+	}
+	
+	.c-footer{
+		display: none !important
+	}
+
+	#divCubicaje{
+		max-height: 5000px !important
+	}
+	
+	#tblSolicitud tbody tr.even{
+		display: none !important
+	}
+	/*
+	#tblSolicitud{
+		display: block !important
+	}
+	*/
+	
+}
+
 </style>
 
 <script>
@@ -239,7 +411,7 @@ function formatoMoneda_(num) {
     return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+/*document.addEventListener('DOMContentLoaded', () => {
 	const toggleButton = document.getElementById('toggleButton');
 	const respuestaInput = document.getElementById('respuesta');
 	const fileInputs = document.getElementById('fileInputs');
@@ -257,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			fileInputs.style.display = 'block';
 		}
 	});
-});
+});*/
 
 /*function calculoVistaPrevia(){
     var igv_valor_ = <?php //echo $parametro[0]->igv?> * 100;
@@ -357,7 +529,7 @@ function calcularReintegro(){
 	}
 }
 
-$(document).ready(function () {
+/*$(document).ready(function () {
 	$('#id_review_request-is_typical_plants').on('change', function () {
 		if ($(this).prop('checked')) {
 			$('#switch-container').removeClass('btn-danger off').addClass('btn-success on');
@@ -365,7 +537,7 @@ $(document).ready(function () {
 			$('#switch-container').removeClass('btn-success on').addClass('btn-danger off');
 		}
 	});
-});
+});*/
 
 </script>
 
@@ -394,7 +566,7 @@ $(document).ready(function () {
 
             <div class="row">
                 <div class="col-sm-5">
-                    <h4 class="card-title mb-0" style="color: #1538C8;">
+                    <h4 class="card-title mb-0" style="color: #1538C8;"  id ="div_solicitud">
                         Detalle de Solicitud de Derecho de Revisi&oacute;n<!--<small class="text-muted">Usuarios activos</small>-->
                     </h4>
                 </div><!--col-->
@@ -407,51 +579,43 @@ $(document).ready(function () {
 								<i class="fas fa-home"></i>
 							</button>-->
 							
-							@if ( $datos_derecho_revision[0]->id_resultado == 1)
+							@if ($datos_derecho_revision[0]->id_resultado == 1)
 
 							<a href="/account/" onclick="" style="border: solid 1px; color:#28A745; margin-top:0px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnHome">
 								<i class="fas fa-home"></i>
 							</a>
 
-							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
+							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px" onclick ="imprimirSolicitudPdf()">
 								<i class="fas fa-print"></i>
 							</button>
-
-							<button id="btnReintegro" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
-								<i class="fas fa-history icono-rojo">  Solicitar Reintegro</i>
+							
+							<button id="btnModificarSolicitud" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-history icono-rojo">  Modificar Solicitud</i>
 							</button>
 
 							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-times icono-rojo">  Solicitar Anulaci&oacute;n</i>
 							</button>
 
-							<!--<button id="btnSolicitudes" type="button" class="btn btn-outline btn-sm btn-celeste" data-toggle="modal" style="border: solid 1px; color:#17A2B8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
-								<i class="fas fa-pencil-ruler">  Solicitudes</i>
-							</button>-->
-
 							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#17A2B8; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-celeste" id="btnSolicitudes">
-								<i class="fas fa-pencil-ruler"> Solicitudes</i>
+								<i class="fa fa-pencil-ruler"> Solicitudes</i>
 							</a>
 
-							<button id="btnLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" data-toggle="modal" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
-								<i class="fas fa-file-pdf">  Liquidaci&oacute;n</i>
+							<button id="btnAprobarLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" data-toggle="modal" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-file-pdf">  Aprobar Liquidaci&oacute;n</i>
 							</button>
 
-							<button id="btnEnviarLiquidacion" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
-								<i class="fas fa-at">  Enviar Liquidaci&oacute;n</i>
+							<button id="btnDenegarSolicitud" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 150px; height: 30px; display: inline-flex; align-items: center; justify-content: center" onclick="activarBotonDenegar()">
+								<i class="fas fa-exclamation-circle">  Denegar Solicitud</i>
 							</button>
 
-							<button id="btnAsignarComision" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 190px; height: 30px; margin-left: 10px">
-								<i class="fas fa-book-reader">  Asignar a Comisi&oacute;n T&eacute;cnica</i>
-							</button>
-
-							<!--<button id="btnRegresar" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 100px; height: 30px; margin-left: 10px">-->
 							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnRegresar">
 								<i class="fas fa-arrow-left"> Regresar</i>
 							</a>
-							<!--</button>-->
+
 							@endif
-							@if ( $datos_derecho_revision[0]->id_resultado == 2)
+
+							@if ($datos_derecho_revision[0]->id_resultado == 2)
 
 							<a href="/account/" onclick="" style="border: solid 1px; color:#28A745; margin-top:0px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnHome">
 								<i class="fas fa-home"></i>
@@ -460,42 +624,54 @@ $(document).ready(function () {
 							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
 								<i class="fas fa-print"></i>
 							</button>
-
-							<button id="btnReintegro" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
-								<i class="fas fa-history icono-rojo">  Solicitar Reintegro</i>
-							</button>
-
+							
 							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-times icono-rojo">  Solicitar Anulaci&oacute;n</i>
 							</button>
 
-							<!--<button id="btnSolicitudes" type="button" class="btn btn-outline btn-sm btn-celeste" data-toggle="modal" style="border: solid 1px; color:#17A2B8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
-								<i class="fas fa-pencil-ruler">  Solicitudes</i>
-							</button>-->
-
 							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#17A2B8; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-celeste" id="btnSolicitudes">
-								<i class="fas fa-pencil-ruler"> Solicitudes</i>
+								<i class="fa fa-pencil-ruler"> Solicitudes</i>
 							</a>
-
-							<button id="btnLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" data-toggle="modal" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
-								<i class="fas fa-file-pdf">  Liquidaci&oacute;n</i>
+							
+							<button id="btnAprobarPago" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-dollar-sign">  Aprobar Pago</i>
 							</button>
 
-							<button id="btnEnviarLiquidacion" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
-								<i class="fas fa-at">  Enviar Liquidaci&oacute;n</i>
-							</button>
-
-							<button id="btnAsignarComision" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 190px; height: 30px; margin-left: 10px">
-								<i class="fas fa-book-reader">  Asignar a Comisi&oacute;n T&eacute;cnica</i>
-							</button>
-
-							<!--<button id="btnRegresar" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 100px; height: 30px; margin-left: 10px">-->
 							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnRegresar">
 								<i class="fas fa-arrow-left"> Regresar</i>
 							</a>
-							<!--</button>-->
+
 							@endif
-							@if ( $datos_derecho_revision[0]->id_resultado == 3)
+
+							@if ($datos_derecho_revision[0]->id_resultado == 3)
+
+							<a href="/account/" onclick="" style="border: solid 1px; color:#28A745; margin-top:0px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnHome">
+								<i class="fas fa-home"></i>
+							</a>
+
+							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
+								<i class="fas fa-print"></i>
+							</button>
+
+							<button id="btnModificarSolicitud" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-history icono-rojo">  Modificar Solicitud</i>
+							</button>
+
+							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-times icono-rojo">  Solicitar Anulaci&oacute;n</i>
+							</button>
+
+							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#17A2B8; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-celeste" id="btnSolicitudes">
+								<i class="fas fa-pencil-ruler"> Solicitudes</i>
+							</a>
+
+							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnRegresar">
+								<i class="fas fa-arrow-left"> Regresar</i>
+							</a>
+
+							@endif
+
+							@if ($datos_derecho_revision[0]->id_resultado == 4 || $datos_derecho_revision[0]->id_resultado == 5)
 
 							<a href="/account/" onclick="" style="border: solid 1px; color:#28A745; margin-top:0px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnHome">
 								<i class="fas fa-home"></i>
@@ -513,10 +689,6 @@ $(document).ready(function () {
 								<i class="fas fa-times icono-rojo">  Solicitar Anulaci&oacute;n</i>
 							</button>
 
-							<!--<button id="btnSolicitudes" type="button" class="btn btn-outline btn-sm btn-celeste" data-toggle="modal" style="border: solid 1px; color:#17A2B8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
-								<i class="fas fa-pencil-ruler">  Solicitudes</i>
-							</button>-->
-
 							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#17A2B8; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-celeste" id="btnSolicitudes">
 								<i class="fas fa-pencil-ruler"> Solicitudes</i>
 							</a>
@@ -533,11 +705,42 @@ $(document).ready(function () {
 								<i class="fas fa-book-reader">  Asignar a Comisi&oacute;n T&eacute;cnica</i>
 							</button>
 
-							<!--<button id="btnRegresar" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 100px; height: 30px; margin-left: 10px">-->
 							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnRegresar">
 								<i class="fas fa-arrow-left"> Regresar</i>
 							</a>
-							<!--</button>-->
+
+							@endif
+
+							@if ($datos_derecho_revision[0]->id_resultado == 6)
+
+							<a href="/account/" onclick="" style="border: solid 1px; color:#28A745; margin-top:0px; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnHome">
+								<i class="fas fa-home"></i>
+							</a>
+
+							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
+								<i class="fas fa-print"></i>
+							</button>
+
+							<button id="btnReintegro" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-history icono-rojo">  Solicitar Reintegro</i>
+							</button>
+
+							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#17A2B8; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-celeste" id="btnSolicitudes">
+								<i class="fas fa-pencil-ruler"> Solicitudes</i>
+							</a>
+
+							<button id="btnLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" data-toggle="modal" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
+								<i class="fas fa-file-pdf">  Liquidaci&oacute;n</i>
+							</button>
+
+							<button id="btnEnviarLiquidacion" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+								<i class="fas fa-at">  Enviar Liquidaci&oacute;n</i>
+							</button>
+
+							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnRegresar">
+								<i class="fas fa-arrow-left"> Regresar</i>
+							</a>
+
 							@endif
 						</div>
 						
@@ -546,13 +749,32 @@ $(document).ready(function () {
 			</div>
 
         <div class="row justify-content-center">
+
+			<div class="col col-sm-12 align-self-left" id="denegar_liquidacion">
+				<h4 style="color:rgb(255, 0, 0)">Denegar Liquidaci&oacute;n</h4>
+				<div class="row">
+					<div class="col-lg-9">
+						<label class="control-label form-control-sm color-letra">Observaciones</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-9">
+						<textarea name="observaciones" cols="40" rows="4" class="form-control upper-case" id="observaciones" style="height: 126px;"></textarea>
+					</div>
+					<div class="col-lg-3" style="padding-bottom:20px">
+						<button id="btnDenegarLiquidacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 190px; height: 30px; margin-left: 5px" onClick="save_denegacion_solicitud()">
+							<i class="fas fa-times icono-rojo" style="font-size:16px">  Denegar Liquidaci&oacute;n</i>
+						</button>
+					</div>
+				</div>
+			</div>
         
-			<div class="col col-sm-12 align-self-center">
+			<div class="col col-sm-12 align-self-center" style="padding-top:15px">
 
 				<div class="card">
 					<div class="card-header" style="color: white; background: #1538C8;">
 						<strong>
-							Solicitud N° 33208 - Proyecto 2025-0031387-2B - Tercera Revision
+							Solicitud N° {{ $datos_derecho_revision[0]->codigo_solicitud }} - Proyecto {{ $datos_derecho_revision[0]->codigo }} - Tercera Revision
 						</strong>
 					</div>
 					
@@ -803,6 +1025,8 @@ $(document).ready(function () {
 									</div>
 								</div>
 
+								@if (!empty($datos_propietario_array) && count($datos_propietario_array) > 0)
+
 								<div class="row" style="text-align: center; display: block; margin-top: 15px">
 									<strong>
 										Administrado
@@ -822,15 +1046,20 @@ $(document).ready(function () {
 												</tr>
 											</thead>
 											<tbody>
-												<td>asd</td>
-												<td>asd</td>
-												<td>asd</td>
-												<td>asd</td>
-												<td>asd</td>
+												@foreach ($datos_propietario_array as $datos_propietario)
+													<tr>
+														<td>{{ $datos_propietario->propietario ?? '-'  }}</td>
+														<td>{{ $datos_propietario->numero_documento_propietario ?? '-'  }}</td>
+														<td>{{ $datos_propietario->tipo_propietario ?? '-'  }}</td>
+														<td>{{ $datos_propietario->celular_propietario ?? '-'  }}</td>
+														<td>{{ $datos_propietario->correo_propietario ?? '-'  }}</td>
+													</tr>
+												@endforeach
 											</tbody>
 										</table>
 									</div>
 								</div>
+								@endif
 
 								<div class="row" style="text-align: center; display: block; margin-top: 15px">
 									<strong>
@@ -916,7 +1145,7 @@ $(document).ready(function () {
 								</div>
 								@endif
 
-								@if (!empty($datos_uso_edificacion) && count($datos_uso_edificacion) > 0)
+								@if (!empty($datos_presupuesto_array) && count($datos_presupuesto_array) > 0)
 								<div class="row" style="margin-top: 15px; background: #203A73; color: white;">
 									<div class="col-lg-12 text-center">
 										<strong>Presupuesto</strong>
@@ -939,16 +1168,16 @@ $(document).ready(function () {
 											@php 
 												$total_presupuesto = 0;
 											@endphp
-											@foreach ($datos_presupuesto as $presupuesto)
+											@foreach ($datos_presupuesto_array as $datos_presupuesto)
 												@php
-													$subtotal = ($presupuesto->area_techada ?? 0) * ($presupuesto->valor_unitario ?? 0);
+													$subtotal = ($datos_presupuesto->area_techada ?? 0) * ($datos_presupuesto->valor_unitario ?? 0);
 													$total_presupuesto += $subtotal;
 												@endphp
 												<?	$presupuesto = ?>
-												<td class="color-letra">{{ $presupuesto->row_num ?? '-'  }}</td>
-												<td class="color-letra">{{ $presupuesto->tipo_obra ?? '-'  }}</td>
-												<td class="color-letra">{{ $presupuesto->area_techada ?? '-'  }}</td>
-												<td class="color-letra">{{ $presupuesto->valor_unitario ?? '-'  }}</td>
+												<td class="color-letra">{{ $datos_presupuesto->row_num ?? '-'  }}</td>
+												<td class="color-letra">{{ $datos_presupuesto->tipo_obra ?? '-'  }}</td>
+												<td class="color-letra">{{ $datos_presupuesto->area_techada ?? '-'  }}</td>
+												<td class="color-letra">{{ $datos_presupuesto->valor_unitario ?? '-'  }}</td>
 												<td class="color-letra">{{ number_format($subtotal, 2) }}</td>
 											@endforeach
 											</tbody>
@@ -967,29 +1196,54 @@ $(document).ready(function () {
 										Datos del Comprobante de Pago
 									</strong>
 								</div>
-
+								@if ($datos_propietario_array[0]->tipo_propietario == 'JURIDICA')
 								<div class="row" style="padding-left:10px">
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Raz&oacute;n Social</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label><br>
+										<label class="control-label form-control-sm"><b>{{ $datos_propietario_array[0]->propietario }}</b></label><br>
 										<label class="control-label form-control-sm color-letra">Departamento</label><br>
 										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
 									</div>
 
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">RUC</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label><br>
+										<label class="control-label form-control-sm"><b>{{ $datos_propietario_array[0]->numero_documento_propietario }}</b></label><br>
 										<label class="control-label form-control-sm color-letra">Provincia</label><br>
 										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
 									</div>
 
 									<div class="col-lg-4">
 										<label class="control-label form-control-sm color-letra">Direcci&oacute;n Fiscal</label><br>
-										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label><br>
+										<label class="control-label form-control-sm"><b>{{ $datos_propietario_array[0]->direccion_propietario }}</b></label><br>
 										<label class="control-label form-control-sm color-letra">Distrito</label><br>
 										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
 									</div>
 								</div>
+								@endif
+								@if ($datos_propietario_array[0]->tipo_propietario == 'NATURAL')
+								<div class="row" style="padding-left:10px">
+									<div class="col-lg-4">
+										<label class="control-label form-control-sm color-letra">Nombres</label><br>
+										<label class="control-label form-control-sm"><b>{{ $datos_propietario_array[0]->propietario }}</b></label><br>
+										<label class="control-label form-control-sm color-letra">Departamento</label><br>
+										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+									</div>
+
+									<div class="col-lg-4">
+										<label class="control-label form-control-sm color-letra">DNI</label><br>
+										<label class="control-label form-control-sm"><b>{{ $datos_propietario_array[0]->numero_documento_propietario }}</b></label><br>
+										<label class="control-label form-control-sm color-letra">Provincia</label><br>
+										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+									</div>
+
+									<div class="col-lg-4">
+										<label class="control-label form-control-sm color-letra">Direcci&oacute;n</label><br>
+										<label class="control-label form-control-sm"><b>{{ $datos_propietario_array[0]->direccion_propietario }}</b></label><br>
+										<label class="control-label form-control-sm color-letra">Distrito</label><br>
+										<label class="control-label form-control-sm"><b>Estado de la Solicitud</b></label>
+									</div>
+								</div>
+								@endif
 
 							</div>
 							

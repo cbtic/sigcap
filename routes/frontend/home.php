@@ -804,7 +804,7 @@ Route::get('derecho_revision/validar_proyectista_hu/{id}', [DerechoRevisionContr
 Route::get('derecho_revision/obtener_numero_revision/{id}', [DerechoRevisionController::class, 'obtener_numero_revision'])->name('derecho_revision.obtener_numero_revision');
 
 Route::get('ingreso/obtener_detalle_factura/{id}/{forma_pago}/{estado_pago}/{medio_pago}/{total}', [IngresoController::class, 'obtener_detalle_factura'])->name('ingreso.obtener_detalle_factura');
-Route::get('reporte/exportar_lista_deuda/{id}/{fecha_fin}/{id_concepto}', [ReporteController::class, 'exportar_lista_deuda'])->name('reporte.exportar_lista_deuda');
+Route::get('reporte/exportar_lista_deuda/{id}/{fecha_cierre}/{fecha_consulta}/{id_concepto}', [ReporteController::class, 'exportar_lista_deuda'])->name('reporte.exportar_lista_deuda');
 
 Route::get('ingreso/modal_concepto_reporte/{numero_cap}', [IngresoController::class, 'modal_concepto_reporte'])->name('ingreso.modal_concepto_reporte');
 Route::get('planilla/eliminar_recibo_honorario/{id}/{estado}', [PlanillaDelegadoController::class, 'eliminar_recibo_honorario'])->name('planilla.eliminar_recibo_honorario');

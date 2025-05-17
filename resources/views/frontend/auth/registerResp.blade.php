@@ -127,6 +127,21 @@
                             </div>
                             -->
 
+                            <div class="form-row mb-2">
+                                <div class="col-md-4 ">
+                                    <label>@lang('Password'):</label>
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="{{ __('Password') }}" maxlength="100"  autocomplete="new-password" />
+                                    
+                                </div>
+                                
+                                <div class="col-md-8 ">
+                                    <label>Confirmar:</label>
+                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('Password Confirmation') }}" maxlength="100"  autocomplete="new-password" />
+                                    
+                                </div>
+
+                            </div>
+
                             @if(config('boilerplate.access.captcha.registration'))
                                 <div class="row">
                                     <div class="col">

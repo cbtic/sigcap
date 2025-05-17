@@ -104,6 +104,14 @@ $(document).ready(function () {
 
 	calculaPorcentaje(1);
 
+	var tipo= $('#TipoF').val()
+	var total_fac = $('#total_fac_').val();
+
+	if (Math.round(total_fac) > 700 && tipo=='FT' ){
+		$('#id_tipooperacion_').val('1001');
+		calculoDetraccion();
+	}
+
 	
 });
 
