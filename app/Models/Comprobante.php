@@ -32,7 +32,19 @@ class Comprobante extends Model
                                     //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
        // print_r($data); 
         return $data[0]->sp_crud_factura_moneda;
-    }                   
+    } 
+    
+    public function registrar_factura_moneda_v2($serie, $tipo, $ubicacion, $persona, $total, $id_user,  $id_caja, $id_moneda, $id_tipo_afectacion, $p_detalle) {
+                                              //(serie, tipo, ubicacion, persona, total, p_id_usuario, p_id_caja, p_id_moneda, p_id_tipo_afectacion, p_detalle)
+
+           // print_r($serie .",". $numero.",".$tipo.",".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$id_v.",". $id_caja.",".$descuento.",".$accion.",".$id_user.",".$id_moneda.",".$id_nc);exit();
+        $cad = "Select sp_crud_factura_moneda_v2(?,?,?,?,?,?,?,?,?,?)";
+        
+		$data = DB::select($cad, array($serie, $tipo, $ubicacion, $persona, $total, $id_user,  $id_caja, $id_moneda, $id_tipo_afectacion, $p_detalle));
+                                    //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
+       // print_r($data); 
+        return $data[0]->sp_crud_factura_moneda;
+    } 
 
     public function registrar_comprobante($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda) {
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)

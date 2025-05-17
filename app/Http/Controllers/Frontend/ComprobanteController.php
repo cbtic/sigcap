@@ -777,7 +777,8 @@ class ComprobanteController extends Controller
                     "cantidad" => 1, 
                     "total" => round($total_redondeo,2), 
                     "item" => 999 ,
-
+                    "valor_venta_bruto" =>  0,
+                    "valor_venta" =>  0,
                     );
                 $tarifa[999]=$items1;
             }
@@ -806,11 +807,12 @@ class ComprobanteController extends Controller
                     "pu" => round($total_abono,2),
                     "igv" => 0 ,
                     "pv" =>  0,
-                    "vv" =>  0, 
+                    "vv" =>  0,                     
                     "cantidad" => 1, 
                     "total" => round($total_abono,2), 
                     "item" => 999 ,
-
+                    "valor_venta_bruto" =>  0,
+                    "valor_venta" =>  0,
                     );
                 $tarifa[999]=$items1;
             }
@@ -842,14 +844,8 @@ class ComprobanteController extends Controller
                     $facturaDet_upd->unidad=$value['unidad_medida_item'];
                     //$facturaDet_upd->moneda=$value['abreviatura'];
                     $facturaDet_upd->save();  
-
                 }
             }
-
-
-
-
-
 			
 			$p_detalle ="";
 			$p_detalle.="{";
@@ -864,6 +860,7 @@ class ComprobanteController extends Controller
 						if ($value['descuento']=='')$descuento = 0;
 						
 						$p_detalle.="{";
+
 						$p_detalle.=$value['item'].",";
 						$p_detalle.=$total_sm.",";
 						
@@ -874,6 +871,32 @@ class ComprobanteController extends Controller
 						$p_detalle.=$value['vestab'].",";
 						$p_detalle.=$value['modulo'].",";
 						$p_detalle.=$value['smodulo'];
+
+/*
+                    "id" => 0, 
+                    "fecha" => $fecha_hoy,
+                    "denominacion" => "REDONDEO",
+                    "codigo_producto" => "",
+                    "descripcion" => "REDONDEO",
+                    "monto" => round($total_abono,2),
+                    "moneda" => "SOLES" ,
+                    "id_moneda" => 1 ,
+                    "abreviatura" => "SOLES" ,
+                    "unidad_medida_item" => "NIU" ,
+                    "unidad_medida_comercial" => "UND" ,
+                    "descuento" => 0 ,
+                    "cod_contable" => "",
+                    "id_concepto" => 26464 ,
+                    "pu" => round($total_abono,2),
+                    "igv" => 0 ,
+                    "pv" =>  0,
+                    "vv" =>  0,                     
+                    "cantidad" => 1, 
+                    "total" => round($total_abono,2), 
+                    "item" => 999 ,
+                    "valor_venta_bruto" =>  0,
+                    "valor_venta" =>  0,
+*/
 						$p_detalle.="},";
 						
 					}
@@ -931,6 +954,7 @@ class ComprobanteController extends Controller
                 /**********RUC***********/
 
 		$tarifa = $request->facturad;
+        echo($tarifa); exit();
 
            // $total_pagar_abono = $request->total_pagar_abono;
 
