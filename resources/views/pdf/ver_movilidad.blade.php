@@ -187,7 +187,7 @@
 					foreach($meses as $keym=>$m){
 						$monto = 0;
 						if((int)$m->mes_<=(int)$mes){
-							$movilidadMes = \App\Models\ComisionMovilidade::getMovilidadMesByPeriodoAndMunicipalidad($id_periodo,$anio,$m->mes_,$r->id_municipalidad_integrada);
+							$movilidadMes = \App\Models\ComisionMovilidade::getMovilidadMesByPeriodoAndMunicipalidad($id_periodo,$m->anio,$m->mes_,$r->id_municipalidad_integrada);
 							$monto = (isset($movilidadMes->monto))?$movilidadMes->monto:"0";
 						}
 					?>
