@@ -402,7 +402,7 @@ class ReporteController extends Controller
 		
     }*/
 
-	public function exportar_lista_deuda($id, $fecha_cierre, $id_concepto) {
+	public function exportar_lista_deuda($id, $fecha_cierre, $fecha_consulta, $id_concepto) {
 		
 		ini_set('display_errors', 1);
 		ini_set('display_startup_errors', 1);
@@ -411,6 +411,7 @@ class ReporteController extends Controller
 		ini_set('max_execution_time', '300');
 
 		if($fecha_cierre==0)$fecha_cierre = "";
+		if($fecha_consulta==0)$fecha_consulta = "";
 		if($id_concepto==0)$id_concepto = "";
 
 		$reporte = Reporte::find($id);
@@ -423,6 +424,7 @@ class ReporteController extends Controller
 
 			$valorizacion_model = new Valorizacione;
 			$p[]=$fecha_cierre;
+			$p[]=$fecha_consulta;
 			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
@@ -432,12 +434,15 @@ class ReporteController extends Controller
 			$output='';
 			$output.="N;Numero_CAP;Apellidos_Nombres;Monto;Concepto;Periodo;Fecha_Vencimiento\n";
 			$n = 1;
+			$total_monto=0;
 
 			foreach($data as $r){
 
 				$output.= $n++.";".$r->numero_cap.";".$r->apellidos_nombre.";". $r->monto.";".$r->descripcion.";".$r->periodo.";".$r->fecha_vencimiento."\n";
-
+				$total_monto+=$r->monto;
 			}
+
+			$output.=";;TOTAL;".$total_monto.";;;";
 			
 			return Response::make("\xEF\xBB\xBF" . $output,200,[
 				'Content-Type' => 'text/csv; charset=UTF-8',
@@ -448,6 +453,7 @@ class ReporteController extends Controller
 
 			$valorizacion_model = new Valorizacione;
 			$p[]=$fecha_cierre;
+			$p[]=$fecha_consulta;
 			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
@@ -470,7 +476,7 @@ class ReporteController extends Controller
 
 			array_push($variable,array('','','Total',$total_monto));
 			
-			$export = new InvoicesExport([$variable], $fecha_cierre);
+			$export = new InvoicesExport([$variable], $fecha_cierre, $fecha_consulta);
 			return Excel::download($export, 'lista_deuda.xlsx');
 			
 		}else if($funcion=='ra'){
@@ -479,6 +485,7 @@ class ReporteController extends Controller
 
 			$valorizacion_model = new Valorizacione;
 			$p[]=$fecha_cierre;
+			$p[]=$fecha_consulta;
 			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
@@ -506,6 +513,7 @@ class ReporteController extends Controller
 
 			$valorizacion_model = new Valorizacione;
 			$p[]=$fecha_cierre;
+			$p[]=$fecha_consulta;
 			$p[]=$id_concepto;
 			$p[]=1;
 			$p[]=1;
@@ -528,7 +536,7 @@ class ReporteController extends Controller
 
 			array_push($variable,array('','','Total',$total_monto));
 			
-			$export = new InvoicesExport([$variable], $fecha_cierre);
+			$export = new InvoicesExport([$variable], $fecha_cierre, $fecha_consulta);
 			return Excel::download($export, 'lista_deuda.xlsx');
 			
 		}
@@ -1059,11 +1067,13 @@ class InvoicesExport implements FromArray, WithHeadings, WithStyles
 {
 	protected $invoices;
 	protected $fechaFin;
+	protected $fechaConsulta;
 
-	public function __construct(array $invoices, $fechaFin)
+	public function __construct(array $invoices, $fechaFin, $fechaConsulta)
 	{
 		$this->invoices = $invoices;
 		$this->fechaFin = $fechaFin;
+		$this->fechaConsulta = $fechaConsulta;
 	}
 
 	public function array(): array
@@ -1083,7 +1093,7 @@ class InvoicesExport implements FromArray, WithHeadings, WithStyles
         
 		$fecha_actual = date('d-m-Y');
 
-        $sheet->setCellValue('A1', "LISTA DE LA DEUDA ACTUAL DE CUOTA INSTITUCIONAL DE \n ARQUITECTOS AL $fecha_actual (Fecha de cierre: {$this->fechaFin})");
+        $sheet->setCellValue('A1', "LISTA DE LA DEUDA ACTUAL DE CUOTA INSTITUCIONAL DE \n ARQUITECTOS AL {$this->fechaConsulta} (Fecha de cierre: {$this->fechaFin})");
         $sheet->getStyle('A1:D1')->applyFromArray([
             'font' => [
                 'bold' => true,
@@ -1502,6 +1512,7 @@ class InvoicesExport7 implements FromArray, WithHeadings, WithStyles
 	protected $invoices;
 	protected $titulo;
 	protected $fecha_cierre;
+	
 
 	public function __construct(array $invoices, $titulo, $fecha_cierre)
 	{
