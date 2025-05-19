@@ -450,7 +450,7 @@ class ReporteController extends Controller
 			]);
 			
 		}else if($funcion=='rt'){
-
+			
 			$valorizacion_model = new Valorizacione;
 			$p[]=$fecha_cierre;
 			$p[]=$fecha_consulta;
