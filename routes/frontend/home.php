@@ -255,10 +255,13 @@ Route::get('ingreso/modal_valoriza/{id}', [IngresoController::class, 'modal_valo
 
 
 Route::post('comprobante/edit', [ComprobanteController::class, 'edit'])->name('comprobante.edit');
+Route::get('comprobante/edit', [ComprobanteController::class, 'edit_'])->name('comprobante.edit_');
+
 Route::get('comprobante', [ComprobanteController::class, 'index'])->name('comprobante.all');
 Route::post('comprobante/create', [ComprobanteController::class, 'create'])->name('comprobante.create');
 Route::post('comprobante/send', [ComprobanteController::class, 'send'])->name('comprobante.send');
-Route::get('comprobante/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
+Route::get('comprobante/ver/{id}', [ComprobanteController::class, 'show'])->name('comprobante.show');
+
 Route::post('comprobante/send_nc', [ComprobanteController::class, 'send_nc'])->name('comprobante.send_nc');
 Route::post('comprobante/send_nd', [ComprobanteController::class, 'send_nd'])->name('comprobante.send_nd');
 //Route::get('comprobante/nc_edit/{id}/{id_caja}', [ComprobanteController::class, 'nc_edit'])->name('comprobante.nc_edit');

@@ -63,6 +63,9 @@ class ComprobanteController extends Controller
     }
 
 
+    public function edit_(){
+        return redirect()->route('frontend.ingreso.create')->withFlashSuccess(__('Ruta no existe intente nuevamente.'));
+    }
 
 	public function edit(Request $request){
 
@@ -2592,6 +2595,8 @@ class ComprobanteController extends Controller
 
 	public function show($id){
 
+
+        //exit();
 
         $factura_model = new Comprobante;
 
