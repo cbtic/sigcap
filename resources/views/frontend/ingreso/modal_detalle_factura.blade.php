@@ -168,7 +168,7 @@ function buscarDetalleFactura(){
                         <td class="text-left">${factura.usuario}</td>
                         <td class="text-center">
                             <div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-                                <a href="/comprobante/${factura.id}" class="btn btn-sm btn-success" target="_blank">
+                                <a href="/comprobante/ver/${factura.id}" class="btn btn-sm btn-success" target="_blank">
                                     <i class="fa fa-search"></i>
                                 </a>
                             </div>
@@ -436,7 +436,7 @@ function validarDecimal(input) {
 									<td class="text-left"><?php echo $row->usuario?></td>
 									<td class="text-center">
 									<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-										<a href="/comprobante/<?php echo $row->id?>" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-search"></i></a>
+										<a href="/comprobante/ver/<?php echo $row->id?>" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-search"></i></a>
 									</div>
 									</td>
 								</tr>
