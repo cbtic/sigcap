@@ -3312,4 +3312,14 @@ class DerechoRevisionController extends Controller
 		echo json_encode($array);
 		
 	}
+
+	public function denegar_solicitud($request)
+    {
+		$derecho_revision = DerechoRevision::find($request->id_solicitud);
+		$derecho_revision->id_resultado = 3;
+		$derecho_revision->observacion = $request->observaciones;
+		$derecho_revision->save();
+
+		echo $derecho_revision->id;
+    }
 }

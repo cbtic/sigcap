@@ -2870,18 +2870,17 @@ function save_denegacion_solicitud(){
 
 	bootbox.confirm({ 
         size: "small",
-        message: "&iquest;Deseas denegar esta solicitud de derechos de revision?", 
+        message: "&iquest;Deseas denegar esta solicitud de derecho de revision?", 
         callback: function(result){
             if (result==true) {
-                fn_denegar_solicitud(id_solicitud, obsevaciones);
+                fn_denegar_solicitud(id_solicitud, observaciones);
             }
         }
-    });
-    $(".modal-dialog").css("width","30%");
+    }).find('.modal-dialog').css("width", "30%");
 
 }
 
-function fn_denegar_solicitud(id_solicitud, obsevaciones){
+function fn_denegar_solicitud(id_solicitud, observaciones){
 	
 	$.ajax({
 		url: "/derecho_revision/denegar_solicitud",
@@ -2892,7 +2891,8 @@ function fn_denegar_solicitud(id_solicitud, obsevaciones){
 			observaciones: observaciones
 		},
 		success: function (result) {
-			window.location.reload();
+			//window.location.reload();
+			window.location.href ="/derecho_revision/consulta_derecho_revision/"
 		}
 	});
 }
