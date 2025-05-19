@@ -64,6 +64,7 @@ use App\Http\Controllers\Frontend\ReporteController;
 use App\Http\Controllers\Frontend\TipoCambioController;
 use App\Http\Controllers\Frontend\CorreoController;
 use App\Http\Controllers\Frontend\SuspensionController;
+use App\Http\Controllers\Frontend\CarritoController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -80,6 +81,8 @@ Route::get('terms', [TermsController::class, 'index'])
         $trail->parent('frontend.index')
             ->push(__('Terms & Conditions'), route('frontend.pages.terms'));
     });
+
+Route::get('carrito', [carritoController::class, 'index'])->name('carrito');
 
 Route::get('persona', [personaController::class, 'index'])->name('persona');
 Route::post('personas', [personaController::class, 'store'])->name('personas');
