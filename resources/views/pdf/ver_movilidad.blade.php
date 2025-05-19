@@ -164,13 +164,13 @@
 		<table style="background-color:white !important;border-collapse:collapse;border-spacing:1px;" width="100%">
 			<tbody>
 				<tr>
-					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center">N°</td>
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;text-align:left;padding-top:5px;padding-bottom:5pxM;text-align:center" width="25%">Municipalidad</td>
+					<td class="ancho_nro" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center" width="1%">N°</td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;text-align:left;padding-top:5px;padding-bottom:5pxM;text-align:center" width="45%">Municipalidad</td>
 					
 					<?php 
 					foreach($meses as $keym=>$m){
 					?>	
-					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center"><?php echo $m->mes?></td>
+					<td class="titulos" style="border:1px solid #A4A4A4;font-style:italic;font-weight:bold;background:#dbeddc;padding-top:5px;padding-bottom:5px;text-align:center"  width="2%"><?php echo $m->mes?></td>
 					<?php
 					} 
 					?>
@@ -180,18 +180,19 @@
 				foreach($movilidad as $key=>$r){
 				?>
 				<tr>
-					<td style="border:1px solid #A4A4A4;width:40px;text-align:center"><?php echo ($key+1)?></td>
-					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo $r->comision?></td>
+					<td style="border:1px solid #A4A4A4;width:40px;text-align:center " width="1%"><?php echo ($key+1)?></td>
+					<td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important" width="15%"><?php echo $r->comision?></td>
 					
 					<?php 
 					foreach($meses as $keym=>$m){
 						$monto = 0;
 						if((int)$m->mes_<=(int)$mes){
+							
 							$movilidadMes = \App\Models\ComisionMovilidade::getMovilidadMesByPeriodoAndMunicipalidad($id_periodo,$m->anio,$m->mes_,$r->id_municipalidad_integrada);
 							$monto = (isset($movilidadMes->monto))?$movilidadMes->monto:"0";
 						}
 					?>
-					<td class="td_right" style="border:1px solid #A4A4A4;padding-right:10px!important"><?php echo $monto?></td>
+					<td class="td_right" style="border:1px solid #A4A4A4;padding-right:10px!important" width="2%"><?php echo $monto?></td>
 					<?php
 					} 
 					?>					
