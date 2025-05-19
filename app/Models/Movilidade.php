@@ -18,7 +18,11 @@ class Movilidade extends Model
 	
 	function getMesByPeriodo($id_periodo){
 
+<<<<<<< HEAD
         $cad = "select to_char(mes::date,'yyyymm')mes,to_char(mes::date,'mm')mes_ ,to_char(mes::date,'yyyy')anio
+=======
+        $cad = "select to_char(mes::date,'yyyymm')mes,to_char(mes::date,'mm')mes_,to_char(mes::date,'yyyy')anio_  
+>>>>>>> 5d63c7a21b7033988a029cac906f62667ab8d9b5
 from generate_series(
 (select fecha_inicio from periodo_comisiones pc where id=".$id_periodo." and estado='1'), 
 (select fecha_fin from periodo_comisiones pc where id=".$id_periodo." and estado='1'), 
