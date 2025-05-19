@@ -413,7 +413,7 @@ function datatablenew(){
 				{
                     "mRender": function (data, type, row) {
                         var html = '<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">';
-                        html += '<a href="/comprobante/'+row.id+'" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-search"></i></a>';
+                        html += '<a href="/comprobante/ver/'+row.id+'" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-search"></i></a>';
                         return html;
                     },
                     "bSortable": false,
