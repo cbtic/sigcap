@@ -187,7 +187,11 @@
 						$monto = 0;
 						//$movilidadMes = \App\Models\ComisionMovilidade::getMovilidadMesByPeriodoAndMunicipalidad($id_periodo,$anio,$m->mes_,$r->id_municipalidad_integrada);
 						if((int)$m->mes_<=(int)$mes){
+<<<<<<< HEAD
 							$movilidadMes = \App\Models\ComisionMovilidade::getMovilidadMesByPeriodoAndMunicipalidad($id_periodo,$m->anio,$m->mes_,$r->id_municipalidad_integrada);
+=======
+							$movilidadMes = \App\Models\ComisionMovilidade::getMovilidadMesByPeriodoAndMunicipalidad($id_periodo,$m->anio_,/*$anio,*/$m->mes_,$r->id_municipalidad_integrada);
+>>>>>>> 5d63c7a21b7033988a029cac906f62667ab8d9b5
 							$monto = (isset($movilidadMes->monto))?$movilidadMes->monto:"0";
 						}
 					?>
