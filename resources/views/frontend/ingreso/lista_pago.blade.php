@@ -48,7 +48,7 @@ foreach($pago as $row){?>
 	<td class="text-left"><?php echo $row->total?></td>	
 	<td class="text-left">
 		<div class="btn-group btn-group-sm" role="group" aria-label="Log Viewer Actions">
-			<a href="/comprobante/<?php echo $row->id_comprobante?>" class="btn btn-sm btn-success" style="font-size:9px!important" target="_blank">
+			<a href="/comprobante/ver/<?php echo $row->id_comprobante?>" class="btn btn-sm btn-success" style="font-size:9px!important" target="_blank">
 				<i class="fa fa-search" style="font-size:9px!important"></i>
 			</a>
 		</div>

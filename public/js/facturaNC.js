@@ -211,7 +211,7 @@ function fn_save(){
 				
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
-				location.href=urlApp+"/comprobante/"+result.id_factura;
+				location.href=urlApp+"/comprobante/ver/"+result.id_factura;
 
             }
     });
@@ -240,7 +240,7 @@ function fn_save_nd(){
 				
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
-				location.href=urlApp+"/comprobante/"+result.id_factura;
+				location.href=urlApp+"/comprobante/ver/"+result.id_factura;
 
             }
     });
@@ -270,7 +270,7 @@ function fn_save_nc(){
 			
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
-				location.href=urlApp+"/comprobante/"+result.id_factura;
+				location.href=urlApp+"/comprobante/ver/"+result.id_factura;
 
 				enviar_comprobante(result.id_factura);
 
@@ -1193,7 +1193,7 @@ function fn_save(){
 				
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
-				location.href=urlApp+"/comprobante/"+result.id_factura;
+				location.href=urlApp+"/comprobante/ver/"+result.id_factura;
 
             }
     });
@@ -1222,7 +1222,7 @@ function fn_save_nc(){
 				$('#numerof').val(result.id_factura);
 				$('#divNumeroF').show();
 
-				location.href=urlApp+"/comprobante/"+result.id_factura;
+				location.href=urlApp+"/comprobante/ver/"+result.id_factura;
 
 				enviar_comprobante(result.id_factura);
 
