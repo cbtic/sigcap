@@ -32,7 +32,19 @@ class Comprobante extends Model
                                     //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
        // print_r($data); 
         return $data[0]->sp_crud_factura_moneda;
-    }                   
+    } 
+    
+    public function registrar_factura_moneda_v2($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda,$id_nc,$p_detalle) {
+                                          //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
+           // print_r($serie .",". $numero.",".$tipo.",".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$id_v.",". $id_caja.",".$descuento.",".$accion.",".$id_user.",".$id_moneda.",".$id_nc);exit();
+        $cad = "Select sp_crud_factura_moneda_secuencia(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        //echo "Select sp_crud_factura(".$serie.",".$numero.", ".$tipo.", ".$ubicacion.",".$persona.",".$total.",".$descripcion.",".$cod_contable.",".$codigo_v.",".$estab_v.",".$modulo.",".$smodulo.",".$descuento.",".$accion.",".$id_user.",".$id_nc.")";
+
+		$data = DB::select($cad, array($serie, $numero, $tipo, $ubicacion, $persona, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,     $id_user,  $id_moneda,$id_nc,$p_detalle));
+                                    //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
+       // print_r($data); 
+        return $data[0]->sp_crud_factura_moneda_secuencia;
+    }  
 
     public function registrar_comprobante($serie, $numero, $tipo, $cod_tributario, $total, $descripcion, $cod_contable, $id_v, $id_caja, $descuento, $accion,    $id_user,   $id_moneda) {
         //( serie,  numero,  tipo,  ubicacion,  persona,  total,  descripcion,  cod_contable,  id_v,  id_caja,  descuento,  accion, p_id_usuario, p_id_moneda)
