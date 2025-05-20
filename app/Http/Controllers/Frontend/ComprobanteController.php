@@ -66,7 +66,11 @@ class ComprobanteController extends Controller
 
 	public function edit(Request $request){
 
-        $trans = $request->Trans;
+        //$trans = $request->Trans;
+        
+        $trans ='FA';
+        //exit();
+
         $id_caja=$request->id_caja;
         $descuentopp=$request->DescuentoPP;
         $id_pronto_pago=$request->id_pronto_pago;
