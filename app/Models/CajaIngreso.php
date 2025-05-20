@@ -172,7 +172,7 @@ class CajaIngreso extends Model
         $cad = "           
         select condicion,  sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
          from(
-             select t.denominacion condicion,  0 total_us, 0/3.7 total_tc, cp.monto total_soles
+             select t.denominacion condicion,  0 total_us, 0/3.7 total_tc,  case when  c.tipo ='NC' and c.afecta_caja='C' then  cp.monto  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else  cp.monto end  total_soles
              from comprobantes c                                
                  inner join comprobante_pagos cp on cp.id_comprobante = c.id
                  inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
@@ -257,7 +257,7 @@ class CajaIngreso extends Model
         $cad = "
             select condicion, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
             from(
-                select t.denominacion||' '||m.denominacion condicion, 0 total_us, 0/3.7 total_tc, round( CAST(cp.monto as numeric), 2) total_soles
+                select t.denominacion||' '||m.denominacion condicion, 0 total_us, 0/3.7 total_tc, round( CAST(case when  c.tipo ='NC' and c.afecta_caja='C' then  cp.monto  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else  cp.monto end as numeric), 2) total_soles
                 from comprobantes c                                
                     inner join comprobante_pagos cp on cp.id_comprobante = c.id
                     inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'

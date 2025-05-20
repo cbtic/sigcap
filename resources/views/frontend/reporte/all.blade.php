@@ -266,7 +266,7 @@
 
 									</select>
 								</div>
-
+								<?php if($reporte[0]->id_tipo!=3){ ?>
 								<div id="div_concepto" class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Conceptos</label>
@@ -278,8 +278,19 @@
 										</select>
 									</div>
 								</div>
-
-
+								<?php }else{ ?>
+								<div id="div_concepto" class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Conceptos</label>
+										<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" >
+											<option value="">Todos</option>
+											<?php foreach($concepto as $row):?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==26411)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<?php  endforeach;?>
+										</select>
+									</div>
+								</div>
+								<?php }?>
 								
 									
 <!--

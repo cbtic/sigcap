@@ -29,7 +29,7 @@ begin
 	LEFT JOIN comprobantes co ON v.id_comprobante = co.id';
 	
 	v_where = ' Where 1=1 
-	and v.id_modulo in (''2'',''3'',''4'',''6'') 
+	and v.id_modulo in (''2'',''6'') 
 	and a.id_regional =''5''
 	and a.id_situacion not in(''83'',''266'',''267'')
 	and a.id_ubicacion =''334''
