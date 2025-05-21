@@ -102,7 +102,8 @@ $(document).ready(function () {
 	});
 
 	$('#btnSolicitudEdificacion').click(function () {
-		guardar_solicitud_derecho_revision_edificacion()
+		validarDatos();
+		//guardar_solicitud_derecho_revision_edificacion()
 		//Limpiar();
 		//window.location.reload();
 	});
@@ -1955,7 +1956,7 @@ function obtenerSubTipoUso(obj){
 		url: '/concurso/listar_maestro_by_tipo_subtipo/111/'+valorSeleccionado,
 		dataType: "json",
 		success: function(result){
-			var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
+			var option = "<option value=''>--Seleccionar Sub Tipo--</option>";
 			$(obj).parent().parent().find("#sub_tipo_uso").html("");
 			$(result).each(function (ii, oo) {
 				option += "<option value='" + oo.codigo + "'>" + oo.denominacion + "</option>";
@@ -2009,7 +2010,7 @@ function obtenerSubTipoObra(obj){
 		url: '/concurso/listar_maestro_by_tipo_subtipo/112/'+valorSeleccionado,
 		dataType: "json",
 		success: function(result){
-			var option = "<option value='0'>--Seleccionar Sub Tipo--</option>";
+			var option = "<option value=''>--Seleccionar Sub Tipo--</option>";
 			$(obj).parent().parent().find("#sub_tipo_obra").html("");
 			$(result).each(function (ii, oo) {
 				option += "<option value='" + oo.codigo + "'>" + oo.denominacion + "</option>";
@@ -2155,6 +2156,158 @@ function modalComprobante(id){
 				$("#diveditpregOpc").html(result);
 				$('#openOverlayOpc').modal('show');
 			}
+	});
+
+}
+
+function validarDatos(){
+
+	var msg = "";
+	var tipo_uso = true;
+	var sub_tipo_uso = true;
+	var area_techada = true;
+	var tipo_obra = true;
+	var area_techada_presupuesto = true;
+	var valor_unitario = true;
+	var presupuesto = true;
+	var municipalidad = $("#municipalidad").val();
+	var n_revision = $("#n_revision").val();
+	var nombre_proyecto = $("#nombre_proyecto").val();
+	var departamento = $("#departamento").val();
+	var provincia = $("#provincia").val();
+	var distrito = $("#distrito").val();
+	var direccion_proyecto = $("#direccion_proyecto").val();
+	var numero_cap = $("#numero_cap").val();
+	var dni_propietario = $("#dni_propietario").val();
+	var tipo_proyecto = $("#tipo_proyecto").val();
+	var valor_total_obra = $("#valor_total_obra").val();
+	var n_sotanos = $("#n_sotanos").val();
+	var azotea = $("#azotea").val();
+	var semisotano = $("#semisotano").val();
+	var n_pisos = $("#n_pisos").val();
+	var codigo_proyecto = $("#codigo_proyecto").val();
+	var numero_liquidacion = $("#numero_liquidacion").val();
+	
+    
+    /*if(municipalidad == "")msg += "Debe ingresar la Municipalidad <br>";
+    if(n_revision == "")msg += "Debe ingresar el Numero de Revision <br>";
+    if(nombre_proyecto == "")msg += "Debe ingresar el Nombre de Proyecto <br>";
+    if(departamento == "")msg += "Debe ingresar el Departamento <br>";
+    if(provincia == "")msg += "Debe ingresar la Provincia <br>";
+    if(distrito == "")msg += "Debe ingresar el Distrito <br>";
+    if(direccion_proyecto == "")msg += "Debe ingresar la Direccion del Proyecto <br>";
+    if(numero_cap == "")msg += "Debe ingresar el Proyectista Principal <br>";
+    if(dni_propietario == "")msg += "Debe ingresar el Propietario <br>";
+    if(tipo_proyecto == "")msg += "Debe ingresar el Tipo de Proyecto <br>";
+    if(tipo_uso == "")msg += "Debe ingresar el Tipo de Uso <br>";
+    if(sub_tipo_uso == "")msg += "Debe ingresar el Sub Tipo de Uso <br>";
+    if(area_techada == "")msg += "Debe ingresar el Area Techada <br>";
+    if(tipo_obra == "")msg += "Debe ingresar el Tipo de Obra <br>";
+    if(area_techada_presupuesto == "")msg += "Debe ingresar el Area Techada M2 <br>";
+    if(valor_unitario == "")msg += "Debe ingresar el Valor Unitario <br>";
+    if(presupuesto == "")msg += "Debe ingresar el Valor Monto del Presupuesto <br>";
+    if(valor_total_obra == "")msg += "Debe ingresar el Valor Total de Obra <br>";
+    if(n_sotanos == "")msg += "Debe ingresar el Numero de Sotanos <br>";
+    if(azotea == "")msg += "Debe ingresar el Numero de Azoteas <br>";
+    if(semisotano == "")msg += "Debe ingresar el Numero de Semi Sotanos <br>";
+    if(n_pisos == "")msg += "Debe ingresar el Numero de Pisos <br>";*/
+
+	$("select[name='tipo_uso[]']").each(function () {
+        if ($(this).val().trim() != "") {
+            tipo_uso = false;
+        }else{
+			tipo_uso = true;
+		}
+    });
+    if (tipo_uso) msg += "Debe ingresar el Tipo de Uso <br>";
+
+	$("select[name='sub_tipo_uso[]']").each(function () {
+        if ($(this).val().trim() != "") {
+            sub_tipo_uso = false;
+        }else{
+			sub_tipo_uso = true;
+		}
+    });
+    if (sub_tipo_uso) msg += "Debe ingresar el Sub Tipo de Uso <br>";
+
+	$("input[name='area_techada[]']").each(function () {
+        if ($(this).val().trim() != "") {
+            area_techada = false;
+        }else{
+			area_techada = true;
+		}
+    });
+    if (area_techada) msg += "Debe ingresar el Area Techada <br>";
+
+	$("select[name='tipo_obra[]']").each(function () {
+        if ($(this).val().trim() != "") {
+            tipo_obra = false;
+        }else{
+			tipo_obra = true;
+		}
+    });
+    if (tipo_obra) msg += "Debe ingresar el Tipo de Obra <br>";
+
+	$("input[name='area_techada_presupuesto[]']").each(function () {
+        if ($(this).val().trim() != 0) {
+            area_techada_presupuesto = false;
+        }else{
+			area_techada_presupuesto = true;
+		}
+    });
+    if (area_techada_presupuesto) msg += "Debe ingresar el Area Techada M2 <br>";
+
+	$("input[name='valor_unitario[]']").each(function () {
+        if ($(this).val().trim() != 0) {
+            valor_unitario = false;
+        }else{
+			valor_unitario = true;
+		}
+    });
+    if (valor_unitario) msg += "Debe ingresar el Valor Unitario <br>";
+
+	if(n_revision > 1){
+		if(codigo_proyecto == "" && numero_liquidacion == ""){
+			msg += "Debe ingresar el Codigo de Proyecto o Numero de Liquidacion <br>";
+		}
+	}
+    
+    if (msg != "") {
+        bootbox.alert(msg);
+        return false;
+    }else{
+		validarCoincidencia();
+	}
+
+}
+
+function validarCoincidencia(){
+
+	var direccion_proyecto = $('#direccion_proyecto').val();
+	var tipo_proyecto = $('#tipo_proyecto').val();
+	var municipalidad = $('#municipalidad').val();
+	var dni_propietario = $('#dni_propietario').val();
+
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+
+	$.ajax({
+		url: "/derecho_revision/validar_coincidencia_solicitud",
+		type: "POST",
+		data: {
+			_token:_token,
+			direccion_proyecto: direccion_proyecto,
+			tipo_proyecto: tipo_proyecto,
+			municipalidad: municipalidad,
+			dni_propietario: dni_propietario
+		},
+		success: function (result) {
+			//window.location.reload();
+			//window.location.href ="/derecho_revision/consulta_derecho_revision/"
+		}
 	});
 
 }

@@ -66,9 +66,9 @@ class DerechoRevisionController extends Controller
 
 	public function modal_credipago($id){
 		
-		$DerechoRevision_model = new DerechoRevision;
-		$DerechoRevision_model->actSituacionLiquidacion($id);
-        $liquidacion = $DerechoRevision_model->getLiquidacionByIdSolicitud($id);
+		$derechoRevision_model = new DerechoRevision;
+		//$DerechoRevision_model->actSituacionLiquidacion($id);
+        $liquidacion = $derechoRevision_model->getLiquidacionByIdSolicitud($id);
 		
         return view('frontend.derecho_revision.modal_liquidacion',compact('liquidacion'));
 		
@@ -2639,9 +2639,10 @@ class DerechoRevisionController extends Controller
 		$empresa = new Empresa;
 
 		$rol_proyectista = $user_model->getRolByUser($id_user);
-		if($rol_proyectista[0]->nombre_rol =='Proyectista'){
+		if($rol_proyectista[0]->nombre_rol =='Proyectista' || $rol_proyectista[0]->nombre_rol =='Administrator'){
 			$agremiado_princ = Agremiado::where('id_persona',$id_persona)->where('estado',1)->first();
 			$agremiado_principal = $agremiado_model->getAgremiado('85',$agremiado_princ->numero_cap);
+			$numero_documento_administrado = null;
 			$datos_administrado = null;
 		}else if($rol_proyectista[0]->nombre_rol =='Administrado'){
 			$agremiado_principal = null;
