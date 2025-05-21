@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
     
+    <script src="https://sandbox-checkout.izipay.pe/payments/v1/js/index.js" defer></script>
+
     <style>
         .close-heading{
             position: relative;

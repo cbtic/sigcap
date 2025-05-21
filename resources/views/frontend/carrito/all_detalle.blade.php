@@ -100,6 +100,70 @@
 
 </style>
 
+<script type="text/javascript">
+
+const transactionId = '123456789';
+const merchantCode = 'MERCHANT123';
+const orderNumber = 'ORDER001';
+const merchantBuyerId = 'mc1991'; 
+const dateTimeTransaction = '1670258741603000'; 
+
+const iziConfig = {
+  config: {
+    transactionId: transactionId,//'{TRANSACTION_ID}',
+    action: 'pay',
+    merchantCode: merchantCode,//'{MERCHANT_CODE}',
+    order: {
+      orderNumber: orderNumber,//'{ORDER_NUMBER}',
+      currency: 'PEN',
+      amount: '1.50',
+      processType: 'AT',
+      merchantBuyerId: merchantBuyerId,//'{MERCHANT_CODE}',
+      dateTimeTransaction: dateTimeTransaction,//'1670258741603000',
+    },
+    billing: {
+      firstName: 'Juan',
+      lastName: 'Wick Quispe',
+      email: 'jwickq@izi.com',
+      phoneNumber: '958745896',
+      street: 'Av. Jorge Chávez 275',
+      city: 'Lima',
+      state: 'Lima',
+      country: 'PE',
+      postalCode: '15038',
+      documentType: 'DNI',
+      document: '21458796',
+    }
+  },
+};
+
+    try {
+
+        const checkout = new Izipay({ config: iziConfig });
+
+    } catch ({Errors, message, date}) {
+
+        console.log({Errors, message, date});
+
+    }
+
+    
+    const callbackResponsePayment = (response) => console.log(response);
+
+    try {
+    checkout &&
+        checkout.LoadForm({
+        authorization: 'TU_TOKEN_SESSION',
+        keyRSA: 'KEY_RSA',
+        callbackResponse: callbackResponsePayment,
+        });
+    } catch ({Errors, message, date}) {
+    console.log({Errors, message, date});
+    }
+    
+
+</script>
+
 @extends('frontend.layouts.app_carrito')
 
 @section('title', ' | ' . __('labels.frontend.contact.box_title'))
