@@ -848,5 +848,6 @@ Route::get('derecho_revision/editar_derecho_revision_edificaciones/{id}', [Derec
 Route::get('derecho_revision/obtener_datos_solicitud_codigo_proyecto/{codigo_proyecto}', [DerechoRevisionController::class, 'obtener_datos_solicitud_codigo_proyecto'])->name('derecho_revision.obtener_datos_solicitud_codigo_proyecto');
 Route::get('agremiado/modal_generar_cuota_agremiado/{id}', [AgremiadoController::class, 'modal_generar_cuota_agremiado'])->name('agremiado.modal_generar_cuota_agremiado');
 Route::get('agremiado/send_generar_cuotas/{id_agremiado}/{anio_inicio}/{mes_inicio}/{fecha_fin}', [AgremiadoController::class, 'send_generar_cuotas'])->name('agremiado.send_generar_cuotas');
+Route::post('derecho_revision/denegar_solicitud', [DerechoRevisionController::class, 'denegar_solicitud'])->name('derecho_revision.denegar_solicitud');
 
 
