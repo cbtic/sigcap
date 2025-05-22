@@ -2893,114 +2893,156 @@ function buscarSolicitudbyCodigoProyecto(){
 
 	var codigo_proyecto = $('#codigo_proyecto').val();
 	var msg = "";
+
+	if(codigo_proyecto==""){
+		msg += "Debe ingresar un Codigo de Proyecto <br>";
+	}
 	
-	var msgLoader = "";
-    msgLoader = "Procesando, espere un momento por favor";
-    var heightBrowser = $(window).width()/2;
-    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-    $('.loader').show();
-    
-    $.ajax({
-        url: '/derecho_revision/obtener_datos_solicitud_codigo_proyecto/' + codigo_proyecto,
-        dataType: "json",
-        success: function(result){
+	 if (msg != "") {
+        bootbox.alert(msg);
+        return false;
+    }else{
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		var heightBrowser = $(window).width()/2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+		
+		$.ajax({
+			url: '/derecho_revision/obtener_datos_solicitud_codigo_proyecto/' + codigo_proyecto,
+			dataType: "json",
+			success: function(result){
 
-            var solicitud = result.solicitud;
+				var solicitud = result.solicitud;
+				
+				//bootbox.alert(solicitud[0].nombre_proyecto)
+
+				if(solicitud[0])
+				{
+					$('#municipalidad').val(solicitud[0].id_municipalidad).trigger('change');
+					$('#nombre_proyecto').val(solicitud[0].nombre_proyecto);
+					$('#sitio').val(solicitud[0].id_sitio);
+					$('#direccion_sitio').val(solicitud[0].sitio_descripcion);
+					$('#zona').val(solicitud[0].id_zona);
+					$('#direccion_zona').val(solicitud[0].zona_descripcion);
+					$('#parcela').val(solicitud[0].parcela);
+					$('#superManzana').val(solicitud[0].super_manzana);
+					$('#tipo').val(solicitud[0].id_tipo);
+					$('#direccion_proyecto').val(solicitud[0].direccion);
+					$('#lote').val(solicitud[0].lote);
+					$('#sublote').val(solicitud[0].sub_lote);
+					$('#fila').val(solicitud[0].fila);
+					$('#n_sotanos').val(solicitud[0].numero_sotano);
+					$('#azotea').val(solicitud[0].azotea);
+					$('#semisotano').val(solicitud[0].semisotano);
+					$('#n_pisos').val(solicitud[0].numero_piso);
+					//$('#fecha_registro').val(solicitud[0].fila);
+					//$('#zonificacion').val(solicitud[0].nombre_proyecto);
+					/*var id_ubigeo = solicitud[0].ubigeo;
+					alert(id_ubigeo);
+					var id_departamento = id_ubigeo.substring(0,2);
+					var id_provincia = id_ubigeo.substring(2,4);
+					var id_distrito = id_ubigeo.substring(4,6);
+
+					$('#departamento').val(id_departamento).trigger('change');
+
+					obtenerProvinciaReintegro(id_provincia, id_distrito);
+					*/
+					$('.loader').hide();
+					
+				}else{
+					msg += "La Solicitud no esta registrada en la Base de Datos de CAP <br>";
+					$('.loader').hide();
+					
+				}
+
+				if (msg != "") {
+					bootbox.alert(msg);
+					return false;
+				}
+
+			}
 			
-			//bootbox.alert(solicitud[0].nombre_proyecto)
-
-            if(solicitud[0])
-            {
-                $('#municipalidad').val(solicitud[0].municipalidad);
-                $('#nombre_proyecto').val(solicitud[0].nombre_proyecto);
-                $('#sitio').val(solicitud[0].id_sitio);
-                $('#direccion_sitio').val(solicitud[0].sitio_descripcion);
-                $('#zona').val(solicitud[0].id_zona);
-                $('#direccion_zona').val(solicitud[0].zona_descripcion);
-                $('#parcela').val(solicitud[0].parcela);
-                $('#superManzana').val(solicitud[0].super_manzana);
-                $('#tipo').val(solicitud[0].id_tipo);
-                $('#direccion_proyecto').val(solicitud[0].direccion);
-                $('#lote').val(solicitud[0].lote);
-                $('#sublote').val(solicitud[0].sub_lote);
-                $('#fila').val(solicitud[0].fila);
-                $('#n_sotanos').val(solicitud[0].numero_sotano);
-                $('#azotea').val(solicitud[0].azotea);
-                $('#semisotano').val(solicitud[0].semisotano);
-                $('#n_pisos').val(solicitud[0].numero_piso);
-                //$('#fecha_registro').val(solicitud[0].fila);
-                //$('#zonificacion').val(solicitud[0].nombre_proyecto);
-				/*var id_ubigeo = solicitud[0].ubigeo;
-				alert(id_ubigeo);
-				var id_departamento = id_ubigeo.substring(0,2);
-				var id_provincia = id_ubigeo.substring(2,4);
-				var id_distrito = id_ubigeo.substring(4,6);
-
-				$('#departamento').val(id_departamento).trigger('change');
-
-				obtenerProvinciaReintegro(id_provincia, id_distrito);
-                */
-                $('.loader').hide();
-                
-            }else{
-                msg += "La Solicitud no esta registrada en la Base de Datos de CAP <br>";
-                $('.loader').hide();
-                
-            }
-
-            if (msg != "") {
-                bootbox.alert(msg);
-                return false;
-            }
-
-        }
-        
-    });
-
+		});
+	}
 }
 
 function buscarSolicitudbyNumeroLiquidacion(){
 
-	var msgLoader = "";
-    msgLoader = "Procesando, espere un momento por favor";
-    var heightBrowser = $(window).width()/2;
-    $('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-    $('.loader').show();
-    
-    $.ajax({
-        url: '/empresa/obtener_datos_empresa/' + ruc_propietario,
-        dataType: "json",
-        success: function(result){
-            var empresa = result.empresa;
+	var numero_liquidacion = $('#numero_liquidacion').val();
+	var msg = "";
 
-            if(empresa!="0")
-            {
-                $('#razon_social_propietario').val(empresa.razon_social);
-                $('#direccion_ruc').val(empresa.direccion);
-                $('#telefono_ruc').val(empresa.telefono);
-                $('#email_ruc').val(empresa.email);
-                
-                $('.loader').hide();
-                
-            }else{
-                msg += "La Empresa no esta registrada en la Base de Datos de CAP <br>";
-                $('#razon_social_propietario').val("");
-                $('#direccion_ruc').val("");
-                $('#telefono_ruc').val("");
-                $('#email_ruc').val("");
-                $('.loader').hide();
-                
-            }
+	if(numero_liquidacion==""){
+		msg += "Debe ingresar un Numero de Liquidacion <br>";
+	}
+	
+	 if (msg != "") {
+        bootbox.alert(msg);
+        return false;
+    }else{
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		var heightBrowser = $(window).width()/2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+		
+		$.ajax({
+			url: '/derecho_revision/obtener_datos_solicitud_numero_liquidacion/' + numero_liquidacion,
+			dataType: "json",
+			success: function(result){
 
-            if (msg != "") {
-                bootbox.alert(msg);
-                return false;
-            }
+				var solicitud = result.solicitud;
+				
+				//bootbox.alert(solicitud[0].nombre_proyecto)
 
+				if(solicitud[0])
+				{
+					$('#municipalidad').val(solicitud[0].id_municipalidad).trigger('change');
+					$('#nombre_proyecto').val(solicitud[0].nombre_proyecto);
+					$('#sitio').val(solicitud[0].id_sitio);
+					$('#direccion_sitio').val(solicitud[0].sitio_descripcion);
+					$('#zona').val(solicitud[0].id_zona);
+					$('#direccion_zona').val(solicitud[0].zona_descripcion);
+					$('#parcela').val(solicitud[0].parcela);
+					$('#superManzana').val(solicitud[0].super_manzana);
+					$('#tipo').val(solicitud[0].id_tipo);
+					$('#direccion_proyecto').val(solicitud[0].direccion);
+					$('#lote').val(solicitud[0].lote);
+					$('#sublote').val(solicitud[0].sub_lote);
+					$('#fila').val(solicitud[0].fila);
+					$('#n_sotanos').val(solicitud[0].numero_sotano);
+					$('#azotea').val(solicitud[0].azotea);
+					$('#semisotano').val(solicitud[0].semisotano);
+					$('#n_pisos').val(solicitud[0].numero_piso);
+					//$('#fecha_registro').val(solicitud[0].fila);
+					//$('#zonificacion').val(solicitud[0].nombre_proyecto);
+					/*var id_ubigeo = solicitud[0].ubigeo;
+					alert(id_ubigeo);
+					var id_departamento = id_ubigeo.substring(0,2);
+					var id_provincia = id_ubigeo.substring(2,4);
+					var id_distrito = id_ubigeo.substring(4,6);
 
-        }
-        
-    });
+					$('#departamento').val(id_departamento).trigger('change');
+
+					obtenerProvinciaReintegro(id_provincia, id_distrito);
+					*/
+					$('.loader').hide();
+					
+				}else{
+					msg += "La Solicitud no esta registrada en la Base de Datos de CAP <br>";
+					$('.loader').hide();
+					
+				}
+
+				if (msg != "") {
+					bootbox.alert(msg);
+					return false;
+				}
+
+			}
+			
+		});
+	}
 
 }
 
