@@ -3314,6 +3314,19 @@ class DerechoRevisionController extends Controller
 		
 	}
 
+	public function obtener_datos_solicitud_numero_liquidacion($numero_liquidacion){
+		
+		$derecho_revision_model = new DerechoRevision;
+		$sw = true;
+
+		$solicitud = $derecho_revision_model->getSolicitudEdificacionesbyNumeroLiquidacion($numero_liquidacion);
+		
+		$array["sw"] = $sw;
+		$array["solicitud"] = $solicitud;
+		echo json_encode($array);
+		
+	}
+
 	public function denegar_solicitud($request)
     {
 		$derecho_revision = DerechoRevision::find($request->id_solicitud);
