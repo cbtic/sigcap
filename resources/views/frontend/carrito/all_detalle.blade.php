@@ -133,7 +133,10 @@ const iziConfig = {
       postalCode: '15038',
       documentType: 'DNI',
       document: '21458796',
-    }
+    },
+    render: {
+      typeForm: 'pop-up'
+   },
   },
 };
 
@@ -184,9 +187,6 @@ const iziConfig = {
         </li>
     </ol>
     -->
-
-
-
 
 
 
