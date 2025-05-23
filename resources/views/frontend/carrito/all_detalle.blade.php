@@ -191,9 +191,6 @@ const iziConfig = {
 
 
 
-
-
-
 <div id="pageCarrito" class="container">
 	
 	<section class="seccion-principal seccion-carrito">
