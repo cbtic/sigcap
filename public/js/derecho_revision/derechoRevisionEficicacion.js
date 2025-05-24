@@ -2948,7 +2948,10 @@ function buscarSolicitudbyCodigoProyecto(){
 
 					obtenerProvinciaReintegro(id_provincia, id_distrito);
 					*/
+
 					$('.loader').hide();
+
+					bootbox.alert("Se solicita verificar la información actualizada <br>");
 					
 				}else{
 					msg += "La Solicitud no esta registrada en la Base de Datos de CAP <br>";
@@ -3027,6 +3030,8 @@ function buscarSolicitudbyNumeroLiquidacion(){
 					obtenerProvinciaReintegro(id_provincia, id_distrito);
 					*/
 					$('.loader').hide();
+					
+					bootbox.alert("Se solicita verificar la información actualizada <br>");
 					
 				}else{
 					msg += "La Solicitud no esta registrada en la Base de Datos de CAP <br>";
