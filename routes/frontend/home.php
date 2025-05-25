@@ -64,6 +64,7 @@ use App\Http\Controllers\Frontend\ReporteController;
 use App\Http\Controllers\Frontend\TipoCambioController;
 use App\Http\Controllers\Frontend\CorreoController;
 use App\Http\Controllers\Frontend\SuspensionController;
+use App\Http\Controllers\Frontend\CarritoController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -80,6 +81,10 @@ Route::get('terms', [TermsController::class, 'index'])
         $trail->parent('frontend.index')
             ->push(__('Terms & Conditions'), route('frontend.pages.terms'));
     });
+
+Route::get('carrito', [CarritoController::class, 'index'])->name('carrito');
+Route::get('carrito/detalle', [CarritoController::class, 'detalle'])->name('carrito.detalle');
+Route::get('carrito/item', [CarritoController::class, 'item'])->name('carrito.item');
 
 Route::get('persona', [personaController::class, 'index'])->name('persona');
 Route::post('personas', [personaController::class, 'store'])->name('personas');
@@ -848,5 +853,6 @@ Route::get('derecho_revision/editar_derecho_revision_edificaciones/{id}', [Derec
 Route::get('derecho_revision/obtener_datos_solicitud_codigo_proyecto/{codigo_proyecto}', [DerechoRevisionController::class, 'obtener_datos_solicitud_codigo_proyecto'])->name('derecho_revision.obtener_datos_solicitud_codigo_proyecto');
 Route::get('agremiado/modal_generar_cuota_agremiado/{id}', [AgremiadoController::class, 'modal_generar_cuota_agremiado'])->name('agremiado.modal_generar_cuota_agremiado');
 Route::get('agremiado/send_generar_cuotas/{id_agremiado}/{anio_inicio}/{mes_inicio}/{fecha_fin}', [AgremiadoController::class, 'send_generar_cuotas'])->name('agremiado.send_generar_cuotas');
-
-
+Route::post('derecho_revision/denegar_solicitud', [DerechoRevisionController::class, 'denegar_solicitud'])->name('derecho_revision.denegar_solicitud');
+Route::post('derecho_revision/validar_coincidencia_solicitud', [DerechoRevisionController::class, 'validar_coincidencia_solicitud'])->name('derecho_revision.validar_coincidencia_solicitud');
+Route::get('derecho_revision/obtener_datos_solicitud_numero_liquidacion/{numero_liquidacion}', [DerechoRevisionController::class, 'obtener_datos_solicitud_numero_liquidacion'])->name('derecho_revision.obtener_datos_solicitud_numero_liquidacion');

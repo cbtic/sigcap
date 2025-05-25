@@ -286,7 +286,7 @@ if($('#instancia').val()==250){
 
 							<div class="col-lg-5">
 								<label class="control-label form-control-sm">Nombre del Proyecto</label>
-								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo $proyecto2->nombre?>" type="text" readonly='readonly'>
+								<input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo htmlspecialchars($proyecto2->nombre, ENT_QUOTES, 'UTF-8');?>" type="text" readonly='readonly'>
 							</div>
 
 							<div class="col-lg-1">

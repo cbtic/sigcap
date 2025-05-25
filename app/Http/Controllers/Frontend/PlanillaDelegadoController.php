@@ -506,7 +506,8 @@ class PlanillaDelegadoController extends Controller
 			$saldo+=$r->saldo;
 			
 			if($r->reintegro_asesor>0){
-				$sesiones_asesor++;
+				//$sesiones_asesor++;
+				$sesiones_asesor+=$r->sesiones;
 			}
 			
 		}

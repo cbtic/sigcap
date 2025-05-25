@@ -136,8 +136,8 @@ $(document).ready(function() {
 
 <body class="hold-transition skin-blue sidebar-mini">
 
-    <div>
-        <img width="200px" height="80px" style="top:-30px" src="img/logo_encabezado.jpg">
+    <div style="text-align: right;">
+        <img width="200px" height="80px" style="top:-30px;" src="img/logo_encabezado.jpg">
     </div>
     <!--<div class="container">
         <div class="vertical-text" style="position: absolute; top: 0; right: 0; writing-mode: vertical-lr;">
@@ -151,16 +151,15 @@ $(document).ready(function() {
     </div>-->
     <table style="background-color:white !important;border-collapse:collapse;border-spacing:1px; width: 100%; margin: 0 auto; font-size:12px">
             <tr>
-                <td class="td" style ="text-align: right; width: 55%; font-size:16px"><b><?php echo $credipago;?></b></td>
-                <td class="td" style ="text-align: left; width: 10%;"></td>
-                <td class="td" style ="text-align: left; width: 15%;">Cod. Proyecto:</b></td>
-                <td class="td" style ="text-align: right; width: 20%;"><?php echo $codigo;?></td>                
+                <td class="td" style ="text-align: right; width: 45%; font-size:14px"><b>CREDIPAGO: </b></td>
+                <td class="td" style ="text-align: left; width: 55%; font-size:15px"><b><?php echo $credipago;?></b></td>
             </tr>
             <tr>
-                <td class="td" style ="text-align: right; width: 55%;">CREDIPAGO</td>
-                <td class="td" style ="text-align: left; width: 10%;"></td>
-                <td class="td" style ="text-align: left; width: 15%;"></b></td>
-                <td class="td" style ="text-align: right; width: 20%;"><?php //echo $credipago;?></td>  
+                <td class="td" style ="text-align: right; width: 45%; font-size:14px"><b>CODIGO DE PROYECTO: </b></td>
+                <td class="td" style ="text-align: left; width: 55%; font-size:15px"><?php echo $codigo;?></td>
+            </tr>
+            <tr>
+                <td class="td" colspan="2" style ="text-align: center; width: 45%; font-size:14px"><b>ESTE DOCUMENTO NO ES UN COMPROBANTE DE PAGO</b></td>
             </tr>
         </tbody>
     </table>
@@ -316,12 +315,11 @@ $(document).ready(function() {
 
             <hr>
             <span style="font_size: 8.5;"><b>V.B</b></span>
-            <span style="float: right; font_size: 8.5"><b>Recibido por:...................................................</b></span> 
             <br>
             <span style="font_size: 8.5;"><b>Fecha de Emisi&oacute;n: <?php echo $fecha_liquidacion;?> &nbsp; &nbsp; &nbsp; <?php echo $currentHour;?></b></span>
-            <span style="float: right; font_size: 8.5"><b>N° DNI:.................................................</b></span>   
             <hr>
-            <p class="p">Costo por devoluci&oacute;n: S/. 50.00 + 12% del valor del Derecho de Revisi&oacute;n por conceptos administrativos.</p>
+            <p class="p">En caso de devoluci&oacute;n solo proceder&aacute; siempre y cuando se solicite en el mismo mes de emisi&oacute;n del comprobante de pago se le deducir&aacute; gastos bancarios y administrativos, comisi&oacute;n Niubiz segun corresponda.</p>
+            <!--<p class="p"><b>IMPORTANTE:</b> Esta liquidaci&oacute;n y su comprobante de pago adjuntarla al expediente</p>-->
             <p></p>
         </div>
     </div>

@@ -591,7 +591,7 @@ function fn_save_credipago(){
                 <div class="row" style="padding-left:10px">
                     <div class="col-lg-12">
                         <label class="control-label form-control-sm">Nombre del Proyecto</label>
-                        <input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo $liquidacion[0]->nombre?>" type="text" readonly='readonly'>
+                        <input id="nombre_proyecto" name="nombre_proyecto" on class="form-control form-control-sm"  value="<?php echo htmlspecialchars($liquidacion[0]->nombre, ENT_QUOTES, 'UTF-8');?>" type="text" readonly='readonly'>
                     </div>
                 </div>
 
