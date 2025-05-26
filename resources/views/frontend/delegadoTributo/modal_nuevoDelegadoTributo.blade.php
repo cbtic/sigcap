@@ -306,6 +306,11 @@ function validar_delegado(){
 						message: "Ya existe un registro de este delegado en la Base de Datos.",
 						
 					});
+
+					$('#numero_cap').val("");
+					$('#apellido_paterno').val("");
+					$('#apellido_materno').val("");
+					$('#nombres').val("");
 				}else{
 					obtener_datos_delegado_();
 				}
@@ -377,9 +382,12 @@ function obtener_datos_delegado_(){
 
 function fn_save_(){
 
-	var id_delegado = $('#delegado').val();
+	var id = $('#id').val();
 
-	if(id_delegado!=""){
+	if(id==0){
+		var id_delegado = $('#delegado').val();
+
+		if(id_delegado!=""){
 		
 		var msgLoader = "";
 		msgLoader = "Procesando, espere un momento por favor";
@@ -426,6 +434,25 @@ function fn_save_(){
 		$('#nombres').val("");
 
 	}
+	}else{
+		//var id_delegado = $('#id_delegado_').val();
+
+		$.ajax({
+			url: "/delegadoTributo/send_delegadoTributo",
+			type: "POST",
+			data : $("#frmTributo").serialize(),
+			success: function (result) {
+	
+				$('#openOverlayOpc').modal('hide');
+				window.location.reload();
+		
+			}
+			
+		});
+
+	}
+
+	
 }
 
 
