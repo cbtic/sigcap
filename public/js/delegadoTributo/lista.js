@@ -13,7 +13,6 @@ $(document).ready(function () {
 		}
 	});
 
-
 	$('#delegadoBus').keypress(function(e){
 		if(e.which == 13) {
 			datatablenew();
