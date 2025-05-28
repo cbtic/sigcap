@@ -1324,7 +1324,7 @@ class ComprobanteController extends Controller
 
                                                                     //exit();
 
-            echo($id_factura); exit();
+            //echo($id_factura); exit();
 
             if($id_factura>0){
                 $factura = Comprobante::where('id', $id_factura)->get()[0];
