@@ -167,20 +167,44 @@ class Comprobante extends Model
     function getncById($id_cliente,$tipo_documento,$id_concepto){
         
         if ($tipo_documento=='79'){
-                $cad = "select c.id,c.fecha,c.cod_tributario,c.total, nro_operacion ,cp.monto ,cp.id_medio, c2.id_comprobante_ncnd id_comprobante,c2.id id_nc,c2.id id_nc,c2.tipo,c2.numero,c2.serie 
-                        from comprobantes c inner join comprobante_pagos cp on c.id =cp.id_comprobante
-                					inner join valorizaciones v on c.id =v.id_comprobante
-                					inner join comprobantes c2 on c2.id_comprobante_ncnd=c.id 
-                        where c.id_empresa ='". $id_cliente ."' and v.id_concepto='". $id_concepto ."'  and v.estado ='0' and c2.tipo ='NC' and c2.devolucion_nc ='N' and c2.id_numero_ncnd =0
+                $cad = "select 
+                            c.id,
+                            c.fecha,
+                            c.cod_tributario,
+                            c.total,
+                            (SELECT cp.nro_operacion FROM comprobante_pagos cp WHERE cp.id_comprobante = c.id LIMIT 1) AS nro_operacion,
+                            (SELECT cp.monto FROM comprobante_pagos cp WHERE cp.id_comprobante = c.id LIMIT 1) AS monto,
+                            (SELECT cp.id_medio FROM comprobante_pagos cp WHERE cp.id_comprobante = c.id LIMIT 1) AS id_medio,
+                            (SELECT c2.id_comprobante_ncnd FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS id_comprobante,
+                            (SELECT c2.id FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS id_nc,
+                            (SELECT c2.tipo FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS tipo,
+                            (SELECT c2.numero FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS numero,
+                            (SELECT c2.serie FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS serie
+                        FROM 
+                            comprobantes c inner join valorizaciones v on c.id =v.id_comprobante
+                        WHERE 
+                            c.c.id_empresa =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0'
                         order by c.id desc
-                        limit 1";
+                        limit 1 ";
             }
             else {
-                $cad = "select c.id,c.fecha,c.cod_tributario,c.total, nro_operacion ,cp.monto ,cp.id_medio, c2.id_comprobante_ncnd id_comprobante,c2.id id_nc,c2.id id_nc,c2.tipo,c2.numero,c2.serie 
-                        from comprobantes c inner join comprobante_pagos cp on c.id =cp.id_comprobante
-                					inner join valorizaciones v on c.id =v.id_comprobante
-                					inner join comprobantes c2 on c2.id_comprobante_ncnd=c.id 
-                        where c.id_persona ='". $id_cliente ."' and v.id_concepto='". $id_concepto ."'  and v.estado ='0' and c2.tipo ='NC' and c2.devolucion_nc ='N' and c2.id_numero_ncnd =0               
+                $cad = "select 
+                            c.id,
+                            c.fecha,
+                            c.cod_tributario,
+                            c.total,
+                            (SELECT cp.nro_operacion FROM comprobante_pagos cp WHERE cp.id_comprobante = c.id LIMIT 1) AS nro_operacion,
+                            (SELECT cp.monto FROM comprobante_pagos cp WHERE cp.id_comprobante = c.id LIMIT 1) AS monto,
+                            (SELECT cp.id_medio FROM comprobante_pagos cp WHERE cp.id_comprobante = c.id LIMIT 1) AS id_medio,
+                            (SELECT c2.id_comprobante_ncnd FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS id_comprobante,
+                            (SELECT c2.id FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS id_nc,
+                            (SELECT c2.tipo FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS tipo,
+                            (SELECT c2.numero FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS numero,
+                            (SELECT c2.serie FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS serie
+                        FROM 
+                            comprobantes c inner join valorizaciones v on c.id =v.id_comprobante
+                        WHERE 
+                            c.id_persona =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0'
                         order by c.id desc
                         limit 1";
             }
