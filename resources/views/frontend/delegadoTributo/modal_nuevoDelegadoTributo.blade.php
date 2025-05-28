@@ -19,7 +19,7 @@
 
 .modal-dialog {
 	width: 100%;
-	max-width:40%!important
+	max-width:50%!important
   }
   
 #tablemodal{
@@ -266,7 +266,7 @@ function obtenerDelegado(){
 		success: function(result){
 			
 			var agremiado = result.agremiado;
-			var option = "";
+			var option = "<option value=''>--Seleccionar--</option>";
 			$('#delegado').html("");
 			$(agremiado).each(function (ii, oo) {
 				
@@ -286,32 +286,47 @@ function validar_delegado(){
 
 	var id_delegado = $('#delegado').val();
 
-	var msgLoader = "";
-	msgLoader = "Procesando, espere un momento por favor";
-	var heightBrowser = $(window).width()/2;
-	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
-    $('.loader').show();
-	
-	$.ajax({
-		url: '/delegadoTributo/validar_delegado/' + id_delegado,
-		dataType: "json",
-		success: function(result){
-			
-			//var_dump(result);exit();
-			if(result>0){
-				bootbox.alert({
-					
-					message: "Ya existe un registro de este delegado en la Base de Datos.",
-					
-				});
-			}else{
-				obtener_datos_delegado_();
-			}
-			$('.loader').hide();
-		}
+	if(id_delegado!=""){
 		
-	});
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		var heightBrowser = $(window).width()/2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+		
+		$.ajax({
+			url: '/delegadoTributo/validar_delegado/' + id_delegado,
+			dataType: "json",
+			success: function(result){
+				
+				//var_dump(result);exit();
+				if(result>0){
+					bootbox.alert({
+						
+						message: "Ya existe un registro de este delegado en la Base de Datos.",
+						
+					});
 
+					$('#numero_cap').val("");
+					$('#apellido_paterno').val("");
+					$('#apellido_materno').val("");
+					$('#nombres').val("");
+				}else{
+					obtener_datos_delegado_();
+				}
+				$('.loader').hide();
+			}
+			
+		});
+
+	}else{
+
+		$('#numero_cap').val("");
+		$('#apellido_paterno').val("");
+		$('#apellido_materno').val("");
+		$('#nombres').val("");
+
+	}
 }
 
 function obtenerAnioPerido(){
@@ -366,19 +381,78 @@ function obtener_datos_delegado_(){
 }
 
 function fn_save_(){
-	
-    $.ajax({
+
+	var id = $('#id').val();
+
+	if(id==0){
+		var id_delegado = $('#delegado').val();
+
+		if(id_delegado!=""){
+		
+		var msgLoader = "";
+		msgLoader = "Procesando, espere un momento por favor";
+		var heightBrowser = $(window).width()/2;
+		$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+		$('.loader').show();
+		
+		$.ajax({
+			url: '/delegadoTributo/validar_delegado/' + id_delegado,
+			dataType: "json",
+			success: function(result){
+				
+				//var_dump(result);exit();
+				if(result>0){
+					bootbox.alert({
+						
+						message: "Ya existe un registro de este delegado en la Base de Datos.",
+						
+					});
+				}else{
+					$.ajax({
+						url: "/delegadoTributo/send_delegadoTributo",
+						type: "POST",
+						data : $("#frmTributo").serialize(),
+						success: function (result) {
+				
+							$('#openOverlayOpc').modal('hide');
+							window.location.reload();
+					
+						}
+						
+					});
+				}
+				$('.loader').hide();
+			}
+			
+		});
+
+	}else{
+
+		$('#numero_cap').val("");
+		$('#apellido_paterno').val("");
+		$('#apellido_materno').val("");
+		$('#nombres').val("");
+
+	}
+	}else{
+		//var id_delegado = $('#id_delegado_').val();
+
+		$.ajax({
 			url: "/delegadoTributo/send_delegadoTributo",
-            type: "POST",
-            data : $("#frmTributo").serialize(),
+			type: "POST",
+			data : $("#frmTributo").serialize(),
 			success: function (result) {
-    
+	
 				$('#openOverlayOpc').modal('hide');
 				window.location.reload();
 		
-		}
+			}
 			
-    });
+		});
+
+	}
+
+	
 }
 
 

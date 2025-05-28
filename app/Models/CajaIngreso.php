@@ -172,7 +172,7 @@ class CajaIngreso extends Model
         $cad = "           
         select condicion,  sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
          from(
-             select t.denominacion condicion,  0 total_us, 0/3.7 total_tc, cp.monto total_soles
+             select t.denominacion condicion,  0 total_us, 0/3.7 total_tc,  case when  c.tipo ='NC' and c.afecta_caja='C' then  cp.monto  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else  cp.monto end  total_soles
              from comprobantes c                                
                  inner join comprobante_pagos cp on cp.id_comprobante = c.id
                  inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
@@ -257,7 +257,7 @@ class CajaIngreso extends Model
         $cad = "
             select condicion, sum(total_us) total_us,sum(total_tc) total_tc,sum(total_soles) total_soles
             from(
-                select t.denominacion||' '||m.denominacion condicion, 0 total_us, 0/3.7 total_tc, round( CAST(cp.monto as numeric), 2) total_soles
+                select t.denominacion||' '||m.denominacion condicion, 0 total_us, 0/3.7 total_tc, round( CAST(case when  c.tipo ='NC' and c.afecta_caja='C' then  cp.monto  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else  cp.monto end as numeric), 2) total_soles
                 from comprobantes c                                
                     inner join comprobante_pagos cp on cp.id_comprobante = c.id
                     inner join tabla_maestras t on t.codigo  = cp.id_medio::varchar and t.tipo = '19'
@@ -811,7 +811,7 @@ class CajaIngreso extends Model
         $cad = "
              select   upper( denominacion) denominacion, sum(importe) importe, sum(pu) pu, sum(igv_total) igv_total
             from(
-           select  cc.denominacion   || case when (cc.id=19 or cc.id=23 or cc.id=6   or cc.id=46 or cc.id=43) then ' ' else  ' - '|| trim(REGEXP_REPLACE(co.denominacion,'- DELEGADOS|- ARQUITECTOS HABILITADOS|- ESTUDIANTES Y BACHILLERES|- PUBLICO EN GENERAL','','g')) end  denominacion, 
+           select  cc.denominacion   || case when (cc.id=19 or cc.id=23 or cc.id=6   or cc.id=46 or cc.id=43 or cc.id=440) then ' ' else  ' - '|| trim(REGEXP_REPLACE(co.denominacion,'- DELEGADOS|- ARQUITECTOS HABILITADOS|- ESTUDIANTES Y BACHILLERES|- PUBLICO EN GENERAL','','g')) end  denominacion, 
             case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.importe)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.importe  end importe,
             case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.valor_venta_bruto-cd.descuento)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else case when cd.id_concepto=26464 then cd.pu else  cd.valor_venta_bruto-cd.descuento end  end pu,
             case when  c.tipo ='NC' and c.afecta_caja='C' then -1* (cd.igv_total)  when  c.tipo ='NC' and c.afecta_caja='D' then 0 else cd.igv_total  end igv_total

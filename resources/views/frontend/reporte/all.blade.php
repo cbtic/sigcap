@@ -209,7 +209,20 @@
 									</div>
 								</div>
 
+								<div id="div_fecha_cierre" class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Fecha Cierre</label>
+										<input class="form-control form-control-sm" id="fecha_cierre" name="fecha_cierre" value="<?php echo "31-12-".(date("Y")-1)?>" placeholder="Fecha Cierre">
+									</div>
+								</div>
 
+								<div id="div_fecha_consulta" class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Fecha Consulta</label>
+										<input class="form-control form-control-sm" id="fecha_consulta" name="fecha_consulta" value="<?php echo (date("d-m-Y"))?>" placeholder="Fecha Consulta">
+									</div>
+								</div>
+								
 								<div id="div_usuario" class="col-lg-2 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Usuario</label>
@@ -253,7 +266,7 @@
 
 									</select>
 								</div>
-
+								<?php if($reporte[0]->id_tipo!=3){ ?>
 								<div id="div_concepto" class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
 									<div class="form-group">
 										<label class="form-control-sm">Conceptos</label>
@@ -265,8 +278,19 @@
 										</select>
 									</div>
 								</div>
-
-
+								<?php }else{ ?>
+								<div id="div_concepto" class="col-lg-3 col-md-1 col-sm-12 col-xs-12">
+									<div class="form-group">
+										<label class="form-control-sm">Conceptos</label>
+										<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" >
+											<option value="">Todos</option>
+											<?php foreach($concepto as $row):?>
+											<option value="<?php echo $row->id?>" <?php if($row->id==26411)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<?php  endforeach;?>
+										</select>
+									</div>
+								</div>
+								<?php }?>
 								
 									
 <!--
@@ -349,10 +373,10 @@
 														<a href="javascript:void(0);"  
 															onclick="descargarExcel('<?php echo addslashes($row->id); ?>', '<?php echo addslashes($row->por_usuario); ?>', '<?php echo addslashes($row->id_tipo); ?>' )"
 														style="font-size: 12px; text-decoration: underline; color: blue;">
-															<?php if($row->funcion=='rt'){?>
+															<?php if($row->funcion=='rt' || $row->funcion=='ra' ){?>
 															Descargar Excel
 															<?php }else if($row->funcion=='rd'){?>
-															Descargar txt
+															Descargar CSV
 															<?php }?>
 														</a>
 													</td>

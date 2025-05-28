@@ -13,6 +13,20 @@ $(document).ready(function () {
 		}
 	});
 
+	$('#delegadoBus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+		return false;
+		}
+	});
+
+	$('#tipo_tributoBus').keypress(function(e){
+		if(e.which == 13) {
+			datatablenew();
+			return false;
+		}
+	});
+
 	obtenerAnioPerido();
 
 	$('#numero_documento').keypress(function(e){

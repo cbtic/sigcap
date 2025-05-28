@@ -280,7 +280,7 @@
 				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo $calendarioSesion?></span></th>
 			</tr>
 			<tr style="font-size:13px">
-				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Sesiones coordinado zonal</th>
+				<th class="td_left" style="background:#E5E5E5;border:1px solid #A4A4A4;padding-left:5px!important;width:70%">Sesiones coordinador zonal</th>
 				<th class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><span id="sesion_delegados"><?php echo $calendarioCoordinadorZonalSesion?></span></th>
 			</tr>
 			<tr style="font-size:13px">

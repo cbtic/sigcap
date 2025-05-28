@@ -229,7 +229,8 @@
 					$saldo+=$row->saldo;
 					
 					if($row->reintegro_asesor>0){
-						$sesiones_asesor++;
+						//$sesiones_asesor++;
+						$sesiones_asesor+=$row->sesiones;
 					}
 				
 				} 
