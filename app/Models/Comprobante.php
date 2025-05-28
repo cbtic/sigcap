@@ -183,7 +183,7 @@ class Comprobante extends Model
                         FROM 
                             comprobantes c inner join valorizaciones v on c.id =v.id_comprobante
                         WHERE 
-                            c.c.id_empresa =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0'
+                            c.id_empresa =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0'
                         order by c.id desc
                         limit 1 ";
             }
