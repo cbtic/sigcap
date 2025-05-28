@@ -394,8 +394,10 @@ function fn_save(){
 				$('#numerof').val(id_factura);
 				$('#divNumeroF').show();
 
-				//enviar_comprobante(result.id_factura);
-				//location.href=urlApp+"/comprobante/ver/"+id_factura;
+				//alert(id_factura);
+
+				enviar_comprobante(result.id_factura);
+				location.href=urlApp+"/comprobante/ver/"+id_factura;
 				
 				
             }
