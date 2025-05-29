@@ -295,7 +295,7 @@
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->numero)?></td>
                     <td class="td_left" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo ($d->destinatario)?></td>
                     <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->us,2)?></td>
-                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->subtotal,2)?></td>
+                    <td class="td_right" style="border:1px solid #A4A4A4;padding-left:5px!important"><?php echo number_format($d->total,2)?></td>
 
 				</tr>
 				<?php
