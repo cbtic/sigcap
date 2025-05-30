@@ -173,7 +173,7 @@ br {
         margin-top: 50px;
         margin-bottom: 50px;
         display: block;
-        width: 250px !important;
+        width: 650px !important;
         height: 250px !important;
     }
     h3{
