@@ -482,19 +482,21 @@ class OperacionController extends Controller
 		
 		$input = $request->input('input');
 		
-		$arr_var_input = array("MESSAGE TYPE IDENTIFICATION","PRIMARY BIT MAP","SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","AMOUNT TRANSACTION","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE","POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","CARD ACCEPTOR TERMINAL ID","CARD ACCEPTOR ID CODE","CARD ACCEPTOR NAME LOCATION","TRANSACTION CURRENCY CODE","LONGITUD","CodigoEmpresa","TipoConsulta","NumConsulta","FormaPago","NumReferenciaOriginal","NumDocs");
+		$arr_var_input = array("MESSAGE TYPE IDENTIFICATION","PRIMARY BIT MAP","SECONDARY BIT MAP","PRIMARY ACCOUNT NUMBER","PROCESSING CODE","AMOUNT TRANSACTION","TRACE","TIME LOCAL TRANSACTION","DATE LOCAL TRANSACTION","POS ENTRY MODE",
+		"POS CONDITION CODE","ACQUIRER INSTITUTION ID CODE","FORWARD INSTITUTION ID CODE","RETRIEVAL REFERENCE NUMBER","CARD ACCEPTOR TERMINAL ID","CARD ACCEPTOR ID CODE","CARD ACCEPTOR NAME LOCATION","TRANSACTION CURRENCY CODE","LONGITUD","CodigoEmpresa",
+		"TipoConsulta","NumConsulta","FormaPago","NumReferenciaOriginal","NumDocs");
 		
-		$arr_indice_input = array(1,5,21,37,56,62,74,80,86,94,97,99,107,115,127,135,150,190,193,197,204,205,219,221,233);
-		$arr_longitud_input = array(4,16,16,19,6,12,6,6,8,3,2,8,8,12,8,15,40,3,4,7,1,14,2,12,2);
+		$arr_indice_input = array(1,5,21,37,56,62,74,80,86,94, 97,99,107,115,127,135,150,190,193,197, 204,205,219,221,233);
+		$arr_longitud_input = array(4,16,16,19,6,12,6,6,8,3, 2,8,8,12,8,15,40,3,4,7, 1,14,2,12,2);
 		
 		foreach($arr_var_input as $key=>$row){
 			$data_input[$row] = substr($input,($arr_indice_input[$key]-1),$arr_longitud_input[$key]);
 		}
 		
 		//$arr_indice_input_detalle = array(235,238,253,254,262,270,282,294,306,318,320,324,326,327);
-		$arr_indice_input_detalle = array(235,240,255,263,271,283,295,307,319,321,325,327);
+		$arr_indice_input_detalle = array(235,240,255,263,271,283,295,307,319,321, 325,327);
 		//$arr_longitud_input_detalle = array(5,15,1,8,8,12,12,12,12,2,4,2,1,30);
-		$arr_longitud_input_detalle = array(5,15,8,8,12,12,12,12,2,4,2,1);
+		$arr_longitud_input_detalle = array(5,15,8,8,12,12,12,12,2,4, 2,1);
 		$arr_var_input_detalle = array("CodigoProducto","NumDocumento","FechaVencimiento","FechaEmision","Deuda","Mora","GastosAdm","ImporteTotal","Periodo","Anio","Cuota","MonedaDoc");
 		
 		for($i=0;$i<(int)$data_input["NumDocs"];$i++){
