@@ -943,7 +943,7 @@ class ComprobanteController extends Controller
 
     
     
-    public function send(Request $request)
+    public function send_secuencia(Request $request)
     {
 
 		$sw = true;
@@ -1567,7 +1567,7 @@ class ComprobanteController extends Controller
     }
 
 
-    public function send_ant(Request $request)
+   public function send(Request $request)
     {
 
 		$sw = true;
@@ -1585,7 +1585,6 @@ class ComprobanteController extends Controller
                 /**********RUC***********/
 
 		$tarifa = $request->facturad;
-        echo($tarifa); exit();
 
            // $total_pagar_abono = $request->total_pagar_abono;
 
