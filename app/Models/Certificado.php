@@ -27,7 +27,7 @@ class Certificado extends Model
 		$data = DB::select($cad);
         return $data[0]->codigo;
     }
-	    
+	
     public function readFuntionPostgres($function, $parameters = null){
 
         $_parameters = '';
