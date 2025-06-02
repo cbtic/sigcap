@@ -58,9 +58,9 @@ class Kernel extends ConsoleKernel
 		
 		/************NUEVOS***************/
 		
-        $schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('16:37');
-        $schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('16:40');
         $schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('16:50');
+        $schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('16:57');
+        $schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('17:00');
 
         $schedule->command('envioAgremiadoAutomatico:cron')->dailyAt('12:01');
         //$schedule->command('envioAgremiadoCuotaAutomatico:cron')->dailyAt('22:32');
