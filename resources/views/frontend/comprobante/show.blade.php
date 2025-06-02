@@ -92,8 +92,8 @@ body {
 }
 
 .link-factura {
-    color: black;
-    font-size: 17px;
+    /*color: black;*/
+    font-size: 14px;
 }
 
 br {
@@ -334,7 +334,11 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                                 <p>No esta identificado el tipo de documento</p>
                                                                 @endswitch
                                                             </p>
-                                                            <p><a href="/{{ $factura->ruta_comprobante }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>    
+                                                        <h3 class="divlogoimpresora">
+                                                           {{ $factura->serie }}-{{ $factura->numero }}
+                                                        </h3>
+
+                                                            <p class="d-print-none"><a href="/{{ $factura->ruta_comprobante }}" target="_blank" class="link-factura">{{ $factura->serie }}-{{ $factura->numero }}</a></p>    
                                                            
                                                         </strong>
 
