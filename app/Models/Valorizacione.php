@@ -605,7 +605,7 @@ class Valorizacione extends Model
     public function listar_deuda_caja_ajax($p){
 		return $this->readFunctionPostgres('sp_listar_deuda_caja_paginado',$p);
     }
-
+    
     public function listar_deuda_caja_anual_ajax($p){
 		return $this->readFunctionPostgres('sp_listar_deuda_caja_anual_paginado',$p);
     }
