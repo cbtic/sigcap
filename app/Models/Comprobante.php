@@ -196,7 +196,7 @@ class Comprobante extends Model
                         FROM 
                             comprobantes c inner join valorizaciones v on c.id =v.id_comprobante
                         WHERE 
-                            c.id_empresa =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0'
+                            c.id_empresa =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0'  and c.id in (select id_numero_ncnd from comprobantes c2 where id_numero_ncnd=c.id )
                         order by c.id desc
                         limit 1 ";
             }
@@ -215,9 +215,9 @@ class Comprobante extends Model
                             (SELECT c2.numero FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS numero,
                             (SELECT c2.serie FROM comprobantes c2 WHERE c2.id_comprobante_ncnd = c.id AND c2.tipo = 'NC' AND c2.devolucion_nc = 'N' AND c2.id_numero_ncnd = 0 LIMIT 1) AS serie
                         FROM 
-                            comprobantes c inner join valorizaciones v on c.id =v.id_comprobante
+                            comprobantes c inner join valorizaciones v on c.id =v.id_comprobante 
                         WHERE 
-                            c.id_persona =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0'
+                            c.id_persona =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0'  and c.id in (select id_numero_ncnd from comprobantes c2 where id_numero_ncnd=c.id )
                         order by c.id desc
                         limit 1";
             }
