@@ -356,7 +356,7 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                                 <p> GUIA DE REMISIÓN</p>
                                                             </p>
                                                             <p>
-															
+															 
 															<a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">{{ $factura->serie_guia }}-{{ $factura->nro_guia }}</a>
 															
 															<a style="float:left" href="/factura/show_guia/<?php echo $id_guia?>" target="_blank" class="link-factura">&nbsp;&nbsp;Ver Guia

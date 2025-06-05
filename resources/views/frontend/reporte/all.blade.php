@@ -285,7 +285,7 @@
 										<select name="id_concepto" id="id_concepto" class="form-control form-control-sm" >
 											<option value="">Todos</option>
 											<?php foreach($concepto as $row):?>
-											<option value="<?php echo $row->id?>" <?php if($row->id==26411)echo "selected='selected'"?>><?php echo $row->denominacion?></option>
+											<option value="<?php echo $row->id?>"><?php echo $row->denominacion?></option>
 											<?php  endforeach;?>
 										</select>
 									</div>

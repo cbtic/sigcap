@@ -3096,3 +3096,92 @@ function fn_denegar_solicitud(id_solicitud, observaciones){
 		}
 	});
 }
+
+function obtenerProvinciaReintegroMunicipalidad() {
+	var id = $('#departamento').val();
+	if (id == "") return $.Deferred().resolve(); // retorna promesa vacía si no hay id
+
+	$('#provincia').attr("disabled", true);
+	$('#distrito').attr("disabled", true);
+
+	var heightBrowser = $(window).width() / 2;
+	$('.loader').css("opacity", "0.8").css("height", heightBrowser).html(
+		"<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>Procesando, espere un momento por favor</div></div>"
+	);
+	$('.loader').show();
+
+	// Retornamos la promesa del $.ajax
+	return $.ajax({
+		url: '/agremiado/obtener_provincia/' + id,
+		dataType: "json",
+		success: function(result) {
+			let option = "<option value='' selected='selected'>Seleccionar</option>";
+			$(result).each(function(ii, oo) {
+				option += "<option value='" + oo.id_provincia + "'>" + oo.desc_ubigeo + "</option>";
+			});
+			$('#provincia').html(option);
+			$('#distrito').html("<option value=''>Seleccionar</option>");
+			$('#provincia').attr("disabled", false);
+			$('#distrito').attr("disabled", false);
+			$('.loader').hide();
+		}
+	});
+}
+
+function obtenerDistritoReintegroMunicipalidad() {
+	var departamento = $('#departamento').val();
+	var id = $('#provincia').val();
+	if (id == "") return $.Deferred().resolve();
+
+	$('#distrito').attr("disabled", true);
+
+	var heightBrowser = $(window).width() / 2;
+	$('.loader').css("opacity", "0.8").css("height", heightBrowser).html(
+		"<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>Procesando, espere un momento por favor</div></div>"
+	);
+	$('.loader').show();
+
+	return $.ajax({
+		url: '/agremiado/obtener_distrito/' + departamento + '/' + id,
+		dataType: "json",
+		success: function(result) {
+			let option = "<option value=''>Seleccionar</option>";
+			$(result).each(function(ii, oo) {
+				option += "<option value='" + oo.id_ubigeo + "'>" + oo.desc_ubigeo + "</option>";
+			});
+			$('#distrito').html(option);
+			$('#distrito').attr("disabled", false);
+			$('.loader').hide();
+		}
+	});
+}
+
+function actualizarDistrito(){
+
+	var municipalidad = $('#municipalidad').val();
+
+	$.ajax({
+			url: '/derecho_revision/obtener_ubigeo_municipalidad/' + municipalidad,
+			dataType: "json",
+			success: function(result){
+
+				var departamento = result.departamento;
+				var provincia = result.provincia;
+				var distrito = result.distrito;
+
+				//alert("Departamento: " + departamento + "Provincia" + provincia + "Distrito" + distrito)
+
+				$('#departamento').val(departamento);
+				
+				obtenerProvinciaReintegroMunicipalidad().done(function() {
+					$('#provincia').val(provincia);
+					obtenerDistritoReintegroMunicipalidad().done(function() {
+						$('#distrito').val(distrito);
+					});
+				});
+
+			}
+			
+		});
+
+}

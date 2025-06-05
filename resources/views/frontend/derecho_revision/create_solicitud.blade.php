@@ -325,7 +325,7 @@ $(document).ready(function () {
 						<div class="row" style="padding-left:10px">
 								<div class="col-lg-3">
 									<label class="control-label form-control-sm color-letra">Municipalidad</label>
-									<select name="municipalidad" id="municipalidad" class="form-control form-control-sm"> 
+									<select name="municipalidad" id="municipalidad" class="form-control form-control-sm" onchange="actualizarDistrito()"> 
 										<?php
 										$valorSeleccionado = isset($derechoRevision_->id_municipalidad) ? $derechoRevision_->id_municipalidad : '';
 										?>
@@ -417,7 +417,6 @@ $(document).ready(function () {
 								</select>
 							</div>
 							
-
 							<div class="col-lg-2">
 								<label class="control-label form-control-sm color-letra">Distrito</label>
 								<select name="distrito" id="distrito" class="form-control form-control-sm" onChange="">

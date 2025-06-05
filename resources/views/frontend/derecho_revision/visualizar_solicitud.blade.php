@@ -980,15 +980,13 @@ function calcularReintegro(){
 											
 											<tbody>
 												@foreach ($datos_proyectista_asociado as $proyectista_asociado)
-													@foreach ($proyectista_asociado as $proyectista)
 												<tr>
-													<td>{{ $proyectista->nombres ?? '-'  }}</td>
-													<td>{{ $proyectista->numero_cap ?? '-'  }}</td>
-													<td>{{ $proyectista->celular1 ?? '-'  }}</td>
-													<td>{{ $proyectista->email1 ?? '-'  }}</td>
-													<td>@if(!empty($proyectista->firma)) <span class="text-success">Validada</span> @else <span class="text-danger">No Validada</span> @endif</td>
+													<td>{{ $proyectista_asociado->nombres ?? '-'  }}</td>
+													<td>{{ $proyectista_asociado->numero_cap ?? '-'  }}</td>
+													<td>{{ $proyectista_asociado->celular1 ?? '-'  }}</td>
+													<td>{{ $proyectista_asociado->email1 ?? '-'  }}</td>
+													<td>@if(!empty($proyectista_asociado->firma)) <span class="text-success">Validada</span> @else <span class="text-danger">No Validada</span> @endif</td>
 												</tr>
-													@endforeach
 												@endforeach
 											</tbody>
 										</table>

@@ -2720,8 +2720,8 @@ class DerechoRevisionController extends Controller
 			foreach ($datos as $item) {
 				$datos_proyectista_asociado[] = $item;
 			}
-
 		}
+
 		//var_dump($datos_proyectista_asociado);exit();
 		$datos_uso_edificaciones = UsoEdificacione::where("id_solicitud",$derechoRevision->id)->where("estado","1")->orderBy('id')->get();
 		//var_dump($datos_uso_edificaciones);exit();
@@ -2754,7 +2754,7 @@ class DerechoRevisionController extends Controller
 			}
 		}
 		
-		$proyectista_asociado = Proyectista::where("id_solicitud",$derechoRevision->id)->where('id_tipo_profesional',212)->where("estado","1")->orderBy('id')->get();
+		//$proyectista_asociado = Proyectista::where("id_solicitud",$derechoRevision->id)->where('id_tipo_profesional',212)->where("estado","1")->orderBy('id')->get();
 
 		$agremiado_principal = Agremiado::find($proyectista_principal->id_agremiado);
 		$datos_agremiado_principal = $agremiado_model->getAgremiado(85,$agremiado_principal->numero_cap);
@@ -3336,4 +3336,22 @@ class DerechoRevisionController extends Controller
 
 		echo $derecho_revision->id;
     }
+
+	public function obtener_ubigeo_municipalidad($municipalidad){
+
+		$ubigeo_model = new Ubigeo;
+		$municipalidad_model = new Municipalidade;
+
+		$municipalidad = $municipalidad_model->getUbigeoByMunicipalidad($municipalidad);
+		$departamento = substr($municipalidad[0]->id_ubigeo, 0, 2);
+		$provincia = substr($municipalidad[0]->id_ubigeo, 2, 2);
+		$distrito = $municipalidad[0]->id_ubigeo;
+
+		//dd($departamento,$provincia,$distrito);exit();
+
+		return response()->json(['departamento'=>$departamento,'provincia'=>$provincia,'distrito'=>$distrito]);
+
+	}
+
+
 }

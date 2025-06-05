@@ -305,7 +305,7 @@ function valida_ultimo_pago(){
 
 				//alert(cantidad_meses);
 
-				if(cantidad_meses!=12){
+				if(cantidad_meses<12){
 					$('.loader').hide();
 					bootbox.alert("El agremiado no tiene 12 cuotas del año en curso, no puede acceder a la constancia");
 					return;
