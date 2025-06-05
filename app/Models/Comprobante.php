@@ -477,7 +477,7 @@ class Comprobante extends Model
     }
 	
 	public function actualiza_pago_pos($p){
-		return $this->readFunctionPostgres('sp_actualiza_pago_pos',$p);
+		return $this->readFunctionPostgres('sp_actualiza_pago_pos_v2',$p);
     }
 	
 	public function readFunctionPostgres__($function, $parameters = null){

@@ -471,7 +471,23 @@ class OperacionController extends Controller
 	
 	}
 	
+
+
 	public function req_pago(Request $request){
+	
+		return $this->operacion("pg",$request);
+		
+	}
+	
+	public function req_anulacion(Request $request){
+	
+		return $this->operacion("an",$request);
+		
+	}
+
+
+	//public function req_pago(Request $request){ 
+	public function operacion($opcion,Request $request){ 
 		
 		/**********REQ PAGO************/
 		/*
@@ -494,10 +510,15 @@ class OperacionController extends Controller
 		}
 		
 		//$arr_indice_input_detalle = array(235,238,253,254,262,270,282,294,306,318,320,324,326,327);
-		$arr_indice_input_detalle = array(235,240,255,263,271,283,295,307,319,321, 325,327);
 		//$arr_longitud_input_detalle = array(5,15,1,8,8,12,12,12,12,2,4,2,1,30);
-		$arr_longitud_input_detalle = array(5,15,8,8,12,12,12,12,2,4, 2,1);
-		$arr_var_input_detalle = array("CodigoProducto","NumDocumento","FechaVencimiento","FechaEmision","Deuda","Mora","GastosAdm","ImporteTotal","Periodo","Anio","Cuota","MonedaDoc");
+		
+		//$arr_indice_input_detalle = array(235,240,255,263,271,283,295,307,319,321, 325,327);
+		//$arr_longitud_input_detalle = array(5,15,8,8,12,12,12,12,2,4, 2,1);
+
+		$arr_indice_input_detalle = array(235,238,253,254,262,270,282,294,306,318, 320,324,326,327);
+		$arr_longitud_input_detalle = array(3,15,1,8,8,12,12,12,12,2,4, 2,1,30);
+
+		$arr_var_input_detalle = array("CodigoProducto","NumDocumento","FILLER","FechaVencimiento","FechaEmision","Deuda","Mora","GastosAdm","ImporteTotal","Periodo","Anio","Cuota","MonedaDoc","Filler");
 		
 		for($i=0;$i<(int)$data_input["NumDocs"];$i++){
 			foreach($arr_var_input_detalle as $key=>$row){
@@ -547,6 +568,8 @@ class OperacionController extends Controller
 		//echo $p_mov;exit();
 		
 		$comprobante_model = new Comprobante;
+		
+		$p[]=$opcion;//"pg";
 		$p[]=strval($data_input["TipoConsulta"]);
 		$p[]=(int)$data_input["NumConsulta"];
 		$p[]=$p_mov;

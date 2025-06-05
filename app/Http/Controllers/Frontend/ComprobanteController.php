@@ -4208,19 +4208,19 @@ class ComprobanteController extends Controller
                     $persona = Persona::where('numero_documento', $dni)->get()[0];
                     $tipoDocB = $persona->tipo_documento;
                     switch ($tipoDocB) {
-                        case "DNI":
+                        case "78":
                             $tipoDoc = "1";
                             break;
-                        case "CARNET_EXTRANJERIA":
+                        case "84":
                             $tipoDoc = "4";
                             break;
 
-                        case "PASAPORTE":
+                        case "83":
                             $tipoDoc = "7";
                             break;
 
-                        case "CEDULA":
-                            $tipoDoc = "A";
+                        case "260":
+                            $tipoDoc = "4";
                             break;
 
                         case "PTP/PTEP":
