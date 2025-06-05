@@ -4206,7 +4206,8 @@ class ComprobanteController extends Controller
                     $tipoDoc = "0";
                 } else {
                     $persona = Persona::where('numero_documento', $dni)->get()[0];
-                    $tipoDocB = $persona->tipo_documento;
+                    $tipoDocB = $persona->id_tipo_documento;
+                    //print_r($tipoDocB);exit();
                     switch ($tipoDocB) {
                         case "78":
                             $tipoDoc = "1";
@@ -4235,6 +4236,8 @@ class ComprobanteController extends Controller
                         default:
                             $tipoDoc = "0";
                     }
+
+                   // print_r($tipoDoc);exit();
                 }
             }
         }
