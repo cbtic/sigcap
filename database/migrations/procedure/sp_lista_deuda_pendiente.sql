@@ -188,7 +188,7 @@ MonedaDoc	:1(1: Soles,2: Dólares)
 	else 
 		 v_campos:='select 
 			v.fecha,
-			c.codigo codigo_producto,
+			RIGHT(c.codigo,3) codigo_producto,
 			c.denominacion descr_producto,
 			v.id num_documento,				
 			(case when descripcion is null then c.denominacion else v.descripcion end) desc_documento,
