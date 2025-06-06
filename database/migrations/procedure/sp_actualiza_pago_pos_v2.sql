@@ -1,4 +1,3 @@
-
 -- DROP FUNCTION public.sp_actualiza_pago_pos_v2(varchar, varchar, varchar, _varchar, refcursor);
 
 CREATE OR REPLACE FUNCTION public.sp_actualiza_pago_pos_v2(p_opcion character varying, p_tipo_doc character varying, p_numero_doc character varying, p_detalle character varying[], p_ref refcursor)
@@ -72,7 +71,7 @@ _nro_operacion character varying;
 Begin
 
 	_id_valorizacion:= '';
-	_serie:= 'B042';
+	_serie:= 'B040';
 	_tipo:= 'BV';
 	_descuento:= 0;
 	_id_caja:= 1027;
@@ -263,13 +262,15 @@ Begin
 						 total, letras, moneda, impuesto_factor, tipo_cambio, estado_pago, anulado, fecha_pago, fecha_recepcion, fecha_vencimiento,
 						 fecha_programado, observacion, id_moneda, tipo, id_forma_pago, afecta, cerrado, id_tipo_documento,serie_ncnd ,id_numero_ncnd ,tipo_ncnd,
 						 solictante,orden_compra,  total_anticipo, total_descuentos, desc_globales,monto_perce, monto_detrac, porc_detrac, totalconperce, tipo_guia,
-						 serie_refer, nro_refer, tipo_refer, codtipo_ncnd, motivo_ncnd, correo_des, tipo_operacion, base_perce, tipo_emision, ope_gratuitas,
-						 subtotal, codigo_bbss_detrac, cuenta_detrac, notas, cond_pago, id_caja, id_usuario_inserta,id_persona, id_comprobante_ncnd,codtipo_ncnd, motivo_ncnd, devolucion_nc)					
-						Values (_serie, _numero, now(), _razon_social, _direccion, _ruc,'', '',CAST(_total AS numeric),0.00,0.00,_igv, 
-						 CAST(_total AS numeric),_total_letras,_moneda,18,0.000,'P','N',now(),now(),
-						 now(),now(),'',_id_moneda, _tipo, 1, '', 'S',6,'',0,'','','',0.00, _descuento, 0.00, 0.00, 0.00, 0, CAST(_total AS numeric), '', '', '', '', '', '', _correo, '01',CAST(_total AS numeric), 'SINCRONO', 0, 
-						 _subtotal, 
-						 '', '', '', '', _id_caja, _id_usuario, _id_persona, _id_comprobante, '01', 'anulacion pago pos', 'S') RETURNING id into idp;
+						 serie_refer, nro_refer, tipo_refer, correo_des, tipo_operacion, base_perce, tipo_emision, ope_gratuitas,
+						 subtotal, codigo_bbss_detrac, cuenta_detrac, notas, cond_pago, id_caja, id_usuario_inserta,id_persona, id_comprobante_ncnd,codtipo_ncnd, motivo_ncnd, devolucion_nc, afecta_caja)					
+						Values (
+						_serie, _numero, now(), _razon_social, _direccion, _ruc,'', '',CAST(_total AS numeric),0.00,0.00,_igv, 
+						 CAST(_total AS numeric),_total_letras,_moneda,18,0.000,'P','N',now(),now(),now(),
+						now(),'',_id_moneda, _tipo, 1, '', 'S',6,'',0,'',
+						'','',0.00, _descuento, 0.00, 0.00, 0.00, 0, CAST(_total AS numeric), '',
+						 '', '', '', _correo, '01',CAST(_total AS numeric), 'SINCRONO', 0, 
+						 _subtotal, '', '', '', '', _id_caja, _id_usuario, _id_persona, _id_comprobante, '01', 'anulacion pago pos', 'S','0') RETURNING id into idp;
 		
 					--update valorizaciones set id_comprobante = idp, pagado='1' where id = num_documento::int;
 					else 				
