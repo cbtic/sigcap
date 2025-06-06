@@ -234,7 +234,7 @@ class Comprobante extends Model
                 from comprobantes c
                 left join personas p on p.id =c.id_persona 
                 left join agremiados a on a.id_persona = p.id 
-                inner join users u on c.id_usuario_inserta =u.id  
+                left join users u on c.id_usuario_inserta =u.id  
                 where c.id='". $id . "'" ;
 
 		$data = DB::select($cad);   
