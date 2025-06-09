@@ -106,10 +106,16 @@ $(document).ready(function () {
 
 	var tipo= $('#TipoF').val()
 	var total_fac = $('#total_fac_').val();
+	var id_tipo_afectacion_pp = $('#id_tipo_afectacion_pp').val();
+
 
 	if (Math.round(total_fac) > 700 && tipo=='FT' ){
-		$('#id_tipooperacion_').val('1001');
-		calculoDetraccion();
+
+		//alert(id_tipo_afectacion_pp);
+		if (id_tipo_afectacion_pp!="30"){
+			$('#id_tipooperacion_').val('1001');
+			calculoDetraccion();
+		}
 	}
 
 	
@@ -126,12 +132,13 @@ function calculoDetraccion(){
 	var tipo_operacion = "1001";
 	//var d = new Date();
 	var id_tipooperacion_ = $('#id_tipooperacion_').val();
+	var id_tipo_afectacion_pp = $('#id_tipo_afectacion_pp').val();
 
 	//alert(Math.round(total_fac));
 	//alert(Math.round(total_fac));
 	var tipo= $('#TipoF').val()
 
-	if (Math.round(total_fac) > 700 && tipo=='FT' && id_tipooperacion_=='1001' ){
+	if (Math.round(total_fac) > 700 && tipo=='FT' && id_tipooperacion_=='1001' && id_tipo_afectacion_pp!="30" ){
 
 		$('#porcentaje_detraccion').val("12");		
 		$('#monto_detraccion').val(total_detraccion.toFixed(2));
