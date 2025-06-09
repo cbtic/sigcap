@@ -76,9 +76,9 @@ class Kernel extends ConsoleKernel
 		
 	$schedule->command('envioAgremiadoAutomaticoFraccionamiento:cron')->dailyAt('22:55');
 
-	$schedule->call(function () {
+	/*$schedule->call(function () {
             \Log::info('Tarea de prueba ejecutada cada minuto: ' . now());
-        })->everyMinute();
+	})->everyMinute();*/
 
     }
 
