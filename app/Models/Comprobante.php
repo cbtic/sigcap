@@ -196,7 +196,7 @@ class Comprobante extends Model
                         FROM 
                             comprobantes c inner join valorizaciones v on c.id =v.id_comprobante
                         WHERE 
-                            c.id_empresa =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0'  and c.id in (select id_numero_ncnd from comprobantes c2 where id_numero_ncnd=c.id )
+                            c.id_empresa =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0' and c.tipo in('BV','FT')  --and c.id in (select id_numero_ncnd from comprobantes c2 where id_numero_ncnd=c.id )
                         order by c.id desc
                         limit 1 ";
             }
@@ -217,7 +217,7 @@ class Comprobante extends Model
                         FROM 
                             comprobantes c inner join valorizaciones v on c.id =v.id_comprobante 
                         WHERE 
-                            c.id_persona =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0'  and c.id in (select id_numero_ncnd from comprobantes c2 where id_numero_ncnd=c.id )
+                            c.id_persona =" . $id_cliente . " and v.id_concepto=". $id_concepto . " and v.estado ='0' and c.tipo in('BV','FT')  --and c.id in (select id_numero_ncnd from comprobantes c2 where id_numero_ncnd=c.id )
                         order by c.id desc
                         limit 1";
             }
@@ -234,7 +234,7 @@ class Comprobante extends Model
                 from comprobantes c
                 left join personas p on p.id =c.id_persona 
                 left join agremiados a on a.id_persona = p.id 
-                inner join users u on c.id_usuario_inserta =u.id  
+                left join users u on c.id_usuario_inserta =u.id  
                 where c.id='". $id . "'" ;
 
 		$data = DB::select($cad);   
@@ -477,7 +477,7 @@ class Comprobante extends Model
     }
 	
 	public function actualiza_pago_pos($p){
-		return $this->readFunctionPostgres('sp_actualiza_pago_pos',$p);
+		return $this->readFunctionPostgres('sp_actualiza_pago_pos_v2',$p);
     }
 	
 	public function readFunctionPostgres__($function, $parameters = null){

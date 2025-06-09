@@ -30,6 +30,7 @@ class VerifyCsrfToken extends Middleware
 
         'operacion/req_consulta',
         'operacion/req_pago',
+        'operacion/req_anulacion',
 
     ];
 }

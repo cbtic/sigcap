@@ -350,7 +350,7 @@ class ComprobanteController extends Controller
             $comprobante_model = new Comprobante;
             //$valorizaciones_model = new Valorizacione;
             
-            $nc = $comprobante_model->getncById($id_cliente,$tipoDocP,$id_concepto_pp);
+            $nc = $comprobante_model->getncById($id_cliente,$request->tipo_documento,$id_concepto_pp);
             
             //print_r($nc); exit();
             //print_r($empresa); exit();
@@ -4206,21 +4206,22 @@ class ComprobanteController extends Controller
                     $tipoDoc = "0";
                 } else {
                     $persona = Persona::where('numero_documento', $dni)->get()[0];
-                    $tipoDocB = $persona->tipo_documento;
+                    $tipoDocB = $persona->id_tipo_documento;
+                    //print_r($tipoDocB);exit();
                     switch ($tipoDocB) {
-                        case "DNI":
+                        case "78":
                             $tipoDoc = "1";
                             break;
-                        case "CARNET_EXTRANJERIA":
+                        case "84":
                             $tipoDoc = "4";
                             break;
 
-                        case "PASAPORTE":
+                        case "83":
                             $tipoDoc = "7";
                             break;
 
-                        case "CEDULA":
-                            $tipoDoc = "A";
+                        case "260":
+                            $tipoDoc = "4";
                             break;
 
                         case "PTP/PTEP":
@@ -4235,6 +4236,8 @@ class ComprobanteController extends Controller
                         default:
                             $tipoDoc = "0";
                     }
+
+                   // print_r($tipoDoc);exit();
                 }
             }
         }
