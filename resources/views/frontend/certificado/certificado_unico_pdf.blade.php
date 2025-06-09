@@ -168,7 +168,7 @@ $(document).ready(function() {
             <p class="contenido_cuerpo" style="text-align: right !important;">Lima, <?php echo $fecha_detallada;?></p>
             
             <div style="text-align: center; position: relative; height: 100px;">
-                <img width="200px" height="80px" src="img/firma_sello_decano_Jorge_Ruiz.jpeg">
+                <img width="200px" height="80px" src="img/firma_sello_decano_Enrique_Alegre.png">
             <div>
             
             <p class="contenido_cuerpo" style="text-align: center !important;margin-bottom: 50px; ">FIRMA Y SELLO DEL DECANO REGIONAL</p>
