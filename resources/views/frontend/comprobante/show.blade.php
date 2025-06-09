@@ -390,7 +390,7 @@ if(TipoCOmprobante=="NC" || TipoCOmprobante=="ND"){
                                                         <td style="text-align: right;"><span class="resaltado">{{ $factura->direccion }}</span></td>
                                                         </tr>
                                                         <tr>
-                                                        <td>FECHA DE EMISIÓN :</td>
+                                                        <td>FECHA DE EMISIÓN:</td>
                                                         <td style="text-align: right;"><span class="resaltado">  {{ date('d-m-Y H:i:s',strtotime($factura->fecha)) }} </span></td>
                                                         </tr>
                                                         <tr>

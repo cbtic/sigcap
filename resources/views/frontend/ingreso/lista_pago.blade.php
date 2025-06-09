@@ -143,7 +143,7 @@ foreach($pago as $row){?>
 		//html += '<a href="/comprobante/'+id+'" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-paper-plane"></i></a>';
 		//return html;
 		if (id == "")id = 0;
-		var href = '/comprobante/' + id;
+		var href = '/comprobante/ver/' + id;
 		window.open(href, '_blank');
 
 	}
