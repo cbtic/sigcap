@@ -26,7 +26,7 @@ class envioAgremiadoAutomaticoCron extends Command
         $hoy = Carbon::now()->format('d-m-Y');
 
         $controller = app()->make('App\Http\Controllers\Frontend\AgremiadoController');
-        app()->call([$controller, 'importar_agremiado'], [$hoy]);
+        app()->call([$controller, 'importar_agremiado'], ['fecha' => $hoy]);
 		
 		$log = ['metodo' => "envioAgremiadoAutomatico:cron", 'description' => "Ejecuta la funcion importar_agremiado(".$hoy.")"];
 		$logCentroCosto = new Logger('job_log');
