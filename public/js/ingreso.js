@@ -1075,7 +1075,6 @@ function obtenerBeneficiario(){
 				} else {
 					$('#foto').attr('src', '/img/profile-icon.png');
 				}
-
 				
 				var tipo_documento_buscar = $("#tipo_documento_b").val();
 				var numero_documento_buscar = $("#numero_documento_b").val();
@@ -1087,7 +1086,7 @@ function obtenerBeneficiario(){
 						success: function(result){
 							
 							situacion = result.liquidacion[0].id_situacion;
-							
+
 							if(situacion==3){
 								Swal.fire("El Numero de liquidacion ha sido anulada!");
 							}else{
@@ -1122,9 +1121,7 @@ function obtenerBeneficiario(){
 				confirma_accion();
 			}
 			
-
 		}
-		
 		
 	});
 	

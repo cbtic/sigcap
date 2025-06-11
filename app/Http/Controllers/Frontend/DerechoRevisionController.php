@@ -60,8 +60,11 @@ class DerechoRevisionController extends Controller
 		$estado_proyecto = $tablaMaestra_model->getMaestroByTipo(118);
 		$situacion_credipago = $tablaMaestra_model->getMaestroByTipo(125);
 		$distrito = $ubigeo_model->getDistritoLima();
+		$sitio = $tablaMaestra_model->getMaestroByTipo(33);
+        $zona = $tablaMaestra_model->getMaestroByTipo(34);
+		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
 		
-        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','departamento','tipo_proyecto','estado_proyecto', 'tipo_solicitud','distrito','situacion_credipago'));
+        return view('frontend.derecho_revision.all',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','departamento','tipo_proyecto','estado_proyecto', 'tipo_solicitud','distrito','situacion_credipago','sitio','zona','tipo'));
     }
 
 	public function modal_credipago($id){
