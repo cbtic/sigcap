@@ -20,7 +20,8 @@ class Kernel extends ConsoleKernel
         Commands\prontoPagoAutomaticoCron::class,
         Commands\periodoComisionAutomaticoCron::class,
 	Commands\suspensionAgremiadoAutomaticoCron::class,
-	Commands\envioAgremiadoAutomaticoFraccionamientoCron::class
+	Commands\envioAgremiadoAutomaticoFraccionamientoCron::class,
+	Commands\anularLiquidacion7DiasAutomaticoCron::class
     ];
 
     protected function schedule(Schedule $schedule)
@@ -79,6 +80,8 @@ class Kernel extends ConsoleKernel
 	/*$schedule->call(function () {
             \Log::info('Tarea de prueba ejecutada cada minuto: ' . now());
 	})->everyMinute();*/
+
+		$schedule->command('anularLiquidacion7DiasAutomaticoCron:cron')->cron('5 0 8 * *');
 
     }
 

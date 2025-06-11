@@ -20,4 +20,27 @@ class Liquidacione extends Model
 		$data = DB::select($cad);
         return $data;
     }
+
+    function anular_liquidacion_7_dias(){
+        $p=array();
+		return $this->readFunctionPostgresTransaction('sp_crud_anular_liquidacion_7_dias',$p);
+    }
+
+    public function readFunctionPostgresTransaction($function, $parameters = null){
+	
+      $_parameters = '';
+      if (count($parameters) > 0) {
+	  		
+			foreach($parameters as $par){
+				if(is_string($par))$_parameters .= "'" . $par . "',";
+				else $_parameters .= "" . $par . ",";
+		  	}
+			if(strlen($_parameters)>1)$_parameters= substr($_parameters,0,-1);
+			
+      }
+
+	  $cad = "select " . $function . "(" . $_parameters . ");";
+	  $data = DB::select($cad);
+	  return $data[0]->$function;
+   }
 }

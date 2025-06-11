@@ -3353,5 +3353,12 @@ class DerechoRevisionController extends Controller
 
 	}
 
+	function anularLiquidacion7Dias(){
+
+        $liquidacion_model = new Liquidacione;
+
+		$liquidacion_model->anular_liquidacion_7_dias();
+
+    }
 
 }
