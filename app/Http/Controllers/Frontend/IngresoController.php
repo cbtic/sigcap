@@ -22,6 +22,7 @@ use App\Models\AgremiadoMulta;
 use App\Models\TipoCambio;
 use App\Models\Efectivo;
 use App\Models\EfectivoDetalle;
+use App\Models\Liquidacione;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
 use PhpOffice\PhpSpreadsheet\Calculation\TextData\Replace;
@@ -1398,5 +1399,15 @@ class IngresoController extends Controller
         return view('frontend.ingreso.modal_valoriza',compact('valoriza'));
 
 	}
+
+    public function validar_estado_liquidacion($numero_documento){
+ 
+        $liquidacion_model = new Liquidacione;
+        $liquidacion = $liquidacion_model->getLiquidacionByCredipago($numero_documento);
+        //dd($liquidacion);exit();
+
+        return response()->json(['liquidacion' => $liquidacion]);
+
+    }
 
 }

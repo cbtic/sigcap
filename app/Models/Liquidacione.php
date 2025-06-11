@@ -43,4 +43,15 @@ class Liquidacione extends Model
 	  $data = DB::select($cad);
 	  return $data[0]->$function;
    }
+
+    function getLiquidacionByCredipago($numero_documento){
+
+      $cad = "select l.id, l.credipago, l.id_situacion from liquidaciones l 
+      where l.credipago ='".$numero_documento."'
+      and l.estado ='1'";
+    
+		  $data = DB::select($cad);
+      return $data;
+    }
+
 }

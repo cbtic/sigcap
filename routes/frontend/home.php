@@ -858,3 +858,4 @@ Route::post('derecho_revision/denegar_solicitud', [DerechoRevisionController::cl
 Route::post('derecho_revision/validar_coincidencia_solicitud', [DerechoRevisionController::class, 'validar_coincidencia_solicitud'])->name('derecho_revision.validar_coincidencia_solicitud');
 Route::get('derecho_revision/obtener_datos_solicitud_numero_liquidacion/{numero_liquidacion}', [DerechoRevisionController::class, 'obtener_datos_solicitud_numero_liquidacion'])->name('derecho_revision.obtener_datos_solicitud_numero_liquidacion');
 Route::get('derecho_revision/obtener_ubigeo_municipalidad/{municipalidad}', [DerechoRevisionController::class, 'obtener_ubigeo_municipalidad'])->name('derecho_revision.obtener_ubigeo_municipalidad');
+Route::get('ingreso/validar_estado_liquidacion/{numero_documento}', [IngresoController::class, 'validar_estado_liquidacion'])->name('ingreso.validar_estado_liquidacion');

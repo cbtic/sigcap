@@ -938,10 +938,7 @@ function obtenerBeneficiario(){
 
 	$("#chkExonerado").prop('checked', false);
 	$('#Exonerado').val("0");
-	
-	
-	
-	
+		
 	$.ajax({
 		url: '/agremiado/obtener_agremiado/' + tipo_documento + '/' + numero_documento,
 		dataType: "json",
@@ -1079,12 +1076,36 @@ function obtenerBeneficiario(){
 					$('#foto').attr('src', '/img/profile-icon.png');
 				}
 
+				
+				var tipo_documento_buscar = $("#tipo_documento_b").val();
+				var numero_documento_buscar = $("#numero_documento_b").val();
 
-				cargarValorizacion();
-				cargarPagos();
-				cargarcboTipoConcepto();
-				cargarcboPeriodo();
-				cargarcboMes();
+				if(tipo_documento_buscar==87){
+					$.ajax({
+						url: '/ingreso/validar_estado_liquidacion/' + numero_documento_buscar,
+						dataType: "json",
+						success: function(result){
+							
+							situacion = result.liquidacion[0].id_situacion;
+							
+							if(situacion==3){
+								Swal.fire("El Numero de liquidacion ha sido anulada!");
+							}else{
+								cargarValorizacion();
+								cargarPagos();
+								cargarcboTipoConcepto();
+								cargarcboPeriodo();
+								cargarcboMes();
+							}
+						}
+					})
+				}else{
+					cargarValorizacion();
+					cargarPagos();
+					cargarcboTipoConcepto();
+					cargarcboPeriodo();
+					cargarcboMes();
+				}
 			}
 			else {
 
