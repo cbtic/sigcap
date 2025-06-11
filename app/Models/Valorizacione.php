@@ -137,7 +137,13 @@ class Valorizacione extends Model
 
     function getValorizacionFrac($tipo_documento,$id_persona,$periodo,$cuota,$concepto, $filas){  
         
-        if($filas!="")$filas="limit ".$filas;   
+        if($filas!="")$filas="limit ".$filas;
+  /*      
+        $exonerado_="";
+        if($exonerado!=""){
+            $exonerado_ = "and v.exonerado = '".$exonerado."'";
+        }
+*/
 
         if($tipo_documento=="79"){  //RUC
             $cad = "
@@ -159,7 +165,7 @@ class Valorizacione extends Model
                 and ((c.codigo = '00006' and  (case when v.fecha < now() then '1' else '0' end) = '0') or (c.codigo = '00001'))
                 and v.estado = '1'            
                 and v.pagado = '0'
-                --and v.exonerado = '0'
+                and v.exonerado = '0'
             order by v.fecha asc
              ".$filas."
 			";
@@ -180,7 +186,8 @@ class Valorizacione extends Model
                 --and ((c.id = 26411 and  (case when v.fecha < now() then '1' else '0' end) = '1') or (c.id = 26412))
                 and ((c.codigo = '00006' and  (case when v.fecha < now() then '1' else '0' end) = '1') or (c.codigo = '00001'))
                 and v.estado = '1'            
-                and v.pagado = '0'                
+                and v.pagado = '0' 
+                and v.exonerado = '0'               
             order by v.fecha asc
              ".$filas."
 			";
