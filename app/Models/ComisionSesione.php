@@ -108,7 +108,7 @@ and t1.id_periodo_comisione=".$id_periodo;
         $cad = "select case 
 		when id_tipo_sesion='401' then
 			case 
-				when t1.id_estado_aprobacion=2 then 'O' 
+				when t1.id_estado_aprobacion=2 and t0.id_aprobar_pago=2 then 'O' 
 				else 'X'
 			end
 		when id_tipo_sesion='402' then 
