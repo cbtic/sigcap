@@ -176,7 +176,7 @@ And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and t4.id_municipalidad_integrada=".$id_municipalidad_integrada." 
 and a.id=".$id_agremiado."
-and t1.id_estado_aprobacion=2
+and t0.id_aprobar_pago =2
 and case 
 	when id_tipo_sesion='401' then
 		case 
