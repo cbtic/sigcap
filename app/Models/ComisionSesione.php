@@ -19,8 +19,8 @@ inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
 inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 inner join municipalidad_integradas mi on t4.id_municipalidad_integrada = mi.id
-where t0.id_aprobar_pago=2
-And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
+where --t0.id_aprobar_pago=2 And 
+to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."' 
 and t4.id_municipalidad_integrada=".$id_municipalidad_integrada;
 		$data = DB::select($cad);
@@ -176,6 +176,7 @@ And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 and t4.id_municipalidad_integrada=".$id_municipalidad_integrada." 
 and a.id=".$id_agremiado."
+and t1.id_estado_aprobacion=2
 and case 
 	when id_tipo_sesion='401' then
 		case 
