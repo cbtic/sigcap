@@ -3073,6 +3073,7 @@ function save_denegacion_solicitud(){
         message: "&iquest;Deseas denegar esta solicitud de derecho de revision?", 
         callback: function(result){
             if (result==true) {
+				
                 fn_denegar_solicitud(id_solicitud, observaciones);
             }
         }
@@ -3081,7 +3082,7 @@ function save_denegacion_solicitud(){
 }
 
 function fn_denegar_solicitud(id_solicitud, observaciones){
-	
+	//alert("ok");
 	$.ajax({
 		url: "/derecho_revision/denegar_solicitud",
 		type: "POST",

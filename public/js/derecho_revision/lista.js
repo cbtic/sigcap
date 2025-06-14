@@ -691,6 +691,44 @@ function obtenerProvincia(){
 	
 }
 
+function obtenerProvinciaBus(){
+	
+	var id = $('#departamento_bus').val();
+	if(id=="")return false;
+	$('#provincia_bus').attr("disabled",true);
+	$('#distrito_bus').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_provincia/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value='' selected='selected'>Seleccionar</option>";
+			$('#provincia_bus').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_provincia+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#provincia_bus').html(option);
+			
+			var option2 = "<option value=''>Seleccionar</option>";
+			$('#distrito_bus').html(option2);
+			
+			$('#provincia_bus').attr("disabled",false);
+			$('#distrito_bus').attr("disabled",false);
+			
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
 function obtenerDatosUbigeo(){
 
 	var id = $('#id_solicitud').val();
@@ -741,6 +779,39 @@ function obtenerDistrito(){
 			$('#distrito').html(option);
 			
 			$('#distrito').attr("disabled",false);
+			$('.loader').hide();
+			
+		}
+		
+	});
+	
+}
+
+function obtenerDistritoBus(){
+		
+	var departamento = $('#departamento_bus').val();
+	var id = $('#provincia_bus').val();
+	if(id=="")return false;
+	$('#distrito_bus').attr("disabled",true);
+	
+	var msgLoader = "";
+	msgLoader = "Procesando, espere un momento por favor";
+	var heightBrowser = $(window).width()/2;
+	$('.loader').css("opacity","0.8").css("height",heightBrowser).html("<div id='Grd1_wrapper' class='dataTables_wrapper'><div id='Grd1_processing' class='dataTables_processing panel-default'>"+msgLoader+"</div></div>");
+	$('.loader').show();
+	
+	$.ajax({
+		url: '/agremiado/obtener_distrito/'+departamento+'/'+id,
+		dataType: "json",
+		success: function(result){
+			var option = "<option value=''>Seleccionar</option>";
+			$('#distrito_bus').html("");
+			$(result).each(function (ii, oo) {
+				option += "<option value='"+oo.id_ubigeo+"'>"+oo.desc_ubigeo+"</option>";
+			});
+			$('#distrito_bus').html(option);
+			
+			$('#distrito_bus').attr("disabled",false);
 			$('.loader').hide();
 			
 		}
@@ -884,7 +955,7 @@ function datatablenew(){
 			
 			var anio = $('#anio_bus').val();
 			var nombre_proyecto = $('#nombre_proyecto_bus').val();
-			var distrito = $('#id_distrito_domiciliario').val();
+			var distrito_domiciliario = $('#id_distrito_domiciliario').val();
 			var numero_cap = $('#numero_cap_bus').val();
 			var proyectista = $('#proyectista_bus').val();
 			var numero_documento = $('#numero_documento_bus').val();
@@ -901,18 +972,28 @@ function datatablenew(){
 			var estado_proyecto = $('#id_estado_proyecto_bus').val();
 			var situacion_credipago = $('#id_situacion_credipago_bus').val();
 			var estado = $('#estado_bus').val();
+			var departamento = $('#departamento_bus').val();
+			var provincia = $('#provincia_bus').val();
+			var distrito = $('#distrito_bus').val();
+			var sitio = $('#sitio_bus').val();
+			var direccion_sitio = $('#direccion_sitio_bus').val();
+			var zona = $('#zona_bus').val();
+			var direccion_zona = $('#direccion_zona_bus').val();
+			var tipo = $('#tipo_bus').val();
+			var lote = $('#lote_bus').val();
+			var sublote = $('#sublote_bus').val();
 			var _token = $('#_token').val();
             oSettings.jqXHR = $.ajax({
 				"dataType": 'json',
                 "type": "POST",
                 "url": sSource,
-                "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						anio:anio,nombre_proyecto:nombre_proyecto,distrito:distrito,numero_cap:numero_cap,
-						proyectista:proyectista,numero_documento:numero_documento,propietario:propietario,
-						tipo_proyecto:tipo_proyecto,tipo_solicitud:tipo_solicitud,credipago:credipago,
-						municipalidad:municipalidad,direccion:direccion,n_solicitud:n_solicitud,
-						codigo:codigo,estado_proyecto:estado_proyecto,fecha_inicio_bus:fecha_inicio_bus,
-						fecha_fin_bus:fecha_fin_bus,situacion_credipago:situacion_credipago,estado:estado,
+                "data":{NumeroPagina:iNroPagina, NumeroRegistros:iCantMostrar,
+						anio:anio, nombre_proyecto:nombre_proyecto, distrito_domiciliario:distrito_domiciliario, numero_cap:numero_cap, proyectista:proyectista,
+						numero_documento:numero_documento, propietario:propietario, tipo_proyecto:tipo_proyecto, tipo_solicitud:tipo_solicitud, credipago:credipago,
+						municipalidad:municipalidad, direccion:direccion, n_solicitud:n_solicitud, codigo:codigo, estado_proyecto:estado_proyecto,
+						fecha_inicio_bus:fecha_inicio_bus, fecha_fin_bus:fecha_fin_bus, situacion_credipago:situacion_credipago, estado:estado, departamento:departamento,
+						provincia:provincia, distrito:distrito, sitio:sitio, direccion_sitio:direccion_sitio, zona:zona, direccion_zona:direccion_zona,
+						tipo:tipo, lote:lote, sublote:sublote,
 						_token:_token
                        },
                 "success": function (result) {
@@ -1176,6 +1257,16 @@ function datatablenew2(){
 			var direccion = $('#direccion_proyecto_hu').val();
 			var estado_proyecto = $('#estado_solicitud_bus_hu').val();
 			var situacion_credipago = $('#id_situacion_credipago').val();
+			var departamento = $('#departamento_bus').val();
+			var provincia = $('#provincia_bus').val();
+			var distrito = $('#distrito_bus').val();
+			var sitio = $('#sitio_bus').val();
+			var direccion_sitio = $('#direccion_sitio_bus').val();
+			var zona = $('#zona_bus').val();
+			var direccion_zona = $('#direccion_zona_bus').val();
+			var tipo = $('#tipo_bus').val();
+			var lote = $('#lote_bus').val();
+			var sublote = $('#sublote_bus').val();
 			var _token = $('#_token').val();
 			
 
@@ -1184,11 +1275,12 @@ function datatablenew2(){
                 "type": "POST",
                 "url": sSource,
                 "data":{NumeroPagina:iNroPagina,NumeroRegistros:iCantMostrar,
-						anio:anio,nombre_proyecto:nombre_proyecto,distrito:distrito,numero_cap:numero_cap,
-						proyectista:proyectista,numero_documento:numero_documento,propietario:propietario,
-						tipo_proyecto:tipo_proyecto,tipo_solicitud:tipo_solicitud,credipago:credipago,
-						municipalidad:municipalidad,direccion:direccion,estado_proyecto:estado_proyecto,
-						situacion_credipago:situacion_credipago,
+						anio:anio, nombre_proyecto:nombre_proyecto, distrito:distrito, numero_cap:numero_cap,
+						proyectista:proyectista, numero_documento:numero_documento, propietario:propietario,
+						tipo_proyecto:tipo_proyecto, tipo_solicitud:tipo_solicitud, credipago:credipago,
+						municipalidad:municipalidad, direccion:direccion, estado_proyecto:estado_proyecto,
+						situacion_credipago:situacion_credipago, departamento:departamento, provincia:provincia, sitio:sitio, direccion_sitio:direccion_sitio,
+						zona:zona, direccion_zona:direccion_zona, tipo:tipo, lote:lote, sublote:sublote,
 						_token:_token
 					},
                 "success": function (result) {

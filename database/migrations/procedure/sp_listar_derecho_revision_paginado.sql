@@ -1,6 +1,10 @@
 -- DROP FUNCTION public.sp_listar_derecho_revision_paginado(varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, varchar, refcursor);
 
-CREATE OR REPLACE FUNCTION public.sp_listar_derecho_revision_paginado(p_anio character varying, p_nombre_proyecto character varying, p_distrito character varying, p_numero_cap character varying, p_proyectista character varying, p_numero_documento character varying, p_propietario character varying, p_tipo_proyecto character varying, p_tipo_solicitud character varying, p_credipago character varying, p_municipalidad character varying, p_direccion character varying, p_n_solicitud character varying, p_codigo character varying, p_fecha_inicio_registro character varying, p_fecha_fin_registro character varying, p_situacion_credipago character varying, p_estado_proyecto character varying, p_estado character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
+CREATE OR REPLACE FUNCTION public.sp_listar_derecho_revision_paginado(p_anio character varying, p_nombre_proyecto character varying, p_numero_cap character varying, p_proyectista character varying, 
+p_numero_documento character varying, p_propietario character varying, p_tipo_proyecto character varying, p_tipo_solicitud character varying, p_credipago character varying, p_municipalidad character varying, 
+p_n_solicitud character varying, p_codigo character varying, p_fecha_inicio_registro character varying, p_fecha_fin_registro character varying, p_situacion_credipago character varying, p_estado_proyecto character varying, 
+p_estado character varying, p_departamento character varying, p_provincia character varying, p_distrito character varying, p_sitio character varying, p_direccion_sitio character varying, p_zona character varying,
+p_direccion_zona character varying, p_tipo character varying, p_direccion character varying, p_lote character varying, p_sublote character varying, p_pagina character varying, p_limit character varying, p_ref refcursor)
  RETURNS refcursor
  LANGUAGE plpgsql
 AS $function$
@@ -63,7 +67,9 @@ begin
 	(select case WHEN pro2.id_empresa IS NOT NULL THEN e2.ruc ELSE pe2.numero_documento END 
 	from propietarios pro2
 	left join personas pe2 on pro2.id_persona = pe2.id 
-	left join empresas e2 on pro2.id_empresa = e2.id where pro2.id_solicitud = s.id limit 1) numero_documento, p2.direccion direccion, s.id_tipo_solicitud, DATE_PART(''YEAR'', s.fecha_registro) anio, s.id_resultado, s.id_municipalidad, s.id_tipo_tramite, p2.codigo, s.codigo_solicitud, tm5.denominacion instancia
+	left join empresas e2 on pro2.id_empresa = e2.id where pro2.id_solicitud = s.id limit 1) numero_documento, p2.direccion direccion, s.id_tipo_solicitud, DATE_PART(''YEAR'', s.fecha_registro) anio, 
+	s.id_resultado, s.id_municipalidad, s.id_tipo_tramite, p2.codigo, s.codigo_solicitud, tm5.denominacion instancia, p2.id_tipo_sitio, p2.sitio_descripcion, p2.id_zona, p2.zona_descripcion, p2.id_tipo_direccion, 
+	p2.lote, p2.sub_lote
 	from solicitudes s
 	left join municipalidades m on s.id_municipalidad = m.id and m.estado=''1''
 	left join proyectos p2 on s.id_proyecto = p2.id
@@ -74,7 +80,7 @@ begin
 	where s.id_tipo_solicitud=''123'' '; 
 	
 	If p_anio<>'' Then
-	 v_tabla:=v_tabla||'And DATE_PART(''YEAR'', s.fecha_registro) = '''||p_anio||''' ';
+		v_tabla:=v_tabla||'And DATE_PART(''YEAR'', s.fecha_registro) = '''||p_anio||''' ';
 	End If;
 
 	if p_situacion_credipago<>'' Then
@@ -82,65 +88,53 @@ begin
 	End If;
 
 	If p_fecha_inicio_registro<>'' Then
-	 v_tabla:=v_tabla|| 'And s.fecha_registro >= '''||p_fecha_inicio_registro||' :00:00'' ';
+		v_tabla:=v_tabla|| 'And s.fecha_registro >= '''||p_fecha_inicio_registro||' :00:00'' ';
 	End If;
 
 	If p_fecha_fin_registro<>'' Then
-	 v_tabla:=v_tabla||'And s.fecha_registro <= '''||p_fecha_fin_registro||' :23:59'' ';
+		v_tabla:=v_tabla||'And s.fecha_registro <= '''||p_fecha_fin_registro||' :23:59'' ';
 	End If;
 	
 	If p_estado_proyecto<>'' Then
-	 v_tabla:=v_tabla||'And s.id_resultado = '''||p_estado_proyecto||''' ';
+		v_tabla:=v_tabla||'And s.id_resultado = '''||p_estado_proyecto||''' ';
 	End If;
-	--p_estado='1';
+	
 	If p_estado<>'' Then
-	 v_tabla:=v_tabla||'And s.estado = '''||p_estado||''' ';
+		v_tabla:=v_tabla||'And s.estado = '''||p_estado||''' ';
 	End If;
 
 	v_tabla:=v_tabla||') R';
 	
 	v_where = ' Where 1=1 ';
-	/*
-	If p_anio<>'' Then
-	 v_where:=v_where||'And R.anio = '''||p_anio||''' ';
-	End If;
-	*/
-	If p_nombre_proyecto<>'' Then
-	 v_where:=v_where||'And R.nombre_proyecto ilike ''%'||p_nombre_proyecto||'%'' ';
-	End If;
 
-	If p_distrito<>'' Then
-	 v_where:=v_where||'And R.distrito ilike ''%'||p_distrito||'%'' ';
+	If p_nombre_proyecto<>'' Then
+		v_where:=v_where||'And R.nombre_proyecto ilike ''%'||p_nombre_proyecto||'%'' ';
 	End If;
 
 	If p_numero_cap<>'' Then
-	 v_where:=v_where||'And R.numero_cap = '''||p_numero_cap||''' ';
+		v_where:=v_where||'And R.numero_cap = '''||p_numero_cap||''' ';
 	End If;
 
 	If p_proyectista<>'' Then
-	 v_where:=v_where||'And R.proyectista ilike ''%'||p_proyectista||'%'' ';
+		v_where:=v_where||'And R.proyectista ilike ''%'||p_proyectista||'%'' ';
 	End If;
 
 	If p_numero_documento<>'' Then
-	 v_where:=v_where||'And R.numero_documento = '''||p_numero_documento||''' ';
+		v_where:=v_where||'And R.numero_documento = '''||p_numero_documento||''' ';
 	End If;
 
 	If p_propietario<>'' Then
-	 v_where:=v_where||'And R.propietario ilike ''%'||p_propietario||'%'' ';
+		v_where:=v_where||'And R.propietario ilike ''%'||p_propietario||'%'' ';
 	End If;
 
 	If p_tipo_proyecto<>'' Then
-	 v_where:=v_where||'And R.tipo_proyecto = '''||p_tipo_proyecto||''' ';
+		v_where:=v_where||'And R.tipo_proyecto = '''||p_tipo_proyecto||''' ';
 	End If;
 
 	If p_tipo_solicitud<>'' Then
-	 v_where:=v_where||'And R.id_tipo_tramite = '''||p_tipo_solicitud||''' ';
+		v_where:=v_where||'And R.id_tipo_tramite = '''||p_tipo_solicitud||''' ';
 	End If;
-
-	/*If p_credipago<>'' Then
-	 v_where:=v_where||'And R.credipago = '''||p_credipago||''' ';
-	End If;*/
-
+	
 	IF p_credipago <> '' THEN
         v_where := v_where || ' AND EXISTS (
             SELECT 1 FROM liquidaciones l WHERE l.id_solicitud = R.id and l.credipago = ''' || p_credipago || ''' AND l.estado = ''1''
@@ -148,64 +142,59 @@ begin
     END IF;
 
 	If p_codigo<>'' Then
-	 v_where:=v_where||'And R.codigo = '''||p_codigo||''' ';
+		v_where:=v_where||'And R.codigo = '''||p_codigo||''' ';
 	End If;
 
 	If p_n_solicitud<>'' Then
-	 v_where:=v_where||'And R.codigo_solicitud = '''||p_n_solicitud||''' ';
+		v_where:=v_where||'And R.codigo_solicitud = '''||p_n_solicitud||''' ';
 	End If;
 	
 	If p_municipalidad<>'' Then
-	 v_where:=v_where||'And R.id_municipalidad  = '''||p_municipalidad||''' ';
+		v_where:=v_where||'And R.id_municipalidad  = '''||p_municipalidad||''' ';
 	End If;
-
-	/*If p_situacion_credipago<>'' Then
-	 v_where:=v_where||'And (select l3.id_situacion from liquidaciones l3 where l3.id_solicitud = s.id and l3.id_situacion ='''||p_situacion_credipago||''' and l3.estado = ''1'')';
-	End If;*/
-
-	
-
-	/*If p_fecha_registro<>'' Then
-	 v_where:=v_where||'And R.fecha_registro >= '''||p_fecha_registro||' :00:00'' ';
-	End If;*/
-
-	/*IF p_fecha_inicio_registro <> '' OR p_fecha_fin_registro <> '' THEN
-    v_where := v_where || ' AND (';
-    IF p_fecha_inicio_registro <> '' THEN
-        v_where := v_where || ' R.fecha_registro >= ''' || p_fecha_inicio_registro || ' 00:00:00''';
-    END IF;
-    
-    IF p_fecha_inicio_registro <> '' AND p_fecha_fin_registro <> '' THEN
-        v_where := v_where || ' AND ';
-    END IF;
-    
-    IF p_fecha_fin_registro <> '' THEN
-        v_where := v_where || ' R.fecha_registro <= ''' || p_fecha_fin_registro || ' 23:59:59''';
-    END IF;
-    v_where := v_where || ')';
-	END IF;*/
-	
-	/*
-	If p_fecha_inicio_registro<>'' Then
-	 v_where:=v_where|| 'And R.fecha_registro >= '''||p_fecha_inicio_registro||' :00:00'' ';
-	End If;
-
-	If p_fecha_fin_registro<>'' Then
-	 v_where:=v_where||'And R.fecha_registro <= '''||p_fecha_fin_registro||' :23:59'' ';
-	End If;
-	*/
-	/*
-	If p_estado_proyecto<>'' Then
-	 v_where:=v_where||'And R.id_resultado = '''||p_estado_proyecto||''' ';
-	End If;
-
-	If p_estado<>'' Then
-	 v_where:=v_where||'And R.estado = '''||p_estado||''' ';
-	End If;
-	*/
 	
 	If p_direccion<>'' Then
-	 v_where:=v_where||'And R.direccion ilike ''%'||p_direccion||'%'' ';
+		v_where:=v_where||'And R.direccion ilike ''%'||p_direccion||'%'' ';
+	End If;
+
+	If p_departamento <> '' Then
+	   v_where := v_where || ' AND SUBSTRING(R.distrito FROM 1 FOR 2) = ''' || p_departamento || ''' ';
+	End If;
+
+	If p_provincia <> '' Then
+	   v_where := v_where || ' AND SUBSTRING(R.distrito FROM 3 FOR 2) = ''' || p_provincia || ''' ';
+	End If;
+
+	If p_distrito<>'' Then
+		v_where:=v_where||'And R.distrito = '''||p_distrito||''' ';
+	End If;
+
+	If p_sitio<>'' Then
+		v_where:=v_where||'And R.id_tipo_sitio = '''||p_sitio||''' ';
+	End If;
+
+	If p_direccion_sitio<>'' Then
+		v_where:=v_where||'And R.sitio_descripcion ilike ''%'||p_direccion_sitio||'%'' ';
+	End If;
+
+	If p_zona<>'' Then
+		v_where:=v_where||'And R.id_zona = '''||p_zona||''' ';
+	End If;
+
+	If p_direccion_zona<>'' Then
+		v_where:=v_where||'And R.zona_descripcion ilike ''%'||p_direccion_zona||'%'' ';
+	End If;
+	
+	If p_tipo<>'' Then
+		v_where:=v_where||'And R.id_tipo_direccion = '''||p_tipo||''' ';
+	End If;
+
+	If p_lote<>'' Then
+		v_where:=v_where||'And R.lote = '''||p_lote||''' ';
+	End If;
+
+	If p_sublote<>'' Then
+		v_where:=v_where||'And R.sub_lote = '''||p_sublote||''' ';
 	End If;
 
 	EXECUTE ('SELECT count(1) '||v_tabla||v_where) INTO v_count;

@@ -23,6 +23,7 @@ use App\Models\NumeracionDocumento;
 use App\Models\UsoEdificacione;
 use App\Models\Presupuesto;
 use App\Models\SolicitudDocumento;
+use App\Models\SolicitudObservacione;
 use App\Models\User;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -108,13 +109,17 @@ class DerechoRevisionController extends Controller
 		$tablaMaestra_model = new TablaMaestra;
 		
         $estado_solicitud = $tablaMaestra_model->getMaestroByTipo(118);
+		$departamento = $ubigeo_model->getDepartamento();
         $distrito = $ubigeo_model->getDistritoLima();
         $municipalidad = $municipalidad_modal->getMunicipalidadOrden();
 		$tipo_proyecto = $tablaMaestra_model->getMaestroByTipo(25);
 		$tipo_solicitud = $tablaMaestra_model->getMaestroByTipo(24);
 		$situacion_credipago = $tablaMaestra_model->getMaestroByTipo(125);
+		$sitio = $tablaMaestra_model->getMaestroByTipo(33);
+        $zona = $tablaMaestra_model->getMaestroByTipo(34);
+		$tipo = $tablaMaestra_model->getMaestroByTipo(35);
         
-        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud','proyecto','situacion_credipago'));
+        return view('frontend.derecho_revision.all_solicitud',compact('derecho_revision','agremiado','persona','liquidacion','municipalidad','distrito','estado_solicitud','tipo_proyecto','tipo_solicitud','proyecto','situacion_credipago','sitio','zona','tipo','departamento'));
     }
 
 	public function listar_derecho_revision_ajax(Request $request){
@@ -122,7 +127,6 @@ class DerechoRevisionController extends Controller
 		$derecho_revision_model = new DerechoRevision;
 		$p[]=$request->anio;
 		$p[]=$request->nombre_proyecto;
-        $p[]=$request->distrito;
         $p[]=$request->numero_cap;
         $p[]=$request->proyectista;
         $p[]=$request->numero_documento;
@@ -131,7 +135,6 @@ class DerechoRevisionController extends Controller
         $p[]=$request->tipo_solicitud;
         $p[]=$request->credipago;
 		$p[]=$request->municipalidad;
-        $p[]=$request->direccion;
 		$p[]=$request->n_solicitud;
 		$p[]=$request->codigo;
 		$p[]=$request->fecha_inicio_bus;
@@ -139,6 +142,17 @@ class DerechoRevisionController extends Controller
 		$p[]=$request->situacion_credipago;
 		$p[]=$request->estado_proyecto;
 		$p[]=$request->estado;
+		$p[]=$request->departamento;
+		$p[]=$request->provincia;
+		$p[]=$request->distrito;
+		$p[]=$request->sitio;
+		$p[]=$request->direccion_sitio;
+		$p[]=$request->zona;
+		$p[]=$request->direccion_zona;
+		$p[]=$request->tipo;
+		$p[]=$request->direccion;
+		$p[]=$request->lote;
+		$p[]=$request->sublote;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_ajax($p);
@@ -161,7 +175,6 @@ class DerechoRevisionController extends Controller
 		$derecho_revision_model = new DerechoRevision;
 		$p[]=$request->anio;
 		$p[]=$request->nombre_proyecto;
-        $p[]=$request->distrito;
         $p[]=$request->numero_cap;
         $p[]=$request->proyectista;
         $p[]=$request->numero_documento;
@@ -174,6 +187,16 @@ class DerechoRevisionController extends Controller
 		$p[]=$request->situacion_credipago;
 		$p[]=$request->estado_proyecto;
 		$p[]="1";
+		$p[]=$request->departamento;
+		$p[]=$request->provincia;
+		$p[]=$request->distrito;
+		$p[]=$request->sitio;
+		$p[]=$request->direccion_sitio;
+		$p[]=$request->zona;
+		$p[]=$request->direccion_zona;
+		$p[]=$request->tipo;
+		$p[]=$request->lote;
+		$p[]=$request->sublote;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
 		$data = $derecho_revision_model->listar_derecho_revision_HU_ajax($p);
@@ -3332,10 +3355,21 @@ class DerechoRevisionController extends Controller
 
 	public function denegar_solicitud($request)
     {
+		//dd("ok");
+		$id_user = Auth::user()->id;
+
 		$derecho_revision = DerechoRevision::find($request->id_solicitud);
 		$derecho_revision->id_resultado = 3;
-		$derecho_revision->observacion = $request->observaciones;
+		//$derecho_revision->observacion = $request->observaciones;
 		$derecho_revision->save();
+
+		$solicitud_observacion = new SolicitudObservacione;
+		$solicitud_observacion->id_usuario = $id_user;
+		$solicitud_observacion->observacion = $request->observaciones;
+		$solicitud_observacion->id_solicitud = $request->id_solicitud;
+		$solicitud_observacion->estado = 1;
+		$solicitud_observacion->id_usuario_inserta = $request->id_user;
+		$solicitud_observacion->save();
 
 		echo $derecho_revision->id;
     }
