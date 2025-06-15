@@ -118,9 +118,9 @@ and t1.id_periodo_comisione=".$id_periodo;
 			end 
 		end tipo_sesion 
 		from comision_sesiones t1 
-		left join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
-		left join solicitudes s2 on s2.id=csd.id_solicitud
-		left join ubigeos u on s2.id_ubigeo=u.id_ubigeo
+		inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
+		inner join solicitudes s2 on s2.id=csd.id_solicitud
+		inner join ubigeos u on s2.id_ubigeo=u.id_ubigeo
 		inner join comision_sesion_delegados t0 on t1.id=t0.id_comision_sesion 
 		inner join comisiones t4 on t1.id_comision=t4.id and t4.estado='1' 
 		left join comision_delegados cd on t0.id_delegado=cd.id  
@@ -133,7 +133,7 @@ and t1.id_periodo_comisione=".$id_periodo;
 		And t0.estado='1' 
 		And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 		And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
-		--and u.id_ubigeo = '".$id_ubigeo."' 
+		and u.id_ubigeo = '".$id_ubigeo."' 
 		and t1.id_comision=".$id_comision."
 		and a.id=".$id_agremiado."
 		and to_char(t1.fecha_ejecucion,'dd-mm-yyyy')='".$fecha."'";
