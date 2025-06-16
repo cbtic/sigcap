@@ -443,6 +443,7 @@ And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 And t1.id_estado_sesion=290 
 and t1.id_estado_aprobacion=2
+and t0.id_aprobar_pago=2
 and t1.id in (select id_comision_sesion from comision_sesion_dictamenes)";
 
 		$data = DB::select($cad);
