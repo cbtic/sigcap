@@ -585,15 +585,15 @@ function calcularReintegro(){
 								<i class="fas fa-home"></i>
 							</a>
 
-							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px" onclick ="imprimirSolicitudPdf()">
+							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px" onclick ="imprimirSolicitudPdf()">
 								<i class="fas fa-print"></i>
 							</button>
 							
-							<button id="btnModificarSolicitud" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnModificarSolicitud" type="button" class="btn btn-outline btn-sm btn-rojo" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-history icono-rojo">  Modificar Solicitud</i>
 							</button>
 
-							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-times icono-rojo">  Solicitar Anulaci&oacute;n</i>
 							</button>
 
@@ -601,16 +601,20 @@ function calcularReintegro(){
 								<i class="fa fa-pencil-ruler"> Solicitudes</i>
 							</a>
 
-							<button id="btnAprobarLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" data-toggle="modal" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnAprobarLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 150px; height: 30px; margin-left: 10px" onclick="activarAprobarLiquidacion()">
 								<i class="fas fa-file-pdf">  Aprobar Liquidaci&oacute;n</i>
 							</button>
 
-							<button id="btnDenegarSolicitud" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 150px; height: 30px; display: inline-flex; align-items: center; justify-content: center" onclick="activarBotonDenegar()">
+							<button id="btnDenegarSolicitud" type="button" class="btn btn-outline btn-sm btn-rojo" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 150px; height: 30px; display: inline-flex; align-items: center; justify-content: center" onclick="activarBotonDenegar()">
 								<i class="fas fa-exclamation-circle">  Denegar Solicitud</i>
 							</button>
 
 							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnRegresar">
 								<i class="fas fa-arrow-left"> Regresar</i>
+							</a>
+
+							<a onclick="visualizarObservacion()" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-left:10px; width: 120px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnObservaciones">
+								<i class="fas fa-clipboard"> Observaciones</i>
 							</a>
 
 							@endif
@@ -621,11 +625,11 @@ function calcularReintegro(){
 								<i class="fas fa-home"></i>
 							</a>
 
-							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
+							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
 								<i class="fas fa-print"></i>
 							</button>
 							
-							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-times icono-rojo">  Solicitar Anulaci&oacute;n</i>
 							</button>
 
@@ -633,12 +637,16 @@ function calcularReintegro(){
 								<i class="fa fa-pencil-ruler"> Solicitudes</i>
 							</a>
 							
-							<button id="btnAprobarPago" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnAprobarPago" type="button" class="btn btn-outline btn-sm btn-verde"style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-dollar-sign">  Aprobar Pago</i>
 							</button>
 
 							<a href="/derecho_revision/consulta_derecho_revision/" onclick="" style="border: solid 1px; color:#DC3545; margin-left: 10px; width: 100px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-rojo" id="btnRegresar">
 								<i class="fas fa-arrow-left"> Regresar</i>
+							</a>
+
+							<a onclick="visualizarObservacion()" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-left:10px; width: 120px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnObservaciones">
+								<i class="fas fa-clipboard"> Observaciones</i>
 							</a>
 
 							@endif
@@ -649,15 +657,15 @@ function calcularReintegro(){
 								<i class="fas fa-home"></i>
 							</a>
 
-							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
+							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
 								<i class="fas fa-print"></i>
 							</button>
 
-							<button id="btnModificarSolicitud" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnModificarSolicitud" type="button" class="btn btn-outline btn-sm btn-rojo" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-history icono-rojo">  Modificar Solicitud</i>
 							</button>
 
-							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-times icono-rojo">  Solicitar Anulaci&oacute;n</i>
 							</button>
 
@@ -669,6 +677,10 @@ function calcularReintegro(){
 								<i class="fas fa-arrow-left"> Regresar</i>
 							</a>
 
+							<a onclick="visualizarObservacion()" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-left:10px; width: 120px; height: 30px; display: inline-flex; align-items: center; justify-content: center;" class="btn btn-outline btn-sm btn-verde" id="btnObservaciones">
+								<i class="fas fa-clipboard"> Observaciones</i>
+							</a>
+
 							@endif
 
 							@if ($datos_derecho_revision[0]->id_resultado == 4 || $datos_derecho_revision[0]->id_resultado == 5)
@@ -677,15 +689,15 @@ function calcularReintegro(){
 								<i class="fas fa-home"></i>
 							</a>
 
-							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
+							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
 								<i class="fas fa-print"></i>
 							</button>
 
-							<button id="btnReintegro" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnReintegro" type="button" class="btn btn-outline btn-sm btn-rojo" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-history icono-rojo">  Solicitar Reintegro</i>
 							</button>
 
-							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnAnulacion" type="button" class="btn btn-outline btn-sm btn-rojo" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-times icono-rojo">  Solicitar Anulaci&oacute;n</i>
 							</button>
 
@@ -693,15 +705,15 @@ function calcularReintegro(){
 								<i class="fas fa-pencil-ruler"> Solicitudes</i>
 							</a>
 
-							<button id="btnLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" data-toggle="modal" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
+							<button id="btnLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
 								<i class="fas fa-file-pdf">  Liquidaci&oacute;n</i>
 							</button>
 
-							<button id="btnEnviarLiquidacion" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnEnviarLiquidacion" type="button" class="btn btn-outline btn-sm btn-verde" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-at">  Enviar Liquidaci&oacute;n</i>
 							</button>
 
-							<button id="btnAsignarComision" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 190px; height: 30px; margin-left: 10px">
+							<button id="btnAsignarComision" type="button" class="btn btn-outline btn-sm btn-verde" style="border: solid 1px; color:#28A745; margin-top:0px; width: 190px; height: 30px; margin-left: 10px">
 								<i class="fas fa-book-reader">  Asignar a Comisi&oacute;n T&eacute;cnica</i>
 							</button>
 
@@ -717,11 +729,11 @@ function calcularReintegro(){
 								<i class="fas fa-home"></i>
 							</a>
 
-							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" data-toggle="modal" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
+							<button id="btnPrint" type="button" class="btn btn-outline btn-sm btn-plomo" style="border: solid 1px; color:gray; margin-top:0px; width: 30px; height: 30px; margin-left: 10px">
 								<i class="fas fa-print"></i>
 							</button>
 
-							<button id="btnReintegro" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnReintegro" type="button" class="btn btn-outline btn-sm btn-rojo" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-history icono-rojo">  Solicitar Reintegro</i>
 							</button>
 
@@ -729,11 +741,11 @@ function calcularReintegro(){
 								<i class="fas fa-pencil-ruler"> Solicitudes</i>
 							</a>
 
-							<button id="btnLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" data-toggle="modal" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
+							<button id="btnLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" style="border: solid 1px; color:#1538C8; margin-top:0px; width: 120px; height: 30px; margin-left: 10px">
 								<i class="fas fa-file-pdf">  Liquidaci&oacute;n</i>
 							</button>
 
-							<button id="btnEnviarLiquidacion" type="button" class="btn btn-outline btn-sm btn-verde" data-toggle="modal" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
+							<button id="btnEnviarLiquidacion" type="button" class="btn btn-outline btn-sm btn-verde" style="border: solid 1px; color:#28A745; margin-top:0px; width: 150px; height: 30px; margin-left: 10px">
 								<i class="fas fa-at">  Enviar Liquidaci&oacute;n</i>
 							</button>
 
@@ -759,12 +771,45 @@ function calcularReintegro(){
 				</div>
 				<div class="row">
 					<div class="col-lg-9">
-						<textarea name="observaciones" cols="40" rows="4" class="form-control upper-case" id="observaciones" style="height: 126px;"></textarea>
+						<textarea name="observaciones" cols="40" rows="4" class="form-control upper-case" id="observaciones" style="height: 126px;">{{ $observaciones ? $observaciones->observacion : '' }}</textarea>
 					</div>
 					<div class="col-lg-3" style="padding-bottom:20px">
-						<button id="btnDenegarLiquidacion" type="button" class="btn btn-outline btn-sm btn-rojo" data-toggle="modal" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 190px; height: 30px; margin-left: 5px" onClick="save_denegacion_solicitud()">
+						<button id="btnDenegarLiquidacion" type="button" class="btn btn-outline btn-sm btn-rojo" style="border: solid 1px; color:#DC3545; margin-top:0px; width: 190px; height: 30px; margin-left: 5px" onClick="save_denegacion_solicitud()">
 							<i class="fas fa-times icono-rojo" style="font-size:16px">  Denegar Liquidaci&oacute;n</i>
 						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="col col-sm-12 align-self-left" id="aprobar_liquidacion">
+				<h4 style="color:rgb(0, 0, 255)">Aprobar Liquidaci&oacute;n</h4>
+				<div class="row">
+					<div class="col-lg-2">
+						<label class="control-label form-control-sm color-letra">N&uacute;mero de Liquidaci&oacute;n</label>
+						<input name="numero_liquidacion" id="numero_liquidacion" class="form-control" value="<?php echo $liquidacion->credipago ?>">
+					</div>
+					<div class="col-lg-2">
+						<label class="control-label form-control-sm color-letra">Fecha de Liquidaci&oacute;n</label>
+						<input name="fecha_liquidacion" id="fecha_liquidacion" class="form-control"  value="<?php echo isset($liquidacion) ? date('d-m-Y', strtotime($liquidacion->fecha)) : ''; ?>">
+					</div>
+					<div class="col-lg-2">
+						<label class="control-label form-control-sm color-letra">Hora de Liquidaci&oacute;n</label>
+						<input name="hora_liquidacion" id="hora_liquidacion" class="form-control" value="<?php echo $liquidacion->fecha ?>">
+					</div>
+					<div class="col-lg-2">
+						<label class="control-label form-control-sm color-letra">Monto de Liquidaci&oacute;n</label>
+						<input name="monto_liquidacion" id="monto_liquidacion" class="form-control" value="<?php echo $liquidacion->total ?>" readonly="readonly">
+					</div>
+					<div class="col-lg-2" style="padding-bottom:20px">
+						<button id="btnAprobarLiquidacion" type="button" class="btn btn-outline btn-sm btn-azul" style="border: solid 1px; color:#1538C8; margin-top:40px; width: 190px; height: 30px; margin-left: 5px" onClick="save_aprobar_solicitud()">
+							<i class="fa fa-save icono-azul" style="font-size:16px">  Aprobar Liquidaci&oacute;n</i>
+						</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4">
+						<label class="control-label form-control-sm color-letra">Nota</label>
+						<input name="nota_liquidacion" id="nota_liquidacion" class="form-control" value="<?php //echo $liquidacion->credipago ?>">
 					</div>
 				</div>
 			</div>

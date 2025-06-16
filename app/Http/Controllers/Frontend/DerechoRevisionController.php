@@ -2779,6 +2779,10 @@ class DerechoRevisionController extends Controller
 				$datos_propietario_array[] = $item;
 			}
 		}
+
+		$observaciones = SolicitudObservacione::where("id_solicitud",$derechoRevision->id)->where("estado","1")->orderBy('id','desc')->first();
+
+		$liquidacion = Liquidacione::where("id_solicitud",$derechoRevision->id)->where("estado","1")->where("id_situacion","!=", 3)->orderBy('id','desc')->first();
 		
 		//$proyectista_asociado = Proyectista::where("id_solicitud",$derechoRevision->id)->where('id_tipo_profesional',212)->where("estado","1")->orderBy('id')->get();
 
@@ -2796,7 +2800,7 @@ class DerechoRevisionController extends Controller
 		$distrito = $ubigeo_model->obtenerDistrito(substr($id_ubigeo, 0, 2),substr($id_ubigeo, 2, 2),substr($id_ubigeo, 4, 2));
 		//dd($datos_proyectista_asociado);
 
-        return view('frontend.derecho_revision.visualizar_solicitud',compact('id', 'derechoRevision', 'agremiado_principal', 'persona_principal', 'proyecto2', 'datos_agremiado_principal', 'datos_persona_principal', 'proyectista_asociado','datos_derecho_revision','departamento','provincia','distrito','datos_proyectista_principal','datos_proyectista_asociado','datos_uso_edificacion','datos_presupuesto_array','datos_propietario_array'));
+        return view('frontend.derecho_revision.visualizar_solicitud',compact('id', 'derechoRevision', 'agremiado_principal', 'persona_principal', 'proyecto2', 'datos_agremiado_principal', 'datos_persona_principal', 'proyectista_asociado','datos_derecho_revision','departamento','provincia','distrito','datos_proyectista_principal','datos_proyectista_asociado','datos_uso_edificacion','datos_presupuesto_array','datos_propietario_array','observaciones','liquidacion'));
     }
 
 	public function send_nuevo_registro_solicitud_edificacion(Request $request){
@@ -3353,7 +3357,7 @@ class DerechoRevisionController extends Controller
 		
 	}
 
-	public function denegar_solicitud($request)
+	public function denegar_solicitud(Request $request)
     {
 		//dd("ok");
 		$id_user = Auth::user()->id;
@@ -3368,10 +3372,10 @@ class DerechoRevisionController extends Controller
 		$solicitud_observacion->observacion = $request->observaciones;
 		$solicitud_observacion->id_solicitud = $request->id_solicitud;
 		$solicitud_observacion->estado = 1;
-		$solicitud_observacion->id_usuario_inserta = $request->id_user;
+		$solicitud_observacion->id_usuario_inserta = $id_user;
 		$solicitud_observacion->save();
 
-		echo $derecho_revision->id;
+		return response()->json(['id' => $derecho_revision->id]);
     }
 
 	public function obtener_ubigeo_municipalidad($municipalidad){
@@ -3395,6 +3399,22 @@ class DerechoRevisionController extends Controller
         $liquidacion_model = new Liquidacione;
 
 		$liquidacion_model->anular_liquidacion_7_dias();
+
+    }
+
+	public function modal_observaciones_solicitud($id){
+		
+        return view('frontend.derecho_revision.modal_observaciones_solicitud',compact('id'));
+		
+    }
+
+	public function obtener_observaciones($id){
+
+        $observacionDerechoRevision = new SolicitudObservacione;
+        //$sw = true;
+        $observacion_lista = $observacionDerechoRevision->listar_observaciones_solicitud($id);
+        //print_r($parentesco_lista);exit();
+        return view('frontend.derecho_revision.lista_observacion',compact('observacion_lista'));
 
     }
 
