@@ -50,10 +50,9 @@ class AdelantoController extends Controller
 	
 		$adelanto_model = new Adelanto;
 		$p[]=$request->numero_cap;
-		$p[]=$request->agremiado;//$request->numero_documento;
+		$p[]=$request->agremiado;
 		$p[]=$request->periodo;
 		$p[]=$request->mes_reintegro;
-		$p[]="";
         $p[]=$request->estado;
 		$p[]=$request->NumeroPagina;
 		$p[]=$request->NumeroRegistros;
@@ -317,7 +316,6 @@ class AdelantoController extends Controller
 		$p[]=$agremiado;
 		$p[]=$periodo;
 		$p[]=$mes_reintegro;
-		$p[]="";
         $p[]=$estado;
 		$p[]=1;
 		$p[]=10000;
