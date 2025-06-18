@@ -50,7 +50,7 @@ and t4.id_municipalidad_integrada=".$id_municipalidad_integrada;
 	
 	public static function getDelegadoComisionDistritoSesion($anio,$mes,$id_ubigeo,$id_comision){ 
 
-        $cad = "select distinct case when cd.id_puesto=12 then 'S' when t0.id_agremiado>0 then 'AE' else 'T' end tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap,tmp.denominacion,tmp.orden 
+        $cad = "select distinct case when cd.id_puesto=12 or cd.id_puesto=30 then 'S' when t0.id_agremiado>0 then 'AE' else 'T' end tipo,a.id,p.apellido_paterno||' '||p.apellido_materno||' '||p.nombres delegado,a.numero_cap,tmp.denominacion,tmp.orden 
 from comision_sesiones t1 
 inner join comision_sesion_dictamenes csd on t1.id=csd.id_comision_sesion 
 inner join solicitudes s2 on s2.id=csd.id_solicitud
@@ -443,6 +443,7 @@ And to_char(t1.fecha_ejecucion,'yyyy') = '".$anio."'
 And to_char(t1.fecha_ejecucion,'mm') = '".$mes."'
 And t1.id_estado_sesion=290 
 and t1.id_estado_aprobacion=2
+and t0.id_aprobar_pago=2
 and t1.id in (select id_comision_sesion from comision_sesion_dictamenes)";
 
 		$data = DB::select($cad);
