@@ -239,7 +239,8 @@ class AgremiadoController extends Controller
 		}else{
 			$persona = new Persona;
 			$persona->estado = 1;
-			$persona->id_usuario_inserta = 1;
+			//$persona->id_usuario_inserta = 1;
+			$persona->id_usuario_inserta = $id_user;
 			
 			if($request->img_foto!="" && $persona->foto!=$request->img_foto){
 				/*
@@ -296,10 +297,14 @@ class AgremiadoController extends Controller
 		
 		if($id_agremiado> 0){
 			$agremiado = Agremiado::find($id_agremiado);
+			$agremiado->id_usuario_actualiza = $id_user;
 		}else{
 			$agremiado = new Agremiado;
 			$agremiado->id_persona = $persona->id;
-			$agremiado->id_usuario_inserta = 1;
+
+			//$agremiado->id_usuario_inserta = 1;
+			$agremiado->id_usuario_inserta = $id_user;
+			
 			$agremiado->fecha_colegiado = $request->fecha_colegiado;
 			//$agremiado->id_situacion = "73";
 		}
@@ -463,10 +468,14 @@ class AgremiadoController extends Controller
 	
 	public function send_agremiado_estudio(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoEstudio = new AgremiadoEstudio;
+			$agremiadoEstudio->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoEstudio = AgremiadoEstudio::find($request->id);
+			$agremiadoEstudio->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiadoEstudio->id_agremiado = $request->id_agremiado;
@@ -478,7 +487,7 @@ class AgremiadoController extends Controller
 		$agremiadoEstudio->libro = $request->libro;
 		$agremiadoEstudio->folio = $request->folio;
 		$agremiadoEstudio->estado = 1;
-		$agremiadoEstudio->id_usuario_inserta = 1;
+		//$agremiadoEstudio->id_usuario_inserta = 1;
 		$agremiadoEstudio->save();
 			
     }
@@ -502,17 +511,21 @@ class AgremiadoController extends Controller
 	
 	public function send_agremiado_idioma(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoIdioma = new AgremiadoIdioma;
+			$agremiadoIdioma->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoIdioma = AgremiadoIdioma::find($request->id);
+			$agremiadoIdioma->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiadoIdioma->id_agremiado = $request->id_agremiado;
 		$agremiadoIdioma->id_idioma = $request->id_idioma;
 		$agremiadoIdioma->id_grado_conocimiento = $request->id_grado_conocimiento;
 		$agremiadoIdioma->estado = 1;
-		$agremiadoIdioma->id_usuario_inserta = 1;
+		//$agremiadoIdioma->id_usuario_inserta = 1;
 		$agremiadoIdioma->save();
 			
     }
@@ -536,10 +549,14 @@ class AgremiadoController extends Controller
 	
 	public function send_agremiado_parentesco(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoParenteco = new AgremiadoParenteco;
+			$agremiadoParenteco->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoParenteco = AgremiadoParenteco::find($request->id);
+			$agremiadoParenteco->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiadoParenteco->id_agremiado = $request->id_agremiado;
@@ -548,7 +565,7 @@ class AgremiadoController extends Controller
 		$agremiadoParenteco->apellido_nombre = $request->apellido_nombre;
 		$agremiadoParenteco->fecha_nacimiento = $request->fecha_nacimiento;
 		$agremiadoParenteco->estado = 1;
-		$agremiadoParenteco->id_usuario_inserta = 1;
+		//$agremiadoParenteco->id_usuario_inserta = 1;
 		$agremiadoParenteco->save();
 			
     }
@@ -605,10 +622,15 @@ class AgremiadoController extends Controller
 	
 	public function send_agremiado_trabajo(Request $request){
 		
+
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoTrabajo = new AgremiadoTrabajo;
+			$agremiadoTrabajo->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoTrabajo = AgremiadoTrabajo::find($request->id);
+			$agremiadoTrabajo->id_usuario_actualiza = $id_user;
 		}
 		/*
 		$id_departamento = str_pad($request->id_departamento_trabajo, 2, "0", STR_PAD_LEFT);
@@ -631,17 +653,21 @@ class AgremiadoController extends Controller
 		$agremiadoTrabajo->celular = $request->celular;
 		$agremiadoTrabajo->email = $request->email;
 		$agremiadoTrabajo->estado = 1;
-		$agremiadoTrabajo->id_usuario_inserta = 1;
+		//$agremiadoTrabajo->id_usuario_inserta = 1;
 		$agremiadoTrabajo->save();
 		
     }
 	
 	public function send_agremiado_situacion(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoSituacion = new AgremiadoSituacione;
+			$agremiadoSituacion->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoSituacion = AgremiadoSituacione::find($request->id);
+			$agremiadoSituacion->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiadoSituacion->id_agremiado = $request->id_agremiado;
@@ -651,7 +677,7 @@ class AgremiadoController extends Controller
 		$agremiadoSituacion->fecha_fin = $request->fecha_fin;
 		$agremiadoSituacion->ruta_documento = $request->ruta_documento;
 		$agremiadoSituacion->estado = 1;
-		$agremiadoSituacion->id_usuario_inserta = 1;
+		//$agremiadoSituacion->id_usuario_inserta = 1;
 		$agremiadoSituacion->save();
 		
 		$agremiado = Agremiado::find($request->id_agremiado);
@@ -668,10 +694,14 @@ class AgremiadoController extends Controller
 	
 	public function send_agremiado_traslado(Request $request){
 		
+		$id_user = Auth::user()->id;
+
 		if($request->id == 0){
 			$agremiadoTraslado = new AgremiadoTraslado;
+			$agremiadoTraslado->id_usuario_inserta = $id_user;
 		}else{
 			$agremiadoTraslado = AgremiadoTraslado::find($request->id);
+			$agremiadoTraslado->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiadoTraslado->id_agremiado = $request->id_agremiado;
@@ -681,7 +711,7 @@ class AgremiadoController extends Controller
 		$agremiadoTraslado->numero_regional = $request->numero_regional;
 		$agremiadoTraslado->observacion = $request->observacion;
 		$agremiadoTraslado->estado = 1;
-		$agremiadoTraslado->id_usuario_inserta = 1;
+		//$agremiadoTraslado->id_usuario_inserta = 1;
 		$agremiadoTraslado->save();
 		
 		$agremiado = Agremiado::find($request->id_agremiado);
@@ -1865,8 +1895,10 @@ class AgremiadoController extends Controller
 
 		if($request->id == 0){
 			$suspension = new Suspensione;
+			$suspension->id_usuario_inserta = $id_user;
 		}else{
 			$suspension = Suspensione::find($request->id);
+			$suspension->id_usuario_actualiza = $id_user;
 		}
 		
 		$suspension->id_agremiado = $request->id_agremiado;
@@ -1874,7 +1906,7 @@ class AgremiadoController extends Controller
 		$suspension->fecha_fin = $request->fecha_fin;
 		$suspension->documento = $request->ruta_documento;
 		//$suspension->estado = 1;
-		$suspension->id_usuario_inserta = $id_user;
+		//$suspension->id_usuario_inserta = $id_user;
 		$suspension->save();
 		
 		$fecha_fin = "";
