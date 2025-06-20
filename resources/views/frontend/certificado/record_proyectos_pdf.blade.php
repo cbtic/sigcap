@@ -201,7 +201,7 @@
         <br></br>
         <div style="text-align: center; position: relative; height: 100px;">
             <img width="200px" height="80px" src="img/firma_gerente_general_guillermo_benvenuto.jpeg">
-        <div>
+        <div> 
         <footer>
         <script type="text/php">
             if (isset($pdf)) {
