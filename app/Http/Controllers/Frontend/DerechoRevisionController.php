@@ -786,12 +786,18 @@ class DerechoRevisionController extends Controller
 
 		if($request->id_solicitud == 0){
 			$derecho_revision = new DerechoRevision;
+			$derecho_revision->id_usuario_inserta = $id_user;
 			$proyecto = new Proyecto;
+			$proyecto->id_usuario_inserta = $id_user;
 			$proyectista = new Proyectista;
+			$proyectista->id_usuario_inserta = $id_user;
 		}else{
 			$derecho_revision = DerechoRevision::find($request->id_solicitud);
+			$derecho_revision->id_usuario_actualiza = $id_user;
 			$proyecto = Proyecto::find($derecho_revision->id_proyecto);
+			$proyecto->id_usuario_actualiza = $id_user;
 			$proyectista = Proyectista::find($derecho_revision->id_proyectista);
+			$proyectista->id_usuario_actualiza = $id_user;
 		}
 		
 		$derecho_revision->id_regional = 5;
@@ -805,9 +811,6 @@ class DerechoRevisionController extends Controller
 		$derecho_revision->id_tipo_solicitud = 124;
 		//$derecho_revision->id_proyectista = $agremiado->id;
 		
-		$derecho_revision->id_usuario_inserta = $id_user;
-		
-
 		$proyecto->id_ubigeo = $ubigeo;
 		$proyecto->nombre = $request->nombre_proyecto;
 		$proyecto->parcela = $request->parcela;
@@ -825,7 +828,6 @@ class DerechoRevisionController extends Controller
 		$proyecto->codigo = $codigoHU;
 		$proyecto->zonificacion = $request->zonificacion;
 		$proyecto->sub_lote = $request->sublote;
-		$proyecto->id_usuario_inserta = $id_user;
 		$proyecto->save();
 		
 
@@ -839,7 +841,6 @@ class DerechoRevisionController extends Controller
 		
 		//$proyectista->firma = $request->nombre;
 		//$profesion->estado = 1;
-		$proyectista->id_usuario_inserta = $id_user;
 		$proyectista->save();
 		$derecho_revision->id_proyecto = $proyecto->id;
 		$derecho_revision->id_proyectista = $proyectista->id;

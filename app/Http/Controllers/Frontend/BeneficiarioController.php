@@ -142,7 +142,7 @@ class BeneficiarioController extends Controller
 				$beneficiario->estado_beneficiario = $request->estado_beneficiario_edit;
 				$beneficiario->tipo_documento = $request->tipo_documento;
 				$beneficiario->observacion = $request->observacion;
-				$beneficiario->id_usuario_inserta = $id_user;
+				$beneficiario->id_usuario_actualiza = $id_user;
 				$beneficiario->save();
 				$id_beneficiario = $beneficiario->id;
 		}else{
@@ -237,6 +237,8 @@ class BeneficiarioController extends Controller
 
     public function eliminar_beneficiario($id,$estado)
     {
+		$id_user = Auth::user()->id;
+
 		$beneficiario = Beneficiario::find($id);
 		$valorizaciones = Valorizacione::where("pk_registro",$id)->where("id_modulo", "9")->where("estado","1")->first();
 
@@ -246,8 +248,10 @@ class BeneficiarioController extends Controller
 		$id_valorizaciones = $valorizaciones->id;
 		$valorizacion = Valorizacione::find($id_valorizaciones);
 		$valorizacion->estado = $estado;
+		$valorizacion->id_usuario_actualiza = $id_user;
 		//print_r($id_valorizaciones).exit();
 		$beneficiario->estado = $estado;
+		$beneficiario->id_usuario_actualiza = $id_user;
 		$beneficiario->save();
 		$valorizacion->save();
 

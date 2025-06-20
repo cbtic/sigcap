@@ -238,9 +238,11 @@ class MultaController extends Controller
 		if($request->id == 0){
 			$agremiadoMulta = new AgremiadoMulta;
 			$agremiado = new Agremiado;
+			$agremiadoMulta->id_usuario_inserta = $id_user;
 			
 		}else{
 			$agremiadoMulta = AgremiadoMulta::find($request->id);
+			$agremiadoMulta->id_usuario_actualiza = $id_user;
 		}
 		
 		$agremiado_ = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
@@ -259,46 +261,84 @@ class MultaController extends Controller
 		$agremiadoMulta->observacion_multa = $request->observacion_multa;
 		
 		//$agremiadoMulta->estado = 1;
-		$agremiadoMulta->id_usuario_inserta = $id_user;
+		
 		$agremiadoMulta->save();
 
 		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 
 		$agremiado->id_situacion = 74;
+		$agremiado->id_usuario_actualiza = $id_user;
 
 		$agremiado->save();
 		
 		$id_multa = $agremiadoMulta->id;
 		
-		if($request->id_estado_multa==1){
+		if($request->id == 0){
+
+			if($request->id_estado_multa==1){
 		
-			$multa = Multa::find($request->id_multa);
-			
-			$valorizacion = new Valorizacione;
-			$valorizacion->id_modulo = 3;
-			$valorizacion->pk_registro = $id_multa;
-			$valorizacion->id_concepto = $multa->id_concepto;
-			$valorizacion->id_agremido = $agremiado_->id;
-			$valorizacion->id_persona = $agremiado_->id_persona;
-			$valorizacion->monto = $multa->monto;
-			$valorizacion->id_moneda = $multa->id_moneda;
-			$valorizacion->fecha = Carbon::now()->format('Y-m-d');
-			$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
-			$valorizacion->descripcion = $multa->denominacion;
-			//$valorizacion->estado = 1;
-			//print_r($valorizacion->descripcion).exit();
-			$valorizacion->id_usuario_inserta = $id_user;
-			$valorizacion->save();
-			
-		}else{
-		
-			$valorizaciones = Valorizacione::where("pk_registro",$request->id)->where("id_modulo", "3")->where("estado","1")->first();
-			if(isset($valorizaciones->id)){
-				$id_valorizaciones = $valorizaciones->id;
-				$valorizacion = Valorizacione::find($id_valorizaciones);
-				$valorizacion->estado = 0;
+				$multa = Multa::find($request->id_multa);
+				
+				$valorizacion = new Valorizacione;
+				$valorizacion->id_modulo = 3;
+				$valorizacion->pk_registro = $id_multa;
+				$valorizacion->id_concepto = $multa->id_concepto;
+				$valorizacion->id_agremido = $agremiado_->id;
+				$valorizacion->id_persona = $agremiado_->id_persona;
+				$valorizacion->monto = $multa->monto;
+				$valorizacion->id_moneda = $multa->id_moneda;
+				$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+				$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+				$valorizacion->descripcion = $multa->denominacion;
+				//$valorizacion->estado = 1;
+				//print_r($valorizacion->descripcion).exit();
+				$valorizacion->id_usuario_inserta = $id_user;
 				$valorizacion->save();
+				
+			}else{
+			
+				$valorizaciones = new Valorizacione;
+				$valorizaciones->estado = 0;
+				$valorizaciones->id_usuario_inserta = $id_user;
+				$valorizaciones->save();
+				
 			}
+
+		}else{
+
+			if($request->id_estado_multa==1){
+		
+				//$multa = Multa::find($request->id_multa);
+				
+				$valorizacion = Valorizacione::where("pk_registro",$id_multa)->where("id_modulo", "3")->first();
+				
+				$valorizacion->id_modulo = 3;
+				$valorizacion->pk_registro = $id_multa;
+				$valorizacion->id_concepto = $multa->id_concepto;
+				$valorizacion->id_agremido = $agremiado_->id;
+				$valorizacion->id_persona = $agremiado_->id_persona;
+				$valorizacion->monto = $multa->monto;
+				$valorizacion->id_moneda = $multa->id_moneda;
+				$valorizacion->fecha = Carbon::now()->format('Y-m-d');
+				$valorizacion->fecha_proceso = Carbon::now()->format('Y-m-d');
+				$valorizacion->descripcion = $multa->denominacion;
+				$valorizacion->estado = 1;
+				//print_r($valorizacion->descripcion).exit();
+				$valorizacion->id_usuario_actualiza = $id_user;
+				$valorizacion->save();
+				
+			}else{
+			
+				$valorizaciones = Valorizacione::where("pk_registro",$id_multa)->where("id_modulo", "3")->first();
+				if(isset($valorizaciones->id)){
+					$id_valorizaciones = $valorizaciones->id;
+					$valorizacion = Valorizacione::find($id_valorizaciones);
+					$valorizacion->estado = 0;
+					$valorizacion->id_usuario_actualiza = $id_user;
+					$valorizacion->save();
+				}
+			}
+
 		}
 		
     }
@@ -309,15 +349,16 @@ class MultaController extends Controller
 
 		if($request->id == 0){
 			$multa = new Multa;
+			$multa->id_usuario_inserta = $id_user;
 		}else{
 			$multa = Multa::find($request->id);
+			$multa->id_usuario_actualiza = $id_user;
 		}
 		
 		$multa->denominacion = $request->denominacion;
 		$multa->monto = $request->monto;
 		$multa->id_moneda = $request->moneda;
 		$multa->id_concepto = $request->concepto;
-		$multa->id_usuario_inserta = $id_user;
 		$multa->save();
 		
     }
@@ -409,6 +450,8 @@ class MultaController extends Controller
 
 	public function eliminar_multa($id,$estado)
     {
+		$id_user = Auth::user()->id;
+
 		$agremiadoMulta = AgremiadoMulta::find($id);
 		$valorizaciones = Valorizacione::where("pk_registro",$id)->where("id_modulo", "3")->where("estado","1")->first();
 
@@ -418,8 +461,10 @@ class MultaController extends Controller
 		$id_valorizaciones = $valorizaciones->id;
 		$valorizacion = Valorizacione::find($id_valorizaciones);
 		$valorizacion->estado = $estado;
+		$valorizacion->id_usuario_actualiza = $id_user;
 		//print_r($id_valorizaciones).exit();
 		$agremiadoMulta->estado = $estado;
+		$agremiadoMulta->id_usuario_actualiza = $id_user;
 		$agremiadoMulta->save();
 		$valorizacion->save();
 
@@ -428,8 +473,11 @@ class MultaController extends Controller
 
 	public function eliminar_multa_mantenimiento($id,$estado)
     {
+		$id_user = Auth::user()->id;
+
 		$multa = Multa::find($id);
 		$multa->estado = $estado;
+		$multa->id_usuario_actualiza = $id_user;
 		$multa->save();
 
 		echo $multa->id;

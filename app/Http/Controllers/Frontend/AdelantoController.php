@@ -181,10 +181,11 @@ class AdelantoController extends Controller
 			$adelanto_detalle = new Adelanto_detalle;
 			$adelanto->id_agremiado = $request->delegado;
 			$adelanto->fecha = Carbon::now()->format('Y-m-d');
+			$adelanto->id_usuario_inserta = $id_user;
 		}else{
 			$adelanto = Adelanto::find($request->id);
 			$adelanto->id_agremiado = $request->id_delegado_;
-			
+			$adelanto->id_usuario_actualiza = $id_user;
 		}
 		
         //$id_agremiado = buscar_numero_cap($numero_cap);
@@ -195,15 +196,12 @@ class AdelantoController extends Controller
         $adelanto->total_adelanto = $request->monto;
 		$adelanto->id_tiene_recibo = $request->id_tiene_recibo;
 		//$profesion->estado = 1;
-		$adelanto->id_usuario_inserta = $id_user;
 		$adelanto->save();
 
 		$pago_mes=$request->monto/$request->numero_cuota;
 		
 		$fechaActual = Carbon::now();
 
-		
-			
 			if($request->id == 0){
 				for ($i = 1; $i <= $request->numero_cuota; $i++) {
 				$adelanto_detalle = new Adelanto_detalle;
@@ -221,7 +219,7 @@ class AdelantoController extends Controller
 			}
 			}else{
 
-				$adelanto_detalle = Adelanto_detalle::where("id_adelento",$adelanto->id)->update(['estado'=>0]);
+				$adelanto_detalle = Adelanto_detalle::where("id_adelento",$adelanto->id)->update(['estado'=>0,'id_usuario_actualiza' => $id_user]);
 
 				for ($i = 1; $i <= $request->numero_cuota; $i++) {
 

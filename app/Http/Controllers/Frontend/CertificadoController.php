@@ -346,6 +346,7 @@ class CertificadoController extends Controller
 	}
 
 	public function send_certificado(Request $request){
+
 		$id_user = Auth::user()->id;
 		
 		$certificado_model = new Certificado;
@@ -354,8 +355,10 @@ class CertificadoController extends Controller
 			$certificado = new Certificado;
 			$codigo = $certificado_model->getCodigoCertificado($request->tipo);
 			$certificado->codigo = $codigo;
+			$certificado->id_usuario_inserta = $id_user;
 		}else{
 			$certificado = Certificado::find($request->id);
+			$certificado->id_usuario_actualiza = $id_user;
 		}
 		
 		$certificado->fecha_solicitud = $request->fecha_sol;
@@ -385,7 +388,6 @@ class CertificadoController extends Controller
 			$solicitud->total_area_techada_m2 = $request->total_area_techada_m2;
 			$solicitud->save();
 		}*/
-		$certificado->id_usuario_inserta = $id_user;
 		
 		$certificado->save();
 		
@@ -447,9 +449,12 @@ class CertificadoController extends Controller
 	
 	public function eliminar_certificado($id){
 
-		$segurosPlane = Certificado::find($id);
-		$segurosPlane->estado= "0";
-		$segurosPlane->save();
+		$id_user = Auth::user()->id;
+
+		$certificado = Certificado::find($id);
+		$certificado->estado= "0";
+		$certificado->id_usuario_actualiza = $id_user;
+		$certificado->save();
 		
 		echo "success";
 

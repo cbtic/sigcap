@@ -169,15 +169,16 @@ class CoordinadorZonalController extends Controller
 
     public function send_coordinador_zonal_nuevoCoordinadorZonal(Request $request){
 		
-
 		$id_user = Auth::user()->id;
 		$agremiado = Agremiado::where("numero_cap",$request->numero_cap)->where("estado","1")->first();
 		$mensaje = "";
 		
 		if($request->id == 0){
 			$coordinadorZonal = new CoordinadorZonal;
+            $coordinadorZonal->id_usuario_inserta = $id_user;
 		}else{
 			$coordinadorZonal = CoordinadorZonal::find($request->id);
+            $coordinadorZonal->id_usuario_actualiza = $id_user;
 		}
 
 		/**********Comision**************/
@@ -226,7 +227,6 @@ class CoordinadorZonalController extends Controller
             $coordinadorZonal->id_agremiado = $agremiado->id;
             $coordinadorZonal->id_comision = $id_comision;
             $coordinadorZonal->id_muni_inte = $id_municipalidad_integrada;
-            $coordinadorZonal->id_usuario_inserta = $id_user;
 			$coordinadorZonal->id_zonal = $request->zonal;
 			$coordinadorZonal->estado_coordinador = $request->estado_coordinador;
             $coordinadorZonal->save();
@@ -316,8 +316,12 @@ class CoordinadorZonalController extends Controller
 
 	public function eliminar_coordinador_zonal($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$coordinadorZonal = CoordinadorZonal::find($id);
 		$coordinadorZonal->estado = $estado;
+		$coordinadorZonal->id_usuario_actualiza = $id_user;
 		$coordinadorZonal->save();
 
 		echo $coordinadorZonal->id;
@@ -390,11 +394,8 @@ class CoordinadorZonalController extends Controller
 		$comisionSesionDelegado = ComisionSesionDelegado::find($request->id);
 		$comisionSesion = ComisionSesione::find($comisionSesionDelegado->id_comision_sesion);
 
-		
-
         $img_foto = $request->img_foto;
 		
-            
 		/*$filepath_tmp = public_path('img/informe/tmp/');
 		$filepath_nuevo = public_path('img/informe/');
 		
@@ -410,15 +411,14 @@ class CoordinadorZonalController extends Controller
 		$comisionSesion->fecha_ejecucion = $request->fecha_ejecucion_;
 		$comisionSesion->id_estado_aprobacion = $request->estado_sesion_;
 		$comisionSesion->id_municipalidad = $request->municipalidad_;
-		$comisionSesion->id_usuario_inserta = $id_user;
+		$comisionSesion->id_usuario_actualiza = $id_user;
 		$comisionSesion->save();
 		
 		/**********ComisionSesionDelegado**************/
 		$comisionSesionDelegado->id_aprobar_pago = $request->aprobar_pago_;
-		$comisionSesionDelegado->id_usuario_inserta = $id_user;
+		$comisionSesionDelegado->id_usuario_actualiza = $id_user;
 		$comisionSesionDelegado->save();
 
-        
     }
 
 	public function modal_informes($id){
