@@ -200,7 +200,7 @@
 		</table>
         <br></br>
         <div style="text-align: center; position: relative; height: 100px;">
-            <img width="200px" height="80px" src="img/firma_sello_gerente_Fernando_Costa.png">
+            <img width="200px" height="80px" src="img/firma_gerente_general_guillermo_benvenuto.jpeg">
         <div>
         <footer>
         <script type="text/php">
