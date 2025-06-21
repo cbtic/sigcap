@@ -191,7 +191,6 @@ function validacion(){
     }
 }
 
-
 function valida(){
 	var mensaje= "0";
 

@@ -128,10 +128,12 @@ class DelegadoTributoController extends Controller
 			$delegadoTributo = new DelegadoTributo;
             $delegadoTributo->id_agremiado = $request->delegado;
             $delegadoTributo->anio = $request->anio;
+		    $delegadoTributo->id_usuario_inserta = $id_user;
 		}else{
 			$delegadoTributo = DelegadoTributo::find($request->id);
             $delegadoTributo->id_agremiado = $request->id_delegado_;
             $delegadoTributo->anio = $request->anio_;
+		    $delegadoTributo->id_usuario_actualiza = $id_user;
 		}
         
         $delegadoTributo->id_periodo_comision = $request->id_periodo;
@@ -144,15 +146,18 @@ class DelegadoTributoController extends Controller
         $delegadoTributo->fecha_recepcion = $request->fecha_recepcion;
         $delegadoTributo->fecha_inicio = $request->fecha_inicio;
         $delegadoTributo->fecha_fin = $request->fecha_fin;
-		$delegadoTributo->id_usuario_inserta = $id_user;
 		$delegadoTributo->save();
 		
     }
 
     public function eliminar_delegadoTributo($id,$estado)
     {
+
+        $id_user = Auth::user()->id;
+
 		$delegadoTributo = DelegadoTributo::find($id);
 		$delegadoTributo->estado = $estado;
+		$delegadoTributo->id_usuario_actualiza = $id_user;
 		$delegadoTributo->save();
 
 		echo $delegadoTributo->id;

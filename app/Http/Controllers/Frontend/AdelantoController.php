@@ -277,8 +277,12 @@ class AdelantoController extends Controller
 
 	public function eliminar_adelanto($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$adelanto = Adelanto::find($id);
 		$adelanto->estado = $estado;
+		$adelanto->id_usuario_actualiza = $id_user;
 		$adelanto->save();
 
 		$adelanto_detalle = Adelanto_detalle::where('id_adelento', $id)->get();
@@ -286,6 +290,7 @@ class AdelantoController extends Controller
 		foreach($adelanto_detalle as $key => $row){
 			$detalle = Adelanto_detalle::find($row->id);
 			$detalle->estado = $estado;
+			$detalle->id_usuario_actualiza = $id_user;
 			$detalle->save();
 		}
 

@@ -70,21 +70,26 @@ class TipoCambioController extends Controller
 
 		if($request->id == 0){
 			$tipoCambio = new TipoCambio;
+			$tipoCambio->id_usuario_inserta = $id_user;
 		}else{
 			$tipoCambio = TipoCambio::find($request->id);
+			$tipoCambio->id_usuario_actualiza = $id_user;
 		}
 		
 		$tipoCambio->fecha = $request->fecha;
         $tipoCambio->valor_venta = $request->valor_venta;
         $tipoCambio->valor_compra = $request->valor_compra;
-		$tipoCambio->id_usuario_inserta = $id_user;
 		$tipoCambio->save();
     }
 
     public function eliminar_tipo_cambio($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$tipo_cambio = TipoCambio::find($id);
 		$tipo_cambio->estado = $estado;
+		$tipo_cambio->id_usuario_actualiza = $id_user;
 		$tipo_cambio->save();
 
 		echo $tipo_cambio->id;

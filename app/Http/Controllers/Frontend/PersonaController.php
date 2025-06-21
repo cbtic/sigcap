@@ -239,8 +239,12 @@ class PersonaController extends Controller
 
 	public function eliminar_persona($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$persona = Persona::find($id);
 		$persona->estado = $estado;
+		$persona->id_usuario_actualiza = $id_user;
 		$persona->save();
 
 		echo $persona->id;
@@ -638,7 +642,7 @@ class PersonaController extends Controller
 			$persona->correo = $request->correo;
 			$persona->foto = $request->img_foto;
 			$persona->direccion = $request->direccion;
-			$persona->id_usuario_inserta = $id_user;
+			$persona->id_usuario_actualiza = $id_user;
 			$persona->save();
 		}
 			//$persona = Persona::find($request->id);

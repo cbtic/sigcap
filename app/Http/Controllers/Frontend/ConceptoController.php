@@ -137,9 +137,11 @@ class ConceptoController extends Controller
 			$concepto = new Concepto;
 			$codigo = $concepto_model->getCodigoConcepto();
 			$concepto->codigo = $codigo;
+			$concepto->id_usuario_inserta = $id_user;
 		}else{
 			$concepto = Concepto::find($request->id);
 			$codigo = $request->codigo;
+			$concepto->id_usuario_actualiza = $id_user;
 		}
 		
 		$concepto->id_regional = $request->id_regional;
@@ -156,14 +158,17 @@ class ConceptoController extends Controller
 		$concepto->centro_costo = $request->centro_costo;
 		$concepto->genera_pago = $request->genera_pago;
 		//$concepto->estado = 1;
-		$concepto->id_usuario_inserta = $id_user;
 		$concepto->save();
     }
 
 	public function eliminar_concepto($id,$estado)
     {
+
+		$id_user = Auth::user()->id;
+
 		$concepto = Concepto::find($id);
 		$concepto->estado = $estado;
+		$concepto->id_usuario_actualiza = $id_user;
 		$concepto->save();
 
 		echo $concepto->id;
